@@ -1,3 +1,21 @@
+MAVEN
+=====
+Coverage.
+Local repo checksum.
+Reports
+idea config
+Avoid having to specify subsonic version more than once.
+Skipping missing optional mojo: org.apache.maven.plugins:maven-site-plugin:attach-descriptor
+svn:keywords
+xml-apis
+Gå gjennom jar-er i war-en.
+Slette Log, Date og Revision?
+
+svn import https://svn.sourceforge.net/svnroot/subsonic --username sindre_mehus --password XXX -m "Initial import."
+svn co https://svn.sourceforge.net/svnroot/subsonic  .
+
+
+
 PRIORITIZED FOR VERSION 2.7
 ===========================
 Download playlist (both current and saved)
