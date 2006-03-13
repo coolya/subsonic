@@ -9,5 +9,5 @@ xml-apis
 Gå gjennom jar-er i war-en.
 Slette Log, Date og Revision?
 
-svn import https://svn.sourceforge.net/svnroot/subsonic --username sindre_mehus --password harmo9sk -m "Initial import."
+svn import https://svn.sourceforge.net/svnroot/subsonic --username sindre_mehus --password XXX -m "Initial import."
 svn co svn://localhost/svnroot/subsonic .
