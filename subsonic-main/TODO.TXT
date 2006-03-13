@@ -1,5 +1,7 @@
 MAVEN
 =====
+faq fml
+
 Coverage.
 Local repo checksum.
 Reports
@@ -20,6 +22,7 @@ PRIORITIZED FOR VERSION 2.7
 ===========================
 Download playlist (both current and saved)
 ID3-editing.
+Fix linebreaks in "New version available" message.
 Add 10% to y-range in status chart.
 Something wrong which status chart history.
 Limit download bandwidth.
