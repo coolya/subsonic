@@ -1,0 +1,18 @@
+/*$Revision: 1.8 $ $Date: 2005/12/15 19:04:32 $*/
+
+<style type="text/css">
+form {font-family: verdana,arial; font-size: 9pt; line-height: 14pt}
+body {font-family: verdana,arial; font-size: 9pt; line-height: 14pt; background-color: #EFEFEF; scrollbar-face-color: #DEE3E7;
+    scrollbar-highlight-color: #FFFFFF; scrollbar-shadow-color: #DEE3E7; scrollbar-3dlight-color: #D1D7DC;
+    scrollbar-arrow-color: #006699; scrollbar-track-color: #EFEFEF; scrollbar-darkshadow-color: #98AAB1;}
+p {font-family: verdana,arial; font-size: 9pt; line-height: 14pt}
+p.dense {white-space:nowrap; margin:0pt; line-height:1.3em}
+label {font-family: verdana,arial; font-size: 9pt; line-height: 14pt}
+table {font-family: verdana,arial; font-size: 9pt; line-height: 12pt}
+h1 {font-family: verdana,arial; font-size: 12pt}
+h2 {font-family: verdana,arial; font-size: 9pt}
+a {font-family: verdana,arial; font-size: 9pt; text-decoration: none}
+a:link,a:active,a:visited {color : #006699}
+a:hover	{text-decoration: underline; color : #DD6900}
+img {border-style: none}
+</style>

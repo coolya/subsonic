@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE securityfilter-config PUBLIC
+        "-//SecurityFilter.org//DTD Security Filter Configuration 2.0//EN"
+        "http://www.securityfilter.org/dtd/securityfilter-config_2_0.dtd">
+
+<securityfilter-config>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Subsonic</web-resource-name>
+            <url-pattern>*.jsp</url-pattern>
+            <url-pattern>*.m3u</url-pattern>
+            <url-pattern>/coverart</url-pattern>
+            <url-pattern>/statusChart</url-pattern>
+            <url-pattern>/dwr</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>user</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Subsonic (admin)</web-resource-name>
+            <url-pattern>/createSearchIndex.jsp</url-pattern>
+            <url-pattern>/createUser.jsp</url-pattern>
+            <url-pattern>/createUserConfirm.jsp</url-pattern>
+            <url-pattern>/indexSettingsConfirm.jsp</url-pattern>
+            <url-pattern>/settingsConfirm.jsp</url-pattern>
+            <url-pattern>/userSettings.jsp</url-pattern>
+            <url-pattern>/userSettingsConfirm.jsp</url-pattern>
+            <url-pattern>/editMusicFolder.jsp</url-pattern>
+            <url-pattern>/editInternetRadio.jsp</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Subsonic (download)</web-resource-name>
+            <url-pattern>/download</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>download</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Subsonic (upload)</web-resource-name>
+            <url-pattern>/upload.jsp</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>upload</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Subsonic (playlist)</web-resource-name>
+            <url-pattern>/deletePlaylist.jsp</url-pattern>
+            <url-pattern>/savePlaylist.jsp</url-pattern>
+            <url-pattern>/savePlaylistConfirm.jsp</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>playlist</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Subsonic (coverart)</web-resource-name>
+            <url-pattern>/changeCoverArt.jsp</url-pattern>
+            <url-pattern>/changeCoverArtConfirm.jsp</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>coverart</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Subsonic (comment)</web-resource-name>
+            <url-pattern>/setMusicFileInfo.jsp</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>comment</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>Welcome to Subsonic!</realm-name>
+    </login-config>
+
+    <realm className="net.sourceforge.subsonic.filter.SecurityRealmFilter"/>
+
+</securityfilter-config>

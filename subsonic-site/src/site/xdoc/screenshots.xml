@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<document>
+
+    <properties>
+        <title>Subsonic :: Screenshots</title>
+        <author email="sindre_mehus@users.sourceforge.net">Sindre Mehus</author>
+    </properties>
+
+    <head>
+        <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            _uacct = "UA-110410-1";
+            urchinTracker();
+        </script>
+    </head>
+
+    <body>
+
+        <section name="Screenshots">
+            <p>Click on an image to enlarge it.</p>
+            <a href="images/screen0.png"><img src="images/thumb_screen0.png" hspace="10" vspace="10"/></a>
+            <a href="images/screen1.png"><img src="images/thumb_screen1.png" hspace="10" vspace="10"/></a>
+            <a href="images/screen2.png"><img src="images/thumb_screen2.png" hspace="10" vspace="10"/></a>
+            <a href="images/screen3.png"><img src="images/thumb_screen3.png" hspace="10" vspace="10"/></a>
+            <a href="images/screen4.png"><img src="images/thumb_screen4.png" hspace="10" vspace="10"/></a>
+            <a href="images/screen5.png"><img src="images/thumb_screen5.png" hspace="10" vspace="10"/></a>
+            <a href="images/screen6.png"><img src="images/thumb_screen6.png" hspace="10" vspace="10"/></a>
+            <a href="images/screen7.png"><img src="images/thumb_screen7.png" hspace="10" vspace="10"/></a>
+            <a href="images/screen8.png"><img src="images/thumb_screen8.png" hspace="10" vspace="10"/></a>
+            <a href="images/screen9.png"><img src="images/thumb_screen9.png" hspace="10" vspace="10"/></a>
+            <a href="images/screen10.png"><img src="images/thumb_screen10.png" hspace="10" vspace="10"/></a>
+            <a href="images/screen11.png"><img src="images/thumb_screen11.png" hspace="10" vspace="10"/></a>
+            <a href="images/screen12.png"><img src="images/thumb_screen12.png" hspace="10" vspace="10"/></a>
+        </section>
+
+    </body>
+</document>

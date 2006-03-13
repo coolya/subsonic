@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+    <display-name>subsonic</display-name>
+
+    <servlet>
+        <servlet-name>stream</servlet-name>
+        <display-name>stream</display-name>
+        <description>Streams the contents of a given file or directory.</description>
+        <servlet-class>net.sourceforge.subsonic.servlet.StreamServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>m3u</servlet-name>
+        <display-name>m3u</display-name>
+        <description>Returns an m3u file with playlist containing the stream URL.</description>
+        <servlet-class>net.sourceforge.subsonic.servlet.M3UServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>download</servlet-name>
+        <display-name>download</display-name>
+        <description>Downloads a single file or an entire directory structure.</description>
+        <servlet-class>net.sourceforge.subsonic.servlet.DownloadServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>coverart</servlet-name>
+        <display-name>coverart</display-name>
+        <description>Finds, scales and serves cover art images</description>
+        <servlet-class>net.sourceforge.subsonic.servlet.CoverArtServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>statusChart</servlet-name>
+        <display-name>statusChart</display-name>
+        <description>Returns an image containing a chart showing stream rate over time.</description>
+        <servlet-class>net.sourceforge.subsonic.servlet.StatusChartServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>dwr-invoker</servlet-name>
+        <display-name>DWR Servlet</display-name>
+        <servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>stream</servlet-name>
+        <url-pattern>/stream/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>m3u</servlet-name>
+        <url-pattern>/play.m3u</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>download</servlet-name>
+        <url-pattern>/download</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>coverart</servlet-name>
+        <url-pattern>/coverart</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>statusChart</servlet-name>
+        <url-pattern>/statusChart</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>dwr-invoker</servlet-name>
+        <url-pattern>/dwr/*</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>RequestEncodingFilter</filter-name>
+        <filter-class>net.sourceforge.subsonic.filter.RequestEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>RequestEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>ResponseHeaderFilter</filter-name>
+        <filter-class>net.sourceforge.subsonic.filter.ResponseHeaderFilter</filter-class>
+        <init-param>
+            <param-name>Cache-Control</param-name>
+            <param-value>max-age=3600</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>ResponseHeaderFilter</filter-name>
+        <url-pattern>/icons/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>org.securityfilter.filter.SecurityFilter</filter-class>
+        <init-param>
+            <param-name>config</param-name>
+            <param-value>/WEB-INF/securityfilter-config.xml</param-value>
+            <description>Configuration file location (this is the default value)</description>
+        </init-param>
+        <init-param>
+            <param-name>validate</param-name>
+            <param-value>true</param-value>
+            <description>Validate config file if set to true</description>
+        </init-param>
+    </filter>
+
+    <!-- Map all requests to the SecurityFilter.  See securityfilter.config.xml for more details. -->
+    <filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+</web-app>

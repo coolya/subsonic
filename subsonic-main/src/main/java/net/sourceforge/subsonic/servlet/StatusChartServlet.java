@@ -1,0 +1,112 @@
+package net.sourceforge.subsonic.servlet;
+
+import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.service.*;
+import org.jfree.chart.*;
+import org.jfree.chart.axis.*;
+import org.jfree.chart.plot.*;
+import org.jfree.chart.renderer.xy.*;
+import org.jfree.data.*;
+import org.jfree.data.time.*;
+
+import javax.servlet.http.*;
+import java.awt.*;
+import java.io.*;
+import java.util.*;
+import java.util.List;
+
+/**
+ * Servlet for generating a chart showing bitrate vs time.
+ *
+ * @author Sindre Mehus
+ * @version $Revision: 1.7 $ $Date: 2005/12/07 19:18:57 $
+ */
+public class StatusChartServlet extends HttpServlet {
+
+    public static final int IMAGE_WIDTH = 350;
+    public static final int IMAGE_HEIGHT = 150;
+
+    /**
+     * Handles the given HTTP request.
+     * @param request The HTTP request.
+     * @param response The HTTP response.
+     * @throws IOException If an I/O error occurs.
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String type = request.getParameter("type");
+        int index =       Integer.parseInt(request.getParameter("index"));
+
+        StreamStatus[] statuses = new StreamStatus[0];
+        if ("stream".equals(type)) {
+            statuses = ServiceFactory.getStatusService().getAllStreamStatuses();
+        } else if ("download".equals(type)) {
+            statuses = ServiceFactory.getStatusService().getAllDownloadStatuses();
+        }
+
+        if (index < 0 || index >= statuses.length) {
+            return;
+        }
+        StreamStatus status = statuses[index];
+
+        TimeSeries series = new TimeSeries("Kbps", Millisecond.class);
+        List<StreamStatus.Sample> history = status.getHistory();
+
+        if (!history.isEmpty()) {
+
+            StreamStatus.Sample previous = history.get(0);
+            for (int i = 1; i < history.size(); i++) {
+
+                StreamStatus.Sample sample = history.get(i);
+
+                long elapsedTimeMilis = sample.getTimestamp() - previous.getTimestamp();
+                long bytesStreamed = sample.getBytesStreamed() - previous.getBytesStreamed();
+
+                double kbps =  (8.0 * bytesStreamed / 1024.0) / (elapsedTimeMilis / 1000.0);
+                series.add(new Millisecond(new Date(sample.getTimestamp())), kbps);
+
+                previous = sample;
+            }
+        }
+
+        // Compute moving average.
+        series = MovingAverage.createMovingAverage(series, "Kbps", 20000, 5000);
+
+        // Find min and max values.
+        double min = 100;
+        double max = 250;
+        for (Object obj : series.getItems()) {
+            TimeSeriesDataItem item = (TimeSeriesDataItem) obj;
+            double value = item.getValue().doubleValue();
+            min = Math.min(min, value);
+            max = Math.max(max, value);
+        }
+
+        long to = System.currentTimeMillis();
+        long from = to - status.getHistoryLengthMillis();
+        Range range = new DateRange(from, to);
+
+        TimeSeriesCollection dataset = new TimeSeriesCollection();
+        dataset.addSeries(series);
+        JFreeChart chart = ChartFactory.createTimeSeriesChart(null, null, null, dataset, false, false, false);
+        XYPlot plot = (XYPlot) chart.getPlot();
+
+        plot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        Paint background = new GradientPaint(0, 0, Color.lightGray, 0, IMAGE_HEIGHT, Color.white);
+        plot.setBackgroundPaint(background);
+
+        XYItemRenderer renderer = plot.getRendererForDataset(dataset);
+        renderer.setPaint(Color.blue.darker());
+        renderer.setStroke(new BasicStroke(2f));
+
+        chart.setBackgroundPaint(new Color(0xEFEFEF));
+
+        ValueAxis domainAxis = plot.getDomainAxis();
+        domainAxis.setRange(range);
+
+        ValueAxis rangeAxis = plot.getRangeAxis();
+        rangeAxis.setRange(new Range(min, max));
+
+        ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart, IMAGE_WIDTH, IMAGE_HEIGHT);
+
+    }
+}

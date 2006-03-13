@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<document>
+    <properties>
+        <title>Subsonic :: Change Log</title>
+        <author email="sindre_mehus@users.sourceforge.net">Sindre Mehus</author>
+    </properties>
+    
+    <head>
+        <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            _uacct = "UA-110410-1";
+            urchinTracker();
+        </script>
+    </head>
+
+    <body>
+
+        <section name="Change Log">
+
+            <subsection name="Subsonic 2.6 - Mar 10, 2006">
+                <ul>
+                    <li>New: Nicer layout, colors and icons. Customizable welcome message. Option to limit number of cover art
+                        images to display.</li>
+                    <li>New: You can now specify multiple media folders in the configuration.
+                        This is useful, for example, if you have your music on multiple disks, or if you have one directory with
+                        music, and another with movies. The index (on the left-hand side) can either show all
+                        media folders (merged alphabetically), or you can select from a combo box which folder to display.</li>
+                    <li>New: Assign ratings (one to five stars) and comments to individual albums.</li>
+                    <li>New: There is a new welcome page, displaying lists of random albums, newest albums, highest rated albums,
+                        most often played albums and most recently played albums.</li>
+                    <li>New: You can configure a set of links to Internet TV and radio stations. These links become available in
+                        the index on the left-hand side. Click on a link, and your player connects to the station.</li>
+                    <li>New: Saved playlists are now available as Podcasts (available from the "More" page).</li>
+                    <li>New: Improved player management. Support multiple players with the same IP address, and players with dynamic
+                        IP addresses.  Display player type (e.g., WinAmp) and last-seen date.</li>
+                    <li>New: Macedonian translation by Stefan Ivanovski.</li>
+                    <li>New: Implemented support for non-Latin character encodings (for instance Japanese or Cyrillic).</li>
+                    <li>New: Added option to load a previously saved playlist in the WAP interface.</li>
+                    <li>New: "Album Info" now integrates with Google Music.</li>
+                    <li>New: Avoid unnecessary reloading of the playlist window.</li>
+                    <li>Bugfix: Fallback to file name if ID3 tags are present but empty.</li>
+                    <li>Bugfix: LAME now works on Linux.</li>
+                    <li>Bugfix: Solved problem with playlist autoscroll on rearrange.</li>
+                    <li>Bugfix: Clicking index in top frame sometimes caused reloading of left frame.</li>
+                </ul>
+            </subsection>
+
+            <subsection name="Subsonic 2.5 - Nov 25, 2005">
+                <ul>
+                    <li>New: Implemented user management. Users are easily created, deleted and assigned different privileges.</li>
+                    <li>New: Faster song switching. Players react immediately to playlist changes.</li>
+                    <li>New: Now possible to refine search for cover art and album info.</li>
+                    <li>New: Better support for OGG, AAC and other formats. Added proper suffix to stream URL as a hint to the player.</li>
+                    <li>New: Display media library statistics.</li>
+                    <li>New: New location for preferences, search index and database (c:\subsonic or /var/subsonic).</li>
+                    <li>Bugfix: Improved parsing of MP3 tags.  Avoid funny characters in artist, album and song title.</li>
+                </ul>
+            </subsection>
+
+            <subsection name="Subsonic 2.4 - Oct 10, 2005">
+                <ul>
+                    <li>New: Download cover art and album info from Amazon web service.</li>
+                    <li>New: Show selection of random albums on welcome page.</li>
+                    <li>New: Display notice if LAME is not installed.</li>
+                    <li>Bugfix: Allow max one stream per player.</li>
+                    <li>Bugfix: Use user-wide (not system-wide) preferences on non-Windows platforms.</li>
+                </ul>
+            </subsection>
+
+            <subsection name="Subsonic 2.3 - May 28, 2005">
+                <ul>
+                    <li>Full internationalization support.</li>
+                    <li>Automatic update of search index at specified intervals.</li>
+                    <li>Search is now more like Google.</li>
+                    <li>Updating search index is now a lot faster (30 seconds for 18000 songs).</li>
+                    <li>Unique playlist "undo" function.</li>
+                    <li>"Now Playing" automatically refreshes when a new album is played.</li>
+                    <li>Ongoing downloads are now displayed in the status page, with charts showing download speed.</li>
+                    <li>Some improvements in zip functionality.</li>
+                    <li>Significantly improved accuracy in charts.</li>
+                    <li>Better support for non-ASCII characters in SHOUTcast.</li>
+                    <li>No longer necessary to enter username and password in player.</li>
+                    <li>Support for "ignored articles".</li>
+                    <li>Show log in help page.</li>
+                </ul>
+            </subsection>
+
+            <subsection name="Subsonic 2.2 - March 17, 2005">
+                <ul>
+                    <li>Implemented SHOUTcast support.</li>
+                    <li>Added "Album info" which links to reviews etc at allmusic.com.</li>
+                    <li>Support for uploading files from the browser to the Subsonic server.  Zip-files are automatically unpacked.</li>
+                    <li>Improved usability in search interface.</li>
+                    <li>Option to specify http://yourhostname/stream/file.ogg etc.</li>
+                    <li>Bugfix: Detect zero-terminated strings in ID3 tags.</li>
+                    <li>Bugfix: Use ID3v2 tags instead of ID3v1, if both are present.</li>
+                </ul>
+            </subsection>
+
+            <subsection name="Subsonic 2.1 - March 8, 2005">
+                <ul>
+                    <li>Added more search options.</li>
+                    <li>Added support for downloading an entire directory structure as a zip file.</li>
+                    <li>Subsonic now parses song titles, artists and albums from ID3 tags.</li>
+                    <li>Settings for cover art size and max bitrate can now be set for individual players.</li>
+                    <li>Search index is now generated in the background.</li>
+                    <li>Keep position in playlist frame (e.g., always show the currently playing track).</li>
+                    <li>Some minor bug fixes.</li>
+                </ul>
+            </subsection>
+
+            <subsection name="Subsonic 2.0 - February 27, 2005">
+                <ul>
+                    <li>Added WAP interface for controlling Subsonic from a mobile phone or PDA.</li>
+                    <li>Added option to generate a random playlist.</li>
+                    <li>Added option to download and save individual songs.</li>
+                    <li>Subsonic now alerts users if a new version is available.</li>
+                    <li>Improved documentation and usability.</li>
+                    <li>ANT support.</li>
+                </ul>
+            </subsection>
+
+            <subsection name="Subsonic 1.0 - February 10, 2005">
+                <ul>
+                    <li>Added chart for displaying bitrates last few minutes.</li>
+                    <li>Implemented transcoding to lower bitrates.</li>
+                    <li>Added online help.</li>
+                    <li>Support PLS and M3U playlists.</li>
+                </ul>
+            </subsection>
+
+            <subsection name="Subsonic 0.1 - December 14, 2004">
+                <ul>
+                    <li>Initial release.</li>
+                </ul>
+            </subsection>
+        </section>
+    </body>
+</document>
+

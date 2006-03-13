@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+
+<document>
+    
+    <properties>
+        <title>Subsonic :: Download</title>
+        <author email="sindre_mehus@users.sourceforge.net">Sindre Mehus</author>
+    </properties>
+
+    <head>
+        <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            _uacct = "UA-110410-1";
+            urchinTracker();
+        </script>
+    </head>
+
+    <body>
+        
+        <section name="Download">
+            <p>
+                <a href="download_redirect.html"><b>Download Subsonic 2.6 now!</b></a>
+                <a href="changelog.html">What's new?</a>
+            </p>
+
+            <p>
+                Older versions, as well as source releases, can be downloaded from <a href="http://sourceforge.net/projects/subsonic/">SourceForge</a>.
+            </p>
+
+            <p>
+                Subsonic is free, but you can contribute to the project by giving a donation.
+                25% of your donation will be allocated to charity. Thank you :-)<br/>
+                <a href="http://sourceforge.net/donate/index.php?group_id=126265"><img src="images/donate.gif"/></a>
+            </p>
+
+            <subsection name="Installing Subsonic for the first time">
+                <p><ol>
+
+                    <li>Install Java from <a href="http://www.java.com/">http://www.java.com/</a>.</li>
+
+                    <li>Install Tomcat from <a href="http://tomcat.apache.org/">http://tomcat.apache.org/</a>.</li>
+
+                    <li>Copy the file <em>subsonic.war</em> to <em>&lt;TOMCAT_HOME&gt;/webapps</em>.</li>
+
+                    <li>Start Tomcat.</li>
+
+                    <li>Point your web browser to http://localhost/subsonic (or http://localhost:8080/subsonic if you
+                        installed Tomcat on port 8080.)</li>
+
+                    <li>Logon with username <em>admin</em> and password <em>admin</em>. You should change the password immediately.
+                        Click <em>Settings</em> to change password and create new users.
+                    </li>
+
+                    <li>Subsonic will attempt to create the directory c:\subsonic (on Windows) or /var/subsonic (all other
+                        platforms). This will fail if the user running Tomcat doesn't have the necessary privileges. In that case, create
+                        the directory manually, and make sure that Tomcat has write access to it.
+                    </li>
+
+                </ol></p>
+            </subsection>
+
+            <subsection name="Upgrading Subsonic">
+                <p><ol>
+
+                    <li>Stop Tomcat.</li>
+
+                    <li>Remove both <em>&lt;TOMCAT_HOME&gt;/webapps/subsonic.war</em> and the
+                        <em>&lt;TOMCAT_HOME&gt;/webapps/subsonic</em> directory.</li>
+
+                    <li>Copy the file <em>subsonic.war</em> to <em>&lt;TOMCAT_HOME&gt;/webapps</em>.</li>
+
+                    <li>Start Tomcat.</li>
+
+                    <li>If upgrading from version 2.4 (or earlier) to 2.5 (or later) - Please follow steps 6 and 7 above.</li>
+
+                    <li>If the upgrade does not seem to have any effect, delete all files in the
+                        <em>&lt;TOMCAT_HOME&gt;/work</em> directory.</li>
+
+                </ol></p>
+            </subsection>
+
+            <subsection name="Notes">
+                <p><ul>
+
+                    <li>If you installed Tomcat as a Windows Service, you can start and stop it from the service manager
+                        (Start &gt; Settings &gt; Control Panel &gt; Administrative Tools &gt; Services) </li>
+
+                    <li><em>&lt;TOMCAT_HOME&gt;</em> refers to the directory in which you installed Tomcat, typically
+                        <em>C:\Program Files\Apache Software Foundation\Tomcat 5.5</em></li>
+
+                    <li>In Subsonic 2.5 and later, users are no longer configured in <em>&lt;TOMCAT_HOME&gt;/conf/tomcat-users.xml</em>.
+                        Users are now created and configured on the <em>Settings</em> page.</li>
+
+                </ul></p>
+            </subsection>
+        </section>
+
+    </body>
+</document>

@@ -1,0 +1,147 @@
+PRIORITIZED FOR VERSION 2.7
+===========================
+Download playlist (both current and saved)
+ID3-editing.
+Add 10% to y-range in status chart.
+Something wrong which status chart history.
+Limit download bandwidth.
+Transcoding plugin framework. (Check out Jinzora transcoding pack.)
+Reimplement LAME integration.
+Specify upload directory per user. Option to delete files?
+Upload quota per user.
+Rating where you can see how much each user has uploaded/downloaded/streamed.
+Set content-length when downloading a single file.
+Improve performance for new/best charts.
+Support reverse proxies.  Send url as parameter. (<a href="javascript:document.location.href='foo.jsp?referrer=' + document.location.href">Trykk her</a>)
+More lenient security check.  Allow symlinks.
+Layout, settings.
+Order search results.
+OK - M3U-servlet from Marius
+Hvis spilleren har "Auto-control enabled" skrudd av, så vises det en ny knapp "Stream" i playlista som kan brukes for å få m3u-en.
+
+SPILL-OVER
+==========
+Message system (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=24)
+Longer log file. Option to not display DEBUG lines in help.jsp.
+If a folder contain loads of files the pictures fill up a lagre portion of the frame and
+the actual files/folders is centered and starts half way down the frame.
+Kant rundt hele vinduet, som i forum.
+Always show playlist menu.
+Let number of columns be dynamic in home page.
+Performance monitoring.
+Precompile jsp's?
+Use MusicFile.isAlbum()
+Simplify new/random in SearchService.
+If the album-name contains an apostrof ( ' ), then I get an error when I search for cover-art
+Keep statistics for players on reconnect. You might have noticed that the bandwidth chart is reset if a player reconnects. I would like to keep bandwidth statistics for a while even if a player reconnects.
+Provide links to podcast, settings, help, message board, wishlist on home page.
+New icon for wap.
+Test wap.
+Check that multi-discs are not included in random and newest albums.  Change implementation of isAlbum.
+Mark music_file_info as disabled if path doesn't exist.
+Integrate Windows Media Player in web page.
+Fetch current version asynchronously.
+Ant task for verifying resource bundles.
+UPnP
+Show list of active users.
+Register at myprogs.net
+Link to Pandora (http://blog.pandora.com/faq/index.html#92)
+Check Jinzora features. http://www.jinzora.com/pages.php?pn=developers&sub=changelog
+Add Cancel button to Save Playlist.
+Håndtere galt format samt manglende filer i playlister.
+Håndtere playere med navn som ikke er iht httpurl.
+Rydd opp i http-parameternavn.
+Gjøre sidene XHTML-kompatibel.
+Validate playlist name on save.
+Use "industrial" CSS.
+Validaton of index specification.
+Make playlist loading more robust.  (Fails on url's, for instance.)
+Make PDA skin.
+Bug: Going back adds songs to playlist multiple times.
+Quiz
+Emulator 3G-telefon
+XHTML Mobile Profile
+Add mp3-player as applet.
+Maven
+Make new screenshots, including wap.
+Check JavaZoom applet
+phone.com wap emulator
+Nevne logging i FAQ.
+Vise lengde på sanger. Lag tabell med all info?
+Automatisk finne lyrics-ting.
+Ta med lisens for commons-fileupload.
+FAQ: Noe om hvordan Subsonic kombinerer katalogstruktur og ID3.  Anbefalt struktur.
+Parse tags for wma, ogg osv.
+WAP load playlist.
+Show year and track length.
+No SHOUTcast if playlist is empty.
+Vurdere AJAX-implementasjon.
+i18n of enums.
+http://www.freeware-guide.com/dir/audio/streaming.html -> Registrert 10. mai 2005
+Option to create structure based on tags.
+Zip and unzip fails with accented characters.  Use commons vfs, or some other lib.
+Log when zipping individual files.
+Forenkle download status.  Slette DownloadStatus, ha bare en tabell osv(?)
+Proper detection of VBR.
+Add online help to search index update.
+Svitsje til automatisk "now playing" etter en stund med inaktivitet?
+JSTL
+XSPF
+Registrere på http://directory.fsf.org/ [Registrert 14.06.2005]
+Show/use genre tag
+Create image cache.
+Make error page.
+Specify context path.
+HDTV-mode.
+Vis "lignende" album.
+Problems with symlink.
+Set language per user.
+Better upload support.  (Multiple files, better feedback.)
+Improve layout.
+Give users access to certain music folders.
+Add "Play" authorization.
+Add performance monitoring.
+
+TRANSCODING CONFIG
+------------------
+Name       Convert from  Convert to  Step 1        Step 2
+wma -> mp3  wma           mp3         wmadec -w     lame -Q - -
+ogg -> mp3  ogg           mp3         oggdec
+
+
+Player config:
+Enabled Transcoder
+  x     wma->mp3
+
+o All transcoders *must* be installed in SUBSONIC_HOME/transcoders/
+o Use Commons IO.
+
+PRIORITIZED FOR VERSION 2.6
+===========================
+OK: Get Macedonian translation.
+OK: Update version in build.properties
+TODO: Regression test of everything.
+TODO: New screenshot on sourceforge and freshmeat.
+OK: Provide link to CVS repository for ResourceBundle.
+
+Bugfix 2:
+NEW: Implemented paging in home page.
+NEW: Avoid unnecessary reloading of the playlist window (using AJAX).
+NEW: Added cover art limit.
+NEW: Macedonian translation (prelimenary) by Stefan Ivanovski.
+NEW: Made it easier to create and test new translations.
+NEW: Support for non-Latin character encodings (such as Cyrillic or Japanese).
+BUGFIX: Auto-control player didn't work after IP address change.
+BUGFIX: Fixed NullPointerException causing errors in home page.
+BUGFIX: Clicking index in top frame sometimes caused reloading of left frame.
+
+
+
+XMLTV
+=====
+Legge jxmltv ut på sourceforge.
+Støtte alle kanaler på dagenstv.com.
+Støtte sommertid.
+Enklere konfigurasjon av hvilke kanaler som skal tas med.
+Endre navn til xmltv_no eller noe.
+

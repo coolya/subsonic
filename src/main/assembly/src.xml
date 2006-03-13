@@ -1,0 +1,30 @@
+<!-- Defines the set of files that should be included in the source distribution. -->
+
+<assembly>
+    <id>src</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <fileSets>
+        <fileSet>
+            <includes>
+                <include>**/pom.xml</include>
+                <include>subsonic-main/build.number</include>
+                <include>subsonic-main/LICENCE.TXT</include>
+                <include>subsonic-main/README.TXT</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>src</directory>
+        </fileSet>
+        <fileSet>
+            <directory>repo</directory>
+        </fileSet>
+        <fileSet>
+            <directory>subsonic-main/src</directory>
+        </fileSet>
+        <fileSet>
+            <directory>subsonic-site/src</directory>
+        </fileSet>
+    </fileSets>
+</assembly>

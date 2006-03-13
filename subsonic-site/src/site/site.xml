@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="subsonic" href="http://subsonic.sourceforge.net/">
+
+    <bannerRight>
+        <src>images/subsonic.png</src>
+        <href>index.html</href>
+    </bannerRight>
+
+    <title>Subsonic</title>
+    <body>
+
+        <menu name="Subsonic">
+            <item name="Overview"         href="index.html"/>
+            <item name="Download"         href="download.html"/>
+            <item name="Screenshots"      href="screenshots.html"/>
+            <item name="Change Log"       href="changelog.html"/>
+            <item name="FAQ"              href="faq.html"/>
+            <item name="Forum"            href="forum.html"/>
+        </menu>
+        <search/>
+
+        <powered-by>
+            <item
+                    name="Hosted by SourceForge"
+                    href="http://www.sourceforge.net"
+                    img="http://sourceforge.net/sflogo.php?group_id=126265&amp;type=1"/>
+        </powered-by>
+
+        <footer>
+            <a href="http://sourceforge.net/donate/index.php?group_id=126265"><img src="images/donate.gif"/></a>
+            <br/>
+            <a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=126265&amp;type=2"
+                                                  width="125" height="37" border="0" alt="SourceForge.net" /></a>
+        </footer>
+
+    </body>
+</project>
