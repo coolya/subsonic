@@ -107,7 +107,7 @@
  </script>
 
  <a name="-1">
-     <h2><table><tr>
+     <h2><table style="white-space:nowrap;"><tr>
          <td><select name="player" onchange="location='playlist.jsp?player=' + options[selectedIndex].value;" >
 <%
     Player[] allPlayers = playerService.getAllPlayers();

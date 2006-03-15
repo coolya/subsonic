@@ -75,7 +75,7 @@
     VersionService versionService = ServiceFactory.getVersionService();
     if (versionService.isNewVersionAvailable()) {
         String message = is.get("top.upgrade", versionService.getLatestVersion().toString());
-        out.println("<td style='padding-left:15pt'><p style='color:red'>" + message  + "</p></td>");
+        out.println("<td style='padding-left:15pt'><p style='color:red; white-space:nowrap;'>" + message  + "</p></td>");
     }
 %>
 </tr></table>
