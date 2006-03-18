@@ -137,6 +137,9 @@
 <% if (user.isPlaylistRole()) { %>
          <td> | <a target='main' href='savePlaylist.jsp?'><%=is.get("playlist.save")%></a></td>
 <% }%>
+<% if (user.isDownloadRole()) { %>
+         <td> | <a href='download?player=<%=player.getId()%>'><%=is.get("common.download")%></a></td>
+<% }%>
    </tr></table></h2></a>
 <%
 

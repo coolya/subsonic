@@ -23,6 +23,7 @@
         File[] playlists = playlistService.getSavedPlaylists();
         String load = is.get("playlist.load.load");
         String delete = is.get("playlist.load.delete");
+        String download = is.get("common.download");
 
         if (playlists.length == 0) {
             out.println("<p>" + is.get("playlist.load.empty") + "</p>");
@@ -35,6 +36,9 @@
                 out.println("<tr><td>" + name + "</td><td><a href='loadPlaylistConfirm.jsp?name=" + encodedName + "'>[" + load + "]</a></td>");
                 if (user.isPlaylistRole()) {
                     out.println("<td><a href='deletePlaylist.jsp?name=" + encodedName + "'>[" + delete + "]</a></td>");
+                }
+                if (user.isDownloadRole()) {
+                    out.print("<td><a href='download?playlist=" + encodedName + "'>[" + download + "]</a></td>");
                 }
                 out.println("</tr>");
             }

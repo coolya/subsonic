@@ -29,28 +29,41 @@ public class DownloadServlet extends HttpServlet {
      * @throws IOException If an I/O error occurs.
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         DownloadStatus status = null;
-        String path = request.getParameter("path");
-
         try {
-            LOG.info("Starting to download '" + path + "' to " + request.getRemoteUser() + '@' + request.getRemoteHost());
-
-            File file = new File(path);
             status = new DownloadStatus();
             status.setPlayer(ServiceFactory.getPlayerService().getPlayer(request, response, false, false));
             ServiceFactory.getStatusService().addDownloadStatus(status);
 
-            if (!ServiceFactory.getSecurityService().isReadAllowed(file)) {
-                response.sendError(HttpServletResponse.SC_FORBIDDEN);
-                return;
+            String path = request.getParameter("path");
+            String playlistName = request.getParameter("playlist");
+            String playerId = request.getParameter("player");
+
+            if (path != null) {
+                File file = new File(path);
+                if (!ServiceFactory.getSecurityService().isReadAllowed(file)) {
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN);
+                    return;
+                }
+
+                if (file.isFile()) {
+                    downloadFile(response, status, file);
+                } else {
+                    downloadDirectory(response, status, file);
+                }
+
+            } else if (playlistName != null) {
+                Playlist playlist = new Playlist();
+                ServiceFactory.getPlaylistService().loadPlaylist(playlist, playlistName);
+                downloadPlaylist(request, response, status, playlist);
+
+            } else if (playerId != null) {
+                Player player = ServiceFactory.getPlayerService().getPlayerById(playerId);
+                Playlist playlist = player.getPlaylist();
+                playlist.setName("Playlist");
+                downloadPlaylist(request, response, status, playlist);
             }
 
-            if (file.isFile()) {
-                downloadFile(request, response, status, file);
-            } else {
-                downloadDirectory(request, response, status, file);
-            }
 
         } finally {
             if (status != null) {
@@ -61,34 +74,34 @@ public class DownloadServlet extends HttpServlet {
 
     /**
      * Downloads a single file.
-     * @param request The HTTP request.
      * @param response The HTTP response.
      * @param status The download status.
      * @param file The file to download.
      * @throws IOException If an I/O error occurs.
      */
-    private void downloadFile(HttpServletRequest request, HttpServletResponse response, DownloadStatus status, File file) throws IOException {
+    private void downloadFile(HttpServletResponse response, DownloadStatus status, File file) throws IOException {
+        LOG.info("Starting to download '" + file + "' to " + status.getPlayer());
         status.setFile(new MusicFile(file));
 
         response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+        response.setContentLength((int) file.length());
 
         copyFileToStream(file, response.getOutputStream(), status);
-        LOG.info("Downloaded '" + file + "' to " + request.getRemoteUser() + '@' + request.getRemoteHost());
+        LOG.info("Downloaded '" + file + "' to " + status.getPlayer());
     }
 
     /**
      * Downloads all files in a directory (including sub-directories). The files are packed together in an
      * uncompressed zip-file.
-     * @param request The HTTP request.
      * @param response The HTTP response.
      * @param status The download status.
      * @param file The file to download.
      * @throws IOException If an I/O error occurs.
      */
-    private void downloadDirectory(HttpServletRequest request, HttpServletResponse response, DownloadStatus status, File file) throws IOException {
-
+    private void downloadDirectory(HttpServletResponse response, DownloadStatus status, File file) throws IOException {
         String zipFileName = file.getName() + ".zip";
+        LOG.info("Starting to download '" + zipFileName + "' to " + status.getPlayer());
         response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", "attachment; filename=" + zipFileName);
 
@@ -97,7 +110,34 @@ public class DownloadServlet extends HttpServlet {
 
         zip(out, file.getParentFile(), file, status);
         out.close();
-        LOG.info("Downloaded '" + zipFileName + "' to " + request.getRemoteUser() + '@' + request.getRemoteHost());
+        LOG.info("Downloaded '" + zipFileName + "' to " + status.getPlayer());
+    }
+
+    /**
+     * Downloads all files in a playlist.  The files are packed together in an
+     * uncompressed zip-file.
+     * @param request The HTTP request.
+     * @param response The HTTP response.
+     * @param status The download status.
+     * @param playlist The playlist to download.
+     * @throws IOException If an I/O error occurs.
+     */
+    private void downloadPlaylist(HttpServletRequest request, HttpServletResponse response, DownloadStatus status, Playlist playlist) throws IOException {
+        String zipFileName = playlist.getName().replaceAll("(\\.m3u)|(\\.pls)", "") + ".zip";
+        LOG.info("Starting to download '" + zipFileName + "' to " + status.getPlayer());
+        response.setContentType("application/x-download");
+        response.setHeader("Content-Disposition", "attachment; filename=" + zipFileName);
+
+        ZipOutputStream out = new ZipOutputStream(response.getOutputStream());
+        out.setMethod(ZipOutputStream.STORED);  // No compression.
+
+        MusicFile[] musicFiles = playlist.getFiles();
+        for (MusicFile musicFile : musicFiles) {
+            zip(out, musicFile.getParent().getFile(), musicFile.getFile(), status);
+        }
+
+        out.close();
+        LOG.info("Downloaded '" + zipFileName + "' to " + status.getPlayer());
     }
 
     /**
@@ -108,6 +148,8 @@ public class DownloadServlet extends HttpServlet {
      * @throws IOException If an I/O error occurs.
      */
     private void copyFileToStream(File file, OutputStream out, DownloadStatus status) throws IOException {
+        LOG.info("Downloading " + file + " to " + status.getPlayer());
+
         InputStream in = new BufferedInputStream(new FileInputStream(file), 8192);
         try {
             byte[] buf = new byte[8192];

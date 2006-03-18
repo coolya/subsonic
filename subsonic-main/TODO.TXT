@@ -2,9 +2,7 @@
 PRIORITIZED FOR VERSION 2.7
 ===========================
 Separate log properties for test?
-Download playlist (both current and saved)
 ID3-editing.
-Fix linebreaks in "New version available" message.
 Add 10% to y-range in status chart.
 Something wrong which status chart history.
 Limit download bandwidth.
@@ -21,6 +19,13 @@ More lenient security check.  Allow symlinks.
 Layout, settings.
 Order search results.
 Hvis spilleren har "Auto-control enabled" skrudd av, så vises det en ny knapp "Stream" i playlista som kan brukes for å få m3u-en.
+
+COMPLETED FOR VERSION 2.7
+==========================
+New: Download playlists.
+Bugfix: Avoid wrapped lines if browser window is small.
+
+
 
 BACKLOG
 ==========
