@@ -34,7 +34,7 @@ public class StatusChartServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String type = request.getParameter("type");
-        int index =       Integer.parseInt(request.getParameter("index"));
+        int index = Integer.parseInt(request.getParameter("index"));
 
         StreamStatus[] statuses = new StreamStatus[0];
         if ("stream".equals(type)) {
@@ -50,18 +50,21 @@ public class StatusChartServlet extends HttpServlet {
 
         TimeSeries series = new TimeSeries("Kbps", Millisecond.class);
         List<StreamStatus.Sample> history = status.getHistory();
+        long to = System.currentTimeMillis();
+        long from = to - status.getHistoryLengthMillis();
+        Range range = new DateRange(from, to);
 
         if (!history.isEmpty()) {
 
             StreamStatus.Sample previous = history.get(0);
-            for (int i = 1; i < history.size(); i++) {
 
+            for (int i = 1; i < history.size(); i++) {
                 StreamStatus.Sample sample = history.get(i);
 
                 long elapsedTimeMilis = sample.getTimestamp() - previous.getTimestamp();
                 long bytesStreamed = sample.getBytesStreamed() - previous.getBytesStreamed();
 
-                double kbps =  (8.0 * bytesStreamed / 1024.0) / (elapsedTimeMilis / 1000.0);
+                double kbps = (8.0 * bytesStreamed / 1024.0) / (elapsedTimeMilis / 1000.0);
                 series.add(new Millisecond(new Date(sample.getTimestamp())), kbps);
 
                 previous = sample;
@@ -77,13 +80,14 @@ public class StatusChartServlet extends HttpServlet {
         for (Object obj : series.getItems()) {
             TimeSeriesDataItem item = (TimeSeriesDataItem) obj;
             double value = item.getValue().doubleValue();
-            min = Math.min(min, value);
-            max = Math.max(max, value);
+            if (item.getPeriod().getFirstMillisecond() > from) {
+                min = Math.min(min, value);
+                max = Math.max(max, value);
+            }
         }
 
-        long to = System.currentTimeMillis();
-        long from = to - status.getHistoryLengthMillis();
-        Range range = new DateRange(from, to);
+        // Add 10% to max value.
+        max *= 1.1D;
 
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         dataset.addSeries(series);
