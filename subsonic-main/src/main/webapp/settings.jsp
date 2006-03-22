@@ -148,6 +148,9 @@
 <tr><td><%=is.get("settings.coverartlimit")%></td><td><input type="text" name="coverArtLimit" size="8" value="<%= settings.getCoverArtLimit()%>"/>
 <a href="helpPopup.jsp?topic=coverArtLimit" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
 
+<tr><td><%=is.get("settings.downloadlimit")%></td><td><input type="text" name="downloadLimit" size="8" value="<%= settings.getDownloadBitrateLimit()%>"/>
+<a href="helpPopup.jsp?topic=downloadLimit" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
+
 <tr><td colspan="3">&nbsp;</td></tr>
 
 <tr><td align="center" colspan="2"><input type='submit' value='<%=is.get("settings.ok")%>'></td></tr>

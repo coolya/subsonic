@@ -14,6 +14,7 @@
     String ignoredArticles = request.getParameter("ignoredArticles");
     String welcomeMessage = request.getParameter("welcomeMessage");
     String coverArtLimit = request.getParameter("coverArtLimit");
+    String downloadLimit = request.getParameter("downloadLimit");
     int localeIndex = Integer.parseInt(request.getParameter("locale"));
 
 
@@ -26,6 +27,9 @@
     settings.setWelcomeMessage(welcomeMessage);
     try {
         settings.setCoverArtLimit(Integer.parseInt(coverArtLimit));
+    } catch (NumberFormatException x) { /* Intentionally ignored. */ }
+    try {
+        settings.setDownloadBitrateLimit(Long.parseLong(downloadLimit));
     } catch (NumberFormatException x) { /* Intentionally ignored. */ }
     settings.save();
 

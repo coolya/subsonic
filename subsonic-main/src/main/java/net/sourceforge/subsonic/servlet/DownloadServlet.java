@@ -55,13 +55,13 @@ public class DownloadServlet extends HttpServlet {
             } else if (playlistName != null) {
                 Playlist playlist = new Playlist();
                 ServiceFactory.getPlaylistService().loadPlaylist(playlist, playlistName);
-                downloadPlaylist(request, response, status, playlist);
+                downloadPlaylist(response, status, playlist);
 
             } else if (playerId != null) {
                 Player player = ServiceFactory.getPlayerService().getPlayerById(playerId);
                 Playlist playlist = player.getPlaylist();
                 playlist.setName("Playlist");
-                downloadPlaylist(request, response, status, playlist);
+                downloadPlaylist(response, status, playlist);
             }
 
 
@@ -116,13 +116,12 @@ public class DownloadServlet extends HttpServlet {
     /**
      * Downloads all files in a playlist.  The files are packed together in an
      * uncompressed zip-file.
-     * @param request The HTTP request.
      * @param response The HTTP response.
      * @param status The download status.
      * @param playlist The playlist to download.
      * @throws IOException If an I/O error occurs.
      */
-    private void downloadPlaylist(HttpServletRequest request, HttpServletResponse response, DownloadStatus status, Playlist playlist) throws IOException {
+    private void downloadPlaylist(HttpServletResponse response, DownloadStatus status, Playlist playlist) throws IOException {
         String zipFileName = playlist.getName().replaceAll("(\\.m3u)|(\\.pls)", "") + ".zip";
         LOG.info("Starting to download '" + zipFileName + "' to " + status.getPlayer());
         response.setContentType("application/x-download");
@@ -150,16 +149,40 @@ public class DownloadServlet extends HttpServlet {
     private void copyFileToStream(File file, OutputStream out, DownloadStatus status) throws IOException {
         LOG.info("Downloading " + file + " to " + status.getPlayer());
 
-        InputStream in = new BufferedInputStream(new FileInputStream(file), 8192);
+        final int bufferSize = 16 * 1024; // 16 Kbit
+        InputStream in = new BufferedInputStream(new FileInputStream(file), bufferSize);
+
         try {
-            byte[] buf = new byte[8192];
+            byte[] buf = new byte[bufferSize];
+            long bitrateLimit = 0;
+
             while (true) {
+                long lastLimitCheck = 0;
+                long before = System.currentTimeMillis();
                 int n = in.read(buf);
                 if (n == -1) {
                     break;
                 }
                 out.write(buf, 0, n);
                 status.setBytesStreamed(status.getBytesStreamed() + n);
+                long after = System.currentTimeMillis();
+
+                // Calculate bitrate limit every 5 seconds.
+                if (after - lastLimitCheck > 5000) {
+                    bitrateLimit = 1024L * ServiceFactory.getSettingsService().getDownloadBitrateLimit() /
+                                   Math.max(1, ServiceFactory.getStatusService().getAllDownloadStatuses().length);
+                    lastLimitCheck = after;
+                }
+
+                // Sleep for a while to throttle bitrate.
+                if (bitrateLimit != 0) {
+                    long sleepTime = 8L * 1000 * bufferSize / bitrateLimit - (after - before);
+                    try {
+                        Thread.sleep(sleepTime);
+                    } catch (Exception x) {
+                        LOG.warn("Failed to sleep.", x);
+                    }
+                }
             }
         } finally {
             in.close();
