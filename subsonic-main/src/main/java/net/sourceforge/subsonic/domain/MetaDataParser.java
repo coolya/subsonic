@@ -32,12 +32,12 @@ public abstract class MetaDataParser {
      * @param file The music file in question.
      * @return Whether this parser is applicable to the given file.
      */
-    protected abstract boolean isApplicable(MusicFile file);
+    public abstract boolean isApplicable(MusicFile file);
 
     /**
      * Guesses the artist for the given music file.
      */
-    protected String guessArtist(MusicFile file) {
+    public String guessArtist(MusicFile file) {
         try {
             MusicFile parent = file.getParent();
             if (parent.isRoot()) {
@@ -54,7 +54,7 @@ public abstract class MetaDataParser {
     /**
      * Guesses the album for the given music file.
      */
-    protected String guessAlbum(MusicFile file) {
+    public String guessAlbum(MusicFile file) {
         try {
             MusicFile parent = file.getParent();
             return parent.isRoot() ? "" : parent.getName();
@@ -67,7 +67,7 @@ public abstract class MetaDataParser {
     /**
      * Guesses the title for the given music file.
      */
-    protected String guessTitle(MusicFile file) {
+    public String guessTitle(MusicFile file) {
         return removeTrackNumberFromTitle(file.getNameWithoutSuffix());
     }
 

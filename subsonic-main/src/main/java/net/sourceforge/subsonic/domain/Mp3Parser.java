@@ -24,6 +24,33 @@ public class Mp3Parser extends MetaDataParser {
      */
     public MusicFile.MetaData getMetaData(MusicFile file) {
 
+        MusicFile.MetaData raw = getRawMetaData(file);
+        String artist = raw.getArtist();
+        String album  = raw.getAlbum();
+        String title  = raw.getTitle();
+        String year   = raw.getYear();
+
+        if (artist == null) {
+            artist = guessArtist(file);
+        }
+        if (album == null) {
+            album = guessAlbum(file);
+        }
+        if (title == null) {
+            title = guessTitle(file);
+        }
+
+        title = removeTrackNumberFromTitle(title);
+        return new MusicFile.MetaData(artist, album, title, year);
+    }
+
+    /**
+     * Parses meta data for the given music file. No guessing or reformatting is done.
+     * @param file The music file to parse.
+     * @return Meta data for the file.
+     */
+    public MusicFile.MetaData getRawMetaData(MusicFile file) {
+
         String artist = null;
         String album  = null;
         String title  = null;
@@ -68,18 +95,64 @@ public class Mp3Parser extends MetaDataParser {
             LOG.warn("Error when parsing MP3 tags in " + file, x);
         }
 
-        if (artist == null) {
-            artist = guessArtist(file);
-        }
-        if (album == null) {
-            album = guessAlbum(file);
-        }
-        if (title == null) {
-            title = guessTitle(file);
-        }
-
-        title = removeTrackNumberFromTitle(title);
         return new MusicFile.MetaData(artist, album, title, year);
+    }
+
+    /**
+     * Updates the given file with the given meta data.
+     * @param file The music file to update.
+     * @param metaData The new meta data.
+     */
+    public void setMetaData(MusicFile file, MusicFile.MetaData metaData) {
+
+        try {
+            MediaFile mediaFile = new org.blinkenlights.jid3.MP3File(file.getFile());
+
+            ID3V1Tag tag1 = mediaFile.getID3V1Tag();
+            ID3V2Tag tag2 = mediaFile.getID3V2Tag();
+
+            if (tag1 == null) {
+                tag1 = new ID3V1_1Tag();
+            }
+            if (tag2 == null) {
+                tag2 = new ID3V2_3_0Tag();
+            }
+
+            String artist = metaData.getArtist() == null ? "" : metaData.getArtist();
+            String album = metaData.getAlbum() == null ? "" : metaData.getAlbum();
+            String title = metaData.getTitle() == null ? "" : metaData.getTitle();
+            String year = metaData.getYear() == null ? "" : metaData.getYear();
+
+            int yearInt = 0;
+            if (year.length() > 0) {
+                try {
+                    yearInt = Integer.parseInt(year);
+                } catch (NumberFormatException x) {
+                    LOG.warn("Failed to parse ID3 year tag: " + year);
+                }
+            }
+
+            tag1.setArtist(artist);
+            tag1.setAlbum(album);
+            tag1.setTitle(title);
+            tag1.setYear(year);
+
+            tag2.setArtist(artist);
+            tag2.setAlbum(album);
+            tag2.setTitle(title);
+            if (yearInt != 0) {
+                tag2.setYear(yearInt);
+            } else if (tag2 instanceof ID3V2_3_0Tag) {
+                ((ID3V2_3_0Tag) tag2).removeTYERTextInformationFrame();
+            }
+
+            mediaFile.setID3Tag(tag1);
+            mediaFile.setID3Tag(tag2);
+            mediaFile.sync();
+        } catch (ID3Exception x) {
+            LOG.warn("Failed to update ID3 tags for file " + file, x);
+            throw new RuntimeException("Failed to update ID3 tags for file " + file + ". " + x.getMessage(), x);
+        }
     }
 
     /**
@@ -109,7 +182,7 @@ public class Mp3Parser extends MetaDataParser {
      * @param file The music file in question.
      * @return Whether this parser is applicable to the given file.
      */
-    protected  boolean isApplicable(MusicFile file) {
+    public boolean isApplicable(MusicFile file) {
         return file.isFile() && file.getName().toUpperCase().endsWith(".MP3");
     }
 
@@ -120,5 +193,4 @@ public class Mp3Parser extends MetaDataParser {
         s = s.trim();
         return s.length() == 0 ? null : s;
     }
-
 }

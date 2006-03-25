@@ -29,8 +29,8 @@ public class DefaultMetaDataParser extends MetaDataParser {
      * Returns whether this parser is applicable to the given file.
      * @param file The music file in question.
      * @return Whether this parser is applicable to the given file.
-     */ 
-    protected  boolean isApplicable(MusicFile file) {
+     */
+    public boolean isApplicable(MusicFile file) {
         return file.isFile();
     }
 }

@@ -17,7 +17,7 @@ public class MetaDataParserTestCase extends TestCase {
         MetaDataParser parser = new MetaDataParser() {
             public int getBitRate(MusicFile file) { return 0; }
             public MetaData getMetaData(MusicFile file) { return null; }
-            protected boolean isApplicable(MusicFile file) { return false; }
+            public boolean isApplicable(MusicFile file) { return false; }
         };
 
         assertEquals("", parser.removeTrackNumberFromTitle(""));

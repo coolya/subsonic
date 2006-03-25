@@ -7,5 +7,9 @@
         <create creator="new" javascript="nowPlayingService">
             <param name="class" value="net.sourceforge.subsonic.ajax.NowPlayingService"/>
         </create>
+        <create creator="new" javascript="tagService">
+            <param name="class" value="net.sourceforge.subsonic.ajax.TagService"/>
+            <auth method="setTags" role="coverart"/>
+        </create>
     </allow>
 </dwr>

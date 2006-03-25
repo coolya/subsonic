@@ -45,7 +45,20 @@ public class StringUtilTestCase extends TestCase {
         assertEquals("Error in getMimeType().", "application/octet-stream", StringUtil.getMimeType("koko"));
         assertEquals("Error in getMimeType().", "application/octet-stream", StringUtil.getMimeType(""));
         assertEquals("Error in getMimeType().", "application/octet-stream", StringUtil.getMimeType(null));
+    }
 
+    public void testAbbrev() {
+        assertEquals("Error in abbrev().", "", StringUtil.abbrev("", 0));
+        assertEquals("Error in abbrev().", "", StringUtil.abbrev("", 1));
+        assertEquals("Error in abbrev().", "a", StringUtil.abbrev("a", 1));
+        assertEquals("Error in abbrev().", "ab", StringUtil.abbrev("ab", 1));
+        assertEquals("Error in abbrev().", "abc", StringUtil.abbrev("abc", 1));
+        assertEquals("Error in abbrev().", "abcd", StringUtil.abbrev("abcd", 1));
+        assertEquals("Error in abbrev().", "abcd", StringUtil.abbrev("abcd", 2));
+        assertEquals("Error in abbrev().", "abcd", StringUtil.abbrev("abcd", 3));
+        assertEquals("Error in abbrev().", "abcd", StringUtil.abbrev("abcd", 4));
+        assertEquals("Error in abbrev().", "abc...", StringUtil.abbrev("abcdefghijkl", 3));
+        assertEquals("Error in abbrev().", "abcd...", StringUtil.abbrev("abcdefghijkl", 4));
     }
 
     public void testFormatBytes() throws Exception {

@@ -206,10 +206,7 @@
         StringBuffer buf = new StringBuffer();
 
         if (artist != null) {
-            if (artist.length() > 20) {
-                artist = artist.substring(0, 17) + "...";
-            }
-            buf.append("<em>" + StringUtil.toHtml(artist) + "</em>");
+            buf.append("<em>").append(StringUtil.toHtml(StringUtil.abbrev(artist, 17))).append("</em>");
         }
 
         if (artist != null && album != null) {
@@ -217,10 +214,7 @@
         }
 
         if (album != null) {
-            if (album.length() > 20) {
-                album = album.substring(0, 17) + "...";
-            }
-            buf.append(StringUtil.toHtml(album));
+            buf.append(StringUtil.toHtml(StringUtil.abbrev(album, 17)));
         }
 
         return buf;
