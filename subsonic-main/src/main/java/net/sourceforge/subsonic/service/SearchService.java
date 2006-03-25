@@ -127,7 +127,7 @@ public class SearchService {
         };
 
         SettingsService settings = ServiceFactory.getSettingsService();
-        int daysBetween = settings.getIndexCreationInterval();
+        long daysBetween = settings.getIndexCreationInterval();
         int hour = settings.getIndexCreationHour();
 
         if (daysBetween == -1) {
@@ -147,7 +147,7 @@ public class SearchService {
         }
 
         Date firstTime = cal.getTime();
-        long period = daysBetween * 24 * 3600 * 1000;
+        long period = daysBetween * 24L * 3600L * 1000L;
         timer.schedule(task, firstTime, period);
 
         LOG.info("Automatic index creation scheduled to run every " + daysBetween + " day(s), starting at " + firstTime);
