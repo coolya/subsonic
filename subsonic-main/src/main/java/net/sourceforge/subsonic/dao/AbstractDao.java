@@ -18,7 +18,7 @@ import java.io.*;
 public abstract class AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(AbstractDao.class);
-    private static final Schema[] SCHEMAS = {new Schema25(), new Schema26()};
+    private static final Schema[] SCHEMAS = {new Schema25(), new Schema26(), new Schema27()};
 
     private DriverManagerDataSource dataSource;
 

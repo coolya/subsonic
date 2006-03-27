@@ -16,7 +16,7 @@ import java.util.*;
 public class UserDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(UserDao.class);
-    private static final String COLUMNS = "username, password";
+    private static final String COLUMNS = "username, password, bytes_streamed, bytes_downloaded, bytes_uploaded";
 
     private static final String ROLE_USER = "user";
     private static final Integer ROLE_ID_ADMIN      = 1;
@@ -89,8 +89,9 @@ public class UserDao extends AbstractDao {
      * @param user The user to create.
      */
     public void createUser(User user) {
-        String sql = "insert into user (" + COLUMNS + ") values (?, ?)";
-        getJdbcTemplate().update(sql, new Object[] {user.getUsername(), user.getPassword()});
+        String sql = "insert into user (" + COLUMNS + ") values (?, ?, ?, ?, ?)";
+        getJdbcTemplate().update(sql, new Object[] {user.getUsername(), user.getPassword(), user.getBytesStreamed(),
+                                                    user.getBytesDownloaded(), user.getBytesUploaded()});
         writeRoles(user);
     }
 
@@ -111,12 +112,13 @@ public class UserDao extends AbstractDao {
     }
 
     /**
-     * Updates the password and admin status for the given user.
+     * Updates the given user.
      * @param user The user to update.
      */
     public void updateUser(User user) {
-        String sql = "update user set password=? where username=?";
-        getJdbcTemplate().update(sql, new Object[] {user.getPassword(), user.getUsername()});
+        String sql = "update user set password=?, bytes_streamed=?, bytes_downloaded=?, bytes_uploaded=? where username=?";
+        getJdbcTemplate().update(sql, new Object[] {user.getPassword(), user.getBytesStreamed(),
+                                                    user.getBytesDownloaded(), user.getBytesUploaded(), user.getUsername()});
         writeRoles(user);
     }
 
@@ -169,7 +171,7 @@ public class UserDao extends AbstractDao {
 
     private static class UserRowMapper implements RowMapper {
         public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new User(rs.getString(1), rs.getString(2));
+            return new User(rs.getString(1), rs.getString(2), rs.getLong(3), rs.getLong(4), rs.getLong(5));
         }
     }
 }

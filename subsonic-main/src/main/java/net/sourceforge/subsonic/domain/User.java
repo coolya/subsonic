@@ -12,6 +12,9 @@ public class User {
 
     private String username;
     private String password;
+    private long bytesStreamed;
+    private long bytesDownloaded;
+    private long bytesUploaded;
 
     private boolean isAdminRole;
     private boolean isDownloadRole;
@@ -20,9 +23,16 @@ public class User {
     private boolean isCoverArtRole;
     private boolean isCommentRole;
 
-    public User(String username, String password) {
+    public User(String username, String password, long bytesStreamed, long bytesDownloaded, long bytesUploaded) {
         this.username = username;
         this.password = password;
+        this.bytesStreamed = bytesStreamed;
+        this.bytesDownloaded = bytesDownloaded;
+        this.bytesUploaded = bytesUploaded;
+    }
+
+    public User(String username, String password) {
+        this(username,  password, 0, 0, 0);
     }
 
     public String getUsername() {
@@ -35,6 +45,30 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public long getBytesStreamed() {
+        return bytesStreamed;
+    }
+
+    public void setBytesStreamed(long bytesStreamed) {
+        this.bytesStreamed = bytesStreamed;
+    }
+
+    public long getBytesDownloaded() {
+        return bytesDownloaded;
+    }
+
+    public void setBytesDownloaded(long bytesDownloaded) {
+        this.bytesDownloaded = bytesDownloaded;
+    }
+
+    public long getBytesUploaded() {
+        return bytesUploaded;
+    }
+
+    public void setBytesUploaded(long bytesUploaded) {
+        this.bytesUploaded = bytesUploaded;
     }
 
     public boolean isAdminRole() {

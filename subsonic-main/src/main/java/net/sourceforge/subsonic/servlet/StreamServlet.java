@@ -20,6 +20,11 @@ public class StreamServlet extends HttpServlet {
 
     private static final Logger LOG = Logger.getLogger(StreamServlet.class);
 
+    private StatusService statusService = ServiceFactory.getStatusService();
+    private PlayerService playerService = ServiceFactory.getPlayerService();
+    private PlaylistService playlistService = ServiceFactory.getPlaylistService();
+    private SecurityService securityService = ServiceFactory.getSecurityService();
+
     /**
      * Handles the given HTTP request.
      * @param request The HTTP request.
@@ -31,10 +36,8 @@ public class StreamServlet extends HttpServlet {
         StreamStatus status = null;
         PlaylistInputStream in = null;
         String streamEndpoint = null;
-
+        Player player = playerService.getPlayer(request, response, false, true);
         try {
-
-            Player player = ServiceFactory.getPlayerService().getPlayer(request, response, false, true);
 
             // If "playlist" request parameter is set, this is a Podcast request. In that case, create a separate
             // playlist (in order to support multiple parallell Podcast streams).
@@ -42,7 +45,7 @@ public class StreamServlet extends HttpServlet {
             boolean isPodcast = playlistName != null;
             if (isPodcast) {
                 Playlist playlist = new Playlist();
-                ServiceFactory.getPlaylistService().loadPlaylist(playlist, playlistName);
+                playlistService.loadPlaylist(playlist, playlistName);
                 player.setPlaylist(playlist);
                 response.setContentLength((int) playlist.length());
                 LOG.info("Incoming Podcast request for playlist " + playlistName);
@@ -57,7 +60,6 @@ public class StreamServlet extends HttpServlet {
             streamEndpoint = player.getUsername() + '@' + request.getRemoteHost() + ':' + request.getRemotePort() + " (" + userAgent + ')';
 
             // Terminate any other streams to this player.
-            StatusService statusService = ServiceFactory.getStatusService();
             if (!isPodcast) {
                 StreamStatus[] currentStatuses = statusService.getStreamStatusesForPlayer(player);
                 for (StreamStatus streamStatus : currentStatuses) {
@@ -122,7 +124,12 @@ public class StreamServlet extends HttpServlet {
 
         } finally {
             if (status != null) {
-                ServiceFactory.getStatusService().removeStreamStatus(status);
+                statusService.removeStreamStatus(status);
+                User user = securityService.getUserByName(player.getUsername());
+                if (user != null) {
+                    user.setBytesStreamed(user.getBytesStreamed() + status.getBytesStreamed());
+                    securityService.updateUser(user);
+                }
             }
             if (in != null) {
                 in.close();

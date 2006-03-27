@@ -22,6 +22,12 @@ public class DownloadServlet extends HttpServlet {
 
     private static final Logger LOG = Logger.getLogger(DownloadServlet.class);
 
+    private PlayerService playerService = ServiceFactory.getPlayerService();
+    private StatusService statusService = ServiceFactory.getStatusService();
+    private SecurityService securityService = ServiceFactory.getSecurityService();
+    private PlaylistService playlistService = ServiceFactory.getPlaylistService();
+    private SettingsService settingsService = ServiceFactory.getSettingsService();
+
     /**
      * Handles the given HTTP request.
      * @param request The HTTP request.
@@ -32,8 +38,8 @@ public class DownloadServlet extends HttpServlet {
         DownloadStatus status = null;
         try {
             status = new DownloadStatus();
-            status.setPlayer(ServiceFactory.getPlayerService().getPlayer(request, response, false, false));
-            ServiceFactory.getStatusService().addDownloadStatus(status);
+            status.setPlayer(playerService.getPlayer(request, response, false, false));
+            statusService.addDownloadStatus(status);
 
             String path = request.getParameter("path");
             String playlistName = request.getParameter("playlist");
@@ -41,7 +47,7 @@ public class DownloadServlet extends HttpServlet {
 
             if (path != null) {
                 File file = new File(path);
-                if (!ServiceFactory.getSecurityService().isReadAllowed(file)) {
+                if (!securityService.isReadAllowed(file)) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
                     return;
                 }
@@ -54,11 +60,11 @@ public class DownloadServlet extends HttpServlet {
 
             } else if (playlistName != null) {
                 Playlist playlist = new Playlist();
-                ServiceFactory.getPlaylistService().loadPlaylist(playlist, playlistName);
+                playlistService.loadPlaylist(playlist, playlistName);
                 downloadPlaylist(response, status, playlist);
 
             } else if (playerId != null) {
-                Player player = ServiceFactory.getPlayerService().getPlayerById(playerId);
+                Player player = playerService.getPlayerById(playerId);
                 Playlist playlist = player.getPlaylist();
                 playlist.setName("Playlist");
                 downloadPlaylist(response, status, playlist);
@@ -67,7 +73,12 @@ public class DownloadServlet extends HttpServlet {
 
         } finally {
             if (status != null) {
-                ServiceFactory.getStatusService().removeDownloadStatus(status);
+                statusService.removeDownloadStatus(status);
+                User user = securityService.getCurrentUser(request);
+                if (user != null) {
+                    user.setBytesStreamed(user.getBytesStreamed() + status.getBytesStreamed());
+                    securityService.updateUser(user);
+                }
             }
         }
     }
@@ -155,9 +166,9 @@ public class DownloadServlet extends HttpServlet {
         try {
             byte[] buf = new byte[bufferSize];
             long bitrateLimit = 0;
+            long lastLimitCheck = 0;
 
             while (true) {
-                long lastLimitCheck = 0;
                 long before = System.currentTimeMillis();
                 int n = in.read(buf);
                 if (n == -1) {
@@ -169,8 +180,8 @@ public class DownloadServlet extends HttpServlet {
 
                 // Calculate bitrate limit every 5 seconds.
                 if (after - lastLimitCheck > 5000) {
-                    bitrateLimit = 1024L * ServiceFactory.getSettingsService().getDownloadBitrateLimit() /
-                                   Math.max(1, ServiceFactory.getStatusService().getAllDownloadStatuses().length);
+                    bitrateLimit = 1024L * settingsService.getDownloadBitrateLimit() /
+                                   Math.max(1, statusService.getAllDownloadStatuses().length);
                     lastLimitCheck = after;
                 }
 

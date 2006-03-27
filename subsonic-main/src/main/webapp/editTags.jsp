@@ -99,7 +99,7 @@
 </script>
 <h1><%=is.get("edittags.title")%></h1>
 <a href="main.jsp?path=<%=dir.urlEncode()%>"><b>[<%=is.get("common.back")%>]</b></a>
-
+<p/>
 <table border="1" cellpadding="5" rules="all">
     <tr style="background-color:#DEE3E7;">
         <th><%=is.get("edittags.file")%></th>

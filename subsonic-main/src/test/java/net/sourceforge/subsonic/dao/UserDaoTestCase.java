@@ -21,7 +21,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
     }
 
     public void testCreateUser() {
-        User user = new User("sindre", "secret");
+        User user = new User("sindre", "secret", 1000L, 2000L, 3000L);
         user.setAdminRole(true);
         user.setCommentRole(true);
         user.setCoverArtRole(true);
@@ -45,16 +45,22 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         userDao.createUser(user);
 
         user.setPassword("foo");
+        user.setBytesStreamed(1);
+        user.setBytesDownloaded(2);
+        user.setBytesUploaded(3);
         user.setAdminRole(false);
         user.setCommentRole(false);
         user.setCoverArtRole(false);
         user.setDownloadRole(true);
-        user.setPlaylistRole(false);
+    user.setPlaylistRole(false);
         user.setUploadRole(true);
         userDao.updateUser(user);
 
         User newUser = userDao.getAllUsers()[0];
         assertUserEquals(user, newUser);
+        assertEquals("Wrong bytes streamed.", 1, newUser.getBytesStreamed());
+        assertEquals("Wrong bytes downloaded.", 2, newUser.getBytesDownloaded());
+        assertEquals("Wrong bytes uploaded.", 3, newUser.getBytesUploaded());
     }
 
     public void testGetUserByName() {
@@ -119,6 +125,9 @@ public class UserDaoTestCase extends DaoTestCaseBase {
     private void assertUserEquals(User expected, User actual) {
         assertEquals("Wrong name.", expected.getUsername(), actual.getUsername());
         assertEquals("Wrong password.", expected.getPassword(), actual.getPassword());
+        assertEquals("Wrong bytes streamed.", expected.getBytesStreamed(), actual.getBytesStreamed());
+        assertEquals("Wrong bytes downloaded.", expected.getBytesDownloaded(), actual.getBytesDownloaded());
+        assertEquals("Wrong bytes uploaded.", expected.getBytesUploaded(), actual.getBytesUploaded());
         assertEquals("Wrong admin role.", expected.isAdminRole(), actual.isAdminRole());
         assertEquals("Wrong comment role.", expected.isCommentRole(), actual.isCommentRole());
         assertEquals("Wrong cover art role.", expected.isCoverArtRole(), actual.isCoverArtRole());
