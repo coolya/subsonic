@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <bean id="helpController" class="net.sourceforge.subsonic.controller.HelpController">
+        <property name="versionService">
+            <ref bean="versionService"/>
+        </property>
+    </bean>
+
+    <bean id="versionService" class="net.sourceforge.subsonic.service.VersionService"/>
+
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/help.view">helpController</prop>
+                <!--<prop key="/recording.do">recordingController</prop>-->
+            </props>
+        </property>
+    </bean>
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename"><value>net.sourceforge.subsonic.i18n.ResourceBundle</value></property>
+    </bean>
+
+    <!-- TODO: Implement locale resolver. -->
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
+        <property name="defaultLocale"><value>no</value></property>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"><value>org.springframework.web.servlet.view.JstlView</value></property>
+        <property name="prefix"><value>/WEB-INF/jsp/</value></property>
+        <property name="suffix"><value>.jsp</value></property>
+    </bean>
+</beans>

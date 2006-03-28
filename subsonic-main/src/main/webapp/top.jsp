@@ -26,7 +26,7 @@
 %>
 
 <table><tr valign='middle'>
-<td style='font-size:16pt'><a href='help.jsp' target='main'><img src='icons/logo.gif' alt='' title='<%=help%>'/></a>&nbsp;Subsonic</td>
+<td style='font-size:16pt'><a href='help.view?' target='main'><img src='icons/logo.gif' alt='' title='<%=help%>'/></a>&nbsp;Subsonic</td>
 <td style='padding-left:20pt; padding-right:20pt'>
 
 <%
@@ -58,7 +58,7 @@
 <td style="width:40pt;padding-right:10pt"><a href="settings.jsp?" target="main"><img src="icons/settings.png" title="<%=settings%>" alt="<%=settings%>"/><br/><%=settings%></a></td>
 <td style="width:40pt;padding-right:10pt"><a href="status.jsp?" target="main"><img src="icons/status.png" title="<%=status%>" alt="<%=status%>"/><br/><%=status%></a></td>
 <td style="width:40pt;padding-right:10pt"><a href="more.jsp?" target="main"><img src="icons/more.png" title="<%=more%>" alt="<%=more%>"/><br/><%=more%></a></td>
-<td style="width:40pt;padding-right:10pt"><a href="help.jsp?" target="main"><img src="icons/help.png" title="<%=help%>" alt="<%=help%>"/><br/><%=help%></a></td>
+<td style="width:40pt;padding-right:10pt"><a href="help.view?" target="main"><img src="icons/help.png" title="<%=help%>" alt="<%=help%>"/><br/><%=help%></a></td>
 
 <td style="padding-left:15pt">
 <table><tr>
