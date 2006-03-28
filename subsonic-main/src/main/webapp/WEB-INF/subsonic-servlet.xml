@@ -2,19 +2,26 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
+
+    <bean id="leftController" class="net.sourceforge.subsonic.controller.LeftController">
+        <property name="searchService"><ref bean="searchService"/></property>
+        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="settingsService"><ref bean="settingsService"/></property>
+    </bean>
     <bean id="helpController" class="net.sourceforge.subsonic.controller.HelpController">
-        <property name="versionService">
-            <ref bean="versionService"/>
-        </property>
+        <property name="versionService"><ref bean="versionService"/></property>
     </bean>
 
+    <bean id="searchService" class="net.sourceforge.subsonic.service.SearchService"/>
+    <bean id="securityService" class="net.sourceforge.subsonic.service.SecurityService"/>
+    <bean id="settingsService" class="net.sourceforge.subsonic.service.SettingsService"/>
     <bean id="versionService" class="net.sourceforge.subsonic.service.VersionService"/>
 
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <props>
                 <prop key="/help.view">helpController</prop>
-                <!--<prop key="/recording.do">recordingController</prop>-->
+                <prop key="/left.view">leftController</prop>
             </props>
         </property>
     </bean>
