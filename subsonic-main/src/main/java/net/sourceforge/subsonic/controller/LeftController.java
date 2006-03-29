@@ -15,7 +15,7 @@ import java.util.*;
  *
  * @author Sindre Mehus
  */
-public class LeftController extends AbstractController {
+public class LeftController extends ParameterizableViewController {
     private SearchService searchService;
     private SettingsService settingsService;
     private SecurityService securityService;
@@ -58,7 +58,9 @@ public class LeftController extends AbstractController {
         map.put("indexedChildren", indexedChildren);
         map.put("downloadEnabled", securityService.getCurrentUser(request).isDownloadRole());
 
-        return new ModelAndView("left", "model", map);
+        ModelAndView result = super.handleRequestInternal(request, response);
+        result.addObject("model", map);
+        return result;
     }
 
     public void setSearchService(SearchService searchService) {

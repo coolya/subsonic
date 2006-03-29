@@ -13,7 +13,7 @@ import java.util.*;
  *
  * @author Sindre Mehus
  */
-public class HelpController extends AbstractController {
+public class HelpController extends ParameterizableViewController {
     private VersionService versionService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -26,7 +26,9 @@ public class HelpController extends AbstractController {
         map.put("newVersionAvailable", versionService.isNewVersionAvailable());
         map.put("logEntries", Logger.getLatestLogEntries());
 
-        return new ModelAndView("help", "model", map);
+        ModelAndView result = super.handleRequestInternal(request, response);
+        result.addObject("model", map);
+        return result;
     }
 
     public void setVersionService(VersionService versionService) {

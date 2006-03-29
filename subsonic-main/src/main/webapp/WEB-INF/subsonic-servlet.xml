@@ -4,24 +4,37 @@
 <beans>
 
     <bean id="leftController" class="net.sourceforge.subsonic.controller.LeftController">
+        <property name="viewName"><value>left</value></property>
         <property name="searchService"><ref bean="searchService"/></property>
         <property name="securityService"><ref bean="securityService"/></property>
         <property name="settingsService"><ref bean="settingsService"/></property>
     </bean>
+    <bean id="statusController" class="net.sourceforge.subsonic.controller.StatusController">
+        <property name="viewName"><value>status</value></property>
+        <property name="statusService"><ref bean="statusService"/></property>
+    </bean>
     <bean id="helpController" class="net.sourceforge.subsonic.controller.HelpController">
+        <property name="viewName"><value>help</value></property>
         <property name="versionService"><ref bean="versionService"/></property>
     </bean>
+    <bean id="playRadioController" class="net.sourceforge.subsonic.controller.PlayRadioController">
+        <property name="settingsService"><ref bean="settingsService"/></property>
+    </bean>
 
-    <bean id="searchService" class="net.sourceforge.subsonic.service.SearchService"/>
-    <bean id="securityService" class="net.sourceforge.subsonic.service.SecurityService"/>
-    <bean id="settingsService" class="net.sourceforge.subsonic.service.SettingsService"/>
-    <bean id="versionService" class="net.sourceforge.subsonic.service.VersionService"/>
+    <!--TODO: Get rid of ServiceFactory-->
+    <bean id="searchService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getSearchService"/>
+    <bean id="securityService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getSecurityService"/>
+    <bean id="settingsService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getSettingsService"/>
+    <bean id="versionService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getVersionService"/>
+    <bean id="statusService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getStatusService"/>
 
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <props>
                 <prop key="/help.view">helpController</prop>
                 <prop key="/left.view">leftController</prop>
+                <prop key="/status.view">statusController</prop>
+                <prop key="/playRadio.view">playRadioController</prop>
             </props>
         </property>
     </bean>

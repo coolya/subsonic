@@ -56,7 +56,7 @@
 <td style="width:40pt;padding-right:10pt"><a href="home.jsp?" target="main"><img src="icons/home.png" title="<%=home%>" alt="<%=home%>"/><br/><%=home%></a></td>
 <td style="width:40pt;padding-right:10pt"><a href="nowPlaying.jsp?" target="main"><img src="icons/now_playing.png" title="<%=nowPlaying%>" alt="<%=nowPlaying%>"/><br/><%=nowPlaying%></a></td>
 <td style="width:40pt;padding-right:10pt"><a href="settings.jsp?" target="main"><img src="icons/settings.png" title="<%=settings%>" alt="<%=settings%>"/><br/><%=settings%></a></td>
-<td style="width:40pt;padding-right:10pt"><a href="status.jsp?" target="main"><img src="icons/status.png" title="<%=status%>" alt="<%=status%>"/><br/><%=status%></a></td>
+<td style="width:40pt;padding-right:10pt"><a href="status.view?" target="main"><img src="icons/status.png" title="<%=status%>" alt="<%=status%>"/><br/><%=status%></a></td>
 <td style="width:40pt;padding-right:10pt"><a href="more.jsp?" target="main"><img src="icons/more.png" title="<%=more%>" alt="<%=more%>"/><br/><%=more%></a></td>
 <td style="width:40pt;padding-right:10pt"><a href="help.view?" target="main"><img src="icons/help.png" title="<%=help%>" alt="<%=help%>"/><br/><%=help%></a></td>
 

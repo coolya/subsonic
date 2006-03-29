@@ -38,6 +38,6 @@
      }
 %>
 
- <script language="javascript">parent.frames.left.location.href="left.jsp?"</script>
+ <script language="javascript">parent.frames.left.location.href="left.view?"</script>
  <script language="javascript">parent.frames.main.location.href="settings.jsp?"</script>
  </body></html>

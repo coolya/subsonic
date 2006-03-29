@@ -19,11 +19,11 @@
     </c:if>
 </em></p>
 
-<c:if test="${not empty model.musicFolders}">
+<c:if test="${fn:length(model.musicFolders) > 1}">
     <select name="musicFolderId" style="width:100%" onchange="location='left.view?musicFolderId=' + options[selectedIndex].value;" >
         <option value="-1"><fmt:message key="left.allfolders"/></option>
         <c:forEach items="${model.musicFolders}" var="musicFolder">
-            <option <c:if test="${model.selectedMusicFolder == musicFolder}">selected</c:if> value="<c:out value="${musicFolder.id}"/>"><c:out value="${musicFolder.name}"/></option>
+            <option ${model.selectedMusicFolder == musicFolder ? "selected" : ""} value="${musicFolder.id}">${musicFolder.name}</option>
         </c:forEach>
     </select>
 </c:if>
@@ -31,15 +31,18 @@
 <c:if test="${not empty model.radios}">
     <h2><fmt:message key="left.radio"/></h2>
     <c:forEach items="${model.radios}" var="radio">
+        <c:url value="playRadio.view" var="playRadioUrl">
+            <c:param name="id" value="${radio.id}"/>
+        </c:url>
         <p class="dense">
-            <a target="hidden" href="playRadio.jsp?id=<c:out value="${radio.id}"/>">
+            <a target="hidden" href="${playRadioUrl}">
                 <img width="13" height="13" src="icons/play.gif" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
             <c:choose>
                 <c:when test="${empty radio.homepageUrl}">
-                    <c:out value="${radio.name}"/>
+                    ${radio.name}
                 </c:when>
                 <c:otherwise>
-                    <a target="main" href="<c:out value="${radio.homepageUrl}"/>"><c:out value="${radio.name}"/></a>
+                    <a target="main" href="${radio.homepageUrl}">${radio.name}</a>
                 </c:otherwise>
             </c:choose>
         </p>
@@ -47,8 +50,8 @@
 </c:if>
 
 <c:forEach items="${model.indexedChildren}" var="entry">
-    <a name="<c:out value="${entry.key.index}"/>"/>
-    <h2><c:out value="${entry.key.index}"/></h2>
+    <a name="${entry.key.index}"/>
+    <h2>${entry.key.index}</h2>
 
     <c:forEach items="${entry.value}" var="child">
         <c:url value="playlist.jsp" var="playUrl">
@@ -59,15 +62,15 @@
         </c:url>
 
         <p class="dense">
-            <a target="playlist" href="<c:out value="${playUrl}"/>">
+            <a target="playlist" href="${playUrl}">
                 <img width="13" height="13" src="icons/play.gif" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
-            <a target="playlist" href="<c:out value="${addUrl}"/>">
+            <a target="playlist" href="${addUrl}">
                 <img width="13" height="13" src="icons/add.gif" alt="<fmt:message key="common.add"/>" title="<fmt:message key="common.add"/>"/></a>
             <c:if test="${model.downloadEnabled}">
                 <c:url value="download" var="downloadUrl">
                     <c:param name="path" value="${child.path}"/>
                 </c:url>
-                <a href="<c:out value="${downloadUrl}"/>">
+                <a href="${downloadUrl}">
                     <img width="13" height="13" src="icons/download.gif" alt="<fmt:message key="common.download"/>" title="<fmt:message key="common.download"/>"/></a>
             </c:if>
 
@@ -76,7 +79,7 @@
                     <c:url value="main.jsp" var="mainUrl">
                         <c:param name="path" value="${child.path}"/>
                     </c:url>
-                    <a target="main" href="<c:out value="${mainUrl}"/>"><c:out value="${child.name}"></c:out></a>
+                    <a target="main" href="${mainUrl}">${child.name}</a>
                 </c:when>
                 <c:otherwise>
                     <c:out value="${child.name}"></c:out>

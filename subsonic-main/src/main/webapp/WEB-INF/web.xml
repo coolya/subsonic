@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app id="subsonic" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
-<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
-<web-app>
     <display-name>subsonic</display-name>
 
     <servlet>
@@ -11,43 +12,43 @@
     </servlet>
 
     <servlet>
-        <servlet-name>stream</servlet-name>
-        <display-name>stream</display-name>
         <description>Streams the contents of a given file or directory.</description>
+        <display-name>stream</display-name>
+        <servlet-name>stream</servlet-name>
         <servlet-class>net.sourceforge.subsonic.servlet.StreamServlet</servlet-class>
     </servlet>
 
     <servlet>
-        <servlet-name>m3u</servlet-name>
-        <display-name>m3u</display-name>
         <description>Returns an m3u file with playlist containing the stream URL.</description>
+        <display-name>m3u</display-name>
+        <servlet-name>m3u</servlet-name>
         <servlet-class>net.sourceforge.subsonic.servlet.M3UServlet</servlet-class>
     </servlet>
 
     <servlet>
-        <servlet-name>download</servlet-name>
-        <display-name>download</display-name>
         <description>Downloads a single file or an entire directory structure.</description>
+        <display-name>download</display-name>
+        <servlet-name>download</servlet-name>
         <servlet-class>net.sourceforge.subsonic.servlet.DownloadServlet</servlet-class>
     </servlet>
 
     <servlet>
-        <servlet-name>coverart</servlet-name>
-        <display-name>coverart</display-name>
         <description>Finds, scales and serves cover art images</description>
+        <display-name>coverart</display-name>
+        <servlet-name>coverart</servlet-name>
         <servlet-class>net.sourceforge.subsonic.servlet.CoverArtServlet</servlet-class>
     </servlet>
 
     <servlet>
-        <servlet-name>statusChart</servlet-name>
-        <display-name>statusChart</display-name>
         <description>Returns an image containing a chart showing stream rate over time.</description>
+        <display-name>statusChart</display-name>
+        <servlet-name>statusChart</servlet-name>
         <servlet-class>net.sourceforge.subsonic.servlet.StatusChartServlet</servlet-class>
     </servlet>
 
     <servlet>
-        <servlet-name>dwr-invoker</servlet-name>
         <display-name>DWR Servlet</display-name>
+        <servlet-name>dwr-invoker</servlet-name>
         <servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
         <init-param>
             <param-name>debug</param-name>
@@ -123,14 +124,14 @@
         <filter-name>SecurityFilter</filter-name>
         <filter-class>org.securityfilter.filter.SecurityFilter</filter-class>
         <init-param>
+            <description>Configuration file location (this is the default value)</description>
             <param-name>config</param-name>
             <param-value>/WEB-INF/securityfilter-config.xml</param-value>
-            <description>Configuration file location (this is the default value)</description>
         </init-param>
         <init-param>
+            <description>Validate config file if set to true</description>
             <param-name>validate</param-name>
             <param-value>true</param-value>
-            <description>Validate config file if set to true</description>
         </init-param>
     </filter>
 
