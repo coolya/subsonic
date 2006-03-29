@@ -2,9 +2,8 @@ package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
-import net.sourceforge.subsonic.util.*;
-import net.sourceforge.subsonic.*;
 import net.sourceforge.subsonic.servlet.*;
+import net.sourceforge.subsonic.util.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
 import org.springframework.web.servlet.support.*;
@@ -18,7 +17,6 @@ import java.util.*;
  * @author Sindre Mehus
  */
 public class StatusController extends ParameterizableViewController {
-    private static final Logger LOG = Logger.getLogger(StatusController.class);
 
     private StatusService statusService;
 
@@ -40,8 +38,6 @@ public class StatusController extends ParameterizableViewController {
             DownloadStatus downloadStatus = downloadStatuses[i];
             bytesDownloaded[i] = StringUtil.formatBytes(downloadStatus.getBytesStreamed(), locale);
         }
-
-        LOG.debug("Got " + streamStatuses.length + " stream statuses.");
 
         map.put("streamStatuses", streamStatuses);
         map.put("downloadStatuses", downloadStatuses);

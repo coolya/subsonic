@@ -6,7 +6,7 @@
      <script type="text/javascript" src="pngfix.js"></script>
      <![endif]-->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="/subsonic/style.css" rel="stylesheet">
+    <link href="<c:url value="/style.css"/>" rel="stylesheet">
 </head><body>
 
 <c:choose>
@@ -45,11 +45,11 @@
 <p/>
 
 <table width="75%"><tr>
-    <td><a target="_blank" href="http://sourceforge.net/donate/index.php?group_id=126265"><img src="icons/donate.gif"/></a></td>
+    <td><a target="_blank" href="http://sourceforge.net/donate/index.php?group_id=126265"><img src="<c:url value="/icons/donate.gif"/>"/></a></td>
     <td><fmt:message key="help.donate"/></td>
 </tr></table>
 
-<h2><img src="icons/log.png" width="22" height="22"/>&nbsp;<fmt:message key="help.log"/></h2>
+<h2><img src="<c:url value="/icons/log.png"/>" width="22" height="22"/>&nbsp;<fmt:message key="help.log"/></h2>
 
 <table cellpadding="2" style="white-space:nowrap;">
     <c:forEach items="${model.logEntries}" var="entry">
@@ -60,6 +60,6 @@
     </c:forEach>
 </table>
 
-<p><a href='help.view?'>[<fmt:message key="common.refresh"/>]</a></p>
+<p><a href="help.view?">[<fmt:message key="common.refresh"/>]</a></p>
 
 </body></html>

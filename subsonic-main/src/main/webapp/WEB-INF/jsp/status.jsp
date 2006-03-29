@@ -5,7 +5,7 @@
     <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
     <meta http-equiv="REFRESH" content="20;URL=status.view">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="/subsonic/style.css" rel="stylesheet">
+    <link href="<c:url value="/style.css"/>" rel="stylesheet">
 </head><body>
 
 <h1><fmt:message key="status.title"/></h1>
@@ -48,7 +48,7 @@
             </c:otherwise>
         </c:choose>
 
-        <c:url value="statusChart" var="chartUrl">
+        <c:url value="/statusChart" var="chartUrl">
             <c:param name="type" value="stream"/>
             <c:param name="index" value="${loopStatus.count - 1}"/>
         </c:url>
@@ -104,7 +104,7 @@
                 </c:otherwise>
             </c:choose>
 
-            <c:url value="statusChart" var="chartUrl">
+            <c:url value="/statusChart" var="chartUrl">
                 <c:param name="type" value="download"/>
                 <c:param name="index" value="${loopStatus.count - 1}"/>
             </c:url>

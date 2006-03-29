@@ -3,7 +3,7 @@
 
 <html><head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="/subsonic/style.css" rel="stylesheet">
+    <link href="<c:url value="/style.css"/>" rel="stylesheet">
 </head>
 <body style="background-color:#DEE3E7">
 
@@ -36,7 +36,7 @@
         </c:url>
         <p class="dense">
             <a target="hidden" href="${playRadioUrl}">
-                <img width="13" height="13" src="icons/play.gif" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
+                <img width="13" height="13" src="<c:url value="/icons/play.gif"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
             <c:choose>
                 <c:when test="${empty radio.homepageUrl}">
                     ${radio.name}
@@ -63,15 +63,15 @@
 
         <p class="dense">
             <a target="playlist" href="${playUrl}">
-                <img width="13" height="13" src="icons/play.gif" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
+                <img width="13" height="13" src="<c:url value="/icons/play.gif"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
             <a target="playlist" href="${addUrl}">
-                <img width="13" height="13" src="icons/add.gif" alt="<fmt:message key="common.add"/>" title="<fmt:message key="common.add"/>"/></a>
+                <img width="13" height="13" src="<c:url value="/icons/add.gif"/>" alt="<fmt:message key="common.add"/>" title="<fmt:message key="common.add"/>"/></a>
             <c:if test="${model.downloadEnabled}">
-                <c:url value="download" var="downloadUrl">
+                <c:url value="/download" var="downloadUrl">
                     <c:param name="path" value="${child.path}"/>
                 </c:url>
                 <a href="${downloadUrl}">
-                    <img width="13" height="13" src="icons/download.gif" alt="<fmt:message key="common.download"/>" title="<fmt:message key="common.download"/>"/></a>
+                    <img width="13" height="13" src="<c:url value="/icons/download.gif"/>" alt="<fmt:message key="common.download"/>" title="<fmt:message key="common.download"/>"/></a>
             </c:if>
 
             <c:choose>
