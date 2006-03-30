@@ -111,24 +111,24 @@
 <table>
 
 <tr><td><%=is.get("settings.playlistfolder")%></td><td><input type="text" name="playlistFolder" size="70" value="<%= settings.getPlaylistFolder()%>"/>
-<a href="helpPopup.jsp?topic=playlistFolder" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
+<a href="helpPopup.view?topic=playlistFolder" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
 
 <tr><td><%=is.get("settings.musicmask")%></td><td><input type="text" name="musicMask" size="70" value="<%= settings.getMusicMask()%>"/>
-<a href="helpPopup.jsp?topic=musicMask" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
+<a href="helpPopup.view?topic=musicMask" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
 
 <tr><td><%=is.get("settings.coverartmask")%></td><td><input type="text" name="coverArtMask" size="70" value="<%= settings.getCoverArtMask()%>"/>
-<a href="helpPopup.jsp?topic=coverArtMask" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
+<a href="helpPopup.view?topic=coverArtMask" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
 
 <tr><td colspan="3">&nbsp;</td></tr>
 
 <tr><td><%=is.get("settings.index")%></td><td><input type="text" name="index" size="70" value="<%= settings.getIndexString()%>"/>
-<a href="helpPopup.jsp?topic=index" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
+<a href="helpPopup.view?topic=index" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
 
 <tr><td><%=is.get("settings.ignoredarticles")%></td><td><input type="text" name="ignoredArticles" size="70" value="<%= settings.getIgnoredArticles()%>"/>
-<a href="helpPopup.jsp?topic=ignoredArticles" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
+<a href="helpPopup.view?topic=ignoredArticles" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
 
 <tr><td><%=is.get("settings.welcomemessage")%></td><td><input type="text" name="welcomeMessage" size="70" value="<%= settings.getWelcomeMessage()%>"/>
-<a href="helpPopup.jsp?topic=welcomeMessage" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
+<a href="helpPopup.view?topic=welcomeMessage" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
 
 <tr><td colspan="3">&nbsp;</td></tr>
 
@@ -143,13 +143,13 @@
     }
 %>
 </select>
-<a href="helpPopup.jsp?topic=language" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
+<a href="helpPopup.view?topic=language" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
 
 <tr><td><%=is.get("settings.coverartlimit")%></td><td><input type="text" name="coverArtLimit" size="8" value="<%= settings.getCoverArtLimit()%>"/>
-<a href="helpPopup.jsp?topic=coverArtLimit" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
+<a href="helpPopup.view?topic=coverArtLimit" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
 
 <tr><td><%=is.get("settings.downloadlimit")%></td><td><input type="text" name="downloadLimit" size="8" value="<%= settings.getDownloadBitrateLimit()%>"/>
-<a href="helpPopup.jsp?topic=downloadLimit" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
+<a href="helpPopup.view?topic=downloadLimit" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
 
 <tr><td colspan="3">&nbsp;</td></tr>
 

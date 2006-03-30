@@ -17,6 +17,9 @@
         <property name="viewName"><value>help</value></property>
         <property name="versionService"><ref bean="versionService"/></property>
     </bean>
+    <bean id="helpPopupController" class="net.sourceforge.subsonic.controller.HelpPopupController">
+        <property name="viewName"><value>helpPopup</value></property>
+    </bean>
     <bean id="playRadioController" class="net.sourceforge.subsonic.controller.PlayRadioController">
         <property name="settingsService"><ref bean="settingsService"/></property>
     </bean>
@@ -32,6 +35,7 @@
         <property name="mappings">
             <props>
                 <prop key="/help.view">helpController</prop>
+                <prop key="/helpPopup.view">helpPopupController</prop>
                 <prop key="/left.view">leftController</prop>
                 <prop key="/status.view">statusController</prop>
                 <prop key="/playRadio.view">playRadioController</prop>

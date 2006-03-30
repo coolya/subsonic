@@ -38,7 +38,7 @@
         <tr><td colspan="4">&nbsp;</td></tr>
 
         <tr><td><%=is.get("playersettings.name")%></td><td><input type="text" name="playerName" size="16" value="<%=name%>">
-        </td><td><a href="helpPopup.jsp?topic=playerName" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
+        </td><td><a href="helpPopup.view?topic=playerName" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
 
         <tr><td><%=is.get("playersettings.coverartsize")%></td><td><select name="cover">
 
@@ -51,7 +51,7 @@
         out.println("<option " + (scheme == coverArtScheme ? "selected" : "") + " value='" + scheme.name() + "'>" + scheme + "</option>");
     }
 %>
-        </select></td><td><a href="helpPopup.jsp?topic=cover" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
+        </select></td><td><a href="helpPopup.view?topic=cover" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td></tr>
 
         <tr><td><%=is.get("playersettings.maxbitrate")%></td><td><select name="transcode">
 <%
@@ -62,7 +62,7 @@
         out.println("<option " + (scheme == transcodeScheme ? "selected" : "") + " value='" + scheme.name() + "'>" + scheme + "</option>");
     }
 %>
-        </select></td><td><a href="helpPopup.jsp?topic=transcode" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td>
+        </select></td><td><a href="helpPopup.view?topic=transcode" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td>
 
 <%
     if (!TranscodedInputStream.isTranscodingSupported()) {
@@ -75,12 +75,12 @@
         <tr>
             <td colspan="2"><input type="checkbox" name="dynamicIp" <%= player.isDynamicIp() ? "checked" : ""%> id="dynamicIp"/>
                 <label for="dynamicIp"><%=is.get("playersettings.dynamicip")%></label></td>
-            <td><a href="helpPopup.jsp?topic=dynamicIp" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td>
+            <td><a href="helpPopup.view?topic=dynamicIp" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td>
         </tr>
         <tr>
             <td colspan="2"><input type="checkbox" name="autoControl" <%= player.isAutoControlEnabled() ? "checked" : ""%> id="autoControl"/>
                 <label for="autoControl"><%=is.get("playersettings.autocontrol")%></label></td>
-            <td><a href="helpPopup.jsp?topic=autoControl" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td>
+            <td><a href="helpPopup.view?topic=autoControl" onclick="return popup(this, 'help')"><img src="icons/help_small.png" alt="<%=help%>" title="<%=help%>"></a></td>
             <td><input type='submit' value='<%=is.get("playersettings.ok")%>'></td>
         </tr>
     </table>
