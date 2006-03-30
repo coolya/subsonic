@@ -105,17 +105,17 @@
         }
 %>
 <map id="ratingMap" name="ratingMap">
-    <area href="setMusicFileInfo.jsp?action=rating&path=<%=dir.urlEncode()%>&rating=1" shape="rect" coords="0,0,12,13"  alt="<%=ratingString%> 1"/>
-    <area href="setMusicFileInfo.jsp?action=rating&path=<%=dir.urlEncode()%>&rating=2" shape="rect" coords="13,0,25,13" alt="<%=ratingString%> 2"/>
-    <area href="setMusicFileInfo.jsp?action=rating&path=<%=dir.urlEncode()%>&rating=3" shape="rect" coords="26,0,38,13" alt="<%=ratingString%> 3"/>
-    <area href="setMusicFileInfo.jsp?action=rating&path=<%=dir.urlEncode()%>&rating=4" shape="rect" coords="39,0,51,13" alt="<%=ratingString%> 4"/>
-    <area href="setMusicFileInfo.jsp?action=rating&path=<%=dir.urlEncode()%>&rating=5" shape="rect" coords="52,0,64,13" alt="<%=ratingString%> 5"/>
+    <area href="setMusicFileInfo.view?action=rating&path=<%=dir.urlEncode()%>&rating=1" shape="rect" coords="0,0,12,13"  alt="<%=ratingString%> 1"/>
+    <area href="setMusicFileInfo.view?action=rating&path=<%=dir.urlEncode()%>&rating=2" shape="rect" coords="13,0,25,13" alt="<%=ratingString%> 2"/>
+    <area href="setMusicFileInfo.view?action=rating&path=<%=dir.urlEncode()%>&rating=3" shape="rect" coords="26,0,38,13" alt="<%=ratingString%> 3"/>
+    <area href="setMusicFileInfo.view?action=rating&path=<%=dir.urlEncode()%>&rating=4" shape="rect" coords="39,0,51,13" alt="<%=ratingString%> 4"/>
+    <area href="setMusicFileInfo.view?action=rating&path=<%=dir.urlEncode()%>&rating=5" shape="rect" coords="52,0,64,13" alt="<%=ratingString%> 5"/>
 </map>
 <img src="icons/rating<%=rating%>.gif" alt="<%=ratingString + ' ' + rating%>" <%=useMap%>/>
 <%=playInfo%>
 
 <div id="commentDiv" style="width:50%;font-style:italic;"><%=comment.replaceAll("\\n", "<br/>")%></div>
-<form method="post" id="commentForm" action="setMusicFileInfo.jsp" style="display:none">
+<form method="post" id="commentForm" action="setMusicFileInfo.view" style="display:none">
     <input type="hidden" name="action" value="comment"/>
     <input type="hidden" name="path" value="<%=path%>"/>
     <textarea name="comment" rows="6" cols="70"><%=comment%></textarea>

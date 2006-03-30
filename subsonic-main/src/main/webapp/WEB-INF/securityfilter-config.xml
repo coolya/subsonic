@@ -84,7 +84,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Subsonic (comment)</web-resource-name>
-            <url-pattern>/setMusicFileInfo.jsp</url-pattern>
+            <url-pattern>/setMusicFileInfo.view</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>comment</role-name>
