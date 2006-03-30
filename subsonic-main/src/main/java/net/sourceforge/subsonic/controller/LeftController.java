@@ -11,7 +11,7 @@ import javax.servlet.http.*;
 import java.util.*;
 
 /**
- * Controller for the left index page.
+ * Controller for the left index frame.
  *
  * @author Sindre Mehus
  */

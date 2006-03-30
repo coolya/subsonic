@@ -13,6 +13,11 @@
         <property name="viewName"><value>status</value></property>
         <property name="statusService"><ref bean="statusService"/></property>
     </bean>
+    <bean id="topController" class="net.sourceforge.subsonic.controller.TopController">
+        <property name="viewName"><value>top</value></property>
+        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="versionService"><ref bean="versionService"/></property>
+    </bean>
     <bean id="helpController" class="net.sourceforge.subsonic.controller.HelpController">
         <property name="viewName"><value>help</value></property>
         <property name="versionService"><ref bean="versionService"/></property>
@@ -44,6 +49,7 @@
                 <prop key="/status.view">statusController</prop>
                 <prop key="/playRadio.view">playRadioController</prop>
                 <prop key="/setMusicFileInfo.view">setMusicFileInfoController</prop>
+                <prop key="/top.view">topController</prop>
             </props>
         </property>
     </bean>
