@@ -27,6 +27,10 @@
         <property name="settingsService"><ref bean="settingsService"/></property>
         <property name="securityService"><ref bean="securityService"/></property>
     </bean>
+    <bean id="uploadController" class="net.sourceforge.subsonic.controller.UploadController">
+        <property name="viewName"><value>upload</value></property>
+        <property name="securityService"><ref bean="securityService"/></property>
+    </bean>
     <bean id="helpPopupController" class="net.sourceforge.subsonic.controller.HelpPopupController">
         <property name="viewName"><value>helpPopup</value></property>
     </bean>
@@ -70,6 +74,7 @@
                 <prop key="/left.view">leftController</prop>
                 <prop key="/status.view">statusController</prop>
                 <prop key="/more.view">moreController</prop>
+                <prop key="/upload.view">uploadController</prop>
                 <prop key="/playRadio.view">playRadioController</prop>
                 <prop key="/setMusicFileInfo.view">setMusicFileInfoController</prop>
                 <prop key="/top.view">topController</prop>

@@ -50,7 +50,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Subsonic (upload)</web-resource-name>
-            <url-pattern>/upload.jsp</url-pattern>
+            <url-pattern>/upload.view</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>upload</role-name>

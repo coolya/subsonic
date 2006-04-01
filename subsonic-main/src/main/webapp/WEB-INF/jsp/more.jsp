@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
 <%@ include file="/include.jsp" %>
 
-
 <html><head>
     <!--[if gte IE 5.5000]>
     <script type="text/javascript" src="pngfix.js"></script>
@@ -41,7 +40,7 @@
 
     <h2><img src="<c:url value="/icons/upload.gif"/>" width="16" height="16"/>&nbsp;<fmt:message key="more.upload.title"/></h2>
 
-    <form method="post" enctype="multipart/form-data" action="upload.jsp">
+    <form method="post" enctype="multipart/form-data" action="upload.view">
         <table>
             <tr>
                 <td><fmt:message key="more.upload.source"/></td>
