@@ -133,7 +133,7 @@
          <td> | <a href='playlist.jsp?shuffle'><%=is.get("playlist.shuffle")%></a></td>
          <td> | <a href='playlist.jsp?repeat'><%= repeat %></a></td>
          <td> | <a href='playlist.jsp?undo'><%= is.get("playlist.undo")%></a></td>
-         <td> | <a target='main' href='loadPlaylist.jsp?'><%=is.get("playlist.load")%></a></td>
+         <td> | <a target='main' href='loadPlaylist.view?'><%=is.get("playlist.load")%></a></td>
 <% if (user.isPlaylistRole()) { %>
          <td> | <a target='main' href='savePlaylist.jsp?'><%=is.get("playlist.save")%></a></td>
 <% }%>

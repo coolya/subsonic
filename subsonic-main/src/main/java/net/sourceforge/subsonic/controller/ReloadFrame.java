@@ -9,6 +9,13 @@ public class ReloadFrame {
     private String frame;
     private String view;
 
+    public ReloadFrame() {}
+
+    public ReloadFrame(String frame, String view) {
+        this.frame = frame;
+        this.view = view;
+    }
+
     public String getFrame() {
         return frame;
     }

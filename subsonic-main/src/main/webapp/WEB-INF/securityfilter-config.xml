@@ -60,7 +60,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Subsonic (playlist)</web-resource-name>
-            <url-pattern>/deletePlaylist.jsp</url-pattern>
+            <url-pattern>/deletePlaylist.view</url-pattern>
             <url-pattern>/savePlaylist.jsp</url-pattern>
             <url-pattern>/savePlaylistConfirm.jsp</url-pattern>
         </web-resource-collection>

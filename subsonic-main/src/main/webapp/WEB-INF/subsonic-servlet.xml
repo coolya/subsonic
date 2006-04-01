@@ -56,11 +56,17 @@
             </list>
         </property>
     </bean>
+    <bean id="loadPlaylistController" class="net.sourceforge.subsonic.controller.LoadPlaylistController">
+        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="playlistService"><ref bean="playlistService"/></property>
+        <property name="playerService"><ref bean="playerService"/></property>
+    </bean>
 
     <!--TODO: Get rid of ServiceFactory-->
     <bean id="searchService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getSearchService"/>
     <bean id="securityService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getSecurityService"/>
     <bean id="playerService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getPlayerService"/>
+    <bean id="playlistService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getPlaylistService"/>
     <bean id="settingsService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getSettingsService"/>
     <bean id="versionService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getVersionService"/>
     <bean id="statusService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getStatusService"/>
@@ -79,6 +85,9 @@
                 <prop key="/setMusicFileInfo.view">setMusicFileInfoController</prop>
                 <prop key="/top.view">topController</prop>
                 <prop key="/randomPlaylist.view">randomPlaylistController</prop>
+                <prop key="/loadPlaylist.view">loadPlaylistController</prop>
+                <prop key="/loadPlaylistConfirm.view">loadPlaylistController</prop>
+                <prop key="/deletePlaylist.view">loadPlaylistController</prop>
             </props>
         </property>
     </bean>
