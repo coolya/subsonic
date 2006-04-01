@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
-<%@ include file="/include.jsp" %>
+<%@ include file="include.jsp" %>
 
 <html><head>
     <!--[if gte IE 5.5000]>
