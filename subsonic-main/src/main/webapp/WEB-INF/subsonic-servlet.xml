@@ -22,6 +22,11 @@
         <property name="viewName"><value>help</value></property>
         <property name="versionService"><ref bean="versionService"/></property>
     </bean>
+    <bean id="moreController" class="net.sourceforge.subsonic.controller.MoreController">
+        <property name="viewName"><value>more</value></property>
+        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="securityService"><ref bean="securityService"/></property>
+    </bean>
     <bean id="helpPopupController" class="net.sourceforge.subsonic.controller.HelpPopupController">
         <property name="viewName"><value>helpPopup</value></property>
     </bean>
@@ -31,10 +36,27 @@
     <bean id="setMusicFileInfoController" class="net.sourceforge.subsonic.controller.SetMusicFileInfoController">
         <property name="musicInfoService"><ref bean="musicInfoService"/></property>
     </bean>
+    <bean id="randomPlaylistController" class="net.sourceforge.subsonic.controller.RandomPlaylistController">
+        <property name="viewName"><value>reload</value></property>
+        <property name="playerService"><ref bean="playerService"/></property>
+        <property name="reloadFrames">
+            <list>
+                <bean class="net.sourceforge.subsonic.controller.ReloadFrame">
+                    <property name="frame" value="playlist"/>
+                    <property name="view" value="playlist.jsp?"/>
+                </bean>
+                <bean class="net.sourceforge.subsonic.controller.ReloadFrame">
+                    <property name="frame" value="main"/>
+                    <property name="view" value="more.view"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
 
     <!--TODO: Get rid of ServiceFactory-->
     <bean id="searchService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getSearchService"/>
     <bean id="securityService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getSecurityService"/>
+    <bean id="playerService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getPlayerService"/>
     <bean id="settingsService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getSettingsService"/>
     <bean id="versionService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getVersionService"/>
     <bean id="statusService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getStatusService"/>
@@ -47,9 +69,11 @@
                 <prop key="/helpPopup.view">helpPopupController</prop>
                 <prop key="/left.view">leftController</prop>
                 <prop key="/status.view">statusController</prop>
+                <prop key="/more.view">moreController</prop>
                 <prop key="/playRadio.view">playRadioController</prop>
                 <prop key="/setMusicFileInfo.view">setMusicFileInfoController</prop>
                 <prop key="/top.view">topController</prop>
+                <prop key="/randomPlaylist.view">randomPlaylistController</prop>
             </props>
         </property>
     </bean>

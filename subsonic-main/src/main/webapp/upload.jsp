@@ -92,7 +92,7 @@
     }
 %>
 
-<p><a href="more.jsp">[<%=is.get("common.back")%>]</a></p>
+<p><a href="more.view?">[<%=is.get("common.back")%>]</a></p>
 </body></html>
 
 <%!
