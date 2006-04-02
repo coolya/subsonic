@@ -77,7 +77,7 @@
     if (isAlbum) {
         out.println("| <a href='albumInfo.jsp?path=" + dir.urlEncode() + "'>" + is.get("main.albuminfo") + "</a>");
         if (user.isCoverArtRole()) {
-            out.println("| <a href='changeCoverArt.jsp?path=" + dir.urlEncode() + "'>" + is.get("main.cover") + "</a>");
+            out.println("| <a href='changeCoverArt.view?path=" + dir.urlEncode() + "'>" + is.get("main.cover") + "</a>");
             out.println("| <a href='editTags.jsp?path=" + dir.urlEncode() + "'>" + is.get("main.tags") + "</a>");
         }
         if (user.isCommentRole()) {
@@ -192,7 +192,7 @@
         if (coverArt.length == 0 && isAlbum) {
             int size = baseSize * 2;
             out.println("<table><tr><td><img height='" + size + "' width='" + size + "' hspace='5' vspace='5' " +
-                    "src='coverart?size=" + size + "'/></td></tr><tr><td align='center'><a href='changeCoverArt.jsp?path=" +
+                    "src='coverart?size=" + size + "'/></td></tr><tr><td align='center'><a href='changeCoverArt.view?path=" +
                     dir.urlEncode() + "'>"+ is.get("main.cover")+ "</a></td></tr></table>");
         }
     }

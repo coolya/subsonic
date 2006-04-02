@@ -71,6 +71,11 @@
         <property name="playerService"><ref bean="playerService"/></property>
     </bean>
 
+    <bean id="changeCoverArtController" class="net.sourceforge.subsonic.controller.ChangeCoverArtController">
+        <property name="amazonSearchService"><ref bean="amazonSearchService"/></property>
+        <property name="securityService"><ref bean="securityService"/></property>
+    </bean>
+
     <bean id="savePlaylistValidator" class="net.sourceforge.subsonic.validator.SavePlaylistValidator">
         <property name="playlistService"><ref bean="playlistService"/></property>
     </bean>
@@ -84,6 +89,7 @@
     <bean id="versionService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getVersionService"/>
     <bean id="statusService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getStatusService"/>
     <bean id="musicInfoService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getMusicInfoService"/>
+    <bean id="amazonSearchService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getAmazonSearchService"/>
 
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
@@ -102,6 +108,7 @@
                 <prop key="/loadPlaylistConfirm.view">loadPlaylistController</prop>
                 <prop key="/deletePlaylist.view">loadPlaylistController</prop>
                 <prop key="/savePlaylist.view">savePlaylistController</prop>
+                <prop key="/changeCoverArt.view">changeCoverArtController</prop>
             </props>
         </property>
     </bean>

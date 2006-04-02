@@ -71,8 +71,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Subsonic (coverart)</web-resource-name>
-            <url-pattern>/changeCoverArt.jsp</url-pattern>
-            <url-pattern>/changeCoverArtConfirm.jsp</url-pattern>
+            <url-pattern>/changeCoverArt.view</url-pattern>
             <url-pattern>/editTags.jsp</url-pattern>
         </web-resource-collection>
         <auth-constraint>
