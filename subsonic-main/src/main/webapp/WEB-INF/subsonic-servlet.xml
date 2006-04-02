@@ -61,6 +61,19 @@
         <property name="playlistService"><ref bean="playlistService"/></property>
         <property name="playerService"><ref bean="playerService"/></property>
     </bean>
+    <bean id="savePlaylistController" class="net.sourceforge.subsonic.controller.SavePlaylistController">
+        <property name="commandName"><value>playlist</value></property>
+        <property name="commandClass"><value>net.sourceforge.subsonic.domain.Playlist</value></property>
+        <property name="validator"><ref bean="savePlaylistValidator"/></property>
+        <property name="formView"><value>savePlaylist</value></property>
+        <property name="successView"><value>nowPlaying.jsp</value></property>
+        <property name="playlistService"><ref bean="playlistService"/></property>
+        <property name="playerService"><ref bean="playerService"/></property>
+    </bean>
+
+    <bean id="savePlaylistValidator" class="net.sourceforge.subsonic.validator.SavePlaylistValidator">
+        <property name="playlistService"><ref bean="playlistService"/></property>
+    </bean>
 
     <!--TODO: Get rid of ServiceFactory-->
     <bean id="searchService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getSearchService"/>
@@ -88,6 +101,7 @@
                 <prop key="/loadPlaylist.view">loadPlaylistController</prop>
                 <prop key="/loadPlaylistConfirm.view">loadPlaylistController</prop>
                 <prop key="/deletePlaylist.view">loadPlaylistController</prop>
+                <prop key="/savePlaylist.view">savePlaylistController</prop>
             </props>
         </property>
     </bean>

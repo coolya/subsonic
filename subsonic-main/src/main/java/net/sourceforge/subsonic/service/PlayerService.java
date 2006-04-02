@@ -84,9 +84,11 @@ public class PlayerService {
         }
 
         // Set cookie in response.
-        Cookie cookie = new Cookie(COOKIE_NAME, player.getId());
-        cookie.setMaxAge(Integer.MAX_VALUE);
-        response.addCookie(cookie);
+        if (response != null) {
+            Cookie cookie = new Cookie(COOKIE_NAME, player.getId());
+            cookie.setMaxAge(Integer.MAX_VALUE);
+            response.addCookie(cookie);
+        }
 
         // Save player in session context.
         if (remoteControlEnabled) {

@@ -135,7 +135,7 @@
          <td> | <a href='playlist.jsp?undo'><%= is.get("playlist.undo")%></a></td>
          <td> | <a target='main' href='loadPlaylist.view?'><%=is.get("playlist.load")%></a></td>
 <% if (user.isPlaylistRole()) { %>
-         <td> | <a target='main' href='savePlaylist.jsp?'><%=is.get("playlist.save")%></a></td>
+         <td> | <a target='main' href='savePlaylist.view?'><%=is.get("playlist.save")%></a></td>
 <% }%>
 <% if (user.isDownloadRole()) { %>
          <td> | <a href='download?player=<%=player.getId()%>'><%=is.get("common.download")%></a></td>
