@@ -66,13 +66,22 @@
         <property name="commandClass"><value>net.sourceforge.subsonic.domain.Playlist</value></property>
         <property name="validator"><ref bean="savePlaylistValidator"/></property>
         <property name="formView"><value>savePlaylist</value></property>
-        <property name="successView"><value>nowPlaying.jsp</value></property>
+        <property name="successView"><value>nowPlaying.view</value></property>
         <property name="playlistService"><ref bean="playlistService"/></property>
         <property name="playerService"><ref bean="playerService"/></property>
     </bean>
-
     <bean id="changeCoverArtController" class="net.sourceforge.subsonic.controller.ChangeCoverArtController">
         <property name="amazonSearchService"><ref bean="amazonSearchService"/></property>
+        <property name="securityService"><ref bean="securityService"/></property>
+    </bean>
+    <bean id="nowPlayingController" class="net.sourceforge.subsonic.controller.NowPlayingController">
+        <property name="playerService"><ref bean="playerService"/></property>
+    </bean>
+    <bean id="searchController" class="net.sourceforge.subsonic.controller.SearchController">
+        <property name="commandClass"><value>net.sourceforge.subsonic.command.SearchCommand</value></property>
+        <property name="successView"><value>search</value></property>
+        <property name="formView"><value>search</value></property>
+        <property name="searchService"><ref bean="searchService"/></property>
         <property name="securityService"><ref bean="securityService"/></property>
     </bean>
 
@@ -109,6 +118,8 @@
                 <prop key="/deletePlaylist.view">loadPlaylistController</prop>
                 <prop key="/savePlaylist.view">savePlaylistController</prop>
                 <prop key="/changeCoverArt.view">changeCoverArtController</prop>
+                <prop key="/nowPlaying.view">nowPlayingController</prop>
+                <prop key="/search.view">searchController</prop>
             </props>
         </property>
     </bean>

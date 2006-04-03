@@ -36,7 +36,7 @@
 
     function nowPlayingCallback(dir){
         if (currentDir != null && currentDir != dir) {
-            location.replace("nowPlaying.jsp?");
+            location.replace("nowPlaying.view?");
         }
         currentDir = dir;
     }
