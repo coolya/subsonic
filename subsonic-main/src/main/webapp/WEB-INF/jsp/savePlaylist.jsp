@@ -7,18 +7,16 @@
 </head><body>
 
 <h1><fmt:message key="playlist.save.title"/></h1>
-<form method="post" action="savePlaylist.view">
+<form:form commandName="playlist" method="post" action="savePlaylist.view">
     <table>
-        <spring:bind path="playlist.name">
-            <tr>
-                <td><fmt:message key="playlist.save.name"/></td>
-                <td><input type="text" name="name" size="30" value="${status.value}">
-                    <input type="submit" value="<fmt:message key="playlist.save.save"/>"></td>
-            </tr>
-            <tr>
-                <td colspan="2" style="color:red">${status.errorMessage}</td>
-            </tr>
-        </spring:bind>
+        <tr>
+            <td><fmt:message key="playlist.save.name"/></td>
+            <td><form:input path="name" size="30"/>
+                <input type="submit" value="<fmt:message key="playlist.save.save"/>"></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="color:red"><form:errors path="name"/></td>
+        </tr>
     </table>
-</form>
+</form:form>
 </body></html>
