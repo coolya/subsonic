@@ -34,6 +34,9 @@
     <bean id="helpPopupController" class="net.sourceforge.subsonic.controller.HelpPopupController">
         <property name="viewName"><value>helpPopup</value></property>
     </bean>
+    <bean id="allmusicController" class="net.sourceforge.subsonic.controller.AllmusicController">
+        <property name="viewName"><value>allmusic</value></property>
+    </bean>
     <bean id="playRadioController" class="net.sourceforge.subsonic.controller.PlayRadioController">
         <property name="settingsService"><ref bean="settingsService"/></property>
     </bean>
@@ -120,6 +123,7 @@
                 <prop key="/changeCoverArt.view">changeCoverArtController</prop>
                 <prop key="/nowPlaying.view">nowPlayingController</prop>
                 <prop key="/search.view">searchController</prop>
+                <prop key="/allmusic.view">allmusicController</prop>
             </props>
         </property>
     </bean>

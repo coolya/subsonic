@@ -164,7 +164,7 @@
 
      if (album != null && album.length() > 0) {
 
-         String allMusicUrl = "<a target='_blank' href='allmusic.jsp?album=" + StringUtil.urlEncode(album) + "'>allmusic.com</a>";
+         String allMusicUrl = "<a target='_blank' href='allmusic.view?album=" + StringUtil.urlEncode(album) + "'>allmusic.com</a>";
          out.println("<br/><b>" + is.get("albuminfo.allmusic", album, allMusicUrl) + "</b>");
 
          String googleUrl = "<a target='_blank' href='http://www.google.com/musicsearch?q=";
