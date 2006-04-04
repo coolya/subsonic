@@ -65,18 +65,18 @@
 
 <table>
     <c:forEach items="${command.matches}" var="match" varStatus="loopStatus">
-        <c:url value="playlist.jsp" var="playUrl">
-            <c:param name="play" value="${match.musicFile.path}"/>
-        </c:url>
-        <c:url value="playlist.jsp" var="addUrl">
-            <c:param name="add" value="${match.musicFile.path}"/>
-        </c:url>
-        <c:url value="/download" var="downloadUrl">
-            <c:param name="path" value="${match.musicFile.path}"/>
-        </c:url>
-        <c:url value="/main.jsp" var="mainUrl">
-            <c:param name="path" value="${match.musicFile.parent.path}"/>
-        </c:url>
+        <sub:url value="playlist.jsp" var="playUrl">
+            <sub:param name="play" value="${match.musicFile.path}"/>
+        </sub:url>
+        <sub:url value="playlist.jsp" var="addUrl">
+            <sub:param name="add" value="${match.musicFile.path}"/>
+        </sub:url>
+        <sub:url value="/download" var="downloadUrl">
+            <sub:param name="path" value="${match.musicFile.path}"/>
+        </sub:url>
+        <sub:url value="/main.jsp" var="mainUrl">
+            <sub:param name="path" value="${match.musicFile.parent.path}"/>
+        </sub:url>
 
         <tr>
             <td style="white-space:nowrap">

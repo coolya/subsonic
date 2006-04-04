@@ -43,6 +43,12 @@
     <bean id="setMusicFileInfoController" class="net.sourceforge.subsonic.controller.SetMusicFileInfoController">
         <property name="musicInfoService"><ref bean="musicInfoService"/></property>
     </bean>
+    <bean id="albumInfoController" class="net.sourceforge.subsonic.controller.AlbumInfoController">
+        <property name="commandClass"><value>net.sourceforge.subsonic.command.AlbumInfoCommand</value></property>
+        <property name="successView"><value>albumInfo</value></property>
+        <property name="formView"><value>albumInfo</value></property>
+        <property name="amazonSearchService"><ref bean="amazonSearchService"/></property>
+    </bean>
     <bean id="randomPlaylistController" class="net.sourceforge.subsonic.controller.RandomPlaylistController">
         <property name="viewName"><value>reload</value></property>
         <property name="playerService"><ref bean="playerService"/></property>
@@ -124,6 +130,7 @@
                 <prop key="/nowPlaying.view">nowPlayingController</prop>
                 <prop key="/search.view">searchController</prop>
                 <prop key="/allmusic.view">allmusicController</prop>
+                <prop key="/albumInfo.view">albumInfoController</prop>
             </props>
         </property>
     </bean>

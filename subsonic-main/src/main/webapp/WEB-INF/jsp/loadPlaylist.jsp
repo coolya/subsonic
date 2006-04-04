@@ -17,9 +17,9 @@
     <c:otherwise>
         <table>
             <c:forEach items="${model.playlists}" var="playlist">
-                <c:url value="loadPlaylistConfirm.view" var="loadUrl"><c:param name="name" value="${playlist}"/></c:url>
-                <c:url value="deletePlaylist.view" var="deleteUrl"><c:param name="name" value="${playlist}"/></c:url>
-                <c:url value="download" var="downloadUrl"><c:param name="playlist" value="${playlist}"/></c:url>
+                <sub:url value="loadPlaylistConfirm.view" var="loadUrl"><sub:param name="name" value="${playlist}"/></sub:url>
+                <sub:url value="deletePlaylist.view" var="deleteUrl"><sub:param name="name" value="${playlist}"/></sub:url>
+                <sub:url value="download" var="downloadUrl"><sub:param name="playlist" value="${playlist}"/></sub:url>
                 <tr>
                     <td>${fn:substringBefore(playlist,".")}</td><td><a href="${loadUrl}">[<fmt:message key="playlist.load.load"/>]</a></td>
                     <c:if test="${model.user.playlistRole}">

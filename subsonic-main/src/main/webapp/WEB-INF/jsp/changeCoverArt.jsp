@@ -7,7 +7,7 @@
 </head><body>
 
 <h1><fmt:message key="changecoverart.title"/></h1>
-<c:url value="main.jsp" var="backUrl"><c:param name="path" value="${model.path}"/></c:url>
+<sub:url value="main.jsp" var="backUrl"><sub:param name="path" value="${model.path}"/></sub:url>
 <a href="${backUrl}"><b>[<fmt:message key="common.back"/>]</b></a>
 
 <form method="post" action="changeCoverArt.view">
@@ -46,10 +46,10 @@
 </c:choose>
 
 <c:forEach items="${model.coverArtUrls}" var="coverArtUrl">
-    <c:url value="changeCoverArt.view" var="url">
-        <c:param name="path" value="${model.path}"/>
-        <c:param name="url" value="${coverArtUrl}"/>
-    </c:url>
+    <sub:url value="changeCoverArt.view" var="url">
+        <sub:param name="path" value="${model.path}"/>
+        <sub:param name="url" value="${coverArtUrl}"/>
+    </sub:url>
     <a href="${url}"><img src="${coverArtUrl}" hspace="5" vspace="5"/></a>
 </c:forEach>
 
