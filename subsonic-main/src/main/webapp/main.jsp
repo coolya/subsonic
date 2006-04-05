@@ -75,7 +75,7 @@
 <a target="playlist" href="playlist.jsp?add=<%=dir.urlEncode()%>"><%=is.get("main.addall")%></a>
 <%
     if (isAlbum) {
-        out.println("| <a href='albumInfo.jsp?path=" + dir.urlEncode() + "'>" + is.get("main.albuminfo") + "</a>");
+        out.println("| <a href='albumInfo.view?path=" + dir.urlEncode() + "'>" + is.get("main.albuminfo") + "</a>");
         if (user.isCoverArtRole()) {
             out.println("| <a href='changeCoverArt.view?path=" + dir.urlEncode() + "'>" + is.get("main.cover") + "</a>");
             out.println("| <a href='editTags.jsp?path=" + dir.urlEncode() + "'>" + is.get("main.tags") + "</a>");

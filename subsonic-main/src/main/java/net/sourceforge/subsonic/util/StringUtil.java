@@ -14,7 +14,6 @@ import java.util.*;
 public final class StringUtil {
 
     private static final String ENCODING_LATIN = "ISO-8859-1";
-    private static final String ENCODING_UTF   = "UTF-8";
 
     private static final String[][] HTML_SUBSTITUTIONS = {
             {"&",  "&amp;"},
@@ -68,19 +67,6 @@ public final class StringUtil {
             }
         }
         return s;
-    }
-
-    /**
-     * Converts a string from UTF-8 to ISO-8859-1 encoding.
-     * @param s The string to convert.
-     * @return The converted string.
-     */
-    public static String utfToLatin(String s) {
-        try {
-            return new String(s.getBytes(ENCODING_UTF), ENCODING_LATIN);
-        } catch (UnsupportedEncodingException x) {
-            return s;
-        }
     }
 
     /**

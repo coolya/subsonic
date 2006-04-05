@@ -8,7 +8,7 @@
 
 <body onload="javascript:populate(0)">
 <h1><fmt:message key="albuminfo.title"/></h1>
-<c:url value="main.jsp" var="backUrl"><c:param name="path" value="${command.path}"/></c:url>
+<sub:url value="main.jsp" var="backUrl"><sub:param name="path" value="${command.path}"/></sub:url>
 <a href="${backUrl}"><b>[<fmt:message key="common.back"/>]</b></a>
 
 <form:form commandName="command" method="post" action="albumInfo.view">
@@ -84,31 +84,34 @@
 
 <c:if test="${not empty command.album}">
 
-    <c:url value="allmusic.view" var="allmusicUrl">
-        <c:param name="album" value="${command.album}"/>
-    </c:url>
-    <br/><b>
-    <fmt:message key="albuminfo.allmusic">
-        <fmt:param value="${command.album}"/>
-        <fmt:param value="<a target='_blank' href='${allmusicUrl}'>allmusic.com</a>"/>
-    </fmt:message>
-</b>
+    <sub:url value="allmusic.view" var="allmusicUrl">
+        <sub:param name="album" value="${command.album}"/>
+    </sub:url>
+    <sub:url value="http://www.google.com/musicsearch" var="googleUrl" encoding="UTF-8">
+        <c:choose>
+            <c:when test="${not empty command.artist}">
+                <sub:param name="q" value="\"${command.artist}\" \"${command.album}\""/>
+            </c:when>
+            <c:otherwise>
+                <sub:param name="q" value="\"${command.album}\""/>
+            </c:otherwise>
+        </c:choose>
+    </sub:url>
+    <br/>
+    <b>
+        <fmt:message key="albuminfo.allmusic">
+            <fmt:param value="${command.album}"/>
+            <fmt:param value="<a target='_blank' href='${allmusicUrl}'>allmusic.com</a>"/>
+        </fmt:message>
+    </b>
+    <br/>
+    <b>
+        <fmt:message key="albuminfo.google">
+            <fmt:param value="${command.album}"/>
+            <fmt:param value="<a target='_blank' href='${googleUrl}'>Google Music</a>"/>
+        </fmt:message>
+    </b>
 </c:if>
-<pre>
 
-    if (album != null && album.length() > 0) {
-
-    String allMusicUrl = "<a target='_blank' href='allmusic.view?album=" + StringUtil.urlEncode(album) + "'>allmusic.com</a>";
-    out.println("<br/><b>" + is.get("albuminfo.allmusic", album, allMusicUrl) + "</b>");
-
-    String googleUrl = "<a target='_blank' href='http://www.google.com/musicsearch?q=";
-    if (artist != null && artist.length() > 0) {
-        googleUrl += StringUtil.urlEncode('"' + StringUtil.utfToLatin(artist) + '"');
-    }
-    googleUrl += StringUtil.urlEncode(" \"" + StringUtil.utfToLatin(album) + '"') + "'>Google Music</a>";
-    out.println("<br/><b>" + is.get("albuminfo.google", album, googleUrl) + "</b>");
-}
-
-</pre>
 </body>
 </html>
