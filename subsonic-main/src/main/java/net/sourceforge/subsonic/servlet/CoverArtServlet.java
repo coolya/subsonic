@@ -28,7 +28,7 @@ public class CoverArtServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String path = request.getParameter("path");
-        File file = path == null ? null : new File(path);
+        File file = (path == null || path.length() == 0) ? null : new File(path);
 
         if (file != null && !ServiceFactory.getSecurityService().isReadAllowed(file)) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);

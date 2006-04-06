@@ -93,6 +93,12 @@
         <property name="searchService"><ref bean="searchService"/></property>
         <property name="securityService"><ref bean="securityService"/></property>
     </bean>
+    <bean id="homeController" class="net.sourceforge.subsonic.controller.HomeController">
+        <property name="viewName"><value>home</value></property>
+        <property name="musicInfoService"><ref bean="musicInfoService"/></property>
+        <property name="searchService"><ref bean="searchService"/></property>
+        <property name="settingsService"><ref bean="settingsService"/></property>
+    </bean>
 
     <bean id="savePlaylistValidator" class="net.sourceforge.subsonic.validator.SavePlaylistValidator">
         <property name="playlistService"><ref bean="playlistService"/></property>
@@ -131,6 +137,7 @@
                 <prop key="/search.view">searchController</prop>
                 <prop key="/allmusic.view">allmusicController</prop>
                 <prop key="/albumInfo.view">albumInfoController</prop>
+                <prop key="/home.view">homeController</prop>
             </props>
         </property>
     </bean>

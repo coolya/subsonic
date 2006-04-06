@@ -27,7 +27,7 @@ public class NowPlayingController extends AbstractController {
         if (current != null && !current.getParent().isRoot()) {
             url = "main.jsp?path=" + current.getParent().urlEncode() + "&updateNowPlaying=true";
         } else {
-            url = "home.jsp";
+            url = "home.view";
         }
 
         return new ModelAndView(new RedirectView(url));
