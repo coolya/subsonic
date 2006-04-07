@@ -64,8 +64,8 @@
                             <em><fmt:message key="common.unknown"/></em>
                         </c:when>
                         <c:otherwise>
-                            <em>${album.artist}</em><br/>
-                            ${album.albumTitle}
+                            <em><str:truncateNicely lower="17" upper="17">${album.artist}</str:truncateNicely></em><br/>
+                            <str:truncateNicely lower="17" upper="17">${album.albumTitle}</str:truncateNicely>
                         </c:otherwise>
                     </c:choose>
 

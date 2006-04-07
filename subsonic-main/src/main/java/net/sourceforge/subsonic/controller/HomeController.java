@@ -1,15 +1,14 @@
 package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.util.*;
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
 
 import javax.servlet.http.*;
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 /**
  * Controller for the home page.
@@ -169,16 +168,8 @@ public class HomeController extends ParameterizableViewController {
             file = children[0];
         }
 
-        String artist = file.getMetaData().getArtist();
-        String albumTitle  = file.getMetaData().getAlbum();
-
-        if (artist != null) {
-            album.setArtist(StringUtil.abbrev(artist, 17));
-        }
-
-        if (albumTitle != null) {
-            album.setAlbumTitle(StringUtil.abbrev(albumTitle, 17));
-        }
+        album.setArtist(file.getMetaData().getArtist());
+        album.setAlbumTitle(file.getMetaData().getAlbum());
     }
 
     private void resolveCoverArt(Album album, MusicFile file) {
@@ -220,6 +211,9 @@ public class HomeController extends ParameterizableViewController {
     }
 
 
+    /**
+     * Contains info for a single album.
+     */
     public static class Album {
         private String path;
         private String coverArtPath;
