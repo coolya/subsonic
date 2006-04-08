@@ -92,16 +92,6 @@ public final class StringUtil {
     }
 
     /**
-     * Abbreviate the given string if it exceeds the given length.
-     * @param s The string to abbreviate.
-     * @param length The length.
-     * @return The abbreviated string with an ellipsis (...) appended.
-     */
-    public static String abbrev(String s, int length) {
-        return (s.length() > length + 3) ? s.substring(0, length) + "..." : s;
-    }
-
-    /**
     * Returns the proper MIME type for the given suffix.
     * @param suffix The suffix, e.g., ".mp3".
     * @return The corresponding MIME type, e.g., "audio/mpeg". If no MIME type is found,

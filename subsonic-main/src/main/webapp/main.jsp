@@ -78,7 +78,7 @@
         out.println("| <a href='albumInfo.view?path=" + dir.urlEncode() + "'>" + is.get("main.albuminfo") + "</a>");
         if (user.isCoverArtRole()) {
             out.println("| <a href='changeCoverArt.view?path=" + dir.urlEncode() + "'>" + is.get("main.cover") + "</a>");
-            out.println("| <a href='editTags.jsp?path=" + dir.urlEncode() + "'>" + is.get("main.tags") + "</a>");
+            out.println("| <a href='editTags.view?path=" + dir.urlEncode() + "'>" + is.get("main.tags") + "</a>");
         }
         if (user.isCommentRole()) {
             out.println("| <a href='javascript:toggleComment()'>" + is.get("main.comment") + "</a>");
