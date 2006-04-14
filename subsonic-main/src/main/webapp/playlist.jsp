@@ -178,7 +178,7 @@
             out.print("<td " + style + "><a href='playlist.jsp?skip=" + i + "'>" +
                       (isCurrent ? "<b>" : "") + StringUtil.toHtml(file.getTitle()) + (isCurrent ? "</b>" : "") +
                       "</a></td>");
-            out.print("<td " + style + "><a target='main' href='main.jsp?path=" + file.getParent().urlEncode() + "'>" + getArtistAlbumYear(metaData) + "</a></td>");
+            out.print("<td " + style + "><a target='main' href='main.view?path=" + file.getParent().urlEncode() + "'>" + getArtistAlbumYear(metaData) + "</a></td>");
             out.println("</tr>");
         }
         out.println("</table>");

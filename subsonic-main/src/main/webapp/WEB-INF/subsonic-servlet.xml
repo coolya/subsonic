@@ -13,6 +13,13 @@
         <property name="viewName"><value>status</value></property>
         <property name="statusService"><ref bean="statusService"/></property>
     </bean>
+    <bean id="mainController" class="net.sourceforge.subsonic.controller.MainController">
+        <property name="viewName"><value>main</value></property>
+        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="playerService"><ref bean="playerService"/></property>
+        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="musicInfoService"><ref bean="musicInfoService"/></property>
+    </bean>
     <bean id="topController" class="net.sourceforge.subsonic.controller.TopController">
         <property name="viewName"><value>top</value></property>
         <property name="settingsService"><ref bean="settingsService"/></property>
@@ -121,6 +128,7 @@
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <props>
+                <prop key="/main.view">mainController</prop>
                 <prop key="/help.view">helpController</prop>
                 <prop key="/helpPopup.view">helpPopupController</prop>
                 <prop key="/left.view">leftController</prop>

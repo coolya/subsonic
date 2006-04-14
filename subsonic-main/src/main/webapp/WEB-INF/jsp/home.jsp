@@ -31,7 +31,7 @@
             <sub:param name="size" value="110"/>
             <sub:param name="path" value="${album.coverArtPath}"/>
         </sub:url>
-        <sub:url value="/main.jsp" var="mainUrl">
+        <sub:url value="/main.view" var="mainUrl">
             <sub:param name="path" value="${album.path}"/>
         </sub:url>
 

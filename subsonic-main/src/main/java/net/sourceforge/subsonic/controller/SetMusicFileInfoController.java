@@ -41,7 +41,7 @@ public class SetMusicFileInfoController extends AbstractController {
             musicInfoService.createMusicFileInfo(musicFileInfo);
         }
 
-        String url = "main.jsp?path=" + StringUtil.urlEncode(path);
+        String url = "main.view?path=" + StringUtil.urlEncode(path);
         return new ModelAndView(new RedirectView(url));
     }
 

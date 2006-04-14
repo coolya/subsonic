@@ -65,31 +65,17 @@
 
 <table>
     <c:forEach items="${command.matches}" var="match" varStatus="loopStatus">
-        <sub:url value="playlist.jsp" var="playUrl">
-            <sub:param name="play" value="${match.musicFile.path}"/>
-        </sub:url>
-        <sub:url value="playlist.jsp" var="addUrl">
-            <sub:param name="add" value="${match.musicFile.path}"/>
-        </sub:url>
-        <sub:url value="/download" var="downloadUrl">
-            <sub:param name="path" value="${match.musicFile.path}"/>
-        </sub:url>
-        <sub:url value="/main.jsp" var="mainUrl">
+
+        <sub:url value="/main.view" var="mainUrl">
             <sub:param name="path" value="${match.musicFile.parent.path}"/>
         </sub:url>
 
         <tr>
             <td style="white-space:nowrap">
-                <a target="playlist" href="${playUrl}">
-                    <img width="13" height="13" src="<c:url value="/icons/play.gif"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
-
-                <a target="playlist" href="${addUrl}">
-                    <img width="13" height="13" src="<c:url value="/icons/add.gif"/>" alt="<fmt:message key="common.add"/>" title="<fmt:message key="common.add"/>"/></a>
-
-                <c:if test="${command.downloadEnabled}">
-                    <a href="${downloadUrl}">
-                        <img width="13" height="13" src="<c:url value="/icons/download.gif"/>" alt="<fmt:message key="common.download"/>" title="<fmt:message key="common.download"/>"/></a>
-                </c:if>
+                <c:import url="playAddDownload.jsp">
+                    <c:param name="path" value="${match.musicFile.path}"/>
+                    <c:param name="downloadEnabled" value="${command.downloadEnabled}"/>
+                </c:import>
             </td>
 
             <td style="padding-left:5;padding-right:5;${loopStatus.count % 2 == 1 ? "background-color:#DEE3E7" : ""}">${match.title}</td>

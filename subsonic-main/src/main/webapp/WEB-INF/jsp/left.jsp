@@ -54,29 +54,16 @@
     <h2>${entry.key.index}</h2>
 
     <c:forEach items="${entry.value}" var="child">
-        <sub:url value="playlist.jsp" var="playUrl">
-            <sub:param name="play" value="${child.path}"/>
-        </sub:url>
-        <sub:url value="playlist.jsp" var="addUrl">
-            <sub:param name="add" value="${child.path}"/>
-        </sub:url>
-
         <p class="dense">
-            <a target="playlist" href="${playUrl}">
-                <img width="13" height="13" src="<c:url value="/icons/play.gif"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
-            <a target="playlist" href="${addUrl}">
-                <img width="13" height="13" src="<c:url value="/icons/add.gif"/>" alt="<fmt:message key="common.add"/>" title="<fmt:message key="common.add"/>"/></a>
-            <c:if test="${model.downloadEnabled}">
-                <sub:url value="/download" var="downloadUrl">
-                    <sub:param name="path" value="${child.path}"/>
-                </sub:url>
-                <a href="${downloadUrl}">
-                    <img width="13" height="13" src="<c:url value="/icons/download.gif"/>" alt="<fmt:message key="common.download"/>" title="<fmt:message key="common.download"/>"/></a>
-            </c:if>
+
+            <c:import url="playAddDownload.jsp">
+                <c:param name="path" value="${child.path}"/>
+                <c:param name="downloadEnabled" value="${model.downloadEnabled}"/>
+            </c:import>
 
             <c:choose>
                 <c:when test="${child.directory}">
-                    <sub:url value="main.jsp" var="mainUrl">
+                    <sub:url value="main.view" var="mainUrl">
                         <sub:param name="path" value="${child.path}"/>
                     </sub:url>
                     <a target="main" href="${mainUrl}">${child.name}</a>

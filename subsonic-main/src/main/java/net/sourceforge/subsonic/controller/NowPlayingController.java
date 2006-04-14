@@ -25,7 +25,7 @@ public class NowPlayingController extends AbstractController {
         MusicFile current = playlist.getCurrentFile();
         String url;
         if (current != null && !current.getParent().isRoot()) {
-            url = "main.jsp?path=" + current.getParent().urlEncode() + "&updateNowPlaying=true";
+            url = "main.view?path=" + current.getParent().urlEncode() + "&updateNowPlaying=true";
         } else {
             url = "home.view";
         }
