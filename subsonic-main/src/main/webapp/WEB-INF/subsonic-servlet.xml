@@ -158,10 +158,9 @@
         <property name="basename"><value>net.sourceforge.subsonic.i18n.ResourceBundle</value></property>
     </bean>
 
-    <!-- TODO: Implement locale resolver. -->
     <bean id="localeResolver"
-          class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
-        <property name="defaultLocale"><value>no</value></property>
+          class="net.sourceforge.subsonic.i18n.SubsonicLocaleResolver">
+        <property name="settingsService"><ref bean="settingsService"/></property>
     </bean>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
