@@ -13,7 +13,7 @@
 
         <frameset rows="70%,30%">
             <frame name="main" src="nowPlaying.view?" marginwidth="10" marginheight="10">
-            <frame name="playlist" src="playlist.jsp?">
+            <frame name="playlist" src="playlist.view?">
         </frameset>
 
     </frameset>

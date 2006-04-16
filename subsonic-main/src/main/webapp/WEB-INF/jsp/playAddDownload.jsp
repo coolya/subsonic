@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
 <%@ include file="include.jsp" %>
 
-<sub:url value="playlist.jsp" var="playUrl">
+<sub:url value="playlist.view" var="playUrl">
     <sub:param name="play" value="${param.path}"/>
 </sub:url>
-<sub:url value="playlist.jsp" var="addUrl">
+<sub:url value="playlist.view" var="addUrl">
     <sub:param name="add" value="${param.path}"/>
 </sub:url>
 <sub:url value="/download" var="downloadUrl">

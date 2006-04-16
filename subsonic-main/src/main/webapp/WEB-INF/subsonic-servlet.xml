@@ -63,7 +63,7 @@
             <list>
                 <bean class="net.sourceforge.subsonic.controller.ReloadFrame">
                     <property name="frame" value="playlist"/>
-                    <property name="view" value="playlist.jsp?"/>
+                    <property name="view" value="playlist.view?"/>
                 </bean>
                 <bean class="net.sourceforge.subsonic.controller.ReloadFrame">
                     <property name="frame" value="main"/>
@@ -109,6 +109,11 @@
     <bean id="editTagsController" class="net.sourceforge.subsonic.controller.EditTagsController">
         <property name="viewName"><value>editTags</value></property>
     </bean>
+    <bean id="playlistController" class="net.sourceforge.subsonic.controller.PlaylistController">
+        <property name="viewName"><value>playlist</value></property>
+        <property name="playerService"><ref bean="playerService"/></property>
+        <property name="securityService"><ref bean="securityService"/></property>
+    </bean>
 
     <bean id="savePlaylistValidator" class="net.sourceforge.subsonic.validator.SavePlaylistValidator">
         <property name="playlistService"><ref bean="playlistService"/></property>
@@ -150,6 +155,7 @@
                 <prop key="/albumInfo.view">albumInfoController</prop>
                 <prop key="/home.view">homeController</prop>
                 <prop key="/editTags.view">editTagsController</prop>
+                <prop key="/playlist.view">playlistController</prop>
             </props>
         </property>
     </bean>

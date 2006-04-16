@@ -48,7 +48,7 @@ public class LoadPlaylistController extends MultiActionController {
         playlistService.loadPlaylist(playlist, name);
 
         List<ReloadFrame> reloadFrames = new ArrayList<ReloadFrame>();
-        reloadFrames.add(new ReloadFrame("playlist", "playlist.jsp"));
+        reloadFrames.add(new ReloadFrame("playlist", "playlist.view"));
         reloadFrames.add(new ReloadFrame("main", "nowPlaying.view"));
 
         Map<String, Object> map = new HashMap<String, Object>();

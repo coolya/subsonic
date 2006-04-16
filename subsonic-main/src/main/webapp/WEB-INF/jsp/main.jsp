@@ -49,10 +49,10 @@
         <a href="${upUrl}"><fmt:message key="main.up"/></a> |
     </c:if>
 
-    <sub:url value="playlist.jsp" var="playUrl">
+    <sub:url value="playlist.view" var="playUrl">
         <sub:param name="play" value="${model.dir.path}"/>
     </sub:url>
-    <sub:url value="playlist.jsp" var="addUrl">
+    <sub:url value="playlist.view" var="addUrl">
         <sub:param name="add" value="${model.dir.path}"/>
     </sub:url>
 
