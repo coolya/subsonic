@@ -27,17 +27,7 @@
     String help = is.get("common.help");
 %>
 
- <h2><%=is.get("settings.player.title")%></h2>
- <p><%=is.get("settings.player.text")%></p>
- <table>
-<%
-     Player[] players = ServiceFactory.getPlayerService().getAllPlayers();
-     for (int i = 0; i < players.length; i++) {
-         Player player = players[i];
-         out.println("<tr><td><a href='playerSettings.jsp?id=" + player.getId() + "'>" + player + "</a></td></tr>");
-     }
-%>
- </table>
+ <h2><a href="playerSettings.view"><%=is.get("settings.player.title")%></a></h2>
 
 <h2><%=is.get("settings.musicfolder.title")%></h2>
 

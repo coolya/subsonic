@@ -204,7 +204,7 @@ public class Player {
      * Returns a string representation of the player.
      * @return A string representation of the player.
      */
-    public String toString() {
+    public String getDescription() {
         StringBuffer buf = new StringBuffer();
         if (name != null) {
             buf.append(name);
@@ -216,4 +216,12 @@ public class Player {
         return buf.toString();
     }
 
+    /**
+     * Returns a string representation of the player.
+     * @return A string representation of the player.
+     * @see #getDescription()
+     */
+    public String toString() {
+        return getDescription();
+    }
 }

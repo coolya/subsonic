@@ -1,5 +1,6 @@
-<%--$Revision: 1.13 $ $Date: 2006/02/28 22:38:17 $--%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 
 <html><head><title>Subsonic</title>
     <link rel="shortcut icon" href="icons/favicon.ico"/>

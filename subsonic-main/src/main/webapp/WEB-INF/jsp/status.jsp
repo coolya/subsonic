@@ -18,7 +18,6 @@
         <th><fmt:message key="status.bitrate"/></th>
     </tr>
 
-    <c:set var="unknown"><fmt:message key="common.unknown"/></c:set>
     <c:forEach items="${model.streamStatuses}" var="status" varStatus="loopStatus">
 
         <c:choose>

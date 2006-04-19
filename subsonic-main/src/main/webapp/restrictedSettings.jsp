@@ -25,7 +25,7 @@
 
          // Only display authorized players.
          if (currentUser.isAdminRole() || username.equals(player.getUsername())) {
-             out.println("<tr><td><a href='playerSettings.jsp?id=" + player.getId() + "'>" + player + "</a></td></tr>");
+             out.println("<tr><td><a href='playerSettings.view?id=" + player.getId() + "'>" + player + "</a></td></tr>");
          }
      }
 %>
