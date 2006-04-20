@@ -16,7 +16,7 @@
 </h2>
 
 <c:if test="${model.isIndexBeingCreated}">
-    <p style="color:red">${"home.scan"}</p>
+    <p style="color:red"><fmt:message key="home.scan"/></p>
 </c:if>
 
 <div style="color:dimgray"><b><fmt:message key="home.${model.listType}.text"/></b></div>
