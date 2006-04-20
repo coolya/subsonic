@@ -29,7 +29,7 @@
             <url-pattern>/settingsConfirm.jsp</url-pattern>
             <url-pattern>/userSettings.jsp</url-pattern>
             <url-pattern>/userSettingsConfirm.jsp</url-pattern>
-            <url-pattern>/editMusicFolder.jsp</url-pattern>
+            <url-pattern>/musicFolderSettings.jsp</url-pattern>
             <url-pattern>/editInternetRadio.jsp</url-pattern>
         </web-resource-collection>
         <auth-constraint>

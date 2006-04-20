@@ -107,6 +107,10 @@
         <property name="playerService"><ref bean="playerService"/></property>
         <property name="securityService"><ref bean="securityService"/></property>
     </bean>
+    <bean id="musicFolderSettingsController" class="net.sourceforge.subsonic.controller.MusicFolderSettingsController">
+        <property name="viewName"><value>musicFolderSettings</value></property>
+        <property name="settingsService"><ref bean="settingsService"/></property>
+    </bean>
     <bean id="homeController" class="net.sourceforge.subsonic.controller.HomeController">
         <property name="viewName"><value>home</value></property>
         <property name="musicInfoService"><ref bean="musicInfoService"/></property>
@@ -159,6 +163,7 @@
                 <prop key="/nowPlaying.view">nowPlayingController</prop>
                 <prop key="/search.view">searchController</prop>
                 <prop key="/playerSettings.view">playerSettingsController</prop>
+                <prop key="/musicFolderSettings.view">musicFolderSettingsController</prop>
                 <prop key="/allmusic.view">allmusicController</prop>
                 <prop key="/albumInfo.view">albumInfoController</prop>
                 <prop key="/home.view">homeController</prop>

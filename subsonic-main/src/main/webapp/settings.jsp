@@ -27,39 +27,8 @@
     String help = is.get("common.help");
 %>
 
- <h2><a href="playerSettings.view"><%=is.get("settings.player.title")%></a></h2>
-
-<h2><%=is.get("settings.musicfolder.title")%></h2>
-
- <table>
-     <tr><th><%=is.get("settings.musicfolder.name")%></th><th><%=is.get("settings.musicfolder.path")%></th><th><%=is.get("settings.musicfolder.enabled")%></th></tr>
-<%
- MusicFolder[] folders = ServiceFactory.getSettingsService().getAllMusicFolders(true);
- for (int i = 0; i < folders.length; i++) {
-     MusicFolder folder = folders[i];
-%>
-     <tr>
-         <form method="post" action="editMusicFolder.jsp">
-             <input type="hidden" name="id" value="<%=folder.getId()%>"/>
-             <td><input type="text" name="name" size="20" value="<%=folder.getName()%>"/></td>
-             <td><input type="text" name="path" size="40" value="<%=folder.getPath().getPath()%>"/></td>
-             <td align="center"><input type="checkbox" <%=folder.isEnabled() ? "checked" : ""%> name="enabled"/></td>
-             <td><input type="submit" name="edit" value="<%=is.get("common.save")%>"/></td>
-             <td><input type="submit" name="delete" value="<%=is.get("common.delete")%>"/></td>
-         </form>
-     </tr>
-<%
- }
-%>
-     <tr>
-         <form method="post" action="editMusicFolder.jsp">
-             <td><input type="text" name="name" size="20"/></td>
-             <td><input type="text" name="path" size="40"/></td>
-             <td align="center"><input name="enabled" checked type="checkbox"/></td>
-             <td><input type="submit" name="create" value="<%=is.get("common.create")%>"/></td>
-         </form>
-     </tr>
- </table>
+ <h2><a href="playerSettings.view?"><%=is.get("settings.player.title")%></a></h2>
+ <h2><a href="musicFolderSettings.view?"><%=is.get("settings.musicfolder.title")%></a></h2>
 
  <h2><%=is.get("settings.radio.title")%></h2>
 
