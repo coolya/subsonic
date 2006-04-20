@@ -30,41 +30,8 @@
  <h2><a href="playerSettings.view?"><%=is.get("settings.player.title")%></a></h2>
  <h2><a href="musicFolderSettings.view?"><%=is.get("settings.musicfolder.title")%></a></h2>
  <h2><a href="internetRadioSettings.view?"><%=is.get("settings.radio.title")%></a></h2>
+ <h2><a href="searchSettings.view?"><%=is.get("settings.searchindex.title")%></a></h2>
 
- <h2><%=is.get("settings.radio.title")%></h2>
-
- <table>
-     <tr><th><%=is.get("settings.radio.name")%></th><th><%=is.get("settings.radio.streamurl")%></th>
-         <th><%=is.get("settings.radio.homepageurl")%></th><th><%=is.get("settings.radio.enabled")%></th></tr>
-<%
-    InternetRadio[] radios = ServiceFactory.getSettingsService().getAllInternetRadios(true);
-    for (int i = 0; i < radios.length; i++) {
-        InternetRadio radio = radios[i];
-%>
-     <tr>
-         <form method="post" action="editInternetRadio.jsp">
-             <input type="hidden" name="id" value="<%=radio.getId()%>"/>
-             <td><input type="text" name="name" size="20" value="<%=radio.getName()%>"/></td>
-             <td><input type="text" name="streamUrl" size="40" value="<%=radio.getStreamUrl()%>"/></td>
-             <td><input type="text" name="homepageUrl" size="40" value="<%=radio.getHomepageUrl()%>"/></td>
-             <td align="center"><input type="checkbox" <%=radio.isEnabled() ? "checked" : ""%> name="enabled"/></td>
-             <td><input type="submit" name="edit" value="<%=is.get("common.save")%>"/></td>
-             <td><input type="submit" name="delete" value="<%=is.get("common.delete")%>"/></td>
-         </form>
-     </tr>
-<%
- }
-%>
-     <tr>
-         <form method="post" action="editInternetRadio.jsp">
-             <td><input type="text" name="name" size="20"/></td>
-             <td><input type="text" name="streamUrl" size="40"/></td>
-             <td><input type="text" name="homepageUrl" size="40"/></td>
-             <td align="center"><input name="enabled" checked type="checkbox"/></td>
-             <td><input type="submit" name="create" value="<%=is.get("common.create")%>"/></td>
-         </form>
-     </tr>
- </table>
 
 <form method="post" action='settingsConfirm.jsp'>
 
@@ -114,48 +81,6 @@
 <tr><td colspan="3">&nbsp;</td></tr>
 
 <tr><td align="center" colspan="2"><input type='submit' value='<%=is.get("settings.ok")%>'></td></tr>
-</table>
-</form>
-
-<h2><%=is.get("settings.searchindex.title")%></h2>
-
-<form method="post" action='indexSettingsConfirm.jsp'>
-<table><tr>
-<td><%=is.get("settings.searchindex.auto")%></td>
-<td><select name="interval">
-<%
-    int[] intervals = {-1, 1, 2, 3, 7, 14, 30, 60};
-    int selectedInterval = settings.getIndexCreationInterval();
-    for (int i = 0; i < intervals.length; i++) {
-        out.print("<option " + (intervals[i] == selectedInterval ? "selected " : "") + " value='" + intervals[i] + "'>");
-
-        switch (intervals[i]) {
-            case -1:
-                out.print(is.get("settings.searchindex.interval.never"));
-                break;
-            case 1:
-                out.print(is.get("settings.searchindex.interval.one"));
-                break;
-            default:
-                out.print(is.get("settings.searchindex.interval.many", intervals[i]));
-                break;
-        }
-        out.println("</option>");
-    }
-%>
-</select>
-&nbsp;
-<select name="hour">
-<%
-    int selectedHour = settings.getIndexCreationHour();
-    for (int hour = 0; hour < 24; hour++) {
-        out.print("<option " + (hour == selectedHour? "selected " : "") + " value='" + hour + "'>" +
-                is.get("settings.searchindex.hour", hour) + "</option>");
-    }
-%>
-</select>
-&nbsp;&nbsp;<input type='submit' value='<%=is.get("settings.ok")%>'></td></tr>
-<tr><td colspan="2"><%=is.get("settings.searchindex.manual")%></td></tr>
 </table>
 </form>
 

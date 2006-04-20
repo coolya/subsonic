@@ -9,7 +9,7 @@ import javax.servlet.http.*;
 import java.util.*;
 
 /**
- * Controller for the page used to administrate the set of music folders.
+ * Controller for the page used to administrate the set of internet radio/tv stations.
  *
  * @author Sindre Mehus
  */

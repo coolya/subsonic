@@ -115,6 +115,13 @@
         <property name="viewName"><value>internetRadioSettings</value></property>
         <property name="settingsService"><ref bean="settingsService"/></property>
     </bean>
+    <bean id="searchSettingsController" class="net.sourceforge.subsonic.controller.SearchSettingsController">
+        <property name="commandClass"><value>net.sourceforge.subsonic.command.SearchSettingsCommand</value></property>
+        <property name="successView"><value>searchSettings</value></property>
+        <property name="formView"><value>searchSettings</value></property>
+        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="searchService"><ref bean="searchService"/></property>
+    </bean>
     <bean id="homeController" class="net.sourceforge.subsonic.controller.HomeController">
         <property name="viewName"><value>home</value></property>
         <property name="musicInfoService"><ref bean="musicInfoService"/></property>
@@ -169,6 +176,7 @@
                 <prop key="/playerSettings.view">playerSettingsController</prop>
                 <prop key="/musicFolderSettings.view">musicFolderSettingsController</prop>
                 <prop key="/internetRadioSettings.view">internetRadioSettingsController</prop>
+                <prop key="/searchSettings.view">searchSettingsController</prop>
                 <prop key="/allmusic.view">allmusicController</prop>
                 <prop key="/albumInfo.view">albumInfoController</prop>
                 <prop key="/home.view">homeController</prop>
