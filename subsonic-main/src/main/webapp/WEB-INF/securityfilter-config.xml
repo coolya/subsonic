@@ -30,7 +30,7 @@
             <url-pattern>/userSettings.jsp</url-pattern>
             <url-pattern>/userSettingsConfirm.jsp</url-pattern>
             <url-pattern>/musicFolderSettings.jsp</url-pattern>
-            <url-pattern>/editInternetRadio.jsp</url-pattern>
+            <url-pattern>/internetRadioSettings.jsp</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>

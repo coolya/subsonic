@@ -29,6 +29,7 @@
 
  <h2><a href="playerSettings.view?"><%=is.get("settings.player.title")%></a></h2>
  <h2><a href="musicFolderSettings.view?"><%=is.get("settings.musicfolder.title")%></a></h2>
+ <h2><a href="internetRadioSettings.view?"><%=is.get("settings.radio.title")%></a></h2>
 
  <h2><%=is.get("settings.radio.title")%></h2>
 
