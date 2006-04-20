@@ -5,6 +5,7 @@
     <!--[if gte IE 5.5000]>
      <script type="text/javascript" src="pngfix.js"></script>
      <![endif]-->
+    <script type="text/javascript" src="<c:url value="/scripts.js"/>"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="<c:url value="/style.css"/>" rel="stylesheet">
 </head>
@@ -15,18 +16,13 @@
 <fmt:message key="common.unknown" var="unknown"/>
 <c:url value="/icons/help_small.png" var="helpUrl"/>
 
-<a href="settings.jsp"><img src="<c:url value="/icons/back.png"/>" align="middle" alt=""/> [<fmt:message key="common.back"/>]</a>
-
 <c:choose>
 <c:when test="${empty command.players}">
     <p><fmt:message key="playersettings.noplayers"/></p>
 </c:when>
 <c:otherwise>
 
-<form:form commandName="command" method="post" action="playerSettings.view">
-<form:hidden path="playerId"/>
-<table border="0" style="border-spacing:3pt">
-
+<table>
     <tr>
         <td><b><fmt:message key="playersettings.title"/></b></td>
         <td colspan="2">
@@ -38,10 +34,11 @@
             </select>
         </td>
     </tr>
+</table>
 
-    <tr>
-        <td colspan="3">&nbsp;</td>
-    </tr>
+<form:form commandName="command" method="post" action="playerSettings.view">
+<form:hidden path="playerId"/>
+<table style="border-spacing:3pt">
 
     <tr>
         <td><fmt:message key="playersettings.type"/></td>

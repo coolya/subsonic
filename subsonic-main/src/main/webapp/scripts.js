@@ -1,5 +1,3 @@
-// $Revision: 1.1 $ $Date: 2005/03/04 20:47:31 $
-
 function popup(mylink, windowname) {
   if (!window.focus) return true;
   var href;
