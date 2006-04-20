@@ -69,7 +69,7 @@
             <sub:url value="changeCoverArt.view" var="changeCoverArtUrl">
                 <sub:param name="path" value="${model.dir.path}"/>
             </sub:url>
-            <sub:url value="editTags.view" var="editTagsArtUrl">
+            <sub:url value="editTags.view" var="editTagsUrl">
                 <sub:param name="path" value="${model.dir.path}"/>
             </sub:url>
             | <a href="${changeCoverArtUrl}"><fmt:message key="main.cover"/></a>
