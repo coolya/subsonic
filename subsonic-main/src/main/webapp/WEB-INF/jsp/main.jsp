@@ -143,7 +143,7 @@
                 </c:import>
 
                 <c:choose>
-                    <c:when test="child.directory">
+                    <c:when test="${child.directory}">
                         <sub:url value="main.view" var="childUrl">
                             <sub:param name="path" value="${child.path}"/>
                         </sub:url>

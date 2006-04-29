@@ -25,7 +25,7 @@
 <table>
     <tr>
         <td><b><fmt:message key="playersettings.title"/></b></td>
-        <td colspan="2">
+        <td>
             <select name="player" onchange="location='playerSettings.view?id=' + options[selectedIndex].value;">
                 <c:forEach items="${command.players}" var="player">
                     <option ${player.id eq command.playerId ? "selected" : ""}

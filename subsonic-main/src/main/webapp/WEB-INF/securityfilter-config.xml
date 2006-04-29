@@ -8,6 +8,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Subsonic</web-resource-name>
+            <url-pattern>*.view</url-pattern>
             <url-pattern>*.jsp</url-pattern>
             <url-pattern>*.m3u</url-pattern>
             <url-pattern>/coverart</url-pattern>
@@ -24,12 +25,11 @@
             <web-resource-name>Subsonic (admin)</web-resource-name>
             <url-pattern>/createUser.jsp</url-pattern>
             <url-pattern>/createUserConfirm.jsp</url-pattern>
-            <url-pattern>/settingsConfirm.jsp</url-pattern>
-            <url-pattern>/userSettings.jsp</url-pattern>
-            <url-pattern>/userSettingsConfirm.jsp</url-pattern>
-            <url-pattern>/musicFolderSettings.jsp</url-pattern>
-            <url-pattern>/internetRadioSettings.jsp</url-pattern>
-            <url-pattern>/searchSettings.jsp</url-pattern>
+            <url-pattern>/generalSettings.view</url-pattern>
+            <url-pattern>/userSettings.view</url-pattern>
+            <url-pattern>/musicFolderSettings.view</url-pattern>
+            <url-pattern>/internetRadioSettings.view</url-pattern>
+            <url-pattern>/searchSettings.view</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>
