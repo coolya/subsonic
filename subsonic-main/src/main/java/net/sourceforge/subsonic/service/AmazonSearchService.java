@@ -77,7 +77,12 @@ public class AmazonSearchService {
 
             EditorialReviews review = item.getEditorialReviews();
             if (review != null) {
-                albumInfo.setEditorialReviews(review.getEditorialReview());
+                EditorialReview[] reviews = review.getEditorialReview();
+                String[] reviewStrings = new String[reviews.length];
+                for (int i = 0; i < reviews.length; i++) {
+                    reviewStrings[i] = reviews[i].getContent();
+                }
+                albumInfo.setEditorialReviews(reviewStrings);
             }
 
             Image image = item.getMediumImage();

@@ -67,7 +67,7 @@
         <dependency>
             <groupId>net.sourceforge.subsonic</groupId>
             <artifactId>subsonic-amazon</artifactId>
-            <version>2004-08-01</version>
+            <version>2006-03-08</version>
         </dependency>
 
 

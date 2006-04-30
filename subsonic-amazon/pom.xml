@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.sourceforge.subsonic</groupId>
     <artifactId>subsonic-amazon</artifactId>
-    <version>2004-08-01</version>
+    <version>2006-03-08</version>
     <name>Subsonic Amazon</name>
 
     <parent>
@@ -70,7 +70,7 @@
                                     <arg value="-W"/>
                                     <arg value="-p"/>
                                     <arg value="com.amazon.webservices.AWSECommerceService"/>
-                                    <arg value="http://webservices.amazon.com/AWSECommerceService/2004-08-01/AWSECommerceService.wsdl"/>
+                                    <arg value="http://webservices.amazon.com/AWSECommerceService/2006-03-08/AWSECommerceService.wsdl"/>
                                 </java>
                             </tasks>
                             <sourceRoot>${project.build.directory}/generated-sources/main/java</sourceRoot>
