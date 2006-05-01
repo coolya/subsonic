@@ -23,8 +23,6 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Subsonic (admin)</web-resource-name>
-            <url-pattern>/createUser.jsp</url-pattern>
-            <url-pattern>/createUserConfirm.jsp</url-pattern>
             <url-pattern>/generalSettings.view</url-pattern>
             <url-pattern>/userSettings.view</url-pattern>
             <url-pattern>/musicFolderSettings.view</url-pattern>

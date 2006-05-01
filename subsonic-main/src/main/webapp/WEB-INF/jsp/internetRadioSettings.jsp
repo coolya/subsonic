@@ -4,7 +4,6 @@
 <html><head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="<c:url value="/style.css"/>" rel="stylesheet">
-    <script type="text/javascript" src="<c:url value="/scripts.js"/>"/>
 </head>
 
 <body>
@@ -51,7 +50,7 @@
 </c:if>
 
 <c:if test="${model.reload}">
-    <script type="text/javascript">parent.frames.left.location.href="left.view?"</script>
+    <script language="javascript" type="text/javascript">parent.frames.left.location.href="left.view?"</script>
 </c:if>
 
 </body></html>
