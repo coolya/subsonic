@@ -4,7 +4,13 @@
 <html><head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="<c:url value="/style.css"/>" rel="stylesheet">
-</head><body>
+</head>
+
+<body>
+
+<c:import url="settingsHeader.jsp">
+    <c:param name="cat" value="user"/>
+</c:import>
 
 <script type="text/javascript" language="javascript">
     function enablePasswordFields() {

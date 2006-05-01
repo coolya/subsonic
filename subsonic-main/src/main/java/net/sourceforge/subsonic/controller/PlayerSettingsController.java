@@ -23,6 +23,7 @@ public class PlayerSettingsController extends SimpleFormController {
         handleRequestParameters(request);
         List<Player> players = getPlayers(request);
 
+        User user = securityService.getCurrentUser(request);
         PlayerSettingsCommand command = new PlayerSettingsCommand();
         Player player = null;
         String playerId = request.getParameter("id");
@@ -48,6 +49,7 @@ public class PlayerSettingsController extends SimpleFormController {
         command.setCoverArtSchemes(CoverArtScheme.values());
         command.setTranscodeSchemes(TranscodeScheme.values());
         command.setPlayers(players.toArray(new Player[0]));
+        command.setAdmin(user.isAdminRole());
 
         return command;
     }

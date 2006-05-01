@@ -12,6 +12,10 @@
 
 <body>
 
+<c:import url="settingsHeader.jsp">
+    <c:param name="cat" value="general"/>
+</c:import>
+
 <fmt:message key="common.help" var="help"/>
 <c:url value="/icons/help_small.png" var="helpUrl"/>
 
@@ -105,9 +109,11 @@
 </form:form>
 
 <c:if test="${command.reloadNeeded}">
-    <script type="text/javascript">parent.frames.left.location.href="left.view?"</script>
-    <script type="text/javascript">parent.frames.top.location.href="top.view?"</script>
-    <script type="text/javascript">parent.frames.playlist.location.href="playlist.view?"</script>
+    <script language="javascript" type="text/javascript">
+        parent.frames.left.location.href="left.view?";
+        parent.frames.top.location.href="top.view?";
+        parent.frames.playlist.location.href="playlist.view?";
+    </script>
 </c:if>
 
 </body></html>

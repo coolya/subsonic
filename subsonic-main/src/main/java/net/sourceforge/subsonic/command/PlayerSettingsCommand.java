@@ -25,6 +25,7 @@ public class PlayerSettingsCommand {
     private EnumHolder[] transcodeSchemeHolders;
     private EnumHolder[] coverArtSchemeHolders;
     private Player[] players;
+    private boolean isAdmin;
 
     public String getPlayerId() {
         return playerId;
@@ -136,6 +137,14 @@ public class PlayerSettingsCommand {
 
     public void setPlayers(Player[] players) {
         this.players = players;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     /**

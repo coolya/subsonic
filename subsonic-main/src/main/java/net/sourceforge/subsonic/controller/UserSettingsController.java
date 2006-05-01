@@ -65,8 +65,6 @@ public class UserSettingsController extends SimpleFormController {
         user.setCoverArtRole(command.isCoverArtRole());
         user.setCommentRole(command.isCommentRole());
 
-        // TODO: Validator
-
         if (command.isPasswordChange()) {
             user.setPassword(command.getPassword());
         }

@@ -2,12 +2,17 @@
 <%@ include file="include.jsp" %>
 
 <html><head>
-    <script type="text/javascript" src="<c:url value="/scripts.js"/>"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="<c:url value="/style.css"/>" rel="stylesheet">
+    <script type="text/javascript" src="<c:url value="/scripts.js"/>"/>
 </head>
 
 <body>
+
+<c:import url="settingsHeader.jsp">
+    <c:param name="cat" value="musicFolder"/>
+</c:import>
+
 <table>
     <tr>
         <th><fmt:message key="musicfoldersettings.name"/></th>
