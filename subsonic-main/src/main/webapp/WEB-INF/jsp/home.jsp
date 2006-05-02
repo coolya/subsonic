@@ -42,7 +42,7 @@
                 </td></tr>
 
                 <tr><td>
-                    <div style="color:dimgray;font-size:8pt">
+                    <div class="detail">
                         <c:if test="${not empty album.playCount}">
                             <fmt:message key="home.playcount"><fmt:param value="${album.playCount}"/></fmt:message>
                         </c:if>

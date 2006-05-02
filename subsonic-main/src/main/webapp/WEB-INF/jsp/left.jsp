@@ -7,8 +7,8 @@
 </head>
 <body style="background-color:#DEE3E7">
 
-<p style="font-size:8pt; white-space:nowrap"><em>
-    <c:if test="${model.statistics != null}">
+<c:if test="${model.statistics != null}">
+    <div class="detail">
         <fmt:message key="left.statistics">
             <fmt:param value="${model.statistics.artistCount}"/>
             <fmt:param value="${model.statistics.albumCount}"/>
@@ -16,8 +16,9 @@
             <fmt:param value="${model.bytes}"/>
             <fmt:param value="${model.hours}"/>
         </fmt:message>
-    </c:if>
-</em></p>
+    </div>
+    <br/>
+</c:if>
 
 <c:if test="${fn:length(model.musicFolders) > 1}">
     <select name="musicFolderId" style="width:100%" onchange="location='left.view?musicFolderId=' + options[selectedIndex].value;" >

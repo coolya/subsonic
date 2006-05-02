@@ -1,24 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1" %>
 <%@ include file="include.jsp" %>
 
-<h2 style="white-space:nowrap">
+<c:set var="categories" value="${param.restricted ? 'password player' : 'general musicFolder user player internetRadio search'}"/>
 
-    <c:choose>
-        <c:when test="${param.restricted}">
-${param.cat eq 'password' ? "" : "<a href='passwordSettings.view?'>"}<fmt:message key="settingsheader.password"/>${param.cat eq 'password' ? "" : "</a>"} |
-${param.cat eq 'player' ? "" : "<a href='playerSettings.view?'>"}<fmt:message key="settingsheader.player"/>${param.cat eq 'player' ? "" : "</a>"} 
-        </c:when>
+<h2>
+    <c:forTokens items="${categories}" delims=" " var="cat" varStatus="loopStatus">
+        <c:if test="${loopStatus.count > 1}">&nbsp;|&nbsp;</c:if>
+        <c:url var="url" value="${cat}Settings.view?"/>
 
-        <c:otherwise>
-${param.cat eq 'general' ? "" : "<a href='generalSettings.view?'>"}<fmt:message key="settingsheader.general"/>${param.cat eq 'general' ? "" : "</a>"} |
-${param.cat eq 'musicFolder' ? "" : "<a href='musicFolderSettings.view?'>"}<fmt:message key="settingsheader.musicfolder"/>${param.cat eq 'musicFolder' ? "" : "</a>"} |
-${param.cat eq 'user' ? "" : "<a href='userSettings.view?'>"}<fmt:message key="settingsheader.user"/>${param.cat eq 'user' ? "" : "</a>"} |
-${param.cat eq 'player' ? "" : "<a href='playerSettings.view?'>"}<fmt:message key="settingsheader.player"/>${param.cat eq 'player' ? "" : "</a>"} |
-${param.cat eq 'internetRadio' ? "" : "<a href='internetRadioSettings.view?'>"}<fmt:message key="settingsheader.radio"/>${param.cat eq 'internetRadio' ? "" : "</a>"} |
-${param.cat eq 'search' ? "" : "<a href='searchSettings.view?'>"}<fmt:message key="settingsheader.search"/>${param.cat eq 'search' ? "" : "</a>"}
-        </c:otherwise>
-    </c:choose>
+        <c:choose>
+            <c:when test="${param.cat eq cat}">
+                <span class="settingsHeaderSelected"><fmt:message key="settingsheader.${cat}"/></span>
+            </c:when>
+            <c:otherwise>
+                <a href="${url}"><fmt:message key="settingsheader.${cat}"/></a>
+            </c:otherwise>
+        </c:choose>
 
+    </c:forTokens>
 </h2>
-
 <p/>

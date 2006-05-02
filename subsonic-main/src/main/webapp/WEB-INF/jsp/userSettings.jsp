@@ -87,12 +87,12 @@
                 <tr>
                     <td><fmt:message key="usersettings.username"/></td>
                     <td><form:password path="username"/></td>
-                    <td style="color:red"><form:errors path="username"/></td>
+                    <td class="warning"><form:errors path="username"/></td>
                 </tr>
                 <tr>
                     <td><fmt:message key="usersettings.password"/></td>
                     <td><form:password path="password"/></td>
-                    <td style="color:red"><form:errors path="password"/></td>
+                    <td class="warning"><form:errors path="password"/></td>
                 </tr>
                 <tr>
                     <td><fmt:message key="usersettings.confirmpassword"/></td>
@@ -114,7 +114,7 @@
                 <tr>
                     <td><fmt:message key="usersettings.newpassword"/></td>
                     <td><form:password path="password" id="path"/></td>
-                    <td style="color:red"><form:errors path="password"/></td>
+                    <td class="warning"><form:errors path="password"/></td>
                 </tr>
                 <tr>
                     <td><fmt:message key="usersettings.confirmpassword"/></td>

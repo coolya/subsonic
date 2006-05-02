@@ -100,14 +100,16 @@
          alt="<fmt:message key="main.rating"/> ${model.rating}"
          ${model.user.commentRole ? "usemap='#ratingMap'" : ""}/>
 
-    <fmt:message key="main.playcount"><fmt:param value="${model.playCount}"/></fmt:message>
-    <c:if test="${not empty model.lastPlayed}">
-        <fmt:message key="main.lastplayed">
-            <fmt:param><fmt:formatDate type="date" dateStyle="long" value="${model.lastPlayed}"/></fmt:param>
-        </fmt:message>
-    </c:if>
+    <span class="detail">
+        <fmt:message key="main.playcount"><fmt:param value="${model.playCount}"/></fmt:message>
+        <c:if test="${not empty model.lastPlayed}">
+            <fmt:message key="main.lastplayed">
+                <fmt:param><fmt:formatDate type="date" dateStyle="long" value="${model.lastPlayed}"/></fmt:param>
+            </fmt:message>
+        </c:if>
+    </span>
 
-    <div id="commentDiv" style="width:50%;font-style:italic;white-space:pre;">${model.comment}</div>
+    <div id="comment" class="comment">${model.comment}</div>
 
     <form method="post" id="commentForm" action="setMusicFileInfo.view" style="display:none">
         <input type="hidden" name="action" value="comment"/>
@@ -119,7 +121,7 @@
     <script type='text/javascript'>
         function toggleComment() {
             var commentForm = document.getElementById('commentForm');
-            var commentDiv = document.getElementById('commentDiv');
+            var commentDiv = document.getElementById('comment');
 
             if (commentForm.style.display == "none")  {
                 commentForm.style.display = "";

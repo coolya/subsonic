@@ -1,11 +1,11 @@
 form {
-    font-family: verdana, arial;
+    font-family: verdana, arial, sans-serif;
     font-size: 9pt;
     line-height: 14pt
 }
 
 body {
-    font-family: verdana, arial;
+    font-family: verdana, arial, sans-serif;
     font-size: 9pt;
     line-height: 14pt;
     background-color: #EFEFEF;
@@ -19,7 +19,7 @@ body {
 }
 
 p {
-    font-family: verdana, arial;
+    font-family: verdana, arial, sans-serif;
     font-size: 9pt;
     line-height: 14pt
 }
@@ -31,29 +31,29 @@ p.dense {
 }
 
 label {
-    font-family: verdana, arial;
+    font-family: verdana, arial, sans-serif;
     font-size: 9pt;
     line-height: 14pt
 }
 
 table {
-    font-family: verdana, arial;
+    font-family: verdana, arial, sans-serif;
     font-size: 9pt;
     line-height: 12pt
 }
 
 h1 {
-    font-family: verdana, arial;
+    font-family: verdana, arial, sans-serif;
     font-size: 12pt
 }
 
 h2 {
-    font-family: verdana, arial;
+    font-family: verdana, arial, sans-serif;
     font-size: 9pt
 }
 
 a {
-    font-family: verdana, arial;
+    font-family: verdana, arial, sans-serif;
     font-size: 9pt;
     text-decoration: none
 }
@@ -69,4 +69,46 @@ a:hover {
 
 img {
     border-style: none
+}
+
+h1 {
+    white-space: nowrap;
+    font-family: arial, sans-serif;
+    color: dimgray;
+}
+
+h2 {
+    white-space: nowrap;
+    margin: 1em 1em 0.2em 0em;
+    color: #333333;
+}
+
+.settingsHeaderSelected {
+    padding: 0.2em;
+    background-color: lightgray;
+}
+
+.detail {
+    white-space: nowrap;
+    color: dimgray;
+    font-size: 8pt;
+    line-height: 1.25em;
+}
+
+.warning {
+    white-space: nowrap;
+    color: red;
+}
+
+.logo {
+    font-family: arial, sans-serif;
+    white-space: nowrap;
+    font-size: 16pt;
+}
+
+.comment {
+    white-space: pre;
+    width: 50%;
+    color: dimgray;
+    font-size: 8pt;
 }

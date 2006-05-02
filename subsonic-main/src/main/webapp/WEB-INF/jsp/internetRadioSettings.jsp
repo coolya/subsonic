@@ -46,7 +46,7 @@
 </table>
 
 <c:if test="${not empty model.error}">
-    <p style="color:red;"><fmt:message key="${model.error}"/></p>
+    <p class="warning"><fmt:message key="${model.error}"/></p>
 </c:if>
 
 <c:if test="${model.reload}">

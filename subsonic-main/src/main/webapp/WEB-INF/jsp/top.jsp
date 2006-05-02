@@ -19,7 +19,7 @@
 <fmt:message key="top.search" var="search"/>
 
 <table><tr valign="middle">
-    <td style="font-size:16pt"><a href="help.view?" target="main"><img src="<c:url value="/icons/logo.gif"/>" title="${help}"/></a>&nbsp;Subsonic</td>
+    <td class="logo"><a href="help.view?" target="main"><img src="<c:url value="/icons/logo.gif"/>" title="${help}"/></a>&nbsp;Subsonic</td>
     <td style="padding-left:20pt; padding-right:20pt">
 
         <c:choose>
@@ -69,7 +69,7 @@
 
             <c:if test="${model.newVersionAvailable}">
                 <td style="padding-left:15pt">
-                    <p style="color:red; white-space:nowrap;">
+                    <p class="warning">
                         <fmt:message key="top.upgrade"><fmt:param value="${model.latestVersion}"/></fmt:message>
                     </p>
                 </td>
