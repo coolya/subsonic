@@ -6,7 +6,7 @@
     <link href="<c:url value="/style.css"/>" rel="stylesheet">
 </head>
 
-<body>
+<body onload="javascript:enablePasswordFields()">
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="user"/>
