@@ -24,7 +24,7 @@
             <tr>
                 <td><fmt:message key="usersettings.password"/></td>
                 <td><form:password path="password"/></td>
-                <td style="color:red"><form:errors path="password"/></td>
+                <td class="warning"><form:errors path="password"/></td>
             </tr>
             <tr>
                 <td><fmt:message key="usersettings.confirmpassword"/></td>

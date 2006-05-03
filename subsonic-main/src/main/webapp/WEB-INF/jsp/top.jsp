@@ -42,7 +42,7 @@
             </c:when>
 
             <c:otherwise>
-                <p style="color:red"><fmt:message key="top.missing"/></p>
+                <p class="warning"><fmt:message key="top.missing"/></p>
             </c:otherwise>
         </c:choose>
 

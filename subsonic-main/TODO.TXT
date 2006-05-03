@@ -1,20 +1,10 @@
 
-Settings refactoring
---------------------
-SettingsController:  Redirect to RestrictedSettings or PrivilegedSettings.
-
-PrivilegedSettings (tabs, iframes)
-o General
-o Music folders
-o Player
-o Users
-o Internet radio/tv
-o Search index
-
-
-
 PRIORITIZED FOR VERSION 2.7
 ===========================
+Password field hiding/showing doesn't work in Firefox or IE.
+Add Settings h1 title.
+Error in Amazon when searching for "degraw".
+Change in editTags.jsp: Suggest title   ->  Suggest / Reset
 Should receive feedback when changing passwords.
 userSettings.jsp: Error when passwords differ.
 Verify that security works.

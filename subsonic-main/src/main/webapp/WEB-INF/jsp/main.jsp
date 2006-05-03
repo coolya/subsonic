@@ -109,7 +109,7 @@
         </c:if>
     </span>
 
-    <div id="comment" class="comment">${model.comment}</div>
+    <div id="comment" class="albumComment">${model.comment}</div>
 
     <form method="post" id="commentForm" action="setMusicFileInfo.view" style="display:none">
         <input type="hidden" name="action" value="comment"/>

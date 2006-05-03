@@ -15,7 +15,7 @@
                 <input type="submit" value="<fmt:message key="playlist.save.save"/>"></td>
         </tr>
         <tr>
-            <td colspan="2" style="color:red"><form:errors path="name"/></td>
+            <td colspan="2" class="warning"><form:errors path="name"/></td>
         </tr>
     </table>
 </form:form>

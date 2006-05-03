@@ -30,7 +30,7 @@
 <h1><fmt:message key="help.title"/></h1>
 
 <c:if test="${model.newVersionAvailable}">
-    <p style="color:red"><fmt:message key="help.upgrade"><fmt:param value="${model.latestVersion}"/></fmt:message></p>
+    <p class="warning"><fmt:message key="help.upgrade"><fmt:param value="${model.latestVersion}"/></fmt:message></p>
 </c:if>
 
 <table border="1" cellpadding="5" width="75%" rules="all">

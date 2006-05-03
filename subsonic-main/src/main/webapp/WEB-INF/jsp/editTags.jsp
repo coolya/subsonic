@@ -114,6 +114,6 @@
 </table>
 
 <p><input type="submit" id="save" value="<fmt:message key="common.save"/>" onclick="javascript:updateTags()"/></p>
-<div style="color:red" id="errors"/>
+<div class="warning" id="errors"/>
 
 </body></html>

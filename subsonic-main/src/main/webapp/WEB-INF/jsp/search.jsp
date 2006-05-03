@@ -41,7 +41,7 @@
 </form:form>
 
 <c:if test="${command.indexBeingCreated}">
-    <p style="color:red"><fmt:message key="search.index"/></p>
+    <p class="warning"><fmt:message key="search.index"/></p>
 </c:if>
 
 <c:if test="${command.matches != null}">

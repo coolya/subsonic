@@ -106,9 +106,10 @@ h2 {
     font-size: 16pt;
 }
 
-.comment {
+.albumComment {
     white-space: pre;
     width: 50%;
     color: dimgray;
     font-size: 8pt;
+    line-height: 1.4em;
 }
