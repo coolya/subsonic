@@ -8,7 +8,7 @@ body {
     font-family: verdana, arial, sans-serif;
     font-size: 9pt;
     line-height: 14pt;
-    background-color: #EFEFEF;
+    /*background-color: #EFEFEF;*/
     scrollbar-face-color: #DEE3E7;
     scrollbar-highlight-color: #FFFFFF;
     scrollbar-shadow-color: #DEE3E7;
@@ -44,7 +44,8 @@ table {
 
 h1 {
     font-family: verdana, arial, sans-serif;
-    font-size: 12pt
+    font-size: 12pt;
+    padding-bottom: 0.5em;
 }
 
 h2 {
@@ -83,9 +84,14 @@ h2 {
     color: #333333;
 }
 
+img {
+    vertical-align:text-bottom;
+}
+
 .settingsHeaderSelected {
-    padding: 0.2em;
+    padding: 0.3em;
     background-color: lightgray;
+    border: 1px solid;
 }
 
 .detail {
@@ -116,4 +122,8 @@ h2 {
 
 .color1 {
     background-color:#DEE3E7
+}
+
+body, .color2 {
+    background-color: #EFEFEF;
 }

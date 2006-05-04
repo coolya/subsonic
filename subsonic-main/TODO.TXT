@@ -1,6 +1,8 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
+Add title to "More" page.
+Add icons to titles?
 Progress bar in file upload.  See forum post.
 Quick link to "#" doesn't work.
 CSS

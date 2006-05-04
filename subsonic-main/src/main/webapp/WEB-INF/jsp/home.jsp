@@ -9,7 +9,11 @@
     <link href="<c:url value="/style.css"/>" rel="stylesheet">
 </head><body>
 
-<h1>${model.welcomeMessage}</h1>
+<h1>
+    <img src="<c:url value="/icons/home.png"/>" alt=""/>
+    ${model.welcomeMessage}
+</h1>
+
 <h2>
     <a href="home.view?listSize=${model.listSize}&listType=random"><fmt:message key="home.random.title"/></a> |
     <a href="home.view?listSize=${model.listSize}&listType=newest"><fmt:message key="home.newest.title"/></a> |

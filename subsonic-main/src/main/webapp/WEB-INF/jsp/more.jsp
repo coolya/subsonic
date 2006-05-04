@@ -9,6 +9,11 @@
     <link href="<c:url value="/style.css"/>" rel="stylesheet">
 </head><body>
 
+<h1>
+    <img src="<c:url value="/icons/more.png"/>" alt=""/>
+    <fmt:message key="more.title"/>
+</h1>
+
 <h2><img src="<c:url value="/icons/random.png"/>" width="16" height="16"/>&nbsp;<fmt:message key="more.random.title"/></h2>
 
 <form method="post" action="randomPlaylist.view">

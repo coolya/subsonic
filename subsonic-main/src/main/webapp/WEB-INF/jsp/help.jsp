@@ -27,7 +27,10 @@
     </c:otherwise>
 </c:choose>
 
-<h1><fmt:message key="help.title"/></h1>
+<h1>
+    <img src="<c:url value="/icons/help.png"/>" alt=""/>
+    <fmt:message key="help.title"/>
+</h1>
 
 <c:if test="${model.newVersionAvailable}">
     <p class="warning"><fmt:message key="help.upgrade"><fmt:param value="${model.latestVersion}"/></fmt:message></p>

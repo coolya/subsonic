@@ -6,7 +6,10 @@
     <link href="<c:url value="/style.css"/>" rel="stylesheet">
 </head><body>
 
-<h1><fmt:message key="search.title"/></h1>
+<h1>
+    <img src="<c:url value="/icons/search_small.png"/>" alt=""/>
+    <fmt:message key="search.title"/>
+</h1>
 
 <form:form commandName="command" method="post" action="search.view">
     <p>

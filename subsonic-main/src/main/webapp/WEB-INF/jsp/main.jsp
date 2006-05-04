@@ -40,7 +40,11 @@
 </c:if>
 
 
-<h1>${model.dir.formattedPath}</h1>
+<h1>
+    <img src="<c:url value="/icons/now_playing.png"/>" alt=""/>
+    ${model.dir.formattedPath}
+</h1>
+
 <h2>
     <c:if test="${not model.dir.parent.root}">
         <sub:url value="main.view" var="upUrl">

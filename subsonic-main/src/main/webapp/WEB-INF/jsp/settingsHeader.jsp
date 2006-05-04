@@ -2,7 +2,11 @@
 <%@ include file="include.jsp" %>
 
 <c:set var="categories" value="${param.restricted ? 'password player' : 'general musicFolder user player internetRadio search'}"/>
-<h1><fmt:message key="settingsheader.title"/></h1>
+<h1>
+    <img src="<c:url value="/icons/settings.png"/>" alt=""/>
+    <fmt:message key="settingsheader.title"/>
+</h1>
+
 <h2>
     <c:forTokens items="${categories}" delims=" " var="cat" varStatus="loopStatus">
         <c:if test="${loopStatus.count > 1}">&nbsp;|&nbsp;</c:if>

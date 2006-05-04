@@ -103,10 +103,10 @@
                     <sub:url value="main.view" var="mainUrl">
                         <sub:param name="path" value="${song.parentPath}"/>
                     </sub:url>
-                    <td style="${i % 2 == 0 ? "background-color:#f0f0f0" : ""}">
+                    <td ${i % 2 == 0 ? "class='color2'" : ""}>
                         <a href="playlist.view?skip=${i}">${song.current ? "<b>" : ""}<str:truncateNicely upper="50">${song.title}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
                     </td>
-                    <td style="${i % 2 == 0 ? "background-color:#f0f0f0" : ""}">
+                    <td ${i % 2 == 0 ? "class='color2'" : ""}>
                         <a target="main" href="${mainUrl}">${song.artistAlbumYear}</a>
                     </td>
                 </tr>

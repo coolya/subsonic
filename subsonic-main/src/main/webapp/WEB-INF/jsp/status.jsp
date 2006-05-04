@@ -8,7 +8,11 @@
     <link href="<c:url value="/style.css"/>" rel="stylesheet">
 </head><body>
 
-<h1><fmt:message key="status.title"/></h1>
+<h1>
+    <img src="<c:url value="/icons/status.png"/>" alt=""/> 
+    <fmt:message key="status.title"/>
+</h1>
+
 <table border="1" cellpadding="10" rules="all">
     <tr class="color1">
         <th><fmt:message key="status.player"/></th>
