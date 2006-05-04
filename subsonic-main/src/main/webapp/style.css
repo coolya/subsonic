@@ -108,8 +108,12 @@ h2 {
 
 .albumComment {
     white-space: pre;
-    width: 50%;
     color: dimgray;
     font-size: 8pt;
     line-height: 1.4em;
+    padding-top:0.25em;
+}
+
+.color1 {
+    background-color:#DEE3E7
 }

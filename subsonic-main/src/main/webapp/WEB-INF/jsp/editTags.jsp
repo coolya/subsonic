@@ -36,6 +36,12 @@
             DWRUtil.setValue("title" + i, title);
         }
     }
+    function resetTitle() {
+        for (i = 0; i < fileCount; i++) {
+            var title = DWRUtil.getValue("originalTitle" + i);
+            DWRUtil.setValue("title" + i, title);
+        }
+    }
     function updateTags() {
         document.getElementById("save").disabled = true;
         index = 0;
@@ -82,15 +88,16 @@
 <p/>
 
 <table border="1" cellpadding="5" rules="all">
-    <tr style="background-color:#DEE3E7;">
+    <tr class="color1">
         <th><fmt:message key="edittags.file"/></th>
         <th><fmt:message key="edittags.songtitle"/></th>
         <th><fmt:message key="edittags.artist"/></th>
         <th><fmt:message key="edittags.album"/></th>
         <th><fmt:message key="edittags.year"/></th>
         <th width="60pt"><fmt:message key="edittags.status"/></th></tr>
-    <tr style="background-color:#DEE3E7;"><th></th>
-        <th><a href="javascript:suggestTitle()"><fmt:message key="edittags.suggest"/></a></th>
+    <tr class="color1"><th></th>
+        <th><a href="javascript:suggestTitle()"><fmt:message key="edittags.suggest"/></a> |
+            <a href="javascript:resetTitle()"><fmt:message key="edittags.reset"/></a></th>
         <th><input type="text" name="artistAll" size="15" onkeypress="DWRUtil.onReturn(event, setArtist)" value="${model.defaultArtist}"/>&nbsp;<a href="javascript:setArtist()"><fmt:message key="edittags.set"/></a></th>
         <th><input type="text" name="albumAll" size="15" onkeypress="DWRUtil.onReturn(event, setAlbum)" value="${model.defaultAlbum}"/>&nbsp;<a href="javascript:setAlbum()"><fmt:message key="edittags.set"/></a></th>
         <th><input type="text" name="yearAll" size="5" onkeypress="DWRUtil.onReturn(event, setYear)" value="${model.defaultYear}"/>&nbsp;<a href="javascript:setYear()"><fmt:message key="edittags.set"/></a></th>
@@ -102,6 +109,7 @@
             <str:truncateNicely lower="25" upper="25" var="fileName">${song.fileName}</str:truncateNicely>
             <input type="hidden" name="path${loopStatus.count - 1}" value="${song.path}"/>
             <input type="hidden" name="suggestedTitle${loopStatus.count - 1}" value="${song.suggestedTitle}"/>
+            <input type="hidden" name="originalTitle${loopStatus.count - 1}" value="${song.title}"/>
             <td>${fileName}</td>
             <td><input type="text" size="30" name="title${loopStatus.count - 1}" value="${song.title}"/></td>
             <td><input type="text" size="15" name="artist${loopStatus.count - 1}" value="${song.artist}"/></td>

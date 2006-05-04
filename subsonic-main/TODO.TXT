@@ -1,18 +1,14 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
-Password field hiding/showing doesn't work in Firefox or IE.
-Add Settings h1 title.
-Error in Amazon when searching for "degraw".
-Change in editTags.jsp: Suggest title   ->  Suggest / Reset
+Progress bar in file upload.  See forum post.
+Quick link to "#" doesn't work.
+CSS
 Should receive feedback when changing passwords.
-userSettings.jsp: Error when passwords differ.
 Verify that security works.
 Option to configure special quick links, e.g., "Compilation", "New", "Miscellaneous".
-Regular reload home page if random.
 Click on cover art to pop-up unscaled.
 java.io.FileNotFoundException: C:\music\The Alan Parsons Project\The Best of The Alan Parsons Project\folder.jpg (Access is denied)
-Check links inside resource bundle.
 Access control of players.  Avoid security hole for deleting other people's players.
 DWREngine problem.
 Use HTML 4.01, validate all pages.
@@ -29,15 +25,12 @@ Jetty
 Rewrite to Spring MVC.
 Rating where you can see how much each user has uploaded/downloaded/streamed.  Use JFreeChart?
 Update text for coverart role. Now includes tag editing.
-Make it possible to undo "suggest title".
 Subtract 10% in chart minimum.
-Separate log properties for test?
 Display image embedded in ID3 tag (APIC).
 Transcoding plugin framework. (Check out Jinzora transcoding pack.)
 Reimplement LAME integration.
 Specify upload directory per user. Option to delete files?
 Upload quota per user.
-Set content-length when downloading a single file.
 Improve performance for new/best charts.
 Support reverse proxies.  Send url as parameter. (<a href="javascript:document.location.href='foo.jsp?referrer=' + document.location.href">Trykk her</a>)
 Support forward proxies.
@@ -57,6 +50,7 @@ New: Download playlists.
 Bugfix: Avoid wrapped lines if browser window is small.
 Bugfix: Use proper range in Y-axis.
 Bugfix: Integer overflow in search index creation interval.
+Bugfix: Some Amazon search didn't show any results.
 
 BACKLOG
 ==========

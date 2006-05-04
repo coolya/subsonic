@@ -10,7 +10,7 @@
 
 <h1><fmt:message key="status.title"/></h1>
 <table border="1" cellpadding="10" rules="all">
-    <tr>
+    <tr class="color1">
         <th><fmt:message key="status.player"/></th>
         <th><fmt:message key="status.user"/></th>
         <th><fmt:message key="status.current"/></th>
@@ -66,7 +66,7 @@
 
     <h1><fmt:message key="status.download.title"/></h1>
     <table border="1" cellpadding="10" rules="all">
-        <tr>
+        <tr class="color1">
             <th><fmt:message key="status.player"/></th>
             <th><fmt:message key="status.user"/></th>
             <th><fmt:message key="status.current"/></th>

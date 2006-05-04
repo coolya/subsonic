@@ -3,6 +3,9 @@
 
 <html><head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <c:if test="${model.listType eq 'random'}">
+        <meta http-equiv="refresh" content="15">
+    </c:if>
     <link href="<c:url value="/style.css"/>" rel="stylesheet">
 </head><body>
 

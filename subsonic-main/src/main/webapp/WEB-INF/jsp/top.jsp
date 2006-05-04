@@ -8,7 +8,7 @@
      <script type="text/javascript" src="pngfix.js"></script>
      <![endif]-->
 </head>
-<body style="background-color:#DEE3E7">
+<body class="color1">
 
 <fmt:message key="top.home" var="home"/>
 <fmt:message key="top.now_playing" var="nowPlaying"/>

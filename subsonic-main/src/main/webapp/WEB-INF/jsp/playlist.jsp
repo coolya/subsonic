@@ -9,7 +9,7 @@
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
 </head>
 
-<body style="background-color:#DEE3E7" onload="onload()">
+<body class="color1" onload="onload()">
 
 <!-- This script uses AJAX to periodically check if the current song has changed. -->
 <script type="text/javascript" language="javascript">

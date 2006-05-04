@@ -15,10 +15,14 @@
 <script type="text/javascript" language="javascript">
     function enablePasswordFields() {
         var display = "none";
-        if (document.getElementById("passwordChange").checked) {
+        var checkbox = document.getElementById("passwordChange");
+        var table = document.getElementById("passwordTable");
+        if (checkbox && checkbox.checked) {
             display = "inline";
         }
-        document.getElementById("passwordTable").style.display = display;
+        if (table) {
+            table.style.display = display;
+        }
     }
 </script>
 

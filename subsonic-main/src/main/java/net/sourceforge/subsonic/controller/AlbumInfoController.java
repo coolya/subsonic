@@ -48,8 +48,8 @@ public class AlbumInfoController extends SimpleFormController {
                 match.setArtists(formatArtists(info));
                 match.setAlbum(formatAlbum(info));
                 match.setReviews(formatReviews(info));
-                match.setLabel(replaceQuotes(info.getLabel()));
-                match.setReleased(replaceQuotes(info.getReleaseDate()));
+                match.setLabel(replaceSpecialChars(info.getLabel()));
+                match.setReleased(replaceSpecialChars(info.getReleaseDate()));
                 match.setImageUrl(info.getImageUrl() == null ? "coverart?size=160" : info.getImageUrl());
                 match.setDetailPageUrl(info.getDetailPageUrl());
                 matches.add(match);
@@ -73,7 +73,7 @@ public class AlbumInfoController extends SimpleFormController {
             }
             s.append(artists[i]);
         }
-        return replaceQuotes(s.toString());
+        return replaceSpecialChars(s.toString());
     }
 
     private String formatAlbum(AmazonAlbumInfo info) {
@@ -83,7 +83,7 @@ public class AlbumInfoController extends SimpleFormController {
         for (int i = 0; i < formats.length; i++) {
             s.append(" [").append(formats[i]).append(']');
         }
-        return replaceQuotes(s.toString());
+        return replaceSpecialChars(s.toString());
     }
 
     private String formatReviews(AmazonAlbumInfo info) {
@@ -95,15 +95,19 @@ public class AlbumInfoController extends SimpleFormController {
             }
             s.append(reviews[i]);
         }
-        return replaceQuotes(s.toString());
+        return replaceSpecialChars(s.toString());
     }
 
-    private String replaceQuotes(String s) {
+    private String replaceSpecialChars(String s) {
         if (s == null) {
             return null;
         }
 
-        return s.replaceAll("'", "&#39;").replaceAll("\"", "&#34;");
+        s = s.replaceAll("'", "&#39;");
+        s = s.replaceAll("\"", "&#34;");
+        s = s.replaceAll("\\n", "<br/>");
+
+        return s ;
     }
 
     public void setAmazonSearchService(AmazonSearchService amazonSearchService) {
