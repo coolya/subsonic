@@ -1,8 +1,9 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
-Add title to "More" page.
-Add icons to titles?
+Send CV til Tommy
+Remove debug-logging in SearchService. (Create new level, PERF?)
+Re-work home page.
 Progress bar in file upload.  See forum post.
 Quick link to "#" doesn't work.
 CSS

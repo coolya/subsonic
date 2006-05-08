@@ -1,22 +1,29 @@
 package net.sourceforge.subsonic;
 
+import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.util.*;
+import org.apache.commons.lang.exception.*;
 
+import java.io.*;
+import java.text.*;
 import java.util.*;
 
 /**
- * Wrapper around log4j logger.
+ * Logger implementation which logs to SUBSONIC_HOME/subsonic.log.
+ * <br/>
+ * Note: Third party logging libraries (such as log4j and Commons logging) are intentionally not
+ * used. These libraries causes a lot of headache when deploying to some application servers
+ * (for instance Jetty and JBoss).
  *
  * @author Sindre Mehus
  * @version $Revision: 1.1 $ $Date: 2005/05/09 19:58:26 $
  */
 public class Logger {
 
-    /** The wrapped log4j logger. */
-    private org.apache.log4j.Logger logger;
     private String category;
 
     private static List<Entry> entries = Collections.synchronizedList(new BoundedList<Entry>(50));
+    private static PrintWriter writer;
 
     /**
      * Creates a logger for the given class.
@@ -45,8 +52,6 @@ public class Logger {
     }
 
     private Logger(String name) {
-        this.logger = org.apache.log4j.Logger.getLogger(name);
-
         int lastDot = name.lastIndexOf('.');
         if (lastDot == -1) {
             category = name;
@@ -69,7 +74,6 @@ public class Logger {
      * @param error The optional exception.
      */
     public void debug(Object message, Throwable error) {
-        logger.debug(message, error);
         add(Level.DEBUG, message, error);
     }
 
@@ -87,7 +91,6 @@ public class Logger {
      * @param error The optional exception.
      */
     public void info(Object message, Throwable error) {
-        logger.info(message, error);
         add(Level.INFO, message, error);
     }
 
@@ -105,7 +108,6 @@ public class Logger {
      * @param error The optional exception.
      */
     public void warn(Object message, Throwable error) {
-        logger.warn(message, error);
         add(Level.WARN, message, error);
     }
 
@@ -123,25 +125,32 @@ public class Logger {
      * @param error The optional exception.
      */
     public void error(Object message, Throwable error) {
-        logger.error(message, error);
         add(Level.ERROR, message, error);
     }
 
-    /**
-     * Returns whether debug logging is enabled for this logger.
-     * @return Whether debug logging is enabled.
-     */
-    public boolean isDebugEnabled() {
-        return logger.isDebugEnabled();
-    }
-
     private void add(Level level, Object message, Throwable error) {
-        entries.add(new Entry(category, level, message, error));
+        Entry entry = new Entry(category, level, message, error);
+        try {
+            getPrintWriter().println(entry);
+        } catch (IOException x) {
+            System.err.println("Failed to write to subsonic.log.");
+            x.printStackTrace();
+        }
+        entries.add(entry);
+    }
+
+    private static synchronized PrintWriter getPrintWriter() throws IOException {
+        if (writer == null) {
+            File subsonicHome = ServiceFactory.getSettingsService().getSubsonicHome();
+            File logFile = new File(subsonicHome, "subsonic.log");
+            writer = new PrintWriter(new FileWriter(logFile, false), true);
+        }
+        return writer;
     }
 
     /**
-     * Log level.
-     */
+    * Log level.
+    */
     public enum Level {
         DEBUG, INFO, WARN, ERROR
     }
@@ -155,6 +164,7 @@ public class Logger {
         private Level level;
         private Object message;
         private Throwable error;
+        private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
 
         public Entry(String category, Level level, Object message, Throwable error) {
             this.date = new Date();
@@ -182,6 +192,19 @@ public class Logger {
 
         public Throwable getError() {
             return error;
+        }
+
+        public String toString() {
+            StringBuffer buf = new StringBuffer();
+            buf.append('[').append(DATE_FORMAT.format(date)).append("] ");
+            buf.append(level).append(' ');
+            buf.append(category).append(" - ");
+            buf.append(message);
+
+            if (error != null) {
+                buf.append('\n').append(ExceptionUtils.getFullStackTrace(error));
+            }
+            return buf.toString();
         }
     }
 }
