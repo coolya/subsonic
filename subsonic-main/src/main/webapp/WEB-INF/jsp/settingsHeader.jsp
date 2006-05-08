@@ -14,7 +14,7 @@
 
         <c:choose>
             <c:when test="${param.cat eq cat}">
-                <span class="settingsHeaderSelected"><fmt:message key="settingsheader.${cat}"/></span>
+                <span class="headerSelected"><fmt:message key="settingsheader.${cat}"/></span>
             </c:when>
             <c:otherwise>
                 <a href="${url}"><fmt:message key="settingsheader.${cat}"/></a>

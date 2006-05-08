@@ -2,6 +2,7 @@
 PRIORITIZED FOR VERSION 2.7
 ===========================
 Send CV til Tommy
+Make PNG work in IE.
 Remove debug-logging in SearchService. (Create new level, PERF?)
 Re-work home page.
 Progress bar in file upload.  See forum post.
@@ -21,7 +22,6 @@ Remove "/subsonic" from all urls.
 Make it work on Java Application Server 8.1.  (web.xml element order)
 Make it work on Geronimo.
 http://www.shareup.com/
-Don't use log4j in Logger. Log to c:/subsonic/subsonic.log
 Search with quotes (") is broken.
 Drop ResourceBundle_en.
 Jetty
@@ -50,6 +50,7 @@ COMPLETED FOR VERSION 2.7
 New: Ajax-based ID3 tag editor.
 New: Limit download bandwidth.
 New: Download playlists.
+New: Now logs to c:/subsonic/subsonic.log (Windows) or /var/subsonic/subsonic.log (other platforms).
 Bugfix: Avoid wrapped lines if browser window is small.
 Bugfix: Use proper range in Y-axis.
 Bugfix: Integer overflow in search index creation interval.

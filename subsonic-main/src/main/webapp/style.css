@@ -7,8 +7,7 @@ form {
 body {
     font-family: verdana, arial, sans-serif;
     font-size: 9pt;
-    line-height: 14pt;
-    /*background-color: #EFEFEF;*/
+    line-height: 14pt; /*background-color: #EFEFEF;*/
     scrollbar-face-color: #DEE3E7;
     scrollbar-highlight-color: #FFFFFF;
     scrollbar-shadow-color: #DEE3E7;
@@ -50,7 +49,9 @@ h1 {
 
 h2 {
     font-family: verdana, arial, sans-serif;
-    font-size: 9pt
+    font-size: 9pt;
+    padding-top: 0.2em;
+    padding-bottom: 0.1em;
 }
 
 a {
@@ -85,12 +86,11 @@ h2 {
 }
 
 img {
-    vertical-align:text-bottom;
+    vertical-align: text-bottom;
 }
 
-.settingsHeaderSelected {
+.headerSelected {
     padding: 0.3em;
-    background-color: lightgray;
     border: 1px solid;
 }
 
@@ -117,13 +117,24 @@ img {
     color: dimgray;
     font-size: 8pt;
     line-height: 1.4em;
-    padding-top:0.25em;
+    padding-top: 0.25em;
+}
+
+.log {
+    white-space: nowrap;
+    font-size: 8pt;
+    line-height: 1em;
+    border: 1px solid;
 }
 
 .color1 {
-    background-color:#DEE3E7
+    background-color: #DEE3E7
 }
 
-body, .color2 {
+.color2, body {
     background-color: #EFEFEF;
+}
+
+.color3, .headerSelected, .log {
+    background-color: lightyellow;
 }

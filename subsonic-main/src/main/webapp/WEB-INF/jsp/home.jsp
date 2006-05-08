@@ -4,7 +4,7 @@
 <html><head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <c:if test="${model.listType eq 'random'}">
-        <meta http-equiv="refresh" content="15">
+        <meta http-equiv="refresh" content="20">
     </c:if>
     <link href="<c:url value="/style.css"/>" rel="stylesheet">
 </head><body>
@@ -15,18 +15,30 @@
 </h1>
 
 <h2>
-    <a href="home.view?listSize=${model.listSize}&listType=random"><fmt:message key="home.random.title"/></a> |
-    <a href="home.view?listSize=${model.listSize}&listType=newest"><fmt:message key="home.newest.title"/></a> |
-    <a href="home.view?listSize=${model.listSize}&listType=highest"><fmt:message key="home.highest.title"/></a> |
-    <a href="home.view?listSize=${model.listSize}&listType=frequent"><fmt:message key="home.frequent.title"/></a> |
-    <a href="home.view?listSize=${model.listSize}&listType=recent"><fmt:message key="home.recent.title"/></a>
+    <c:forTokens items="random newest highest frequent recent" delims=" " var="cat" varStatus="loopStatus">
+        <c:if test="${loopStatus.count > 1}">&nbsp;|&nbsp;</c:if>
+        <c:url var="url" value="home.view">
+            <c:param name="listSize" value="${model.listSize}"/>
+            <c:param name="listType" value="${cat}"/>
+        </c:url>
+
+        <c:choose>
+            <c:when test="${model.listType eq cat}">
+                <span class="headerSelected"><fmt:message key="home.${cat}.title"/></span>
+            </c:when>
+            <c:otherwise>
+                <a href="${url}"><fmt:message key="home.${cat}.title"/></a>
+            </c:otherwise>
+        </c:choose>
+
+    </c:forTokens>
 </h2>
 
 <c:if test="${model.isIndexBeingCreated}">
     <p class="warning"><fmt:message key="home.scan"/></p>
 </c:if>
 
-<div style="color:dimgray"><b><fmt:message key="home.${model.listType}.text"/></b></div>
+<h2><fmt:message key="home.${model.listType}.text"/></h2>
 
 <table>
     <c:forEach items="${model.albums}" var="album" varStatus="loopStatus">
@@ -45,7 +57,7 @@
         <td style="vertical-align:top">
             <table>
                 <tr><td>
-                    <a href="${mainUrl}"><img height="110" width="110" hspace="2" vspace="2" src="${coverArtUrl}"/></a>
+                    <a href="${mainUrl}"><img height="110" width="110" hspace="2" vspace="2" src="${coverArtUrl}" alt=""/></a>
                 </td></tr>
 
                 <tr><td>
@@ -62,7 +74,7 @@
                             <fmt:message key="home.lastmodified"><fmt:param value="${lastModifiedDate}"/></fmt:message>
                         </c:if>
                         <c:if test="${not empty album.rating}">
-                            <img src="<c:url value="/icons/rating${album.rating}.gif"/>"/>
+                            <img src="<c:url value="/icons/rating${album.rating}.gif"/>" alt=""/>
                         </c:if>
                     </div>
 

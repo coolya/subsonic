@@ -37,13 +37,13 @@
 </c:if>
 
 <table border="1" cellpadding="5" width="75%" rules="all">
-    <tr><td><b><fmt:message key="help.version.title"/></b></td><td>${versionString}</td></tr>
-    <tr><td><b><fmt:message key="help.builddate.title"/></b></td><td>${buildDateString}</td></tr>
-    <tr><td><b><fmt:message key="help.license.title"/></b></td><td><fmt:message key="help.license.text"/></td></tr>
-    <tr><td><b><fmt:message key="help.homepage.title"/></b></td><td><a target="_blank" href="http://subsonic.sourceforge.net/">http://subsonic.sourceforge.net/</a></td></tr>
-    <tr><td><b><fmt:message key="help.faq.title"/></b></td><td><a target="_blank" href="http://subsonic.sourceforge.net/faq.html">http://subsonic.sourceforge.net/faq.html</a></td></tr>
-    <tr><td><b><fmt:message key="help.forum.title"/></b></td><td><a target="_blank" href="http://subsonic.sourceforge.net/forum.html">http://subsonic.sourceforge.net/forum.html</a></td></tr>
-    <tr><td><b><fmt:message key="help.contact.title"/></b></td><td><fmt:message key="help.contact.text"/></td></tr>
+    <tr><td class="color1"><b><fmt:message key="help.version.title"/></b></td><td>${versionString}</td></tr>
+    <tr><td class="color1"><b><fmt:message key="help.builddate.title"/></b></td><td>${buildDateString}</td></tr>
+    <tr><td class="color1"><b><fmt:message key="help.license.title"/></b></td><td><fmt:message key="help.license.text"/></td></tr>
+    <tr><td class="color1"><b><fmt:message key="help.homepage.title"/></b></td><td><a target="_blank" href="http://subsonic.sourceforge.net/">http://subsonic.sourceforge.net/</a></td></tr>
+    <tr><td class="color1"><b><fmt:message key="help.faq.title"/></b></td><td><a target="_blank" href="http://subsonic.sourceforge.net/faq.html">http://subsonic.sourceforge.net/faq.html</a></td></tr>
+    <tr><td class="color1"><b><fmt:message key="help.forum.title"/></b></td><td><a target="_blank" href="http://subsonic.sourceforge.net/forum.html">http://subsonic.sourceforge.net/forum.html</a></td></tr>
+    <tr><td class="color1"><b><fmt:message key="help.contact.title"/></b></td><td><fmt:message key="help.contact.text"/></td></tr>
 </table>
 <p/>
 
@@ -54,7 +54,7 @@
 
 <h2><img src="<c:url value="/icons/log.png"/>" width="22" height="22"/>&nbsp;<fmt:message key="help.log"/></h2>
 
-<table cellpadding="2" style="white-space:nowrap;">
+<table cellpadding="2" class="log">
     <c:forEach items="${model.logEntries}" var="entry">
         <tr>
             <td>[<fmt:formatDate value="${entry.date}" dateStyle="short" timeStyle="long" type="both"></fmt:formatDate>]</td>
