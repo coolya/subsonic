@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
-<%@ include file="include.jsp" %>
 
 <html><head>
-    <!--[if gte IE 5.5000]>
-     <script type="text/javascript" src="pngfix.js"></script>
-     <![endif]-->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="<c:url value="/style.css"/>" rel="stylesheet">
+    <%@ include file="head.jsp" %>
 </head><body>
 
 <c:choose>

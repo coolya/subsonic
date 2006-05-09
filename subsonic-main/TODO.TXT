@@ -1,6 +1,7 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
+Check Javascript error on IE.
 h1, h2, p etc margin and padding.
 Make PNG work in IE.
 Remove debug-logging in SearchService. (Create new level, PERF?)

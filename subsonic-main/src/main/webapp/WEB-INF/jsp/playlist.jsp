@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
-<%@ include file="include.jsp" %>
 
 <html><head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
-    <link href="<c:url value="/style.css"/>" rel="stylesheet">
+    <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
 </head>

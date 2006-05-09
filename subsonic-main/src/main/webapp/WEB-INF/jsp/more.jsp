@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
-<%@ include file="include.jsp" %>
 
 <html><head>
-    <!--[if gte IE 5.5000]>
-    <script type="text/javascript" src="pngfix.js"></script>
-    <![endif]-->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="<c:url value="/style.css"/>" rel="stylesheet">
+    <%@ include file="head.jsp" %>
 </head><body>
 
 <h1>
@@ -14,7 +9,7 @@
     <fmt:message key="more.title"/>
 </h1>
 
-<h2><img src="<c:url value="/icons/random.png"/>" width="16" height="16"/>&nbsp;<fmt:message key="more.random.title"/></h2>
+<h2><img src="<c:url value="/icons/random.png"/>" width="16" height="16" alt=""/>&nbsp;<fmt:message key="more.random.title"/></h2>
 
 <form method="post" action="randomPlaylist.view">
     <table>
@@ -35,15 +30,15 @@
     </table>
 </form>
 
-<h2><img src="<c:url value="/icons/wap.jpeg"/>" width="16" height="16"/>&nbsp;<fmt:message key="more.mobile.title"/></h2>
+<h2><img src="<c:url value="/icons/wap.jpeg"/>" width="16" height="16" alt=""/>&nbsp;<fmt:message key="more.mobile.title"/></h2>
 <fmt:message key="more.mobile.text"/>
 
-<h2><img src="<c:url value="/icons/podcast.png"/>" width="16" height="16"/>&nbsp;<fmt:message key="more.podcast.title"/></h2>
+<h2><img src="<c:url value="/icons/podcast.png"/>" width="16" height="16" alt=""/>&nbsp;<fmt:message key="more.podcast.title"/></h2>
 <fmt:message key="more.podcast.text"/>
 
 <c:if test="${model.uploadEnabled}">
 
-    <h2><img src="<c:url value="/icons/upload.gif"/>" width="16" height="16"/>&nbsp;<fmt:message key="more.upload.title"/></h2>
+    <h2><img src="<c:url value="/icons/upload.gif"/>" width="16" height="16" alt=""/>&nbsp;<fmt:message key="more.upload.title"/></h2>
 
     <form method="post" enctype="multipart/form-data" action="upload.view">
         <table>

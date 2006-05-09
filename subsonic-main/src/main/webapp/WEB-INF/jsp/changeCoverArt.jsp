@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
-<%@ include file="include.jsp" %>
 
 <html><head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="<c:url value="/style.css"/>" rel="stylesheet">
-</head><body>
+    <%@ include file="head.jsp" %>
+</head>
+<body>
 
 <h1><fmt:message key="changecoverart.title"/></h1>
 <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.path}"/></sub:url>
@@ -50,7 +49,7 @@
         <sub:param name="path" value="${model.path}"/>
         <sub:param name="url" value="${coverArtUrl}"/>
     </sub:url>
-    <a href="${url}"><img src="${coverArtUrl}" hspace="5" vspace="5"/></a>
+    <a href="${url}"><img src="${coverArtUrl}" hspace="5" vspace="5" alt=""/></a>
 </c:forEach>
 
 </body></html>

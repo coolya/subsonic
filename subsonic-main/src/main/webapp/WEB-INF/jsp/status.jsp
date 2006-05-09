@@ -1,15 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
-<%@ include file="include.jsp" %>
 
 <html><head>
+    <%@ include file="head.jsp" %>
     <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
     <meta http-equiv="REFRESH" content="20;URL=status.view">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="<c:url value="/style.css"/>" rel="stylesheet">
 </head><body>
 
 <h1>
-    <img src="<c:url value="/icons/status.png"/>" alt=""/> 
+    <img src="<c:url value="/icons/status.png"/>" alt=""/>
     <fmt:message key="status.title"/>
 </h1>
 
@@ -61,7 +59,7 @@
             <td>${user}</td>
             <td>${current}</td>
             <td>${model.bytesStreamed[loopStatus.count - 1]}</td>
-            <td><img width="${model.chartWidth}" height="${model.chartHeight}" src="${chartUrl}"/></td>
+            <td><img width="${model.chartWidth}" height="${model.chartHeight}" src="${chartUrl}" alt=""/></td>
         </tr>
     </c:forEach>
 </table>
@@ -117,7 +115,7 @@
                 <td>${user}</td>
                 <td>${current}</td>
                 <td>${model.bytesStreamed[loopStatus.count - 1]}</td>
-                <td><img width="${model.chartWidth}" height="${model.chartHeight}" src="${chartUrl}"/></td>
+                <td><img width="${model.chartWidth}" height="${model.chartHeight}" src="${chartUrl}" alt=""/></td>
             </tr>
         </c:forEach>
     </table>

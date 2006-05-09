@@ -1,16 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
-<%@ include file="include.jsp" %>
 
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="<c:url value="/style.css"/>" rel="stylesheet">
+<html><head>
+    <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
-</head>
-
-
-<body>
+</head><body>
 
 <c:if test="${model.updateNowPlaying}">
 
@@ -186,7 +180,7 @@
                         <sub:param name="path" value="${model.dir.path}"/>
                     </sub:url>
 
-                    <img height="${model.coverArtSize}" width="${model.coverArtSize}" hspace="5" vspace="5" src="${coverArtUrl}"/>
+                    <img height="${model.coverArtSize}" width="${model.coverArtSize}" hspace="5" vspace="5" src="${coverArtUrl}" alt=""/>
                 </td></tr>
                 <tr><td align="center">
                     <a href="${changeCoverArtUrl}"><fmt:message key="main.cover"/></a>
