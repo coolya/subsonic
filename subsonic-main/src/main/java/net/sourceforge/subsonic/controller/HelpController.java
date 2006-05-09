@@ -25,6 +25,7 @@ public class HelpController extends ParameterizableViewController {
         map.put("buildNumber", versionService.getLocalBuildNumber());
         map.put("newVersionAvailable", versionService.isNewVersionAvailable());
         map.put("logEntries", Logger.getLatestLogEntries());
+        map.put("logFile", Logger.getLogFile());
 
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);

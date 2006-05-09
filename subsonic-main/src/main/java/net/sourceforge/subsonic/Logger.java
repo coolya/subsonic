@@ -141,11 +141,14 @@ public class Logger {
 
     private static synchronized PrintWriter getPrintWriter() throws IOException {
         if (writer == null) {
-            File subsonicHome = ServiceFactory.getSettingsService().getSubsonicHome();
-            File logFile = new File(subsonicHome, "subsonic.log");
-            writer = new PrintWriter(new FileWriter(logFile, false), true);
+            writer = new PrintWriter(new FileWriter(getLogFile(), false), true);
         }
         return writer;
+    }
+
+    public static File getLogFile() {
+        File subsonicHome = ServiceFactory.getSettingsService().getSubsonicHome();
+        return new File(subsonicHome, "subsonic.log");
     }
 
     /**

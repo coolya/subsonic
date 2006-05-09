@@ -48,11 +48,11 @@
 <p/>
 
 <table width="75%"><tr>
-    <td><a target="_blank" href="http://sourceforge.net/donate/index.php?group_id=126265"><img src="<c:url value="/icons/donate.gif"/>"/></a></td>
+    <td><a target="_blank" href="http://sourceforge.net/donate/index.php?group_id=126265"><img src="<c:url value="/icons/donate.gif"/>" alt=""/></a></td>
     <td><fmt:message key="help.donate"/></td>
 </tr></table>
 
-<h2><img src="<c:url value="/icons/log.png"/>" width="22" height="22"/>&nbsp;<fmt:message key="help.log"/></h2>
+<h2><img src="<c:url value="/icons/log.png"/>" width="22" height="22" alt=""/>&nbsp;<fmt:message key="help.log"/></h2>
 
 <table cellpadding="2" class="log">
     <c:forEach items="${model.logEntries}" var="entry">
@@ -62,6 +62,8 @@
         </tr>
     </c:forEach>
 </table>
+
+<p><fmt:message key="help.logfile"><fmt:param value="${model.logFile}"/></fmt:message> </p>
 
 <p><a href="help.view?">[<fmt:message key="common.refresh"/>]</a></p>
 

@@ -1,7 +1,7 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
-Send CV til Tommy
+h1, h2, p etc margin and padding.
 Make PNG work in IE.
 Remove debug-logging in SearchService. (Create new level, PERF?)
 Re-work home page.
@@ -18,7 +18,6 @@ DWREngine problem.
 Use HTML 4.01, validate all pages.
 i18n of TagService.
 Create taglib for StringUtil.formatBytes() and help popup.
-Remove "/subsonic" from all urls.
 Make it work on Java Application Server 8.1.  (web.xml element order)
 Make it work on Geronimo.
 http://www.shareup.com/

@@ -41,19 +41,6 @@ table {
     line-height: 12pt
 }
 
-h1 {
-    font-family: verdana, arial, sans-serif;
-    font-size: 12pt;
-    padding-bottom: 0.5em;
-}
-
-h2 {
-    font-family: verdana, arial, sans-serif;
-    font-size: 9pt;
-    padding-top: 0.2em;
-    padding-bottom: 0.1em;
-}
-
 a {
     font-family: verdana, arial, sans-serif;
     font-size: 9pt;
@@ -76,12 +63,22 @@ img {
 h1 {
     white-space: nowrap;
     font-family: arial, sans-serif;
+    font-size: 12pt;
     color: dimgray;
+    padding-bottom: 0.5em;
 }
 
 h2 {
     white-space: nowrap;
+    font-family: verdana, arial, sans-serif;
+    font-size: 9pt;
+    color: #333333;
     margin: 1em 1em 0.2em 0em;
+    padding-top: 0.2em;
+    padding-bottom: 0.1em;
+}
+
+b {
     color: #333333;
 }
 
