@@ -166,7 +166,9 @@
     <bean id="savePlaylistValidator" class="net.sourceforge.subsonic.validator.SavePlaylistValidator">
         <property name="playlistService"><ref bean="playlistService"/></property>
     </bean>
-    <bean id="userSettingsValidator" class="net.sourceforge.subsonic.validator.UserSettingsValidator"/>
+    <bean id="userSettingsValidator" class="net.sourceforge.subsonic.validator.UserSettingsValidator">
+        <property name="securityService"><ref bean="securityService"/></property>
+    </bean>
     <bean id="passwordSettingsValidator" class="net.sourceforge.subsonic.validator.PasswordSettingsValidator"/>
 
     <!--TODO: Get rid of ServiceFactory-->

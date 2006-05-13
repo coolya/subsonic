@@ -76,7 +76,7 @@ public class DownloadServlet extends HttpServlet {
                 statusService.removeDownloadStatus(status);
                 User user = securityService.getCurrentUser(request);
                 if (user != null) {
-                    user.setBytesStreamed(user.getBytesStreamed() + status.getBytesStreamed());
+                    user.setBytesDownloaded(user.getBytesStreamed() + status.getBytesStreamed());
                     securityService.updateUser(user);
                 }
             }

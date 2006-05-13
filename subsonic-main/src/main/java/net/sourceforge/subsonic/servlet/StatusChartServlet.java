@@ -89,6 +89,9 @@ public class StatusChartServlet extends HttpServlet {
         // Add 10% to max value.
         max *= 1.1D;
 
+        // Subtract 10% from min value.
+        min *= 0.9D;
+
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         dataset.addSeries(series);
         JFreeChart chart = ChartFactory.createTimeSeriesChart(null, null, null, dataset, false, false, false);

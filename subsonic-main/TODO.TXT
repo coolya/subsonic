@@ -1,6 +1,10 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
+Upload statistics.
+Upload status.
+Upload bandwidth limit.
+CSS colors.
 Check Javascript error on IE.
 h1, h2, p etc margin and padding.
 Make PNG work in IE.
@@ -9,7 +13,7 @@ Re-work home page.
 Progress bar in file upload.  See forum post.
 Quick link to "#" doesn't work.
 CSS
-Should receive feedback when changing passwords.
+Should receive feedback when changing passwords, creating users etc.
 Verify that security works.
 Option to configure special quick links, e.g., "Compilation", "New", "Miscellaneous".
 Click on cover art to pop-up unscaled.

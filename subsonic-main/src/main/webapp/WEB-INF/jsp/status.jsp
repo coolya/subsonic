@@ -122,6 +122,6 @@
 
 </c:if>
 
-<p><a href="status.view" target="main">[<fmt:message key="common.refresh"/>]</a></p>
+<p><a href="status.view?">[<fmt:message key="common.refresh"/>]</a></p>
 
 </body></html>

@@ -13,6 +13,7 @@
             <url-pattern>*.m3u</url-pattern>
             <url-pattern>/coverart</url-pattern>
             <url-pattern>/statusChart</url-pattern>
+            <url-pattern>/userChart</url-pattern>
             <url-pattern>/dwr</url-pattern>
         </web-resource-collection>
         <auth-constraint>

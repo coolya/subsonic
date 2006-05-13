@@ -19,9 +19,8 @@ public class UserSettingsController extends SimpleFormController {
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         UserSettingsCommand command = new UserSettingsCommand();
 
-        String username = request.getParameter("username");
-        if (username != null && username.length() > 0) {
-            User user = securityService.getUserByName(username);
+        User user = getUser(request);
+        if (user != null) {
             command.setUser(user);
             command.setAdmin(User.USERNAME_ADMIN.equals(user.getUsername()));
         } else {
@@ -31,6 +30,14 @@ public class UserSettingsController extends SimpleFormController {
         command.setUsers(securityService.getAllUsers());
 
         return command;
+    }
+
+    private User getUser(HttpServletRequest request) {
+        String username = request.getParameter("username");
+        if (username != null && username.length() > 0) {
+            return securityService.getUserByName(username);
+        }
+        return null;
     }
 
     protected void doSubmitAction(Object comm) throws Exception {
