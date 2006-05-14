@@ -37,6 +37,9 @@
     <bean id="uploadController" class="net.sourceforge.subsonic.controller.UploadController">
         <property name="viewName"><value>upload</value></property>
         <property name="securityService"><ref bean="securityService"/></property>
+        <property name="statusService"><ref bean="statusService"/></property>
+        <property name="playerService"><ref bean="playerService"/></property>
+        <property name="settingsService"><ref bean="settingsService"/></property>
     </bean>
     <bean id="helpPopupController" class="net.sourceforge.subsonic.controller.HelpPopupController">
         <property name="viewName"><value>helpPopup</value></property>

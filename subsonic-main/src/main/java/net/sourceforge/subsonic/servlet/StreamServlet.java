@@ -32,8 +32,7 @@ public class StreamServlet extends HttpServlet {
      * @throws IOException If an I/O error occurs.
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        StreamStatus status = null;
+        TransferStatus status = null;
         PlaylistInputStream in = null;
         String streamEndpoint = null;
         Player player = playerService.getPlayer(request, response, false, true);
@@ -61,15 +60,15 @@ public class StreamServlet extends HttpServlet {
 
             // Terminate any other streams to this player.
             if (!isPodcast) {
-                StreamStatus[] currentStatuses = statusService.getStreamStatusesForPlayer(player);
-                for (StreamStatus streamStatus : currentStatuses) {
+                TransferStatus[] currentStatuses = statusService.getStreamStatusesForPlayer(player);
+                for (TransferStatus streamStatus : currentStatuses) {
                     streamStatus.terminate();
                 }
             }
 
             LOG.info("Starting stream " + streamEndpoint);
 
-            status = new StreamStatus();
+            status = new TransferStatus();
             status.setPlayer(player);
             statusService.addStreamStatus(status);
 
@@ -127,7 +126,7 @@ public class StreamServlet extends HttpServlet {
                 statusService.removeStreamStatus(status);
                 User user = securityService.getUserByName(player.getUsername());
                 if (user != null) {
-                    user.setBytesStreamed(user.getBytesStreamed() + status.getBytesStreamed());
+                    user.setBytesStreamed(user.getBytesStreamed() + status.getBytesTransfered());
                     securityService.updateUser(user);
                 }
             }
@@ -159,9 +158,9 @@ public class StreamServlet extends HttpServlet {
         private Player player;
         private MusicFile currentFile;
         private InputStream currentInputStream;
-        private StreamStatus status;
+        private TransferStatus status;
 
-        PlaylistInputStream(Player player, StreamStatus status) {
+        PlaylistInputStream(Player player, TransferStatus status) {
             this.player = player;
             this.status = status;
         }
@@ -178,7 +177,7 @@ public class StreamServlet extends HttpServlet {
                 player.getPlaylist().next();
                 close();
             } else {
-                status.setBytesStreamed(status.getBytesStreamed() + n);
+                status.addBytesTransfered(n);
             }
             return n;
         }
@@ -197,7 +196,7 @@ public class StreamServlet extends HttpServlet {
 
                 currentInputStream = file.getInputStream(doTranscode, transcodeScheme.getMaxBitRate());
                 currentFile = file;
-                status.setFile(currentFile);
+                status.setFile(currentFile.getFile());
             }
         }
 

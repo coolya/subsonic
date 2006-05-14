@@ -1,9 +1,12 @@
 package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.*;
+import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.upload.*;
 import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.util.*;
 import org.apache.commons.fileupload.*;
+import org.apache.commons.fileupload.servlet.*;
 import org.apache.tools.zip.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
@@ -22,23 +25,36 @@ public class UploadController extends ParameterizableViewController {
     private static final Logger LOG = Logger.getLogger(UploadController.class);
 
     private SecurityService securityService;
+    private PlayerService playerService;
+    private StatusService statusService;
+    private SettingsService settingsService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
         Map<String, Object> map = new HashMap<String, Object>();
         List<File> uploadedFiles = new ArrayList<File>();
         List<File> unzippedFiles = new ArrayList<File>();
+        TransferStatus status = null;
 
         try {
 
+            status = new TransferStatus();
+            status.setPlayer(playerService.getPlayer(request, response, false, false));
+            statusService.addUploadStatus(status);
+
             // Check that we have a file upload request
-            if (!FileUpload.isMultipartContent(request)) {
+            if (!ServletFileUpload.isMultipartContent(request)) {
                 throw new Exception("Illegal request.");
             }
 
             File dir = null;
             boolean unzip = false;
 
-            DiskFileUpload upload = new DiskFileUpload();
+            UploadListener listener = new UploadListenerImpl(status);
+
+            FileItemFactory factory = new MonitoredDiskFileItemFactory(listener);
+            ServletFileUpload upload = new ServletFileUpload(factory);
+
             List items = upload.parseRequest(request);
 
             // First, look for "dir" and "unzip" parameters.
@@ -88,6 +104,15 @@ public class UploadController extends ParameterizableViewController {
         } catch (Exception x) {
             LOG.warn("Uploading failed.", x);
             map.put("exception", x);
+        } finally {
+            if (status != null) {
+                statusService.removeUploadStatus(status);
+                User user = securityService.getCurrentUser(request);
+                if (user != null) {
+                    user.setBytesUploaded(user.getBytesUploaded() + status.getBytesTransfered());
+                    securityService.updateUser(user);
+                }
+            }
         }
 
         map.put("uploadedFiles", uploadedFiles);
@@ -153,4 +178,62 @@ public class UploadController extends ParameterizableViewController {
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
     }
+
+    public void setPlayerService(PlayerService playerService) {
+        this.playerService = playerService;
+    }
+
+    public void setStatusService(StatusService statusService) {
+        this.statusService = statusService;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
+    }
+
+    /**
+     * Receives callbacks as the file upload progresses.
+     */
+    private class UploadListenerImpl implements UploadListener {
+        private TransferStatus status;
+        private long start;
+
+        private UploadListenerImpl(TransferStatus status) {
+            this.status = status;
+            this.start = System.currentTimeMillis();
+        }
+
+        public void start(String fileName) {
+            status.setFile(new File(fileName));
+        }
+
+        public void bytesRead(int bytesRead) {
+
+            // Throttle bitrate.
+
+            long byteCount = status.getBytesTransfered() + bytesRead;
+            long bitCount = byteCount * 8L;
+
+            float elapsedMillis = Math.max(1, System.currentTimeMillis() - start);
+            float elapsedSeconds = elapsedMillis / 1000.0F;
+            long maxBitsPerSecond = getBitrateLimit();
+
+            status.setBytesTransfered(byteCount);
+
+            float sleepMillis = 1000.0F * (bitCount / maxBitsPerSecond - elapsedSeconds);
+            if (sleepMillis > 0) {
+                try {
+                    Thread.sleep((long) sleepMillis);
+                } catch (InterruptedException x) {
+                    LOG.warn("Failed to sleep.", x);
+                }
+            }
+        }
+
+        private long getBitrateLimit() {
+            // TODO: Add getUploadBitrateLimit.
+            return 1024L * settingsService.getDownloadBitrateLimit() / Math.max(1, statusService.getAllUploadStatuses().length);
+        }
+    }
+
 }

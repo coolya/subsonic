@@ -1,9 +1,11 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
+Table layout in status.jsp.
 Upload statistics.
 Upload status.
 Upload bandwidth limit.
+Fix logger in SettingsService.
 CSS colors.
 Check Javascript error on IE.
 h1, h2, p etc margin and padding.

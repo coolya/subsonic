@@ -468,7 +468,7 @@ public class SearchService {
      * @return The index file for the given index version.
      */
     private File getIndexFile(int version) {
-        File home = ServiceFactory.getSettingsService().getSubsonicHome();
+        File home = SettingsService.getSubsonicHome();
         return new File(home, "subsonic" + version + ".index");
     }
 

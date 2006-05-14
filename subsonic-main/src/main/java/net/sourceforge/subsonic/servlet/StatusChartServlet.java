@@ -1,7 +1,7 @@
 package net.sourceforge.subsonic.servlet;
 
-import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
+import net.sourceforge.subsonic.domain.*;
 import org.jfree.chart.*;
 import org.jfree.chart.axis.*;
 import org.jfree.chart.plot.*;
@@ -36,33 +36,35 @@ public class StatusChartServlet extends HttpServlet {
         String type = request.getParameter("type");
         int index = Integer.parseInt(request.getParameter("index"));
 
-        StreamStatus[] statuses = new StreamStatus[0];
+        TransferStatus[] statuses = new TransferStatus[0];
         if ("stream".equals(type)) {
             statuses = ServiceFactory.getStatusService().getAllStreamStatuses();
         } else if ("download".equals(type)) {
             statuses = ServiceFactory.getStatusService().getAllDownloadStatuses();
+        } else if ("upload".equals(type)) {
+            statuses = ServiceFactory.getStatusService().getAllUploadStatuses();
         }
 
         if (index < 0 || index >= statuses.length) {
             return;
         }
-        StreamStatus status = statuses[index];
+        TransferStatus status = statuses[index];
 
         TimeSeries series = new TimeSeries("Kbps", Millisecond.class);
-        List<StreamStatus.Sample> history = status.getHistory();
+        List<TransferStatus.Sample> history = status.getHistory();
         long to = System.currentTimeMillis();
         long from = to - status.getHistoryLengthMillis();
         Range range = new DateRange(from, to);
 
         if (!history.isEmpty()) {
 
-            StreamStatus.Sample previous = history.get(0);
+            TransferStatus.Sample previous = history.get(0);
 
             for (int i = 1; i < history.size(); i++) {
-                StreamStatus.Sample sample = history.get(i);
+                TransferStatus.Sample sample = history.get(i);
 
                 long elapsedTimeMilis = sample.getTimestamp() - previous.getTimestamp();
-                long bytesStreamed = sample.getBytesStreamed() - previous.getBytesStreamed();
+                long bytesStreamed = sample.getBytesTransfered() - previous.getBytesTransfered();
 
                 double kbps = (8.0 * bytesStreamed / 1024.0) / (elapsedTimeMilis / 1000.0);
                 series.add(new Millisecond(new Date(sample.getTimestamp())), kbps);

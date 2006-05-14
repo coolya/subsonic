@@ -32,7 +32,7 @@ public abstract class AbstractDao {
 
     private synchronized DataSource getDataSource() {
         if (dataSource == null) {
-            File subsonicHome = ServiceFactory.getSettingsService().getSubsonicHome();
+            File subsonicHome = SettingsService.getSubsonicHome();
             dataSource = new DriverManagerDataSource();
             dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
             dataSource.setUrl("jdbc:hsqldb:file:" + subsonicHome.getPath() + "/db/subsonic");

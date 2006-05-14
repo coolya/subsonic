@@ -23,7 +23,7 @@ public class SettingsServiceTestCase extends TestCase {
     }
 
     public void testSubsonicHome() {
-        assertEquals("Wrong Subsonic home.", SUBSONIC_HOME, settingsService.getSubsonicHome());
+        assertEquals("Wrong Subsonic home.", SUBSONIC_HOME, SettingsService.getSubsonicHome());
     }
 
     public void testDefaultValues() {

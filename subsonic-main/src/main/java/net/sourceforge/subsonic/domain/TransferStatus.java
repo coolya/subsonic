@@ -2,64 +2,73 @@ package net.sourceforge.subsonic.domain;
 
 import net.sourceforge.subsonic.util.*;
 
+import java.io.*;
 import java.util.*;
 
 /**
- * Status for a single stream.
+ * Status for a single transfer (stream, download or upload).
  *
  * @author Sindre Mehus
  * @version $Revision: 1.5 $ $Date: 2005/06/13 17:20:43 $
  */
-public class StreamStatus {
+public class TransferStatus {
 
     private static final int HISTORY_LENGTH = 200;
     private static final long SAMPLE_INTERVAL_MILLIS = 5000;
 
     private Player player;
-    private MusicFile file;
-    private long bytesStreamed;
+    private File file;
+    private long bytesTransfered;
     private LinkedList<Sample> history = new BoundedList<Sample>(HISTORY_LENGTH);
     private boolean isTerminated;
 
     /**
-     * Return the number of bytes streamed.
-     * @return The number of bytes streamed.
+     * Return the number of bytes transfered.
+     * @return The number of bytes transfered.
      */
-    public synchronized long getBytesStreamed() {
-        return bytesStreamed;
+    public synchronized long getBytesTransfered() {
+        return bytesTransfered;
     }
 
     /**
-     * Sets the number of bytes streamed.
-     * @param bytesStreamed The number of bytes streamed.
+     * Adds the given byte count to the total number of bytes transfered.
+     * @param byteCount The byte count.
      */
-    public synchronized void setBytesStreamed(long bytesStreamed) {
-        this.bytesStreamed = bytesStreamed;
+    public synchronized void addBytesTransfered(long byteCount) {
+        setBytesTransfered(bytesTransfered + byteCount);
+    }
+
+    /**
+    * Sets the number of bytes transfered.
+    * @param bytesTransfered The number of bytes transfered.
+    */
+    public synchronized void setBytesTransfered(long bytesTransfered) {
+        this.bytesTransfered = bytesTransfered;
         long now = System.currentTimeMillis();
 
         if (history.isEmpty()) {
-            history.add(new Sample(bytesStreamed, now));
+            history.add(new TransferStatus.Sample(bytesTransfered, now));
         } else {
-            Sample lastSample = history.getLast();
-            if (now - lastSample.getTimestamp() > SAMPLE_INTERVAL_MILLIS) {
-                history.add(new Sample(bytesStreamed, now));
+            TransferStatus.Sample lastSample = history.getLast();
+            if (now - lastSample.getTimestamp() > TransferStatus.SAMPLE_INTERVAL_MILLIS) {
+                history.add(new TransferStatus.Sample(bytesTransfered, now));
             }
         }
     }
 
     /**
-     * Returns the music file that is currently being streamed.
-     * @return The music file that is currently being streamed.
+     * Returns the file that is currently being transfered.
+     * @return The file that is currently being transfered.
      */
-    public synchronized MusicFile getFile() {
+    public synchronized File getFile() {
         return file;
     }
 
     /**
-     * Sets the music file that is currently being streamed.
-     * @param file The music file that is currently being streamed.
+     * Sets the file that is currently being transfered.
+     * @param file The file that is currently being transfered.
      */
-    public synchronized void setFile(MusicFile file) {
+    public synchronized void setFile(File file) {
         this.file = file;
     }
 
@@ -83,8 +92,8 @@ public class StreamStatus {
      * Returns a history of samples for the stream
      * @return A (copy of) the history list of samples.
      */
-    public synchronized List<Sample> getHistory() {
-        return new ArrayList<Sample>(history);
+    public synchronized List<TransferStatus.Sample> getHistory() {
+        return new ArrayList<TransferStatus.Sample>(history);
     }
 
     /**
@@ -92,7 +101,7 @@ public class StreamStatus {
      * @return The history length in milliseconds.
      */
     public long getHistoryLengthMillis() {
-        return SAMPLE_INTERVAL_MILLIS * (HISTORY_LENGTH - 1);
+        return TransferStatus.SAMPLE_INTERVAL_MILLIS * (TransferStatus.HISTORY_LENGTH - 1);
     }
 
     /**
@@ -111,28 +120,28 @@ public class StreamStatus {
     }
 
     /**
-     * A sample containing a timestamp and the number of bytes streamed up to that point in time.
+     * A sample containing a timestamp and the number of bytes transfered up to that point in time.
      */
     public static class Sample {
-        private long bytesStreamed;
+        private long bytesTransfered;
         private long timestamp;
 
         /**
          * Creates a new sample.
-         * @param bytesStreamed The total number of bytes streamed.
+         * @param bytesTransfered The total number of bytes transfered.
          * @param timestamp A point in time, in milliseconds.
          */
-        public Sample(long bytesStreamed, long timestamp) {
-            this.bytesStreamed = bytesStreamed;
+        public Sample(long bytesTransfered, long timestamp) {
+            this.bytesTransfered = bytesTransfered;
             this.timestamp = timestamp;
         }
 
         /**
-         * Returns the number of bytes streamed.
-         * @return The number of bytes streamed.
+         * Returns the number of bytes transfered.
+         * @return The number of bytes transfered.
          */
-        public long getBytesStreamed() {
-            return bytesStreamed;
+        public long getBytesTransfered() {
+            return bytesTransfered;
         }
 
         /**

@@ -11,8 +11,9 @@
     <fmt:message key="status.title"/>
 </h1>
 
-<table border="1" cellpadding="10" rules="all">
+<table width="95%" border="1" cellpadding="10" rules="all">
     <tr class="color1">
+        <th><fmt:message key="status.type"/></th>
         <th><fmt:message key="status.player"/></th>
         <th><fmt:message key="status.user"/></th>
         <th><fmt:message key="status.current"/></th>
@@ -20,107 +21,70 @@
         <th><fmt:message key="status.bitrate"/></th>
     </tr>
 
-    <c:forEach items="${model.streamStatuses}" var="status" varStatus="loopStatus">
+    <c:forEach items="${model.transferStatuses}" var="status">
 
         <c:choose>
-            <c:when test="${empty status.player.type}">
+            <c:when test="${empty status.playerType}">
                 <fmt:message key="common.unknown" var="type"/>
             </c:when>
             <c:otherwise>
-                <c:set var="type" value="${status.player.type})"/>
+                <c:set var="type" value="(${status.playerType})"/>
             </c:otherwise>
         </c:choose>
 
         <c:choose>
-            <c:when test="${empty status.player.username}">
+            <c:when test="${status.stream}">
+                <fmt:message key="status.stream" var="transferType"/>
+            </c:when>
+            <c:when test="${status.download}">
+                <fmt:message key="status.download" var="transferType"/>
+            </c:when>
+            <c:when test="${status.upload}">
+                <fmt:message key="status.upload" var="transferType"/>
+            </c:when>
+        </c:choose>
+
+        <c:choose>
+            <c:when test="${empty status.username}">
                 <fmt:message key="common.unknown" var="user"/>
             </c:when>
             <c:otherwise>
-                <c:set var="user" value="${status.player.username}"/>
+                <c:set var="user" value="${status.username}"/>
             </c:otherwise>
         </c:choose>
 
         <c:choose>
-            <c:when test="${empty status.file}">
+            <c:when test="${empty status.path}">
                 <fmt:message key="common.unknown" var="current"/>
             </c:when>
             <c:otherwise>
-                <c:set var="current" value="${status.file.path}<br/>(${status.file.bitRate} Kbps)"/>
+                <c:set var="current" value="${status.path}"/>
             </c:otherwise>
         </c:choose>
 
         <c:url value="/statusChart" var="chartUrl">
-            <c:param name="type" value="stream"/>
-            <c:param name="index" value="${loopStatus.count - 1}"/>
+            <c:if test="${status.stream}">
+                <c:param name="type" value="stream"/>
+            </c:if>
+            <c:if test="${status.download}">
+                <c:param name="type" value="download"/>
+            </c:if>
+            <c:if test="${status.upload}">
+                <c:param name="type" value="upload"/>
+            </c:if>
+            <c:param name="index" value="${status.index}"/>
         </c:url>
 
         <tr>
+            <td>${transferType}</td>
             <td>${status.player}<br/>${type}</td>
             <td>${user}</td>
             <td>${current}</td>
-            <td>${model.bytesStreamed[loopStatus.count - 1]}</td>
+            <td>${status.bytes}</td>
             <td><img width="${model.chartWidth}" height="${model.chartHeight}" src="${chartUrl}" alt=""/></td>
         </tr>
     </c:forEach>
 </table>
-
-<c:if test="${not empty model.downloadStatuses}">
-
-    <h1><fmt:message key="status.download.title"/></h1>
-    <table border="1" cellpadding="10" rules="all">
-        <tr class="color1">
-            <th><fmt:message key="status.player"/></th>
-            <th><fmt:message key="status.user"/></th>
-            <th><fmt:message key="status.current"/></th>
-            <th><fmt:message key="status.transmitted"/></th>
-            <th><fmt:message key="status.bitrate"/></th>
-        </tr>
-
-        <c:forEach items="${model.downloadStatuses}" var="status" varStatus="loopStatus">
-
-            <c:choose>
-                <c:when test="${empty status.player.type}">
-                    <fmt:message key="common.unknown" var="type"/>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="type" value="${status.player.type})"/>
-                </c:otherwise>
-            </c:choose>
-
-            <c:choose>
-                <c:when test="${empty status.player.username}">
-                    <fmt:message key="common.unknown" var="user"/>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="user" value="${status.player.username}"/>
-                </c:otherwise>
-            </c:choose>
-
-            <c:choose>
-                <c:when test="${empty status.file}">
-                    <fmt:message key="common.unknown" var="current"/>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="current" value="${status.file.path}<br/>(${status.file.bitRate} Kbps)"/>
-                </c:otherwise>
-            </c:choose>
-
-            <c:url value="/statusChart" var="chartUrl">
-                <c:param name="type" value="download"/>
-                <c:param name="index" value="${loopStatus.count - 1}"/>
-            </c:url>
-
-            <tr>
-                <td>${status.player}<br/>${type}</td>
-                <td>${user}</td>
-                <td>${current}</td>
-                <td>${model.bytesStreamed[loopStatus.count - 1]}</td>
-                <td><img width="${model.chartWidth}" height="${model.chartHeight}" src="${chartUrl}" alt=""/></td>
-            </tr>
-        </c:forEach>
-    </table>
-
-</c:if>
 
 <p><a href="status.view?">[<fmt:message key="common.refresh"/>]</a></p>
 

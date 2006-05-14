@@ -5,48 +5,61 @@ import net.sourceforge.subsonic.domain.*;
 import java.util.*;
 
 /**
- * Provides services for maintaining the list of stream and download status objects.
+ * Provides services for maintaining the list of stream, download and upload statuses.
  *
- * @see StreamStatus
+ * @see TransferStatus
  * @author Sindre Mehus
  * @version $Revision: 1.5 $ $Date: 2006/01/08 17:29:14 $
  */
 public class StatusService {
 
-    private List<StreamStatus> streamStatuses = new ArrayList<StreamStatus>();
-    private List<DownloadStatus> downloadStatuses = new ArrayList<DownloadStatus>();
+    private List<TransferStatus> streamStatuses = new ArrayList<TransferStatus>();
+    private List<TransferStatus> downloadStatuses = new ArrayList<TransferStatus>();
+    private List<TransferStatus> uploadStatuses = new ArrayList<TransferStatus>();
 
-    public synchronized void addStreamStatus(StreamStatus status) {
+    public synchronized void addStreamStatus(TransferStatus status) {
         streamStatuses.add(status);
     }
 
-    public synchronized void removeStreamStatus(StreamStatus status) {
+    public synchronized void removeStreamStatus(TransferStatus status) {
         streamStatuses.remove(status);
     }
 
-    public synchronized StreamStatus[] getAllStreamStatuses() {
-        return streamStatuses.toArray(new StreamStatus[0]);
+    public synchronized TransferStatus[] getAllStreamStatuses() {
+        return streamStatuses.toArray(new TransferStatus[0]);
     }
 
-    public synchronized StreamStatus[] getStreamStatusesForPlayer(Player player) {
-        List<StreamStatus> result = new ArrayList<StreamStatus>();
-        for (StreamStatus status : getAllStreamStatuses()) {
+    public synchronized TransferStatus[] getStreamStatusesForPlayer(Player player) {
+        List<TransferStatus> result = new ArrayList<TransferStatus>();
+        for (TransferStatus status : getAllStreamStatuses()) {
             if (status.getPlayer().getId().equals(player.getId())) {
                 result.add(status);
             }
         }
-        return result.toArray(new StreamStatus[0]);
+        return result.toArray(new TransferStatus[0]);
     }
 
-    public synchronized void addDownloadStatus(DownloadStatus status) {
+    public synchronized void addDownloadStatus(TransferStatus status) {
         downloadStatuses.add(status);
     }
 
-    public synchronized void removeDownloadStatus(DownloadStatus status) {
+    public synchronized void removeDownloadStatus(TransferStatus status) {
         downloadStatuses.remove(status);
     }
 
-    public synchronized DownloadStatus[] getAllDownloadStatuses() {
-        return downloadStatuses.toArray(new DownloadStatus[0]);
+    public synchronized TransferStatus[] getAllDownloadStatuses() {
+        return downloadStatuses.toArray(new TransferStatus[0]);
+    }
+
+    public synchronized void addUploadStatus(TransferStatus status) {
+        uploadStatuses.add(status);
+    }
+
+    public synchronized void removeUploadStatus(TransferStatus status) {
+        uploadStatuses.remove(status);
+    }
+
+    public synchronized TransferStatus[] getAllUploadStatuses() {
+        return uploadStatuses.toArray(new TransferStatus[0]);
     }
 }

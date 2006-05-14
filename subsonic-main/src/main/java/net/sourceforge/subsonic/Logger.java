@@ -147,7 +147,7 @@ public class Logger {
     }
 
     public static File getLogFile() {
-        File subsonicHome = ServiceFactory.getSettingsService().getSubsonicHome();
+        File subsonicHome = SettingsService.getSubsonicHome();
         return new File(subsonicHome, "subsonic.log");
     }
 

@@ -127,12 +127,11 @@ public class SettingsService {
      * @return The Subsonic home directory, if it exists.
      * @throws RuntimeException If directory doesn't exist.
      */
-    public File getSubsonicHome() {
+    public static File getSubsonicHome() {
         File home;
 
         String overrideHome = System.getProperty("subsonic.home");
         if (overrideHome != null) {
-            LOG.info("Using Subsonic home from system property: subsonic.home=" + overrideHome);
             home = new File(overrideHome);
         } else {
             boolean isWindows = System.getProperty("os.name", "Windows").toLowerCase().startsWith("windows");
@@ -143,12 +142,10 @@ public class SettingsService {
         if (!home.exists()) {
             boolean success = home.mkdirs();
             if (success) {
-                LOG.info("Created directory " + home.getPath());
             } else {
                 String message = "The directory " + home + " does not exist. Please create it and make it writable. " +
                                  "(You can override the directory location by specifying -Dsubsonic.home=... when " +
                                  "starting the servlet container.)";
-                LOG.error(message);
                 throw new RuntimeException(message);
             }
         }

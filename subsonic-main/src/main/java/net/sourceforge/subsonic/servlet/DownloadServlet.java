@@ -35,9 +35,9 @@ public class DownloadServlet extends HttpServlet {
      * @throws IOException If an I/O error occurs.
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        DownloadStatus status = null;
+        TransferStatus status = null;
         try {
-            status = new DownloadStatus();
+            status = new TransferStatus();
             status.setPlayer(playerService.getPlayer(request, response, false, false));
             statusService.addDownloadStatus(status);
 
@@ -76,7 +76,7 @@ public class DownloadServlet extends HttpServlet {
                 statusService.removeDownloadStatus(status);
                 User user = securityService.getCurrentUser(request);
                 if (user != null) {
-                    user.setBytesDownloaded(user.getBytesStreamed() + status.getBytesStreamed());
+                    user.setBytesDownloaded(user.getBytesDownloaded() + status.getBytesTransfered());
                     securityService.updateUser(user);
                 }
             }
@@ -90,9 +90,9 @@ public class DownloadServlet extends HttpServlet {
      * @param file The file to download.
      * @throws IOException If an I/O error occurs.
      */
-    private void downloadFile(HttpServletResponse response, DownloadStatus status, File file) throws IOException {
+    private void downloadFile(HttpServletResponse response, TransferStatus status, File file) throws IOException {
         LOG.info("Starting to download '" + file + "' to " + status.getPlayer());
-        status.setFile(new MusicFile(file));
+        status.setFile(file);
 
         response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
@@ -110,7 +110,7 @@ public class DownloadServlet extends HttpServlet {
      * @param file The file to download.
      * @throws IOException If an I/O error occurs.
      */
-    private void downloadDirectory(HttpServletResponse response, DownloadStatus status, File file) throws IOException {
+    private void downloadDirectory(HttpServletResponse response, TransferStatus status, File file) throws IOException {
         String zipFileName = file.getName() + ".zip";
         LOG.info("Starting to download '" + zipFileName + "' to " + status.getPlayer());
         response.setContentType("application/x-download");
@@ -132,7 +132,7 @@ public class DownloadServlet extends HttpServlet {
      * @param playlist The playlist to download.
      * @throws IOException If an I/O error occurs.
      */
-    private void downloadPlaylist(HttpServletResponse response, DownloadStatus status, Playlist playlist) throws IOException {
+    private void downloadPlaylist(HttpServletResponse response, TransferStatus status, Playlist playlist) throws IOException {
         String zipFileName = playlist.getName().replaceAll("(\\.m3u)|(\\.pls)", "") + ".zip";
         LOG.info("Starting to download '" + zipFileName + "' to " + status.getPlayer());
         response.setContentType("application/x-download");
@@ -157,7 +157,7 @@ public class DownloadServlet extends HttpServlet {
      * @param status The download status.
      * @throws IOException If an I/O error occurs.
      */
-    private void copyFileToStream(File file, OutputStream out, DownloadStatus status) throws IOException {
+    private void copyFileToStream(File file, OutputStream out, TransferStatus status) throws IOException {
         LOG.info("Downloading " + file + " to " + status.getPlayer());
 
         final int bufferSize = 16 * 1024; // 16 Kbit
@@ -175,7 +175,7 @@ public class DownloadServlet extends HttpServlet {
                     break;
                 }
                 out.write(buf, 0, n);
-                status.setBytesStreamed(status.getBytesStreamed() + n);
+                status.addBytesTransfered(n);
                 long after = System.currentTimeMillis();
 
                 // Calculate bitrate limit every 5 seconds.
@@ -188,10 +188,12 @@ public class DownloadServlet extends HttpServlet {
                 // Sleep for a while to throttle bitrate.
                 if (bitrateLimit != 0) {
                     long sleepTime = 8L * 1000 * bufferSize / bitrateLimit - (after - before);
-                    try {
-                        Thread.sleep(sleepTime);
-                    } catch (Exception x) {
-                        LOG.warn("Failed to sleep.", x);
+                    if (sleepTime > 0L) {
+                        try {
+                            Thread.sleep(sleepTime);
+                        } catch (Exception x) {
+                            LOG.warn("Failed to sleep.", x);
+                        }
                     }
                 }
             }
@@ -209,11 +211,11 @@ public class DownloadServlet extends HttpServlet {
      * @param status The download status.
      * @throws IOException If an I/O error occurs.
      */
-    private void zip(ZipOutputStream out, File root, File file, DownloadStatus status) throws IOException {
+    private void zip(ZipOutputStream out, File root, File file, TransferStatus status) throws IOException {
         String zipName = file.getCanonicalPath().substring(root.getCanonicalPath().length() + 1);
 
         if (file.isFile()) {
-            status.setFile(new MusicFile(file));
+            status.setFile(file);
 
             ZipEntry zipEntry = new ZipEntry(zipName);
             zipEntry.setSize(file.length());
