@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.io.IOException;
 
 /**
+ * Extension of Commons FileUpload for monitoring the upload progress.
+ *
  * @author Pierre-Alexandre Losson -- http://www.telio.be/blog -- plosson@users.sourceforge.net
  */
 public class MonitoredDiskFileItem extends DiskFileItem {

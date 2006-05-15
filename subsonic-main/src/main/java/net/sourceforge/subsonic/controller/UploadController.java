@@ -40,6 +40,8 @@ public class UploadController extends ParameterizableViewController {
 
             status = new TransferStatus();
             status.setPlayer(playerService.getPlayer(request, response, false, false));
+            status.setBytesTotal(request.getContentLength());
+
             statusService.addUploadStatus(status);
 
             // Check that we have a file upload request
@@ -207,7 +209,7 @@ public class UploadController extends ParameterizableViewController {
             status.setFile(new File(fileName));
         }
 
-        public void bytesRead(int bytesRead) {
+        public void bytesRead(long bytesRead) {
 
             // Throttle bitrate.
 

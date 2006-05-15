@@ -62,4 +62,14 @@ public class StatusService {
     public synchronized TransferStatus[] getAllUploadStatuses() {
         return uploadStatuses.toArray(new TransferStatus[0]);
     }
+
+    public synchronized TransferStatus[] getUploadStatusesForPlayer(Player player) {
+        List<TransferStatus> result = new ArrayList<TransferStatus>();
+        for (TransferStatus status : getAllUploadStatuses()) {
+            if (status.getPlayer().getId().equals(player.getId())) {
+                result.add(status);
+            }
+        }
+        return result.toArray(new TransferStatus[0]);
+    }
 }

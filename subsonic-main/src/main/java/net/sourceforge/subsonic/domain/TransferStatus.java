@@ -19,6 +19,7 @@ public class TransferStatus {
     private Player player;
     private File file;
     private long bytesTransfered;
+    private long bytesTotal;
     private LinkedList<Sample> history = new BoundedList<Sample>(HISTORY_LENGTH);
     private boolean isTerminated;
 
@@ -54,6 +55,22 @@ public class TransferStatus {
                 history.add(new TransferStatus.Sample(bytesTransfered, now));
             }
         }
+    }
+
+    /**
+     * Returns the total number of bytes, or 0 if unknown.
+     * @return The total number of bytes, or 0 if unknown.
+     */
+    public long getBytesTotal() {
+        return bytesTotal;
+    }
+
+    /**
+     * Sets the total number of bytes, or 0 if unknown.
+     * @param bytesTotal The total number of bytes, or 0 if unknown.
+     */
+    public void setBytesTotal(long bytesTotal) {
+        this.bytesTotal = bytesTotal;
     }
 
     /**

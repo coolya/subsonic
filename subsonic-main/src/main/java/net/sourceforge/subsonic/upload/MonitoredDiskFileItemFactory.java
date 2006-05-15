@@ -6,6 +6,8 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import java.io.File;
 
 /**
+ * Extension of Commons FileUpload for monitoring the upload progress.
+ *
  * @author Pierre-Alexandre Losson -- http://www.telio.be/blog -- plosson@users.sourceforge.net
  */
 public class MonitoredDiskFileItemFactory extends DiskFileItemFactory {
