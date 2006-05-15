@@ -1,6 +1,15 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
+Too much table padding in status.jsp.
+Too much yellow padding in selected tab.
+Upload limit config.
+AJAX upload.  Use hidden frame?  TransferService.
+Theme support.
+Option to show exception details in error log.
+Table rules don't work in IE.
+Firefox scrollbar background
+google analytics is broken.
 Table layout in status.jsp.
 Upload statistics.
 Upload status.
@@ -32,7 +41,6 @@ Search with quotes (") is broken.
 Drop ResourceBundle_en.
 Jetty
 Rewrite to Spring MVC.
-Rating where you can see how much each user has uploaded/downloaded/streamed.  Use JFreeChart?
 Update text for coverart role. Now includes tag editing.
 Subtract 10% in chart minimum.
 Display image embedded in ID3 tag (APIC).
@@ -53,9 +61,11 @@ Per-user locale.
 
 COMPLETED FOR VERSION 2.7
 ==========================
+New: Rewritten to Spring MVC.
 New: Ajax-based ID3 tag editor.
-New: Limit download bandwidth.
+New: Limit download and upload bandwidth.
 New: Download playlists.
+New: Rating where you can see how much each user has uploaded/downloaded/streamed. 
 New: Now logs to c:/subsonic/subsonic.log (Windows) or /var/subsonic/subsonic.log (other platforms).
 Bugfix: Avoid wrapped lines if browser window is small.
 Bugfix: Use proper range in Y-axis.

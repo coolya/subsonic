@@ -22,6 +22,7 @@ public class GeneralSettingsController extends SimpleFormController {
         command.setCoverArtLimit(String.valueOf(settingsService.getCoverArtLimit()));
         command.setCoverArtMask(settingsService.getCoverArtMask());
         command.setDownloadLimit(String.valueOf(settingsService.getDownloadBitrateLimit()));
+        command.setUploadLimit(String.valueOf(settingsService.getUploadBitrateLimit()));
         command.setIgnoredArticles(settingsService.getIgnoredArticles());
         command.setIndex(settingsService.getIndexString());
         command.setMusicMask(settingsService.getMusicMask());
@@ -65,6 +66,9 @@ public class GeneralSettingsController extends SimpleFormController {
         } catch (NumberFormatException x) { /* Intentionally ignored. */ }
         try {
             settingsService.setDownloadBitrateLimit(Long.parseLong(command.getDownloadLimit()));
+        } catch (NumberFormatException x) { /* Intentionally ignored. */ }
+        try {
+            settingsService.setUploadBitrateLimit(Long.parseLong(command.getUploadLimit()));
         } catch (NumberFormatException x) { /* Intentionally ignored. */ }
         settingsService.save();
 

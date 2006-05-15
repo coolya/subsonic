@@ -33,6 +33,7 @@ public class SettingsService {
     private static final String          KEY_INDEX_CREATION_INTERVAL = "IndexCreationInterval";
     private static final String          KEY_INDEX_CREATION_HOUR     = "IndexCreationHour";
     private static final String          KEY_DOWNLOAD_BITRATE_LIMIT  = "DownloadBitrateLimit";
+    private static final String          KEY_UPLOAD_BITRATE_LIMIT    = "UploadBitrateLimit";
 
     // Default values.
     private static final String          DEFAULT_INDEX_STRING            = "A B C D E F G H I J K L M N O P Q R S T U V W X-Z(XYZ)";
@@ -48,12 +49,13 @@ public class SettingsService {
     private static final int             DEFAULT_INDEX_CREATION_INTERVAL = 1;
     private static final int             DEFAULT_INDEX_CREATION_HOUR     = 3;
     private static final long            DEFAULT_DOWNLOAD_BITRATE_LIMIT  = 0;
+    private static final long            DEFAULT_UPLOAD_BITRATE_LIMIT    = 0;
 
     // Array of all keys.  Used to clean property file.
     private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
                                           KEY_COVER_ART_MASK, KEY_COVER_ART_LIMIT, KEY_WELCOME_MESSAGE, KEY_LOCALE_LANGUAGE,
                                           KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
-                                          KEY_DOWNLOAD_BITRATE_LIMIT};
+                                          KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT};
 
     private static final Logger LOG = Logger.getLogger(SettingsService.class);
 
@@ -263,6 +265,20 @@ public class SettingsService {
      */
     public void setDownloadBitrateLimit(long limit) {
         properties.setProperty(KEY_DOWNLOAD_BITRATE_LIMIT,  "" + limit);
+    }
+
+    /**
+     * @return The upload bitrate limit in Kbit/s. Zero if unlimited.
+     */
+    public long getUploadBitrateLimit() {
+        return Long.parseLong(properties.getProperty(KEY_UPLOAD_BITRATE_LIMIT, "" + DEFAULT_UPLOAD_BITRATE_LIMIT));
+    }
+
+    /**
+     * @param limit The upload bitrate limit in Kbit/s. Zero if unlimited.
+     */
+    public void setUploadBitrateLimit(long limit) {
+        properties.setProperty(KEY_UPLOAD_BITRATE_LIMIT,  "" + limit);
     }
 
     /**

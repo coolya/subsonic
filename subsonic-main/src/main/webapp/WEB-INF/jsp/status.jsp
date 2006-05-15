@@ -11,7 +11,7 @@
     <fmt:message key="status.title"/>
 </h1>
 
-<table width="95%" border="1" cellpadding="10" rules="all">
+<table width="100%" border="1" cellpadding="3" rules="all">
     <tr class="color1">
         <th><fmt:message key="status.type"/></th>
         <th><fmt:message key="status.player"/></th>
@@ -81,7 +81,7 @@
             <td>${user}</td>
             <td>${current}</td>
             <td>${status.bytes}</td>
-            <td><img width="${model.chartWidth}" height="${model.chartHeight}" src="${chartUrl}" alt=""/></td>
+            <td width="${model.chartWidth}"><img width="${model.chartWidth}" height="${model.chartHeight}" src="${chartUrl}" alt=""/></td>
         </tr>
     </c:forEach>
 </table>

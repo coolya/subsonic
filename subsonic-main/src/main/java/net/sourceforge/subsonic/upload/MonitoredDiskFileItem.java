@@ -17,7 +17,9 @@ public class MonitoredDiskFileItem extends DiskFileItem {
                                  File repository, UploadListener listener) {
         super(fieldName, contentType, isFormField, fileName, sizeThreshold, repository);
         this.listener = listener;
-        listener.start(fileName);
+        if (fileName != null) {
+            listener.start(fileName);
+        }
     }
 
     public OutputStream getOutputStream() throws IOException {

@@ -16,6 +16,7 @@ public class GeneralSettingsCommand {
     private String welcomeMessage;
     private String coverArtLimit;
     private String downloadLimit;
+    private String uploadLimit;
     private String localeIndex;
     private String[] locales;
     private boolean isReloadNeeded;
@@ -82,6 +83,14 @@ public class GeneralSettingsCommand {
 
     public void setDownloadLimit(String downloadLimit) {
         this.downloadLimit = downloadLimit;
+    }
+
+    public String getUploadLimit() {
+        return uploadLimit;
+    }
+
+    public void setUploadLimit(String uploadLimit) {
+        this.uploadLimit = uploadLimit;
     }
 
     public String getLocaleIndex() {

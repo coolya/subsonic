@@ -220,19 +220,20 @@ public class UploadController extends ParameterizableViewController {
 
             status.setBytesTransfered(byteCount);
 
-            float sleepMillis = 1000.0F * (bitCount / maxBitsPerSecond - elapsedSeconds);
-            if (sleepMillis > 0) {
-                try {
-                    Thread.sleep((long) sleepMillis);
-                } catch (InterruptedException x) {
-                    LOG.warn("Failed to sleep.", x);
+            if (maxBitsPerSecond > 0) {
+                float sleepMillis = 1000.0F * (bitCount / maxBitsPerSecond - elapsedSeconds);
+                if (sleepMillis > 0) {
+                    try {
+                        Thread.sleep((long) sleepMillis);
+                    } catch (InterruptedException x) {
+                        LOG.warn("Failed to sleep.", x);
+                    }
                 }
             }
         }
 
         private long getBitrateLimit() {
-            // TODO: Add getUploadBitrateLimit.
-            return 1024L * settingsService.getDownloadBitrateLimit() / Math.max(1, statusService.getAllUploadStatuses().length);
+            return 1024L * settingsService.getUploadBitrateLimit() / Math.max(1, statusService.getAllUploadStatuses().length);
         }
     }
 
