@@ -27,21 +27,21 @@
     </select>
 </c:if>
 
-<c:if test="${not empty model.quickLinks}">
-    <h2><fmt:message key="left.quicklink"/></h2>
-    <c:forEach items="${model.quickLinks}" var="quickLink">
+<c:if test="${not empty model.shortcuts}">
+    <h2><fmt:message key="left.shortcut"/></h2>
+    <c:forEach items="${model.shortcuts}" var="shortcut">
         <c:url value="playRadio.view" var="playRadioUrl">
             <c:param name="id" value="${radio.id}"/>
         </c:url>
         <p class="dense">
             <c:import url="playAddDownload.jsp">
-                <c:param name="path" value="${quickLink.path}"/>
+                <c:param name="path" value="${shortcut.path}"/>
                 <c:param name="downloadEnabled" value="${model.downloadEnabled}"/>
             </c:import>
             <sub:url value="main.view" var="mainUrl">
-                <sub:param name="path" value="${quickLink.path}"/>
+                <sub:param name="path" value="${shortcut.path}"/>
             </sub:url>
-            <a target="main" href="${mainUrl}">${quickLink.name}</a>
+            <a target="main" href="${mainUrl}">${shortcut.name}</a>
         </p>
     </c:forEach>
 </c:if>

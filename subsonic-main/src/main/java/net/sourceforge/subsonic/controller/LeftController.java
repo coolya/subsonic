@@ -41,14 +41,14 @@ public class LeftController extends ParameterizableViewController {
         MusicFolder[] musicFoldersToUse = selectedMusicFolder == null ? allMusicFolders : new MusicFolder[] {selectedMusicFolder};
         String indexString = settingsService.getIndexString();
         String[] ignoredArticles = settingsService.getIgnoredArticlesAsArray();
-        String[] quickLinks = settingsService.getQuickLinksAsArray();
+        String[] shortcuts = settingsService.getShortcutsAsArray();
         List<MusicIndex> musicIndex = MusicIndex.createIndexesFromExpression(indexString);
-        Map<MusicIndex, List<MusicFile>> indexedChildren = MusicIndex.getIndexedChildren(musicFoldersToUse, musicIndex, ignoredArticles, quickLinks);
+        Map<MusicIndex, List<MusicFile>> indexedChildren = MusicIndex.getIndexedChildren(musicFoldersToUse, musicIndex, ignoredArticles, shortcuts);
 
         map.put("musicFolders", allMusicFolders);
         map.put("selectedMusicFolder", selectedMusicFolder);
         map.put("radios", settingsService.getAllInternetRadios());
-        map.put("quickLinks", getQuickLinks(musicFoldersToUse, quickLinks));
+        map.put("shortcuts", getShortcuts(musicFoldersToUse, shortcuts));
 
         if (statistics != null) {
             map.put("statistics", statistics);
@@ -66,12 +66,12 @@ public class LeftController extends ParameterizableViewController {
         return result;
     }
 
-    private List<MusicFile> getQuickLinks(MusicFolder[] musicFoldersToUse, String[] quickLinks) {
+    private List<MusicFile> getShortcuts(MusicFolder[] musicFoldersToUse, String[] shortcuts) {
         List<MusicFile> result = new ArrayList<MusicFile>();
 
-        for (String link : quickLinks) {
+        for (String shortcut : shortcuts) {
             for (MusicFolder musicFolder : musicFoldersToUse) {
-                File file = new File(musicFolder.getPath(), link);
+                File file = new File(musicFolder.getPath(), shortcut);
                 if (file.exists()) {
                     result.add(new MusicFile(file));
                 }

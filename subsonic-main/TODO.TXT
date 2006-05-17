@@ -1,6 +1,7 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
+Rename quick link to shortcut.
 Springify podcast.
 Springify wap.
 Internet radio broken?
