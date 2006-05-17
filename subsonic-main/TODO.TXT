@@ -1,20 +1,41 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
+Stue, før:
+[5/17/06 1:16:37 PM CEST]	DEBUG	SearchService	Found 50 random files in 2015 ms.
+[5/17/06 1:16:54 PM CEST]	DEBUG	SearchService	Found 50 random files in 1437 ms.
+[5/17/06 1:17:06 PM CEST]	DEBUG	SearchService	Found 50 random files in 1250 ms.
+
+Stue, etter:
+[5/17/06 1:27:45 PM CEST]	DEBUG	SearchService	Found 50 random files in 1531 ms.
+[5/17/06 1:28:00 PM CEST]	DEBUG	SearchService	Found 50 random files in 1250 ms.
+[5/17/06 1:28:08 PM CEST]	DEBUG	SearchService	Found 50 random files in 1093 ms.
+[5/17/06 1:28:19 PM CEST]	DEBUG	SearchService	Found 50 random files in 1391 ms.
+
+Laptop, før:
+[2006-05-17 13:16:22,904] DEBUG SearchService - Found 10 random files in 40 ms.
+[2006-05-17 13:16:43,613] DEBUG SearchService - Found 10 random files in 20 ms.
+[2006-05-17 13:16:47,870] DEBUG SearchService - Found 50 random files in 812 ms.
+[2006-05-17 13:17:05,094] DEBUG SearchService - Found 50 random files in 90 ms.
+[2006-05-17 13:17:09,491] DEBUG SearchService - Found 50 random files in 70 ms.
+[2006-05-17 13:17:23,110] DEBUG SearchService - Found 50 random files in 120 ms.
+
+Laptop, etter:
+[5/17/06 1:20:35 PM CEST]	DEBUG	SearchService	Found 50 random files in 80 ms.
+[5/17/06 1:20:40 PM CEST]	DEBUG	SearchService	Found 50 random files in 70 ms.
+
+Springify podcast.
+Springify wap.
 Internet radio broken?
 AJAX upload.  Use hidden frame?  TransferService. Put stuff in session.
-Album info layout.
 Theme support.
 Option to show exception details in error log.
 Table rules don't work in IE.
 Firefox scrollbar background
-google analytics is broken.
 CSS colors.
 Check Javascript error on IE.
 h1, h2, p etc margin and padding.
-Make PNG work in IE.
 Remove debug-logging in SearchService. (Create new level, PERF?)
-Re-work home page.
 Progress bar in file upload.  See forum post.
 Quick link to "#" doesn't work.
 CSS
@@ -30,10 +51,8 @@ i18n of TagService.
 Create taglib for StringUtil.formatBytes() and help popup.
 Make it work on Java Application Server 8.1.  (web.xml element order)
 Make it work on Geronimo.
-http://www.shareup.com/
-Search with quotes (") is broken.
+Make it work on Jetty
 Drop ResourceBundle_en.
-Jetty
 Rewrite to Spring MVC.
 Update text for coverart role. Now includes tag editing.
 Display image embedded in ID3 tag (APIC).
@@ -44,12 +63,8 @@ Upload quota per user.
 Improve performance for new/best charts.
 Support reverse proxies.  Send url as parameter. (<a href="javascript:document.location.href='foo.jsp?referrer=' + document.location.href">Trykk her</a>)
 Support forward proxies.
-More lenient security check.  Allow symlinks.
-Layout, settings.
 Order search results.
 Hvis spilleren har "Auto-control enabled" skrudd av, så vises det en ny knapp "Stream" i playlista som kan brukes for å få m3u-en.
-"Mini" interface for phones, pda's etc.
-Create installer for Windows. http://nsis.sourceforge.net
 Per-user locale.
 
 COMPLETED FOR VERSION 2.7
@@ -61,6 +76,8 @@ New: Show upload progress in status page.
 New: Download playlists.
 New: Rating where you can see how much each user has uploaded/downloaded/streamed.
 New: Now logs to c:/subsonic/subsonic.log (Windows) or /var/subsonic/subsonic.log (other platforms).
+New: Improved layout, particular in settings page.
+New: Support symbolic links on Unix.
 Bugfix: Avoid wrapped lines if browser window is small.
 Bugfix: Use proper range in Y-axis.
 Bugfix: Integer overflow in search index creation interval.
@@ -68,6 +85,8 @@ Bugfix: Some Amazon search didn't show any results.
 
 BACKLOG
 ==========
+"Mini" interface for phones, pda's etc.
+Create installer for Windows. http://nsis.sourceforge.net
 Message system (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=24)
 Longer log file. Option to not display DEBUG lines in help.jsp.
 If a folder contain loads of files the pictures fill up a lagre portion of the frame and

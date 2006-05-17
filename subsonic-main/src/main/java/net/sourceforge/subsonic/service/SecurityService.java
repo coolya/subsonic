@@ -97,7 +97,7 @@ public class SecurityService {
     * Returns whether the given file may be read.
     * @return Whether the given file may be read.
     */
-    public boolean isReadAllowed(File file) throws IOException {
+    public boolean isReadAllowed(File file) {
         // Allowed to read from both music folder and playlist folder.
         return isInMusicFolder(file) || isInPlaylistFolder(file);
     }
@@ -106,7 +106,7 @@ public class SecurityService {
      * Returns whether the given file may be written, created or deleted.
      * @return Whether the given file may be written, created or deleted.
      */
-    public boolean isWriteAllowed(File file) throws IOException {
+    public boolean isWriteAllowed(File file) {
         // Only allowed to write playlists or cover art.
         boolean isPlaylist = isInPlaylistFolder(file);
         boolean isCoverArt = isInMusicFolder(file) && file.getName().startsWith("folder.");
@@ -118,7 +118,7 @@ public class SecurityService {
      * Returns whether the given file may be uploaded.
      * @return Whether the given file may be uploaded.
      */
-    public boolean isUploadAllowed(File file) throws IOException {
+    public boolean isUploadAllowed(File file) {
         return isInMusicFolder(file) && !file.exists();
     }
 
@@ -126,13 +126,12 @@ public class SecurityService {
      * Returns whether the given file is located in one of the music folders (or any of their sub-folders).
      * @param file The file in question.
      * @return Whether the given file is located in one of the music folders.
-     * @throws IOException If an I/O error occurs.
      */
-    private boolean isInMusicFolder(File file) throws IOException {
+    private boolean isInMusicFolder(File file) {
         MusicFolder[] folders =  ServiceFactory.getSettingsService().getAllMusicFolders();
-        String canonicalPath = getCanonicalPath(file);
+        String path = file.getPath();
         for (MusicFolder folder : folders) {
-            if (canonicalPath.startsWith(getCanonicalPath(folder.getPath()))) {
+            if (isFileInFolder(path, folder.getPath().getPath())) {
                 return true;
             }
         }
@@ -143,20 +142,28 @@ public class SecurityService {
      * Returns whether the given file is located in the playlist folder (or any of its sub-folders).
      * @param file The file in question.
      * @return Whether the given file is located in the playlist folder.
-     * @throws IOException If an I/O error occurs.
      */
-    private boolean isInPlaylistFolder(File file) throws IOException {
+    private boolean isInPlaylistFolder(File file) {
         String playlistFolder = ServiceFactory.getSettingsService().getPlaylistFolder();
-        return getCanonicalPath(file).startsWith(getCanonicalPath(new File(playlistFolder)));
-
+        return isFileInFolder(file.getPath(), playlistFolder);
     }
 
     /**
-     * Returns the canonical path of the file, converted to upper-case letters.
-     * @return The canonical path of the file, converted to upper-case letters.
-     * @throws IOException If an I/O error occurs.
+     * Returns whether the given file is located in the given folder (or any of its sub-folders).
+     * @param file The file in question.
+     * @param folder The folder in question.
+     * @return Whether the given file is located in the given folder.
      */
-    private String getCanonicalPath(File file) throws IOException {
-        return file.getCanonicalPath().toUpperCase();
+    private boolean isFileInFolder(String file, String folder) {
+        // Deny access if file contains ".."
+        if (file.contains("..")) {
+            return false;
+        }
+
+        // Convert slashes.
+        file = file.replace('\\', '/');
+        folder = folder.replace('\\', '/');
+
+        return file.toUpperCase().startsWith(folder.toUpperCase());
     }
 }

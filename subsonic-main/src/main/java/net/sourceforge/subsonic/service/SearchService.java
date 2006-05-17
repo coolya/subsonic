@@ -180,7 +180,7 @@ public class SearchService {
         }
 
         // Step two: split query and re-run search.
-        List<MusicFile> resultTwo= search(splitQuery(query), maxHits - resultOne.size(), includeArtist, includeAlbum, includeTitle, newerThan);
+        List<MusicFile> resultTwo = search(splitQuery(query), maxHits - resultOne.size(), includeArtist, includeAlbum, includeTitle, newerThan);
 
         // Step three: compute the union
         for (MusicFile file : resultTwo) {

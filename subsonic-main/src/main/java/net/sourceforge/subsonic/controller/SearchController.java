@@ -136,7 +136,8 @@ public class SearchController extends SimpleFormController {
         if (query == null || "".equals(query)) {
             return null;
         }
-        return query.replaceAll("\"", "&quot;");
+        command.setQuery(query.replaceAll("\"", "&quot;"));
+        return query;
     }
 
     private long getNewerThanMillis(SearchCommand command) {

@@ -25,11 +25,9 @@ public class MusicFile {
     /**
      * Creates a new instance for the given file.
      * @param file A file on the local file system.
-     * @exception IOException If an I/O error occurs.
      * @exception SecurityException If access is denied to the given file.
      */
-    public MusicFile(File file) throws IOException {
-        file = file.getCanonicalFile();
+    public MusicFile(File file) {
         if (!ServiceFactory.getSecurityService().isReadAllowed(file)) {
             throw new SecurityException("Access denied to file " + file);
         }
@@ -39,10 +37,9 @@ public class MusicFile {
     /**
      * Creates a new instance for the given path name.
      * @param pathName A path name for a file on the local file system.
-     * @exception IOException If an I/O error occurs.
      * @exception SecurityException If access is denied to the given file.
      */
-    public MusicFile(String pathName) throws IOException {
+    public MusicFile(String pathName) {
         this(new File(pathName));
     }
 
