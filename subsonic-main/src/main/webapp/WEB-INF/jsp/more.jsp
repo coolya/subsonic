@@ -3,9 +3,8 @@
 <html><head>
     <%@ include file="head.jsp" %>
     <style type="text/css">
-        #progressBar { padding-top: 5px; }
-        #progressBarBox { width: 350px; height: 20px; border: 1px inset; background: #eee;}
-        #progressBarBoxContent { width: 0; height: 20px; border-right: 1px solid #444; background: #9ACB34; }
+        #progressBar{ width: 350px; height: 15px; border: 1px inset; background: #eee;}
+        #progressBarContent { width: 0; height: 15px; border-right: 1px solid #444; background: #9ACB34; }
     </style>
     <script type="text/javascript" src="<c:url value="/dwr/interface/transferService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
@@ -15,23 +14,19 @@
         function refreshProgress() {
             transferService.getUploadInfo(updateProgress);
         }
-        function updateProgress(uploadInfo) {
-            DWRUtil.setValue("progress", uploadInfo.bytesUploaded + " of " + uploadInfo.bytesTotal);
 
-//            if (uploadInfo.bytesTotal > 0) {
-//                var percent = Math.ceil((uploadInfo.bytesUploaded / uploadInfo.bytesTotal) * 100);
-//                var width = parseInt(percent * 3.5) + 'px';
-//                var element = document.getElementById('progressBarBoxContent');
-//                element.style.width = width;
-//                document.getElementById("progressBarBoxContent").style.width = "100px";
-//                DWRUtil.setValue("progress", parseInt(percent * 3.5) + "px");
-//            }
+        function updateProgress(uploadInfo) {
+            if (uploadInfo.bytesTotal > 0) {
+                var percent = Math.ceil((uploadInfo.bytesUploaded / uploadInfo.bytesTotal) * 100);
+                var width = parseInt(percent * 3.5) + 'px';
+                document.getElementById("progressBarContent").style.width = width;
+            }
 
             window.setTimeout("refreshProgress()", 1000);
         }
     </script>
 
-    </head><body>
+</head><body onload="refreshProgress()">
 
 <h1>
     <img src="<c:url value="/icons/more.png"/>" alt=""/>
@@ -69,7 +64,7 @@
 
     <h2><img src="<c:url value="/icons/upload.gif"/>" width="16" height="16" alt=""/>&nbsp;<fmt:message key="more.upload.title"/></h2>
 
-    <form method="post" enctype="multipart/form-data" action="upload.view" onsubmit="refreshProgress()">
+    <form method="post" enctype="multipart/form-data" action="upload.view">
         <table>
             <tr>
                 <td><fmt:message key="more.upload.source"/></td>
@@ -89,18 +84,11 @@
         </table>
     </form>
 
-    <div id="progress"/>
 
     <div id="progressBar">
-
-        <div id="theMeter">
-            <div id="progressBarText"></div>
-
-            <div id="progressBarBox">
-                <div id="progressBarBoxContent"></div>
-            </div>
-        </div>
+        <div id="progressBarContent"/>
     </div>
+
 </c:if>
 
 </body></html>

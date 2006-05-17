@@ -70,13 +70,13 @@
 </script>
 
 <c:if test="${hits > 0}">
-    <table>
+    <table class="ruleTable" width="80%">
         <tr><td rowspan="6"><img id="image" src="" alt="" hspace="15"/></td></tr>
-        <tr><td><em><fmt:message key="albuminfo.artist"/></em></td><td id="artists"></td></tr>
-        <tr><td><em><fmt:message key="albuminfo.released"/></em></td><td id="released"></td></tr>
-        <tr><td><em><fmt:message key="albuminfo.label"/></em></td><td id="label"></td></tr>
-        <tr><td><em><fmt:message key="albuminfo.review"/></em></td><td id="review"></td></tr>
-        <tr><td colspan="2"><a id="buy" target="_blank"><b><fmt:message key="albuminfo.amazon"/></b></a></td></tr>
+        <tr><td class="ruleTableHeader"><fmt:message key="albuminfo.artist"/></th><td class="ruleTableCell" id="artists"></td></tr>
+        <tr><td class="ruleTableHeader"><fmt:message key="albuminfo.released"/></th><td class="ruleTableCell" id="released"></td></tr>
+        <tr><td class="ruleTableHeader"><fmt:message key="albuminfo.label"/></th><td class="ruleTableCell" id="label"></td></tr>
+        <tr><td class="ruleTableHeader"><fmt:message key="albuminfo.review"/></th><td class="ruleTableCell" id="review"></td></tr>
+        <tr><td  class="ruleTableCell" colspan="2"><a id="buy" target="_blank"><b><fmt:message key="albuminfo.amazon"/></b></a></td></tr>
     </table>
 </c:if>
 

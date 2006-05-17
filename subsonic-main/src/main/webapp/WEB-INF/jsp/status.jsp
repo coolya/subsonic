@@ -11,14 +11,14 @@
     <fmt:message key="status.title"/>
 </h1>
 
-<table width="100%" border="1" cellpadding="3" rules="all">
-    <tr class="color1">
-        <th><fmt:message key="status.type"/></th>
-        <th><fmt:message key="status.player"/></th>
-        <th><fmt:message key="status.user"/></th>
-        <th><fmt:message key="status.current"/></th>
-        <th><fmt:message key="status.transmitted"/></th>
-        <th><fmt:message key="status.bitrate"/></th>
+<table width="100%" class="ruleTable">
+    <tr>
+        <th class="ruleTableHeader"><fmt:message key="status.type"/></th>
+        <th class="ruleTableHeader"><fmt:message key="status.player"/></th>
+        <th class="ruleTableHeader"><fmt:message key="status.user"/></th>
+        <th class="ruleTableHeader"><fmt:message key="status.current"/></th>
+        <th class="ruleTableHeader"><fmt:message key="status.transmitted"/></th>
+        <th class="ruleTableHeader"><fmt:message key="status.bitrate"/></th>
     </tr>
 
     <c:forEach items="${model.transferStatuses}" var="status">
@@ -76,12 +76,12 @@
         </c:url>
 
         <tr>
-            <td>${transferType}</td>
-            <td>${status.player}<br/>${type}</td>
-            <td>${user}</td>
-            <td>${current}</td>
-            <td>${status.bytes}</td>
-            <td width="${model.chartWidth}"><img width="${model.chartWidth}" height="${model.chartHeight}" src="${chartUrl}" alt=""/></td>
+            <td class="ruleTableCell">${transferType}</td>
+            <td class="ruleTableCell">${status.player}<br/>${type}</td>
+            <td class="ruleTableCell">${user}</td>
+            <td class="ruleTableCell">${current}</td>
+            <td class="ruleTableCell">${status.bytes}</td>
+            <td class="ruleTableCell" width="${model.chartWidth}"><img width="${model.chartWidth}" height="${model.chartHeight}" src="${chartUrl}" alt=""/></td>
         </tr>
     </c:forEach>
 </table>

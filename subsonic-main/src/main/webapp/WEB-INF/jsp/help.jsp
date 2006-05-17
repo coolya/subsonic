@@ -31,15 +31,16 @@
     <p class="warning"><fmt:message key="help.upgrade"><fmt:param value="${model.latestVersion}"/></fmt:message></p>
 </c:if>
 
-<table border="1" cellpadding="5" width="75%" rules="all">
-    <tr><td class="color1"><b><fmt:message key="help.version.title"/></b></td><td>${versionString}</td></tr>
-    <tr><td class="color1"><b><fmt:message key="help.builddate.title"/></b></td><td>${buildDateString}</td></tr>
-    <tr><td class="color1"><b><fmt:message key="help.license.title"/></b></td><td><fmt:message key="help.license.text"/></td></tr>
-    <tr><td class="color1"><b><fmt:message key="help.homepage.title"/></b></td><td><a target="_blank" href="http://subsonic.sourceforge.net/">http://subsonic.sourceforge.net/</a></td></tr>
-    <tr><td class="color1"><b><fmt:message key="help.faq.title"/></b></td><td><a target="_blank" href="http://subsonic.sourceforge.net/faq.html">http://subsonic.sourceforge.net/faq.html</a></td></tr>
-    <tr><td class="color1"><b><fmt:message key="help.forum.title"/></b></td><td><a target="_blank" href="http://subsonic.sourceforge.net/forum.html">http://subsonic.sourceforge.net/forum.html</a></td></tr>
-    <tr><td class="color1"><b><fmt:message key="help.contact.title"/></b></td><td><fmt:message key="help.contact.text"/></td></tr>
+<table width="75%" class="ruleTable">
+    <tr><td class="ruleTableHeader"><fmt:message key="help.version.title"/></td><td class="ruleTableCell">${versionString}</td></tr>
+    <tr><td class="ruleTableHeader"><fmt:message key="help.builddate.title"/></td><td class="ruleTableCell">${buildDateString}</td></tr>
+    <tr><td class="ruleTableHeader"><fmt:message key="help.license.title"/></td><td class="ruleTableCell"><fmt:message key="help.license.text"/></td></tr>
+    <tr><td class="ruleTableHeader"><fmt:message key="help.homepage.title"/></td><td class="ruleTableCell"><a target="_blank" href="http://subsonic.sourceforge.net/">http://subsonic.sourceforge.net/</a></td></tr>
+    <tr><td class="ruleTableHeader"><fmt:message key="help.faq.title"/></td><td class="ruleTableCell"><a target="_blank" href="http://subsonic.sourceforge.net/faq.html">http://subsonic.sourceforge.net/faq.html</a></td></tr>
+    <tr><td class="ruleTableHeader"><fmt:message key="help.forum.title"/></td><td class="ruleTableCell"><a target="_blank" href="http://subsonic.sourceforge.net/forum.html">http://subsonic.sourceforge.net/forum.html</a></td></tr>
+    <tr><td class="ruleTableHeader"><fmt:message key="help.contact.title"/></td><td class="ruleTableCell"><fmt:message key="help.contact.text"/></td></tr>
 </table>
+
 <p/>
 
 <table width="75%"><tr>

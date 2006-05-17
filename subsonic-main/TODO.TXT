@@ -1,7 +1,9 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
-AJAX upload.  Use hidden frame?  TransferService.
+Internet radio broken?
+AJAX upload.  Use hidden frame?  TransferService. Put stuff in session.
+Album info layout.
 Theme support.
 Option to show exception details in error log.
 Table rules don't work in IE.
