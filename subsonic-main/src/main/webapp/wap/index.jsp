@@ -36,7 +36,8 @@
 
         String indexString = settings.getIndexString();
         String[] ignoredArticles = settings.getIgnoredArticlesAsArray();
-        Map children = MusicIndex.getIndexedChildren(folders, MusicIndex.createIndexesFromExpression(indexString), ignoredArticles);
+        String[] quickLinks = settings.getQuickLinksAsArray();
+        Map children = MusicIndex.getIndexedChildren(folders, MusicIndex.createIndexesFromExpression(indexString), ignoredArticles, quickLinks);
 
         // If an index is given as parameter, only show music files for this index.
         if (index != null) {

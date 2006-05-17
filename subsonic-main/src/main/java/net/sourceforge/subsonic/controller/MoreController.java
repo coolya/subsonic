@@ -28,7 +28,7 @@ public class MoreController extends ParameterizableViewController {
         String uploadDirectory = null;
         MusicFolder[] musicFolders = settingsService.getAllMusicFolders();
         if (musicFolders.length > 0) {
-            uploadDirectory = new File(musicFolders[0].getPath(), "incoming").getPath();
+            uploadDirectory = new File(musicFolders[0].getPath(), "Incoming").getPath();
         }
 
         ModelAndView result = super.handleRequestInternal(request, response);

@@ -13,6 +13,7 @@ public class GeneralSettingsCommand {
     private String coverArtMask;
     private String index;
     private String ignoredArticles;
+    private String quickLinks;
     private String welcomeMessage;
     private String coverArtLimit;
     private String downloadLimit;
@@ -59,6 +60,14 @@ public class GeneralSettingsCommand {
 
     public void setIgnoredArticles(String ignoredArticles) {
         this.ignoredArticles = ignoredArticles;
+    }
+
+    public String getQuickLinks() {
+        return quickLinks;
+    }
+
+    public void setQuickLinks(String quickLinks) {
+        this.quickLinks = quickLinks;
     }
 
     public String getWelcomeMessage() {

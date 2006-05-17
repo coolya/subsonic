@@ -136,23 +136,32 @@ public class MusicIndex {
      * @param folders The music folders.
      * @param indexes The list of indexes to use when grouping the children.
      * @param ignoredArticles Articles to ignore (typically "The", "El", "Las" etc),
+     * @param quickLinks Quick links that should be ignored.
      * @return A map from music indexes to lists of music files that are direct children of this music file.
      * @exception IOException If an I/O error occurs.
      */
     public static Map<MusicIndex, List<MusicFile>> getIndexedChildren(MusicFolder[] folders,
                                                                       final List<MusicIndex> indexes,
-                                                                      String[] ignoredArticles ) throws IOException {
+                                                                      String[] ignoredArticles, String[] quickLinks) throws IOException {
         Comparator<MusicIndex> comp = new Comparator<MusicIndex>() {
             public int compare(MusicIndex a, MusicIndex b) {
                 return indexes.indexOf(a) - indexes.indexOf(b);
             }
         };
         Map<MusicIndex, List<MusicFile>> result = new TreeMap<MusicIndex, List<MusicFile>>(comp);
+        Set<String> quickLinkSet = new HashSet<String>();
+        for (String link : quickLinks) {
+            quickLinkSet.add(link);
+        }
 
         for (MusicFolder folder : folders) {
 
             MusicFile[] children = new MusicFile(folder.getPath()).getChildren(false, true);
             for (MusicFile child : children) {
+                if (quickLinkSet.contains(child.getName())) {
+                    continue;
+                }
+
                 MusicIndex index = getIndex(child, indexes, ignoredArticles);
                 List<MusicFile> list = result.get(index);
                 if (list == null) {

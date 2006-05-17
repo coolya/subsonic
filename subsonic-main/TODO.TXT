@@ -1,29 +1,6 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
-Stue, før:
-[5/17/06 1:16:37 PM CEST]	DEBUG	SearchService	Found 50 random files in 2015 ms.
-[5/17/06 1:16:54 PM CEST]	DEBUG	SearchService	Found 50 random files in 1437 ms.
-[5/17/06 1:17:06 PM CEST]	DEBUG	SearchService	Found 50 random files in 1250 ms.
-
-Stue, etter:
-[5/17/06 1:27:45 PM CEST]	DEBUG	SearchService	Found 50 random files in 1531 ms.
-[5/17/06 1:28:00 PM CEST]	DEBUG	SearchService	Found 50 random files in 1250 ms.
-[5/17/06 1:28:08 PM CEST]	DEBUG	SearchService	Found 50 random files in 1093 ms.
-[5/17/06 1:28:19 PM CEST]	DEBUG	SearchService	Found 50 random files in 1391 ms.
-
-Laptop, før:
-[2006-05-17 13:16:22,904] DEBUG SearchService - Found 10 random files in 40 ms.
-[2006-05-17 13:16:43,613] DEBUG SearchService - Found 10 random files in 20 ms.
-[2006-05-17 13:16:47,870] DEBUG SearchService - Found 50 random files in 812 ms.
-[2006-05-17 13:17:05,094] DEBUG SearchService - Found 50 random files in 90 ms.
-[2006-05-17 13:17:09,491] DEBUG SearchService - Found 50 random files in 70 ms.
-[2006-05-17 13:17:23,110] DEBUG SearchService - Found 50 random files in 120 ms.
-
-Laptop, etter:
-[5/17/06 1:20:35 PM CEST]	DEBUG	SearchService	Found 50 random files in 80 ms.
-[5/17/06 1:20:40 PM CEST]	DEBUG	SearchService	Found 50 random files in 70 ms.
-
 Springify podcast.
 Springify wap.
 Internet radio broken?

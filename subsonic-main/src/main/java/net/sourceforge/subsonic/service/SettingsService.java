@@ -22,6 +22,7 @@ public class SettingsService {
     // Global settings.
     private static final String          KEY_INDEX_STRING            = "IndexString";
     private static final String          KEY_IGNORED_ARTICLES        = "IgnoredArticles";
+    private static final String          KEY_QUICK_LINKS             = "QuickLinks";
     private static final String          KEY_PLAYLIST_FOLDER         = "PlaylistFolder";
     private static final String          KEY_MUSIC_MASK              = "MusicMask";
     private static final String          KEY_COVER_ART_MASK          = "CoverArtMask";
@@ -38,6 +39,7 @@ public class SettingsService {
     // Default values.
     private static final String          DEFAULT_INDEX_STRING            = "A B C D E F G H I J K L M N O P Q R S T U V W X-Z(XYZ)";
     private static final String          DEFAULT_IGNORED_ARTICLES        = "The El La Los Las Le Les";
+    private static final String          DEFAULT_QUICK_LINKS             = "New Incoming";
     private static final String          DEFAULT_PLAYLIST_FOLDER         = "c:/playlists";
     private static final String          DEFAULT_MUSIC_MASK              = ".mp3 .ogg .aac .wav .wma";
     private static final String          DEFAULT_COVER_ART_MASK          = "folder.jpg cover.jpg .jpg .jpeg .gif .png";
@@ -52,7 +54,7 @@ public class SettingsService {
     private static final long            DEFAULT_UPLOAD_BITRATE_LIMIT    = 0;
 
     // Array of all keys.  Used to clean property file.
-    private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
+    private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_QUICK_LINKS, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
                                           KEY_COVER_ART_MASK, KEY_COVER_ART_LIMIT, KEY_WELCOME_MESSAGE, KEY_LOCALE_LANGUAGE,
                                           KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
                                           KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT};
@@ -173,6 +175,18 @@ public class SettingsService {
 
     public void setIgnoredArticles(String ignoredArticles) {
         properties.setProperty(KEY_IGNORED_ARTICLES, ignoredArticles);
+    }
+
+    public String getQuickLinks() {
+        return properties.getProperty(KEY_QUICK_LINKS, DEFAULT_QUICK_LINKS);
+    }
+
+    public String[] getQuickLinksAsArray() {
+        return getQuickLinks().split("\\s+");
+    }
+
+    public void setQuickLinks(String quickLinks) {
+        properties.setProperty(KEY_QUICK_LINKS, quickLinks);
     }
 
     public String getPlaylistFolder() {

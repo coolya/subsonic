@@ -60,6 +60,14 @@
         </tr>
 
         <tr>
+            <td><fmt:message key="generalsettings.quicklinks"/></td>
+            <td>
+                <form:input path="quickLinks" size="70"/>
+                <a href="helpPopup.view?topic=quickLinks" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+            </td>
+        </tr>
+
+        <tr>
             <td><fmt:message key="generalsettings.welcomemessage"/></td>
             <td>
                 <form:input path="welcomeMessage" size="70"/>

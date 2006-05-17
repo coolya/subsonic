@@ -16,7 +16,6 @@
             <fmt:param value="${model.hours}"/>
         </fmt:message>
     </div>
-    <br/>
 </c:if>
 
 <c:if test="${fn:length(model.musicFolders) > 1}">
@@ -26,6 +25,25 @@
             <option ${model.selectedMusicFolder == musicFolder ? "selected" : ""} value="${musicFolder.id}">${musicFolder.name}</option>
         </c:forEach>
     </select>
+</c:if>
+
+<c:if test="${not empty model.quickLinks}">
+    <h2><fmt:message key="left.quicklink"/></h2>
+    <c:forEach items="${model.quickLinks}" var="quickLink">
+        <c:url value="playRadio.view" var="playRadioUrl">
+            <c:param name="id" value="${radio.id}"/>
+        </c:url>
+        <p class="dense">
+            <c:import url="playAddDownload.jsp">
+                <c:param name="path" value="${quickLink.path}"/>
+                <c:param name="downloadEnabled" value="${model.downloadEnabled}"/>
+            </c:import>
+            <sub:url value="main.view" var="mainUrl">
+                <sub:param name="path" value="${quickLink.path}"/>
+            </sub:url>
+            <a target="main" href="${mainUrl}">${quickLink.name}</a>
+        </p>
+    </c:forEach>
 </c:if>
 
 <c:if test="${not empty model.radios}">
