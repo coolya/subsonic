@@ -1,7 +1,3 @@
-/*
-* $Log$
-*/
-
 package net.sourceforge.subsonic.dao.schema;
 
 import net.sourceforge.subsonic.*;
@@ -22,6 +18,12 @@ public class Schema27 implements Schema{
         if (template.queryForInt("select count(*) from version where version = 3") == 0) {
             LOG.info("Updating database schema to version 3.");
             template.execute("insert into version values (3)");
+
+            LOG.info("Converting database column 'music_file_info.path' to varchar_ignorecase.");
+            template.execute("drop index idx_music_file_info_path");
+            template.execute("alter table music_file_info alter column path varchar_ignorecase not null");
+            template.execute("create index idx_music_file_info_path on music_file_info(path)");
+            LOG.info("Database column 'music_file_info.path' was converted successfully.");
         }
 
         try {

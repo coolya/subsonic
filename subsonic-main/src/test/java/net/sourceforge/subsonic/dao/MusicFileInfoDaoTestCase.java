@@ -29,6 +29,14 @@ public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
         assertMusicFileInfoEquals(info, newInfo);
     }
 
+    public void testCaseInsensitivity() {
+        MusicFileInfo info = new MusicFileInfo(null, "aBcDeFgH", 0, "comment", 123, new Date());
+        musicFileInfoDao.createMusicFileInfo(info);
+
+        MusicFileInfo newInfo = musicFileInfoDao.getMusicFileInfoForPath("AbcdefGH");
+        assertMusicFileInfoEquals(info, newInfo);
+    }
+
     public void testUpdateMusicFileInfo() {
         MusicFileInfo info = new MusicFileInfo(null, "path", 0, "comment", 123, new Date());
         musicFileInfoDao.createMusicFileInfo(info);

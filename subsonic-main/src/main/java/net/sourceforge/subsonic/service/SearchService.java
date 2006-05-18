@@ -15,7 +15,7 @@ import java.util.regex.*;
  */
 public class SearchService {
 
-    private static final int INDEX_VERSION = 6;
+    private static final int INDEX_VERSION = 7;
     private static final Random RANDOM = new Random(System.currentTimeMillis());
     private static final Logger LOG = Logger.getLogger(SearchService.class);
 
