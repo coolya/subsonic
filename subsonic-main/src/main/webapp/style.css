@@ -7,7 +7,7 @@ form {
 body {
     font-family: verdana, arial, sans-serif;
     font-size: 9pt;
-    line-height: 14pt; /*background-color: #EFEFEF;*/
+    line-height: 14pt;
     scrollbar-face-color: #DEE3E7;
     scrollbar-highlight-color: #FFFFFF;
     scrollbar-shadow-color: #DEE3E7;
@@ -56,6 +56,14 @@ a:hover {
     color: #DD6900
 }
 
+a:link b, a:active b, a:visited b {
+    color: #006699
+}
+
+a:hover b {
+    color: #DD6900
+}
+
 img {
     border-style: none
 }
@@ -65,7 +73,7 @@ h1 {
     font-family: arial, sans-serif;
     font-size: 12pt;
     color: dimgray;
-    padding-bottom: 0.5em;
+    padding-bottom: 0.2em;
 }
 
 h2 {

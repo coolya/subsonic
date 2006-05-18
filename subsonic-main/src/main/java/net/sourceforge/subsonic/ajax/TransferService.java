@@ -1,35 +1,31 @@
 package net.sourceforge.subsonic.ajax;
 
 import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
+import net.sourceforge.subsonic.controller.*;
 import uk.ltd.getahead.dwr.*;
+
+import javax.servlet.http.*;
 
 /**
  * Provides AJAX-enabled services for retrieving the status of ongoing transfers.
  * This class is used by the DWR framework (http://getahead.ltd.uk/dwr/).
  *
  * @author Sindre Mehus
- * @version $Revision: 1.1 $ $Date: 2006/02/26 21:46:28 $
  */
 public class TransferService {
 
     /**
-     * Returns info about ongoing uploads from the player associated with the HTTP request.
-     * @return Info about ongoing uploads.
+     * Returns info about any ongoing upload within the current session.
+     * @return Info about ongoing upload.
      */
     public UploadInfo getUploadInfo() {
-        WebContext webContext = WebContextFactory.get();
-        Player player = ServiceFactory.getPlayerService().getPlayer(webContext.getHttpServletRequest(), webContext.getHttpServletResponse());
-        TransferStatus[] statuses = ServiceFactory.getStatusService().getUploadStatusesForPlayer(player);
 
-        long bytesUploaded = 0L;
-        long bytesTotal = 0L;
-        for (TransferStatus status : statuses) {
-            bytesUploaded += status.getBytesTransfered();
-            bytesTotal += status.getBytesTotal();
+        HttpSession session = WebContextFactory.get().getSession();
+        TransferStatus status = (TransferStatus) session.getAttribute(UploadController.UPLOAD_STATUS);
+
+        if (status != null) {
+            return new UploadInfo(status.getBytesTransfered(), status.getBytesTotal());
         }
-
-        return new UploadInfo(bytesUploaded, bytesTotal);
+        return new UploadInfo(0L, 0L);
     }
-
 }

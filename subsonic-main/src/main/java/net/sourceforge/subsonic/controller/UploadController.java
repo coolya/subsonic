@@ -28,6 +28,7 @@ public class UploadController extends ParameterizableViewController {
     private PlayerService playerService;
     private StatusService statusService;
     private SettingsService settingsService;
+    public static final String UPLOAD_STATUS = "uploadStatus";
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -43,6 +44,7 @@ public class UploadController extends ParameterizableViewController {
             status.setBytesTotal(request.getContentLength());
 
             statusService.addUploadStatus(status);
+            request.getSession().setAttribute(UPLOAD_STATUS, status);
 
             // Check that we have a file upload request
             if (!ServletFileUpload.isMultipartContent(request)) {
@@ -109,6 +111,7 @@ public class UploadController extends ParameterizableViewController {
         } finally {
             if (status != null) {
                 statusService.removeUploadStatus(status);
+                request.getSession().removeAttribute(UPLOAD_STATUS);
                 User user = securityService.getCurrentUser(request);
                 if (user != null) {
                     user.setBytesUploaded(user.getBytesUploaded() + status.getBytesTransfered());

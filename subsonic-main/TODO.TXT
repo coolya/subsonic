@@ -1,11 +1,7 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
-Use javascript to submit search form in top.jsp. (To avoid png problem in IE).
-Wrong color for bold links.
 Problems with playlist reordering etc in Firefox.
-Problems with lowercase/uppercase in "Most recently played" etc.
-Rename quick link to shortcut.
 Springify podcast.
 Springify wap.
 Internet radio broken?
