@@ -4,6 +4,7 @@
     <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/scripts.js"/>"></script>
 </head><body>
 
 <c:if test="${model.updateNowPlaying}">
@@ -64,13 +65,9 @@
         | <a href="${albumInfoUrl}"><fmt:message key="main.albuminfo"/></a>
 
         <c:if test="${model.user.coverArtRole}">
-            <sub:url value="changeCoverArt.view" var="changeCoverArtUrl">
-                <sub:param name="path" value="${model.dir.path}"/>
-            </sub:url>
             <sub:url value="editTags.view" var="editTagsUrl">
                 <sub:param name="path" value="${model.dir.path}"/>
             </sub:url>
-            | <a href="${changeCoverArtUrl}"><fmt:message key="main.cover"/></a>
             | <a href="${editTagsUrl}"><fmt:message key="main.tags"/></a>
 
         </c:if>
@@ -147,45 +144,34 @@
                         <sub:url value="main.view" var="childUrl">
                             <sub:param name="path" value="${child.path}"/>
                         </sub:url>
-                        <a href="${childUrl}">${child.name}</a>
+                        <a href="${childUrl}"><str:truncateNicely lower="35" upper="35">${child.name}</str:truncateNicely></a>
                     </c:when>
                     <c:otherwise>
-                    ${child.title}
+                    <str:truncateNicely lower="35" upper="35">${child.title}</str:truncateNicely>
                     </c:otherwise>
                 </c:choose>
             </p>
         </c:forEach>
     </td>
 
-    <td>
+    <td style="vertical-align:top;">
         <c:forEach items="${model.coverArts}" var="coverArt">
-            <sub:url value="main.view" var="mainUrl">
-                <sub:param name="path" value="${coverArt.parentFile.path}"/>
-            </sub:url>
-            <sub:url value="coverart" var="coverArtUrl">
-                <sub:param name="path" value="${coverArt.path}"/>
-                <sub:param name="size" value="${model.coverArtSize}"/>
-            </sub:url>
-            <a href="${mainUrl}"><img src="${coverArtUrl}" alt="" hspace="5" vspace="5"
-                                      height="${model.coverArtSize}" width="${model.coverArtSize}"/></a>
+            <c:import url="coverArt.jsp">
+                <c:param name="albumPath" value="${coverArt.parentFile.path}"/>
+                <c:param name="coverArtSize" value="${model.coverArtSize}"/>
+                <c:param name="coverArtPath" value="${coverArt.path}"/>
+                <c:param name="showZoom" value="${coverArt.parentFile.path eq model.dir.path}"/>
+                <c:param name="showChange" value="${(coverArt.parentFile.path eq model.dir.path) and model.user.coverArtRole}"/>
+            </c:import>
         </c:forEach>
 
         <c:if test="${model.showGenericCoverArt}">
-            <table>
-                <tr><td>
-                    <sub:url value="/coverart" var="coverArtUrl">
-                        <sub:param name="size" value="${model.coverArtSize}"/>
-                    </sub:url>
-                    <sub:url value="/changeCoverArt.view" var="changeCoverArtUrl">
-                        <sub:param name="path" value="${model.dir.path}"/>
-                    </sub:url>
-
-                    <img height="${model.coverArtSize}" width="${model.coverArtSize}" hspace="5" vspace="5" src="${coverArtUrl}" alt=""/>
-                </td></tr>
-                <tr><td align="center">
-                    <a href="${changeCoverArtUrl}"><fmt:message key="main.cover"/></a>
-                </td></tr>
-            </table>
+            <c:import url="coverArt.jsp">
+                <c:param name="albumPath" value="${model.dir.path}"/>
+                <c:param name="coverArtSize" value="${model.coverArtSize}"/>
+                <c:param name="showZoom" value="false"/>
+                <c:param name="showChange" value="${model.user.coverArtRole}"/>
+            </c:import>
         </c:if>
     </td>
 </tr>

@@ -1,11 +1,17 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
+Refactor code to display cover art.  Use c:import.
+- showChange
+- showZoom
+- coverArtPath
+- albumPath
+
+Link to "Change Cover" not hidden properly.
 Problems with playlist reordering etc in Firefox.
 Springify podcast.
 Springify wap.
 Internet radio broken?
-AJAX upload.  Use hidden frame?  TransferService. Put stuff in session.
 Theme support.
 Option to show exception details in error log.
 Table rules don't work in IE.
@@ -14,7 +20,6 @@ CSS colors.
 Check Javascript error on IE.
 h1, h2, p etc margin and padding.
 Remove debug-logging in SearchService. (Create new level, PERF?)
-Progress bar in file upload.  See forum post.
 Quick link to "#" doesn't work.
 CSS
 Should receive feedback when changing passwords, creating users etc.
@@ -49,7 +54,7 @@ COMPLETED FOR VERSION 2.7
 ==========================
 New: Rewritten to Spring MVC.
 New: Ajax-based ID3 tag editor.
-New: Limit download and upload bandwidth.
+New: Option to limit bandwidth for downloads and uploads.
 New: Show upload progress in status page.
 New: Download playlists.
 New: Rating where you can see how much each user has uploaded/downloaded/streamed.

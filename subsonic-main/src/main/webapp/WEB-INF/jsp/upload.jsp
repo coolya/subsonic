@@ -4,7 +4,7 @@
     <%@ include file="head.jsp" %>
 </head><body>
 
-<h2><fmt:message key="upload.title"/></h2>
+<h1><fmt:message key="upload.title"/></h1>
 
 <c:forEach items="${model.uploadedFiles}" var="file">
     <p><fmt:message key="upload.success"><fmt:param value="${file.path}"/></fmt:message></p>

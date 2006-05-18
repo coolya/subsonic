@@ -17,7 +17,6 @@ import java.net.*;
  * @version $Revision: 1.3 $ $Date: 2005/06/15 18:10:40 $
  */
 public class CoverArtServlet extends HttpServlet {
-    private static final int DEFAULT_IMAGE_SIZE  = 300;
 
     /**
      * Handles the given HTTP request.
@@ -35,12 +34,17 @@ public class CoverArtServlet extends HttpServlet {
             return;
         }
 
-        String s = request.getParameter("size");
-        int size = s == null ? DEFAULT_IMAGE_SIZE : Integer.parseInt(s);
 
         URL url = getClass().getResource("default_cover.jpg");
         BufferedImage image = file == null ? ImageIO.read(url) : ImageIO.read(file);
-        image = scale(image, size, size);
+
+        // TODO: Optimize if no scaling necessary.
+        String s = request.getParameter("size");
+        if (s != null) {
+            int size = Integer.parseInt(s);
+            image = scale(image, size, size);
+        }
+
         ImageIO.write(image, "jpeg", response.getOutputStream());
     }
 
