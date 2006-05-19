@@ -117,7 +117,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!--TODO: Replace with Spring stuff?-->
     <filter>
         <filter-name>CacheFilter</filter-name>
         <filter-class>net.sourceforge.subsonic.filter.ResponseHeaderFilter</filter-class>
@@ -156,6 +155,10 @@
     <filter-mapping>
         <filter-name>NoCacheFilter</filter-name>
         <url-pattern>/userChart</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>NoCacheFilter</filter-name>
+        <url-pattern>/coverart</url-pattern>
     </filter-mapping>
 
     <filter>

@@ -17,7 +17,9 @@ PARAMETERS
     </sub:url>
 
     <sub:url value="coverart" var="coverArtUrl">
-        <sub:param name="size" value="${param.coverArtSize}"/>
+        <c:if test="${not empty param.coverArtSize}">
+            <sub:param name="size" value="${param.coverArtSize}"/>
+        </c:if>
         <c:if test="${not empty param.coverArtPath}">
             <sub:param name="path" value="${param.coverArtPath}"/>
         </c:if>

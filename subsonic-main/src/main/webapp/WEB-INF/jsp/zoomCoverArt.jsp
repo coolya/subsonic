@@ -16,9 +16,8 @@
 
 <body onload="resize()">
 
-<div style="padding:10px; float:left">
+<div style="padding:10px 10px 5px 10px; float:left">
     <c:import url="coverArt.jsp">
-        <c:param name="coverArtSize" value="300"/>
         <c:param name="coverArtPath" value="${model.path}"/>
         <c:param name="showLink" value="false"/>
         <c:param name="showZoom" value="false"/>

@@ -1,6 +1,8 @@
 package net.sourceforge.subsonic.servlet;
 
+import net.sourceforge.subsonic.*;
 import net.sourceforge.subsonic.service.*;
+import org.apache.commons.io.*;
 
 import javax.imageio.*;
 import javax.servlet.http.*;
@@ -8,7 +10,6 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.*;
 import java.io.*;
-import java.net.*;
 
 /**
  * A servlet which scales and transcodes cover art images.
@@ -17,6 +18,8 @@ import java.net.*;
  * @version $Revision: 1.3 $ $Date: 2005/06/15 18:10:40 $
  */
 public class CoverArtServlet extends HttpServlet {
+
+    private static final Logger LOG = Logger.getLogger(CoverArtServlet.class);
 
     /**
      * Handles the given HTTP request.
@@ -34,18 +37,33 @@ public class CoverArtServlet extends HttpServlet {
             return;
         }
 
-
-        URL url = getClass().getResource("default_cover.jpg");
-        BufferedImage image = file == null ? ImageIO.read(url) : ImageIO.read(file);
-
-        // TODO: Optimize if no scaling necessary.
-        String s = request.getParameter("size");
-        if (s != null) {
-            int size = Integer.parseInt(s);
-            image = scale(image, size, size);
+        InputStream in;
+        if (file == null) {
+            in = getClass().getResourceAsStream("default_cover.jpg");
+        } else {
+            in = new FileInputStream(file);
         }
 
-        ImageIO.write(image, "jpeg", response.getOutputStream());
+        try {
+
+            String s = request.getParameter("size");
+            if (s != null) {
+                int size = Integer.parseInt(s);
+                BufferedImage image = ImageIO.read(in);
+                image = scale(image, size, size);
+                ImageIO.write(image, "jpeg", response.getOutputStream());
+            } else {
+                // Optimize if no scaling is required.
+                IOUtils.copy(in, response.getOutputStream());
+            }
+
+        } finally {
+            try {
+                in.close();
+            } catch (IOException e) {
+                LOG.warn("Failed to close input stream for cover art (" + path + ").");
+            }
+        }
     }
 
     private BufferedImage scale(BufferedImage original, int width, int height) {

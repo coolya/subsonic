@@ -128,7 +128,7 @@ img {
     white-space: nowrap;
     font-size: 8pt;
     line-height: 1em;
-    border: 1px solid;
+    border: 1px solid black;
 }
 
 .color1, .ruleTableHeader {
