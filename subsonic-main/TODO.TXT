@@ -1,10 +1,10 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
+Log border not working on IE.
 Move CSS stuff to 'style' directory.
-Use coverArt.jsp in main.jsp
-Use detail class in home page.
-http://www.positioniseverything.net/articles/dropshadows.html
+Move Javascript stuff to 'script' directory.
+Use detail class in home page. Make it look better.
 Support music files with names like "foo..mp3"
 Problems with playlist reordering etc in Firefox.
 Springify podcast.
@@ -52,6 +52,7 @@ COMPLETED FOR VERSION 2.7
 ==========================
 New: Rewritten to Spring MVC.
 New: Ajax-based ID3 tag editor.
+New: Cover art 3D effect and popup.
 New: Option to limit bandwidth for downloads and uploads.
 New: Show upload progress in status page.
 New: Download playlists.
