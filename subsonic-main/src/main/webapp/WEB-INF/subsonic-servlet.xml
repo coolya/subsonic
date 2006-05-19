@@ -165,6 +165,7 @@
         <property name="playerService"><ref bean="playerService"/></property>
         <property name="securityService"><ref bean="securityService"/></property>
     </bean>
+    <bean id="multiController" class="net.sourceforge.subsonic.controller.MultiController"/>
 
     <bean id="savePlaylistValidator" class="net.sourceforge.subsonic.validator.SavePlaylistValidator">
         <property name="playlistService"><ref bean="playlistService"/></property>
@@ -206,6 +207,7 @@
                 <prop key="/deletePlaylist.view">loadPlaylistController</prop>
                 <prop key="/savePlaylist.view">savePlaylistController</prop>
                 <prop key="/changeCoverArt.view">changeCoverArtController</prop>
+                <prop key="/zoomCoverArt.view">multiController</prop>
                 <prop key="/nowPlaying.view">nowPlayingController</prop>
                 <prop key="/search.view">searchController</prop>
                 <prop key="/settings.view">settingsController</prop>

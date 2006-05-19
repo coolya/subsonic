@@ -2,6 +2,7 @@
 
 <html><head>
     <%@ include file="head.jsp" %>
+    <link href="<c:url value="/style/shadow.css"/>" rel="stylesheet">
     <c:if test="${model.listType eq 'random'}">
         <meta http-equiv="refresh" content="20">
     </c:if>
@@ -68,18 +69,17 @@
                 <tr>
             </c:if>
 
-            <sub:url value="/coverart" var="coverArtUrl">
-                <sub:param name="size" value="110"/>
-                <sub:param name="path" value="${album.coverArtPath}"/>
-            </sub:url>
-            <sub:url value="/main.view" var="mainUrl">
-                <sub:param name="path" value="${album.path}"/>
-            </sub:url>
-
             <td style="vertical-align:top">
                 <table>
                     <tr><td>
-                        <a href="${mainUrl}"><img height="110" width="110" hspace="2" vspace="2" src="${coverArtUrl}" alt=""/></a>
+                        <c:import url="coverArt.jsp">
+                            <c:param name="albumPath" value="${album.path}"/>
+                            <c:param name="coverArtSize" value="110"/>
+                            <c:param name="coverArtPath" value="${album.coverArtPath}"/>
+                            <c:param name="showLink" value="true"/>
+                            <c:param name="showZoom" value="false"/>
+                            <c:param name="showChange" value="false"/>
+                        </c:import>
                     </td></tr>
 
                     <tr><td>
@@ -102,11 +102,11 @@
 
                         <c:choose>
                             <c:when test="${empty album.artist and empty album.albumTitle}">
-                                <em><fmt:message key="common.unknown"/></em>
+                                <div class="detail"><fmt:message key="common.unknown"/></div>
                             </c:when>
                             <c:otherwise>
-                                <em><str:truncateNicely lower="17" upper="17">${album.artist}</str:truncateNicely></em><br/>
-                                <str:truncateNicely lower="17" upper="17">${album.albumTitle}</str:truncateNicely>
+                                <div class="detail"><em><str:truncateNicely lower="17" upper="17">${album.artist}</str:truncateNicely></em></div>
+                                <div class="detail"><str:truncateNicely lower="17" upper="17">${album.albumTitle}</str:truncateNicely></div>
                             </c:otherwise>
                         </c:choose>
 

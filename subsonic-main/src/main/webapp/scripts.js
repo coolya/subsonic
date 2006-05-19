@@ -5,7 +5,7 @@ function popup(mylink, windowname) {
      href = mylink;
   else
      href = mylink.href;
-  window.open(href, windowname, 'width=400,height=200,scrollbars=yes');
+  window.open(href, windowname, 'width=400,height=200,screenX=400,screenY=300,scrollbars=yes,resizable=yes');
   return false;
 }
 

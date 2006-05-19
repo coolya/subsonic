@@ -1,13 +1,11 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
-Refactor code to display cover art.  Use c:import.
-- showChange
-- showZoom
-- coverArtPath
-- albumPath
-
-Link to "Change Cover" not hidden properly.
+Move CSS stuff to 'style' directory.
+Use coverArt.jsp in main.jsp
+Use detail class in home page.
+http://www.positioniseverything.net/articles/dropshadows.html
+Support music files with names like "foo..mp3"
 Problems with playlist reordering etc in Firefox.
 Springify podcast.
 Springify wap.

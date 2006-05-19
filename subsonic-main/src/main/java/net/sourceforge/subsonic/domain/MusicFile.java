@@ -260,7 +260,11 @@ public class MusicFile {
             File[] files = file.listFiles();
             for (File file : files) {
                 if (acceptMusic(file) && (file.isFile() || includeDirectories)) {
-                    result.add(new MusicFile(file));
+                    try {
+                        result.add(new MusicFile(file));
+                    } catch (SecurityException x) {
+                        LOG.warn("Failed to create MusicFile for " + file, x);
+                    }
                 }
             }
         }
