@@ -11,7 +11,6 @@ import java.io.*;
  * Provides security-related services for authentication and authorization.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.7 $ $Date: 2005/11/27 13:28:48 $
  */
 public class SecurityService {
 
@@ -150,13 +149,15 @@ public class SecurityService {
 
     /**
      * Returns whether the given file is located in the given folder (or any of its sub-folders).
+     * If the given file contains the expression ".." (indicating a reference to the parent directory),
+     * this method will return <code>false</code>.
      * @param file The file in question.
      * @param folder The folder in question.
      * @return Whether the given file is located in the given folder.
      */
-    private boolean isFileInFolder(String file, String folder) {
-        // Deny access if file contains ".."
-        if (file.contains("..")) {
+    protected boolean isFileInFolder(String file, String folder) {
+        // Deny access if file contains ".." surrounded by slashes (or end of line).
+        if (file.matches(".*(/|\\\\)\\.\\.(/|\\\\|$).*")) {
             return false;
         }
 

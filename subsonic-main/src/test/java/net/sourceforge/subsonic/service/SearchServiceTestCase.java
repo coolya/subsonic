@@ -1,18 +1,17 @@
 package net.sourceforge.subsonic.service;
 
-/**
- * Unit test of {@link SearchService}.
- *
- * @author Sindre Mehus
- * @version $Revision: 1.4 $ $Date: 2005/12/25 09:52:56 $
- */
-
 import junit.framework.*;
 import net.sourceforge.subsonic.domain.*;
 
 import java.io.*;
 import java.util.*;
 
+
+/**
+ * Unit test of {@link SearchService}.
+ *
+ * @author Sindre Mehus
+ */
 public class SearchServiceTestCase extends TestCase {
 
     public void testLine() {
