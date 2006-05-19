@@ -5,7 +5,7 @@
     <link href="<c:url value="/style/shadow.css"/>" rel="stylesheet">
     <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/scripts.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
 </head><body>
 
 <c:if test="${model.updateNowPlaying}">
