@@ -4,4 +4,4 @@
  <script type="text/javascript" src="pngfix.js"></script>
  <![endif]-->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="<c:url value="/style.css"/>" rel="stylesheet">
+<link href="<c:url value="/style/subsonic.css"/>" rel="stylesheet">
