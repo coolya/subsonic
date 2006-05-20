@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="<c:url value="/icons/favicon.ico"/>"/>
 </head>
 
-<frameset rows="70,*,0" border="1" framespacing="1" frameborder="1" bordercolor="red" style="border-color:yellow">
+<frameset rows="70,*,0" border="1" framespacing="1" frameborder="1">
     <frame name="top" src="top.view?">
 
     <frameset cols="20%,80%">
