@@ -61,6 +61,7 @@ Bugfix: Avoid wrapped lines if browser window is small.
 Bugfix: Use proper range in Y-axis.
 Bugfix: Integer overflow in search index creation interval.
 Bugfix: Some Amazon search didn't show any results.
+Bugfix: Now possible to change cover art even if original file is write protected (Windows only).
 
 BACKLOG
 ==========

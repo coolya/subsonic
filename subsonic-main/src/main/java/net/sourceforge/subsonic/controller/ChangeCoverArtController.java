@@ -7,6 +7,7 @@ import net.sourceforge.subsonic.util.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
 import org.springframework.web.servlet.view.*;
+import org.apache.commons.io.*;
 
 import javax.servlet.http.*;
 import java.io.*;
@@ -96,16 +97,11 @@ public class ChangeCoverArtController extends AbstractController {
                 throw new Exception("Permission denied: " + StringUtil.toHtml(newCoverFile.getPath()));
             }
 
+            // If file exists, create a backup.
+            backup(newCoverFile, new File(path, "folder.backup." + suffix));
+
             // Write file.
-            output = new FileOutputStream(newCoverFile);
-            byte[] buf = new byte[8192];
-            while (true) {
-                int n = input.read(buf);
-                if (n == -1) {
-                    break;
-                }
-                output.write(buf, 0, n);
-            }
+            IOUtils.copy(input, new FileOutputStream(newCoverFile));
 
             // Rename existing cover file if new cover file is not the preferred.
             try {
@@ -121,8 +117,21 @@ public class ChangeCoverArtController extends AbstractController {
             }
 
         } finally {
-            try { input.close(); } catch (Exception x) {/* Ignored */}
-            try { output.close(); } catch (Exception x) {/* Ignored */}
+            IOUtils.closeQuietly(input);
+            IOUtils.closeQuietly(output);
+        }
+    }
+
+    private void backup(File newCoverFile, File backup) {
+        if (newCoverFile.exists()) {
+            if (backup.exists()) {
+                backup.delete();
+            }
+            if (newCoverFile.renameTo(backup)) {
+                LOG.info("Backed up old image file to " + backup);
+            } else {
+                LOG.warn("Failed to create image file backup " + backup);
+            }
         }
     }
 
