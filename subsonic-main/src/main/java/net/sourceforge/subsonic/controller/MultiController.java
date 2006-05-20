@@ -13,6 +13,10 @@ import java.util.*;
  */
 public class MultiController extends MultiActionController {
 
+    public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("index");
+    }
+
     public ModelAndView zoomCoverArt(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("path", request.getParameter("path"));

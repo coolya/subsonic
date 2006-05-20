@@ -3,10 +3,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 
 <html><head><title>Subsonic</title>
-    <link rel="shortcut icon" href="icons/favicon.ico"/>
+    <%@ include file="head.jsp" %>
+    <link rel="shortcut icon" href="<c:url value="/icons/favicon.ico"/>"/>
 </head>
 
-<frameset rows="70,*,0" border="1" framespacing="1" frameborder="1">
+<frameset rows="70,*,0" border="1" framespacing="1" frameborder="1" bordercolor="red" style="border-color:yellow">
     <frame name="top" src="top.view?">
 
     <frameset cols="20%,80%">

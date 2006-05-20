@@ -103,6 +103,11 @@
         <url-pattern>/dwr/*</url-pattern>
     </servlet-mapping>
 
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
     <!--TODO: Do this with a Spring interceptor or something-->
     <filter>
         <filter-name>RequestEncodingFilter</filter-name>
