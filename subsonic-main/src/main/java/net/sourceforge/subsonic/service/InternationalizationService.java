@@ -1,17 +1,17 @@
 package net.sourceforge.subsonic.service;
 
 import net.sourceforge.subsonic.*;
+import org.apache.commons.io.*;
 
-import java.util.*;
-import java.text.*;
 import java.io.*;
+import java.text.*;
+import java.util.*;
 
 /**
  * Provides internationalization services, including methods for setting and getting the
  * currently selected locale, and methods for retrieving localized strings.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.6 $ $Date: 2006/02/27 21:39:39 $
  */
 public class InternationalizationService {
 
@@ -142,8 +142,8 @@ public class InternationalizationService {
                 LOG.error("Failed to resolve list of locales.", x);
                 locales = new Locale[] {Locale.ENGLISH};
             } finally {
-                try {in.close();}  catch (Exception x) { /* Intentionally ignored. */ }
-                try {reader.close();}  catch (Exception x) { /* Intentionally ignored. */ }
+                IOUtils.closeQuietly(in);
+                IOUtils.closeQuietly(reader);
             }
         }
         return locales;

@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.domain;
 
 import net.sourceforge.subsonic.*;
+import org.apache.commons.io.*;
 
 import java.io.*;
 
@@ -9,7 +10,6 @@ import java.io.*;
  * using LAME.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.6 $ $Date: 2005/12/04 15:06:22 $
  */
 public class TranscodedInputStream extends FileInputStream {
 
@@ -193,8 +193,8 @@ public class TranscodedInputStream extends FileInputStream {
             } catch (IOException x) {
                 // Intentionally ignored.
             } finally {
-                try { reader.close(); } catch (IOException e) {} // Intentionally ignored.
-                try { input.close(); } catch (IOException e) {} // Intentionally ignored.
+                IOUtils.closeQuietly(reader);
+                IOUtils.closeQuietly(input);
             }
         }
     }
