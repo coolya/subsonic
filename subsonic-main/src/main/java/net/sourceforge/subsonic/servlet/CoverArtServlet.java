@@ -15,7 +15,6 @@ import java.io.*;
  * A servlet which scales and transcodes cover art images.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.3 $ $Date: 2005/06/15 18:10:40 $
  */
 public class CoverArtServlet extends HttpServlet {
 
@@ -70,23 +69,19 @@ public class CoverArtServlet extends HttpServlet {
 
         BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        Graphics2D g2 = result.createGraphics();
-        g2.setPaint(Color.white);
-        g2.fillRect(0, 0, width, height);
-
         // scale to fit
         double xScale = (double)width  / original.getWidth();
         double yScale = (double)height / original.getHeight();
-        double scale = Math.min(xScale, yScale);
 
         // center thumbnail image
-        double x = (width  - original.getWidth()  * scale)/2;
-        double y = (height - original.getHeight() * scale)/2;
+        double x = (width  - original.getWidth()  * xScale)/2;
+        double y = (height - original.getHeight() * yScale)/2;
 
         AffineTransform at = AffineTransform.getTranslateInstance(x, y);
-        at.scale(scale, scale);
-        g2.drawRenderedImage(original, at);
+        at.scale(xScale, yScale);
 
+        Graphics2D g2 = result.createGraphics();
+        g2.drawRenderedImage(original, at);
         g2.dispose();
 
         return result;

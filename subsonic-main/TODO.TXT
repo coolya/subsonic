@@ -1,30 +1,28 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
-Log border not working on IE.
+Don't always make square cover art images.
+Support quoting in Shortcuts.
 Use detail class in home page. Make it look better.
-Support music files with names like "foo..mp3"
+TEST: symlinks.
+TEST: Log border not working on IE.
+TEST: Support music files with names like "foo..mp3"
 Problems with playlist reordering etc in Firefox.
 Springify podcast.
 Springify wap.
 Internet radio broken?
 Theme support.
 Option to show exception details in error log.
-Table rules don't work in IE.
 Firefox scrollbar background
 CSS colors.
 Check Javascript error on IE.
 h1, h2, p etc margin and padding.
 Remove debug-logging in SearchService. (Create new level, PERF?)
 Quick link to "#" doesn't work.
-CSS
 Should receive feedback when changing passwords, creating users etc.
 Verify that security works.
-Option to configure special quick links, e.g., "Compilation", "New", "Miscellaneous".
-Click on cover art to pop-up unscaled.
 java.io.FileNotFoundException: C:\music\The Alan Parsons Project\The Best of The Alan Parsons Project\folder.jpg (Access is denied)
 Access control of players.  Avoid security hole for deleting other people's players.
-DWREngine problem.
 Use HTML 4.01, validate all pages.
 i18n of TagService.
 Create taglib for StringUtil.formatBytes() and help popup.
@@ -32,7 +30,6 @@ Make it work on Java Application Server 8.1.  (web.xml element order)
 Make it work on Geronimo.
 Make it work on Jetty
 Drop ResourceBundle_en.
-Rewrite to Spring MVC.
 Update text for coverart role. Now includes tag editing.
 Display image embedded in ID3 tag (APIC).
 Transcoding plugin framework. (Check out Jinzora transcoding pack.)
@@ -49,6 +46,7 @@ Per-user locale.
 COMPLETED FOR VERSION 2.7
 ==========================
 New: Rewritten to Spring MVC.
+New: Shortcuts.
 New: Ajax-based ID3 tag editor.
 New: Cover art 3D effect and popup.
 New: Option to limit bandwidth for downloads and uploads.

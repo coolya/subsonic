@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1" %>
 <%@ include file="include.jsp" %>
 
-<!--
+<%--
 PARAMETERS
   coverArtSize: Height and width of cover art.
   coverArtPath: Path to cover art, or nil if generic cover art image should be displayed.
@@ -9,7 +9,7 @@ PARAMETERS
   showLink: Whether to make the cover art image link to the album page.
   showZoom: Whether to display a link for zooming the cover art.
   showChange: Whether to display a link for changing the cover art.
--->
+--%>
 
 <div>
     <sub:url value="main.view" var="mainUrl">
@@ -25,12 +25,21 @@ PARAMETERS
         </c:if>
     </sub:url>
 
+    <c:choose>
+        <c:when test="${empty param.coverArtSize}">
+            <c:set var="size" value="auto"/>
+        </c:when>
+        <c:otherwise>
+            <c:set var="size" value="${param.coverArtSize}"/>
+        </c:otherwise>
+    </c:choose>
+
     <div class="outerpair1">
         <div class="outerpair2">
             <div class="shadowbox">
                 <div class="innerbox">
                     <c:if test="${param.showLink}"><a href="${mainUrl}"></c:if>
-                        <img src="${coverArtUrl}" alt="" height="${param.coverArtSize}" width="${param.coverArtSize}"/>
+                        <img src="${coverArtUrl}" alt="" height="${size}" width="${size}"/>
                         <c:if test="${param.showLink}"></a></c:if>
                 </div>
             </div>
@@ -38,7 +47,7 @@ PARAMETERS
     </div>
 </div>
 
-<div style="text-align:right; padding-right: 8px">
+<div style="text-align:right; padding-right: 8px; width:${size}">
     <c:if test="${param.showChange}">
         <sub:url value="/changeCoverArt.view" var="changeCoverArtUrl">
             <sub:param name="path" value="${param.albumPath}"/>
@@ -49,7 +58,6 @@ PARAMETERS
     <c:if test="${param.showZoom and param.showChange}">
         |
     </c:if>
-
     <c:if test="${param.showZoom}">
         <sub:url value="/zoomCoverArt.view" var="zoomCoverArtUrl">
             <sub:param name="path" value="${param.coverArtPath}"/>
