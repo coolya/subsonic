@@ -4,12 +4,12 @@ import java.io.*;
 import java.net.*;
 import java.text.*;
 import java.util.*;
+import java.util.regex.*;
 
 /**
  * Miscellaneous string utility methods.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.4 $ $Date: 2006/03/01 17:23:15 $
  */
 public final class StringUtil {
 
@@ -143,4 +143,31 @@ public final class StringUtil {
         return byteCount + " B";
     }
 
+    /**
+     * Splits the input string. White space is interpreted as separator token. Double quotes
+     * are interpreted as grouping operator. <br/>
+     * For instance, the input <code>"u2 rem "greatest hits""</code> will return an array with
+     * three elements: <code>{"u2", "rem", "greatest hits"}</code>
+     * @param input The input string.
+     * @return Array of elements.
+     */
+    public static String[] split(String input) {
+        if (input == null) {
+            return new String[0];
+        }
+
+        Pattern pattern = Pattern.compile("\".*?\"|\\S+");
+        Matcher matcher = pattern.matcher(input);
+
+        List<String> result = new ArrayList<String>();
+        while (matcher.find()) {
+            String element = matcher.group();
+            if (element.startsWith("\"") && element.endsWith("\"") && element.length() > 1) {
+                element = element.substring(1, element.length() - 1);
+            }
+            result.add(element);
+        }
+
+        return result.toArray(new String[0]);
+    }
 }

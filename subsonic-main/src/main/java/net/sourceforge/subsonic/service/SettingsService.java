@@ -2,6 +2,7 @@ package net.sourceforge.subsonic.service;
 
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.*;
+import net.sourceforge.subsonic.util.*;
 import net.sourceforge.subsonic.dao.*;
 
 import java.util.*;
@@ -11,7 +12,6 @@ import java.io.*;
  * Provides persistent storage of application settings and preferences.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.25 $ $Date: 2006/03/02 19:56:00 $
  */
 public class SettingsService {
 
@@ -182,7 +182,7 @@ public class SettingsService {
     }
 
     public String[] getShortcutsAsArray() {
-        return getShortcuts().split("\\s+");
+        return StringUtil.split(getShortcuts());
     }
 
     public void setShortcuts(String shortcuts) {

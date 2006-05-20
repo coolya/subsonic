@@ -1,11 +1,11 @@
 package net.sourceforge.subsonic.service;
 
 import net.sourceforge.subsonic.*;
+import net.sourceforge.subsonic.util.*;
 import net.sourceforge.subsonic.domain.*;
 
 import java.io.*;
 import java.util.*;
-import java.util.regex.*;
 
 /**
  * Provides services for searching for music.
@@ -180,7 +180,7 @@ public class SearchService {
         }
 
         // Step two: split query and re-run search.
-        List<MusicFile> resultTwo = search(splitQuery(query), maxHits - resultOne.size(), includeArtist, includeAlbum, includeTitle, newerThan);
+        List<MusicFile> resultTwo = search(StringUtil.split(query), maxHits - resultOne.size(), includeArtist, includeAlbum, includeTitle, newerThan);
 
         // Step three: compute the union
         for (MusicFile file : resultTwo) {
@@ -254,32 +254,6 @@ public class SearchService {
             }
         }
         return result;
-    }
-
-    /**
-     * Splits the criteria of a query.  For instance, the input <code>"u2 rem "greatest hits""</code> will return an array with
-     * three elements: <code>{"u2", "rem", "greatest hits"}</code>
-     * @param query The query string.
-     * @return Array of query criteria.
-     */
-    public String[] splitQuery(String query) {
-        if (query == null) {
-            return new String[0];
-        }
-
-        Pattern pattern = Pattern.compile("\".*?\"|\\S+");
-        Matcher matcher = pattern.matcher(query);
-
-        List<String> result = new ArrayList<String>();
-        while (matcher.find()) {
-            String criteria = matcher.group();
-            if (criteria.startsWith("\"") && criteria.endsWith("\"") && criteria.length() > 1) {
-                criteria = criteria.substring(1, criteria.length() - 1);
-            }
-            result.add(criteria);
-        }
-
-        return result.toArray(new String[0]);
     }
 
     /**

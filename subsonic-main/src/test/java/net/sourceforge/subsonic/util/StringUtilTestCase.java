@@ -1,16 +1,14 @@
 package net.sourceforge.subsonic.util;
 
-/**
- * Unit test of {@link StringUtil}.
- *
- * @author Sindre Mehus
- * @version $Revision: 1.3 $ $Date: 2006/01/10 22:39:35 $
- */
-
 import junit.framework.*;
 
 import java.util.*;
 
+/**
+ * Unit test of {@link StringUtil}.
+ *
+ * @author Sindre Mehus
+ */
 public class StringUtilTestCase extends TestCase {
 
     public void testToHtml() throws Exception {
@@ -65,5 +63,28 @@ public class StringUtilTestCase extends TestCase {
         assertEquals("Error in formatBytes().", "1024 KB", StringUtil.formatBytes(1048575, locale));
         assertEquals("Error in formatBytes().", "1,2 MB", StringUtil.formatBytes(1238476, locale));
         assertEquals("Error in formatBytes().", "3,50 GB", StringUtil.formatBytes(3758096384L, locale));
+    }
+
+    public void testSplit() {
+        doTestSplit("u2 rem \"greatest hits\"", "u2", "rem", "greatest hits");
+        doTestSplit("u2", "u2");
+        doTestSplit("u2 rem", "u2", "rem");
+        doTestSplit(" u2  \t rem ", "u2", "rem");
+        doTestSplit("u2 \"rem\"", "u2", "rem");
+        doTestSplit("u2 \"rem", "u2", "\"rem");
+        doTestSplit("\"", "\"");
+
+        assertEquals(0, StringUtil.split("").length);
+        assertEquals(0, StringUtil.split(" ").length);
+        assertEquals(0, StringUtil.split(null).length);
+    }
+
+    private void doTestSplit(String input, String... expected) {
+        String[] actual = StringUtil.split(input);
+        assertEquals("Wrong number of elements.", expected.length, actual.length);
+
+        for (int i = 0; i < expected.length; i++) {
+            assertEquals("Wrong criteria.", expected[i], actual[i]);
+        }
     }
 }

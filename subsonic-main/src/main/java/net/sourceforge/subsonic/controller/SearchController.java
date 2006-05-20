@@ -51,7 +51,7 @@ public class SearchController extends SimpleFormController {
                 List<MusicFile> result = searchService.heuristicSearch(query, MAX_HITS, command.isArtistAndAlbumIncluded(),
                                                                        command.isArtistAndAlbumIncluded(), command.isTitleIncluded(),
                                                                        new Date(millis));
-                String[] criteria = searchService.splitQuery(query);
+                String[] criteria = StringUtil.split(query);
                 command.setMatches(createMatches(result, criteria));
             }
         }

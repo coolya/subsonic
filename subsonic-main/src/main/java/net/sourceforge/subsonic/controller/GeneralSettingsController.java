@@ -24,7 +24,7 @@ public class GeneralSettingsController extends SimpleFormController {
         command.setDownloadLimit(String.valueOf(settingsService.getDownloadBitrateLimit()));
         command.setUploadLimit(String.valueOf(settingsService.getUploadBitrateLimit()));
         command.setIgnoredArticles(settingsService.getIgnoredArticles());
-        command.setShortcuts(settingsService.getShortcuts());
+        command.setShortcuts(settingsService.getShortcuts().replaceAll("\"", "&quot;"));
         command.setIndex(settingsService.getIndexString());
         command.setMusicMask(settingsService.getMusicMask());
         command.setPlaylistFolder(settingsService.getPlaylistFolder());
@@ -76,6 +76,8 @@ public class GeneralSettingsController extends SimpleFormController {
         settingsService.save();
 
         internationalizationService.setLocale(locale);
+
+        command.setShortcuts(command.getShortcuts().replaceAll("\"", "&quot;"));
     }
 
     public void setSettingsService(SettingsService settingsService) {

@@ -1,8 +1,8 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
-Don't always make square cover art images.
-Support quoting in Shortcuts.
+Use less black frame borders.
+Use Spring StringUtils.cleanPath()?
 Use detail class in home page. Make it look better.
 TEST: symlinks.
 TEST: Log border not working on IE.

@@ -63,29 +63,4 @@ public class SearchServiceTestCase extends TestCase {
         assertEquals("Error in forFile().",  expected, SearchService.Line.forFile(file, new HashMap<File, SearchService.Line>()).toString());
         assertEquals("Error in parse().",    expected, SearchService.Line.parse(expected).toString());
     }
-
-    public void testSplitQuery() {
-        doTestSplitQuery("u2 rem \"greatest hits\"", "u2", "rem", "greatest hits");
-        doTestSplitQuery("u2", "u2");
-        doTestSplitQuery("u2 rem", "u2", "rem");
-        doTestSplitQuery(" u2  \t rem ", "u2", "rem");
-        doTestSplitQuery("u2 \"rem\"", "u2", "rem");
-        doTestSplitQuery("u2 \"rem", "u2", "\"rem");
-        doTestSplitQuery("\"", "\"");
-
-        SearchService service = ServiceFactory.getSearchService();
-        assertEquals(0, service.splitQuery("").length);
-        assertEquals(0, service.splitQuery(" ").length);
-        assertEquals(0, service.splitQuery(null).length);
-    }
-
-    private void doTestSplitQuery(String query, String... expected) {
-        SearchService service = ServiceFactory.getSearchService();
-        String[] actual = service.splitQuery(query);
-        assertEquals("Wrong number of criteria.", expected.length, actual.length);
-
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals("Wrong criteria.", expected[i], actual[i]);
-        }
-    }
 }

@@ -8,7 +8,6 @@ import java.util.*;
  * Unit test of {@link SettingsService}.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.4 $ $Date: 2006/03/02 19:56:00 $
  */
 public class SettingsServiceTestCase extends TestCase {
 
@@ -37,6 +36,7 @@ public class SettingsServiceTestCase extends TestCase {
     public void testChangeSettings() {
         settingsService.setIndexString("indexString");
         settingsService.setIgnoredArticles("a the foo bar");
+        settingsService.setShortcuts("new incoming \"rock 'n' roll\"");
         settingsService.setPlaylistFolder("playlistFolder");
         settingsService.setMusicMask(".mp3 .ogg  .aac");
         settingsService.setCoverArtMask(".jpeg .gif  .png");
@@ -56,23 +56,18 @@ public class SettingsServiceTestCase extends TestCase {
     private void verifySettings(SettingsService ss) {
         assertEquals("Wrong index string.", "indexString", ss.getIndexString());
         assertEquals("Wrong ignored articles.", "a the foo bar", ss.getIgnoredArticles());
-        assertArrayEquals("Wrong ignored articles array.", new String[] {"a", "the", "foo", "bar"}, ss.getIgnoredArticlesAsArray());
+        assertEquals("Wrong shortcuts.", "new incoming \"rock 'n' roll\"", ss.getShortcuts());
+        assertTrue("Wrong ignored articles array.", Arrays.equals(new String[] {"a", "the", "foo", "bar"}, ss.getIgnoredArticlesAsArray()));
+        assertTrue("Wrong shortcut array.", Arrays.equals(new String[] {"new", "incoming", "rock 'n' roll"}, ss.getShortcutsAsArray()));
         assertEquals("Wrong playlist folder.", "playlistFolder", ss.getPlaylistFolder());
         assertEquals("Wrong music mask.", ".mp3 .ogg  .aac", ss.getMusicMask());
-        assertArrayEquals("Wrong music mask array.", new String[] {".mp3", ".ogg", ".aac"}, ss.getMusicMaskAsArray());
+        assertTrue("Wrong music mask array.", Arrays.equals(new String[] {".mp3", ".ogg", ".aac"}, ss.getMusicMaskAsArray()));
         assertEquals("Wrong cover art mask.", ".jpeg .gif  .png", ss.getCoverArtMask());
-        assertArrayEquals("Wrong cover art mask array.", new String[] {".jpeg", ".gif", ".png"}, ss.getCoverArtMaskAsArray());
+        assertTrue("Wrong cover art mask array.", Arrays.equals(new String[] {".jpeg", ".gif", ".png"}, ss.getCoverArtMaskAsArray()));
         assertEquals("Wrong cover art limit.", 99, ss.getCoverArtLimit());
         assertEquals("Wrong welcome message.", "welcomeMessage", ss.getWelcomeMessage());
         assertEquals("Wrong locale.", Locale.CANADA_FRENCH, ss.getLocale());
         assertEquals("Wrong index creation interval.", 4, ss.getIndexCreationInterval());
         assertEquals("Wrong index creation hour.", 9, ss.getIndexCreationHour());
-    }
-
-    private void assertArrayEquals(String message, Object[] expected, String[] actual) {
-        assertEquals(message + " (wrong array length).", expected.length, actual.length);
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(message, expected[i], actual[i]);
-        }
     }
 }
