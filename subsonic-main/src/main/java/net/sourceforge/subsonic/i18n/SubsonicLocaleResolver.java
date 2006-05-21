@@ -7,8 +7,7 @@ import javax.servlet.http.*;
 import java.util.*;
 
 /**
- * Locale resolver implementation which returns the proper locale for the
- * current user.
+ * Locale resolver implementation which returns the locale selected in the settings.
  *
  * @author Sindre Mehus
  */

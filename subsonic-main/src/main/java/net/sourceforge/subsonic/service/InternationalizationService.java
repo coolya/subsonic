@@ -1,7 +1,7 @@
 package net.sourceforge.subsonic.service;
 
 import net.sourceforge.subsonic.*;
-import org.apache.commons.io.*;
+import net.sourceforge.subsonic.util.*;
 
 import java.io.*;
 import java.text.*;
@@ -122,38 +122,25 @@ public class InternationalizationService {
      */
     public synchronized Locale[] getAvailableLocales() {
         if (locales == null) {
-
-            InputStream in = null;
-            BufferedReader reader = null;
             try {
-
-                in = InternationalizationService.class.getResourceAsStream(LOCALES_FILE);
-                reader = new BufferedReader(new InputStreamReader(in));
+                InputStream in = InternationalizationService.class.getResourceAsStream(LOCALES_FILE);
+                String[] lines = StringUtil.readLines(in);
                 List<Locale> result = new ArrayList<Locale>();
-                for (String line = reader.readLine(); line != null; line = reader.readLine()) {
-                    Locale loc = parseLocale(line);
-                    if (loc != null) {
-                        result.add(loc);
-                    }
+
+                for (String line : lines) {
+                    result.add(parseLocale(line));
                 }
                 locales = result.toArray(new Locale[0]);
 
             } catch (IOException x) {
                 LOG.error("Failed to resolve list of locales.", x);
                 locales = new Locale[] {Locale.ENGLISH};
-            } finally {
-                IOUtils.closeQuietly(in);
-                IOUtils.closeQuietly(reader);
             }
         }
         return locales;
     }
 
     private Locale parseLocale(String line) {
-        line = line.trim();
-        if (line.startsWith("#") || line.length() == 0) {
-            return null;
-        }
         String[] s = line.split("_");
         String language = s[0];
         String country = "";

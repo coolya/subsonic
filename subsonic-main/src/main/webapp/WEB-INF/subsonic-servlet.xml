@@ -248,8 +248,8 @@
     </bean>
 
     <bean id="themeResolver"
-            class="org.springframework.web.servlet.theme.FixedThemeResolver">
-        <property name="defaultThemeName"><value>Default</value></property>
+          class="net.sourceforge.subsonic.theme.SubsonicThemeResolver">
+        <property name="settingsService"><ref bean="settingsService"/></property>
     </bean>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

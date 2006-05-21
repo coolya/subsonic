@@ -1,6 +1,7 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
+Work on 'dark' theme.
 Make fancy css background for playlist toolbar.
 Use less black frame borders.
 Use Spring StringUtils.cleanPath()?
@@ -48,6 +49,7 @@ COMPLETED FOR VERSION 2.7
 ==========================
 New: Rewritten to Spring MVC.
 New: Shortcuts.
+New: Theme support.
 New: Ajax-based ID3 tag editor.
 New: Cover art 3D effect and popup.
 New: Option to limit bandwidth for downloads and uploads.

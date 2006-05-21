@@ -1,5 +1,7 @@
 package net.sourceforge.subsonic.util;
 
+import org.apache.commons.io.*;
+
 import java.io.*;
 import java.net.*;
 import java.text.*;
@@ -169,5 +171,32 @@ public final class StringUtil {
         }
 
         return result.toArray(new String[0]);
+    }
+
+    /**
+     * Reads lines from the given input stream. All lines are trimmed. Empty lines and lines starting
+     * with "#" are skipped. The input stream is always closed by this method.
+     * @param in The input stream to read from.
+     * @return Array of lines.
+     * @throws IOException If an I/O error occurs.
+     */
+    public static String[] readLines(InputStream in) throws IOException {
+        BufferedReader reader = null;
+
+        try {
+            reader = new BufferedReader(new InputStreamReader(in));
+            List<String> result = new ArrayList<String>();
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+                line = line.trim();
+                if (!line.startsWith("#") && line.length() > 0) {
+                    result.add(line);
+                }
+            }
+            return result.toArray(new String[0]);
+
+        } finally {
+            IOUtils.closeQuietly(in);
+            IOUtils.closeQuietly(reader);
+        }
     }
 }

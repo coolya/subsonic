@@ -1,0 +1,9 @@
+# List of available themes.
+# Author: Sindre Mehus
+
+# The original Subsonic theme.
+default
+
+# Theme with dark colors.
+dark
+

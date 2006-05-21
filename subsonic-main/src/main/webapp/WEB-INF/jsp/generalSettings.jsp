@@ -90,6 +90,20 @@
         </tr>
 
         <tr>
+            <td><fmt:message key="generalsettings.theme"/></td>
+            <td>
+                <form:select path="themeIndex">
+                    <c:forEach items="${command.themes}" var="theme" varStatus="loopStatus">
+                        <form:option value="${loopStatus.count - 1}" label="${theme}"/>
+                    </c:forEach>
+                </form:select>
+                <a href="helpPopup.view?topic=theme" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+            </td>
+        </tr>
+
+        <tr><td colspan="3">&nbsp;</td></tr>
+
+        <tr>
             <td><fmt:message key="generalsettings.coverartlimit"/></td>
             <td>
                 <form:input path="coverArtLimit" size="8"/>

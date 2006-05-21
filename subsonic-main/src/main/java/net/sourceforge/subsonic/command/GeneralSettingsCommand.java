@@ -20,6 +20,8 @@ public class GeneralSettingsCommand {
     private String uploadLimit;
     private String localeIndex;
     private String[] locales;
+    private String themeIndex;
+    private String[] themes;
     private boolean isReloadNeeded;
 
     public String getPlaylistFolder() {
@@ -116,6 +118,22 @@ public class GeneralSettingsCommand {
 
     public void setLocales(String[] locales) {
         this.locales = locales;
+    }
+
+    public String getThemeIndex() {
+        return themeIndex;
+    }
+
+    public void setThemeIndex(String themeIndex) {
+        this.themeIndex = themeIndex;
+    }
+
+    public String[] getThemes() {
+        return themes;
+    }
+
+    public void setThemes(String[] themes) {
+        this.themes = themes;
     }
 
     public boolean isReloadNeeded() {

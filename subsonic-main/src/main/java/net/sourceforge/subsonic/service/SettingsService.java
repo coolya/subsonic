@@ -31,6 +31,7 @@ public class SettingsService {
     private static final String          KEY_LOCALE_LANGUAGE         = "LocaleLanguage";
     private static final String          KEY_LOCALE_COUNTRY          = "LocaleCountry";
     private static final String          KEY_LOCALE_VARIANT          = "LocaleVariant";
+    private static final String          KEY_THEME                   = "Theme";
     private static final String          KEY_INDEX_CREATION_INTERVAL = "IndexCreationInterval";
     private static final String          KEY_INDEX_CREATION_HOUR     = "IndexCreationHour";
     private static final String          KEY_DOWNLOAD_BITRATE_LIMIT  = "DownloadBitrateLimit";
@@ -48,6 +49,7 @@ public class SettingsService {
     private static final String          DEFAULT_LOCALE_LANGUAGE         = "en";
     private static final String          DEFAULT_LOCALE_COUNTRY          = "";
     private static final String          DEFAULT_LOCALE_VARIANT          = "";
+    private static final String          DEFAULT_THEME                   = "default";
     private static final int             DEFAULT_INDEX_CREATION_INTERVAL = 1;
     private static final int             DEFAULT_INDEX_CREATION_HOUR     = 3;
     private static final long            DEFAULT_DOWNLOAD_BITRATE_LIMIT  = 0;
@@ -56,12 +58,14 @@ public class SettingsService {
     // Array of all keys.  Used to clean property file.
     private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_SHORTCUTS, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
                                           KEY_COVER_ART_MASK, KEY_COVER_ART_LIMIT, KEY_WELCOME_MESSAGE, KEY_LOCALE_LANGUAGE,
-                                          KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
+                                          KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_THEME, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
                                           KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT};
 
+    private static final String THEMES_FILE = "/net/sourceforge/subsonic/theme/themes.txt";
     private static final Logger LOG = Logger.getLogger(SettingsService.class);
 
     private Properties properties = new Properties();
+    private String[] themes;
     private MusicFolderDao musicFolderDao = new MusicFolderDao();
     private InternetRadioDao internetRadioDao = new InternetRadioDao();
 
@@ -296,7 +300,7 @@ public class SettingsService {
     }
 
     /**
-     * Sets the locale (for language, date format etc).
+     * Returns the locale (for language, date format etc).
      * @return The locale.
      */
     public Locale getLocale() {
@@ -308,13 +312,46 @@ public class SettingsService {
     }
 
     /**
-     * Returns the locale (for language, date format etc.)
+     * Sets the locale (for language, date format etc.)
      * @param locale The locale.
      */
     public void setLocale(Locale locale) {
         properties.setProperty(KEY_LOCALE_LANGUAGE, locale.getLanguage());
         properties.setProperty(KEY_LOCALE_COUNTRY, locale.getCountry());
         properties.setProperty(KEY_LOCALE_VARIANT, locale.getVariant());
+    }
+
+    /**
+     * Returns the name of the theme to use.
+     * @return The theme name.
+     */
+    public String getTheme() {
+        return properties.getProperty(KEY_THEME, DEFAULT_THEME);
+    }
+
+    /**
+     * Sets the name of the theme to use.
+     * @param theme The theme name
+     */
+    public void setTheme(String theme) {
+        properties.setProperty(KEY_THEME, theme);
+    }
+
+    /**
+    * Returns a list of available themes.
+    * @return A list of available themes.
+    */
+    public synchronized String[] getAvailableThemes() {
+        if (themes == null) {
+            try {
+                InputStream in = SettingsService.class.getResourceAsStream(THEMES_FILE);
+                themes = StringUtil.readLines(in);
+            } catch (IOException x) {
+                LOG.error("Failed to resolve list of themes.", x);
+                themes = new String[] {"default"};
+            }
+        }
+        return themes;
     }
 
     /**

@@ -30,6 +30,16 @@ public class GeneralSettingsController extends SimpleFormController {
         command.setPlaylistFolder(settingsService.getPlaylistFolder());
         command.setWelcomeMessage(settingsService.getWelcomeMessage());
 
+        String[] themes = settingsService.getAvailableThemes();
+        command.setThemes(themes);
+        String currentTheme = settingsService.getTheme();
+        for (int i = 0; i < themes.length; i++) {
+            if (currentTheme.equals(themes[i])) {
+                command.setThemeIndex(String.valueOf(i));
+                break;
+            }
+        }
+
         Locale currentLocale = internationalizationService.getLocale();
         Locale[] locales = internationalizationService.getAvailableLocales();
         String[] localeStrings = new String[locales.length];
@@ -49,12 +59,16 @@ public class GeneralSettingsController extends SimpleFormController {
     protected void doSubmitAction(Object comm) throws Exception {
         GeneralSettingsCommand command = (GeneralSettingsCommand) comm;
 
+        int themeIndex = Integer.parseInt(command.getThemeIndex());
+        String theme = settingsService.getAvailableThemes()[themeIndex];
+
         int localeIndex = Integer.parseInt(command.getLocaleIndex());
         Locale locale = internationalizationService.getAvailableLocales()[localeIndex];
 
         command.setReloadNeeded(!settingsService.getIndexString().equals(command.getIndex()) ||
                                 !settingsService.getIgnoredArticles().equals(command.getIgnoredArticles()) ||
                                 !settingsService.getShortcuts().equals(command.getShortcuts()) ||
+                                !settingsService.getTheme().equals(theme) ||
                                 !internationalizationService.getLocale().equals(locale));
 
         settingsService.setIndexString(command.getIndex());
@@ -64,6 +78,7 @@ public class GeneralSettingsController extends SimpleFormController {
         settingsService.setMusicMask(command.getMusicMask());
         settingsService.setCoverArtMask(command.getCoverArtMask());
         settingsService.setWelcomeMessage(command.getWelcomeMessage());
+        settingsService.setTheme(theme);
         try {
             settingsService.setCoverArtLimit(Integer.parseInt(command.getCoverArtLimit()));
         } catch (NumberFormatException x) { /* Intentionally ignored. */ }

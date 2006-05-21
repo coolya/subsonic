@@ -1,0 +1,12 @@
+@import "default.css";
+
+/* TODO */
+
+.color1, .ruleTableHeader {
+    background-color: black;
+}
+
+.color2, body {
+    background-color: 333;
+}
+
