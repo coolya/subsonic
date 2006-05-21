@@ -228,8 +228,8 @@
                 <prop key="/home.view">homeController</prop>
                 <prop key="/editTags.view">editTagsController</prop>
                 <prop key="/playlist.view">playlistController</prop>
-                <prop key="/podcast*">podcastController</prop>
-                <prop key="/podcast/*">podcastController</prop>
+                <prop key="/podcast.view">podcastController</prop>
+                <prop key="/podcast">podcastController</prop>
             </props>
         </property>
     </bean>
