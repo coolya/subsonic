@@ -47,6 +47,10 @@
     <bean id="allmusicController" class="net.sourceforge.subsonic.controller.AllmusicController">
         <property name="viewName"><value>allmusic</value></property>
     </bean>
+    <bean id="podcastController" class="net.sourceforge.subsonic.controller.PodcastController">
+        <property name="viewName"><value>podcast</value></property>
+        <property name="playlistService"><ref bean="playlistService"/></property>
+    </bean>
     <bean id="playRadioController" class="net.sourceforge.subsonic.controller.PlayRadioController">
         <property name="settingsService"><ref bean="settingsService"/></property>
     </bean>
@@ -224,6 +228,8 @@
                 <prop key="/home.view">homeController</prop>
                 <prop key="/editTags.view">editTagsController</prop>
                 <prop key="/playlist.view">playlistController</prop>
+                <prop key="/podcast*">podcastController</prop>
+                <prop key="/podcast/*">podcastController</prop>
             </props>
         </property>
     </bean>
