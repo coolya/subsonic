@@ -44,7 +44,7 @@
 
 <c:if test="${model.reload}">
     <script type="text/javascript">
-        parent.frames.top.location.href="top.view?";
+        parent.frames.upper.location.href="top.view?";
         parent.frames.left.location.href="left.view?";
     </script>
 </c:if>

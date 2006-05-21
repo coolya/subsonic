@@ -1,6 +1,8 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
+TEST: Reload after settings change is broken on IE.
+Cover art popup is broken on IE.
 Work on 'dark' theme.
 Make fancy css background for playlist toolbar.
 Use less black frame borders.

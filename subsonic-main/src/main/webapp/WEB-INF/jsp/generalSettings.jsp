@@ -136,7 +136,7 @@
 <c:if test="${command.reloadNeeded}">
     <script language="javascript" type="text/javascript">
         parent.frames.left.location.href="left.view?";
-        parent.frames.top.location.href="top.view?";
+        parent.frames.upper.location.href="top.view?";
         parent.frames.playlist.location.href="playlist.view?";
     </script>
 </c:if>

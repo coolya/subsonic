@@ -8,7 +8,7 @@
 </head>
 
 <frameset rows="70,*,0" border="1" framespacing="1" frameborder="1">
-    <frame name="top" src="top.view?">
+    <frame name="upper" src="top.view?">
 
     <frameset cols="20%,80%">
         <frame name="left" src="left.view?" marginwidth="10" marginheight="10">
