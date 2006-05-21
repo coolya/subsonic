@@ -238,9 +238,18 @@
         <property name="basename"><value>net.sourceforge.subsonic.i18n.ResourceBundle</value></property>
     </bean>
 
+    <bean id="themeSource" class="org.springframework.ui.context.support.ResourceBundleThemeSource">
+        <property name="basenamePrefix"><value>net.sourceforge.subsonic.theme.</value></property>
+    </bean>
+
     <bean id="localeResolver"
           class="net.sourceforge.subsonic.i18n.SubsonicLocaleResolver">
         <property name="settingsService"><ref bean="settingsService"/></property>
+    </bean>
+
+    <bean id="themeResolver"
+            class="org.springframework.web.servlet.theme.FixedThemeResolver">
+        <property name="defaultThemeName"><value>Default</value></property>
     </bean>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

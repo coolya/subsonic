@@ -4,4 +4,4 @@
  <script type="text/javascript" src="script/pngfix.js"></script>
  <![endif]-->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="<c:url value="/style/subsonic.css"/>" rel="stylesheet">
+<link rel="stylesheet" href="<spring:theme code="styleSheet"/>" type="text/css"/>
