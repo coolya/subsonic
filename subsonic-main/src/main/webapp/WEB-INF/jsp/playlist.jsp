@@ -6,7 +6,7 @@
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
 </head>
 
-<body class="color1" onload="onload()">
+<body class="bgcolor2" onload="onload()">
 
 <!-- This script uses AJAX to periodically check if the current song has changed. -->
 <script type="text/javascript" language="javascript">
@@ -100,10 +100,10 @@
                     <sub:url value="main.view" var="mainUrl">
                         <sub:param name="path" value="${song.parentPath}"/>
                     </sub:url>
-                    <td ${i % 2 == 0 ? "class='color2'" : ""}>
+                    <td ${i % 2 == 0 ? "class='bgcolor1'" : ""}>
                         <a href="playlist.view?skip=${i}">${song.current ? "<b>" : ""}<str:truncateNicely upper="50">${song.title}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
                     </td>
-                    <td ${i % 2 == 0 ? "class='color2'" : ""}>
+                    <td ${i % 2 == 0 ? "class='bgcolor1'" : ""}>
                         <a target="main" href="${mainUrl}">${song.artistAlbumYear}</a>
                     </td>
                 </tr>

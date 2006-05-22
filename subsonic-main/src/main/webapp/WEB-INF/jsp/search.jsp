@@ -79,8 +79,8 @@
                 </c:import>
             </td>
 
-            <td ${loopStatus.count % 2 == 1 ? "class='color1'" : ""} style="padding-left:5;padding-right:5">${match.title}</td>
-            <td ${loopStatus.count % 2 == 1 ? "class='color1'" : ""} style="padding-left:5;padding-right:5"><a target="main" href="${mainUrl}">${match.artistAlbumYear}</a></td>
+            <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-left:5;padding-right:5">${match.title}</td>
+            <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-left:5;padding-right:5"><a target="main" href="${mainUrl}">${match.artistAlbumYear}</a></td>
         </tr>
     </c:forEach>
 </table>

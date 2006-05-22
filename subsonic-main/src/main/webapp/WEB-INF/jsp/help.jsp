@@ -31,7 +31,7 @@
     <p class="warning"><fmt:message key="help.upgrade"><fmt:param value="${model.latestVersion}"/></fmt:message></p>
 </c:if>
 
-<table width="75%" class="ruleTable">
+<table width="75%" class="ruleTable indent">
     <tr><td class="ruleTableHeader"><fmt:message key="help.version.title"/></td><td class="ruleTableCell">${versionString}</td></tr>
     <tr><td class="ruleTableHeader"><fmt:message key="help.builddate.title"/></td><td class="ruleTableCell">${buildDateString}</td></tr>
     <tr><td class="ruleTableHeader"><fmt:message key="help.license.title"/></td><td class="ruleTableCell"><fmt:message key="help.license.text"/></td></tr>
@@ -50,7 +50,7 @@
 
 <h2><img src="<c:url value="/icons/log.png"/>" width="22" height="22" alt=""/>&nbsp;<fmt:message key="help.log"/></h2>
 
-<table cellpadding="2" class="log">
+<table cellpadding="2" class="log indent">
     <c:forEach items="${model.logEntries}" var="entry">
         <tr>
             <td>[<fmt:formatDate value="${entry.date}" dateStyle="short" timeStyle="long" type="both"></fmt:formatDate>]</td>

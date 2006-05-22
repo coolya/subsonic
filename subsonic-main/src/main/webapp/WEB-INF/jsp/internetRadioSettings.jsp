@@ -8,7 +8,7 @@
     <c:param name="cat" value="internetRadio"/>
 </c:import>
 
-<table>
+<table class="indent">
     <tr>
         <th><fmt:message key="internetradiosettings.name"/></th>
         <th><fmt:message key="internetradiosettings.streamurl"/></th>

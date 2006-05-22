@@ -8,7 +8,7 @@
     <c:param name="cat" value="musicFolder"/>
 </c:import>
 
-<table>
+<table class="indent">
     <tr>
         <th><fmt:message key="musicfoldersettings.name"/></th>
         <th><fmt:message key="musicfoldersettings.path"/></th>

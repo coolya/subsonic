@@ -85,7 +85,7 @@
 <a href="${backUrl}"><b>[<fmt:message key="common.back"/>]</b></a>
 <p/>
 
-<table class="ruleTable">
+<table class="ruleTable indent">
     <tr>
         <th class="ruleTableHeader"><fmt:message key="edittags.file"/></th>
         <th class="ruleTableHeader"><fmt:message key="edittags.songtitle"/></th>

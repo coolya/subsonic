@@ -11,7 +11,7 @@
 
 <form method="post" action="changeCoverArt.view">
     <input type="hidden" name="path" value="${model.path}"/>
-    <table><tr>
+    <table class="indent"><tr>
         <td><fmt:message key="changecoverart.artist"/></td>
         <td><input name="artist" type="text" value="${model.artist}"/></td>
         <td style="padding-left:10pt"><fmt:message key="changecoverart.album"/></td>

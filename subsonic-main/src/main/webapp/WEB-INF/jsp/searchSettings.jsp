@@ -10,7 +10,7 @@
 
 <form:form commandName="command" action="searchSettings.view" method="post">
 
-<table>
+<table class="indent">
     <tr>
         <td><fmt:message key="searchsettings.auto"/></td>
         <td>

@@ -11,7 +11,7 @@
     <fmt:message key="status.title"/>
 </h1>
 
-<table width="100%" class="ruleTable">
+<table width="100%" class="ruleTable indent">
     <tr>
         <th class="ruleTableHeader"><fmt:message key="status.type"/></th>
         <th class="ruleTableHeader"><fmt:message key="status.player"/></th>

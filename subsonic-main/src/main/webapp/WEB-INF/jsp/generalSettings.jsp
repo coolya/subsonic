@@ -16,7 +16,7 @@
 
 <form:form method="post" action="generalSettings.view" commandName="command">
 
-    <table style="white-space:nowrap">
+    <table style="white-space:nowrap" class="indent">
         <tr>
             <td><fmt:message key="generalsettings.playlistfolder"/></td>
             <td>

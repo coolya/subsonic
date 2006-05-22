@@ -1,13 +1,65 @@
-form {
-    font-family: verdana, arial, sans-serif;
-    font-size: 9pt;
-    line-height: 14pt
+
+/* The primary background color (light blue). */
+.bgcolor1, body {
+    background-color: #EFEFEF;
+}
+
+/* The secondary background color (darker blue). */
+.bgcolor2, .ruleTableHeader {
+    background-color: #DEE3E7
+}
+
+/* Background color for selected header, log etc. */
+.headerSelected, .log {
+    background-color: lightyellow;
+}
+
+/* Background color for form controls (use default). */
+input, select {
+}
+
+/* Hover color for form controls (use default). */
+input:hover, select:hover {
+}
+
+/* The primary foreground color (black). */
+body {
+    color: black;
+}
+
+/* The secondary foreground color used for h1, details etc (gray). */
+h1, .detail, .albumComment {
+    color: dimgray;
+}
+
+/* Foreground color used for h2, bold and tr. */
+h2, b, tr {
+    color: #333333;
+}
+
+/* Link color */
+a:link, a:active, a:visited, a:link *, a:active *, a:visited * {
+    color: #006699
+}
+
+/* Link hover color */
+a:hover, a:hover * {
+    text-decoration: underline;
+    color: #DD6900
+}
+
+/* Simple dark border. */
+.border1, .ruleTableHeader, .ruleTableCell, .headerSelected, .log {
+    border: 1px solid black;
 }
 
 body {
+    padding:0;
+    border:0;
+    margin:0.75em;
     font-family: verdana, arial, sans-serif;
     font-size: 9pt;
-    line-height: 14pt;
+    line-height: 1.5em;
     scrollbar-face-color: #DEE3E7;
     scrollbar-highlight-color: #FFFFFF;
     scrollbar-shadow-color: #DEE3E7;
@@ -18,89 +70,82 @@ body {
 }
 
 p {
-    font-family: verdana, arial, sans-serif;
-    font-size: 9pt;
-    line-height: 14pt
+    padding:0;
+    border:0;
+    margin:0 0 1em 0;
 }
 
 p.dense {
     white-space: nowrap;
-    margin: 0pt;
+    margin: 0;
     line-height: 1.3em
-}
-
-label {
-    font-family: verdana, arial, sans-serif;
-    font-size: 9pt;
-    line-height: 14pt
-}
-
-table {
-    font-family: verdana, arial, sans-serif;
-    font-size: 9pt;
-    line-height: 12pt
-}
-
-a {
-    font-family: verdana, arial, sans-serif;
-    font-size: 9pt;
-    text-decoration: none
-}
-
-a:link, a:active, a:visited {
-    color: #006699
-}
-
-a:hover {
-    text-decoration: underline;
-    color: #DD6900
-}
-
-a:link b, a:active b, a:visited b {
-    color: #006699
-}
-
-a:hover b {
-    color: #DD6900
-}
-
-img {
-    border-style: none
 }
 
 h1 {
     white-space: nowrap;
     font-family: arial, sans-serif;
-    font-size: 12pt;
-    color: dimgray;
-    padding-bottom: 0.2em;
+    font-size: 140%;
+    padding: 0 0 0.2em 0;
+    border: 0;
+    margin: 0;
 }
 
 h2 {
     white-space: nowrap;
     font-family: verdana, arial, sans-serif;
-    font-size: 9pt;
-    margin: 1em 1em 0.2em 0em;
-    padding-top: 0.2em;
-    padding-bottom: 0.1em;
+    font-size: 100%;
+    margin: 1em 0 0.2em 0;
 }
 
-h2, b, tr {
-    color: #333333;
+form {
+    font-family: verdana, arial, sans-serif;
+    font-size: 100%;
+    line-height: 140%;
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+label {
+    font-family: verdana, arial, sans-serif;
+    font-size: 100%;
+    line-height: 140%;
+}
+
+table {
+    font-family: verdana, arial, sans-serif;
+    font-size: 100%;
+    line-height: 140%;
+    padding: 0;
+    border: 0;
+    margin: 0 0 0.4em 0;
+}
+
+/* Table with some white space above it.*/
+table.indent {
+    margin: 1em 0 0.4em 0;
+}
+
+a {
+    font-family: verdana, arial, sans-serif;
+    font-size: 100%;
+    text-decoration: none
 }
 
 img {
+    border-style: none;
+    border: 0;
+    margin: 0;
+    padding: 0;
     vertical-align: text-bottom;
 }
 
 .headerSelected {
     padding: 0.25em;
-    border: 1px solid;
 }
 
 .detail {
     white-space: nowrap;
-    color: dimgray;
     font-size: 8pt;
     line-height: 1.25em;
 }
@@ -118,7 +163,6 @@ img {
 
 .albumComment {
     white-space: pre;
-    color: dimgray;
     font-size: 8pt;
     line-height: 1.4em;
     padding-top: 0.25em;
@@ -128,21 +172,9 @@ img {
     white-space: nowrap;
     font-size: 8pt;
     line-height: 1em;
-    border: 1px solid black;
 }
 
-.color1, .ruleTableHeader {
-    background-color: #DEE3E7
-}
-
-.color2, body {
-    background-color: #EFEFEF;
-}
-
-.color3, .headerSelected, .log {
-    background-color: lightyellow;
-}
-
+/* Table with simple lines between the cells. */
 .ruleTable {
     border-collapse: collapse;
 }
@@ -150,10 +182,8 @@ img {
 .ruleTableHeader, .ruleTableCell {
     margin: 5px;
     padding: 5px;
-    border: 1px solid black;
 }
 
 .ruleTableHeader {
     font-weight: bold;
 }
-

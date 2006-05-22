@@ -4,7 +4,7 @@
     <%@ include file="head.jsp" %>
 </head>
 
-<body class="color1">
+<body class="bgcolor2" style="margin:0.4em 1em 0.4em 1em">
 
 <fmt:message key="top.home" var="home"/>
 <fmt:message key="top.now_playing" var="nowPlaying"/>
@@ -14,7 +14,7 @@
 <fmt:message key="top.help" var="help"/>
 <fmt:message key="top.search" var="search"/>
 
-<table><tr valign="middle">
+<table style="margin:0"><tr valign="middle">
     <td class="logo"><a href="help.view?" target="main"><img src="<c:url value="/icons/logo.gif"/>" title="${help}" alt=""/></a>&nbsp;Subsonic</td>
     <td style="padding-left:20pt; padding-right:20pt">
 

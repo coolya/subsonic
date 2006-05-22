@@ -20,7 +20,7 @@
 </c:when>
 <c:otherwise>
 
-<table>
+<table class="indent">
     <tr>
         <td><b><fmt:message key="playersettings.title"/></b></td>
         <td>

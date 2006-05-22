@@ -24,7 +24,7 @@
     }
 </script>
 
-<table>
+<table class="indent">
     <tr>
         <td><b><fmt:message key="usersettings.title"/></b></td>
         <td>

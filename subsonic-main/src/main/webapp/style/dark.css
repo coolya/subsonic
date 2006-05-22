@@ -1,12 +1,59 @@
 @import "default.css";
 
-/* TODO */
-
-.color1, .ruleTableHeader {
-    background-color: black;
+/* The primary background color (light blue). */
+.bgcolor1, body {
+    background-color: #656569;
 }
 
-.color2, body {
-    background-color: 333;
+/* The secondary background color (darker blue). */
+.bgcolor2, .ruleTableHeader {
+    background-color: #4D4C52
+}
+
+/* Background color for selected header, log etc. */
+.headerSelected, .log {
+    color: black;
+    background-color: #DDDDDD;
+}
+
+/* Background color for form controls (use default). */
+input, select {
+    background-color: #DDDDDD;
+}
+
+/* Hover color for form controls (use default). */
+input:hover, select:hover {
+    background-color: white;
+}
+
+/* The primary foreground color (black). */
+body {
+    color: #DDDDDD;
+}
+
+/* The secondary foreground color used for h1, details etc (gray). */
+h1, .detail, .albumComment {
+    color: #DDDDDD;
+}
+
+/* Foreground color used for h2, bold and tr. */
+h2, b, tr {
+    color: #DDDDDD;
+}
+
+/* Link color */
+a:link, a:active, a:visited, a:link *, a:active *, a:visited * {
+    color: #BAD9F2
+}
+
+/* Link hover color */
+a:hover, a:hover * {
+    text-decoration: underline;
+    color: #DD6900
+}
+
+/* Simple dark border. */
+.border1, .ruleTableHeader, .ruleTableCell, .headerSelected, .log {
+    border: 1px solid white;
 }
 

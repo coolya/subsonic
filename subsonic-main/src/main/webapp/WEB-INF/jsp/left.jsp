@@ -4,7 +4,7 @@
     <%@ include file="head.jsp" %>
 </head>
 
-<body class="color1">
+<body class="bgcolor2">
 
 <c:if test="${model.statistics != null}">
     <div class="detail">
