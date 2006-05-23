@@ -10,7 +10,7 @@
 <frameset rows="70,*,0" border="1" framespacing="1" frameborder="1">
     <frame name="upper" src="top.view?">
 
-    <frameset cols="20%,80%">
+    <frameset cols="15%,85%">
         <frame name="left" src="left.view?" marginwidth="10" marginheight="10">
 
         <frameset rows="70%,30%">

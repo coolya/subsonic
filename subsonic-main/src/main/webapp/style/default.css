@@ -1,3 +1,11 @@
+/*
+ * CSS styleshet for default theme.
+ *
+ * Note that attributes that are typically changed by theme authors are
+ * placed at the top.
+  *
+ * Author: Sindre Mehus
+ */
 
 /* The primary background color (light blue). */
 .bgcolor1, body {
@@ -5,12 +13,12 @@
 }
 
 /* The secondary background color (darker blue). */
-.bgcolor2, .ruleTableHeader {
+.bgcolor2, .ruleTableHeader, .log {
     background-color: #DEE3E7
 }
 
 /* Background color for selected header, log etc. */
-.headerSelected, .log {
+.headerSelected {
     background-color: lightyellow;
 }
 
@@ -48,6 +56,11 @@ a:hover, a:hover * {
     color: #DD6900
 }
 
+/* Color for warning messages. */
+.warning {
+    color: red;
+}
+
 /* Simple dark border. */
 .border1, .ruleTableHeader, .ruleTableCell, .headerSelected, .log {
     border: 1px solid black;
@@ -64,11 +77,24 @@ body {
     scrollbar-darkshadow-color: #98AAB1;
 }
 
+/* Font 1 */
+body, h2, form, label, table, a {
+    font-family: verdana, arial, sans-serif;
+}
+
+/* Font 2 */
+h1, .logo {
+    font-family: arial, sans-serif;
+}
+
+/***************************************************************************************
+ * The rest of the CSS is typically not changed in other themes (but not necessarily so).
+ ***************************************************************************************/
+
 body {
     padding:0;
     border:0;
     margin:0.75em;
-    font-family: verdana, arial, sans-serif;
     font-size: 9pt;
     line-height: 1.5em;
 }
@@ -87,7 +113,6 @@ p.dense {
 
 h1 {
     white-space: nowrap;
-    font-family: arial, sans-serif;
     font-size: 140%;
     padding: 0 0 0.2em 0;
     border: 0;
@@ -96,13 +121,11 @@ h1 {
 
 h2 {
     white-space: nowrap;
-    font-family: verdana, arial, sans-serif;
     font-size: 100%;
     margin: 1em 0 0.2em 0;
 }
 
 form {
-    font-family: verdana, arial, sans-serif;
     font-size: 100%;
     line-height: 140%;
     padding: 0;
@@ -111,13 +134,11 @@ form {
 }
 
 label {
-    font-family: verdana, arial, sans-serif;
     font-size: 100%;
     line-height: 140%;
 }
 
 table {
-    font-family: verdana, arial, sans-serif;
     font-size: 100%;
     line-height: 140%;
     padding: 0;
@@ -131,7 +152,6 @@ table.indent {
 }
 
 a {
-    font-family: verdana, arial, sans-serif;
     font-size: 100%;
     text-decoration: none
 }
@@ -156,11 +176,9 @@ img {
 
 .warning {
     white-space: nowrap;
-    color: red;
 }
 
 .logo {
-    font-family: arial, sans-serif;
     white-space: nowrap;
     font-size: 16pt;
 }

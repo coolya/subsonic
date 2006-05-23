@@ -79,20 +79,20 @@
             <c:forEach items="${model.songs}" var="song" varStatus="loopStatus">
                 <c:set var="i" value="${loopStatus.count - 1}"/>
                 <tr><a name="${i}"></a>
-                    <td><a href="playlist.view?remove=${i}"><img width="13" height="13" src="<c:url value="/icons/remove.gif"/>"
+                    <td><a href="playlist.view?remove=${i}"><img width="13" height="13" src="<spring:theme code="removeImage"/>"
                                                                  alt="<fmt:message key="playlist.remove"/>"
                                                                  title="<fmt:message key="playlist.remove"/>"/></a></td>
-                    <td><a href="playlist.view?up=${i}"><img width="13" height="13" src="<c:url value="/icons/up.gif"/>"
+                    <td><a href="playlist.view?up=${i}"><img width="13" height="13" src="<spring:theme code="upImage"/>"
                                                              alt="<fmt:message key="playlist.up"/>"
                                                              title="<fmt:message key="playlist.up"/>"/></a></td>
-                    <td><a href="playlist.view?down=${i}"><img width="13" height="13" src="<c:url value="/icons/down.gif"/>"
+                    <td><a href="playlist.view?down=${i}"><img width="13" height="13" src="<spring:theme code="downImage"/>"
                                                                alt="<fmt:message key="playlist.down"/>"
                                                                title="<fmt:message key="playlist.down"/>"/></a></td>
                     <c:if test="${model.user.downloadRole}">
                         <sub:url value="download" var="downloadUrl">
                             <sub:param name="path" value="${song.path}"/>
                         </sub:url>
-                        <td><a href="${downloadUrl}"><img width="13" height="13" src="<c:url value="/icons/download.gif"/>"
+                        <td><a href="${downloadUrl}"><img width="13" height="13" src="<spring:theme code="downloadImage"/>"
                                                           alt="<fmt:message key="common.download"/>"
                                                           title="<fmt:message key="common.download"/>"/></a></td>
                     </c:if>
@@ -104,7 +104,7 @@
                         <a href="playlist.view?skip=${i}">${song.current ? "<b>" : ""}<str:truncateNicely upper="50">${song.title}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
                     </td>
                     <td ${i % 2 == 0 ? "class='bgcolor1'" : ""}>
-                        <a target="main" href="${mainUrl}">${song.artistAlbumYear}</a>
+                        <a target="main" href="${mainUrl}"><str:truncateNicely upper="50">${song.artistAlbumYear}</str:truncateNicely></a>
                     </td>
                 </tr>
             </c:forEach>

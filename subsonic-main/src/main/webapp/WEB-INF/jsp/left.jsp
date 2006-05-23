@@ -54,7 +54,7 @@
         </c:url>
         <p class="dense">
             <a target="hidden" href="${playRadioUrl}">
-                <img width="13" height="13" src="<c:url value="/icons/play.gif"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
+                <img width="13" height="13" src="<spring:theme code="playImage"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
             <c:choose>
                 <c:when test="${empty radio.homepageUrl}">
                     ${radio.name}
@@ -84,10 +84,10 @@
                     <sub:url value="main.view" var="mainUrl">
                         <sub:param name="path" value="${child.path}"/>
                     </sub:url>
-                    <a target="main" href="${mainUrl}">${child.name}</a>
+                    <a target="main" href="${mainUrl}"><str:truncateNicely upper="30">${child.name}</str:truncateNicely></a>
                 </c:when>
                 <c:otherwise>
-                    <c:out value="${child.name}"></c:out>
+                    <str:truncateNicely upper="30">${child.name}</str:truncateNicely>
                 </c:otherwise>
             </c:choose>
         </p>

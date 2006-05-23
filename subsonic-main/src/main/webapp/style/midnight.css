@@ -1,3 +1,9 @@
+/*
+ * CSS styleshet for the "2 Minutes To Midnight" theme.
+ *
+ * Author: Sindre Mehus
+ */
+
 @import "default.css";
 
 /* The primary background color. */
@@ -6,12 +12,12 @@
 }
 
 /* The secondary background color. */
-.bgcolor2, .ruleTableHeader {
+.bgcolor2, .ruleTableHeader, .log  {
     background-color: #4D4C52
 }
 
 /* Background color for selected header, log etc. */
-.headerSelected, .log {
+.headerSelected {
     color: black;
     background-color: #DDDDDD;
 }
@@ -19,6 +25,7 @@
 /* Background color for form controls. */
 input, select {
     background-color: #DDDDDD;
+    border: 1px solid gray;
 }
 
 /* Hover color for form controls. */
@@ -49,7 +56,12 @@ a:link, a:active, a:visited, a:link *, a:active *, a:visited * {
 /* Link hover color */
 a:hover, a:hover * {
     text-decoration: underline;
-    color: #DD6900
+    color: orange;
+}
+
+/* Color for warning messages. */
+.warning {
+    color: orange;
 }
 
 /* Simple border. */

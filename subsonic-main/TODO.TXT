@@ -1,67 +1,33 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
-Replace use of arrays with type-safe collections.
+
+LAYOUT
 Too much whitespace below cover art in home.jsp.
-Ugly input border in 'dark'.
-"2 minutes to midnight."
-Use AJAX to change random albums on home page, one at a time.
-Fix CSS for .log and .headerSelected.
-Fix CSS for scroll bars.
-Truncate long lines in left.jsp, search.jsp and playlist.jsp.
-Make fonts themeable.
-Make images themeable.
-Support per-user theme.
-Support theme names.
-Refactor CSS.
+Make images themeable, including rating.
 Fix ugly Back links.
-Use CSS overflow: auto for scrolling in playlist?
-JFreeChart alpha, http://docs.pushtotest.com/jfreechart/org/jfree/chart/plot/Plot.html#getBackgroundAlpha()
 White right border in some cover arts.
+Red-marking of search hits.
+Fix images, they are not consistent.
+Fix table cell spacing and border in search.jsp and playlist.jsp.
+
+BUGS
 Cover art popup is broken on IE.
-Work on 'dark' theme. See colors on http://www.neocrome.net/users.php?m=auth
-Make fancy css background for playlist toolbar.
-Use less black frame borders.
-Use Spring StringUtils.cleanPath()?
 Use detail class in home page. Make it look better.
-TEST: symlinks.
-TEST: Log border not working on IE.
-TEST: Support music files with names like "foo..mp3"
-Problems with playlist reordering etc in Firefox.
-Springify podcast.
-Springify wap.
-Internet radio broken?
-Theme support.
-Option to show exception details in error log.
-Firefox scrollbar background
-CSS colors.
+
+TEST
+Symlinks.
+Support music files with names like "foo..mp3"
 Check Javascript error on IE.
-h1, h2, p etc margin and padding.
+
+MISC
+Support per-user theme.
 Remove debug-logging in SearchService. (Create new level, PERF?)
-Quick link to "#" doesn't work.
-Should receive feedback when changing passwords, creating users etc.
-Verify that security works.
-java.io.FileNotFoundException: C:\music\The Alan Parsons Project\The Best of The Alan Parsons Project\folder.jpg (Access is denied)
-Access control of players.  Avoid security hole for deleting other people's players.
-Use HTML 4.01, validate all pages.
+Rework rating images. Only 2 images are necessary.
 i18n of TagService.
-Create taglib for StringUtil.formatBytes() and help popup.
-Make it work on Java Application Server 8.1.  (web.xml element order)
-Make it work on Geronimo.
-Make it work on Jetty
-Drop ResourceBundle_en.
+Get updated Norwegian resource bundle.
+Get updated Macedonian resource bundle.
 Update text for coverart role. Now includes tag editing.
-Display image embedded in ID3 tag (APIC).
-Transcoding plugin framework. (Check out Jinzora transcoding pack.)
-Reimplement LAME integration.
-Specify upload directory per user. Option to delete files?
-Upload quota per user.
-Improve performance for new/best charts.
-Support reverse proxies.  Send url as parameter. (<a href="javascript:document.location.href='foo.jsp?referrer=' + document.location.href">Trykk her</a>)
-Support forward proxies.
-Order search results.
-Hvis spilleren har "Auto-control enabled" skrudd av, så vises det en ny knapp "Stream" i playlista som kan brukes for å få m3u-en.
-Per-user locale.
 
 COMPLETED FOR VERSION 2.7
 ==========================
@@ -87,6 +53,36 @@ Bugfix: Now possible to change cover art even if original file is write protecte
 
 BACKLOG
 ==========
+Make fancy css background for playlist toolbar.
+Use CSS overflow: auto for scrolling in playlist?
+Problems with playlist reordering etc in Firefox.
+Use AJAX to change random albums on home page, one at a time.
+Implement pure AJAX version of playlist.jsp.
+Use Spring StringUtils.cleanPath()?
+Springify wap.
+Option to show exception details in error log.
+Quick link to "#" doesn't work.
+Should receive feedback when changing passwords, creating users etc.
+java.io.FileNotFoundException: C:\music\The Alan Parsons Project\The Best of The Alan Parsons Project\folder.jpg (Access is denied)
+Access control of players.  Avoid security hole for deleting other people's players.
+Use HTML 4.01, validate all pages.
+Create taglib for StringUtil.formatBytes() and help popup.
+Make it work on Java Application Server 8.1.  (web.xml element order)
+Make it work on Geronimo.
+Make it work on Jetty
+Drop ResourceBundle_en.
+Display image embedded in ID3 tag (APIC).
+Transcoding plugin framework. (Check out Jinzora transcoding pack.)
+Reimplement LAME integration.
+Upload quota per user.
+Order search results.
+Specify upload directory per user. Option to delete files?
+Improve performance for new/best charts.
+Support reverse proxies.  Send url as parameter. (<a href="javascript:document.location.href='foo.jsp?referrer=' + document.location.href">Trykk her</a>)
+Support forward proxies.
+Hvis spilleren har "Auto-control enabled" skrudd av, så vises det en ny knapp "Stream" i playlista som kan brukes for å få m3u-en.
+Per-user locale.
+Replace use of arrays with type-safe collections.
 Completely AJAX-based playlist frame.
 "Mini" interface for phones, pda's etc.
 Create installer for Windows. http://nsis.sourceforge.net

@@ -1,9 +1,11 @@
 package net.sourceforge.subsonic.theme;
 
 import net.sourceforge.subsonic.service.*;
+import net.sourceforge.subsonic.domain.*;
 import org.springframework.web.servlet.*;
 
 import javax.servlet.http.*;
+import java.util.*;
 
 /**
  * Theme resolver implementation which returns the theme selected in the settings.
@@ -13,15 +15,37 @@ import javax.servlet.http.*;
 public class SubsonicThemeResolver implements ThemeResolver {
 
     private SettingsService settingsService;
+    private Set<String> themeIds;
 
     /**
-     * Resolve the current theme name via the given request.
-     *
-     * @param request Request to be used for resolution
-     * @return The current theme name
-     */
+    * Resolve the current theme name via the given request.
+    *
+    * @param request Request to be used for resolution
+    * @return The current theme name
+    */
     public String resolveThemeName(HttpServletRequest request) {
-        return settingsService.getThemeId();
+        String themeId = settingsService.getThemeId();
+
+        // Verify that theme exists.
+        return themeExists(themeId) ? themeId : "default";
+    }
+
+    /**
+     * Returns whether the theme with the given ID exists.
+     * @param themeId The theme ID.
+     * @return Whether the theme with the given ID exists.
+     */
+    private synchronized boolean themeExists(String themeId) {
+        // Lazily create set of theme IDs.
+        if (themeIds == null) {
+            themeIds = new HashSet<String>();
+            Theme[] themes = settingsService.getAvailableThemes();
+            for (Theme theme : themes) {
+                themeIds.add(theme.getId());
+            }
+        }
+
+        return themeIds.contains(themeId);
     }
 
     /**
@@ -34,7 +58,6 @@ public class SubsonicThemeResolver implements ThemeResolver {
      *                                       does not support dynamic changing of the theme
      */
     public void setThemeName(HttpServletRequest request, HttpServletResponse response, String themeName) {
-
         throw new UnsupportedOperationException("Cannot change theme - use a different theme resolution strategy");
     }
 
