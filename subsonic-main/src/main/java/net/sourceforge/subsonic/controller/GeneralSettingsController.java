@@ -3,6 +3,7 @@ package net.sourceforge.subsonic.controller;
 import org.springframework.web.servlet.mvc.*;
 import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.command.*;
+import net.sourceforge.subsonic.domain.*;
 
 import javax.servlet.http.*;
 import java.util.*;
@@ -30,11 +31,11 @@ public class GeneralSettingsController extends SimpleFormController {
         command.setPlaylistFolder(settingsService.getPlaylistFolder());
         command.setWelcomeMessage(settingsService.getWelcomeMessage());
 
-        String[] themes = settingsService.getAvailableThemes();
+        Theme[] themes = settingsService.getAvailableThemes();
         command.setThemes(themes);
-        String currentTheme = settingsService.getTheme();
+        String currentThemeId = settingsService.getThemeId();
         for (int i = 0; i < themes.length; i++) {
-            if (currentTheme.equals(themes[i])) {
+            if (currentThemeId.equals(themes[i].getId())) {
                 command.setThemeIndex(String.valueOf(i));
                 break;
             }
@@ -60,7 +61,7 @@ public class GeneralSettingsController extends SimpleFormController {
         GeneralSettingsCommand command = (GeneralSettingsCommand) comm;
 
         int themeIndex = Integer.parseInt(command.getThemeIndex());
-        String theme = settingsService.getAvailableThemes()[themeIndex];
+        Theme theme = settingsService.getAvailableThemes()[themeIndex];
 
         int localeIndex = Integer.parseInt(command.getLocaleIndex());
         Locale locale = internationalizationService.getAvailableLocales()[localeIndex];
@@ -68,7 +69,7 @@ public class GeneralSettingsController extends SimpleFormController {
         command.setReloadNeeded(!settingsService.getIndexString().equals(command.getIndex()) ||
                                 !settingsService.getIgnoredArticles().equals(command.getIgnoredArticles()) ||
                                 !settingsService.getShortcuts().equals(command.getShortcuts()) ||
-                                !settingsService.getTheme().equals(theme) ||
+                                !settingsService.getThemeId().equals(theme.getId()) ||
                                 !internationalizationService.getLocale().equals(locale));
 
         settingsService.setIndexString(command.getIndex());
@@ -78,7 +79,7 @@ public class GeneralSettingsController extends SimpleFormController {
         settingsService.setMusicMask(command.getMusicMask());
         settingsService.setCoverArtMask(command.getCoverArtMask());
         settingsService.setWelcomeMessage(command.getWelcomeMessage());
-        settingsService.setTheme(theme);
+        settingsService.setThemeId(theme.getId());
         try {
             settingsService.setCoverArtLimit(Integer.parseInt(command.getCoverArtLimit()));
         } catch (NumberFormatException x) { /* Intentionally ignored. */ }

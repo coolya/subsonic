@@ -31,7 +31,7 @@ public class SettingsServiceTestCase extends TestCase {
         assertEquals("Wrong default index creation interval.", 1, settingsService.getIndexCreationInterval());
         assertEquals("Wrong default index creation hour.", 3, settingsService.getIndexCreationHour());
         assertEquals("Wrong default playlist folder.", "c:/playlists", settingsService.getPlaylistFolder());
-        assertEquals("Wrong default theme.", "default", settingsService.getTheme());
+        assertEquals("Wrong default theme.", "default", settingsService.getThemeId());
     }
 
     public void testChangeSettings() {
@@ -44,7 +44,7 @@ public class SettingsServiceTestCase extends TestCase {
         settingsService.setCoverArtLimit(99);
         settingsService.setWelcomeMessage("welcomeMessage");
         settingsService.setLocale(Locale.CANADA_FRENCH);
-        settingsService.setTheme("dark");
+        settingsService.setThemeId("dark");
         settingsService.setIndexCreationInterval(4);
         settingsService.setIndexCreationHour(9);
 
@@ -70,7 +70,7 @@ public class SettingsServiceTestCase extends TestCase {
         assertEquals("Wrong cover art limit.", 99, ss.getCoverArtLimit());
         assertEquals("Wrong welcome message.", "welcomeMessage", ss.getWelcomeMessage());
         assertEquals("Wrong locale.", Locale.CANADA_FRENCH, ss.getLocale());
-        assertEquals("Wrong theme.", "dark", ss.getTheme());
+        assertEquals("Wrong theme.", "dark", ss.getThemeId());
         assertEquals("Wrong index creation interval.", 4, ss.getIndexCreationInterval());
         assertEquals("Wrong index creation hour.", 9, ss.getIndexCreationHour());
     }

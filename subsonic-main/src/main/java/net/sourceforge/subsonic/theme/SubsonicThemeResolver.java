@@ -21,7 +21,7 @@ public class SubsonicThemeResolver implements ThemeResolver {
      * @return The current theme name
      */
     public String resolveThemeName(HttpServletRequest request) {
-        return settingsService.getTheme();
+        return settingsService.getThemeId();
     }
 
     /**

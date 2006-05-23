@@ -94,7 +94,7 @@
             <td>
                 <form:select path="themeIndex">
                     <c:forEach items="${command.themes}" var="theme" varStatus="loopStatus">
-                        <form:option value="${loopStatus.count - 1}" label="${theme}"/>
+                        <form:option value="${loopStatus.count - 1}" label="${theme.name}"/>
                     </c:forEach>
                 </form:select>
                 <a href="helpPopup.view?topic=theme" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>

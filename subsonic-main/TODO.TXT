@@ -1,7 +1,17 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
+Replace use of arrays with type-safe collections.
+Too much whitespace below cover art in home.jsp.
+Ugly input border in 'dark'.
+"2 minutes to midnight."
+Use AJAX to change random albums on home page, one at a time.
 Fix CSS for .log and .headerSelected.
+Fix CSS for scroll bars.
+Truncate long lines in left.jsp, search.jsp and playlist.jsp.
+Make fonts themeable.
+Make images themeable.
+Support per-user theme.
 Support theme names.
 Refactor CSS.
 Fix ugly Back links.

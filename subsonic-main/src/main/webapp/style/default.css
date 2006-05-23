@@ -53,13 +53,8 @@ a:hover, a:hover * {
     border: 1px solid black;
 }
 
+/* Scrollbar colors (supported on IE and Opera) */
 body {
-    padding:0;
-    border:0;
-    margin:0.75em;
-    font-family: verdana, arial, sans-serif;
-    font-size: 9pt;
-    line-height: 1.5em;
     scrollbar-face-color: #DEE3E7;
     scrollbar-highlight-color: #FFFFFF;
     scrollbar-shadow-color: #DEE3E7;
@@ -67,6 +62,15 @@ body {
     scrollbar-arrow-color: #006699;
     scrollbar-track-color: #EFEFEF;
     scrollbar-darkshadow-color: #98AAB1;
+}
+
+body {
+    padding:0;
+    border:0;
+    margin:0.75em;
+    font-family: verdana, arial, sans-serif;
+    font-size: 9pt;
+    line-height: 1.5em;
 }
 
 p {

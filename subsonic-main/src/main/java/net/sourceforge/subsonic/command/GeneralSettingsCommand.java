@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.command;
 
 import net.sourceforge.subsonic.controller.*;
+import net.sourceforge.subsonic.domain.*;
 
 /**
  * Command used in {@link GeneralSettingsController}.
@@ -21,7 +22,7 @@ public class GeneralSettingsCommand {
     private String localeIndex;
     private String[] locales;
     private String themeIndex;
-    private String[] themes;
+    private Theme[] themes;
     private boolean isReloadNeeded;
 
     public String getPlaylistFolder() {
@@ -128,11 +129,11 @@ public class GeneralSettingsCommand {
         this.themeIndex = themeIndex;
     }
 
-    public String[] getThemes() {
+    public Theme[] getThemes() {
         return themes;
     }
 
-    public void setThemes(String[] themes) {
+    public void setThemes(Theme[] themes) {
         this.themes = themes;
     }
 

@@ -31,7 +31,7 @@ public class SettingsService {
     private static final String          KEY_LOCALE_LANGUAGE         = "LocaleLanguage";
     private static final String          KEY_LOCALE_COUNTRY          = "LocaleCountry";
     private static final String          KEY_LOCALE_VARIANT          = "LocaleVariant";
-    private static final String          KEY_THEME                   = "Theme";
+    private static final String          KEY_THEME_ID                   = "Theme";
     private static final String          KEY_INDEX_CREATION_INTERVAL = "IndexCreationInterval";
     private static final String          KEY_INDEX_CREATION_HOUR     = "IndexCreationHour";
     private static final String          KEY_DOWNLOAD_BITRATE_LIMIT  = "DownloadBitrateLimit";
@@ -49,7 +49,7 @@ public class SettingsService {
     private static final String          DEFAULT_LOCALE_LANGUAGE         = "en";
     private static final String          DEFAULT_LOCALE_COUNTRY          = "";
     private static final String          DEFAULT_LOCALE_VARIANT          = "";
-    private static final String          DEFAULT_THEME                   = "default";
+    private static final String          DEFAULT_THEME_ID                   = "default";
     private static final int             DEFAULT_INDEX_CREATION_INTERVAL = 1;
     private static final int             DEFAULT_INDEX_CREATION_HOUR     = 3;
     private static final long            DEFAULT_DOWNLOAD_BITRATE_LIMIT  = 0;
@@ -58,14 +58,14 @@ public class SettingsService {
     // Array of all keys.  Used to clean property file.
     private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_SHORTCUTS, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
                                           KEY_COVER_ART_MASK, KEY_COVER_ART_LIMIT, KEY_WELCOME_MESSAGE, KEY_LOCALE_LANGUAGE,
-                                          KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_THEME, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
+                                          KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_THEME_ID, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
                                           KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT};
 
     private static final String THEMES_FILE = "/net/sourceforge/subsonic/theme/themes.txt";
     private static final Logger LOG = Logger.getLogger(SettingsService.class);
 
     private Properties properties = new Properties();
-    private String[] themes;
+    private List<Theme> themes;
     private MusicFolderDao musicFolderDao = new MusicFolderDao();
     private InternetRadioDao internetRadioDao = new InternetRadioDao();
 
@@ -322,36 +322,45 @@ public class SettingsService {
     }
 
     /**
-     * Returns the name of the theme to use.
-     * @return The theme name.
+     * Returns the ID of the theme to use.
+     * @return The theme ID.
      */
-    public String getTheme() {
-        return properties.getProperty(KEY_THEME, DEFAULT_THEME);
+    public String getThemeId() {
+        return properties.getProperty(KEY_THEME_ID, DEFAULT_THEME_ID);
     }
 
     /**
-     * Sets the name of the theme to use.
-     * @param theme The theme name
+     * Sets the ID of the theme to use.
+     * @param themeId The theme ID
      */
-    public void setTheme(String theme) {
-        properties.setProperty(KEY_THEME, theme);
+    public void setThemeId(String themeId) {
+        properties.setProperty(KEY_THEME_ID, themeId);
     }
 
     /**
     * Returns a list of available themes.
     * @return A list of available themes.
     */
-    public synchronized String[] getAvailableThemes() {
+    public synchronized Theme[] getAvailableThemes() {
         if (themes == null) {
+            themes = new ArrayList<Theme>();
             try {
                 InputStream in = SettingsService.class.getResourceAsStream(THEMES_FILE);
-                themes = StringUtil.readLines(in);
+                String[] lines = StringUtil.readLines(in);
+                for (String line : lines) {
+                    String[] elements = StringUtil.split(line);
+                    if (elements.length == 2) {
+                        themes.add(new Theme(elements[0], elements[1]));
+                    } else {
+                        LOG.warn("Failed to parse theme from line: [" + line + "].");
+                    }
+                }
             } catch (IOException x) {
                 LOG.error("Failed to resolve list of themes.", x);
-                themes = new String[] {"default"};
+                themes.add(new Theme("default", "Subsonic default"));
             }
         }
-        return themes;
+        return themes.toArray(new Theme[0]);
     }
 
     /**

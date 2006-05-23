@@ -2,8 +2,8 @@
 # Author: Sindre Mehus
 
 # The original Subsonic theme.
-default
+default "Subsonic Default"
 
 # Theme with dark colors.
-dark
+midnight "2 Minutes To Midnight"
 
