@@ -10,8 +10,16 @@ PARAMETERS
   showZoom: Whether to display a link for zooming the cover art.
   showChange: Whether to display a link for changing the cover art.
 --%>
+<c:choose>
+    <c:when test="${empty param.coverArtSize}">
+        <c:set var="size" value="auto"/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="size" value="${param.coverArtSize + 8}px"/>
+    </c:otherwise>
+</c:choose>
 
-<div>
+<div style="width:${size}; max-width:${size}">
     <sub:url value="main.view" var="mainUrl">
         <sub:param name="path" value="${param.albumPath}"/>
     </sub:url>
@@ -25,21 +33,12 @@ PARAMETERS
         </c:if>
     </sub:url>
 
-    <c:choose>
-        <c:when test="${empty param.coverArtSize}">
-            <c:set var="size" value="auto"/>
-        </c:when>
-        <c:otherwise>
-            <c:set var="size" value="${param.coverArtSize}"/>
-        </c:otherwise>
-    </c:choose>
-
     <div class="outerpair1">
         <div class="outerpair2">
             <div class="shadowbox">
                 <div class="innerbox">
                     <c:if test="${param.showLink}"><a href="${mainUrl}"></c:if>
-                        <img src="${coverArtUrl}" alt="" height="${size}" width="${size}"/>
+                        <img src="${coverArtUrl}" alt=""/>
                         <c:if test="${param.showLink}"></a></c:if>
                 </div>
             </div>
@@ -47,7 +46,7 @@ PARAMETERS
     </div>
 </div>
 
-<div style="text-align:right; padding-right: 8px; width:${size}">
+<div style="text-align:right; padding-right: 8px;">
     <c:if test="${param.showChange}">
         <sub:url value="/changeCoverArt.view" var="changeCoverArtUrl">
             <sub:param name="path" value="${param.albumPath}"/>

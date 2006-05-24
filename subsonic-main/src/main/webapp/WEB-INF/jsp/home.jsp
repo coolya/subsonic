@@ -80,9 +80,7 @@
                             <c:param name="showZoom" value="false"/>
                             <c:param name="showChange" value="false"/>
                         </c:import>
-                    </td></tr>
 
-                    <tr><td>
                         <div class="detail">
                             <c:if test="${not empty album.playCount}">
                                 <fmt:message key="home.playcount"><fmt:param value="${album.playCount}"/></fmt:message>
@@ -108,8 +106,8 @@
                                 <div class="detail"><fmt:message key="common.unknown"/></div>
                             </c:when>
                             <c:otherwise>
-                                <div class="detail"><em><str:truncateNicely lower="17" upper="17">${album.artist}</str:truncateNicely></em></div>
-                                <div class="detail"><str:truncateNicely lower="17" upper="17">${album.albumTitle}</str:truncateNicely></div>
+                                <div class="detail"><em><str:truncateNicely lower="15" upper="15">${album.artist}</str:truncateNicely></em></div>
+                                <div class="detail"><str:truncateNicely lower="15" upper="15">${album.albumTitle}</str:truncateNicely></div>
                             </c:otherwise>
                         </c:choose>
 

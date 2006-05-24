@@ -3,10 +3,7 @@ PRIORITIZED FOR VERSION 2.7
 ===========================
 
 LAYOUT
-Too much whitespace below cover art in home.jsp.
-Make images themeable, including rating.
 Fix ugly Back links.
-White right border in some cover arts.
 Red-marking of search hits. Is it broken?  Use different color.
 Fix images, they are not consistent.
 Fix table cell spacing and border in search.jsp and playlist.jsp.
@@ -20,12 +17,13 @@ TEST
 Symlinks.
 Support music files with names like "foo..mp3"
 Check Javascript error on IE.
+White right border in some cover arts. Test on IE.
 
 MISC
 Support per-user theme.
 Use cool coverart dialog popup (see Google Web Toolkit).
+Use dialog popup for online help.
 Remove debug-logging in SearchService. (Create new level, PERF?)
-Rework rating images. Only 2 images are necessary.
 i18n of TagService.
 Get updated Norwegian resource bundle.
 Get updated Macedonian resource bundle.
