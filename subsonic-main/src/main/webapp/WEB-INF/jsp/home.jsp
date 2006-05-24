@@ -96,7 +96,10 @@
                                 <fmt:message key="home.lastmodified"><fmt:param value="${lastModifiedDate}"/></fmt:message>
                             </c:if>
                             <c:if test="${not empty album.rating}">
-                                <img src="<c:url value="/icons/rating${album.rating}.gif"/>" alt=""/>
+                                <c:import url="rating.jsp">
+                                    <c:param name="readonly" value="true"/>
+                                    <c:param name="rating" value="${album.rating}"/>
+                                </c:import>
                             </c:if>
                         </div>
 

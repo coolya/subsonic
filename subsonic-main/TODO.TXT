@@ -7,9 +7,10 @@ Too much whitespace below cover art in home.jsp.
 Make images themeable, including rating.
 Fix ugly Back links.
 White right border in some cover arts.
-Red-marking of search hits.
+Red-marking of search hits. Is it broken?  Use different color.
 Fix images, they are not consistent.
 Fix table cell spacing and border in search.jsp and playlist.jsp.
+Midnight images should be darker.
 
 BUGS
 Cover art popup is broken on IE.
@@ -22,6 +23,7 @@ Check Javascript error on IE.
 
 MISC
 Support per-user theme.
+Use cool coverart dialog popup (see Google Web Toolkit).
 Remove debug-logging in SearchService. (Create new level, PERF?)
 Rework rating images. Only 2 images are necessary.
 i18n of TagService.

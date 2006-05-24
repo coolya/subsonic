@@ -79,22 +79,12 @@
 </h2>
 
 <c:if test="${model.dir.album}">
-    <sub:url value="setMusicFileInfo.view" var="ratingUrl">
-        <sub:param name="path" value="${model.dir.path}"/>
-        <sub:param name="action" value="rating"/>
-    </sub:url>
 
-    <map id="ratingMap" name="ratingMap">
-        <area href="${ratingUrl}&rating=1" shape="rect" coords="0,0,12,13"  alt="<fmt:message key="main.rating"/> 1"/>
-        <area href="${ratingUrl}&rating=2" shape="rect" coords="13,0,25,13" alt="<fmt:message key="main.rating"/> 2"/>
-        <area href="${ratingUrl}&rating=3" shape="rect" coords="26,0,38,13" alt="<fmt:message key="main.rating"/> 3"/>
-        <area href="${ratingUrl}&rating=4" shape="rect" coords="39,0,51,13" alt="<fmt:message key="main.rating"/> 4"/>
-        <area href="${ratingUrl}&rating=5" shape="rect" coords="52,0,64,13" alt="<fmt:message key="main.rating"/> 5"/>
-    </map>
-
-    <img src="icons/rating${model.rating}.gif"
-         alt="<fmt:message key="main.rating"/> ${model.rating}"
-         ${model.user.commentRole ? "usemap='#ratingMap'" : ""}/>
+    <c:import url="rating.jsp">
+        <c:param name="path" value="${model.dir.path}"/>
+        <c:param name="readonly" value="${not model.user.commentRole}"/>
+        <c:param name="rating" value="${model.rating}"/>
+    </c:import>
 
     <span class="detail">
         <fmt:message key="main.playcount"><fmt:param value="${model.playCount}"/></fmt:message>
