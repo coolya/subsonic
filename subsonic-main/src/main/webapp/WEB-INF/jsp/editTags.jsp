@@ -82,8 +82,7 @@
 
 <h1><fmt:message key="edittags.title"/></h1>
 <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.path}"/></sub:url>
-<a href="${backUrl}"><b>[<fmt:message key="common.back"/>]</b></a>
-<p/>
+<div class="back"><a href="${backUrl}"><fmt:message key="common.back"/></a></div>
 
 <table class="ruleTable indent">
     <tr>

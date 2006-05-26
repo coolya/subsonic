@@ -61,6 +61,6 @@
 
 <p><fmt:message key="help.logfile"><fmt:param value="${model.logFile}"/></fmt:message> </p>
 
-<p><a href="help.view?">[<fmt:message key="common.refresh"/>]</a></p>
+<div class="forward"><a href="help.view?"><fmt:message key="common.refresh"/></a></div>
 
 </body></html>

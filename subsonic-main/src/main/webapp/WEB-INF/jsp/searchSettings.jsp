@@ -44,7 +44,7 @@
 
     <tr>
         <td colspan="4">
-            <a href="searchSettings.view?update"><fmt:message key="searchsettings.manual"/></a>
+            <div class="forward"><a href="searchSettings.view?update"><fmt:message key="searchsettings.manual"/></a></div>
         </td>
     </tr>
 </table>

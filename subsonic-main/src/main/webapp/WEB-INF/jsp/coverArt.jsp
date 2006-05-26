@@ -24,7 +24,7 @@ PARAMETERS
         <sub:param name="path" value="${param.albumPath}"/>
     </sub:url>
 
-    <sub:url value="coverart" var="coverArtUrl">
+    <sub:url value="coverArt.view" var="coverArtUrl">
         <c:if test="${not empty param.coverArtSize}">
             <sub:param name="size" value="${param.coverArtSize}"/>
         </c:if>

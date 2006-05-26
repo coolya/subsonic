@@ -7,7 +7,7 @@
 
 <h1><fmt:message key="changecoverart.title"/></h1>
 <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.path}"/></sub:url>
-<a href="${backUrl}"><b>[<fmt:message key="common.back"/>]</b></a>
+<div class="back"><a href="${backUrl}"><fmt:message key="common.back"/></a></div>
 
 <form method="post" action="changeCoverArt.view">
     <input type="hidden" name="path" value="${model.path}"/>

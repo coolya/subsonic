@@ -1,4 +1,4 @@
-package net.sourceforge.subsonic.servlet;
+package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
@@ -7,41 +7,36 @@ import org.jfree.chart.axis.*;
 import org.jfree.chart.plot.*;
 import org.jfree.chart.renderer.category.*;
 import org.jfree.data.category.*;
+import org.springframework.web.servlet.*;
 
 import javax.servlet.http.*;
 import java.awt.*;
-import java.io.*;
 
 /**
- * Servlet for generating a chart showing how much the different users have
- * streamed/uploaded/downloaded.
+ * Controller for generating a chart showing bitrate vs time.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.7 $ $Date: 2005/12/07 19:18:57 $
  */
-public class UserChartServlet extends HttpServlet {
+public class UserChartController extends AbstractChartController {
+
+    private SecurityService securityService;
 
     public static final int IMAGE_WIDTH = 400;
     public static final int IMAGE_HEIGHT = 200;
     private static final long BYTES_PER_MB = 1024L * 1024L;
 
-    /**
-     * Handles the given HTTP request.
-     * @param request The HTTP request.
-     * @param response The HTTP response.
-     * @throws IOException If an I/O error occurs.
-     */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String type = request.getParameter("type");
         CategoryDataset dataset = createDataset(type);
-        JFreeChart chart = createChart(dataset);
+        JFreeChart chart = createChart(dataset, request);
 
         ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart, IMAGE_WIDTH, IMAGE_HEIGHT);
+        return null;
     }
 
     private CategoryDataset createDataset(String type) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        User[] users = ServiceFactory.getSecurityService().getAllUsers();
+        User[] users = securityService.getAllUsers();
         for (User user : users) {
             double value;
             if ("stream".equals(type)) {
@@ -63,9 +58,8 @@ public class UserChartServlet extends HttpServlet {
         return dataset;
     }
 
-    private JFreeChart createChart(CategoryDataset dataset) {
+    private JFreeChart createChart(CategoryDataset dataset, HttpServletRequest request) {
         JFreeChart chart = ChartFactory.createBarChart(null, null, null, dataset, PlotOrientation.HORIZONTAL, false, false, false);
-        chart.setBackgroundPaint(new Color(0xEFEFEF));
 
         CategoryPlot plot = chart.getCategoryPlot();
         Paint background = new GradientPaint(0, 0, Color.lightGray, 0, IMAGE_HEIGHT, Color.white);
@@ -94,6 +88,24 @@ public class UserChartServlet extends HttpServlet {
         CategoryAxis domainAxis = plot.getDomainAxis();
         domainAxis.setCategoryLabelPositions(CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 6.0));
 
+        // Set theme-specific colors.
+        Color bgColor = getBackground(request);
+        Color fgColor = getForeground(request);
+
+        chart.setBackgroundPaint(bgColor);
+
+        domainAxis.setTickLabelPaint(fgColor);
+        domainAxis.setTickMarkPaint(fgColor);
+        domainAxis.setAxisLinePaint(fgColor);
+
+        rangeAxis.setTickLabelPaint(fgColor);
+        rangeAxis.setTickMarkPaint(fgColor);
+        rangeAxis.setAxisLinePaint(fgColor);
+
         return chart;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 }

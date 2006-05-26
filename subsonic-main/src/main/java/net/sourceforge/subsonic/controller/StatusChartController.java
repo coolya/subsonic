@@ -1,52 +1,47 @@
-package net.sourceforge.subsonic.servlet;
+package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.service.*;
 import org.jfree.chart.*;
 import org.jfree.chart.axis.*;
 import org.jfree.chart.plot.*;
 import org.jfree.chart.renderer.xy.*;
 import org.jfree.data.*;
 import org.jfree.data.time.*;
+import org.springframework.web.servlet.*;
 
 import javax.servlet.http.*;
 import java.awt.*;
-import java.io.*;
 import java.util.*;
 import java.util.List;
 
 /**
- * Servlet for generating a chart showing bitrate vs time.
+ * Controller for generating a chart showing bitrate vs time.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.7 $ $Date: 2005/12/07 19:18:57 $
  */
-public class StatusChartServlet extends HttpServlet {
+public class StatusChartController extends AbstractChartController {
+
+    private StatusService statusService;
 
     public static final int IMAGE_WIDTH = 350;
     public static final int IMAGE_HEIGHT = 150;
 
-    /**
-     * Handles the given HTTP request.
-     * @param request The HTTP request.
-     * @param response The HTTP response.
-     * @throws IOException If an I/O error occurs.
-     */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String type = request.getParameter("type");
         int index = Integer.parseInt(request.getParameter("index"));
 
         TransferStatus[] statuses = new TransferStatus[0];
         if ("stream".equals(type)) {
-            statuses = ServiceFactory.getStatusService().getAllStreamStatuses();
+            statuses = statusService.getAllStreamStatuses();
         } else if ("download".equals(type)) {
-            statuses = ServiceFactory.getStatusService().getAllDownloadStatuses();
+            statuses = statusService.getAllDownloadStatuses();
         } else if ("upload".equals(type)) {
-            statuses = ServiceFactory.getStatusService().getAllUploadStatuses();
+            statuses = statusService.getAllUploadStatuses();
         }
 
         if (index < 0 || index >= statuses.length) {
-            return;
+            return null;
         }
         TransferStatus status = statuses[index];
 
@@ -107,15 +102,30 @@ public class StatusChartServlet extends HttpServlet {
         renderer.setPaint(Color.blue.darker());
         renderer.setStroke(new BasicStroke(2f));
 
-        chart.setBackgroundPaint(new Color(0xEFEFEF));
+        // Set theme-specific colors.
+        Color bgColor = getBackground(request);
+        Color fgColor = getForeground(request);
+
+        chart.setBackgroundPaint(bgColor);
 
         ValueAxis domainAxis = plot.getDomainAxis();
         domainAxis.setRange(range);
+        domainAxis.setTickLabelPaint(fgColor);
+        domainAxis.setTickMarkPaint(fgColor);
+        domainAxis.setAxisLinePaint(fgColor);
 
         ValueAxis rangeAxis = plot.getRangeAxis();
         rangeAxis.setRange(new Range(min, max));
+        rangeAxis.setTickLabelPaint(fgColor);
+        rangeAxis.setTickMarkPaint(fgColor);
+        rangeAxis.setAxisLinePaint(fgColor);
 
         ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart, IMAGE_WIDTH, IMAGE_HEIGHT);
 
+        return null;
+    }
+
+    public void setStatusService(StatusService statusService) {
+        this.statusService = statusService;
     }
 }

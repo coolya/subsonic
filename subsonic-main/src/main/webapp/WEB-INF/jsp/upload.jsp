@@ -23,7 +23,7 @@
     </c:when>
 </c:choose>
 
-<p><a href="more.view?">[<fmt:message key="common.back"/>]</a></p>
+<div class="back"><a href="more.view?"><fmt:message key="common.back"/></a></div>
 </body></html>
 
 

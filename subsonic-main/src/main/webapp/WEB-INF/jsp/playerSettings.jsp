@@ -127,8 +127,8 @@
 <c:url value="playerSettings.view" var="cloneUrl">
     <c:param name="clone" value="${command.playerId}"/>
 </c:url>
-<a href="${deleteUrl}">[<fmt:message key="playersettings.forget"/>]</a>&nbsp;&nbsp;
-<a href="${cloneUrl}">[<fmt:message key="playersettings.clone"/>]</a>
+<div class="forward"><a href="${deleteUrl}"><fmt:message key="playersettings.forget"/></a></div>
+<div class="forward"><a href="${cloneUrl}"><fmt:message key="playersettings.clone"/></a></div>
 </c:otherwise>
 </c:choose>
 

@@ -13,20 +13,22 @@
         <p><fmt:message key="playlist.load.empty"/></p>
     </c:when>
     <c:otherwise>
-        <table class="ruleTable">
+        <table class="ruleTable indent">
             <c:forEach items="${model.playlists}" var="playlist">
                 <sub:url value="loadPlaylistConfirm.view" var="loadUrl"><sub:param name="name" value="${playlist}"/></sub:url>
                 <sub:url value="deletePlaylist.view" var="deleteUrl"><sub:param name="name" value="${playlist}"/></sub:url>
                 <sub:url value="download" var="downloadUrl"><sub:param name="playlist" value="${playlist}"/></sub:url>
                 <tr>
                     <td class="ruleTableHeader">${fn:substringBefore(playlist,".")}</td>
-                    <td class="ruleTableCell"><a href="${loadUrl}">[<fmt:message key="playlist.load.load"/>]</a>
-                    <c:if test="${model.user.playlistRole}">
-                        <a href="${deleteUrl}">[<fmt:message key="playlist.load.delete"/>]</a>
-                    </c:if>
-                    <c:if test="${model.user.downloadRole}">
-                        <a href="${downloadUrl}">[<fmt:message key="common.download"/>]</a>
-                    </c:if>
+                    <td class="ruleTableCell">
+                        <div class="forward"><a href="${loadUrl}" class="forward"><fmt:message key="playlist.load.load"/></a></div>
+                        <c:if test="${model.user.playlistRole}">
+                            <div class="forward"><a href="${deleteUrl}"><fmt:message key="playlist.load.delete"/></a></div>
+                        </c:if>
+                        <c:if test="${model.user.downloadRole}">
+                            <div class="forward"><a href="${downloadUrl}"><fmt:message key="common.download"/></a></div>
+                        </c:if>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

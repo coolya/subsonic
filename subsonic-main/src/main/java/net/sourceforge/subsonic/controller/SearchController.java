@@ -120,7 +120,7 @@ public class SearchController extends SimpleFormController {
 
             StringBuffer buf = new StringBuffer();
             while (matcher.find()) {
-                matcher.appendReplacement(buf, "<font color='red'>$0</font>");
+                matcher.appendReplacement(buf, "<b>$0</b>");
             }
             matcher.appendTail(buf);
 

@@ -62,7 +62,7 @@
             </c:otherwise>
         </c:choose>
 
-        <c:url value="/statusChart" var="chartUrl">
+        <c:url value="/statusChart.view" var="chartUrl">
             <c:if test="${status.stream}">
                 <c:param name="type" value="stream"/>
             </c:if>
@@ -86,6 +86,6 @@
     </c:forEach>
 </table>
 
-<p><a href="status.view?">[<fmt:message key="common.refresh"/>]</a></p>
+<div class="forward"><a href="status.view?"><fmt:message key="common.refresh"/></a></div>
 
 </body></html>

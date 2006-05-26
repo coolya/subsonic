@@ -47,16 +47,16 @@
             <th><fmt:message key="home.chart.stream"/></th>
         </tr>
         <tr>
-            <td><img src="<c:url value="/userChart"><c:param name="type" value="total"/></c:url>" alt=""/></td>
-            <td><img src="<c:url value="/userChart"><c:param name="type" value="stream"/></c:url>" alt=""/></td>
+            <td><img src="<c:url value="/userChart.view"><c:param name="type" value="total"/></c:url>" alt=""/></td>
+            <td><img src="<c:url value="/userChart.view"><c:param name="type" value="stream"/></c:url>" alt=""/></td>
         </tr>
         <tr>
             <th><fmt:message key="home.chart.download"/></th>
             <th><fmt:message key="home.chart.upload"/></th>
         </tr>
         <tr>
-            <td><img src="<c:url value="/userChart"><c:param name="type" value="download"/></c:url>" alt=""/></td>
-            <td><img src="<c:url value="/userChart"><c:param name="type" value="upload"/></c:url>" alt=""/></td>
+            <td><img src="<c:url value="/userChart.view"><c:param name="type" value="download"/></c:url>" alt=""/></td>
+            <td><img src="<c:url value="/userChart.view"><c:param name="type" value="upload"/></c:url>" alt=""/></td>
         </tr>
 </table>
 
@@ -132,7 +132,7 @@
 
             <c:choose>
                 <c:when test="${model.listType eq 'random'}">
-                    <td style="padding-right:7pt"><a href="home.view?listType=random&listSize=${model.listSize}">[<fmt:message key="common.more"/>]</a></td>
+                    <td><div class="forward"><a href="home.view?listType=random&listSize=${model.listSize}"><fmt:message key="common.more"/></a></div></td>
                 </c:when>
 
                 <c:otherwise>
@@ -148,8 +148,8 @@
                     </c:url>
 
                     <td style="padding-right:7pt"><fmt:message key="home.albums"><fmt:param value="${model.listOffset + 1}"/><fmt:param value="${model.listOffset + model.listSize}"/></fmt:message></td>
-                    <td style="padding-right:7pt"><a href="${previousUrl}">[<fmt:message key="common.previous"/>]</a></td>
-                    <td><a href="${nextUrl}">[<fmt:message key="common.next"/>]</a></td>
+                    <td style="padding-right:7pt"><div class="back"><a href="${previousUrl}"><fmt:message key="common.previous"/></a></div></td>
+                    <td><div class="forward"><a href="${nextUrl}"><fmt:message key="common.next"/></a></div></td>
                 </c:otherwise>
             </c:choose>
         </tr>

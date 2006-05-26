@@ -1,8 +1,10 @@
-package net.sourceforge.subsonic.servlet;
+package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.*;
 import net.sourceforge.subsonic.service.*;
 import org.apache.commons.io.*;
+import org.springframework.web.servlet.*;
+import org.springframework.web.servlet.mvc.*;
 
 import javax.imageio.*;
 import javax.servlet.http.*;
@@ -12,28 +14,23 @@ import java.awt.image.*;
 import java.io.*;
 
 /**
- * A servlet which scales and transcodes cover art images.
+ * Controller which produces cover art images.
  *
  * @author Sindre Mehus
  */
-public class CoverArtServlet extends HttpServlet {
+public class CoverArtController implements Controller {
 
-    private static final Logger LOG = Logger.getLogger(CoverArtServlet.class);
+    private SecurityService securityService;
 
-    /**
-     * Handles the given HTTP request.
-     * @param request The HTTP request.
-     * @param response The HTTP response.
-     * @throws IOException If an I/O error occurs.
-     */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private static final Logger LOG = Logger.getLogger(CoverArtController.class);
 
+    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String path = request.getParameter("path");
         File file = (path == null || path.length() == 0) ? null : new File(path);
 
-        if (file != null && !ServiceFactory.getSecurityService().isReadAllowed(file)) {
+        if (file != null && !securityService.isReadAllowed(file)) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
-            return;
+            return null;
         }
 
         InputStream in;
@@ -63,6 +60,7 @@ public class CoverArtServlet extends HttpServlet {
                 LOG.warn("Failed to close input stream for cover art (" + path + ").");
             }
         }
+        return null;
     }
 
     private BufferedImage scale(BufferedImage original, int width, int height) {
@@ -85,5 +83,9 @@ public class CoverArtServlet extends HttpServlet {
         g2.dispose();
 
         return result;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 }

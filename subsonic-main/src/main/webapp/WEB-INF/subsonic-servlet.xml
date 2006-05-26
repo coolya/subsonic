@@ -169,6 +169,15 @@
         <property name="playerService"><ref bean="playerService"/></property>
         <property name="securityService"><ref bean="securityService"/></property>
     </bean>
+    <bean id="coverArtController" class="net.sourceforge.subsonic.controller.CoverArtController">
+        <property name="securityService"><ref bean="securityService"/></property>
+    </bean>
+    <bean id="statusChartController" class="net.sourceforge.subsonic.controller.StatusChartController">
+        <property name="statusService"><ref bean="statusService"/></property>
+    </bean>
+    <bean id="userChartController" class="net.sourceforge.subsonic.controller.UserChartController">
+        <property name="securityService"><ref bean="securityService"/></property>
+    </bean>
     <bean id="multiController" class="net.sourceforge.subsonic.controller.MultiController"/>
 
     <bean id="savePlaylistValidator" class="net.sourceforge.subsonic.validator.SavePlaylistValidator">
@@ -228,6 +237,9 @@
                 <prop key="/home.view">homeController</prop>
                 <prop key="/editTags.view">editTagsController</prop>
                 <prop key="/playlist.view">playlistController</prop>
+                <prop key="/coverArt.view">coverArtController</prop>
+                <prop key="/statusChart.view">statusChartController</prop>
+                <prop key="/userChart.view">userChartController</prop>
                 <prop key="/podcast.view">podcastController</prop>
                 <prop key="/podcast">podcastController</prop>
             </props>

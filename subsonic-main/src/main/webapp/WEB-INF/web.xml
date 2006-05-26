@@ -33,27 +33,6 @@
     </servlet>
 
     <servlet>
-        <description>Finds, scales and serves cover art images</description>
-        <display-name>coverart</display-name>
-        <servlet-name>coverart</servlet-name>
-        <servlet-class>net.sourceforge.subsonic.servlet.CoverArtServlet</servlet-class>
-    </servlet>
-
-    <servlet>
-        <description>Returns an image containing a chart showing stream rate over time.</description>
-        <display-name>statusChart</display-name>
-        <servlet-name>statusChart</servlet-name>
-        <servlet-class>net.sourceforge.subsonic.servlet.StatusChartServlet</servlet-class>
-    </servlet>
-
-    <servlet>
-        <description>Returns an image containing a chart showing stream/download/upload statistics per user.</description>
-        <display-name>userChart</display-name>
-        <servlet-name>userChart</servlet-name>
-        <servlet-class>net.sourceforge.subsonic.servlet.UserChartServlet</servlet-class>
-    </servlet>
-
-    <servlet>
         <display-name>DWR Servlet</display-name>
         <servlet-name>dwr-invoker</servlet-name>
         <servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
@@ -85,21 +64,6 @@
     <servlet-mapping>
         <servlet-name>download</servlet-name>
         <url-pattern>/download</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>coverart</servlet-name>
-        <url-pattern>/coverart</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>statusChart</servlet-name>
-        <url-pattern>/statusChart</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>userChart</servlet-name>
-        <url-pattern>/userChart</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -157,13 +121,14 @@
         <url-pattern>/icons/*</url-pattern>
     </filter-mapping>
 
+    <!--TODO: Use spring stuff in subsonic-servlet.xml?-->
     <filter-mapping>
         <filter-name>NoCacheFilter</filter-name>
-        <url-pattern>/statusChart</url-pattern>
+        <url-pattern>/statusChart.view</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>NoCacheFilter</filter-name>
-        <url-pattern>/userChart</url-pattern>
+        <url-pattern>/userChart.view</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>NoCacheFilter</filter-name>

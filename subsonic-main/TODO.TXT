@@ -3,11 +3,12 @@ PRIORITIZED FOR VERSION 2.7
 ===========================
 
 LAYOUT
-Fix ugly Back links.
-Red-marking of search hits. Is it broken?  Use different color.
 Fix images, they are not consistent.
-Fix table cell spacing and border in search.jsp and playlist.jsp.
+Fix table cell spacing and border in search.jsp and playlist.jsp.  Create CSS.
 Midnight images should be darker.
+Make another theme with smaller fonts.
+Find proper back.gif and forward.gif for midnight theme.
+Make image size themeable?
 
 BUGS
 Cover art popup is broken on IE.
@@ -20,6 +21,8 @@ Check Javascript error on IE.
 White right border in some cover arts. Test on IE.
 
 MISC
+Convert servlets to controllers.
+Alpha channel in status charts.
 Support per-user theme.
 Use cool coverart dialog popup (see Google Web Toolkit).
 Use dialog popup for online help.
@@ -34,6 +37,7 @@ COMPLETED FOR VERSION 2.7
 New: Rewritten to Spring MVC.
 New: Shortcuts.
 New: Theme support.
+New: Improved layout.
 New: Ajax-based ID3 tag editor.
 New: Cover art 3D effect and popup. (3D effect not available in IE).
 New: Option to limit bandwidth for downloads and uploads.

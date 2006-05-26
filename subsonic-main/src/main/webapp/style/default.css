@@ -133,6 +133,10 @@ form {
     margin: 0;
 }
 
+input, select {
+    font-size: 9pt;
+}
+
 label {
     font-size: 100%;
     line-height: 140%;
@@ -181,6 +185,14 @@ img {
 .logo {
     white-space: nowrap;
     font-size: 16pt;
+}
+
+.back {
+    background-image:url("../icons/back.gif");background-position: 0px 3px; background-repeat:no-repeat; padding-left: 16px; line-height: 16px;
+}
+
+.forward {
+    background-image:url("../icons/forward.gif");background-position: 0px 3px; background-repeat:no-repeat; padding-left: 16px; line-height: 16px;
 }
 
 .albumComment {

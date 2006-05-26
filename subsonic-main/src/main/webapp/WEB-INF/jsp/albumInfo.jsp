@@ -7,7 +7,8 @@
 <body onload="javascript:populate(0)">
 <h1><fmt:message key="albuminfo.title"/></h1>
 <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${command.path}"/></sub:url>
-<a href="${backUrl}"><b>[<fmt:message key="common.back"/>]</b></a>
+<div class="back"><a href="${backUrl}"><fmt:message key="common.back"/></a></div>
+<br/>
 
 <form:form commandName="command" method="post" action="albumInfo.view">
     <form:hidden path="path"/>

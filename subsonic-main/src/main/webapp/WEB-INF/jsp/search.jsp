@@ -80,10 +80,10 @@
             </td>
 
             <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-left:5;padding-right:5">
-                <str:truncateNicely upper="50">${match.title}</str:truncateNicely>
+                ${match.title}
             </td>
             <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-left:5;padding-right:5">
-                <a target="main" href="${mainUrl}"><str:truncateNicely upper="50">${match.artistAlbumYear}</str:truncateNicely></a>
+                <a target="main" href="${mainUrl}">${match.artistAlbumYear}</a>
             </td>
         </tr>
     </c:forEach>
