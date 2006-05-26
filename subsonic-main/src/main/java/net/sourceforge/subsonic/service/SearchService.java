@@ -11,7 +11,6 @@ import java.util.*;
  * Provides services for searching for music.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.22 $ $Date: 2006/02/27 21:39:39 $
  */
 public class SearchService {
 
@@ -278,8 +277,6 @@ public class SearchService {
      * @throws IOException If an I/O error occurs.
      */
     public List<MusicFile> getRandomMusicFiles(int count) throws IOException {
-        long t0 = System.currentTimeMillis();
-
         List<MusicFile> result = new ArrayList<MusicFile>(count);
 
         // Ensure that index is read to memory.
@@ -298,9 +295,6 @@ public class SearchService {
             }
         }
 
-        long t1 = System.currentTimeMillis();
-        LOG.debug("Found " + result.size() + " random files in " + (t1 - t0) + " ms.");
-
         return result;
     }
 
@@ -312,8 +306,6 @@ public class SearchService {
      * @throws IOException If an I/O error occurs.
      */
     public List<MusicFile> getNewestAlbums(int offset, int count) throws IOException {
-        long t0 = System.currentTimeMillis();
-
         List<MusicFile> result = new ArrayList<MusicFile>(count);
 
         // Ensure that index is read to memory.
@@ -336,9 +328,6 @@ public class SearchService {
                 n++;
             }
         }
-
-        long t1 = System.currentTimeMillis();
-        LOG.debug("Found " + result.size() + " new albums in " + (t1 - t0) + " ms.");
 
         return result;
     }

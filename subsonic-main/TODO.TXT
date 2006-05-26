@@ -22,7 +22,6 @@ White right border in some cover arts. Test on IE.
 
 MISC
 Convert servlets to controllers.
-Alpha channel in status charts.
 Support per-user theme.
 Use cool coverart dialog popup (see Google Web Toolkit).
 Use dialog popup for online help.
