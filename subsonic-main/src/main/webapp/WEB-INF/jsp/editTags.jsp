@@ -55,7 +55,7 @@
         var album = DWRUtil.getValue("album" + index);
         var title = DWRUtil.getValue("title" + index);
         var year = DWRUtil.getValue("year" + index);
-        DWRUtil.setValue("status" + index, "Working");
+        DWRUtil.setValue("status" + index, "<fmt:message key="edittags.working"/>");
         tagService.setTags(setTagsCallback, path, artist, album, title, year);
     }
     function setTagsCallback(result) {

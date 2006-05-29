@@ -1,32 +1,18 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
+BUGS
+Bad colors in editTags (midnight)
+
 PR
 directory.google.com, dmoz.org
-
-LAYOUT
-Fix images, they are not consistent.
-Fix table cell spacing and border in search.jsp and playlist.jsp.  Create CSS.
-Midnight images should be darker.
-Make another theme with smaller fonts.
-Make image size themeable?
-
-BUGS
-Cover art popup is broken on IE.
-Use detail class in home page. Make it look better.
 
 TEST
 Symlinks.
 Support music files with names like "foo..mp3"
 Check Javascript error on IE.
-White right border in some cover arts. Test on IE.
-Test transparency on IE. Find proper back.gif and forward.gif for midnight theme.
 
 MISC
-Convert servlets to controllers.
-Support per-user theme.
-Use cool coverart dialog popup (see Google Web Toolkit).
-Use dialog popup for online help.
 i18n of TagService.
 Get updated Norwegian resource bundle.
 Get updated Macedonian resource bundle.
@@ -57,6 +43,14 @@ Bugfix: Now possible to change cover art even if original file is write protecte
 
 BACKLOG
 ==========
+Support per-user theme.
+Use cool coverart dialog popup (see Google Web Toolkit).
+Use dialog popup for online help.
+Convert servlets to controllers.
+Fix table cell spacing and border in search.jsp and playlist.jsp.  Create CSS.
+Make another theme with smaller fonts.
+Use detail class in home page. Make it look better.
+Make image size themeable?
 Make fancy css background for playlist toolbar.
 Use CSS overflow: auto for scrolling in playlist?
 Problems with playlist reordering etc in Firefox.
