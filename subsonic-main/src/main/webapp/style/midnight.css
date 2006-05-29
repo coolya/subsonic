@@ -79,3 +79,10 @@ body {
     scrollbar-track-color: #656569;
     scrollbar-darkshadow-color: #656569;
 }
+
+.back {
+    background-image:url("../icons/midnight/back.png");background-position: 0px 3px; background-repeat:no-repeat; padding-left: 16px; line-height: 16px;
+}
+.forward {
+    background-image:url("../icons/midnight/forward.png");background-position: 0px 3px; background-repeat:no-repeat; padding-left: 16px; line-height: 16px;
+}

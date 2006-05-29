@@ -36,7 +36,7 @@ COMPLETED FOR VERSION 2.7
 ==========================
 New: Rewritten to Spring MVC.
 New: Shortcuts.
-New: Theme support.
+New: Theme support. 2 minutes to midnight.
 New: Improved layout.
 New: Ajax-based ID3 tag editor.
 New: Cover art 3D effect and popup. (3D effect not available in IE).

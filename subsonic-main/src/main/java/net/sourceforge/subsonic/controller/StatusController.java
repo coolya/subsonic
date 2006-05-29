@@ -2,11 +2,10 @@ package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
-import net.sourceforge.subsonic.servlet.*;
 import net.sourceforge.subsonic.util.*;
 import org.springframework.web.servlet.*;
-import org.springframework.web.servlet.support.*;
 import org.springframework.web.servlet.mvc.*;
+import org.springframework.web.servlet.support.*;
 
 import javax.servlet.http.*;
 import java.io.*;
@@ -42,8 +41,8 @@ public class StatusController extends ParameterizableViewController {
         }
 
         map.put("transferStatuses", transferStatuses);
-        map.put("chartWidth", StatusChartServlet.IMAGE_WIDTH);
-        map.put("chartHeight", StatusChartServlet.IMAGE_HEIGHT);
+        map.put("chartWidth", StatusChartController.IMAGE_WIDTH);
+        map.put("chartHeight", StatusChartController.IMAGE_HEIGHT);
 
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
