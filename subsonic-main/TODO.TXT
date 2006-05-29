@@ -9,7 +9,6 @@ Fix images, they are not consistent.
 Fix table cell spacing and border in search.jsp and playlist.jsp.  Create CSS.
 Midnight images should be darker.
 Make another theme with smaller fonts.
-Find proper back.gif and forward.gif for midnight theme.
 Make image size themeable?
 
 BUGS
@@ -21,6 +20,7 @@ Symlinks.
 Support music files with names like "foo..mp3"
 Check Javascript error on IE.
 White right border in some cover arts. Test on IE.
+Test transparency on IE. Find proper back.gif and forward.gif for midnight theme.
 
 MISC
 Convert servlets to controllers.
