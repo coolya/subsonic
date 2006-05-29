@@ -1,6 +1,8 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
+PR
+directory.google.com, dmoz.org
 
 LAYOUT
 Fix images, they are not consistent.
@@ -25,7 +27,6 @@ Convert servlets to controllers.
 Support per-user theme.
 Use cool coverart dialog popup (see Google Web Toolkit).
 Use dialog popup for online help.
-Remove debug-logging in SearchService. (Create new level, PERF?)
 i18n of TagService.
 Get updated Norwegian resource bundle.
 Get updated Macedonian resource bundle.
