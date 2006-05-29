@@ -6,6 +6,7 @@ Bad colors in editTags (midnight)
 
 PR
 directory.google.com, dmoz.org
+Update site. New screenshots. But don't deploy.
 
 TEST
 Symlinks.
