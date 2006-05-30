@@ -10,18 +10,15 @@ Update site. New screenshots. But don't deploy.
 
 TEST
 Symlinks.
-Support music files with names like "foo..mp3"
 Check Javascript error on IE.
 
 MISC
-i18n of TagService.
-Get updated Norwegian resource bundle.
 Get updated Macedonian resource bundle.
-Update text for coverart role. Now includes tag editing.
+Create copy of index.html called index.jsp
 
 COMPLETED FOR VERSION 2.7
 ==========================
-New: Rewritten to Spring MVC.
+Tech: Rewritten to Spring MVC.
 New: Shortcuts.
 New: Theme support. 2 minutes to midnight.
 New: Improved layout.
@@ -44,6 +41,7 @@ Bugfix: Now possible to change cover art even if original file is write protecte
 
 BACKLOG
 ==========
+Use cewolf?
 Support per-user theme.
 Use cool coverart dialog popup (see Google Web Toolkit).
 Use dialog popup for online help.
