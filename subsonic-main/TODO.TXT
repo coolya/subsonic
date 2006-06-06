@@ -2,7 +2,6 @@
 PRIORITIZED FOR VERSION 2.7
 ===========================
 BUGS
-Make (non-admin) screen for changing password more intuitive.
 Bad colors in editTags (midnight)
 
 DOC

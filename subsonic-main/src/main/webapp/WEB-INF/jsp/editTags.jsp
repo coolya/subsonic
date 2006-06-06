@@ -61,11 +61,11 @@
     function setTagsCallback(result) {
         var message;
         if (result == "SKIPPED") {
-            message = "<div style='color:blue'><fmt:message key="edittags.skipped"/></div>";
+            message = "<fmt:message key="edittags.skipped"/>";
         } else if (result == "UPDATED") {
-            message = "<div style='color:green'><fmt:message key="edittags.updated"/></div>";
+            message = "<b><fmt:message key="edittags.updated"/></b>";
         } else {
-            message = "<div style='color:red'><fmt:message key="edittags.error"/></div>"
+            message = "<div class='warning'><fmt:message key="edittags.error"/></div>"
             var errors = DWRUtil.getValue("errors");
             errors += "<br/>" + result;
             DWRUtil.setValue("errors", errors);
