@@ -4,6 +4,7 @@ import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.command.*;
 import org.springframework.web.servlet.mvc.*;
+import org.springframework.web.bind.*;
 
 import javax.servlet.http.*;
 
@@ -32,10 +33,13 @@ public class UserSettingsController extends SimpleFormController {
         return command;
     }
 
-    private User getUser(HttpServletRequest request) {
-        String username = request.getParameter("username");
-        if (username != null && username.length() > 0) {
-            return securityService.getUserByName(username);
+    private User getUser(HttpServletRequest request) throws ServletRequestBindingException {
+        Integer userIndex = ServletRequestUtils.getIntParameter(request, "userIndex");
+        if (userIndex != null) {
+            User[] allUsers = securityService.getAllUsers();
+            if (userIndex >= 0 && userIndex < allUsers.length) {
+                return allUsers[userIndex];
+            }
         }
         return null;
     }

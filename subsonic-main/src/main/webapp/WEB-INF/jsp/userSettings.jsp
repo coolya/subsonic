@@ -28,7 +28,7 @@
     <tr>
         <td><b><fmt:message key="usersettings.title"/></b></td>
         <td>
-            <select name="username" onchange="location='userSettings.view?username=' + options[selectedIndex].value;">
+            <select name="username" onchange="location='userSettings.view?userIndex=' + (selectedIndex - 1);">
                 <option value="">-- <fmt:message key="usersettings.newuser"/> --</option>
                 <c:forEach items="${command.users}" var="user">
                     <option ${user.username eq command.username ? "selected" : ""}
@@ -88,7 +88,7 @@
             <table>
                 <tr>
                     <td><fmt:message key="usersettings.username"/></td>
-                    <td><form:password path="username"/></td>
+                    <td><form:input path="username"/></td>
                     <td class="warning"><form:errors path="username"/></td>
                 </tr>
                 <tr>

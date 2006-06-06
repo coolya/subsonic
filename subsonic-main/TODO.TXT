@@ -4,8 +4,7 @@ PRIORITIZED FOR VERSION 2.7
 BUGS
 Make (non-admin) screen for changing password more intuitive.
 Bad colors in editTags (midnight)
-User statistics gets garbled when many users.
-Username text field is of type password.
+Username with רזו is not properly selected.
 
 DOC
 Update site. New screenshots. But don't deploy.
