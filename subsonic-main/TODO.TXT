@@ -1,9 +1,6 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
-BUGS
-Bad colors in editTags (midnight)
-
 DOC
 Update site. New screenshots. But don't deploy.
 Add trouble-shooting chapter to install page.
