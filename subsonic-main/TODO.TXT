@@ -2,25 +2,20 @@
 PRIORITIZED FOR VERSION 2.7
 ===========================
 BUGS
-OK - Make sure not more than one SearchService is created.
 Make (non-admin) screen for changing password more intuitive.
-Make sure AbstractDao.getDataSource() doesn't run in parallell.
-Add link to PayPal donation.
 Bad colors in editTags (midnight)
-Add width/height to img in coverart.
-Use Rico for rounded edges.
+User statistics gets garbled when many users.
+Username text field is of type password.
 
 DOC
 Update site. New screenshots. But don't deploy.
 Add trouble-shooting chapter to install page.
 
 TEST
-Symlinks.
 Check Javascript error on IE.
 
 MISC
 Get updated Macedonian resource bundle.
-Create copy of index.html called index.jsp
 
 COMPLETED FOR VERSION 2.7
 ==========================
@@ -46,6 +41,7 @@ Bugfix: Now possible to change cover art even if original file is write protecte
 
 BACKLOG
 ==========
+Use Rico for rounded edges.
 Seeking within songs.
 Support SSL.
 Test flac

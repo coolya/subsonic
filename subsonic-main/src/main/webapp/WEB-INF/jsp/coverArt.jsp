@@ -19,7 +19,7 @@ PARAMETERS
     </c:otherwise>
 </c:choose>
 
-<div style="width:${size}; max-width:${size}">
+<div style="width:${size}; max-width:${size}; height:${size}; max-height:${size}">
     <sub:url value="main.view" var="mainUrl">
         <sub:param name="path" value="${param.albumPath}"/>
     </sub:url>

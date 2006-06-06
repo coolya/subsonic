@@ -22,7 +22,7 @@ public class UserChartController extends AbstractChartController {
     private SecurityService securityService;
 
     public static final int IMAGE_WIDTH = 400;
-    public static final int IMAGE_HEIGHT = 200;
+    public static final int IMAGE_MIN_HEIGHT = 200;
     private static final long BYTES_PER_MB = 1024L * 1024L;
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -30,7 +30,9 @@ public class UserChartController extends AbstractChartController {
         CategoryDataset dataset = createDataset(type);
         JFreeChart chart = createChart(dataset, request);
 
-        ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart, IMAGE_WIDTH, IMAGE_HEIGHT);
+        int imageHeight = Math.max(IMAGE_MIN_HEIGHT, 15 * dataset.getColumnCount());
+
+        ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart, IMAGE_WIDTH, imageHeight);
         return null;
     }
 
@@ -62,7 +64,7 @@ public class UserChartController extends AbstractChartController {
         JFreeChart chart = ChartFactory.createBarChart(null, null, null, dataset, PlotOrientation.HORIZONTAL, false, false, false);
 
         CategoryPlot plot = chart.getCategoryPlot();
-        Paint background = new GradientPaint(0, 0, Color.lightGray, 0, IMAGE_HEIGHT, Color.white);
+        Paint background = new GradientPaint(0, 0, Color.lightGray, 0, IMAGE_MIN_HEIGHT, Color.white);
         plot.setBackgroundPaint(background);
         plot.setDomainGridlinePaint(Color.white);
         plot.setDomainGridlinesVisible(true);
