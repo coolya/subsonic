@@ -3,9 +3,10 @@ PRIORITIZED FOR VERSION 2.7
 ===========================
 BUGS
 Bad colors in editTags (midnight)
+Add width/height to img in coverart.
+Use Rico for rounded edges.
 
 PR
-directory.google.com, dmoz.org
 Update site. New screenshots. But don't deploy.
 
 TEST
@@ -18,19 +19,18 @@ Create copy of index.html called index.jsp
 
 COMPLETED FOR VERSION 2.7
 ==========================
-Tech: Rewritten to Spring MVC.
-New: Shortcuts.
-New: Theme support. 2 minutes to midnight.
-New: Improved layout.
+Tech: Subsonic was completely rewritten to use the Spring MVC framework.
+New: Theme support. Now ships with two themes, "Subsonic Default" and "2 minutes to midnight". Theme authors are encouraged to contribute.
 New: Ajax-based ID3 tag editor.
-New: Cover art 3D effect and popup. (3D effect not available in IE).
-New: Option to limit bandwidth for downloads and uploads.
+New: Cover art 3D effect and popup. (3D effect not available in Internet Explorer).
+New: Added options to limit bandwidth for downloads and uploads.
 New: Added progress bar to upload page.
 New: Show upload (as well as download and streaming) charts in status page.
-New: Download playlists.
+New: Added option to configure shortcuts to certain folders.
 New: Rating where you can see how much each user has uploaded/downloaded/streamed.
+New: Nicer layout and graphics.
+New: Added option to download playlists, both current and previously saved ones.
 New: Now logs to c:/subsonic/subsonic.log (Windows) or /var/subsonic/subsonic.log (other platforms).
-New: Improved layout, particular in settings page.
 New: Support symbolic links on Unix.
 New: Create backup of old image file when changing cover art.
 Bugfix: Avoid wrapped lines if browser window is small.
@@ -41,7 +41,13 @@ Bugfix: Now possible to change cover art even if original file is write protecte
 
 BACKLOG
 ==========
+Seeking within songs.
+Support SSL.
+Test flac
 Use cewolf?
+Springify DWR.
+Playlist popup window.
+http://openrico.org
 Support per-user theme.
 Use cool coverart dialog popup (see Google Web Toolkit).
 Use dialog popup for online help.
@@ -52,6 +58,7 @@ Use detail class in home page. Make it look better.
 Make image size themeable?
 Make fancy css background for playlist toolbar.
 Use CSS overflow: auto for scrolling in playlist?
+
 Problems with playlist reordering etc in Firefox.
 Use AJAX to change random albums on home page, one at a time.
 Implement pure AJAX version of playlist.jsp.
@@ -163,6 +170,10 @@ Improve layout.
 Give users access to certain music folders.
 Add "Play" authorization.
 Add performance monitoring.
+
+SUBVERSION
+-------------
+% svn copy https://svn.sourceforge.net/svnroot/subsonic/trunk https://svn.sourceforge.net/svnroot/subsonic/tags/release-2.7.beta1 -m "Tagging 2.7.beta1."
 
 TRANSCODING CONFIG
 ------------------
