@@ -2,10 +2,13 @@
 PRIORITIZED FOR VERSION 2.7
 ===========================
 BUGS
+Make sure not more than one SearchService is created.
+Make (non-admin) screen for changing password more intuitive.
+Make sure AbstractDao.getDataSource() doesn't run in parallell.
+Add link to PayPal donation.
 Bad colors in editTags (midnight)
 Add width/height to img in coverart.
 Use Rico for rounded edges.
-
 PR
 Update site. New screenshots. But don't deploy.
 
@@ -58,7 +61,6 @@ Use detail class in home page. Make it look better.
 Make image size themeable?
 Make fancy css background for playlist toolbar.
 Use CSS overflow: auto for scrolling in playlist?
-
 Problems with playlist reordering etc in Firefox.
 Use AJAX to change random albums on home page, one at a time.
 Implement pure AJAX version of playlist.jsp.
