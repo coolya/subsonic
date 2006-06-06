@@ -20,7 +20,8 @@ public abstract class AbstractDao {
     private static final Logger LOG = Logger.getLogger(AbstractDao.class);
     private static final Schema[] SCHEMAS = {new Schema25(), new Schema26(), new Schema27()};
 
-    private DriverManagerDataSource dataSource;
+    private static final Object MUTEX = new Object();
+    private static DriverManagerDataSource dataSource;
 
     /**
     * Returns a JDBC template for performing database operations.
@@ -30,27 +31,31 @@ public abstract class AbstractDao {
         return new JdbcTemplate(getDataSource());
     }
 
-    private synchronized DataSource getDataSource() {
-        if (dataSource == null) {
-            File subsonicHome = SettingsService.getSubsonicHome();
-            dataSource = new DriverManagerDataSource();
-            dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
-            dataSource.setUrl("jdbc:hsqldb:file:" + subsonicHome.getPath() + "/db/subsonic");
-            dataSource.setUsername("sa");
-            dataSource.setPassword("");
+    private DataSource getDataSource() {
+        synchronized (MUTEX) {
+            if (dataSource == null) {
+                File subsonicHome = SettingsService.getSubsonicHome();
+                dataSource = new DriverManagerDataSource();
+                dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
+                dataSource.setUrl("jdbc:hsqldb:file:" + subsonicHome.getPath() + "/db/subsonic");
+                dataSource.setUsername("sa");
+                dataSource.setPassword("");
 
-            try {
-                checkDatabase();
-            } catch (Exception x) {
-                LOG.error("Failed to initialize database.", x);
+                try {
+                    checkDatabase();
+                } catch (Exception x) {
+                    LOG.error("Failed to initialize database.", x);
+                }
             }
+            return dataSource;
         }
-        return dataSource;
     }
 
     private void checkDatabase() {
+        LOG.info("Checking database schema.");
         for (Schema schema : SCHEMAS) {
             schema.execute(getJdbcTemplate());
         }
+        LOG.info("Done checking database schema.");
     }
 }

@@ -2,15 +2,17 @@
 PRIORITIZED FOR VERSION 2.7
 ===========================
 BUGS
-Make sure not more than one SearchService is created.
+OK - Make sure not more than one SearchService is created.
 Make (non-admin) screen for changing password more intuitive.
 Make sure AbstractDao.getDataSource() doesn't run in parallell.
 Add link to PayPal donation.
 Bad colors in editTags (midnight)
 Add width/height to img in coverart.
 Use Rico for rounded edges.
-PR
+
+DOC
 Update site. New screenshots. But don't deploy.
+Add trouble-shooting chapter to install page.
 
 TEST
 Symlinks.
