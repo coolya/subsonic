@@ -9,6 +9,8 @@
     <c:param name="restricted" value="true"/>
 </c:import>
 
+<h2><fmt:message key="usersettings.changepassword"/></h2>
+
 <form:form method="post" action="passwordSettings.view" commandName="command">
     <table class="indent">
         <tr>
@@ -17,7 +19,7 @@
             <td/>
         </tr>
         <tr>
-            <td><fmt:message key="usersettings.password"/></td>
+            <td><fmt:message key="usersettings.newpassword"/></td>
             <td><form:password path="password"/></td>
             <td class="warning"><form:errors path="password"/></td>
         </tr>
