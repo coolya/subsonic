@@ -7,10 +7,10 @@
 <h1><fmt:message key="playlist.load.title"/></h1>
 <c:choose>
     <c:when test="${not model.playlistDirectoryExists}">
-        <p><fmt:message key="playlist.load.missing_folder"><fmt:param value="${model.playlistDirectory}"/></fmt:message></p>
+        <p class="warning"><fmt:message key="playlist.load.missing_folder"><fmt:param value="${model.playlistDirectory}"/></fmt:message></p>
     </c:when>
     <c:when test="${empty model.playlists}">
-        <p><fmt:message key="playlist.load.empty"/></p>
+        <p class="warning"><fmt:message key="playlist.load.empty"/></p>
     </c:when>
     <c:otherwise>
         <table class="ruleTable indent">

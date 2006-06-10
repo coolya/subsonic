@@ -1,9 +1,6 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
-
-net.sourceforge.subsonic.service.PlaylistService.getSavedPlaylists(PlaylistService.java:76)
-
 TEST
 Check Javascript error on IE.
 
