@@ -21,12 +21,12 @@
                 <tr>
                     <td class="ruleTableHeader">${fn:substringBefore(playlist,".")}</td>
                     <td class="ruleTableCell">
-                        <div class="forward"><a href="${loadUrl}" class="forward"><fmt:message key="playlist.load.load"/></a></div>
-                        <c:if test="${model.user.playlistRole}">
-                            <div class="forward"><a href="${deleteUrl}"><fmt:message key="playlist.load.delete"/></a></div>
-                        </c:if>
+                        <div class="forward"><a href="${loadUrl}"><fmt:message key="playlist.load.load"/></a></div>
                         <c:if test="${model.user.downloadRole}">
                             <div class="forward"><a href="${downloadUrl}"><fmt:message key="common.download"/></a></div>
+                        </c:if>
+                        <c:if test="${model.user.playlistRole}">
+                            <div class="forward"><a href="${deleteUrl}"><fmt:message key="playlist.load.delete"/></a></div>
                         </c:if>
                     </td>
                 </tr>

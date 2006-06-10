@@ -1,7 +1,10 @@
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.*;
+import net.sourceforge.subsonic.domain.*;
+import org.jdom.input.*;
+import org.jdom.*;
+import org.apache.commons.lang.*;
 
 import java.io.*;
 import java.util.*;
@@ -25,7 +28,7 @@ public class PlaylistService {
     public void savePlaylist(Playlist playlist) throws IOException {
         String name = playlist.getName();
 
-        // Add m3u suffix if playlist name is not *.pls or *.m3u
+        // Add m3u suffix if no other suitable suffix is given.
         if (!new PlaylistFilenameFilter().accept(getPlaylistDirectory(), name)) {
             name += ".m3u";
             playlist.setName(name);
@@ -112,7 +115,7 @@ public class PlaylistService {
     private static class PlaylistFilenameFilter implements FilenameFilter {
         public boolean accept(File dir, String name) {
             name = name.toLowerCase();
-            return name.endsWith(".m3u") || name.endsWith(".pls");
+            return name.endsWith(".m3u") || name.endsWith(".pls") || name.endsWith(".xspf");
         }
     }
 
@@ -129,6 +132,9 @@ public class PlaylistService {
             }
             if (name.endsWith(".pls")) {
                 return new PLSFormat();
+            }
+            if (name.endsWith(".xspf")) {
+                return new XSPFFormat();
             }
             return null;
         }
@@ -203,6 +209,61 @@ public class PlaylistService {
             }
             writer.println("NumberOfEntries=" + counter);
             writer.println("Version=2");
+
+            if (writer.checkError()) {
+                throw new IOException("Error when writing playlist " + playlist.getName());
+            }
+        }
+    }
+
+    /**
+     * Implementation of XSPF (http://www.xspf.org/) playlist format.
+     */
+    private static class XSPFFormat extends PlaylistFormat {
+        public void loadPlaylist(Playlist playlist, BufferedReader reader) throws IOException {
+            playlist.clear();
+
+            SAXBuilder builder = new SAXBuilder();
+            Document document;
+            try {
+                document = builder.build(reader);
+            } catch (JDOMException x) {
+                LOG.warn("Failed to parse XSPF playlist.", x);
+                throw new IOException("Failed to parse XSPF playlist " + playlist.getName());
+            }
+
+            Element root = document.getRootElement();
+            Namespace ns = root.getNamespace();
+            Element trackList = root.getChild("trackList", ns);
+            List tracks = trackList.getChildren("track", ns);
+
+            for (Iterator i = tracks.iterator(); i.hasNext();) {
+                Element track = (Element) i.next();
+                String location = track.getChildText("location", ns);
+                if (location != null && location.startsWith("file://")) {
+                    location = location.replaceFirst("file://", "");
+                    try {
+                        MusicFile file = new MusicFile(location);
+                        if (file.exists()) {
+                            playlist.addFile(file);
+                        }
+                    } catch (SecurityException x) {
+                        LOG.warn(x.getMessage(), x);
+                    }
+                }
+            }
+        }
+
+        public void savePlaylist(Playlist playlist, PrintWriter writer) throws IOException {
+            writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            writer.println("<playlist version=\"1\" xmlns=\"http://xspf.org/ns/0/\">");
+            writer.println("    <trackList>");
+
+            for (MusicFile file : playlist.getFiles()) {
+                writer.println("        <track><location>file://" + StringEscapeUtils.escapeXml(file.getPath()) + "</location></track>");
+            }
+            writer.println("    </trackList>");
+            writer.println("</playlist>");
 
             if (writer.checkError()) {
                 throw new IOException("Error when writing playlist " + playlist.getName());

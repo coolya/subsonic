@@ -64,7 +64,7 @@
                         <li>ID3 tag editor.</li>
                         <li>On-the-fly resampling to lower bitrates using the high-quality LAME encoder (MP3 only).</li>
                         <li>Common playlist features (add, remove, rearrange, repeat, shuffle, undo).</li>
-                        <li>Playlists can be saved and restored.  Both M3U and PLS formats are supported.</li>
+                        <li>Playlists can be saved and restored. M3U, PLS and XSPF formats are supported.</li>
                         <li>Saved playlists are available as Podcasts.</li>
                     </ul>
                     <ul>

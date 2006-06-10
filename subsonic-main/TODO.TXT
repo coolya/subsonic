@@ -6,28 +6,7 @@ Check Javascript error on IE.
 
 MISC
 Get updated Macedonian resource bundle.
-
-COMPLETED FOR VERSION 2.7
-==========================
-Tech: Subsonic was completely rewritten to use the Spring MVC framework.
-New: Theme support. Now ships with two themes, "Subsonic Default" and "2 minutes to midnight". Theme authors are encouraged to contribute.
-New: Ajax-based ID3 tag editor.
-New: Cover art 3D effect and popup. (3D effect not available in Internet Explorer).
-New: Added options to limit bandwidth for downloads and uploads.
-New: Added progress bar to upload page.
-New: Show upload (as well as download and streaming) charts in status page.
-New: Added option to configure shortcuts to certain folders.
-New: Rating where you can see how much each user has uploaded/downloaded/streamed.
-New: Nicer layout and graphics.
-New: Added option to download playlists, both current and previously saved ones.
-New: Now logs to c:/subsonic/subsonic.log (Windows) or /var/subsonic/subsonic.log (other platforms).
-New: Support symbolic links on Unix.
-New: Create backup of old image file when changing cover art.
-Bugfix: Avoid wrapped lines if browser window is small.
-Bugfix: Use proper Y-range in bandwidth charts.
-Bugfix: Integer overflow in search index creation interval.
-Bugfix: Some Amazon search didn't show any results.
-Bugfix: Now possible to change cover art even if original file is write protected (Windows only).
+Register at http://www.xspf.org/
 
 BACKLOG
 ==========
@@ -139,7 +118,6 @@ Forenkle download status.  Slette DownloadStatus, ha bare en tabell osv(?)
 Proper detection of VBR.
 Add online help to search index update.
 Svitsje til automatisk "now playing" etter en stund med inaktivitet?
-JSTL
 XSPF
 Registrere på http://directory.fsf.org/ [Registrert 14.06.2005]
 Show/use genre tag
@@ -148,9 +126,7 @@ Make error page.
 Specify context path.
 HDTV-mode.
 Vis "lignende" album.
-Problems with symlink.
 Set language per user.
-Better upload support.  (Multiple files, better feedback.)
 Improve layout.
 Give users access to certain music folders.
 Add "Play" authorization.

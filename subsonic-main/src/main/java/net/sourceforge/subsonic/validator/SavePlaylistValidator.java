@@ -1,10 +1,9 @@
 package net.sourceforge.subsonic.validator;
 
-import org.springframework.validation.*;
-import net.sourceforge.subsonic.util.*;
+import net.sourceforge.subsonic.command.*;
 import net.sourceforge.subsonic.controller.*;
 import net.sourceforge.subsonic.service.*;
-import net.sourceforge.subsonic.domain.*;
+import org.springframework.validation.*;
 
 import java.io.*;
 
@@ -17,19 +16,17 @@ public class SavePlaylistValidator implements Validator {
     private PlaylistService playlistService;
 
     public boolean supports(Class clazz) {
-        return clazz.equals(Playlist.class);
+        return clazz.equals(SavePlaylistCommand.class);
     }
 
     public void validate(Object obj, Errors errors) {
-        Playlist playlist = (Playlist) obj;
-
         File playlistDirectory = playlistService.getPlaylistDirectory();
         if (!playlistDirectory.exists()) {
             errors.rejectValue("name", "playlist.save.missing_folder", new Object[] {playlistDirectory.getPath()}, null);
         }
 
-        String name = playlist.getName();
-        if (name == null || StringUtil.removeSuffix(name.trim()).length() == 0) {
+        String name = ((SavePlaylistCommand) obj).getName();
+        if (name == null || name.trim().length() == 0) {
             errors.rejectValue("name", "playlist.save.noname");
         }
     }

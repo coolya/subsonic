@@ -32,6 +32,7 @@
                     <li>New: Added option to download playlists, both current and previously saved ones.</li>
                     <li>New: Now logs to c:/subsonic/subsonic.log (Windows) or /var/subsonic/subsonic.log (other platforms).</li>
                     <li>New: Support symbolic links on Unix.</li>
+                    <li>New: Support XSPF playlist format.</li>
                     <li>New: Create backup of old image file when changing cover art.</li>
                     <li>Bugfix: Avoid wrapped lines if browser window is small.</li>
                     <li>Bugfix: Use proper Y-range in bandwidth charts.</li>

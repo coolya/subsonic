@@ -1,5 +1,6 @@
 package net.sourceforge.subsonic.controller;
 
+import net.sourceforge.subsonic.command.*;
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
 import org.springframework.web.servlet.*;
@@ -18,8 +19,10 @@ public class SavePlaylistController extends SimpleFormController {
     private PlaylistService playlistService;
     private PlayerService playerService;
 
-    public ModelAndView onSubmit(Object command) throws Exception {
-        Playlist playlist = (Playlist) command;
+    public ModelAndView onSubmit(Object comm) throws Exception {
+        SavePlaylistCommand command = (SavePlaylistCommand) comm;
+        Playlist playlist = command.getPlaylist();
+        playlist.setName(command.getName() + '.' + command.getSuffix());
         playlistService.savePlaylist(playlist);
 
         return new ModelAndView(new RedirectView(getSuccessView()));
@@ -27,7 +30,7 @@ public class SavePlaylistController extends SimpleFormController {
 
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         Player player = playerService.getPlayer(request, null);
-        return player.getPlaylist();
+        return new SavePlaylistCommand(player.getPlaylist());
     }
 
     public void setPlaylistService(PlaylistService playlistService) {

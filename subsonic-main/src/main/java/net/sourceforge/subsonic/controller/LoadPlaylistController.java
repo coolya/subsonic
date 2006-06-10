@@ -48,8 +48,8 @@ public class LoadPlaylistController extends MultiActionController {
         playlistService.loadPlaylist(playlist, name);
 
         List<ReloadFrame> reloadFrames = new ArrayList<ReloadFrame>();
-        reloadFrames.add(new ReloadFrame("playlist", "playlist.view"));
-        reloadFrames.add(new ReloadFrame("main", "nowPlaying.view"));
+        reloadFrames.add(new ReloadFrame("playlist", "playlist.view?"));
+        reloadFrames.add(new ReloadFrame("main", "nowPlaying.view?"));
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("reloadFrames", reloadFrames);
@@ -61,7 +61,7 @@ public class LoadPlaylistController extends MultiActionController {
         String name = request.getParameter("name");
         playlistService.deletePlaylist(name);
 
-        return new ModelAndView(new RedirectView("loadPlaylist.view"));
+        return new ModelAndView(new RedirectView("loadPlaylist.view?"));
     }
 
     public void setPlaylistService(PlaylistService playlistService) {
