@@ -35,6 +35,7 @@ Bugfix: Now possible to change cover art even if original file is write protecte
 
 BACKLOG
 ==========
+Batch download of cover arts.
 Use Rico for rounded edges.
 Seeking within songs.
 Support SSL.

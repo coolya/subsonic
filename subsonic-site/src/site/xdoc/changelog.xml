@@ -16,6 +16,31 @@
 
         <section name="Change Log">
 
+            <subsection name="Subsonic 2.7 - Jun 18, 2006">
+                <ul>
+                    <li>Tech: Subsonic was completely rewritten to use the Spring MVC framework.</li>
+                    <li>New: Theme support. Now ships with two themes, "Subsonic Default" and "2 minutes to midnight".
+                        Theme authors are encouraged to contribute.</li>
+                    <li>New: Ajax-based ID3 tag editor.</li>
+                    <li>New: Cover art 3D effect and popup. (3D effect not available in Internet Explorer).</li>
+                    <li>New: Added options to limit bandwidth for downloads and uploads.</li>
+                    <li>New: Added progress bar to upload page.</li>
+                    <li>New: Show upload (as well as download and streaming) charts in status page.</li>
+                    <li>New: Added option to configure shortcuts to certain folders.</li>
+                    <li>New: Rating where you can see how much each user has uploaded/downloaded/streamed.</li>
+                    <li>New: Nicer layout and graphics.</li>
+                    <li>New: Added option to download playlists, both current and previously saved ones.</li>
+                    <li>New: Now logs to c:/subsonic/subsonic.log (Windows) or /var/subsonic/subsonic.log (other platforms).</li>
+                    <li>New: Support symbolic links on Unix.</li>
+                    <li>New: Create backup of old image file when changing cover art.</li>
+                    <li>Bugfix: Avoid wrapped lines if browser window is small.</li>
+                    <li>Bugfix: Use proper Y-range in bandwidth charts.</li>
+                    <li>Bugfix: Integer overflow in search index creation interval.</li>
+                    <li>Bugfix: Some Amazon search didn't show any results.</li>
+                    <li>Bugfix: Now possible to change cover art even if original file is write protected (Windows only).</li>
+                </ul>
+            </subsection>
+
             <subsection name="Subsonic 2.6 - Mar 10, 2006">
                 <ul>
                     <li>New: Nicer layout, colors and icons. Customizable welcome message. Option to limit number of cover art

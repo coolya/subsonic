@@ -63,26 +63,40 @@
                         <li>Displays cover art, dynamically scaling it to fit nicely on the screen.</li>
                         <li>You can assign ratings and comments to albums.</li>
                         <li>Finds cover art and album info using Amazon Web Services.</li>
+                    </ul>
+                    <ul>
+                        <li>ID3 tag editor.</li>
                         <li>On-the-fly resampling to lower bitrates using the high-quality LAME encoder (MP3 only).</li>
                         <li>Common playlist features (add, remove, rearrange, repeat, shuffle, undo).</li>
                         <li>Playlists can be saved and restored.  Both M3U and PLS formats are supported.</li>
                         <li>Saved playlists are available as Podcasts.</li>
+                    </ul>
+                    <ul>
                         <li>Support for Internet TV and radio stations.</li>
                         <li>Configurable index.</li>
                         <li>Google-like search functionality.</li>
                         <li>Automatic update of search index at specified intervals.</li>
                         <li>Supports multiple media folders (for instance one with music and another with movies.)</li>
+                    </ul>
+                    <ul>
                         <li>Supports multiple simultaneous players. The playlist for any player can be managed from any location.</li>
                         <li>Secure. Users must log in using a username and password. Users can be assigned different privileges.</li>
                         <li>Lean web interface optimized for constrained bandwidth environments and efficient browsing through large music collections.</li>
                         <li>WAP interface allows you to control Subsonic from any mobile phone or PDA.</li>
                         <li>In addition to streaming, single files or entire directories may be downloaded from Subsonic.</li>
+                    </ul>
+                    <ul>
                         <li>Files can be uploaded to Subsonic. Zip-files can be automatically unpacked.</li>
+                        <li>You can specify a upload/download bandwidth limit.</li>
                         <li>Implements the SHOUTcast protocol. Players which support this (including Winamp, iTunes and XMMS) will display
                             the current artist and song name.</li>
                         <li>Provides links to album reviews and more at Google Music and allmusic.com.</li>
                         <li>Full internationalization support. Currently available translations: English, Norwegian and Macedonian
                             (kudos to Stefan Ivanovski).</li>
+                        <li>Theme support. Currently ships with two themes.</li>
+                    </ul>
+                    <ul>
+                        <li>... and more.  <a href="download.html">Download</a> and see for yourself!</li>
                     </ul>
                 </p>
             </subsection>

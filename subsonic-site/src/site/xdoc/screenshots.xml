@@ -18,7 +18,6 @@
             <p>Click on an image to enlarge it.</p>
             <a href="images/screen0.png"><img src="images/thumb_screen0.png" hspace="10" vspace="10"/></a>
             <a href="images/screen1.png"><img src="images/thumb_screen1.png" hspace="10" vspace="10"/></a>
-            <a href="images/screen2.png"><img src="images/thumb_screen2.png" hspace="10" vspace="10"/></a>
             <a href="images/screen3.png"><img src="images/thumb_screen3.png" hspace="10" vspace="10"/></a>
             <a href="images/screen4.png"><img src="images/thumb_screen4.png" hspace="10" vspace="10"/></a>
             <a href="images/screen5.png"><img src="images/thumb_screen5.png" hspace="10" vspace="10"/></a>
@@ -26,6 +25,8 @@
             <a href="images/screen7.png"><img src="images/thumb_screen7.png" hspace="10" vspace="10"/></a>
             <a href="images/screen8.png"><img src="images/thumb_screen8.png" hspace="10" vspace="10"/></a>
             <a href="images/screen9.png"><img src="images/thumb_screen9.png" hspace="10" vspace="10"/></a>
+            <a href="images/screen13.png"><img src="images/thumb_screen13.png" hspace="10" vspace="10"/></a>
+            <a href="images/screen14.png"><img src="images/thumb_screen14.png" hspace="10" vspace="10"/></a>
             <a href="images/screen10.png"><img src="images/thumb_screen10.png" hspace="10" vspace="10"/></a>
             <a href="images/screen11.png"><img src="images/thumb_screen11.png" hspace="10" vspace="10"/></a>
             <a href="images/screen12.png"><img src="images/thumb_screen12.png" hspace="10" vspace="10"/></a>
