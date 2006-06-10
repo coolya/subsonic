@@ -64,7 +64,7 @@
     </p>
 </c:if>
 
-<table>
+<table style="border-collapse:collapse">
     <c:forEach items="${command.matches}" var="match" varStatus="loopStatus">
 
         <sub:url value="/main.view" var="mainUrl">
@@ -79,10 +79,10 @@
                 </c:import>
             </td>
 
-            <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-left:5;padding-right:5">
+            <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-left:0.25em;padding-right:2em">
                 ${match.title}
             </td>
-            <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-left:5;padding-right:5">
+            <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-right:0.25em">
                 <a target="main" href="${mainUrl}">${match.artistAlbumYear}</a>
             </td>
         </tr>

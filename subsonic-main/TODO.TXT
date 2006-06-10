@@ -1,9 +1,8 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
-DOC
-Update site. New screenshots. But don't deploy.
-Add trouble-shooting chapter to install page.
+Fix table cell spacing and border in search.jsp and playlist.jsp.  Create CSS.
+Add icon for currently playing song.
 
 TEST
 Check Javascript error on IE.
@@ -48,7 +47,6 @@ Support per-user theme.
 Use cool coverart dialog popup (see Google Web Toolkit).
 Use dialog popup for online help.
 Convert servlets to controllers.
-Fix table cell spacing and border in search.jsp and playlist.jsp.  Create CSS.
 Make another theme with smaller fonts.
 Use detail class in home page. Make it look better.
 Make image size themeable?

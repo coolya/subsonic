@@ -75,10 +75,10 @@
         <p><em><fmt:message key="playlist.empty"/></em></p>
     </c:when>
     <c:otherwise>
-        <table>
+        <table style="border-collapse:collapse;">
             <c:forEach items="${model.songs}" var="song" varStatus="loopStatus">
                 <c:set var="i" value="${loopStatus.count - 1}"/>
-                <tr><a name="${i}"></a>
+                <tr style="margin:0;padding:0;border:0"><a name="${i}"></a>
                     <td><a href="playlist.view?remove=${i}"><img width="13" height="13" src="<spring:theme code="removeImage"/>"
                                                                  alt="<fmt:message key="playlist.remove"/>"
                                                                  title="<fmt:message key="playlist.remove"/>"/></a></td>
@@ -100,10 +100,13 @@
                     <sub:url value="main.view" var="mainUrl">
                         <sub:param name="path" value="${song.parentPath}"/>
                     </sub:url>
-                    <td ${i % 2 == 0 ? "class='bgcolor1'" : ""}>
+                    <td ${i % 2 == 0 ? "class='bgcolor1'" : ""} style="padding-left:0.25em;padding-right:2em">
+                        <c:if test="${song.current}">
+                            <img src="<c:url value="/icons/current.gif"/>" alt=""/>
+                        </c:if>
                         <a href="playlist.view?skip=${i}">${song.current ? "<b>" : ""}<str:truncateNicely upper="50">${song.title}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
                     </td>
-                    <td ${i % 2 == 0 ? "class='bgcolor1'" : ""}>
+                    <td ${i % 2 == 0 ? "class='bgcolor1'" : ""} style="padding-right:0.25em">
                         <a target="main" href="${mainUrl}"><str:truncateNicely upper="50">${song.artistAlbumYear}</str:truncateNicely></a>
                     </td>
                 </tr>
