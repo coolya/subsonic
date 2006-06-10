@@ -5,6 +5,7 @@
 <html><head><title>Subsonic</title>
     <%@ include file="head.jsp" %>
     <link rel="shortcut icon" href="<c:url value="/icons/favicon.ico"/>"/>
+    <link rel="alternate" type="application/rss+xml" title="Subsonic Podcast" href="podcast.view?suffix=.rss"/>
 </head>
 
 <frameset rows="70,*,0" border="1" framespacing="1" frameborder="1">

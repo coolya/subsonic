@@ -1,8 +1,8 @@
 
 PRIORITIZED FOR VERSION 2.7
 ===========================
-Fix table cell spacing and border in search.jsp and playlist.jsp.  Create CSS.
-Add icon for currently playing song.
+
+net.sourceforge.subsonic.service.PlaylistService.getSavedPlaylists(PlaylistService.java:76)
 
 TEST
 Check Javascript error on IE.
@@ -35,14 +35,13 @@ Bugfix: Now possible to change cover art even if original file is write protecte
 BACKLOG
 ==========
 Batch download of cover arts.
-Use Rico for rounded edges.
+Use Rico for rounded edges. http://openrico.org
 Seeking within songs.
 Support SSL.
 Test flac
 Use cewolf?
 Springify DWR.
 Playlist popup window.
-http://openrico.org
 Support per-user theme.
 Use cool coverart dialog popup (see Google Web Toolkit).
 Use dialog popup for online help.
@@ -80,18 +79,14 @@ Support forward proxies.
 Hvis spilleren har "Auto-control enabled" skrudd av, så vises det en ny knapp "Stream" i playlista som kan brukes for å få m3u-en.
 Per-user locale.
 Replace use of arrays with type-safe collections.
-Completely AJAX-based playlist frame.
 "Mini" interface for phones, pda's etc.
 Create installer for Windows. http://nsis.sourceforge.net
 Message system (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=24)
 Longer log file. Option to not display DEBUG lines in help.jsp.
-If a folder contain loads of files the pictures fill up a lagre portion of the frame and
-the actual files/folders is centered and starts half way down the frame.
 Kant rundt hele vinduet, som i forum.
 Always show playlist menu.
 Let number of columns be dynamic in home page.
 Performance monitoring.
-Precompile jsp's?
 Use MusicFile.isAlbum()
 Simplify new/random in SearchService.
 If the album-name contains an apostrof ( ' ), then I get an error when I search for cover-art

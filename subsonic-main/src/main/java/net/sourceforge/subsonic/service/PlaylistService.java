@@ -12,7 +12,6 @@ import java.util.regex.*;
  *
  * @see Playlist
  * @author Sindre Mehus
- * @version $Revision: 1.7 $ $Date: 2006/01/14 16:24:25 $
  */
 public class PlaylistService {
 
@@ -73,6 +72,12 @@ public class PlaylistService {
     public File[] getSavedPlaylists() {
         List<File> result = new ArrayList<File>();
         File[] candidates = getPlaylistDirectory().listFiles(new PlaylistFilenameFilter());
+
+        // Happens if playlist directory is non-existing.
+        if (candidates == null) {
+            return new File[0];
+        }
+
         for (File candidate : candidates) {
             result.add(candidate);
         }
@@ -98,7 +103,7 @@ public class PlaylistService {
         return new File(ServiceFactory.getSettingsService().getPlaylistFolder());
     }
 
-    private void checkAccess(File file) throws IOException {
+    private void checkAccess(File file) {
         if (!ServiceFactory.getSecurityService().isWriteAllowed(file)) {
             throw new SecurityException("Access denied to file " + file);
         }
