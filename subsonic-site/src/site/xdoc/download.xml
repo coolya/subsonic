@@ -91,6 +91,24 @@
 
                 </ul></p>
             </subsection>
+
+            <subsection name="Troubleshooting">
+                <p>
+                    If you experience any problems, please make sure you follow the installation instructions above. Here's a list
+                    of suggestions of what to do if it still doesn't work:
+                    <ul>
+                        <li>Restart Tomcat.</li>
+                        <li>Reinstall Subsonic.</li>
+                        <li>Upgrade to the latest Tomcat version (at least if you're using Tomcat 5.0 or earlier).</li>
+                        <li>Look for errors in the Subsonic log (c:\subsonic\subsonic.log or /var/subsonic/subsonic.log).</li>
+                        <li>Look for errors in the Tomcat logs (&lt;TOMCAT_HOME&gt;/logs).</li>
+                        <li>Post a message to the <a href="forum.html">Subsonic forum</a>. Please let us know what Subsonic version,
+                            Tomcat version and operating system you're using. Also, please give a detailed description of the problem.
+                            This way, we'll be able to help you faster.</li>
+                    </ul>
+                </p>
+            </subsection>
+
         </section>
 
     </body>

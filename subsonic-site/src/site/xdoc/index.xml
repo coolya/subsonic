@@ -18,25 +18,21 @@
 
         <section name="Subsonic">
             <p>
-                <a href="screenshots.html"><img src="images/thumb_screen0.png" alt="Screenshots" hspace="10" vspace="10" align="right"/></a>
+                <a href="screenshots.html"><img src="images/thumb_screen14.png" alt="Screenshots" hspace="10" vspace="10" align="right"/></a>
             </p>
 
             <p>
                 <a href="download.html"><img src="images/download.gif" alt="Download"/></a><br/>
-                Subsonic is a free, web-based media streamer. Although primarily designed for MP3, it works for any audio or video
-                format that can stream over HTTP (for instance AAC and OGG).
-            </p>
-
-            <p>
-                With Subsonic you have access to your entire music collection wherever you are.
+                Subsonic is a free, web-based media streamer, providing access to your entire music collection wherever you are.
                 Use it to share your music with friends, or to listen to your own music while at work.  You can
                 stream to multiple players simultaneously, for instance to one player in your kitchen and another in your
                 living room.
             </p>
 
             <p>
-                Subsonic is designed to handle very large music collections (many thousand albums).  It uses a combination
-                of directory structure and tag parsing to organize the music.
+                Subsonic is designed to handle very large music collections (many thousand albums). It uses a combination
+                of directory structure and tag parsing to organize the music. Although optimized for MP3 streaming, it works for
+                any audio or video format that can stream over HTTP (for instance AAC and OGG).
             </p>
 
             <p>
