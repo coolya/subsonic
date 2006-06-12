@@ -1,6 +1,4 @@
 
-Set combobox widths.
-
 PRIORITIZED FOR VERSION 2.8
 ===========================
 Transcoding plugin framework. (Check out Jinzora transcoding pack.)
