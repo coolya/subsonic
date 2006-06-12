@@ -80,7 +80,7 @@
         <tr>
             <td><fmt:message key="generalsettings.language"/></td>
             <td>
-                <form:select path="localeIndex">
+                <form:select path="localeIndex" cssStyle="width:15em">
                     <c:forEach items="${command.locales}" var="locale" varStatus="loopStatus">
                         <form:option value="${loopStatus.count - 1}" label="${locale}"/>
                     </c:forEach>
@@ -92,7 +92,7 @@
         <tr>
             <td><fmt:message key="generalsettings.theme"/></td>
             <td>
-                <form:select path="themeIndex">
+                <form:select path="themeIndex" cssStyle="width:15em">
                     <c:forEach items="${command.themes}" var="theme" varStatus="loopStatus">
                         <form:option value="${loopStatus.count - 1}" label="${theme.name}"/>
                     </c:forEach>

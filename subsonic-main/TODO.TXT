@@ -1,37 +1,42 @@
 
-PRIORITIZED FOR VERSION 2.7
-===========================
-TEST
-Check Javascript error on IE.
+Set combobox widths.
 
-MISC
-Get updated Macedonian resource bundle.
+PRIORITIZED FOR VERSION 2.8
+===========================
+Transcoding plugin framework. (Check out Jinzora transcoding pack.)
+Use AJAX to change random albums on home page, one at a time.
+Implement pure AJAX version of playlist.jsp.
+Per-user locale.
+Per-user theme.
 Register at http://www.xspf.org/
+Get updated Macedonian resource bundle.
+Check Javascript error on IE.
+Springify WAP.
+Springify DWR.
+Springify securityfilter.
+Springify servlets.
+Convert servlets to controllers.
+Remove usage of services in domain (MusicFile).
 
 BACKLOG
 ==========
+Replace methods in my StringUtil with corresponding in Spring.
 Batch download of cover arts.
 Use Rico for rounded edges. http://openrico.org
 Seeking within songs.
 Support SSL.
 Test flac
 Use cewolf?
-Springify DWR.
 Playlist popup window.
-Support per-user theme.
 Use cool coverart dialog popup (see Google Web Toolkit).
 Use dialog popup for online help.
-Convert servlets to controllers.
 Make another theme with smaller fonts.
 Use detail class in home page. Make it look better.
 Make image size themeable?
 Make fancy css background for playlist toolbar.
 Use CSS overflow: auto for scrolling in playlist?
 Problems with playlist reordering etc in Firefox.
-Use AJAX to change random albums on home page, one at a time.
-Implement pure AJAX version of playlist.jsp.
 Use Spring StringUtils.cleanPath()?
-Springify wap.
 Option to show exception details in error log.
 Quick link to "#" doesn't work.
 Should receive feedback when changing passwords, creating users etc.
@@ -44,7 +49,6 @@ Make it work on Geronimo.
 Make it work on Jetty
 Drop ResourceBundle_en.
 Display image embedded in ID3 tag (APIC).
-Transcoding plugin framework. (Check out Jinzora transcoding pack.)
 Reimplement LAME integration.
 Upload quota per user.
 Order search results.
@@ -53,7 +57,6 @@ Improve performance for new/best charts.
 Support reverse proxies.  Send url as parameter. (<a href="javascript:document.location.href='foo.jsp?referrer=' + document.location.href">Trykk her</a>)
 Support forward proxies.
 Hvis spilleren har "Auto-control enabled" skrudd av, så vises det en ny knapp "Stream" i playlista som kan brukes for å få m3u-en.
-Per-user locale.
 Replace use of arrays with type-safe collections.
 "Mini" interface for phones, pda's etc.
 Create installer for Windows. http://nsis.sourceforge.net
@@ -69,12 +72,10 @@ If the album-name contains an apostrof ( ' ), then I get an error when I search 
 Keep statistics for players on reconnect. You might have noticed that the bandwidth chart is reset if a player reconnects. I would like to keep bandwidth statistics for a while even if a player reconnects.
 Provide links to podcast, settings, help, message board, wishlist on home page.
 New icon for wap.
-Test wap.
 Check that multi-discs are not included in random and newest albums.  Change implementation of isAlbum.
 Mark music_file_info as disabled if path doesn't exist.
 Integrate Windows Media Player in web page.
 Fetch current version asynchronously.
-Ant task for verifying resource bundles.
 UPnP
 Show list of active users.
 Register at myprogs.net
@@ -85,8 +86,6 @@ Håndtere galt format samt manglende filer i playlister.
 Håndtere playere med navn som ikke er iht httpurl.
 Rydd opp i http-parameternavn.
 Gjøre sidene XHTML-kompatibel.
-Validate playlist name on save.
-Use "industrial" CSS.
 Validaton of index specification.
 Make playlist loading more robust.  (Fails on url's, for instance.)
 Make PDA skin.
@@ -95,30 +94,20 @@ Quiz
 Emulator 3G-telefon
 XHTML Mobile Profile
 Add mp3-player as applet.
-Maven
-Make new screenshots, including wap.
-Check JavaZoom applet
-phone.com wap emulator
-Nevne logging i FAQ.
 Vise lengde på sanger. Lag tabell med all info?
 Automatisk finne lyrics-ting.
 Ta med lisens for commons-fileupload.
-FAQ: Noe om hvordan Subsonic kombinerer katalogstruktur og ID3.  Anbefalt struktur.
 Parse tags for wma, ogg osv.
-WAP load playlist.
 Show year and track length.
 No SHOUTcast if playlist is empty.
-Vurdere AJAX-implementasjon.
 i18n of enums.
 http://www.freeware-guide.com/dir/audio/streaming.html -> Registrert 10. mai 2005
 Option to create structure based on tags.
 Zip and unzip fails with accented characters.  Use commons vfs, or some other lib.
 Log when zipping individual files.
-Forenkle download status.  Slette DownloadStatus, ha bare en tabell osv(?)
 Proper detection of VBR.
 Add online help to search index update.
 Svitsje til automatisk "now playing" etter en stund med inaktivitet?
-XSPF
 Registrere på http://directory.fsf.org/ [Registrert 14.06.2005]
 Show/use genre tag
 Create image cache.
@@ -127,7 +116,6 @@ Specify context path.
 HDTV-mode.
 Vis "lignende" album.
 Set language per user.
-Improve layout.
 Give users access to certain music folders.
 Add "Play" authorization.
 Add performance monitoring.

@@ -40,7 +40,7 @@
 
     <tr>
         <td><fmt:message key="playersettings.type"/></td>
-        <td colspan="2">
+        <td colspan="3">
             <c:choose>
                 <c:when test="${empty command.type}">${unknown}</c:when>
                 <c:otherwise>${command.type}</c:otherwise>
@@ -49,7 +49,7 @@
     </tr>
     <tr>
         <td><fmt:message key="playersettings.lastseen"/></td>
-        <td colspan="2"><fmt:formatDate value="${command.lastSeen}" type="both" dateStyle="long" timeStyle="medium"/></td>
+        <td colspan="3"><fmt:formatDate value="${command.lastSeen}" type="both" dateStyle="long" timeStyle="medium"/></td>
     </tr>
 
     <tr>
@@ -66,7 +66,7 @@
     <tr>
         <td><fmt:message key="playersettings.coverartsize"/></td>
         <td>
-            <form:select path="coverArtSchemeName">
+            <form:select path="coverArtSchemeName" cssStyle="width:8em">
                 <c:forEach items="${command.coverArtSchemeHolders}" var="coverArtSchemeHolder">
                     <form:option value="${coverArtSchemeHolder.name}" label="${coverArtSchemeHolder.description}"/>
                 </c:forEach>
@@ -79,7 +79,7 @@
     <tr>
         <td><fmt:message key="playersettings.maxbitrate"/></td>
         <td>
-            <form:select path="transcodeSchemeName">
+            <form:select path="transcodeSchemeName" cssStyle="width:8em">
                 <c:forEach items="${command.transcodeSchemeHolders}" var="transcodeSchemeHolder">
                     <form:option value="${transcodeSchemeHolder.name}" label="${transcodeSchemeHolder.description}"/>
                 </c:forEach>
