@@ -16,7 +16,7 @@
 
         <section name="Change Log">
 
-            <subsection name="Subsonic 2.7 - Jun 18, 2006">
+            <subsection name="Subsonic 2.7 - Jun 12, 2006">
                 <ul>
                     <li>Tech: Subsonic was completely rewritten to use the Spring MVC framework.</li>
                     <li>New: Theme support. Now ships with two themes, "Subsonic Default" and "2 minutes to midnight".

@@ -118,8 +118,17 @@ Give users access to certain music folders.
 Add "Play" authorization.
 Add performance monitoring.
 
-SUBVERSION
+HOW TO RELEASE
 -------------
+Update version number in pom.xml etc.
+mvn clean install
+mvn assembly:assembly
+mv target/subsonic-2.7-bin.zip target/subsonic-2.7.zip
+Deploy
+Check that correct local version is displayed.
+Commit
+Create file release at SourceForge.
+
 % svn copy https://svn.sourceforge.net/svnroot/subsonic/trunk https://svn.sourceforge.net/svnroot/subsonic/tags/release-2.7.beta1 -m "Tagging 2.7.beta1."
 
 TRANSCODING CONFIG
