@@ -7,3 +7,6 @@ default "Subsonic Default"
 # Theme with dark colors.
 midnight "2 Minutes To Midnight"
 
+# Theme with even darker colors.
+black "Back In Black"
+

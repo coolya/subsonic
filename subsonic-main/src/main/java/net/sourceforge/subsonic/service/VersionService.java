@@ -1,20 +1,20 @@
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.*;
+import net.sourceforge.subsonic.domain.*;
+import org.apache.commons.io.*;
 
 import java.io.*;
+import java.net.*;
 import java.text.*;
 import java.util.*;
 import java.util.regex.*;
-import java.net.*;
 
 /**
  * Provides version-related services, including functionality for determining whether a newer
  * version of Subsonic is available.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.5 $ $Date: 2006/03/06 20:20:27 $
  */
 public class VersionService {
 
@@ -133,13 +133,8 @@ public class VersionService {
         } catch (IOException x) {
             return null;
         } finally {
-
-            try {
-                reader.close();
-            } catch (Exception x) {/* Ignored */}
-            try {
-                in.close();
-            } catch (Exception x) {/* Ignored */}
+            IOUtils.closeQuietly(reader);
+            IOUtils.closeQuietly(in);
         }
     }
 
