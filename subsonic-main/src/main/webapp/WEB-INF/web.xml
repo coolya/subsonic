@@ -50,6 +50,10 @@
         <servlet-name>subsonic</servlet-name>
         <url-pattern>/podcast</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>subsonic</servlet-name>
+        <url-pattern>/wap</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>stream</servlet-name>

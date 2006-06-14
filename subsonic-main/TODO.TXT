@@ -1,12 +1,12 @@
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
+Register at freashmeat.
 Transcoding plugin framework. (Check out Jinzora transcoding pack.)
 Use AJAX to change random albums on home page, one at a time.
 Implement pure AJAX version of playlist.jsp.
 Per-user locale.
 Per-user theme.
-Register at http://www.xspf.org/
 Get updated Macedonian resource bundle.
 Check Javascript error on IE.
 Springify WAP.
@@ -16,7 +16,11 @@ Springify servlets.
 Convert servlets to controllers.
 Remove usage of services in domain (MusicFile).
 Include options to display bitrate, album, artist, year, genre, format etc in the playlist (and maybe also the main browser window)
-Create "Back in black" theme.
+
+
+COMPLETED IN VERSION 2.8
+========================
+Created "Back in black" theme.
 
 
 BACKLOG
@@ -131,8 +135,8 @@ Deploy
 Check that correct local version is displayed.
 Commit
 Create file release at SourceForge.
-TODO mvn site:site
-TODO mvn site:deploy
+mvn site:site
+mvn site:deploy
 svn copy https://svn.sourceforge.net/svnroot/subsonic/trunk https://svn.sourceforge.net/svnroot/subsonic/tags/release-2.7.beta1 -m "Tagging 2.7.beta1."
 Register at freshmeat.
 Update version number in pom.xml etc.
