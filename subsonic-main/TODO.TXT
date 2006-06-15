@@ -1,6 +1,7 @@
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
+Make it clearer that Tomcat 5.5 or later is required.
 Register at freashmeat.
 Transcoding plugin framework. (Check out Jinzora transcoding pack.)
 Use AJAX to change random albums on home page, one at a time.

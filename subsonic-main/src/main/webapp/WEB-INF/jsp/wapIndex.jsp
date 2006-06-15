@@ -13,9 +13,9 @@
             <c:choose>
             <c:when test="${empty model.artists}">
 
-                <b><a href="playlist.view">[<fmt:message key="wap.index.playlist"/>]</a></b><br/>
-                <b><a href="search.view">[<fmt:message key="wap.index.search"/>]</a></b><br/>
-                <b><a href="settings.view">[<fmt:message key="wap.index.settings"/>]</a></b><br/>
+                <b><a href="wapPlaylist.view">[<fmt:message key="wap.index.playlist"/>]</a></b><br/>
+                <b><a href="wapSearch.view">[<fmt:message key="wap.index.search"/>]</a></b><br/>
+                <b><a href="wapSettings.view">[<fmt:message key="wap.index.settings"/>]</a></b><br/>
         </small></p>
         <p><small>
             <c:forEach items="${model.indexes}" var="index">

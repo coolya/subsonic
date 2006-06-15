@@ -181,6 +181,8 @@
     <bean id="multiController" class="net.sourceforge.subsonic.controller.MultiController"/>
     <bean id="wapController" class="net.sourceforge.subsonic.controller.WapController">
         <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="playerService"><ref bean="playerService"/></property>
+        <property name="playlistService"><ref bean="playlistService"/></property>
     </bean>
 
     <bean id="savePlaylistValidator" class="net.sourceforge.subsonic.validator.SavePlaylistValidator">
@@ -245,8 +247,7 @@
                 <prop key="/userChart.view">userChartController</prop>
                 <prop key="/podcast.view">podcastController</prop>
                 <prop key="/podcast">podcastController</prop>
-                <prop key="/wap">wapController</prop>
-                <prop key="/wapIndex.view">wapController</prop>
+                <prop key="/wap*">wapController</prop>
             </props>
         </property>
     </bean>
