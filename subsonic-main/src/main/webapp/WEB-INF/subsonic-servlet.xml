@@ -183,6 +183,8 @@
         <property name="settingsService"><ref bean="settingsService"/></property>
         <property name="playerService"><ref bean="playerService"/></property>
         <property name="playlistService"><ref bean="playlistService"/></property>
+        <property name="searchService"><ref bean="searchService"/></property>
+        <property name="securityService"><ref bean="securityService"/></property>
     </bean>
 
     <bean id="savePlaylistValidator" class="net.sourceforge.subsonic.validator.SavePlaylistValidator">

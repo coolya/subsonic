@@ -48,7 +48,6 @@
             </c:otherwise>
             </c:choose>
         </small></p>
-
     </card>
 </wml>
 
