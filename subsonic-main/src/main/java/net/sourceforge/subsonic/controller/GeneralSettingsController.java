@@ -16,7 +16,6 @@ import java.util.*;
 public class GeneralSettingsController extends SimpleFormController {
 
     private SettingsService settingsService;
-    private InternationalizationService internationalizationService;
 
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         GeneralSettingsCommand command = new GeneralSettingsCommand();
@@ -42,8 +41,8 @@ public class GeneralSettingsController extends SimpleFormController {
             }
         }
 
-        Locale currentLocale = internationalizationService.getLocale();
-        Locale[] locales = internationalizationService.getAvailableLocales();
+        Locale currentLocale = settingsService.getLocale();
+        Locale[] locales = settingsService.getAvailableLocales();
         String[] localeStrings = new String[locales.length];
         for (int i = 0; i < locales.length; i++) {
             localeStrings[i] = locales[i].getDisplayLanguage(locales[i]);
@@ -65,13 +64,13 @@ public class GeneralSettingsController extends SimpleFormController {
         Theme theme = settingsService.getAvailableThemes()[themeIndex];
 
         int localeIndex = Integer.parseInt(command.getLocaleIndex());
-        Locale locale = internationalizationService.getAvailableLocales()[localeIndex];
+        Locale locale = settingsService.getAvailableLocales()[localeIndex];
 
         command.setReloadNeeded(!settingsService.getIndexString().equals(command.getIndex()) ||
                                 !settingsService.getIgnoredArticles().equals(command.getIgnoredArticles()) ||
                                 !settingsService.getShortcuts().equals(command.getShortcuts()) ||
                                 !settingsService.getThemeId().equals(theme.getId()) ||
-                                !internationalizationService.getLocale().equals(locale));
+                                !settingsService.getLocale().equals(locale));
 
         settingsService.setIndexString(command.getIndex());
         settingsService.setIgnoredArticles(command.getIgnoredArticles());
@@ -81,6 +80,8 @@ public class GeneralSettingsController extends SimpleFormController {
         settingsService.setCoverArtMask(command.getCoverArtMask());
         settingsService.setWelcomeMessage(command.getWelcomeMessage());
         settingsService.setThemeId(theme.getId());
+        settingsService.setLocale(locale);
+
         try {
             settingsService.setCoverArtLimit(Integer.parseInt(command.getCoverArtLimit()));
         } catch (NumberFormatException x) { /* Intentionally ignored. */ }
@@ -95,16 +96,10 @@ public class GeneralSettingsController extends SimpleFormController {
         } catch (NumberFormatException x) { /* Intentionally ignored. */ }
         settingsService.save();
 
-        internationalizationService.setLocale(locale);
-
         command.setShortcuts(command.getShortcuts().replaceAll("\"", "&quot;"));
     }
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
-    }
-
-    public void setInternationalizationService(InternationalizationService internationalizationService) {
-        this.internationalizationService = internationalizationService;
     }
 }

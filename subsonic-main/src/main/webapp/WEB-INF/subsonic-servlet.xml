@@ -139,7 +139,6 @@
         <property name="successView"><value>generalSettings</value></property>
         <property name="formView"><value>generalSettings</value></property>
         <property name="settingsService"><ref bean="settingsService"/></property>
-        <property name="internationalizationService"><ref bean="internationalizationService"/></property>
     </bean>
     <bean id="userSettingsController" class="net.sourceforge.subsonic.controller.UserSettingsController">
         <property name="sessionForm"><value>true</value></property>
@@ -221,7 +220,6 @@
     <bean id="securityService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getSecurityService"/>
     <bean id="playerService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getPlayerService"/>
     <bean id="playlistService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getPlaylistService"/>
-    <bean id="internationalizationService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getInternationalizationService"/>
     <bean id="settingsService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getSettingsService"/>
     <bean id="versionService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getVersionService"/>
     <bean id="statusService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getStatusService"/>

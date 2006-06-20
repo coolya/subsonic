@@ -63,11 +63,14 @@ public class SettingsService {
                                           KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_THEME_ID, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
                                           KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT};
 
+    private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
     private static final String THEMES_FILE = "/net/sourceforge/subsonic/theme/themes.txt";
+
     private static final Logger LOG = Logger.getLogger(SettingsService.class);
 
     private Properties properties = new Properties();
     private List<Theme> themes;
+    private List<Locale> locales;
     private MusicFolderDao musicFolderDao = new MusicFolderDao();
     private InternetRadioDao internetRadioDao = new InternetRadioDao();
 
@@ -378,6 +381,45 @@ public class SettingsService {
         }
         return themes.toArray(new Theme[0]);
     }
+
+    /**
+     * Returns a list of available locales.
+     * @return A list of available locales.
+     */
+    public synchronized Locale[] getAvailableLocales() {
+        if (locales == null) {
+            locales = new ArrayList<Locale>();
+            try {
+                InputStream in = SettingsService.class.getResourceAsStream(LOCALES_FILE);
+                String[] lines = StringUtil.readLines(in);
+
+                for (String line : lines) {
+                    locales.add(parseLocale(line));
+                }
+
+            } catch (IOException x) {
+                LOG.error("Failed to resolve list of locales.", x);
+                locales.add(Locale.ENGLISH);
+            }
+        }
+        return locales.toArray(new Locale[0]);
+    }
+
+    private Locale parseLocale(String line) {
+        String[] s = line.split("_");
+        String language = s[0];
+        String country = "";
+        String variant = "";
+
+        if (s.length > 1) {
+            country = s[1];
+        }
+        if (s.length > 2) {
+            variant = s[2];
+        }
+        return new Locale(language, country, variant);
+    }
+
 
     /**
      * Returns all music folders. Non-existing and disabled folders are not included.

@@ -16,7 +16,6 @@ public class ServiceFactory {
     private static final StatusService               STATUS_SERVICE               = new StatusService();
     private static final VersionService              VERSION_SERVICE              = new VersionService();
     private static final AmazonSearchService         AMAZON_SEARCH_SERVICE        = new AmazonSearchService();
-    private static final InternationalizationService INTERNATIONALIZATION_SERVICE = new InternationalizationService();
     private static final MusicInfoService            MUSIC_INFO_SERVICE           = new MusicInfoService();
 
     /**
@@ -81,14 +80,6 @@ public class ServiceFactory {
      */
     public static AmazonSearchService getAmazonSearchService() {
         return AMAZON_SEARCH_SERVICE;
-    }
-
-    /**
-     * Returns the internationalization service.
-     * @return The internationalization service.
-     */
-    public static InternationalizationService getInternationalizationService() {
-        return INTERNATIONALIZATION_SERVICE;
     }
 
     /**
