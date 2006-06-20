@@ -15,6 +15,7 @@ import java.util.*;
  */
 public class RandomPlaylistController extends ParameterizableViewController {
 
+    private SearchService searchService;
     private PlayerService playerService;
     private List<ReloadFrame> reloadFrames;
 
@@ -26,7 +27,7 @@ public class RandomPlaylistController extends ParameterizableViewController {
         Playlist playlist = player.getPlaylist();
         playlist.clear();
 
-        List randomFiles = ServiceFactory.getSearchService().getRandomMusicFiles(size);
+        List randomFiles = searchService.getRandomMusicFiles(size);
         for (int i = 0; i < randomFiles.size(); i++) {
             playlist.addFile((MusicFile) randomFiles.get(i));
         }
@@ -45,5 +46,9 @@ public class RandomPlaylistController extends ParameterizableViewController {
 
     public void setReloadFrames(List<ReloadFrame> reloadFrames) {
         this.reloadFrames = reloadFrames;
+    }
+
+    public void setSearchService(SearchService searchService) {
+        this.searchService = searchService;
     }
 }

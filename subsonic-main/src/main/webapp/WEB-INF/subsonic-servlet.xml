@@ -67,6 +67,7 @@
     <bean id="randomPlaylistController" class="net.sourceforge.subsonic.controller.RandomPlaylistController">
         <property name="viewName"><value>reload</value></property>
         <property name="playerService"><ref bean="playerService"/></property>
+        <property name="searchService"><ref bean="searchService"/></property>
         <property name="reloadFrames">
             <list>
                 <bean class="net.sourceforge.subsonic.controller.ReloadFrame">
@@ -188,6 +189,8 @@
         <property name="playlistService"><ref bean="playlistService"/></property>
         <property name="statusService"><ref bean="statusService"/></property>
         <property name="securityService"><ref bean="securityService"/></property>
+        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="musicInfoService"><ref bean="musicInfoService"/></property>
     </bean>
     <bean id="downloadController" class="net.sourceforge.subsonic.controller.DownloadController">
         <property name="playerService"><ref bean="playerService"/></property>

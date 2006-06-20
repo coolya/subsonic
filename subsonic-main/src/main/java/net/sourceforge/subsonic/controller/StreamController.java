@@ -25,6 +25,8 @@ public class StreamController implements Controller {
     private PlayerService playerService;
     private PlaylistService playlistService;
     private SecurityService securityService;
+    private MusicInfoService musicInfoService;
+    private SettingsService settingsService;
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -84,7 +86,7 @@ public class StreamController implements Controller {
                 response.setHeader("icy-name", "Subsonic");
                 response.setHeader("icy-genre", "Mixed");
                 response.setHeader("icy-url", "http://subsonic.sourceforge.net/");
-                out = new StreamController.ShoutCastOutputStream(out, playlist);
+                out = new StreamController.ShoutCastOutputStream(out, playlist, settingsService);
             }
 
 
@@ -164,6 +166,14 @@ public class StreamController implements Controller {
         this.securityService = securityService;
     }
 
+    public void setMusicInfoService(MusicInfoService musicInfoService) {
+        this.musicInfoService = musicInfoService;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
+    }
+
     /**
      * Implementation of {@link InputStream} which reads from a {@link Playlist}.
      */
@@ -217,7 +227,7 @@ public class StreamController implements Controller {
             try {
                 MusicFile folder = file.getParent();
                 if (!folder.isRoot()) {
-                    ServiceFactory.getMusicInfoService().incrementPlayCount(folder);
+                    musicInfoService.incrementPlayCount(folder);
                 }
             } catch (Exception x) {
                 StreamController.LOG.warn("Failed to update statistics for " + file, x);
@@ -264,14 +274,17 @@ public class StreamController implements Controller {
         /** The last stream title sent. */
         private String previousStreamTitle;
 
+        private SettingsService settingsService;
+
         /**
          * Creates a new SHOUTcast-decorated stream for the given output stream.
          * @param out The output stream to decorate.
          * @param playlist Meta-data is fetched from this playlist.
          */
-        ShoutCastOutputStream(OutputStream out, Playlist playlist) {
+        ShoutCastOutputStream(OutputStream out, Playlist playlist, SettingsService settingsService) {
             this.out = out;
             this.playlist = playlist;
+            this.settingsService = settingsService;
         }
 
         /**
@@ -327,7 +340,7 @@ public class StreamController implements Controller {
         }
 
         private void writeMetaData() throws IOException {
-            String streamTitle = ServiceFactory.getSettingsService().getWelcomeMessage();
+            String streamTitle = settingsService.getWelcomeMessage();
 
             MusicFile musicFile = playlist.getCurrentFile();
             if (musicFile != null) {
