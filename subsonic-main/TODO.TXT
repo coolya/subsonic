@@ -12,7 +12,6 @@ Per-user locale.
 Per-user theme.
 Get updated Macedonian resource bundle.
 Check Javascript error on IE.
-Springify WAP.
 Springify DWR.
 Springify securityfilter.
 Springify servlets.
@@ -24,6 +23,8 @@ Include options to display bitrate, album, artist, year, genre, format etc in th
 COMPLETED IN VERSION 2.8
 ========================
 Created "Back in black" theme.
+Springify WAP.
+Added option to stream over plain http when using SSL.
 
 
 BACKLOG

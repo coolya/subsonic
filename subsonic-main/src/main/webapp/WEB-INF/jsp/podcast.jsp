@@ -14,9 +14,9 @@
 
         <c:forEach var="podcast" items="${model.podcasts}">
             <item>
-                <title>${podcast.name}</title>
+                <title>${fn:escapeXml(podcast.name)}</title>
                 <link>${model.url}</link>
-                <description>Subsonic playlist "${podcast.name}"</description>
+                <description>Subsonic playlist "${fn:escapeXml(podcast.name)}"</description>
                 <pubDate>${podcast.publishDate}</pubDate>
                 <enclosure url="${podcast.enclosureUrl}" length="${podcast.length}" type="${podcast.type}"/>
             </item>

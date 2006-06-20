@@ -116,6 +116,6 @@
 </c:choose>
 
 <c:if test="${model.sendM3U}">
-    <script language="javascript" type="text/javascript">parent.frames.main.location.href="play.m3u"</script>
+    <script language="javascript" type="text/javascript">parent.frames.main.location.href="play.m3u?"</script>
 </c:if>
 </body></html>

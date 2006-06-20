@@ -19,13 +19,6 @@
     </servlet>
 
     <servlet>
-        <description>Returns an m3u file with playlist containing the stream URL.</description>
-        <display-name>m3u</display-name>
-        <servlet-name>m3u</servlet-name>
-        <servlet-class>net.sourceforge.subsonic.servlet.M3UServlet</servlet-class>
-    </servlet>
-
-    <servlet>
         <description>Downloads a single file or an entire directory structure.</description>
         <display-name>download</display-name>
         <servlet-name>download</servlet-name>
@@ -54,15 +47,14 @@
         <servlet-name>subsonic</servlet-name>
         <url-pattern>/wap</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>subsonic</servlet-name>
+        <url-pattern>/play.m3u</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>stream</servlet-name>
         <url-pattern>/stream/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>m3u</servlet-name>
-        <url-pattern>/play.m3u</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

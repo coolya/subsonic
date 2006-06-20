@@ -20,6 +20,7 @@ public class PodcastController extends ParameterizableViewController {
 
     private static final DateFormat RSS_DATE_FORMAT = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
     private PlaylistService playlistService;
+    private SettingsService settingsService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -42,6 +43,12 @@ public class PodcastController extends ParameterizableViewController {
             long length = playlist.length();
             String enclosureUrl = url.replaceFirst("/podcast.*", "/stream?playlist=" + encodedName + "&amp;suffix=" + suffix);
 
+            // Change protocol and port, if specified. (To make it work with players that don't support SSL.)
+            int streamPort = settingsService.getStreamPort();
+            if (streamPort != 0) {
+                enclosureUrl = StringUtil.toHttpUrl(enclosureUrl, streamPort);
+            }
+
             podcasts.add(new Podcast(name, publishDate, enclosureUrl, length, type));
         }
 
@@ -57,6 +64,10 @@ public class PodcastController extends ParameterizableViewController {
 
     public void setPlaylistService(PlaylistService playlistService) {
         this.playlistService = playlistService;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
     }
 
     /**

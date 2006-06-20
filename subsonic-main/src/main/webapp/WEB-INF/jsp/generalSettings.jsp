@@ -127,6 +127,14 @@
             </td>
         </tr>
 
+        <tr>
+            <td><fmt:message key="generalsettings.streamport"/></td>
+            <td>
+                <form:input path="streamPort" size="8"/>
+                <a href="helpPopup.view?topic=streamPort" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+            </td>
+        </tr>
+
         <tr><td colspan="3">&nbsp;</td></tr>
 
         <tr><td align="center" colspan="2"><input type="submit" value="<fmt:message key="common.save"/>"></td></tr>

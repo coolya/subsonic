@@ -32,6 +32,7 @@ public class SettingsServiceTestCase extends TestCase {
         assertEquals("Wrong default index creation hour.", 3, settingsService.getIndexCreationHour());
         assertEquals("Wrong default playlist folder.", "c:/playlists", settingsService.getPlaylistFolder());
         assertEquals("Wrong default theme.", "default", settingsService.getThemeId());
+        assertEquals("Wrong default stream port.", 0, settingsService.getStreamPort());
     }
 
     public void testChangeSettings() {
@@ -47,6 +48,7 @@ public class SettingsServiceTestCase extends TestCase {
         settingsService.setThemeId("dark");
         settingsService.setIndexCreationInterval(4);
         settingsService.setIndexCreationHour(9);
+        settingsService.setStreamPort(8080);
 
         verifySettings(settingsService);
 
@@ -73,5 +75,6 @@ public class SettingsServiceTestCase extends TestCase {
         assertEquals("Wrong theme.", "dark", ss.getThemeId());
         assertEquals("Wrong index creation interval.", 4, ss.getIndexCreationInterval());
         assertEquals("Wrong index creation hour.", 9, ss.getIndexCreationHour());
+        assertEquals("Wrong stream port.", 8080, ss.getStreamPort());
     }
 }

@@ -19,6 +19,7 @@ public class GeneralSettingsCommand {
     private String coverArtLimit;
     private String downloadLimit;
     private String uploadLimit;
+    private String streamPort;
     private String localeIndex;
     private String[] locales;
     private String themeIndex;
@@ -99,6 +100,14 @@ public class GeneralSettingsCommand {
 
     public String getUploadLimit() {
         return uploadLimit;
+    }
+
+    public String getStreamPort() {
+        return streamPort;
+    }
+
+    public void setStreamPort(String streamPort) {
+        this.streamPort = streamPort;
     }
 
     public void setUploadLimit(String uploadLimit) {

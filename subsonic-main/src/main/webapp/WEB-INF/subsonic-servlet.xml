@@ -50,6 +50,7 @@
     <bean id="podcastController" class="net.sourceforge.subsonic.controller.PodcastController">
         <property name="viewName"><value>podcast</value></property>
         <property name="playlistService"><ref bean="playlistService"/></property>
+        <property name="settingsService"><ref bean="settingsService"/></property>
     </bean>
     <bean id="playRadioController" class="net.sourceforge.subsonic.controller.PlayRadioController">
         <property name="settingsService"><ref bean="settingsService"/></property>
@@ -178,6 +179,10 @@
     <bean id="userChartController" class="net.sourceforge.subsonic.controller.UserChartController">
         <property name="securityService"><ref bean="securityService"/></property>
     </bean>
+    <bean id="m3uController" class="net.sourceforge.subsonic.controller.M3UController">
+        <property name="playerService"><ref bean="playerService"/></property>
+        <property name="settingsService"><ref bean="settingsService"/></property>
+    </bean>
     <bean id="multiController" class="net.sourceforge.subsonic.controller.MultiController"/>
     <bean id="wapController" class="net.sourceforge.subsonic.controller.WapController">
         <property name="settingsService"><ref bean="settingsService"/></property>
@@ -250,6 +255,7 @@
                 <prop key="/podcast.view">podcastController</prop>
                 <prop key="/podcast">podcastController</prop>
                 <prop key="/wap*">wapController</prop>
+                <prop key="/play.m3u">m3uController</prop>
             </props>
         </property>
     </bean>
