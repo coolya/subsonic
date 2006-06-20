@@ -12,20 +12,6 @@
     </servlet>
 
     <servlet>
-        <description>Streams the contents of a given file or directory.</description>
-        <display-name>stream</display-name>
-        <servlet-name>stream</servlet-name>
-        <servlet-class>net.sourceforge.subsonic.servlet.StreamServlet</servlet-class>
-    </servlet>
-
-    <servlet>
-        <description>Downloads a single file or an entire directory structure.</description>
-        <display-name>download</display-name>
-        <servlet-name>download</servlet-name>
-        <servlet-class>net.sourceforge.subsonic.servlet.DownloadServlet</servlet-class>
-    </servlet>
-
-    <servlet>
         <display-name>DWR Servlet</display-name>
         <servlet-name>dwr-invoker</servlet-name>
         <servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
@@ -51,15 +37,9 @@
         <servlet-name>subsonic</servlet-name>
         <url-pattern>/play.m3u</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
-        <servlet-name>stream</servlet-name>
+        <servlet-name>subsonic</servlet-name>
         <url-pattern>/stream/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>download</servlet-name>
-        <url-pattern>/download</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

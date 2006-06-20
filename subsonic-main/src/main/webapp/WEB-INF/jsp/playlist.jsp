@@ -65,7 +65,7 @@
             <td> | <a target="main" href="savePlaylist.view?"><fmt:message key="playlist.save"/></a></td>
         </c:if>
         <c:if test="${model.user.downloadRole}">
-            <td> | <a href="download?player=${model.player.id}"><fmt:message key="common.download"/></a></td>
+            <td> | <a href="download.view?player=${model.player.id}"><fmt:message key="common.download"/></a></td>
         </c:if>
     </tr></table></h2>
 </a>
@@ -89,7 +89,7 @@
                                                                alt="<fmt:message key="playlist.down"/>"
                                                                title="<fmt:message key="playlist.down"/>"/></a></td>
                     <c:if test="${model.user.downloadRole}">
-                        <sub:url value="download" var="downloadUrl">
+                        <sub:url value="download.view" var="downloadUrl">
                             <sub:param name="path" value="${song.path}"/>
                         </sub:url>
                         <td><a href="${downloadUrl}"><img width="13" height="13" src="<spring:theme code="downloadImage"/>"

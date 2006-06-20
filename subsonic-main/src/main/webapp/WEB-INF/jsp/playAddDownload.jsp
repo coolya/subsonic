@@ -7,7 +7,7 @@
 <sub:url value="playlist.view" var="addUrl">
     <sub:param name="add" value="${param.path}"/>
 </sub:url>
-<sub:url value="/download" var="downloadUrl">
+<sub:url value="/download.view" var="downloadUrl">
     <sub:param name="path" value="${param.path}"/>
 </sub:url>
 

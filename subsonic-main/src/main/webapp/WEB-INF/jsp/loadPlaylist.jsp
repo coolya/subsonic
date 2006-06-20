@@ -17,7 +17,7 @@
             <c:forEach items="${model.playlists}" var="playlist">
                 <sub:url value="loadPlaylistConfirm.view" var="loadUrl"><sub:param name="name" value="${playlist}"/></sub:url>
                 <sub:url value="deletePlaylist.view" var="deleteUrl"><sub:param name="name" value="${playlist}"/></sub:url>
-                <sub:url value="download" var="downloadUrl"><sub:param name="playlist" value="${playlist}"/></sub:url>
+                <sub:url value="download.view" var="downloadUrl"><sub:param name="playlist" value="${playlist}"/></sub:url>
                 <tr>
                     <td class="ruleTableHeader">${fn:substringBefore(playlist,".")}</td>
                     <td class="ruleTableCell">

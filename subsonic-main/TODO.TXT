@@ -3,8 +3,7 @@ PRIORITIZED FOR VERSION 2.8
 ===========================
 Test WAP select player on cell phone.
 Make it clearer that Tomcat 5.5 or later is required.
-Try to make SSL work. Force streams through http.
-Register at freashmeat.
+Tomcat user must have write access (see forum)
 Transcoding plugin framework. (Check out Jinzora transcoding pack.)
 Use AJAX to change random albums on home page, one at a time.
 Implement pure AJAX version of playlist.jsp.

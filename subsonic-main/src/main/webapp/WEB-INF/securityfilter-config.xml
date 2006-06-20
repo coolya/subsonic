@@ -35,7 +35,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Subsonic (download)</web-resource-name>
-            <url-pattern>/download</url-pattern>
+            <url-pattern>/download.view</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>download</role-name>
