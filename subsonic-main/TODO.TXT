@@ -1,6 +1,9 @@
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
+Create "General" forum.
+Error page.
+Ask Palm for a free phone.
 Test WAP select player on cell phone.
 Make it clearer that Tomcat 5.5 or later is required.
 Tomcat user must have write access (see forum)
@@ -17,7 +20,10 @@ Springify servlets.
 Convert servlets to controllers.
 Remove usage of services in domain (MusicFile).
 Include options to display bitrate, album, artist, year, genre, format etc in the playlist (and maybe also the main browser window)
-
+Acegi
+Logout option
+Show logged-in user
+Update Norwegian translation.
 
 COMPLETED IN VERSION 2.8
 ========================
@@ -28,6 +34,7 @@ Added option to stream over plain http when using SSL.
 
 BACKLOG
 ==========
+User-based folder access
 Replace methods in my StringUtil with corresponding in Spring.
 Batch download of cover arts.
 Use Rico for rounded edges. http://openrico.org

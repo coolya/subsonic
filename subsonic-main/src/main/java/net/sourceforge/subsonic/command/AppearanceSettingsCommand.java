@@ -1,0 +1,66 @@
+package net.sourceforge.subsonic.command;
+
+import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.controller.*;
+
+/**
+ * Command used in {@link AppearanceSettingsController}.
+ *
+ * @author Sindre Mehus
+ */
+public class AppearanceSettingsCommand {
+    private User user;
+    private String localeIndex;
+    private String[] locales;
+    private String themeIndex;
+    private Theme[] themes;
+    private boolean isReloadNeeded;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getLocaleIndex() {
+        return localeIndex;
+    }
+
+    public void setLocaleIndex(String localeIndex) {
+        this.localeIndex = localeIndex;
+    }
+
+    public String[] getLocales() {
+        return locales;
+    }
+
+    public void setLocales(String[] locales) {
+        this.locales = locales;
+    }
+
+    public String getThemeIndex() {
+        return themeIndex;
+    }
+
+    public void setThemeIndex(String themeIndex) {
+        this.themeIndex = themeIndex;
+    }
+
+    public Theme[] getThemes() {
+        return themes;
+    }
+
+    public void setThemes(Theme[] themes) {
+        this.themes = themes;
+    }
+
+    public boolean isReloadNeeded() {
+        return isReloadNeeded;
+    }
+
+    public void setReloadNeeded(boolean reloadNeeded) {
+        isReloadNeeded = reloadNeeded;
+    }
+}

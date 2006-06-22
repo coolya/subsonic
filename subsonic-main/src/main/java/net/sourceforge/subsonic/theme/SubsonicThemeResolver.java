@@ -14,6 +14,7 @@ import java.util.*;
  */
 public class SubsonicThemeResolver implements ThemeResolver {
 
+    private SecurityService securityService;
     private SettingsService settingsService;
     private Set<String> themeIds;
 
@@ -24,9 +25,16 @@ public class SubsonicThemeResolver implements ThemeResolver {
     * @return The current theme name
     */
     public String resolveThemeName(HttpServletRequest request) {
-        String themeId = settingsService.getThemeId();
 
-        // Verify that theme exists.
+        // Look for user-specific theme.
+        User user = securityService.getCurrentUser(request);
+        String themeId = user.getThemeId();
+        if (themeId != null && themeExists(themeId)) {
+            return themeId;
+        }
+
+        // Return system theme.
+        themeId = settingsService.getThemeId();
         return themeExists(themeId) ? themeId : "default";
     }
 
@@ -59,6 +67,10 @@ public class SubsonicThemeResolver implements ThemeResolver {
      */
     public void setThemeName(HttpServletRequest request, HttpServletResponse response, String themeName) {
         throw new UnsupportedOperationException("Cannot change theme - use a different theme resolution strategy");
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 
     public void setSettingsService(SettingsService settingsService) {

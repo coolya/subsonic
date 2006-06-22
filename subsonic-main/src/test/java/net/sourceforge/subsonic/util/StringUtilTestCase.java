@@ -79,6 +79,15 @@ public class StringUtilTestCase extends TestCase {
         assertEquals(0, StringUtil.split(null).length);
     }
 
+   private void doTestSplit(String input, String... expected) {
+        String[] actual = StringUtil.split(input);
+        assertEquals("Wrong number of elements.", expected.length, actual.length);
+
+        for (int i = 0; i < expected.length; i++) {
+            assertEquals("Wrong criteria.", expected[i], actual[i]);
+        }
+    }
+
     public void testToHttpUrl() throws Exception {
         assertEquals("Error in toHttpUrl.", "http://foo.bar.com", StringUtil.toHttpUrl("http://foo.bar.com", 8080));
         assertEquals("Error in toHttpUrl.", "http://foo.bar.com:12/abc?f=a", StringUtil.toHttpUrl("http://foo.bar.com:12/abc?f=a", 8080));
@@ -86,12 +95,13 @@ public class StringUtilTestCase extends TestCase {
         assertEquals("Error in toHttpUrl.", "http://foo.bar.com:443/a/b/c?k=1&j=2", StringUtil.toHttpUrl("https://foo.bar.com/a/b/c?k=1&j=2", 443));
     }
 
-    private void doTestSplit(String input, String... expected) {
-        String[] actual = StringUtil.split(input);
-        assertEquals("Wrong number of elements.", expected.length, actual.length);
-
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals("Wrong criteria.", expected[i], actual[i]);
-        }
+    public void testParseLocale() {
+        assertEquals("Error in parseLocale().", null, null);
+        assertEquals("Error in parseLocale().", new Locale("en"), StringUtil.parseLocale("en"));
+        assertEquals("Error in parseLocale().", new Locale("en"), StringUtil.parseLocale("en_"));
+        assertEquals("Error in parseLocale().", new Locale("en"), StringUtil.parseLocale("en__"));
+        assertEquals("Error in parseLocale().", new Locale("en", "US"), StringUtil.parseLocale("en_US"));
+        assertEquals("Error in parseLocale().", new Locale("en", "US", "WIN"), StringUtil.parseLocale("en_US_WIN"));
+        assertEquals("Error in parseLocale().", new Locale("en", "", "WIN"), StringUtil.parseLocale("en__WIN"));
     }
 }

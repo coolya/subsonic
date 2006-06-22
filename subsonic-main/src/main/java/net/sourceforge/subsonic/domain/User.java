@@ -1,5 +1,7 @@
 package net.sourceforge.subsonic.domain;
 
+import java.util.*;
+
 /**
  * Represent a user.
  *
@@ -15,6 +17,8 @@ public class User {
     private long bytesStreamed;
     private long bytesDownloaded;
     private long bytesUploaded;
+    private Locale locale;
+    private String themeId;
 
     private boolean isAdminRole;
     private boolean isDownloadRole;
@@ -23,16 +27,19 @@ public class User {
     private boolean isCoverArtRole;
     private boolean isCommentRole;
 
-    public User(String username, String password, long bytesStreamed, long bytesDownloaded, long bytesUploaded) {
+    public User(String username, String password, long bytesStreamed, long bytesDownloaded, long bytesUploaded,
+                Locale locale, String theme) {
         this.username = username;
         this.password = password;
         this.bytesStreamed = bytesStreamed;
         this.bytesDownloaded = bytesDownloaded;
         this.bytesUploaded = bytesUploaded;
+        this.locale = locale;
+        this.themeId = theme;
     }
 
     public User(String username, String password) {
-        this(username,  password, 0, 0, 0);
+        this(username,  password, 0, 0, 0, null, null);
     }
 
     public String getUsername() {
@@ -69,6 +76,22 @@ public class User {
 
     public void setBytesUploaded(long bytesUploaded) {
         this.bytesUploaded = bytesUploaded;
+    }
+
+    public Locale getLocale() {
+        return locale;
+    }
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+
+    public String getThemeId() {
+        return themeId;
+    }
+
+    public void setThemeId(String themeId) {
+        this.themeId = themeId;
     }
 
     public boolean isAdminRole() {

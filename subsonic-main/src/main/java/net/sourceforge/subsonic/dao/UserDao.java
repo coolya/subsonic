@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.dao;
 
 import net.sourceforge.subsonic.*;
+import net.sourceforge.subsonic.util.*;
 import net.sourceforge.subsonic.domain.*;
 import org.springframework.jdbc.core.*;
 
@@ -11,12 +12,11 @@ import java.util.*;
  * Provides user-related database services, including authorization and authentication.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.5 $ $Date: 2006/02/25 16:11:14 $
  */
 public class UserDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(UserDao.class);
-    private static final String COLUMNS = "username, password, bytes_streamed, bytes_downloaded, bytes_uploaded";
+    private static final String COLUMNS = "username, password, bytes_streamed, bytes_downloaded, bytes_uploaded, locale, theme";
 
     private static final String ROLE_USER = "user";
     private static final Integer ROLE_ID_ADMIN      = 1;
@@ -89,9 +89,10 @@ public class UserDao extends AbstractDao {
      * @param user The user to create.
      */
     public void createUser(User user) {
-        String sql = "insert into user (" + COLUMNS + ") values (?, ?, ?, ?, ?)";
+        String sql = "insert into user (" + COLUMNS + ") values (?, ?, ?, ?, ?, ?, ?)";
         getJdbcTemplate().update(sql, new Object[] {user.getUsername(), user.getPassword(), user.getBytesStreamed(),
-                                                    user.getBytesDownloaded(), user.getBytesUploaded()});
+                                                    user.getBytesDownloaded(), user.getBytesUploaded(),
+                                                    user.getLocale().toString(), user.getThemeId()});
         writeRoles(user);
     }
 
@@ -116,9 +117,12 @@ public class UserDao extends AbstractDao {
      * @param user The user to update.
      */
     public void updateUser(User user) {
-        String sql = "update user set password=?, bytes_streamed=?, bytes_downloaded=?, bytes_uploaded=? where username=?";
+        String sql = "update user set password=?, bytes_streamed=?, bytes_downloaded=?, bytes_uploaded=?, " +
+                     "locale=?, theme=? where username=?";
+        String locale = user.getLocale() == null ? null : user.getLocale().toString();
         getJdbcTemplate().update(sql, new Object[] {user.getPassword(), user.getBytesStreamed(),
-                                                    user.getBytesDownloaded(), user.getBytesUploaded(), user.getUsername()});
+                                                    user.getBytesDownloaded(), user.getBytesUploaded(),
+                                                    locale, user.getThemeId(), user.getUsername()});
         writeRoles(user);
     }
 
@@ -171,7 +175,8 @@ public class UserDao extends AbstractDao {
 
     private static class UserRowMapper implements RowMapper {
         public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new User(rs.getString(1), rs.getString(2), rs.getLong(3), rs.getLong(4), rs.getLong(5));
+            return new User(rs.getString(1), rs.getString(2), rs.getLong(3), rs.getLong(4),
+                            rs.getLong(5), StringUtil.parseLocale(rs.getString(6)), rs.getString(7));
         }
     }
 }

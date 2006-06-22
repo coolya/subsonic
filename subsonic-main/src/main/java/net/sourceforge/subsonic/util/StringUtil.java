@@ -215,4 +215,36 @@ public final class StringUtil {
         }
         return url;
     }
+
+    /**
+     * Determines whether a is equal to b, taking null into account.
+     * @return Whether a and b are equal, or both null.
+     */
+    public static boolean isEqual(Object a, Object b) {
+        return a == null ? b == null : a.equals(b);
+    }
+
+    /**
+     * Parses a locale from the given string.
+     * @param s The locale string. Should be formatted as per the documentation in {@link Locale#toString()}.
+     * @return The locale.
+     */
+    public static Locale parseLocale(String s) {
+        if (s == null) {
+            return null;
+        }
+
+        String[] elements = s.split("_");
+
+        if (elements.length == 0) {
+            return new Locale(s, "", "");
+        }
+        if (elements.length == 1) {
+            return new Locale(elements[0], "", "");
+        }
+        if (elements.length == 2) {
+            return new Locale(elements[0], elements[1], "");
+        }
+        return new Locale(elements[0], elements[1], elements[2]);
+    }
 }

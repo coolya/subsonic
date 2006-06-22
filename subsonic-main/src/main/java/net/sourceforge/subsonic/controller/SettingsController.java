@@ -22,12 +22,8 @@ public class SettingsController extends AbstractController {
 
         User user = securityService.getCurrentUser(request);
 
-        String view = "generalSettings.view";
-
-        // Redirect to password settings if not admin.
-        if (!user.isAdminRole()) {
-            view = "passwordSettings.view";
-        }
+        // Redirect to general settings if admin.
+        String view = user.isAdminRole() ? "generalSettings.view" : "appearanceSettings.view";
 
         return new ModelAndView(new RedirectView(view));
      }

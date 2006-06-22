@@ -13,12 +13,11 @@ import java.io.*;
  * Abstract superclass for all DAO classes.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.5 $ $Date: 2006/03/01 16:58:08 $
  */
 public abstract class AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(AbstractDao.class);
-    private static final Schema[] SCHEMAS = {new Schema25(), new Schema26(), new Schema27()};
+    private static final Schema[] SCHEMAS = {new Schema25(), new Schema26(), new Schema27(), new Schema28()};
 
     private static final Object MUTEX = new Object();
     private static DriverManagerDataSource dataSource;

@@ -140,6 +140,13 @@
         <property name="formView"><value>generalSettings</value></property>
         <property name="settingsService"><ref bean="settingsService"/></property>
     </bean>
+    <bean id="appearanceSettingsController" class="net.sourceforge.subsonic.controller.AppearanceSettingsController">
+        <property name="commandClass"><value>net.sourceforge.subsonic.command.AppearanceSettingsCommand</value></property>
+        <property name="successView"><value>appearanceSettings</value></property>
+        <property name="formView"><value>appearanceSettings</value></property>
+        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="securityService"><ref bean="securityService"/></property>
+    </bean>
     <bean id="userSettingsController" class="net.sourceforge.subsonic.controller.UserSettingsController">
         <property name="sessionForm"><value>true</value></property>
         <property name="commandClass"><value>net.sourceforge.subsonic.command.UserSettingsCommand</value></property>
@@ -257,6 +264,7 @@
                 <prop key="/internetRadioSettings.view">internetRadioSettingsController</prop>
                 <prop key="/searchSettings.view">searchSettingsController</prop>
                 <prop key="/generalSettings.view">generalSettingsController</prop>
+                <prop key="/appearanceSettings.view">appearanceSettingsController</prop>
                 <prop key="/userSettings.view">userSettingsController</prop>
                 <prop key="/passwordSettings.view">passwordSettingsController</prop>
                 <prop key="/allmusic.view">allmusicController</prop>
@@ -287,11 +295,13 @@
 
     <bean id="localeResolver"
           class="net.sourceforge.subsonic.i18n.SubsonicLocaleResolver">
+        <property name="securityService"><ref bean="securityService"/></property>
         <property name="settingsService"><ref bean="settingsService"/></property>
     </bean>
 
     <bean id="themeResolver"
           class="net.sourceforge.subsonic.theme.SubsonicThemeResolver">
+        <property name="securityService"><ref bean="securityService"/></property>
         <property name="settingsService"><ref bean="settingsService"/></property>
     </bean>
 

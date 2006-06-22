@@ -1,14 +1,14 @@
 package net.sourceforge.subsonic.dao;
 
-/**
- * Unit test of {@link net.sourceforge.subsonic.dao.UserDao}.
- * @author Sindre Mehus
- * @version $Revision: 1.2 $ $Date: 2006/02/25 16:11:14 $
- */
-
 import net.sourceforge.subsonic.domain.*;
 import org.springframework.jdbc.core.*;
 
+import java.util.*;
+
+/**
+ * Unit test of {@link UserDao}.
+ * @author Sindre Mehus
+ */
 public class UserDaoTestCase extends DaoTestCaseBase {
 
     private UserDao userDao;
@@ -21,7 +21,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
     }
 
     public void testCreateUser() {
-        User user = new User("sindre", "secret", 1000L, 2000L, 3000L);
+        User user = new User("sindre", "secret", 1000L, 2000L, 3000L, new Locale("no"), "midnight");
         user.setAdminRole(true);
         user.setCommentRole(true);
         user.setCoverArtRole(true);
@@ -48,12 +48,15 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         user.setBytesStreamed(1);
         user.setBytesDownloaded(2);
         user.setBytesUploaded(3);
+        user.setLocale(Locale.ENGLISH);
+        user.setThemeId("default");
         user.setAdminRole(false);
         user.setCommentRole(false);
         user.setCoverArtRole(false);
         user.setDownloadRole(true);
-    user.setPlaylistRole(false);
+        user.setPlaylistRole(false);
         user.setUploadRole(true);
+
         userDao.updateUser(user);
 
         User newUser = userDao.getAllUsers()[0];
@@ -61,6 +64,8 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong bytes streamed.", 1, newUser.getBytesStreamed());
         assertEquals("Wrong bytes downloaded.", 2, newUser.getBytesDownloaded());
         assertEquals("Wrong bytes uploaded.", 3, newUser.getBytesUploaded());
+        assertEquals("Wrong locale.", "en", newUser.getLocale());
+        assertEquals("Wrong theme.", "default", newUser.getThemeId());
     }
 
     public void testGetUserByName() {
@@ -128,6 +133,8 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong bytes streamed.", expected.getBytesStreamed(), actual.getBytesStreamed());
         assertEquals("Wrong bytes downloaded.", expected.getBytesDownloaded(), actual.getBytesDownloaded());
         assertEquals("Wrong bytes uploaded.", expected.getBytesUploaded(), actual.getBytesUploaded());
+        assertEquals("Wrong locale.", expected.getLocale(), actual.getLocale());
+        assertEquals("Wrong theme.", expected.getThemeId(), actual.getThemeId());
         assertEquals("Wrong admin role.", expected.isAdminRole(), actual.isAdminRole());
         assertEquals("Wrong comment role.", expected.isCommentRole(), actual.isCommentRole());
         assertEquals("Wrong cover art role.", expected.isCoverArtRole(), actual.isCoverArtRole());

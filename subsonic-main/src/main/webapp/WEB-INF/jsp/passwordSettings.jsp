@@ -9,15 +9,9 @@
     <c:param name="restricted" value="true"/>
 </c:import>
 
-<h2><fmt:message key="usersettings.changepassword"/></h2>
-
+<h2><fmt:message key="passwordsettings.title"><fmt:param>${command.username}</fmt:param></fmt:message></h2>
 <form:form method="post" action="passwordSettings.view" commandName="command">
     <table class="indent">
-        <tr>
-            <td><fmt:message key="usersettings.username"/></td>
-            <td><b>${command.username}</b></td>
-            <td/>
-        </tr>
         <tr>
             <td><fmt:message key="usersettings.newpassword"/></td>
             <td><form:password path="password"/></td>
