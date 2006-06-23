@@ -17,7 +17,7 @@
     background-color: #DEE3E7
 }
 
-/* Background color for selected header, log etc. */
+/* Background color for selected header. */
 .headerSelected {
     background-color: lightyellow;
 }

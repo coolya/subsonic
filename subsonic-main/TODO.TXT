@@ -1,8 +1,7 @@
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
-Create "General" forum.
-Error page.
+Error page for login failure.
 Ask Palm for a free phone.
 Test WAP select player on cell phone.
 Make it clearer that Tomcat 5.5 or later is required.
@@ -30,7 +29,7 @@ COMPLETED IN VERSION 2.8
 Created "Back in black" theme.
 Springify WAP.
 Added option to stream over plain http when using SSL.
-
+Error page.
 
 BACKLOG
 ==========
