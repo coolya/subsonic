@@ -1,7 +1,9 @@
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
-Error page for login failure.
+DWR
+Create roles
+
 Ask Palm for a free phone.
 Test WAP select player on cell phone.
 Make it clearer that Tomcat 5.5 or later is required.
@@ -9,25 +11,26 @@ Tomcat user must have write access (see forum)
 Transcoding plugin framework. (Check out Jinzora transcoding pack.)
 Use AJAX to change random albums on home page, one at a time.
 Implement pure AJAX version of playlist.jsp.
-Per-user locale.
-Per-user theme.
 Get updated Macedonian resource bundle.
 Check Javascript error on IE.
 Springify DWR.
 Springify securityfilter.
-Springify servlets.
-Convert servlets to controllers.
 Remove usage of services in domain (MusicFile).
 Include options to display bitrate, album, artist, year, genre, format etc in the playlist (and maybe also the main browser window)
 Acegi
+Form-based login.
 Logout option
 Show logged-in user
 Update Norwegian translation.
 
 COMPLETED IN VERSION 2.8
 ========================
+Per-user locale.
+Per-user theme.
 Created "Back in black" theme.
 Springify WAP.
+Springify servlets.
+Convert servlets to controllers.
 Added option to stream over plain http when using SSL.
 Error page.
 

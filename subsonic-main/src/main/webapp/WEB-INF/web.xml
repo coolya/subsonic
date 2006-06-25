@@ -5,6 +5,20 @@
 
     <display-name>subsonic</display-name>
 
+    <!-- Location of application context.  Used by ContextLoaderListener. -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/applicationContext-service.xml
+            /WEB-INF/applicationContext-security.xml
+        </param-value>
+    </context-param>
+
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>subsonic</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -56,10 +70,10 @@
         <exception-type>java.lang.Throwable</exception-type>
         <location>/error.jsp</location>
     </error-page>
-    <error-page>
-        <error-code>401</error-code>
-        <location>/error401.jsp</location>
-    </error-page>
+    <!--<error-page>-->
+        <!--<error-code>401</error-code>-->
+        <!--<location>/error401.jsp</location>-->
+    <!--</error-page>-->
 
     <!--TODO: Do this with a Spring interceptor or something-->
     <filter>
@@ -120,24 +134,54 @@
         <url-pattern>/coverart</url-pattern>
     </filter-mapping>
 
+    <!--<filter>-->
+        <!--<filter-name>SecurityFilter</filter-name>-->
+        <!--<filter-class>org.securityfilter.filter.SecurityFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<description>Configuration file location (this is the default value)</description>-->
+            <!--<param-name>config</param-name>-->
+            <!--<param-value>/WEB-INF/securityfilter-config.xml</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<description>Validate config file if set to true</description>-->
+            <!--<param-name>validate</param-name>-->
+            <!--<param-value>true</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
+
+    <!-- Map all requests to the SecurityFilter.  See securityfilter.config.xml for more details. -->
+    <!--<filter-mapping>-->
+        <!--<filter-name>SecurityFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <!--<filter>-->
+        <!--<filter-name>Acegi Authentication Processing Filter</filter-name>-->
+        <!--<filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>targetClass</param-name>-->
+            <!--<param-value>-->
+                <!--org.acegisecurity.ui.basicauth.BasicProcessingFilter-->
+            <!--</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
+<!---->
+    <!--<filter-mapping>-->
+        <!--<filter-name>Acegi Authentication Processing Filter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
     <filter>
-        <filter-name>SecurityFilter</filter-name>
-        <filter-class>org.securityfilter.filter.SecurityFilter</filter-class>
+        <filter-name>Acegi Filter Chain Proxy</filter-name>
+        <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
         <init-param>
-            <description>Configuration file location (this is the default value)</description>
-            <param-name>config</param-name>
-            <param-value>/WEB-INF/securityfilter-config.xml</param-value>
-        </init-param>
-        <init-param>
-            <description>Validate config file if set to true</description>
-            <param-name>validate</param-name>
-            <param-value>true</param-value>
+            <param-name>targetClass</param-name>
+            <param-value>org.acegisecurity.util.FilterChainProxy</param-value>
         </init-param>
     </filter>
 
-    <!-- Map all requests to the SecurityFilter.  See securityfilter.config.xml for more details. -->
     <filter-mapping>
-        <filter-name>SecurityFilter</filter-name>
+        <filter-name>Acegi Filter Chain Proxy</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 

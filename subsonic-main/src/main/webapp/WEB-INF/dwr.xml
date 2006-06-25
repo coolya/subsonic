@@ -6,6 +6,20 @@
 <dwr>
     <allow>
 
+        <create creator="spring" javascript="nowPlayingService">
+            <param name="beanName" value="ajaxNowPlayingService"/>
+        </create>
+
+        <create creator="spring" javascript="tagService">
+            <param name="beanName" value="ajaxTagServiceSecure"/>
+        </create>
+
+        <create creator="spring" javascript="transferService">
+            <param name="beanName" value="ajaxTransferServiceSecure"/>
+            <!--<auth method="getUploadInfo" role="upload"/>-->
+        </create>
+
+<!--
         <create creator="new" javascript="nowPlayingService">
             <param name="class" value="net.sourceforge.subsonic.ajax.NowPlayingService"/>
         </create>
@@ -19,7 +33,7 @@
             <param name="class" value="net.sourceforge.subsonic.ajax.TransferService"/>
             <auth method="getUploadInfo" role="upload"/>
         </create>
-
+-->
         <convert converter="bean" match="net.sourceforge.subsonic.ajax.UploadInfo"/>
 
     </allow>

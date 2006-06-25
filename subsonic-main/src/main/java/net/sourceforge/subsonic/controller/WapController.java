@@ -21,7 +21,7 @@ public class WapController extends MultiActionController {
     private SearchService searchService;
     private SecurityService securityService;
 
-    public ModelAndView wapIndex(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return wap(request, response);
     }
 
@@ -55,10 +55,10 @@ public class WapController extends MultiActionController {
             }
         }
 
-        return new ModelAndView("wapIndex", "model", map);
+        return new ModelAndView("wap/index", "model", map);
     }
 
-    public ModelAndView wapBrowse(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView browse(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String path = request.getParameter("path");
         MusicFile parent = new MusicFile(path);
 
@@ -74,10 +74,10 @@ public class WapController extends MultiActionController {
         map.put("parent", parent);
         map.put("children", children);
 
-        return new ModelAndView("wapBrowse", "model", map);
+        return new ModelAndView("wap/browse", "model", map);
     }
 
-    public ModelAndView wapPlaylist(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView playlist(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // Create array of players to control. If the "player" attribute is set for this session,
         // only the player with this ID is controlled.  Otherwise, all players are controlled.
         Player[] players = playerService.getAllPlayers();
@@ -113,20 +113,20 @@ public class WapController extends MultiActionController {
         }
 
         map.put("players", players);
-        return new ModelAndView("wapPlaylist", "model", map);
+        return new ModelAndView("wap/playlist", "model", map);
     }
 
-    public ModelAndView wapLoadPlaylist(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView loadPlaylist(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("playlists", playlistService.getSavedPlaylists());
-        return new ModelAndView("wapLoadPlaylist", "model", map);
+        return new ModelAndView("wap/loadPlaylist", "model", map);
     }
 
-    public ModelAndView wapSearch(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return new ModelAndView("wapSearch");
+    public ModelAndView search(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return new ModelAndView("wap/search");
     }
 
-    public ModelAndView wapSearchResult(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView searchResult(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String query = request.getParameter("query");
         if (!searchService.isIndexCreated()) {
             searchService.createIndex();
@@ -140,10 +140,10 @@ public class WapController extends MultiActionController {
             map.put("hits", searchService.heuristicSearch(query, 50, false, false, true, null));
         }
 
-        return new ModelAndView("wapSearchResult", "model", map);
+        return new ModelAndView("wap/searchResult", "model", map);
     }
 
-    public ModelAndView wapSettings(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView settings(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String playerId = (String) request.getSession().getAttribute("id");
 
         Player[] allPlayers = playerService.getAllPlayers();
@@ -160,12 +160,12 @@ public class WapController extends MultiActionController {
         }
         map.put("playerId", playerId);
         map.put("players", players);
-        return new ModelAndView("wapSettings", "model", map);
+        return new ModelAndView("wap/settings", "model", map);
     }
 
-    public ModelAndView wapSelectPlayer(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView selectPlayer(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request.getSession().setAttribute("player", request.getParameter("player"));
-        return wapSettings(request, response);
+        return settings(request, response);
     }
 
     public void setSettingsService(SettingsService settingsService) {

@@ -13,6 +13,10 @@ import java.util.*;
  */
 public class MultiController extends MultiActionController {
 
+    public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("login");
+    }
+
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
         return new ModelAndView("index");
     }

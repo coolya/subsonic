@@ -1,14 +1,14 @@
-<%@ page language="java" contentType="text/vnd.wap.wml; charset=utf-8" pageEncoding="iso-8859-1"%>
-
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE wml PUBLIC "-//WAPFORUM//DTD WML 1.1//EN" "http://www.wapforum.org/DTD/wml_1.1.xml">
 
+<%@ page language="java" contentType="text/vnd.wap.wml; charset=utf-8" pageEncoding="iso-8859-1"%>
+
 <wml>
 
-    <%@ include file="wapHead.jsp" %>
+    <%@ include file="head.jsp" %>
     <card id="main" title="Subsonic" newcontext="false">
         <p><small>
-            <b><a href="wapIndex.view">[<fmt:message key="common.home"/>]</a><br/></b>
+            <b><a href="index.view">[<fmt:message key="common.home"/>]</a><br/></b>
             <b><a href="#player">[<fmt:message key="wap.settings.selectplayer"/>]</a></b>
         </small></p>
     </card>
@@ -16,7 +16,7 @@
     <card id="player" title="Subsonic" newcontext="false">
         <p><small>
 
-            <b><a href="wapIndex.view">[<fmt:message key="common.home"/>]</a><br/></b>
+            <b><a href="index.view">[<fmt:message key="common.home"/>]</a><br/></b>
         </small></p><p><small>
 
         <c:choose>
@@ -24,7 +24,7 @@
                 <fmt:message key="wap.settings.allplayers"/>
             </c:when>
             <c:otherwise>
-                <a href="wapSelectPlayer.view"><fmt:message key="wap.settings.allplayers"/></a>
+                <a href="selectPlayer.view"><fmt:message key="wap.settings.allplayers"/></a>
             </c:otherwise>
         </c:choose>
         <br/>
@@ -35,7 +35,7 @@
                     ${player}
                 </c:when>
                 <c:otherwise>
-                    <a href="wapSelectPlayer.view?player=${player.id}">${player}</a>
+                    <a href="selectPlayer.view?player=${player.id}">${player}</a>
                 </c:otherwise>
             </c:choose>
             <br/>

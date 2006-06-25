@@ -17,6 +17,7 @@ public class TopController extends ParameterizableViewController {
 
     private SettingsService settingsService;
     private VersionService versionService;
+    private SecurityService securityService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -28,6 +29,7 @@ public class TopController extends ParameterizableViewController {
         List<MusicIndex> musicIndex = MusicIndex.createIndexesFromExpression(indexString);
         Map<MusicIndex, List<MusicFile>> indexedChildren = MusicIndex.getIndexedChildren(allMusicFolders, musicIndex, ignoredArticles, shortcuts);
 
+        map.put("username", securityService.getCurrentUsername(request));
         map.put("musicFoldersExist", allMusicFolders.length > 0);
         map.put("indexes", indexedChildren.keySet().toArray(new MusicIndex[0]));
         map.put("newVersionAvailable", versionService.isNewVersionAvailable());
@@ -44,5 +46,9 @@ public class TopController extends ParameterizableViewController {
 
     public void setVersionService(VersionService versionService) {
         this.versionService = versionService;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 }

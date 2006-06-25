@@ -18,7 +18,6 @@ public class UserDao extends AbstractDao {
     private static final Logger LOG = Logger.getLogger(UserDao.class);
     private static final String COLUMNS = "username, password, bytes_streamed, bytes_downloaded, bytes_uploaded, locale, theme";
 
-    private static final String ROLE_USER = "user";
     private static final Integer ROLE_ID_ADMIN      = 1;
     private static final Integer ROLE_ID_DOWNLOAD   = 2;
     private static final Integer ROLE_ID_UPLOAD     = 3;
@@ -27,33 +26,6 @@ public class UserDao extends AbstractDao {
     private static final Integer ROLE_ID_COMMENT    = 6;
 
     private UserRowMapper rowMapper = new UserRowMapper();
-
-    /**
-    * Authenticates a user.
-    * @param username The username.
-    * @param password The plain text password, as entered by the user.
-    * @return Whether the user is authenticated.
-    */
-    public boolean authenticate(String username, String password) {
-        String sql = "select count(*) from user where username=? and password=?";
-        return getJdbcTemplate().queryForInt(sql, new Object[]{username, password}) > 0;
-    }
-
-    /**
-     * Authorizes a user by checking if it is member of the given role.
-     * @param username The username.
-     * @param role The role to test for membership.
-     * @return Whether the user is authorized for the given role.
-     */
-    public boolean authorize(String username, String role) {
-        if (ROLE_USER.equals(role)) {
-            return true;
-        }
-
-        String sql = "select count(*) from user u, role r, user_role ur " +
-                     "where u.username = ? and r.name = ? and ur.username = u.username and ur.role_id = r.id";
-        return getJdbcTemplate().queryForInt(sql, new Object[]{username, role}) > 0;
-    }
 
     /**
      * Returns the user with the given username.
@@ -90,9 +62,10 @@ public class UserDao extends AbstractDao {
      */
     public void createUser(User user) {
         String sql = "insert into user (" + COLUMNS + ") values (?, ?, ?, ?, ?, ?, ?)";
+        String locale = user.getLocale() == null ? null : user.getLocale().toString();
         getJdbcTemplate().update(sql, new Object[] {user.getUsername(), user.getPassword(), user.getBytesStreamed(),
                                                     user.getBytesDownloaded(), user.getBytesUploaded(),
-                                                    user.getLocale().toString(), user.getThemeId()});
+                                                    locale, user.getThemeId()});
         writeRoles(user);
     }
 
@@ -113,9 +86,9 @@ public class UserDao extends AbstractDao {
     }
 
     /**
-     * Updates the given user.
-     * @param user The user to update.
-     */
+    * Updates the given user.
+    * @param user The user to update.
+    */
     public void updateUser(User user) {
         String sql = "update user set password=?, bytes_streamed=?, bytes_downloaded=?, bytes_uploaded=?, " +
                      "locale=?, theme=? where username=?";
@@ -124,6 +97,22 @@ public class UserDao extends AbstractDao {
                                                     user.getBytesDownloaded(), user.getBytesUploaded(),
                                                     locale, user.getThemeId(), user.getUsername()});
         writeRoles(user);
+    }
+
+    /**
+     * Returns the name of the roles for the given user.
+     * @param username The user name.
+     * @return Roles the user is granted.
+     */
+    public String[] getRolesForUser(String username) {
+        String sql = "select r.name from role r, user_role ur " +
+                     "where ur.username=? and ur.role_id=r.id";
+        List roles = getJdbcTemplate().queryForList(sql, new Object[] {username}, String.class);
+        String[] result = new String[roles.size()];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = (String) roles.get(i);
+        }
+        return result;
     }
 
     private void readRoles(User user) {
@@ -145,7 +134,6 @@ public class UserDao extends AbstractDao {
             } else {
                 LOG.warn("Unknown role: '" + role + '\'');
             }
-
         }
     }
 

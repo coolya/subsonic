@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+    <bean id="filterChainProxy" class="org.acegisecurity.util.FilterChainProxy">
+        <property name="filterInvocationDefinitionSource">
+            <value>
+                PATTERN_TYPE_APACHE_ANT
+                /wap**=httpSessionContextIntegrationFilter,logoutFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,basicExceptionTranslationFilter,filterInvocationInterceptor
+                /podcast**=httpSessionContextIntegrationFilter,logoutFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,basicExceptionTranslationFilter,filterInvocationInterceptor
+                /**=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
+            </value>
+        </property>
+    </bean>
+
+    <bean id="httpSessionContextIntegrationFilter" class="org.acegisecurity.context.HttpSessionContextIntegrationFilter"/>
+
+    <bean id="logoutFilter" class="org.acegisecurity.ui.logout.LogoutFilter">
+        <constructor-arg value="/login.view?logout"/> <!-- URL redirected to after logout -->
+        <constructor-arg>
+            <list>
+                <ref bean="rememberMeServices"/>
+                <bean class="org.acegisecurity.ui.logout.SecurityContextLogoutHandler"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="authenticationProcessingFilter" class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="authenticationFailureUrl" value="/login.view?error"/>
+        <property name="defaultTargetUrl" value="/"/>
+        <property name="alwaysUseDefaultTargetUrl" value="true"/>
+        <property name="filterProcessesUrl" value="/j_acegi_security_check"/>
+        <property name="rememberMeServices" ref="rememberMeServices"/>
+    </bean>
+
+    <bean id="basicProcessingFilter" class="org.acegisecurity.ui.basicauth.BasicProcessingFilter">
+       <property name="authenticationManager"><ref local="authenticationManager"/></property>
+       <property name="authenticationEntryPoint"><ref local="basicProcessingFilterEntryPoint"/></property>
+    </bean>
+
+    <bean id="basicProcessingFilterEntryPoint" class="org.acegisecurity.ui.basicauth.BasicProcessingFilterEntryPoint">
+       <property name="realmName"><value>Contacts Realm</value></property>
+    </bean>
+
+    <bean id="securityContextHolderAwareRequestFilter" class="org.acegisecurity.wrapper.SecurityContextHolderAwareRequestFilter"/>
+
+    <bean id="rememberMeProcessingFilter" class="org.acegisecurity.ui.rememberme.RememberMeProcessingFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="rememberMeServices" ref="rememberMeServices"/>
+    </bean>
+
+    <!--TODO-->
+    <bean id="anonymousProcessingFilter" class="org.acegisecurity.providers.anonymous.AnonymousProcessingFilter">
+        <property name="key" value="changeThis"/>
+        <property name="userAttribute" value="anonymousUser,ROLE_ANONYMOUS"/>
+    </bean>
+
+    <bean id="exceptionTranslationFilter" class="org.acegisecurity.ui.ExceptionTranslationFilter">
+        <property name="authenticationEntryPoint">
+            <bean class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+                <property name="loginFormUrl" value="/login.view?"/>
+                <property name="forceHttps" value="false"/>
+            </bean>
+        </property>
+        <!--TODO-->
+        <!--<property name="accessDeniedHandler">-->
+            <!--<bean class="org.acegisecurity.ui.AccessDeniedHandlerImpl">-->
+                <!--<property name="errorPage" value="/accessDenied.jsp"/>-->
+            <!--</bean>-->
+        <!--</property>-->
+    </bean>
+
+    <bean id="basicExceptionTranslationFilter" class="org.acegisecurity.ui.ExceptionTranslationFilter">
+        <property name="authenticationEntryPoint">
+            <bean class="org.acegisecurity.ui.basicauth.BasicProcessingFilterEntryPoint">
+                <property name="realmName" value="Subsonic"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="filterInvocationInterceptor" class="org.acegisecurity.intercept.web.FilterSecurityInterceptor">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="alwaysReauthenticate" value="true"/>
+        <property name="accessDecisionManager" ref="accessDecisionManager"/>
+        <property name="objectDefinitionSource">
+            <value>
+                PATTERN_TYPE_APACHE_ANT
+
+                /login.view=IS_AUTHENTICATED_ANONYMOUSLY
+                /stream/**=IS_AUTHENTICATED_ANONYMOUSLY
+                /style/**=IS_AUTHENTICATED_ANONYMOUSLY
+                /icons/**=IS_AUTHENTICATED_ANONYMOUSLY
+
+                /generalSettings.view=ROLE_ADMIN
+                /userSettings.view=ROLE_ADMIN
+                /musicFolderSettings.view=ROLE_ADMIN
+                /internetRadioSettings.view=ROLE_ADMIN
+                /searchSettings.view=ROLE_ADMIN
+
+                /deletePlaylist.view=ROLE_PLAYLIST
+                /savePlaylist.view=ROLE_PLAYLIST
+
+                /download.view=ROLE_DOWNLOAD
+
+                /upload.view=ROLE_UPLOAD
+
+                /changeCoverArt.view=ROLE_COVERART
+                /editTags.view=ROLE_COVERART
+
+                /setMusicFileInfo.view=ROLE_COMMENT
+
+                /**=IS_AUTHENTICATED_REMEMBERED
+            </value>
+        </property>
+    </bean>
+
+    <bean id="accessDecisionManager" class="org.acegisecurity.vote.AffirmativeBased">
+        <property name="allowIfAllAbstainDecisions" value="false"/>
+        <property name="decisionVoters">
+            <list>
+                <bean class="org.acegisecurity.vote.RoleVoter"/>
+                <bean class="org.acegisecurity.vote.AuthenticatedVoter"/>
+            </list>
+        </property>
+    </bean>
+
+    <!--TODO-->
+    <bean id="rememberMeServices" class="org.acegisecurity.ui.rememberme.TokenBasedRememberMeServices">
+        <property name="userDetailsService" ref="securityService"/>
+        <property name="key" value="changeThis"/>
+    </bean>
+
+    <bean id="authenticationManager" class="org.acegisecurity.providers.ProviderManager">
+        <property name="providers">
+            <list>
+                <ref local="daoAuthenticationProvider"/>
+                <bean class="org.acegisecurity.providers.anonymous.AnonymousAuthenticationProvider">
+                    <property name="key" value="changeThis"/>
+                </bean>
+                <bean class="org.acegisecurity.providers.rememberme.RememberMeAuthenticationProvider">
+                    <property name="key" value="changeThis"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="daoAuthenticationProvider" class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="securityService"/>
+        <!--<property name="userCache">-->
+            <!--<bean class="org.acegisecurity.providers.dao.cache.EhCacheBasedUserCache">-->
+                <!--<property name="cache">-->
+                    <!--<bean class="org.springframework.cache.ehcache.EhCacheFactoryBean">-->
+                        <!--<property name="cacheManager">-->
+                            <!--<bean class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"/>-->
+                        <!--</property>-->
+                        <!--<property name="cacheName" value="userCache"/>-->
+                    <!--</bean>-->
+                <!--</property>-->
+            <!--</bean>-->
+        <!--</property>-->
+    </bean>
+
+    <!-- Authorization of AJAX services. -->
+    <bean id="ajaxServiceInterceptor" class="org.acegisecurity.intercept.method.aopalliance.MethodSecurityInterceptor">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="accessDecisionManager" ref="accessDecisionManager"/>
+        <property name="objectDefinitionSource">
+            <value>
+                net.sourceforge.subsonic.ajax.TagService.setTags=ROLE_COVERART
+                net.sourceforge.subsonic.ajax.TransferService.getUploadInfo=ROLE_UPLOAD
+            </value>
+        </property>
+    </bean>
+
+    <bean id="ajaxTagServiceSecure" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="ajaxTagService"/>
+        <property name="interceptorNames">
+            <idref local="ajaxServiceInterceptor"/>
+        </property>
+    </bean>
+
+    <bean id="ajaxTransferServiceSecure" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="ajaxTransferService"/>
+        <property name="interceptorNames">
+            <idref local="ajaxServiceInterceptor"/>
+        </property>
+    </bean>
+
+    <!--TODO-->
+    <!-- This bean is optional; it isn't used by any other bean as it only listens and logs -->
+    <bean id="loggerListener" class="org.acegisecurity.event.authentication.LoggerListener"/>
+
+
+</beans>

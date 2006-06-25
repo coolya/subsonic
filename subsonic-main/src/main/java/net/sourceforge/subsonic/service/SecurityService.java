@@ -3,6 +3,12 @@ package net.sourceforge.subsonic.service;
 import net.sourceforge.subsonic.*;
 import net.sourceforge.subsonic.dao.*;
 import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.domain.User;
+import org.acegisecurity.wrapper.*;
+import org.acegisecurity.userdetails.*;
+import org.acegisecurity.*;
+import org.acegisecurity.providers.dao.*;
+import org.springframework.dao.*;
 
 import javax.servlet.http.*;
 import java.io.*;
@@ -12,30 +18,35 @@ import java.io.*;
  *
  * @author Sindre Mehus
  */
-public class SecurityService {
+public class SecurityService implements UserDetailsService {
 
     private static final Logger LOG = Logger.getLogger(SecurityService.class);
 
     private UserDao userDao = new UserDao();
 
     /**
-     * Authenticates a user.
-     * @param username The username.
-     * @param password The plain text password, as entered by the user.
-     * @return Whether the user is authenticated.
+     * Locates the user based on the username.
+     *
+     * @param username The username presented to the {@link DaoAuthenticationProvider}
+     * @return A fully populated user record (never <code>null</code>)
+     * @throws UsernameNotFoundException
+     *          if the user could not be found or the user has no GrantedAuthority
+     * @throws DataAccessException
+     *          if user could not be found for a repository-specific reason
      */
-    public boolean authenticate(String username, String password) {
-        return userDao.authenticate(username, password);
-    }
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+        User user = getUserByName(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User \"" + username + "\" was not found.");
+        }
 
-    /**
-     * Authorizes a user by checking if it is member of the given role.
-     * @param username The username.
-     * @param role The role to test for membership.
-     * @return Whether the user is authorized for the given role.
-     */
-    public boolean authorize(String username, String role) {
-        return userDao.authorize(username, role);
+        String[] roles = userDao.getRolesForUser(username);
+        GrantedAuthority[] authorities = new GrantedAuthority[roles.length];
+        for (int i = 0; i < roles.length; i++) {
+            authorities[i] = new GrantedAuthorityImpl("ROLE_" + roles[i].toUpperCase());
+        }
+        
+        return new org.acegisecurity.userdetails.User(username, user.getPassword(), true, true, true, true, authorities);
     }
 
     /**
@@ -44,15 +55,24 @@ public class SecurityService {
      * @return The logged-in user, or <code>null</code>.
      */
     public User getCurrentUser(HttpServletRequest request) {
-        String username = request.getRemoteUser();
+        String username = getCurrentUsername(request);
         return username == null ? null : userDao.getUserByName(username);
     }
 
     /**
-     * Returns the user with the given username.
-     * @param username The username used when logging in.
-     * @return The user, or <code>null</code> if not found.
+     * Returns the name of the currently logged-in user.
+     * @param request The HTTP request.
+     * @return The name of the logged-in user, or <code>null</code>.
      */
+    public String getCurrentUsername(HttpServletRequest request) {
+        return new SecurityContextHolderAwareRequestWrapper(request).getRemoteUser();
+    }
+
+    /**
+    * Returns the user with the given username.
+    * @param username The username used when logging in.
+    * @return The user, or <code>null</code> if not found.
+    */
     public User getUserByName(String username) {
         return userDao.getUserByName(username);
     }

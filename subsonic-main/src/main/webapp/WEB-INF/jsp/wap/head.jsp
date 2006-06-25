@@ -1,4 +1,4 @@
-<%@ include file="include.jsp" %>
+<%@ include file="../include.jsp" %>
 
 <head>
     <meta http-equiv="Cache-Control" content="max-age=0" forua="true"/>

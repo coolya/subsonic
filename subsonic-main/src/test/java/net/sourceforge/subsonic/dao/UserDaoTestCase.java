@@ -64,7 +64,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong bytes streamed.", 1, newUser.getBytesStreamed());
         assertEquals("Wrong bytes downloaded.", 2, newUser.getBytesDownloaded());
         assertEquals("Wrong bytes uploaded.", 3, newUser.getBytesUploaded());
-        assertEquals("Wrong locale.", "en", newUser.getLocale());
+        assertEquals("Wrong locale.", Locale.ENGLISH, newUser.getLocale());
         assertEquals("Wrong theme.", "default", newUser.getThemeId());
     }
 
@@ -99,32 +99,16 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong number of users.", 0, userDao.getAllUsers().length);
     }
 
-    public void testAuthenticate() {
-        userDao.createUser(new User("sindre", "secret"));
-        assertTrue("Error in authentication.", userDao.authenticate("sindre", "secret"));
-        assertFalse("Error in authentication.", userDao.authenticate("sindre", "wrong"));
-        assertFalse("Error in authentication.", userDao.authenticate("sindre", ""));
-        assertFalse("Error in authentication.", userDao.authenticate("sindre", null));
-        assertFalse("Error in authentication.", userDao.authenticate("wrong", "secret"));
-        assertFalse("Error in authentication.", userDao.authenticate("", "secret"));
-        assertFalse("Error in authentication.", userDao.authenticate(null, "secret"));
-        assertFalse("Error in authentication.", userDao.authenticate(null, null));
-        assertFalse("Error in authentication.", userDao.authenticate("", ""));
-    }
-
-    public void testAuthorize() {
+    public void testGetRolesForUser() {
         User user = new User("sindre", "secret");
+        user.setAdminRole(true);
+        user.setCommentRole(true);
         userDao.createUser(user);
 
-        assertEquals("Error in authorization.", user.isAdminRole(),    userDao.authorize("sindre", "admin"));
-        assertEquals("Error in authorization.", user.isCommentRole(),  userDao.authorize("sindre", "comment"));
-        assertEquals("Error in authorization.", user.isCoverArtRole(), userDao.authorize("sindre", "coverart"));
-        assertEquals("Error in authorization.", user.isDownloadRole(), userDao.authorize("sindre", "download"));
-        assertEquals("Error in authorization.", user.isPlaylistRole(), userDao.authorize("sindre", "playlist"));
-        assertEquals("Error in authorization.", user.isUploadRole(),   userDao.authorize("sindre", "upload"));
-
-        assertEquals("Error in authorization.", true, userDao.authorize("sindre", "user"));
-        assertEquals("Error in authorization.", true, userDao.authorize("anyone", "user"));
+        String[] roles = userDao.getRolesForUser("sindre");
+        assertEquals("Wrong number of roles.", 2, roles.length);
+        assertEquals("Wrong role.", "admin", roles[0]);
+        assertEquals("Wrong role.", "comment", roles[1]);
     }
 
     private void assertUserEquals(User expected, User actual) {

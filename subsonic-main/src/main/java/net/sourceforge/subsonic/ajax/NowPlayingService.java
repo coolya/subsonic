@@ -15,6 +15,8 @@ import java.io.*;
  */
 public class NowPlayingService {
 
+    private PlayerService playerService;
+
     /**
      * Returns the path of the currently playing file.
      * @return The path of the currently playing file, or the string <code>"nil"</code> if no file is playing.
@@ -35,8 +37,11 @@ public class NowPlayingService {
 
     private MusicFile getCurrentMusicFile() {
         WebContext webContext = WebContextFactory.get();
-        Player player = ServiceFactory.getPlayerService().getPlayer(webContext.getHttpServletRequest(), webContext.getHttpServletResponse());
+        Player player = playerService.getPlayer(webContext.getHttpServletRequest(), webContext.getHttpServletResponse());
         return player.getPlaylist().getCurrentFile();
     }
 
+    public void setPlayerService(PlayerService playerService) {
+        this.playerService = playerService;
+    }
 }

@@ -24,6 +24,7 @@
         <property name="viewName"><value>top</value></property>
         <property name="settingsService"><ref bean="settingsService"/></property>
         <property name="versionService"><ref bean="versionService"/></property>
+        <property name="securityService"><ref bean="securityService"/></property>
     </bean>
     <bean id="helpController" class="net.sourceforge.subsonic.controller.HelpController">
         <property name="viewName"><value>help</value></property>
@@ -222,17 +223,6 @@
     </bean>
     <bean id="passwordSettingsValidator" class="net.sourceforge.subsonic.validator.PasswordSettingsValidator"/>
 
-    <!--TODO: Get rid of ServiceFactory-->
-    <bean id="searchService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getSearchService"/>
-    <bean id="securityService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getSecurityService"/>
-    <bean id="playerService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getPlayerService"/>
-    <bean id="playlistService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getPlaylistService"/>
-    <bean id="settingsService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getSettingsService"/>
-    <bean id="versionService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getVersionService"/>
-    <bean id="statusService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getStatusService"/>
-    <bean id="musicInfoService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getMusicInfoService"/>
-    <bean id="amazonSearchService" class="net.sourceforge.subsonic.service.ServiceFactory" factory-method="getAmazonSearchService"/>
-
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="alwaysUseFullPath" value="true"/>
         <property name="mappings">
@@ -254,6 +244,7 @@
                 <prop key="/deletePlaylist.view">loadPlaylistController</prop>
                 <prop key="/savePlaylist.view">savePlaylistController</prop>
                 <prop key="/changeCoverArt.view">changeCoverArtController</prop>
+                <prop key="/login.view">multiController</prop>
                 <prop key="/index.view">multiController</prop>
                 <prop key="/zoomCoverArt.view">multiController</prop>
                 <prop key="/nowPlaying.view">nowPlayingController</prop>
@@ -277,8 +268,8 @@
                 <prop key="/userChart.view">userChartController</prop>
                 <prop key="/download.view">downloadController</prop>
                 <prop key="/podcast.view">podcastController</prop>
-                <prop key="/podcast">podcastController</prop>
-                <prop key="/wap*">wapController</prop>
+                <prop key="/podcast/**">podcastController</prop>
+                <prop key="/wap/**">wapController</prop>
                 <prop key="/play.m3u">m3uController</prop>
                 <prop key="/stream/**">streamController</prop>
             </props>
@@ -310,4 +301,5 @@
         <property name="prefix"><value>/WEB-INF/jsp/</value></property>
         <property name="suffix"><value>.jsp</value></property>
     </bean>
+
 </beans>

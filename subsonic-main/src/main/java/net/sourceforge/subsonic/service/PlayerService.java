@@ -17,6 +17,7 @@ public class PlayerService {
     private static final String COOKIE_NAME = "player";
 
     private PlayerDao playerDao = new PlayerDao();
+    private StatusService statusService;
 
     /**
      * Equivalent to <code>getPlayer(request, response, true)</code> .
@@ -51,8 +52,9 @@ public class PlayerService {
         }
 
         // Look for player with same IP address and user name.
+        String remoteUser = ServiceFactory.getSecurityService().getCurrentUsername(request);
         if (player == null) {
-            player = getPlayerByIpAddressAndUsername(request.getRemoteAddr(), request.getRemoteUser());
+            player = getPlayerByIpAddressAndUsername(request.getRemoteAddr(), remoteUser);
         }
 
         // If no player was found, create it.
@@ -63,8 +65,8 @@ public class PlayerService {
 
         // Update player data.
         boolean isUpdate = false;
-        if (request.getRemoteUser() != null && !request.getRemoteUser().equals(player.getUsername())) {
-            player.setUsername(request.getRemoteUser());
+        if (remoteUser != null && !remoteUser.equals(player.getUsername())) {
+            player.setUsername(remoteUser);
             isUpdate = true;
         }
         if (player.getIpAddress() == null || isStreamRequest ||
@@ -129,7 +131,6 @@ public class PlayerService {
      * @return Whether the player is connected.
      */
     private boolean isPlayerConnected(Player player) {
-        StatusService statusService = ServiceFactory.getStatusService();
         return statusService.getStreamStatusesForPlayer(player).length > 0;
     }
 
@@ -201,5 +202,9 @@ public class PlayerService {
 
         playerDao.createPlayer(player);
         return player;
+    }
+
+    public void setStatusService(StatusService statusService) {
+        this.statusService = statusService;
     }
 }

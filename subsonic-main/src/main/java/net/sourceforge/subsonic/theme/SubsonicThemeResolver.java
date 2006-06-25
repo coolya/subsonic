@@ -28,7 +28,7 @@ public class SubsonicThemeResolver implements ThemeResolver {
 
         // Look for user-specific theme.
         User user = securityService.getCurrentUser(request);
-        String themeId = user.getThemeId();
+        String themeId = (user == null ? null : user.getThemeId());
         if (themeId != null && themeExists(themeId)) {
             return themeId;
         }
