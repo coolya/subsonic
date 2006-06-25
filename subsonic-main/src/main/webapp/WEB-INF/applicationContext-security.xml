@@ -51,9 +51,8 @@
         <property name="rememberMeServices" ref="rememberMeServices"/>
     </bean>
 
-    <!--TODO-->
     <bean id="anonymousProcessingFilter" class="org.acegisecurity.providers.anonymous.AnonymousProcessingFilter">
-        <property name="key" value="changeThis"/>
+        <property name="key" value="subsonic"/>
         <property name="userAttribute" value="anonymousUser,ROLE_ANONYMOUS"/>
     </bean>
 
@@ -126,10 +125,10 @@
         </property>
     </bean>
 
-    <!--TODO-->
     <bean id="rememberMeServices" class="org.acegisecurity.ui.rememberme.TokenBasedRememberMeServices">
         <property name="userDetailsService" ref="securityService"/>
-        <property name="key" value="changeThis"/>
+        <property name="tokenValiditySeconds" value="31536000"/> <!-- One year -->
+        <property name="key" value="subsonic"/>
     </bean>
 
     <bean id="authenticationManager" class="org.acegisecurity.providers.ProviderManager">
@@ -137,10 +136,10 @@
             <list>
                 <ref local="daoAuthenticationProvider"/>
                 <bean class="org.acegisecurity.providers.anonymous.AnonymousAuthenticationProvider">
-                    <property name="key" value="changeThis"/>
+                    <property name="key" value="subsonic"/>
                 </bean>
                 <bean class="org.acegisecurity.providers.rememberme.RememberMeAuthenticationProvider">
-                    <property name="key" value="changeThis"/>
+                    <property name="key" value="subsonic"/>
                 </bean>
             </list>
         </property>
@@ -148,6 +147,7 @@
 
     <bean id="daoAuthenticationProvider" class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
         <property name="userDetailsService" ref="securityService"/>
+        <!--TODO-->
         <!--<property name="userCache">-->
             <!--<bean class="org.acegisecurity.providers.dao.cache.EhCacheBasedUserCache">-->
                 <!--<property name="cache">-->

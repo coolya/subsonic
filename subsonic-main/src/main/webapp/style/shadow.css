@@ -1,3 +1,7 @@
+/*
+ From http://www.positioniseverything.net/articles/dropshadows.html
+*/
+
 html>body .outerpair1 {
     background: url( upperrightfade.png ) right top no-repeat;
 }

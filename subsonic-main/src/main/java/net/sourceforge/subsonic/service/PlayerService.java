@@ -18,6 +18,7 @@ public class PlayerService {
 
     private PlayerDao playerDao = new PlayerDao();
     private StatusService statusService;
+    private SecurityService securityService;
 
     /**
      * Equivalent to <code>getPlayer(request, response, true)</code> .
@@ -52,7 +53,7 @@ public class PlayerService {
         }
 
         // Look for player with same IP address and user name.
-        String remoteUser = ServiceFactory.getSecurityService().getCurrentUsername(request);
+        String remoteUser = securityService.getCurrentUsername(request);
         if (player == null) {
             player = getPlayerByIpAddressAndUsername(request.getRemoteAddr(), remoteUser);
         }
@@ -206,5 +207,9 @@ public class PlayerService {
 
     public void setStatusService(StatusService statusService) {
         this.statusService = statusService;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 }

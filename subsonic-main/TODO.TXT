@@ -1,9 +1,9 @@
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
-DWR
-Create roles
-
+Fancy login page (http://www.cssdrive.com/index.php/forums/member/login/)
+Use cookie.setPath()?
+      cookie.setPath(request.getContextPath());
 Ask Palm for a free phone.
 Test WAP select player on cell phone.
 Make it clearer that Tomcat 5.5 or later is required.

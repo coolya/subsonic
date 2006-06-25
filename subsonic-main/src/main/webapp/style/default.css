@@ -135,6 +135,7 @@ form {
 
 input, select {
     font-size: 9pt;
+    border: 1px solid gray;
 }
 
 label {

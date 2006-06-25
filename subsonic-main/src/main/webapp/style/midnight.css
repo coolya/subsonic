@@ -25,7 +25,6 @@
 /* Background color for form controls. */
 input, select {
     background-color: #DDDDDD;
-    border: 1px solid gray;
 }
 
 /* Hover color for form controls. */

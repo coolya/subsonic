@@ -9,6 +9,7 @@
     <bean id="searchService" class="net.sourceforge.subsonic.service.SearchService"/>
     <bean id="playerService" class="net.sourceforge.subsonic.service.PlayerService">
         <property name="statusService"><ref bean="statusService"/></property>
+        <property name="securityService"><ref bean="securityService"/></property>
     </bean>
     <bean id="playlistService" class="net.sourceforge.subsonic.service.PlaylistService"/>
     <bean id="versionService" class="net.sourceforge.subsonic.service.VersionService"/>

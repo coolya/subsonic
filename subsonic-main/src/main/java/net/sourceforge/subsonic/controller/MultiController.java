@@ -14,7 +14,10 @@ import java.util.*;
 public class MultiController extends MultiActionController {
 
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
-        return new ModelAndView("login");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("logout", request.getParameter("logout") != null);
+        map.put("error", request.getParameter("error") != null);
+        return new ModelAndView("login", "model", map);
     }
 
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
