@@ -14,10 +14,10 @@
         <form:input path="query" size="55"/>
         <input type="submit" value="<fmt:message key="search.search"/>"/>
     </p>
-    <form:checkbox path="titleIncluded" id="titleIncluded"/>
+    <form:checkbox path="titleIncluded" id="titleIncluded" cssClass="checkbox"/>
     <label for="titleIncluded"><fmt:message key="search.include.title"/></label> |
 
-    <form:checkbox path="artistAndAlbumIncluded" id="artistAndAlbumIncluded"/>
+    <form:checkbox path="artistAndAlbumIncluded" id="artistAndAlbumIncluded" cssClass="checkbox"/>
     <label for="artistAndAlbumIncluded"><fmt:message key="search.include.artistandalbum"/></label> |
 
     <label for="time"><fmt:message key="search.newer"/></label>

@@ -10,7 +10,6 @@ import java.util.*;
  * as details about how often and how recent albums have been played.
 
  * @author Sindre Mehus
- * @version $Revision: 1.3 $ $Date: 2006/02/27 21:39:39 $
  */
 public class MusicInfoService {
 

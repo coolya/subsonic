@@ -209,6 +209,12 @@ img {
     line-height: 1em;
 }
 
+.checkbox {
+    margin: 0;
+    padding: 0;
+    border: 1px solid gray;
+}
+
 /* Table with simple lines between the cells. */
 .ruleTable {
     border-collapse: collapse;

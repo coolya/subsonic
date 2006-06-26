@@ -1,7 +1,10 @@
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
-Fancy login page (http://www.cssdrive.com/index.php/forums/member/login/)
+Ugly checkbox border in IE (and FF?)
+Ugly login in IE.
+<FRAMESET BORDERCOLOR="…"
+Create "Electron Blue" theme (http://www.msn.com/)
 Use cookie.setPath()?
       cookie.setPath(request.getContextPath());
 Ask Palm for a free phone.
@@ -17,14 +20,14 @@ Springify DWR.
 Springify securityfilter.
 Remove usage of services in domain (MusicFile).
 Include options to display bitrate, album, artist, year, genre, format etc in the playlist (and maybe also the main browser window)
-Acegi
-Form-based login.
-Logout option
-Show logged-in user
 Update Norwegian translation.
 
 COMPLETED IN VERSION 2.8
 ========================
+Acegi
+Form-based login.
+Logout option
+Show logged-in user
 Per-user locale.
 Per-user theme.
 Created "Back in black" theme.

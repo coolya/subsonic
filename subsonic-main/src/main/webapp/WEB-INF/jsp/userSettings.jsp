@@ -45,27 +45,27 @@
     <c:if test="${not command.admin}">
         <table>
             <tr>
-                <td><form:checkbox path="adminRole" id="admin"/></td>
+                <td><form:checkbox path="adminRole" id="admin" cssClass="checkbox"/></td>
                 <td><label for="admin"><fmt:message key="usersettings.admin"/></label></td>
             </tr>
             <tr>
-                <td><form:checkbox path="downloadRole" id="download"/></td>
+                <td><form:checkbox path="downloadRole" id="download" cssClass="checkbox"/></td>
                 <td><label for="download"><fmt:message key="usersettings.download"/></label></td>
             </tr>
             <tr>
-                <td><form:checkbox path="uploadRole" id="upload"/></td>
+                <td><form:checkbox path="uploadRole" id="upload" cssClass="checkbox"/></td>
                 <td><label for="upload"><fmt:message key="usersettings.upload"/></label></td>
             </tr>
             <tr>
-                <td><form:checkbox path="playlistRole" id="playlist"/></td>
+                <td><form:checkbox path="playlistRole" id="playlist" cssClass="checkbox"/></td>
                 <td><label for="playlist"><fmt:message key="usersettings.playlist"/></label></td>
             </tr>
             <tr>
-                <td><form:checkbox path="coverArtRole" id="coverArt"/></td>
+                <td><form:checkbox path="coverArtRole" id="coverArt" cssClass="checkbox"/></td>
                 <td><label for="coverArt"><fmt:message key="usersettings.coverart"/></label></td>
             </tr>
             <tr>
-                <td><form:checkbox path="commentRole" id="comment"/></td>
+                <td><form:checkbox path="commentRole" id="comment" cssClass="checkbox"/></td>
                 <td><label for="comment"><fmt:message key="usersettings.comment"/></label></td>
             </tr>
         </table>
@@ -75,7 +75,7 @@
         <c:if test="${not command.new}">
             <table>
                 <tr>
-                    <td><form:checkbox path="delete" id="delete"/></td>
+                    <td><form:checkbox path="delete" id="delete" cssClass="checkbox"/></td>
                     <td><label for="delete"><fmt:message key="usersettings.delete"/></label></td>
                 </tr>
             </table>
@@ -107,7 +107,7 @@
         <c:otherwise>
             <table>
                 <tr>
-                    <td><form:checkbox path="passwordChange" id="passwordChange" onclick="javascript:enablePasswordFields()"/></td>
+                    <td><form:checkbox path="passwordChange" id="passwordChange" onclick="javascript:enablePasswordFields()" cssClass="checkbox"/></td>
                     <td><label for="passwordChange"><fmt:message key="usersettings.changepassword"/></label></td>
                 </tr>
             </table>

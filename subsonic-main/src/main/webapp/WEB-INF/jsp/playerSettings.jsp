@@ -96,7 +96,7 @@
 
     <tr>
         <td colspan="2">
-            <form:checkbox path="dynamicIp" id="dynamicIp"/>
+            <form:checkbox path="dynamicIp" id="dynamicIp" cssClass="checkbox"/>
             <label for="dynamicIp"><fmt:message key="playersettings.dynamicip"/></label>
         </td>
         <td><a href="helpPopup.view?topic=dynamicIp" onclick="return popup(this, 'help')">
@@ -105,7 +105,7 @@
 
     <tr>
         <td colspan="2">
-            <form:checkbox path="autoControlEnabled" id="autoControlEnabled"/>
+            <form:checkbox path="autoControlEnabled" id="autoControlEnabled" cssClass="checkbox"/>
             <label for="autoControlEnabled"><fmt:message key="playersettings.autocontrol"/></label>
         </td>
         <td><a href="helpPopup.view?topic=autoControl" onclick="return popup(this, 'help')">

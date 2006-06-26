@@ -12,7 +12,7 @@
 }
 
 /* The secondary background color. */
-.bgcolor2, .ruleTableHeader, .log  {
+.bgcolor2, .ruleTableHeader, .log {
     background-color: #4D4C52
 }
 
@@ -25,6 +25,11 @@
 /* Background color for form controls. */
 input, select {
     background-color: #DDDDDD;
+    border: 1px solid #4D4C52;
+}
+
+.checkbox {
+    border: 1px solid #4D4C52;
 }
 
 /* Hover color for form controls. */

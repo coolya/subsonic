@@ -23,7 +23,7 @@
                 <td><input type="text" name="name" size="20" value="${radio.name}"/></td>
                 <td><input type="text" name="streamUrl" size="40" value="${radio.streamUrl}"/></td>
                 <td><input type="text" name="homepageUrl" size="40" value="${radio.homepageUrl}"/></td>
-                <td align="center"><input type="checkbox" ${radio.enabled ? "checked" : ""} name="enabled"/></td>
+                <td align="center"><input type="checkbox" ${radio.enabled ? "checked" : ""} name="enabled" class="checkbox"/></td>
                 <td><input type="submit" name="edit" value="<fmt:message key="common.save"/>"/></td>
                 <td><input type="submit" name="delete" value="<fmt:message key="common.delete"/>"/></td>
             </form>
@@ -35,7 +35,7 @@
             <td><input type="text" name="name" size="20"/></td>
             <td><input type="text" name="streamUrl" size="40"/></td>
             <td><input type="text" name="homepageUrl" size="40"/></td>
-            <td align="center"><input name="enabled" checked type="checkbox"/></td>
+            <td align="center"><input name="enabled" checked type="checkbox" class="checkbox"/></td>
             <td><input type="submit" name="create" value="<fmt:message key="common.create"/>"/></td>
         </form>
     </tr>

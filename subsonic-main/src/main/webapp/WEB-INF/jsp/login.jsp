@@ -14,7 +14,8 @@
 </head><body>
 
 <form action="<c:url value="/j_acegi_security_check"/>" method="POST">
-    <table class="bgcolor2" style="border:1px solid black; padding:20px 50px 20px 50px; margin:100px auto 0 auto">
+    <div class="bgcolor2" align="center" style="border:1px solid black; padding:20px 50px 20px 50px; margin-top:100px">
+        <table>
         <tr>
             <td colspan="2" style="padding-bottom:10px">
                 <h1><img src="<c:url value="/icons/logo.gif"/>" alt="" style="padding-right:15px"/> <fmt:message key="login.title"/></h1>
@@ -23,18 +24,18 @@
 
         <tr>
             <td style="padding-right:10px"><fmt:message key="login.username"/></td>
-            <td><input type="text" name="j_username" size="25"></td>
+            <td><input type="text" name="j_username" style="width:12em"></td>
         </tr>
 
         <tr>
             <td style="padding-bottom:10px"><fmt:message key="login.password"/></td>
-            <td style="padding-bottom:10px"><input type="password" name="j_password" size="25"/></td>
+            <td style="padding-bottom:10px"><input type="password" name="j_password" style="width:12em"/></td>
         </tr>
 
         <tr>
             <td><input name="submit" type="submit" value="<fmt:message key="login.login"/>"></td>
             <td class="detail">
-                <input type="checkbox" name="_acegi_security_remember_me" id="remember">
+                <input type="checkbox" name="_acegi_security_remember_me" id="remember" class="checkbox">
                 <label for="remember"><fmt:message key="login.remember"/></label>
             </td>
         </tr>
@@ -46,6 +47,7 @@
         </c:if>
 
     </table>
+        </div>
 </form>
 </body>
 </html>
