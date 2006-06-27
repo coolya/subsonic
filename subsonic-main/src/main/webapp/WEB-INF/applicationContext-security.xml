@@ -190,7 +190,6 @@
 
     <!--TODO-->
     <!-- This bean is optional; it isn't used by any other bean as it only listens and logs -->
-    <bean id="loggerListener" class="org.acegisecurity.event.authentication.LoggerListener"/>
-
+    <!--<bean id="loggerListener" class="org.acegisecurity.event.authentication.LoggerListener"/>-->
 
 </beans>

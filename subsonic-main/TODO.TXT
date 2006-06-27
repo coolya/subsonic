@@ -1,6 +1,8 @@
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
+Too much whitespace above error in editTags.jsp
+Ugly alignment of images and text in Opera 9.
 Ugly checkbox border in IE (and FF?)
 Ugly login in IE.
 <FRAMESET BORDERCOLOR="…"
@@ -24,18 +26,14 @@ Update Norwegian translation.
 
 COMPLETED IN VERSION 2.8
 ========================
-Acegi
-Form-based login.
-Logout option
-Show logged-in user
-Per-user locale.
-Per-user theme.
-Created "Back in black" theme.
-Springify WAP.
-Springify servlets.
-Convert servlets to controllers.
-Added option to stream over plain http when using SSL.
-Error page.
+New security implementation based on Acegi (http://acegisecurity.org/)
+Added form-based login.
+Added logout option.
+Support per-user language and theme.
+Added "Back in black" theme.
+Added option to stream over plain HTTP when using SSL.
+Nicer error page.
+Springified WAP pages and servlets.
 
 BACKLOG
 ==========
