@@ -1,14 +1,12 @@
 package net.sourceforge.subsonic.dao;
 
-/**
- * Unit test of {@link PlayerDao}.
- * @author Sindre Mehus
- * @version $Revision: 1.7 $ $Date: 2006/02/28 23:19:58 $
- */
-
 import net.sourceforge.subsonic.domain.*;
 import org.springframework.jdbc.core.*;
 
+/**
+ * Unit test of {@link PlayerDao}.
+ * @author Sindre Mehus
+ */
 import java.util.*;
 
 public class PlayerDaoTestCase extends DaoTestCaseBase {
@@ -17,7 +15,7 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
 
     protected void setUp() throws Exception {
         playerDao = new PlayerDao();
-        JdbcTemplate template = playerDao.getJdbcTemplate();
+        JdbcTemplate template = new DaoHelper().getJdbcTemplate();
         template.execute("delete from player");
     }
 

@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class MusicInfoService {
 
-    private MusicFileInfoDao musicFileInfoDao = new MusicFileInfoDao();
+    private MusicFileInfoDao musicFileInfoDao;
 
     /**
     * Returns music file info for the given path.
@@ -85,5 +85,9 @@ public class MusicInfoService {
             info.setPlayCount(info.getPlayCount() + 1);
             updateMusicFileInfo(info);
         }
+    }
+
+    public void setMusicFileInfoDao(MusicFileInfoDao musicFileInfoDao) {
+        this.musicFileInfoDao = musicFileInfoDao;
     }
 }

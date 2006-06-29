@@ -1,11 +1,12 @@
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
+Remove usage of services in domain (MusicFile).
+Springify DAO's and data source.
+Simplify <ref bean="musicFileService"/>
 Too much whitespace above error in editTags.jsp
 Ugly alignment of images and text in Opera 9.
 Ugly checkbox border in IE (and FF?)
-Ugly login in IE.
-<FRAMESET BORDERCOLOR="…"
 Create "Electron Blue" theme (http://www.msn.com/)
 Use cookie.setPath()?
       cookie.setPath(request.getContextPath());
@@ -18,9 +19,6 @@ Use AJAX to change random albums on home page, one at a time.
 Implement pure AJAX version of playlist.jsp.
 Get updated Macedonian resource bundle.
 Check Javascript error on IE.
-Springify DWR.
-Springify securityfilter.
-Remove usage of services in domain (MusicFile).
 Include options to display bitrate, album, artist, year, genre, format etc in the playlist (and maybe also the main browser window)
 Update Norwegian translation.
 
@@ -34,6 +32,7 @@ Added "Back in black" theme.
 Added option to stream over plain HTTP when using SSL.
 Nicer error page.
 Springified WAP pages and servlets.
+Springify DWR.
 
 BACKLOG
 ==========
@@ -42,7 +41,6 @@ Replace methods in my StringUtil with corresponding in Spring.
 Batch download of cover arts.
 Use Rico for rounded edges. http://openrico.org
 Seeking within songs.
-Support SSL.
 Test flac
 Use cewolf?
 Playlist popup window.
@@ -177,3 +175,16 @@ Støtte sommertid.
 Enklere konfigurasjon av hvilke kanaler som skal tas med.
 Endre navn til xmltv_no eller noe.
 
+HUS
+=====
+Male alt hvitt på huset.
+Male østvegg.
+Fikse takrenne/nedløp på østvegg.
+Fikse mur på hjørne og overside. Males.
+Skifte knust vindu.
+Korte ned på terrasse.
+Male rødt under balkong, rekkverk, balkongkant etc.
+Vaske/male tak over inngang.
+Male trappegelender på overside?
+Fjerne tung jerndings og sykkel.
+Legge ny singel/heller.

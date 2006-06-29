@@ -15,7 +15,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
 
     protected void setUp() throws Exception {
         userDao = new UserDao();
-        JdbcTemplate template = userDao.getJdbcTemplate();
+        JdbcTemplate template = new DaoHelper().getJdbcTemplate();
         template.execute("delete from user_role");
         template.execute("delete from user");
     }

@@ -11,13 +11,13 @@ import java.io.*;
  * Provides database services for music folders.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.3 $ $Date: 2006/02/25 16:11:14 $
  */
-public class MusicFolderDao extends AbstractDao {
+public class MusicFolderDao {
 
     private static final Logger LOG = Logger.getLogger(MusicFolderDao.class);
     private static final String COLUMNS = "id, path, name, enabled";
     private MusicFolderRowMapper rowMapper = new MusicFolderRowMapper();
+    private DaoHelper daoHelper;
 
     /**
      * Returns all music folders.
@@ -25,7 +25,7 @@ public class MusicFolderDao extends AbstractDao {
      */
     public MusicFolder[] getAllMusicFolders() {
         String sql = "select " + COLUMNS + " from music_folder";
-        return (MusicFolder[]) getJdbcTemplate().query(sql, rowMapper).toArray(new MusicFolder[0]);
+        return (MusicFolder[]) daoHelper.getJdbcTemplate().query(sql, rowMapper).toArray(new MusicFolder[0]);
     }
 
     /**
@@ -34,7 +34,7 @@ public class MusicFolderDao extends AbstractDao {
      */
     public void createMusicFolder(MusicFolder musicFolder) {
         String sql = "insert into music_folder (" + COLUMNS + ") values (null, ?, ?, ?)";
-        getJdbcTemplate().update(sql, new Object[] {musicFolder.getPath(), musicFolder.getName(), musicFolder.isEnabled()});
+        daoHelper.getJdbcTemplate().update(sql, new Object[] {musicFolder.getPath(), musicFolder.getName(), musicFolder.isEnabled()});
         LOG.info("Created music folder " + musicFolder.getPath());
     }
 
@@ -44,7 +44,7 @@ public class MusicFolderDao extends AbstractDao {
      */
     public void deleteMusicFolder(Integer id) {
         String sql = "delete from music_folder where id=?";
-        getJdbcTemplate().update(sql, new Object[] {id});
+        daoHelper.getJdbcTemplate().update(sql, new Object[] {id});
         LOG.info("Deleted music folder with ID " + id);
     }
 
@@ -54,8 +54,12 @@ public class MusicFolderDao extends AbstractDao {
      */
     public void updateMusicFolder(MusicFolder musicFolder) {
         String sql = "update music_folder set path=?, name=?, enabled=? where id=?";
-        getJdbcTemplate().update(sql, new Object[] {musicFolder.getPath().getPath(), musicFolder.getName(),
+        daoHelper.getJdbcTemplate().update(sql, new Object[] {musicFolder.getPath().getPath(), musicFolder.getName(),
                                                     musicFolder.isEnabled(), musicFolder.getId()});
+    }
+
+    public void setDaoHelper(DaoHelper daoHelper) {
+        this.daoHelper = daoHelper;
     }
 
     private static class MusicFolderRowMapper implements RowMapper {

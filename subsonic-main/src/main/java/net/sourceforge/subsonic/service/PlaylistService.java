@@ -2,9 +2,9 @@ package net.sourceforge.subsonic.service;
 
 import net.sourceforge.subsonic.*;
 import net.sourceforge.subsonic.domain.*;
-import org.jdom.input.*;
-import org.jdom.*;
 import org.apache.commons.lang.*;
+import org.jdom.*;
+import org.jdom.input.*;
 
 import java.io.*;
 import java.util.*;
@@ -19,6 +19,8 @@ import java.util.regex.*;
 public class PlaylistService {
 
     private static final Logger LOG = Logger.getLogger(PlaylistService.class);
+    private SettingsService settingsService;
+    private SecurityService securityService;
 
     /**
      * Saves the given playlist to persistent storage.
@@ -103,13 +105,21 @@ public class PlaylistService {
      * @return The directory where playlists are stored.
      */
     public File getPlaylistDirectory() {
-        return new File(ServiceFactory.getSettingsService().getPlaylistFolder());
+        return new File(settingsService.getPlaylistFolder());
     }
 
     private void checkAccess(File file) {
-        if (!ServiceFactory.getSecurityService().isWriteAllowed(file)) {
+        if (!securityService.isWriteAllowed(file)) {
             throw new SecurityException("Access denied to file " + file);
         }
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 
     private static class PlaylistFilenameFilter implements FilenameFilter {

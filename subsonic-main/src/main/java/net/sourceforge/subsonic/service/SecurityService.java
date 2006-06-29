@@ -4,10 +4,10 @@ import net.sourceforge.subsonic.*;
 import net.sourceforge.subsonic.dao.*;
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.domain.User;
-import org.acegisecurity.wrapper.*;
-import org.acegisecurity.userdetails.*;
 import org.acegisecurity.*;
 import org.acegisecurity.providers.dao.*;
+import org.acegisecurity.userdetails.*;
+import org.acegisecurity.wrapper.*;
 import org.springframework.dao.*;
 
 import javax.servlet.http.*;
@@ -22,18 +22,27 @@ public class SecurityService implements UserDetailsService {
 
     private static final Logger LOG = Logger.getLogger(SecurityService.class);
 
-    private UserDao userDao = new UserDao();
+    private UserDao userDao;
+    private SettingsService settingsService;
 
     /**
-     * Locates the user based on the username.
-     *
-     * @param username The username presented to the {@link DaoAuthenticationProvider}
-     * @return A fully populated user record (never <code>null</code>)
-     * @throws UsernameNotFoundException
-     *          if the user could not be found or the user has no GrantedAuthority
-     * @throws DataAccessException
-     *          if user could not be found for a repository-specific reason
+     * Register in service locator so that non-Spring objects can access me.
+     * This method is invoked automatically by Spring.
      */
+    public void init() {
+        ServiceLocator.setSecurityService(this);
+    }
+
+    /**
+    * Locates the user based on the username.
+    *
+    * @param username The username presented to the {@link DaoAuthenticationProvider}
+    * @return A fully populated user record (never <code>null</code>)
+    * @throws UsernameNotFoundException
+    *          if the user could not be found or the user has no GrantedAuthority
+    * @throws DataAccessException
+    *          if user could not be found for a repository-specific reason
+    */
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
         User user = getUserByName(username);
         if (user == null) {
@@ -45,7 +54,7 @@ public class SecurityService implements UserDetailsService {
         for (int i = 0; i < roles.length; i++) {
             authorities[i] = new GrantedAuthorityImpl("ROLE_" + roles[i].toUpperCase());
         }
-        
+
         return new org.acegisecurity.userdetails.User(username, user.getPassword(), true, true, true, true, authorities);
     }
 
@@ -147,7 +156,7 @@ public class SecurityService implements UserDetailsService {
      * @return Whether the given file is located in one of the music folders.
      */
     private boolean isInMusicFolder(File file) {
-        MusicFolder[] folders =  ServiceFactory.getSettingsService().getAllMusicFolders();
+        MusicFolder[] folders =  settingsService.getAllMusicFolders();
         String path = file.getPath();
         for (MusicFolder folder : folders) {
             if (isFileInFolder(path, folder.getPath().getPath())) {
@@ -163,7 +172,7 @@ public class SecurityService implements UserDetailsService {
      * @return Whether the given file is located in the playlist folder.
      */
     private boolean isInPlaylistFolder(File file) {
-        String playlistFolder = ServiceFactory.getSettingsService().getPlaylistFolder();
+        String playlistFolder = settingsService.getPlaylistFolder();
         return isFileInFolder(file.getPath(), playlistFolder);
     }
 
@@ -186,5 +195,13 @@ public class SecurityService implements UserDetailsService {
         folder = folder.replace('\\', '/');
 
         return file.toUpperCase().startsWith(folder.toUpperCase());
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
+    }
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
     }
 }

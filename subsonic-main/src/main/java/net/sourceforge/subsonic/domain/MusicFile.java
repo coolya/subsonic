@@ -28,7 +28,7 @@ public class MusicFile {
      * @exception SecurityException If access is denied to the given file.
      */
     public MusicFile(File file) {
-        if (!ServiceFactory.getSecurityService().isReadAllowed(file)) {
+        if (!ServiceLocator.getSecurityService().isReadAllowed(file)) {
             throw new SecurityException("Access denied to file " + file);
         }
         this.file = file;
@@ -113,7 +113,7 @@ public class MusicFile {
     * @return Whether this music file is one of the root music folders.
     */
     public boolean isRoot() {
-        SettingsService settings = ServiceFactory.getSettingsService();
+        SettingsService settings = ServiceLocator.getSettingsService();
         MusicFolder[] folders = settings.getAllMusicFolders();
         for (MusicFolder folder : folders) {
             if (file.equals(folder.getPath())) {
@@ -325,7 +325,7 @@ public class MusicFile {
     }
 
     private File getBestCoverArt(File[] candidates) {
-        for (String mask : ServiceFactory.getSettingsService().getCoverArtMaskAsArray()) {
+        for (String mask : ServiceLocator.getSettingsService().getCoverArtMaskAsArray()) {
             for (File candidate : candidates) {
                 if (candidate.getName().toUpperCase().endsWith(mask.toUpperCase())) {
                     return candidate;
@@ -340,7 +340,7 @@ public class MusicFile {
             return true;
         }
 
-        for (String suffix : ServiceFactory.getSettingsService().getMusicMaskAsArray()) {
+        for (String suffix : ServiceLocator.getSettingsService().getMusicMaskAsArray()) {
             if (file.getName().toLowerCase().endsWith(suffix.toLowerCase())) {
                 return true;
             }

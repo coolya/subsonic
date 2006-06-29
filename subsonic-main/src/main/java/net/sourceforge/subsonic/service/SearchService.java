@@ -1,8 +1,8 @@
 package net.sourceforge.subsonic.service;
 
 import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.util.*;
 import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.util.*;
 
 import java.io.*;
 import java.util.*;
@@ -25,13 +25,8 @@ public class SearchService {
 
     private boolean creatingIndex;
     private Timer timer;
-
-    /**
-     * Creates a new instance.
-     */
-    public SearchService() {
-        schedule();
-    }
+    private SettingsService settingsService;
+    private SecurityService securityService;
 
     /**
      * Returns whether the search index exists.
@@ -72,10 +67,9 @@ public class SearchService {
                     Map<File, Line> oldIndex = getIndex();
 
                     writer = new PrintWriter(new FileWriter(getIndexFile()));
-                    SettingsService settings = ServiceFactory.getSettingsService();
 
                     // Read entire music directory.
-                    MusicFolder[] musicFolders = settings.getAllMusicFolders();
+                    MusicFolder[] musicFolders = settingsService.getAllMusicFolders();
                     int count = 0;
                     for (MusicFolder musicFolder : musicFolders) {
 
@@ -125,9 +119,8 @@ public class SearchService {
             }
         };
 
-        SettingsService settings = ServiceFactory.getSettingsService();
-        long daysBetween = settings.getIndexCreationInterval();
-        int hour = settings.getIndexCreationHour();
+        long daysBetween = settingsService.getIndexCreationInterval();
+        int hour = settingsService.getIndexCreationHour();
 
         if (daysBetween == -1) {
             LOG.info("Automatic index creation disabled.");
@@ -286,7 +279,6 @@ public class SearchService {
             return result;
         }
 
-        SecurityService securityService = ServiceFactory.getSecurityService();
         for (int i = 0; i < count; i++) {
             int n = RANDOM.nextInt(cachedSongs.size());
             File file = cachedSongs.get(n).file;
@@ -315,7 +307,6 @@ public class SearchService {
             return result;
         }
 
-        SecurityService securityService = ServiceFactory.getSecurityService();
         int n = 0;
         for (Line line : cachedAlbums) {
             if (n == count + offset) {
@@ -451,6 +442,14 @@ public class SearchService {
                 LOG.warn("Failed to delete old index file: " + file.getPath(), x);
             }
         }
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 
     /**

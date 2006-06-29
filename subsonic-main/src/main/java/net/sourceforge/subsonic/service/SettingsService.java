@@ -71,8 +71,8 @@ public class SettingsService {
     private Properties properties = new Properties();
     private List<Theme> themes;
     private List<Locale> locales;
-    private MusicFolderDao musicFolderDao = new MusicFolderDao();
-    private InternetRadioDao internetRadioDao = new InternetRadioDao();
+    private InternetRadioDao internetRadioDao;
+    private MusicFolderDao musicFolderDao;
 
     public SettingsService() {
         File propertyFile = getPropertyFile();
@@ -110,6 +110,14 @@ public class SettingsService {
         }
 
         save();
+    }
+
+    /**
+     * Register in service locator so that non-Spring objects can access me.
+     * This method is invoked automatically by Spring.
+     */
+    public void init() {
+        ServiceLocator.setSettingsService(this);
     }
 
     public void save() {
@@ -540,5 +548,13 @@ public class SettingsService {
         }
 
         return result.toArray(new String[0]);
+    }
+
+    public void setInternetRadioDao(InternetRadioDao internetRadioDao) {
+        this.internetRadioDao = internetRadioDao;
+    }
+
+    public void setMusicFolderDao(MusicFolderDao musicFolderDao) {
+        this.musicFolderDao = musicFolderDao;
     }
 }

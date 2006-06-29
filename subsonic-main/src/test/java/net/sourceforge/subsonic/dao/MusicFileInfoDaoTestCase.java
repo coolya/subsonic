@@ -1,23 +1,21 @@
 package net.sourceforge.subsonic.dao;
 
-/**
- * Unit test of {@link net.sourceforge.subsonic.dao.MusicFileInfoDao}.
- * @author Sindre Mehus
- * @version $Revision: 1.2 $ $Date: 2006/02/27 21:39:39 $
- */
-
 import net.sourceforge.subsonic.domain.*;
 import org.springframework.jdbc.core.*;
 
 import java.util.*;
 
+/**
+ * Unit test of {@link MusicFileInfoDao}.
+ * @author Sindre Mehus
+ */
 public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
 
     private MusicFileInfoDao musicFileInfoDao;
 
     protected void setUp() throws Exception {
         musicFileInfoDao = new MusicFileInfoDao();
-        JdbcTemplate template = musicFileInfoDao.getJdbcTemplate();
+        JdbcTemplate template = new DaoHelper().getJdbcTemplate();
         template.execute("delete from music_file_info");
     }
 

@@ -11,12 +11,11 @@ import java.util.*;
  *
  * @see Player
  * @author Sindre Mehus
- * @version $Revision: 1.15 $ $Date: 2006/02/28 23:19:58 $
  */
 public class PlayerService {
     private static final String COOKIE_NAME = "player";
 
-    private PlayerDao playerDao = new PlayerDao();
+    private PlayerDao playerDao;
     private StatusService statusService;
     private SecurityService securityService;
 
@@ -211,5 +210,9 @@ public class PlayerService {
 
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
+    }
+
+    public void setPlayerDao(PlayerDao playerDao) {
+        this.playerDao = playerDao;
     }
 }

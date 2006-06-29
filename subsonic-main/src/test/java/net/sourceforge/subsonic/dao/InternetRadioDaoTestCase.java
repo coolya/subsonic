@@ -1,21 +1,19 @@
 package net.sourceforge.subsonic.dao;
 
-/**
- * Unit test of {@link net.sourceforge.subsonic.dao.InternetRadioDao}.
- * @author Sindre Mehus
- * @version $Revision: 1.3 $ $Date: 2006/02/25 16:11:14 $
- */
-
 import net.sourceforge.subsonic.domain.*;
 import org.springframework.jdbc.core.*;
 
+/**
+ * Unit test of {@link InternetRadioDao}.
+ * @author Sindre Mehus
+ */
 public class InternetRadioDaoTestCase extends DaoTestCaseBase {
 
     private InternetRadioDao internetRadioDao;
 
     protected void setUp() throws Exception {
         internetRadioDao = new InternetRadioDao();
-        JdbcTemplate template = internetRadioDao.getJdbcTemplate();
+        JdbcTemplate template = new DaoHelper().getJdbcTemplate();
         template.execute("delete from internet_radio");
     }
 

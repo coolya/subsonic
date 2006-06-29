@@ -10,21 +10,21 @@ import java.sql.*;
  * Provides database services for internet radio.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.3 $ $Date: 2006/02/25 16:11:14 $
  */
-public class InternetRadioDao extends AbstractDao {
+public class InternetRadioDao {
 
     private static final Logger LOG = Logger.getLogger(InternetRadioDao.class);
     private static final String COLUMNS = "id, name, stream_url, homepage_url, enabled";
     private InternetRadioRowMapper rowMapper = new InternetRadioRowMapper();
+    private DaoHelper daoHelper;
 
     /**
-     * Returns all internet radio stations.
-     * @return Possibly empty array of all internet radio stations.
-     */
+    * Returns all internet radio stations.
+    * @return Possibly empty array of all internet radio stations.
+    */
     public InternetRadio[] getAllInternetRadios() {
         String sql = "select " + COLUMNS + " from internet_radio";
-        return (InternetRadio[]) getJdbcTemplate().query(sql, rowMapper).toArray(new InternetRadio[0]);
+        return (InternetRadio[]) daoHelper.getJdbcTemplate().query(sql, rowMapper).toArray(new InternetRadio[0]);
     }
 
     /**
@@ -33,7 +33,7 @@ public class InternetRadioDao extends AbstractDao {
      */
     public void createInternetRadio(InternetRadio radio) {
         String sql = "insert into internet_radio (" + COLUMNS + ") values (null, ?, ?, ?, ?)";
-        getJdbcTemplate().update(sql, new Object[] {radio.getName(), radio.getStreamUrl(), radio.getHomepageUrl(), radio.isEnabled()});
+        daoHelper.getJdbcTemplate().update(sql, new Object[] {radio.getName(), radio.getStreamUrl(), radio.getHomepageUrl(), radio.isEnabled()});
         LOG.info("Created internet radio station " + radio.getName());
     }
 
@@ -43,7 +43,7 @@ public class InternetRadioDao extends AbstractDao {
      */
     public void deleteInternetRadio(Integer id) {
         String sql = "delete from internet_radio where id=?";
-        getJdbcTemplate().update(sql, new Object[] {id});
+        daoHelper.getJdbcTemplate().update(sql, new Object[] {id});
         LOG.info("Deleted internet radio station with ID " + id);
     }
 
@@ -53,8 +53,12 @@ public class InternetRadioDao extends AbstractDao {
      */
     public void updateInternetRadio(InternetRadio radio) {
         String sql = "update internet_radio set name=?, stream_url=?, homepage_url=?, enabled=? where id=?";
-        getJdbcTemplate().update(sql, new Object[] {radio.getName(), radio.getStreamUrl(), radio.getHomepageUrl(),
-                                                    radio.isEnabled(), radio.getId()});
+        daoHelper.getJdbcTemplate().update(sql, new Object[] {radio.getName(), radio.getStreamUrl(), radio.getHomepageUrl(),
+                                                              radio.isEnabled(), radio.getId()});
+    }
+
+    public void setDaoHelper(DaoHelper daoHelper) {
+        this.daoHelper = daoHelper;
     }
 
     private static class InternetRadioRowMapper implements RowMapper {

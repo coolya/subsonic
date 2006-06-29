@@ -1,23 +1,21 @@
 package net.sourceforge.subsonic.dao;
 
-/**
- * Unit test of {@link MusicFolderDao}.
- * @author Sindre Mehus
- * @version $Revision: 1.1 $ $Date: 2006/02/25 16:11:14 $
- */
-
 import net.sourceforge.subsonic.domain.*;
 import org.springframework.jdbc.core.*;
 
 import java.io.*;
 
+/**
+ * Unit test of {@link MusicFolderDao}.
+ * @author Sindre Mehus
+ */
 public class MusicFolderDaoTestCase extends DaoTestCaseBase {
 
     private MusicFolderDao musicFolderDao;
 
     protected void setUp() throws Exception {
         musicFolderDao = new MusicFolderDao();
-        JdbcTemplate template = musicFolderDao.getJdbcTemplate();
+        JdbcTemplate template = new DaoHelper().getJdbcTemplate();
         template.execute("delete from music_folder");
     }
 
