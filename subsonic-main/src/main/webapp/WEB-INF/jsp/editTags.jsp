@@ -67,7 +67,7 @@
         } else {
             message = "<div class='warning'><fmt:message key="edittags.error"/></div>"
             var errors = DWRUtil.getValue("errors");
-            errors += "<br/>" + result;
+            errors += result + "<br/>";
             DWRUtil.setValue("errors", errors);
         }
         DWRUtil.setValue("status" + index, message);
@@ -120,5 +120,4 @@
 
 <p><input type="submit" id="save" value="<fmt:message key="common.save"/>" onclick="javascript:updateTags()"/></p>
 <div class="warning" id="errors"/>
-
 </body></html>
