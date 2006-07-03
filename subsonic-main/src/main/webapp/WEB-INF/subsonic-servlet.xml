@@ -4,71 +4,71 @@
 <beans>
 
     <bean id="leftController" class="net.sourceforge.subsonic.controller.LeftController">
-        <property name="viewName"><value>left</value></property>
-        <property name="searchService"><ref bean="searchService"/></property>
-        <property name="securityService"><ref bean="securityService"/></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="viewName" value="left"/>
+        <property name="searchService" ref="searchService"/>
+        <property name="securityService" ref="securityService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="statusController" class="net.sourceforge.subsonic.controller.StatusController">
-        <property name="viewName"><value>status</value></property>
-        <property name="statusService"><ref bean="statusService"/></property>
+        <property name="viewName" value="status"/>
+        <property name="statusService" ref="statusService"/>
     </bean>
     <bean id="mainController" class="net.sourceforge.subsonic.controller.MainController">
-        <property name="viewName"><value>main</value></property>
-        <property name="securityService"><ref bean="securityService"/></property>
-        <property name="playerService"><ref bean="playerService"/></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
-        <property name="musicInfoService"><ref bean="musicInfoService"/></property>
+        <property name="viewName" value="main"/>
+        <property name="securityService" ref="securityService"/>
+        <property name="playerService" ref="playerService"/>
+        <property name="settingsService" ref="settingsService"/>
+        <property name="musicInfoService" ref="musicInfoService"/>
     </bean>
     <bean id="topController" class="net.sourceforge.subsonic.controller.TopController">
-        <property name="viewName"><value>top</value></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
-        <property name="versionService"><ref bean="versionService"/></property>
-        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="viewName" value="top"/>
+        <property name="settingsService" ref="settingsService"/>
+        <property name="versionService" ref="versionService"/>
+        <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="helpController" class="net.sourceforge.subsonic.controller.HelpController">
-        <property name="viewName"><value>help</value></property>
-        <property name="versionService"><ref bean="versionService"/></property>
+        <property name="viewName" value="help"/>
+        <property name="versionService" ref="versionService"/>
     </bean>
     <bean id="moreController" class="net.sourceforge.subsonic.controller.MoreController">
-        <property name="viewName"><value>more</value></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
-        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="viewName" value="more"/>
+        <property name="settingsService" ref="settingsService"/>
+        <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="uploadController" class="net.sourceforge.subsonic.controller.UploadController">
-        <property name="viewName"><value>upload</value></property>
-        <property name="securityService"><ref bean="securityService"/></property>
-        <property name="statusService"><ref bean="statusService"/></property>
-        <property name="playerService"><ref bean="playerService"/></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="viewName" value="upload"/>
+        <property name="securityService" ref="securityService"/>
+        <property name="statusService" ref="statusService"/>
+        <property name="playerService" ref="playerService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="helpPopupController" class="net.sourceforge.subsonic.controller.HelpPopupController">
-        <property name="viewName"><value>helpPopup</value></property>
+        <property name="viewName" value="helpPopup"/>
     </bean>
     <bean id="allmusicController" class="net.sourceforge.subsonic.controller.AllmusicController">
-        <property name="viewName"><value>allmusic</value></property>
+        <property name="viewName" value="allmusic"/>
     </bean>
     <bean id="podcastController" class="net.sourceforge.subsonic.controller.PodcastController">
-        <property name="viewName"><value>podcast</value></property>
-        <property name="playlistService"><ref bean="playlistService"/></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="viewName" value="podcast"/>
+        <property name="playlistService" ref="playlistService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="playRadioController" class="net.sourceforge.subsonic.controller.PlayRadioController">
-        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="setMusicFileInfoController" class="net.sourceforge.subsonic.controller.SetMusicFileInfoController">
-        <property name="musicInfoService"><ref bean="musicInfoService"/></property>
+        <property name="musicInfoService" ref="musicInfoService"/>
     </bean>
     <bean id="albumInfoController" class="net.sourceforge.subsonic.controller.AlbumInfoController">
         <property name="commandClass"><value>net.sourceforge.subsonic.command.AlbumInfoCommand</value></property>
-        <property name="successView"><value>albumInfo</value></property>
-        <property name="formView"><value>albumInfo</value></property>
-        <property name="amazonSearchService"><ref bean="amazonSearchService"/></property>
+        <property name="successView" value="albumInfo"/>
+        <property name="formView" value="albumInfo"/>
+        <property name="amazonSearchService" ref="amazonSearchService"/>
     </bean>
     <bean id="randomPlaylistController" class="net.sourceforge.subsonic.controller.RandomPlaylistController">
-        <property name="viewName"><value>reload</value></property>
-        <property name="playerService"><ref bean="playerService"/></property>
-        <property name="searchService"><ref bean="searchService"/></property>
+        <property name="viewName" value="reload"/>
+        <property name="playerService" ref="playerService"/>
+        <property name="searchService" ref="searchService"/>
         <property name="reloadFrames">
             <list>
                 <bean class="net.sourceforge.subsonic.controller.ReloadFrame">
@@ -83,143 +83,143 @@
         </property>
     </bean>
     <bean id="loadPlaylistController" class="net.sourceforge.subsonic.controller.LoadPlaylistController">
-        <property name="securityService"><ref bean="securityService"/></property>
-        <property name="playlistService"><ref bean="playlistService"/></property>
-        <property name="playerService"><ref bean="playerService"/></property>
+        <property name="securityService" ref="securityService"/>
+        <property name="playlistService" ref="playlistService"/>
+        <property name="playerService" ref="playerService"/>
     </bean>
     <bean id="savePlaylistController" class="net.sourceforge.subsonic.controller.SavePlaylistController">
-        <property name="commandName"><value>command</value></property>
+        <property name="commandName" value="command"/>
         <property name="commandClass"><value>net.sourceforge.subsonic.command.SavePlaylistCommand</value></property>
-        <property name="validator"><ref bean="savePlaylistValidator"/></property>
-        <property name="formView"><value>savePlaylist</value></property>
+        <property name="validator" ref="savePlaylistValidator"/>
+        <property name="formView" value="savePlaylist"/>
         <property name="successView"><value>nowPlaying.view</value></property>
-        <property name="playlistService"><ref bean="playlistService"/></property>
-        <property name="playerService"><ref bean="playerService"/></property>
+        <property name="playlistService" ref="playlistService"/>
+        <property name="playerService" ref="playerService"/>
     </bean>
     <bean id="changeCoverArtController" class="net.sourceforge.subsonic.controller.ChangeCoverArtController">
-        <property name="amazonSearchService"><ref bean="amazonSearchService"/></property>
-        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="amazonSearchService" ref="amazonSearchService"/>
+        <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="nowPlayingController" class="net.sourceforge.subsonic.controller.NowPlayingController">
-        <property name="playerService"><ref bean="playerService"/></property>
+        <property name="playerService" ref="playerService"/>
     </bean>
     <bean id="searchController" class="net.sourceforge.subsonic.controller.SearchController">
         <property name="commandClass"><value>net.sourceforge.subsonic.command.SearchCommand</value></property>
-        <property name="successView"><value>search</value></property>
-        <property name="formView"><value>search</value></property>
-        <property name="searchService"><ref bean="searchService"/></property>
-        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="successView" value="search"/>
+        <property name="formView" value="search"/>
+        <property name="searchService" ref="searchService"/>
+        <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="settingsController" class="net.sourceforge.subsonic.controller.SettingsController">
-        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="playerSettingsController" class="net.sourceforge.subsonic.controller.PlayerSettingsController">
         <property name="commandClass"><value>net.sourceforge.subsonic.command.PlayerSettingsCommand</value></property>
-        <property name="successView"><value>playerSettings</value></property>
-        <property name="formView"><value>playerSettings</value></property>
-        <property name="playerService"><ref bean="playerService"/></property>
-        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="successView" value="playerSettings"/>
+        <property name="formView" value="playerSettings"/>
+        <property name="playerService" ref="playerService"/>
+        <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="musicFolderSettingsController" class="net.sourceforge.subsonic.controller.MusicFolderSettingsController">
-        <property name="viewName"><value>musicFolderSettings</value></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="viewName" value="musicFolderSettings"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="internetRadioSettingsController" class="net.sourceforge.subsonic.controller.InternetRadioSettingsController">
-        <property name="viewName"><value>internetRadioSettings</value></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="viewName" value="internetRadioSettings"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="searchSettingsController" class="net.sourceforge.subsonic.controller.SearchSettingsController">
         <property name="commandClass"><value>net.sourceforge.subsonic.command.SearchSettingsCommand</value></property>
-        <property name="successView"><value>searchSettings</value></property>
-        <property name="formView"><value>searchSettings</value></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
-        <property name="searchService"><ref bean="searchService"/></property>
+        <property name="successView" value="searchSettings"/>
+        <property name="formView" value="searchSettings"/>
+        <property name="settingsService" ref="settingsService"/>
+        <property name="searchService" ref="searchService"/>
     </bean>
     <bean id="generalSettingsController" class="net.sourceforge.subsonic.controller.GeneralSettingsController">
         <property name="commandClass"><value>net.sourceforge.subsonic.command.GeneralSettingsCommand</value></property>
-        <property name="successView"><value>generalSettings</value></property>
-        <property name="formView"><value>generalSettings</value></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="successView" value="generalSettings"/>
+        <property name="formView" value="generalSettings"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="appearanceSettingsController" class="net.sourceforge.subsonic.controller.AppearanceSettingsController">
         <property name="commandClass"><value>net.sourceforge.subsonic.command.AppearanceSettingsCommand</value></property>
-        <property name="successView"><value>appearanceSettings</value></property>
-        <property name="formView"><value>appearanceSettings</value></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
-        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="successView" value="appearanceSettings"/>
+        <property name="formView" value="appearanceSettings"/>
+        <property name="settingsService" ref="settingsService"/>
+        <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="userSettingsController" class="net.sourceforge.subsonic.controller.UserSettingsController">
-        <property name="sessionForm"><value>true</value></property>
+        <property name="sessionForm" value="true"/>
         <property name="commandClass"><value>net.sourceforge.subsonic.command.UserSettingsCommand</value></property>
-        <property name="validator"><ref bean="userSettingsValidator"/></property>
-        <property name="successView"><value>userSettings</value></property>
-        <property name="formView"><value>userSettings</value></property>
-        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="validator" ref="userSettingsValidator"/>
+        <property name="successView" value="userSettings"/>
+        <property name="formView" value="userSettings"/>
+        <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="passwordSettingsController" class="net.sourceforge.subsonic.controller.PasswordSettingsController">
-        <property name="sessionForm"><value>true</value></property>
+        <property name="sessionForm" value="true"/>
         <property name="commandClass"><value>net.sourceforge.subsonic.command.PasswordSettingsCommand</value></property>
-        <property name="validator"><ref bean="passwordSettingsValidator"/></property>
-        <property name="successView"><value>passwordSettings</value></property>
-        <property name="formView"><value>passwordSettings</value></property>
-        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="validator" ref="passwordSettingsValidator"/>
+        <property name="successView" value="passwordSettings"/>
+        <property name="formView" value="passwordSettings"/>
+        <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="homeController" class="net.sourceforge.subsonic.controller.HomeController">
-        <property name="viewName"><value>home</value></property>
-        <property name="musicInfoService"><ref bean="musicInfoService"/></property>
-        <property name="searchService"><ref bean="searchService"/></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="viewName" value="home"/>
+        <property name="musicInfoService" ref="musicInfoService"/>
+        <property name="searchService" ref="searchService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="editTagsController" class="net.sourceforge.subsonic.controller.EditTagsController">
-        <property name="viewName"><value>editTags</value></property>
+        <property name="viewName" value="editTags"/>
     </bean>
     <bean id="playlistController" class="net.sourceforge.subsonic.controller.PlaylistController">
-        <property name="viewName"><value>playlist</value></property>
-        <property name="playerService"><ref bean="playerService"/></property>
-        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="viewName" value="playlist"/>
+        <property name="playerService" ref="playerService"/>
+        <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="coverArtController" class="net.sourceforge.subsonic.controller.CoverArtController">
-        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="statusChartController" class="net.sourceforge.subsonic.controller.StatusChartController">
-        <property name="statusService"><ref bean="statusService"/></property>
+        <property name="statusService" ref="statusService"/>
     </bean>
     <bean id="userChartController" class="net.sourceforge.subsonic.controller.UserChartController">
-        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="m3uController" class="net.sourceforge.subsonic.controller.M3UController">
-        <property name="playerService"><ref bean="playerService"/></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="playerService" ref="playerService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="streamController" class="net.sourceforge.subsonic.controller.StreamController">
-        <property name="playerService"><ref bean="playerService"/></property>
-        <property name="playlistService"><ref bean="playlistService"/></property>
-        <property name="statusService"><ref bean="statusService"/></property>
-        <property name="securityService"><ref bean="securityService"/></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
-        <property name="musicInfoService"><ref bean="musicInfoService"/></property>
+        <property name="playerService" ref="playerService"/>
+        <property name="playlistService" ref="playlistService"/>
+        <property name="statusService" ref="statusService"/>
+        <property name="securityService" ref="securityService"/>
+        <property name="settingsService" ref="settingsService"/>
+        <property name="musicInfoService" ref="musicInfoService"/>
     </bean>
     <bean id="downloadController" class="net.sourceforge.subsonic.controller.DownloadController">
-        <property name="playerService"><ref bean="playerService"/></property>
-        <property name="statusService"><ref bean="statusService"/></property>
-        <property name="securityService"><ref bean="securityService"/></property>
-        <property name="playlistService"><ref bean="playlistService"/></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="playerService" ref="playerService"/>
+        <property name="statusService" ref="statusService"/>
+        <property name="securityService" ref="securityService"/>
+        <property name="playlistService" ref="playlistService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="multiController" class="net.sourceforge.subsonic.controller.MultiController"/>
     <bean id="wapController" class="net.sourceforge.subsonic.controller.WapController">
-        <property name="settingsService"><ref bean="settingsService"/></property>
-        <property name="playerService"><ref bean="playerService"/></property>
-        <property name="playlistService"><ref bean="playlistService"/></property>
-        <property name="searchService"><ref bean="searchService"/></property>
-        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="settingsService" ref="settingsService"/>
+        <property name="playerService" ref="playerService"/>
+        <property name="playlistService" ref="playlistService"/>
+        <property name="searchService" ref="searchService"/>
+        <property name="securityService" ref="securityService"/>
     </bean>
 
     <bean id="savePlaylistValidator" class="net.sourceforge.subsonic.validator.SavePlaylistValidator">
-        <property name="playlistService"><ref bean="playlistService"/></property>
+        <property name="playlistService" ref="playlistService"/>
     </bean>
     <bean id="userSettingsValidator" class="net.sourceforge.subsonic.validator.UserSettingsValidator">
-        <property name="securityService"><ref bean="securityService"/></property>
+        <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="passwordSettingsValidator" class="net.sourceforge.subsonic.validator.PasswordSettingsValidator"/>
 
@@ -286,14 +286,14 @@
 
     <bean id="localeResolver"
           class="net.sourceforge.subsonic.i18n.SubsonicLocaleResolver">
-        <property name="securityService"><ref bean="securityService"/></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="securityService" ref="securityService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
 
     <bean id="themeResolver"
           class="net.sourceforge.subsonic.theme.SubsonicThemeResolver">
-        <property name="securityService"><ref bean="securityService"/></property>
-        <property name="settingsService"><ref bean="settingsService"/></property>
+        <property name="securityService" ref="securityService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

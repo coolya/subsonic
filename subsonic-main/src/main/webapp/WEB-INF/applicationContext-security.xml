@@ -41,7 +41,7 @@
     </bean>
 
     <bean id="basicProcessingFilterEntryPoint" class="org.acegisecurity.ui.basicauth.BasicProcessingFilterEntryPoint">
-       <property name="realmName"><value>Contacts Realm</value></property>
+       <property name="realmName"><value>Subsonic</value></property>
     </bean>
 
     <bean id="securityContextHolderAwareRequestFilter" class="org.acegisecurity.wrapper.SecurityContextHolderAwareRequestFilter"/>

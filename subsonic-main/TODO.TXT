@@ -2,8 +2,6 @@
 PRIORITIZED FOR VERSION 2.8
 ===========================
 Remove usage of services in domain (MusicFile).
-Springify DAO's and data source.
-Simplify <ref bean="musicFileService"/>
 Too much whitespace above error in editTags.jsp
 Ugly alignment of images and text in Opera 9.
 Ugly checkbox border in IE (and FF?)
@@ -24,6 +22,7 @@ Update Norwegian translation.
 
 COMPLETED IN VERSION 2.8
 ========================
+Exclude folders, "subsonic_exclude.txt".
 New security implementation based on Acegi (http://acegisecurity.org/)
 Added form-based login.
 Added logout option.
@@ -33,6 +32,8 @@ Added option to stream over plain HTTP when using SSL.
 Nicer error page.
 Springified WAP pages and servlets.
 Springify DWR.
+Springify DAO's and data source.
+Simplify <ref bean="musicFileService"/>
 
 BACKLOG
 ==========
@@ -112,7 +113,6 @@ XHTML Mobile Profile
 Add mp3-player as applet.
 Vise lengde på sanger. Lag tabell med all info?
 Automatisk finne lyrics-ting.
-Ta med lisens for commons-fileupload.
 Parse tags for wma, ogg osv.
 Show year and track length.
 No SHOUTcast if playlist is empty.
@@ -127,12 +127,9 @@ Svitsje til automatisk "now playing" etter en stund med inaktivitet?
 Registrere på http://directory.fsf.org/ [Registrert 14.06.2005]
 Show/use genre tag
 Create image cache.
-Make error page.
 Specify context path.
 HDTV-mode.
 Vis "lignende" album.
-Set language per user.
-Give users access to certain music folders.
 Add "Play" authorization.
 Add performance monitoring.
 
