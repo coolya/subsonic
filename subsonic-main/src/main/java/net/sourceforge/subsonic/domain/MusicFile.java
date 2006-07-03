@@ -21,6 +21,7 @@ public class MusicFile {
     private File file;
     private MetaData metaData;
     private int bitRate = -1;
+    private Set<String> excludes;
 
     /**
      * Creates a new instance for the given file.
@@ -309,7 +310,7 @@ public class MusicFile {
         File[] files = file.listFiles();
 
         for (File file : files) {
-            if (file.isDirectory()) {
+            if (file.isDirectory() && !isExcluded(file)) {
                 new MusicFile(file).listCoverArtRecursively(coverArtFiles, limit);
             }
         }
@@ -335,7 +336,12 @@ public class MusicFile {
         return null;
     }
 
-    private boolean acceptMusic(File file) {
+    private boolean acceptMusic(File file) throws IOException {
+
+        if (isExcluded(file)) {
+            return false;
+        }
+
         if (file.isDirectory()) {
             return true;
         }
@@ -346,6 +352,27 @@ public class MusicFile {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns whether the given file is excluded, i.e., whether it is listed in 'subsonic_exlude.txt' in
+     * the current directory.
+     * @param file The child file in question.
+     * @return Whether the child file is excluded.
+     */
+    private boolean isExcluded(File file) throws IOException {
+        if (excludes == null) {
+            excludes = new HashSet<String>();
+            File excludeFile = new File(this.file, "subsonic_exclude.txt");
+            if (excludeFile.exists()) {
+                String[] lines = StringUtil.readLines(new FileInputStream(excludeFile));
+                for (String line : lines) {
+                    excludes.add(line.toLowerCase());
+                }
+            }
+        }
+
+        return excludes.contains(file.getName().toLowerCase());
     }
 
     /**
