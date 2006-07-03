@@ -20,7 +20,7 @@ public class MusicFile {
 
     private File file;
     private MetaData metaData;
-    private int bitRate = -1;
+    private Integer bitRate;
     private Set<String> excludes;
 
     /**
@@ -380,18 +380,27 @@ public class MusicFile {
      * @return The bit rate in kilobits per second, or 0 if the bit rate can't be resolved.
      */
     public synchronized int getBitRate() {
-        if (bitRate == -1) {
+        if (bitRate == null) {
             MetaDataParser parser = MetaDataParser.Factory.getInstance().getParser(this);
             bitRate = (parser == null) ? 0 : parser.getBitRate(this);
         }
-        return bitRate;
+        return Math.abs(bitRate);
     }
 
     /**
-     * Returns whether this music file is equal to another object.
-     * @param o The object to compare to.
-     * @return Whether this music file is equal to another object.
+     * Returns whether this music file is encoded with variable bit rate (VBR). NOTE: Onlye works for MP3 files.
+     * @return Whether VBR is used.
      */
+    public boolean isVariableBitRate() {
+        getBitRate();
+        return bitRate < 0;
+    }
+
+    /**
+    * Returns whether this music file is equal to another object.
+    * @param o The object to compare to.
+    * @return Whether this music file is equal to another object.
+    */
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof MusicFile)) return false;

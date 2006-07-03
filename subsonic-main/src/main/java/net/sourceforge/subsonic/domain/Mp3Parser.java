@@ -2,11 +2,10 @@ package net.sourceforge.subsonic.domain;
 
 import net.sourceforge.subsonic.*;
 import org.blinkenlights.jid3.*;
+import org.blinkenlights.jid3.MP3File;
 import org.blinkenlights.jid3.v1.*;
 import org.blinkenlights.jid3.v2.*;
-import org.farng.mp3.MP3File;
-
-import java.io.*;
+import org.jaudiotagger.audio.mp3.*;
 
 /**
  * Parses meta data from MP3 files.
@@ -56,7 +55,7 @@ public class Mp3Parser extends MetaDataParser {
         String title  = null;
         String year   = null;
 
-        MediaFile mediaFile = new org.blinkenlights.jid3.MP3File(file.getFile());
+        MediaFile mediaFile = new MP3File(file.getFile());
 
         try {
             ID3V2Tag tag2 = null;
@@ -106,7 +105,7 @@ public class Mp3Parser extends MetaDataParser {
     public void setMetaData(MusicFile file, MusicFile.MetaData metaData) {
 
         try {
-            MediaFile mediaFile = new org.blinkenlights.jid3.MP3File(file.getFile());
+            MediaFile mediaFile = new MP3File(file.getFile());
 
             ID3V1Tag tag1 = mediaFile.getID3V1Tag();
             ID3V2Tag tag2 = mediaFile.getID3V2Tag();
@@ -157,23 +156,20 @@ public class Mp3Parser extends MetaDataParser {
 
     /**
      * Returns the bit rate of this music file.
-     * @return The bit rate in kilobits per second, or 0 if the bit rate can't be resolved.
+     * @return The bit rate in kilobits per second, or 0 if the bit rate can't be resolved. If variable bitrate (VBR) is used,
+     * a negative bitrate is returned.
      */
     public int getBitRate(MusicFile file) {
-        RandomAccessFile randomAccessFile = null;
         try {
-            MP3File mp3File = new MP3File();
-            randomAccessFile = new RandomAccessFile(file.getPath(), "r");
-            mp3File.seekMP3Frame(randomAccessFile);
-
-            return mp3File.getBitRate();
-        } catch (Exception x) {
+            MP3AudioHeader header = new MP3AudioHeader(file.getFile());
+            String bitRate = header.getBitRate();
+            if (header.isVariableBitRate()) {
+                return -1 * Integer.valueOf(bitRate.replace("~", ""));
+            }
+            return Integer.valueOf(bitRate);
+        } catch (Exception x ) {
             LOG.warn("Failed to resolve bit rate for " + file, x);
             return 0;
-        } finally {
-            try {
-                randomAccessFile.close();
-            } catch (Exception x) {}
         }
     }
 

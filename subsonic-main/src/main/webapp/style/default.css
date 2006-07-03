@@ -166,7 +166,7 @@ img {
     border: 0;
     margin: 0;
     padding: 0;
-    vertical-align: text-bottom;
+    vertical-align: middle;
 }
 
 .headerSelected {

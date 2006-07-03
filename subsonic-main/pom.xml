@@ -98,9 +98,9 @@
         </dependency>
 
         <dependency>
-            <groupId>jid3lib</groupId>
-            <artifactId>jid3lib</artifactId>
-            <version>0.5</version>
+            <groupId>jaudiotagger</groupId>
+            <artifactId>jaudiotagger</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>

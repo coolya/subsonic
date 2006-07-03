@@ -52,6 +52,8 @@ public class PlaylistController extends ParameterizableViewController {
             song.setParentPath(file.getParent().getPath());
             song.setArtistAlbumYear(getArtistAlbumYear(file.getMetaData()));
             song.setTitle(file.getTitle());
+            song.setBitRate(file.getBitRate());
+            song.setVariableBitRate(file.isVariableBitRate());
 
             boolean isCurrent = file.equals(currentFile) && i == playlist.getIndex();
             song.setCurrent(isCurrent);
@@ -183,6 +185,8 @@ public class PlaylistController extends ParameterizableViewController {
     public static class Song {
         private String title;
         private String artistAlbumYear;
+        private int bitRate;
+        private boolean isVariableBitRate;
         private String path;
         private String parentPath;
         private boolean isCurrent;
@@ -226,5 +230,22 @@ public class PlaylistController extends ParameterizableViewController {
         public void setCurrent(boolean current) {
             isCurrent = current;
         }
+
+        public int getBitRate() {
+            return bitRate;
+        }
+
+        public void setBitRate(int bitRate) {
+            this.bitRate = bitRate;
+        }
+
+        public boolean isVariableBitRate() {
+            return isVariableBitRate;
+        }
+
+        public void setVariableBitRate(boolean variableBitRate) {
+            isVariableBitRate = variableBitRate;
+        }
+
     }
 }

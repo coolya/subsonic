@@ -108,6 +108,7 @@
                     </td>
                     <td ${i % 2 == 0 ? "class='bgcolor1'" : ""} style="padding-right:0.25em">
                         <a target="main" href="${mainUrl}"><str:truncateNicely upper="50">${song.artistAlbumYear}</str:truncateNicely></a>
+                        ${song.bitRate} ${song.variableBitRate ? "VBR" : "CBR"}
                     </td>
                 </tr>
             </c:forEach>
