@@ -2,13 +2,12 @@ package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
-import net.sourceforge.subsonic.util.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
 
 import javax.servlet.http.*;
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 /**
  * Controller for the playlist frame.
@@ -40,22 +39,16 @@ public class PlaylistController extends ParameterizableViewController {
         return result;
     }
 
-    private List<Song> getSongs(Playlist playlist) throws IOException {
+    private List<Song> getSongs(Playlist playlist) {
         List<Song> result = new ArrayList<Song>();
         MusicFile currentFile = playlist.getCurrentFile();
 
         MusicFile[] files = playlist.getFiles();
         for (int i = 0; i < files.length; i++) {
             MusicFile file = files[i];
-            Song song = new Song();
-            song.setPath(file.getPath());
-            song.setParentPath(file.getParent().getPath());
-            song.setArtistAlbumYear(getArtistAlbumYear(file.getMetaData()));
-            song.setTitle(file.getTitle());
-            song.setBitRate(file.getBitRate());
-            song.setVariableBitRate(file.isVariableBitRate());
-
             boolean isCurrent = file.equals(currentFile) && i == playlist.getIndex();
+            Song song = new Song();
+            song.setMusicFile(file);
             song.setCurrent(isCurrent);
             result.add(song);
         }
@@ -140,37 +133,6 @@ public class PlaylistController extends ParameterizableViewController {
         return result;
     }
 
-    private String getArtistAlbumYear(MusicFile.MetaData metaData) {
-
-        String artist = metaData.getArtist();
-        String album  = metaData.getAlbum();
-        String year   = metaData.getYear();
-
-        if ("".equals(artist)) { artist = null; }
-        if ("".equals(album)) { album = null; }
-        if ("".equals(year)) { year = null; }
-
-        StringBuffer buf = new StringBuffer();
-
-        if (artist != null) {
-            buf.append("<em>").append(StringUtil.toHtml(artist)).append("</em>");
-        }
-
-        if (artist != null && album != null) {
-            buf.append(" - ");
-        }
-
-        if (album != null) {
-            buf.append(StringUtil.toHtml(album));
-        }
-
-        if (year != null) {
-            buf.append(" (").append(StringUtil.toHtml(year)).append(')');
-        }
-
-        return buf.toString();
-    }
-
     public void setPlayerService(PlayerService playerService) {
         this.playerService = playerService;
     }
@@ -183,44 +145,15 @@ public class PlaylistController extends ParameterizableViewController {
      * Contains information about a single song in the playlist.
      */
     public static class Song {
-        private String title;
-        private String artistAlbumYear;
-        private int bitRate;
-        private boolean isVariableBitRate;
-        private String path;
-        private String parentPath;
+        private MusicFile musicFile;
         private boolean isCurrent;
 
-        public String getTitle() {
-            return title;
+        public MusicFile getMusicFile() {
+            return musicFile;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getArtistAlbumYear() {
-            return artistAlbumYear;
-        }
-
-        public void setArtistAlbumYear(String artistAlbumYear) {
-            this.artistAlbumYear = artistAlbumYear;
-        }
-
-        public String getPath() {
-            return path;
-        }
-
-        public void setPath(String path) {
-            this.path = path;
-        }
-
-        public String getParentPath() {
-            return parentPath;
-        }
-
-        public void setParentPath(String parentPath) {
-            this.parentPath = parentPath;
+        public void setMusicFile(MusicFile musicFile) {
+            this.musicFile = musicFile;
         }
 
         public boolean isCurrent() {
@@ -230,22 +163,5 @@ public class PlaylistController extends ParameterizableViewController {
         public void setCurrent(boolean current) {
             isCurrent = current;
         }
-
-        public int getBitRate() {
-            return bitRate;
-        }
-
-        public void setBitRate(int bitRate) {
-            this.bitRate = bitRate;
-        }
-
-        public boolean isVariableBitRate() {
-            return isVariableBitRate;
-        }
-
-        public void setVariableBitRate(boolean variableBitRate) {
-            isVariableBitRate = variableBitRate;
-        }
-
     }
 }

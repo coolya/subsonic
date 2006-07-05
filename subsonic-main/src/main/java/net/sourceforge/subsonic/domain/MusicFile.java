@@ -3,6 +3,7 @@ package net.sourceforge.subsonic.domain;
 import net.sourceforge.subsonic.*;
 import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.util.*;
+import org.springframework.util.*;
 
 import java.io.*;
 import java.util.*;
@@ -195,9 +196,17 @@ public class MusicFile {
     }
 
     /**
-     * Returns the full pathname as a string.
-     * @return The full pathname as a string.
+     * Returns the file suffix, e.g., "mp3".
+     * @return The file suffix.
      */
+    public String getSuffix() {
+        return StringUtils.getFilenameExtension(getName());
+    }
+
+    /**
+    * Returns the full pathname as a string.
+    * @return The full pathname as a string.
+    */
     public String getPath() {
         return file.getPath();
     }

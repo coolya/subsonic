@@ -90,7 +90,7 @@
                                                                title="<fmt:message key="playlist.down"/>"/></a></td>
                     <c:if test="${model.user.downloadRole}">
                         <sub:url value="download.view" var="downloadUrl">
-                            <sub:param name="path" value="${song.path}"/>
+                            <sub:param name="path" value="${song.musicFile.path}"/>
                         </sub:url>
                         <td><a href="${downloadUrl}"><img width="13" height="13" src="<spring:theme code="downloadImage"/>"
                                                           alt="<fmt:message key="common.download"/>"
@@ -98,17 +98,43 @@
                     </c:if>
 
                     <sub:url value="main.view" var="mainUrl">
-                        <sub:param name="path" value="${song.parentPath}"/>
+                        <sub:param name="path" value="${song.musicFile.parent.path}"/>
                     </sub:url>
-                    <td ${i % 2 == 0 ? "class='bgcolor1'" : ""} style="padding-left:0.25em;padding-right:2em">
+                    <c:choose>
+                        <c:when test="${i % 2 == 0}">
+                            <c:set var="class" value="class='bgcolor1'"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="class" value=""/>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <td ${class} style="padding-left:0.25em;padding-right:1.5em">
                         <c:if test="${song.current}">
                             <img src="<c:url value="/icons/current.gif"/>" alt=""/>
                         </c:if>
-                        <a href="playlist.view?skip=${i}">${song.current ? "<b>" : ""}<str:truncateNicely upper="50">${song.title}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
+                        <a href="playlist.view?skip=${i}">${song.current ? "<b>" : ""}<str:truncateNicely upper="50">${song.musicFile.title}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
                     </td>
-                    <td ${i % 2 == 0 ? "class='bgcolor1'" : ""} style="padding-right:0.25em">
-                        <a target="main" href="${mainUrl}"><str:truncateNicely upper="50">${song.artistAlbumYear}</str:truncateNicely></a>
-                        ${song.bitRate} ${song.variableBitRate ? "VBR" : "CBR"}
+
+                    <td ${class} style="padding-right:1.5em">
+                        <a target="main" href="${mainUrl}"><str:truncateNicely upper="50">${song.musicFile.metaData.album}</str:truncateNicely></a>
+                    </td>
+
+                    <td ${class} style="padding-right:1.5em">
+                        <str:truncateNicely upper="50">${song.musicFile.metaData.artist}</str:truncateNicely>
+                    </td>
+
+                    <td ${class} style="padding-right:1.5em">
+                        ${song.musicFile.metaData.year}
+                    </td>
+
+                    <td ${class} style="padding-right:0.25em">
+                        <span class="detail">
+                            <c:if test="${song.musicFile.bitRate != 0}">
+                            ${song.musicFile.bitRate} Kbps ${song.musicFile.variableBitRate ? "(vbr)" : ""}
+                            </c:if>
+                         ${fn:toLowerCase(song.musicFile.suffix)}
+                        </span>
                     </td>
                 </tr>
             </c:forEach>

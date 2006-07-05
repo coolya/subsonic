@@ -40,6 +40,7 @@ public class VersionService {
         if (localVersion == null) {
             try {
                 localVersion = new Version(readLineFromResource("/version.txt"));
+                LOG.info("Resolved local Subsonic version to: " + localVersion);
             } catch (Exception x) {
                 LOG.warn("Failed to resolve local Subsonic version.", x);
             }
