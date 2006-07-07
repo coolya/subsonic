@@ -1,7 +1,6 @@
 package net.sourceforge.subsonic.dao;
 
 import net.sourceforge.subsonic.domain.*;
-import org.springframework.jdbc.core.*;
 
 import java.util.*;
 
@@ -11,12 +10,8 @@ import java.util.*;
  */
 public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
 
-    private MusicFileInfoDao musicFileInfoDao;
-
     protected void setUp() throws Exception {
-        musicFileInfoDao = new MusicFileInfoDao();
-        JdbcTemplate template = new DaoHelper().getJdbcTemplate();
-        template.execute("delete from music_file_info");
+        getJdbcTemplate().execute("delete from music_file_info");
     }
 
     public void testCreateMusicFileInfo() {

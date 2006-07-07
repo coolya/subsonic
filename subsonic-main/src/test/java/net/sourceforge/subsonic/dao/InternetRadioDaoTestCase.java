@@ -1,7 +1,6 @@
 package net.sourceforge.subsonic.dao;
 
 import net.sourceforge.subsonic.domain.*;
-import org.springframework.jdbc.core.*;
 
 /**
  * Unit test of {@link InternetRadioDao}.
@@ -9,12 +8,8 @@ import org.springframework.jdbc.core.*;
  */
 public class InternetRadioDaoTestCase extends DaoTestCaseBase {
 
-    private InternetRadioDao internetRadioDao;
-
     protected void setUp() throws Exception {
-        internetRadioDao = new InternetRadioDao();
-        JdbcTemplate template = new DaoHelper().getJdbcTemplate();
-        template.execute("delete from internet_radio");
+        getJdbcTemplate().execute("delete from internet_radio");
     }
 
     public void testCreateInternetRadio() {

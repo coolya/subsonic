@@ -1,7 +1,6 @@
 package net.sourceforge.subsonic.dao;
 
 import net.sourceforge.subsonic.domain.*;
-import org.springframework.jdbc.core.*;
 
 import java.io.*;
 
@@ -11,12 +10,8 @@ import java.io.*;
  */
 public class MusicFolderDaoTestCase extends DaoTestCaseBase {
 
-    private MusicFolderDao musicFolderDao;
-
     protected void setUp() throws Exception {
-        musicFolderDao = new MusicFolderDao();
-        JdbcTemplate template = new DaoHelper().getJdbcTemplate();
-        template.execute("delete from music_folder");
+        getJdbcTemplate().execute("delete from music_folder");
     }
 
     public void testCreateMusicFolder() {
