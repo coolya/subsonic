@@ -27,6 +27,7 @@ public class StreamController implements Controller {
     private SecurityService securityService;
     private MusicInfoService musicInfoService;
     private SettingsService settingsService;
+    private TranscodeService transcodeService;
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -45,7 +46,7 @@ public class StreamController implements Controller {
                 playlistService.loadPlaylist(playlist, playlistName);
                 player.setPlaylist(playlist);
                 response.setContentLength((int) playlist.length());
-                StreamController.LOG.info("Incoming Podcast request for playlist " + playlistName);
+                LOG.info("Incoming Podcast request for playlist " + playlistName);
             }
 
             Playlist playlist = player.getPlaylist();
@@ -64,7 +65,7 @@ public class StreamController implements Controller {
                 }
             }
 
-            StreamController.LOG.info("Starting stream " + streamEndpoint);
+            LOG.info("Starting stream " + streamEndpoint);
 
             status = new TransferStatus();
             status.setPlayer(player);
@@ -79,7 +80,7 @@ public class StreamController implements Controller {
             // Enabled SHOUTcast, if requested.
             boolean isShoutCastRequested = "1".equals(request.getHeader("icy-metadata"));
             if (isShoutCastRequested) {
-                StreamController.LOG.info("Enabling SHOUTcast.");
+                LOG.info("Enabling SHOUTcast.");
                 response.setHeader("icy-metaint", "" + StreamController.ShoutCastOutputStream.META_DATA_INTERVAL);
                 response.setHeader("icy-notice1", "This stream is served using Subsonic");
                 response.setHeader("icy-notice2", "Subsonic - Free media streamer - subsonic.sourceforge.net");
@@ -97,7 +98,7 @@ public class StreamController implements Controller {
 
                 // Check if stream has been terminated.
                 if (status.isTerminated()) {
-                    StreamController.LOG.info("Killing stream " + streamEndpoint);
+                    LOG.info("Killing stream " + streamEndpoint);
                     return null;
                 }
 
@@ -131,7 +132,7 @@ public class StreamController implements Controller {
             if (in != null) {
                 in.close();
             }
-            StreamController.LOG.info("Stopping stream " + streamEndpoint);
+            LOG.info("Stopping stream " + streamEndpoint);
         }
         return null;
     }
@@ -143,7 +144,7 @@ public class StreamController implements Controller {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException x) {
-            StreamController.LOG.warn("Interrupted in sleep.", x);
+            LOG.warn("Interrupted in sleep.", x);
         }
         Arrays.fill(buf, (byte) 0xFF);
         out.write(buf);
@@ -172,6 +173,10 @@ public class StreamController implements Controller {
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
+    }
+
+    public void setTranscodeService(TranscodeService transcodeService) {
+        this.transcodeService = transcodeService;
     }
 
     /**
@@ -211,13 +216,13 @@ public class StreamController implements Controller {
                 close();
             } else if (!file.equals(currentFile)) {
                 close();
-                StreamController.LOG.info("Opening new song " + file);
+                LOG.info("Opening new song " + file);
                 updateStatistics(file);
 
                 TranscodeScheme transcodeScheme = player.getTranscodeScheme();
                 boolean doTranscode = transcodeScheme != TranscodeScheme.OFF;
 
-                currentInputStream = file.getInputStream(doTranscode, transcodeScheme.getMaxBitRate());
+                currentInputStream = transcodeService.getDownsampledInputStream(file, doTranscode, transcodeScheme.getMaxBitRate());
                 currentFile = file;
                 status.setFile(currentFile.getFile());
             }
@@ -230,7 +235,7 @@ public class StreamController implements Controller {
                     musicInfoService.incrementPlayCount(folder);
                 }
             } catch (Exception x) {
-                StreamController.LOG.warn("Failed to update statistics for " + file, x);
+                LOG.warn("Failed to update statistics for " + file, x);
             }
         }
 
@@ -356,7 +361,7 @@ public class StreamController implements Controller {
                     previousStreamTitle = streamTitle;
                     bytes = createStreamTitle(streamTitle);
                 } catch (UnsupportedEncodingException x) {
-                    StreamController.LOG.warn("Failed to create SHOUTcast meta-data.  Ignoring.", x);
+                    LOG.warn("Failed to create SHOUTcast meta-data.  Ignoring.", x);
                     bytes = new byte[0];
                 }
             }

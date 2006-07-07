@@ -51,27 +51,6 @@ public class MusicFile {
     protected MusicFile() {}
 
     /**
-     * Returns a possibly transcoded input stream to the music file.
-     * @param transcode Whether transcoding should be performed if necessary.
-     * @param maxBitRate If transcoding is enabled, and the bitrate of the original file
-     * is higher than this value, a transcoded input stream is returned. The bitrate of the
-     * returned input stream will be at most <code>maxBitRate</code>.
-     * @return An input stream to the possibly transcoded music file.
-     * @exception IOException If an I/O error occurs.
-     */
-    public InputStream getInputStream(boolean transcode, int maxBitRate) throws IOException {
-        if (transcode && getBitRate() > maxBitRate) {
-            try {
-                return TranscodedInputStream.create(file, maxBitRate);
-            } catch (Exception x) {
-                LOG.warn("Failed to create transcoded stream. Using ordinary.");
-            }
-        }
-
-        return new FileInputStream(file);
-    }
-
-    /**
      * Returns the underlying {@link File};
      * @return The file wrapped by this MusicFile.
      */

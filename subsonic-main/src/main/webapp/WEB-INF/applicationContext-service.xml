@@ -66,6 +66,8 @@
 
     <bean id="amazonSearchService" class="net.sourceforge.subsonic.service.AmazonSearchService"/>
 
+    <bean id="transcodeService" class="net.sourceforge.subsonic.service.TranscodeService"/>
+
 
     <!-- AJAX services -->
 

@@ -17,6 +17,7 @@ public class PlayerSettingsController extends SimpleFormController {
 
     private PlayerService playerService;
     private SecurityService securityService;
+    private TranscodeService transcodeService;
 
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
 
@@ -45,7 +46,7 @@ public class PlayerSettingsController extends SimpleFormController {
             command.setTranscodeSchemeName(player.getTranscodeScheme().name());
         }
 
-        command.setTranscodingSupported(TranscodedInputStream.isTranscodingSupported());
+        command.setTranscodingSupported(transcodeService.isDownsamplingSupported());
         command.setCoverArtSchemes(CoverArtScheme.values());
         command.setTranscodeSchemes(TranscodeScheme.values());
         command.setPlayers(players.toArray(new Player[0]));
@@ -96,5 +97,9 @@ public class PlayerSettingsController extends SimpleFormController {
 
     public void setPlayerService(PlayerService playerService) {
         this.playerService = playerService;
+    }
+
+    public void setTranscodeService(TranscodeService transcodeService) {
+        this.transcodeService = transcodeService;
     }
 }
