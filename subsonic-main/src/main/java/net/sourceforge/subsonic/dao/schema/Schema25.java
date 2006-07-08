@@ -8,24 +8,19 @@ import net.sourceforge.subsonic.*;
  * This class implementes the database schema for Subsonic version 2.5.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.8 $ $Date: 2006/02/25 16:52:36 $
  */
-public class Schema25 implements Schema{
+public class Schema25 extends Schema{
     private static final Logger LOG = Logger.getLogger(Schema25.class);
 
     public void execute(JdbcTemplate template) {
-        try {
-            template.execute("select 1 from version");
-        } catch (Exception x) {
+        if (!tableExists(template, "version")) {
             LOG.info("Database table 'version' not found.  Creating it.");
             template.execute("create table version (version int not null)");
             template.execute("insert into version values (1)");
             LOG.info("Database table 'version' was created successfully.");
         }
 
-        try {
-            template.execute("select 1 from role");
-        } catch (Exception x) {
+        if (!tableExists(template, "role")) {
             LOG.info("Database table 'role' not found.  Creating it.");
             template.execute("create table role (" +
                              "id int not null," +
@@ -39,9 +34,7 @@ public class Schema25 implements Schema{
             LOG.info("Database table 'role' was created successfully.");
         }
 
-        try {
-            template.execute("select 1 from user");
-        } catch (Exception x) {
+        if (!tableExists(template, "user")) {
             LOG.info("Database table 'user' not found.  Creating it.");
             template.execute("create table user (" +
                              "username varchar not null," +
@@ -51,9 +44,7 @@ public class Schema25 implements Schema{
             LOG.info("Database table 'user' was created successfully.");
         }
 
-        try {
-            template.execute("select 1 from user_role");
-        } catch (Exception x) {
+        if (!tableExists(template, "user_role")) {
             LOG.info("Database table 'user_role' not found.  Creating it.");
             template.execute("create table user_role (" +
                              "username varchar not null," +

@@ -32,8 +32,8 @@ public class MusicFolderDaoTestCase extends DaoTestCaseBase {
         musicFolder.setEnabled(false);
         musicFolderDao.updateMusicFolder(musicFolder);
 
-        MusicFolder newRadio = musicFolderDao.getAllMusicFolders()[0];
-        assertMusicFolderEquals(musicFolder, newRadio);
+        MusicFolder newMusicFolder = musicFolderDao.getAllMusicFolders()[0];
+        assertMusicFolderEquals(musicFolder, newMusicFolder);
     }
 
     public void testDeleteMusicFolder() {

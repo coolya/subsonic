@@ -8,9 +8,8 @@ import org.springframework.jdbc.core.*;
  * This class implementes the database schema for Subsonic version 2.6.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.2 $ $Date: 2006/02/25 17:39:39 $
  */
-public class Schema26 implements Schema{
+public class Schema26 extends Schema{
     private static final Logger LOG = Logger.getLogger(Schema26.class);
 
     public void execute(JdbcTemplate template) {
@@ -20,9 +19,7 @@ public class Schema26 implements Schema{
             template.execute("insert into version values (2)");
         }
 
-        try {
-            template.execute("select 1 from music_folder");
-        } catch (Exception x) {
+        if (!tableExists(template, "music_folder")) {
             LOG.info("Database table 'music_folder' not found.  Creating it.");
             template.execute("create table music_folder (" +
                              "id identity," +
@@ -33,9 +30,7 @@ public class Schema26 implements Schema{
             LOG.info("Database table 'music_folder' was created successfully.");
         }
 
-        try {
-            template.execute("select 1 from music_file_info");
-        } catch (Exception x) {
+        if (!tableExists(template, "music_file_info")) {
             LOG.info("Database table 'music_file_info' not found.  Creating it.");
             template.execute("create cached table music_file_info (" +
                              "id identity," +
@@ -48,9 +43,7 @@ public class Schema26 implements Schema{
             LOG.info("Database table 'music_file_info' was created successfully.");
         }
 
-        try {
-            template.execute("select 1 from internet_radio");
-        } catch (Exception x) {
+        if (!tableExists(template, "internet_radio")) {
             LOG.info("Database table 'internet_radio' not found.  Creating it.");
             template.execute("create table internet_radio (" +
                              "id identity," +
@@ -61,9 +54,7 @@ public class Schema26 implements Schema{
             LOG.info("Database table 'internet_radio' was created successfully.");
         }
 
-        try {
-            template.execute("select 1 from player");
-        } catch (Exception x) {
+        if (!tableExists(template, "player")) {
             LOG.info("Database table 'player' not found.  Creating it.");
             template.execute("create table player (" +
                              "id int not null," +
@@ -80,9 +71,7 @@ public class Schema26 implements Schema{
         }
 
         // 'dynamic_ip' was added in 2.6.beta2
-        try {
-            template.execute("select dynamic_ip from player");
-        } catch (Exception x) {
+        if (!columnExists(template, "dynamic_ip", "player")) {
             LOG.info("Database column 'player.dynamic_ip' not found.  Creating it.");
             template.execute("alter table player " +
                              "add dynamic_ip boolean default true not null");

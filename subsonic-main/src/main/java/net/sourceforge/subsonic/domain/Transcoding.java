@@ -4,8 +4,8 @@ package net.sourceforge.subsonic.domain;
  * Contains the configuration for a transcoding, i.e., a specification of how a given media format
  * should be converted to another.
  * <br/>
- * A transcoding may contain up to three steps. Typically you need to convert in several steps, for instance from
- * OGG to WAV to MP3.
+ * A transcoding may contain up to three steps. Typically you need to convert in several steps, for
+ * instance from OGG to WAV to MP3.
  *
  * @author Sindre Mehus
  */

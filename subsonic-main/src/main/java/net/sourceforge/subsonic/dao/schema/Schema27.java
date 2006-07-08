@@ -8,9 +8,8 @@ import org.springframework.jdbc.core.*;
  * This class implementes the database schema for Subsonic version 2.7.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.2 $ $Date: 2006/02/25 17:39:39 $
  */
-public class Schema27 implements Schema{
+public class Schema27 extends Schema{
     private static final Logger LOG = Logger.getLogger(Schema27.class);
 
     public void execute(JdbcTemplate template) {
@@ -26,9 +25,7 @@ public class Schema27 implements Schema{
             LOG.info("Database column 'music_file_info.path' was converted successfully.");
         }
 
-        try {
-            template.execute("select bytes_streamed from user");
-        } catch (Exception x) {
+        if (!columnExists(template, "bytes_streamed", "user")) {
             LOG.info("Database columns 'user.bytes_streamed/downloaded/uploaded' not found.  Creating them.");
             template.execute("alter table user add bytes_streamed bigint default 0 not null");
             template.execute("alter table user add bytes_downloaded bigint default 0 not null");

@@ -25,6 +25,10 @@
         <property name="daoHelper" ref="daoHelper"/>
     </bean>
 
+    <bean id="transcodingDao" class="net.sourceforge.subsonic.dao.TranscodingDao">
+        <property name="daoHelper" ref="daoHelper"/>
+    </bean>
+
     <bean id="daoHelper" class="net.sourceforge.subsonic.dao.DaoHelper"/>
 
     
@@ -66,7 +70,9 @@
 
     <bean id="amazonSearchService" class="net.sourceforge.subsonic.service.AmazonSearchService"/>
 
-    <bean id="transcodeService" class="net.sourceforge.subsonic.service.TranscodeService"/>
+    <bean id="transcodingService" class="net.sourceforge.subsonic.service.TranscodingService">
+        <property name="transcodingDao" ref="transcodingDao"/>
+    </bean>
 
 
     <!-- AJAX services -->

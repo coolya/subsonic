@@ -10,7 +10,6 @@ import java.io.*;
  * Creates and configures the DAO's, and resets the test database.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.3 $ $Date: 2006/02/25 16:11:14 $
  */
 public abstract class DaoTestCaseBase extends TestCase {
 
@@ -27,6 +26,7 @@ public abstract class DaoTestCaseBase extends TestCase {
     protected MusicFileInfoDao musicFileInfoDao;
     protected MusicFolderDao musicFolderDao;
     protected UserDao userDao;
+    protected TranscodingDao transcodingDao;
 
     protected DaoTestCaseBase() {
         daoHelper = new DaoHelper();
@@ -36,12 +36,14 @@ public abstract class DaoTestCaseBase extends TestCase {
         musicFileInfoDao = new MusicFileInfoDao();
         musicFolderDao = new MusicFolderDao();
         userDao = new UserDao();
+        transcodingDao = new TranscodingDao();
 
         playerDao.setDaoHelper(daoHelper);
         internetRadioDao.setDaoHelper(daoHelper);
         musicFileInfoDao.setDaoHelper(daoHelper);
         musicFolderDao.setDaoHelper(daoHelper);
         userDao.setDaoHelper(daoHelper);
+        transcodingDao.setDaoHelper(daoHelper);
     }
 
     protected JdbcTemplate getJdbcTemplate() {

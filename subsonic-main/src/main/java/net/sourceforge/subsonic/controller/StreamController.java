@@ -27,7 +27,7 @@ public class StreamController implements Controller {
     private SecurityService securityService;
     private MusicInfoService musicInfoService;
     private SettingsService settingsService;
-    private TranscodeService transcodeService;
+    private TranscodingService transcodingService;
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -175,8 +175,8 @@ public class StreamController implements Controller {
         this.settingsService = settingsService;
     }
 
-    public void setTranscodeService(TranscodeService transcodeService) {
-        this.transcodeService = transcodeService;
+    public void setTranscodingService(TranscodingService transcodingService) {
+        this.transcodingService = transcodingService;
     }
 
     /**
@@ -222,7 +222,7 @@ public class StreamController implements Controller {
                 TranscodeScheme transcodeScheme = player.getTranscodeScheme();
                 boolean doTranscode = transcodeScheme != TranscodeScheme.OFF;
 
-                currentInputStream = transcodeService.getDownsampledInputStream(file, doTranscode, transcodeScheme.getMaxBitRate());
+                currentInputStream = transcodingService.getDownsampledInputStream(file, doTranscode, transcodeScheme.getMaxBitRate());
                 currentFile = file;
                 status.setFile(currentFile.getFile());
             }
