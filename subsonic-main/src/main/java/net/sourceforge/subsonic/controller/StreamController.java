@@ -219,10 +219,7 @@ public class StreamController implements Controller {
                 LOG.info("Opening new song " + file);
                 updateStatistics(file);
 
-                TranscodeScheme transcodeScheme = player.getTranscodeScheme();
-                boolean doTranscode = transcodeScheme != TranscodeScheme.OFF;
-
-                currentInputStream = transcodingService.getDownsampledInputStream(file, doTranscode, transcodeScheme.getMaxBitRate());
+                currentInputStream = transcodingService.getTranscodedInputStream(file, player);
                 currentFile = file;
                 status.setFile(currentFile.getFile());
             }

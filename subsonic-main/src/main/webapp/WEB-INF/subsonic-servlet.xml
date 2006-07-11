@@ -125,6 +125,10 @@
         <property name="viewName" value="musicFolderSettings"/>
         <property name="settingsService" ref="settingsService"/>
     </bean>
+    <bean id="transcodingSettingsController" class="net.sourceforge.subsonic.controller.TranscodingSettingsController">
+        <property name="viewName" value="transcodingSettings"/>
+        <property name="transcodingService" ref="transcodingService"/>
+    </bean>
     <bean id="internetRadioSettingsController" class="net.sourceforge.subsonic.controller.InternetRadioSettingsController">
         <property name="viewName" value="internetRadioSettings"/>
         <property name="settingsService" ref="settingsService"/>
@@ -191,6 +195,7 @@
     <bean id="m3uController" class="net.sourceforge.subsonic.controller.M3UController">
         <property name="playerService" ref="playerService"/>
         <property name="settingsService" ref="settingsService"/>
+        <property name="transcodingService" ref="transcodingService"/>
     </bean>
     <bean id="streamController" class="net.sourceforge.subsonic.controller.StreamController">
         <property name="playerService" ref="playerService"/>
@@ -254,6 +259,7 @@
                 <prop key="/settings.view">settingsController</prop>
                 <prop key="/playerSettings.view">playerSettingsController</prop>
                 <prop key="/musicFolderSettings.view">musicFolderSettingsController</prop>
+                <prop key="/transcodingSettings.view">transcodingSettingsController</prop>
                 <prop key="/internetRadioSettings.view">internetRadioSettingsController</prop>
                 <prop key="/searchSettings.view">searchSettingsController</prop>
                 <prop key="/generalSettings.view">generalSettingsController</prop>

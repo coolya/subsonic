@@ -12,7 +12,7 @@ import java.util.*;
  *
  * @author Sindre Mehus
  */
-public class PlayerDao {
+public class PlayerDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(PlayerDao.class);
     private static final String COLUMNS = "id, name, type, username, ip_address, auto_control_enabled, " +
@@ -20,7 +20,6 @@ public class PlayerDao {
 
     private PlayerRowMapper rowMapper = new PlayerRowMapper();
     private Map<String, Playlist> playlists = Collections.synchronizedMap(new HashMap<String, Playlist>());
-    private DaoHelper daoHelper;
 
     /**
      * Returns all players.
@@ -28,7 +27,7 @@ public class PlayerDao {
      */
     public Player[] getAllPlayers() {
         String sql = "select " + COLUMNS + " from player";
-        return (Player[]) daoHelper.getJdbcTemplate().query(sql, rowMapper).toArray(new Player[0]);
+        return (Player[]) getJdbcTemplate().query(sql, rowMapper).toArray(new Player[0]);
     }
 
     /**
@@ -36,7 +35,7 @@ public class PlayerDao {
      * @param player The player to create.
      */
     public synchronized void createPlayer(Player player) {
-        JdbcTemplate template = daoHelper.getJdbcTemplate();
+        JdbcTemplate template = getJdbcTemplate();
         int id = template.queryForInt("select max(id) from player") + 1;
         player.setId(String.valueOf(id));
         String sql = "insert into player (" + COLUMNS + ") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -55,7 +54,7 @@ public class PlayerDao {
      */
     public void deletePlayer(String id) {
         String sql = "delete from player where id=?";
-        daoHelper.getJdbcTemplate().update(sql, new Object[] {id});
+        getJdbcTemplate().update(sql, new Object[] {id});
         playlists.remove(id);
     }
 
@@ -75,7 +74,7 @@ public class PlayerDao {
                      "transcode_scheme = ?, " +
                      "dynamic_ip = ? " +
                      "where id = ?";
-        daoHelper.getJdbcTemplate().update(sql, new Object[] {player.getName(), player.getType(), player.getUsername(),
+        getJdbcTemplate().update(sql, new Object[] {player.getName(), player.getType(), player.getUsername(),
                                                     player.getIpAddress(), player.isAutoControlEnabled(),
                                                     player.getLastSeen(), player.getCoverArtScheme().name(),
                                                     player.getTranscodeScheme().name(), player.isDynamicIp(), player.getId()});
@@ -88,10 +87,6 @@ public class PlayerDao {
             playlists.put(player.getId(), playlist);
         }
         player.setPlaylist(playlist);
-    }
-
-    public void setDaoHelper(DaoHelper daoHelper) {
-        this.daoHelper = daoHelper;
     }
 
     private class PlayerRowMapper implements RowMapper {

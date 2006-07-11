@@ -13,7 +13,7 @@ import java.util.*;
  *
  * @author Sindre Mehus
  */
-public class UserDao {
+public class UserDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(UserDao.class);
     private static final String COLUMNS = "username, password, bytes_streamed, bytes_downloaded, bytes_uploaded, locale, theme";
@@ -26,7 +26,6 @@ public class UserDao {
     private static final Integer ROLE_ID_COMMENT    = 6;
 
     private UserRowMapper rowMapper = new UserRowMapper();
-    private DaoHelper daoHelper;
 
     /**
      * Returns the user with the given username.
@@ -35,7 +34,7 @@ public class UserDao {
      */
     public User getUserByName(String username) {
         String sql = "select " + COLUMNS + " from user where username=?";
-        User[] users = (User[]) daoHelper.getJdbcTemplate().query(sql, new Object[] {username}, rowMapper).toArray(new User[0]);
+        User[] users = (User[]) getJdbcTemplate().query(sql, new Object[] {username}, rowMapper).toArray(new User[0]);
         if (users.length == 0) {
             return null;
         }
@@ -50,7 +49,7 @@ public class UserDao {
      */
     public User[] getAllUsers() {
         String sql = "select " + COLUMNS + " from user";
-        User[] users = (User[]) daoHelper.getJdbcTemplate().query(sql, rowMapper).toArray(new User[0]);
+        User[] users = (User[]) getJdbcTemplate().query(sql, rowMapper).toArray(new User[0]);
         for (User user : users) {
             readRoles(user);
         }
@@ -64,7 +63,7 @@ public class UserDao {
     public void createUser(User user) {
         String sql = "insert into user (" + COLUMNS + ") values (?, ?, ?, ?, ?, ?, ?)";
         String locale = user.getLocale() == null ? null : user.getLocale().toString();
-        daoHelper.getJdbcTemplate().update(sql, new Object[] {user.getUsername(), user.getPassword(), user.getBytesStreamed(),
+        getJdbcTemplate().update(sql, new Object[] {user.getUsername(), user.getPassword(), user.getBytesStreamed(),
                                                     user.getBytesDownloaded(), user.getBytesUploaded(),
                                                     locale, user.getThemeId()});
         writeRoles(user);
@@ -80,10 +79,10 @@ public class UserDao {
         }
 
         String sql = "delete from user_role where username=?";
-        daoHelper.getJdbcTemplate().update(sql, new Object[] {username});
+        getJdbcTemplate().update(sql, new Object[] {username});
 
         sql = "delete from user where username=?";
-        daoHelper.getJdbcTemplate().update(sql, new Object[] {username});
+        getJdbcTemplate().update(sql, new Object[] {username});
     }
 
     /**
@@ -94,7 +93,7 @@ public class UserDao {
         String sql = "update user set password=?, bytes_streamed=?, bytes_downloaded=?, bytes_uploaded=?, " +
                      "locale=?, theme=? where username=?";
         String locale = user.getLocale() == null ? null : user.getLocale().toString();
-        daoHelper.getJdbcTemplate().update(sql, new Object[] {user.getPassword(), user.getBytesStreamed(),
+        getJdbcTemplate().update(sql, new Object[] {user.getPassword(), user.getBytesStreamed(),
                                                     user.getBytesDownloaded(), user.getBytesUploaded(),
                                                     locale, user.getThemeId(), user.getUsername()});
         writeRoles(user);
@@ -108,7 +107,7 @@ public class UserDao {
     public String[] getRolesForUser(String username) {
         String sql = "select r.name from role r, user_role ur " +
                      "where ur.username=? and ur.role_id=r.id";
-        List roles = daoHelper.getJdbcTemplate().queryForList(sql, new Object[] {username}, String.class);
+        List roles = getJdbcTemplate().queryForList(sql, new Object[] {username}, String.class);
         String[] result = new String[roles.size()];
         for (int i = 0; i < result.length; i++) {
             result[i] = (String) roles.get(i);
@@ -118,7 +117,7 @@ public class UserDao {
 
     private void readRoles(User user) {
         String sql = "select role_id from user_role where username=?";
-        List roles = daoHelper.getJdbcTemplate().queryForList(sql, new Object[] {user.getUsername()}, Integer.class);
+        List roles = getJdbcTemplate().queryForList(sql, new Object[] {user.getUsername()}, Integer.class);
         for (Object role : roles) {
             if (ROLE_ID_ADMIN.equals(role)) {
                 user.setAdminRole(true);
@@ -140,30 +139,26 @@ public class UserDao {
 
     private void writeRoles(User user) {
         String sql = "delete from user_role where username=?";
-        daoHelper.getJdbcTemplate().update(sql, new Object[] {user.getUsername()});
+        getJdbcTemplate().update(sql, new Object[] {user.getUsername()});
         sql = "insert into user_role (username, role_id) values(?, ?)";
         if (user.isAdminRole()) {
-            daoHelper.getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_ADMIN});
+            getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_ADMIN});
         }
         if (user.isDownloadRole()) {
-            daoHelper.getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_DOWNLOAD});
+            getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_DOWNLOAD});
         }
         if (user.isUploadRole()) {
-            daoHelper.getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_UPLOAD});
+            getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_UPLOAD});
         }
         if (user.isPlaylistRole()) {
-            daoHelper.getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_PLAYLIST});
+            getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_PLAYLIST});
         }
         if (user.isCoverArtRole()) {
-            daoHelper.getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_COVER_ART});
+            getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_COVER_ART});
         }
         if (user.isCommentRole()) {
-            daoHelper.getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_COMMENT});
+            getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_COMMENT});
         }
-    }
-
-    public void setDaoHelper(DaoHelper daoHelper) {
-        this.daoHelper = daoHelper;
     }
 
     private static class UserRowMapper implements RowMapper {

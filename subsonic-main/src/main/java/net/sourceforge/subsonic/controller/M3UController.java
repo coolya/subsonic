@@ -18,20 +18,20 @@ public class M3UController implements Controller {
 
     private PlayerService playerService;
     private SettingsService settingsService;
+    private TranscodingService transcodingService;
 
     private static final Logger LOG = Logger.getLogger(M3UController.class);
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("audio/x-mpegurl");
         Player player = playerService.getPlayer(request, response);
-        Playlist playlist = player.getPlaylist();
 
         String s = "stream?player=" + player.getId() + '&';
 
         // Get suffix of current file, e.g., ".mp3".
-        String suffix = playlist.getSuffix();
+        String suffix = getSuffix(player);
         if (suffix != null) {
-            s += "suffix=" + suffix;
+            s += "suffix=." + suffix;
         }
 
         String url = request.getRequestURL().toString();
@@ -45,10 +45,24 @@ public class M3UController implements Controller {
         }
 
         response.getOutputStream().println("#EXTM3U");
-        response.getOutputStream().println("#EXTINF:-1,subsonic");
+        response.getOutputStream().println("#EXTINF:-1,Subsonic");
         response.getOutputStream().println(url);
 
         return null;
+    }
+
+    private String getSuffix(Player player) {
+        Playlist playlist = player.getPlaylist();
+        if (playlist.isEmpty()) {
+            return null;
+        }
+        MusicFile file = playlist.getFile(0);
+        Transcoding transcoding = transcodingService.getTranscoding(file, player);
+        if (transcoding != null) {
+            return transcoding.getTargetFormat();
+        }
+
+        return file.getSuffix();
     }
 
     public void setPlayerService(PlayerService playerService) {
@@ -57,5 +71,9 @@ public class M3UController implements Controller {
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
+    }
+
+    public void setTranscodingService(TranscodingService transcodingService) {
+        this.transcodingService = transcodingService;
     }
 }

@@ -1,7 +1,5 @@
 package net.sourceforge.subsonic.domain;
 
-import net.sourceforge.subsonic.util.*;
-
 import java.io.*;
 import java.util.*;
 
@@ -73,8 +71,18 @@ public class Playlist {
     }
 
     /**
-     * Skip to the next song in the playlist.
+     * Returns the music file at the given index.
+     * @param index The index.
+     * @return The music file at the given index.
+     * @throws IndexOutOfBoundsException If the index is out of range.
      */
+    public synchronized MusicFile getFile(int index) {
+        return files.get(index);
+    }
+
+    /**
+    * Skip to the next song in the playlist.
+    */
     public synchronized void next() {
         index++;
 
@@ -266,19 +274,6 @@ public class Playlist {
         if (index == -1) {
             index = Math.max(0, Math.min(index, size() - 1));
         }
-    }
-
-    /**
-     * Returns the suffix which best describes the content of the playlist.
-     * @return The suffix, e.g., ".mp3", or <code>null</code> if playlist is empty.
-     */
-    public String getSuffix() {
-        MusicFile file = getCurrentFile();
-        if (file == null && !files.isEmpty()) {
-            file = files.get(0);
-        }
-
-        return file == null ? null : StringUtil.getSuffix(file.getName());
     }
 
     /**

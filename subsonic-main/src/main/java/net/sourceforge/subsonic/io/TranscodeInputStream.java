@@ -29,8 +29,6 @@ public class TranscodeInputStream extends InputStream {
      * @throws IOException If an I/O error occurs.
      */
     public TranscodeInputStream(String command, final InputStream in) throws IOException {
-        // TODO: Use ProcessBuilder?
-
         LOG.debug("Starting transcoder: " + command);
 
         String[] commandArray = StringUtil.split(command);

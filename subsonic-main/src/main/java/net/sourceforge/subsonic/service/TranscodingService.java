@@ -7,6 +7,7 @@ import net.sourceforge.subsonic.io.*;
 import org.apache.commons.io.filefilter.*;
 
 import java.io.*;
+import java.util.*;
 
 /**
  * Provides services for transcoding media. Transcoding is the process of
@@ -23,11 +24,27 @@ public class TranscodingService {
     private TranscodingDao transcodingDao;
 
     /**
-     * Returns all transcodings.
+     * Returns all transcodings. Disabled transcodings are not included.
      * @return Possibly empty array of all transcodings.
      */
     public Transcoding[] getAllTranscodings() {
-        return transcodingDao.getAllTranscodings();
+        return getAllTranscodings(false);
+    }
+
+    /**
+     * Returns all transcodings.
+     * @param includeAll Whether disabled transcodings should be included.
+     * @return Possibly empty array of all transcodings.
+     */
+    public Transcoding[] getAllTranscodings(boolean includeAll) {
+        Transcoding[] all = transcodingDao.getAllTranscodings();
+        List<Transcoding> result = new ArrayList<Transcoding>(all.length);
+        for (Transcoding transcoding : all) {
+            if (includeAll || transcoding.isEnabled()) {
+                result.add(transcoding);
+            }
+        }
+        return result.toArray(new Transcoding[0]);
     }
 
     /**
@@ -55,27 +72,92 @@ public class TranscodingService {
     }
 
     /**
-    * Returns a possibly downsampled input stream to the music file.
-    * @param downsample Whether downsampling should be performed if necessary.
-    * @param maxBitRate If downsampling is enabled, and the bitrate of the original file
-    * is higher than this value, a downsampled input stream is returned. The bitrate of the
-    * returned input stream will be at most <code>maxBitRate</code>.
-    * @return An input stream to the possibly downsampled music file.
-    * @exception IOException If an I/O error occurs.
-    */
-    public InputStream getDownsampledInputStream(MusicFile musicFile, boolean downsample, int maxBitRate) throws IOException {
-        if (downsample && musicFile.getBitRate() > maxBitRate) {
-            try {
-                File lame = new File(getTranscodeDirectory(), "lame");
-
-                String command = lame.getPath() + " -S -h -b " + maxBitRate + " \"" + musicFile.getFile().getAbsolutePath() + "\" -";
-                return new TranscodeInputStream(command, null);
-            } catch (Exception x) {
-                LOG.warn("Failed to downsample " + musicFile + ". Using original.");
+     * Returns a possibly transcoded or downsampled input stream for the given music file and player combination.
+     * <p/>
+     * A transcoding is applied if it is applicable for the format of the given file, and is activated for the
+     * given player.
+     * <p/>
+     * If no transcoding is applicable, the file may still be downsampled, given that the player is configured
+     * with a bit rate limit which is higher than the actual bit rate of the file.
+     * <p/>
+     * Otherwise, a normal input stream to the original file is returned.
+     *
+     * @param musicFile The music file.
+     * @param player The player.
+     * @return A possible transcoded or downsampled input stream.
+     * @throws IOException If an I/O error occurs.
+     */
+    public InputStream getTranscodedInputStream(MusicFile musicFile, Player player) throws IOException {
+        try {
+            Transcoding transcoding = getTranscoding(musicFile, player);
+            if (transcoding != null) {
+                return getTranscodedInputStream(musicFile, transcoding);
             }
+
+            TranscodeScheme transcodeScheme = player.getTranscodeScheme();
+            boolean downsample = transcodeScheme != TranscodeScheme.OFF;
+            int maxBitRate = transcodeScheme.getMaxBitRate();
+
+            if (downsample && musicFile.getBitRate() > maxBitRate) {
+                return getDownsampledInputStream(musicFile, maxBitRate);
+            }
+        } catch (Exception x) {
+            LOG.warn("Failed to transcode " + musicFile + ". Using original.", x);
         }
 
         return new FileInputStream(musicFile.getFile());
+    }
+
+    /**
+     * Returns an input stream by applying the given transcoding to the given music file.
+     * @param musicFile The music file.
+     * @param transcoding The transcoding to apply.
+     * @return The transcoded input stream
+     * @throws IOException If an I/O error occurs.
+     */
+    private InputStream getTranscodedInputStream(MusicFile musicFile, Transcoding transcoding) throws IOException {
+        String step1 = transcoding.getStep1();
+        step1 = step1.replace("%s", '"' + musicFile.getPath() + '"');
+        String prefix = getTranscodeDirectory().getPath() + File.separatorChar;
+
+        TranscodeInputStream in = new TranscodeInputStream(prefix + step1, null);
+
+        if (transcoding.getStep2() != null) {
+            in = new TranscodeInputStream(prefix + transcoding.getStep2(), in);
+        }
+
+        if (transcoding.getStep3() != null) {
+            in = new TranscodeInputStream(prefix + transcoding.getStep3(), in);
+        }
+
+        return in;
+    }
+
+    /**
+     * Returns an applicable transcoding for the given file and player, or <code>null</code> if no
+     * transcoding should be done.
+     */
+    public Transcoding getTranscoding(MusicFile musicFile, Player player) {
+        // TODO: Only consider those that are active for the given player.
+        for (Transcoding transcoding : getAllTranscodings()) {
+            if (transcoding.getSourceFormat().equalsIgnoreCase(musicFile.getSuffix())) {
+                return transcoding;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns a downsampled input stream to the music file.
+     * @param bitRate The bitrate to downsample to.
+     * @return An input stream to the downsampled music file.
+     * @exception IOException If an I/O error occurs.
+     */
+    private InputStream getDownsampledInputStream(MusicFile musicFile, int bitRate) throws IOException {
+        File lame = new File(getTranscodeDirectory(), "lame");
+        String command = '"' + lame.getPath() + "\" -S -h -b " + String.valueOf(bitRate) +
+                         " \"" + musicFile.getFile().getAbsolutePath() +"\" -";
+        return new TranscodeInputStream(command, null);
     }
 
     /**
@@ -83,7 +165,7 @@ public class TranscodingService {
      * @return Whether downsampling is supported.
      */
     public boolean isDownsamplingSupported() {
-        SuffixFileFilter filter = new SuffixFileFilter("lame");
+        PrefixFileFilter filter = new PrefixFileFilter("lame");
         String[] matches = getTranscodeDirectory().list(filter);
         return matches != null && matches.length > 0;
     }
@@ -91,7 +173,7 @@ public class TranscodingService {
     /**
      * Returns the directory in which all transcoders are installed.
      */
-    private File getTranscodeDirectory() {
+    public File getTranscodeDirectory() {
         return new File(SettingsService.getSubsonicHome(), "transcode");
     }
 

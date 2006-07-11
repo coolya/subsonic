@@ -26,13 +26,13 @@ public final class StringUtil {
     };
 
     private static final String[][] MIME_TYPES = {
-            {".mp3",  "audio/mpeg"},
-            {".mpg",  "video/mpeg"},
-            {".mpeg", "video/mpeg"},
-            {".mp4",  "audio/mp4"},
-            {".m4a",  "audio/mp4"},
-            {".mpg4", "audio/mp4"},
-            {".ogg",  "application/ogg"},
+            {"mp3",  "audio/mpeg"},
+            {"mpg",  "video/mpeg"},
+            {"mpeg", "video/mpeg"},
+            {"mp4",  "audio/mp4"},
+            {"m4a",  "audio/mp4"},
+            {"mpg4", "audio/mp4"},
+            {"ogg",  "application/ogg"},
     };
 
     /**
@@ -95,13 +95,13 @@ public final class StringUtil {
 
     /**
     * Returns the proper MIME type for the given suffix.
-    * @param suffix The suffix, e.g., ".mp3".
+    * @param suffix The suffix, e.g., "mp3" or ".mp3".
     * @return The corresponding MIME type, e.g., "audio/mpeg". If no MIME type is found,
     *  <code>application/octet-stream</code> is returned.
     */
     public static String getMimeType(String suffix) {
         for (String[] map : MIME_TYPES) {
-            if (map[0].equalsIgnoreCase(suffix)) {
+            if (map[0].equalsIgnoreCase(suffix) || ('.' + map[0]).equalsIgnoreCase(suffix)) {
                 return map[1];
             }
         }

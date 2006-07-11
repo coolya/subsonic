@@ -37,7 +37,7 @@ public class PodcastController extends ParameterizableViewController {
             // Resolve content type.
             Playlist playlist = new Playlist();
             playlistService.loadPlaylist(playlist, playlists[i].getName());
-            String suffix = playlist.getSuffix();
+            String suffix = getSuffix(playlist);
             String type = StringUtil.getMimeType(suffix);
 
             long length = playlist.length();
@@ -60,6 +60,13 @@ public class PodcastController extends ParameterizableViewController {
 
         result.addObject("model", map);
         return result;
+    }
+
+    private String getSuffix(Playlist playlist) {
+        if (playlist.isEmpty()) {
+            return null;
+        }
+        return playlist.getFile(0).getSuffix();
     }
 
     public void setPlaylistService(PlaylistService playlistService) {

@@ -38,6 +38,7 @@ public class StringUtilTestCase extends TestCase {
     }
 
     public void testGetMimeType() {
+        assertEquals("Error in getMimeType().", "audio/mpeg", StringUtil.getMimeType("mp3"));
         assertEquals("Error in getMimeType().", "audio/mpeg", StringUtil.getMimeType(".mp3"));
         assertEquals("Error in getMimeType().", "audio/mpeg", StringUtil.getMimeType(".MP3"));
         assertEquals("Error in getMimeType().", "application/octet-stream", StringUtil.getMimeType("koko"));

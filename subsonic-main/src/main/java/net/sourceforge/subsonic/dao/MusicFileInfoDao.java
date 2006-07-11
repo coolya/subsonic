@@ -12,12 +12,11 @@ import java.util.*;
  *
  * @author Sindre Mehus
  */
-public class MusicFileInfoDao {
+public class MusicFileInfoDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(MusicFileInfoDao.class);
     private static final String COLUMNS = "id, path, rating, comment, play_count, last_played";
     private MusicFileInfoRowMapper rowMapper = new MusicFileInfoRowMapper();
-    private DaoHelper daoHelper;
 
     /**
     * Returns music file info for the given path.
@@ -25,7 +24,7 @@ public class MusicFileInfoDao {
     */
     public MusicFileInfo getMusicFileInfoForPath(String path) {
         String sql = "select " + COLUMNS + " from music_file_info where path=?";
-        List result = daoHelper.getJdbcTemplate().query(sql, new Object[] {path}, rowMapper);
+        List result = getJdbcTemplate().query(sql, new Object[] {path}, rowMapper);
         return (MusicFileInfo) (result.isEmpty() ? null : result.get(0));
     }
 
@@ -40,7 +39,7 @@ public class MusicFileInfoDao {
             return new MusicFileInfo[0];
         }
 
-        JdbcTemplate template = daoHelper.getJdbcTemplate();
+        JdbcTemplate template = getJdbcTemplate();
         template.setMaxRows(offset + count);
         String sql = "select " + COLUMNS + " from music_file_info where rating > 0 order by rating desc";
         MusicFileInfo[] tmp = (MusicFileInfo[]) template.query(sql, rowMapper).toArray(new MusicFileInfo[0]);
@@ -58,7 +57,7 @@ public class MusicFileInfoDao {
             return new MusicFileInfo[0];
         }
 
-        JdbcTemplate template = daoHelper.getJdbcTemplate();
+        JdbcTemplate template = getJdbcTemplate();
         template.setMaxRows(offset + count);
         String sql = "select " + COLUMNS + " from music_file_info where play_count > 0 order by play_count desc";
         MusicFileInfo[] tmp = (MusicFileInfo[]) template.query(sql, rowMapper).toArray(new MusicFileInfo[0]);
@@ -76,7 +75,7 @@ public class MusicFileInfoDao {
             return new MusicFileInfo[0];
         }
 
-        JdbcTemplate template = daoHelper.getJdbcTemplate();
+        JdbcTemplate template = getJdbcTemplate();
         template.setMaxRows(offset + count);
         String sql = "select " + COLUMNS + " from music_file_info where last_played is not null order by last_played desc";
         MusicFileInfo[] tmp = (MusicFileInfo[]) template.query(sql, rowMapper).toArray(new MusicFileInfo[0]);
@@ -89,7 +88,7 @@ public class MusicFileInfoDao {
     */
     public void createMusicFileInfo(MusicFileInfo info) {
         String sql = "insert into music_file_info (" + COLUMNS + ") values (null, ?, ?, ?, ?, ?)";
-        daoHelper.getJdbcTemplate().update(sql, new Object[] {info.getPath(), info.getRating(), info.getComment(),
+        getJdbcTemplate().update(sql, new Object[] {info.getPath(), info.getRating(), info.getComment(),
                                                     info.getPlayCount(), info.getLastPlayed()});
         LOG.info("Created music file info for " + info.getPath());
     }
@@ -100,7 +99,7 @@ public class MusicFileInfoDao {
      */
     public void updateMusicFileInfo(MusicFileInfo info) {
         String sql = "update music_file_info set path=?, rating=?, comment=?, play_count=?, last_played=? where id=?";
-        daoHelper.getJdbcTemplate().update(sql, new Object[] {info.getPath(), info.getRating(), info.getComment(),
+        getJdbcTemplate().update(sql, new Object[] {info.getPath(), info.getRating(), info.getComment(),
                                                     info.getPlayCount(), info.getLastPlayed(), info.getId()});
     }
 
@@ -119,10 +118,6 @@ public class MusicFileInfoDao {
         MusicFileInfo[] result = new MusicFileInfo[actualLength];
         System.arraycopy(src, offset, result, 0, actualLength);
         return result;
-    }
-
-    public void setDaoHelper(DaoHelper daoHelper) {
-        this.daoHelper = daoHelper;
     }
 
     private static class MusicFileInfoRowMapper implements RowMapper {
