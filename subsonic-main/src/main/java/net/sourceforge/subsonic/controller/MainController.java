@@ -27,11 +27,13 @@ public class MainController extends ParameterizableViewController {
         Player player = playerService.getPlayer(request, response);
         String path = request.getParameter("path");
         MusicFile dir = new MusicFile(path);
-        map.put("dir", dir);
-        map.put("children", dir.getChildren(false, true));
-        map.put("player", player);
+        MusicFile[] children = dir.getChildren(false, true);
 
+        map.put("dir", dir);
+        map.put("children", children);
+        map.put("player", player);
         map.put("user", securityService.getCurrentUser(request));
+        map.put("showArtist", isMultipleArtists(children));
         map.put("updateNowPlaying", request.getParameter("updateNowPlaying") != null);
 
         MusicFileInfo musicInfo = musicInfoService.getMusicFileInfoForPath(path);
@@ -63,6 +65,17 @@ public class MainController extends ParameterizableViewController {
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
+    }
+
+    private boolean isMultipleArtists(MusicFile[] children) {
+        Set<String> artists = new HashSet<String>();
+        for (MusicFile child : children) {
+            MusicFile.MetaData metaData = child.getMetaData();
+            if (metaData != null && metaData.getArtist() != null) {
+                artists.add(metaData.getArtist());
+            }
+        }
+        return artists.size() > 1;
     }
 
     public void setSecurityService(SecurityService securityService) {

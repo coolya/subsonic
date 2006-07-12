@@ -138,7 +138,10 @@
                         <a href="${childUrl}"><str:truncateNicely lower="35" upper="35">${child.name}</str:truncateNicely></a>
                     </c:when>
                     <c:otherwise>
-                    <str:truncateNicely lower="35" upper="35">${child.title}</str:truncateNicely>
+                        <str:truncateNicely lower="35" upper="35">${child.title}</str:truncateNicely>
+                        <c:if test="${model.showArtist and not empty child.metaData.artist}">
+                            &nbsp;&nbsp;-&nbsp;&nbsp;${child.metaData.artist}
+                        </c:if>
                     </c:otherwise>
                 </c:choose>
             </p>
