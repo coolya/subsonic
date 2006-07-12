@@ -47,6 +47,7 @@ public class PlayerSettingsController extends SimpleFormController {
         }
 
         command.setTranscodingSupported(transcodingService.isDownsamplingSupported());
+        command.setTranscodeDirectory(transcodingService.getTranscodeDirectory().getPath());
         command.setCoverArtSchemes(CoverArtScheme.values());
         command.setTranscodeSchemes(TranscodeScheme.values());
         command.setPlayers(players.toArray(new Player[0]));

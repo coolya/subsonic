@@ -26,7 +26,6 @@ public class Schema28 extends Schema {
             LOG.info("Database columns 'user.locale/theme' were added successfully.");
         }
 
-
         if (!tableExists(template, "transcoding")) {
             LOG.info("Database table 'transcoding' not found.  Creating it.");
             template.execute("create table transcoding (" +
@@ -38,8 +37,13 @@ public class Schema28 extends Schema {
                              "step2 varchar," +
                              "step3 varchar," +
                              "enabled boolean not null)");
-// TODO: Insert default transcodings.
-//            template.execute("insert into music_folder values (null, 'c:\\music', 'Music', true)");
+            template.execute("insert into transcoding values(null,'ogg > mp3','ogg','mp3','oggdec %s -o','lame - -',null,true)");
+            template.execute("insert into transcoding values(null,'wma > mp3','wma','mp3','wmadec -w %s','lame - -',null,true)");
+            template.execute("insert into transcoding values(null,'flac > mp3','flac','mp3','flac -c -s -d %s','lame - -',null,true)");
+            template.execute("insert into transcoding values(null,'ape > mp3','ape','mp3','macpipe.exe %s - -d','lame - -',null,true)");
+            template.execute("insert into transcoding values(null,'m4a > mp3','m4a','mp3','faad -w %s','lame -x - -',null,true)");
+            template.execute("insert into transcoding values(null,'mpc > mp3','mpc','mp3','mppdec --wav --silent %s -','lame - -',null,true)");
+            template.execute("insert into transcoding values(null,'ofr > mp3','ofr','mp3','ofr --decode --silent %s --output -','lame - -',null,true)");
             LOG.info("Database table 'transcoding' was created successfully.");
         }
     }

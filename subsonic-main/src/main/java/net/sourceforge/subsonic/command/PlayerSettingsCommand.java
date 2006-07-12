@@ -20,8 +20,8 @@ public class PlayerSettingsCommand {
     private boolean isAutoControlEnabled;
     private String coverArtSchemeName;
     private String transcodeSchemeName;
-
     private boolean transcodingSupported;
+    private String transcodeDirectory;
     private EnumHolder[] transcodeSchemeHolders;
     private EnumHolder[] coverArtSchemeHolders;
     private Player[] players;
@@ -105,6 +105,14 @@ public class PlayerSettingsCommand {
 
     public void setTranscodingSupported(boolean transcodingSupported) {
         this.transcodingSupported = transcodingSupported;
+    }
+
+    public String getTranscodeDirectory() {
+        return transcodeDirectory;
+    }
+
+    public void setTranscodeDirectory(String transcodeDirectory) {
+        this.transcodeDirectory = transcodeDirectory;
     }
 
     public EnumHolder[] getTranscodeSchemeHolders() {

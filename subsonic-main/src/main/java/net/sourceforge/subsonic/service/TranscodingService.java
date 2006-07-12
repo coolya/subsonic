@@ -174,7 +174,16 @@ public class TranscodingService {
      * Returns the directory in which all transcoders are installed.
      */
     public File getTranscodeDirectory() {
-        return new File(SettingsService.getSubsonicHome(), "transcode");
+        File dir = new File(SettingsService.getSubsonicHome(), "transcode");
+        if (!dir.exists()) {
+            boolean ok = dir.mkdir();
+            if (ok) {
+                LOG.info("Created directory " + dir);
+            } else {
+                LOG.warn("Failed to create directory " + dir);
+            }
+        }
+        return dir;
     }
 
     public void setTranscodingDao(TranscodingDao transcodingDao) {
