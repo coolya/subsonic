@@ -1,14 +1,34 @@
 
+OK - WMA9, Quality-based VBR Q75, Atlantic
+OK - OGG, Quality-based VBR Q3, Is It Any Wonder
+OK - MPEG-4, Quality-based VBR Normal, Nothing In My Way
+OK - MPC radio, Leaving So Soon
+OK - FLAC Lossless, A Bad Dream
+OK - Monkey Lossless (ape), Hamburg Song
+OK - Frog Lossless, Put It Behind You
+
 PRIORITIZED FOR VERSION 2.8
 ===========================
-Remove usage of services in domain (MusicFile).
-Too much whitespace above error in editTags.jsp
-Ugly alignment of images and text in Opera 9.
+Avoid ugly error log when transcoding.
+oggdec crashes on "stue" pc.
+Add transcoder for cell phone etc.
+Mouseover hover effect for truncated text.
+Mention SSL support in feature list.
+Add transcode directory to path (in case of libraries).
+Set proper content type and suffix when transcoding. Also consider podcast and download.
+Upload broken in IE.
+Upload popup?
+Update LAME online help.
+Seeking.
+Render everything but song title as css class "detail".
+Display running time, as well as elapsed time for current song.
+Playback buttons.  Stop, play, pause, resume, next, previous.
+Transparent favicon.
+Write about logo on web pages.
 Ugly checkbox border in IE (and FF?)
 Create "Electron Blue" theme (http://www.msn.com/)
 Use cookie.setPath()?
       cookie.setPath(request.getContextPath());
-Ask Palm for a free phone.
 Test WAP select player on cell phone.
 Make it clearer that Tomcat 5.5 or later is required.
 Tomcat user must have write access (see forum)
@@ -17,12 +37,22 @@ Use AJAX to change random albums on home page, one at a time.
 Implement pure AJAX version of playlist.jsp.
 Get updated Macedonian resource bundle.
 Check Javascript error on IE.
-Include options to display bitrate, album, artist, year, genre, format etc in the playlist (and maybe also the main browser window)
 Update Norwegian translation.
 
 COMPLETED IN VERSION 2.8
 ========================
+Render artist as detail class in main.jsp
+Show file size in playlist.
+Show artist name in main.jsp if multiple artists. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=76)
+Use LAME resampling also for VBR.  Only for Xing.
+Remove "Total" from statistics.
+Log current and latest version.
+Ask HP for a free PDA (July 5 2006)
+Ask Palm for a free phone.
+Include options to display bitrate, album, artist, year, genre, format etc in the playlist (and maybe also the main browser window)
+Ugly alignment of images and text in Opera 9.
 Exclude folders, "subsonic_exclude.txt".
+Too much whitespace above error in editTags.jsp
 New security implementation based on Acegi (http://acegisecurity.org/)
 Added form-based login.
 Added logout option.
@@ -37,6 +67,10 @@ Simplify <ref bean="musicFileService"/>
 
 BACKLOG
 ==========
+Photo support?
+Sandstone theme: http://www.jinzora.org/images/screens/themes/sandstone-full.gif
+Make logo in svg.
+Sell t-shirts from http://www.cafepress.com/
 User-based folder access
 Replace methods in my StringUtil with corresponding in Spring.
 Batch download of cover arts.

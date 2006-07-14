@@ -117,23 +117,30 @@
                     </td>
 
                     <td ${class} style="padding-right:1.5em">
-                        <a target="main" href="${mainUrl}"><str:truncateNicely upper="50">${song.musicFile.metaData.album}</str:truncateNicely></a>
+                        <span class="detail"><a target="main" href="${mainUrl}"><str:truncateNicely upper="50">${song.musicFile.metaData.album}</str:truncateNicely></a></span>
                     </td>
 
                     <td ${class} style="padding-right:1.5em">
-                        <str:truncateNicely upper="50">${song.musicFile.metaData.artist}</str:truncateNicely>
+                        <span class="detail"><str:truncateNicely upper="50">${song.musicFile.metaData.artist}</str:truncateNicely></span>
                     </td>
 
                     <td ${class} style="padding-right:1.5em">
-                        ${song.musicFile.metaData.year}
+                        <span class="detail">${song.musicFile.metaData.year}</span>
+                    </td>
+
+                    <td ${class} style="padding-right:1.5em">
+                        <span class="detail">${fn:toLowerCase(song.musicFile.suffix)}</span>
+                    </td>
+
+                    <td ${class} style="padding-right:1.5em;text-align:right">
+                        <span class="detail">${song.size}</span>
                     </td>
 
                     <td ${class} style="padding-right:0.25em">
                         <span class="detail">
                             <c:if test="${song.musicFile.bitRate != 0}">
-                            ${song.musicFile.bitRate} Kbps ${song.musicFile.variableBitRate ? "(vbr)" : ""}
+                                ${song.musicFile.bitRate} Kbps ${song.musicFile.variableBitRate ? "(vbr)" : ""}
                             </c:if>
-                         ${fn:toLowerCase(song.musicFile.suffix)}
                         </span>
                     </td>
                 </tr>

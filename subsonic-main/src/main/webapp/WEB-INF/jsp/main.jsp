@@ -140,7 +140,7 @@
                     <c:otherwise>
                         <str:truncateNicely lower="35" upper="35">${child.title}</str:truncateNicely>
                         <c:if test="${model.showArtist and not empty child.metaData.artist}">
-                            &nbsp;&nbsp;-&nbsp;&nbsp;${child.metaData.artist}
+                            - <span class="detail"><str:truncateNicely lower="35" upper="35">${child.metaData.artist}</str:truncateNicely></span>
                         </c:if>
                     </c:otherwise>
                 </c:choose>

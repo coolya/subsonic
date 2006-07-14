@@ -2,7 +2,9 @@ package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
+import net.sourceforge.subsonic.util.*;
 import org.springframework.web.servlet.*;
+import org.springframework.web.servlet.support.*;
 import org.springframework.web.servlet.mvc.*;
 
 import javax.servlet.http.*;
@@ -30,7 +32,7 @@ public class PlaylistController extends ParameterizableViewController {
 
         map.put("user", user);
         map.put("player", player);
-        map.put("songs", getSongs(playlist));
+        map.put("songs", getSongs(playlist, request));
         map.put("players", getPlayers(user));
         map.put("repeatEnabled", playlist.isRepeatEnabled());
         map.put("isPlaying", playlist.getStatus() == Playlist.Status.PLAYING);
@@ -39,9 +41,10 @@ public class PlaylistController extends ParameterizableViewController {
         return result;
     }
 
-    private List<Song> getSongs(Playlist playlist) {
+    private List<Song> getSongs(Playlist playlist, HttpServletRequest request) {
         List<Song> result = new ArrayList<Song>();
         MusicFile currentFile = playlist.getCurrentFile();
+        Locale locale = RequestContextUtils.getLocale(request);
 
         MusicFile[] files = playlist.getFiles();
         for (int i = 0; i < files.length; i++) {
@@ -50,6 +53,7 @@ public class PlaylistController extends ParameterizableViewController {
             Song song = new Song();
             song.setMusicFile(file);
             song.setCurrent(isCurrent);
+            song.setSize(StringUtil.formatBytes(file.length(), locale));
             result.add(song);
         }
         return result;
@@ -147,6 +151,7 @@ public class PlaylistController extends ParameterizableViewController {
     public static class Song {
         private MusicFile musicFile;
         private boolean isCurrent;
+        private String size;
 
         public MusicFile getMusicFile() {
             return musicFile;
@@ -162,6 +167,14 @@ public class PlaylistController extends ParameterizableViewController {
 
         public void setCurrent(boolean current) {
             isCurrent = current;
+        }
+
+        public String getSize() {
+            return size;
+        }
+
+        public void setSize(String size) {
+            this.size = size;
         }
     }
 }
