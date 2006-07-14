@@ -37,16 +37,17 @@ public class TranscodeInputStream extends InputStream {
         processInputStream = process.getInputStream();
 
         // Must read stderr from the process, otherwise it may block.
-        new InputStreamLogger(process.getErrorStream(), commandArray[0]).start();
+        final String name = commandArray[0];
+        new InputStreamLogger(process.getErrorStream(), name).start();
 
         // Copy data in a separate thread
         if (in != null) {
-            new Thread("TranscodedInputStream copy thread") {
+            new Thread(name + " TranscodedInputStream copy thread") {
                 public void run() {
                     try {
                         IOUtils.copy(in, processOutputStream);
                     } catch (IOException x) {
-                        LOG.error("Failed to write data to transcoder.", x);
+                        // Intentionally ignored. Will happen if the remote player closes the stream.
                     } finally {
                         IOUtils.closeQuietly(in);
                         IOUtils.closeQuietly(processOutputStream);
@@ -83,8 +84,6 @@ public class TranscodeInputStream extends InputStream {
     public void close() throws IOException {
         IOUtils.closeQuietly(processInputStream);
         IOUtils.closeQuietly(processOutputStream);
-
-        // TODO: Kill process?
     }
 
     /**
@@ -95,7 +94,7 @@ public class TranscodeInputStream extends InputStream {
         private String name;
 
         public InputStreamLogger(InputStream input, String name) {
-            super("InputStreamLogger");
+            super(name + " InputStreamLogger");
             this.input = input;
             this.name = name;
         }
