@@ -78,7 +78,7 @@ public abstract class MetaDataParser {
      */
     protected String removeTrackNumberFromTitle(String title) {
         title = title.trim();
-        String result = title.replaceFirst("^\\d{2}[\\.\\- ]*", "");
+        String result = title.replaceFirst("^\\d{2}[\\.\\- ]+", "");
         return result.length() == 0 ? title : result;
     }
 
