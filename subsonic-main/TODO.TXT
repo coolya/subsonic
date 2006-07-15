@@ -1,5 +1,14 @@
-TRANSCODING
-oggdec, oggenc - http://www.rarewares.org/ogg.html
+oggdec
+Windows: version 1.9.2,  http://www.rarewares.org/ogg.html
+Linux: Normally included in OS. Create symlink.
+
+oggenc2
+Windows: version 2.83 using libVorbis v1.1.2, http://www.rarewares.org/ogg.html
+Linux: Normally included in OS. Create symlink.
+
+
+
+
 
 OK - WMA9, Quality-based VBR Q75, Atlantic
 OK - OGG, Quality-based VBR Q3, Is It Any Wonder
@@ -11,6 +20,10 @@ OK - Frog Lossless, Put It Behind You
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
+Detection of various artists is buggy.  Must be a bit fuzzy. (Spacing, spelling etc).
+Don't require that transcoders are installed in SUBSONIC_HOME/transcoding, but add this to PATH.  How about lame?
+Does "Remember me" work?  How long?
+Sandstone theme http://www.jinzora.org/images/screens/themes/sandstone-full.gif
 Upgrade Spring.
 Show artist/album as tooltip on cover art images.
 Why is Player.id a String, not an Integer?
@@ -49,6 +62,7 @@ Update Norwegian translation.
 COMPLETED IN VERSION 2.8
 ========================
 Render artist as detail class in main.jsp
+Display album title in cover art image caption.
 Show file size in playlist.
 Show artist name in main.jsp if multiple artists. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=76)
 Use LAME resampling also for VBR.  Only for Xing.

@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.service;
 
 import net.sourceforge.subsonic.*;
+import net.sourceforge.subsonic.util.*;
 import net.sourceforge.subsonic.dao.*;
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.io.*;
@@ -137,25 +138,46 @@ public class TranscodingService {
      * Returns an input stream by applying the given transcoding to the given music file.
      * @param musicFile The music file.
      * @param transcoding The transcoding to apply.
-     * @return The transcoded input stream
+     * @return The transcoded input stream.
      * @throws IOException If an I/O error occurs.
      */
     private InputStream getTranscodedInputStream(MusicFile musicFile, Transcoding transcoding) throws IOException {
-        String step1 = transcoding.getStep1();
-        step1 = step1.replace("%s", '"' + musicFile.getPath() + '"');
-        String prefix = getTranscodeDirectory().getPath() + File.separatorChar;
-
-        TranscodeInputStream in = new TranscodeInputStream(prefix + step1, null);
+        TranscodeInputStream in = new TranscodeInputStream(createCommand(transcoding.getStep1(), musicFile), null);
 
         if (transcoding.getStep2() != null) {
-            in = new TranscodeInputStream(prefix + transcoding.getStep2(), in);
+            in = new TranscodeInputStream(createCommand(transcoding.getStep2(), null), in);
         }
 
         if (transcoding.getStep3() != null) {
-            in = new TranscodeInputStream(prefix + transcoding.getStep3(), in);
+            in = new TranscodeInputStream(createCommand(transcoding.getStep3(), null), in);
         }
 
         return in;
+    }
+
+    /**
+     * Prepares the given command line string. This includes the following:
+     * <ul>
+     * <li>Splitting the command line string to an array.</li>
+     * <li>Replacing occurrences of "%s" with the path of the given music file.</li>
+     * <li>Prepending the path of the transcoder directory if the transcoder is found there.</li>
+     * </ul>
+     * @param command The command line string.
+     * @param musicFile The music file to use when replacing "%s".  May be <code>null</code>.
+     * @return The prepared command array.
+     */
+    private String[] createCommand(String command, MusicFile musicFile) {
+        if (musicFile != null) {
+            command = command.replace("%s", '"' + musicFile.getFile().getAbsolutePath() + '"');
+        }
+
+        String[] result = StringUtil.split(command);
+
+        if (isTranscoderInstalled(result[0])) {
+            result[0] = getTranscodeDirectory().getPath() + File.separatorChar + result[0];
+        }
+
+        return result;
     }
 
     /**
@@ -178,10 +200,8 @@ public class TranscodingService {
      * @exception IOException If an I/O error occurs.
      */
     private InputStream getDownsampledInputStream(MusicFile musicFile, int bitRate) throws IOException {
-        File lame = new File(getTranscodeDirectory(), "lame");
-        String command = '"' + lame.getPath() + "\" -S -h -b " + String.valueOf(bitRate) +
-                         " \"" + musicFile.getFile().getAbsolutePath() +"\" -";
-        return new TranscodeInputStream(command, null);
+        String command = "lame -S -h -b " + String.valueOf(bitRate) + " %s -";
+        return new TranscodeInputStream(createCommand(command, musicFile), null);
     }
 
     /**
@@ -189,7 +209,28 @@ public class TranscodingService {
      * @return Whether downsampling is supported.
      */
     public boolean isDownsamplingSupported() {
-        PrefixFileFilter filter = new PrefixFileFilter("lame");
+        String[] command = createCommand("lame", null);
+
+        try {
+            Process process = Runtime.getRuntime().exec(command);
+
+            // Must read stdout and stderr from the process, otherwise it may block.
+            new InputStreamReaderThread(process.getInputStream(), "lame stdout", false).start();
+            new InputStreamReaderThread(process.getErrorStream(), "lame stderr", false).start();
+
+            return true;
+
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns whether the given transcoder is installed in SUBSONIC_HOME/transcode.
+     * @return Whether the transcoder is installed.
+     */
+    private boolean isTranscoderInstalled(String transcoder) {
+        PrefixFileFilter filter = new PrefixFileFilter(transcoder);
         String[] matches = getTranscodeDirectory().list(filter);
         return matches != null && matches.length > 0;
     }

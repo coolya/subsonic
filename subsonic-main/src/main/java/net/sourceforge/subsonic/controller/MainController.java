@@ -4,6 +4,7 @@ import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
+import org.apache.commons.lang.*;
 
 import javax.servlet.http.*;
 import java.util.*;
@@ -68,6 +69,7 @@ public class MainController extends ParameterizableViewController {
     }
 
     private boolean isMultipleArtists(MusicFile[] children) {
+        // Collect unique artist names.
         Set<String> artists = new HashSet<String>();
         for (MusicFile child : children) {
             MusicFile.MetaData metaData = child.getMetaData();
@@ -75,7 +77,20 @@ public class MainController extends ParameterizableViewController {
                 artists.add(metaData.getArtist());
             }
         }
-        return artists.size() > 1;
+
+        // If zero or one artist, it is definitely not multiple artists.
+        if (artists.size() < 2) {
+            return false;
+        }
+
+        // Fuzzily compare artist names, allowing for some differences in spelling, whitespace etc.
+        List<String> artistList = new ArrayList<String>(artists);
+        for (String artist : artistList) {
+            if (StringUtils.getLevenshteinDistance(artist, artistList.get(0)) > 3) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setSecurityService(SecurityService securityService) {

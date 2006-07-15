@@ -98,7 +98,7 @@
         <td><a href="helpPopup.view?topic=transcode" onclick="return popup(this, 'help')">
             <img src="${helpUrl}" alt="${help}" title="${help}"></a></td>
         <c:if test="${not command.transcodingSupported}">
-            <td><fmt:message key="playersettings.nolame"><fmt:param value="${command.transcodeDirectory}"/></fmt:message></td>
+            <td class="warning"><fmt:message key="playersettings.nolame"></fmt:message></td>
         </c:if>
     </tr>
 

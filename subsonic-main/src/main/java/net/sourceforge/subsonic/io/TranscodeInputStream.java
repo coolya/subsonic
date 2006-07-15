@@ -1,7 +1,6 @@
 package net.sourceforge.subsonic.io;
 
 import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.util.*;
 import org.apache.commons.io.*;
 
 import java.io.*;
@@ -20,7 +19,6 @@ public class TranscodeInputStream extends InputStream {
     private InputStream processInputStream;
     private OutputStream processOutputStream;
 
-
     /**
      * Creates a transcoded input stream by executing the given command. If <code>in</code> is not null,
      * data from it is copied to the command.
@@ -28,17 +26,21 @@ public class TranscodeInputStream extends InputStream {
      * @param in Data to feed to the command.  May be <code>null</code>.
      * @throws IOException If an I/O error occurs.
      */
-    public TranscodeInputStream(String command, final InputStream in) throws IOException {
-        LOG.debug("Starting transcoder: " + command);
+    public TranscodeInputStream(String[] command, final InputStream in) throws IOException {
 
-        String[] commandArray = StringUtil.split(command);
-        Process process = Runtime.getRuntime().exec(commandArray);
+        StringBuffer buf = new StringBuffer("Starting transcoder: ");
+        for (String s : command) {
+            buf.append('[').append(s).append("] ");
+        }
+        LOG.debug("Starting transcoder: " + buf);
+
+        Process process = Runtime.getRuntime().exec(command);
         processOutputStream = process.getOutputStream();
         processInputStream = process.getInputStream();
 
         // Must read stderr from the process, otherwise it may block.
-        final String name = commandArray[0];
-        new InputStreamLogger(process.getErrorStream(), name).start();
+        final String name = command[0];
+        new InputStreamReaderThread(process.getErrorStream(), name, true).start();
 
         // Copy data in a separate thread
         if (in != null) {
@@ -84,34 +86,5 @@ public class TranscodeInputStream extends InputStream {
     public void close() throws IOException {
         IOUtils.closeQuietly(processInputStream);
         IOUtils.closeQuietly(processOutputStream);
-    }
-
-    /**
-     * Utility class which logs everything from an input stream.
-     */
-    public static class InputStreamLogger extends Thread {
-        private InputStream input;
-        private String name;
-
-        public InputStreamLogger(InputStream input, String name) {
-            super(name + " InputStreamLogger");
-            this.input = input;
-            this.name = name;
-        }
-
-        public void run() {
-            BufferedReader reader = null;
-            try {
-                reader = new BufferedReader(new InputStreamReader(input));
-                for (String line = reader.readLine(); line != null; line = reader.readLine()) {
-                    LOG.debug('(' + name + ") " + line);
-                }
-            } catch (IOException x) {
-                // Intentionally ignored.
-            } finally {
-                IOUtils.closeQuietly(reader);
-                IOUtils.closeQuietly(input);
-            }
-        }
     }
 }
