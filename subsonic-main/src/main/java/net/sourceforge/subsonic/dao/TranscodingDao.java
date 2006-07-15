@@ -27,9 +27,34 @@ public class TranscodingDao extends AbstractDao {
     }
 
     /**
-     * Creates a new transcoding.
-     * @param transcoding The transcoding to create.
+     * Returns all active transcodings for the given player.
+     * @param playerId The player ID.
+     * @return All active transcodings for the player.
      */
+    public Transcoding[] getTranscodingsForPlayer(String playerId) {
+        String sql = "select " + COLUMNS + " from transcoding, player_transcoding " +
+                     "where player_transcoding.player_id = ? " +
+                     "and   player_transcoding.transcoding_id = transcoding.id";
+        return (Transcoding[]) getJdbcTemplate().query(sql, new Object[] {playerId}, rowMapper).toArray(new Transcoding[0]);
+    }
+
+    /**
+     * Sets the list of active transcodings for the given player.
+     * @param playerId The player ID.
+     * @param transcodingIds ID's of the active transcodings.
+     */
+    public void setTranscodingsForPlayer(String playerId, int[] transcodingIds) {
+        getJdbcTemplate().update("delete from player_transcoding where player_id = ?", new Object[] {playerId});
+        String sql = "insert into player_transcoding(player_id, transcoding_id) values (?, ?)";
+        for (int transcodingId : transcodingIds) {
+            getJdbcTemplate().update(sql, new Object[]{playerId, transcodingId});
+        }
+    }
+
+    /**
+    * Creates a new transcoding.
+    * @param transcoding The transcoding to create.
+    */
     public void createTranscoding(Transcoding transcoding) {
         String sql = "insert into transcoding (" + COLUMNS + ") values (null, ?, ?, ?, ?, ?, ?, ?)";
         getJdbcTemplate().update(sql, new Object[] {transcoding.getName(), transcoding.getSourceFormat(),

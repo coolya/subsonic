@@ -20,6 +20,13 @@
 </c:when>
 <c:otherwise>
 
+<c:url value="playerSettings.view" var="deleteUrl">
+    <c:param name="delete" value="${command.playerId}"/>
+</c:url>
+<c:url value="playerSettings.view" var="cloneUrl">
+    <c:param name="clone" value="${command.playerId}"/>
+</c:url>
+
 <table class="indent">
     <tr>
         <td><b><fmt:message key="playersettings.title"/></b></td>
@@ -32,12 +39,15 @@
             </select>
         </td>
     </tr>
+    <tr>
+        <td><div class="forward"><a href="${deleteUrl}"><fmt:message key="playersettings.forget"/></a></div></td>
+        <td><div class="forward"><a href="${cloneUrl}"><fmt:message key="playersettings.clone"/></a></div></td>
+    </tr>
 </table>
 
 <form:form commandName="command" method="post" action="playerSettings.view">
 <form:hidden path="playerId"/>
-<table style="border-spacing:3pt">
-
+<table class="indent" style="border-spacing:3pt">
     <tr>
         <td><fmt:message key="playersettings.type"/></td>
         <td colspan="3">
@@ -112,23 +122,25 @@
             <img src="${helpUrl}" alt="${help}" title="${help}"></a></td>
     </tr>
 
-    <tr>
-        <td colspan="3" align="center">
-            <input type="submit" value="<fmt:message key="playersettings.ok"/>">
-        </td>
-    </tr>
 </table>
 
+    <c:if test="${not empty command.allTranscodings}">
+        <table class="indent">
+            <tr><td><b><fmt:message key="playersettings.transcodings"/></b></td></tr>
+            <c:forEach items="${command.allTranscodings}" var="transcoding" varStatus="loopStatus">
+                <c:if test="${loopStatus.count % 3 == 1}"><tr></c:if>
+                <td style="padding-right:2em">
+                    <form:checkbox path="activeTranscodingIds" id="transcoding${transcoding.id}" value="${transcoding.id}" cssClass="checkbox"/>
+                    <label for="transcoding${transcoding.id}">${transcoding.name}</label>
+                </td>
+                <c:if test="${loopStatus.count % 3 == 0 or loopStatus.count eq fn:length(command.allTranscodings)}"></tr></c:if>
+            </c:forEach>
+        </table>
+    </c:if>
+
+    <input type="submit" value="<fmt:message key="playersettings.ok"/>" style="margin-top:1em">
 </form:form>
 
-<c:url value="playerSettings.view" var="deleteUrl">
-    <c:param name="delete" value="${command.playerId}"/>
-</c:url>
-<c:url value="playerSettings.view" var="cloneUrl">
-    <c:param name="clone" value="${command.playerId}"/>
-</c:url>
-<div class="forward"><a href="${deleteUrl}"><fmt:message key="playersettings.forget"/></a></div>
-<div class="forward"><a href="${cloneUrl}"><fmt:message key="playersettings.clone"/></a></div>
 </c:otherwise>
 </c:choose>
 

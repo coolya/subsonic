@@ -46,5 +46,16 @@ public class Schema28 extends Schema {
             template.execute("insert into transcoding values(null,'ofr > mp3','ofr','mp3','ofr --decode --silent %s --output -','lame - -',null,false)");
             LOG.info("Database table 'transcoding' was created successfully.");
         }
+
+        if (!tableExists(template, "player_transcoding")) {
+            LOG.info("Database table 'player_transcoding' not found.  Creating it.");
+            template.execute("create table player_transcoding (" +
+                             "player_id int not null," +
+                             "transcoding_id int not null," +
+                             "primary key (player_id, transcoding_id)," +
+                             "foreign key (player_id) references player(id) on delete cascade," +
+                             "foreign key (transcoding_id) references transcoding(id) on delete cascade)");
+            LOG.info("Database table 'player_transcoding' was created successfully.");
+        }
     }
 }

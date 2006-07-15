@@ -44,6 +44,13 @@ public class PlayerSettingsController extends SimpleFormController {
             command.setAutoControlEnabled(player.isAutoControlEnabled());
             command.setCoverArtSchemeName(player.getCoverArtScheme().name());
             command.setTranscodeSchemeName(player.getTranscodeScheme().name());
+            command.setAllTranscodings(transcodingService.getAllTranscodings());
+            Transcoding[] activeTranscodings = transcodingService.getTranscodingsForPlayer(player);
+            int[] activeTranscodingIds = new int[activeTranscodings.length];
+            for (int i = 0; i < activeTranscodings.length; i++) {
+                activeTranscodingIds[i] = activeTranscodings[i].getId();
+            }
+            command.setActiveTranscodingIds(activeTranscodingIds);
         }
 
         command.setTranscodingSupported(transcodingService.isDownsamplingSupported());
@@ -65,7 +72,9 @@ public class PlayerSettingsController extends SimpleFormController {
         player.setDynamicIp(command.isDynamicIp());
         player.setName(command.getName());
         player.setTranscodeScheme(TranscodeScheme.valueOf(command.getTranscodeSchemeName()));
+
         playerService.updatePlayer(player);
+        transcodingService.setTranscodingsForPlayer(player, command.getActiveTranscodingIds());
     }
 
     private List<Player> getPlayers(HttpServletRequest request) {

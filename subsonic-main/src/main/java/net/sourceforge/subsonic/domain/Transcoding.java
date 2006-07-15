@@ -170,4 +170,16 @@ public class Transcoding {
     public void setEnabled(boolean isEnabled) {
         this.isEnabled = isEnabled;
     }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Transcoding that = (Transcoding) o;
+        return !(id != null ? !id.equals(that.id) : that.id != null);
+    }
+
+    public int hashCode() {
+        return (id != null ? id.hashCode() : 0);
+    }
 }

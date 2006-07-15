@@ -48,6 +48,31 @@ public class TranscodingService {
     }
 
     /**
+     * Returns all active transcodings for the given player. Only enabled transcodings are returned.
+     * @param player The player.
+     * @return All active transcodings for the player.
+     */
+    public Transcoding[] getTranscodingsForPlayer(Player player) {
+        Transcoding[] all = transcodingDao.getTranscodingsForPlayer(player.getId());
+        List<Transcoding> result = new ArrayList<Transcoding>(all.length);
+        for (Transcoding transcoding : all) {
+            if (transcoding.isEnabled()) {
+                result.add(transcoding);
+            }
+        }
+        return result.toArray(new Transcoding[0]);
+    }
+
+    /**
+     * Sets the list of active transcodings for the given player.
+     * @param player The player.
+     * @param transcodingIds ID's of the active transcodings.
+     */
+    public void setTranscodingsForPlayer(Player player, int[] transcodingIds) {
+        transcodingDao.setTranscodingsForPlayer(player.getId(), transcodingIds);
+    }
+
+    /**
      * Creates a new transcoding.
      * @param transcoding The transcoding to create.
      */
@@ -138,8 +163,7 @@ public class TranscodingService {
      * transcoding should be done.
      */
     public Transcoding getTranscoding(MusicFile musicFile, Player player) {
-        // TODO: Only consider those that are active for the given player.
-        for (Transcoding transcoding : getAllTranscodings()) {
+        for (Transcoding transcoding : getTranscodingsForPlayer(player)) {
             if (transcoding.getSourceFormat().equalsIgnoreCase(musicFile.getSuffix())) {
                 return transcoding;
             }
@@ -189,4 +213,5 @@ public class TranscodingService {
     public void setTranscodingDao(TranscodingDao transcodingDao) {
         this.transcodingDao = transcodingDao;
     }
+
 }

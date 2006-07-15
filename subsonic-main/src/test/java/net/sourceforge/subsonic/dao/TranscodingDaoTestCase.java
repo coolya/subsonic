@@ -54,6 +54,68 @@ public class TranscodingDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong number of transcodings.", 0, transcodingDao.getAllTranscodings().length);
     }
 
+    public void testPlayerTranscoding() {
+        Player player = new Player();
+        playerDao.createPlayer(player);
+
+        transcodingDao.createTranscoding(new Transcoding(null, "name", "sourceFormat", "targetFormat", "step1", "step2", "step3", true));
+        transcodingDao.createTranscoding(new Transcoding(null, "name", "sourceFormat", "targetFormat", "step1", "step2", "step3", true));
+        transcodingDao.createTranscoding(new Transcoding(null, "name", "sourceFormat", "targetFormat", "step1", "step2", "step3", true));
+        Transcoding transcodingA = transcodingDao.getAllTranscodings()[0];
+        Transcoding transcodingB = transcodingDao.getAllTranscodings()[1];
+        Transcoding transcodingC = transcodingDao.getAllTranscodings()[2];
+
+        Transcoding[] activeTranscodings = transcodingDao.getTranscodingsForPlayer(player.getId());
+        assertEquals("Wrong number of transcodings.", 0, activeTranscodings.length);
+
+        transcodingDao.setTranscodingsForPlayer(player.getId(), new int[] {transcodingA.getId()});
+        activeTranscodings = transcodingDao.getTranscodingsForPlayer(player.getId());
+        assertEquals("Wrong number of transcodings.", 1, activeTranscodings.length);
+        assertTranscodingEquals(transcodingA, activeTranscodings[0]);
+
+        transcodingDao.setTranscodingsForPlayer(player.getId(), new int[] {transcodingB.getId(), transcodingC.getId()});
+        activeTranscodings = transcodingDao.getTranscodingsForPlayer(player.getId());
+        assertEquals("Wrong number of transcodings.", 2, activeTranscodings.length);
+        assertTranscodingEquals(transcodingB, activeTranscodings[0]);
+        assertTranscodingEquals(transcodingC, activeTranscodings[1]);
+
+        transcodingDao.setTranscodingsForPlayer(player.getId(), new int[0]);
+        activeTranscodings = transcodingDao.getTranscodingsForPlayer(player.getId());
+        assertEquals("Wrong number of transcodings.", 0, activeTranscodings.length);
+    }
+
+    public void testCascadingDeletePlayer() {
+        Player player = new Player();
+        playerDao.createPlayer(player);
+
+        transcodingDao.createTranscoding(new Transcoding(null, "name", "sourceFormat", "targetFormat", "step1", "step2", "step3", true));
+        Transcoding transcoding = transcodingDao.getAllTranscodings()[0];
+
+        transcodingDao.setTranscodingsForPlayer(player.getId(), new int[] {transcoding.getId()});
+        Transcoding[] activeTranscodings = transcodingDao.getTranscodingsForPlayer(player.getId());
+        assertEquals("Wrong number of transcodings.", 1, activeTranscodings.length);
+
+        playerDao.deletePlayer(player.getId());
+        activeTranscodings = transcodingDao.getTranscodingsForPlayer(player.getId());
+        assertEquals("Wrong number of transcodings.", 0, activeTranscodings.length);
+    }
+
+    public void testCascadingDeleteTranscoding() {
+        Player player = new Player();
+        playerDao.createPlayer(player);
+
+        transcodingDao.createTranscoding(new Transcoding(null, "name", "sourceFormat", "targetFormat", "step1", "step2", "step3", true));
+        Transcoding transcoding = transcodingDao.getAllTranscodings()[0];
+
+        transcodingDao.setTranscodingsForPlayer(player.getId(), new int[] {transcoding.getId()});
+        Transcoding[] activeTranscodings = transcodingDao.getTranscodingsForPlayer(player.getId());
+        assertEquals("Wrong number of transcodings.", 1, activeTranscodings.length);
+
+        transcodingDao.deleteTranscoding(transcoding.getId());
+        activeTranscodings = transcodingDao.getTranscodingsForPlayer(player.getId());
+        assertEquals("Wrong number of transcodings.", 0, activeTranscodings.length);
+    }
+
     private void assertTranscodingEquals(Transcoding expected, Transcoding actual) {
         assertEquals("Wrong name.", expected.getName(), actual.getName());
         assertEquals("Wrong source format.", expected.getSourceFormat(), actual.getSourceFormat());

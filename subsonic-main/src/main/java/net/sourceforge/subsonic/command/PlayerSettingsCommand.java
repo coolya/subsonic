@@ -22,6 +22,8 @@ public class PlayerSettingsCommand {
     private String transcodeSchemeName;
     private boolean transcodingSupported;
     private String transcodeDirectory;
+    private Transcoding[] allTranscodings;
+    private int[] activeTranscodingIds;
     private EnumHolder[] transcodeSchemeHolders;
     private EnumHolder[] coverArtSchemeHolders;
     private Player[] players;
@@ -115,6 +117,22 @@ public class PlayerSettingsCommand {
         this.transcodeDirectory = transcodeDirectory;
     }
 
+    public Transcoding[] getAllTranscodings() {
+        return allTranscodings;
+    }
+
+    public void setAllTranscodings(Transcoding[] allTranscodings) {
+        this.allTranscodings = allTranscodings;
+    }
+
+    public int[] getActiveTranscodingIds() {
+        return activeTranscodingIds;
+    }
+
+    public void setActiveTranscodingIds(int[] activeTranscodingIds) {
+        this.activeTranscodingIds = activeTranscodingIds;
+    }
+
     public EnumHolder[] getTranscodeSchemeHolders() {
         return transcodeSchemeHolders;
     }
@@ -173,6 +191,27 @@ public class PlayerSettingsCommand {
 
         public String getDescription() {
             return description;
+        }
+    }
+
+    /**
+     * Holds the transcoding and whether it is active for the given player.
+     */
+    public static class TranscodingHolder {
+        private Transcoding transcoding;
+        private boolean isActive;
+
+        public TranscodingHolder(Transcoding transcoding, boolean isActive) {
+            this.transcoding = transcoding;
+            this.isActive = isActive;
+        }
+
+        public Transcoding getTranscoding() {
+            return transcoding;
+        }
+
+        public boolean isActive() {
+            return isActive;
         }
     }
 }

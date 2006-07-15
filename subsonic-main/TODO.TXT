@@ -1,3 +1,5 @@
+TRANSCODING
+oggdec, oggenc - http://www.rarewares.org/ogg.html
 
 OK - WMA9, Quality-based VBR Q75, Atlantic
 OK - OGG, Quality-based VBR Q3, Is It Any Wonder
@@ -9,6 +11,11 @@ OK - Frog Lossless, Put It Behind You
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
+Upgrade Spring.
+Show artist/album as tooltip on cover art images.
+Why is Player.id a String, not an Integer?
+Write transcoding pack README.TXT.
+Make transcoding web page.
 Avoid ugly error log when transcoding.
 oggdec crashes on "stue" pc.
 Add transcoder for cell phone etc.
