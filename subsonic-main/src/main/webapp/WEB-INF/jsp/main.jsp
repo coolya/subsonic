@@ -153,6 +153,7 @@
             <div style="float:left; padding:5px">
                 <c:import url="coverArt.jsp">
                     <c:param name="albumPath" value="${coverArt.parentFile.path}"/>
+                    <c:param name="albumName" value="${coverArt.parentFile.name}"/>
                     <c:param name="coverArtSize" value="${model.coverArtSize}"/>
                     <c:param name="coverArtPath" value="${coverArt.path}"/>
                     <c:param name="showLink" value="${coverArt.parentFile.path ne model.dir.path}"/>

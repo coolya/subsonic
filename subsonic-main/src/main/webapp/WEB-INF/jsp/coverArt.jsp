@@ -6,6 +6,7 @@ PARAMETERS
   coverArtSize: Height and width of cover art.
   coverArtPath: Path to cover art, or nil if generic cover art image should be displayed.
   albumPath: Path to album.
+  albumName: Album name to display as caption and img alt.
   showLink: Whether to make the cover art image link to the album page.
   showZoom: Whether to display a link for zooming the cover art.
   showChange: Whether to display a link for changing the cover art.
@@ -38,7 +39,7 @@ PARAMETERS
             <div class="shadowbox">
                 <div class="innerbox">
                     <c:if test="${param.showLink}"><a href="${mainUrl}"></c:if>
-                        <img src="${coverArtUrl}" alt=""/>
+                        <img src="${coverArtUrl}" alt="${param.albumName}"/>
                         <c:if test="${param.showLink}"></a></c:if>
                 </div>
             </div>
@@ -57,10 +58,15 @@ PARAMETERS
     <c:if test="${param.showZoom and param.showChange}">
         |
     </c:if>
+
     <c:if test="${param.showZoom}">
         <sub:url value="/zoomCoverArt.view" var="zoomCoverArtUrl">
             <sub:param name="path" value="${param.coverArtPath}"/>
         </sub:url>
         <a class="detail" href="${zoomCoverArtUrl}" onclick="return popup(this, 'Cover')"><fmt:message key="coverart.zoom"/></a>
+    </c:if>
+
+    <c:if test="${not param.showZoom and not param.showChange}">
+        <span class="detail"><str:truncateNicely upper="17">${param.albumName}</str:truncateNicely></span>
     </c:if>
 </div>
