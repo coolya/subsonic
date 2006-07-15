@@ -109,37 +109,37 @@
                         </c:otherwise>
                     </c:choose>
 
-                    <td ${class} style="padding-left:0.25em;padding-right:1.5em">
+                    <td ${class} style="padding-left:0.25em;padding-right:1.25em">
                         <c:if test="${song.current}">
                             <img src="<c:url value="/icons/current.gif"/>" alt=""/>
                         </c:if>
-                        <a href="playlist.view?skip=${i}">${song.current ? "<b>" : ""}<str:truncateNicely upper="50">${song.musicFile.title}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
+                        <a href="playlist.view?skip=${i}">${song.current ? "<b>" : ""}<str:truncateNicely upper="30">${song.musicFile.title}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
                     </td>
 
-                    <td ${class} style="padding-right:1.5em">
-                        <span class="detail"><a target="main" href="${mainUrl}"><str:truncateNicely upper="50">${song.musicFile.metaData.album}</str:truncateNicely></a></span>
+                    <td ${class} style="padding-right:1.25em">
+                        <span class="detail"><a target="main" href="${mainUrl}"><str:truncateNicely upper="25">${song.musicFile.metaData.album}</str:truncateNicely></a></span>
                     </td>
 
-                    <td ${class} style="padding-right:1.5em">
-                        <span class="detail"><str:truncateNicely upper="50">${song.musicFile.metaData.artist}</str:truncateNicely></span>
+                    <td ${class} style="padding-right:1.25em">
+                        <span class="detail"><str:truncateNicely upper="25">${song.musicFile.metaData.artist}</str:truncateNicely></span>
                     </td>
 
-                    <td ${class} style="padding-right:1.5em">
+                    <td ${class} style="padding-right:1.25em">
                         <span class="detail">${song.musicFile.metaData.year}</span>
                     </td>
 
-                    <td ${class} style="padding-right:1.5em">
+                    <td ${class} style="padding-right:1.25em">
                         <span class="detail">${fn:toLowerCase(song.musicFile.suffix)}</span>
                     </td>
 
-                    <td ${class} style="padding-right:1.5em;text-align:right">
+                    <td ${class} style="padding-right:1.25em;text-align:right">
                         <span class="detail">${song.size}</span>
                     </td>
 
                     <td ${class} style="padding-right:0.25em">
                         <span class="detail">
                             <c:if test="${song.musicFile.bitRate != 0}">
-                                ${song.musicFile.bitRate} Kbps ${song.musicFile.variableBitRate ? "(vbr)" : ""}
+                                ${song.musicFile.bitRate} Kbps ${song.musicFile.variableBitRate ? "vbr" : ""}
                             </c:if>
                         </span>
                     </td>
