@@ -42,6 +42,7 @@
     <bean id="settingsService" class="net.sourceforge.subsonic.service.SettingsService" init-method="init">
         <property name="internetRadioDao" ref="internetRadioDao"/>
         <property name="musicFolderDao" ref="musicFolderDao"/>
+        <property name="userDao" ref="userDao"/>
     </bean>
 
     <bean id="searchService" class="net.sourceforge.subsonic.service.SearchService" init-method="schedule">

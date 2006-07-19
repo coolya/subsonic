@@ -19,11 +19,15 @@ public class Schema28 extends Schema {
             template.execute("insert into version values (4)");
         }
 
-        if (!columnExists(template, "locale", "user")) {
-            LOG.info("Database columns 'user.locale/theme' not found.  Creating them.");
-            template.execute("alter table user add locale varchar");
-            template.execute("alter table user add theme varchar");
-            LOG.info("Database columns 'user.locale/theme' were added successfully.");
+        if (!tableExists(template, "user_settings")) {
+            LOG.info("Database table 'user_settings' not found.  Creating it.");
+            template.execute("create table user_settings (" +
+                             "username varchar not null," +
+                             "locale varchar," +
+                             "theme_id varchar," +
+                             "primary key (username)," +
+                             "foreign key (username) references user(username) on delete cascade)");
+            LOG.info("Database table 'user_settings' was created successfully.");
         }
 
         if (!tableExists(template, "transcoding")) {

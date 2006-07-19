@@ -25,10 +25,17 @@ public class SubsonicLocaleResolver implements LocaleResolver {
     * @return The current locale.
     */
     public Locale resolveLocale(HttpServletRequest request) {
+        Locale locale = null;
 
         // Look for user-specific locale.
-        User user = securityService.getCurrentUser(request);
-        Locale locale = (user == null ? null : user.getLocale());
+        String username = securityService.getCurrentUsername(request);
+        if (username != null) {
+            UserSettings userSettings = settingsService.getUserSettings(username);
+            if (userSettings != null) {
+                locale = userSettings.getLocale();
+            }
+        }
+
         if (locale != null && localeExists(locale)) {
             return locale;
         }

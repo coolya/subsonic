@@ -23,11 +23,13 @@ public class AppearanceSettingsController extends SimpleFormController {
         AppearanceSettingsCommand command = new AppearanceSettingsCommand();
 
         User user = securityService.getCurrentUser(request);
+        UserSettings userSettings = settingsService.getUserSettings(user.getUsername());
+
         command.setUser(user);
         command.setLocaleIndex("-1");
         command.setThemeIndex("-1");
 
-        Locale currentLocale = user.getLocale();
+        Locale currentLocale = userSettings == null ? null : userSettings.getLocale();
         Locale[] locales = settingsService.getAvailableLocales();
         String[] localeStrings = new String[locales.length];
         for (int i = 0; i < locales.length; i++) {
@@ -39,10 +41,11 @@ public class AppearanceSettingsController extends SimpleFormController {
         }
         command.setLocales(localeStrings);
 
+        String currentThemeId = userSettings == null ? null : userSettings.getThemeId();
         Theme[] themes = settingsService.getAvailableThemes();
         command.setThemes(themes);
         for (int i = 0; i < themes.length; i++) {
-            if (themes[i].getId().equals(user.getThemeId())) {
+            if (themes[i].getId().equals(currentThemeId)) {
                 command.setThemeIndex(String.valueOf(i));
                 break;
             }
@@ -66,12 +69,18 @@ public class AppearanceSettingsController extends SimpleFormController {
             themeId = settingsService.getAvailableThemes()[themeIndex].getId();
         }
 
-        User user = securityService.getUserByName(command.getUser().getUsername());
-        command.setReloadNeeded(!StringUtil.isEqual(locale, user.getLocale()) || !StringUtil.isEqual(themeId, user.getThemeId()));
+        String username = command.getUser().getUsername();
+        UserSettings userSettings = settingsService.getUserSettings(username);
+        if (userSettings == null) {
+            userSettings = new UserSettings(username, null, null);
+        }
 
-        user.setLocale(locale);
-        user.setThemeId(themeId);
-        securityService.updateUser(user);
+        command.setReloadNeeded(!StringUtil.isEqual(locale, userSettings.getLocale()) ||
+                                !StringUtil.isEqual(themeId, userSettings.getThemeId()));
+
+        userSettings.setLocale(locale);
+        userSettings.setThemeId(themeId);
+        settingsService.updateUserSettings(userSettings);
     }
 
     public void setSettingsService(SettingsService settingsService) {

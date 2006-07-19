@@ -6,6 +6,7 @@ import org.blinkenlights.jid3.MP3File;
 import org.blinkenlights.jid3.v1.*;
 import org.blinkenlights.jid3.v2.*;
 import org.jaudiotagger.audio.mp3.*;
+import org.apache.commons.lang.*;
 
 /**
  * Parses meta data from MP3 files.
@@ -66,9 +67,9 @@ public class Mp3Parser extends MetaDataParser {
                 // proceed with ID3v1.
             }
             if (tag2 != null) {
-                artist = trim(tag2.getArtist());
-                album = trim(tag2.getAlbum());
-                title = trim(tag2.getTitle());
+                artist = StringUtils.trimToNull(tag2.getArtist());
+                album = StringUtils.trimToNull(tag2.getAlbum());
+                title = StringUtils.trimToNull(tag2.getTitle());
                 try {
                     year = String.valueOf(tag2.getYear());
                 } catch (Exception x) {
@@ -80,9 +81,9 @@ public class Mp3Parser extends MetaDataParser {
                 ID3V1Tag tag1 = mediaFile.getID3V1Tag();
                 if (tag1 != null) {
 
-                    artist = trim(tag1.getArtist());
-                    album = trim(tag1.getAlbum());
-                    title = trim(tag1.getTitle());
+                    artist = StringUtils.trimToNull(tag1.getArtist());
+                    album = StringUtils.trimToNull(tag1.getAlbum());
+                    title = StringUtils.trimToNull(tag1.getTitle());
                     try {
                         year = String.valueOf(tag1.getYear());
                     } catch (Exception x) {
@@ -180,13 +181,5 @@ public class Mp3Parser extends MetaDataParser {
      */
     public boolean isApplicable(MusicFile file) {
         return file.isFile() && file.getName().toUpperCase().endsWith(".MP3");
-    }
-
-    private String trim(String s) {
-        if (s == null) {
-            return null;
-        }
-        s = s.trim();
-        return s.length() == 0 ? null : s;
     }
 }

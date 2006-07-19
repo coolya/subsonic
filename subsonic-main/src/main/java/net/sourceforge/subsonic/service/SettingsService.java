@@ -73,6 +73,7 @@ public class SettingsService {
     private List<Locale> locales;
     private InternetRadioDao internetRadioDao;
     private MusicFolderDao musicFolderDao;
+    private UserDao userDao;
 
     public SettingsService() {
         File propertyFile = getPropertyFile();
@@ -540,6 +541,23 @@ public class SettingsService {
         internetRadioDao.updateInternetRadio(radio);
     }
 
+    /**
+     * Returns settings for the given user.
+     * @param username The username.
+     * @return User-specific settings.
+     */
+    public UserSettings getUserSettings(String username) {
+        return userDao.getUserSettings(username);
+    }
+
+    /**
+     * Updates settings for the given username.
+     * @param settings The user-specific settings.
+     */
+    public void updateUserSettings(UserSettings settings) {
+        userDao.updateUserSettings(settings);
+    }
+
     private String[] toStringArray(String s) {
         List<String> result = new ArrayList<String>();
         StringTokenizer tokenizer = new StringTokenizer(s, " ");
@@ -556,5 +574,9 @@ public class SettingsService {
 
     public void setMusicFolderDao(MusicFolderDao musicFolderDao) {
         this.musicFolderDao = musicFolderDao;
+    }
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
     }
 }

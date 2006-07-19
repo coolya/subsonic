@@ -16,7 +16,8 @@ import java.util.*;
 public class UserDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(UserDao.class);
-    private static final String COLUMNS = "username, password, bytes_streamed, bytes_downloaded, bytes_uploaded, locale, theme";
+    private static final String USER_COLUMNS = "username, password, bytes_streamed, bytes_downloaded, bytes_uploaded";
+    private static final String USER_SETTINGS_COLUMNS = "username, locale, theme_id";
 
     private static final Integer ROLE_ID_ADMIN      = 1;
     private static final Integer ROLE_ID_DOWNLOAD   = 2;
@@ -25,7 +26,8 @@ public class UserDao extends AbstractDao {
     private static final Integer ROLE_ID_COVER_ART  = 5;
     private static final Integer ROLE_ID_COMMENT    = 6;
 
-    private UserRowMapper rowMapper = new UserRowMapper();
+    private UserRowMapper userRowMapper = new UserRowMapper();
+    private UserSettingsRowMapper userSettingsRowMapper = new UserSettingsRowMapper();
 
     /**
      * Returns the user with the given username.
@@ -33,8 +35,8 @@ public class UserDao extends AbstractDao {
      * @return The user, or <code>null</code> if not found.
      */
     public User getUserByName(String username) {
-        String sql = "select " + COLUMNS + " from user where username=?";
-        User[] users = (User[]) getJdbcTemplate().query(sql, new Object[] {username}, rowMapper).toArray(new User[0]);
+        String sql = "select " + USER_COLUMNS + " from user where username=?";
+        User[] users = (User[]) getJdbcTemplate().query(sql, new Object[] {username}, userRowMapper).toArray(new User[0]);
         if (users.length == 0) {
             return null;
         }
@@ -48,8 +50,8 @@ public class UserDao extends AbstractDao {
      * @return Possibly empty array of all users.
      */
     public User[] getAllUsers() {
-        String sql = "select " + COLUMNS + " from user";
-        User[] users = (User[]) getJdbcTemplate().query(sql, rowMapper).toArray(new User[0]);
+        String sql = "select " + USER_COLUMNS + " from user";
+        User[] users = (User[]) getJdbcTemplate().query(sql, userRowMapper).toArray(new User[0]);
         for (User user : users) {
             readRoles(user);
         }
@@ -61,11 +63,9 @@ public class UserDao extends AbstractDao {
      * @param user The user to create.
      */
     public void createUser(User user) {
-        String sql = "insert into user (" + COLUMNS + ") values (?, ?, ?, ?, ?, ?, ?)";
-        String locale = user.getLocale() == null ? null : user.getLocale().toString();
+        String sql = "insert into user (" + USER_COLUMNS + ") values (?, ?, ?, ?, ?)";
         getJdbcTemplate().update(sql, new Object[] {user.getUsername(), user.getPassword(), user.getBytesStreamed(),
-                                                    user.getBytesDownloaded(), user.getBytesUploaded(),
-                                                    locale, user.getThemeId()});
+                                                    user.getBytesDownloaded(), user.getBytesUploaded()});
         writeRoles(user);
     }
 
@@ -90,12 +90,11 @@ public class UserDao extends AbstractDao {
     * @param user The user to update.
     */
     public void updateUser(User user) {
-        String sql = "update user set password=?, bytes_streamed=?, bytes_downloaded=?, bytes_uploaded=?, " +
-                     "locale=?, theme=? where username=?";
-        String locale = user.getLocale() == null ? null : user.getLocale().toString();
+        String sql = "update user set password=?, bytes_streamed=?, bytes_downloaded=?, bytes_uploaded=? " +
+                     "where username=?";
         getJdbcTemplate().update(sql, new Object[] {user.getPassword(), user.getBytesStreamed(),
                                                     user.getBytesDownloaded(), user.getBytesUploaded(),
-                                                    locale, user.getThemeId(), user.getUsername()});
+                                                    user.getUsername()});
         writeRoles(user);
     }
 
@@ -113,6 +112,34 @@ public class UserDao extends AbstractDao {
             result[i] = (String) roles.get(i);
         }
         return result;
+    }
+
+    /**
+     * Returns settings for the given user.
+     * @param username The username.
+     * @return User-specific settings, or <code>null</code> if no such settings exist.
+     */
+    public UserSettings getUserSettings(String username) {
+        String sql = "select " + USER_SETTINGS_COLUMNS + " from user_settings where username=?";
+        UserSettings[] result = (UserSettings[]) getJdbcTemplate().query(sql, new Object[]{username}, userSettingsRowMapper).toArray(new UserSettings[0]);
+
+        return result.length == 0 ? null : result[0];
+    }
+
+    /**
+     * Updates settings for the given username, creating it if necessary.
+     * @param settings The user-specific settings.
+     */
+    public void updateUserSettings(UserSettings settings) {
+        String locale = settings.getLocale() == null ? null : settings.getLocale().toString();
+
+        if (getUserSettings(settings.getUsername()) == null) {
+            String sql = "insert into user_settings (" + USER_SETTINGS_COLUMNS + ") values (?, ?, ?)";
+            getJdbcTemplate().update(sql, new Object[]{settings.getUsername(), locale, settings.getThemeId()});
+        } else {
+            String sql = "update user_settings set locale=?, theme_id=? where username=?";
+            getJdbcTemplate().update(sql, new Object[]{locale, settings.getThemeId(), settings.getUsername()});
+        }
     }
 
     private void readRoles(User user) {
@@ -163,8 +190,13 @@ public class UserDao extends AbstractDao {
 
     private static class UserRowMapper implements RowMapper {
         public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new User(rs.getString(1), rs.getString(2), rs.getLong(3), rs.getLong(4),
-                            rs.getLong(5), StringUtil.parseLocale(rs.getString(6)), rs.getString(7));
+            return new User(rs.getString(1), rs.getString(2), rs.getLong(3), rs.getLong(4), rs.getLong(5));
+        }
+    }
+
+    private static class UserSettingsRowMapper implements RowMapper {
+        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new UserSettings(rs.getString(1), StringUtil.parseLocale(rs.getString(2)), rs.getString(3));
         }
     }
 }

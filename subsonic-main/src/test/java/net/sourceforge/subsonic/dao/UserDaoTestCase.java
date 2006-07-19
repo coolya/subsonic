@@ -2,6 +2,7 @@ package net.sourceforge.subsonic.dao;
 
 import net.sourceforge.subsonic.domain.*;
 import org.springframework.jdbc.core.*;
+import org.springframework.dao.*;
 
 import java.util.*;
 
@@ -18,7 +19,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
     }
 
     public void testCreateUser() {
-        User user = new User("sindre", "secret", 1000L, 2000L, 3000L, new Locale("no"), "midnight");
+        User user = new User("sindre", "secret", 1000L, 2000L, 3000L);
         user.setAdminRole(true);
         user.setCommentRole(true);
         user.setCoverArtRole(true);
@@ -45,8 +46,6 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         user.setBytesStreamed(1);
         user.setBytesDownloaded(2);
         user.setBytesUploaded(3);
-        user.setLocale(Locale.ENGLISH);
-        user.setThemeId("default");
         user.setAdminRole(false);
         user.setCommentRole(false);
         user.setCoverArtRole(false);
@@ -61,8 +60,6 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong bytes streamed.", 1, newUser.getBytesStreamed());
         assertEquals("Wrong bytes downloaded.", 2, newUser.getBytesDownloaded());
         assertEquals("Wrong bytes uploaded.", 3, newUser.getBytesUploaded());
-        assertEquals("Wrong locale.", Locale.ENGLISH, newUser.getLocale());
-        assertEquals("Wrong theme.", "default", newUser.getThemeId());
     }
 
     public void testGetUserByName() {
@@ -108,14 +105,39 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong role.", "comment", roles[1]);
     }
 
+    public void testUserSettings() {
+        assertNull("Error in getUserSettings.", userDao.getUserSettings("sindre"));
+
+        try {
+            userDao.updateUserSettings(new UserSettings("sindre", null, null));
+            fail("Expected DataIntegrityViolationException.");
+        } catch (DataIntegrityViolationException x) {}
+
+        userDao.createUser(new User("sindre", "secret"));
+        assertNull("Error in getUserSettings.", userDao.getUserSettings("sindre"));
+
+        userDao.updateUserSettings(new UserSettings("sindre", null, null));
+        UserSettings userSettings = userDao.getUserSettings("sindre");
+        assertNotNull("Error in getUserSettings().", userSettings);
+        assertNull("Error in getUserSettings().", userSettings.getLocale());
+        assertNull("Error in getUserSettings().", userSettings.getThemeId());
+
+        userDao.updateUserSettings(new UserSettings("sindre", Locale.SIMPLIFIED_CHINESE, "midnight"));
+        userSettings = userDao.getUserSettings("sindre");
+        assertNotNull("Error in getUserSettings().", userSettings);
+        assertEquals("Error in getUserSettings().", Locale.SIMPLIFIED_CHINESE, userSettings.getLocale());
+        assertEquals("Error in getUserSettings().", "midnight", userSettings.getThemeId());
+
+        userDao.deleteUser("sindre");
+        assertNull("Error in cascading delete.", userDao.getUserSettings("sindre"));
+    }
+
     private void assertUserEquals(User expected, User actual) {
         assertEquals("Wrong name.", expected.getUsername(), actual.getUsername());
         assertEquals("Wrong password.", expected.getPassword(), actual.getPassword());
         assertEquals("Wrong bytes streamed.", expected.getBytesStreamed(), actual.getBytesStreamed());
         assertEquals("Wrong bytes downloaded.", expected.getBytesDownloaded(), actual.getBytesDownloaded());
         assertEquals("Wrong bytes uploaded.", expected.getBytesUploaded(), actual.getBytesUploaded());
-        assertEquals("Wrong locale.", expected.getLocale(), actual.getLocale());
-        assertEquals("Wrong theme.", expected.getThemeId(), actual.getThemeId());
         assertEquals("Wrong admin role.", expected.isAdminRole(), actual.isAdminRole());
         assertEquals("Wrong comment role.", expected.isCommentRole(), actual.isCommentRole());
         assertEquals("Wrong cover art role.", expected.isCoverArtRole(), actual.isCoverArtRole());
