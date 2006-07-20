@@ -76,9 +76,10 @@ public class SearchService {
                         MusicFile root = new MusicFile(musicFolder.getPath());
                         MusicFile[] all = root.getChildren(true, true);
 
-                        for (MusicFile file : all) {
+                        for (int i = 0; i < all.length; i++) {
                             count++;
-                            writer.println(Line.forFile(file, oldIndex));
+                            writer.println(Line.forFile(all[i], oldIndex));
+                            all[i] = null;  // Make available for GC.
                         }
                     }
 
