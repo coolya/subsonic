@@ -135,10 +135,10 @@
                         <sub:url value="main.view" var="childUrl">
                             <sub:param name="path" value="${child.path}"/>
                         </sub:url>
-                        <a href="${childUrl}"><str:truncateNicely lower="35" upper="35">${child.name}</str:truncateNicely></a>
+                        <a href="${childUrl}" title="${child.name}"><str:truncateNicely lower="35" upper="35">${child.name}</str:truncateNicely></a>
                     </c:when>
                     <c:otherwise>
-                        <str:truncateNicely lower="35" upper="35">${child.title}</str:truncateNicely>
+                        <span title="${child.title}"><str:truncateNicely lower="35" upper="35">${child.title}</str:truncateNicely></span>
                         <c:if test="${model.showArtist and not empty child.metaData.artist}">
                             - <span class="detail"><str:truncateNicely lower="35" upper="35">${child.metaData.artist}</str:truncateNicely></span>
                         </c:if>

@@ -113,15 +113,15 @@
                         <c:if test="${song.current}">
                             <img src="<c:url value="/icons/current.gif"/>" alt=""/>
                         </c:if>
-                        <a href="playlist.view?skip=${i}">${song.current ? "<b>" : ""}<str:truncateNicely upper="30">${song.musicFile.title}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
+                        <a href="playlist.view?skip=${i}" title="${song.musicFile.title}">${song.current ? "<b>" : ""}<str:truncateNicely upper="30">${song.musicFile.title}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
                     </td>
 
                     <td ${class} style="padding-right:1.25em">
-                        <span class="detail"><a target="main" href="${mainUrl}"><str:truncateNicely upper="25">${song.musicFile.metaData.album}</str:truncateNicely></a></span>
+                        <span class="detail" title="${song.musicFile.metaData.album}"><a target="main" href="${mainUrl}"><str:truncateNicely upper="25">${song.musicFile.metaData.album}</str:truncateNicely></a></span>
                     </td>
 
                     <td ${class} style="padding-right:1.25em">
-                        <span class="detail"><str:truncateNicely upper="25">${song.musicFile.metaData.artist}</str:truncateNicely></span>
+                        <span class="detail" title="${song.musicFile.metaData.artist}"><str:truncateNicely upper="25">${song.musicFile.metaData.artist}</str:truncateNicely></span>
                     </td>
 
                     <td ${class} style="padding-right:1.25em">

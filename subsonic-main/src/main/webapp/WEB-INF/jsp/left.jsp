@@ -79,17 +79,19 @@
                 <c:param name="downloadEnabled" value="${model.downloadEnabled}"/>
             </c:import>
 
-            <c:choose>
-                <c:when test="${child.directory}">
-                    <sub:url value="main.view" var="mainUrl">
-                        <sub:param name="path" value="${child.path}"/>
-                    </sub:url>
-                    <a target="main" href="${mainUrl}"><str:truncateNicely upper="30">${child.name}</str:truncateNicely></a>
-                </c:when>
-                <c:otherwise>
-                    <str:truncateNicely upper="30">${child.name}</str:truncateNicely>
-                </c:otherwise>
-            </c:choose>
+            <span title="${child.name}">
+                <c:choose>
+                    <c:when test="${child.directory}">
+                        <sub:url value="main.view" var="mainUrl">
+                            <sub:param name="path" value="${child.path}"/>
+                        </sub:url>
+                        <a target="main" href="${mainUrl}"><str:truncateNicely upper="30">${child.name}</str:truncateNicely></a>
+                    </c:when>
+                    <c:otherwise>
+                        <str:truncateNicely upper="30">${child.name}</str:truncateNicely>
+                    </c:otherwise>
+                </c:choose>
+            </span>
         </p>
     </c:forEach>
 </c:forEach>

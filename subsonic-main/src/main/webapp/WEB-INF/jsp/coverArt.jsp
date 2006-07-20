@@ -20,7 +20,7 @@ PARAMETERS
     </c:otherwise>
 </c:choose>
 
-<div style="width:${size}; max-width:${size}; height:${size}; max-height:${size}">
+<div style="width:${size}; max-width:${size}; height:${size}; max-height:${size}" title="${param.albumName}">
     <sub:url value="main.view" var="mainUrl">
         <sub:param name="path" value="${param.albumPath}"/>
     </sub:url>
@@ -38,7 +38,7 @@ PARAMETERS
         <div class="outerpair2">
             <div class="shadowbox">
                 <div class="innerbox">
-                    <c:if test="${param.showLink}"><a href="${mainUrl}"></c:if>
+                    <c:if test="${param.showLink}"><a href="${mainUrl}" title="${param.albumName}"></c:if>
                         <img src="${coverArtUrl}" alt="${param.albumName}"/>
                         <c:if test="${param.showLink}"></a></c:if>
                 </div>
