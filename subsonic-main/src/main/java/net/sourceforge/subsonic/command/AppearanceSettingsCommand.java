@@ -14,6 +14,8 @@ public class AppearanceSettingsCommand {
     private String[] locales;
     private String themeIndex;
     private Theme[] themes;
+    private UserSettings.Visibility mainVisibility;
+    private UserSettings.Visibility playlistVisibility;
     private boolean isReloadNeeded;
 
     public User getUser() {
@@ -54,6 +56,22 @@ public class AppearanceSettingsCommand {
 
     public void setThemes(Theme[] themes) {
         this.themes = themes;
+    }
+
+    public UserSettings.Visibility getMainVisibility() {
+        return mainVisibility;
+    }
+
+    public void setMainVisibility(UserSettings.Visibility mainVisibility) {
+        this.mainVisibility = mainVisibility;
+    }
+
+    public UserSettings.Visibility getPlaylistVisibility() {
+        return playlistVisibility;
+    }
+
+    public void setPlaylistVisibility(UserSettings.Visibility playlistVisibility) {
+        this.playlistVisibility = playlistVisibility;
     }
 
     public boolean isReloadNeeded() {

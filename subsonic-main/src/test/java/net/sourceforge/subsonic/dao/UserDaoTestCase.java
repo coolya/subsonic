@@ -109,24 +109,35 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertNull("Error in getUserSettings.", userDao.getUserSettings("sindre"));
 
         try {
-            userDao.updateUserSettings(new UserSettings("sindre", null, null));
+            userDao.updateUserSettings(new UserSettings("sindre"));
             fail("Expected DataIntegrityViolationException.");
         } catch (DataIntegrityViolationException x) {}
 
         userDao.createUser(new User("sindre", "secret"));
         assertNull("Error in getUserSettings.", userDao.getUserSettings("sindre"));
 
-        userDao.updateUserSettings(new UserSettings("sindre", null, null));
+        userDao.updateUserSettings(new UserSettings("sindre"));
         UserSettings userSettings = userDao.getUserSettings("sindre");
         assertNotNull("Error in getUserSettings().", userSettings);
         assertNull("Error in getUserSettings().", userSettings.getLocale());
         assertNull("Error in getUserSettings().", userSettings.getThemeId());
 
-        userDao.updateUserSettings(new UserSettings("sindre", Locale.SIMPLIFIED_CHINESE, "midnight"));
+        UserSettings settings = new UserSettings("sindre");
+        settings.setLocale(Locale.SIMPLIFIED_CHINESE);
+        settings.setThemeId("midnight");
+        settings.getMainVisibility().setCaptionCutoff(42);
+        settings.getMainVisibility().setBitRateVisible(true);
+        settings.getPlaylistVisibility().setCaptionCutoff(44);
+        settings.getPlaylistVisibility().setYearVisible(true);
+        userDao.updateUserSettings(settings);
         userSettings = userDao.getUserSettings("sindre");
         assertNotNull("Error in getUserSettings().", userSettings);
         assertEquals("Error in getUserSettings().", Locale.SIMPLIFIED_CHINESE, userSettings.getLocale());
         assertEquals("Error in getUserSettings().", "midnight", userSettings.getThemeId());
+        assertEquals("Error in getUserSettings().", 42, userSettings.getMainVisibility().getCaptionCutoff());
+        assertEquals("Error in getUserSettings().", true, userSettings.getMainVisibility().isBitRateVisible());
+        assertEquals("Error in getUserSettings().", 44, userSettings.getPlaylistVisibility().getCaptionCutoff());
+        assertEquals("Error in getUserSettings().", true, userSettings.getPlaylistVisibility().isYearVisible());
 
         userDao.deleteUser("sindre");
         assertNull("Error in cascading delete.", userDao.getUserSettings("sindre"));

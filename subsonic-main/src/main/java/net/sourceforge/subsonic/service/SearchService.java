@@ -80,6 +80,10 @@ public class SearchService {
                             count++;
                             writer.println(Line.forFile(all[i], oldIndex));
                             all[i] = null;  // Make available for GC.
+
+                            if (count % 1000 == 0) {
+                                LOG.info("Created search index with " + count + " entries.");
+                            }
                         }
                     }
 
@@ -487,7 +491,7 @@ public class SearchService {
             line.isAlbum = "A".equals(tokens[0]);
             line.isDirectory = "D".equals(tokens[0]);
             line.lastModified = Long.parseLong(tokens[1]);
-            line.file    = new File(tokens[2]);
+            line.file = new File(tokens[2]);
             if (line.isFile) {
                 line.length  = Long.parseLong(tokens[3]);
                 line.artist = tokens[4].length() == 0 ? null : tokens[4];

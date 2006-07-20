@@ -544,10 +544,30 @@ public class SettingsService {
     /**
      * Returns settings for the given user.
      * @param username The username.
-     * @return User-specific settings.
+     * @return User-specific settings. Never <code>null</code>.
      */
     public UserSettings getUserSettings(String username) {
-        return userDao.getUserSettings(username);
+        UserSettings settings = userDao.getUserSettings(username);
+        return settings == null ? createDefaultUserSettings(username) : settings;
+    }
+
+    private UserSettings createDefaultUserSettings(String username) {
+        UserSettings settings = new UserSettings(username);
+        UserSettings.Visibility playlist = settings.getPlaylistVisibility();
+        // TODO: Change
+        playlist.setCaptionCutoff(35);
+        playlist.setArtistVisible(true);
+        playlist.setAlbumVisible(true);
+        playlist.setYearVisible(true);
+        playlist.setBitRateVisible(true);
+        playlist.setFormatVisible(true);
+        playlist.setFileSizeVisible(true);
+
+        UserSettings.Visibility main = settings.getMainVisibility();
+        main.setCaptionCutoff(35);
+        main.setArtistVisible(true);
+
+        return settings;
     }
 
     /**

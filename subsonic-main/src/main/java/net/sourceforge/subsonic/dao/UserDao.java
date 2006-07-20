@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.*;
 
 /**
- * Provides user-related database services, including authorization and authentication.
+ * Provides user-related database services.
  *
  * @author Sindre Mehus
  */
@@ -17,7 +17,11 @@ public class UserDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(UserDao.class);
     private static final String USER_COLUMNS = "username, password, bytes_streamed, bytes_downloaded, bytes_uploaded";
-    private static final String USER_SETTINGS_COLUMNS = "username, locale, theme_id";
+    private static final String USER_SETTINGS_COLUMNS = "username, locale, theme_id, " +
+                                                        "main_caption_cutoff, main_track_number, main_artist, main_album, main_genre, " +
+                                                        "main_year, main_bit_rate, main_duration, main_format, main_file_size, " +
+                                                        "playlist_caption_cutoff, playlist_track_number, playlist_artist, playlist_album, playlist_genre, " +
+                                                        "playlist_year, playlist_bit_rate, playlist_duration, playlist_format, playlist_file_size";
 
     private static final Integer ROLE_ID_ADMIN      = 1;
     private static final Integer ROLE_ID_DOWNLOAD   = 2;
@@ -63,9 +67,9 @@ public class UserDao extends AbstractDao {
      * @param user The user to create.
      */
     public void createUser(User user) {
-        String sql = "insert into user (" + USER_COLUMNS + ") values (?, ?, ?, ?, ?)";
-        getJdbcTemplate().update(sql, new Object[] {user.getUsername(), user.getPassword(), user.getBytesStreamed(),
-                                                    user.getBytesDownloaded(), user.getBytesUploaded()});
+        String sql = "insert into user (" + USER_COLUMNS + ") values (" + questionMarks(USER_COLUMNS) + ')';
+        getJdbcTemplate().update(sql, new Object[]{user.getUsername(), user.getPassword(), user.getBytesStreamed(),
+                                                   user.getBytesDownloaded(), user.getBytesUploaded()});
         writeRoles(user);
     }
 
@@ -131,15 +135,19 @@ public class UserDao extends AbstractDao {
      * @param settings The user-specific settings.
      */
     public void updateUserSettings(UserSettings settings) {
-        String locale = settings.getLocale() == null ? null : settings.getLocale().toString();
+        getJdbcTemplate().update("delete from user_settings where username=?", new Object[]{settings.getUsername()});
 
-        if (getUserSettings(settings.getUsername()) == null) {
-            String sql = "insert into user_settings (" + USER_SETTINGS_COLUMNS + ") values (?, ?, ?)";
-            getJdbcTemplate().update(sql, new Object[]{settings.getUsername(), locale, settings.getThemeId()});
-        } else {
-            String sql = "update user_settings set locale=?, theme_id=? where username=?";
-            getJdbcTemplate().update(sql, new Object[]{locale, settings.getThemeId(), settings.getUsername()});
-        }
+        String sql = "insert into user_settings (" + USER_SETTINGS_COLUMNS + ") values (" + questionMarks(USER_SETTINGS_COLUMNS) + ')';
+        String locale = settings.getLocale() == null ? null : settings.getLocale().toString();
+        UserSettings.Visibility main = settings.getMainVisibility();
+        UserSettings.Visibility playlist = settings.getPlaylistVisibility();
+        getJdbcTemplate().update(sql, new Object[]{settings.getUsername(), locale, settings.getThemeId(),
+                                                   main.getCaptionCutoff(), main.isTrackNumberVisible(), main.isArtistVisible(), main.isAlbumVisible(),
+                                                   main.isGenreVisible(), main.isYearVisible(), main.isBitRateVisible(), main.isDurationVisible(),
+                                                   main.isFormatVisible(), main.isFileSizeVisible(),
+                                                   playlist.getCaptionCutoff(), playlist.isTrackNumberVisible(), playlist.isArtistVisible(), playlist.isAlbumVisible(),
+                                                   playlist.isGenreVisible(), playlist.isYearVisible(), playlist.isBitRateVisible(), playlist.isDurationVisible(),
+                                                   playlist.isFormatVisible(), playlist.isFileSizeVisible()});
     }
 
     private void readRoles(User user) {
@@ -196,7 +204,34 @@ public class UserDao extends AbstractDao {
 
     private static class UserSettingsRowMapper implements RowMapper {
         public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new UserSettings(rs.getString(1), StringUtil.parseLocale(rs.getString(2)), rs.getString(3));
+            int col = 1;
+            UserSettings settings = new UserSettings(rs.getString(col++));
+            settings.setLocale(StringUtil.parseLocale(rs.getString(col++)));
+            settings.setThemeId(rs.getString(col++));
+
+            settings.getMainVisibility().setCaptionCutoff(rs.getInt(col++));
+            settings.getMainVisibility().setTrackNumberVisible(rs.getBoolean(col++));
+            settings.getMainVisibility().setArtistVisible(rs.getBoolean(col++));
+            settings.getMainVisibility().setAlbumVisible(rs.getBoolean(col++));
+            settings.getMainVisibility().setGenreVisible(rs.getBoolean(col++));
+            settings.getMainVisibility().setYearVisible(rs.getBoolean(col++));
+            settings.getMainVisibility().setBitRateVisible(rs.getBoolean(col++));
+            settings.getMainVisibility().setDurationVisible(rs.getBoolean(col++));
+            settings.getMainVisibility().setFormatVisible(rs.getBoolean(col++));
+            settings.getMainVisibility().setFileSizeVisible(rs.getBoolean(col++));
+
+            settings.getPlaylistVisibility().setCaptionCutoff(rs.getInt(col++));
+            settings.getPlaylistVisibility().setTrackNumberVisible(rs.getBoolean(col++));
+            settings.getPlaylistVisibility().setArtistVisible(rs.getBoolean(col++));
+            settings.getPlaylistVisibility().setAlbumVisible(rs.getBoolean(col++));
+            settings.getPlaylistVisibility().setGenreVisible(rs.getBoolean(col++));
+            settings.getPlaylistVisibility().setYearVisible(rs.getBoolean(col++));
+            settings.getPlaylistVisibility().setBitRateVisible(rs.getBoolean(col++));
+            settings.getPlaylistVisibility().setDurationVisible(rs.getBoolean(col++));
+            settings.getPlaylistVisibility().setFormatVisible(rs.getBoolean(col++));
+            settings.getPlaylistVisibility().setFileSizeVisible(rs.getBoolean(col++));
+
+            return settings;
         }
     }
 }

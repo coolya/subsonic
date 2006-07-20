@@ -25,6 +25,26 @@ public class Schema28 extends Schema {
                              "username varchar not null," +
                              "locale varchar," +
                              "theme_id varchar," +
+                             "main_caption_cutoff int not null," +
+                             "main_track_number boolean not null," +
+                             "main_artist boolean not null," +
+                             "main_album boolean not null," +
+                             "main_genre boolean not null," +
+                             "main_year boolean not null," +
+                             "main_bit_rate boolean not null," +
+                             "main_duration boolean not null," +
+                             "main_format boolean not null," +
+                             "main_file_size boolean not null," +
+                             "playlist_caption_cutoff int not null," +
+                             "playlist_track_number boolean not null," +
+                             "playlist_artist boolean not null," +
+                             "playlist_album boolean not null," +
+                             "playlist_genre boolean not null," +
+                             "playlist_year boolean not null," +
+                             "playlist_bit_rate boolean not null," +
+                             "playlist_duration boolean not null," +
+                             "playlist_format boolean not null," +
+                             "playlist_file_size boolean not null," +
                              "primary key (username)," +
                              "foreign key (username) references user(username) on delete cascade)");
             LOG.info("Database table 'user_settings' was created successfully.");

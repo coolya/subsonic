@@ -18,6 +18,18 @@ public class AbstractDao {
         return daoHelper.getJdbcTemplate();
     }
 
+    protected String questionMarks(String columns) {
+        int count = columns.split(", ").length;
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < count; i++) {
+            buf.append('?');
+            if (i < count - 1) {
+                buf.append(", ");
+            }
+        }
+        return buf.toString();
+    }
+
     public void setDaoHelper(DaoHelper daoHelper) {
         this.daoHelper = daoHelper;
     }

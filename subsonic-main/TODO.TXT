@@ -17,21 +17,21 @@ OK - Frog Lossless, Put It Behind You
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
+Create default visibility settings.
 MusicFile cache.
 Show artist/size/length/year/album etc in main.jsp? (Only show artist/album if multiple). Tabular layout.
+Show genre, duration and track number.
+Configurable cutoff (in format nicely). Show full text as alt?
 Performance test of reading MPEGHeader.
-Add song length to playlist.
 Change MP3Parser implementation.  Include bitrate and song length in MetaData.
 Make it configurable which information to show in playlist. (appearanceSettings)
-New table USER_PREFERENCES.
-Does "Remember me" work?  How long?
 Sandstone theme http://www.jinzora.org/images/screens/themes/sandstone-full.gif
 Upgrade Spring.
 Show artist/album as tooltip on cover art images.
 Why is Player.id a String, not an Integer?
 Write transcoding pack README.TXT.
 Make transcoding web page.
-Add transcoder for cell phone etc.
+Add transcoder for cell phone etc.  aacPlus.
 Mouseover hover effect for truncated text.
 Mention SSL support in feature list.
 Add transcode directory to path (in case of libraries)?
@@ -58,6 +58,7 @@ Update Norwegian translation.
 
 COMPLETED IN VERSION 2.8
 ========================
+Tooltip.
 Detection of various artists is buggy.  Must be a bit fuzzy. (Spacing, spelling etc).
 Don't require that transcoders are installed in SUBSONIC_HOME/transcoding, but add this to PATH.  How about lame?
 Render artist as detail class in main.jsp

@@ -4,13 +4,12 @@ import org.springframework.web.servlet.mvc.*;
 import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.command.*;
 import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.util.*;
 
 import javax.servlet.http.*;
 import java.util.*;
 
 /**
- * Controller for the page used to administrate appearance settings.
+ * Controller for the page used to administrate per-user appearance settings.
  *
  * @author Sindre Mehus
  */
@@ -28,8 +27,10 @@ public class AppearanceSettingsController extends SimpleFormController {
         command.setUser(user);
         command.setLocaleIndex("-1");
         command.setThemeIndex("-1");
+        command.setMainVisibility(userSettings.getMainVisibility());
+        command.setPlaylistVisibility(userSettings.getPlaylistVisibility());
 
-        Locale currentLocale = userSettings == null ? null : userSettings.getLocale();
+        Locale currentLocale = userSettings.getLocale();
         Locale[] locales = settingsService.getAvailableLocales();
         String[] localeStrings = new String[locales.length];
         for (int i = 0; i < locales.length; i++) {
@@ -41,7 +42,7 @@ public class AppearanceSettingsController extends SimpleFormController {
         }
         command.setLocales(localeStrings);
 
-        String currentThemeId = userSettings == null ? null : userSettings.getThemeId();
+        String currentThemeId = userSettings.getThemeId();
         Theme[] themes = settingsService.getAvailableThemes();
         command.setThemes(themes);
         for (int i = 0; i < themes.length; i++) {
@@ -70,17 +71,15 @@ public class AppearanceSettingsController extends SimpleFormController {
         }
 
         String username = command.getUser().getUsername();
-        UserSettings userSettings = settingsService.getUserSettings(username);
-        if (userSettings == null) {
-            userSettings = new UserSettings(username, null, null);
-        }
+        UserSettings settings = settingsService.getUserSettings(username);
 
-        command.setReloadNeeded(!StringUtil.isEqual(locale, userSettings.getLocale()) ||
-                                !StringUtil.isEqual(themeId, userSettings.getThemeId()));
+        settings.setLocale(locale);
+        settings.setThemeId(themeId);
+        settings.setMainVisibility(command.getMainVisibility());
+        settings.setPlaylistVisibility(command.getPlaylistVisibility());
+        settingsService.updateUserSettings(settings);
 
-        userSettings.setLocale(locale);
-        userSettings.setThemeId(themeId);
-        settingsService.updateUserSettings(userSettings);
+        command.setReloadNeeded(true);
     }
 
     public void setSettingsService(SettingsService settingsService) {

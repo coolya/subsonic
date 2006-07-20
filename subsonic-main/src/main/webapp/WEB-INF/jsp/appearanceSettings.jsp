@@ -50,6 +50,23 @@
 
         <tr><td align="center" colspan="2"><input type="submit" value="<fmt:message key="common.save"/>"></td></tr>
     </table>
+
+    <table>
+        <tr>
+            <th/><th>Main</th><th>Playlist</th>
+        </tr>
+        <tr>
+            <td>Track number</td>
+            <td><form:checkbox path="mainVisibility.trackNumberVisible"/></td>
+            <td><form:checkbox path="playlistVisibility.trackNumberVisible"/></td>
+        </tr>
+        <tr>
+            <td>Cutoff</td>
+            <td><form:input path="mainVisibility.captionCutoff"/></td>
+            <td><form:input path="playlistVisibility.captionCutoff"/></td>
+        </tr>
+        <!--TODO: Complete-->
+    </table>
 </form:form>
 
 <c:if test="${command.reloadNeeded}">
