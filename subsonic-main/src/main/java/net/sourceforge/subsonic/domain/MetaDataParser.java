@@ -9,7 +9,6 @@ import java.io.*;
  * Parses meta data from media files.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.4 $ $Date: 2005/05/18 15:33:23 $
  */
 public abstract class MetaDataParser {
     private static final Logger LOG = Logger.getLogger(MetaDataParser.class);
@@ -20,12 +19,6 @@ public abstract class MetaDataParser {
      * @return Meta data for the file.
      */
     public abstract MusicFile.MetaData getMetaData(MusicFile file);
-
-    /**
-     * Returns the bit rate of this music file.
-     * @return The bit rate in kilobits per second, or 0 if the bit rate can't be resolved.
-     */
-    public abstract int getBitRate(MusicFile file);
 
     /**
      * Returns whether this parser is applicable to the given file.
@@ -52,8 +45,20 @@ public abstract class MetaDataParser {
     }
 
     /**
-     * Guesses the album for the given music file.
+     * Returns meta-data containg file size and format.
+     * @param file The music file.
+     * @return Meta-data containg file size and format.
      */
+    protected MusicFile.MetaData getBasicMetaData(MusicFile file) {
+        MusicFile.MetaData metaData = new MusicFile.MetaData();
+        metaData.setFileSize(file.length());
+        metaData.setFormat(file.getSuffix());
+        return metaData;
+    }
+
+    /**
+    * Guesses the album for the given music file.
+    */
     public String guessAlbum(MusicFile file) {
         try {
             MusicFile parent = file.getParent();

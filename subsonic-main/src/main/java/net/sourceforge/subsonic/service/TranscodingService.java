@@ -124,7 +124,8 @@ public class TranscodingService {
             boolean downsample = transcodeScheme != TranscodeScheme.OFF;
             int maxBitRate = transcodeScheme.getMaxBitRate();
 
-            if (downsample && musicFile.getBitRate() > maxBitRate) {
+            Integer bitRate = musicFile.getMetaData().getBitRate();
+            if (downsample && bitRate != null && bitRate > maxBitRate) {
                 return getDownsampledInputStream(musicFile, maxBitRate);
             }
         } catch (Exception x) {

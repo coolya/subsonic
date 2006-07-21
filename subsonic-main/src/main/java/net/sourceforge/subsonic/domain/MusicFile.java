@@ -13,7 +13,6 @@ import java.util.*;
  * and may be streamed to remote players.  All music files are located in a configurable root music folder.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.32 $ $Date: 2006/01/23 22:01:08 $
  */
 public class MusicFile {
 
@@ -21,7 +20,6 @@ public class MusicFile {
 
     private File file;
     private MetaData metaData;
-    private Integer bitRate;
     private Set<String> excludes;
 
     /**
@@ -364,27 +362,6 @@ public class MusicFile {
     }
 
     /**
-     * Returns the bit rate of this music file.  NOTE: Only works for MP3 files.
-     * @return The bit rate in kilobits per second, or 0 if the bit rate can't be resolved.
-     */
-    public synchronized int getBitRate() {
-        if (bitRate == null) {
-            MetaDataParser parser = MetaDataParser.Factory.getInstance().getParser(this);
-            bitRate = (parser == null) ? 0 : parser.getBitRate(this);
-        }
-        return Math.abs(bitRate);
-    }
-
-    /**
-     * Returns whether this music file is encoded with variable bit rate (VBR). NOTE: Onlye works for MP3 files.
-     * @return Whether VBR is used.
-     */
-    public boolean isVariableBitRate() {
-        getBitRate();
-        return bitRate < 0;
-    }
-
-    /**
     * Returns whether this music file is equal to another object.
     * @param o The object to compare to.
     * @return Whether this music file is equal to another object.
@@ -429,11 +406,23 @@ public class MusicFile {
      * Contains meta-data (song title, artist, album etc) for a music file.
      */
     public static class MetaData {
+
+        private Integer trackNumber;
+        private String title;
         private String artist;
         private String album;
-        private String title;
+        private String genre;
         private String year;
+        private Integer bitRate;
+        private Boolean variableBitRate;
+        private Long duration;
+        private String format;
+        private Long fileSize;
 
+        public MetaData() {
+        }
+
+        /** Deprecated. */
         public MetaData(String artist, String album, String title, String year) {
             this.artist = artist;
             this.album = album;
@@ -441,22 +430,95 @@ public class MusicFile {
             this.year = year;
         }
 
-        public String getArtist() {
-            return artist;
+        public Integer getTrackNumber() {
+            return trackNumber;
         }
 
-        public String getAlbum() {
-            return album;
+        public void setTrackNumber(Integer trackNumber) {
+            this.trackNumber = trackNumber;
         }
 
         public String getTitle() {
             return title;
         }
 
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getArtist() {
+            return artist;
+        }
+
+        public void setArtist(String artist) {
+            this.artist = artist;
+        }
+
+        public String getAlbum() {
+            return album;
+        }
+
+        public void setAlbum(String album) {
+            this.album = album;
+        }
+
+        public String getGenre() {
+            return genre;
+        }
+
+        public void setGenre(String genre) {
+            this.genre = genre;
+        }
+
         public String getYear() {
             return year;
         }
 
+        public void setYear(String year) {
+            this.year = year;
+        }
+
+        public Integer getBitRate() {
+            return bitRate;
+        }
+
+        public void setBitRate(Integer bitRate) {
+            this.bitRate = bitRate;
+        }
+
+        public Boolean getVariableBitRate() {
+            return variableBitRate;
+        }
+
+        public void setVariableBitRate(Boolean variableBitRate) {
+            this.variableBitRate = variableBitRate;
+        }
+
+        public Long getDuration() {
+            return duration;
+        }
+
+        public void setDuration(Long duration) {
+            this.duration = duration;
+        }
+
+        public String getFormat() {
+            return format;
+        }
+
+        public void setFormat(String format) {
+            this.format = format;
+        }
+
+        public Long getFileSize() {
+            return fileSize;
+        }
+
+        public void setFileSize(Long fileSize) {
+            this.fileSize = fileSize;
+        }
+
+        // TODO
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;

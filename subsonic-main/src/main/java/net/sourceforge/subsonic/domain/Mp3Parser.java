@@ -12,7 +12,6 @@ import org.apache.commons.lang.*;
  * Parses meta data from MP3 files.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.9 $ $Date: 2005/11/27 13:29:33 $
  */
 public class Mp3Parser extends MetaDataParser {
     private static final Logger LOG = Logger.getLogger(Mp3Parser.class);
@@ -24,11 +23,10 @@ public class Mp3Parser extends MetaDataParser {
      */
     public MusicFile.MetaData getMetaData(MusicFile file) {
 
-        MusicFile.MetaData raw = getRawMetaData(file);
-        String artist = raw.getArtist();
-        String album  = raw.getAlbum();
-        String title  = raw.getTitle();
-        String year   = raw.getYear();
+        MusicFile.MetaData metaData = getRawMetaData(file);
+        String artist = metaData.getArtist();
+        String album  = metaData.getAlbum();
+        String title  = metaData.getTitle();
 
         if (artist == null) {
             artist = guessArtist(file);
@@ -41,7 +39,11 @@ public class Mp3Parser extends MetaDataParser {
         }
 
         title = removeTrackNumberFromTitle(title);
-        return new MusicFile.MetaData(artist, album, title, year);
+        metaData.setArtist(artist);
+        metaData.setAlbum(album);
+        metaData.setTitle(title);
+
+        return metaData;
     }
 
     /**
@@ -51,11 +53,7 @@ public class Mp3Parser extends MetaDataParser {
      */
     public MusicFile.MetaData getRawMetaData(MusicFile file) {
 
-        String artist = null;
-        String album  = null;
-        String title  = null;
-        String year   = null;
-
+        MusicFile.MetaData metaData = getBasicMetaData(file);
         MediaFile mediaFile = new MP3File(file.getFile());
 
         try {
@@ -67,11 +65,13 @@ public class Mp3Parser extends MetaDataParser {
                 // proceed with ID3v1.
             }
             if (tag2 != null) {
-                artist = StringUtils.trimToNull(tag2.getArtist());
-                album = StringUtils.trimToNull(tag2.getAlbum());
-                title = StringUtils.trimToNull(tag2.getTitle());
+                metaData.setArtist(StringUtils.trimToNull(tag2.getArtist()));
+                metaData.setAlbum(StringUtils.trimToNull(tag2.getAlbum()));
+                metaData.setTitle(StringUtils.trimToNull(tag2.getTitle()));
+                metaData.setGenre(StringUtils.trimToNull(tag2.getGenre()));
+                metaData.setTrackNumber(tag2.getTrackNumber());
                 try {
-                    year = String.valueOf(tag2.getYear());
+                    metaData.setYear(String.valueOf(tag2.getYear()));
                 } catch (Exception x) {
                     // Year is not always present.
                 }
@@ -81,11 +81,15 @@ public class Mp3Parser extends MetaDataParser {
                 ID3V1Tag tag1 = mediaFile.getID3V1Tag();
                 if (tag1 != null) {
 
-                    artist = StringUtils.trimToNull(tag1.getArtist());
-                    album = StringUtils.trimToNull(tag1.getAlbum());
-                    title = StringUtils.trimToNull(tag1.getTitle());
+                    metaData.setArtist(StringUtils.trimToNull(tag1.getArtist()));
+                    metaData.setAlbum(StringUtils.trimToNull(tag1.getAlbum()));
+                    metaData.setTitle(StringUtils.trimToNull(tag1.getTitle()));
+                    ID3V1Tag.Genre genre = tag1.getGenre();
+                    if (genre != null) {
+                        metaData.setGenre(StringUtils.trimToNull(genre.toString()));
+                    }
                     try {
-                        year = String.valueOf(tag1.getYear());
+                        metaData.setYear(String.valueOf(tag1.getYear()));
                     } catch (Exception x) {
                         // Year is not always present.
                     }
@@ -95,7 +99,9 @@ public class Mp3Parser extends MetaDataParser {
             LOG.warn("Error when parsing MP3 tags in " + file, x);
         }
 
-        return new MusicFile.MetaData(artist, album, title, year);
+        parseMp3Header(metaData, file);
+
+        return metaData;
     }
 
     /**
@@ -155,22 +161,21 @@ public class Mp3Parser extends MetaDataParser {
         }
     }
 
-    /**
-     * Returns the bit rate of this music file.
-     * @return The bit rate in kilobits per second, or 0 if the bit rate can't be resolved. If variable bitrate (VBR) is used,
-     * a negative bitrate is returned.
-     */
-    public int getBitRate(MusicFile file) {
+    private void parseMp3Header(MusicFile.MetaData metaData, MusicFile file) {
         try {
             MP3AudioHeader header = new MP3AudioHeader(file.getFile());
             String bitRate = header.getBitRate();
             if (header.isVariableBitRate()) {
-                return -1 * Integer.valueOf(bitRate.replace("~", ""));
+                metaData.setVariableBitRate(true);
+                metaData.setBitRate(Integer.valueOf(bitRate.replace("~", "")));
+            } else {
+                metaData.setVariableBitRate(false);
+                metaData.setBitRate(Integer.valueOf(bitRate));
             }
-            return Integer.valueOf(bitRate);
+            double duration = header.getTrackLength();
+            metaData.setDuration((long) (duration * 1000));
         } catch (Exception x ) {
-            LOG.warn("Failed to resolve bit rate for " + file, x);
-            return 0;
+            LOG.warn("Failed to parse MP3 header for " + file, x);
         }
     }
 
