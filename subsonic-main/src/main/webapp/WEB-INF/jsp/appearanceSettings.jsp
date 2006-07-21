@@ -47,26 +47,70 @@
                 <a href="helpPopup.view?topic=theme" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
             </td>
         </tr>
-
-        <tr><td align="center" colspan="2"><input type="submit" value="<fmt:message key="common.save"/>"></td></tr>
     </table>
 
-    <table>
+    <table class="indent">
         <tr>
-            <th/><th>Main</th><th>Playlist</th>
+            <th style="padding:0 0.5em 0.5em 0;text-align:left;"><fmt:message key="appearancesettings.display"/></th>
+            <th style="padding:0 0.5em 0.5em 0.5em;text-align:center;"><fmt:message key="appearancesettings.browse"/></th>
+            <th style="padding:0 0 0.5em 0.5em;text-align:center;"><fmt:message key="appearancesettings.playlist"/></th>
+            <th style="padding:0 0 0.5em 0.5em">
+                <a href="helpPopup.view?topic=visibility" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+            </th>
         </tr>
         <tr>
-            <td>Track number</td>
-            <td><form:checkbox path="mainVisibility.trackNumberVisible"/></td>
-            <td><form:checkbox path="playlistVisibility.trackNumberVisible"/></td>
+            <td><fmt:message key="appearancesettings.tracknumber"/></td>
+            <td style="text-align:center"><form:checkbox path="mainVisibility.trackNumberVisible" cssClass="checkbox"/></td>
+            <td style="text-align:center"><form:checkbox path="playlistVisibility.trackNumberVisible" cssClass="checkbox"/></td>
         </tr>
         <tr>
-            <td>Cutoff</td>
-            <td><form:input path="mainVisibility.captionCutoff"/></td>
-            <td><form:input path="playlistVisibility.captionCutoff"/></td>
+            <td><fmt:message key="appearancesettings.artist"/></td>
+            <td style="text-align:center"><form:checkbox path="mainVisibility.artistVisible" cssClass="checkbox"/></td>
+            <td style="text-align:center"><form:checkbox path="playlistVisibility.artistVisible" cssClass="checkbox"/></td>
         </tr>
-        <!--TODO: Complete-->
+        <tr>
+            <td><fmt:message key="appearancesettings.album"/></td>
+            <td style="text-align:center"><form:checkbox path="mainVisibility.albumVisible" cssClass="checkbox"/></td>
+            <td style="text-align:center"><form:checkbox path="playlistVisibility.albumVisible" cssClass="checkbox"/></td>
+        </tr>
+        <tr>
+            <td><fmt:message key="appearancesettings.genre"/></td>
+            <td style="text-align:center"><form:checkbox path="mainVisibility.genreVisible" cssClass="checkbox"/></td>
+            <td style="text-align:center"><form:checkbox path="playlistVisibility.genreVisible" cssClass="checkbox"/></td>
+        </tr>
+        <tr>
+            <td><fmt:message key="appearancesettings.year"/></td>
+            <td style="text-align:center"><form:checkbox path="mainVisibility.yearVisible" cssClass="checkbox"/></td>
+            <td style="text-align:center"><form:checkbox path="playlistVisibility.yearVisible" cssClass="checkbox"/></td>
+        </tr>
+        <tr>
+            <td><fmt:message key="appearancesettings.bitrate"/></td>
+            <td style="text-align:center"><form:checkbox path="mainVisibility.bitRateVisible" cssClass="checkbox"/></td>
+            <td style="text-align:center"><form:checkbox path="playlistVisibility.bitRateVisible" cssClass="checkbox"/></td>
+        </tr>
+        <tr>
+            <td><fmt:message key="appearancesettings.duration"/></td>
+            <td style="text-align:center"><form:checkbox path="mainVisibility.durationVisible" cssClass="checkbox"/></td>
+            <td style="text-align:center"><form:checkbox path="playlistVisibility.durationVisible" cssClass="checkbox"/></td>
+        </tr>
+        <tr>
+            <td><fmt:message key="appearancesettings.format"/></td>
+            <td style="text-align:center"><form:checkbox path="mainVisibility.formatVisible" cssClass="checkbox"/></td>
+            <td style="text-align:center"><form:checkbox path="playlistVisibility.formatVisible" cssClass="checkbox"/></td>
+        </tr>
+        <tr>
+            <td><fmt:message key="appearancesettings.filesize"/></td>
+            <td style="text-align:center"><form:checkbox path="mainVisibility.fileSizeVisible" cssClass="checkbox"/></td>
+            <td style="text-align:center"><form:checkbox path="playlistVisibility.fileSizeVisible" cssClass="checkbox"/></td>
+        </tr>
+        <tr>
+            <td><fmt:message key="appearancesettings.captioncutoff"/></td>
+            <td style="text-align:center"><form:input path="mainVisibility.captionCutoff" size="3"/></td>
+            <td style="text-align:center"><form:input path="playlistVisibility.captionCutoff" size="3"/></td>
+        </tr>
     </table>
+
+    <input type="submit" value="<fmt:message key="common.save"/>"/>
 </form:form>
 
 <c:if test="${command.reloadNeeded}">

@@ -79,6 +79,7 @@ public class AppearanceSettingsController extends SimpleFormController {
         settings.setPlaylistVisibility(command.getPlaylistVisibility());
         settingsService.updateUserSettings(settings);
 
+        // TODO.
         command.setReloadNeeded(true);
     }
 

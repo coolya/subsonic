@@ -10,6 +10,7 @@ PARAMETERS
   showLink: Whether to make the cover art image link to the album page.
   showZoom: Whether to display a link for zooming the cover art.
   showChange: Whether to display a link for changing the cover art.
+  showCaption: Whether to display the album name as a caption below the image.
 --%>
 <c:choose>
     <c:when test="${empty param.coverArtSize}">
@@ -66,7 +67,7 @@ PARAMETERS
         <a class="detail" href="${zoomCoverArtUrl}" onclick="return popup(this, 'Cover')"><fmt:message key="coverart.zoom"/></a>
     </c:if>
 
-    <c:if test="${not param.showZoom and not param.showChange}">
+    <c:if test="${not param.showZoom and not param.showChange and param.showCaption}">
         <span class="detail"><str:truncateNicely upper="17">${param.albumName}</str:truncateNicely></span>
     </c:if>
 </div>

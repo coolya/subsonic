@@ -159,6 +159,7 @@
                     <c:param name="showLink" value="${coverArt.parentFile.path ne model.dir.path}"/>
                     <c:param name="showZoom" value="${coverArt.parentFile.path eq model.dir.path}"/>
                     <c:param name="showChange" value="${(coverArt.parentFile.path eq model.dir.path) and model.user.coverArtRole}"/>
+                    <c:param name="showCaption" value="true"/>
                 </c:import>
             </div>
         </c:forEach>
