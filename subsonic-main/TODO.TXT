@@ -17,25 +17,17 @@ OK - Frog Lossless, Put It Behind You
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
+Remove back-in-black?
 Listen for new beta releases.  Make notification configurable.
-Create default visibility settings.
 MusicFile cache.
-Show artist/size/length/year/album etc in main.jsp? (Only show artist/album if multiple). Tabular layout.
-Show genre, duration and track number.
-Configurable cutoff (in format nicely). Show full text as alt?
 Performance test of reading MPEGHeader.
-Change MP3Parser implementation.  Include bitrate and song length in MetaData.
-Make it configurable which information to show in playlist. (appearanceSettings)
 Sandstone theme http://www.jinzora.org/images/screens/themes/sandstone-full.gif
 Upgrade Spring.
-Show artist/album as tooltip on cover art images.
 Why is Player.id a String, not an Integer?
 Write transcoding pack README.TXT.
 Make transcoding web page.
 Add transcoder for cell phone etc.  aacPlus.
-Mouseover hover effect for truncated text.
 Mention SSL support in feature list.
-Add transcode directory to path (in case of libraries)?
 Upload broken in IE.
 Upload popup?
 Seeking.
@@ -59,6 +51,14 @@ Update Norwegian translation.
 
 COMPLETED IN VERSION 2.8
 ========================
+Add transcode directory to path (in case of libraries)?
+Mouseover hover effect for truncated text.
+Show artist/album as tooltip on cover art images.
+Change MP3Parser implementation.  Include bitrate and song length in MetaData.
+Make it configurable which information to show in playlist. (appearanceSettings)
+Show artist/size/length/year/album etc in main.jsp? (Only show artist/album if multiple). Tabular layout.
+Show genre, duration and track number.
+Configurable cutoff (in format nicely). Show full text as alt?
 Tooltip.
 Detection of various artists is buggy.  Must be a bit fuzzy. (Spacing, spelling etc).
 Don't require that transcoders are installed in SUBSONIC_HOME/transcoding, but add this to PATH.  How about lame?
@@ -116,7 +116,7 @@ Should receive feedback when changing passwords, creating users etc.
 java.io.FileNotFoundException: C:\music\The Alan Parsons Project\The Best of The Alan Parsons Project\folder.jpg (Access is denied)
 Access control of players.  Avoid security hole for deleting other people's players.
 Use HTML 4.01, validate all pages.
-Create taglib for StringUtil.formatBytes() and help popup.
+Create taglib for help popup.
 Make it work on Java Application Server 8.1.  (web.xml element order)
 Make it work on Geronimo.
 Make it work on Jetty

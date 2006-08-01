@@ -554,18 +554,21 @@ public class SettingsService {
     private UserSettings createDefaultUserSettings(String username) {
         UserSettings settings = new UserSettings(username);
         UserSettings.Visibility playlist = settings.getPlaylistVisibility();
-        // TODO: Change
+
         playlist.setCaptionCutoff(35);
         playlist.setArtistVisible(true);
         playlist.setAlbumVisible(true);
         playlist.setYearVisible(true);
+        playlist.setDurationVisible(true);
         playlist.setBitRateVisible(true);
         playlist.setFormatVisible(true);
         playlist.setFileSizeVisible(true);
 
         UserSettings.Visibility main = settings.getMainVisibility();
         main.setCaptionCutoff(35);
+        main.setTrackNumberVisible(true);
         main.setArtistVisible(true);
+        main.setDurationVisible(true);
 
         return settings;
     }

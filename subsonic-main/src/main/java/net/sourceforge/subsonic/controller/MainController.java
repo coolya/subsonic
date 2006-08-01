@@ -34,7 +34,8 @@ public class MainController extends ParameterizableViewController {
         map.put("children", children);
         map.put("player", player);
         map.put("user", securityService.getCurrentUser(request));
-        map.put("showArtist", isMultipleArtists(children));
+        map.put("multipleArtists", isMultipleArtists(children));
+        map.put("visibility", settingsService.getUserSettings(securityService.getCurrentUsername(request)).getMainVisibility());
         map.put("updateNowPlaying", request.getParameter("updateNowPlaying") != null);
 
         MusicFileInfo musicInfo = musicInfoService.getMusicFileInfoForPath(path);

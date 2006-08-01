@@ -157,7 +157,7 @@
 
                     <c:if test="${model.visibility.fileSizeVisible}">
                         <td ${class} style="padding-right:1.25em;text-align:right">
-                            <span class="detail">${song.size}</span>
+                            <span class="detail"><sub:formatBytes bytes="${song.musicFile.metaData.fileSize}"/></span>
                         </td>
                     </c:if>
 

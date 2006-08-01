@@ -73,4 +73,23 @@
         </attribute>
     </tag>
 
+    <tag>
+        <description>
+            Converts a byte-count to a formatted string suitable for display to the user, with respect
+            to the current locale.
+        </description>
+        <name>formatBytes</name>
+        <tag-class>net.sourceforge.subsonic.taglib.FormatBytesTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>
+                The byte count.
+            </description>
+            <name>bytes</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
 </taglib>

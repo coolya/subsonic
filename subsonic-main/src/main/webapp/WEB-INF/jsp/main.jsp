@@ -123,29 +123,106 @@
 
 <table cellpadding="10"><tr style="vertical-align:top;">
     <td style="vertical-align:top;">
-        <c:forEach items="${model.children}" var="child">
-            <p class="dense">
-                <c:import url="playAddDownload.jsp">
-                    <c:param name="path" value="${child.path}"/>
-                    <c:param name="downloadEnabled" value="${model.user.downloadRole}"/>
-                </c:import>
-
+        <table style="border-collapse:collapse">
+            <c:set var="cutoff" value="${model.visibility.captionCutoff}"/>
+            <c:forEach items="${model.children}" var="child" varStatus="loopStatus">
                 <c:choose>
-                    <c:when test="${child.directory}">
-                        <sub:url value="main.view" var="childUrl">
-                            <sub:param name="path" value="${child.path}"/>
-                        </sub:url>
-                        <a href="${childUrl}" title="${child.name}"><str:truncateNicely lower="35" upper="35">${child.name}</str:truncateNicely></a>
+                    <c:when test="${loopStatus.count % 2 == 1}">
+                        <c:set var="class" value="class='bgcolor2'"/>
                     </c:when>
                     <c:otherwise>
-                        <span title="${child.title}"><str:truncateNicely lower="35" upper="35">${child.title}</str:truncateNicely></span>
-                        <c:if test="${model.showArtist and not empty child.metaData.artist}">
-                            - <span class="detail"><str:truncateNicely lower="35" upper="35">${child.metaData.artist}</str:truncateNicely></span>
-                        </c:if>
+                        <c:set var="class" value=""/>
                     </c:otherwise>
                 </c:choose>
-            </p>
-        </c:forEach>
+
+                <tr style="margin:0;padding:0;border:0">
+                    <td style="white-space:nowrap;">
+                        <c:import url="playAddDownload.jsp">
+                            <c:param name="path" value="${child.path}"/>
+                            <c:param name="downloadEnabled" value="${model.user.downloadRole}"/>
+                        </c:import>
+                    </td>
+                    <c:choose>
+                        <c:when test="${child.directory}">
+                            <sub:url value="main.view" var="childUrl">
+                                <sub:param name="path" value="${child.path}"/>
+                            </sub:url>
+                            <td style="padding-left:0.25em">
+                                <a href="${childUrl}" title="${child.name}"><str:truncateNicely upper="${cutoff}">${child.name}</str:truncateNicely></a>
+                            </td>
+                        </c:when>
+
+                        <c:otherwise>
+                            <td ${class} style="padding-left:0.25em"/>
+
+                            <c:if test="${model.visibility.trackNumberVisible}">
+                                <td ${class} style="padding-right:1.25em;text-align:right">
+                                    <span class="detail">${child.metaData.trackNumber}</span>
+                                </td>
+                            </c:if>
+
+                            <td ${class} style="padding-right:1.25em">
+                                <span title="${child.title}"><str:truncateNicely upper="${cutoff}">${child.title}</str:truncateNicely></span>
+                            </td>
+
+                            <c:if test="${model.visibility.albumVisible}">
+                                <td ${class} style="padding-right:1.25em">
+                                    <span class="detail" title="${child.metaData.album}"><str:truncateNicely upper="${cutoff}">${child.metaData.album}</str:truncateNicely></span>
+                                </td>
+                            </c:if>
+
+                            <c:if test="${model.visibility.artistVisible and model.multipleArtists}">
+                                <td ${class} style="padding-right:1.25em">
+                                    <span class="detail" title="${child.metaData.artist}"><str:truncateNicely upper="${cutoff}">${child.metaData.artist}</str:truncateNicely></span>
+                                </td>
+                            </c:if>
+
+                            <c:if test="${model.visibility.genreVisible}">
+                                <td ${class} style="padding-right:1.25em">
+                                    <span class="detail">${child.metaData.genre}</span>
+                                </td>
+                            </c:if>
+
+                            <c:if test="${model.visibility.yearVisible}">
+                                <td ${class} style="padding-right:1.25em">
+                                    <span class="detail">${child.metaData.year}</span>
+                                </td>
+                            </c:if>
+
+                            <c:if test="${model.visibility.formatVisible}">
+                                <td ${class} style="padding-right:1.25em">
+                                    <span class="detail">${fn:toLowerCase(child.metaData.format)}</span>
+                                </td>
+                            </c:if>
+
+                            <c:if test="${model.visibility.fileSizeVisible}">
+                                <td ${class} style="padding-right:1.25em;text-align:right">
+                                    <span class="detail"><sub:formatBytes bytes="${child.metaData.fileSize}"/></span>
+                                </td>
+                            </c:if>
+
+                            <c:if test="${model.visibility.durationVisible}">
+                                <td ${class} style="padding-right:1.25em;text-align:right">
+                                    <span class="detail">${child.metaData.durationAsString}</span>
+                                </td>
+                            </c:if>
+
+                            <c:if test="${model.visibility.bitRateVisible}">
+                                <td ${class} style="padding-right:0.25em">
+                                    <span class="detail">
+                                        <c:if test="${not empty child.metaData.bitRate}">
+                                ${child.metaData.bitRate} Kbps ${child.metaData.variableBitRate ? "vbr" : ""}
+                                        </c:if>
+                                    </span>
+                                </td>
+                            </c:if>
+
+
+                        </c:otherwise>
+                    </c:choose>
+                </tr>
+            </c:forEach>
+        </table>
     </td>
 
     <td style="vertical-align:top;">
