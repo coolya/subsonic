@@ -72,12 +72,11 @@
         </sub:url>
 
         <tr>
-            <td style="white-space:nowrap">
-                <c:import url="playAddDownload.jsp">
-                    <c:param name="path" value="${match.musicFile.path}"/>
-                    <c:param name="downloadEnabled" value="${command.downloadEnabled}"/>
-                </c:import>
-            </td>
+            <c:import url="playAddDownload.jsp">
+                <c:param name="path" value="${match.musicFile.path}"/>
+                <c:param name="downloadEnabled" value="${command.downloadEnabled}"/>
+                <c:param name="asTable" value="true"/>
+            </c:import>
 
             <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-left:0.25em;padding-right:2em">
                 ${match.title}

@@ -104,6 +104,7 @@
         <input type="submit" value="<fmt:message key="common.save"/>"/>
     </form>
 
+
     <script type='text/javascript'>
         function toggleComment() {
             var commentForm = document.getElementById('commentForm');
@@ -136,12 +137,12 @@
                 </c:choose>
 
                 <tr style="margin:0;padding:0;border:0">
-                    <td style="white-space:nowrap;">
-                        <c:import url="playAddDownload.jsp">
-                            <c:param name="path" value="${child.path}"/>
-                            <c:param name="downloadEnabled" value="${model.user.downloadRole}"/>
-                        </c:import>
-                    </td>
+                    <c:import url="playAddDownload.jsp">
+                        <c:param name="path" value="${child.path}"/>
+                        <c:param name="downloadEnabled" value="${model.user.downloadRole}"/>
+                        <c:param name="asTable" value="true"/>
+                    </c:import>
+                    
                     <c:choose>
                         <c:when test="${child.directory}">
                             <sub:url value="main.view" var="childUrl">
