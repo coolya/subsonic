@@ -182,6 +182,7 @@
         <property name="viewName" value="playlist"/>
         <property name="playerService" ref="playerService"/>
         <property name="securityService" ref="securityService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="coverArtController" class="net.sourceforge.subsonic.controller.CoverArtController">
         <property name="securityService" ref="securityService"/>

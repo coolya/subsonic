@@ -3,13 +3,13 @@ package net.sourceforge.subsonic.ajax;
 import net.sourceforge.subsonic.*;
 import net.sourceforge.subsonic.util.*;
 import net.sourceforge.subsonic.domain.*;
+import org.apache.commons.lang.*;
 
 /**
  * Provides AJAX-enabled services for editing tags in music files.
  * This class is used by the DWR framework (http://getahead.ltd.uk/dwr/).
  *
  * @author Sindre Mehus
- * @version $Revision: 1.1 $ $Date: 2006/02/26 21:46:28 $
  */
 public class TagService {
 
@@ -27,10 +27,10 @@ public class TagService {
      */
     public String setTags(String path, String artist, String album, String title, String year) {
 
-        artist = "".equals(artist) ? null : artist;
-        album = "".equals(album) ? null : album;
-        title = "".equals(title) ? null : title;
-        year = "".equals(year) ? null : year;
+        artist = StringUtils.trimToNull(artist);
+        album = StringUtils.trimToNull(album);
+        title = StringUtils.trimToNull(title);
+        year = StringUtils.trimToNull(year);
 
         try {
 
@@ -42,13 +42,22 @@ public class TagService {
             }
 
             MusicFile.MetaData existingMetaData = parser.getRawMetaData(file);
-            MusicFile.MetaData newMetaData = new MusicFile.MetaData(artist, album, title, year);
 
-            if (!newMetaData.equals(existingMetaData)) {
-                parser.setMetaData(file, newMetaData);
-                return "UPDATED";
+            if (StringUtils.equals(artist, existingMetaData.getArtist()) &&
+                StringUtils.equals(album, existingMetaData.getAlbum()) &&
+                StringUtils.equals(title, existingMetaData.getTitle()) &&
+                StringUtils.equals(year, existingMetaData.getYear())) {
+
+                return "SKIPPED";
             }
-            return "SKIPPED";
+
+            MusicFile.MetaData newMetaData = new MusicFile.MetaData();
+            newMetaData.setArtist(artist);
+            newMetaData.setAlbum(album);
+            newMetaData.setTitle(title);
+            newMetaData.setYear(year);
+            parser.setMetaData(file, newMetaData);
+            return "UPDATED";
 
         } catch (Exception x) {
             LOG.warn("Failed to update tags for " + path, x);

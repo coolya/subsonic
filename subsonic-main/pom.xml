@@ -90,11 +90,10 @@
             <version>2006-03-08</version>
         </dependency>
 
-
         <dependency>
             <groupId>jid3</groupId>
             <artifactId>jid3</artifactId>
-            <version>0.44</version>
+            <version>0.46</version>
         </dependency>
 
         <dependency>

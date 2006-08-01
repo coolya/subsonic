@@ -7,6 +7,7 @@ import org.springframework.util.*;
 
 import java.io.*;
 import java.util.*;
+import java.text.*;
 
 /**
  * Represents a file or directory containing music. Music files can be put in a {@link Playlist},
@@ -407,6 +408,9 @@ public class MusicFile {
      */
     public static class MetaData {
 
+        private static final SimpleDateFormat TIME_IN_FORMAT    = new SimpleDateFormat("ss");
+        private static final SimpleDateFormat TIME_OUT_FORMAT   = new SimpleDateFormat("m:ss");
+
         private Integer trackNumber;
         private String title;
         private String artist;
@@ -415,20 +419,9 @@ public class MusicFile {
         private String year;
         private Integer bitRate;
         private Boolean variableBitRate;
-        private Long duration;
+        private Integer duration;
         private String format;
         private Long fileSize;
-
-        public MetaData() {
-        }
-
-        /** Deprecated. */
-        public MetaData(String artist, String album, String title, String year) {
-            this.artist = artist;
-            this.album = album;
-            this.title = title;
-            this.year = year;
-        }
 
         public Integer getTrackNumber() {
             return trackNumber;
@@ -494,11 +487,23 @@ public class MusicFile {
             this.variableBitRate = variableBitRate;
         }
 
-        public Long getDuration() {
+        public Integer getDuration() {
             return duration;
         }
 
-        public void setDuration(Long duration) {
+        public String getDurationAsString() {
+            if (duration == null) {
+                return null;
+            }
+            try {
+                Date timeIn = TIME_IN_FORMAT.parse(String.valueOf(duration));
+                return TIME_OUT_FORMAT.format(timeIn);
+            } catch (ParseException x) {
+                return null;
+            }
+        }
+
+        public void setDuration(Integer duration) {
             this.duration = duration;
         }
 
@@ -516,30 +521,6 @@ public class MusicFile {
 
         public void setFileSize(Long fileSize) {
             this.fileSize = fileSize;
-        }
-
-        // TODO
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            final MetaData metaData = (MetaData) o;
-
-            if (album != null ? !album.equals(metaData.album) : metaData.album != null) return false;
-            if (artist != null ? !artist.equals(metaData.artist) : metaData.artist != null) return false;
-            if (title != null ? !title.equals(metaData.title) : metaData.title != null) return false;
-            if (year != null ? !year.equals(metaData.year) : metaData.year != null) return false;
-
-            return true;
-        }
-
-        public int hashCode() {
-            int result;
-            result = (artist != null ? artist.hashCode() : 0);
-            result = 29 * result + (album != null ? album.hashCode() : 0);
-            result = 29 * result + (title != null ? title.hashCode() : 0);
-            result = 29 * result + (year != null ? year.hashCode() : 0);
-            return result;
         }
     }
 

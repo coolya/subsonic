@@ -68,12 +68,22 @@ public class Mp3Parser extends MetaDataParser {
                 metaData.setArtist(StringUtils.trimToNull(tag2.getArtist()));
                 metaData.setAlbum(StringUtils.trimToNull(tag2.getAlbum()));
                 metaData.setTitle(StringUtils.trimToNull(tag2.getTitle()));
-                metaData.setGenre(StringUtils.trimToNull(tag2.getGenre()));
                 metaData.setTrackNumber(tag2.getTrackNumber());
                 try {
                     metaData.setYear(String.valueOf(tag2.getYear()));
                 } catch (Exception x) {
                     // Year is not always present.
+                }
+
+                if (tag2 instanceof ID3V2_3_0Tag) {
+                    ID3V2_3_0Tag tag23 = (ID3V2_3_0Tag) tag2;
+                    TCONTextInformationID3V2Frame tcon = tag23.getTCONTextInformationFrame();
+                    if (tcon != null && tcon.getContentType() != null && tcon.getContentType().getGenres() != null) {
+                        ContentType.Genre[] genres = tcon.getContentType().getGenres();
+                        if (genres.length > 0 && genres[0] != null) {
+                            metaData.setGenre(StringUtils.trimToNull(genres[0].toString()));
+                        }
+                    }
                 }
 
             } else {
@@ -92,6 +102,13 @@ public class Mp3Parser extends MetaDataParser {
                         metaData.setYear(String.valueOf(tag1.getYear()));
                     } catch (Exception x) {
                         // Year is not always present.
+                    }
+
+                    if (tag1 instanceof ID3V1_1Tag) {
+                        int track = ((ID3V1_1Tag) tag1).getAlbumTrack();
+                        if (track != 0) {
+                            metaData.setTrackNumber(track);
+                        }
                     }
                 }
             }
@@ -173,7 +190,7 @@ public class Mp3Parser extends MetaDataParser {
                 metaData.setBitRate(Integer.valueOf(bitRate));
             }
             double duration = header.getTrackLength();
-            metaData.setDuration((long) (duration * 1000));
+            metaData.setDuration((int) duration);
         } catch (Exception x ) {
             LOG.warn("Failed to parse MP3 header for " + file, x);
         }

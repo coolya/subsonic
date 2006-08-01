@@ -29,7 +29,12 @@ public class SearchServiceTestCase extends TestCase {
 
         MusicFile file = new MusicFile() {
             public synchronized MetaData getMetaData() {
-                return new MetaData(artist, album, title, year);
+                MetaData metaData = new MetaData();
+                metaData.setArtist(artist);
+                metaData.setAlbum(album);
+                metaData.setTitle(title);
+                metaData.setYear(year);
+                return metaData;
             }
             public File getFile() {
                 return new File(path);

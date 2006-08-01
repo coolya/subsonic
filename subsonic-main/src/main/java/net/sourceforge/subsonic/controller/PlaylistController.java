@@ -20,6 +20,7 @@ public class PlaylistController extends ParameterizableViewController {
 
     private PlayerService playerService;
     private SecurityService securityService;
+    private SettingsService settingsService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -36,6 +37,7 @@ public class PlaylistController extends ParameterizableViewController {
         map.put("players", getPlayers(user));
         map.put("repeatEnabled", playlist.isRepeatEnabled());
         map.put("isPlaying", playlist.getStatus() == Playlist.Status.PLAYING);
+        map.put("visibility", settingsService.getUserSettings(user.getUsername()).getPlaylistVisibility());
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
@@ -143,6 +145,10 @@ public class PlaylistController extends ParameterizableViewController {
 
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
     }
 
     /**

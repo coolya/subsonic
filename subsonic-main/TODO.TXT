@@ -17,6 +17,7 @@ OK - Frog Lossless, Put It Behind You
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
+Listen for new beta releases.  Make notification configurable.
 Create default visibility settings.
 MusicFile cache.
 Show artist/size/length/year/album etc in main.jsp? (Only show artist/album if multiple). Tabular layout.

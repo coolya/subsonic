@@ -76,6 +76,7 @@
     </c:when>
     <c:otherwise>
         <table style="border-collapse:collapse;">
+            <c:set var="cutoff" value="${model.visibility.captionCutoff}"/>
             <c:forEach items="${model.songs}" var="song" varStatus="loopStatus">
                 <c:set var="i" value="${loopStatus.count - 1}"/>
                 <tr style="margin:0;padding:0;border:0"><a name="${i}"></a>
@@ -111,52 +112,70 @@
 
                     <td ${class} style="padding-left:0.25em"/>
 
-                    <td ${class} style="padding-right:1.25em">
-                        <span class="detail">${song.musicFile.metaData.trackNumber}</span>
-                    </td>
+                    <c:if test="${model.visibility.trackNumberVisible}">
+                        <td ${class} style="padding-right:1.25em;text-align:right">
+                            <span class="detail">${song.musicFile.metaData.trackNumber}</span>
+                        </td>
+                    </c:if>
 
                     <td ${class} style="padding-right:1.25em">
                         <c:if test="${song.current}">
                             <img src="<c:url value="/icons/current.gif"/>" alt=""/>
                         </c:if>
-                        <a href="playlist.view?skip=${i}" title="${song.musicFile.metaData.title}">${song.current ? "<b>" : ""}<str:truncateNicely upper="30">${song.musicFile.title}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
+                        <a href="playlist.view?skip=${i}" title="${song.musicFile.metaData.title}">${song.current ? "<b>" : ""}<str:truncateNicely upper="${cutoff}">${song.musicFile.title}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
                     </td>
 
-                    <td ${class} style="padding-right:1.25em">
-                        <span class="detail" title="${song.musicFile.metaData.album}"><a target="main" href="${mainUrl}"><str:truncateNicely upper="25">${song.musicFile.metaData.album}</str:truncateNicely></a></span>
-                    </td>
+                    <c:if test="${model.visibility.albumVisible}">
+                        <td ${class} style="padding-right:1.25em">
+                            <span class="detail" title="${song.musicFile.metaData.album}"><a target="main" href="${mainUrl}"><str:truncateNicely upper="${cutoff}">${song.musicFile.metaData.album}</str:truncateNicely></a></span>
+                        </td>
+                    </c:if>
 
-                    <td ${class} style="padding-right:1.25em">
-                        <span class="detail" title="${song.musicFile.metaData.artist}"><str:truncateNicely upper="25">${song.musicFile.metaData.artist}</str:truncateNicely></span>
-                    </td>
+                    <c:if test="${model.visibility.artistVisible}">
+                        <td ${class} style="padding-right:1.25em">
+                            <span class="detail" title="${song.musicFile.metaData.artist}"><str:truncateNicely upper="${cutoff}">${song.musicFile.metaData.artist}</str:truncateNicely></span>
+                        </td>
+                    </c:if>
 
-                    <td ${class} style="padding-right:1.25em">
-                        <span class="detail">${song.musicFile.metaData.genre}</span>
-                    </td>
+                    <c:if test="${model.visibility.genreVisible}">
+                        <td ${class} style="padding-right:1.25em">
+                            <span class="detail">${song.musicFile.metaData.genre}</span>
+                        </td>
+                    </c:if>
 
-                    <td ${class} style="padding-right:1.25em">
-                        <span class="detail">${song.musicFile.metaData.year}</span>
-                    </td>
+                    <c:if test="${model.visibility.yearVisible}">
+                        <td ${class} style="padding-right:1.25em">
+                            <span class="detail">${song.musicFile.metaData.year}</span>
+                        </td>
+                    </c:if>
 
-                    <td ${class} style="padding-right:1.25em">
-                        <span class="detail">${fn:toLowerCase(song.musicFile.metaData.format)}</span>
-                    </td>
+                    <c:if test="${model.visibility.formatVisible}">
+                        <td ${class} style="padding-right:1.25em">
+                            <span class="detail">${fn:toLowerCase(song.musicFile.metaData.format)}</span>
+                        </td>
+                    </c:if>
 
-                    <td ${class} style="padding-right:1.25em;text-align:right">
-                        <span class="detail">${song.size}</span>
-                    </td>
+                    <c:if test="${model.visibility.fileSizeVisible}">
+                        <td ${class} style="padding-right:1.25em;text-align:right">
+                            <span class="detail">${song.size}</span>
+                        </td>
+                    </c:if>
 
-                    <td ${class} style="padding-right:1.25em;text-align:right">
-                        <span class="detail">${song.musicFile.metaData.duration}</span>
-                    </td>
+                    <c:if test="${model.visibility.durationVisible}">
+                        <td ${class} style="padding-right:1.25em;text-align:right">
+                            <span class="detail">${song.musicFile.metaData.durationAsString}</span>
+                        </td>
+                    </c:if>
 
-                    <td ${class} style="padding-right:0.25em">
-                        <span class="detail">
-                            <c:if test="${not empty song.musicFile.metaData.bitRate}">
+                    <c:if test="${model.visibility.bitRateVisible}">
+                        <td ${class} style="padding-right:0.25em">
+                            <span class="detail">
+                                <c:if test="${not empty song.musicFile.metaData.bitRate}">
                                 ${song.musicFile.metaData.bitRate} Kbps ${song.musicFile.metaData.variableBitRate ? "vbr" : ""}
-                            </c:if>
-                        </span>
-                    </td>
+                                </c:if>
+                            </span>
+                        </td>
+                    </c:if>
                 </tr>
             </c:forEach>
         </table>
