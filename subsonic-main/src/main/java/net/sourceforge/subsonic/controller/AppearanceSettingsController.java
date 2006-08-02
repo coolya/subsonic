@@ -29,6 +29,8 @@ public class AppearanceSettingsController extends SimpleFormController {
         command.setThemeIndex("-1");
         command.setMainVisibility(userSettings.getMainVisibility());
         command.setPlaylistVisibility(userSettings.getPlaylistVisibility());
+        command.setFinalVersionNotificationEnabled(userSettings.isFinalVersionNotificationEnabled());
+        command.setBetaVersionNotificationEnabled(userSettings.isBetaVersionNotificationEnabled());
 
         Locale currentLocale = userSettings.getLocale();
         Locale[] locales = settingsService.getAvailableLocales();
@@ -77,6 +79,8 @@ public class AppearanceSettingsController extends SimpleFormController {
         settings.setThemeId(themeId);
         settings.setMainVisibility(command.getMainVisibility());
         settings.setPlaylistVisibility(command.getPlaylistVisibility());
+        settings.setFinalVersionNotificationEnabled(command.isFinalVersionNotificationEnabled());
+        settings.setBetaVersionNotificationEnabled(command.isBetaVersionNotificationEnabled());
         settingsService.updateUserSettings(settings);
 
         // TODO.

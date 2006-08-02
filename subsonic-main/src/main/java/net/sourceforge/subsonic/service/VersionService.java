@@ -22,7 +22,8 @@ public class VersionService {
     private static final Logger LOG = Logger.getLogger(VersionService.class);
 
     private Version localVersion;
-    private Version latestVersion;
+    private Version latestFinalVersion;
+    private Version latestBetaVersion;
     private Date localBuildDate;
     private String localBuildNumber;
 
@@ -31,6 +32,9 @@ public class VersionService {
 
     /** Only fetch last version this often (in milliseconds.).*/
     private static final long LAST_VERSION_FETCH_INTERVAL = 7 * 24 * 3600 * 1000; // One week
+
+    /** URL from which to fetch latest versions. */
+    private static final String VERSION_URL = "http://subsonic.sourceforge.net/version.html";
 
     /**
      * Returns the version number for the locally installed Subsonic version.
@@ -49,22 +53,23 @@ public class VersionService {
     }
 
     /**
-     * Returns the version number for the latest available Subsonic version.
-     * @return The version number for the latest available Subsonic version, or <code>null</code>
+     * Returns the version number for the latest available Subsonic final version.
+     * @return The version number for the latest available Subsonic final version, or <code>null</code>
      * if the version number can't be resolved.
      */
-    public synchronized Version getLatestVersion() {
-        long now = System.currentTimeMillis();
-        if (latestVersion == null || now - lastVersionFetched > LAST_VERSION_FETCH_INTERVAL) {
-            try {
-                latestVersion = readLatestVersion();
-                lastVersionFetched = now;
-                LOG.info("Resolved latest Subsonic version to: " + latestVersion);
-            } catch (Exception x) {
-                LOG.warn("Failed to resolve latest Subsonic version.", x);
-            }
-        }
-        return latestVersion;
+    public synchronized Version getLatestFinalVersion() {
+        refreshLatestVersion();
+        return latestFinalVersion;
+    }
+
+    /**
+     * Returns the version number for the latest available Subsonic beta version.
+     * @return The version number for the latest available Subsonic beta version, or <code>null</code>
+     * if the version number can't be resolved.
+     */
+    public synchronized Version getLatestBetaVersion() {
+        refreshLatestVersion();
+        return latestBetaVersion;
     }
 
     /**
@@ -101,11 +106,26 @@ public class VersionService {
     }
 
     /**
-     * Returns whether a new version of Subsonic is available.
-     * @return Whether a new version of Subsonic is available.
+     * Returns whether a new final version of Subsonic is available.
+     * @return Whether a new final version of Subsonic is available.
      */
-    public boolean isNewVersionAvailable() {
-        Version latest = getLatestVersion();
+    public boolean isNewFinalVersionAvailable() {
+        Version latest = getLatestFinalVersion();
+        Version local = getLocalVersion();
+
+        if (latest == null || local == null) {
+            return false;
+        }
+
+        return local.compareTo(latest) < 0;
+    }
+
+    /**
+     * Returns whether a new beta version of Subsonic is available.
+     * @return Whether a new beta version of Subsonic is available.
+     */
+    public boolean isNewBetaVersionAvailable() {
+        Version latest = getLatestBetaVersion();
         Version local = getLocalVersion();
 
         if (latest == null || local == null) {
@@ -140,22 +160,43 @@ public class VersionService {
     }
 
     /**
-     * Returns the latest available Subsonic version by screen-scraping a web page.
-     * @return The latest available Subsonic version.
+     * Refreshes the latest final and beta versions.
+     */
+    private void refreshLatestVersion() {
+        long now = System.currentTimeMillis();
+        if (latestFinalVersion == null || now - lastVersionFetched > LAST_VERSION_FETCH_INTERVAL) {
+            try {
+                readLatestVersion();
+                lastVersionFetched = now;
+            } catch (Exception x) {
+                LOG.warn("Failed to resolve latest Subsonic version.", x);
+            }
+        }
+    }
+
+    /**
+     * Resolves the latest available Subsonic version by screen-scraping a web page.
      * @throws IOException If an I/O error occurs.
      */
-    private Version readLatestVersion() throws IOException {
-        URL url = new URL("http://subsonic.sourceforge.net/version.html");
+    private void readLatestVersion() throws IOException {
+        URL url = new URL(VERSION_URL);
         BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        Pattern pattern = Pattern.compile("SUBSONIC_FULL_VERSION_BEGIN(.*)SUBSONIC_FULL_VERSION_END");
+        Pattern finalPattern = Pattern.compile("SUBSONIC_FULL_VERSION_BEGIN(.*)SUBSONIC_FULL_VERSION_END");
+        Pattern betaPattern = Pattern.compile("SUBSONIC_BETA_VERSION_BEGIN(.*)SUBSONIC_BETA_VERSION_END");
 
         try {
 
             String line = reader.readLine();
             while (line != null) {
-                Matcher matcher = pattern.matcher(line);
-                if (matcher.find()) {
-                    return new Version(matcher.group(1));
+                Matcher finalMatcher = finalPattern.matcher(line);
+                if (finalMatcher.find()) {
+                    latestFinalVersion = new Version(finalMatcher.group(1));
+                    LOG.info("Resolved latest Subsonic final version to: " + latestFinalVersion);
+                }
+                Matcher betaMatcher = betaPattern.matcher(line);
+                if (betaMatcher.find()) {
+                    latestBetaVersion = new Version(betaMatcher.group(1));
+                    LOG.info("Resolved latest Subsonic beta version to: " + latestBetaVersion);
                 }
                 line = reader.readLine();
             }
@@ -163,6 +204,5 @@ public class VersionService {
         } finally {
             reader.close();
         }
-        return null;
     }
 }

@@ -49,6 +49,7 @@ public class LeftController extends ParameterizableViewController {
         map.put("selectedMusicFolder", selectedMusicFolder);
         map.put("radios", settingsService.getAllInternetRadios());
         map.put("shortcuts", getShortcuts(musicFoldersToUse, shortcuts));
+        map.put("captionCutoff", settingsService.getUserSettings(securityService.getCurrentUsername(request)).getMainVisibility().getCaptionCutoff());
 
         if (statistics != null) {
             map.put("statistics", statistics);

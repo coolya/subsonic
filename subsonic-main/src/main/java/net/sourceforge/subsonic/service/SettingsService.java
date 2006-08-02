@@ -553,8 +553,10 @@ public class SettingsService {
 
     private UserSettings createDefaultUserSettings(String username) {
         UserSettings settings = new UserSettings(username);
-        UserSettings.Visibility playlist = settings.getPlaylistVisibility();
+        settings.setFinalVersionNotificationEnabled(true);
+        settings.setBetaVersionNotificationEnabled(false);
 
+        UserSettings.Visibility playlist = settings.getPlaylistVisibility();
         playlist.setCaptionCutoff(35);
         playlist.setArtistVisible(true);
         playlist.setAlbumVisible(true);

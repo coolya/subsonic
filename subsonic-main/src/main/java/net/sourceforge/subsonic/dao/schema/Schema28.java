@@ -25,6 +25,8 @@ public class Schema28 extends Schema {
                              "username varchar not null," +
                              "locale varchar," +
                              "theme_id varchar," +
+                             "final_version_notification boolean not null," +
+                             "beta_version_notification boolean not null," +
                              "main_caption_cutoff int not null," +
                              "main_track_number boolean not null," +
                              "main_artist boolean not null," +

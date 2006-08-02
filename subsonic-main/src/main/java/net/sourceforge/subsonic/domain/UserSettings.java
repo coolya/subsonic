@@ -12,6 +12,8 @@ public class UserSettings {
     private String username;
     private Locale locale;
     private String themeId;
+    private boolean finalVersionNotificationEnabled;
+    private boolean betaVersionNotificationEnabled;
 
     private Visibility mainVisibility = new Visibility();
     private Visibility playlistVisibility = new Visibility();
@@ -42,6 +44,22 @@ public class UserSettings {
 
     public void setThemeId(String themeId) {
         this.themeId = themeId;
+    }
+
+    public boolean isFinalVersionNotificationEnabled() {
+        return finalVersionNotificationEnabled;
+    }
+
+    public void setFinalVersionNotificationEnabled(boolean finalVersionNotificationEnabled) {
+        this.finalVersionNotificationEnabled = finalVersionNotificationEnabled;
+    }
+
+    public boolean isBetaVersionNotificationEnabled() {
+        return betaVersionNotificationEnabled;
+    }
+
+    public void setBetaVersionNotificationEnabled(boolean betaVersionNotificationEnabled) {
+        this.betaVersionNotificationEnabled = betaVersionNotificationEnabled;
     }
 
     public Visibility getMainVisibility() {

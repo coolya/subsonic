@@ -28,12 +28,21 @@ public class TopController extends ParameterizableViewController {
         String[] shortcuts = settingsService.getShortcutsAsArray();
         List<MusicIndex> musicIndex = MusicIndex.createIndexesFromExpression(indexString);
         Map<MusicIndex, List<MusicFile>> indexedChildren = MusicIndex.getIndexedChildren(allMusicFolders, musicIndex, ignoredArticles, shortcuts);
+        String username = securityService.getCurrentUsername(request);
 
-        map.put("username", securityService.getCurrentUsername(request));
+        map.put("username", username);
         map.put("musicFoldersExist", allMusicFolders.length > 0);
         map.put("indexes", indexedChildren.keySet().toArray(new MusicIndex[0]));
-        map.put("newVersionAvailable", versionService.isNewVersionAvailable());
-        map.put("latestVersion", versionService.getLatestVersion());
+
+        UserSettings userSettings = settingsService.getUserSettings(username);
+        if (userSettings.isFinalVersionNotificationEnabled() && versionService.isNewFinalVersionAvailable()) {
+            map.put("newVersionAvailable", true);
+            map.put("latestVersion", versionService.getLatestFinalVersion());
+
+        } else if (userSettings.isBetaVersionNotificationEnabled() && versionService.isNewBetaVersionAvailable()) {
+            map.put("newVersionAvailable", true);
+            map.put("latestVersion", versionService.getLatestBetaVersion());
+        }
 
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);

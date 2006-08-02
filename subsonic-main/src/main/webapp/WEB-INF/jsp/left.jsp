@@ -85,10 +85,10 @@
                         <sub:url value="main.view" var="mainUrl">
                             <sub:param name="path" value="${child.path}"/>
                         </sub:url>
-                        <a target="main" href="${mainUrl}"><str:truncateNicely upper="30">${child.name}</str:truncateNicely></a>
+                        <a target="main" href="${mainUrl}"><str:truncateNicely upper="${model.captionCutoff}">${child.name}</str:truncateNicely></a>
                     </c:when>
                     <c:otherwise>
-                        <str:truncateNicely upper="30">${child.name}</str:truncateNicely>
+                        <str:truncateNicely upper="${model.captionCutoff}">${child.name}</str:truncateNicely>
                     </c:otherwise>
                 </c:choose>
             </span>

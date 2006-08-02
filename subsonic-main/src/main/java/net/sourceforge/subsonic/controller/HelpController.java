@@ -19,11 +19,17 @@ public class HelpController extends ParameterizableViewController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
 
+        if (versionService.isNewFinalVersionAvailable()) {
+            map.put("newVersionAvailable", true);
+            map.put("latestVersion", versionService.getLatestFinalVersion());
+        } else if (versionService.isNewBetaVersionAvailable()) {
+            map.put("newVersionAvailable", true);
+            map.put("latestVersion", versionService.getLatestBetaVersion());
+        }
+
         map.put("localVersion", versionService.getLocalVersion());
-        map.put("latestVersion", versionService.getLatestVersion());
         map.put("buildDate", versionService.getLocalBuildDate());
         map.put("buildNumber", versionService.getLocalBuildNumber());
-        map.put("newVersionAvailable", versionService.isNewVersionAvailable());
         map.put("logEntries", Logger.getLatestLogEntries());
         map.put("logFile", Logger.getLogFile());
 

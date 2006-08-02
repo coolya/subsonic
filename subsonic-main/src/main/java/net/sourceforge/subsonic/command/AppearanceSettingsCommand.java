@@ -16,6 +16,8 @@ public class AppearanceSettingsCommand {
     private Theme[] themes;
     private UserSettings.Visibility mainVisibility;
     private UserSettings.Visibility playlistVisibility;
+    private boolean finalVersionNotificationEnabled;
+    private boolean betaVersionNotificationEnabled;
     private boolean isReloadNeeded;
 
     public User getUser() {
@@ -72,6 +74,22 @@ public class AppearanceSettingsCommand {
 
     public void setPlaylistVisibility(UserSettings.Visibility playlistVisibility) {
         this.playlistVisibility = playlistVisibility;
+    }
+
+    public boolean isFinalVersionNotificationEnabled() {
+        return finalVersionNotificationEnabled;
+    }
+
+    public void setFinalVersionNotificationEnabled(boolean finalVersionNotificationEnabled) {
+        this.finalVersionNotificationEnabled = finalVersionNotificationEnabled;
+    }
+
+    public boolean isBetaVersionNotificationEnabled() {
+        return betaVersionNotificationEnabled;
+    }
+
+    public void setBetaVersionNotificationEnabled(boolean betaVersionNotificationEnabled) {
+        this.betaVersionNotificationEnabled = betaVersionNotificationEnabled;
     }
 
     public boolean isReloadNeeded() {

@@ -121,10 +121,13 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertNotNull("Error in getUserSettings().", userSettings);
         assertNull("Error in getUserSettings().", userSettings.getLocale());
         assertNull("Error in getUserSettings().", userSettings.getThemeId());
+        assertFalse("Error in getUserSettings().", userSettings.isFinalVersionNotificationEnabled());
+        assertFalse("Error in getUserSettings().", userSettings.isBetaVersionNotificationEnabled());
 
         UserSettings settings = new UserSettings("sindre");
         settings.setLocale(Locale.SIMPLIFIED_CHINESE);
         settings.setThemeId("midnight");
+        settings.setBetaVersionNotificationEnabled(true);
         settings.getMainVisibility().setCaptionCutoff(42);
         settings.getMainVisibility().setBitRateVisible(true);
         settings.getPlaylistVisibility().setCaptionCutoff(44);
@@ -133,6 +136,8 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         userSettings = userDao.getUserSettings("sindre");
         assertNotNull("Error in getUserSettings().", userSettings);
         assertEquals("Error in getUserSettings().", Locale.SIMPLIFIED_CHINESE, userSettings.getLocale());
+        assertEquals("Error in getUserSettings().", false, userSettings.isFinalVersionNotificationEnabled());
+        assertEquals("Error in getUserSettings().", true, userSettings.isBetaVersionNotificationEnabled());
         assertEquals("Error in getUserSettings().", "midnight", userSettings.getThemeId());
         assertEquals("Error in getUserSettings().", 42, userSettings.getMainVisibility().getCaptionCutoff());
         assertEquals("Error in getUserSettings().", true, userSettings.getMainVisibility().isBitRateVisible());

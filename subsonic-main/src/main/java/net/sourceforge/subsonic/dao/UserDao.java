@@ -17,7 +17,7 @@ public class UserDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(UserDao.class);
     private static final String USER_COLUMNS = "username, password, bytes_streamed, bytes_downloaded, bytes_uploaded";
-    private static final String USER_SETTINGS_COLUMNS = "username, locale, theme_id, " +
+    private static final String USER_SETTINGS_COLUMNS = "username, locale, theme_id, final_version_notification, beta_version_notification, " +
                                                         "main_caption_cutoff, main_track_number, main_artist, main_album, main_genre, " +
                                                         "main_year, main_bit_rate, main_duration, main_format, main_file_size, " +
                                                         "playlist_caption_cutoff, playlist_track_number, playlist_artist, playlist_album, playlist_genre, " +
@@ -142,6 +142,7 @@ public class UserDao extends AbstractDao {
         UserSettings.Visibility main = settings.getMainVisibility();
         UserSettings.Visibility playlist = settings.getPlaylistVisibility();
         getJdbcTemplate().update(sql, new Object[]{settings.getUsername(), locale, settings.getThemeId(),
+                                                   settings.isFinalVersionNotificationEnabled(), settings.isBetaVersionNotificationEnabled(),
                                                    main.getCaptionCutoff(), main.isTrackNumberVisible(), main.isArtistVisible(), main.isAlbumVisible(),
                                                    main.isGenreVisible(), main.isYearVisible(), main.isBitRateVisible(), main.isDurationVisible(),
                                                    main.isFormatVisible(), main.isFileSizeVisible(),
@@ -208,6 +209,8 @@ public class UserDao extends AbstractDao {
             UserSettings settings = new UserSettings(rs.getString(col++));
             settings.setLocale(StringUtil.parseLocale(rs.getString(col++)));
             settings.setThemeId(rs.getString(col++));
+            settings.setFinalVersionNotificationEnabled(rs.getBoolean(col++));
+            settings.setBetaVersionNotificationEnabled(rs.getBoolean(col++));
 
             settings.getMainVisibility().setCaptionCutoff(rs.getInt(col++));
             settings.getMainVisibility().setTrackNumberVisible(rs.getBoolean(col++));

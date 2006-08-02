@@ -110,6 +110,17 @@
         </tr>
     </table>
 
+    <table class="indent">
+        <tr>
+            <td><form:checkbox path="finalVersionNotificationEnabled" id="final" cssClass="checkbox"/></td>
+            <td><label for="final"><fmt:message key="appearancesettings.finalversionnotification"/></label></td>
+        </tr>
+        <tr>
+            <td><form:checkbox path="betaVersionNotificationEnabled" id="beta" cssClass="checkbox"/></td>
+            <td><label for="beta"><fmt:message key="appearancesettings.betaversionnotification"/></label></td>
+        </tr>
+    </table>
+
     <input type="submit" value="<fmt:message key="common.save"/>"/>
 </form:form>
 
