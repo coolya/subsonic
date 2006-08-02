@@ -68,10 +68,14 @@ public class Mp3Parser extends MetaDataParser {
                 metaData.setArtist(StringUtils.trimToNull(tag2.getArtist()));
                 metaData.setAlbum(StringUtils.trimToNull(tag2.getAlbum()));
                 metaData.setTitle(StringUtils.trimToNull(tag2.getTitle()));
-                metaData.setTrackNumber(tag2.getTrackNumber());
+                try {
+                    metaData.setTrackNumber(tag2.getTrackNumber());
+                } catch (ID3Exception x) {
+                    // Track number is not always present.
+                }
                 try {
                     metaData.setYear(String.valueOf(tag2.getYear()));
-                } catch (Exception x) {
+                } catch (ID3Exception x) {
                     // Year is not always present.
                 }
 

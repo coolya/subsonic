@@ -16,6 +16,9 @@ OK - Frog Lossless, Put It Behind You
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
+Scroller color in Sandstorm.
+Sort by track number.
+Less white-space after track number.
 MusicFile cache.
 Performance test of reading MPEGHeader.
 Upgrade Spring.

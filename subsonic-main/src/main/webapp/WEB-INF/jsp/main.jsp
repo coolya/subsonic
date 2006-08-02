@@ -124,7 +124,7 @@
 
 <table cellpadding="10"><tr style="vertical-align:top;">
     <td style="vertical-align:top;">
-        <table style="border-collapse:collapse">
+        <table style="border-collapse:collapse;white-space:nowrap">
             <c:set var="cutoff" value="${model.visibility.captionCutoff}"/>
             <c:forEach items="${model.children}" var="child" varStatus="loopStatus">
                 <c:choose>
@@ -142,7 +142,7 @@
                         <c:param name="downloadEnabled" value="${model.user.downloadRole}"/>
                         <c:param name="asTable" value="true"/>
                     </c:import>
-                    
+
                     <c:choose>
                         <c:when test="${child.directory}">
                             <sub:url value="main.view" var="childUrl">

@@ -75,7 +75,7 @@
         <p><em><fmt:message key="playlist.empty"/></em></p>
     </c:when>
     <c:otherwise>
-        <table style="border-collapse:collapse;">
+        <table style="border-collapse:collapse;white-space:nowrap;">
             <c:set var="cutoff" value="${model.visibility.captionCutoff}"/>
             <c:forEach items="${model.songs}" var="song" varStatus="loopStatus">
                 <c:set var="i" value="${loopStatus.count - 1}"/>
