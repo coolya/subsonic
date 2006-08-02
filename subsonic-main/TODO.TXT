@@ -1,11 +1,10 @@
 oggdec
 Windows: version 1.9.2,  http://www.rarewares.org/ogg.html
-Linux: Normally included in OS. Create symlink.
+Linux: Normally included in OS.
 
 oggenc2
 Windows: version 2.83 using libVorbis v1.1.2, http://www.rarewares.org/ogg.html
-Linux: Normally included in OS. Create symlink.
-
+Linux: Normally included in OS.
 
 OK - WMA9, Quality-based VBR Q75, Atlantic
 OK - OGG, Quality-based VBR Q3, Is It Any Wonder
@@ -17,8 +16,6 @@ OK - Frog Lossless, Put It Behind You
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
-Remove back-in-black?
-Listen for new beta releases.  Make notification configurable.
 MusicFile cache.
 Performance test of reading MPEGHeader.
 Sandstone theme http://www.jinzora.org/images/screens/themes/sandstone-full.gif
@@ -51,6 +48,7 @@ Update Norwegian translation.
 
 COMPLETED IN VERSION 2.8
 ========================
+Listen for new beta releases.  Make notification configurable.
 Add transcode directory to path (in case of libraries)?
 Mouseover hover effect for truncated text.
 Show artist/album as tooltip on cover art images.
@@ -227,17 +225,3 @@ Støtte alle kanaler på dagenstv.com.
 Støtte sommertid.
 Enklere konfigurasjon av hvilke kanaler som skal tas med.
 Endre navn til xmltv_no eller noe.
-
-HUS
-=====
-Male alt hvitt på huset.
-Male østvegg.
-Fikse takrenne/nedløp på østvegg.
-Fikse mur på hjørne og overside. Males.
-Skifte knust vindu.
-Korte ned på terrasse.
-Male rødt under balkong, rekkverk, balkongkant etc.
-Vaske/male tak over inngang.
-Male trappegelender på overside?
-Fjerne tung jerndings og sykkel.
-Legge ny singel/heller.

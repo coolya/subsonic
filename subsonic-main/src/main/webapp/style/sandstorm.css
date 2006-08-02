@@ -1,0 +1,30 @@
+/*
+ * CSS styleshet for the "Sandstorm" theme.
+ *
+ * Author: Sindre Mehus
+ */
+
+@import "default.css";
+
+/* The primary background color. */
+.bgcolor1, body {
+    background-color: #F5F5D0
+}
+
+/* The secondary background color. */
+.bgcolor2, .ruleTableHeader, .log  {
+    background-color: #CCCC99
+}
+
+/* Link color */
+a:link, a:active, a:visited, a:link *, a:active *, a:visited * {
+    /*color: #006699*/
+    color: #1B2E8D
+}
+
+/* Link hover color */
+a:hover, a:hover * {
+    text-decoration: underline;
+    color: #DD6900
+}
+

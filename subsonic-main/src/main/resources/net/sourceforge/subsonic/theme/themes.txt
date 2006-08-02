@@ -10,3 +10,6 @@ midnight "2 Minutes To Midnight"
 # Theme with even darker colors.
 black "Back In Black"
 
+# Theme with sandy colors.
+sandstorm "Sandstorm"
+
