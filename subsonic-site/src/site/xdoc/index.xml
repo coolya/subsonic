@@ -32,7 +32,9 @@
             <p>
                 Subsonic is designed to handle very large music collections (many thousand albums). It uses a combination
                 of directory structure and tag parsing to organize the music. Although optimized for MP3 streaming, it works for
-                any audio or video format that can stream over HTTP (for instance AAC and OGG).
+                any audio or video format that can stream over HTTP (for instance AAC and OGG). By using transcoder plug-ins, Subsonic
+                supports on-the-fly conversion and streaming of virtually any audio format, including WMA, FLAC, APE, Musepack and
+                OptimFROG.
             </p>
 
             <p>
@@ -55,6 +57,7 @@
                 <p>
                     <ul>
                         <li>Supports MP3, OGG, AAC and any other audio or video format that can be streamed over HTTP.</li>
+                        <li>Transcoding engine allows for streaming of a variety of lossy and lossless formats by converting to MP3 on-the-fly.</li>
                         <li>Works with any network-enabled media player, such as Winamp, iTunes, XMMS, MusicMatch and Windows Media Player.</li>
                         <li>Displays cover art, dynamically scaling it to fit nicely on the screen.</li>
                         <li>You can assign ratings and comments to albums.</li>
@@ -76,7 +79,7 @@
                     </ul>
                     <ul>
                         <li>Supports multiple simultaneous players. The playlist for any player can be managed from any location.</li>
-                        <li>Secure. Users must log in using a username and password. Users can be assigned different privileges.</li>
+                        <li>Secure. Users must log in using a username and password. Users can be assigned different privileges. Supports HTTPS/SSL encryption.</li>
                         <li>Lean web interface optimized for constrained bandwidth environments and efficient browsing through large music collections.</li>
                         <li>WAP interface allows you to control Subsonic from any mobile phone or PDA.</li>
                         <li>In addition to streaming, single files or entire directories may be downloaded from Subsonic.</li>
@@ -104,15 +107,17 @@
                     <a href="http://java.sun.com/j2se/1.5.0/download.jsp">Java 5.0</a> and a JSP container such
                     as <a href="http://tomcat.apache.org/">Tomcat</a>, both of which are available at no charge.
 
-                    To receive streams you need a web browser (any browser will do) and a media player (Winamp, Windows Media Player etc).
-                       Refer to the <a href="faq.html">FAQ</a> for a list of recommended players.
+                    To receive streams you need a web browser (tested on recent versions of Firefox, Opera and IE) and a media
+                    player (Winamp, Windows Media Player etc). Refer to the <a href="faq.html">FAQ</a> for a list of recommended players.
                    </p>
                </subsection>
 
             <subsection name="Get involved!">
                 <p>
                     I'm looking for volunteers who'd like to translate Subsonic to new languages. Interested?
-                    Please read <a href="translate.html">this</a>.
+                    Please read <a href="translate.html">this</a>. I'm also looking for someone to improve the Subsonic logo -
+                    I like the concept of a yellow submarine, but would like the logo to have a more contemporary and professional look.
+                    Please contact me if you would like to help.
                 </p>
             </subsection>
 

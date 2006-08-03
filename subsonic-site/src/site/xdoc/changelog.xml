@@ -16,6 +16,29 @@
 
         <section name="Change Log">
 
+            <subsection name="Subsonic 2.8 - Aug 13, 2006">
+                <ul>
+                    <li>New: Transcoding plugin framework.</li>
+                    <li>New: VBR (variable bitrate) detection and resampling.</li>
+                    <li>New: Added form-based login.</li>
+                    <li>New: Added logout option.</li>
+                    <li>New: Support per-user language and theme.</li>
+                    <li>New: Show track number, genre, format, duration and file size.</li>
+                    <li>New: Configurable level of song details.</li>
+                    <li>New: Various artists detection.</li>
+                    <li>New: Added option to stream over plain HTTP when using SSL.</li>
+                    <li>New: Mouseover tooltip for truncated text and cover art images.</li>
+                    <li>New: Optional notification of new final and beta releases.</li>
+                    <li>New: Nicer error page.</li>
+                    <li>New: Added "Back in black" and "Sandstorm" themes.</li>
+                    <li>New: Exclude files and folders listed in "subsonic_exclude.txt"</li>
+                    <li>Tech: New security implementation based on Acegi (http://acegisecurity.org/)</li>
+                    <li>Tech: Springified WAP pages and servlets.</li>
+                    <li>Tech: Springified DWR.</li>
+                    <li>Tech: Springified DAO's and data source.</li>
+                </ul>
+            </subsection>
+            
             <subsection name="Subsonic 2.7 - Jun 12, 2006">
                 <ul>
                     <li>Tech: Subsonic was completely rewritten to use the Spring MVC framework.</li>

@@ -1,8 +1,14 @@
+==========================================================
+            SUBSONIC TRANSCODING PACK
+==========================================================
 
-This is a collection of free codecs
+This is a collection of free audio codecs for Windows.
+To be installed in c:\subsonic\transcode
 
+See http://subsonic.sourceforge.net/transcode for details.
 
-=========================================
+Sindre Mehus, Aug 03 2006
+==========================================================
 
 oggdec
 Ogg Vorbis decoder

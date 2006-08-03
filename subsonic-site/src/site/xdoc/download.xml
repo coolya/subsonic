@@ -36,7 +36,8 @@
 
                     <li>Install Java from <a href="http://www.java.com/">http://www.java.com/</a>.</li>
 
-                    <li>Install Tomcat from <a href="http://tomcat.apache.org/">http://tomcat.apache.org/</a>.</li>
+                    <li>Install Tomcat from <a href="http://tomcat.apache.org/">http://tomcat.apache.org/</a>. Note that version 5.5 or
+                        later is required.</li>
 
                     <li>Copy the file <em>subsonic.war</em> to <em>&lt;TOMCAT_HOME&gt;/webapps</em>.</li>
 

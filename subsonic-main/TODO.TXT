@@ -1,29 +1,13 @@
 
-OK - WMA9, Quality-based VBR Q75, Atlantic
-OK - OGG, Quality-based VBR Q3, Is It Any Wonder
-OK - MPEG-4, Quality-based VBR Normal, Nothing In My Way
-OK - MPC radio, Leaving So Soon
-OK - FLAC Lossless, A Bad Dream
-OK - Monkey Lossless (ape), Hamburg Song
-OK - Frog Lossless, Put It Behind You
-
 PRIORITIZED FOR VERSION 2.8
 ===========================
-Put transcoders in separate maven project.
-Update to oggenc2 and faad2
-Complete transcoding pack.
 Scroller color in Sandstorm.
-Write transcoding pack README.TXT.
 Test WAP select player on cell phone.
 Update Norwegian translation.
 
 DOC
-Mention SSL support in feature list.
 Make transcoding web page.
-Make it clearer that Tomcat 5.5 or later is required.
-Write about logo on web pages.
 Tomcat user must have write access (see forum)
-
 
 COMPLETED IN VERSION 2.8
 ========================
@@ -185,6 +169,7 @@ HDTV-mode.
 Vis "lignende" album.
 Add "Play" authorization.
 Add performance monitoring.
+User-Specific Ratings and Comments (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=86)
 
 HOW TO RELEASE
 -------------
@@ -209,3 +194,12 @@ Støtte alle kanaler på dagenstv.com.
 Støtte sommertid.
 Enklere konfigurasjon av hvilke kanaler som skal tas med.
 Endre navn til xmltv_no eller noe.
+
+OK - WMA9, Quality-based VBR Q75, Atlantic
+OK - OGG, Quality-based VBR Q3, Is It Any Wonder
+OK - MPEG-4, Quality-based VBR Normal, Nothing In My Way
+OK - MPC radio, Leaving So Soon
+OK - FLAC Lossless, A Bad Dream
+OK - Monkey Lossless (ape), Hamburg Song
+OK - Frog Lossless, Put It Behind You
+
