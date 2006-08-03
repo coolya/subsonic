@@ -157,7 +157,7 @@
                             <td ${class} style="padding-left:0.25em"/>
 
                             <c:if test="${model.visibility.trackNumberVisible}">
-                                <td ${class} style="padding-right:1.25em;text-align:right">
+                                <td ${class} style="padding-right:0.5em;text-align:right">
                                     <span class="detail">${child.metaData.trackNumber}</span>
                                 </td>
                             </c:if>

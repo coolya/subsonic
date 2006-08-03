@@ -1,10 +1,3 @@
-oggdec
-Windows: version 1.9.2,  http://www.rarewares.org/ogg.html
-Linux: Normally included in OS.
-
-oggenc2
-Windows: version 2.83 using libVorbis v1.1.2, http://www.rarewares.org/ogg.html
-Linux: Normally included in OS.
 
 OK - WMA9, Quality-based VBR Q75, Atlantic
 OK - OGG, Quality-based VBR Q3, Is It Any Wonder
@@ -16,40 +9,26 @@ OK - Frog Lossless, Put It Behind You
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
+Put transcoders in separate maven project.
+Update to oggenc2 and faad2
+Complete transcoding pack.
 Scroller color in Sandstorm.
-Sort by track number.
-Less white-space after track number.
-MusicFile cache.
-Performance test of reading MPEGHeader.
-Upgrade Spring.
-Why is Player.id a String, not an Integer?
 Write transcoding pack README.TXT.
-Make transcoding web page.
-Add transcoder for cell phone etc.  aacPlus.
-Mention SSL support in feature list.
-Upload broken in IE.
-Upload popup?
-Seeking.
-Display running time, as well as elapsed time for current song.
-Playback buttons.  Stop, play, pause, resume, next, previous.
-Transparent favicon.
-Write about logo on web pages.
-Ugly checkbox border in IE (and FF?)
-Create "Electron Blue" theme (http://www.msn.com/)
-Use cookie.setPath()?
-      cookie.setPath(request.getContextPath());
 Test WAP select player on cell phone.
-Make it clearer that Tomcat 5.5 or later is required.
-Tomcat user must have write access (see forum)
-Transcoding plugin framework. (Check out Jinzora transcoding pack.)
-Use AJAX to change random albums on home page, one at a time.
-Implement pure AJAX version of playlist.jsp.
-Get updated Macedonian resource bundle.
-Check Javascript error on IE.
 Update Norwegian translation.
+
+DOC
+Mention SSL support in feature list.
+Make transcoding web page.
+Make it clearer that Tomcat 5.5 or later is required.
+Write about logo on web pages.
+Tomcat user must have write access (see forum)
+
 
 COMPLETED IN VERSION 2.8
 ========================
+Transcoding plugin framework. (Check out Jinzora transcoding pack.)
+Transparent favicon.
 Listen for new beta releases.  Make notification configurable.
 Add transcode directory to path (in case of libraries)?
 Mouseover hover effect for truncated text.
@@ -89,6 +68,24 @@ Simplify <ref bean="musicFileService"/>
 
 BACKLOG
 ==========
+Sort by track number.
+MusicFile cache.
+Upgrade Spring.
+Why is Player.id a String, not an Integer?
+Upload broken in IE.
+Upload popup?
+Add transcoder for cell phone etc.  aacPlus.
+Seeking.
+Display running time, as well as elapsed time for current song.
+Playback buttons.  Stop, play, pause, resume, next, previous.
+Ugly checkbox border in IE (and FF?)
+Create "Electron Blue" theme (http://www.msn.com/)
+Use cookie.setPath()?
+      cookie.setPath(request.getContextPath());
+Use AJAX to change random albums on home page, one at a time.
+Implement pure AJAX version of playlist.jsp.
+Get updated Macedonian resource bundle.
+Check Javascript error on IE.
 Photo support?
 Sandstone theme: http://www.jinzora.org/images/screens/themes/sandstone-full.gif
 Make logo in svg.
@@ -204,21 +201,6 @@ mvn site:deploy
 svn copy https://svn.sourceforge.net/svnroot/subsonic/trunk https://svn.sourceforge.net/svnroot/subsonic/tags/release-2.7.beta1 -m "Tagging 2.7.beta1."
 Register at freshmeat.
 Update version number in pom.xml etc.
-
-
-TRANSCODING CONFIG
-------------------
-Name       Convert from  Convert to  Step 1        Step 2
-wma -> mp3  wma           mp3         wmadec -w     lame -Q - -
-ogg -> mp3  ogg           mp3         oggdec
-
-
-Player config:
-Enabled Transcoder
-  x     wma->mp3
-
-o All transcoders *must* be installed in SUBSONIC_HOME/transcoders/
-o Use Commons IO.
 
 XMLTV
 =====
