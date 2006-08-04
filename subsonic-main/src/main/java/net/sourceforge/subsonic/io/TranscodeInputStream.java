@@ -18,6 +18,7 @@ public class TranscodeInputStream extends InputStream {
 
     private InputStream processInputStream;
     private OutputStream processOutputStream;
+    private Process process;
 
     /**
      * Creates a transcoded input stream by executing the given command. If <code>in</code> is not null,
@@ -34,7 +35,7 @@ public class TranscodeInputStream extends InputStream {
         }
         LOG.debug("Starting transcoder: " + buf);
 
-        Process process = Runtime.getRuntime().exec(command);
+        process = Runtime.getRuntime().exec(command);
         processOutputStream = process.getOutputStream();
         processInputStream = process.getInputStream();
 
@@ -86,5 +87,11 @@ public class TranscodeInputStream extends InputStream {
     public void close() throws IOException {
         IOUtils.closeQuietly(processInputStream);
         IOUtils.closeQuietly(processOutputStream);
+
+        if (process != null) {
+            process.destroy();
+        }
+
+
     }
 }

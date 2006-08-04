@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<document>
+    <properties>
+        <title>Transcoding</title>
+        <author email="sindre_mehus@users.sourceforge.net">Sindre Mehus</author>
+    </properties>
+
+
+    <body>
+
+        <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            _uacct = 'UA-110410-1';
+            urchinTracker();
+        </script>
+
+        <section name="Transcoding">
+            <p>
+                Transcoding is the process of converting from one media format to another. Subsonic's transcoding engine allows for
+                streaming of media that would normally not be streamable, for instance lossless formats. The transcoding is
+                performed on-the-fly and doesn't require any disk usage.
+            </p>
+            <p>
+                The actual transcoding is done by third-party command line programs which must be installed in c:\subsonic\transcode
+                (on Windows), /var/subsonic/transcode (other operating systems), or in a directory present in the PATH environment
+                variable.
+            </p>
+            <p>
+                Up to three transcoders can be chained together. For instance, to convert FLAC to MP3 you would typically use a FLAC
+                decoder which converts to WAV, and chain in with a WAV to MP3 encoder.
+            </p>
+            <subsection name="Transcoding pack for Windows">
+                <p>
+                    A transcoding pack for Windows with a selection of codecs can be <a href="transcode_windows.zip"><b>downloaded here</b></a>.
+                    It supports the following media types:
+                    <ul>
+                        <li>MP3</li>
+                        <li>Ogg Vorbis</li>
+                        <li>FLAC (Free Lossless Audio Codec)</li>
+                        <li>AAC/MP4</li>
+                        <li>WMA</li>
+                        <li>WAV</li>
+                        <li>APE (Monkey's Audio)</li>
+                        <li>MPC (Musepack)</li>
+                        <li>OptimFROG Lossless and DualStream</li>
+                    </ul>
+                </p>
+            </subsection>
+
+            <subsection name="Adding new transcoders">
+                <p>
+                    You can add your own custom transcoder given that it fulfills the following requirements:
+                    <ul>
+                        <li>It must have a command line interface.</li>
+                        <li>It must be able to send output to stdout.</li>
+                        <li>If used in transcoding step 2 or 3, it must be able to read input from stdin.</li>
+                    </ul>
+                    Note that in step 1 you must use "%s" to refer to the original file.
+                </p>
+
+            </subsection>
+
+            <subsection name="Example configuration">
+                <table>
+                    <tr><th>Name</th><th>Convert from</th><th>Convert to</th><th>Step 1</th><th>Step 2</th></tr>
+                    <tr><td>wav &gt; mp3 </td><td>wav </td><td>mp3</td><td>lame -S %s -</td><td/></tr>
+                    <tr><td>ogg &gt; mp3 </td><td>ogg </td><td>mp3</td><td>oggdec %s -o</td><td>lame - -</td></tr>
+                    <tr><td>wma &gt; mp3 </td><td>wma </td><td>mp3</td><td>wmadec %s</td><td>lame -x - -</td></tr>
+                    <tr><td>flac &gt; mp3</td><td>flac</td><td>mp3</td><td>flac -c -s -d %s</td><td>lame - -</td></tr>
+                    <tr><td>ape &gt; mp3 </td><td>ape </td><td>mp3</td><td>mac %s - -d</td><td>lame - -</td></tr>
+                    <tr><td>m4a &gt; mp3 </td><td>m4a </td><td>mp3</td><td>faad -w %s</td><td>lame -x - -</td></tr>
+                    <tr><td>mpc &gt; mp3 </td><td>mpc </td><td>mp3</td><td>mppdec --wav --silent %s -</td><td>lame - -</td></tr>
+                    <tr><td>ofr &gt; mp3 </td><td>ofr </td><td>mp3</td><td>ofr --decode --silent %s --output -</td><td>lame - -</td></tr>
+                </table>
+            </subsection>
+        </section>
+    </body>
+</document>
+

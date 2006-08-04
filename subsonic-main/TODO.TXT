@@ -5,9 +5,10 @@ Scroller color in Sandstorm.
 Test WAP select player on cell phone.
 Update Norwegian translation.
 
+
 DOC
-Make transcoding web page.
 Tomcat user must have write access (see forum)
+New screenshots
 
 COMPLETED IN VERSION 2.8
 ========================

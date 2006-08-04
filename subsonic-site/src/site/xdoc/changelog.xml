@@ -16,11 +16,11 @@
 
         <section name="Change Log">
 
-            <subsection name="Subsonic 2.8 - Aug 13, 2006">
+            <subsection name="Subsonic 2.8.beta1 - Aug 13, 2006">
                 <ul>
                     <li>New: Transcoding plugin framework.</li>
                     <li>New: VBR (variable bitrate) detection and resampling.</li>
-                    <li>New: Added form-based login.</li>
+                    <li>New: Added form-based login with remember-me.</li>
                     <li>New: Added logout option.</li>
                     <li>New: Support per-user language and theme.</li>
                     <li>New: Show track number, genre, format, duration and file size.</li>
@@ -38,7 +38,7 @@
                     <li>Tech: Springified DAO's and data source.</li>
                 </ul>
             </subsection>
-            
+
             <subsection name="Subsonic 2.7 - Jun 12, 2006">
                 <ul>
                     <li>Tech: Subsonic was completely rewritten to use the Spring MVC framework.</li>

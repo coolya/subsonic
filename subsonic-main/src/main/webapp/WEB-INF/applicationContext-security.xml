@@ -63,12 +63,6 @@
                 <property name="forceHttps" value="false"/>
             </bean>
         </property>
-        <!--TODO-->
-        <!--<property name="accessDeniedHandler">-->
-            <!--<bean class="org.acegisecurity.ui.AccessDeniedHandlerImpl">-->
-                <!--<property name="errorPage" value="/accessDenied.jsp"/>-->
-            <!--</bean>-->
-        <!--</property>-->
     </bean>
 
     <bean id="basicExceptionTranslationFilter" class="org.acegisecurity.ui.ExceptionTranslationFilter">
@@ -147,19 +141,6 @@
 
     <bean id="daoAuthenticationProvider" class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
         <property name="userDetailsService" ref="securityService"/>
-        <!--TODO-->
-        <!--<property name="userCache">-->
-            <!--<bean class="org.acegisecurity.providers.dao.cache.EhCacheBasedUserCache">-->
-                <!--<property name="cache">-->
-                    <!--<bean class="org.springframework.cache.ehcache.EhCacheFactoryBean">-->
-                        <!--<property name="cacheManager">-->
-                            <!--<bean class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"/>-->
-                        <!--</property>-->
-                        <!--<property name="cacheName" value="userCache"/>-->
-                    <!--</bean>-->
-                <!--</property>-->
-            <!--</bean>-->
-        <!--</property>-->
     </bean>
 
     <!-- Authorization of AJAX services. -->
@@ -187,9 +168,5 @@
             <idref local="ajaxServiceInterceptor"/>
         </property>
     </bean>
-
-    <!--TODO-->
-    <!-- This bean is optional; it isn't used by any other bean as it only listens and logs -->
-    <!--<bean id="loggerListener" class="org.acegisecurity.event.authentication.LoggerListener"/>-->
 
 </beans>

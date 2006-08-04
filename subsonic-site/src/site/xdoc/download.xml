@@ -17,8 +17,12 @@
 
         <section name="Download">
             <p>
-                <a href="download_redirect.html"><b>Download Subsonic 2.7 now!</b></a>
-                <a href="changelog.html">What's new?</a>
+                Download latest stable release: <a href="download_redirect.html"><b>Subsonic 2.7</b></a>
+                <a href="changelog.html">(What's new?)</a>
+            </p>
+            <p>
+                Download latest beta release: <a href="download_beta_redirect.html"><b>Subsonic 2.8.beta1</b></a>
+                <a href="changelog.html">(What's new?)</a>
             </p>
 
             <p>

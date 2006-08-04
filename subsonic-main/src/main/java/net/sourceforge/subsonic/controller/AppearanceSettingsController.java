@@ -83,7 +83,6 @@ public class AppearanceSettingsController extends SimpleFormController {
         settings.setBetaVersionNotificationEnabled(command.isBetaVersionNotificationEnabled());
         settingsService.updateUserSettings(settings);
 
-        // TODO.
         command.setReloadNeeded(true);
     }
 
