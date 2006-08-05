@@ -28,19 +28,19 @@
                 <fmt:message key="wap.playlist.noplayer"/>
             </c:when>
                 <c:otherwise>
-                <b><a href="index.view">[<fmt:message key="common.home"/>]</a></b><br/>
-                <b><a href="loadPlaylist.view">[<fmt:message key="wap.playlist.load"/>]</a></b><br/>
+                <b><a href="<c:url value="/wap/index.view"/>">[<fmt:message key="common.home"/>]</a></b><br/>
+                <b><a href="<c:url value="/wap/loadPlaylist.view"/>">[<fmt:message key="wap.playlist.load"/>]</a></b><br/>
                 <c:set var="playlist" value="${model.players[0].playlist}"/>
 
                 <c:if test="${not empty playlist.files}">
-                <b><a href="playlist.view?clear">[<fmt:message key="wap.playlist.clear"/>]</a></b><br/>
+                <b><a href="<c:url value="/wap/playlist.view?clear"/>">[<fmt:message key="wap.playlist.clear"/>]</a></b><br/>
         </small></p>
         <p><small>
 
             <c:forEach items="${playlist.files}" var="file" varStatus="loopStatus">
                 <c:set var="isCurrent" value="${(file eq playlist.currentFile) and (loopStatus.count - 1 eq playlist.index)}"/>
                 ${isCurrent ? "<b>" : ""}
-                <a href="playlist.view?skip=${loopStatus.count - 1}">${fn:escapeXml(file.title)}</a>
+                <a href="<c:url value="/wap/playlist.view?skip=${loopStatus.count - 1}"/>">${fn:escapeXml(file.title)}</a>
                 ${isCurrent ? "</b>" : ""}
                 <br/>
             </c:forEach>

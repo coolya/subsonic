@@ -4,7 +4,6 @@ PRIORITIZED FOR VERSION 2.8
 Scroller color in Sandstorm.
 Test WAP select player on cell phone.
 Update Norwegian translation.
-Download cutoff, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=89
 
 DOC
 Tomcat user must have write access (see forum)

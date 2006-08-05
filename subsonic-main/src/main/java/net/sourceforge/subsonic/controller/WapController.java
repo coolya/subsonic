@@ -144,7 +144,7 @@ public class WapController extends MultiActionController {
     }
 
     public ModelAndView settings(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String playerId = (String) request.getSession().getAttribute("id");
+        String playerId = (String) request.getSession().getAttribute("playerId");
 
         Player[] allPlayers = playerService.getAllPlayers();
         User user = securityService.getCurrentUser(request);
@@ -164,7 +164,7 @@ public class WapController extends MultiActionController {
     }
 
     public ModelAndView selectPlayer(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.getSession().setAttribute("player", request.getParameter("player"));
+        request.getSession().setAttribute("playerId", request.getParameter("playerId"));
         return settings(request, response);
     }
 

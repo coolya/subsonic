@@ -16,7 +16,7 @@
 
                 <c:otherwise>
                     <c:forEach items="${model.hits}" var="hit">
-                        <sub:url var="url" value="browse.view">
+                        <sub:url var="url" value="/wap/browse.view">
                             <sub:param name="path" value="${hit.path}"/>
                         </sub:url>
                         <a href="${url}">${fn:escapeXml(hit.title)}</a><br/>

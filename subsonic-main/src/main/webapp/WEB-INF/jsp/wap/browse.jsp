@@ -11,10 +11,10 @@
 
         <p><small><b>
 
-            <sub:url value="playlist.view" var="playUrl">
+            <sub:url value="/wap/playlist.view" var="playUrl">
                 <sub:param name="play" value="${model.parent.path}"/>
             </sub:url>
-            <sub:url value="playlist.view" var="addUrl">
+            <sub:url value="/wap/playlist.view" var="addUrl">
                 <sub:param name="add" value="${model.parent.path}"/>
             </sub:url>
 
@@ -29,13 +29,13 @@
                 </c:otherwise>
             </c:choose>
 
-            <a href="index.view">[<fmt:message key="common.home"/>]</a><br/>
+            <a href="<c:url value="/wap/index.view"/>">[<fmt:message key="common.home"/>]</a><br/>
         </b></small></p>
 
         <p><small>
 
             <c:forEach items="${model.children}" var="child">
-                <sub:url value="browse.view" var="browseUrl">
+                <sub:url value="/wap/browse.view" var="browseUrl">
                     <sub:param name="path" value="${child.path}"/>
                 </sub:url>
                 <a href="${browseUrl}">${fn:escapeXml(child.title)}</a><br/>

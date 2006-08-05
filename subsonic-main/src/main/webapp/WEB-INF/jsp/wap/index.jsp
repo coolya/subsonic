@@ -13,13 +13,13 @@
             <c:choose>
             <c:when test="${empty model.artists}">
 
-                <b><a href="playlist.view">[<fmt:message key="wap.index.playlist"/>]</a></b><br/>
-                <b><a href="search.view">[<fmt:message key="wap.index.search"/>]</a></b><br/>
-                <b><a href="settings.view">[<fmt:message key="wap.index.settings"/>]</a></b><br/>
+                <b><a href="<c:url value="/wap/playlist.view"/>">[<fmt:message key="wap.index.playlist"/>]</a></b><br/>
+                <b><a href="<c:url value="/wap/search.view"/>">[<fmt:message key="wap.index.search"/>]</a></b><br/>
+                <b><a href="<c:url value="/wap/settings.view"/>">[<fmt:message key="wap.index.settings"/>]</a></b><br/>
         </small></p>
         <p><small>
             <c:forEach items="${model.indexes}" var="index">
-                <sub:url var="url" value="index.view">
+                <sub:url var="url" value="/wap/index.view">
                     <sub:param name="index" value="${index.index}"/>
                 </sub:url>
                 <a href="${url}">${index.index}</a>
@@ -28,10 +28,10 @@
 
             <c:otherwise>
                 <c:forEach items="${model.artists}" var="artist">
-                    <sub:url var="url" value="browse.view">
+                    <sub:url var="url" value="/wap/browse.view">
                         <sub:param name="path" value="${artist.path}"/>
                     </sub:url>
-                    <a href="${url}">${artist.title}</a>
+                    <a href="${url}">${artist.title}</a><br/>
                 </c:forEach>
             </c:otherwise>
             </c:choose>

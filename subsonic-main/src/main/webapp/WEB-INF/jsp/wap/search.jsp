@@ -9,7 +9,7 @@
         <p>
             <input name="query" value="" size="10"/>
             <anchor><fmt:message key="wap.search.title"/>
-                <go href="searchResult.view" method="get">
+                <go href="<c:url value="/wap/searchResult.view"/>" method="get">
                     <postfield name="query" value="$query"/>
                 </go>
             </anchor>
