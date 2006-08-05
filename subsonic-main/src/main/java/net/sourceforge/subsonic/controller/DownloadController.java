@@ -93,7 +93,7 @@ public class DownloadController implements Controller {
         status.setFile(file);
 
         response.setContentType("application/x-download");
-        response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + '\"');
         response.setContentLength((int) file.length());
 
         copyFileToStream(file, response.getOutputStream(), status);
@@ -112,7 +112,7 @@ public class DownloadController implements Controller {
         String zipFileName = file.getName() + ".zip";
         DownloadController.LOG.info("Starting to download '" + zipFileName + "' to " + status.getPlayer());
         response.setContentType("application/x-download");
-        response.setHeader("Content-Disposition", "attachment; filename=" + zipFileName);
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + zipFileName + '"');
 
         ZipOutputStream out = new ZipOutputStream(response.getOutputStream());
         out.setMethod(ZipOutputStream.STORED);  // No compression.
@@ -134,7 +134,7 @@ public class DownloadController implements Controller {
         String zipFileName = playlist.getName().replaceAll("(\\.m3u)|(\\.pls)", "") + ".zip";
         DownloadController.LOG.info("Starting to download '" + zipFileName + "' to " + status.getPlayer());
         response.setContentType("application/x-download");
-        response.setHeader("Content-Disposition", "attachment; filename=" + zipFileName);
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + zipFileName + '"');
 
         ZipOutputStream out = new ZipOutputStream(response.getOutputStream());
         out.setMethod(ZipOutputStream.STORED);  // No compression.
