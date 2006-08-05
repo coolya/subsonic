@@ -75,7 +75,7 @@ public class MainController extends ParameterizableViewController {
         for (MusicFile child : children) {
             MusicFile.MetaData metaData = child.getMetaData();
             if (metaData != null && metaData.getArtist() != null) {
-                artists.add(metaData.getArtist());
+                artists.add(metaData.getArtist().toLowerCase());
             }
         }
 
