@@ -246,18 +246,22 @@ public class MusicFile {
             listMusicRecursively(result, includeDirectories);
         } else {
             File[] files = file.listFiles();
-            for (File file : files) {
-                if (acceptMusic(file) && (file.isFile() || includeDirectories)) {
+            MusicFile[] musicFiles = new MusicFile[files.length];
+            for (int i = 0; i < files.length; i++) {
+                musicFiles[i] = new MusicFile(files[i]);
+            }
+            Arrays.sort(musicFiles, new MusicFileSorter());
+
+            for (MusicFile musicFile : musicFiles) {
+                if (acceptMusic(musicFile.getFile()) && (musicFile.isFile() || includeDirectories)) {
                     try {
-                        result.add(new MusicFile(file));
+                        result.add(musicFile);
                     } catch (SecurityException x) {
-                        LOG.warn("Failed to create MusicFile for " + file, x);
+                        LOG.warn("Failed to create MusicFile for " + musicFile, x);
                     }
                 }
             }
         }
-
-        Collections.sort(result, new FileSorter());
 
         return result.toArray(new MusicFile[0]);
     }
@@ -527,7 +531,7 @@ public class MusicFile {
     /**
      * Comparator for sorting music files.
      */
-    private static class FileSorter implements Comparator<MusicFile> {
+    private static class MusicFileSorter implements Comparator<MusicFile> {
 
         public int compare(MusicFile a, MusicFile b) {
             if (a.isFile() && b.isDirectory()) {
@@ -538,7 +542,26 @@ public class MusicFile {
                 return -1;
             }
 
-            return a.getPath().compareToIgnoreCase(b.getPath());
+            if (a.isDirectory() && b.isDirectory()) {
+                return a.getName().compareToIgnoreCase(b.getName());
+            }
+
+            Integer trackA = a.getMetaData().getTrackNumber();
+            Integer trackB = b.getMetaData().getTrackNumber();
+
+            if (trackA == null && trackB != null) {
+                return 1;
+            }
+
+            if (trackA != null && trackB == null) {
+                return -1;
+            }
+
+            if (trackA == null && trackB == null) {
+                return a.getName().compareToIgnoreCase(b.getName());
+            }
+
+            return trackA.compareTo(trackB);
         }
     }
 }

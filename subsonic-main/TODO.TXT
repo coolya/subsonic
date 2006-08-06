@@ -1,6 +1,8 @@
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
+Sort by track number.
+Problem with internet radio.
 Scroller color in Sandstorm.
 Test WAP select player on cell phone.
 Update Norwegian translation.
