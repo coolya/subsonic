@@ -4,6 +4,7 @@
     <title>Subsonic</title>
     <%@ include file="head.jsp" %>
     <link href="<c:url value="/style/shadow.css"/>" rel="stylesheet">
+    <link rel="shortcut icon" href="<c:url value="/icons/favicon.ico"/>"/>
 
 <script type="text/javascript">
     function resize() {

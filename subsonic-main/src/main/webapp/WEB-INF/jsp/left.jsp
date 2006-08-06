@@ -30,9 +30,6 @@
 <c:if test="${not empty model.shortcuts}">
     <h2><fmt:message key="left.shortcut"/></h2>
     <c:forEach items="${model.shortcuts}" var="shortcut">
-        <c:url value="playRadio.view" var="playRadioUrl">
-            <c:param name="id" value="${radio.id}"/>
-        </c:url>
         <p class="dense">
             <c:import url="playAddDownload.jsp">
                 <c:param name="path" value="${shortcut.path}"/>
@@ -49,11 +46,8 @@
 <c:if test="${not empty model.radios}">
     <h2><fmt:message key="left.radio"/></h2>
     <c:forEach items="${model.radios}" var="radio">
-        <c:url value="playRadio.view" var="playRadioUrl">
-            <c:param name="id" value="${radio.id}"/>
-        </c:url>
         <p class="dense">
-            <a target="hidden" href="${playRadioUrl}">
+            <a target="hidden" href="${radio.streamUrl}">
                 <img width="13" height="13" src="<spring:theme code="playImage"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
             <c:choose>
                 <c:when test="${empty radio.homepageUrl}">
