@@ -69,7 +69,10 @@ public class Mp3Parser extends MetaDataParser {
                 metaData.setAlbum(StringUtils.trimToNull(tag2.getAlbum()));
                 metaData.setTitle(StringUtils.trimToNull(tag2.getTitle()));
                 try {
-                    metaData.setTrackNumber(tag2.getTrackNumber());
+                    int track = tag2.getTrackNumber();
+                    if (track > 0) {
+                        metaData.setTrackNumber(track);
+                    }
                 } catch (ID3Exception x) {
                     // Track number is not always present.
                 }
@@ -110,7 +113,7 @@ public class Mp3Parser extends MetaDataParser {
 
                     if (tag1 instanceof ID3V1_1Tag) {
                         int track = ((ID3V1_1Tag) tag1).getAlbumTrack();
-                        if (track != 0) {
+                        if (track > 0) {
                             metaData.setTrackNumber(track);
                         }
                     }

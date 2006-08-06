@@ -79,8 +79,8 @@
             <c:set var="cutoff" value="${model.visibility.captionCutoff}"/>
             <c:forEach items="${model.songs}" var="song" varStatus="loopStatus">
                 <c:set var="i" value="${loopStatus.count - 1}"/>
-                <tr style="margin:0;padding:0;border:0"><a name="${i}"></a>
-                    <td><a href="playlist.view?remove=${i}"><img width="13" height="13" src="<spring:theme code="removeImage"/>"
+                <tr style="margin:0;padding:0;border:0">
+                    <td><a name="${i}" href="playlist.view?remove=${i}"><img width="13" height="13" src="<spring:theme code="removeImage"/>"
                                                                  alt="<fmt:message key="playlist.remove"/>"
                                                                  title="<fmt:message key="playlist.remove"/>"/></a></td>
                     <td><a href="playlist.view?up=${i}"><img width="13" height="13" src="<spring:theme code="upImage"/>"

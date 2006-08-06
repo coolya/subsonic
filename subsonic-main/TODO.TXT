@@ -1,7 +1,12 @@
+CHANGES SINCE 2.8.beta1:
+===========================
+Fixed broken wap interface.
+Fix playlist autoscroll.
+Sort songs by track number.
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
-Sort by track number.
+Add transcoding trouble-shooting to webpage.
 Problem with internet radio.
 Scroller color in Sandstorm.
 Test WAP select player on cell phone.
