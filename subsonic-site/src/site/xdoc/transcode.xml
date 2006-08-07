@@ -27,7 +27,7 @@
             </p>
             <p>
                 Up to three transcoders can be chained together. For instance, to convert FLAC to MP3 you would typically use a FLAC
-                decoder which converts to WAV, and chain in with a WAV to MP3 encoder.
+                decoder which converts to WAV, and chain it with a WAV to MP3 encoder.
             </p>
             <subsection name="Transcoding pack for Windows">
                 <p>
@@ -55,7 +55,6 @@
                         <li>It must be able to send output to stdout.</li>
                         <li>If used in transcoding step 2 or 3, it must be able to read input from stdin.</li>
                     </ul>
-                    Note that in step 1 you must use "%s" to refer to the original file.
                 </p>
 
             </subsection>
@@ -63,15 +62,29 @@
             <subsection name="Example configuration">
                 <table>
                     <tr><th>Name</th><th>Convert from</th><th>Convert to</th><th>Step 1</th><th>Step 2</th></tr>
-                    <tr><td>wav &gt; mp3 </td><td>wav </td><td>mp3</td><td>lame -S %s -</td><td/></tr>
-                    <tr><td>ogg &gt; mp3 </td><td>ogg </td><td>mp3</td><td>oggdec %s -o</td><td>lame - -</td></tr>
-                    <tr><td>wma &gt; mp3 </td><td>wma </td><td>mp3</td><td>wmadec %s</td><td>lame -x - -</td></tr>
-                    <tr><td>flac &gt; mp3</td><td>flac</td><td>mp3</td><td>flac -c -s -d %s</td><td>lame - -</td></tr>
-                    <tr><td>ape &gt; mp3 </td><td>ape </td><td>mp3</td><td>mac %s - -d</td><td>lame - -</td></tr>
-                    <tr><td>m4a &gt; mp3 </td><td>m4a </td><td>mp3</td><td>faad -w %s</td><td>lame -x - -</td></tr>
-                    <tr><td>mpc &gt; mp3 </td><td>mpc </td><td>mp3</td><td>mppdec --wav --silent %s -</td><td>lame - -</td></tr>
-                    <tr><td>ofr &gt; mp3 </td><td>ofr </td><td>mp3</td><td>ofr --decode --silent %s --output -</td><td>lame - -</td></tr>
+                    <tr><td>wav &gt; mp3 </td><td>wav </td><td>mp3</td><td>lame -b %b -S %s -</td><td/></tr>
+                    <tr><td>ogg &gt; mp3 </td><td>ogg </td><td>mp3</td><td>oggdec %s -o</td><td>lame -b %b - -</td></tr>
+                    <tr><td>wma &gt; mp3 </td><td>wma </td><td>mp3</td><td>wmadec %s</td><td>lame -b %b -x - -</td></tr>
+                    <tr><td>flac &gt; mp3</td><td>flac</td><td>mp3</td><td>flac -c -s -d %s</td><td>lame -b %b - -</td></tr>
+                    <tr><td>ape &gt; mp3 </td><td>ape </td><td>mp3</td><td>mac %s - -d</td><td>lame -b %b - -</td></tr>
+                    <tr><td>m4a &gt; mp3 </td><td>m4a </td><td>mp3</td><td>faad -w %s</td><td>lame -b %b -x - -</td></tr>
+                    <tr><td>mpc &gt; mp3 </td><td>mpc </td><td>mp3</td><td>mppdec --wav --silent %s -</td><td>lame -b %b - -</td></tr>
+                    <tr><td>ofr &gt; mp3 </td><td>ofr </td><td>mp3</td><td>ofr --decode --silent %s --output -</td><td>lame -b %b - -</td></tr>
                 </table>
+                <p>
+                    Note that "%s" is substituted with the path of the original file at run-time, and "%b" is substituted with the
+                    max bitrate of the player.
+                </p>
+            </subsection>
+
+            <subsection name="Troubleshooting">
+                <ul>
+                    <li>Is the transcoder installed in c:\subsonic\transcode (or /var/subsonic/transcode)?</li>
+                    <li>Is the transcoder's enabled checkbox turned on (in Settings &gt; Transcoders)?</li>
+                    <li>Is the transcoder activated for your player (in Settings &gt; Players)?</li>
+                    <li>Is the proper file extension added to the music mask (in Settings &gt; General)?</li>
+                    <li>If it still doesn't work, please check the Subsonic log.</li>
+                </ul>
             </subsection>
         </section>
     </body>

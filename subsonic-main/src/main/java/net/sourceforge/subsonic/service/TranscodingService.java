@@ -117,7 +117,7 @@ public class TranscodingService {
         try {
             Transcoding transcoding = getTranscoding(musicFile, player);
             if (transcoding != null) {
-                return getTranscodedInputStream(musicFile, transcoding);
+                return getTranscodedInputStream(musicFile, transcoding, player.getTranscodeScheme());
             }
 
             TranscodeScheme transcodeScheme = player.getTranscodeScheme();
@@ -139,18 +139,20 @@ public class TranscodingService {
      * Returns an input stream by applying the given transcoding to the given music file.
      * @param musicFile The music file.
      * @param transcoding The transcoding to apply.
+     * @param transcodeScheme The transcoding (resampling) scheme. May be <code>null</code>.
      * @return The transcoded input stream.
      * @throws IOException If an I/O error occurs.
      */
-    private InputStream getTranscodedInputStream(MusicFile musicFile, Transcoding transcoding) throws IOException {
-        TranscodeInputStream in = new TranscodeInputStream(createCommand(transcoding.getStep1(), musicFile), null);
+    private InputStream getTranscodedInputStream(MusicFile musicFile, Transcoding transcoding, TranscodeScheme transcodeScheme)
+            throws IOException {
+        TranscodeInputStream in = new TranscodeInputStream(createCommand(transcoding.getStep1(), transcodeScheme, musicFile), null);
 
         if (transcoding.getStep2() != null) {
-            in = new TranscodeInputStream(createCommand(transcoding.getStep2(), null), in);
+            in = new TranscodeInputStream(createCommand(transcoding.getStep2(), transcodeScheme, null), in);
         }
 
         if (transcoding.getStep3() != null) {
-            in = new TranscodeInputStream(createCommand(transcoding.getStep3(), null), in);
+            in = new TranscodeInputStream(createCommand(transcoding.getStep3(), transcodeScheme, null), in);
         }
 
         return in;
@@ -161,16 +163,24 @@ public class TranscodingService {
      * <ul>
      * <li>Splitting the command line string to an array.</li>
      * <li>Replacing occurrences of "%s" with the path of the given music file.</li>
+     * <li>Replacing occurrcences of "%b" with the max bitrate from the transcode scheme.</li>
      * <li>Prepending the path of the transcoder directory if the transcoder is found there.</li>
      * </ul>
      * @param command The command line string.
+     * @param transcodeScheme The transcoding (resampling) scheme. May be <code>null</code>.
      * @param musicFile The music file to use when replacing "%s".  May be <code>null</code>.
      * @return The prepared command array.
      */
-    private String[] createCommand(String command, MusicFile musicFile) {
+    private String[] createCommand(String command, TranscodeScheme transcodeScheme, MusicFile musicFile) {
         if (musicFile != null) {
             command = command.replace("%s", '"' + musicFile.getFile().getAbsolutePath() + '"');
         }
+
+        // If no transcoding scheme is specified, use 128 Kbps.
+        if (transcodeScheme == null || transcodeScheme == TranscodeScheme.OFF) {
+            transcodeScheme = TranscodeScheme.MAX_128;
+        }
+        command = command.replace("%b", String.valueOf(transcodeScheme.getMaxBitRate()));
 
         String[] result = StringUtil.split(command);
 
@@ -202,7 +212,7 @@ public class TranscodingService {
      */
     private InputStream getDownsampledInputStream(MusicFile musicFile, int bitRate) throws IOException {
         String command = "lame -S -h -b " + String.valueOf(bitRate) + " %s -";
-        return new TranscodeInputStream(createCommand(command, musicFile), null);
+        return new TranscodeInputStream(createCommand(command, null, musicFile), null);
     }
 
     /**
@@ -210,7 +220,7 @@ public class TranscodingService {
      * @return Whether downsampling is supported.
      */
     public boolean isDownsamplingSupported() {
-        String[] command = createCommand("lame", null);
+        String[] command = createCommand("lame", null, null);
 
         try {
             Process process = Runtime.getRuntime().exec(command);

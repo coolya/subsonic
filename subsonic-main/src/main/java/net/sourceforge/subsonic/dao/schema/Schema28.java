@@ -63,14 +63,14 @@ public class Schema28 extends Schema {
                              "step2 varchar," +
                              "step3 varchar," +
                              "enabled boolean not null)");
-            template.execute("insert into transcoding values(null,'wav > mp3','wav','mp3','lame -S %s -',null,null,false)");
-            template.execute("insert into transcoding values(null,'ogg > mp3','ogg','mp3','oggdec %s -o','lame - -',null,false)");
-            template.execute("insert into transcoding values(null,'wma > mp3','wma','mp3','wmadec %s','lame -x - -',null,false)");
-            template.execute("insert into transcoding values(null,'flac > mp3','flac','mp3','flac -c -s -d %s','lame - -',null,false)");
-            template.execute("insert into transcoding values(null,'ape > mp3','ape','mp3','mac %s - -d','lame - -',null,false)");
-            template.execute("insert into transcoding values(null,'m4a > mp3','m4a','mp3','faad -w %s','lame -x - -',null,false)");
-            template.execute("insert into transcoding values(null,'mpc > mp3','mpc','mp3','mppdec --wav --silent %s -','lame - -',null,false)");
-            template.execute("insert into transcoding values(null,'ofr > mp3','ofr','mp3','ofr --decode --silent %s --output -','lame - -',null,false)");
+            template.execute("insert into transcoding values(null,'wav > mp3','wav','mp3','lame -b %b -S %s -',null,null,false)");
+            template.execute("insert into transcoding values(null,'ogg > mp3','ogg','mp3','oggdec %s -o','lame -b %b - -',null,false)");
+            template.execute("insert into transcoding values(null,'wma > mp3','wma','mp3','wmadec %s','lame -b %b -x - -',null,false)");
+            template.execute("insert into transcoding values(null,'flac > mp3','flac','mp3','flac -c -s -d %s','lame -b %b - -',null,false)");
+            template.execute("insert into transcoding values(null,'ape > mp3','ape','mp3','mac %s - -d','lame -b %b - -',null,false)");
+            template.execute("insert into transcoding values(null,'m4a > mp3','m4a','mp3','faad -w %s','lame -b %b -x - -',null,false)");
+            template.execute("insert into transcoding values(null,'mpc > mp3','mpc','mp3','mppdec --wav --silent %s -','lame -b %b - -',null,false)");
+            template.execute("insert into transcoding values(null,'ofr > mp3','ofr','mp3','ofr --decode --silent %s --output -','lame -b %b - -',null,false)");
             LOG.info("Database table 'transcoding' was created successfully.");
         }
 
