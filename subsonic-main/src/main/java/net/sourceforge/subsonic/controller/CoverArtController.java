@@ -85,6 +85,20 @@ public class CoverArtController implements Controller {
         return result;
     }
 
+//    private BufferedImage scale(BufferedImage original, int width, int height) {
+//
+//        BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+//
+//        Graphics2D graphics2D = result.createGraphics();
+//        // TODO: Make configurable?
+//        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+//                                    RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+//        graphics2D.drawImage(original, 0, 0, width, height, null);
+//        graphics2D.dispose();
+//
+//        return result;
+//    }
+
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
     }
