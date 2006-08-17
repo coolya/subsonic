@@ -4,11 +4,11 @@ Get the active transcoders to follow the Max Bitrate setting per player.
 Fixed broken wap interface.
 Fix playlist autoscroll.
 Sort songs by track number.
+Added transcoding support for Shorten and WavPack.
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
-Mails from Dave.
-Add support for shorten and wavepack.
+Mails from Dave (IP change problem).
 Change forum email address.
 Get link from https://jaudiotagger.dev.java.net/
 Bug in main.jsp when path contains both files and directories, e.g., Mary J Blige.

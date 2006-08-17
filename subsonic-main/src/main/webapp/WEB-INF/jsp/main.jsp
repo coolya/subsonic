@@ -148,7 +148,7 @@
                             <sub:url value="main.view" var="childUrl">
                                 <sub:param name="path" value="${child.path}"/>
                             </sub:url>
-                            <td style="padding-left:0.25em">
+                            <td style="padding-left:0.25em" colspan="4">
                                 <a href="${childUrl}" title="${child.name}"><str:truncateNicely upper="${cutoff}">${child.name}</str:truncateNicely></a>
                             </td>
                         </c:when>
