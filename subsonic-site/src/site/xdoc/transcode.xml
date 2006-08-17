@@ -42,6 +42,8 @@
                         <li>WAV</li>
                         <li>APE (Monkey's Audio)</li>
                         <li>MPC (Musepack)</li>
+                        <li>WavPack</li>
+                        <li>SHN (Shorten)</li>
                         <li>OptimFROG Lossless and DualStream</li>
                     </ul>
                 </p>
@@ -70,6 +72,8 @@
                     <tr><td>m4a &gt; mp3 </td><td>m4a </td><td>mp3</td><td>faad -w %s</td><td>lame -b %b -x - -</td></tr>
                     <tr><td>mpc &gt; mp3 </td><td>mpc </td><td>mp3</td><td>mppdec --wav --silent %s -</td><td>lame -b %b - -</td></tr>
                     <tr><td>ofr &gt; mp3 </td><td>ofr </td><td>mp3</td><td>ofr --decode --silent %s --output -</td><td>lame -b %b - -</td></tr>
+                    <tr><td>wv &gt; mp3  </td><td>wv  </td><td>mp3</td><td>wvunpack -q %s -</td><td>lame -b %b - -</td></tr>
+                    <tr><td>shn &gt; mp3 </td><td>shn </td><td>mp3</td><td>shorten -x %s -</td><td>lame -b %b - -</td></tr>
                 </table>
                 <p>
                     Note that "%s" is substituted with the path of the original file at run-time, and "%b" is substituted with the

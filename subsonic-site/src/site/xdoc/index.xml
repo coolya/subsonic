@@ -33,8 +33,8 @@
                 Subsonic is designed to handle very large music collections (many thousand albums). It uses a combination
                 of directory structure and tag parsing to organize the music. Although optimized for MP3 streaming, it works for
                 any audio or video format that can stream over HTTP (for instance AAC and OGG). By using transcoder plug-ins, Subsonic
-                supports on-the-fly conversion and streaming of virtually any audio format, including WMA, FLAC, APE, Musepack and
-                OptimFROG.
+                supports on-the-fly conversion and streaming of virtually any audio format, including WMA, FLAC, APE, Musepack, WavPack,
+                Shorten and OptimFROG.
             </p>
 
             <p>

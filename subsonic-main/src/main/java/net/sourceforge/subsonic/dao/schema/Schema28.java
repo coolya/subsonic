@@ -71,6 +71,8 @@ public class Schema28 extends Schema {
             template.execute("insert into transcoding values(null,'m4a > mp3','m4a','mp3','faad -w %s','lame -b %b -x - -',null,false)");
             template.execute("insert into transcoding values(null,'mpc > mp3','mpc','mp3','mppdec --wav --silent %s -','lame -b %b - -',null,false)");
             template.execute("insert into transcoding values(null,'ofr > mp3','ofr','mp3','ofr --decode --silent %s --output -','lame -b %b - -',null,false)");
+            template.execute("insert into transcoding values(null,'wv > mp3','wv','mp3','wvunpack -q %s -','lame -b %b - -',null,false)");
+            template.execute("insert into transcoding values(null,'shn > mp3','shn','mp3','shorten -x %s -','lame -b %b - -',null,false)");
             LOG.info("Database table 'transcoding' was created successfully.");
         }
 

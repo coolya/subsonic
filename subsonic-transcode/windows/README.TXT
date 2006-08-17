@@ -58,3 +58,13 @@ ofs
 OptimFROG DualStream decoder/encoder
 Version 4.509
 http://www.losslessaudio.org/
+
+shorten (incl cygwin1.dll)
+Shorten (shn) decoder
+Version 3.6.0
+http://www.etree.org/shnutils/shorten/
+
+wvunpack
+WavPack decoder
+Version 4.31
+http://www.wavpack.com/downloads.html

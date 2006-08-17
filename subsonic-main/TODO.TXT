@@ -7,14 +7,18 @@ Sort songs by track number.
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
+Mails from Dave.
+Add support for shorten and wavepack.
 Change forum email address.
 Get link from https://jaudiotagger.dev.java.net/
-Bug when both files and directories, e.g., Mary J Blige.
+Bug in main.jsp when path contains both files and directories, e.g., Mary J Blige.
+Transcode downloads.
 http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=94
 Update FAQ (with respect to transcoding).
 Scroller color in Sandstorm.
 Test WAP select player on cell phone.
 Update Norwegian translation.
+Deploy new transcoding pack.  Document how to do it.
 
 DOC
 Tomcat user must have write access (see forum)
@@ -63,7 +67,9 @@ Simplify <ref bean="musicFileService"/>
 
 BACKLOG
 ==========
-Sort by track number.
+Make it possible to remove ratings.
+Cover art resize/resample (bicubic/bilinear)
+Cover art cache.
 MusicFile cache.
 Upgrade Spring.
 Why is Player.id a String, not an Integer?
