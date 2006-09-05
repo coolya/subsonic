@@ -5,15 +5,10 @@ Fixed broken wap interface.
 Fix playlist autoscroll.
 Sort songs by track number.
 Added transcoding support for Shorten and WavPack.
+Bug in main.jsp when path contains both files and directories, e.g., Mary J Blige.
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
-Mails from Dave (IP change problem).
-Change forum email address.
-Get link from https://jaudiotagger.dev.java.net/
-Bug in main.jsp when path contains both files and directories, e.g., Mary J Blige.
-Transcode downloads.
-http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=94
 Update FAQ (with respect to transcoding).
 Scroller color in Sandstorm.
 Test WAP select player on cell phone.
@@ -67,6 +62,13 @@ Simplify <ref bean="musicFileService"/>
 
 BACKLOG
 ==========
+Transcode downloads.
+http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=94
+Mails from Dave (IP change problem).
+Remove "user" column from status.jsp
+Add "Download" option to main.jsp album view.
+Get link from https://jaudiotagger.dev.java.net/
+Wiki-like comments, with links etc. radeox
 Make it possible to remove ratings.
 Cover art resize/resample (bicubic/bilinear)
 Cover art cache.
