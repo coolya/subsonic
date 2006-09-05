@@ -9,3 +9,6 @@ no
 
 # Macedonian
 mk
+
+# Simplified Chinese
+zh_CN

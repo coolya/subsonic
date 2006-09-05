@@ -90,8 +90,8 @@
                         <li>Implements the SHOUTcast protocol. Players which support this (including Winamp, iTunes and XMMS) will display
                             the current artist and song name.</li>
                         <li>Provides links to album reviews and more at Google Music and allmusic.com.</li>
-                        <li>Full internationalization support. Currently available translations: English, Norwegian and Macedonian
-                            (kudos to Stefan Ivanovski).</li>
+                        <li>Full internationalization support. Currently available translations: English, Norwegian, Macedonian
+                            (by Stefan Ivanovski) and Simplified Chinese (by Neil Gao).</li>
                         <li>Theme support. Currently ships with four themes.</li>
                     </ul>
                     <ul>
