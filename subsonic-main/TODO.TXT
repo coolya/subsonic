@@ -9,10 +9,10 @@ Bug in main.jsp when path contains both files and directories, e.g., Mary J Blig
 Scroller color in Sandstorm.
 Added Simplified Chinese translation (incomplete)
 Update Norwegian translation.
+Update FAQ (with respect to transcoding).
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
-Update FAQ (with respect to transcoding).
 Test WAP select player on cell phone.
 Deploy new transcoding pack.  Document how to do it.
 

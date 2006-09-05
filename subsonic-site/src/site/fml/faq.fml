@@ -94,7 +94,9 @@
                   in the player settings.
               </p>
               <p>
-                  <b>NOTE:</b> In Subsonic 2.5 and later, the stream suffix is set automatically in the M3U.
+                  <b>NOTE 1:</b> In Subsonic 2.5 and later, the stream suffix is set automatically in the M3U.<br/>
+                  <b>NOTE 2:</b> In Subsonic 2.8 and later, you can plug in <a href="transcode.html">transcoders</a> to convert files
+                  to streamable formats (such as MP3).
               </p>
           </answer>
       </faq>
