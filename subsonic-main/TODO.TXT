@@ -20,49 +20,10 @@ DOC
 Tomcat user must have write access (see forum)
 New screenshots
 
-COMPLETED IN VERSION 2.8
-========================
-Transcoding plugin framework. (Check out Jinzora transcoding pack.)
-Transparent favicon.
-Listen for new beta releases.  Make notification configurable.
-Add transcode directory to path (in case of libraries)?
-Mouseover hover effect for truncated text.
-Show artist/album as tooltip on cover art images.
-Change MP3Parser implementation.  Include bitrate and song length in MetaData.
-Make it configurable which information to show in playlist. (appearanceSettings)
-Show artist/size/length/year/album etc in main.jsp? (Only show artist/album if multiple). Tabular layout.
-Show genre, duration and track number.
-Configurable cutoff (in format nicely). Show full text as alt?
-Tooltip.
-Detection of various artists is buggy.  Must be a bit fuzzy. (Spacing, spelling etc).
-Don't require that transcoders are installed in SUBSONIC_HOME/transcoding, but add this to PATH.  How about lame?
-Render artist as detail class in main.jsp
-Display album title in cover art image caption.
-Show file size in playlist.
-Show artist name in main.jsp if multiple artists. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=76)
-Use LAME resampling also for VBR.  Only for Xing.
-Remove "Total" from statistics.
-Log current and latest version.
-Ask HP for a free PDA (July 5 2006)
-Ask Palm for a free phone.
-Include options to display bitrate, album, artist, year, genre, format etc in the playlist (and maybe also the main browser window)
-Ugly alignment of images and text in Opera 9.
-Exclude folders, "subsonic_exclude.txt".
-Too much whitespace above error in editTags.jsp
-New security implementation based on Acegi (http://acegisecurity.org/)
-Added form-based login.
-Added logout option.
-Support per-user language and theme.
-Added "Back in black" and "Sandstorm" themes.
-Added option to stream over plain HTTP when using SSL.
-Nicer error page.
-Springified WAP pages and servlets.
-Springify DWR.
-Springify DAO's and data source.
-Simplify <ref bean="musicFileService"/>
-
 BACKLOG
 ==========
+Upgrade Spring.
+Show list of currently active users.
 &ndash; &mdash;
 Cache CSS.
 Transcode downloads.

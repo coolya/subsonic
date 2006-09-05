@@ -17,13 +17,13 @@
 
         <section name="Download">
             <p>
-                Download latest stable release: <a href="download_redirect.html"><b>Subsonic 2.7</b></a>
+                Download latest stable release: <a href="download_redirect.html"><b>Subsonic 2.8</b></a>
                 <a href="changelog.html">(What's new?)</a>
             </p>
-            <p>
-                Download latest beta release: <a href="download_beta_redirect.html"><b>Subsonic 2.8.beta1</b></a>
-                <a href="changelog.html">(What's new?)</a>
-            </p>
+            <!--<p>-->
+                <!--Download latest beta release: <a href="download_beta_redirect.html"><b>Subsonic 2.8.beta1</b></a>-->
+                <!--<a href="changelog.html">(What's new?)</a>-->
+            <!--</p>-->
 
             <p>
                 Older versions, as well as source releases, can be downloaded from <a href="http://sourceforge.net/projects/subsonic/">SourceForge</a>.
@@ -42,6 +42,8 @@
 
                     <li>Install Tomcat from <a href="http://tomcat.apache.org/">http://tomcat.apache.org/</a>. Note that version 5.5 or
                         later is required.</li>
+
+                    <li>Stop Tomcat if it's running.</li>
 
                     <li>Copy the file <em>subsonic.war</em> to <em>&lt;TOMCAT_HOME&gt;/webapps</em>.</li>
 

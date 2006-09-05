@@ -16,6 +16,21 @@
 
         <section name="Change Log">
 
+            <subsection name="Subsonic 2.8 - Sep 06, 2006">
+                <p>(Changes since 2.8.beta1)</p>
+                <ul>
+                    <li>New: Added option for transcoders to obey the player max bitrate setting.</li>
+                    <li>New: Sort songs by track number.</li>
+                    <li>New: Added transcoding support for Shorten and WavPack.</li>
+                    <li>New: Scroller color in Sandstorm theme.</li>
+                    <li>New: Updated Norwegian translation.</li>
+                    <li>New: Added Simplified Chinese translation by Neil Gao (currently incomplete).</li>
+                    <li>Bugfix: Fixed broken wap interface.</li>
+                    <li>Bugfix: Fixed playlist autoscroll.</li>
+                    <li>Bugfix: Proper rendering of directories with both files and sub-directories.</li>
+                </ul>
+            </subsection>
+
             <subsection name="Subsonic 2.8.beta1 - Aug 13, 2006">
                 <ul>
                     <li>New: Transcoding plugin framework.</li>
