@@ -7,13 +7,13 @@ Sort songs by track number.
 Added transcoding support for Shorten and WavPack.
 Bug in main.jsp when path contains both files and directories, e.g., Mary J Blige.
 Scroller color in Sandstorm.
+Added Simplified Chinese translation (incomplete)
+Update Norwegian translation.
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
-Chinese translation
 Update FAQ (with respect to transcoding).
 Test WAP select player on cell phone.
-Update Norwegian translation.
 Deploy new transcoding pack.  Document how to do it.
 
 DOC

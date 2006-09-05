@@ -36,7 +36,8 @@ public class AppearanceSettingsController extends SimpleFormController {
         Locale[] locales = settingsService.getAvailableLocales();
         String[] localeStrings = new String[locales.length];
         for (int i = 0; i < locales.length; i++) {
-            localeStrings[i] = locales[i].getDisplayLanguage(locales[i]);
+            localeStrings[i] = locales[i].getDisplayLanguage(Locale.ENGLISH) +
+                               " (" + locales[i].getDisplayLanguage(locales[i]) + ')';
 
             if (locales[i].equals(currentLocale)) {
                 command.setLocaleIndex(String.valueOf(i));
