@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+    <!-- DAO's -->
+
+    <bean id="playerDao" class="net.sourceforge.subsonic.dao.PlayerDao">
+        <property name="daoHelper" ref="daoHelper"/>
+    </bean>
+
+    <bean id="internetRadioDao" class="net.sourceforge.subsonic.dao.InternetRadioDao">
+        <property name="daoHelper" ref="daoHelper"/>
+    </bean>
+
+    <bean id="musicFileInfoDao" class="net.sourceforge.subsonic.dao.MusicFileInfoDao">
+        <property name="daoHelper" ref="daoHelper"/>
+    </bean>
+
+    <bean id="musicFolderDao" class="net.sourceforge.subsonic.dao.MusicFolderDao">
+        <property name="daoHelper" ref="daoHelper"/>
+    </bean>
+
+    <bean id="userDao" class="net.sourceforge.subsonic.dao.UserDao">
+        <property name="daoHelper" ref="daoHelper"/>
+    </bean>
+
+    <bean id="transcodingDao" class="net.sourceforge.subsonic.dao.TranscodingDao">
+        <property name="daoHelper" ref="daoHelper"/>
+    </bean>
+
+    <bean id="daoHelper" class="net.sourceforge.subsonic.dao.DaoHelper"/>
+
+    
+    <!-- Services -->
+
+    <bean id="securityService" class="net.sourceforge.subsonic.service.SecurityService" init-method="init">
+        <property name="settingsService" ref="settingsService"/>
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+    <bean id="settingsService" class="net.sourceforge.subsonic.service.SettingsService" init-method="init">
+        <property name="internetRadioDao" ref="internetRadioDao"/>
+        <property name="musicFolderDao" ref="musicFolderDao"/>
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+    <bean id="searchService" class="net.sourceforge.subsonic.service.SearchService" init-method="schedule">
+        <property name="settingsService" ref="settingsService"/>
+        <property name="securityService" ref="securityService"/>
+    </bean>
+
+    <bean id="playerService" class="net.sourceforge.subsonic.service.PlayerService">
+        <property name="playerDao" ref="playerDao"/>
+        <property name="statusService" ref="statusService"/>
+        <property name="securityService" ref="securityService"/>
+    </bean>
+
+    <bean id="playlistService" class="net.sourceforge.subsonic.service.PlaylistService">
+        <property name="settingsService" ref="settingsService"/>
+        <property name="securityService" ref="securityService"/>
+    </bean>
+
+    <bean id="versionService" class="net.sourceforge.subsonic.service.VersionService"/>
+
+    <bean id="statusService" class="net.sourceforge.subsonic.service.StatusService"/>
+
+    <bean id="musicInfoService" class="net.sourceforge.subsonic.service.MusicInfoService">
+        <property name="musicFileInfoDao" ref="musicFileInfoDao"/>
+    </bean>
+
+    <bean id="amazonSearchService" class="net.sourceforge.subsonic.service.AmazonSearchService"/>
+
+    <bean id="transcodingService" class="net.sourceforge.subsonic.service.TranscodingService">
+        <property name="transcodingDao" ref="transcodingDao"/>
+    </bean>
+
+
+    <!-- AJAX services -->
+
+    <bean id="ajaxNowPlayingService" class="net.sourceforge.subsonic.ajax.NowPlayingService">
+        <property name="playerService" ref="playerService"/>
+    </bean>
+
+    <bean id="ajaxTagService" class="net.sourceforge.subsonic.ajax.TagService"/>
+
+    <bean id="ajaxTransferService" class="net.sourceforge.subsonic.ajax.TransferService"/>
+
+</beans>
