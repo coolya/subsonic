@@ -1,18 +1,17 @@
 
-PRIORITIZED FOR VERSION 2.8
-===========================
-Test WAP select player on cell phone.
-Deploy new transcoding pack.  Document how to do it.
+CHANGED IN 2.9.beta1
+====================
+Home page (random, new etc) is now much faster (10 times)
 
-DOC
-Tomcat user must have write access (see forum)
-New screenshots
+
+PRIORITIZED FOR VERSION 2.9
+===========================
+Wiki-like comments, with links etc. radeox
+Upgrade Spring.
 
 BACKLOG
 ==========
 Invalidate browser cache when changing cover art image.
-Implement LastModified in CoverArtController.
-Upgrade Spring.
 Show list of currently active users.
 &ndash; &mdash;
 Cache CSS.
@@ -22,7 +21,6 @@ Mails from Dave (IP change problem).
 Remove "user" column from status.jsp
 Add "Download" option to main.jsp album view.
 Get link from https://jaudiotagger.dev.java.net/
-Wiki-like comments, with links etc. radeox
 Make it possible to remove ratings.
 Cover art resize/resample (bicubic/bilinear)
 Cover art cache.
@@ -152,12 +150,19 @@ Deploy
 Check that correct local version is displayed.
 Commit
 Create file release at SourceForge.
+cd subsonic-site
 mvn site:site
 mvn site:deploy
 svn copy https://svn.sourceforge.net/svnroot/subsonic/trunk https://svn.sourceforge.net/svnroot/subsonic/tags/release-2.7.beta1 -m "Tagging 2.7.beta1."
 Register at freshmeat.
 Post message on forum.
 Update version number in pom.xml etc.
+
+HOW TO RELEASE TRANSCODING PACK
+===============================
+Create transcode_windows.zip
+scp transcode_windows.zip sindre_mehus@shell.sourceforge.net:/home/groups/s/su/subsonic/htdocs
+(doesn't work inside XEmacs)
 
 XMLTV
 =====

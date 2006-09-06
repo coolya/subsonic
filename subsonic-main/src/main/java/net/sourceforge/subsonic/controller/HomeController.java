@@ -161,13 +161,12 @@ public class HomeController extends ParameterizableViewController {
 
         // If directory, find  title and artist from metadata in child.
         if (file.isDirectory()) {
-            MusicFile[] children = file.getChildren(false);
-            if (children.length == 0) {
+            file = file.getFirstChild();
+            if (file == null) {
                 return;
             }
-            file = children[0];
         }
-
+        
         album.setArtist(file.getMetaData().getArtist());
         album.setAlbumTitle(file.getMetaData().getAlbum());
     }

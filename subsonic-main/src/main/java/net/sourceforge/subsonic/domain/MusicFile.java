@@ -84,8 +84,7 @@ public class MusicFile {
             return false;
         }
 
-        MusicFile[] children = getChildren(false);
-        return children.length > 0;
+        return getFirstChild() != null;
     }
 
     /**
@@ -264,6 +263,26 @@ public class MusicFile {
         }
 
         return result.toArray(new MusicFile[0]);
+    }
+
+    /**
+     * Returns the first direct child (excluding directories).
+     * This method is an optimization.
+     * @return The first child, or <code>null</code> if not found.
+     * @throws IOException If an I/O error occurs.
+     */
+    public MusicFile getFirstChild() throws IOException {
+        File[] files = file.listFiles();
+        for (File f : files) {
+            if (f.isFile() && acceptMusic(f)) {
+                try {
+                    return new MusicFile(f);
+                } catch (SecurityException x) {
+                    LOG.warn("Failed to create MusicFile for " + f, x);
+                }
+            }
+        }
+        return null;
     }
 
     private void listMusicRecursively(List<MusicFile> musicFiles, boolean includeDirectories) throws IOException {
