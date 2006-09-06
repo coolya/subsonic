@@ -2,17 +2,13 @@ package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
+import org.apache.commons.lang.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
-import org.apache.commons.lang.*;
-import org.radeox.api.engine.context.*;
-import org.radeox.api.engine.*;
-import org.radeox.engine.context.*;
-import org.radeox.engine.*;
 
 import javax.servlet.http.*;
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 /**
  * Controller for the main page.
@@ -45,13 +41,11 @@ public class MainController extends ParameterizableViewController {
         MusicFileInfo musicInfo = musicInfoService.getMusicFileInfoForPath(path);
         int rating = musicInfo == null ? 0 : musicInfo.getRating();
         int playCount = musicInfo == null ? 0 : musicInfo.getPlayCount();
-        String wikiComment = musicInfo == null ? null : musicInfo.getComment();
-        String htmlComment = wikiComment == null ? null : convertWiki(wikiComment);
+        String comment = musicInfo == null ? null : musicInfo.getComment();
         Date lastPlayed = musicInfo == null  ? null : musicInfo.getLastPlayed();
         map.put("rating", rating);
         map.put("playCount", playCount);
-        map.put("wikiComment", wikiComment);
-        map.put("htmlComment", htmlComment);
+        map.put("comment", comment);
         map.put("lastPlayed", lastPlayed);
 
         CoverArtScheme scheme = player.getCoverArtScheme();
@@ -73,13 +67,6 @@ public class MainController extends ParameterizableViewController {
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
-    }
-
-    private String convertWiki(String s) {
-        // TODO: Optimize
-        RenderContext context = new BaseRenderContext();
-        RenderEngine engine = new BaseRenderEngine();
-        return engine.render(s, context);
     }
 
     private boolean isMultipleArtists(MusicFile[] children) {
