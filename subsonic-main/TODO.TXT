@@ -22,6 +22,8 @@ New screenshots
 
 BACKLOG
 ==========
+Invalidate browser cache when changing cover art image.
+Implement LastModified in CoverArtController.
 Upgrade Spring.
 Show list of currently active users.
 &ndash; &mdash;
@@ -179,11 +181,13 @@ Støtte sommertid.
 Enklere konfigurasjon av hvilke kanaler som skal tas med.
 Endre navn til xmltv_no eller noe.
 
-OK - WMA9, Quality-based VBR Q75, Atlantic
-OK - OGG, Quality-based VBR Q3, Is It Any Wonder
-OK - MPEG-4, Quality-based VBR Normal, Nothing In My Way
-OK - MPC radio, Leaving So Soon
-OK - FLAC Lossless, A Bad Dream
-OK - Monkey Lossless (ape), Hamburg Song
-OK - Frog Lossless, Put It Behind You
+TEST DATA
+=========
+WMA9, Quality-based VBR Q75, Atlantic
+OGG, Quality-based VBR Q3, Is It Any Wonder
+MPEG-4, Quality-based VBR Normal, Nothing In My Way
+MPC radio, Leaving So Soon
+FLAC Lossless, A Bad Dream
+Monkey Lossless (ape), Hamburg Song
+Frog Lossless, Put It Behind You
 

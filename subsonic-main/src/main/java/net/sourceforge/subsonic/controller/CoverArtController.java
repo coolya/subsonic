@@ -3,6 +3,7 @@ package net.sourceforge.subsonic.controller;
 import net.sourceforge.subsonic.*;
 import net.sourceforge.subsonic.service.*;
 import org.apache.commons.io.*;
+import org.apache.commons.lang.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
 
@@ -18,11 +19,25 @@ import java.io.*;
  *
  * @author Sindre Mehus
  */
-public class CoverArtController implements Controller {
+public class CoverArtController implements Controller, LastModified {
 
     private SecurityService securityService;
 
     private static final Logger LOG = Logger.getLogger(CoverArtController.class);
+
+    public long getLastModified(HttpServletRequest request) {
+        String path = request.getParameter("path");
+        if (StringUtils.trimToNull(path) == null) {
+            return 0;
+        }
+
+        File file = new File(path);
+        if (!file.exists()) {
+            return -1;
+        }
+
+        return file.lastModified();
+    }
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String path = request.getParameter("path");
@@ -102,4 +117,5 @@ public class CoverArtController implements Controller {
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
     }
+
 }

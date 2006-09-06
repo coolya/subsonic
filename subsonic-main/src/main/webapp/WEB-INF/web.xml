@@ -114,6 +114,10 @@
         <filter-name>CacheFilter</filter-name>
         <url-pattern>/icons/*</url-pattern>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>CacheFilter</filter-name>
+        <url-pattern>/style/*</url-pattern>
+    </filter-mapping>
 
     <!--TODO: Use spring stuff in subsonic-servlet.xml?-->
     <filter-mapping>
@@ -123,10 +127,6 @@
     <filter-mapping>
         <filter-name>NoCacheFilter</filter-name>
         <url-pattern>/userChart.view</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>NoCacheFilter</filter-name>
-        <url-pattern>/coverart</url-pattern>
     </filter-mapping>
 
     <filter>
