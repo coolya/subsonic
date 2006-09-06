@@ -1,15 +1,3 @@
-CHANGES SINCE 2.8.beta1:
-===========================
-Get the active transcoders to follow the Max Bitrate setting per player.
-Fixed broken wap interface.
-Fix playlist autoscroll.
-Sort songs by track number.
-Added transcoding support for Shorten and WavPack.
-Bug in main.jsp when path contains both files and directories, e.g., Mary J Blige.
-Scroller color in Sandstorm.
-Added Simplified Chinese translation (incomplete)
-Update Norwegian translation.
-Update FAQ (with respect to transcoding).
 
 PRIORITIZED FOR VERSION 2.8
 ===========================
@@ -56,7 +44,6 @@ Implement pure AJAX version of playlist.jsp.
 Get updated Macedonian resource bundle.
 Check Javascript error on IE.
 Photo support?
-Sandstone theme: http://www.jinzora.org/images/screens/themes/sandstone-full.gif
 Make logo in svg.
 Sell t-shirts from http://www.cafepress.com/
 User-based folder access
@@ -64,7 +51,6 @@ Replace methods in my StringUtil with corresponding in Spring.
 Batch download of cover arts.
 Use Rico for rounded edges. http://openrico.org
 Seeking within songs.
-Test flac
 Use cewolf?
 Playlist popup window.
 Use cool coverart dialog popup (see Google Web Toolkit).
