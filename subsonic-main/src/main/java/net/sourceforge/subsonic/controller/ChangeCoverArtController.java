@@ -49,11 +49,11 @@ public class ChangeCoverArtController extends AbstractController {
         String album = request.getParameter("album");
         MusicFile dir = new MusicFile(path);
 
-        MusicFile[] children = dir.getChildren(false);
+        MusicFile child = dir.getFirstChild();
         String[] coverArtUrls = new String[0];
-        if (children.length > 0) {
+        if (child != null) {
             try {
-                MusicFile.MetaData metaData = children[0].getMetaData();
+                MusicFile.MetaData metaData = child.getMetaData();
                 if (artist == null) {
                     artist = metaData.getArtist();
                 }

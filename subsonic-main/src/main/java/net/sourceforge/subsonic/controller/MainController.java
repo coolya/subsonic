@@ -2,13 +2,13 @@ package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
+import org.apache.commons.lang.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
-import org.apache.commons.lang.*;
 
 import javax.servlet.http.*;
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 /**
  * Controller for the main page.
@@ -41,7 +41,7 @@ public class MainController extends ParameterizableViewController {
         MusicFileInfo musicInfo = musicInfoService.getMusicFileInfoForPath(path);
         int rating = musicInfo == null ? 0 : musicInfo.getRating();
         int playCount = musicInfo == null ? 0 : musicInfo.getPlayCount();
-        String comment = musicInfo == null  ? null : musicInfo.getComment();
+        String comment = musicInfo == null ? null : musicInfo.getComment();
         Date lastPlayed = musicInfo == null  ? null : musicInfo.getLastPlayed();
         map.put("rating", rating);
         map.put("playCount", playCount);

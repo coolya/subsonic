@@ -1,18 +1,19 @@
 
-PRIORITIZED FOR VERSION 2.8
-===========================
-Test WAP select player on cell phone.
-Deploy new transcoding pack.  Document how to do it.
+CHANGED IN 2.9.beta1
+====================
+Home page (random, new etc) is now much faster (10 times)
 
-DOC
-Tomcat user must have write access (see forum)
-New screenshots
+
+PRIORITIZED FOR VERSION 2.9
+===========================
+Wiki-like comments, with links etc. radeox
+User-Specific Ratings and Comments (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=86)
+Upgrade Spring.
+
 
 BACKLOG
 ==========
 Invalidate browser cache when changing cover art image.
-Implement LastModified in CoverArtController.
-Upgrade Spring.
 Show list of currently active users.
 &ndash; &mdash;
 Cache CSS.
@@ -22,12 +23,10 @@ Mails from Dave (IP change problem).
 Remove "user" column from status.jsp
 Add "Download" option to main.jsp album view.
 Get link from https://jaudiotagger.dev.java.net/
-Wiki-like comments, with links etc. radeox
 Make it possible to remove ratings.
 Cover art resize/resample (bicubic/bilinear)
 Cover art cache.
 MusicFile cache.
-Upgrade Spring.
 Why is Player.id a String, not an Integer?
 Upload broken in IE.
 Upload popup?
@@ -36,7 +35,7 @@ Seeking.
 Display running time, as well as elapsed time for current song.
 Playback buttons.  Stop, play, pause, resume, next, previous.
 Ugly checkbox border in IE (and FF?)
-Create "Electron Blue" theme (http://www.msn.com/)
+Create "Electron Blue" theme (http://www.msn.com/) Startour?
 Use cookie.setPath()?
       cookie.setPath(request.getContextPath());
 Use AJAX to change random albums on home page, one at a time.
@@ -50,7 +49,6 @@ User-based folder access
 Replace methods in my StringUtil with corresponding in Spring.
 Batch download of cover arts.
 Use Rico for rounded edges. http://openrico.org
-Seeking within songs.
 Use cewolf?
 Playlist popup window.
 Use cool coverart dialog popup (see Google Web Toolkit).
@@ -74,11 +72,9 @@ Make it work on Geronimo.
 Make it work on Jetty
 Drop ResourceBundle_en.
 Display image embedded in ID3 tag (APIC).
-Reimplement LAME integration.
 Upload quota per user.
 Order search results.
 Specify upload directory per user. Option to delete files?
-Improve performance for new/best charts.
 Support reverse proxies.  Send url as parameter. (<a href="javascript:document.location.href='foo.jsp?referrer=' + document.location.href">Trykk her</a>)
 Support forward proxies.
 Hvis spilleren har "Auto-control enabled" skrudd av, så vises det en ny knapp "Stream" i playlista som kan brukes for å få m3u-en.
@@ -139,8 +135,6 @@ Specify context path.
 HDTV-mode.
 Vis "lignende" album.
 Add "Play" authorization.
-Add performance monitoring.
-User-Specific Ratings and Comments (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=86)
 
 HOW TO RELEASE
 -------------
@@ -152,12 +146,19 @@ Deploy
 Check that correct local version is displayed.
 Commit
 Create file release at SourceForge.
+cd subsonic-site
 mvn site:site
 mvn site:deploy
 svn copy https://svn.sourceforge.net/svnroot/subsonic/trunk https://svn.sourceforge.net/svnroot/subsonic/tags/release-2.7.beta1 -m "Tagging 2.7.beta1."
 Register at freshmeat.
 Post message on forum.
 Update version number in pom.xml etc.
+
+HOW TO RELEASE TRANSCODING PACK
+===============================
+Create transcode_windows.zip
+scp transcode_windows.zip sindre_mehus@shell.sourceforge.net:/home/groups/s/su/subsonic/htdocs
+(doesn't work inside XEmacs)
 
 XMLTV
 =====
