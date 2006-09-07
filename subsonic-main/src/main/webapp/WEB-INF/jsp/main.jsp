@@ -60,6 +60,14 @@
     <a target="playlist" href="${addUrl}"><fmt:message key="main.addall"/></a>
 
     <c:if test="${model.dir.album}">
+
+        <c:if test="${model.user.downloadRole}">
+            <sub:url value="download.view" var="downloadUrl">
+                <sub:param name="path" value="${model.dir.path}"/>
+            </sub:url>
+            | <a href="${downloadUrl}"><fmt:message key="common.download"/></a>
+        </c:if>
+
         <sub:url value="albumInfo.view" var="albumInfoUrl">
             <sub:param name="path" value="${model.dir.path}"/>
         </sub:url>
@@ -70,8 +78,8 @@
                 <sub:param name="path" value="${model.dir.path}"/>
             </sub:url>
             | <a href="${editTagsUrl}"><fmt:message key="main.tags"/></a>
-
         </c:if>
+
         <c:if test="${model.user.commentRole}">
             | <a href="javascript:toggleComment()"><fmt:message key="main.comment"/></a>
         </c:if>

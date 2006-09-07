@@ -16,12 +16,13 @@ Cover art resize/resample (bicubic/bilinear)
 Cover art cache.
 MusicFile cache.
 Mark music_file_info as disabled if path doesn't exist.
+&ndash; &mdash;
+Sometimes a song is started twice. Two m3u's sent?
 
 BACKLOG
 ==========
 Invalidate browser cache when changing cover art image.
 Show list of currently active users.
-&ndash; &mdash;
 http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=94
 Mails from Dave (IP change problem).
 Get link from https://jaudiotagger.dev.java.net/
