@@ -1,7 +1,6 @@
 
 CHANGED IN 2.9.beta1
 ====================
-Home page (random, new etc) is now much faster (10 times)
 
 
 PRIORITIZED FOR VERSION 2.9
@@ -10,6 +9,9 @@ Wiki-like comments, with links etc. radeox
 User-Specific Ratings and Comments (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=86)
 Upgrade Spring.
 
+Write reply to
+   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=94
+regarding performance in home.jsp, and download transcoding. 
 
 BACKLOG
 ==========
