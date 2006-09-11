@@ -56,8 +56,8 @@
             <td style="padding-left:15pt">
                 <table><tr>
                     <form method="post" action="search.view" target="main" name="searchForm">
-                        <td><input type="text" name="query" size="14"/></td>
-                        <%--<td><input type="image" src="<c:url value="/icons/search_small.png"/>" alt="${search}" title="${search}"/></td>--%>
+                        <td><input type="text" name="query" id="query" size="14" value="${search}" onclick="javascript:document.searchForm.query.select();"/></td>
+
                         <td><a href="javascript:document.searchForm.submit()"><img src="<c:url value="/icons/search_small.png"/>" alt="${search}" title="${search}"/></a></td>
                         <input type="hidden" name="includeTitle" value="on"/>
                         <input type="hidden" name="includeArtistAndAlbum" value="on"/>
