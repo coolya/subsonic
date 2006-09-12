@@ -4,8 +4,10 @@ import net.sourceforge.subsonic.*;
 import net.sourceforge.subsonic.service.*;
 import org.apache.commons.io.*;
 import org.apache.commons.lang.*;
+import org.apache.commons.codec.digest.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
+import org.springframework.web.bind.*;
 
 import javax.imageio.*;
 import javax.servlet.http.*;
@@ -42,40 +44,103 @@ public class CoverArtController implements Controller, LastModified {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String path = request.getParameter("path");
         File file = (path == null || path.length() == 0) ? null : new File(path);
+        Integer size = ServletRequestUtils.getIntParameter(request, "size");
 
+        // Check access.
         if (file != null && !securityService.isReadAllowed(file)) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return null;
         }
 
-        InputStream in;
-        if (file == null) {
-            in = getClass().getResourceAsStream("default_cover.jpg");
-        } else {
-            in = new FileInputStream(file);
+        // Optimize if no scaling is required.
+        if (size == null) {
+            sendUnscaled(file, response);
+            return null;
         }
 
-        try {
+        // Send default image if no path is given. (No need to cache it, since it will be cached in browser.)
+        if (file == null) {
+            sendDefault(size, response);
+            return null;
+        }
 
-            String s = request.getParameter("size");
-            if (s != null) {
-                int size = Integer.parseInt(s);
+        // Send cached image, creating it if necessary.
+        File cachedImage = getCachedImage(file, size);
+        sendImage(cachedImage, response);
+
+        return null;
+    }
+
+    private void sendImage(File file, HttpServletResponse response) throws IOException {
+        InputStream in = new FileInputStream(file);
+        try {
+            IOUtils.copy(in, response.getOutputStream());
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
+    }
+
+    private void sendDefault(Integer size, HttpServletResponse response) throws IOException {
+        InputStream in = null;
+        try {
+            in = getClass().getResourceAsStream("default_cover.jpg");
+            BufferedImage image = ImageIO.read(in);
+            image = scale(image, size, size);
+            ImageIO.write(image, "jpeg", response.getOutputStream());
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
+    }
+
+    private void sendUnscaled(File file, HttpServletResponse response) throws IOException {
+        InputStream in = null;
+        try {
+            in = new FileInputStream(file);
+            IOUtils.copy(in, response.getOutputStream());
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
+    }
+
+    private File getCachedImage(File file, int size) throws IOException {
+        String md5 = DigestUtils.md5Hex(file.getPath() + size);
+
+        // TODO: Create subdir for each size.
+        File cachedImage = new File(getImageCacheDirectory(), md5);
+
+        // Is cache missing or obsolete?
+        if (!cachedImage.exists() || file.lastModified() > cachedImage.lastModified()) {
+            LOG.debug("MISS: " + file + " (" + size + ')');  //TODO: Remove
+            InputStream in = null;
+            OutputStream out = null;
+            try {
+                in = new FileInputStream(file);
+                out = new FileOutputStream(cachedImage);
                 BufferedImage image = ImageIO.read(in);
                 image = scale(image, size, size);
-                ImageIO.write(image, "jpeg", response.getOutputStream());
-            } else {
-                // Optimize if no scaling is required.
-                IOUtils.copy(in, response.getOutputStream());
+                ImageIO.write(image, "jpeg", out);
+            } finally {
+                IOUtils.closeQuietly(in);
+                IOUtils.closeQuietly(out);
             }
+        } else {
+            LOG.debug("HIT:  " + file + " (" + size + ')');  //TODO: Remove
+        }
 
-        } finally {
-            try {
-                in.close();
-            } catch (IOException e) {
-                LOG.warn("Failed to close input stream for cover art (" + path + ").");
+        return cachedImage;
+    }
+
+    private File getImageCacheDirectory() {
+        File dir = new File(SettingsService.getSubsonicHome(), "thumbs");
+        if (!dir.exists()) {
+            if (dir.mkdirs()) {
+                LOG.info("Created thumbnail cache " + dir);
+            } else {
+                LOG.error("Failed to create thumbnail cache " + dir);
             }
         }
-        return null;
+
+        return dir;
     }
 
     private BufferedImage scale(BufferedImage original, int width, int height) {

@@ -89,11 +89,11 @@ public class MusicFileService {
         if (element != null) {
             // Check if cache is obsolete.
             if (element.getCreationTime() > dir.lastModified()) {
-                LOG.debug("HIT : " + dir); // TODO: Remove
+//                LOG.debug("HIT : " + dir); // TODO: Remove
                 List<File> result = (List<File>) element.getObjectValue();
                 return result.subList(0, Math.min(limit, result.size()));
             } else {
-                LOG.debug("EXP : " + dir);
+//                LOG.debug("EXP : " + dir);
             }
         }
 
@@ -101,7 +101,7 @@ public class MusicFileService {
         listCoverArtRecursively(dir, result, limit);
 
         coverArtCache.put(new Element(dir, result));
-        LOG.debug("MISS: " + dir);
+//        LOG.debug("MISS: " + dir);
         return result;
     }
 
