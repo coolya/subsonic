@@ -24,7 +24,7 @@ public class MusicFile {
     private Set<String> excludes;
 
     /**
-     * Do not use this method directly. Instead, use {@link MusicFileService#createMusicFile}.
+     * Do not use this method directly. Instead, use {@link MusicFileService#getMusicFile}.
      *
      * @param file A file on the local file system.
      */
@@ -254,7 +254,7 @@ public class MusicFile {
     }
 
     private MusicFile createMusicFile(File file) {
-        return ServiceLocator.getMusicFileService().createMusicFile(file);
+        return ServiceLocator.getMusicFileService().getMusicFile(file);
     }
 
     /**
@@ -291,53 +291,6 @@ public class MusicFile {
         }
     }
 
-    /**
-     * Returns an array of appropriate cover art images for this music file.
-     * @param limit Maximum number of images to return.
-     * @return An array of appropriate cover art images for this music file.
-     * @exception IOException If an I/O error occurs.
-     */
-    public File[] getCoverArt(int limit) throws IOException {
-        List<File> result = new ArrayList<File>();
-        listCoverArtRecursively(result, limit);
-
-        return result.toArray(new File[0]);
-    }
-
-    private void listCoverArtRecursively(List<File> coverArtFiles, int limit) throws IOException {
-        if (coverArtFiles.size() == limit) {
-            return;
-        }
-
-        File[] files = file.listFiles();
-
-        for (File file : files) {
-            if (file.isDirectory() && !isExcluded(file)) {
-                createMusicFile(file).listCoverArtRecursively(coverArtFiles, limit);
-            }
-        }
-
-        if (coverArtFiles.size() == limit) {
-            return;
-        }
-
-        File best = getBestCoverArt(files);
-        if (best != null) {
-            coverArtFiles.add(best);
-        }
-    }
-
-    private File getBestCoverArt(File[] candidates) {
-        for (String mask : ServiceLocator.getSettingsService().getCoverArtMaskAsArray()) {
-            for (File candidate : candidates) {
-                if (candidate.getName().toUpperCase().endsWith(mask.toUpperCase())) {
-                    return candidate;
-                }
-            }
-        }
-        return null;
-    }
-
     private boolean acceptMusic(File file) throws IOException {
 
         if (isExcluded(file)) {
@@ -362,7 +315,7 @@ public class MusicFile {
      * @param file The child file in question.
      * @return Whether the child file is excluded.
      */
-    private boolean isExcluded(File file) throws IOException {
+    public boolean isExcluded(File file) throws IOException {
         if (excludes == null) {
             excludes = new HashSet<String>();
             File excludeFile = new File(this.file, "subsonic_exclude.txt");

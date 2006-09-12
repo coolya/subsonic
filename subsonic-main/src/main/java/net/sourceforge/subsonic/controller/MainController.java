@@ -28,7 +28,7 @@ public class MainController extends ParameterizableViewController {
 
         Player player = playerService.getPlayer(request, response);
         String path = request.getParameter("path");
-        MusicFile dir = musicFileService.createMusicFile(path);
+        MusicFile dir = musicFileService.getMusicFile(path);
         MusicFile[] children = dir.getChildren(false, true);
 
         map.put("dir", dir);
@@ -55,11 +55,11 @@ public class MainController extends ParameterizableViewController {
             if (limit == 0) {
                 limit = Integer.MAX_VALUE;
             }
-            File[] coverArts = dir.getCoverArt(limit);
-            int size = coverArts.length > 1 ? scheme.getSize() : scheme.getSize() * 2;
+            List<File> coverArts = musicFileService.getCoverArt(dir, limit);
+            int size = coverArts.size() > 1 ? scheme.getSize() : scheme.getSize() * 2;
             map.put("coverArts", coverArts);
             map.put("coverArtSize", size);
-            if (coverArts.length == 0 && dir.isAlbum()) {
+            if (coverArts.isEmpty() && dir.isAlbum()) {
                 map.put("showGenericCoverArt", true);
             }
 

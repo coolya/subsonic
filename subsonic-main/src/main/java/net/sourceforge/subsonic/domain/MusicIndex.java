@@ -157,7 +157,7 @@ public class MusicIndex {
 
         for (MusicFolder folder : folders) {
 
-            MusicFile parent = ServiceLocator.getMusicFileService().createMusicFile(folder.getPath());
+            MusicFile parent = ServiceLocator.getMusicFileService().getMusicFile(folder.getPath());
             MusicFile[] children = parent.getChildren(false, true);
             for (MusicFile child : children) {
                 if (shortcutSet.contains(child.getName())) {

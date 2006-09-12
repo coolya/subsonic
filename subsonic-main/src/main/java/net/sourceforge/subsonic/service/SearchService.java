@@ -74,7 +74,7 @@ public class SearchService {
                     int count = 0;
                     for (MusicFolder musicFolder : musicFolders) {
 
-                        MusicFile root = musicFileService.createMusicFile(musicFolder.getPath());
+                        MusicFile root = musicFileService.getMusicFile(musicFolder.getPath());
                         MusicFile[] all = root.getChildren(true, true);
 
                         for (int i = 0; i < all.length; i++) {
@@ -241,7 +241,7 @@ public class SearchService {
                 }
 
                 if (line.file.exists()) {
-                    result.add(musicFileService.createMusicFile(line.file));
+                    result.add(musicFileService.getMusicFile(line.file));
                     if (result.size() >= maxHits) {
                         return result;
                     }
@@ -289,7 +289,7 @@ public class SearchService {
             int n = RANDOM.nextInt(cachedSongs.size());
             File file = cachedSongs.get(n).file;
             if (file.exists() && securityService.isReadAllowed(file)) {
-                result.add(musicFileService.createMusicFile(file));
+                result.add(musicFileService.getMusicFile(file));
             }
         }
 
@@ -320,7 +320,7 @@ public class SearchService {
             }
             if (line.file.exists() && securityService.isReadAllowed(line.file)) {
                 if (n >= offset) {
-                    result.add(musicFileService.createMusicFile(line.file));
+                    result.add(musicFileService.getMusicFile(line.file));
                 }
                 n++;
             }

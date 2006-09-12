@@ -78,10 +78,10 @@ public class PlaylistController extends ParameterizableViewController {
             playlist.setStatus(Playlist.Status.STOPPED);
         } else if (request.getParameter("play") != null) {
             sendM3U = true;
-            MusicFile file = musicFileService.createMusicFile(request.getParameter("play"));
+            MusicFile file = musicFileService.getMusicFile(request.getParameter("play"));
             playlist.addFile(file, false);
         } else if (request.getParameter("add") != null) {
-            MusicFile file = musicFileService.createMusicFile(request.getParameter("add"));
+            MusicFile file = musicFileService.getMusicFile(request.getParameter("add"));
             playlist.addFile(file);
             index = playlist.size() - 1;
         } else if (request.getParameter("clear") != null) {

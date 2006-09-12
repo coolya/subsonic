@@ -165,7 +165,7 @@ public class PlaylistService {
             while (line != null) {
                 if (!line.startsWith("#")) {
                     try {
-                        MusicFile file = musicFileService.createMusicFile(new File(line));
+                        MusicFile file = musicFileService.getMusicFile(new File(line));
                         if (file.exists()) {
                             playlist.addFile(file);
                         }
@@ -202,7 +202,7 @@ public class PlaylistService {
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.find()) {
                     try {
-                        MusicFile file = musicFileService.createMusicFile(new File(matcher.group(1)));
+                        MusicFile file = musicFileService.getMusicFile(new File(matcher.group(1)));
                         if (file.exists()) {
                             playlist.addFile(file);
                         }
@@ -258,7 +258,7 @@ public class PlaylistService {
                 if (location != null && location.startsWith("file://")) {
                     location = location.replaceFirst("file://", "");
                     try {
-                        MusicFile file = musicFileService.createMusicFile(location);
+                        MusicFile file = musicFileService.getMusicFile(location);
                         if (file.exists()) {
                             playlist.addFile(file);
                         }

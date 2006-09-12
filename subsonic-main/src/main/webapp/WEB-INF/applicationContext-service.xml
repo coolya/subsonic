@@ -36,6 +36,7 @@
 
     <bean id="musicFileService" class="net.sourceforge.subsonic.service.MusicFileService" init-method="init">
         <property name="securityService" ref="securityService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
 
     <bean id="securityService" class="net.sourceforge.subsonic.service.SecurityService">

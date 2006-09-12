@@ -151,7 +151,7 @@ public class HomeController extends ParameterizableViewController {
 
     private Album createAlbum(MusicFileInfo info) {
         try {
-            return createAlbum(musicFileService.createMusicFile(info.getPath()));
+            return createAlbum(musicFileService.getMusicFile(info.getPath()));
         } catch (Exception x) {
             LOG.warn("Failed to create albumTitle list entry for " + info.getPath(), x);
             return null;
@@ -181,9 +181,9 @@ public class HomeController extends ParameterizableViewController {
             if (file.isRoot()) {
                 return;
             }
-            File[] coverArts = file.getCoverArt(1);
-            if (coverArts.length > 0) {
-                album.setCoverArtPath(coverArts[0].getPath());
+            List<File> coverArts = musicFileService.getCoverArt(file, 1);
+            if (!coverArts.isEmpty()) {
+                album.setCoverArtPath(coverArts.get(0).getPath());
             }
         } catch (IOException x) {
             LOG.warn("Failed to resolve cover art for " + file, x);

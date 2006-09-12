@@ -38,7 +38,7 @@ public class TagService {
         try {
 
             Mp3Parser parser = new Mp3Parser();
-            MusicFile file = musicFileService.createMusicFile(path);
+            MusicFile file = musicFileService.getMusicFile(path);
 
             if (!parser.isApplicable(file)) {
                 return "Tag editing of "+ StringUtil.getSuffix(file.getName()) + " files is not supported.";

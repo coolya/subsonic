@@ -20,7 +20,7 @@ public class EditTagsController extends ParameterizableViewController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String path = request.getParameter("path");
-        MusicFile dir = musicFileService.createMusicFile(path);
+        MusicFile dir = musicFileService.getMusicFile(path);
         MusicFile[] files = dir.getChildren(false);
 
         Map<String, Object> map = new HashMap<String, Object>();

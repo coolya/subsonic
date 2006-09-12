@@ -61,7 +61,7 @@ public class WapController extends MultiActionController {
 
     public ModelAndView browse(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String path = request.getParameter("path");
-        MusicFile parent = musicFileService.createMusicFile(path);
+        MusicFile parent = musicFileService.getMusicFile(path);
 
         // Create array of file(s) to display.
         MusicFile[] children;
@@ -99,10 +99,10 @@ public class WapController extends MultiActionController {
             map.put("playlist", playlist);
 
             if (request.getParameter("play") != null) {
-                MusicFile file = musicFileService.createMusicFile(request.getParameter("play"));
+                MusicFile file = musicFileService.getMusicFile(request.getParameter("play"));
                 playlist.addFile(file, false);
             } else if (request.getParameter("add") != null) {
-                MusicFile file = musicFileService.createMusicFile(request.getParameter("add"));
+                MusicFile file = musicFileService.getMusicFile(request.getParameter("add"));
                 playlist.addFile(file);
             } else if (request.getParameter("skip") != null) {
                 playlist.setIndex(Integer.parseInt(request.getParameter("skip")));

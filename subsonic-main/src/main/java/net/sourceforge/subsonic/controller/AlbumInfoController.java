@@ -26,7 +26,7 @@ public class AlbumInfoController extends SimpleFormController {
         String artist = request.getParameter("artist");
         String album = request.getParameter("album");
 
-        MusicFile child = musicFileService.createMusicFile(path).getFirstChild();
+        MusicFile child = musicFileService.getMusicFile(path).getFirstChild();
         MusicFile.MetaData metaData = child.getMetaData();
         if (artist == null) {
             artist = metaData.getArtist();

@@ -48,7 +48,7 @@ public class ChangeCoverArtController extends AbstractController {
         String path = request.getParameter("path");
         String artist = request.getParameter("artist");
         String album = request.getParameter("album");
-        MusicFile dir = musicFileService.createMusicFile(path);
+        MusicFile dir = musicFileService.getMusicFile(path);
 
         MusicFile child = dir.getFirstChild();
         String[] coverArtUrls = new String[0];
@@ -106,11 +106,12 @@ public class ChangeCoverArtController extends AbstractController {
 
             // Rename existing cover file if new cover file is not the preferred.
             try {
-                File[] coverFiles = musicFileService.createMusicFile(path).getCoverArt(1);
-                if (coverFiles.length > 0) {
-                    if (!newCoverFile.equals(coverFiles[0])) {
-                        coverFiles[0].renameTo(new File(coverFiles[0].getCanonicalPath() + ".old"));
-                        LOG.info("Renamed old image file " + coverFiles[0]);
+                MusicFile musicFile = musicFileService.getMusicFile(path);
+                List<File> coverFiles = musicFileService.getCoverArt(musicFile, 1);
+                if (!coverFiles.isEmpty()) {
+                    if (!newCoverFile.equals(coverFiles.get(0))) {
+                        coverFiles.get(0).renameTo(new File(coverFiles.get(0).getCanonicalPath() + ".old"));
+                        LOG.info("Renamed old image file " + coverFiles.get(0));
                     }
                 }
             } catch (Exception x) {

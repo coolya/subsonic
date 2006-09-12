@@ -75,7 +75,7 @@ public class LeftController extends ParameterizableViewController {
             for (MusicFolder musicFolder : musicFoldersToUse) {
                 File file = new File(musicFolder.getPath(), shortcut);
                 if (file.exists()) {
-                    result.add(musicFileService.createMusicFile(file));
+                    result.add(musicFileService.getMusicFile(file));
                 }
             }
         }
