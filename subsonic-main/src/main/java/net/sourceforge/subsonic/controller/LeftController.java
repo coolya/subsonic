@@ -20,6 +20,7 @@ public class LeftController extends ParameterizableViewController {
     private SearchService searchService;
     private SettingsService settingsService;
     private SecurityService securityService;
+    private MusicFileService musicFileService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -74,7 +75,7 @@ public class LeftController extends ParameterizableViewController {
             for (MusicFolder musicFolder : musicFoldersToUse) {
                 File file = new File(musicFolder.getPath(), shortcut);
                 if (file.exists()) {
-                    result.add(new MusicFile(file));
+                    result.add(musicFileService.createMusicFile(file));
                 }
             }
         }
@@ -92,5 +93,9 @@ public class LeftController extends ParameterizableViewController {
 
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
+    }
+
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
     }
 }

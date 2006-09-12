@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.domain;
 
 import net.sourceforge.subsonic.*;
+import net.sourceforge.subsonic.service.*;
 
 import java.util.*;
 import java.util.regex.*;
@@ -156,7 +157,8 @@ public class MusicIndex {
 
         for (MusicFolder folder : folders) {
 
-            MusicFile[] children = new MusicFile(folder.getPath()).getChildren(false, true);
+            MusicFile parent = ServiceLocator.getMusicFileService().createMusicFile(folder.getPath());
+            MusicFile[] children = parent.getChildren(false, true);
             for (MusicFile child : children) {
                 if (shortcutSet.contains(child.getName())) {
                     continue;

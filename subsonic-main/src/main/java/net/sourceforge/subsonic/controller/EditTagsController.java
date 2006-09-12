@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.service.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
 
@@ -14,10 +15,12 @@ import java.util.*;
  */
 public class EditTagsController extends ParameterizableViewController {
 
+    private MusicFileService musicFileService;
+
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String path = request.getParameter("path");
-        MusicFile dir = new MusicFile(path);
+        MusicFile dir = musicFileService.createMusicFile(path);
         MusicFile[] files = dir.getChildren(false);
 
         Map<String, Object> map = new HashMap<String, Object>();
@@ -53,6 +56,10 @@ public class EditTagsController extends ParameterizableViewController {
         song.setAlbum(metaData.getAlbum());
         song.setYear(metaData.getYear());
         return song;
+    }
+
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
     }
 
     /**

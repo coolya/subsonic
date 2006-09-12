@@ -20,6 +20,7 @@ public class WapController extends MultiActionController {
     private PlaylistService playlistService;
     private SearchService searchService;
     private SecurityService securityService;
+    private MusicFileService musicFileService;
 
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return wap(request, response);
@@ -60,7 +61,7 @@ public class WapController extends MultiActionController {
 
     public ModelAndView browse(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String path = request.getParameter("path");
-        MusicFile parent = new MusicFile(path);
+        MusicFile parent = musicFileService.createMusicFile(path);
 
         // Create array of file(s) to display.
         MusicFile[] children;
@@ -98,10 +99,10 @@ public class WapController extends MultiActionController {
             map.put("playlist", playlist);
 
             if (request.getParameter("play") != null) {
-                MusicFile file = new MusicFile(request.getParameter("play"));
+                MusicFile file = musicFileService.createMusicFile(request.getParameter("play"));
                 playlist.addFile(file, false);
             } else if (request.getParameter("add") != null) {
-                MusicFile file = new MusicFile(request.getParameter("add"));
+                MusicFile file = musicFileService.createMusicFile(request.getParameter("add"));
                 playlist.addFile(file);
             } else if (request.getParameter("skip") != null) {
                 playlist.setIndex(Integer.parseInt(request.getParameter("skip")));
@@ -186,5 +187,9 @@ public class WapController extends MultiActionController {
 
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
+    }
+
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
     }
 }

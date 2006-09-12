@@ -21,13 +21,14 @@ public class MainController extends ParameterizableViewController {
     private PlayerService playerService;
     private SettingsService settingsService;
     private MusicInfoService musicInfoService;
+    private MusicFileService musicFileService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
 
         Player player = playerService.getPlayer(request, response);
         String path = request.getParameter("path");
-        MusicFile dir = new MusicFile(path);
+        MusicFile dir = musicFileService.createMusicFile(path);
         MusicFile[] children = dir.getChildren(false, true);
 
         map.put("dir", dir);
@@ -108,5 +109,9 @@ public class MainController extends ParameterizableViewController {
 
     public void setMusicInfoService(MusicInfoService musicInfoService) {
         this.musicInfoService = musicInfoService;
+    }
+
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
     }
 }

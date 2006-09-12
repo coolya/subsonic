@@ -27,11 +27,12 @@ public class SearchService {
     private Timer timer;
     private SettingsService settingsService;
     private SecurityService securityService;
+    private MusicFileService musicFileService;
 
     /**
-     * Returns whether the search index exists.
-     * @return Whether the search index exists.
-     */
+    * Returns whether the search index exists.
+    * @return Whether the search index exists.
+    */
     public synchronized boolean isIndexCreated() {
         return getIndexFile().exists();
     }
@@ -73,7 +74,7 @@ public class SearchService {
                     int count = 0;
                     for (MusicFolder musicFolder : musicFolders) {
 
-                        MusicFile root = new MusicFile(musicFolder.getPath());
+                        MusicFile root = musicFileService.createMusicFile(musicFolder.getPath());
                         MusicFile[] all = root.getChildren(true, true);
 
                         for (int i = 0; i < all.length; i++) {
@@ -240,7 +241,7 @@ public class SearchService {
                 }
 
                 if (line.file.exists()) {
-                    result.add(new MusicFile(line.file));
+                    result.add(musicFileService.createMusicFile(line.file));
                     if (result.size() >= maxHits) {
                         return result;
                     }
@@ -288,7 +289,7 @@ public class SearchService {
             int n = RANDOM.nextInt(cachedSongs.size());
             File file = cachedSongs.get(n).file;
             if (file.exists() && securityService.isReadAllowed(file)) {
-                result.add(new MusicFile(file));
+                result.add(musicFileService.createMusicFile(file));
             }
         }
 
@@ -319,7 +320,7 @@ public class SearchService {
             }
             if (line.file.exists() && securityService.isReadAllowed(line.file)) {
                 if (n >= offset) {
-                    result.add(new MusicFile(line.file));
+                    result.add(musicFileService.createMusicFile(line.file));
                 }
                 n++;
             }
@@ -455,6 +456,10 @@ public class SearchService {
 
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
+    }
+
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
     }
 
     /**

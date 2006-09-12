@@ -26,14 +26,6 @@ public class SecurityService implements UserDetailsService {
     private SettingsService settingsService;
 
     /**
-     * Register in service locator so that non-Spring objects can access me.
-     * This method is invoked automatically by Spring.
-     */
-    public void init() {
-        ServiceLocator.setSecurityService(this);
-    }
-
-    /**
     * Locates the user based on the username.
     *
     * @param username The username presented to the {@link DaoAuthenticationProvider}

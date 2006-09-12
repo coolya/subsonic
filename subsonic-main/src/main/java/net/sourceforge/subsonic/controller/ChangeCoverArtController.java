@@ -25,6 +25,7 @@ public class ChangeCoverArtController extends AbstractController {
 
     private AmazonSearchService amazonSearchService;
     private SecurityService securityService;
+    private MusicFileService musicFileService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -47,7 +48,7 @@ public class ChangeCoverArtController extends AbstractController {
         String path = request.getParameter("path");
         String artist = request.getParameter("artist");
         String album = request.getParameter("album");
-        MusicFile dir = new MusicFile(path);
+        MusicFile dir = musicFileService.createMusicFile(path);
 
         MusicFile child = dir.getFirstChild();
         String[] coverArtUrls = new String[0];
@@ -105,7 +106,7 @@ public class ChangeCoverArtController extends AbstractController {
 
             // Rename existing cover file if new cover file is not the preferred.
             try {
-                File[] coverFiles = new MusicFile(path).getCoverArt(1);
+                File[] coverFiles = musicFileService.createMusicFile(path).getCoverArt(1);
                 if (coverFiles.length > 0) {
                     if (!newCoverFile.equals(coverFiles[0])) {
                         coverFiles[0].renameTo(new File(coverFiles[0].getCanonicalPath() + ".old"));
@@ -141,5 +142,9 @@ public class ChangeCoverArtController extends AbstractController {
 
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
+    }
+
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
     }
 }

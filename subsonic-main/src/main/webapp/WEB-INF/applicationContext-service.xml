@@ -34,7 +34,11 @@
     
     <!-- Services -->
 
-    <bean id="securityService" class="net.sourceforge.subsonic.service.SecurityService" init-method="init">
+    <bean id="musicFileService" class="net.sourceforge.subsonic.service.MusicFileService" init-method="init">
+        <property name="securityService" ref="securityService"/>
+    </bean>
+
+    <bean id="securityService" class="net.sourceforge.subsonic.service.SecurityService">
         <property name="settingsService" ref="settingsService"/>
         <property name="userDao" ref="userDao"/>
     </bean>
@@ -48,6 +52,7 @@
     <bean id="searchService" class="net.sourceforge.subsonic.service.SearchService" init-method="schedule">
         <property name="settingsService" ref="settingsService"/>
         <property name="securityService" ref="securityService"/>
+        <property name="musicFileService" ref="musicFileService"/>
     </bean>
 
     <bean id="playerService" class="net.sourceforge.subsonic.service.PlayerService">
@@ -59,6 +64,7 @@
     <bean id="playlistService" class="net.sourceforge.subsonic.service.PlaylistService">
         <property name="settingsService" ref="settingsService"/>
         <property name="securityService" ref="securityService"/>
+        <property name="musicFileService" ref="musicFileService"/>
     </bean>
 
     <bean id="versionService" class="net.sourceforge.subsonic.service.VersionService"/>
@@ -82,7 +88,9 @@
         <property name="playerService" ref="playerService"/>
     </bean>
 
-    <bean id="ajaxTagService" class="net.sourceforge.subsonic.ajax.TagService"/>
+    <bean id="ajaxTagService" class="net.sourceforge.subsonic.ajax.TagService">
+        <property name="musicFileService" ref="musicFileService"/>
+    </bean>
 
     <bean id="ajaxTransferService" class="net.sourceforge.subsonic.ajax.TransferService"/>
 

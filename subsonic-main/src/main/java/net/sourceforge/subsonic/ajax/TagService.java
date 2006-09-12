@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.ajax;
 
 import net.sourceforge.subsonic.*;
+import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.util.*;
 import net.sourceforge.subsonic.domain.*;
 import org.apache.commons.lang.*;
@@ -15,16 +16,18 @@ public class TagService {
 
     private static final Logger LOG = Logger.getLogger(TagService.class);
 
+    private MusicFileService musicFileService;
+
     /**
-     * Updated tags for a given music file.
-     * @param path The path of the music file.
-     * @param artist The artist name.
-     * @param album The album name.
-     * @param title The song title.
-     * @param year The release year.
-     * @return "UPDATED" if the new tags were updated, "SKIPPED" if no update was necessary.
-     *          Otherwise the error message is returned.
-     */
+    * Updated tags for a given music file.
+    * @param path The path of the music file.
+    * @param artist The artist name.
+    * @param album The album name.
+    * @param title The song title.
+    * @param year The release year.
+    * @return "UPDATED" if the new tags were updated, "SKIPPED" if no update was necessary.
+    *          Otherwise the error message is returned.
+    */
     public String setTags(String path, String artist, String album, String title, String year) {
 
         artist = StringUtils.trimToNull(artist);
@@ -35,7 +38,7 @@ public class TagService {
         try {
 
             Mp3Parser parser = new Mp3Parser();
-            MusicFile file = new MusicFile(path);
+            MusicFile file = musicFileService.createMusicFile(path);
 
             if (!parser.isApplicable(file)) {
                 return "Tag editing of "+ StringUtil.getSuffix(file.getName()) + " files is not supported.";
@@ -63,5 +66,9 @@ public class TagService {
             LOG.warn("Failed to update tags for " + path, x);
             return x.getMessage();
         }
+    }
+
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
     }
 }

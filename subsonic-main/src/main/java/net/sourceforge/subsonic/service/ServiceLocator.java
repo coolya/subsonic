@@ -9,6 +9,7 @@ public class ServiceLocator {
 
     private static SettingsService settingsService;
     private static SecurityService securityService;
+    private static MusicFileService musicFileService;
 
     private ServiceLocator() {
     }
@@ -21,12 +22,12 @@ public class ServiceLocator {
         ServiceLocator.settingsService = settingsService;
     }
 
-    public static SecurityService getSecurityService() {
-        return securityService;
+    public static MusicFileService getMusicFileService() {
+        return musicFileService;
     }
 
-    public static void setSecurityService(SecurityService securityService) {
-        ServiceLocator.securityService = securityService;
+    public static void setMusicFileService(MusicFileService musicFileService) {
+        ServiceLocator.musicFileService = musicFileService;
     }
 }
 

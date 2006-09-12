@@ -8,6 +8,7 @@
         <property name="searchService" ref="searchService"/>
         <property name="securityService" ref="securityService"/>
         <property name="settingsService" ref="settingsService"/>
+        <property name="musicFileService" ref="musicFileService"/>
     </bean>
     <bean id="statusController" class="net.sourceforge.subsonic.controller.StatusController">
         <property name="viewName" value="status"/>
@@ -19,6 +20,7 @@
         <property name="playerService" ref="playerService"/>
         <property name="settingsService" ref="settingsService"/>
         <property name="musicInfoService" ref="musicInfoService"/>
+        <property name="musicFileService" ref="musicFileService"/>
     </bean>
     <bean id="topController" class="net.sourceforge.subsonic.controller.TopController">
         <property name="viewName" value="top"/>
@@ -61,6 +63,7 @@
         <property name="successView" value="albumInfo"/>
         <property name="formView" value="albumInfo"/>
         <property name="amazonSearchService" ref="amazonSearchService"/>
+        <property name="musicFileService" ref="musicFileService"/>
     </bean>
     <bean id="randomPlaylistController" class="net.sourceforge.subsonic.controller.RandomPlaylistController">
         <property name="viewName" value="reload"/>
@@ -96,6 +99,7 @@
     <bean id="changeCoverArtController" class="net.sourceforge.subsonic.controller.ChangeCoverArtController">
         <property name="amazonSearchService" ref="amazonSearchService"/>
         <property name="securityService" ref="securityService"/>
+        <property name="musicFileService" ref="musicFileService"/>
     </bean>
     <bean id="nowPlayingController" class="net.sourceforge.subsonic.controller.NowPlayingController">
         <property name="playerService" ref="playerService"/>
@@ -171,15 +175,18 @@
         <property name="musicInfoService" ref="musicInfoService"/>
         <property name="searchService" ref="searchService"/>
         <property name="settingsService" ref="settingsService"/>
+        <property name="musicFileService" ref="musicFileService"/>
     </bean>
     <bean id="editTagsController" class="net.sourceforge.subsonic.controller.EditTagsController">
         <property name="viewName" value="editTags"/>
+        <property name="musicFileService" ref="musicFileService"/>
     </bean>
     <bean id="playlistController" class="net.sourceforge.subsonic.controller.PlaylistController">
         <property name="viewName" value="playlist"/>
         <property name="playerService" ref="playerService"/>
         <property name="securityService" ref="securityService"/>
         <property name="settingsService" ref="settingsService"/>
+        <property name="musicFileService" ref="musicFileService"/>
     </bean>
     <bean id="coverArtController" class="net.sourceforge.subsonic.controller.CoverArtController">
         <property name="securityService" ref="securityService"/>
@@ -218,6 +225,7 @@
         <property name="playlistService" ref="playlistService"/>
         <property name="searchService" ref="searchService"/>
         <property name="securityService" ref="securityService"/>
+        <property name="musicFileService" ref="musicFileService"/>
     </bean>
 
     <bean id="savePlaylistValidator" class="net.sourceforge.subsonic.validator.SavePlaylistValidator">

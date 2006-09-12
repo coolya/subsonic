@@ -27,6 +27,7 @@ public class HomeController extends ParameterizableViewController {
     private SettingsService settingsService;
     private SearchService searchService;
     private MusicInfoService musicInfoService;
+    private MusicFileService musicFileService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -150,7 +151,7 @@ public class HomeController extends ParameterizableViewController {
 
     private Album createAlbum(MusicFileInfo info) {
         try {
-            return createAlbum(new MusicFile(info.getPath()));
+            return createAlbum(musicFileService.createMusicFile(info.getPath()));
         } catch (Exception x) {
             LOG.warn("Failed to create albumTitle list entry for " + info.getPath(), x);
             return null;
@@ -207,6 +208,10 @@ public class HomeController extends ParameterizableViewController {
 
     public void setMusicInfoService(MusicInfoService musicInfoService) {
         this.musicInfoService = musicInfoService;
+    }
+
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
     }
 
 

@@ -21,12 +21,13 @@ public class PlaylistService {
     private static final Logger LOG = Logger.getLogger(PlaylistService.class);
     private SettingsService settingsService;
     private SecurityService securityService;
+    private MusicFileService musicFileService;
 
     /**
-     * Saves the given playlist to persistent storage.
-     * @param playlist The playlist to save.
-     * @throws IOException If an I/O error occurs.
-     */
+    * Saves the given playlist to persistent storage.
+    * @param playlist The playlist to save.
+    * @throws IOException If an I/O error occurs.
+    */
     public void savePlaylist(Playlist playlist) throws IOException {
         String name = playlist.getName();
 
@@ -64,7 +65,7 @@ public class PlaylistService {
         BufferedReader reader = new BufferedReader(new FileReader(playlistFile));
         try {
             PlaylistFormat format = PlaylistFormat.getFilelistFormat(playlistFile);
-            format.loadPlaylist(playlist, reader);
+            format.loadPlaylist(playlist, reader, musicFileService);
         } finally {
             reader.close();
         }
@@ -122,6 +123,10 @@ public class PlaylistService {
         this.securityService = securityService;
     }
 
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
+    }
+
     private static class PlaylistFilenameFilter implements FilenameFilter {
         public boolean accept(File dir, String name) {
             name = name.toLowerCase();
@@ -133,7 +138,7 @@ public class PlaylistService {
      * Abstract superclass for playlist formats.
      */
     private static abstract class PlaylistFormat {
-        public abstract void loadPlaylist(Playlist playlist, BufferedReader reader) throws IOException;
+        public abstract void loadPlaylist(Playlist playlist, BufferedReader reader, MusicFileService musicFileService) throws IOException;
         public abstract void savePlaylist(Playlist playlist, PrintWriter writer) throws IOException;
         public static PlaylistFormat getFilelistFormat(File file) {
             String name = file.getName().toLowerCase();
@@ -154,13 +159,13 @@ public class PlaylistService {
      * Implementation of M3U playlist format.
      */
     private static class M3UFormat extends PlaylistFormat {
-        public void loadPlaylist(Playlist playlist, BufferedReader reader) throws IOException {
+        public void loadPlaylist(Playlist playlist, BufferedReader reader, MusicFileService musicFileService) throws IOException {
             playlist.clear();
             String line = reader.readLine();
             while (line != null) {
                 if (!line.startsWith("#")) {
                     try {
-                        MusicFile file = new MusicFile(new File(line));
+                        MusicFile file = musicFileService.createMusicFile(new File(line));
                         if (file.exists()) {
                             playlist.addFile(file);
                         }
@@ -187,7 +192,7 @@ public class PlaylistService {
      * Implementation of PLS playlist format.
      */
     private static class PLSFormat extends PlaylistFormat {
-        public void loadPlaylist(Playlist playlist, BufferedReader reader) throws IOException {
+        public void loadPlaylist(Playlist playlist, BufferedReader reader, MusicFileService musicFileService) throws IOException {
             playlist.clear();
 
             Pattern pattern = Pattern.compile("^File\\d+=(.*)$");
@@ -197,7 +202,7 @@ public class PlaylistService {
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.find()) {
                     try {
-                        MusicFile file = new MusicFile(new File(matcher.group(1)));
+                        MusicFile file = musicFileService.createMusicFile(new File(matcher.group(1)));
                         if (file.exists()) {
                             playlist.addFile(file);
                         }
@@ -230,7 +235,7 @@ public class PlaylistService {
      * Implementation of XSPF (http://www.xspf.org/) playlist format.
      */
     private static class XSPFFormat extends PlaylistFormat {
-        public void loadPlaylist(Playlist playlist, BufferedReader reader) throws IOException {
+        public void loadPlaylist(Playlist playlist, BufferedReader reader, MusicFileService musicFileService) throws IOException {
             playlist.clear();
 
             SAXBuilder builder = new SAXBuilder();
@@ -253,7 +258,7 @@ public class PlaylistService {
                 if (location != null && location.startsWith("file://")) {
                     location = location.replaceFirst("file://", "");
                     try {
-                        MusicFile file = new MusicFile(location);
+                        MusicFile file = musicFileService.createMusicFile(location);
                         if (file.exists()) {
                             playlist.addFile(file);
                         }

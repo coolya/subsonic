@@ -19,6 +19,7 @@ public class PlaylistController extends ParameterizableViewController {
     private PlayerService playerService;
     private SecurityService securityService;
     private SettingsService settingsService;
+    private MusicFileService musicFileService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -77,10 +78,10 @@ public class PlaylistController extends ParameterizableViewController {
             playlist.setStatus(Playlist.Status.STOPPED);
         } else if (request.getParameter("play") != null) {
             sendM3U = true;
-            MusicFile file = new MusicFile(request.getParameter("play"));
+            MusicFile file = musicFileService.createMusicFile(request.getParameter("play"));
             playlist.addFile(file, false);
         } else if (request.getParameter("add") != null) {
-            MusicFile file = new MusicFile(request.getParameter("add"));
+            MusicFile file = musicFileService.createMusicFile(request.getParameter("add"));
             playlist.addFile(file);
             index = playlist.size() - 1;
         } else if (request.getParameter("clear") != null) {
@@ -145,6 +146,10 @@ public class PlaylistController extends ParameterizableViewController {
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
+    }
+
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
     }
 
     /**

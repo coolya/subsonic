@@ -24,24 +24,12 @@ public class MusicFile {
     private Set<String> excludes;
 
     /**
-     * Creates a new instance for the given file.
+     * Do not use this method directly. Instead, use {@link MusicFileService#createMusicFile}.
+     *
      * @param file A file on the local file system.
-     * @exception SecurityException If access is denied to the given file.
      */
     public MusicFile(File file) {
-        if (!ServiceLocator.getSecurityService().isReadAllowed(file)) {
-            throw new SecurityException("Access denied to file " + file);
-        }
         this.file = file;
-    }
-
-    /**
-     * Creates a new instance for the given path name.
-     * @param pathName A path name for a file on the local file system.
-     * @exception SecurityException If access is denied to the given file.
-     */
-    public MusicFile(String pathName) {
-        this(new File(pathName));
     }
 
     /**
@@ -217,7 +205,7 @@ public class MusicFile {
      */
     public MusicFile getParent() throws IOException {
         File parent = file.getParentFile();
-        return parent == null ? null : new MusicFile(parent);
+        return parent == null ? null : createMusicFile(parent);
     }
 
     /**
@@ -247,7 +235,7 @@ public class MusicFile {
             File[] files = file.listFiles();
             MusicFile[] musicFiles = new MusicFile[files.length];
             for (int i = 0; i < files.length; i++) {
-                musicFiles[i] = new MusicFile(files[i]);
+                musicFiles[i] = createMusicFile(files[i]);
             }
             Arrays.sort(musicFiles, new MusicFileSorter());
 
@@ -265,6 +253,10 @@ public class MusicFile {
         return result.toArray(new MusicFile[0]);
     }
 
+    private MusicFile createMusicFile(File file) {
+        return ServiceLocator.getMusicFileService().createMusicFile(file);
+    }
+
     /**
      * Returns the first direct child (excluding directories).
      * This method is an optimization.
@@ -276,7 +268,7 @@ public class MusicFile {
         for (File f : files) {
             if (f.isFile() && acceptMusic(f)) {
                 try {
-                    return new MusicFile(f);
+                    return createMusicFile(f);
                 } catch (SecurityException x) {
                     LOG.warn("Failed to create MusicFile for " + f, x);
                 }
@@ -321,7 +313,7 @@ public class MusicFile {
 
         for (File file : files) {
             if (file.isDirectory() && !isExcluded(file)) {
-                new MusicFile(file).listCoverArtRecursively(coverArtFiles, limit);
+                createMusicFile(file).listCoverArtRecursively(coverArtFiles, limit);
             }
         }
 
@@ -565,8 +557,8 @@ public class MusicFile {
                 return a.getName().compareToIgnoreCase(b.getName());
             }
 
-            Integer trackA = a.getMetaData().getTrackNumber();
-            Integer trackB = b.getMetaData().getTrackNumber();
+            Integer trackA = a.getMetaData() == null ? null : a.getMetaData().getTrackNumber();
+            Integer trackB = b.getMetaData() == null ? null : b.getMetaData().getTrackNumber();
 
             if (trackA == null && trackB != null) {
                 return 1;

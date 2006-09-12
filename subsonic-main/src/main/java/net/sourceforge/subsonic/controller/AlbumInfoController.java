@@ -19,13 +19,14 @@ public class AlbumInfoController extends SimpleFormController {
     private static final Logger LOG = Logger.getLogger(AlbumInfoController.class);
 
     private AmazonSearchService amazonSearchService;
+    private MusicFileService musicFileService;
 
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         String path = request.getParameter("path");
         String artist = request.getParameter("artist");
         String album = request.getParameter("album");
 
-        MusicFile child = new MusicFile(path).getFirstChild();
+        MusicFile child = musicFileService.createMusicFile(path).getFirstChild();
         MusicFile.MetaData metaData = child.getMetaData();
         if (artist == null) {
             artist = metaData.getArtist();
@@ -112,5 +113,9 @@ public class AlbumInfoController extends SimpleFormController {
 
     public void setAmazonSearchService(AmazonSearchService amazonSearchService) {
         this.amazonSearchService = amazonSearchService;
+    }
+
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
     }
 }
