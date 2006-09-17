@@ -21,11 +21,11 @@ public class EditTagsController extends ParameterizableViewController {
 
         String path = request.getParameter("path");
         MusicFile dir = musicFileService.getMusicFile(path);
-        MusicFile[] files = dir.getChildren(false);
+        List<MusicFile> files = dir.getChildren(false, false, true);
 
         Map<String, Object> map = new HashMap<String, Object>();
-        if (files.length > 0) {
-            MusicFile.MetaData metaData = files[0].getMetaData();
+        if (!files.isEmpty()) {
+            MusicFile.MetaData metaData = files.get(0).getMetaData();
             map.put("defaultArtist", metaData.getArtist());
             map.put("defaultAlbum", metaData.getAlbum());
             map.put("defaultYear", metaData.getYear());

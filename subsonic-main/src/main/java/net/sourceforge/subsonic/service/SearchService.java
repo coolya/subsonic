@@ -75,12 +75,11 @@ public class SearchService {
                     for (MusicFolder musicFolder : musicFolders) {
 
                         MusicFile root = musicFileService.getMusicFile(musicFolder.getPath());
-                        MusicFile[] all = root.getChildren(true, true);
+                        List<MusicFile> all = root.getChildren(true, true, false);
 
-                        for (int i = 0; i < all.length; i++) {
+                        while (!all.isEmpty()) {
                             count++;
-                            writer.println(Line.forFile(all[i], oldIndex));
-                            all[i] = null;  // Make available for GC.
+                            writer.println(Line.forFile(all.remove(0), oldIndex));
 
                             if (count % 1000 == 0) {
                                 LOG.info("Created search index with " + count + " entries.");

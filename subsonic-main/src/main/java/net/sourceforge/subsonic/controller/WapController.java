@@ -64,11 +64,12 @@ public class WapController extends MultiActionController {
         MusicFile parent = musicFileService.getMusicFile(path);
 
         // Create array of file(s) to display.
-        MusicFile[] children;
+        List<MusicFile> children;
         if (parent.isDirectory()) {
-            children = parent.getChildren(false, true);
+            children = parent.getChildren(false, true, true);
         } else {
-            children = new MusicFile[] {parent};
+            children = new ArrayList<MusicFile>();
+            children.add(parent);
         }
 
         Map<String, Object> map = new HashMap<String, Object>();

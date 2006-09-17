@@ -1,30 +1,24 @@
 
-CHANGED IN 2.9.beta1
+CHANGED IN 2.8.1
 ====================
 Add "Download" option to main.jsp album view.
 Add "search" text in textfield. Select all on click.
-
-
-
-if (cachingEnabled) {
-
-
-}
-
-
-
+Bugfix: Avoid excess disk and memory usage when refreshing the search index (bug introduced in 2.8)
+New: Improved thumbnail quality using step-wise bilinear resampling.
+New: Thumbnails are now cached in SUBSONIC_HOME/thumbs
+New: Miscellaneous other caching for faster response times.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
+Don't show empty statistics.
+Sorting-problems with accented chars, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
 Lucene?
 Wiki-like comments, with links etc. radeox
-User-Specific Ratings and Comments (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=86)
+User-Specific Ratings and Comments (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=86) http://www.nabble.com/Possible-Bug--No-data-received-from-server-DWR-1.0-Exception-in-DWR-1.1-t1260759.html
+AJAX error dialog from Dave.
 Upgrade Spring.
 Transcode download
-Cover art resize/ds.
 Remove "user" column from status.jsp?
-resample (bicubic/bilinear)
-Cover art cache. Maybe both in memory and disk.
 MusicFile cache. Use ehcache?
 Mark music_file_info as disabled if path doesn't exist.
 &ndash; &mdash;

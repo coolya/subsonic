@@ -210,34 +210,27 @@ public class MusicFile {
 
     /**
      * Returns all music files that are children of this music file.
-     * Equivalent to <code>getChildren(recurse, false)</code>.
-     * @param recurse Whether to recurse or not.
-     * @return All children music files.
-     * @exception IOException If an I/O error occurs.
-     */
-    public MusicFile[] getChildren(boolean recurse) throws IOException {
-        return getChildren(recurse, false);
-    }
-
-    /**
-     * Returns all music files that are children of this music file.
      * @param recurse Whether to recurse or not.
      * @param includeDirectories Whether directories should be included in the result.
+     * @param sort Whether to sort files in the same directory.
      * @return All children music files.
      * @exception IOException If an I/O error occurs.
      */
-    public MusicFile[] getChildren(boolean recurse, boolean includeDirectories) throws IOException {
+    public List<MusicFile> getChildren(boolean recurse, boolean includeDirectories, boolean sort) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>();
 
         if (recurse) {
-            listMusicRecursively(result, includeDirectories);
+            listMusicRecursively(result, includeDirectories, sort);
         } else {
             File[] files = file.listFiles();
             MusicFile[] musicFiles = new MusicFile[files.length];
             for (int i = 0; i < files.length; i++) {
                 musicFiles[i] = createMusicFile(files[i]);
             }
-            Arrays.sort(musicFiles, new MusicFileSorter());
+
+            if (sort) {
+                Arrays.sort(musicFiles, new MusicFileSorter());
+            }
 
             for (MusicFile musicFile : musicFiles) {
                 if (acceptMusic(musicFile.getFile()) && (musicFile.isFile() || includeDirectories)) {
@@ -250,7 +243,7 @@ public class MusicFile {
             }
         }
 
-        return result.toArray(new MusicFile[0]);
+        return result;
     }
 
     private MusicFile createMusicFile(File file) {
@@ -277,16 +270,16 @@ public class MusicFile {
         return null;
     }
 
-    private void listMusicRecursively(List<MusicFile> musicFiles, boolean includeDirectories) throws IOException {
+    private void listMusicRecursively(List<MusicFile> musicFiles, boolean includeDirectories, boolean sort) throws IOException {
         if (isFile() || includeDirectories) {
             musicFiles.add(this);
         }
 
         if (isDirectory()) {
-            MusicFile[] children = getChildren(false, true);
+            List<MusicFile> children = getChildren(false, true, sort);
 
             for (MusicFile child : children) {
-                child.listMusicRecursively(musicFiles, includeDirectories);
+                child.listMusicRecursively(musicFiles, includeDirectories, sort);
             }
         }
     }

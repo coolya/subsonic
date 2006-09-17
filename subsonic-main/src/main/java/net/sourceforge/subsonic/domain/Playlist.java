@@ -139,7 +139,7 @@ public class Playlist {
             index = 0;
             files.clear();
         }
-        Collections.addAll(files, file.getChildren(true));
+        files.addAll(file.getChildren(true, false, true));
         setStatus(Status.PLAYING);
     }
 

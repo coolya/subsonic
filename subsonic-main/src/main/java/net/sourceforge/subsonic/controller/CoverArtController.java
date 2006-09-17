@@ -2,17 +2,16 @@ package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.*;
 import net.sourceforge.subsonic.service.*;
+import org.apache.commons.codec.digest.*;
 import org.apache.commons.io.*;
 import org.apache.commons.lang.*;
-import org.apache.commons.codec.digest.*;
+import org.springframework.web.bind.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
-import org.springframework.web.bind.*;
 
 import javax.imageio.*;
 import javax.servlet.http.*;
 import java.awt.*;
-import java.awt.geom.*;
 import java.awt.image.*;
 import java.io.*;
 
@@ -103,10 +102,8 @@ public class CoverArtController implements Controller, LastModified {
     }
 
     private File getCachedImage(File file, int size) throws IOException {
-        String md5 = DigestUtils.md5Hex(file.getPath() + size);
-
-        // TODO: Create subdir for each size.
-        File cachedImage = new File(getImageCacheDirectory(), md5);
+        String md5 = DigestUtils.md5Hex(file.getPath());
+        File cachedImage = new File(getImageCacheDirectory(size), md5 + ".jpeg");
 
         // Is cache missing or obsolete?
         if (!cachedImage.exists() || file.lastModified() > cachedImage.lastModified()) {
@@ -130,8 +127,9 @@ public class CoverArtController implements Controller, LastModified {
         return cachedImage;
     }
 
-    private File getImageCacheDirectory() {
+    private File getImageCacheDirectory(int size) {
         File dir = new File(SettingsService.getSubsonicHome(), "thumbs");
+        dir = new File(dir, String.valueOf(size));
         if (!dir.exists()) {
             if (dir.mkdirs()) {
                 LOG.info("Created thumbnail cache " + dir);
@@ -143,41 +141,34 @@ public class CoverArtController implements Controller, LastModified {
         return dir;
     }
 
-    private BufferedImage scale(BufferedImage original, int width, int height) {
+    public BufferedImage scale(BufferedImage image, int width, int height) {
+        int w = image.getWidth();
+        int h = image.getHeight();
+        BufferedImage thumb = image;
 
-        BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        // For optimal results, use step by step bilinear resampling - halfing the size at each step.
+        do {
+            w /= 2;
+            h /= 2;
+            if (w < width) {
+                w = width;
+            }
+            if (h < height) {
+                h = height;
+            }
 
-        // scale to fit
-        double xScale = (double)width  / original.getWidth();
-        double yScale = (double)height / original.getHeight();
+            BufferedImage temp = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2 = temp.createGraphics();
+            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g2.drawImage(thumb, 0, 0, temp.getWidth(), temp.getHeight(), null);
+            g2.dispose();
 
-        // center thumbnail image
-        double x = (width  - original.getWidth()  * xScale)/2;
-        double y = (height - original.getHeight() * yScale)/2;
+            thumb = temp;
+        } while (w != width);
 
-        AffineTransform at = AffineTransform.getTranslateInstance(x, y);
-        at.scale(xScale, yScale);
-
-        Graphics2D g2 = result.createGraphics();
-        g2.drawRenderedImage(original, at);
-        g2.dispose();
-
-        return result;
+        return thumb;
     }
-
-//    private BufferedImage scale(BufferedImage original, int width, int height) {
-//
-//        BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-//
-//        Graphics2D graphics2D = result.createGraphics();
-//        // TODO: Make configurable?
-//        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-//                                    RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-//        graphics2D.drawImage(original, 0, 0, width, height, null);
-//        graphics2D.dispose();
-//
-//        return result;
-//    }
 
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;

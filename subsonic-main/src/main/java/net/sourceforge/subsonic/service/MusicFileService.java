@@ -1,8 +1,7 @@
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.*;
 import net.sf.ehcache.*;
+import net.sourceforge.subsonic.domain.*;
 
 import java.io.*;
 import java.util.*;
@@ -14,7 +13,6 @@ import java.util.*;
  */
 public class MusicFileService {
 
-    private static final Logger LOG = Logger.getLogger(MusicFileService.class);
     public static final int MUSIC_FILE_CACHE_SIZE = 1000;
     public static final int COVER_ART_CACHE_SIZE  =  200;
     public static final long COVER_ART_CACHE_TTL  =  5L * 60L;  // 5 minutes

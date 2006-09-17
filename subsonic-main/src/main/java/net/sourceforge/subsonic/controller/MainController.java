@@ -29,7 +29,7 @@ public class MainController extends ParameterizableViewController {
         Player player = playerService.getPlayer(request, response);
         String path = request.getParameter("path");
         MusicFile dir = musicFileService.getMusicFile(path);
-        MusicFile[] children = dir.getChildren(false, true);
+        List<MusicFile> children = dir.getChildren(false, true, true);
 
         map.put("dir", dir);
         map.put("children", children);
@@ -70,7 +70,7 @@ public class MainController extends ParameterizableViewController {
         return result;
     }
 
-    private boolean isMultipleArtists(MusicFile[] children) {
+    private boolean isMultipleArtists(List<MusicFile> children) {
         // Collect unique artist names.
         Set<String> artists = new HashSet<String>();
         for (MusicFile child : children) {
