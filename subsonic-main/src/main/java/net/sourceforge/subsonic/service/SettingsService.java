@@ -75,6 +75,9 @@ public class SettingsService {
     private MusicFolderDao musicFolderDao;
     private UserDao userDao;
 
+    private String[] cachedCoverArtMaskArray;
+    private String[] cachedMusicMaskArray;
+
     public SettingsService() {
         File propertyFile = getPropertyFile();
 
@@ -219,24 +222,32 @@ public class SettingsService {
         return properties.getProperty(KEY_MUSIC_MASK, DEFAULT_MUSIC_MASK);
     }
 
-    public void setMusicMask(String mask) {
+    public synchronized void setMusicMask(String mask) {
         properties.setProperty(KEY_MUSIC_MASK,  mask);
+        cachedMusicMaskArray = null;
     }
 
-    public String[] getMusicMaskAsArray() {
-        return toStringArray(getMusicMask());
+    public synchronized String[] getMusicMaskAsArray() {
+        if (cachedMusicMaskArray == null) {
+            cachedMusicMaskArray = toStringArray(getMusicMask());
+        }
+        return cachedMusicMaskArray;
     }
 
     public String getCoverArtMask() {
         return properties.getProperty(KEY_COVER_ART_MASK, DEFAULT_COVER_ART_MASK);
     }
 
-    public void setCoverArtMask(String mask) {
+    public synchronized void setCoverArtMask(String mask) {
         properties.setProperty(KEY_COVER_ART_MASK,  mask);
+        cachedCoverArtMaskArray = null;
     }
 
-    public String[] getCoverArtMaskAsArray() {
-        return toStringArray(getCoverArtMask());
+    public synchronized String[] getCoverArtMaskAsArray() {
+        if (cachedCoverArtMaskArray == null) {
+            cachedCoverArtMaskArray = toStringArray(getCoverArtMask());
+        }
+        return cachedCoverArtMaskArray;
     }
 
     public int getCoverArtLimit() {
