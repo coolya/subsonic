@@ -41,9 +41,8 @@ public class MusicFileInfoDao extends AbstractDao {
 
         JdbcTemplate template = getJdbcTemplate();
         template.setMaxRows(offset + count);
-        String sql = "select " + COLUMNS + " from music_file_info where rating > 0 order by rating desc";
-        MusicFileInfo[] tmp = (MusicFileInfo[]) template.query(sql, rowMapper).toArray(new MusicFileInfo[0]);
-        return copy(tmp, offset, count);
+        String sql = "select " + COLUMNS + " from music_file_info where rating > 0 order by rating desc limit " + count + " offset " + offset;
+        return (MusicFileInfo[]) template.query(sql, rowMapper).toArray(new MusicFileInfo[0]);
     }
 
     /**
@@ -59,9 +58,8 @@ public class MusicFileInfoDao extends AbstractDao {
 
         JdbcTemplate template = getJdbcTemplate();
         template.setMaxRows(offset + count);
-        String sql = "select " + COLUMNS + " from music_file_info where play_count > 0 order by play_count desc";
-        MusicFileInfo[] tmp = (MusicFileInfo[]) template.query(sql, rowMapper).toArray(new MusicFileInfo[0]);
-        return copy(tmp, offset, count);
+        String sql = "select " + COLUMNS + " from music_file_info where play_count > 0 order by play_count desc limit " + count + " offset " + offset;
+        return (MusicFileInfo[]) template.query(sql, rowMapper).toArray(new MusicFileInfo[0]);
     }
 
     /**
@@ -77,9 +75,8 @@ public class MusicFileInfoDao extends AbstractDao {
 
         JdbcTemplate template = getJdbcTemplate();
         template.setMaxRows(offset + count);
-        String sql = "select " + COLUMNS + " from music_file_info where last_played is not null order by last_played desc";
-        MusicFileInfo[] tmp = (MusicFileInfo[]) template.query(sql, rowMapper).toArray(new MusicFileInfo[0]);
-        return copy(tmp, offset, count);
+        String sql = "select " + COLUMNS + " from music_file_info where last_played is not null order by last_played desc limit " + count + " offset " + offset;
+        return (MusicFileInfo[]) template.query(sql, rowMapper).toArray(new MusicFileInfo[0]);
     }
 
     /**
