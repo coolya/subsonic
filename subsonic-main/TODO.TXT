@@ -10,6 +10,7 @@ New: Miscellaneous other caching for faster response times.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
+WIKI help page.
 Test if iTunes podcast works.
 Database paging.
 Don't show empty statistics.

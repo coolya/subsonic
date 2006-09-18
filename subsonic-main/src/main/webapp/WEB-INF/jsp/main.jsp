@@ -103,15 +103,22 @@
         </c:if>
     </span>
 
-    <div id="comment" class="albumComment">${model.comment}</div>
+    <div id="comment" class="albumComment"><sub:wiki text="${model.comment}"/></div>
 
-    <form method="post" id="commentForm" action="setMusicFileInfo.view" style="display:none">
+    <div id="commentForm" style="display:none">
+    <form method="post" action="setMusicFileInfo.view">
         <input type="hidden" name="action" value="comment"/>
         <input type="hidden" name="path" value="${model.dir.path}"/>
         <textarea name="comment" rows="6" cols="70">${model.comment}</textarea>
         <input type="submit" value="<fmt:message key="common.save"/>"/>
     </form>
-
+        <table class="detail">
+            <tr><td style="padding-right:1em">__text__</td><td>Bold text           </td><td style="padding-left:3em;padding-right:1em">\\             </td><td>Creates a line break</td></tr>
+            <tr><td style="padding-right:1em">~~text~~</td><td>Italic text         </td><td style="padding-left:3em;padding-right:1em">(empty line)   </td><td>Creates a new paragraph</td></tr>
+            <tr><td style="padding-right:1em">* text  </td><td>List item           </td><td style="padding-left:3em;padding-right:1em">http://foo.com/</td><td>Creates an external link</td></tr>
+            <tr><td style="padding-right:1em">1. text </td><td>Enumerated list item</td><td style="padding-left:3em;padding-right:1em">               </td><td>                        </td></tr>
+        </table>
+    </div>
 
     <script type='text/javascript'>
         function toggleComment() {
