@@ -107,7 +107,6 @@ public class CoverArtController implements Controller, LastModified {
 
         // Is cache missing or obsolete?
         if (!cachedImage.exists() || file.lastModified() > cachedImage.lastModified()) {
-            LOG.debug("MISS: " + file + " (" + size + ')');  //TODO: Remove
             InputStream in = null;
             OutputStream out = null;
             try {
@@ -120,10 +119,7 @@ public class CoverArtController implements Controller, LastModified {
                 IOUtils.closeQuietly(in);
                 IOUtils.closeQuietly(out);
             }
-        } else {
-            LOG.debug("HIT:  " + file + " (" + size + ')');  //TODO: Remove
         }
-
         return cachedImage;
     }
 

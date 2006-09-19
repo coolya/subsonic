@@ -210,41 +210,86 @@ public class MusicFile {
 
     /**
      * Returns all music files that are children of this music file.
-     * @param recurse Whether to recurse or not.
+     *
      * @param includeDirectories Whether directories should be included in the result.
      * @param sort Whether to sort files in the same directory.
      * @return All children music files.
      * @exception IOException If an I/O error occurs.
      */
-    public List<MusicFile> getChildren(boolean recurse, boolean includeDirectories, boolean sort) throws IOException {
+    public List<MusicFile> getChildren(boolean includeDirectories, boolean sort) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>();
 
-        if (recurse) {
-            listMusicRecursively(result, includeDirectories, sort);
-        } else {
-            File[] files = file.listFiles();
-            MusicFile[] musicFiles = new MusicFile[files.length];
-            for (int i = 0; i < files.length; i++) {
-                musicFiles[i] = createMusicFile(files[i]);
-            }
+        File[] files = file.listFiles();
+        MusicFile[] musicFiles = new MusicFile[files.length];
+        for (int i = 0; i < files.length; i++) {
+            musicFiles[i] = createMusicFile(files[i]);
+        }
 
-            if (sort) {
-                Arrays.sort(musicFiles, new MusicFileSorter());
-            }
+        if (sort) {
+            Arrays.sort(musicFiles, new MusicFileSorter());
+        }
 
-            for (MusicFile musicFile : musicFiles) {
-                if (acceptMusic(musicFile.getFile()) && (musicFile.isFile() || includeDirectories)) {
-                    try {
-                        result.add(musicFile);
-                    } catch (SecurityException x) {
-                        LOG.warn("Failed to create MusicFile for " + musicFile, x);
-                    }
+        for (MusicFile musicFile : musicFiles) {
+            if (acceptMusic(musicFile.getFile()) && (musicFile.isFile() || includeDirectories)) {
+                try {
+                    result.add(musicFile);
+                } catch (SecurityException x) {
+                    LOG.warn("Failed to create MusicFile for " + musicFile, x);
                 }
             }
         }
 
         return result;
     }
+
+    /**
+     * Returns all music files that are children, grand-children etc of this music file.
+     *
+     * @param includeDirectories Whether directories should be included in the result.
+     * @param sort Whether to sort files in the same directory.
+     * @return All descendant music files.
+     * @exception IOException If an I/O error occurs.
+     */
+    public List<MusicFile> getDescendants(final boolean includeDirectories, final boolean sort) throws IOException {
+        final List<MusicFile> result = new ArrayList<MusicFile>();
+
+        Visitor visitor = new Visitor() {
+            public void visit(MusicFile musicFile) {
+                result.add(musicFile);
+            }
+            public boolean includeDirectories() {
+                return includeDirectories;
+            }
+            public boolean sorted() {
+                return sort;
+            }
+        };
+
+        accept(visitor);
+        return result;
+    }
+
+    /**
+     * Accepts the given visitor (as in the <em>Visitor</em> pattern). Recursively calls <code>accept()</code> on all
+     * descendants of this music file.
+     *
+     * @param visitor The visitor.
+     * @throws IOException If an I/O error occurs.
+     */
+    public void accept(Visitor visitor) throws IOException {
+        if (isFile() || visitor.includeDirectories()) {
+            visitor.visit(this);
+        }
+
+        if (isDirectory()) {
+            List<MusicFile> children = getChildren(true, visitor.sorted());
+
+            for (MusicFile child : children) {
+                child.accept(visitor);
+            }
+        }
+    }
+
 
     private MusicFile createMusicFile(File file) {
         return ServiceLocator.getMusicFileService().getMusicFile(file);
@@ -268,20 +313,6 @@ public class MusicFile {
             }
         }
         return null;
-    }
-
-    private void listMusicRecursively(List<MusicFile> musicFiles, boolean includeDirectories, boolean sort) throws IOException {
-        if (isFile() || includeDirectories) {
-            musicFiles.add(this);
-        }
-
-        if (isDirectory()) {
-            List<MusicFile> children = getChildren(false, true, sort);
-
-            for (MusicFile child : children) {
-                child.listMusicRecursively(musicFiles, includeDirectories, sort);
-            }
-        }
     }
 
     private boolean acceptMusic(File file) throws IOException {
@@ -520,5 +551,29 @@ public class MusicFile {
 
             return trackA.compareTo(trackB);
         }
+    }
+
+    /**
+     * Defines a visitor (as in the <em>Visitor</em> pattern), used to traverse a hierarchy of music files.
+     */
+    public static interface Visitor {
+
+        /**
+         * Visits the given music file.
+         * @param musicFile The music file to visist.
+         */
+        void visit(MusicFile musicFile);
+
+        /**
+         * Whether this visitor wants to visit directories.
+         * @return Whether this visitor wants to visit directories.
+         */
+        boolean includeDirectories();
+
+        /**
+         * Whether this visitor wants to visit files in ascending order (within a given directory).
+         * @return Whether this visitor wants to visit files in ascending order.
+         */
+        boolean sorted();
     }
 }

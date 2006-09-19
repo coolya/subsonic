@@ -3,6 +3,7 @@ package net.sourceforge.subsonic.service;
 import net.sourceforge.subsonic.*;
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.util.*;
+import org.apache.commons.io.*;
 
 import java.io.*;
 import java.util.*;
@@ -69,22 +70,13 @@ public class SearchService {
 
                     writer = new PrintWriter(new FileWriter(getIndexFile()));
 
+                    // Create a scanner for visiting all music files.
+                    Scanner scanner = new Scanner(writer, oldIndex);
+
                     // Read entire music directory.
-                    MusicFolder[] musicFolders = settingsService.getAllMusicFolders();
-                    int count = 0;
-                    for (MusicFolder musicFolder : musicFolders) {
-
+                    for (MusicFolder musicFolder : settingsService.getAllMusicFolders()) {
                         MusicFile root = musicFileService.getMusicFile(musicFolder.getPath());
-                        List<MusicFile> all = root.getChildren(true, true, false);
-
-                        while (!all.isEmpty()) {
-                            count++;
-                            writer.println(Line.forFile(all.remove(0), oldIndex));
-
-                            if (count % 1000 == 0) {
-                                LOG.info("Created search index with " + count + " entries.");
-                            }
-                        }
+                        root.accept(scanner);
                     }
 
                     // Clear memory cache.
@@ -95,13 +87,13 @@ public class SearchService {
                         statistics = null;
                     }
 
-                    LOG.info("Created search index with " + count + " entries.");
+                    LOG.info("Created search index with " + scanner.getCount() + " entries.");
 
                 } catch (Exception x) {
                     LOG.error("Failed to create search index.", x);
                 } finally {
                     creatingIndex = false;
-                    if (writer != null) writer.close();
+                    IOUtils.closeQuietly(writer);
                 }
             }};
 
@@ -572,6 +564,37 @@ public class SearchService {
             buf.append(year == null ? "" : year);
 
             return buf.toString();
+        }
+    }
+
+    private static class Scanner implements MusicFile.Visitor {
+        private final PrintWriter writer;
+        private final Map<File, Line> oldIndex;
+        private int count;
+
+        Scanner(PrintWriter writer, Map<File, Line> oldIndex) {
+            this.writer = writer;
+            this.oldIndex = oldIndex;
+        }
+
+        public void visit(MusicFile musicFile) {
+            writer.println(Line.forFile(musicFile, oldIndex));
+            count++;
+            if (count % 1000 == 0) {
+                LOG.info("Created search index with " + count + " entries.");
+            }
+        }
+
+        public boolean includeDirectories() {
+            return true;
+        }
+
+        public boolean sorted() {
+            return false;
+        }
+
+        public int getCount() {
+            return count;
         }
     }
 }

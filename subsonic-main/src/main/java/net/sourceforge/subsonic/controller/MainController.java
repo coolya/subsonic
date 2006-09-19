@@ -29,7 +29,7 @@ public class MainController extends ParameterizableViewController {
         Player player = playerService.getPlayer(request, response);
         String path = request.getParameter("path");
         MusicFile dir = musicFileService.getMusicFile(path);
-        List<MusicFile> children = dir.getChildren(false, true, true);
+        List<MusicFile> children = dir.getChildren(true, true);
 
         map.put("dir", dir);
         map.put("children", children);
