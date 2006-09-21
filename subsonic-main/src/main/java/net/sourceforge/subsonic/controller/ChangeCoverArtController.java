@@ -37,7 +37,6 @@ public class ChangeCoverArtController extends AbstractController {
             saveCoverArt(path, url);
             return new ModelAndView(new RedirectView("main.view?path=" + StringUtil.urlEncode(path)));
         } else {
-
             return new ModelAndView("changeCoverArt", "model", createModel(request));
         }
 

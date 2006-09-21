@@ -1,15 +1,13 @@
 package net.sourceforge.subsonic.domain;
 
+import junit.framework.*;
+import net.sourceforge.subsonic.domain.Playlist.*;
+
 /**
  * Unit test of {@link Playlist}.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.4 $ $Date: 2005/11/14 21:31:25 $
  */
-
-import junit.framework.*;
-import net.sourceforge.subsonic.domain.Playlist.*;
-
 public class PlaylistTestCase extends TestCase {
 
     public void testEmpty() {
@@ -193,9 +191,9 @@ public class PlaylistTestCase extends TestCase {
 
         private String name;
 
-        public TestMusicFile() {}
+        TestMusicFile() {}
 
-        public TestMusicFile(String name) {
+        TestMusicFile(String name) {
             this.name = name;
         }
 
@@ -209,6 +207,14 @@ public class PlaylistTestCase extends TestCase {
 
         public boolean exists() {
             return true;
+        }
+
+        public boolean isFile() {
+            return true;
+        }
+
+        public boolean isDirectory() {
+            return false;
         }
     }
 }

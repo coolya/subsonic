@@ -119,7 +119,6 @@
         <url-pattern>/style/*</url-pattern>
     </filter-mapping>
 
-    <!--TODO: Use spring stuff in subsonic-servlet.xml?-->
     <filter-mapping>
         <filter-name>NoCacheFilter</filter-name>
         <url-pattern>/statusChart.view</url-pattern>

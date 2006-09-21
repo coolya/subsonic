@@ -1,3 +1,4 @@
+BEFORE: 85MB after full scan.
 
 CHANGED IN 2.8.1
 ====================
@@ -7,29 +8,30 @@ Bugfix: Avoid excess disk and memory usage when scanning the music library (bug 
 New: Improved thumbnail quality using step-wise bilinear resampling.
 New: Thumbnails are now cached in SUBSONIC_HOME/thumbs
 New: Miscellaneous other caching for faster response times.
+Database paging.
+Use Visitor pattern to optimize search index refresh.
+Wiki-like comments, with links etc. radeox.  Create taglib?
+WIKI help page.
+MusicFile cache. Use ehcache?
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
-WIKI help page.
 Test if iTunes podcast works.
-Database paging.
 Don't show empty statistics.
 Sorting-problems with accented chars, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
 Lucene?
-Use Visitor pattern to optimize search index refresh.
-Wiki-like comments, with links etc. radeox.  Create taglib?
 User-Specific Ratings and Comments (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=86) http://www.nabble.com/Possible-Bug--No-data-received-from-server-DWR-1.0-Exception-in-DWR-1.1-t1260759.html
 AJAX error dialog from Dave.
 Upgrade Spring.
 Transcode download
 Remove "user" column from status.jsp?
-MusicFile cache. Use ehcache?
 Mark music_file_info as disabled if path doesn't exist.
 &ndash; &mdash;
 Sometimes a song is started twice. Two m3u's sent?
 
 BACKLOG
 ==========
+User-level bitrate limit?
 Google Ads?
 Invalidate browser cache when changing cover art image.
 Show list of currently active users.
