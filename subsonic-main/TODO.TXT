@@ -1,4 +1,6 @@
 BEFORE: 85MB after full scan.
+BEFORE: 87MB after a while
+AFTER: 81MB after partial scan.
 
 CHANGED IN 2.8.1
 ====================
@@ -16,6 +18,7 @@ MusicFile cache. Use ehcache?
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
+Support changing of track numbers.
 Test if iTunes podcast works.
 Don't show empty statistics.
 Sorting-problems with accented chars, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
@@ -31,6 +34,7 @@ Sometimes a song is started twice. Two m3u's sent?
 
 BACKLOG
 ==========
+Check out ORB.
 User-level bitrate limit?
 Google Ads?
 Invalidate browser cache when changing cover art image.

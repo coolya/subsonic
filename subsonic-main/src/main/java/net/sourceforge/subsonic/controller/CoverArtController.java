@@ -123,7 +123,7 @@ public class CoverArtController implements Controller, LastModified {
         return cachedImage;
     }
 
-    private File getImageCacheDirectory(int size) {
+    private synchronized File getImageCacheDirectory(int size) {
         File dir = new File(SettingsService.getSubsonicHome(), "thumbs");
         dir = new File(dir, String.valueOf(size));
         if (!dir.exists()) {

@@ -39,7 +39,7 @@
 
             <p>
                 If you have constrained bandwidth, you may set an upper limit for the bitrate of the music streams. Subsonic will
-                then automatically resample the music to a suitable bitrate. (Supported for MP3 only).
+                then automatically resample the music to a suitable bitrate.
             </p>
 
             <p>
