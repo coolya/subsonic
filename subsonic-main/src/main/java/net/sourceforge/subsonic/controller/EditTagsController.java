@@ -51,6 +51,7 @@ public class EditTagsController extends ParameterizableViewController {
         song.setPath(file.getPath());
         song.setFileName(file.getName());
         song.setSuggestedTitle(parser.guessTitle(file));
+        song.setTrack(metaData.getTrackNumber());
         song.setTitle(metaData.getTitle());
         song.setArtist(metaData.getArtist());
         song.setAlbum(metaData.getAlbum());
@@ -68,6 +69,7 @@ public class EditTagsController extends ParameterizableViewController {
     public static class Song {
         private String path;
         private String fileName;
+        private Integer track;
         private String suggestedTitle;
         private String title;
         private String artist;
@@ -88,6 +90,14 @@ public class EditTagsController extends ParameterizableViewController {
 
         public void setFileName(String fileName) {
             this.fileName = fileName;
+        }
+
+        public Integer getTrack() {
+            return track;
+        }
+
+        public void setTrack(Integer track) {
+            this.track = track;
         }
 
         public String getSuggestedTitle() {

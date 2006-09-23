@@ -2,7 +2,7 @@ BEFORE: 85MB after full scan.
 BEFORE: 87MB after a while
 AFTER: 81MB after partial scan.
 
-CHANGED IN 2.8.1
+CHANGED IN 2.9.beta1
 ====================
 Add "Download" option to main.jsp album view.
 Add "search" text in textfield. Select all on click.
@@ -15,10 +15,10 @@ Use Visitor pattern to optimize search index refresh.
 Wiki-like comments, with links etc. radeox.  Create taglib?
 WIKI help page.
 MusicFile cache. Use ehcache?
+Support changing of track numbers.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
-Support changing of track numbers.
 Test if iTunes podcast works.
 Don't show empty statistics.
 Sorting-problems with accented chars, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112

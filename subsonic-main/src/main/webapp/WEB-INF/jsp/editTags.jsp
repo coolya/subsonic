@@ -52,11 +52,12 @@
     function updateNextTag() {
         var path = DWRUtil.getValue("path" + index);
         var artist = DWRUtil.getValue("artist" + index);
+        var track = DWRUtil.getValue("track" + index);
         var album = DWRUtil.getValue("album" + index);
         var title = DWRUtil.getValue("title" + index);
         var year = DWRUtil.getValue("year" + index);
         DWRUtil.setValue("status" + index, "<fmt:message key="edittags.working"/>");
-        tagService.setTags(setTagsCallback, path, artist, album, title, year);
+        tagService.setTags(setTagsCallback, path, track, artist, album, title, year);
     }
     function setTagsCallback(result) {
         var message;
@@ -87,12 +88,14 @@
 <table class="ruleTable indent">
     <tr>
         <th class="ruleTableHeader"><fmt:message key="edittags.file"/></th>
+        <th class="ruleTableHeader"><fmt:message key="edittags.track"/></th>
         <th class="ruleTableHeader"><fmt:message key="edittags.songtitle"/></th>
         <th class="ruleTableHeader"><fmt:message key="edittags.artist"/></th>
         <th class="ruleTableHeader"><fmt:message key="edittags.album"/></th>
         <th class="ruleTableHeader"><fmt:message key="edittags.year"/></th>
         <th class="ruleTableHeader" width="60pt"><fmt:message key="edittags.status"/></th></tr>
     <tr><th class="ruleTableHeader"></th>
+        <th class="ruleTableHeader"></th>
         <th class="ruleTableHeader"><a href="javascript:suggestTitle()"><fmt:message key="edittags.suggest"/></a> |
             <a href="javascript:resetTitle()"><fmt:message key="edittags.reset"/></a></th>
         <th class="ruleTableHeader"><input type="text" name="artistAll" size="15" onkeypress="DWRUtil.onReturn(event, setArtist)" value="${model.defaultArtist}"/>&nbsp;<a href="javascript:setArtist()"><fmt:message key="edittags.set"/></a></th>
@@ -108,6 +111,7 @@
             <input type="hidden" name="suggestedTitle${loopStatus.count - 1}" value="${song.suggestedTitle}"/>
             <input type="hidden" name="originalTitle${loopStatus.count - 1}" value="${song.title}"/>
             <td class="ruleTableCell">${fileName}</td>
+            <td class="ruleTableCell"><input type="text" size="5" name="track${loopStatus.count - 1}" value="${song.track}"/></td>
             <td class="ruleTableCell"><input type="text" size="30" name="title${loopStatus.count - 1}" value="${song.title}"/></td>
             <td class="ruleTableCell"><input type="text" size="15" name="artist${loopStatus.count - 1}" value="${song.artist}"/></td>
             <td class="ruleTableCell"><input type="text" size="15" name="album${loopStatus.count - 1}" value="${song.album}"/></td>

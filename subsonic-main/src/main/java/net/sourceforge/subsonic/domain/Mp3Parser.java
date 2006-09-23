@@ -152,6 +152,7 @@ public class Mp3Parser extends MetaDataParser {
             String album = metaData.getAlbum() == null ? "" : metaData.getAlbum();
             String title = metaData.getTitle() == null ? "" : metaData.getTitle();
             String year = metaData.getYear() == null ? "" : metaData.getYear();
+            Integer track = metaData.getTrackNumber();
 
             int yearInt = 0;
             if (year.length() > 0) {
@@ -166,6 +167,10 @@ public class Mp3Parser extends MetaDataParser {
             tag1.setAlbum(album);
             tag1.setTitle(title);
             tag1.setYear(year);
+            if (tag1 instanceof ID3V1_1Tag &&
+                track != null && track > 0 && track < 256) {
+                ((ID3V1_1Tag) tag1).setAlbumTrack(track);
+            }
 
             tag2.setArtist(artist);
             tag2.setAlbum(album);
@@ -174,6 +179,11 @@ public class Mp3Parser extends MetaDataParser {
                 tag2.setYear(yearInt);
             } else if (tag2 instanceof ID3V2_3_0Tag) {
                 ((ID3V2_3_0Tag) tag2).removeTYERTextInformationFrame();
+            }
+            if (track == null || track < 0) {
+                tag2.setTrackNumber(0);
+            } else {
+                tag2.setTrackNumber(track);
             }
 
             mediaFile.setID3Tag(tag1);
