@@ -16,6 +16,7 @@ Wiki-like comments, with links etc. radeox.  Create taglib?
 WIKI help page.
 MusicFile cache. Use ehcache?
 Support changing of track numbers in ID3 tags.
+Now possible to clear ratings.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
