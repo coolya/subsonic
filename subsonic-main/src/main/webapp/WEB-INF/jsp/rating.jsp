@@ -28,7 +28,7 @@ PARAMETERS
 
     <c:choose>
         <c:when test="${param.readonly}">
-            <img src="${imageUrl}" alt=""/>
+            <img src="${imageUrl}" alt="" title="<fmt:message key="rating.rating"/> ${param.rating}"/>
         </c:when>
         <c:otherwise>
             <a href="${ratingUrl}"><img src="${imageUrl}" style="margin-right:-3px" alt="" title="<fmt:message key="rating.rating"/> ${i}"/></a>
