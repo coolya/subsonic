@@ -28,11 +28,21 @@ PARAMETERS
 
     <c:choose>
         <c:when test="${param.readonly}">
-            <img src="${imageUrl}" alt="<fmt:message key="rating.rating"/> ${param.rating}"/>
+            <img src="${imageUrl}" alt=""/>
         </c:when>
         <c:otherwise>
-            <a href="${ratingUrl}"><img src="${imageUrl}" alt="<fmt:message key="rating.rating"/> ${param.rating}"/></a>
+            <a href="${ratingUrl}"><img src="${imageUrl}" style="margin-right:-3px" alt="" title="<fmt:message key="rating.rating"/> ${i}"/></a>
         </c:otherwise>
     </c:choose>
 
 </c:forEach>
+
+<sub:url value="setMusicFileInfo.view" var="clearRatingUrl">
+    <sub:param name="path" value="${param.path}"/>
+    <sub:param name="action" value="rating"/>
+    <sub:param name="rating" value="0"/>
+</sub:url>
+
+<c:if test="${not param.readonly}">
+    <a href="${clearRatingUrl}"><img src="<c:url value="/icons/clearRating.png"/>" alt="" title="<fmt:message key="rating.clearrating"/>" style="margin-left:5px; margin-right:5px"/></a>
+</c:if>

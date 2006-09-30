@@ -15,15 +15,18 @@ Use Visitor pattern to optimize search index refresh.
 Wiki-like comments, with links etc. radeox.  Create taglib?
 WIKI help page.
 MusicFile cache. Use ehcache?
-Support changing of track numbers.
+Support changing of track numbers in ID3 tags.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
+Missing refresh when changing from no cover art.
+Resolve problem with MetaData NullPointerException.
 Test if iTunes podcast works.
 Don't show empty statistics.
 Sorting-problems with accented chars, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
 Lucene?
-User-Specific Ratings and Comments (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=86) http://www.nabble.com/Possible-Bug--No-data-received-from-server-DWR-1.0-Exception-in-DWR-1.1-t1260759.html
+User-Specific Ratings and Comments (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=86)
+http://www.nabble.com/Possible-Bug--No-data-received-from-server-DWR-1.0-Exception-in-DWR-1.1-t1260759.html
 AJAX error dialog from Dave.
 Upgrade Spring.
 Transcode download
