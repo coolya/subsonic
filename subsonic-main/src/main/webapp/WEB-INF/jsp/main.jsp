@@ -39,6 +39,13 @@
 <h1>
     <img src="<c:url value="/icons/now_playing.png"/>" alt=""/>
     ${model.dir.formattedPath}
+    <c:if test="${model.dir.album and model.averageRating gt 0}">
+        <c:import url="rating.jsp">
+            <c:param name="path" value="${model.dir.path}"/>
+            <c:param name="readonly" value="true"/>
+            <c:param name="rating" value="${model.averageRating}"/>
+        </c:import>
+    </c:if>
 </h1>
 
 <h2>
@@ -88,11 +95,13 @@
 
 <c:if test="${model.dir.album}">
 
-    <c:import url="rating.jsp">
-        <c:param name="path" value="${model.dir.path}"/>
-        <c:param name="readonly" value="${not model.user.commentRole}"/>
-        <c:param name="rating" value="${model.rating}"/>
-    </c:import>
+    <c:if test="${model.user.commentRole}">
+        <c:import url="rating.jsp">
+            <c:param name="path" value="${model.dir.path}"/>
+            <c:param name="readonly" value="false"/>
+            <c:param name="rating" value="${model.userRating}"/>
+        </c:import>
+    </c:if>
 
     <span class="detail">
         <fmt:message key="main.playcount"><fmt:param value="${model.playCount}"/></fmt:message>

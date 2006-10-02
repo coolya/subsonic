@@ -20,6 +20,8 @@ Now possible to clear ratings.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
+Don't show stars if no rating.
+Fix "highest rated".
 Missing refresh when changing from no cover art.
 Resolve problem with MetaData NullPointerException.
 Test if iTunes podcast works.

@@ -40,11 +40,23 @@ public class MainController extends ParameterizableViewController {
         map.put("updateNowPlaying", request.getParameter("updateNowPlaying") != null);
 
         MusicFileInfo musicInfo = musicInfoService.getMusicFileInfoForPath(path);
-        int rating = musicInfo == null ? 0 : musicInfo.getRating();
         int playCount = musicInfo == null ? 0 : musicInfo.getPlayCount();
         String comment = musicInfo == null ? null : musicInfo.getComment();
         Date lastPlayed = musicInfo == null  ? null : musicInfo.getLastPlayed();
-        map.put("rating", rating);
+        String username = securityService.getCurrentUsername(request);
+        Integer userRating = musicInfoService.getRatingForUser(username, dir);
+        Double averageRating = musicInfoService.getAverageRating(dir);
+
+        if (userRating == null) {
+            userRating = 0;
+        }
+
+        if (averageRating == null) {
+            averageRating = 0.0D;
+        }
+
+        map.put("userRating", 10 * userRating);
+        map.put("averageRating", Math.round(10.0D * averageRating));
         map.put("playCount", playCount);
         map.put("comment", comment);
         map.put("lastPlayed", lastPlayed);

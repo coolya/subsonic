@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.*;
 import javax.servlet.http.*;
 
 /**
+ * TODO: Rename to SetCommentController?
  * Controller for updating music file metadata.
  *
  * @author Sindre Mehus
@@ -28,10 +29,7 @@ public class SetMusicFileInfoController extends AbstractController {
             musicFileInfo = new MusicFileInfo(path);
         }
 
-        if ("rating".equals(action)) {
-            int rating = Integer.parseInt(request.getParameter("rating"));
-            musicFileInfo.setRating(rating);
-        } else if ("comment".equals(action)) {
+        if ("comment".equals(action)) {
             musicFileInfo.setComment(StringUtil.toHtml(request.getParameter("comment")));
         }
 

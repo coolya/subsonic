@@ -11,19 +11,17 @@ import java.util.*;
 public class MusicFileInfo {
     private Integer id;
     private String path;
-    private int rating;
     private String comment;
     private int playCount;
     private Date lastPlayed;
 
     public MusicFileInfo(String path) {
-        this(null, path, 0, null, 0, null);
+        this(null, path, null, 0, null);
     }
 
-    public MusicFileInfo(Integer id, String path, int rating, String comment, int playCount, Date lastPlayed) {
+    public MusicFileInfo(Integer id, String path, String comment, int playCount, Date lastPlayed) {
         this.id = id;
         this.path = path;
-        this.rating = rating;
         this.comment = comment;
         this.playCount = playCount;
         this.lastPlayed = lastPlayed;
@@ -39,14 +37,6 @@ public class MusicFileInfo {
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
     }
 
     public String getComment() {

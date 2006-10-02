@@ -1,8 +1,8 @@
 package net.sourceforge.subsonic.dao;
 
 import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.util.*;
 import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.util.*;
 import org.springframework.jdbc.core.*;
 
 import java.sql.*;

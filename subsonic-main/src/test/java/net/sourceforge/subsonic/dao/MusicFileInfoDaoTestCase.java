@@ -1,7 +1,9 @@
 package net.sourceforge.subsonic.dao;
 
 import net.sourceforge.subsonic.domain.*;
+import org.springframework.dao.*;
 
+import java.io.*;
 import java.util.*;
 
 /**
@@ -12,10 +14,12 @@ public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
 
     protected void setUp() throws Exception {
         getJdbcTemplate().execute("delete from music_file_info");
+        getJdbcTemplate().execute("delete from user_role");
+        getJdbcTemplate().execute("delete from user");
     }
 
     public void testCreateMusicFileInfo() {
-        MusicFileInfo info = new MusicFileInfo(null, "path", 0, "comment", 123, new Date());
+        MusicFileInfo info = new MusicFileInfo(null, "path", "comment", 123, new Date());
         musicFileInfoDao.createMusicFileInfo(info);
 
         MusicFileInfo newInfo = musicFileInfoDao.getMusicFileInfoForPath("path");
@@ -23,7 +27,7 @@ public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
     }
 
     public void testCaseInsensitivity() {
-        MusicFileInfo info = new MusicFileInfo(null, "aBcDeFgH", 0, "comment", 123, new Date());
+        MusicFileInfo info = new MusicFileInfo(null, "aBcDeFgH", "comment", 123, new Date());
         musicFileInfoDao.createMusicFileInfo(info);
 
         MusicFileInfo newInfo = musicFileInfoDao.getMusicFileInfoForPath("AbcdefGH");
@@ -31,13 +35,12 @@ public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
     }
 
     public void testUpdateMusicFileInfo() {
-        MusicFileInfo info = new MusicFileInfo(null, "path", 0, "comment", 123, new Date());
+        MusicFileInfo info = new MusicFileInfo(null, "path", "comment", 123, new Date());
         musicFileInfoDao.createMusicFileInfo(info);
         info = musicFileInfoDao.getMusicFileInfoForPath("path");
 
         info.setPath("newPath");
         info.setPlayCount(5);
-        info.setRating(3);
         info.setLastPlayed(new Date());
         info.setComment("newComment");
         musicFileInfoDao.updateMusicFileInfo(info);
@@ -47,66 +50,66 @@ public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
     }
 
     public void testGetHighestRated() {
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "f", 5, null, 0, null));
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "b", 4, null, 0, null));
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "d", 3, null, 0, null));
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "a", 2, null, 0, null));
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "e", 1, null, 0, null));
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "c", 0, null, 0, null)); // Not inclued in query.
+        userDao.createUser(new User("sindre", "secret"));
+        musicFileInfoDao.setRatingForUser("sindre", new MusicFile(new File("f")), 5);
+        musicFileInfoDao.setRatingForUser("sindre", new MusicFile(new File("b")), 4);
+        musicFileInfoDao.setRatingForUser("sindre", new MusicFile(new File("d")), 3);
+        musicFileInfoDao.setRatingForUser("sindre", new MusicFile(new File("a")), 2);
+        musicFileInfoDao.setRatingForUser("sindre", new MusicFile(new File("e")), 1);
 
-        MusicFileInfo[] highestRated = musicFileInfoDao.getHighestRated(0, 0);
-        assertEquals("Error in getHighestRated().", 0, highestRated.length);
+        List<String> highestRated = musicFileInfoDao.getHighestRated(0, 0);
+        assertEquals("Error in getHighestRated().", 0, highestRated.size());
 
         highestRated = musicFileInfoDao.getHighestRated(0, 1);
-        assertEquals("Error in getHighestRated().", 1, highestRated.length);
-        assertEquals("Error in getHighestRated().", "f", highestRated[0].getPath());
+        assertEquals("Error in getHighestRated().", 1, highestRated.size());
+        assertEquals("Error in getHighestRated().", "f", highestRated.get(0));
 
         highestRated = musicFileInfoDao.getHighestRated(0, 2);
-        assertEquals("Error in getHighestRated().", 2, highestRated.length);
-        assertEquals("Error in getHighestRated().", "f", highestRated[0].getPath());
-        assertEquals("Error in getHighestRated().", "b", highestRated[1].getPath());
+        assertEquals("Error in getHighestRated().", 2, highestRated.size());
+        assertEquals("Error in getHighestRated().", "f", highestRated.get(0));
+        assertEquals("Error in getHighestRated().", "b", highestRated.get(1));
 
         highestRated = musicFileInfoDao.getHighestRated(0, 5);
-        assertEquals("Error in getHighestRated().", 5, highestRated.length);
-        assertEquals("Error in getHighestRated().", "f", highestRated[0].getPath());
-        assertEquals("Error in getHighestRated().", "b", highestRated[1].getPath());
-        assertEquals("Error in getHighestRated().", "d", highestRated[2].getPath());
-        assertEquals("Error in getHighestRated().", "a", highestRated[3].getPath());
-        assertEquals("Error in getHighestRated().", "e", highestRated[4].getPath());
+        assertEquals("Error in getHighestRated().", 5, highestRated.size());
+        assertEquals("Error in getHighestRated().", "f", highestRated.get(0));
+        assertEquals("Error in getHighestRated().", "b", highestRated.get(1));
+        assertEquals("Error in getHighestRated().", "d", highestRated.get(2));
+        assertEquals("Error in getHighestRated().", "a", highestRated.get(3));
+        assertEquals("Error in getHighestRated().", "e", highestRated.get(4));
 
         highestRated = musicFileInfoDao.getHighestRated(0, 6);
-        assertEquals("Error in getHighestRated().", 5, highestRated.length);
+        assertEquals("Error in getHighestRated().", 5, highestRated.size());
 
         highestRated = musicFileInfoDao.getHighestRated(1, 0);
-        assertEquals("Error in getHighestRated().", 0, highestRated.length);
+        assertEquals("Error in getHighestRated().", 0, highestRated.size());
 
         highestRated = musicFileInfoDao.getHighestRated(1, 1);
-        assertEquals("Error in getHighestRated().", 1, highestRated.length);
-        assertEquals("Error in getHighestRated().", "b", highestRated[0].getPath());
+        assertEquals("Error in getHighestRated().", 1, highestRated.size());
+        assertEquals("Error in getHighestRated().", "b", highestRated.get(0));
 
         highestRated = musicFileInfoDao.getHighestRated(3, 2);
-        assertEquals("Error in getHighestRated().", 2, highestRated.length);
-        assertEquals("Error in getHighestRated().", "a", highestRated[0].getPath());
-        assertEquals("Error in getHighestRated().", "e", highestRated[1].getPath());
+        assertEquals("Error in getHighestRated().", 2, highestRated.size());
+        assertEquals("Error in getHighestRated().", "a", highestRated.get(0));
+        assertEquals("Error in getHighestRated().", "e", highestRated.get(1));
 
         highestRated = musicFileInfoDao.getHighestRated(4, 10);
-        assertEquals("Error in getHighestRated().", 1, highestRated.length);
-        assertEquals("Error in getHighestRated().", "e", highestRated[0].getPath());
+        assertEquals("Error in getHighestRated().", 1, highestRated.size());
+        assertEquals("Error in getHighestRated().", "e", highestRated.get(0));
 
         highestRated = musicFileInfoDao.getHighestRated(5, 10);
-        assertEquals("Error in getHighestRated().", 0, highestRated.length);
+        assertEquals("Error in getHighestRated().", 0, highestRated.size());
 
         highestRated = musicFileInfoDao.getHighestRated(6, 10);
-        assertEquals("Error in getHighestRated().", 0, highestRated.length);
+        assertEquals("Error in getHighestRated().", 0, highestRated.size());
     }
 
     public void testGetMostFrequentlyPlayed() {
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "f", 0, null, 5, null));
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "b", 0, null, 4, null));
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "d", 0, null, 3, null));
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "a", 0, null, 2, null));
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "e", 0, null, 1, null));
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "c", 0, null, 0, null));  // Not included in query.
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "f", null, 5, null));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "b", null, 4, null));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "d", null, 3, null));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "a", null, 2, null));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "e", null, 1, null));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "c", null, 0, null));  // Not included in query.
 
         MusicFileInfo[] mostFrequent = musicFileInfoDao.getMostFrequentlyPlayed(0, 0);
         assertEquals("Error in getMostFrequentlyPlayed().", 0, mostFrequent.length);
@@ -155,12 +158,12 @@ public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
     }
 
     public void testGetMostRecentlyPlayed() {
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "f", 0, null, 0, new Date(5)));
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "b", 0, null, 0, new Date(4)));
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "d", 0, null, 0, new Date(3)));
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "a", 0, null, 0, new Date(2)));
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "e", 0, null, 0, new Date(1)));
-        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "c", 0, null, 0, null));  // Not included in query.
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "f", null, 0, new Date(5)));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "b", null, 0, new Date(4)));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "d", null, 0, new Date(3)));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "a", null, 0, new Date(2)));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "e", null, 0, new Date(1)));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "c", null, 0, null));  // Not included in query.
 
         MusicFileInfo[] mostRecent = musicFileInfoDao.getMostRecentlyPlayed(0, 0);
         assertEquals("Error in getMostRecentlyPlayed().", 0, mostRecent.length);
@@ -208,13 +211,60 @@ public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
         assertEquals("Error in getMostRecentlyPlayed().", 0, mostRecent.length);
     }
 
+    public void testRating() {
+        MusicFile musicFile = new MusicFile(new File("foo"));
+        assertNull("Error in getRatingForUser().", musicFileInfoDao.getRatingForUser("sindre", musicFile));
+        assertNull("Error in getAverageRating().", musicFileInfoDao.getAverageRating(musicFile));
+
+        try {
+            musicFileInfoDao.setRatingForUser("sindre", musicFile, 1);
+            fail("Expected exception.");
+        } catch (DataAccessException x) {}
+
+        userDao.createUser(new User("sindre", "secret"));
+        userDao.createUser(new User("bente", "secret"));
+
+        musicFileInfoDao.setRatingForUser("sindre", musicFile, 1);
+        assertEquals("Error in getAverageRating().", 1.0D, musicFileInfoDao.getAverageRating(musicFile));
+        assertEquals("Error in getRatingForUser().", new Integer(1), musicFileInfoDao.getRatingForUser("sindre", musicFile));
+        assertNull("Error in getRatingForUser().", musicFileInfoDao.getRatingForUser("bente", musicFile));
+
+        musicFileInfoDao.setRatingForUser("sindre", musicFile, 2);
+        assertEquals("Error in getAverageRating().", 2.0D, musicFileInfoDao.getAverageRating(musicFile));
+        assertEquals("Error in getRatingForUser().", new Integer(2), musicFileInfoDao.getRatingForUser("sindre", musicFile));
+
+        musicFileInfoDao.setRatingForUser("sindre", musicFile, 3);
+        assertEquals("Error in getAverageRating().", 3.0D, musicFileInfoDao.getAverageRating(musicFile));
+        assertEquals("Error in getRatingForUser().", new Integer(3), musicFileInfoDao.getRatingForUser("sindre", musicFile));
+
+        musicFileInfoDao.setRatingForUser("sindre", musicFile, 4);
+        assertEquals("Error in getAverageRating().", 4.0D, musicFileInfoDao.getAverageRating(musicFile));
+        assertEquals("Error in getRatingForUser().", new Integer(4), musicFileInfoDao.getRatingForUser("sindre", musicFile));
+
+        musicFileInfoDao.setRatingForUser("sindre", musicFile, 5);
+        assertEquals("Error in getAverageRating().", 5.0D, musicFileInfoDao.getAverageRating(musicFile));
+        assertEquals("Error in getRatingForUser().", new Integer(5), musicFileInfoDao.getRatingForUser("sindre", musicFile));
+
+        musicFileInfoDao.setRatingForUser("bente", musicFile, 2);
+        assertEquals("Error in getRatingForUser().", new Integer(2), musicFileInfoDao.getRatingForUser("bente", musicFile));
+        assertEquals("Error in getAverageRating().", 3.5D, musicFileInfoDao.getAverageRating(musicFile));
+
+        userDao.deleteUser("bente");
+        assertEquals("Error in getAverageRating().", 5.0D, musicFileInfoDao.getAverageRating(musicFile));
+        assertEquals("Error in getRatingForUser().", new Integer(5), musicFileInfoDao.getRatingForUser("sindre", musicFile));
+        assertNull("Error in getRatingForUser().", musicFileInfoDao.getRatingForUser("bente", musicFile));
+
+        musicFileInfoDao.setRatingForUser("sindre", musicFile, null);
+        assertNull("Error in getRatingForUser().", musicFileInfoDao.getRatingForUser("sindre", musicFile));
+        assertNull("Error in getAverageRating().", musicFileInfoDao.getAverageRating(musicFile));
+    }
+
 
     private void assertMusicFileInfoEquals(MusicFileInfo expected, MusicFileInfo actual) {
         assertEquals("Wrong path.", expected.getPath(), actual.getPath());
         assertEquals("Wrong comment.", expected.getComment(), actual.getComment());
         assertEquals("Wrong last played date.", expected.getLastPlayed(), actual.getLastPlayed());
         assertEquals("Wrong play count.", expected.getPlayCount(), actual.getPlayCount());
-        assertEquals("Wrong rating.", expected.getRating(), actual.getRating());
     }
 
 

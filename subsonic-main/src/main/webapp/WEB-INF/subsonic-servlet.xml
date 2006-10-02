@@ -58,6 +58,11 @@
     <bean id="setMusicFileInfoController" class="net.sourceforge.subsonic.controller.SetMusicFileInfoController">
         <property name="musicInfoService" ref="musicInfoService"/>
     </bean>
+    <bean id="setRatingController" class="net.sourceforge.subsonic.controller.SetRatingController">
+        <property name="musicInfoService" ref="musicInfoService"/>
+        <property name="musicFileService" ref="musicFileService"/>
+        <property name="securityService" ref="securityService"/>
+    </bean>
     <bean id="albumInfoController" class="net.sourceforge.subsonic.controller.AlbumInfoController">
         <property name="commandClass"><value>net.sourceforge.subsonic.command.AlbumInfoCommand</value></property>
         <property name="successView" value="albumInfo"/>
@@ -248,6 +253,7 @@
                 <prop key="/more.view">moreController</prop>
                 <prop key="/upload.view">uploadController</prop>
                 <prop key="/setMusicFileInfo.view">setMusicFileInfoController</prop>
+                <prop key="/setRating.view">setRatingController</prop>
                 <prop key="/top.view">topController</prop>
                 <prop key="/randomPlaylist.view">randomPlaylistController</prop>
                 <prop key="/loadPlaylist.view">loadPlaylistController</prop>

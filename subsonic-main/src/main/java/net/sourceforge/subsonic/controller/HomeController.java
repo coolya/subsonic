@@ -76,10 +76,10 @@ public class HomeController extends ParameterizableViewController {
 
     private List<Album> getHighestRated(int offset, int count) {
         List<Album> result = new ArrayList<Album>();
-        for (MusicFileInfo info : musicInfoService.getHighestRated(offset, count)) {
-            Album album = createAlbum(info);
+        for (MusicFile musicFile : musicInfoService.getHighestRated(offset, count)) {
+            Album album = createAlbum(musicFile);
             if (album != null) {
-                album.setRating(info.getRating());
+                album.setRating((int) Math.round(musicInfoService.getAverageRating(musicFile) * 10.0D));
                 result.add(album);
             }
         }

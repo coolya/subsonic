@@ -8,35 +8,44 @@ import java.util.*;
 /**
  * Provides services for user rating and comments, as well
  * as details about how often and how recent albums have been played.
-
+ *
  * @author Sindre Mehus
  */
 public class MusicInfoService {
 
     private MusicFileInfoDao musicFileInfoDao;
+    private MusicFileService musicFileService;
 
     /**
-    * Returns music file info for the given path.
-    * @return Music file info for the given path, or <code>null</code> if not found.
-    */
+     * Returns music file info for the given path.
+     *
+     * @return Music file info for the given path, or <code>null</code> if not found.
+     */
     public MusicFileInfo getMusicFileInfoForPath(String path) {
         return musicFileInfoDao.getMusicFileInfoForPath(path);
     }
 
     /**
-     * Returns info for the highest rated music files.
+     * Returns the highest rated music files.
+     *
      * @param offset Number of files to skip.
-     * @param count Maximum number of files to return.
-     * @return Info for the highest rated music files.
+     * @param count  Maximum number of files to return.
+     * @return The highest rated music files.
      */
-    public MusicFileInfo[] getHighestRated(int offset, int count) {
-        return musicFileInfoDao.getHighestRated(offset, count);
+    public List<MusicFile> getHighestRated(int offset, int count) {
+        List<String> highestRated = musicFileInfoDao.getHighestRated(offset, count);
+        List<MusicFile> result = new ArrayList<MusicFile>();
+        for (String path : highestRated) {
+            result.add(musicFileService.getMusicFile(path));
+        }
+        return result;
     }
 
     /**
      * Returns info for the most frequently played music files.
+     *
      * @param offset Number of files to skip.
-     * @param count Maximum number of elements to return.
+     * @param count  Maximum number of elements to return.
      * @return Info for the most frequently played music files.
      */
     public MusicFileInfo[] getMostFrequentlyPlayed(int offset, int count) {
@@ -45,8 +54,9 @@ public class MusicInfoService {
 
     /**
      * Returns info for the most recently played music files.
+     *
      * @param offset Number of files to skip.
-     * @param count Maximum number of elements to return.
+     * @param count  Maximum number of elements to return.
      * @return Info for the most recently played music files.
      */
     public MusicFileInfo[] getMostRecentlyPlayed(int offset, int count) {
@@ -55,6 +65,7 @@ public class MusicInfoService {
 
     /**
      * Creates a new music file info.
+     *
      * @param info The music file info to create.
      */
     public void createMusicFileInfo(MusicFileInfo info) {
@@ -63,6 +74,7 @@ public class MusicInfoService {
 
     /**
      * Updates the given music file info.
+     *
      * @param info The music file info to update.
      */
     public void updateMusicFileInfo(MusicFileInfo info) {
@@ -71,6 +83,7 @@ public class MusicInfoService {
 
     /**
      * Increments the play count and last played date for the given music file.
+     *
      * @param file The music file.
      */
     public void incrementPlayCount(MusicFile file) {
@@ -87,7 +100,43 @@ public class MusicInfoService {
         }
     }
 
+    /**
+     * Sets the rating for a music file and a given user.
+     *
+     * @param username  The user name.
+     * @param musicFile The music file.
+     * @param rating    The rating between 1 and 5, or <code>null</code> to remove the rating.
+     */
+    public void setRatingForUser(String username, MusicFile musicFile, Integer rating) {
+        musicFileInfoDao.setRatingForUser(username, musicFile, rating);
+    }
+
+    /**
+     * Returns the average rating for the given music file.
+     *
+     * @param musicFile The music file.
+     * @return The average rating, or <code>null</code> if no ratings are set.
+     */
+    public Double getAverageRating(MusicFile musicFile) {
+        return musicFileInfoDao.getAverageRating(musicFile);
+    }
+
+    /**
+     * Returns the rating for the given user and music file.
+     *
+     * @param username  The user name.
+     * @param musicFile The music file.
+     * @return The rating, or <code>null</code> if no rating is set.
+     */
+    public Integer getRatingForUser(String username, MusicFile musicFile) {
+        return musicFileInfoDao.getRatingForUser(username, musicFile);
+    }
+
     public void setMusicFileInfoDao(MusicFileInfoDao musicFileInfoDao) {
         this.musicFileInfoDao = musicFileInfoDao;
+    }
+
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
     }
 }

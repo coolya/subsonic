@@ -18,7 +18,7 @@ public class DaoHelper {
 
     private static final Logger LOG = Logger.getLogger(DaoHelper.class);
 
-    private Schema[] schemas = {new Schema25(), new Schema26(), new Schema27(), new Schema28()};
+    private Schema[] schemas = {new Schema25(), new Schema26(), new Schema27(), new Schema28(), new Schema29()};
     private DataSource dataSource;
 
     public DaoHelper() {

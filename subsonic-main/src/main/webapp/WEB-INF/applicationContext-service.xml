@@ -74,6 +74,7 @@
 
     <bean id="musicInfoService" class="net.sourceforge.subsonic.service.MusicInfoService">
         <property name="musicFileInfoDao" ref="musicFileInfoDao"/>
+        <property name="musicFileService" ref="musicFileService"/>
     </bean>
 
     <bean id="amazonSearchService" class="net.sourceforge.subsonic.service.AmazonSearchService"/>
