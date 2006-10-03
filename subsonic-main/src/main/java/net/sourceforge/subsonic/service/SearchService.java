@@ -4,6 +4,7 @@ import net.sourceforge.subsonic.*;
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.util.*;
 import org.apache.commons.io.*;
+import org.apache.commons.lang.*;
 
 import java.io.*;
 import java.util.*;
@@ -15,7 +16,7 @@ import java.util.*;
  */
 public class SearchService {
 
-    private static final int INDEX_VERSION = 7;
+    private static final int INDEX_VERSION = 8;
     private static final Random RANDOM = new Random(System.currentTimeMillis());
     private static final Logger LOG = Logger.getLogger(SearchService.class);
 
@@ -205,6 +206,11 @@ public class SearchService {
             query = new String[] {""};
         }
 
+        // Convert query to upper case for slightly better performance.
+        for (int i = 0; i < query.length; i++) {
+            query[i] = query[i].toUpperCase();
+        }
+
         long newerThanTime = newerThan == null ? 0 : newerThan.getTime();
 
         Map<File,Line> index = getIndex();
@@ -218,9 +224,9 @@ public class SearchService {
 
                 boolean isMatch = false;
                 for (String criteria : query) {
-                    boolean isArtistMatch = includeArtist && containsIgnoreCase(line.artist, criteria);
-                    boolean isAlbumMatch  = includeAlbum  && containsIgnoreCase(line.album, criteria);
-                    boolean isTitleMatch  = includeTitle  && containsIgnoreCase(line.title, criteria);
+                    boolean isArtistMatch = includeArtist && StringUtils.contains(line.artist, criteria);
+                    boolean isAlbumMatch  = includeAlbum  && StringUtils.contains(line.album, criteria);
+                    boolean isTitleMatch  = includeTitle  && StringUtils.contains(line.title, criteria);
                     isMatch = isArtistMatch || isAlbumMatch || isTitleMatch;
                     if (!isMatch) {
                         break;
@@ -390,22 +396,6 @@ public class SearchService {
     }
 
     /**
-     * Returns whether the given text contains the given substring, ignoring upper/lower-case.
-     * @param text The string to search in.
-     * @param substring The string to search for.
-     * @return Whether the substring is found.
-     */
-    private boolean containsIgnoreCase(String text, String substring) {
-        if (text == null) {
-            return false;
-        }
-        text = text.toUpperCase();
-        substring = substring.toUpperCase();
-
-        return text.contains(substring);
-    }
-
-    /**
      * Returns the file containing the index.
      * @return The file containing the index.
      */
@@ -532,9 +522,9 @@ public class SearchService {
             line.file = file.getFile();
             if (line.isFile) {
                 line.length = file.length();
-                line.artist = metaData.getArtist();
-                line.album  = metaData.getAlbum();
-                line.title  = metaData.getTitle();
+                line.artist = StringUtils.upperCase(metaData.getArtist());
+                line.album  = StringUtils.upperCase(metaData.getAlbum());
+                line.title  = StringUtils.upperCase(metaData.getTitle());
                 line.year   = metaData.getYear();
             }
             return line;

@@ -2,6 +2,7 @@ package net.sourceforge.subsonic.service;
 
 import junit.framework.*;
 import net.sourceforge.subsonic.domain.*;
+import org.apache.commons.lang.*;
 
 import java.io.*;
 import java.util.*;
@@ -59,9 +60,9 @@ public class SearchServiceTestCase extends TestCase {
                           lastModified + SearchService.Line.SEPARATOR +
                           path + SearchService.Line.SEPARATOR +
                           length + SearchService.Line.SEPARATOR +
-                          artist + SearchService.Line.SEPARATOR + album +
-                          SearchService.Line.SEPARATOR +
-                          title + SearchService.Line.SEPARATOR +
+                          StringUtils.upperCase(artist) + SearchService.Line.SEPARATOR +
+                          StringUtils.upperCase(album) + SearchService.Line.SEPARATOR +
+                          StringUtils.upperCase(title) + SearchService.Line.SEPARATOR +
                           yearString;
 
         assertEquals("Error in toString().", expected, line.toString());
