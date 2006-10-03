@@ -24,11 +24,9 @@ Search optimization: twice as fast.
 PRIORITIZED FOR VERSION 2.9
 ===========================
 Missing refresh when changing from no cover art.
-Resolve problem with MetaData NullPointerException.
+Resolve problem with MetaData NullPointerException. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
 Test if iTunes podcast works.
 Don't show empty statistics.
-Sorting-problems with accented chars, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
-Lucene?
 AJAX error dialog from Dave.
 Upgrade Spring.
 Transcode download
@@ -37,9 +35,11 @@ Mark music_file_info as disabled if path doesn't exist.
 &ndash; &mdash;
 Sometimes a song is started twice. Two m3u's sent?
 Update Norwegian translation.
+Update screen shots.
 
 BACKLOG
 ==========
+Lucene?
 Check out ORB.
 User-level bitrate limit?
 Google Ads?
