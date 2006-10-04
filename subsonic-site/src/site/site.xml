@@ -6,6 +6,12 @@
         <href>index.html</href>
     </bannerRight>
 
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-stylus-skin</artifactId> 
+        <version>1.0</version>
+    </skin>
+
     <body>
 
         <menu name="Subsonic">
