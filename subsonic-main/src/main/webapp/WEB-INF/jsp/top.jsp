@@ -15,7 +15,7 @@
 <fmt:message key="top.search" var="search"/>
 
 <table style="margin:0"><tr valign="middle">
-    <td class="logo"><a href="help.view?" target="main"><img src="<c:url value="/icons/logo.gif"/>" title="${help}" alt=""/></a>&nbsp;Subsonic</td>
+    <td class="logo"><a href="help.view?" target="main"><img src="<c:url value="/icons/logo.png"/>" title="${help}" alt=""/></a>&nbsp;Subsonic</td>
     <td style="padding-left:20pt; padding-right:20pt">
 
         <c:choose>

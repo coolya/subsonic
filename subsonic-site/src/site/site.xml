@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Subsonic" href="http://subsonic.sourceforge.net/">
 
-    <bannerRight>
+    <bannerLeft>
         <src>images/subsonic.png</src>
         <href>index.html</href>
-    </bannerRight>
+    </bannerLeft>
 
     <skin>
         <groupId>org.apache.maven.skins</groupId>
@@ -23,6 +23,6 @@
             <item name="FAQ"              href="faq.html"/>
             <item name="Forum"            href="forum.html"/>
         </menu>
-        
+
     </body>
 </project>

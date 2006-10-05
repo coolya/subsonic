@@ -18,7 +18,7 @@
         <table>
         <tr>
             <td colspan="2" style="padding-bottom:10px">
-                <h1><img src="<c:url value="/icons/logo.gif"/>" alt="" style="padding-right:15px"/> <fmt:message key="login.title"/></h1>
+                <h1><img src="<c:url value="/icons/logo.png"/>" alt="" style="padding-right:15px"/> <fmt:message key="login.title"/></h1>
             </td>
         </tr>
 
