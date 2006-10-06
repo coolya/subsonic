@@ -4,6 +4,9 @@
 # English
 en
 
+# Spanish
+es
+
 # Norwegian
 no
 
