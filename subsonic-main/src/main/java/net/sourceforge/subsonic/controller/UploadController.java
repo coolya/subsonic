@@ -7,6 +7,7 @@ import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.util.*;
 import org.apache.commons.fileupload.*;
 import org.apache.commons.fileupload.servlet.*;
+import org.apache.commons.io.*;
 import org.apache.tools.zip.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
@@ -39,11 +40,9 @@ public class UploadController extends ParameterizableViewController {
 
         try {
 
-            status = new TransferStatus();
-            status.setPlayer(playerService.getPlayer(request, response, false, false));
+            status = statusService.createUploadStatus(playerService.getPlayer(request, response, false, false));
             status.setBytesTotal(request.getContentLength());
 
-            statusService.addUploadStatus(status);
             request.getSession().setAttribute(UPLOAD_STATUS, status);
 
             // Check that we have a file upload request
@@ -166,8 +165,8 @@ public class UploadController extends ParameterizableViewController {
                         LOG.info("Unzipped " + entryFile);
                         unzippedFiles.add(entryFile);
                     } finally {
-                        try {inputStream.close();} catch (Exception x) {}
-                        try {outputStream.close();} catch (Exception x) {}
+                        IOUtils.closeQuietly(inputStream);
+                        IOUtils.closeQuietly(outputStream);
                     }
                 }
             }

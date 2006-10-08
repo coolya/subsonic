@@ -13,7 +13,6 @@ import org.springframework.web.servlet.*;
 import javax.servlet.http.*;
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 /**
  * Controller for generating a chart showing bitrate vs time.
@@ -46,7 +45,7 @@ public class StatusChartController extends AbstractChartController {
         TransferStatus status = statuses[index];
 
         TimeSeries series = new TimeSeries("Kbps", Millisecond.class);
-        List<TransferStatus.Sample> history = status.getHistory();
+        TransferStatus.SampleHistory history = status.getHistory();
         long to = System.currentTimeMillis();
         long from = to - status.getHistoryLengthMillis();
         Range range = new DateRange(from, to);

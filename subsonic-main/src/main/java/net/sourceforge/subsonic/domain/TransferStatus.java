@@ -3,7 +3,6 @@ package net.sourceforge.subsonic.domain;
 import net.sourceforge.subsonic.util.*;
 
 import java.io.*;
-import java.util.*;
 
 /**
  * Status for a single transfer (stream, download or upload).
@@ -20,13 +19,14 @@ public class TransferStatus {
     private File file;
     private long bytesTransfered;
     private long bytesTotal;
-    private LinkedList<Sample> history = new BoundedList<Sample>(HISTORY_LENGTH);
+    private SampleHistory history = new SampleHistory();
     private boolean isTerminated;
 
+
     /**
-     * Return the number of bytes transfered.
-     * @return The number of bytes transfered.
-     */
+    * Return the number of bytes transfered.
+    * @return The number of bytes transfered.
+    */
     public synchronized long getBytesTransfered() {
         return bytesTransfered;
     }
@@ -109,14 +109,22 @@ public class TransferStatus {
      * Returns a history of samples for the stream
      * @return A (copy of) the history list of samples.
      */
-    public synchronized List<TransferStatus.Sample> getHistory() {
-        return new ArrayList<TransferStatus.Sample>(history);
+    public synchronized SampleHistory getHistory() {
+        return new SampleHistory(history);
     }
 
     /**
-     * Returns the history length in milliseconds.
-     * @return The history length in milliseconds.
+     * Sets the history of samples. A defensive copy is taken.
+     * @param history The history list of samples.
      */
+    public synchronized void setHistory(SampleHistory history) {
+        this.history = new SampleHistory(history);
+    }
+
+    /**
+    * Returns the history length in milliseconds.
+    * @return The history length in milliseconds.
+    */
     public long getHistoryLengthMillis() {
         return TransferStatus.SAMPLE_INTERVAL_MILLIS * (TransferStatus.HISTORY_LENGTH - 1);
     }
@@ -170,4 +178,18 @@ public class TransferStatus {
         }
     }
 
+    /**
+     * Contains recent history of samples.
+     */
+    public static class SampleHistory extends BoundedList<Sample> {
+
+        public SampleHistory() {
+            super(HISTORY_LENGTH);
+        }
+
+        public SampleHistory(SampleHistory other) {
+            super(HISTORY_LENGTH);
+            addAll(other);
+        }
+    }
 }

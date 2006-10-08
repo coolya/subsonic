@@ -23,6 +23,10 @@ Search optimization: twice as fast.
 Improve web page layout, maven-theme.css
 New logo
 Added Spanish translation by Jorge Bueno Magdalena.
+Upgrade Spring.
+Update Norwegian translation.
+Keep statistics for players on reconnect. You might have noticed that the bandwidth chart is reset if a player reconnects. 
+I would like to keep bandwidth statistics for a while even if a player reconnects.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
@@ -31,13 +35,11 @@ Resolve problem with MetaData NullPointerException. http://www.activeobjects.no/
 Test if iTunes podcast works.
 Don't show empty statistics.
 AJAX error dialog from Dave.
-Upgrade Spring.
 Transcode download
 Remove "user" column from status.jsp?
 Mark music_file_info as disabled if path doesn't exist.
 &ndash; &mdash;
 Sometimes a song is started twice. Two m3u's sent?
-Update Norwegian translation.
 Update screen shots.
 
 BACKLOG
@@ -51,7 +53,6 @@ Show list of currently active users.
 http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=94
 Mails from Dave (IP change problem).
 Get link from https://jaudiotagger.dev.java.net/
-Make it possible to remove ratings.
 Why is Player.id a String, not an Integer?
 Upload broken in IE.
 Upload popup?
@@ -68,7 +69,6 @@ Implement pure AJAX version of playlist.jsp.
 Get updated Macedonian resource bundle.
 Check Javascript error on IE.
 Photo support?
-Make logo in svg.
 Sell t-shirts from http://www.cafepress.com/
 User-based folder access
 Replace methods in my StringUtil with corresponding in Spring.
@@ -79,7 +79,6 @@ Playlist popup window.
 Use cool coverart dialog popup (see Google Web Toolkit).
 Use dialog popup for online help.
 Make another theme with smaller fonts.
-Use detail class in home page. Make it look better.
 Make image size themeable?
 Make fancy css background for playlist toolbar.
 Use CSS overflow: auto for scrolling in playlist?
@@ -114,7 +113,6 @@ Performance monitoring.
 Use MusicFile.isAlbum()
 Simplify new/random in SearchService.
 If the album-name contains an apostrof ( ' ), then I get an error when I search for cover-art
-Keep statistics for players on reconnect. You might have noticed that the bandwidth chart is reset if a player reconnects. I would like to keep bandwidth statistics for a while even if a player reconnects.
 Provide links to podcast, settings, help, message board, wishlist on home page.
 New icon for wap.
 Check that multi-discs are not included in random and newest albums.  Change implementation of isAlbum.

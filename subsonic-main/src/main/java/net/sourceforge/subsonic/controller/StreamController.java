@@ -67,9 +67,7 @@ public class StreamController implements Controller {
 
             LOG.info("Starting stream " + streamEndpoint);
 
-            status = new TransferStatus();
-            status.setPlayer(player);
-            statusService.addStreamStatus(status);
+            status = statusService.createStreamStatus(player);
 
             String contentType = StringUtil.getMimeType(request.getParameter("suffix"));
             response.setContentType(contentType);

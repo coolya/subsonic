@@ -9,7 +9,6 @@ import java.util.*;
  *
  * @see TransferStatus
  * @author Sindre Mehus
- * @version $Revision: 1.5 $ $Date: 2006/01/08 17:29:14 $
  */
 public class StatusService {
 
@@ -17,12 +16,16 @@ public class StatusService {
     private List<TransferStatus> downloadStatuses = new ArrayList<TransferStatus>();
     private List<TransferStatus> uploadStatuses = new ArrayList<TransferStatus>();
 
-    public synchronized void addStreamStatus(TransferStatus status) {
-        streamStatuses.add(status);
+    /** Map is used to keep the bitrate history even if the player reconnects. */
+    private Map<String, TransferStatus> streamHistoryCache = new HashMap<String, TransferStatus>();
+
+    public synchronized TransferStatus createStreamStatus(Player player) {
+        return createStatus(player, streamStatuses, true);
     }
 
     public synchronized void removeStreamStatus(TransferStatus status) {
         streamStatuses.remove(status);
+        streamHistoryCache.put(status.getPlayer().getId(), status);
     }
 
     public synchronized TransferStatus[] getAllStreamStatuses() {
@@ -39,8 +42,8 @@ public class StatusService {
         return result.toArray(new TransferStatus[0]);
     }
 
-    public synchronized void addDownloadStatus(TransferStatus status) {
-        downloadStatuses.add(status);
+    public synchronized TransferStatus createDownloadStatus(Player player) {
+        return createStatus(player, downloadStatuses, false);
     }
 
     public synchronized void removeDownloadStatus(TransferStatus status) {
@@ -51,8 +54,8 @@ public class StatusService {
         return downloadStatuses.toArray(new TransferStatus[0]);
     }
 
-    public synchronized void addUploadStatus(TransferStatus status) {
-        uploadStatuses.add(status);
+    public synchronized TransferStatus createUploadStatus(Player player) {
+        return createStatus(player, uploadStatuses, false);
     }
 
     public synchronized void removeUploadStatus(TransferStatus status) {
@@ -71,5 +74,29 @@ public class StatusService {
             }
         }
         return result.toArray(new TransferStatus[0]);
+    }
+
+    private synchronized TransferStatus createStatus(Player player, List<TransferStatus> statusList, boolean isStream) {
+        TransferStatus status = new TransferStatus();
+        status.setPlayer(player);
+
+        if (isStream) {
+            TransferStatus previousStatus = getPreviousStatus(player);
+            if (previousStatus != null) {
+                status.setHistory(previousStatus.getHistory());
+                status.setBytesTransfered(previousStatus.getBytesTransfered());
+            }
+        }
+
+        statusList.add(status);
+        return status;
+    }
+
+    private TransferStatus getPreviousStatus(Player player) {
+        TransferStatus[] statuses = getStreamStatusesForPlayer(player);
+        if (statuses.length > 0) {
+            return statuses[0];
+        }
+        return streamHistoryCache.get(player.getId());
     }
 }

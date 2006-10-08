@@ -33,9 +33,7 @@ public class DownloadController implements Controller {
 
         TransferStatus status = null;
         try {
-            status = new TransferStatus();
-            status.setPlayer(playerService.getPlayer(request, response, false, false));
-            statusService.addDownloadStatus(status);
+            status = statusService.createDownloadStatus(playerService.getPlayer(request, response, false, false));
 
             String path = request.getParameter("path");
             String playlistName = request.getParameter("playlist");
