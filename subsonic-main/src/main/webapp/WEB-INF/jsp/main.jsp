@@ -38,7 +38,7 @@
 
 <h1>
     <img src="<c:url value="/icons/now_playing.png"/>" alt=""/>
-    ${model.dir.formattedPath}
+    ${model.dir.formattedPath}&nbsp;&nbsp;
     <c:if test="${model.dir.album and model.averageRating gt 0}">
         <c:import url="rating.jsp">
             <c:param name="path" value="${model.dir.path}"/>
