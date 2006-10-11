@@ -25,11 +25,12 @@ New logo
 Added Spanish translation by Jorge Bueno Magdalena.
 Upgrade Spring.
 Update Norwegian translation.
-Keep statistics for players on reconnect. You might have noticed that the bandwidth chart is reset if a player reconnects. 
+Keep statistics for players on reconnect. You might have noticed that the bandwidth chart is reset if a player reconnects.
 I would like to keep bandwidth statistics for a while even if a player reconnects.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
+Create theme-specific logos and ratings stars.defa
 Missing refresh when changing from no cover art.
 Resolve problem with MetaData NullPointerException. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
 Test if iTunes podcast works.
