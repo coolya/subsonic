@@ -131,7 +131,7 @@ public class MusicFile {
         MusicFile mf = getParent();
 
         while (mf != null && !mf.isRoot()) {
-            s = mf.getName() + " - " + s;
+            s = mf.getName() + " &ndash; " + s;
             mf = mf.getParent();
         }
         return s;

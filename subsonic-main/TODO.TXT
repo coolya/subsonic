@@ -27,6 +27,7 @@ Upgrade Spring.
 Update Norwegian translation.
 Keep statistics for players on reconnect. You might have noticed that the bandwidth chart is reset if a player reconnects.
 I would like to keep bandwidth statistics for a while even if a player reconnects.
+Show full file name as tool tip when editing tags.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
