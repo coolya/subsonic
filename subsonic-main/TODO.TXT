@@ -30,7 +30,6 @@ I would like to keep bandwidth statistics for a while even if a player reconnect
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
-Create theme-specific logos and ratings stars.defa
 Missing refresh when changing from no cover art.
 Resolve problem with MetaData NullPointerException. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
 Test if iTunes podcast works.

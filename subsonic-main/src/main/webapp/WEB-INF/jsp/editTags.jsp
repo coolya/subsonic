@@ -110,7 +110,7 @@
             <input type="hidden" name="path${loopStatus.count - 1}" value="${song.path}"/>
             <input type="hidden" name="suggestedTitle${loopStatus.count - 1}" value="${song.suggestedTitle}"/>
             <input type="hidden" name="originalTitle${loopStatus.count - 1}" value="${song.title}"/>
-            <td class="ruleTableCell">${fileName}</td>
+            <td class="ruleTableCell" title="${song.fileName}">${fileName}</td>
             <td class="ruleTableCell"><input type="text" size="5" name="track${loopStatus.count - 1}" value="${song.track}"/></td>
             <td class="ruleTableCell"><input type="text" size="30" name="title${loopStatus.count - 1}" value="${song.title}"/></td>
             <td class="ruleTableCell"><input type="text" size="15" name="artist${loopStatus.count - 1}" value="${song.artist}"/></td>
