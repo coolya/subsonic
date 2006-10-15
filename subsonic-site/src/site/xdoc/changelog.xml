@@ -16,6 +16,28 @@
 
         <section name="Change Log">
 
+            <subsection name="Subsonic 2.9.beta1 - Oct 16, 2006">
+                <p>Development efforts in 2.9 have been focused on performance and quality, but there are some new features as well.</p>
+                <ul>
+                    <li>Bugfix: Avoid excessive disk and memory usage when (re)scanning the music library (bug introduced in 2.8).</li>
+                    <li>Bugfix: Avoid flickering PNG images in IE.</li>
+                    <li>New: Improved thumbnail quality using step-wise bilinear resampling.</li>
+                    <li>New: Thumbnails are now cached in SUBSONIC_HOME/thumbs. Expect significant speed-ups (after a while), in particular for huge images.</li>
+                    <li>New: Improved search speed by a factor of two.</li>
+                    <li>New: Miscellaneous other caching mechanisms for faster response times.</li>
+                    <li>New: Support Wiki markup in album comments.</li>
+                    <li>New: Added "Download" menu option to main album view.</li>
+                    <li>New: Ratings are now per-user. Average rating is also displayed.</li>
+                    <li>New: Now possible to delete rating (for current user).</li>
+                    <li>New: Added Spanish translation by Jorge Bueno Magdalena. Gracias, Jorge!</li>
+                    <li>New: New Subsonic logo.</li>
+                    <li>New: Keep bitrate statistics even if player reconnects.</li>
+                    <li>New: Support editing of track numbers in ID3 tags.</li>
+                    <li>New: Show full file name as tool tip in ID3 tag editor.</li>
+                    <li>New: Search results are now better sorted.</li>
+                </ul>
+            </subsection>
+
             <subsection name="Subsonic 2.8 - Sep 07, 2006">
                 <p>(Changes since 2.8.beta1)</p>
                 <ul>

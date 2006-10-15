@@ -333,14 +333,14 @@ public class SearchService {
     */
     private synchronized Map<File, Line> getIndex() throws IOException {
         if (!isIndexCreated()) {
-            return new HashMap<File,Line>();
+            return new TreeMap<File,Line>();
         }
 
         if (cachedIndex != null) {
             return cachedIndex;
         }
 
-        cachedIndex = new HashMap<File,Line>();
+        cachedIndex = new TreeMap<File,Line>();
 
         // Statistics.
         int songCount = 0;

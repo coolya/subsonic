@@ -1,36 +1,26 @@
+SCREENSHOTS
+===========
+Home page, one for each theme
+Main page, artist
+Main page, single album
+Album info
+Change cover art
+Bitrate statistics
+Users
+General settings
+
+
 
 BEFORE: 85MB after full scan.
 BEFORE: 87MB after a while
 AFTER: 81MB after partial scan.
 
-CHANGED IN 2.9.beta1
-====================
-Add "Download" option to main.jsp album view.
-Add "search" text in textfield. Select all on click.
-Bugfix: Avoid excess disk and memory usage when scanning the music library (bug introduced in 2.8)
-New: Improved thumbnail quality using step-wise bilinear resampling.
-New: Thumbnails are now cached in SUBSONIC_HOME/thumbs
-New: Miscellaneous other caching for faster response times.
-Database paging.
-Use Visitor pattern to optimize search index refresh.
-Wiki-like comments, with links etc. radeox.  Create taglib?
-WIKI help page.
-MusicFile cache. Use ehcache?
-Support changing of track numbers in ID3 tags.
-Now possible to clear ratings.
-User-Specific Ratings and Comments (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=86)
-Search optimization: twice as fast.
-Improve web page layout, maven-theme.css
-New logo
-Added Spanish translation by Jorge Bueno Magdalena.
-Upgrade Spring.
-Update Norwegian translation.
-Keep statistics for players on reconnect. You might have noticed that the bandwidth chart is reset if a player reconnects.
-I would like to keep bandwidth statistics for a while even if a player reconnects.
-Show full file name as tool tip when editing tags.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
+Order search results.
+Don't hang if unable to resolve latest version.
+Show memory usage in help.jsp
 Missing refresh when changing from no cover art.
 Resolve problem with MetaData NullPointerException. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
 Test if iTunes podcast works.
@@ -39,12 +29,12 @@ AJAX error dialog from Dave.
 Transcode download
 Remove "user" column from status.jsp?
 Mark music_file_info as disabled if path doesn't exist.
-&ndash; &mdash;
 Sometimes a song is started twice. Two m3u's sent?
 Update screen shots.
 
 BACKLOG
 ==========
+Profiling (http://www.yourkit.com/)
 Lucene?
 Check out ORB.
 User-level bitrate limit?
