@@ -20,10 +20,10 @@
                 Download latest stable release: <a href="download_redirect.html"><b>Subsonic 2.8</b></a>
                 <a href="changelog.html">(What's new?)</a>
             </p>
-            <!--<p>-->
-                <!--Download latest beta release: <a href="download_beta_redirect.html"><b>Subsonic 2.8.beta1</b></a>-->
-                <!--<a href="changelog.html">(What's new?)</a>-->
-            <!--</p>-->
+            <p>
+                Download latest beta release: <a href="download_beta_redirect.html"><b>Subsonic 2.9.beta1</b></a>
+                <a href="changelog.html">(What's new?)</a>
+            </p>
 
             <p>
                 Older versions, as well as source releases, can be downloaded from <a href="http://sourceforge.net/projects/subsonic/">SourceForge</a>.
