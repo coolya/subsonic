@@ -18,7 +18,7 @@ AFTER: 81MB after partial scan.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
-Order search results.
+Don't keep bitrate history if older than 15 minutes.
 Don't hang if unable to resolve latest version.
 Show memory usage in help.jsp
 Missing refresh when changing from no cover art.

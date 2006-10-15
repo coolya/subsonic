@@ -16,20 +16,20 @@
 
         <section name="Screenshots">
             <p>Click on an image to enlarge it.</p>
-            <a href="images/screen0.png"><img src="images/thumb_screen0.png" hspace="10" vspace="10"/></a>
-            <a href="images/screen1.png"><img src="images/thumb_screen1.png" hspace="10" vspace="10"/></a>
-            <a href="images/screen3.png"><img src="images/thumb_screen3.png" hspace="10" vspace="10"/></a>
-            <a href="images/screen4.png"><img src="images/thumb_screen4.png" hspace="10" vspace="10"/></a>
-            <a href="images/screen5.png"><img src="images/thumb_screen5.png" hspace="10" vspace="10"/></a>
-            <a href="images/screen6.png"><img src="images/thumb_screen6.png" hspace="10" vspace="10"/></a>
-            <a href="images/screen7.png"><img src="images/thumb_screen7.png" hspace="10" vspace="10"/></a>
-            <a href="images/screen8.png"><img src="images/thumb_screen8.png" hspace="10" vspace="10"/></a>
-            <a href="images/screen9.png"><img src="images/thumb_screen9.png" hspace="10" vspace="10"/></a>
-            <a href="images/screen13.png"><img src="images/thumb_screen13.png" hspace="10" vspace="10"/></a>
-            <a href="images/screen14.png"><img src="images/thumb_screen14.png" hspace="10" vspace="10"/></a>
-            <a href="images/screen10.png"><img src="images/thumb_screen10.png" hspace="10" vspace="10"/></a>
-            <a href="images/screen11.png"><img src="images/thumb_screen11.png" hspace="10" vspace="10"/></a>
-            <a href="images/screen12.png"><img src="images/thumb_screen12.png" hspace="10" vspace="10"/></a>
+            <a href="images/01.png"><img src="images/t01.png" hspace="10" vspace="10"/></a>
+            <a href="images/02.png"><img src="images/t02.png" hspace="10" vspace="10"/></a>
+            <a href="images/03.png"><img src="images/t03.png" hspace="10" vspace="10"/></a>
+            <a href="images/04.png"><img src="images/t04.png" hspace="10" vspace="10"/></a>
+            <a href="images/05.png"><img src="images/t05.png" hspace="10" vspace="10"/></a>
+            <a href="images/06.png"><img src="images/t06.png" hspace="10" vspace="10"/></a>
+            <a href="images/07.png"><img src="images/t07.png" hspace="10" vspace="10"/></a>
+            <a href="images/08.png"><img src="images/t08.png" hspace="10" vspace="10"/></a>
+            <a href="images/09.png"><img src="images/t09.png" hspace="10" vspace="10"/></a>
+            <a href="images/10.png"><img src="images/t10.png" hspace="10" vspace="10"/></a>
+            <a href="images/11.png"><img src="images/t11.png" hspace="10" vspace="10"/></a>
+            <a href="images/12.png"><img src="images/t12.png" hspace="10" vspace="10"/></a>
+            <a href="images/13.png"><img src="images/t13.png" hspace="10" vspace="10"/></a>
+            <a href="images/14.png"><img src="images/t14.png" hspace="10" vspace="10"/></a>
         </section>
 
     </body>
