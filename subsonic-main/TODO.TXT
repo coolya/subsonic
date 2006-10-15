@@ -1,15 +1,3 @@
-SCREENSHOTS
-===========
-Home page, one for each theme
-Main page, artist
-Main page, single album
-Album info
-Change cover art
-Bitrate statistics
-Users
-General settings
-
-
 
 BEFORE: 85MB after full scan.
 BEFORE: 87MB after a while
@@ -18,7 +6,6 @@ AFTER: 81MB after partial scan.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
-Don't keep bitrate history if older than 15 minutes.
 Don't hang if unable to resolve latest version.
 Show memory usage in help.jsp
 Missing refresh when changing from no cover art.

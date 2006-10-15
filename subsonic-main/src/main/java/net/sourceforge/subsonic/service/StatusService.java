@@ -93,10 +93,22 @@ public class StatusService {
     }
 
     private TransferStatus getPreviousStatus(Player player) {
+        TransferStatus result;
         TransferStatus[] statuses = getStreamStatusesForPlayer(player);
         if (statuses.length > 0) {
-            return statuses[0];
+            result = statuses[0];
+        } else {
+            result = streamHistoryCache.get(player.getId());
         }
-        return streamHistoryCache.get(player.getId());
+
+        // Don't use previous statistics if too old to show in chart.
+        if (result != null) {
+            TransferStatus.Sample lastSample = result.getHistory().getLast();
+            if (lastSample != null && System.currentTimeMillis() - lastSample.getTimestamp() > result.getHistoryLengthMillis()) {
+                result = null;
+            }
+        }
+
+        return result;
     }
 }
