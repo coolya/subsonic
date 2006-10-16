@@ -7,10 +7,10 @@ COMPLETED IN VERSION 2.9
 ===========================
 Declare cached cover art paths as stale if any subdirectory is newer.
 Upgrade version numbers.
+Don't hang if unable to resolve latest version.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
-Don't hang if unable to resolve latest version.
 Hard-to-read lists in web pages.
 Upgrade version number in web pages.
 
