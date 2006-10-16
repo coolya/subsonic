@@ -2,6 +2,7 @@ package net.sourceforge.subsonic.service;
 
 import net.sf.ehcache.*;
 import net.sourceforge.subsonic.domain.*;
+import org.apache.commons.io.filefilter.*;
 
 import java.io.*;
 import java.util.*;
@@ -82,7 +83,7 @@ public class MusicFileService {
         Element element = coverArtCache.get(dir);
         if (element != null) {
             // Check if cache is obsolete.
-            if (element.getCreationTime() > dir.lastModified()) {
+            if (element.getCreationTime() > getDirectoryLastModified(dir.getFile())) {
                 List<File> result = (List<File>) element.getObjectValue();
                 return result.subList(0, Math.min(limit, result.size()));
             }
@@ -93,6 +94,15 @@ public class MusicFileService {
 
         coverArtCache.put(new Element(dir, result));
         return result;
+    }
+
+    private long getDirectoryLastModified(File dir) {
+        long lastModified = dir.lastModified();
+        File[] subDirs = dir.listFiles((FileFilter) DirectoryFileFilter.INSTANCE);
+        for (File subDir : subDirs) {
+            lastModified = Math.max(lastModified, subDir.lastModified());
+        }
+        return lastModified;
     }
 
     private void listCoverArtRecursively(MusicFile dir, List<File> coverArtFiles, int limit) throws IOException {

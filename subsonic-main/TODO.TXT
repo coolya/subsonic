@@ -6,7 +6,11 @@ AFTER: 81MB after partial scan.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
+Upgrade version numbers.
 Don't hang if unable to resolve latest version.
+Declare cached cover art paths as stale if any subdirectory is newer.
+Hard-to-read lists in web pages.
+
 Show memory usage in help.jsp
 Missing refresh when changing from no cover art.
 Resolve problem with MetaData NullPointerException. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
@@ -17,7 +21,6 @@ Transcode download
 Remove "user" column from status.jsp?
 Mark music_file_info as disabled if path doesn't exist.
 Sometimes a song is started twice. Two m3u's sent?
-Update screen shots.
 
 BACKLOG
 ==========
