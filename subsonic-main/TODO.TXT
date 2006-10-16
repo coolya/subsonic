@@ -3,13 +3,16 @@ BEFORE: 85MB after full scan.
 BEFORE: 87MB after a while
 AFTER: 81MB after partial scan.
 
+COMPLETED IN VERSION 2.9
+===========================
+Declare cached cover art paths as stale if any subdirectory is newer.
+Upgrade version numbers.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
-Upgrade version numbers.
 Don't hang if unable to resolve latest version.
-Declare cached cover art paths as stale if any subdirectory is newer.
 Hard-to-read lists in web pages.
+Upgrade version number in web pages.
 
 Show memory usage in help.jsp
 Missing refresh when changing from no cover art.

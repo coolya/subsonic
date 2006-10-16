@@ -164,10 +164,12 @@ public class VersionService {
      */
     private void refreshLatestVersion() {
         long now = System.currentTimeMillis();
-        if (latestFinalVersion == null || now - lastVersionFetched > LAST_VERSION_FETCH_INTERVAL) {
+        boolean isOutdated = now - lastVersionFetched > LAST_VERSION_FETCH_INTERVAL;
+
+        if (isOutdated) {
             try {
-                readLatestVersion();
                 lastVersionFetched = now;
+                readLatestVersion();
             } catch (Exception x) {
                 LOG.warn("Failed to resolve latest Subsonic version.", x);
             }
