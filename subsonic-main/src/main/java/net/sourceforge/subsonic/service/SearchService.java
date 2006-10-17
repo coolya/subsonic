@@ -267,12 +267,12 @@ public class SearchService {
     }
 
     /**
-     * Returns a number of random music files.
-     * @param count Maximum number of music files to return.
-     * @return Array of random music files.
+     * Returns a number of random songs
+     * @param count Maximum number of songs to return.
+     * @return Array of random songs
      * @throws IOException If an I/O error occurs.
      */
-    public List<MusicFile> getRandomMusicFiles(int count) throws IOException {
+    public List<MusicFile> getRandomSongs(int count) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>(count);
 
         // Ensure that index is read to memory.
@@ -282,11 +282,58 @@ public class SearchService {
             return result;
         }
 
-        for (int i = 0; i < count; i++) {
+        // Note: To avoid duplicates, we iterate over more than the requested number of items.
+        for (int i = 0; i < count * 10; i++) {
             int n = RANDOM.nextInt(cachedSongs.size());
             File file = cachedSongs.get(n).file;
+
             if (file.exists() && securityService.isReadAllowed(file)) {
-                result.add(musicFileService.getMusicFile(file));
+                MusicFile musicFile = musicFileService.getMusicFile(file);
+                if (!result.contains(musicFile)) {
+                    result.add(musicFile);
+
+                    // Enough items found?
+                    if (result.size() == count) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Returns a number of random albums
+     * @param count Maximum number of albums to return.
+     * @return Array of random albums
+     * @throws IOException If an I/O error occurs.
+     */
+    public List<MusicFile> getRandomAlbums(int count) throws IOException {
+        List<MusicFile> result = new ArrayList<MusicFile>(count);
+
+        // Ensure that index is read to memory.
+        getIndex();
+
+        if (!isIndexCreated() || isIndexBeingCreated() || cachedSongs.isEmpty()) {
+            return result;
+        }
+
+        // Note: To avoid duplicates, we iterate over more than the requested number of items.
+        for (int i = 0; i < count * 20; i++) {
+            int n = RANDOM.nextInt(cachedSongs.size());
+            File file = cachedSongs.get(n).file;
+
+            if (file.exists() && securityService.isReadAllowed(file)) {
+                MusicFile album = musicFileService.getMusicFile(file.getParentFile());
+                if (!album.isRoot() && !result.contains(album)) {
+                    result.add(album);
+
+                    // Enough items found?
+                    if (result.size() == count) {
+                        break;
+                    }
+                }
             }
         }
 

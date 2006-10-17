@@ -8,13 +8,16 @@ COMPLETED IN VERSION 2.9
 Declare cached cover art paths as stale if any subdirectory is newer.
 Upgrade version numbers.
 Don't hang if unable to resolve latest version.
+Hard-to-read lists in web pages.
+Avoid duplicates in random album page.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
-Hard-to-read lists in web pages.
+LDAP support.
+Use application.getServerInfo(). Show memory usage in help.jsp
+New icon for wap.
 Upgrade version number in web pages.
 
-Show memory usage in help.jsp
 Missing refresh when changing from no cover art.
 Resolve problem with MetaData NullPointerException. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
 Test if iTunes podcast works.
@@ -29,7 +32,6 @@ BACKLOG
 ==========
 Profiling (http://www.yourkit.com/)
 Lucene?
-Check out ORB.
 User-level bitrate limit?
 Google Ads?
 Invalidate browser cache when changing cover art image.
@@ -178,3 +180,4 @@ FLAC Lossless, A Bad Dream
 Monkey Lossless (ape), Hamburg Song
 Frog Lossless, Put It Behind You
 
+openclipart.org

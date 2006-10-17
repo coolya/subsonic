@@ -124,13 +124,10 @@ public class HomeController extends ParameterizableViewController {
 
     private List<Album> getRandom(int count) throws IOException {
         List<Album> result = new ArrayList<Album>();
-        for (MusicFile file : searchService.getRandomMusicFiles(count)) {
-            MusicFile dir = file.getParent();
-            if (!dir.isRoot()) {
-                Album album = createAlbum(dir);
-                if (album != null) {
-                    result.add(album);
-                }
+        for (MusicFile file : searchService.getRandomAlbums(count)) {
+            Album album = createAlbum(file);
+            if (album != null) {
+                result.add(album);
             }
         }
         return result;

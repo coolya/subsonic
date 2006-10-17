@@ -27,7 +27,7 @@ public class RandomPlaylistController extends ParameterizableViewController {
         Playlist playlist = player.getPlaylist();
         playlist.clear();
 
-        List randomFiles = searchService.getRandomMusicFiles(size);
+        List randomFiles = searchService.getRandomSongs(size);
         for (int i = 0; i < randomFiles.size(); i++) {
             playlist.addFile((MusicFile) randomFiles.get(i));
         }
