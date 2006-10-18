@@ -34,6 +34,7 @@
 <table width="75%" class="ruleTable indent">
     <tr><td class="ruleTableHeader"><fmt:message key="help.version.title"/></td><td class="ruleTableCell">${versionString}</td></tr>
     <tr><td class="ruleTableHeader"><fmt:message key="help.builddate.title"/></td><td class="ruleTableCell">${buildDateString}</td></tr>
+    <tr><td class="ruleTableHeader"><fmt:message key="help.server.title"/></td><td class="ruleTableCell">${model.serverInfo} (<sub:formatBytes bytes="${model.usedMemory}"/> / <sub:formatBytes bytes="${model.totalMemory}"/>)</td></tr>
     <tr><td class="ruleTableHeader"><fmt:message key="help.license.title"/></td><td class="ruleTableCell"><fmt:message key="help.license.text"/></td></tr>
     <tr><td class="ruleTableHeader"><fmt:message key="help.homepage.title"/></td><td class="ruleTableCell"><a target="_blank" href="http://subsonic.sourceforge.net/">http://subsonic.sourceforge.net/</a></td></tr>
     <tr><td class="ruleTableHeader"><fmt:message key="help.faq.title"/></td><td class="ruleTableCell"><a target="_blank" href="http://subsonic.sourceforge.net/faq.html">http://subsonic.sourceforge.net/faq.html</a></td></tr>
