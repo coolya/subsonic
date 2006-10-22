@@ -7,14 +7,15 @@ COMPLETED IN VERSION 2.9
 ===========================
 Declare cached cover art paths as stale if any subdirectory is newer.
 Upgrade version numbers.
-Don't hang if unable to resolve latest version.
+Don't hang if unable to resolve latest version number.
 Hard-to-read lists in web pages.
 Avoid duplicates in random album page.
+Show server version and memory usage in help page.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
+Catch throwable in mp3parser.
 LDAP support.
-Use application.getServerInfo(). Show memory usage in help.jsp
 New icon for wap.
 Upgrade version number in web pages.
 

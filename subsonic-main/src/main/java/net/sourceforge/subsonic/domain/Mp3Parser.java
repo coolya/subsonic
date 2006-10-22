@@ -119,7 +119,7 @@ public class Mp3Parser extends MetaDataParser {
                     }
                 }
             }
-        } catch (Exception x) {
+        } catch (Throwable x) {
             LOG.warn("Error when parsing MP3 tags in " + file, x);
         }
 
@@ -208,7 +208,7 @@ public class Mp3Parser extends MetaDataParser {
             }
             double duration = header.getTrackLength();
             metaData.setDuration((int) duration);
-        } catch (Exception x ) {
+        } catch (Throwable x ) {
             LOG.warn("Failed to parse MP3 header for " + file, x);
         }
     }
