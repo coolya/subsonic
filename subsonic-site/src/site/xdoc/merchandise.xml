@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<document>
+    
+    <properties>
+        <title>Merchandise</title>
+        <author email="sindre_mehus@users.sourceforge.net">Sindre Mehus</author>
+    </properties>
+
+    <body>
+        <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            _uacct = 'UA-110410-1';
+            urchinTracker();
+        </script>
+
+        <section name="Merchandise">
+            <p>
+                Buy t-shirts and other stuff in the <a href="http://www.cafepress.com/subsonic_shop"><b>Subsonic Shop</b></a>!
+            </p>
+
+            <p>
+                <a href="http://www.cafepress.com/subsonic_shop"><img src="images/tshirt.jpeg" hspace="10" vspace="10"/></a>
+                <a href="http://www.cafepress.com/subsonic_shop"><img src="images/bodysuit.jpeg" hspace="10" vspace="10"/></a>
+                <a href="http://www.cafepress.com/subsonic_shop"><img src="images/cup.jpeg" hspace="10" vspace="10"/></a>
+            </p>
+        </section>
+
+    </body>
+</document>

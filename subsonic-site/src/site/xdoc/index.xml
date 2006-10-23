@@ -55,6 +55,9 @@
 
             <subsection name="Features">
                 <p>
+                    <a href="merchandise.html"><img src="images/tshirt.jpeg" title="Subsonic Shop" alt="Subsonic Shop" hspace="10" vspace="200" align="right"/></a>
+                </p>
+                <p>
                     <ul>
                         <li>Supports MP3, OGG, AAC and any other audio or video format that can be streamed over HTTP.</li>
                         <li>Transcoding engine allows for streaming of a variety of lossy and lossless formats by converting to MP3 on-the-fly.</li>

@@ -39,6 +39,7 @@
     <tr><td class="ruleTableHeader"><fmt:message key="help.homepage.title"/></td><td class="ruleTableCell"><a target="_blank" href="http://subsonic.sourceforge.net/">http://subsonic.sourceforge.net/</a></td></tr>
     <tr><td class="ruleTableHeader"><fmt:message key="help.faq.title"/></td><td class="ruleTableCell"><a target="_blank" href="http://subsonic.sourceforge.net/faq.html">http://subsonic.sourceforge.net/faq.html</a></td></tr>
     <tr><td class="ruleTableHeader"><fmt:message key="help.forum.title"/></td><td class="ruleTableCell"><a target="_blank" href="http://subsonic.sourceforge.net/forum.html">http://subsonic.sourceforge.net/forum.html</a></td></tr>
+    <tr><td class="ruleTableHeader"><fmt:message key="help.shop.title"/></td><td class="ruleTableCell"><a target="_blank" href="http://www.cafepress.com/subsonic_shop">http://www.cafepress.com/subsonic_shop</a></td></tr>
     <tr><td class="ruleTableHeader"><fmt:message key="help.contact.title"/></td><td class="ruleTableCell"><fmt:message key="help.contact.text"/></td></tr>
 </table>
 

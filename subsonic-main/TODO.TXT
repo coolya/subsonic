@@ -1,8 +1,4 @@
 
-BEFORE: 85MB after full scan.
-BEFORE: 87MB after a while
-AFTER: 81MB after partial scan.
-
 COMPLETED IN VERSION 2.9
 ===========================
 Declare cached cover art paths as stale if any subdirectory is newer.
@@ -11,10 +7,11 @@ Don't hang if unable to resolve latest version number.
 Hard-to-read lists in web pages.
 Avoid duplicates in random album page.
 Show server version and memory usage in help page.
+Catch throwable in mp3parser.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
-Catch throwable in mp3parser.
+Sell t-shirts from http://www.cafepress.com/
 LDAP support.
 New icon for wap.
 Upgrade version number in web pages.
@@ -56,7 +53,6 @@ Implement pure AJAX version of playlist.jsp.
 Get updated Macedonian resource bundle.
 Check Javascript error on IE.
 Photo support?
-Sell t-shirts from http://www.cafepress.com/
 User-based folder access
 Replace methods in my StringUtil with corresponding in Spring.
 Batch download of cover arts.
@@ -123,7 +119,6 @@ Quiz
 Emulator 3G-telefon
 XHTML Mobile Profile
 Add mp3-player as applet.
-Vise lengde på sanger. Lag tabell med all info?
 Automatisk finne lyrics-ting.
 Parse tags for wma, ogg osv.
 No SHOUTcast if playlist is empty.
