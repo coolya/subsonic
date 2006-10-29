@@ -8,10 +8,10 @@ Hard-to-read lists in web pages.
 Avoid duplicates in random album page.
 Show server version and memory usage in help page.
 Catch throwable in mp3parser.
+Sell t-shirts from http://www.cafepress.com/
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
-Sell t-shirts from http://www.cafepress.com/
 LDAP support.
 New icon for wap.
 Upgrade version number in web pages.

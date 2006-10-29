@@ -103,8 +103,8 @@ public class StatusService {
 
         // Don't use previous statistics if too old to show in chart.
         if (result != null) {
-            TransferStatus.Sample lastSample = result.getHistory().getLast();
-            if (lastSample != null && System.currentTimeMillis() - lastSample.getTimestamp() > result.getHistoryLengthMillis()) {
+            TransferStatus.SampleHistory history = result.getHistory();
+            if (history.isEmpty() || System.currentTimeMillis() - history.getLast().getTimestamp() > result.getHistoryLengthMillis()) {
                 result = null;
             }
         }
