@@ -73,16 +73,23 @@ public abstract class MetaDataParser {
      * Guesses the title for the given music file.
      */
     public String guessTitle(MusicFile file) {
-        return removeTrackNumberFromTitle(file.getNameWithoutSuffix());
+        return removeTrackNumberFromTitle(file.getNameWithoutSuffix(), null);
     }
 
     /**
      * Removes any prefixed track number from the given title string.
      * @param title The title with or without a prefixed track number, e.g., "02 - Back In Black".
+     * @param trackNumber If specified, this is the "true" track number.
      * @return The title with the track number removed, e.g., "Back In Black".
      */
-    protected String removeTrackNumberFromTitle(String title) {
+    protected String removeTrackNumberFromTitle(String title, Integer trackNumber) {
         title = title.trim();
+
+        // Don't remove numbers if true track number is given, and title does not start with it.
+        if (trackNumber != null && !title.matches("0?" + trackNumber + ".*")) {
+            return title;
+        }
+
         String result = title.replaceFirst("^\\d{2}[\\.\\- ]+", "");
         return result.length() == 0 ? title : result;
     }

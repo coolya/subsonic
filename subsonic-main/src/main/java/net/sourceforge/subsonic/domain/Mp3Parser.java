@@ -38,7 +38,7 @@ public class Mp3Parser extends MetaDataParser {
             title = guessTitle(file);
         }
 
-        title = removeTrackNumberFromTitle(title);
+        title = removeTrackNumberFromTitle(title, metaData.getTrackNumber());
         metaData.setArtist(artist);
         metaData.setAlbum(album);
         metaData.setTitle(title);
