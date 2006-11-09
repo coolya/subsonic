@@ -7,6 +7,9 @@ en
 # Spanish
 es
 
+# German
+de
+
 # Norwegian
 no
 

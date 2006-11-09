@@ -9,13 +9,17 @@ Avoid duplicates in random album page.
 Show server version and memory usage in help page.
 Catch throwable in mp3parser.
 Sell t-shirts from http://www.cafepress.com/
+Improve track number removal.
+Fixed bug which in some cases made it impossible to restart streams.
+Improve track number removal from title. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=170)
+German translation.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
-Improve track number removal from title. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=170)
-LDAP support.
+Possible bug with corrupt thumbs.  Should delete file on exception.  Limit number of concurrent instances?
 New icon for wap.
 Upgrade version number in web pages.
+Check PM from Jof.
 
 Missing refresh when changing from no cover art.
 Resolve problem with MetaData NullPointerException. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
@@ -29,6 +33,8 @@ Sometimes a song is started twice. Two m3u's sent?
 
 BACKLOG
 ==========
+Audioscrobbler (last.fm) support.
+LDAP support.
 Profiling (http://www.yourkit.com/)
 Lucene?
 User-level bitrate limit?
