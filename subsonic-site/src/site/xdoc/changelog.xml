@@ -16,6 +16,20 @@
 
         <section name="Change Log">
 
+            <subsection name="Subsonic 2.9 - Nov 13, 2006">
+                <p>(Changes since 2.9.beta1)</p>
+                <ul>
+                    <li>New: Added German translation by Harald Weiss.</li>
+                    <li>New: Show server version and memory usage in help page.</li>
+                    <li>Bugfix: Don't hang if unable to resolve latest version number.</li>
+                    <li>Bugfix: Avoid duplicates in random album page.</li>
+                    <li>Bugfix: More robust ID3 parsing.</li>
+                    <li>Bugfix: More robust thumbnail scaling.</li>
+                    <li>Bugfix: Fixed bug which in some cases made it impossible to restart streams.</li>
+                    <li>Bugfix: Improve track number removal from title.</li>
+                </ul>
+            </subsection>
+
             <subsection name="Subsonic 2.9.beta1 - Oct 16, 2006">
                 <p>Development efforts in 2.9 have been focused on performance and quality, but there are some new features as well.</p>
                 <ul>
