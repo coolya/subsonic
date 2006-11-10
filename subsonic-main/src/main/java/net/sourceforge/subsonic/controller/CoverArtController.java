@@ -115,6 +115,14 @@ public class CoverArtController implements Controller, LastModified {
                 BufferedImage image = ImageIO.read(in);
                 image = scale(image, size, size);
                 ImageIO.write(image, "jpeg", out);
+
+            } catch (Throwable x) {
+                // Delete corrupt (probably empty) thumbnail cache.
+                LOG.warn("Failed to create thumbnail for " + file, x);
+                IOUtils.closeQuietly(out);
+                cachedImage.delete();
+                throw new IOException("Failed to create thumbnail for " + file + ". " + x.getMessage());
+
             } finally {
                 IOUtils.closeQuietly(in);
                 IOUtils.closeQuietly(out);

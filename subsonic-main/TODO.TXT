@@ -13,13 +13,14 @@ Improve track number removal.
 Fixed bug which in some cases made it impossible to restart streams.
 Improve track number removal from title. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=170)
 German translation.
+More robust ID3 parsing.
+More robust thumbnail scaling.
 
 PRIORITIZED FOR VERSION 2.9
 ===========================
 Possible bug with corrupt thumbs.  Should delete file on exception.  Limit number of concurrent instances?
 New icon for wap.
 Upgrade version number in web pages.
-Check PM from Jof.
 
 Missing refresh when changing from no cover art.
 Resolve problem with MetaData NullPointerException. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
