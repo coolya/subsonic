@@ -26,6 +26,30 @@
         </repository>
     </repositories>
 
+    <scm>
+        <connection>scm:svn:https://svn.sourceforge.net/svnroot/subsonic/trunk</connection>
+        <url>http://subsonic.svn.sourceforge.net/viewvc/subsonic/</url>
+    </scm>
+
+    <ciManagement>
+        <system>continuum</system>
+        <notifiers>
+            <notifier>
+                <type>mail</type>
+                <configuration>
+                    <address>sindre@activeobjects.no</address>
+                </configuration>
+            </notifier>
+        </notifiers>
+    </ciManagement>
+
+    <developers>
+        <developer>
+            <name>Sindre Mehus</name>
+            <email>sindre@activeobjects.no</email>
+        </developer>
+    </developers>
+    
     <modules>
         <module>subsonic-main</module>
         <module>subsonic-amazon</module>
