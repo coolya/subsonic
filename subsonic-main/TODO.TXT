@@ -15,6 +15,7 @@ Sometimes a song is started twice. Two m3u's sent?
 
 BACKLOG
 ==========
+Show other albums by same artist.
 Audioscrobbler (last.fm) support.
 LDAP support.
 Profiling (http://www.yourkit.com/)
