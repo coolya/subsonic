@@ -1,8 +1,13 @@
-PRIORITIZED FOR VERSION 2.9
+PRIORITIZED FOR VERSION 2.10
 ===========================
-New icon for wap.
-Upgrade version number in web pages.
+Show other albums by same artist.
+Audioscrobbler (last.fm) support. http://www.audioscrobbler.net/wiki/Protocol1.1.merged
+Display hours for very long tracks.
 
+BACKLOG
+==========
+Web proxy support (for audioscrobbler, amazon etc)?
+New icon for wap.
 Missing refresh when changing from no cover art.
 Resolve problem with MetaData NullPointerException. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
 Test if iTunes podcast works.
@@ -12,11 +17,6 @@ Transcode download
 Remove "user" column from status.jsp?
 Mark music_file_info as disabled if path doesn't exist.
 Sometimes a song is started twice. Two m3u's sent?
-
-BACKLOG
-==========
-Show other albums by same artist.
-Audioscrobbler (last.fm) support.
 LDAP support.
 Profiling (http://www.yourkit.com/)
 Lucene?
