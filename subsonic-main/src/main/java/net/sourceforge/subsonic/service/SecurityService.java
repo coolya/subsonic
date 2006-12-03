@@ -110,7 +110,6 @@ public class SecurityService implements UserDetailsService {
      */
     public void updateUser(User user) {
         userDao.updateUser(user);
-        LOG.info("Updated user " + user.getUsername());
     }
 
     /**

@@ -123,6 +123,9 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertNull("Error in getUserSettings().", userSettings.getThemeId());
         assertFalse("Error in getUserSettings().", userSettings.isFinalVersionNotificationEnabled());
         assertFalse("Error in getUserSettings().", userSettings.isBetaVersionNotificationEnabled());
+        assertFalse("Error in getUserSettings().", userSettings.isLastFmEnabled());
+        assertNull("Error in getUserSettings().", userSettings.getLastFmUsername());
+        assertNull("Error in getUserSettings().", userSettings.getLastFmPassword());
 
         UserSettings settings = new UserSettings("sindre");
         settings.setLocale(Locale.SIMPLIFIED_CHINESE);
@@ -132,6 +135,10 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         settings.getMainVisibility().setBitRateVisible(true);
         settings.getPlaylistVisibility().setCaptionCutoff(44);
         settings.getPlaylistVisibility().setYearVisible(true);
+        settings.setLastFmEnabled(true);
+        settings.setLastFmUsername("last_user");
+        settings.setLastFmPassword("last_pass");
+
         userDao.updateUserSettings(settings);
         userSettings = userDao.getUserSettings("sindre");
         assertNotNull("Error in getUserSettings().", userSettings);
@@ -143,6 +150,9 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertEquals("Error in getUserSettings().", true, userSettings.getMainVisibility().isBitRateVisible());
         assertEquals("Error in getUserSettings().", 44, userSettings.getPlaylistVisibility().getCaptionCutoff());
         assertEquals("Error in getUserSettings().", true, userSettings.getPlaylistVisibility().isYearVisible());
+        assertEquals("Error in getUserSettings().", true, userSettings.isLastFmEnabled());
+        assertEquals("Error in getUserSettings().", "last_user", userSettings.getLastFmUsername());
+        assertEquals("Error in getUserSettings().", "last_pass", userSettings.getLastFmPassword());
 
         userDao.deleteUser("sindre");
         assertNull("Error in cascading delete.", userDao.getUserSettings("sindre"));

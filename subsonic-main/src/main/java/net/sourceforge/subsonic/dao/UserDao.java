@@ -13,6 +13,7 @@ import java.util.*;
  *
  * @author Sindre Mehus
  */
+@SuppressWarnings({"unchecked"})
 public class UserDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(UserDao.class);
@@ -21,7 +22,8 @@ public class UserDao extends AbstractDao {
                                                         "main_caption_cutoff, main_track_number, main_artist, main_album, main_genre, " +
                                                         "main_year, main_bit_rate, main_duration, main_format, main_file_size, " +
                                                         "playlist_caption_cutoff, playlist_track_number, playlist_artist, playlist_album, playlist_genre, " +
-                                                        "playlist_year, playlist_bit_rate, playlist_duration, playlist_format, playlist_file_size";
+                                                        "playlist_year, playlist_bit_rate, playlist_duration, playlist_format, playlist_file_size, " +
+                                                        "last_fm_enabled, last_fm_username, last_fm_password";
 
     private static final Integer ROLE_ID_ADMIN      = 1;
     private static final Integer ROLE_ID_DOWNLOAD   = 2;
@@ -148,7 +150,8 @@ public class UserDao extends AbstractDao {
                                                    main.isFormatVisible(), main.isFileSizeVisible(),
                                                    playlist.getCaptionCutoff(), playlist.isTrackNumberVisible(), playlist.isArtistVisible(), playlist.isAlbumVisible(),
                                                    playlist.isGenreVisible(), playlist.isYearVisible(), playlist.isBitRateVisible(), playlist.isDurationVisible(),
-                                                   playlist.isFormatVisible(), playlist.isFileSizeVisible()});
+                                                   playlist.isFormatVisible(), playlist.isFileSizeVisible(),
+                                                   settings.isLastFmEnabled(), settings.getLastFmUsername(), settings.getLastFmPassword()});
     }
 
     private void readRoles(User user) {
@@ -233,6 +236,10 @@ public class UserDao extends AbstractDao {
             settings.getPlaylistVisibility().setDurationVisible(rs.getBoolean(col++));
             settings.getPlaylistVisibility().setFormatVisible(rs.getBoolean(col++));
             settings.getPlaylistVisibility().setFileSizeVisible(rs.getBoolean(col++));
+
+            settings.setLastFmEnabled(rs.getBoolean(col++));
+            settings.setLastFmUsername(rs.getString(col++));
+            settings.setLastFmPassword(rs.getString(col++));
 
             return settings;
         }

@@ -566,6 +566,9 @@ public class SettingsService {
         UserSettings settings = new UserSettings(username);
         settings.setFinalVersionNotificationEnabled(true);
         settings.setBetaVersionNotificationEnabled(false);
+        settings.setLastFmEnabled(false);
+        settings.setLastFmUsername(null);
+        settings.setLastFmPassword(null);
 
         UserSettings.Visibility playlist = settings.getPlaylistVisibility();
         playlist.setCaptionCutoff(35);

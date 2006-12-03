@@ -28,6 +28,7 @@ public class StreamController implements Controller {
     private MusicInfoService musicInfoService;
     private SettingsService settingsService;
     private TranscodingService transcodingService;
+    private AudioScrobblerService audioScrobblerService;
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -78,7 +79,6 @@ public class StreamController implements Controller {
             // Enabled SHOUTcast, if requested.
             boolean isShoutCastRequested = "1".equals(request.getHeader("icy-metadata"));
             if (isShoutCastRequested) {
-                LOG.info("Enabling SHOUTcast.");
                 response.setHeader("icy-metaint", "" + StreamController.ShoutCastOutputStream.META_DATA_INTERVAL);
                 response.setHeader("icy-notice1", "This stream is served using Subsonic");
                 response.setHeader("icy-notice2", "Subsonic - Free media streamer - subsonic.sourceforge.net");
@@ -177,14 +177,18 @@ public class StreamController implements Controller {
         this.transcodingService = transcodingService;
     }
 
+    public void setAudioScrobblerService(AudioScrobblerService audioScrobblerService) {
+        this.audioScrobblerService = audioScrobblerService;
+    }
+
     /**
      * Implementation of {@link InputStream} which reads from a {@link Playlist}.
      */
     private class PlaylistInputStream extends InputStream {
-        private Player player;
+        private final Player player;
+        private final TransferStatus status;
         private MusicFile currentFile;
         private InputStream currentInputStream;
-        private TransferStatus status;
 
         PlaylistInputStream(Player player, TransferStatus status) {
             this.player = player;
@@ -229,6 +233,7 @@ public class StreamController implements Controller {
                 if (!folder.isRoot()) {
                     musicInfoService.incrementPlayCount(folder);
                 }
+                audioScrobblerService.register(file, player.getUsername());
             } catch (Exception x) {
                 LOG.warn("Failed to update statistics for " + file, x);
             }

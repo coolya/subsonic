@@ -3,6 +3,8 @@ PRIORITIZED FOR VERSION 2.10
 Show other albums by same artist.
 Audioscrobbler (last.fm) support. http://www.audioscrobbler.net/wiki/Protocol1.1.merged
 Display hours for very long tracks.
+Upgrade acegi and junit.
+http://cruxic.googlepages.com/jvorbiscomment
 
 BACKLOG
 ==========

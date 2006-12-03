@@ -14,9 +14,11 @@ public class UserSettings {
     private String themeId;
     private boolean finalVersionNotificationEnabled;
     private boolean betaVersionNotificationEnabled;
-
     private Visibility mainVisibility = new Visibility();
     private Visibility playlistVisibility = new Visibility();
+    private boolean lastFmEnabled;
+    private String lastFmUsername;
+    private String lastFmPassword;
 
     public UserSettings(String username) {
         this.username = username;
@@ -76,6 +78,30 @@ public class UserSettings {
 
     public void setPlaylistVisibility(Visibility playlistVisibility) {
         this.playlistVisibility = playlistVisibility;
+    }
+
+    public boolean isLastFmEnabled() {
+        return lastFmEnabled;
+    }
+
+    public void setLastFmEnabled(boolean lastFmEnabled) {
+        this.lastFmEnabled = lastFmEnabled;
+    }
+
+    public String getLastFmUsername() {
+        return lastFmUsername;
+    }
+
+    public void setLastFmUsername(String lastFmUsername) {
+        this.lastFmUsername = lastFmUsername;
+    }
+
+    public String getLastFmPassword() {
+        return lastFmPassword;
+    }
+
+    public void setLastFmPassword(String lastFmPassword) {
+        this.lastFmPassword = lastFmPassword;
     }
 
     /**

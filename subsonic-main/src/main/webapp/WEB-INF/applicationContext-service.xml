@@ -79,6 +79,10 @@
 
     <bean id="amazonSearchService" class="net.sourceforge.subsonic.service.AmazonSearchService"/>
 
+    <bean id="audioScrobblerService" class="net.sourceforge.subsonic.service.AudioScrobblerService">
+        <property name="settingsService" ref="settingsService"/>
+    </bean>
+
     <bean id="transcodingService" class="net.sourceforge.subsonic.service.TranscodingService">
         <property name="transcodingDao" ref="transcodingDao"/>
     </bean>
