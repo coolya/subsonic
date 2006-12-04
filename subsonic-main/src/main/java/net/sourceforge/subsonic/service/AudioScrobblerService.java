@@ -47,7 +47,7 @@ public class AudioScrobblerService {
         }
 
         if (queue.size() >= MAX_PENDING_REGISTRATION) {
-            LOG.warn("AudioScrobbler queue is full. Ignoring " + musicFile);
+            LOG.warn("Last.fm scrobbler queue is full. Ignoring " + musicFile);
             return;
         }
 
@@ -59,7 +59,7 @@ public class AudioScrobblerService {
         try {
             queue.put(registrationData);
         } catch (InterruptedException x) {
-            LOG.warn("Interrupted while queuing AudioScrobbler registration.", x);
+            LOG.warn("Interrupted while queuing Last.fm scrobble.", x);
         }
     }
 
@@ -111,17 +111,17 @@ public class AudioScrobblerService {
         String[] lines = executeGetRequest("http://post.audioscrobbler.com/?hs=true&p=1.1&c=tst&v=1.0&u=" + registrationData.username);
 
         if (lines[0].startsWith("BADUSER")) {
-            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at last.fm. Wrong username: " + registrationData.username);
+            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm. Wrong username: " + registrationData.username);
             return parseSleepInterval(lines);
         }
 
         if (lines[0].startsWith("FAILED")) {
-            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at last.fm: " + lines[0]);
+            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm: " + lines[0]);
             return parseSleepInterval(lines);
         }
 
         if (!lines[0].startsWith("UPDATE") && !lines[0].startsWith("UPTODATE")) {
-            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at last.fm.  Unknown response: " + lines[0]);
+            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm.  Unknown response: " + lines[0]);
             return 1;
         }
 
@@ -141,11 +141,11 @@ public class AudioScrobblerService {
         lines = executePostRequest(url);
 
         if (lines[0].startsWith("FAILED")) {
-            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at last.fm: " + lines[0]);
+            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm: " + lines[0]);
         } else if (lines[0].startsWith("BADAUTH")) {
-            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at last.fm.  Wrong password.");
+            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm.  Wrong password.");
         } else if (lines[0].startsWith("OK")) {
-            LOG.debug("Successfully scrobbled song '" + registrationData.title + "' for user " + registrationData.username + " at last.fm.");
+            LOG.debug("Successfully scrobbled song '" + registrationData.title + "' for user " + registrationData.username + " at Last.fm.");
         }
 
         return parseSleepInterval(lines);
@@ -216,7 +216,7 @@ public class AudioScrobblerService {
                         sleep(sleepInterval * 1000);
                     }
                 } catch (Exception x) {
-                    LOG.warn("Error in AudioScrobbler registration.", x);
+                    LOG.warn("Error in Last.fm scrobble registration.", x);
                 }
             }
         }
