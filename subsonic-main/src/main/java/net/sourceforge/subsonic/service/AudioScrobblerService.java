@@ -5,6 +5,7 @@ import net.sourceforge.subsonic.domain.*;
 import org.apache.commons.codec.digest.*;
 import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.methods.*;
+import org.apache.commons.lang.*;
 
 import java.io.*;
 import java.net.*;
@@ -111,12 +112,12 @@ public class AudioScrobblerService {
 
         if (lines[0].startsWith("BADUSER")) {
             LOG.warn("Failed to scrobble song '" + registrationData.title + "' at last.fm. Wrong username: " + registrationData.username);
-            return parseSleepInterval(lines[1]);
+            return parseSleepInterval(lines);
         }
 
         if (lines[0].startsWith("FAILED")) {
             LOG.warn("Failed to scrobble song '" + registrationData.title + "' at last.fm: " + lines[0]);
-            return parseSleepInterval(lines[1]);
+            return parseSleepInterval(lines);
         }
 
         if (!lines[0].startsWith("UPDATE") && !lines[0].startsWith("UPTODATE")) {
@@ -147,16 +148,23 @@ public class AudioScrobblerService {
             LOG.debug("Successfully scrobbled song '" + registrationData.title + "' for user " + registrationData.username + " at last.fm.");
         }
 
-        return lines.length > 1 ? parseSleepInterval(lines[1]) : 0;
+        return parseSleepInterval(lines);
     }
 
 
     /**
      * Parses a string containing the sleep interval, e.g., "INTERVAL 10".
      */
-    private int parseSleepInterval(String line) {
-        line = line.trim();
-        return Integer.valueOf(line.substring(9));
+    private int parseSleepInterval(String[] lines) {
+        if (lines.length == 0) {
+            return 0;
+        }
+
+        String lastLine = StringUtils.trimToEmpty(lines[lines.length - 1]);
+        if (lastLine.startsWith("INTERVAL ")) {
+            return Integer.valueOf(lastLine.substring(9));
+        }
+        return 0;
     }
 
     private String calculateMD5Response(String md5Challenge, String password) {

@@ -31,6 +31,9 @@ public class AppearanceSettingsController extends SimpleFormController {
         command.setPlaylistVisibility(userSettings.getPlaylistVisibility());
         command.setFinalVersionNotificationEnabled(userSettings.isFinalVersionNotificationEnabled());
         command.setBetaVersionNotificationEnabled(userSettings.isBetaVersionNotificationEnabled());
+        command.setLastFmEnabled(userSettings.isLastFmEnabled());
+        command.setLastFmUsername(userSettings.getLastFmUsername());
+        command.setLastFmPassword(userSettings.getLastFmPassword());
 
         Locale currentLocale = userSettings.getLocale();
         Locale[] locales = settingsService.getAvailableLocales();
@@ -82,6 +85,10 @@ public class AppearanceSettingsController extends SimpleFormController {
         settings.setPlaylistVisibility(command.getPlaylistVisibility());
         settings.setFinalVersionNotificationEnabled(command.isFinalVersionNotificationEnabled());
         settings.setBetaVersionNotificationEnabled(command.isBetaVersionNotificationEnabled());
+        settings.setLastFmEnabled(command.isLastFmEnabled());
+        settings.setLastFmUsername(command.getLastFmUsername());
+        settings.setLastFmPassword(command.getLastFmPassword());
+
         settingsService.updateUserSettings(settings);
 
         command.setReloadNeeded(true);

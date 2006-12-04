@@ -3,9 +3,23 @@
 <html><head>
     <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
+
+    <script type="text/javascript" language="javascript">
+        function enableLastFmFields() {
+            var display = "none";
+            var checkbox = document.getElementById("lastFm");
+            var table = document.getElementById("lastFmTable");
+            if (checkbox && checkbox.checked) {
+                display = "inline";
+            }
+            if (table) {
+                table.style.display = display;
+            }
+        }
+    </script>
 </head>
 
-<body>
+<body onload="javascript:enableLastFmFields()">
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="appearance"/>
@@ -121,6 +135,24 @@
         </tr>
     </table>
 
+    <table class="indent">
+        <tr>
+            <td><form:checkbox path="lastFmEnabled" id="lastFm" cssClass="checkbox" onclick="javascript:enableLastFmFields()"/></td>
+            <td><label for="lastFm"><fmt:message key="appearancesettings.lastfmenabled"/></label></td>
+        </tr>
+    </table>
+    <table id="lastFmTable" style="padding-left:2em">
+        <tr>
+            <td><fmt:message key="appearancesettings.lastfmusername"/></td>
+            <td><form:input path="lastFmUsername" size="24"/></td>
+        </tr>
+        <tr>
+            <td><fmt:message key="appearancesettings.lastfmpassword"/></td>
+            <td><form:password path="lastFmPassword" size="24"/></td>
+        </tr>
+    </table>
+
+    <p/>
     <input type="submit" value="<fmt:message key="common.save"/>"/>
 </form:form>
 

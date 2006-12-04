@@ -18,6 +18,9 @@ public class AppearanceSettingsCommand {
     private UserSettings.Visibility playlistVisibility;
     private boolean finalVersionNotificationEnabled;
     private boolean betaVersionNotificationEnabled;
+    private boolean lastFmEnabled;
+    private String lastFmUsername;
+    private String lastFmPassword;
     private boolean isReloadNeeded;
 
     public User getUser() {
@@ -90,6 +93,30 @@ public class AppearanceSettingsCommand {
 
     public void setBetaVersionNotificationEnabled(boolean betaVersionNotificationEnabled) {
         this.betaVersionNotificationEnabled = betaVersionNotificationEnabled;
+    }
+
+    public boolean isLastFmEnabled() {
+        return lastFmEnabled;
+    }
+
+    public void setLastFmEnabled(boolean lastFmEnabled) {
+        this.lastFmEnabled = lastFmEnabled;
+    }
+
+    public String getLastFmUsername() {
+        return lastFmUsername;
+    }
+
+    public void setLastFmUsername(String lastFmUsername) {
+        this.lastFmUsername = lastFmUsername;
+    }
+
+    public String getLastFmPassword() {
+        return lastFmPassword;
+    }
+
+    public void setLastFmPassword(String lastFmPassword) {
+        this.lastFmPassword = lastFmPassword;
     }
 
     public boolean isReloadNeeded() {
