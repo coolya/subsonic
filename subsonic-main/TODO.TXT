@@ -1,10 +1,18 @@
-PRIORITIZED FOR VERSION 2.10
+PRIORITIZED FOR SUBSONIC 3.0
 ===========================
 Show other albums by same artist.
-Audioscrobbler (last.fm) support. http://www.audioscrobbler.net/wiki/Protocol1.1.merged
-Display hours for very long tracks.
+Get last.fm client ID.
 Upgrade acegi and junit.
 http://cruxic.googlepages.com/jvorbiscomment
+Mention that you might have to create /var/subsonic manually (http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=712#712)
+Update translation.
+Update version numbers.
+Update site.
+
+COMPLETED IN SUBSONIC 3.0
+==========================
+Audioscrobbler (last.fm) support. http://www.audioscrobbler.net/wiki/Protocol1.1.merged
+Display hours for very long tracks.
 
 BACKLOG
 ==========

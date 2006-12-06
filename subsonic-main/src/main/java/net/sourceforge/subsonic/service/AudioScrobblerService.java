@@ -108,6 +108,7 @@ public class AudioScrobblerService {
             return 0;
         }
 
+        // TODO: Get client ID.
         String[] lines = executeGetRequest("http://post.audioscrobbler.com/?hs=true&p=1.1&c=tst&v=1.0&u=" + registrationData.username);
 
         if (lines[0].startsWith("BADUSER")) {
@@ -193,7 +194,6 @@ public class AudioScrobblerService {
             return response.split("\\n");
 
         } finally {
-            // Release the connection.
             method.releaseConnection();
         }
 

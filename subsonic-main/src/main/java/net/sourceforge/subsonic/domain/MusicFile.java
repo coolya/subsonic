@@ -7,7 +7,6 @@ import org.springframework.util.*;
 
 import java.io.*;
 import java.util.*;
-import java.text.*;
 
 /**
  * Represents a file or directory containing music. Music files can be put in a {@link Playlist},
@@ -400,9 +399,6 @@ public class MusicFile {
      */
     public static class MetaData {
 
-        private static final SimpleDateFormat TIME_IN_FORMAT    = new SimpleDateFormat("ss");
-        private static final SimpleDateFormat TIME_OUT_FORMAT   = new SimpleDateFormat("m:ss");
-
         private Integer trackNumber;
         private String title;
         private String artist;
@@ -487,12 +483,31 @@ public class MusicFile {
             if (duration == null) {
                 return null;
             }
-            try {
-                Date timeIn = TIME_IN_FORMAT.parse(String.valueOf(duration));
-                return TIME_OUT_FORMAT.format(timeIn);
-            } catch (ParseException x) {
-                return null;
+
+            StringBuffer result = new StringBuffer(8);
+
+            int seconds = duration;
+
+            int hours = seconds / 3600;
+            seconds -= hours * 3600;
+
+            int minutes = seconds / 60;
+            seconds -= minutes * 60;
+
+            if (hours > 0) {
+                result.append(hours).append(':');
+                if (minutes < 10) {
+                    result.append('0');
+                }
             }
+
+            result.append(minutes).append(':');
+            if (seconds < 10) {
+                result.append('0');
+            }
+            result.append(seconds);
+
+            return result.toString();
         }
 
         public void setDuration(Integer duration) {
