@@ -44,6 +44,7 @@ public class EditTagsController extends ParameterizableViewController {
     }
 
     private Song createSong(MusicFile file) {
+        //  TODO: Support OGG
         Mp3Parser parser = new Mp3Parser();
         MusicFile.MetaData metaData = parser.isApplicable(file) ? parser.getRawMetaData(file) : new MusicFile.MetaData();
 

@@ -14,6 +14,7 @@ import org.apache.commons.lang.*;
  * @author Sindre Mehus
  */
 public class Mp3Parser extends MetaDataParser {
+
     private static final Logger LOG = Logger.getLogger(Mp3Parser.class);
 
     /**

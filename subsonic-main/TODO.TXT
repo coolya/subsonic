@@ -3,11 +3,15 @@ PRIORITIZED FOR SUBSONIC 3.0
 Show other albums by same artist.
 Get last.fm client ID.
 Upgrade acegi and junit.
-http://cruxic.googlepages.com/jvorbiscomment
+Support display and editing of OGG tags.Chart
+Get listed on http://cruxic.googlepages.com/jvorbiscomment
 Mention that you might have to create /var/subsonic manually (http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=712#712)
 Update translation.
 Update version numbers.
 Update site.
+Make LAME args configurable.
+Fix PayPal donations.
+
 
 COMPLETED IN SUBSONIC 3.0
 ==========================
