@@ -12,8 +12,9 @@ public class MetaDataParserTestCase extends TestCase {
     public void testRemoveTrackNumberFromTitle() throws Exception {
 
         MetaDataParser parser = new MetaDataParser() {
-            public int getBitRate(MusicFile file) { return 0; }
-            public MusicFile.MetaData getMetaData(MusicFile file) { return null; }
+            public MusicFile.MetaData getRawMetaData(MusicFile file) { return null; }
+            public void setMetaData(MusicFile file, MusicFile.MetaData metaData) {}
+            public boolean isEditingSupported() { return false; }
             public boolean isApplicable(MusicFile file) { return false; }
         };
 

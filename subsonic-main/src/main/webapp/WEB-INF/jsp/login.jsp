@@ -24,18 +24,18 @@
 
         <tr>
             <td style="padding-right:10px"><fmt:message key="login.username"/></td>
-            <td><input type="text" name="j_username" style="width:12em"></td>
+            <td><input type="text" name="j_username" style="width:12em" tabindex="1"></td>
         </tr>
 
         <tr>
             <td style="padding-bottom:10px"><fmt:message key="login.password"/></td>
-            <td style="padding-bottom:10px"><input type="password" name="j_password" style="width:12em"/></td>
+            <td style="padding-bottom:10px"><input type="password" name="j_password" style="width:12em" tabindex="2"/></td>
         </tr>
 
         <tr>
-            <td><input name="submit" type="submit" value="<fmt:message key="login.login"/>"></td>
+            <td><input name="submit" type="submit" value="<fmt:message key="login.login"/>" tabindex="4"></td>
             <td class="detail">
-                <input type="checkbox" name="_acegi_security_remember_me" id="remember" class="checkbox">
+                <input type="checkbox" name="_acegi_security_remember_me" id="remember" class="checkbox" tabindex="3">
                 <label for="remember"><fmt:message key="login.remember"/></label>
             </td>
         </tr>

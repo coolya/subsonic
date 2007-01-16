@@ -115,6 +115,12 @@
         </dependency>
 
         <dependency>
+            <groupId>jvorbiscomment</groupId>
+            <artifactId>jvorbiscomment</artifactId>
+            <version>0.5.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>jfree</groupId>
             <artifactId>jfreechart</artifactId>
             <version>1.0.0</version>

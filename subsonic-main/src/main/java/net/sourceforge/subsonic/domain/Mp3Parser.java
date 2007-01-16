@@ -17,35 +17,6 @@ public class Mp3Parser extends MetaDataParser {
 
     private static final Logger LOG = Logger.getLogger(Mp3Parser.class);
 
-    /**
-     * Parses meta data for the given music file.
-     * @param file The music file to parse.
-     * @return Meta data for the file.
-     */
-    public MusicFile.MetaData getMetaData(MusicFile file) {
-
-        MusicFile.MetaData metaData = getRawMetaData(file);
-        String artist = metaData.getArtist();
-        String album  = metaData.getAlbum();
-        String title  = metaData.getTitle();
-
-        if (artist == null) {
-            artist = guessArtist(file);
-        }
-        if (album == null) {
-            album = guessAlbum(file);
-        }
-        if (title == null) {
-            title = guessTitle(file);
-        }
-
-        title = removeTrackNumberFromTitle(title, metaData.getTrackNumber());
-        metaData.setArtist(artist);
-        metaData.setAlbum(album);
-        metaData.setTitle(title);
-
-        return metaData;
-    }
 
     /**
      * Parses meta data for the given music file. No guessing or reformatting is done.
@@ -194,6 +165,15 @@ public class Mp3Parser extends MetaDataParser {
             LOG.warn("Failed to update ID3 tags for file " + file, x);
             throw new RuntimeException("Failed to update ID3 tags for file " + file + ". " + x.getMessage(), x);
         }
+    }
+
+    /**
+     * Returns whether this parser supports tag editing (using the {@link #setMetaData} method).
+     *
+     * @return Always true.
+     */
+    public boolean isEditingSupported() {
+        return true;
     }
 
     private void parseMp3Header(MusicFile.MetaData metaData, MusicFile file) {

@@ -10,6 +10,9 @@ es
 # German
 de
 
+# Dutch
+nl
+
 # Norwegian
 no
 

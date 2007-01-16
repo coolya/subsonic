@@ -15,17 +15,65 @@ public abstract class MetaDataParser {
 
     /**
      * Parses meta data for the given music file.
+     *
      * @param file The music file to parse.
      * @return Meta data for the file.
      */
-    public abstract MusicFile.MetaData getMetaData(MusicFile file);
+    public MusicFile.MetaData getMetaData(MusicFile file) {
+
+        MusicFile.MetaData metaData = getRawMetaData(file);
+        String artist = metaData.getArtist();
+        String album = metaData.getAlbum();
+        String title = metaData.getTitle();
+
+        if (artist == null) {
+            artist = guessArtist(file);
+        }
+        if (album == null) {
+            album = guessAlbum(file);
+        }
+        if (title == null) {
+            title = guessTitle(file);
+        }
+
+        title = removeTrackNumberFromTitle(title, metaData.getTrackNumber());
+        metaData.setArtist(artist);
+        metaData.setAlbum(album);
+        metaData.setTitle(title);
+
+        return metaData;
+    }
+
+    /**
+     * Parses meta data for the given music file. No guessing or reformatting is done.
+     *
+     * @param file The music file to parse.
+     * @return Meta data for the file.
+     */
+    public abstract MusicFile.MetaData getRawMetaData(MusicFile file);
+
+    /**
+     * Updates the given file with the given meta data.
+     *
+     * @param file     The music file to update.
+     * @param metaData The new meta data.
+     */
+    public abstract void setMetaData(MusicFile file, MusicFile.MetaData metaData);
 
     /**
      * Returns whether this parser is applicable to the given file.
+     *
      * @param file The music file in question.
      * @return Whether this parser is applicable to the given file.
      */
     public abstract boolean isApplicable(MusicFile file);
+
+    /**
+     * Returns whether this parser supports tag editing (using the {@link #setMetaData} method).
+     *
+     * @return Whether tag editing is supported.
+     */
+    public abstract boolean isEditingSupported();
 
     /**
      * Guesses the artist for the given music file.
@@ -46,6 +94,7 @@ public abstract class MetaDataParser {
 
     /**
      * Returns meta-data containg file size and format.
+     *
      * @param file The music file.
      * @return Meta-data containg file size and format.
      */
@@ -57,8 +106,8 @@ public abstract class MetaDataParser {
     }
 
     /**
-    * Guesses the album for the given music file.
-    */
+     * Guesses the album for the given music file.
+     */
     public String guessAlbum(MusicFile file) {
         try {
             MusicFile parent = file.getParent();
@@ -78,7 +127,8 @@ public abstract class MetaDataParser {
 
     /**
      * Removes any prefixed track number from the given title string.
-     * @param title The title with or without a prefixed track number, e.g., "02 - Back In Black".
+     *
+     * @param title       The title with or without a prefixed track number, e.g., "02 - Back In Black".
      * @param trackNumber If specified, this is the "true" track number.
      * @return The title with the track number removed, e.g., "Back In Black".
      */
@@ -103,11 +153,12 @@ public abstract class MetaDataParser {
         private MetaDataParser[] parsers;
 
         private Factory() {
-            parsers = new MetaDataParser[] {new Mp3Parser(), new DefaultMetaDataParser()};
+            parsers = new MetaDataParser[]{new Mp3Parser(), new OggParser(), new DefaultMetaDataParser()};
         }
 
         /**
          * Returns the singleton instance of the factory.
+         *
          * @return The singleton instance of the factory.
          */
         public static Factory getInstance() {
@@ -116,6 +167,7 @@ public abstract class MetaDataParser {
 
         /**
          * Returns a meta-data parser for the given music file.
+         *
          * @param file The file in question.
          * @return An applicable parser, or <code>null</code> if no parser is found.
          */
