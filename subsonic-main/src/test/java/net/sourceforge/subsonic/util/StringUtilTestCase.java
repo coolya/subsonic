@@ -105,4 +105,17 @@ public class StringUtilTestCase extends TestCase {
         assertEquals("Error in parseLocale().", new Locale("en", "US", "WIN"), StringUtil.parseLocale("en_US_WIN"));
         assertEquals("Error in parseLocale().", new Locale("en", "", "WIN"), StringUtil.parseLocale("en__WIN"));
     }
+
+    public void testUtf8Hex() throws Exception {
+        doTestUtf8Hex(null);
+        doTestUtf8Hex("");
+        doTestUtf8Hex("a");
+        doTestUtf8Hex("abcdefg");
+        doTestUtf8Hex("abcæøåÆØÅ");
+        doTestUtf8Hex("NRK P3 – FK Fotball");
+    }
+
+    private void doTestUtf8Hex(String s) throws Exception {
+        assertEquals("Error in utf8hex.", s, StringUtil.utf8HexDecode(StringUtil.utf8HexEncode(s)));
+    }
 }

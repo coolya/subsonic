@@ -15,7 +15,9 @@
         <description>
             Creates a URL with optional query parameters. Similar to 'c:url', but
             you may specify which character encoding to use for the URL query
-            parameters. The default encoding is ISO-8859-1.
+            parameters.  If no encoding is specified, the following steps are performed:
+            a) Parameter values are encoded as the hexadecimal representation of the UTF-8 bytes of the original string.
+            b) Parameter names are prepended with the suffix "Utf8Hex"
         </description>
         <name>url</name>
         <tag-class>net.sourceforge.subsonic.taglib.UrlTag</tag-class>

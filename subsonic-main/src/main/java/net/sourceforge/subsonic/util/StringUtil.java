@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.util;
 
 import org.apache.commons.io.*;
+import org.apache.commons.codec.binary.Hex;
 
 import java.io.*;
 import java.net.*;
@@ -16,6 +17,7 @@ import java.util.regex.*;
 public final class StringUtil {
 
     private static final String ENCODING_LATIN = "ISO-8859-1";
+    private static final String ENCODING_UTF8 = "UTF-8";
 
     private static final String[][] HTML_SUBSTITUTIONS = {
             {"&",  "&amp;"},
@@ -246,5 +248,32 @@ public final class StringUtil {
             return new Locale(elements[0], elements[1], "");
         }
         return new Locale(elements[0], elements[1], elements[2]);
+    }
+
+    /**
+     * Encodes the given string by using the hexadecimal representation of its UTF-8 bytes.
+     * @param s The string to encode.
+     * @return The encoded string.
+     * @throws Exception If an error occurs.
+     */
+    public static String utf8HexEncode(String s) throws Exception {
+        if (s == null) {
+            return null;
+        }
+        byte[] utf8 = s.getBytes(ENCODING_UTF8);
+        return String.valueOf(Hex.encodeHex(utf8));
+    }
+
+    /**
+     * Decodes the given string by using the hexadecimal representation of its UTF-8 bytes.
+     * @param s The string to decode.
+     * @return The decoded string.
+     * @throws Exception If an error occurs.
+     */
+    public static String utf8HexDecode(String s) throws Exception {
+        if (s == null) {
+            return null;
+        }
+        return new String(Hex.decodeHex(s.toCharArray()), ENCODING_UTF8);
     }
 }

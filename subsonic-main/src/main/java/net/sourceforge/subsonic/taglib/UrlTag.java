@@ -1,17 +1,28 @@
 package net.sourceforge.subsonic.taglib;
 
-import org.apache.taglibs.standard.tag.common.core.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.filter.ParameterDecodingFilter;
+import net.sourceforge.subsonic.util.StringUtil;
+import org.apache.taglibs.standard.tag.common.core.UrlSupport;
 
-import javax.servlet.jsp.tagext.*;
-import javax.servlet.jsp.*;
-import java.util.*;
-import java.io.*;
-import java.net.*;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspTagException;
+import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.BodyTagSupport;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Creates a URL with optional query parameters. Similar to 'c:url', but
  * you may specify which character encoding to use for the URL query
- * parameters. The default encoding is ISO-8859-1.
+ * parameters. If no encoding is specified, the following steps are performed:
+ * <ul>
+ * <li>Parameter values are encoded as the hexadecimal representation of the UTF-8 bytes of the original string.</li>
+ * <li>Parameter names are prepended with the suffix "Utf8Hex"</li>
+ * </ul>
  * <p/>
  * (The problem with c:url is that is uses the same encoding as the http response,
  * but most(?) servlet container assumes that ISO-8859-1 is used.)
@@ -20,7 +31,8 @@ import java.net.*;
  */
 public class UrlTag extends BodyTagSupport {
 
-    private String DEFAULT_ENCODING = "ISO-8859-1";
+    private String DEFAULT_ENCODING = "Utf8Hex";
+    private static final Logger LOG = Logger.getLogger(UrlTag.class);
 
     private String var;
     private String value;
@@ -61,10 +73,14 @@ public class UrlTag extends BodyTagSupport {
             for (int i = 0; i < parameters.size(); i++) {
                 Parameter parameter =  parameters.get(i);
                 try {
-                    result.append(URLEncoder.encode(parameter.getName(), encoding));
+                    result.append(parameter.getName());
+                    if (DEFAULT_ENCODING.equals(encoding)) {
+                        result.append(ParameterDecodingFilter.PARAM_SUFFIX);
+                    }
+
                     result.append('=');
                     if (parameter.getValue() != null) {
-                        result.append(URLEncoder.encode(parameter.getValue(), encoding));
+                        result.append(encode(parameter.getValue()));
                     }
                     if (i < parameters.size() - 1) {
                         result.append('&');
@@ -76,6 +92,18 @@ public class UrlTag extends BodyTagSupport {
             }
         }
         return result.toString();
+    }
+
+    private String encode(String s) throws UnsupportedEncodingException {
+        if (DEFAULT_ENCODING.equals(encoding)) {
+            try {
+                return StringUtil.utf8HexEncode(s);
+            } catch (Exception x) {
+                LOG.error("Failed to utf8hex-encode the string '" + s + "'.", x);
+            }
+        }
+
+        return URLEncoder.encode(s, encoding);
     }
 
     public void release() {
