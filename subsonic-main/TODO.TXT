@@ -10,7 +10,6 @@ Update version numbers.
 Update site.
 Make LAME args configurable.
 Fix PayPal donations.
-Fix NPE in MusicFile.getChildren() caused by non-latin characters (e,g., NRK P3 – FK Fotball)
 Rename source artifacts to xxx-source.zip (or whatever)
 
 COMPLETED IN SUBSONIC 3.0
@@ -18,8 +17,9 @@ COMPLETED IN SUBSONIC 3.0
 Dutch translation.
 Audioscrobbler (last.fm) support. http://www.audioscrobbler.net/wiki/Protocol1.1.merged
 Support display and editing of OGG Vorbis tags.
-Display hours for very long tracks.
 Change tab order in login screen.
+Display hours for very long tracks.
+Fix NPE in MusicFile.getChildren() caused by non-latin characters (e,g., NRK P3 – FK Fotball)
 
 BACKLOG
 ==========

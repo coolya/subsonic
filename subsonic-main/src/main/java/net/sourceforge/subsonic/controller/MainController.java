@@ -77,9 +77,31 @@ public class MainController extends ParameterizableViewController {
 
         }
 
+        setPreviousAndNextAlbums(dir, map);
+
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
+    }
+
+    private void setPreviousAndNextAlbums(MusicFile dir, Map<String, Object> map) throws IOException {
+        if (dir.isAlbum() && !dir.getParent().isRoot()) {
+            List<MusicFile> sieblings = dir.getParent().getChildren(true, true);
+            for (Iterator<MusicFile> iterator = sieblings.iterator(); iterator.hasNext();) {
+                MusicFile siebling = iterator.next();
+                if (siebling.isFile()) {
+                    iterator.remove();
+                }
+            }
+
+            int index = sieblings.indexOf(dir);
+            if (index > 0) {
+                map.put("previousAlbum", sieblings.get(index - 1));
+            }
+            if (index < sieblings.size() - 1) {
+                map.put("nextAlbum", sieblings.get(index + 1));
+            }
+        }
     }
 
     private boolean isMultipleArtists(List<MusicFile> children) {

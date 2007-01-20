@@ -274,5 +274,24 @@
 </tr>
 </table>
 
+<table>
+    <c:if test="${not empty model.previousAlbum}">
+        <sub:url value="main.view" var="previousUrl">
+            <sub:param name="path" value="${model.previousAlbum.path}"/>
+        </sub:url>
+        <td style="padding-right:10pt"><div class="back"><a href="${previousUrl}" title="${model.previousAlbum.name}">
+            <str:truncateNicely upper="30">${model.previousAlbum.name}</str:truncateNicely>
+        </a></div></td>
+    </c:if>
+    <c:if test="${not empty model.nextAlbum}">
+        <sub:url value="main.view" var="nextUrl">
+            <sub:param name="path" value="${model.nextAlbum.path}"/>
+        </sub:url>
+        <td><div class="forward"><a href="${nextUrl}" title="${model.nextAlbum.name}">
+            <str:truncateNicely upper="30">${model.nextAlbum.name}</str:truncateNicely>
+        </a></div></td>
+    </c:if>
+</table>
+
 </body>
 </html>
