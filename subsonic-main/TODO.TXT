@@ -1,7 +1,8 @@
 PRIORITIZED FOR SUBSONIC 3.0
 ===========================
-Show other albums by same artist.
-Get last.fm client ID.
+Display image embedded in ID3 tag (APIC).
+Show what other users are playing. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=359)
+∆ÿ≈ looks wrong on last.fm.
 Upgrade acegi and junit.
 Get listed on http://cruxic.googlepages.com/jvorbiscomment
 Mention that you might have to create /var/subsonic manually (http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=712#712)
@@ -16,6 +17,7 @@ COMPLETED IN SUBSONIC 3.0
 ==========================
 Dutch translation.
 Audioscrobbler (last.fm) support. http://www.audioscrobbler.net/wiki/Protocol1.1.merged
+Show other albums by same artist.
 Support display and editing of OGG Vorbis tags.
 Change tab order in login screen.
 Display hours for very long tracks.
@@ -84,7 +86,6 @@ Make it work on Java Application Server 8.1.  (web.xml element order)
 Make it work on Geronimo.
 Make it work on Jetty
 Drop ResourceBundle_en.
-Display image embedded in ID3 tag (APIC).
 Upload quota per user.
 Order search results.
 Specify upload directory per user. Option to delete files?
