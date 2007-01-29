@@ -31,7 +31,7 @@
                     <sub:url var="url" value="/wap/browse.view">
                         <sub:param name="path" value="${artist.path}"/>
                     </sub:url>
-                    <a href="${url}">${artist.title}</a><br/>
+                    <a href="${url}">${fn:escapeXml(artist.title)}</a><br/>
                 </c:forEach>
             </c:otherwise>
             </c:choose>

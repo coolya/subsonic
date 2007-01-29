@@ -1,7 +1,6 @@
 PRIORITIZED FOR SUBSONIC 3.0
 ===========================
 Ampersand bug in WAP (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=368)
-Display image embedded in ID3 tag (APIC).
 Show what other users are playing. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=359)
 ∆ÿ≈ looks wrong on last.fm.
 Upgrade acegi and junit.
@@ -16,6 +15,7 @@ Rename source artifacts to xxx-source.zip (or whatever)
 
 COMPLETED IN SUBSONIC 3.0
 ==========================
+Display image embedded in ID3 tag (APIC).
 Dutch translation.
 Audioscrobbler (last.fm) support. http://www.audioscrobbler.net/wiki/Protocol1.1.merged
 Show other albums by same artist.
