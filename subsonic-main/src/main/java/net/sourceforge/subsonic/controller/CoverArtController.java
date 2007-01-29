@@ -1,6 +1,8 @@
 package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.*;
+import net.sourceforge.subsonic.domain.Mp3Parser;
+import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.service.*;
 import org.apache.commons.codec.digest.*;
 import org.apache.commons.io.*;
@@ -23,6 +25,7 @@ import java.io.*;
 public class CoverArtController implements Controller, LastModified {
 
     private SecurityService securityService;
+    private MusicFileService musicFileService;
 
     private static final Logger LOG = Logger.getLogger(CoverArtController.class);
 
@@ -110,7 +113,7 @@ public class CoverArtController implements Controller, LastModified {
             InputStream in = null;
             OutputStream out = null;
             try {
-                in = new FileInputStream(file);
+                in = getImageInputStream(file);
                 out = new FileOutputStream(cachedImage);
                 BufferedImage image = ImageIO.read(in);
                 image = scale(image, size, size);
@@ -129,6 +132,20 @@ public class CoverArtController implements Controller, LastModified {
             }
         }
         return cachedImage;
+    }
+
+    /**
+     * Returns an input stream to the image in the given file.  If the file is an MP3 file,
+     * the embedded ID3 image (APIC) is returned.
+     */
+    private InputStream getImageInputStream(File file) throws IOException {
+        Mp3Parser parser = new Mp3Parser();
+        MusicFile musicFile = musicFileService.getMusicFile(file);
+        if (parser.isApplicable(musicFile)) {
+            return new ByteArrayInputStream(parser.getImageData(musicFile));
+        } else {
+            return new FileInputStream(file);
+        }
     }
 
     private synchronized File getImageCacheDirectory(int size) {
@@ -178,4 +195,7 @@ public class CoverArtController implements Controller, LastModified {
         this.securityService = securityService;
     }
 
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
+    }
 }

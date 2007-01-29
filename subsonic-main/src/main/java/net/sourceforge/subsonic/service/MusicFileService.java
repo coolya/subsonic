@@ -136,6 +136,19 @@ public class MusicFileService {
                 }
             }
         }
+
+        // Look for embedded images in MP3 files. (Only check first MP3 file encountered).
+        Mp3Parser parser = new Mp3Parser();
+        for (File candidate : candidates) {
+            MusicFile musicFile = getMusicFile(candidate);
+            if (parser.isApplicable(musicFile)) {
+                if (parser.isImageAvailable(musicFile)) {
+                    return candidate;
+                } else {
+                    return null;
+                }
+            }
+        }
         return null;
     }
 

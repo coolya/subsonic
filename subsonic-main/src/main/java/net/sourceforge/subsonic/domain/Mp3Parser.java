@@ -1,12 +1,14 @@
 package net.sourceforge.subsonic.domain;
 
-import net.sourceforge.subsonic.*;
-import org.blinkenlights.jid3.*;
+import net.sourceforge.subsonic.Logger;
+import org.apache.commons.lang.StringUtils;
+import org.blinkenlights.jid3.ID3Exception;
 import org.blinkenlights.jid3.MP3File;
-import org.blinkenlights.jid3.v1.*;
+import org.blinkenlights.jid3.MediaFile;
+import org.blinkenlights.jid3.v1.ID3V1Tag;
+import org.blinkenlights.jid3.v1.ID3V1_1Tag;
 import org.blinkenlights.jid3.v2.*;
-import org.jaudiotagger.audio.mp3.*;
-import org.apache.commons.lang.*;
+import org.jaudiotagger.audio.mp3.MP3AudioHeader;
 
 /**
  * Parses meta data from MP3 files.
@@ -201,5 +203,47 @@ public class Mp3Parser extends MetaDataParser {
      */
     public boolean isApplicable(MusicFile file) {
         return file.isFile() && file.getName().toUpperCase().endsWith(".MP3");
+    }
+
+    /**
+     * Returns whether cover art image data (APIC) is available in the given file.
+     * @param file The music file.
+     * @return Whether cover art image data (APIC) is available.
+     */
+    public boolean isImageAvailable(MusicFile file) {
+        try {
+            return getAPICFrame(file) != null;
+        } catch (Throwable x) {
+            LOG.warn("Failed to parse APIC frame for " + file, x);
+            return false;
+        }
+    }
+
+    /**
+     * Returns the cover art image data (APIC) embedded in the given file.
+     * @param file The music file.
+     * @return The embedded cover art image data, or <code>null</code> if not available.
+     */
+    public byte[] getImageData(MusicFile file) {
+        try {
+            return getAPICFrame(file).getPictureData();
+        } catch (Throwable x) {
+            LOG.warn("Failed to parse APIC frame for " + file, x);
+            return null;
+        }
+    }
+
+    private APICID3V2Frame getAPICFrame(MusicFile file) throws Exception {
+        MediaFile mediaFile = new MP3File(file.getFile());
+        ID3V2Tag tag2 = mediaFile.getID3V2Tag();
+
+        if (tag2 instanceof ID3V2_3_0Tag) {
+            APICID3V2Frame[] frames = ((ID3V2_3_0Tag) tag2).getAPICFrames();
+            if (frames != null && frames.length > 0) {
+                return frames[0];
+            }
+        }
+
+        return null;
     }
 }

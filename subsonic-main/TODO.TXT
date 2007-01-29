@@ -1,5 +1,6 @@
 PRIORITIZED FOR SUBSONIC 3.0
 ===========================
+Ampersand bug in WAP (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=368)
 Display image embedded in ID3 tag (APIC).
 Show what other users are playing. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=359)
 ∆ÿ≈ looks wrong on last.fm.

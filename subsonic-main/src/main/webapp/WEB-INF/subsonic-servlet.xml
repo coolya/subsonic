@@ -195,6 +195,7 @@
     </bean>
     <bean id="coverArtController" class="net.sourceforge.subsonic.controller.CoverArtController">
         <property name="securityService" ref="securityService"/>
+        <property name="musicFileService" ref="musicFileService"/>
     </bean>
     <bean id="statusChartController" class="net.sourceforge.subsonic.controller.StatusChartController">
         <property name="statusService" ref="statusService"/>
