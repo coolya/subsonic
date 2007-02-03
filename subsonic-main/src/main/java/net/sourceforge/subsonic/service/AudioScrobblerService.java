@@ -1,17 +1,25 @@
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.domain.*;
-import org.apache.commons.codec.digest.*;
-import org.apache.commons.httpclient.*;
-import org.apache.commons.httpclient.methods.*;
-import org.apache.commons.lang.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.util.StringUtil;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.UserSettings;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.lang.StringUtils;
 
-import java.io.*;
-import java.net.*;
-import java.text.*;
-import java.util.*;
-import java.util.concurrent.*;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Provides services for "audioscrobbling", which is the process of
@@ -24,7 +32,6 @@ public class AudioScrobblerService {
     private static final Logger LOG = Logger.getLogger(AudioScrobblerService.class);
     private static final int MAX_PENDING_REGISTRATION = 2000;
     private static final long MIN_REGISTRATION_INTERVAL = 30000L;
-    private static final String UTF8 = "UTF-8";
 
     private RegistrationThread thread;
     private final Map<String,Long> lastRegistrationTimes = new HashMap<String, Long>();
@@ -92,6 +99,7 @@ public class AudioScrobblerService {
         reg.artist = metaData.getArtist();
         reg.album = metaData.getAlbum();
         reg.title = metaData.getTitle();
+        reg.duration = metaData.getDuration() == null ? 0 : metaData.getDuration();
         reg.time = new Date(now);
 
         return reg;
@@ -134,14 +142,19 @@ public class AudioScrobblerService {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String time = dateFormat.format(registrationData.time);
 
-        String artist = URLEncoder.encode(registrationData.artist, UTF8);
-        String title = URLEncoder.encode(registrationData.title, UTF8);
-        String album = URLEncoder.encode(registrationData.album, UTF8);
-        String time = URLEncoder.encode(dateFormat.format(registrationData.time), UTF8);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("u", registrationData.username);
+        params.put("s", md5Response);
+        params.put("a[0]", registrationData.artist);
+        params.put("t[0]", registrationData.title);
+        params.put("b[0]", registrationData.album);
+        params.put("m[0]", "");
+        params.put("l[0]", String.valueOf(registrationData.duration));
+        params.put("i[0]", time);
 
-        url += "?u=" + registrationData.username + "&s=" + md5Response + "&a[0]=" + artist + "&t[0]=" + title + "&b[0]=" + album + "&m[0]=&l[0]=60&i[0]=" + time;
-        lines = executePostRequest(url);
+        lines = executePostRequest(url, params);
 
         if (lines[0].startsWith("FAILED")) {
             LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm: " + lines[0]);
@@ -178,12 +191,18 @@ public class AudioScrobblerService {
         return executeRequest(new GetMethod(url));
     }
 
-    private String[] executePostRequest(String url) throws IOException {
-        return executeRequest(new PostMethod(url));
+    private String[] executePostRequest(String url, Map<String, String> parameters) throws IOException {
+        PostMethod method = new PostMethod(url);
+
+        for (Map.Entry<String,String> entry : parameters.entrySet()) {
+            method.addParameter(entry.getKey(), entry.getValue());
+        }
+        return executeRequest(method);
     }
 
     private String[] executeRequest(HttpMethod method) throws IOException {
         HttpClient client = new HttpClient();
+        client.getParams().setContentCharset(StringUtil.ENCODING_UTF8);
 
         try {
             int statusCode = client.executeMethod(method);
@@ -230,6 +249,7 @@ public class AudioScrobblerService {
         private String artist;
         private String album;
         private String title;
+        private int duration;
         private Date time;
     }
 }

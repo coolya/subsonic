@@ -16,8 +16,8 @@ import java.util.regex.*;
  */
 public final class StringUtil {
 
-    private static final String ENCODING_LATIN = "ISO-8859-1";
-    private static final String ENCODING_UTF8 = "UTF-8";
+    public static final String ENCODING_LATIN = "ISO-8859-1";
+    public static final String ENCODING_UTF8 = "UTF-8";
 
     private static final String[][] HTML_SUBSTITUTIONS = {
             {"&",  "&amp;"},
