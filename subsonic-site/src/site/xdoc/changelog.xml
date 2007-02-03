@@ -19,7 +19,7 @@
                 <ul>
                     <li>New: Audioscrobbling support. Automatically register what you're playing on last.fm.</li>
                     <li>New: Support display and editing of OGG Vorbis tags.</li>
-                    <li>New: Display cover art embedded in ID3 tag.</li>
+                    <li>New: Display cover art embedded in ID3 tags.</li>
                     <li>New: Dutch translation by Ronald Knot.</li>
                     <li>New: Links to previous/next album by same artist.</li>
                     <li>New: Change tab order in login screen.</li>
