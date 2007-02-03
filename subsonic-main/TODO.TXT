@@ -1,31 +1,12 @@
-PRIORITIZED FOR SUBSONIC 3.0
+
+BACKLOG
 ===========================
 Show what other users are playing. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=359)
 Get listed on http://cruxic.googlepages.com/jvorbiscomment
 Mention that you might have to create /var/subsonic manually (http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=712#712)
-Update translation.
-Update version numbers.
-Update site.
 Make LAME args configurable.
 Fix PayPal donations.
-Rename source artifacts to xxx-source.zip (or whatever)
 LDAP support.
-
-COMPLETED IN SUBSONIC 3.0
-==========================
-Upgrade spring, acegi and junit.
-Ampersand bug in WAP (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=368)
-Display image embedded in ID3 tag (APIC).
-Dutch translation.
-Audioscrobbler (last.fm) support. http://www.audioscrobbler.net/wiki/Protocol1.1.merged
-Show other albums by same artist.
-Support display and editing of OGG Vorbis tags.
-Change tab order in login screen.
-Display hours for very long tracks.
-Fix NPE in MusicFile.getChildren() caused by non-latin characters (e,g., NRK P3 – FK Fotball)
-
-BACKLOG
-==========
 Web proxy support (for audioscrobbler, amazon etc)?
 New icon for wap.
 Missing refresh when changing from no cover art.

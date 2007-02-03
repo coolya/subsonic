@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <document>
-    
+
     <properties>
         <title>Download</title>
         <author email="sindre_mehus@users.sourceforge.net">Sindre Mehus</author>
@@ -20,10 +20,10 @@
                 Download latest stable release: <a href="download_redirect.html"><b>Subsonic 2.9</b></a>
                 <a href="changelog.html">(What's new?)</a>
             </p>
-            <!--<p>-->
-                <!--Download latest beta release: <a href="download_beta_redirect.html"><b>Subsonic 2.9.beta1</b></a>-->
-                <!--<a href="changelog.html">(What's new?)</a>-->
-            <!--</p>-->
+            <p>
+                Download latest beta release: <a href="download_beta_redirect.html"><b>Subsonic 3.0.beta1</b></a>
+                <a href="changelog.html">(What's new?)</a>
+            </p>
 
             <p>
                 Older versions, as well as source releases, can be downloaded from <a href="http://sourceforge.net/projects/subsonic/">SourceForge</a>.

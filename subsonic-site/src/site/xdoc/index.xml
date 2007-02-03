@@ -62,7 +62,7 @@
                         <li>Supports MP3, OGG, AAC and any other audio or video format that can be streamed over HTTP.</li>
                         <li>Transcoding engine allows for streaming of a variety of lossy and lossless formats by converting to MP3 on-the-fly.</li>
                         <li>Works with any network-enabled media player, such as Winamp, iTunes, XMMS, MusicMatch and Windows Media Player.</li>
-                        <li>Displays cover art, dynamically scaling it to fit nicely on the screen.</li>
+                        <li>Displays cover art, dynamically scaling it to fit nicely on the screen. Supports images embedded in ID3.</li>
                         <li>You can assign ratings and comments to albums.</li>
                         <li>Finds cover art and album info using Amazon Web Services.</li>
                     </ul>
@@ -72,6 +72,7 @@
                         <li>Common playlist features (add, remove, rearrange, repeat, shuffle, undo).</li>
                         <li>Playlists can be saved and restored. M3U, PLS and XSPF formats are supported.</li>
                         <li>Saved playlists are available as Podcasts.</li>
+                        <li>Audioscrobbling support. Automatically register what you're playing on last.fm</li>
                     </ul>
                     <ul>
                         <li>Support for Internet TV and radio stations.</li>
@@ -95,7 +96,7 @@
                         <li>Provides links to album reviews and more at Google Music and allmusic.com.</li>
                         <li>Full internationalization support. Currently available translations: English, Norwegian, Macedonian
                             (by Stefan Ivanovski), Simplified Chinese (by Neil Gao), Spanish (by Jorge Bueno Magdalena),
-                            and German (by Harald Weiss).</li>
+                            German (by Harald Weiss), and Dutch (by Ronald Knot).</li>
                         <li>Theme support. Currently ships with four themes.</li>
                     </ul>
                     <ul>

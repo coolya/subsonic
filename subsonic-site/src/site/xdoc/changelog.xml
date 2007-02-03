@@ -4,7 +4,6 @@
         <title>Change Log</title>
         <author email="sindre_mehus@users.sourceforge.net">Sindre Mehus</author>
     </properties>
-    
 
     <body>
 
@@ -15,6 +14,21 @@
         </script>
 
         <section name="Change Log">
+
+            <subsection name="Subsonic 3.0.beta1 - Feb 04, 2007">
+                <ul>
+                    <li>New: Audioscrobbling support. Automatically register what you're playing on last.fm.</li>
+                    <li>New: Support display and editing of OGG Vorbis tags.</li>
+                    <li>New: Display cover art embedded in ID3 tag.</li>
+                    <li>New: Dutch translation by Ronald Knot.</li>
+                    <li>New: Links to previous/next album by same artist.</li>
+                    <li>New: Change tab order in login screen.</li>
+                    <li>Bugfix: Support directory names with non-latin characters.</li>
+                    <li>Bugfix: Fixed ampersand bug in wap interface.</li>
+                    <li>Bugfix: Display hours for very long tracks.</li>
+                    <li>Tech: Upgraded Spring and Acegi to latest versions.</li>
+                </ul>
+            </subsection>
 
             <subsection name="Subsonic 2.9 - Nov 13, 2006">
                 <p>(Changes since 2.9.beta1)</p>

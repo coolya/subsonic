@@ -6,7 +6,7 @@ import java.util.*;
 public class MissingTranslations  {
 
     public static void main(String[] args) throws IOException {
-        diff("en", "es");
+        diff("en", "no");
 //        diff("en", "mk");
     }
 
