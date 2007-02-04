@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.controller;
 
 import org.springframework.web.servlet.mvc.*;
+import org.apache.commons.lang.StringUtils;
 import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.command.*;
 import net.sourceforge.subsonic.domain.*;
@@ -87,7 +88,10 @@ public class AppearanceSettingsController extends SimpleFormController {
         settings.setBetaVersionNotificationEnabled(command.isBetaVersionNotificationEnabled());
         settings.setLastFmEnabled(command.isLastFmEnabled());
         settings.setLastFmUsername(command.getLastFmUsername());
-        settings.setLastFmPassword(command.getLastFmPassword());
+
+        if (StringUtils.isNotBlank(command.getLastFmPassword())) {
+            settings.setLastFmPassword(command.getLastFmPassword());
+        }
 
         settingsService.updateUserSettings(settings);
 

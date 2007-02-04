@@ -1,6 +1,10 @@
+CHANGES BETWEEN 3.0.BETA1 and 3.0
+=================================
+last.fm password gets cleared in dialog. (Spring bug)
 
 BACKLOG
 ===========================
+Rename "Appearance" settings to "Personal".
 Show what other users are playing. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=359)
 Get listed on http://cruxic.googlepages.com/jvorbiscomment
 Mention that you might have to create /var/subsonic manually (http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=712#712)
