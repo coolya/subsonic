@@ -23,6 +23,7 @@ public class TranscodingService {
     private static final Logger LOG = Logger.getLogger(TranscodingService.class);
 
     private TranscodingDao transcodingDao;
+    private SettingsService settingsService;
 
     /**
      * Returns all transcodings. Disabled transcodings are not included.
@@ -117,10 +118,10 @@ public class TranscodingService {
         try {
             Transcoding transcoding = getTranscoding(musicFile, player);
             if (transcoding != null) {
-                return getTranscodedInputStream(musicFile, transcoding, player.getTranscodeScheme());
+                return getTranscodedInputStream(musicFile, transcoding, getTranscodeScheme(player));
             }
 
-            TranscodeScheme transcodeScheme = player.getTranscodeScheme();
+            TranscodeScheme transcodeScheme = getTranscodeScheme(player);
             boolean downsample = transcodeScheme != TranscodeScheme.OFF;
             int maxBitRate = transcodeScheme.getMaxBitRate();
 
@@ -133,6 +134,19 @@ public class TranscodingService {
         }
 
         return new FileInputStream(musicFile.getFile());
+    }
+
+    /**
+     * Returns the strictest transcoding scheme defined for the player and the user.
+     */
+    private TranscodeScheme getTranscodeScheme(Player player) {
+        String username = player.getUsername();
+        if (username != null) {
+            UserSettings userSettings = settingsService.getUserSettings(username);
+            return player.getTranscodeScheme().strictest(userSettings.getTranscodeScheme());
+        }
+
+        return player.getTranscodeScheme();
     }
 
     /**
@@ -266,4 +280,7 @@ public class TranscodingService {
         this.transcodingDao = transcodingDao;
     }
 
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
+    }
 }

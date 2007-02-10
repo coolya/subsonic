@@ -2,9 +2,10 @@
 
 <html><head>
     <%@ include file="head.jsp" %>
+    <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
 </head>
 
-<body onload="javascript:enablePasswordFields()">
+<body onload="enablePasswordFields()">
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="user"/>
@@ -69,23 +70,40 @@
                 <td><label for="comment"><fmt:message key="usersettings.comment"/></label></td>
             </tr>
         </table>
+    </c:if>
 
-        <br/>
+    <table class="indent">
+        <tr>
+            <td><fmt:message key="playersettings.maxbitrate"/></td>
+            <td>
+                <form:select path="transcodeSchemeName" cssStyle="width:8em">
+                    <c:forEach items="${command.transcodeSchemeHolders}" var="transcodeSchemeHolder">
+                        <form:option value="${transcodeSchemeHolder.name}" label="${transcodeSchemeHolder.description}"/>
+                    </c:forEach>
+                </form:select>
+            </td>
+            <td><a href="helpPopup.view?topic=transcode" onclick="return popup(this, 'help')">
+                <fmt:message key="common.help" var="help"/>
+                <img src="<c:url value="/icons/help_small.png"/>" alt="" title="${help}"></a></td>
+            <c:if test="${not command.transcodingSupported}">
+                <td class="warning"><fmt:message key="playersettings.nolame"></fmt:message></td>
+            </c:if>
+        </tr>
+    </table>
 
-        <c:if test="${not command.new}">
-            <table>
-                <tr>
-                    <td><form:checkbox path="delete" id="delete" cssClass="checkbox"/></td>
-                    <td><label for="delete"><fmt:message key="usersettings.delete"/></label></td>
-                </tr>
-            </table>
-        </c:if>
+    <c:if test="${not command.new and not command.admin}">
+        <table class="indent">
+            <tr>
+                <td><form:checkbox path="delete" id="delete" cssClass="checkbox"/></td>
+                <td><label for="delete"><fmt:message key="usersettings.delete"/></label></td>
+            </tr>
+        </table>
     </c:if>
 
     <c:choose>
         <c:when test="${command.new}">
 
-            <table>
+            <table class="indent">
                 <tr>
                     <td><fmt:message key="usersettings.username"/></td>
                     <td><form:input path="username"/></td>

@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.dao.schema;
 
 import net.sourceforge.subsonic.*;
+import net.sourceforge.subsonic.domain.TranscodeScheme;
 import org.springframework.jdbc.core.*;
 
 /**
@@ -18,7 +19,7 @@ public class Schema30 extends Schema {
             LOG.info("Updating database schema to version 6.");
             template.execute("insert into version values (6)");
         }
-        
+
         if (!columnExists(template, "last_fm_enabled", "user_settings")) {
             LOG.info("Database columns 'user_settings.last_fm_*' not found.  Creating them.");
             template.execute("alter table user_settings add last_fm_enabled boolean default false not null");
@@ -27,5 +28,11 @@ public class Schema30 extends Schema {
             LOG.info("Database columns 'user_settings.last_fm_*' were added successfully.");
         }
 
+        if (!columnExists(template, "transcode_scheme", "user_settings")) {
+            LOG.info("Database column 'user_settings.transcode_scheme' not found.  Creating it.");
+            template.execute("alter table user_settings add transcode_scheme varchar default '" +
+                             TranscodeScheme.OFF.name() + "' not null");
+            LOG.info("Database column 'user_settings.transcode_scheme' was added successfully.");
+        }
     }
 }

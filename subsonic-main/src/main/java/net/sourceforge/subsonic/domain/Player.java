@@ -7,7 +7,6 @@ import java.util.*;
  * miscellaneous identifiers, and an associated playlist. <p/>
  *
  * @author Sindre Mehus
- * @version $Revision: 1.10 $ $Date: 2006/02/28 23:19:58 $
  */
 public class Player {
 

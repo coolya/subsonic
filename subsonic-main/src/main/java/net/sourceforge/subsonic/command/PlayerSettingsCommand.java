@@ -174,27 +174,6 @@ public class PlayerSettingsCommand {
     }
 
     /**
-     * Holds the name and description of an enum value.
-     */
-    public static class EnumHolder {
-        private String name;
-        private String description;
-
-        public EnumHolder(String name, String description) {
-            this.name = name;
-            this.description = description;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-    }
-
-    /**
      * Holds the transcoding and whether it is active for the given player.
      */
     public static class TranscodingHolder {

@@ -19,6 +19,7 @@ public class UserSettings {
     private boolean lastFmEnabled;
     private String lastFmUsername;
     private String lastFmPassword;
+    private TranscodeScheme transcodeScheme = TranscodeScheme.OFF;
 
     public UserSettings(String username) {
         this.username = username;
@@ -102,6 +103,14 @@ public class UserSettings {
 
     public void setLastFmPassword(String lastFmPassword) {
         this.lastFmPassword = lastFmPassword;
+    }
+
+    public TranscodeScheme getTranscodeScheme() {
+        return transcodeScheme;
+    }
+
+    public void setTranscodeScheme(TranscodeScheme transcodeScheme) {
+        this.transcodeScheme = transcodeScheme;
     }
 
     /**

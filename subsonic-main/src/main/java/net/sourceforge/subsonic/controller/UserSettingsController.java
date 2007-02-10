@@ -16,6 +16,8 @@ import javax.servlet.http.*;
 public class UserSettingsController extends SimpleFormController {
 
     private SecurityService securityService;
+    private SettingsService settingsService;
+    private TranscodingService transcodingService;
 
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         UserSettingsCommand command = new UserSettingsCommand();
@@ -24,11 +26,17 @@ public class UserSettingsController extends SimpleFormController {
         if (user != null) {
             command.setUser(user);
             command.setAdmin(User.USERNAME_ADMIN.equals(user.getUsername()));
+            UserSettings userSettings = settingsService.getUserSettings(user.getUsername());
+            command.setTranscodeSchemeName(userSettings.getTranscodeScheme().name());
+
         } else {
             command.setNew(true);
         }
 
         command.setUsers(securityService.getAllUsers());
+        command.setTranscodingSupported(transcodingService.isDownsamplingSupported());
+        command.setTranscodeDirectory(transcodingService.getTranscodeDirectory().getPath());
+        command.setTranscodeSchemes(TranscodeScheme.values());
 
         return command;
     }
@@ -81,6 +89,10 @@ public class UserSettingsController extends SimpleFormController {
         }
 
         securityService.updateUser(user);
+
+        UserSettings userSettings = settingsService.getUserSettings(command.getUsername());
+        userSettings.setTranscodeScheme(TranscodeScheme.valueOf(command.getTranscodeSchemeName()));
+        settingsService.updateUserSettings(userSettings);
     }
 
     private void resetCommand(UserSettingsCommand command) {
@@ -91,9 +103,18 @@ public class UserSettingsController extends SimpleFormController {
         command.setNew(true);
         command.setPassword(null);
         command.setConfirmPassword(null);
+        command.setTranscodeSchemeName(null);
     }
 
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
+    }
+
+    public void setTranscodingService(TranscodingService transcodingService) {
+        this.transcodingService = transcodingService;
     }
 }

@@ -166,6 +166,8 @@
         <property name="successView" value="userSettings"/>
         <property name="formView" value="userSettings"/>
         <property name="securityService" ref="securityService"/>
+        <property name="settingsService" ref="settingsService"/>
+        <property name="transcodingService" ref="transcodingService"/>
     </bean>
     <bean id="passwordSettingsController" class="net.sourceforge.subsonic.controller.PasswordSettingsController">
         <property name="sessionForm" value="true"/>

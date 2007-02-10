@@ -31,7 +31,7 @@
 
     <bean id="daoHelper" class="net.sourceforge.subsonic.dao.DaoHelper"/>
 
-    
+
     <!-- Services -->
 
     <bean id="musicFileService" class="net.sourceforge.subsonic.service.MusicFileService" init-method="init">
@@ -85,6 +85,7 @@
 
     <bean id="transcodingService" class="net.sourceforge.subsonic.service.TranscodingService">
         <property name="transcodingDao" ref="transcodingDao"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
 
 

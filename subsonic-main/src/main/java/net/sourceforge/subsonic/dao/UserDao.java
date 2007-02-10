@@ -23,7 +23,7 @@ public class UserDao extends AbstractDao {
                                                         "main_year, main_bit_rate, main_duration, main_format, main_file_size, " +
                                                         "playlist_caption_cutoff, playlist_track_number, playlist_artist, playlist_album, playlist_genre, " +
                                                         "playlist_year, playlist_bit_rate, playlist_duration, playlist_format, playlist_file_size, " +
-                                                        "last_fm_enabled, last_fm_username, last_fm_password";
+                                                        "last_fm_enabled, last_fm_username, last_fm_password, transcode_scheme";
 
     private static final Integer ROLE_ID_ADMIN      = 1;
     private static final Integer ROLE_ID_DOWNLOAD   = 2;
@@ -112,7 +112,7 @@ public class UserDao extends AbstractDao {
     public String[] getRolesForUser(String username) {
         String sql = "select r.name from role r, user_role ur " +
                      "where ur.username=? and ur.role_id=r.id";
-        List roles = getJdbcTemplate().queryForList(sql, new Object[] {username}, String.class);
+        List<?> roles = getJdbcTemplate().queryForList(sql, new Object[] {username}, String.class);
         String[] result = new String[roles.size()];
         for (int i = 0; i < result.length; i++) {
             result[i] = (String) roles.get(i);
@@ -151,12 +151,13 @@ public class UserDao extends AbstractDao {
                                                    playlist.getCaptionCutoff(), playlist.isTrackNumberVisible(), playlist.isArtistVisible(), playlist.isAlbumVisible(),
                                                    playlist.isGenreVisible(), playlist.isYearVisible(), playlist.isBitRateVisible(), playlist.isDurationVisible(),
                                                    playlist.isFormatVisible(), playlist.isFileSizeVisible(),
-                                                   settings.isLastFmEnabled(), settings.getLastFmUsername(), settings.getLastFmPassword()});
+                                                   settings.isLastFmEnabled(), settings.getLastFmUsername(), settings.getLastFmPassword(),
+                                                   settings.getTranscodeScheme().name()});
     }
 
     private void readRoles(User user) {
         String sql = "select role_id from user_role where username=?";
-        List roles = getJdbcTemplate().queryForList(sql, new Object[] {user.getUsername()}, Integer.class);
+        List<?> roles = getJdbcTemplate().queryForList(sql, new Object[] {user.getUsername()}, Integer.class);
         for (Object role : roles) {
             if (ROLE_ID_ADMIN.equals(role)) {
                 user.setAdminRole(true);
@@ -240,6 +241,8 @@ public class UserDao extends AbstractDao {
             settings.setLastFmEnabled(rs.getBoolean(col++));
             settings.setLastFmUsername(rs.getString(col++));
             settings.setLastFmPassword(rs.getString(col++));
+
+            settings.setTranscodeScheme(TranscodeScheme.valueOf(rs.getString(col++)));
 
             return settings;
         }

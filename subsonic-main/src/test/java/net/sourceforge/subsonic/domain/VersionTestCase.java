@@ -3,7 +3,6 @@ package net.sourceforge.subsonic.domain;
 /**
  * Unit test of {@link Version}.
  * @author Sindre Mehus
- * @version $Revision: 1.2 $ $Date: 2006/01/20 21:25:16 $
  */
 
 import junit.framework.*;

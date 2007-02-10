@@ -126,6 +126,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertFalse("Error in getUserSettings().", userSettings.isLastFmEnabled());
         assertNull("Error in getUserSettings().", userSettings.getLastFmUsername());
         assertNull("Error in getUserSettings().", userSettings.getLastFmPassword());
+        assertSame("Error in getUserSettings().", TranscodeScheme.OFF, userSettings.getTranscodeScheme());
 
         UserSettings settings = new UserSettings("sindre");
         settings.setLocale(Locale.SIMPLIFIED_CHINESE);
@@ -138,6 +139,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         settings.setLastFmEnabled(true);
         settings.setLastFmUsername("last_user");
         settings.setLastFmPassword("last_pass");
+        settings.setTranscodeScheme(TranscodeScheme.MAX_192);
 
         userDao.updateUserSettings(settings);
         userSettings = userDao.getUserSettings("sindre");
@@ -153,6 +155,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertEquals("Error in getUserSettings().", true, userSettings.isLastFmEnabled());
         assertEquals("Error in getUserSettings().", "last_user", userSettings.getLastFmUsername());
         assertEquals("Error in getUserSettings().", "last_pass", userSettings.getLastFmPassword());
+        assertSame("Error in getUserSettings().", TranscodeScheme.MAX_192, userSettings.getTranscodeScheme());
 
         userDao.deleteUser("sindre");
         assertNull("Error in cascading delete.", userDao.getUserSettings("sindre"));

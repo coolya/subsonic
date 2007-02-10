@@ -5,7 +5,6 @@ package net.sourceforge.subsonic.domain;
  * converting an audio stream to a lower bit rate.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.3 $ $Date: 2005/04/14 20:46:34 $
  */
 public enum TranscodeScheme {
 
@@ -33,6 +32,7 @@ public enum TranscodeScheme {
 
     /**
      * Returns the maximum bit rate for this transcoding scheme.
+     *
      * @return The maximum bit rate for this transcoding scheme.
      */
     public int getMaxBitRate() {
@@ -40,7 +40,26 @@ public enum TranscodeScheme {
     }
 
     /**
+     * Returns the strictest transcode scheme (i.e., the scheme with the lowest max bitrate).
+     *
+     * @param other The other transcode scheme. May be <code>null</code>, in which case 'this' is returned.
+     * @return The strictest scheme.
+     */
+    public TranscodeScheme strictest(TranscodeScheme other) {
+        if (other == null || other == TranscodeScheme.OFF) {
+            return this;
+        }
+
+        if (this == TranscodeScheme.OFF) {
+            return other;
+        }
+
+        return maxBitRate < other.maxBitRate ? this : other;
+    }
+
+    /**
      * Returns a human-readable string representation of this object.
+     *
      * @return A human-readable string representation of this object.
      */
     public String toString() {

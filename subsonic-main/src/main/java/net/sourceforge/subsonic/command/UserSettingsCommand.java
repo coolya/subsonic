@@ -25,6 +25,11 @@ public class UserSettingsCommand {
     private String password;
     private String confirmPassword;
 
+    private String transcodeSchemeName;
+    private EnumHolder[] transcodeSchemeHolders;
+    private boolean transcodingSupported;
+    private String transcodeDirectory;
+
     public String getUsername() {
         return username;
     }
@@ -135,6 +140,42 @@ public class UserSettingsCommand {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public String getTranscodeSchemeName() {
+        return transcodeSchemeName;
+    }
+
+    public void setTranscodeSchemeName(String transcodeSchemeName) {
+        this.transcodeSchemeName = transcodeSchemeName;
+    }
+
+    public EnumHolder[] getTranscodeSchemeHolders() {
+        return transcodeSchemeHolders;
+    }
+
+    public void setTranscodeSchemes(TranscodeScheme[] transcodeSchemes) {
+        transcodeSchemeHolders = new EnumHolder[transcodeSchemes.length];
+        for (int i = 0; i < transcodeSchemes.length; i++) {
+            TranscodeScheme scheme = transcodeSchemes[i];
+            transcodeSchemeHolders[i] = new EnumHolder(scheme.name(), scheme.toString());
+        }
+    }
+
+    public boolean isTranscodingSupported() {
+        return transcodingSupported;
+    }
+
+    public void setTranscodingSupported(boolean transcodingSupported) {
+        this.transcodingSupported = transcodingSupported;
+    }
+
+    public String getTranscodeDirectory() {
+        return transcodeDirectory;
+    }
+
+    public void setTranscodeDirectory(String transcodeDirectory) {
+        this.transcodeDirectory = transcodeDirectory;
     }
 
     public void setUser(User user) {

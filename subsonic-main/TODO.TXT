@@ -1,9 +1,15 @@
+TODO IN 3.0
+=============
+Bug in user settings window.
+
 CHANGES BETWEEN 3.0.BETA1 and 3.0
 =================================
+Per-user bitrate limit - http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=396
 last.fm password gets cleared in dialog. (Spring bug)
 
 BACKLOG
 ===========================
+Longer cache expiry period for images.
 Rename "Appearance" settings to "Personal".
 Show what other users are playing. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=359)
 Get listed on http://cruxic.googlepages.com/jvorbiscomment
