@@ -4,6 +4,7 @@ import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.filter.ParameterDecodingFilter;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.taglibs.standard.tag.common.core.UrlSupport;
+import org.apache.commons.lang.CharUtils;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
@@ -22,6 +23,7 @@ import java.util.List;
  * <ul>
  * <li>Parameter values are encoded as the hexadecimal representation of the UTF-8 bytes of the original string.</li>
  * <li>Parameter names are prepended with the suffix "Utf8Hex"</li>
+ * <li>Note: Nothing is done with the parameter name or value if the value only contains ASCII alphanumeric characters.</li>
  * </ul>
  * <p/>
  * (The problem with c:url is that is uses the same encoding as the http response,
@@ -74,7 +76,7 @@ public class UrlTag extends BodyTagSupport {
                 Parameter parameter =  parameters.get(i);
                 try {
                     result.append(parameter.getName());
-                    if (DEFAULT_ENCODING.equals(encoding)) {
+                    if (isUtf8Hex() && !isAsciiAlphaNumeric(parameter.getValue())) {
                         result.append(ParameterDecodingFilter.PARAM_SUFFIX);
                     }
 
@@ -95,15 +97,37 @@ public class UrlTag extends BodyTagSupport {
     }
 
     private String encode(String s) throws UnsupportedEncodingException {
-        if (DEFAULT_ENCODING.equals(encoding)) {
+        if (isUtf8Hex()) {
+            if (isAsciiAlphaNumeric(s)) {
+                return s;
+            }
+
             try {
                 return StringUtil.utf8HexEncode(s);
             } catch (Exception x) {
                 LOG.error("Failed to utf8hex-encode the string '" + s + "'.", x);
+                return s;
             }
         }
 
         return URLEncoder.encode(s, encoding);
+    }
+
+    private boolean isUtf8Hex() {
+        return DEFAULT_ENCODING.equals(encoding);
+    }
+
+    private boolean isAsciiAlphaNumeric(String s) {
+        if (s == null) {
+            return true;
+        }
+
+        for (int i = 0; i < s.length(); i++) {
+            if (!CharUtils.isAsciiAlphanumeric(s.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void release() {
