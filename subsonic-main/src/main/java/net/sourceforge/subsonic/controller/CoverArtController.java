@@ -97,7 +97,7 @@ public class CoverArtController implements Controller, LastModified {
     private void sendUnscaled(File file, HttpServletResponse response) throws IOException {
         InputStream in = null;
         try {
-            in = new FileInputStream(file);
+            in = getImageInputStream(file);
             IOUtils.copy(in, response.getOutputStream());
         } finally {
             IOUtils.closeQuietly(in);
