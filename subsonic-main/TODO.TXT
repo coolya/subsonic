@@ -1,15 +1,14 @@
 TODO IN 3.0
 =============
-Use "utf8hex" only if string contain non-ascii characters.
-Bug when setting/clearing ratings for non-Latin folders.
--> Remove all use of StringUtil.urlEncode() and MusicFile.urlEncode().
-Bug in user settings window.
+Bug in user settings window.  Related to Spring version?
 
 CHANGES BETWEEN 3.0.BETA1 and 3.0
 =================================
+Use "utf8hex" only if string contain non-ascii characters.
 Bug when zooming ID3 cover art.
 Per-user bitrate limit - http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=396
 last.fm password gets cleared in dialog. (Spring bug)
+Fixed remaining bugs related to folders with non-latin characters.
 
 BACKLOG
 ===========================

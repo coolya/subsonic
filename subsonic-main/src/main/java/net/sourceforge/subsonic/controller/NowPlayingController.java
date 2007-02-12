@@ -2,6 +2,8 @@ package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
+import net.sourceforge.subsonic.util.StringUtil;
+import net.sourceforge.subsonic.filter.ParameterDecodingFilter;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
 import org.springframework.web.servlet.view.*;
@@ -25,7 +27,8 @@ public class NowPlayingController extends AbstractController {
         MusicFile current = playlist.getCurrentFile();
         String url;
         if (current != null && !current.getParent().isRoot()) {
-            url = "main.view?path=" + current.getParent().urlEncode() + "&updateNowPlaying=true";
+            url = "main.view?path" + ParameterDecodingFilter.PARAM_SUFFIX  + "=" +
+                  StringUtil.utf8HexEncode(current.getParent().getPath()) + "&updateNowPlaying=true";
         } else {
             url = "home.view";
         }

@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.*;
+import net.sourceforge.subsonic.filter.ParameterDecodingFilter;
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.util.*;
@@ -35,7 +36,8 @@ public class ChangeCoverArtController extends AbstractController {
         if (url != null) {
             // TODO: handle error and redirect.
             saveCoverArt(path, url);
-            return new ModelAndView(new RedirectView("main.view?path=" + StringUtil.urlEncode(path)));
+            return new ModelAndView(new RedirectView("main.view?path" + ParameterDecodingFilter.PARAM_SUFFIX + "=" +
+                                                     StringUtil.utf8HexEncode(path)));
         } else {
             return new ModelAndView("changeCoverArt", "model", createModel(request));
         }

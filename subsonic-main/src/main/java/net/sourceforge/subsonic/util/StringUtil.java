@@ -43,16 +43,6 @@ public final class StringUtil {
     private StringUtil() {}
 
     /**
-     * URL-encodes the given string.
-     * @param s The input string.
-     * @return The converted string.
-     * @throws UnsupportedEncodingException If the encoding used is not supported.
-     */
-    public static String urlEncode(String s) throws UnsupportedEncodingException {
-        return URLEncoder.encode(s, ENCODING_LATIN);
-    }
-
-    /**
      * Returns the specified string converted to a format suitable for
      * HTML. All single-quote, double-quote, greater-than, less-than and
      * ampersand characters are replaces with their corresponding HTML

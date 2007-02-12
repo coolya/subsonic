@@ -3,6 +3,7 @@ package net.sourceforge.subsonic.controller;
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.util.*;
+import net.sourceforge.subsonic.filter.ParameterDecodingFilter;
 import org.springframework.web.bind.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
@@ -29,7 +30,7 @@ public class SetRatingController extends AbstractController {
         String username = securityService.getCurrentUsername(request);
         musicInfoService.setRatingForUser(username, musicFile, rating);
 
-        String url = "main.view?path=" + StringUtil.urlEncode(path);
+        String url = "main.view?path" + ParameterDecodingFilter.PARAM_SUFFIX  + "=" + StringUtil.utf8HexEncode(path);
         return new ModelAndView(new RedirectView(url));
     }
 

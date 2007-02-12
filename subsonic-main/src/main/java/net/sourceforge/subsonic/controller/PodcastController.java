@@ -10,6 +10,7 @@ import javax.servlet.http.*;
 import java.util.*;
 import java.io.*;
 import java.text.*;
+import java.net.URLEncoder;
 
 /**
  * Controller for the page used to generate the Podcast XML file.
@@ -31,7 +32,7 @@ public class PodcastController extends ParameterizableViewController {
         for (int i = 0; i < playlists.length; i++) {
 
             String name = StringUtil.removeSuffix(playlists[i].getName());
-            String encodedName = StringUtil.urlEncode(playlists[i].getName());
+            String encodedName = URLEncoder.encode(playlists[i].getName(), StringUtil.ENCODING_LATIN);
             String publishDate = RSS_DATE_FORMAT.format(new Date(playlists[i].lastModified()));
 
             // Resolve content type.

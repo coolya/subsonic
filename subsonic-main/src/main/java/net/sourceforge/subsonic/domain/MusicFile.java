@@ -378,15 +378,6 @@ public class MusicFile {
     }
 
     /**
-     * Returns the path of this music file as an URL-encoded string.
-     * @return The path of this music file as an URL-encoded string.
-     * @throws UnsupportedEncodingException
-     */
-    public String urlEncode() throws UnsupportedEncodingException {
-        return StringUtil.urlEncode(getPath());
-    }
-
-    /**
      * Equivalent to {@link #getPath}.
      * @return This music file as a string.
      */
