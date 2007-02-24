@@ -1,16 +1,24 @@
 package net.sourceforge.subsonic.controller;
 
-import org.springframework.web.servlet.mvc.*;
-import org.springframework.web.servlet.*;
-import net.sourceforge.subsonic.service.*;
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.util.*;
+import net.sourceforge.subsonic.domain.Playlist;
+import net.sourceforge.subsonic.service.PlaylistService;
+import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.util.StringUtil;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
-import javax.servlet.http.*;
-import java.util.*;
-import java.io.*;
-import java.text.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Controller for the page used to generate the Podcast XML file.
@@ -42,7 +50,7 @@ public class PodcastController extends ParameterizableViewController {
             String type = StringUtil.getMimeType(suffix);
 
             long length = playlist.length();
-            String enclosureUrl = url.replaceFirst("/podcast.*", "/stream?playlist=" + encodedName + "&amp;suffix=" + suffix);
+            String enclosureUrl = url.replaceFirst("/podcast.*", "/stream?playlist=" + encodedName + "&amp;suffix=." + suffix);
 
             // Change protocol and port, if specified. (To make it work with players that don't support SSL.)
             int streamPort = settingsService.getStreamPort();

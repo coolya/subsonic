@@ -1,12 +1,28 @@
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.util.*;
-import net.sourceforge.subsonic.dao.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.dao.InternetRadioDao;
+import net.sourceforge.subsonic.dao.MusicFolderDao;
+import net.sourceforge.subsonic.dao.UserDao;
+import net.sourceforge.subsonic.domain.InternetRadio;
+import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.domain.Theme;
+import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.util.StringUtil;
 
-import java.util.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 /**
  * Provides persistent storage of application settings and preferences.
@@ -17,45 +33,45 @@ public class SettingsService {
 
     // Subsonic home directory.
     private static final File SUBSONIC_HOME_WINDOWS = new File("c:/subsonic");
-    private static final File SUBSONIC_HOME_OTHER   = new File("/var/subsonic");
+    private static final File SUBSONIC_HOME_OTHER = new File("/var/subsonic");
 
     // Global settings.
-    private static final String          KEY_INDEX_STRING            = "IndexString";
-    private static final String          KEY_IGNORED_ARTICLES        = "IgnoredArticles";
-    private static final String          KEY_SHORTCUTS               = "Shortcuts";
-    private static final String          KEY_PLAYLIST_FOLDER         = "PlaylistFolder";
-    private static final String          KEY_MUSIC_MASK              = "MusicMask";
-    private static final String          KEY_COVER_ART_MASK          = "CoverArtMask";
-    private static final String          KEY_COVER_ART_LIMIT         = "CoverArtLimit";
-    private static final String          KEY_WELCOME_MESSAGE         = "WelcomeMessage";
-    private static final String          KEY_LOCALE_LANGUAGE         = "LocaleLanguage";
-    private static final String          KEY_LOCALE_COUNTRY          = "LocaleCountry";
-    private static final String          KEY_LOCALE_VARIANT          = "LocaleVariant";
-    private static final String          KEY_THEME_ID                   = "Theme";
-    private static final String          KEY_INDEX_CREATION_INTERVAL = "IndexCreationInterval";
-    private static final String          KEY_INDEX_CREATION_HOUR     = "IndexCreationHour";
-    private static final String          KEY_DOWNLOAD_BITRATE_LIMIT  = "DownloadBitrateLimit";
-    private static final String          KEY_UPLOAD_BITRATE_LIMIT    = "UploadBitrateLimit";
-    private static final String          KEY_STREAM_PORT             = "StreamPort";
+    private static final String KEY_INDEX_STRING = "IndexString";
+    private static final String KEY_IGNORED_ARTICLES = "IgnoredArticles";
+    private static final String KEY_SHORTCUTS = "Shortcuts";
+    private static final String KEY_PLAYLIST_FOLDER = "PlaylistFolder";
+    private static final String KEY_MUSIC_MASK = "MusicMask";
+    private static final String KEY_COVER_ART_MASK = "CoverArtMask";
+    private static final String KEY_COVER_ART_LIMIT = "CoverArtLimit";
+    private static final String KEY_WELCOME_MESSAGE = "WelcomeMessage";
+    private static final String KEY_LOCALE_LANGUAGE = "LocaleLanguage";
+    private static final String KEY_LOCALE_COUNTRY = "LocaleCountry";
+    private static final String KEY_LOCALE_VARIANT = "LocaleVariant";
+    private static final String KEY_THEME_ID = "Theme";
+    private static final String KEY_INDEX_CREATION_INTERVAL = "IndexCreationInterval";
+    private static final String KEY_INDEX_CREATION_HOUR = "IndexCreationHour";
+    private static final String KEY_DOWNLOAD_BITRATE_LIMIT = "DownloadBitrateLimit";
+    private static final String KEY_UPLOAD_BITRATE_LIMIT = "UploadBitrateLimit";
+    private static final String KEY_STREAM_PORT = "StreamPort";
 
     // Default values.
-    private static final String          DEFAULT_INDEX_STRING            = "A B C D E F G H I J K L M N O P Q R S T U V W X-Z(XYZ)";
-    private static final String          DEFAULT_IGNORED_ARTICLES        = "The El La Los Las Le Les";
-    private static final String          DEFAULT_SHORTCUTS               = "New Incoming";
-    private static final String          DEFAULT_PLAYLIST_FOLDER         = "c:/playlists";
-    private static final String          DEFAULT_MUSIC_MASK              = ".mp3 .ogg .aac .wav .wma";
-    private static final String          DEFAULT_COVER_ART_MASK          = "folder.jpg cover.jpg .jpg .jpeg .gif .png";
-    private static final int             DEFAULT_COVER_ART_LIMIT         = 30;
-    private static final String          DEFAULT_WELCOME_MESSAGE         = "Welcome to Subsonic!";
-    private static final String          DEFAULT_LOCALE_LANGUAGE         = "en";
-    private static final String          DEFAULT_LOCALE_COUNTRY          = "";
-    private static final String          DEFAULT_LOCALE_VARIANT          = "";
-    private static final String          DEFAULT_THEME_ID                   = "default";
-    private static final int             DEFAULT_INDEX_CREATION_INTERVAL = 1;
-    private static final int             DEFAULT_INDEX_CREATION_HOUR     = 3;
-    private static final long            DEFAULT_DOWNLOAD_BITRATE_LIMIT  = 0;
-    private static final long            DEFAULT_UPLOAD_BITRATE_LIMIT    = 0;
-    private static final long            DEFAULT_STREAM_PORT             = 0;
+    private static final String DEFAULT_INDEX_STRING = "A B C D E F G H I J K L M N O P Q R S T U V W X-Z(XYZ)";
+    private static final String DEFAULT_IGNORED_ARTICLES = "The El La Los Las Le Les";
+    private static final String DEFAULT_SHORTCUTS = "New Incoming";
+    private static final String DEFAULT_PLAYLIST_FOLDER = "c:/playlists";
+    private static final String DEFAULT_MUSIC_MASK = ".mp3 .ogg .aac .wav .wma";
+    private static final String DEFAULT_COVER_ART_MASK = "folder.jpg cover.jpg .jpg .jpeg .gif .png";
+    private static final int DEFAULT_COVER_ART_LIMIT = 30;
+    private static final String DEFAULT_WELCOME_MESSAGE = "Welcome to Subsonic!";
+    private static final String DEFAULT_LOCALE_LANGUAGE = "en";
+    private static final String DEFAULT_LOCALE_COUNTRY = "";
+    private static final String DEFAULT_LOCALE_VARIANT = "";
+    private static final String DEFAULT_THEME_ID = "default";
+    private static final int DEFAULT_INDEX_CREATION_INTERVAL = 1;
+    private static final int DEFAULT_INDEX_CREATION_HOUR = 3;
+    private static final long DEFAULT_DOWNLOAD_BITRATE_LIMIT = 0;
+    private static final long DEFAULT_UPLOAD_BITRATE_LIMIT = 0;
+    private static final long DEFAULT_STREAM_PORT = 0;
 
     // Array of all keys.  Used to clean property file.
     private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_SHORTCUTS, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
@@ -77,6 +93,7 @@ public class SettingsService {
 
     private String[] cachedCoverArtMaskArray;
     private String[] cachedMusicMaskArray;
+    private static File subsonicHome;
 
     public SettingsService() {
         File propertyFile = getPropertyFile();
@@ -149,10 +166,16 @@ public class SettingsService {
 
     /**
      * Returns the Subsonic home directory.
+     *
      * @return The Subsonic home directory, if it exists.
      * @throws RuntimeException If directory doesn't exist.
      */
-    public static File getSubsonicHome() {
+    public static synchronized File getSubsonicHome() {
+
+        if (subsonicHome != null) {
+            return subsonicHome;
+        }
+
         File home;
 
         String overrideHome = System.getProperty("subsonic.home");
@@ -164,15 +187,18 @@ public class SettingsService {
         }
 
         // Attempt to create home directory if it doesn't exist.
-        if (!home.exists()) {
+        if (!home.exists() || !home.isDirectory()) {
             boolean success = home.mkdirs();
             if (success) {
+                subsonicHome = home;
             } else {
                 String message = "The directory " + home + " does not exist. Please create it and make it writable. " +
                                  "(You can override the directory location by specifying -Dsubsonic.home=... when " +
                                  "starting the servlet container.)";
-                throw new RuntimeException(message);
+                System.err.println("ERROR: " + message);
             }
+        } else {
+            subsonicHome = home;
         }
 
         return home;
@@ -223,7 +249,7 @@ public class SettingsService {
     }
 
     public synchronized void setMusicMask(String mask) {
-        properties.setProperty(KEY_MUSIC_MASK,  mask);
+        properties.setProperty(KEY_MUSIC_MASK, mask);
         cachedMusicMaskArray = null;
     }
 
@@ -239,7 +265,7 @@ public class SettingsService {
     }
 
     public synchronized void setCoverArtMask(String mask) {
-        properties.setProperty(KEY_COVER_ART_MASK,  mask);
+        properties.setProperty(KEY_COVER_ART_MASK, mask);
         cachedCoverArtMaskArray = null;
     }
 
@@ -255,7 +281,7 @@ public class SettingsService {
     }
 
     public void setCoverArtLimit(int limit) {
-        properties.setProperty(KEY_COVER_ART_LIMIT,  "" + limit);
+        properties.setProperty(KEY_COVER_ART_LIMIT, "" + limit);
     }
 
     public String getWelcomeMessage() {
@@ -263,13 +289,13 @@ public class SettingsService {
     }
 
     public void setWelcomeMessage(String message) {
-        properties.setProperty(KEY_WELCOME_MESSAGE,  message);
+        properties.setProperty(KEY_WELCOME_MESSAGE, message);
     }
 
     /**
-    * Returns the number of days between automatic index creation, of -1 if automatic index
-    * creation is disabled.
-    */
+     * Returns the number of days between automatic index creation, of -1 if automatic index
+     * creation is disabled.
+     */
     public int getIndexCreationInterval() {
         return Integer.parseInt(properties.getProperty(KEY_INDEX_CREATION_INTERVAL, "" + DEFAULT_INDEX_CREATION_INTERVAL));
     }
@@ -290,7 +316,7 @@ public class SettingsService {
     }
 
     /**
-     * Sets the hour of day (0 - 23) when automatic index creation should run. 
+     * Sets the hour of day (0 - 23) when automatic index creation should run.
      */
     public void setIndexCreationHour(int hour) {
         properties.setProperty(KEY_INDEX_CREATION_HOUR, "" + hour);
@@ -307,7 +333,7 @@ public class SettingsService {
      * @param limit The download bitrate limit in Kbit/s. Zero if unlimited.
      */
     public void setDownloadBitrateLimit(long limit) {
-        properties.setProperty(KEY_DOWNLOAD_BITRATE_LIMIT,  "" + limit);
+        properties.setProperty(KEY_DOWNLOAD_BITRATE_LIMIT, "" + limit);
     }
 
     /**
@@ -321,7 +347,7 @@ public class SettingsService {
      * @param limit The upload bitrate limit in Kbit/s. Zero if unlimited.
      */
     public void setUploadBitrateLimit(long limit) {
-        properties.setProperty(KEY_UPLOAD_BITRATE_LIMIT,  "" + limit);
+        properties.setProperty(KEY_UPLOAD_BITRATE_LIMIT, "" + limit);
     }
 
     /**
@@ -335,23 +361,25 @@ public class SettingsService {
      * @param port The non-SSL stream port. Zero if disabled.
      */
     public void setStreamPort(int port) {
-        properties.setProperty(KEY_STREAM_PORT,  "" + port);
+        properties.setProperty(KEY_STREAM_PORT, "" + port);
     }
 
     /**
      * Returns the locale (for language, date format etc).
+     *
      * @return The locale.
      */
     public Locale getLocale() {
         String language = properties.getProperty(KEY_LOCALE_LANGUAGE, DEFAULT_LOCALE_LANGUAGE);
-        String country  = properties.getProperty(KEY_LOCALE_COUNTRY, DEFAULT_LOCALE_COUNTRY);
-        String variant  = properties.getProperty(KEY_LOCALE_VARIANT, DEFAULT_LOCALE_VARIANT);
+        String country = properties.getProperty(KEY_LOCALE_COUNTRY, DEFAULT_LOCALE_COUNTRY);
+        String variant = properties.getProperty(KEY_LOCALE_VARIANT, DEFAULT_LOCALE_VARIANT);
 
         return new Locale(language, country, variant);
     }
 
     /**
      * Sets the locale (for language, date format etc.)
+     *
      * @param locale The locale.
      */
     public void setLocale(Locale locale) {
@@ -362,6 +390,7 @@ public class SettingsService {
 
     /**
      * Returns the ID of the theme to use.
+     *
      * @return The theme ID.
      */
     public String getThemeId() {
@@ -370,6 +399,7 @@ public class SettingsService {
 
     /**
      * Sets the ID of the theme to use.
+     *
      * @param themeId The theme ID
      */
     public void setThemeId(String themeId) {
@@ -377,9 +407,10 @@ public class SettingsService {
     }
 
     /**
-    * Returns a list of available themes.
-    * @return A list of available themes.
-    */
+     * Returns a list of available themes.
+     *
+     * @return A list of available themes.
+     */
     public synchronized Theme[] getAvailableThemes() {
         if (themes == null) {
             themes = new ArrayList<Theme>();
@@ -404,6 +435,7 @@ public class SettingsService {
 
     /**
      * Returns a list of available locales.
+     *
      * @return A list of available locales.
      */
     public synchronized Locale[] getAvailableLocales() {
@@ -443,6 +475,7 @@ public class SettingsService {
 
     /**
      * Returns all music folders. Non-existing and disabled folders are not included.
+     *
      * @return Possibly empty array of all music folders.
      */
     public MusicFolder[] getAllMusicFolders() {
@@ -451,6 +484,7 @@ public class SettingsService {
 
     /**
      * Returns all music folders.
+     *
      * @param includeAll Whether non-existing and disabled folders should be included.
      * @return Possibly empty array of all music folders.
      */
@@ -466,15 +500,17 @@ public class SettingsService {
     }
 
     /**
-    * Creates a new music folder.
-    * @param musicFolder The music folder to create.
-    */
+     * Creates a new music folder.
+     *
+     * @param musicFolder The music folder to create.
+     */
     public void createMusicFolder(MusicFolder musicFolder) {
         musicFolderDao.createMusicFolder(musicFolder);
     }
 
     /**
      * Deletes the music folder with the given ID.
+     *
      * @param id The ID of the music folder to delete.
      */
     public void deleteMusicFolder(Integer id) {
@@ -483,6 +519,7 @@ public class SettingsService {
 
     /**
      * Updates the given music folder.
+     *
      * @param musicFolder The music folder to update.
      */
     public void updateMusicFolder(MusicFolder musicFolder) {
@@ -491,6 +528,7 @@ public class SettingsService {
 
     /**
      * Returns all internet radio stations. Disabled stations are not returned.
+     *
      * @return Possibly empty array of all internet radio stations.
      */
     public InternetRadio[] getAllInternetRadios() {
@@ -499,6 +537,7 @@ public class SettingsService {
 
     /**
      * Returns the internet radio station with the given ID.
+     *
      * @param id The ID.
      * @return The internet radio station with the given ID, or <code>null</code> if not found.
      */
@@ -513,10 +552,11 @@ public class SettingsService {
     }
 
     /**
-    * Returns all internet radio stations.
-    * @param includeAll Whether disabled stations should be included.
-    * @return Possibly empty array of all internet radio stations.
-    */
+     * Returns all internet radio stations.
+     *
+     * @param includeAll Whether disabled stations should be included.
+     * @return Possibly empty array of all internet radio stations.
+     */
     public InternetRadio[] getAllInternetRadios(boolean includeAll) {
         InternetRadio[] all = internetRadioDao.getAllInternetRadios();
         List<InternetRadio> result = new ArrayList<InternetRadio>(all.length);
@@ -530,6 +570,7 @@ public class SettingsService {
 
     /**
      * Creates a new internet radio station.
+     *
      * @param radio The internet radio station to create.
      */
     public void createInternetRadio(InternetRadio radio) {
@@ -538,6 +579,7 @@ public class SettingsService {
 
     /**
      * Deletes the internet radio station with the given ID.
+     *
      * @param id The internet radio station ID.
      */
     public void deleteInternetRadio(Integer id) {
@@ -546,6 +588,7 @@ public class SettingsService {
 
     /**
      * Updates the given internet radio station.
+     *
      * @param radio The internet radio station to update.
      */
     public void updateInternetRadio(InternetRadio radio) {
@@ -554,6 +597,7 @@ public class SettingsService {
 
     /**
      * Returns settings for the given user.
+     *
      * @param username The username.
      * @return User-specific settings. Never <code>null</code>.
      */
@@ -591,6 +635,7 @@ public class SettingsService {
 
     /**
      * Updates settings for the given username.
+     *
      * @param settings The user-specific settings.
      */
     public void updateUserSettings(UserSettings settings) {
