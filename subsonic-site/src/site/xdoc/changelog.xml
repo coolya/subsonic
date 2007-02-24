@@ -15,6 +15,16 @@
 
         <section name="Change Log">
 
+            <subsection name="Subsonic 3.0.beta2 - Feb 24, 2007">
+                <ul>
+                    <li>New: Added per-user bitrate limit.</li>
+                    <li>New: Show error message in browser if Subsonic home can't be created.</li>
+                    <li>Bugfix: Fixed remaining bugs (hopefully) related to folders with non-latin characters.</li>
+                    <li>Bugfix: Zooming of ID3 cover art now works.</li>
+                    <li>Bugfix: last.fm password must no longer be entered every time.</li>
+                </ul>
+            </subsection>
+
             <subsection name="Subsonic 3.0.beta1 - Feb 04, 2007">
                 <ul>
                     <li>New: Audioscrobbling support. Automatically register what you're playing on last.fm.</li>
@@ -45,12 +55,18 @@
             </subsection>
 
             <subsection name="Subsonic 2.9.beta1 - Oct 16, 2006">
-                <p>Development efforts in 2.9 have been focused on performance and quality, but there are some new features as well.</p>
+                <p>Development efforts in 2.9 have been focused on performance and quality, but there are some new
+                    features as well.
+                </p>
                 <ul>
-                    <li>Bugfix: Avoid excessive disk and memory usage when (re)scanning the music library (bug introduced in 2.8).</li>
+                    <li>Bugfix: Avoid excessive disk and memory usage when (re)scanning the music library (bug
+                        introduced in 2.8).
+                    </li>
                     <li>Bugfix: Avoid flickering PNG images in IE.</li>
                     <li>New: Improved thumbnail quality using step-wise bilinear resampling.</li>
-                    <li>New: Thumbnails are now cached in SUBSONIC_HOME/thumbs. Expect significant speed-ups (after a while), in particular for huge images.</li>
+                    <li>New: Thumbnails are now cached in SUBSONIC_HOME/thumbs. Expect significant speed-ups (after a
+                        while), in particular for huge images.
+                    </li>
                     <li>New: Improved search speed by a factor of two.</li>
                     <li>New: Miscellaneous other caching mechanisms for faster response times.</li>
                     <li>New: Support Wiki markup in album comments.</li>
@@ -110,7 +126,8 @@
                 <ul>
                     <li>Tech: Subsonic was completely rewritten to use the Spring MVC framework.</li>
                     <li>New: Theme support. Now ships with two themes, "Subsonic Default" and "2 minutes to midnight".
-                        Theme authors are encouraged to contribute.</li>
+                        Theme authors are encouraged to contribute.
+                    </li>
                     <li>New: Ajax-based ID3 tag editor.</li>
                     <li>New: Cover art 3D effect and popup. (3D effect not available in Internet Explorer).</li>
                     <li>New: Added options to limit bandwidth for downloads and uploads.</li>
@@ -120,7 +137,9 @@
                     <li>New: Rating where you can see how much each user has uploaded/downloaded/streamed.</li>
                     <li>New: Nicer layout and graphics.</li>
                     <li>New: Added option to download playlists, both current and previously saved ones.</li>
-                    <li>New: Now logs to c:/subsonic/subsonic.log (Windows) or /var/subsonic/subsonic.log (other platforms).</li>
+                    <li>New: Now logs to c:/subsonic/subsonic.log (Windows) or /var/subsonic/subsonic.log (other
+                        platforms).
+                    </li>
                     <li>New: Support symbolic links on Unix.</li>
                     <li>New: Support XSPF playlist format.</li>
                     <li>New: Create backup of old image file when changing cover art.</li>
@@ -128,28 +147,42 @@
                     <li>Bugfix: Use proper Y-range in bandwidth charts.</li>
                     <li>Bugfix: Integer overflow in search index creation interval.</li>
                     <li>Bugfix: Some Amazon search didn't show any results.</li>
-                    <li>Bugfix: Now possible to change cover art even if original file is write protected (Windows only).</li>
+                    <li>Bugfix: Now possible to change cover art even if original file is write protected (Windows
+                        only).
+                    </li>
                 </ul>
             </subsection>
 
             <subsection name="Subsonic 2.6 - Mar 10, 2006">
                 <ul>
-                    <li>New: Nicer layout, colors and icons. Customizable welcome message. Option to limit number of cover art
-                        images to display.</li>
+                    <li>New: Nicer layout, colors and icons. Customizable welcome message. Option to limit number of
+                        cover art
+                        images to display.
+                    </li>
                     <li>New: You can now specify multiple media folders in the configuration.
-                        This is useful, for example, if you have your music on multiple disks, or if you have one directory with
+                        This is useful, for example, if you have your music on multiple disks, or if you have one
+                        directory with
                         music, and another with movies. The index (on the left-hand side) can either show all
-                        media folders (merged alphabetically), or you can select from a combo box which folder to display.</li>
+                        media folders (merged alphabetically), or you can select from a combo box which folder to
+                        display.
+                    </li>
                     <li>New: Assign ratings (one to five stars) and comments to individual albums.</li>
-                    <li>New: There is a new welcome page, displaying lists of random albums, newest albums, highest rated albums,
-                        most often played albums and most recently played albums.</li>
-                    <li>New: You can configure a set of links to Internet TV and radio stations. These links become available in
-                        the index on the left-hand side. Click on a link, and your player connects to the station.</li>
+                    <li>New: There is a new welcome page, displaying lists of random albums, newest albums, highest
+                        rated albums,
+                        most often played albums and most recently played albums.
+                    </li>
+                    <li>New: You can configure a set of links to Internet TV and radio stations. These links become
+                        available in
+                        the index on the left-hand side. Click on a link, and your player connects to the station.
+                    </li>
                     <li>New: Saved playlists are now available as Podcasts (available from the "More" page).</li>
-                    <li>New: Improved player management. Support multiple players with the same IP address, and players with dynamic
-                        IP addresses.  Display player type (e.g., WinAmp) and last-seen date.</li>
+                    <li>New: Improved player management. Support multiple players with the same IP address, and players
+                        with dynamic
+                        IP addresses. Display player type (e.g., WinAmp) and last-seen date.
+                    </li>
                     <li>New: Macedonian translation by Stefan Ivanovski.</li>
-                    <li>New: Implemented support for non-Latin character encodings (for instance Japanese or Cyrillic).</li>
+                    <li>New: Implemented support for non-Latin character encodings (for instance Japanese or Cyrillic).
+                    </li>
                     <li>New: Added option to load a previously saved playlist in the WAP interface.</li>
                     <li>New: "Album Info" now integrates with Google Music.</li>
                     <li>New: Avoid unnecessary reloading of the playlist window.</li>
@@ -162,13 +195,19 @@
 
             <subsection name="Subsonic 2.5 - Nov 25, 2005">
                 <ul>
-                    <li>New: Implemented user management. Users are easily created, deleted and assigned different privileges.</li>
+                    <li>New: Implemented user management. Users are easily created, deleted and assigned different
+                        privileges.
+                    </li>
                     <li>New: Faster song switching. Players react immediately to playlist changes.</li>
                     <li>New: Now possible to refine search for cover art and album info.</li>
-                    <li>New: Better support for OGG, AAC and other formats. Added proper suffix to stream URL as a hint to the player.</li>
+                    <li>New: Better support for OGG, AAC and other formats. Added proper suffix to stream URL as a hint
+                        to the player.
+                    </li>
                     <li>New: Display media library statistics.</li>
-                    <li>New: New location for preferences, search index and database (c:\subsonic or /var/subsonic).</li>
-                    <li>Bugfix: Improved parsing of MP3 tags.  Avoid funny characters in artist, album and song title.</li>
+                    <li>New: New location for preferences, search index and database (c:\subsonic or /var/subsonic).
+                    </li>
+                    <li>Bugfix: Improved parsing of MP3 tags. Avoid funny characters in artist, album and song title.
+                    </li>
                 </ul>
             </subsection>
 
@@ -204,7 +243,9 @@
                 <ul>
                     <li>Implemented SHOUTcast support.</li>
                     <li>Added "Album info" which links to reviews etc at allmusic.com.</li>
-                    <li>Support for uploading files from the browser to the Subsonic server.  Zip-files are automatically unpacked.</li>
+                    <li>Support for uploading files from the browser to the Subsonic server. Zip-files are automatically
+                        unpacked.
+                    </li>
                     <li>Improved usability in search interface.</li>
                     <li>Option to specify http://yourhostname/stream/file.ogg etc.</li>
                     <li>Bugfix: Detect zero-terminated strings in ID3 tags.</li>

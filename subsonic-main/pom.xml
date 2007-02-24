@@ -5,13 +5,13 @@
     <groupId>net.sourceforge.subsonic</groupId>
     <artifactId>subsonic-main</artifactId>
     <packaging>war</packaging>
-    <version>3.0.beta1</version>
+    <version>3.0.beta2</version>
     <name>Subsonic Main</name>
 
     <parent>
         <groupId>net.sourceforge.subsonic</groupId>
         <artifactId>subsonic</artifactId>
-        <version>3.0.beta1</version>
+        <version>3.0.beta2</version>
     </parent>
 
     <dependencies>

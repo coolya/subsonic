@@ -10,7 +10,7 @@
     <parent>
         <groupId>net.sourceforge.subsonic</groupId>
         <artifactId>subsonic</artifactId>
-        <version>3.0.beta1</version>
+        <version>3.0.beta2</version>
     </parent>
 
     <dependencies>
@@ -64,7 +64,8 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <tasks>
-                                <java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes" classpathref="maven.compile.classpath">
+                                <java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes"
+                                      classpathref="maven.compile.classpath">
                                     <arg value="-o"/>
                                     <arg value="${project.build.directory}/generated-sources/main/java"/>
                                     <arg value="-W"/>

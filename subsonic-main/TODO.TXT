@@ -4,21 +4,7 @@ Fix description in Freshmeat.
 Genre-based random playlist. And year-based.
 Create links to artist from title in main.view (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=420&sid=5587c32b068070c9bf515405db9c1090)
 ID3 problems (http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=952#952)
-
-TODO IN 3.0
-=============
 Make sure podcast works with playlist names with non-latin chars.
-Mention that you might have to create /var/subsonic manually (http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=712#712)
-mkdir /var/subsonic; chmod tomcat:tomcat /var/subsonic
-
-CHANGES BETWEEN 3.0.BETA1 and 3.0
-=================================
-Show error message in browser if subsonic home can't be created.
-Use "utf8hex" only if string contain non-ascii characters.
-Bug when zooming ID3 cover art.
-Per-user bitrate limit - http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=396
-last.fm password gets cleared in dialog. (Spring bug)
-Fixed remaining bugs related to folders with non-latin characters.
 
 BACKLOG
 ===========================
@@ -148,7 +134,8 @@ Vis "lignende" album.
 Add "Play" authorization.
 
 HOW TO RELEASE
--------------
+===============================
+Set JAVA_HOME to 1.5.
 Update version number in pom.xml etc.
 mvn clean install
 mvn assembly:assembly

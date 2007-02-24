@@ -18,51 +18,76 @@
 
         <section name="Welcome to Subsonic!">
             <p>
-                <a href="screenshots.html"><img src="images/t04.png" alt="Screenshots" hspace="10" vspace="10" align="right"/></a>
+                <a href="screenshots.html">
+                    <img src="images/t04.png" alt="Screenshots" hspace="10" vspace="10" align="right"/>
+                </a>
             </p>
 
             <p>
-                <a href="download.html"><img src="images/download.gif" alt="Download"/></a><br/>
-                Subsonic is a free, web-based media streamer, providing access to your entire music collection wherever you are.
-                Use it to share your music with friends, or to listen to your own music while at work.  You can
-                stream to multiple players simultaneously, for instance to one player in your kitchen and another in your
+                <a href="download.html">
+                    <img src="images/download.gif" alt="Download"/>
+                </a>
+                <br/>
+                Subsonic is a free, web-based media streamer, providing access to your entire music collection wherever
+                you are.
+                Use it to share your music with friends, or to listen to your own music while at work. You can
+                stream to multiple players simultaneously, for instance to one player in your kitchen and another in
+                your
                 living room.
             </p>
 
             <p>
-                Subsonic is designed to handle very large music collections (many thousand albums). It uses a combination
-                of directory structure and tag parsing to organize the music. Although optimized for MP3 streaming, it works for
-                any audio or video format that can stream over HTTP (for instance AAC and OGG). By using transcoder plug-ins, Subsonic
-                supports on-the-fly conversion and streaming of virtually any audio format, including WMA, FLAC, APE, Musepack, WavPack,
+                Subsonic is designed to handle very large music collections (many thousand albums). It uses a
+                combination
+                of directory structure and tag parsing to organize the music. Although optimized for MP3 streaming, it
+                works for
+                any audio or video format that can stream over HTTP (for instance AAC and OGG). By using transcoder
+                plug-ins, Subsonic
+                supports on-the-fly conversion and streaming of virtually any audio format, including WMA, FLAC, APE,
+                Musepack, WavPack,
                 Shorten and OptimFROG.
             </p>
 
             <p>
-                If you have constrained bandwidth, you may set an upper limit for the bitrate of the music streams. Subsonic will
+                If you have constrained bandwidth, you may set an upper limit for the bitrate of the music streams.
+                Subsonic will
                 then automatically resample the music to a suitable bitrate.
             </p>
 
             <p>
-                In addition to being a streaming media server, Subsonic works very well as a local jukebox.  The intuitive web
-                interface, as well as search and index facilities, are optimized for efficient browsing through large media
+                In addition to being a streaming media server, Subsonic works very well as a local jukebox. The
+                intuitive web
+                interface, as well as search and index facilities, are optimized for efficient browsing through large
+                media
                 libraries.
             </p>
 
             <p>
-                Subsonic is free software distributed under the <a href="http://www.gnu.org/copyleft/lesser.html">LGPL</a>
+                Subsonic is free software distributed under the
+                <a href="http://www.gnu.org/copyleft/lesser.html">LGPL</a>
                 open-source licence.
             </p>
 
             <subsection name="Features">
                 <p>
-                    <a href="merchandise.html"><img src="images/tshirt.jpeg" title="Subsonic Shop" alt="Subsonic Shop" hspace="10" vspace="200" align="right"/></a>
+                    <a href="merchandise.html">
+                        <img src="images/tshirt.jpeg" title="Subsonic Shop" alt="Subsonic Shop" hspace="10" vspace="200"
+                             align="right"/>
+                    </a>
                 </p>
                 <p>
                     <ul>
-                        <li>Supports MP3, OGG, AAC and any other audio or video format that can be streamed over HTTP.</li>
-                        <li>Transcoding engine allows for streaming of a variety of lossy and lossless formats by converting to MP3 on-the-fly.</li>
-                        <li>Works with any network-enabled media player, such as Winamp, iTunes, XMMS, MusicMatch and Windows Media Player.</li>
-                        <li>Displays cover art, dynamically scaling it to fit nicely on the screen. Supports images embedded in ID3.</li>
+                        <li>Supports MP3, OGG, AAC and any other audio or video format that can be streamed over HTTP.
+                        </li>
+                        <li>Transcoding engine allows for streaming of a variety of lossy and lossless formats by
+                            converting to MP3 on-the-fly.
+                        </li>
+                        <li>Works with any network-enabled media player, such as Winamp, iTunes, XMMS, MusicMatch and
+                            Windows Media Player.
+                        </li>
+                        <li>Displays cover art, dynamically scaling it to fit nicely on the screen. Supports images
+                            embedded in ID3.
+                        </li>
                         <li>You can assign ratings and comments to albums.</li>
                         <li>Finds cover art and album info using Amazon Web Services.</li>
                         <li>Audioscrobbling support. Automatically register what you're playing on last.fm</li>
@@ -82,25 +107,40 @@
                         <li>Supports multiple media folders (for instance one with music and another with movies.)</li>
                     </ul>
                     <ul>
-                        <li>Supports multiple simultaneous players. The playlist for any player can be managed from any location.</li>
-                        <li>Secure. Users must log in using a username and password. Users can be assigned different privileges. Supports HTTPS/SSL encryption.</li>
-                        <li>Lean web interface optimized for constrained bandwidth environments and efficient browsing through large music collections.</li>
+                        <li>Supports multiple simultaneous players. The playlist for any player can be managed from any
+                            location.
+                        </li>
+                        <li>Secure. Users must log in using a username and password. Users can be assigned different
+                            privileges. Supports HTTPS/SSL encryption.
+                        </li>
+                        <li>Lean web interface optimized for constrained bandwidth environments and efficient browsing
+                            through large music collections.
+                        </li>
                         <li>WAP interface allows you to control Subsonic from any mobile phone or PDA.</li>
-                        <li>In addition to streaming, single files or entire directories may be downloaded from Subsonic.</li>
+                        <li>In addition to streaming, single files or entire directories may be downloaded from
+                            Subsonic.
+                        </li>
                     </ul>
                     <ul>
                         <li>Files can be uploaded to Subsonic. Zip-files can be automatically unpacked.</li>
                         <li>You can specify a upload/download bandwidth limit.</li>
-                        <li>Implements the SHOUTcast protocol. Players which support this (including Winamp, iTunes and XMMS) will display
-                            the current artist and song name.</li>
+                        <li>Implements the SHOUTcast protocol. Players which support this (including Winamp, iTunes and
+                            XMMS) will display
+                            the current artist and song name.
+                        </li>
                         <li>Provides links to album reviews and more at Google Music and allmusic.com.</li>
-                        <li>Full internationalization support. Currently available translations: English, Norwegian, Macedonian
+                        <li>Full internationalization support. Currently available translations: English, Norwegian,
+                            Macedonian
                             (by Stefan Ivanovski), Simplified Chinese (by Neil Gao), Spanish (by Jorge Bueno Magdalena),
-                            German (by Harald Weiss), and Dutch (by Ronald Knot).</li>
+                            German (by Harald Weiss), and Dutch (by Ronald Knot).
+                        </li>
                         <li>Theme support. Currently ships with four themes.</li>
                     </ul>
                     <ul>
-                        <li>... and more.  <a href="download.html">Download</a> and see for yourself!</li>
+                        <li>... and more.
+                            <a href="download.html">Download</a>
+                            and see for yourself!
+                        </li>
                     </ul>
                 </p>
             </subsection>
@@ -109,38 +149,53 @@
                 <p>
                     Subsonic works with most operating systems, including Windows, Linux, Mac and Solaris.
                     The Subsonic server requires
-                    <a href="http://java.sun.com/j2se/1.5.0/download.jsp">Java 5.0</a> and a JSP container such
-                    as <a href="http://tomcat.apache.org/">Tomcat</a>, both of which are available at no charge.
+                    <a href="http://java.sun.com/j2se/1.5.0/download.jsp">Java 5.0</a>
+                    and a JSP container such
+                    as
+                    <a href="http://tomcat.apache.org/">Tomcat</a>
+                    , both of which are available at no charge.
 
-                    To receive streams you need a web browser (tested on recent versions of Firefox, Opera and IE) and a media
-                    player (Winamp, Windows Media Player etc). Refer to the <a href="faq.html">FAQ</a> for a list of recommended players.
-                   </p>
-               </subsection>
+                    To receive streams you need a web browser (tested on recent versions of Firefox, Opera and IE) and a
+                    media
+                    player (Winamp, Windows Media Player etc). Refer to the
+                    <a href="faq.html">FAQ</a>
+                    for a list of recommended players.
+                </p>
+            </subsection>
 
             <subsection name="Get involved!">
                 <p>
                     I'm looking for volunteers who'd like to translate Subsonic to new languages. Interested?
-                    Please read <a href="translate.html">this</a>. I'm also looking for someone to improve the Subsonic logo -
-                    I like the concept of a yellow submarine, but would like the logo to have a more contemporary and professional look.
-                    Please contact me if you would like to help.
+                    Please read
+                    <a href="translate.html">this</a>
+                    .
                 </p>
             </subsection>
 
             <subsection name="Feedback">
                 <p>
                     Subsonic is developed and maintained by Sindre Mehus
-                    (<a href="mailto:sindre_mehus@users.sourceforge.net">sindre_mehus@users.sourceforge.net</a>).
+                    (
+                    <a href="mailto:sindre_mehus@users.sourceforge.net">sindre_mehus@users.sourceforge.net</a>
+                    ).
                     If you have any questions, comments or suggestions for improvements, please visit the
-                    <a href="forum.html">Subsonic Forum</a>.
+                    <a href="forum.html">Subsonic Forum</a>
+                    .
                 </p>
             </subsection>
 
         </section>
 
         <footer>
-            <a href="http://sourceforge.net/projects/subsonic/"><img src="http://sourceforge.net/sflogo.php?group_id=126265&amp;type=1" alt="SourceForge.net"/></a>
-            <a href="http://sourceforge.net/donate/index.php?group_id=126265"><img src="images/donate.gif" alt="Donate"/></a>
-            <a href="http://www.shareup.com/Subsonic-download-47278.html"><img src="images/shareup.gif" width="90" height="33" alt="Shareup Networks"/></a>
+            <a href="http://sourceforge.net/projects/subsonic/">
+                <img src="http://sourceforge.net/sflogo.php?group_id=126265&amp;type=1" alt="SourceForge.net"/>
+            </a>
+            <a href="http://sourceforge.net/donate/index.php?group_id=126265">
+                <img src="images/donate.gif" alt="Donate"/>
+            </a>
+            <a href="http://www.shareup.com/Subsonic-download-47278.html">
+                <img src="images/shareup.gif" width="90" height="33" alt="Shareup Networks"/>
+            </a>
         </footer>
 
     </body>
