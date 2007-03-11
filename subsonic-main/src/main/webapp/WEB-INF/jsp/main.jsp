@@ -35,7 +35,31 @@
     </script>
 </c:if>
 
+<!--TODO-->
+<c:if test="${model.showAds}">
+    <div style="float:right;">
+        <script type="text/javascript"><!--
+        google_ad_client = "pub-0717623072243542";
+        google_alternate_color = "<spring:theme code="backgroundColor"/>";
+        google_ad_width = 160;
+        google_ad_height = 600;
+        google_ad_format = "160x600_as";
+        google_ad_type = "text_image";
+        //2007-03-10: Webapp
+        google_ad_channel = "0505456490";
+        google_color_border = "<spring:theme code="backgroundColor"/>";
+        google_color_bg = "<spring:theme code="backgroundColor"/>";
+        google_color_link = "<spring:theme code="linkColor"/>";
+        google_color_text = "<spring:theme code="textColor"/>";
+        google_color_url = "<spring:theme code="linkColor"/>";
+        //--></script>
+        <script type="text/javascript"
+                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+        </script>
+    </div>
+</c:if>
 
+<div style="margin-right:160px">
 <h1>
     <img src="<c:url value="/icons/now_playing.png"/>" alt=""/>
     ${model.dir.formattedPath}&nbsp;&nbsp;
@@ -292,6 +316,8 @@
         </a></div></td>
     </c:if>
 </table>
+
+</div>
 
 </body>
 </html>

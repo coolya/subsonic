@@ -17,24 +17,17 @@
 
         <section name="Download">
             <p>
-                Download latest stable release:
-                <a href="download_redirect.html">
-                    <b>Subsonic 2.9</b>
-                </a>
+                Download latest stable release: <a href="download_redirect.html"><b>Subsonic 2.9</b></a>
                 <a href="changelog.html">(What's new?)</a>
             </p>
             <p>
-                Download latest beta release:
-                <a href="download_beta_redirect.html">
-                    <b>Subsonic 3.0.beta2</b>
-                </a>
+                Download latest beta release: <a href="download_beta_redirect.html"><b>Subsonic 3.0.beta2</b></a>
                 <a href="changelog.html">(What's new?)</a>
             </p>
 
             <p>
                 Older versions, as well as source releases, can be downloaded from
-                <a href="http://sourceforge.net/projects/subsonic/">SourceForge</a>
-                .
+                <a href="http://sourceforge.net/projects/subsonic/">SourceForge</a>.
                 Subsonic is free, but you can contribute to the project by giving a donation.
                 25% of your donation will be allocated to charity. Thank you :-)
                 <br/>
@@ -47,49 +40,26 @@
                 <p>
                     <ol>
 
-                        <li>Install Java from
-                            <a href="http://www.java.com/">http://www.java.com/</a>
-                            .
-                        </li>
+                        <li>Install Java from <a href="http://www.java.com/">http://www.java.com/</a>.</li>
 
-                        <li>Install Tomcat from
-                            <a href="http://tomcat.apache.org/">http://tomcat.apache.org/</a>
-                            . Note that version 5.5 or
-                            later is required.
-                        </li>
+                        <li>Install Tomcat from <a href="http://tomcat.apache.org/">http://tomcat.apache.org/</a>.
+                            Note that version 5.5 or later is required. </li>
 
                         <li>Stop Tomcat if it's running.</li>
 
-                        <li>Copy the file
-                            <em>subsonic.war</em>
-                            to
-                            <em>&lt;TOMCAT_HOME&gt;/webapps</em>
-                            .
-                        </li>
+                        <li>Copy the file <em>subsonic.war</em> to <em>&lt;TOMCAT_HOME&gt;/webapps</em>.</li>
 
                         <li>Start Tomcat.</li>
 
                         <li>Point your web browser to http://localhost/subsonic (or http://localhost:8080/subsonic if
-                            you
-                            installed Tomcat on port 8080.)
-                        </li>
+                            you installed Tomcat on port 8080.)</li>
 
-                        <li>Logon with username
-                            <em>admin</em>
-                            and password
-                            <em>admin</em>
-                            . You should change the password immediately.
-                            Click
-                            <em>Settings</em>
-                            to change password and create new users.
-                        </li>
+                        <li>Logon with username <em>admin</em> and password <em>admin</em>. You should change the password immediately.
+                            Click <em>Settings</em> to change password and create new users.</li>
 
                         <li>Subsonic will attempt to create the directory c:\subsonic (on Windows) or /var/subsonic (all
-                            other
-                            platforms). This will fail if the user running Tomcat doesn't have the necessary privileges.
-                            In that case, create
-                            the directory manually, and make sure that Tomcat has write access to it.
-                        </li>
+                            other platforms). This will fail if the user running Tomcat doesn't have the necessary privileges.
+                            In that case, create the directory manually, and make sure that Tomcat has write access to it.</li>
 
                     </ol>
                 </p>
@@ -101,30 +71,17 @@
 
                         <li>Stop Tomcat.</li>
 
-                        <li>Remove both
-                            <em>&lt;TOMCAT_HOME&gt;/webapps/subsonic.war</em>
-                            and the
-                            <em>&lt;TOMCAT_HOME&gt;/webapps/subsonic</em>
-                            directory.
-                        </li>
+                        <li>Remove both <em>&lt;TOMCAT_HOME&gt;/webapps/subsonic.war</em> and the
+                            <em>&lt;TOMCAT_HOME&gt;/webapps/subsonic</em> directory.</li>
 
-                        <li>Copy the file
-                            <em>subsonic.war</em>
-                            to
-                            <em>&lt;TOMCAT_HOME&gt;/webapps</em>
-                            .
-                        </li>
+                        <li>Copy the file <em>subsonic.war</em> to <em>&lt;TOMCAT_HOME&gt;/webapps</em>.</li>
 
                         <li>Start Tomcat.</li>
 
-                        <li>If upgrading from version 2.4 (or earlier) to 2.5 (or later) - Please follow steps 6 and 7
-                            above.
-                        </li>
+                        <li>If upgrading from version 2.4 (or earlier) to 2.5 (or later) - Please follow steps 6 and 7 above.</li>
 
                         <li>If the upgrade does not seem to have any effect, delete all files in the
-                            <em>&lt;TOMCAT_HOME&gt;/work</em>
-                            directory.
-                        </li>
+                            <em>&lt;TOMCAT_HOME&gt;/work</em> directory.</li>
 
                     </ol>
                 </p>
@@ -135,23 +92,14 @@
                     <ul>
 
                         <li>If you installed Tomcat as a Windows Service, you can start and stop it from the service
-                            manager
-                            (Start &gt; Settings &gt; Control Panel &gt; Administrative Tools &gt; Services)
-                        </li>
+                            manager (Start &gt; Settings &gt; Control Panel &gt; Administrative Tools &gt; Services)</li>
 
-                        <li>
-                            <em>&lt;TOMCAT_HOME&gt;</em>
-                            refers to the directory in which you installed Tomcat, typically
-                            <em>C:\Program Files\Apache Software Foundation\Tomcat 5.5</em>
-                        </li>
+                        <li><em>&lt;TOMCAT_HOME&gt;</em> refers to the directory in which you installed Tomcat, typically
+                            <em>C:\Program Files\Apache Software Foundation\Tomcat 5.5</em></li>
 
-                        <li>On Linux, Subsonic keeps its files in
-                            <em>/var/subsonic</em>
-                            . Depending on your configuration,
+                        <li>On Linux, Subsonic keeps its files in <em>/var/subsonic</em>. Depending on your configuration,
                             Tomcat may not be permitted to create this directory, in which case you have to create it
-                            manually:
-                            <code>mkdir /var/subsonic; chown tomcat:tomcat /var/subsonic</code>
-                        </li>
+                            manually: <code>mkdir /var/subsonic; chown tomcat:tomcat /var/subsonic</code></li>
 
                     </ul>
                 </p>
@@ -160,23 +108,16 @@
             <subsection name="Troubleshooting">
                 <p>
                     If you experience any problems, please make sure you follow the installation instructions above.
-                    Here's a list
-                    of suggestions of what to do if it still doesn't work:
+                    Here's a list of suggestions of what to do if it still doesn't work:
                     <ul>
                         <li>Restart Tomcat.</li>
                         <li>Reinstall Subsonic.</li>
                         <li>Upgrade to the latest Tomcat version (at least if you're using Tomcat 5.0 or earlier).</li>
-                        <li>Look for errors in the Subsonic log (c:\subsonic\subsonic.log or
-                            /var/subsonic/subsonic.log).
-                        </li>
+                        <li>Look for errors in the Subsonic log (c:\subsonic\subsonic.log or /var/subsonic/subsonic.log).</li>
                         <li>Look for errors in the Tomcat logs (&lt;TOMCAT_HOME&gt;/logs).</li>
-                        <li>Post a message to the
-                            <a href="forum.html">Subsonic forum</a>
-                            . Please let us know what Subsonic version,
+                        <li>Post a message to the <a href="forum.html">Subsonic forum</a>. Please let us know what Subsonic version,
                             Tomcat version and operating system you're using. Also, please give a detailed description
-                            of the problem.
-                            This way, we'll be able to help you faster.
-                        </li>
+                            of the problem. This way, we'll be able to help you faster.</li>
                     </ul>
                 </p>
             </subsection>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Subsonic" href="http://subsonic.sourceforge.net/">
 
+    <publishDate position="right" format="MM-dd-yyyy"/>
+
     <bannerLeft>
         <src>images/subsonic.png</src>
         <href>index.html</href>
@@ -8,7 +10,7 @@
 
     <skin>
         <groupId>org.apache.maven.skins</groupId>
-        <artifactId>maven-stylus-skin</artifactId> 
+        <artifactId>maven-stylus-skin</artifactId>
         <version>1.0</version>
     </skin>
 

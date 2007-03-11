@@ -17,6 +17,9 @@ import java.util.*;
  */
 public class MainController extends ParameterizableViewController {
 
+    /** How often ads should be displayed. */
+    private static final double AD_RATIO = 0.15;
+
     private SecurityService securityService;
     private PlayerService playerService;
     private SettingsService settingsService;
@@ -38,6 +41,7 @@ public class MainController extends ParameterizableViewController {
         map.put("multipleArtists", isMultipleArtists(children));
         map.put("visibility", settingsService.getUserSettings(securityService.getCurrentUsername(request)).getMainVisibility());
         map.put("updateNowPlaying", request.getParameter("updateNowPlaying") != null);
+        map.put("showAds", dir.isAlbum() && Math.random() < AD_RATIO);
 
         MusicFileInfo musicInfo = musicInfoService.getMusicFileInfoForPath(path);
         int playCount = musicInfo == null ? 0 : musicInfo.getPlayCount();

@@ -21,7 +21,7 @@ public abstract class AbstractChartController implements Controller {
      * @return The chart background color.
      */
     protected Color getBackground(HttpServletRequest request) {
-        return getColor("chartBackground", request);
+        return getColor("backgroundColor", request);
     }
 
     /**
@@ -30,7 +30,7 @@ public abstract class AbstractChartController implements Controller {
      * @return The chart foreground color.
      */
     protected Color getForeground(HttpServletRequest request) {
-        return getColor("chartForeground", request);
+        return getColor("textColor", request);
     }
 
     private Color getColor(String code, HttpServletRequest request) {

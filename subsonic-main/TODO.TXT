@@ -5,6 +5,12 @@ Genre-based random playlist. And year-based.
 Create links to artist from title in main.view (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=420&sid=5587c32b068070c9bf515405db9c1090)
 ID3 problems (http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=952#952)
 Make sure podcast works with playlist names with non-latin chars.
+Mark music_file_info as disabled if path doesn't exist.
+Sort on both disc and track number? (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=96)
+Test Google Web Toolkit?
+Resumable downloads.
+Ads
+Update links/requirements to Java 1.5
 
 BACKLOG
 ===========================
@@ -26,7 +32,6 @@ Don't show empty statistics.
 AJAX error dialog from Dave.
 Transcode download
 Remove "user" column from status.jsp?
-Mark music_file_info as disabled if path doesn't exist.
 Sometimes a song is started twice. Two m3u's sent?
 Profiling (http://www.yourkit.com/)
 Lucene?
