@@ -1,25 +1,32 @@
 package net.sourceforge.subsonic.domain;
 
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.service.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.service.ServiceLocator;
 
-import java.util.*;
-import java.util.regex.*;
-import java.io.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.TreeMap;
+import java.util.Collections;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * A music index is a mapping from an index string to a list of prefixes.  A complete index consists of a list of
  * <code>MusicIndex</code> instances.<p/>
- *
+ * <p/>
  * For a normal alphabetical index, such a mapping would typically be <em>"A" -&gt; ["A"]</em>.  The index can also be used
  * to group less frequently used letters, such as  <em>"X-&Aring;" -&gt; ["X", "Y", "Z", "&AElig;", "&Oslash;", "&Aring;"]</em>, or to make multiple
  * indexes for frequently used letters, such as <em>"SA" -&gt; ["SA"]</em> and <em>"SO" -&gt; ["SO"]</em><p/>
- *
+ * <p/>
  * Clicking on an index in the user interface will typically bring up a list of all music files that are categorized
  * under that index.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.9 $ $Date: 2005/12/15 19:04:32 $
  */
 public class MusicIndex {
     private static final Logger LOG = Logger.getLogger(MusicIndex.class);
@@ -30,6 +37,7 @@ public class MusicIndex {
 
     /**
      * Creates a new index with the given index string.
+     *
      * @param index The index string, e.g., "A" or "The".
      */
     public MusicIndex(String index) {
@@ -38,6 +46,7 @@ public class MusicIndex {
 
     /**
      * Adds a prefix to this index. Music files that starts with this prefix will be categorized under this index entry.
+     *
      * @param prefix The prefix.
      */
     public void addPrefix(String prefix) {
@@ -46,6 +55,7 @@ public class MusicIndex {
 
     /**
      * Returns the index name.
+     *
      * @return The index name.
      */
     public String getIndex() {
@@ -54,6 +64,7 @@ public class MusicIndex {
 
     /**
      * Returns the list of prefixes.
+     *
      * @return The list of prefixes.
      */
     public List<String> getPrefixes() {
@@ -62,23 +73,31 @@ public class MusicIndex {
 
     /**
      * Returns whether this object is equal to another one.
+     *
      * @param o Object to compare to.
      * @return <code>true</code> if, and only if, the other object is a <code>MusicIndex</code> with the same
-     * index name as this one.
+     *         index name as this one.
      */
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MusicIndex)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof MusicIndex)) {
+            return false;
+        }
 
         final MusicIndex musicIndex = (MusicIndex) o;
 
-        if (index != null ? !index.equals(musicIndex.index) : musicIndex.index != null) return false;
+        if (index != null ? !index.equals(musicIndex.index) : musicIndex.index != null) {
+            return false;
+        }
 
         return true;
     }
 
     /**
      * Returns a hash code for this object.
+     *
      * @return A hash code for this object.
      */
     public int hashCode() {
@@ -88,7 +107,7 @@ public class MusicIndex {
     /**
      * Creates a new instance by parsing the given expression.  The expression consists of an index name, followed by
      * an optional list of one-character prefixes. For example:<p/>
-     *
+     * <p/>
      * The expression <em>"A"</em> will create the index <em>"A" -&gt; ["A"]</em><br/>
      * The expression <em>"The"</em> will create the index <em>"The" -&gt; ["The"]</em><br/>
      * The expression <em>"A(A&Aring;&AElig;)"</em> will create the index <em>"A" -&gt; ["A", "&Aring;", "&AElig;"]</em><br/>
@@ -117,6 +136,7 @@ public class MusicIndex {
     /**
      * Creates a list of music indexes by parsing the given expression.  The expression is a space-separated list of
      * sub-expressions, for which the rules described in {@link #createIndexFromExpression} apply.
+     *
      * @param expr The expression to parse.
      * @return A list of music indexes.
      */
@@ -133,23 +153,31 @@ public class MusicIndex {
     }
 
     /**
-     * Returns a map from music indexes to lists of music files that are direct children of the given music folder.
-     * @param folders The music folders.
-     * @param indexes The list of indexes to use when grouping the children.
+     * Returns a map from music indexes to lists of music files that are direct children of the given music folders.
+     *
+     * @param folders         The music folders.
+     * @param indexes         The list of indexes to use when grouping the children.
      * @param ignoredArticles Articles to ignore (typically "The", "El", "Las" etc),
-     * @param shortcuts Shortcuts that should be ignored.
+     * @param shortcuts       Shortcuts that should be ignored.
      * @return A map from music indexes to lists of music files that are direct children of this music file.
-     * @exception IOException If an I/O error occurs.
+     * @throws IOException If an I/O error occurs.
      */
     public static Map<MusicIndex, List<MusicFile>> getIndexedChildren(MusicFolder[] folders,
                                                                       final List<MusicIndex> indexes,
                                                                       String[] ignoredArticles, String[] shortcuts) throws IOException {
-        Comparator<MusicIndex> comp = new Comparator<MusicIndex>() {
+        Comparator<MusicIndex> indexComparator = new Comparator<MusicIndex>() {
             public int compare(MusicIndex a, MusicIndex b) {
                 return indexes.indexOf(a) - indexes.indexOf(b);
             }
         };
-        Map<MusicIndex, List<MusicFile>> result = new TreeMap<MusicIndex, List<MusicFile>>(comp);
+
+        Comparator<MusicFile> musicFileComparator = new Comparator<MusicFile>() {
+            public int compare(MusicFile a, MusicFile b) {
+                return a.getName().compareTo(b.getName());
+            }
+        };
+
+        Map<MusicIndex, List<MusicFile>> result = new TreeMap<MusicIndex, List<MusicFile>>(indexComparator);
         Set<String> shortcutSet = new HashSet<String>();
         for (String shortcut : shortcuts) {
             shortcutSet.add(shortcut);
@@ -169,7 +197,13 @@ public class MusicIndex {
                     list = new ArrayList<MusicFile>();
                     result.put(index, list);
                 }
-                list.add(child);
+
+                // Keep the list sorted alphabetically.
+                int insertIndex = Collections.binarySearch(list, child, musicFileComparator);
+                if (insertIndex < 0) {
+                    insertIndex = -insertIndex - 1;
+                }
+                list.add(insertIndex, child);
             }
         }
 
@@ -178,8 +212,9 @@ public class MusicIndex {
 
     /**
      * Returns the music index to which the given music file belongs.
-     * @param musicFile The music file in question.
-     * @param indexes List of available indexes.
+     *
+     * @param musicFile       The music file in question.
+     * @param indexes         List of available indexes.
      * @param ignoredArticles Articles to ignore (typically "The", "El", "Las" etc),
      * @return The music index to which this music file belongs, or {@link MusicIndex#OTHER} if no index applies.
      */

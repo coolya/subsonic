@@ -33,6 +33,7 @@ public class DownloadController implements Controller {
 
         TransferStatus status = null;
         try {
+
             status = statusService.createDownloadStatus(playerService.getPlayer(request, response, false, false));
 
             String path = request.getParameter("path");
@@ -47,6 +48,15 @@ public class DownloadController implements Controller {
                 }
 
                 if (file.isFile()) {
+
+//                    // TODO: REMOVE
+//                    response.setHeader("ETag", path);
+//                    response.setHeader("Accept-Ranges", "bytes");
+//                    String range = request.getHeader("Range");
+//                    if (range != null) {
+//                        response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
+//                    }
+
                     downloadFile(response, status, file);
                 } else {
                     downloadDirectory(response, status, file);

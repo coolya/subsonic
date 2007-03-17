@@ -1,14 +1,31 @@
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
-import org.apache.commons.lang.*;
-import org.springframework.web.servlet.*;
-import org.springframework.web.servlet.mvc.*;
+import net.sourceforge.subsonic.domain.CoverArtScheme;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicFileInfo;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.service.AdService;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.MusicInfoService;
+import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
-import javax.servlet.http.*;
-import java.io.*;
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Controller for the main page.
@@ -17,14 +34,12 @@ import java.util.*;
  */
 public class MainController extends ParameterizableViewController {
 
-    /** How often ads should be displayed. */
-    private static final double AD_RATIO = 0.15;
-
     private SecurityService securityService;
     private PlayerService playerService;
     private SettingsService settingsService;
     private MusicInfoService musicInfoService;
     private MusicFileService musicFileService;
+    private AdService adService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -41,12 +56,12 @@ public class MainController extends ParameterizableViewController {
         map.put("multipleArtists", isMultipleArtists(children));
         map.put("visibility", settingsService.getUserSettings(securityService.getCurrentUsername(request)).getMainVisibility());
         map.put("updateNowPlaying", request.getParameter("updateNowPlaying") != null);
-        map.put("showAds", dir.isAlbum() && Math.random() < AD_RATIO);
+        map.put("adReferrer", adService.getAdReferrer(dir));
 
         MusicFileInfo musicInfo = musicInfoService.getMusicFileInfoForPath(path);
         int playCount = musicInfo == null ? 0 : musicInfo.getPlayCount();
         String comment = musicInfo == null ? null : musicInfo.getComment();
-        Date lastPlayed = musicInfo == null  ? null : musicInfo.getLastPlayed();
+        Date lastPlayed = musicInfo == null ? null : musicInfo.getLastPlayed();
         String username = securityService.getCurrentUsername(request);
         Integer userRating = musicInfoService.getRatingForUser(username, dir);
         Double averageRating = musicInfoService.getAverageRating(dir);
@@ -151,5 +166,9 @@ public class MainController extends ParameterizableViewController {
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
+    }
+
+    public void setAdService(AdService adService) {
+        this.adService = adService;
     }
 }

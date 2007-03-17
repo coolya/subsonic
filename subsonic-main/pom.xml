@@ -117,7 +117,7 @@
         <dependency>
             <groupId>jvorbiscomment</groupId>
             <artifactId>jvorbiscomment</artifactId>
-            <version>0.5.0</version>
+            <version>1.0.1</version>
         </dependency>
 
         <dependency>
