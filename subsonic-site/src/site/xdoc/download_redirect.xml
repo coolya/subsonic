@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 
 <document>
-    
+
     <properties>
         <title>Download</title>
         <author email="sindre_mehus@users.sourceforge.net">Sindre Mehus</author>
     </properties>
 
     <head>
-        <meta http-equiv="REFRESH" content="3;URL=http://prdownloads.sourceforge.net/subsonic/subsonic-2.9.zip"/>
+        <meta http-equiv="REFRESH" content="3;URL=http://prdownloads.sourceforge.net/subsonic/subsonic-3.0.zip"/>
     </head>
 
 
@@ -22,7 +22,7 @@
         <section name="Download">
             <p>
                 You are being redirected to the SourceForge download center. Please wait!<br/>
-                (Click <a href="http://prdownloads.sourceforge.net/subsonic/subsonic-2.9.zip">here</a> if nothing happens.)
+                (Click <a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.0.zip">here</a> if nothing happens.)
             </p>
         </section>
 

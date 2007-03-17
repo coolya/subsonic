@@ -317,11 +317,6 @@
        #poweredByLogo( $decoration.poweredBy )
        #publishDate( "navigation-bottom" $decoration.publishDate $decoration.version )
 
-<!--
-<iframe src="adsense.html" width="160" height="600" title="ad" longdesc="ad" marginwidth="0" marginheight="0"
-        hspace="0" vspace="0" frameborder="0" scrolling="no"></iframe>
--->
-
         <script type="text/javascript"><!--
         google_ad_client = "pub-0717623072243542";
         google_alternate_ad_url = "http://pagead2.googlesyndication.com/pagead/google_adsense_script.html";

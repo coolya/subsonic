@@ -17,13 +17,13 @@
 
         <section name="Download">
             <p>
-                Download latest stable release: <a href="download_redirect.html"><b>Subsonic 2.9</b></a>
+                Download latest stable release: <a href="download_redirect.html"><b>Subsonic 3.0</b></a>
                 <a href="changelog.html">(What's new?)</a>
             </p>
-            <p>
-                Download latest beta release: <a href="download_beta_redirect.html"><b>Subsonic 3.0.beta2</b></a>
-                <a href="changelog.html">(What's new?)</a>
-            </p>
+            <!--<p>-->
+                <!--Download latest beta release: <a href="download_beta_redirect.html"><b>Subsonic 3.0.beta2</b></a>-->
+                <!--<a href="changelog.html">(What's new?)</a>-->
+            <!--</p>-->
 
             <p>
                 Older versions, as well as source releases, can be downloaded from
@@ -34,6 +34,12 @@
                 <a href="http://sourceforge.net/donate/index.php?group_id=126265">
                     <img src="images/donate.gif"/>
                 </a>
+            </p>
+
+            <p>
+                Please note that Subsonic will display Google ads from time to time. The ads are non-obtrusive
+                in terms of placement, colors and design (see <a href="images/ads.png">example</a>). Hopefully,
+                you will find the ads both relevant and interesting.
             </p>
 
             <subsection name="Installing Subsonic for the first time">
