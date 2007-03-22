@@ -1,13 +1,3 @@
-TODO IN 3.0 FINAL
-=================
-Fix sorting bug with multiple folders.
-Test how Google ads work offline.
-Make podcast work in iTunes.
-Update jvorbiscomment library.
-Add link to jvorbiscomment.
-Add doc about Google ads.
-Test mp3 from kdid.
-
 TODO IN 3.1
 =============
 Replace jid3 with jaudiotagger.
@@ -18,15 +8,14 @@ Create links to artist from title in main.view (http://www.activeobjects.no/subs
 ID3 problems (http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=952#952)
 Make sure podcast works with playlist names with non-latin chars.
 Mark music_file_info as disabled if path doesn't exist.
-Sort on both disc and track number? (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=96)
 Test Google Web Toolkit?
 Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownloads/default.aspx)
-Ads
 Update links/requirements to Java 1.5
 
 BACKLOG
 ===========================
 Audioscrobbler caching support.
+Make podcast work in iTunes.
 Longer cache expiry period for images.
 RSS feed for newest content.
 Rename "Appearance" settings to "Personal".
