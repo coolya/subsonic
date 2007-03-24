@@ -1,6 +1,7 @@
 COMPLETED IN 3.1
 =================
 Changed wap icon.
+Create links to artist from title in main.view (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=420&sid=5587c32b068070c9bf515405db9c1090)
 
 
 TODO IN 3.1
@@ -10,7 +11,6 @@ Replace jid3 with jaudiotagger.
 Drag'n'drop in playlist.
 Fix description in Freshmeat.
 Genre-based random playlist. And year-based.
-Create links to artist from title in main.view (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=420&sid=5587c32b068070c9bf515405db9c1090)
 ID3 problems (http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=952#952)
 Make sure podcast works with playlist names with non-latin chars.
 Mark music_file_info as disabled if path doesn't exist.
