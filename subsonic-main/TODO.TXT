@@ -1,5 +1,7 @@
 TODO IN 3.1
 =============
+Phone icon: http://tango.freedesktop.org/User:PauLoX
+Add thinkgeek.com to adlinks.
 Replace jid3 with jaudiotagger.
 Drag'n'drop in playlist.
 Fix description in Freshmeat.
@@ -10,7 +12,6 @@ Make sure podcast works with playlist names with non-latin chars.
 Mark music_file_info as disabled if path doesn't exist.
 Test Google Web Toolkit?
 Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownloads/default.aspx)
-Update links/requirements to Java 1.5
 
 BACKLOG
 ===========================

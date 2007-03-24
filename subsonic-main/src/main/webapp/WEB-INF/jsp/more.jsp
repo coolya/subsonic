@@ -66,7 +66,7 @@
     </table>
 </form>
 
-<h2><img src="<c:url value="/icons/wap.jpeg"/>" width="16" height="16" alt=""/>&nbsp;<fmt:message key="more.mobile.title"/></h2>
+<h2><img src="<c:url value="/icons/wap.png"/>" width="16" height="16" alt=""/>&nbsp;<fmt:message key="more.mobile.title"/></h2>
 <fmt:message key="more.mobile.text"/>
 
 <h2><img src="<c:url value="/icons/podcast.png"/>" width="16" height="16" alt=""/>&nbsp;<fmt:message key="more.podcast.title"/></h2>
