@@ -83,7 +83,7 @@ body, h2, form, label, table, a {
 }
 
 /* Font 2 */
-h1, .logo {
+h1, h1 a, .logo {
     font-family: arial, sans-serif;
 }
 

@@ -62,7 +62,15 @@
 <div style="margin-right:160px">
 <h1>
     <img src="<c:url value="/icons/now_playing.png"/>" alt=""/>
-    ${model.dir.formattedPath}&nbsp;&nbsp;
+
+    <c:forEach items="${model.ancestors}" var="ancestor">
+        <sub:url value="main.view" var="ancestorUrl">
+            <sub:param name="path" value="${ancestor.path}"/>
+        </sub:url>
+        <a href="${ancestorUrl}">${ancestor.name}</a> &ndash;
+    </c:forEach>
+    ${model.dir.name}&nbsp;&nbsp;
+
     <c:if test="${model.dir.album and model.averageRating gt 0}">
         <c:import url="rating.jsp">
             <c:param name="path" value="${model.dir.path}"/>

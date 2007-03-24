@@ -37,7 +37,7 @@ public class MusicFile {
     protected MusicFile() {}
 
     /**
-     * Returns the underlying {@link File};
+     * Returns the underlying {@link File}.
      * @return The file wrapped by this MusicFile.
      */
     public File getFile() {
@@ -116,25 +116,25 @@ public class MusicFile {
         return file.exists();
     }
 
-    /**
-     * Returns the path of this music file as a formatted string intended for display to the user,
-     * e.g., "Pink Floyd - Dark Side Of The Moon - Money".
-     * @return The path of this music file as a formatted string.
-     * @exception IOException If an I/O error occurs.
-     */
-    public String getFormattedPath() throws IOException {
-        if (isRoot()) {
-            return "";
-        }
-        String s = getNameWithoutSuffix();
-        MusicFile mf = getParent();
-
-        while (mf != null && !mf.isRoot()) {
-            s = mf.getName() + " &ndash; " + s;
-            mf = mf.getParent();
-        }
-        return s;
-    }
+//    /**
+//     * Returns the path of this music file as a formatted string intended for display to the user,
+//     * e.g., "Pink Floyd - Dark Side Of The Moon - Money".
+//     * @return The path of this music file as a formatted string.
+//     * @exception IOException If an I/O error occurs.
+//     */
+//    public String getFormattedPath() throws IOException {
+//        if (isRoot()) {
+//            return "";
+//        }
+//        String s = getNameWithoutSuffix();
+//        MusicFile mf = getParent();
+//
+//        while (mf != null && !mf.isRoot()) {
+//            s = mf.getName() + " &ndash; " + s;
+//            mf = mf.getParent();
+//        }
+//        return s;
+//    }
 
     /**
      * Returns the name of the music file. This is just the last name in the pathname's name

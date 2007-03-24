@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.LinkedList;
 
 /**
  * Controller for the main page.
@@ -50,6 +51,7 @@ public class MainController extends ParameterizableViewController {
         List<MusicFile> children = dir.getChildren(true, true);
 
         map.put("dir", dir);
+        map.put("ancestors", getAncestors(dir));
         map.put("children", children);
         map.put("player", player);
         map.put("user", securityService.getCurrentUser(request));
@@ -100,6 +102,17 @@ public class MainController extends ParameterizableViewController {
 
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
+        return result;
+    }
+
+    private List<MusicFile> getAncestors(MusicFile dir) throws IOException {
+        LinkedList<MusicFile> result = new LinkedList<MusicFile>();
+
+        MusicFile parent = dir.getParent();
+        while (parent != null && !parent.isRoot()) {
+            result.addFirst(parent);
+            parent = parent.getParent();
+        }
         return result;
     }
 

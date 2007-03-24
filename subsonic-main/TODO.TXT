@@ -1,6 +1,10 @@
+COMPLETED IN 3.1
+=================
+Changed wap icon.
+
+
 TODO IN 3.1
 =============
-Phone icon: http://tango.freedesktop.org/User:PauLoX
 Add thinkgeek.com to adlinks.
 Replace jid3 with jaudiotagger.
 Drag'n'drop in playlist.
