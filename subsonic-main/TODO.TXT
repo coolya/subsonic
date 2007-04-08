@@ -2,6 +2,7 @@ COMPLETED IN 3.1
 =================
 Changed wap icon.
 Create links to artist from title in main.view (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=420&sid=5587c32b068070c9bf515405db9c1090)
+Audioscrobbler caching support. (Must be tested)
 
 TODO IN 3.1
 =============
@@ -31,7 +32,6 @@ Make sure podcast works with playlist names with non-latin chars.
 Mark music_file_info as disabled if path doesn't exist.
 Test Google Web Toolkit?
 Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownloads/default.aspx)
-Audioscrobbler caching support.
 
 BACKLOG
 ===========================

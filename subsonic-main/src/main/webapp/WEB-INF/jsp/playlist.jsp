@@ -31,6 +31,22 @@
     }
 </script>
 
+<!-- actionSelected() is invoked when the users selects from the "More actions..." combo box. -->
+<script type="text/javascript" language="javascript">
+    function actionSelected(index) {
+        if (index == 0) {
+            return;
+        } else if (index == 1) {
+            parent.frames.main.location.href = "loadPlaylist.view?";
+        } else if (index == 2) {
+            parent.frames.main.location.href = "savePlaylist.view?";
+        } else if (index == 3) {
+            location.href = "download.view?player=${model.player.id}";
+        }
+        document.getElementById("moreActions").selectedIndex = 0;
+    }
+</script>
+
 <a name="-1">
     <h2><table style="white-space:nowrap;"><tr>
         <td><select name="player" onchange="location='playlist.view?player=' + options[selectedIndex].value;" >
@@ -60,13 +76,19 @@
             </c:otherwise>
         </c:choose>
         <td> | <a href="playlist.view?undo"><fmt:message key="playlist.undo"/></a></td>
-        <td> | <a target="main" href="loadPlaylist.view?"><fmt:message key="playlist.load"/></a></td>
-        <c:if test="${model.user.playlistRole}">
-            <td> | <a target="main" href="savePlaylist.view?"><fmt:message key="playlist.save"/></a></td>
-        </c:if>
-        <c:if test="${model.user.downloadRole}">
-            <td> | <a href="download.view?player=${model.player.id}"><fmt:message key="common.download"/></a></td>
-        </c:if>
+
+        <td>| <select name="moreActions" onchange="actionSelected(selectedIndex)">
+            <option selected="selected"><fmt:message key="playlist.more"/></option>
+            <option>&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.load"/></option>
+            <c:if test="${model.user.playlistRole}">
+                <option>&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.save"/></option>
+            </c:if>
+            <c:if test="${model.user.downloadRole}">
+                <option>&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
+            </c:if>
+
+        </select>
+        </td>
     </tr></table></h2>
 </a>
 
