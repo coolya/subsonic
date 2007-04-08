@@ -3,10 +3,25 @@ COMPLETED IN 3.1
 Changed wap icon.
 Create links to artist from title in main.view (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=420&sid=5587c32b068070c9bf515405db9c1090)
 
-
 TODO IN 3.1
 =============
-Add thinkgeek.com to adlinks.
+Donators shouldn't have to see ads.
+Check out non-Latin ID3 problem (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=527)
+Track titles that begin with numbers (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=170)
+Fault-tolerant transcoding FLAC>MP3 (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=545)
+Use checkbox/combobox mechanism (like gmail) in playlist (and main). Must be able to select all.
+Append selected tracks to previously saved playlist (bring up dialog for selecting).
+Add menu option for sorting playlist on artist, album, track. (Put in combobox).
+Save playlists in database?  Access rights.
+
+By default, activate transcoders when new players are created. Create new transcoding attribute: default on/off for new players.
+Svitsje til automatisk "now playing" etter en stund med inaktivitet?
+Add to adlinks:
+  www.beyerdynamic.com (and other hifi stuff)
+  www.last.fm/charts (for instance)
+  thinkgeek.com
+  www.audio.com
+
 Replace jid3 with jaudiotagger.
 Drag'n'drop in playlist.
 Fix description in Freshmeat.
@@ -16,24 +31,21 @@ Make sure podcast works with playlist names with non-latin chars.
 Mark music_file_info as disabled if path doesn't exist.
 Test Google Web Toolkit?
 Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownloads/default.aspx)
+Audioscrobbler caching support.
 
 BACKLOG
 ===========================
-Audioscrobbler caching support.
 Make podcast work in iTunes.
 Longer cache expiry period for images.
 RSS feed for newest content.
 Rename "Appearance" settings to "Personal".
 Show what other users are playing. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=359)
-Get listed on http://cruxic.googlepages.com/jvorbiscomment
 Make LAME args configurable.
 Fix PayPal donations.
 LDAP support.
 Web proxy support (for audioscrobbler, amazon etc)?
-New icon for wap.
 Missing refresh when changing from no cover art.
 Resolve problem with MetaData NullPointerException. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
-Test if iTunes podcast works.
 Don't show empty statistics.
 AJAX error dialog from Dave.
 Transcode download
@@ -41,8 +53,6 @@ Remove "user" column from status.jsp?
 Sometimes a song is started twice. Two m3u's sent?
 Profiling (http://www.yourkit.com/)
 Lucene?
-User-level bitrate limit?
-Google Ads?
 Invalidate browser cache when changing cover art image.
 Show list of currently active users.
 http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=94
@@ -89,7 +99,6 @@ Make it work on Geronimo.
 Make it work on Jetty
 Drop ResourceBundle_en.
 Upload quota per user.
-Order search results.
 Specify upload directory per user. Option to delete files?
 Support reverse proxies.  Send url as parameter. (<a href="javascript:document.location.href='foo.jsp?referrer=' + document.location.href">Trykk her</a>)
 Support forward proxies.
@@ -112,7 +121,6 @@ Check that multi-discs are not included in random and newest albums.  Change imp
 Integrate Windows Media Player in web page.
 Fetch current version asynchronously.
 UPnP
-Show list of active users.
 Register at myprogs.net
 Link to Pandora (http://blog.pandora.com/faq/index.html#92)
 Check Jinzora features. http://www.jinzora.com/pages.php?pn=developers&sub=changelog
@@ -130,7 +138,7 @@ Emulator 3G-telefon
 XHTML Mobile Profile
 Add mp3-player as applet.
 Automatisk finne lyrics-ting.
-Parse tags for wma, ogg osv.
+Parse tags for wma etc.
 No SHOUTcast if playlist is empty.
 i18n of enums.
 http://www.freeware-guide.com/dir/audio/streaming.html -> Registrert 10. mai 2005
@@ -138,7 +146,6 @@ Option to create structure based on tags.
 Zip and unzip fails with accented characters.  Use commons vfs, or some other lib.
 Log when zipping individual files.
 Add online help to search index update.
-Svitsje til automatisk "now playing" etter en stund med inaktivitet?
 Specify context path.
 HDTV-mode.
 Vis "lignende" album.
@@ -162,6 +169,7 @@ svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://sub
 Register at freshmeat.
 Post message on forum.
 Update version number in pom.xml etc.
+Take backup of forum.
 
 HOW TO RELEASE TRANSCODING PACK
 ===============================

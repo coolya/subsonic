@@ -228,6 +228,10 @@
         <property name="playlistService" ref="playlistService"/>
         <property name="settingsService" ref="settingsService"/>
     </bean>
+    <bean id="donateController" class="net.sourceforge.subsonic.controller.DonateController">
+        <property name="viewName" value="donate"/>
+        <property name="musicFileService" ref="musicFileService"/>
+    </bean>
     <bean id="multiController" class="net.sourceforge.subsonic.controller.MultiController"/>
     <bean id="wapController" class="net.sourceforge.subsonic.controller.WapController">
         <property name="settingsService" ref="settingsService"/>
@@ -291,6 +295,7 @@
                 <prop key="/statusChart.view">statusChartController</prop>
                 <prop key="/userChart.view">userChartController</prop>
                 <prop key="/download.view">downloadController</prop>
+                <prop key="/donate.view">donateController</prop>
                 <prop key="/podcast.view">podcastController</prop>
                 <prop key="/podcast/**">podcastController</prop>
                 <prop key="/wap/**">wapController</prop>

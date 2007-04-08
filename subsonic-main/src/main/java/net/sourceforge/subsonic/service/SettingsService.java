@@ -9,12 +9,14 @@ import net.sourceforge.subsonic.domain.MusicFolder;
 import net.sourceforge.subsonic.domain.Theme;
 import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.util.StringUtil;
+import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -106,16 +108,10 @@ public class SettingsService {
             } catch (Exception x) {
                 LOG.error("Unable to read from property file.", x);
             } finally {
-                try {
-                    if (in != null) {
-                        in.close();
-                    }
-                } catch (Exception x) {
-                    LOG.error("Failed to close property file", x);
-                }
+                IOUtils.closeQuietly(in);
             }
 
-            // Removed obsolete properties.
+            // Remove obsolete properties.
             Set<String> allowedKeys = new HashSet<String>();
             for (String key : KEYS) {
                 allowedKeys.add(key);
@@ -142,7 +138,7 @@ public class SettingsService {
     }
 
     public void save() {
-        FileOutputStream out = null;
+        OutputStream out = null;
 
         try {
             out = new FileOutputStream(getPropertyFile());
@@ -150,13 +146,7 @@ public class SettingsService {
         } catch (Exception x) {
             LOG.error("Unable to write to property file.", x);
         } finally {
-            try {
-                if (out != null) {
-                    out.close();
-                }
-            } catch (Exception x) {
-                LOG.error("Failed to close property file", x);
-            }
+            IOUtils.closeQuietly(out);
         }
     }
 
@@ -308,58 +298,42 @@ public class SettingsService {
         properties.setProperty(KEY_INDEX_CREATION_INTERVAL, "" + days);
     }
 
-    /**
-     * Returns the hour of day (0 - 23) when automatic index creation should run.
-     */
+    /** Returns the hour of day (0 - 23) when automatic index creation should run. */
     public int getIndexCreationHour() {
         return Integer.parseInt(properties.getProperty(KEY_INDEX_CREATION_HOUR, "" + DEFAULT_INDEX_CREATION_HOUR));
     }
 
-    /**
-     * Sets the hour of day (0 - 23) when automatic index creation should run.
-     */
+    /** Sets the hour of day (0 - 23) when automatic index creation should run. */
     public void setIndexCreationHour(int hour) {
         properties.setProperty(KEY_INDEX_CREATION_HOUR, "" + hour);
     }
 
-    /**
-     * @return The download bitrate limit in Kbit/s. Zero if unlimited.
-     */
+    /** @return The download bitrate limit in Kbit/s. Zero if unlimited. */
     public long getDownloadBitrateLimit() {
         return Long.parseLong(properties.getProperty(KEY_DOWNLOAD_BITRATE_LIMIT, "" + DEFAULT_DOWNLOAD_BITRATE_LIMIT));
     }
 
-    /**
-     * @param limit The download bitrate limit in Kbit/s. Zero if unlimited.
-     */
+    /** @param limit The download bitrate limit in Kbit/s. Zero if unlimited. */
     public void setDownloadBitrateLimit(long limit) {
         properties.setProperty(KEY_DOWNLOAD_BITRATE_LIMIT, "" + limit);
     }
 
-    /**
-     * @return The upload bitrate limit in Kbit/s. Zero if unlimited.
-     */
+    /** @return The upload bitrate limit in Kbit/s. Zero if unlimited. */
     public long getUploadBitrateLimit() {
         return Long.parseLong(properties.getProperty(KEY_UPLOAD_BITRATE_LIMIT, "" + DEFAULT_UPLOAD_BITRATE_LIMIT));
     }
 
-    /**
-     * @param limit The upload bitrate limit in Kbit/s. Zero if unlimited.
-     */
+    /** @param limit The upload bitrate limit in Kbit/s. Zero if unlimited. */
     public void setUploadBitrateLimit(long limit) {
         properties.setProperty(KEY_UPLOAD_BITRATE_LIMIT, "" + limit);
     }
 
-    /**
-     * @return The non-SSL stream port. Zero if disabled.
-     */
+    /** @return The non-SSL stream port. Zero if disabled. */
     public int getStreamPort() {
         return Integer.parseInt(properties.getProperty(KEY_STREAM_PORT, "" + DEFAULT_STREAM_PORT));
     }
 
-    /**
-     * @param port The non-SSL stream port. Zero if disabled.
-     */
+    /** @param port The non-SSL stream port. Zero if disabled. */
     public void setStreamPort(int port) {
         properties.setProperty(KEY_STREAM_PORT, "" + port);
     }

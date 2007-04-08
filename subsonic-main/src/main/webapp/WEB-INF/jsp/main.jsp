@@ -6,9 +6,10 @@
     <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
-    <c:if test="${not empty model.adReferrer}">
+    <!--todo-->
+    <%--<c:if test="${not empty model.adReferrer}">--%>
         <script type="text/javascript" src="<c:url value="/script/adsense.js"/>"></script>
-    </c:if>
+    <%--</c:if>--%>
 </head><body>
 
 <c:if test="${model.updateNowPlaying}">
@@ -38,8 +39,16 @@
     </script>
 </c:if>
 
-<c:if test="${not empty model.adReferrer}">
+<!--todo-->
+<%--<c:if test="${not empty model.adReferrer}">--%>
     <div style="float:right;">
+        <div class="detail" style="margin-bottom:1em">
+            <sub:url value="donate.view" var="donateUrl">
+                <sub:param name="path" value="${model.dir.path}"/>
+            </sub:url>
+            <a href="${donateUrl}">Donate</a> to disable ads
+        </div>
+        <div>
         <script type="text/javascript"><!--
         google_ad_client = "pub-0717623072243542";
         google_alternate_color = "<spring:theme code="backgroundColor"/>";
@@ -54,10 +63,13 @@
         google_color_text = "<spring:theme code="textColor"/>";
         google_color_url = "<spring:theme code="linkColor"/>";
 
-        showAds("${model.adReferrer}");
+        <%--showAds("${model.adReferrer}");--%>
+        showAds("http://www.audio.com/");
+
         //--></script>
+            </div>
     </div>
-</c:if>
+<%--</c:if>--%>
 
 <div style="margin-right:160px">
 <h1>
