@@ -30,6 +30,8 @@ input, select {
 
 .checkbox {
     border: 1px solid #4D4C52;
+    width: 14px;
+    height: 14px;
 }
 
 /* Hover color for form controls. */

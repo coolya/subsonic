@@ -135,7 +135,6 @@ form {
 
 input, select {
     font-size: 9pt;
-    border: 1px solid gray;
 }
 
 label {
@@ -212,7 +211,6 @@ img {
 .checkbox {
     margin: 0;
     padding: 0;
-    border: 1px solid gray;
 }
 
 /* Table with simple lines between the cells. */
