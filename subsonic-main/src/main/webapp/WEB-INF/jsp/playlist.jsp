@@ -4,6 +4,7 @@
     <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
 </head>
 
 <body class="bgcolor2" onload="onload()">
@@ -16,6 +17,7 @@
         DWREngine.setErrorHandler(null);
         location.hash="${model.anchor}";
         startTimer();
+        onSelectionChange();
     }
 
     function startTimer() {
@@ -33,24 +35,77 @@
 
 <!-- actionSelected() is invoked when the users selects from the "More actions..." combo box. -->
 <script type="text/javascript" language="javascript">
-    function actionSelected(index) {
-        if (index == 0) {
+    var N = ${fn:length(model.songs)};
+    var downloadEnabled = ${model.user.downloadRole ? "true" : "false"};
+
+    function actionSelected(id) {
+        if (id == "top") {
             return;
-        } else if (index == 1) {
+        } else if (id == "loadPlaylist") {
             parent.frames.main.location.href = "loadPlaylist.view?";
-        } else if (index == 2) {
+        } else if (id == "savePlaylist") {
             parent.frames.main.location.href = "savePlaylist.view?";
-        } else if (index == 3) {
+        } else if (id == "downloadPlaylist") {
             location.href = "download.view?player=${model.player.id}";
+        } else if (id == "selectAll") {
+            selectAll(true);
+            onSelectionChange();
+        } else if (id == "selectNone") {
+            selectAll(false);
+            onSelectionChange();
+        } else if (id == "remove") {
+            location.href = "playlist.view?remove=" + getSelectedIndexes();
+        } else if (id == "download") {
+            location.href = "download.view?player=${model.player.id}&indexes=" + getSelectedIndexes();
         }
-        document.getElementById("moreActions").selectedIndex = 0;
+        $("moreActions").selectedIndex = 0;
     }
+
+    function getSelectedIndexes() {
+        var result = "";
+        for (var i = 0; i < N; i++) {
+            if ($("songIndex" + i).checked) {
+                result += (i + " ");
+            }
+        }
+        return result;
+    }
+
+    function selectAll(b) {
+        for (var i = 0; i < N; i++) {
+            $("songIndex" + i).checked = b;
+        }
+    }
+
+    function isSelectionEmpty() {
+        for (var i = 0; i < N; i++) {
+            if ($("songIndex" + i).checked) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function onSelectionChange() {
+        var selectionEmpty = isSelectionEmpty();
+
+        var remove = $("moreActions").options["remove"];
+        remove.disabled = selectionEmpty ? "disabled" : "";
+
+        var download = $("moreActions").options["download"];
+        if (download) {
+            download.disabled = (selectionEmpty || !downloadEnabled) ? "disabled" : "";
+        }
+    }
+
 </script>
 
 <a name="-1">
-    <h2><table style="white-space:nowrap;"><tr>
-        <td><select name="player" onchange="location='playlist.view?player=' + options[selectedIndex].value;" >
-            <c:forEach items="${model.players}" var="player">
+    <h2>
+        <table style="white-space:nowrap;">
+            <tr>
+                <td><select name="player" onchange="location='playlist.view?player=' + options[selectedIndex].value;">
+                    <c:forEach items="${model.players}" var="player">
                 <option ${player.id eq model.player.id ? "selected" : ""} value="${player.id}">${player}</option>
             </c:forEach>
         </select></td>
@@ -77,16 +132,23 @@
         </c:choose>
         <td> | <a href="playlist.view?undo"><fmt:message key="playlist.undo"/></a></td>
 
-        <td>| <select name="moreActions" onchange="actionSelected(selectedIndex)">
-            <option selected="selected"><fmt:message key="playlist.more"/></option>
-            <option>&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.load"/></option>
+        <td> | <select id="moreActions" onchange="actionSelected(this.options[selectedIndex].id)">
+            <option id="top" selected="selected"><fmt:message key="playlist.more"/></option>
+            <option disabled="disabled"><fmt:message key="playlist.more.playlist"/></option>
+            <option id="loadPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.load"/></option>
             <c:if test="${model.user.playlistRole}">
-                <option>&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.save"/></option>
+                <option id="savePlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.save"/></option>
             </c:if>
             <c:if test="${model.user.downloadRole}">
-                <option>&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
+                <option id="downloadPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
             </c:if>
-
+            <option disabled="disabled"><fmt:message key="playlist.more.selection"/></option>
+            <option id="selectAll">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.selectall"/></option>
+            <option id="selectNone">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.selectnone"/></option>
+            <option id="remove">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.remove"/></option>
+            <c:if test="${model.user.downloadRole}">
+                <option id="download">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
+            </c:if>
         </select>
         </td>
     </tr></table></h2>
@@ -102,6 +164,7 @@
             <c:forEach items="${model.songs}" var="song" varStatus="loopStatus">
                 <c:set var="i" value="${loopStatus.count - 1}"/>
                 <tr style="margin:0;padding:0;border:0">
+
                     <td><a name="${i}" href="playlist.view?remove=${i}"><img width="13" height="13" src="<spring:theme code="removeImage"/>"
                                                                  alt="<fmt:message key="playlist.remove"/>"
                                                                  title="<fmt:message key="playlist.remove"/>"/></a></td>
@@ -111,15 +174,6 @@
                     <td><a href="playlist.view?down=${i}"><img width="13" height="13" src="<spring:theme code="downImage"/>"
                                                                alt="<fmt:message key="playlist.down"/>"
                                                                title="<fmt:message key="playlist.down"/>"/></a></td>
-                    <c:if test="${model.user.downloadRole}">
-                        <sub:url value="download.view" var="downloadUrl">
-                            <sub:param name="path" value="${song.musicFile.path}"/>
-                        </sub:url>
-                        <td><a href="${downloadUrl}"><img width="13" height="13" src="<spring:theme code="downloadImage"/>"
-                                                          alt="<fmt:message key="common.download"/>"
-                                                          title="<fmt:message key="common.download"/>"/></a></td>
-                    </c:if>
-
                     <sub:url value="main.view" var="mainUrl">
                         <sub:param name="path" value="${song.musicFile.parent.path}"/>
                     </sub:url>
@@ -132,7 +186,7 @@
                         </c:otherwise>
                     </c:choose>
 
-                    <td ${class} style="padding-left:0.25em"/>
+                    <td ${class} style="padding-left: 0.45em; padding-right:0.35em"><input type="checkbox" class="checkbox" id="songIndex${i}" onchange="onSelectionChange()"/></td>
 
                     <c:if test="${model.visibility.trackNumberVisible}">
                         <td ${class} style="padding-right:0.5em;text-align:right">

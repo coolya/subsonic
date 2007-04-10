@@ -1,13 +1,24 @@
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
-import org.springframework.web.servlet.*;
-import org.springframework.web.servlet.mvc.*;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.Playlist;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
-import javax.servlet.http.*;
-import java.io.*;
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Controller for the playlist frame.
@@ -97,8 +108,13 @@ public class PlaylistController extends ParameterizableViewController {
             sendM3U = true;
             playlist.setIndex(Integer.parseInt(request.getParameter("skip")));
         } else if (request.getParameter("remove") != null) {
-            index = Integer.parseInt(request.getParameter("remove"));
-            playlist.removeFileAt(index);
+            int[] indexes = parseIndexes(request.getParameter("remove"));
+            if (indexes.length > 0) {
+                index = indexes[0];
+            }
+            for (int i = indexes.length - 1; i >= 0; i--) {
+                playlist.removeFileAt(indexes[i]);
+            }
         } else if (request.getParameter("up") != null) {
             index = Integer.parseInt(request.getParameter("up"));
             playlist.moveUp(index);
@@ -124,7 +140,16 @@ public class PlaylistController extends ParameterizableViewController {
         map.put("anchor", anchor);
     }
 
-    private List<Player> getPlayers(User user){
+    private int[] parseIndexes(String s) {
+        String[] strings = StringUtils.split(s);
+        int[] ints = new int[strings.length];
+        for (int i = 0; i < strings.length; i++) {
+            ints[i] = Integer.parseInt(strings[i]);
+        }
+        return ints;
+    }
+
+    private List<Player> getPlayers(User user) {
         List<Player> result = new ArrayList<Player>();
         for (Player player : playerService.getAllPlayers()) {
 
@@ -152,9 +177,7 @@ public class PlaylistController extends ParameterizableViewController {
         this.musicFileService = musicFileService;
     }
 
-    /**
-     * Contains information about a single song in the playlist.
-     */
+    /** Contains information about a single song in the playlist. */
     public static class Song {
         private MusicFile musicFile;
         private boolean isCurrent;

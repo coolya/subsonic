@@ -6,6 +6,9 @@ Audioscrobbler caching support. (Must be tested)
 
 TODO IN 3.1
 =============
+Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
+Test playlist checkbox stuff, in particular download auth.
+Ugly checkbox border in IE (and FF?)
 Donators shouldn't have to see ads.
 Check out non-Latin ID3 problem (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=527)
 Track titles that begin with numbers (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=170)
@@ -65,7 +68,6 @@ Add transcoder for cell phone etc.  aacPlus.
 Seeking.
 Display running time, as well as elapsed time for current song.
 Playback buttons.  Stop, play, pause, resume, next, previous.
-Ugly checkbox border in IE (and FF?)
 Create "Electron Blue" theme (http://www.msn.com/) Startour?
 Use cookie.setPath()?
       cookie.setPath(request.getContextPath());

@@ -1,16 +1,34 @@
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.Playlist;
+import net.sourceforge.subsonic.domain.TransferStatus;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.service.PlaylistService;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.StatusService;
+import org.apache.commons.lang.StringUtils;
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipOutputStream;
-import org.springframework.web.servlet.mvc.*;
-import org.springframework.web.servlet.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
 
-import javax.servlet.http.*;
-import java.io.*;
-import java.util.zip.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.zip.CRC32;
 
 /**
  * A controller used for downloading files to a remote client. If the requested path refers to a file, the
@@ -39,6 +57,7 @@ public class DownloadController implements Controller {
             String path = request.getParameter("path");
             String playlistName = request.getParameter("playlist");
             String playerId = request.getParameter("player");
+            String indexes = request.getParameter("indexes");
 
             if (path != null) {
                 File file = new File(path);
@@ -65,13 +84,13 @@ public class DownloadController implements Controller {
             } else if (playlistName != null) {
                 Playlist playlist = new Playlist();
                 playlistService.loadPlaylist(playlist, playlistName);
-                downloadPlaylist(response, status, playlist);
+                downloadPlaylist(response, status, playlist, null);
 
             } else if (playerId != null) {
                 Player player = playerService.getPlayerById(playerId);
                 Playlist playlist = player.getPlaylist();
                 playlist.setName("Playlist");
-                downloadPlaylist(response, status, playlist);
+                downloadPlaylist(response, status, playlist, parseIndexes(indexes));
             }
 
 
@@ -89,15 +108,29 @@ public class DownloadController implements Controller {
         return null;
     }
 
+    private int[] parseIndexes(String s) {
+        if (s == null) {
+            return null;
+        }
+
+        String[] strings = StringUtils.split(s);
+        int[] ints = new int[strings.length];
+        for (int i = 0; i < strings.length; i++) {
+            ints[i] = Integer.parseInt(strings[i]);
+        }
+        return ints;
+    }
+
     /**
      * Downloads a single file.
+     *
      * @param response The HTTP response.
-     * @param status The download status.
-     * @param file The file to download.
+     * @param status   The download status.
+     * @param file     The file to download.
      * @throws IOException If an I/O error occurs.
      */
     private void downloadFile(HttpServletResponse response, TransferStatus status, File file) throws IOException {
-        DownloadController.LOG.info("Starting to download '" + file + "' to " + status.getPlayer());
+        LOG.info("Starting to download '" + file + "' to " + status.getPlayer());
         status.setFile(file);
 
         response.setContentType("application/x-download");
@@ -105,20 +138,21 @@ public class DownloadController implements Controller {
         response.setContentLength((int) file.length());
 
         copyFileToStream(file, response.getOutputStream(), status);
-        DownloadController.LOG.info("Downloaded '" + file + "' to " + status.getPlayer());
+        LOG.info("Downloaded '" + file + "' to " + status.getPlayer());
     }
 
     /**
      * Downloads all files in a directory (including sub-directories). The files are packed together in an
      * uncompressed zip-file.
+     *
      * @param response The HTTP response.
-     * @param status The download status.
-     * @param file The file to download.
+     * @param status   The download status.
+     * @param file     The file to download.
      * @throws IOException If an I/O error occurs.
      */
     private void downloadDirectory(HttpServletResponse response, TransferStatus status, File file) throws IOException {
         String zipFileName = file.getName() + ".zip";
-        DownloadController.LOG.info("Starting to download '" + zipFileName + "' to " + status.getPlayer());
+        LOG.info("Starting to download '" + zipFileName + "' to " + status.getPlayer());
         response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", "attachment; filename=\"" + zipFileName + '"');
 
@@ -127,44 +161,62 @@ public class DownloadController implements Controller {
 
         zip(out, file.getParentFile(), file, status);
         out.close();
-        DownloadController.LOG.info("Downloaded '" + zipFileName + "' to " + status.getPlayer());
+        LOG.info("Downloaded '" + zipFileName + "' to " + status.getPlayer());
     }
 
     /**
      * Downloads all files in a playlist.  The files are packed together in an
      * uncompressed zip-file.
+     *
      * @param response The HTTP response.
-     * @param status The download status.
+     * @param status   The download status.
      * @param playlist The playlist to download.
+     * @param indexes  Only download songs at these playlist indexes. May be <code>null</code>.
      * @throws IOException If an I/O error occurs.
      */
-    private void downloadPlaylist(HttpServletResponse response, TransferStatus status, Playlist playlist) throws IOException {
+    private void downloadPlaylist(HttpServletResponse response, TransferStatus status, Playlist playlist, int[] indexes) throws IOException {
+        if (indexes != null && indexes.length == 1) {
+            downloadFile(response, status, playlist.getFile(indexes[0]).getFile());
+            return;
+        }
+
         String zipFileName = playlist.getName().replaceAll("(\\.m3u)|(\\.pls)", "") + ".zip";
-        DownloadController.LOG.info("Starting to download '" + zipFileName + "' to " + status.getPlayer());
+        LOG.info("Starting to download '" + zipFileName + "' to " + status.getPlayer());
         response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", "attachment; filename=\"" + zipFileName + '"');
 
         ZipOutputStream out = new ZipOutputStream(response.getOutputStream());
         out.setMethod(ZipOutputStream.STORED);  // No compression.
 
-        MusicFile[] musicFiles = playlist.getFiles();
+        List<MusicFile> musicFiles = new ArrayList<MusicFile>();
+        if (indexes == null) {
+            Collections.addAll(musicFiles, playlist.getFiles());
+        } else {
+            for (int index : indexes) {
+                try {
+                    musicFiles.add(playlist.getFile(index));
+                } catch (IndexOutOfBoundsException x) { /* Ignored */}
+            }
+        }
+
         for (MusicFile musicFile : musicFiles) {
             zip(out, musicFile.getParent().getFile(), musicFile.getFile(), status);
         }
 
         out.close();
-        DownloadController.LOG.info("Downloaded '" + zipFileName + "' to " + status.getPlayer());
+        LOG.info("Downloaded '" + zipFileName + "' to " + status.getPlayer());
     }
 
     /**
      * Utility method for writing the content of a given file to a given output stream.
-     * @param file The file to copy.
-     * @param out The output stream to write to.
+     *
+     * @param file   The file to copy.
+     * @param out    The output stream to write to.
      * @param status The download status.
      * @throws IOException If an I/O error occurs.
      */
     private void copyFileToStream(File file, OutputStream out, TransferStatus status) throws IOException {
-        DownloadController.LOG.info("Downloading " + file + " to " + status.getPlayer());
+        LOG.info("Downloading " + file + " to " + status.getPlayer());
 
         final int bufferSize = 16 * 1024; // 16 Kbit
         InputStream in = new BufferedInputStream(new FileInputStream(file), bufferSize);
@@ -198,7 +250,7 @@ public class DownloadController implements Controller {
                         try {
                             Thread.sleep(sleepTime);
                         } catch (Exception x) {
-                            DownloadController.LOG.warn("Failed to sleep.", x);
+                            LOG.warn("Failed to sleep.", x);
                         }
                     }
                 }
@@ -211,9 +263,10 @@ public class DownloadController implements Controller {
     /**
      * Writes a file or a directory structure to a zip output stream. File entries in the zip file are relative
      * to the given root.
-     * @param out The zip output stream.
-     * @param root The root of the directory structure.  Used to create path information in the zip file.
-     * @param file The file or directory to zip.
+     *
+     * @param out    The zip output stream.
+     * @param root   The root of the directory structure.  Used to create path information in the zip file.
+     * @param file   The file or directory to zip.
      * @param status The download status.
      * @throws IOException If an I/O error occurs.
      */
@@ -250,6 +303,7 @@ public class DownloadController implements Controller {
 
     /**
      * Computes the CRC checksum for the given file.
+     *
      * @param file The file to compute checksum for.
      * @return A CRC32 checksum.
      * @throws IOException If an I/O error occurs.
