@@ -1,9 +1,9 @@
 package net.sourceforge.subsonic.service;
 
 import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
@@ -34,18 +34,18 @@ public class AudioScrobblerService {
     private static final long MIN_REGISTRATION_INTERVAL = 30000L;
 
     private RegistrationThread thread;
-    private final Map<String,Long> lastRegistrationTimes = new HashMap<String, Long>();
+    private final Map<String, Long> lastRegistrationTimes = new HashMap<String, Long>();
     private final LinkedBlockingQueue<RegistrationData> queue = new LinkedBlockingQueue<RegistrationData>();
 
     private SettingsService settingsService;
 
     /**
-    * Registers the given music file at www.last.fm. This method returns immediately, the actual registration is done
-    * by a separate thread.
-    *
-    * @param musicFile The music file to register.
-    * @param username The user which played the music file.
-    */
+     * Registers the given music file at www.last.fm. This method returns immediately, the actual registration is done
+     * by a separate thread.
+     *
+     * @param musicFile The music file to register.
+     * @param username  The user which played the music file.
+     */
     public synchronized void register(MusicFile musicFile, String username) {
 
         if (thread == null) {
@@ -70,9 +70,7 @@ public class AudioScrobblerService {
         }
     }
 
-    /**
-     * Returns registration details, or <code>null</code> if not eligible for registration.
-     */
+    /** Returns registration details, or <code>null</code> if not eligible for registration. */
     private RegistrationData createRegistrationData(MusicFile musicFile, String username) {
 
         MusicFile.MetaData metaData = musicFile.getMetaData();
@@ -168,9 +166,7 @@ public class AudioScrobblerService {
     }
 
 
-    /**
-     * Parses a string containing the sleep interval, e.g., "INTERVAL 10".
-     */
+    /** Parses a string containing the sleep interval, e.g., "INTERVAL 10". */
     private int parseSleepInterval(String[] lines) {
         if (lines.length == 0) {
             return 0;
@@ -194,7 +190,7 @@ public class AudioScrobblerService {
     private String[] executePostRequest(String url, Map<String, String> parameters) throws IOException {
         PostMethod method = new PostMethod(url);
 
-        for (Map.Entry<String,String> entry : parameters.entrySet()) {
+        for (Map.Entry<String, String> entry : parameters.entrySet()) {
             method.addParameter(entry.getKey(), entry.getValue());
         }
         return executeRequest(method);
@@ -231,14 +227,33 @@ public class AudioScrobblerService {
 
         public void run() {
             while (true) {
+                RegistrationData registrationData = null;
                 try {
-                    int sleepInterval = scrobble(queue.take());
+                    registrationData = queue.take();
+                    int sleepInterval = scrobble(registrationData);
                     if (sleepInterval > 0) {
                         sleep(sleepInterval * 1000);
                     }
+                } catch (IOException x) {
+                    handleNetworkError(registrationData, x);
                 } catch (Exception x) {
-                    LOG.warn("Error in Last.fm scrobble registration.", x);
+                    LOG.warn("Error in Last.fm registration.", x);
                 }
+            }
+        }
+
+        private void handleNetworkError(RegistrationData registrationData, IOException x) {
+            try {
+                queue.put(registrationData);
+                LOG.info("Last.fm registration for " + registrationData.title +
+                         " encountered network error.  Will try again later. In queue: " + queue.size(), x);
+            } catch (InterruptedException e) {
+                LOG.error("Failed to reschedule Last.fm registration for " + registrationData.title, e);
+            }
+            try {
+                sleep(15L * 60L * 1000L);  // Wait 15 minutes.
+            } catch (InterruptedException e) {
+                LOG.error("Failed to sleep after Last.fm registration failure for " + registrationData.title, e);
             }
         }
     }
