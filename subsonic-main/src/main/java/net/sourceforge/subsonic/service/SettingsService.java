@@ -25,6 +25,9 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.Date;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Provides persistent storage of application settings and preferences.
@@ -55,6 +58,9 @@ public class SettingsService {
     private static final String KEY_DOWNLOAD_BITRATE_LIMIT = "DownloadBitrateLimit";
     private static final String KEY_UPLOAD_BITRATE_LIMIT = "UploadBitrateLimit";
     private static final String KEY_STREAM_PORT = "StreamPort";
+    private static final String KEY_LICENSE_EMAIL = "LicenseEmail";
+    private static final String KEY_LICENSE_CODE = "LicenseCode";
+    private static final String KEY_LICENSE_DATE = "LicenseDate";
 
     // Default values.
     private static final String DEFAULT_INDEX_STRING = "A B C D E F G H I J K L M N O P Q R S T U V W X-Z(XYZ)";
@@ -74,12 +80,16 @@ public class SettingsService {
     private static final long DEFAULT_DOWNLOAD_BITRATE_LIMIT = 0;
     private static final long DEFAULT_UPLOAD_BITRATE_LIMIT = 0;
     private static final long DEFAULT_STREAM_PORT = 0;
+    private static final String DEFAULT_LICENSE_EMAIL = null;
+    private static final String DEFAULT_LICENSE_CODE = null;
+    private static final String DEFAULT_LICENSE_DATE = null;
 
     // Array of all keys.  Used to clean property file.
     private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_SHORTCUTS, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
                                           KEY_COVER_ART_MASK, KEY_COVER_ART_LIMIT, KEY_WELCOME_MESSAGE, KEY_LOCALE_LANGUAGE,
                                           KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_THEME_ID, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
-                                          KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT};
+                                          KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT, KEY_LICENSE_EMAIL,
+                                          KEY_LICENSE_CODE, KEY_LICENSE_DATE};
 
     private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
     private static final String THEMES_FILE = "/net/sourceforge/subsonic/theme/themes.txt";
@@ -199,7 +209,7 @@ public class SettingsService {
     }
 
     public void setIndexString(String indexString) {
-        properties.setProperty(KEY_INDEX_STRING, indexString);
+        setProperty(KEY_INDEX_STRING, indexString);
     }
 
     public String getIgnoredArticles() {
@@ -211,7 +221,7 @@ public class SettingsService {
     }
 
     public void setIgnoredArticles(String ignoredArticles) {
-        properties.setProperty(KEY_IGNORED_ARTICLES, ignoredArticles);
+        setProperty(KEY_IGNORED_ARTICLES, ignoredArticles);
     }
 
     public String getShortcuts() {
@@ -223,7 +233,7 @@ public class SettingsService {
     }
 
     public void setShortcuts(String shortcuts) {
-        properties.setProperty(KEY_SHORTCUTS, shortcuts);
+        setProperty(KEY_SHORTCUTS, shortcuts);
     }
 
     public String getPlaylistFolder() {
@@ -231,7 +241,7 @@ public class SettingsService {
     }
 
     public void setPlaylistFolder(String playlistFolder) {
-        properties.setProperty(KEY_PLAYLIST_FOLDER, playlistFolder);
+        setProperty(KEY_PLAYLIST_FOLDER, playlistFolder);
     }
 
     public String getMusicMask() {
@@ -239,7 +249,7 @@ public class SettingsService {
     }
 
     public synchronized void setMusicMask(String mask) {
-        properties.setProperty(KEY_MUSIC_MASK, mask);
+        setProperty(KEY_MUSIC_MASK, mask);
         cachedMusicMaskArray = null;
     }
 
@@ -255,7 +265,7 @@ public class SettingsService {
     }
 
     public synchronized void setCoverArtMask(String mask) {
-        properties.setProperty(KEY_COVER_ART_MASK, mask);
+        setProperty(KEY_COVER_ART_MASK, mask);
         cachedCoverArtMaskArray = null;
     }
 
@@ -271,7 +281,7 @@ public class SettingsService {
     }
 
     public void setCoverArtLimit(int limit) {
-        properties.setProperty(KEY_COVER_ART_LIMIT, "" + limit);
+        setProperty(KEY_COVER_ART_LIMIT, "" + limit);
     }
 
     public String getWelcomeMessage() {
@@ -279,7 +289,7 @@ public class SettingsService {
     }
 
     public void setWelcomeMessage(String message) {
-        properties.setProperty(KEY_WELCOME_MESSAGE, message);
+        setProperty(KEY_WELCOME_MESSAGE, message);
     }
 
     /**
@@ -295,7 +305,7 @@ public class SettingsService {
      * creation is disabled.
      */
     public void setIndexCreationInterval(int days) {
-        properties.setProperty(KEY_INDEX_CREATION_INTERVAL, "" + days);
+        setProperty(KEY_INDEX_CREATION_INTERVAL, "" + days);
     }
 
     /** Returns the hour of day (0 - 23) when automatic index creation should run. */
@@ -305,7 +315,7 @@ public class SettingsService {
 
     /** Sets the hour of day (0 - 23) when automatic index creation should run. */
     public void setIndexCreationHour(int hour) {
-        properties.setProperty(KEY_INDEX_CREATION_HOUR, "" + hour);
+        setProperty(KEY_INDEX_CREATION_HOUR, "" + hour);
     }
 
     /** @return The download bitrate limit in Kbit/s. Zero if unlimited. */
@@ -315,7 +325,7 @@ public class SettingsService {
 
     /** @param limit The download bitrate limit in Kbit/s. Zero if unlimited. */
     public void setDownloadBitrateLimit(long limit) {
-        properties.setProperty(KEY_DOWNLOAD_BITRATE_LIMIT, "" + limit);
+        setProperty(KEY_DOWNLOAD_BITRATE_LIMIT, "" + limit);
     }
 
     /** @return The upload bitrate limit in Kbit/s. Zero if unlimited. */
@@ -325,7 +335,7 @@ public class SettingsService {
 
     /** @param limit The upload bitrate limit in Kbit/s. Zero if unlimited. */
     public void setUploadBitrateLimit(long limit) {
-        properties.setProperty(KEY_UPLOAD_BITRATE_LIMIT, "" + limit);
+        setProperty(KEY_UPLOAD_BITRATE_LIMIT, "" + limit);
     }
 
     /** @return The non-SSL stream port. Zero if disabled. */
@@ -335,14 +345,51 @@ public class SettingsService {
 
     /** @param port The non-SSL stream port. Zero if disabled. */
     public void setStreamPort(int port) {
-        properties.setProperty(KEY_STREAM_PORT, "" + port);
+        setProperty(KEY_STREAM_PORT, "" + port);
+    }
+
+    public String getLicenseEmail() {
+        return properties.getProperty(KEY_LICENSE_EMAIL, DEFAULT_LICENSE_EMAIL);
+    }
+
+    public void setLicenseEmail(String email) {
+        setProperty(KEY_LICENSE_EMAIL, email);
+    }
+
+    public String getLicenseCode() {
+        return properties.getProperty(KEY_LICENSE_CODE, DEFAULT_LICENSE_CODE);
+    }
+
+    public void setLicenseCode(String code) {
+        setProperty(KEY_LICENSE_CODE, code);
+    }
+
+    public Date getLicenseDate() {
+        String value = properties.getProperty(KEY_LICENSE_DATE, DEFAULT_LICENSE_DATE);
+        return value == null ? null : new Date(Long.parseLong(value));
+    }
+
+    public void setLicenseDate(Date date) {
+        String value = (date == null ? null : String.valueOf(date.getTime()));
+        setProperty(KEY_LICENSE_DATE, value);
+    }
+
+    public boolean isLicenseValid(String email, String license) {
+
+        if (email == null || license == null) {
+            return false;
+        }
+
+        // Little point in doing anything more fancy, since there are
+        // easier ways to disable ads.
+        return license.equalsIgnoreCase(StringUtil.md5Hex(email));
     }
 
     /**
-     * Returns the locale (for language, date format etc).
-     *
-     * @return The locale.
-     */
+    * Returns the locale (for language, date format etc).
+    *
+    * @return The locale.
+    */
     public Locale getLocale() {
         String language = properties.getProperty(KEY_LOCALE_LANGUAGE, DEFAULT_LOCALE_LANGUAGE);
         String country = properties.getProperty(KEY_LOCALE_COUNTRY, DEFAULT_LOCALE_COUNTRY);
@@ -357,9 +404,9 @@ public class SettingsService {
      * @param locale The locale.
      */
     public void setLocale(Locale locale) {
-        properties.setProperty(KEY_LOCALE_LANGUAGE, locale.getLanguage());
-        properties.setProperty(KEY_LOCALE_COUNTRY, locale.getCountry());
-        properties.setProperty(KEY_LOCALE_VARIANT, locale.getVariant());
+        setProperty(KEY_LOCALE_LANGUAGE, locale.getLanguage());
+        setProperty(KEY_LOCALE_COUNTRY, locale.getCountry());
+        setProperty(KEY_LOCALE_VARIANT, locale.getVariant());
     }
 
     /**
@@ -377,7 +424,7 @@ public class SettingsService {
      * @param themeId The theme ID
      */
     public void setThemeId(String themeId) {
-        properties.setProperty(KEY_THEME_ID, themeId);
+        setProperty(KEY_THEME_ID, themeId);
     }
 
     /**
@@ -614,6 +661,14 @@ public class SettingsService {
      */
     public void updateUserSettings(UserSettings settings) {
         userDao.updateUserSettings(settings);
+    }
+
+    private void setProperty(String key, String value) {
+        if (value == null) {
+            properties.remove(key);
+        } else {
+            properties.setProperty(key, value);
+        }
     }
 
     private String[] toStringArray(String s) {

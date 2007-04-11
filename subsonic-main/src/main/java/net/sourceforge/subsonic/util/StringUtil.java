@@ -8,6 +8,8 @@ import java.net.*;
 import java.text.*;
 import java.util.*;
 import java.util.regex.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Miscellaneous string utility methods.
@@ -265,5 +267,24 @@ public final class StringUtil {
             return null;
         }
         return new String(Hex.decodeHex(s.toCharArray()), ENCODING_UTF8);
+    }
+
+    /**
+     * Calculates the MD5 digest and returns the value as a 32 character hex string.
+     *
+     * @param s Data to digest.
+     * @return MD5 digest as a hex string.
+     */
+    public static String md5Hex(String s) {
+        if (s == null) {
+            return null;
+        }
+
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            return new String(Hex.encodeHex(md5.digest(s.getBytes(ENCODING_UTF8))));
+        } catch (Exception x) {
+            throw new RuntimeException(x.getMessage(), x);
+        }
     }
 }

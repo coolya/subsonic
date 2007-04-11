@@ -46,7 +46,7 @@
 <p/>
 
 <table width="75%"><tr>
-    <td><a target="_blank" href="http://sourceforge.net/donate/index.php?group_id=126265"><img src="<c:url value="/icons/donate.gif"/>" alt=""/></a></td>
+    <td><a href="<c:url value="/donate.view"/>"><img src="<c:url value="/icons/donate.gif"/>" alt=""/></a></td>
     <td><fmt:message key="help.donate"/></td>
 </tr></table>
 

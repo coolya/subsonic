@@ -229,8 +229,11 @@
         <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="donateController" class="net.sourceforge.subsonic.controller.DonateController">
-        <property name="viewName" value="donate"/>
-        <property name="musicFileService" ref="musicFileService"/>
+        <property name="commandClass"><value>net.sourceforge.subsonic.command.DonateCommand</value></property>
+        <property name="successView" value="donate"/>
+        <property name="formView" value="donate"/>
+        <property name="validator" ref="donateValidator"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="multiController" class="net.sourceforge.subsonic.controller.MultiController"/>
     <bean id="wapController" class="net.sourceforge.subsonic.controller.WapController">
@@ -244,6 +247,9 @@
 
     <bean id="savePlaylistValidator" class="net.sourceforge.subsonic.validator.SavePlaylistValidator">
         <property name="playlistService" ref="playlistService"/>
+    </bean>
+    <bean id="donateValidator" class="net.sourceforge.subsonic.validator.DonateValidator">
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="userSettingsValidator" class="net.sourceforge.subsonic.validator.UserSettingsValidator">
         <property name="securityService" ref="securityService"/>

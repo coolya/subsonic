@@ -3,12 +3,13 @@ COMPLETED IN 3.1
 Changed wap icon.
 Create links to artist from title in main.view (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=420&sid=5587c32b068070c9bf515405db9c1090)
 Audioscrobbler caching support. (Must be tested)
+Fixed ugly checkboxes in IE.
+Made some visual changes to the form controls in the default and sandstorm themes.
 
 TODO IN 3.1
 =============
 Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
 Test playlist checkbox stuff, in particular download auth.
-Ugly checkbox border in IE (and FF?)
 Donators shouldn't have to see ads.
 Check out non-Latin ID3 problem (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=527)
 Track titles that begin with numbers (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=170)

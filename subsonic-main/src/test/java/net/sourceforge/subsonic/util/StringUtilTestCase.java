@@ -4,6 +4,8 @@ import junit.framework.*;
 
 import java.util.*;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 /**
  * Unit test of {@link StringUtil}.
  *
@@ -117,5 +119,11 @@ public class StringUtilTestCase extends TestCase {
 
     private void doTestUtf8Hex(String s) throws Exception {
         assertEquals("Error in utf8hex.", s, StringUtil.utf8HexDecode(StringUtil.utf8HexEncode(s)));
+    }
+
+    public void testMd5Hex() {
+        assertNull("Error in md5Hex().", StringUtil.md5Hex(null));
+        assertEquals("Error in md5Hex().", "d41d8cd98f00b204e9800998ecf8427e", StringUtil.md5Hex(""));
+        assertEquals("Error in md5Hex().", "308ed0af23d48f6d2fd4717e77a23e0c", StringUtil.md5Hex("sindre@activeobjects.no"));
     }
 }
