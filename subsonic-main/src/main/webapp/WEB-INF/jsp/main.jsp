@@ -64,7 +64,8 @@
         google_color_url = "<spring:theme code="linkColor"/>";
 
         <%--showAds("${model.adReferrer}");--%>
-        showAds("http://www.audio.com/");
+//        showAds("http://www.audio.com/");
+        showAds("http://subsonic.sourceforge.net/changelog.html");
 
         //--></script>
             </div>

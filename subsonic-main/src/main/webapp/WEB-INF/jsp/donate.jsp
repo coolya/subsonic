@@ -22,7 +22,7 @@
 
 <c:url value="https://www.paypal.com/cgi-bin/webscr" var="donate5Url">
     <c:param name="cmd" value="_xclick"/>
-    <c:param name="business" value="sindre@activeobjects.no"/>
+    <c:param name="business" value="subsonic_donation@activeobjects.no"/>
     <c:param name="item_name" value="Subsonic Donation"/>
     <c:param name="no_shipping" value="1"/>
     <c:param name="amount" value="5.00"/>
@@ -33,7 +33,7 @@
 </c:url>
 <c:url value="https://www.paypal.com/cgi-bin/webscr" var="donate10Url">
     <c:param name="cmd" value="_xclick"/>
-    <c:param name="business" value="sindre@activeobjects.no"/>
+    <c:param name="business" value="subsonic_donation@activeobjects.no"/>
     <c:param name="item_name" value="Subsonic Donation"/>
     <c:param name="no_shipping" value="1"/>
     <c:param name="amount" value="10.00"/>
@@ -44,7 +44,7 @@
 </c:url>
 <c:url value="https://www.paypal.com/cgi-bin/webscr" var="donate20Url">
     <c:param name="cmd" value="_xclick"/>
-    <c:param name="business" value="sindre@activeobjects.no"/>
+    <c:param name="business" value="subsonic_donation@activeobjects.no"/>
     <c:param name="item_name" value="Subsonic Donation"/>
     <c:param name="no_shipping" value="1"/>
     <c:param name="amount" value="20.00"/>
@@ -55,7 +55,7 @@
 </c:url>
 <c:url value="https://www.paypal.com/cgi-bin/webscr" var="donate50Url">
     <c:param name="cmd" value="_xclick"/>
-    <c:param name="business" value="sindre@activeobjects.no"/>
+    <c:param name="business" value="subsonic_donation@activeobjects.no"/>
     <c:param name="item_name" value="Subsonic Donation"/>
     <c:param name="no_shipping" value="1"/>
     <c:param name="amount" value="50.00"/>
@@ -66,7 +66,7 @@
 </c:url>
 <c:url value="https://www.paypal.com/cgi-bin/webscr" var="donate100Url">
     <c:param name="cmd" value="_xclick"/>
-    <c:param name="business" value="sindre@activeobjects.no"/>
+    <c:param name="business" value="subsonic_donation@activeobjects.no"/>
     <c:param name="item_name" value="Subsonic Donation"/>
     <c:param name="no_shipping" value="1"/>
     <c:param name="amount" value="100.00"/>
@@ -77,7 +77,7 @@
 </c:url>
 <c:url value="https://www.paypal.com/cgi-bin/webscr" var="donateAnyUrl">
     <c:param name="cmd" value="_xclick"/>
-    <c:param name="business" value="sindre@activeobjects.no"/>
+    <c:param name="business" value="subsonic_donation@activeobjects.no"/>
     <c:param name="item_name" value="Subsonic Donation"/>
     <c:param name="no_shipping" value="1"/>
     <c:param name="currency_code" value="USD"/>

@@ -5,12 +5,12 @@ Create links to artist from title in main.view (http://www.activeobjects.no/subs
 Audioscrobbler caching support. (Must be tested)
 Fixed ugly checkboxes in IE.
 Made some visual changes to the form controls in the default and sandstorm themes.
+Donators shouldn't have to see ads.
 
 TODO IN 3.1
 =============
 Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
 Test playlist checkbox stuff, in particular download auth.
-Donators shouldn't have to see ads.
 Check out non-Latin ID3 problem (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=527)
 Track titles that begin with numbers (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=170)
 Fault-tolerant transcoding FLAC>MP3 (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=545)
@@ -39,6 +39,7 @@ Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownload
 
 BACKLOG
 ===========================
+Podcast receiver.
 Make podcast work in iTunes.
 Longer cache expiry period for images.
 RSS feed for newest content.
