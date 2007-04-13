@@ -20,17 +20,6 @@
     <br/>
 </c:if>
 
-<c:url value="https://www.paypal.com/cgi-bin/webscr" var="donate5Url">
-    <c:param name="cmd" value="_xclick"/>
-    <c:param name="business" value="subsonic_donation@activeobjects.no"/>
-    <c:param name="item_name" value="Subsonic Donation"/>
-    <c:param name="no_shipping" value="1"/>
-    <c:param name="amount" value="5.00"/>
-    <c:param name="currency_code" value="USD"/>
-    <c:param name="tax" value="0"/>
-    <c:param name="bn" value="PP-DonationsBF"/>
-    <c:param name="charset" value="UTF-8"/>
-</c:url>
 <c:url value="https://www.paypal.com/cgi-bin/webscr" var="donate10Url">
     <c:param name="cmd" value="_xclick"/>
     <c:param name="business" value="subsonic_donation@activeobjects.no"/>
@@ -92,16 +81,6 @@
 
 <table cellpadding="10">
     <tr>
-        <td>
-            <table>
-                <tr>
-                    <td><a href="${donate5Url}" target="_blank"><img src="<c:url value="/icons/donate.gif"/>" alt=""/></a></td>
-                </tr>
-                <tr>
-                <td class="detail" style="text-align:center;"><fmt:message key="donate.amount"><fmt:param value="$5"/></fmt:message></td>
-                </tr>
-            </table>
-        </td>
         <td>
             <table>
                 <tr>

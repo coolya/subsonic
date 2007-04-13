@@ -3,10 +3,12 @@
 <html><head>
     <%@ include file="head.jsp" %>
     <link href="<c:url value="/style/shadow.css"/>" rel="stylesheet">
+    <c:if test="${not model.updateNowPlaying}">
+        <meta http-equiv="refresh" content="180;URL=nowPlaying.view?">
+    </c:if>
     <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
-    <!--todo-->
     <%--<c:if test="${not empty model.adReferrer}">--%>
         <script type="text/javascript" src="<c:url value="/script/adsense.js"/>"></script>
     <%--</c:if>--%>

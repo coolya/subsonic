@@ -6,9 +6,11 @@ Audioscrobbler caching support. (Must be tested)
 Fixed ugly checkboxes in IE.
 Made some visual changes to the form controls in the default and sandstorm themes.
 Donators shouldn't have to see ads.
+Switch to "Now playing" after 3 minutes.
 
 TODO IN 3.1
 =============
+Check out http://www.javazoom.net/jlgui/jnlp_configurator.jsp
 Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
 Test playlist checkbox stuff, in particular download auth.
 Check out non-Latin ID3 problem (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=527)
@@ -20,7 +22,6 @@ Add menu option for sorting playlist on artist, album, track. (Put in combobox).
 Save playlists in database?  Access rights.
 
 By default, activate transcoders when new players are created. Create new transcoding attribute: default on/off for new players.
-Svitsje til automatisk "now playing" etter en stund med inaktivitet?
 Add to adlinks:
   www.beyerdynamic.com (and other hifi stuff)
   www.last.fm/charts (for instance)
@@ -36,6 +37,7 @@ Make sure podcast works with playlist names with non-latin chars.
 Mark music_file_info as disabled if path doesn't exist.
 Test Google Web Toolkit?
 Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownloads/default.aspx)
+Show next/prev 100 hits.
 
 BACKLOG
 ===========================

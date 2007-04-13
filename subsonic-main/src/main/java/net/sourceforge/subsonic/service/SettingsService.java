@@ -382,7 +382,7 @@ public class SettingsService {
 
         // Little point in doing anything more fancy, since there are
         // easier ways to disable ads.
-        return license.equalsIgnoreCase(StringUtil.md5Hex(email));
+        return license.equalsIgnoreCase(StringUtil.md5Hex(email.toLowerCase()));
     }
 
     /**
