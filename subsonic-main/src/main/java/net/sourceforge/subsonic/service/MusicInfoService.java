@@ -26,6 +26,18 @@ public class MusicInfoService {
     }
 
     /**
+     * Returns all music file infos with respect to the given row offset and count.
+     * Disabled instances are also returned.
+     *
+     * @param offset Number of rows to skip.
+     * @param count  Maximum number of rows to return.
+     * @return Music file infos with respect to the given row offset and count.
+     */
+    public List<MusicFileInfo> getAllMusicFileInfos(int offset, int count) {
+        return musicFileInfoDao.getAllMusicFileInfos(offset, count);
+    }
+
+    /**
      * Returns the highest rated music files.
      *
      * @param offset Number of files to skip.

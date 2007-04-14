@@ -54,6 +54,7 @@
         <property name="settingsService" ref="settingsService"/>
         <property name="securityService" ref="securityService"/>
         <property name="musicFileService" ref="musicFileService"/>
+        <property name="musicInfoService" ref="musicInfoService"/>
     </bean>
 
     <bean id="playerService" class="net.sourceforge.subsonic.service.PlayerService">

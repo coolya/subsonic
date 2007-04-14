@@ -1,12 +1,16 @@
 package net.sourceforge.subsonic.dao;
 
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.domain.*;
-import org.springframework.jdbc.core.*;
-import org.springframework.dao.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicFileInfo;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides database services for music file info.
@@ -17,18 +21,36 @@ import java.util.*;
 public class MusicFileInfoDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(MusicFileInfoDao.class);
-    private static final String COLUMNS = "id, path, comment, play_count, last_played";
+    private static final String COLUMNS = "id, path, comment, play_count, last_played, enabled";
     private MusicFileInfoRowMapper rowMapper = new MusicFileInfoRowMapper();
 
     /**
-     * Returns music file info for the given path.
+     * Returns music file info for the given path. Also disabled instances are returned.
      *
      * @return Music file info for the given path, or <code>null</code> if not found.
      */
     public MusicFileInfo getMusicFileInfoForPath(String path) {
         String sql = "select " + COLUMNS + " from music_file_info where path=?";
-        List result = getJdbcTemplate().query(sql, new Object[]{path}, rowMapper);
+        List<?> result = getJdbcTemplate().query(sql, new Object[]{path}, rowMapper);
         return (MusicFileInfo) (result.isEmpty() ? null : result.get(0));
+    }
+
+    /**
+     * Returns all music file infos with respect to the given row offset and count.
+     * Disabled instances are also returned.
+     *
+     * @param offset Number of rows to skip.
+     * @param count  Maximum number of rows to return.
+     * @return Music file infos with respect to the given row offset and count.
+     */
+    public List<MusicFileInfo> getAllMusicFileInfos(int offset, int count) {
+        if (count < 1) {
+            return new ArrayList<MusicFileInfo>();
+        }
+        String sql = "select " + COLUMNS + " from music_file_info " +
+                     "order by id " +
+                     "limit " + count + " offset " + offset;
+        return getJdbcTemplate().query(sql, rowMapper);
     }
 
     /**
@@ -62,7 +84,9 @@ public class MusicFileInfoDao extends AbstractDao {
         }
 
         JdbcTemplate template = getJdbcTemplate();
-        String sql = "select " + COLUMNS + " from music_file_info where play_count > 0 order by play_count desc limit " + count + " offset " + offset;
+        String sql = "select " + COLUMNS + " from music_file_info " +
+                     "where play_count > 0 and enabled=true " +
+                     "order by play_count desc limit " + count + " offset " + offset;
         return (MusicFileInfo[]) template.query(sql, rowMapper).toArray(new MusicFileInfo[0]);
     }
 
@@ -79,7 +103,9 @@ public class MusicFileInfoDao extends AbstractDao {
         }
 
         JdbcTemplate template = getJdbcTemplate();
-        String sql = "select " + COLUMNS + " from music_file_info where last_played is not null order by last_played desc limit " + count + " offset " + offset;
+        String sql = "select " + COLUMNS + " from music_file_info " +
+                     "where last_played is not null and enabled=true " +
+                     "order by last_played desc limit " + count + " offset " + offset;
         return (MusicFileInfo[]) template.query(sql, rowMapper).toArray(new MusicFileInfo[0]);
     }
 
@@ -89,9 +115,9 @@ public class MusicFileInfoDao extends AbstractDao {
      * @param info The music file info to create.
      */
     public void createMusicFileInfo(MusicFileInfo info) {
-        String sql = "insert into music_file_info (" + COLUMNS + ") values (null, ?, ?, ?, ?)";
-        getJdbcTemplate().update(sql, new Object[] {info.getPath(), info.getComment(),
-                                                    info.getPlayCount(), info.getLastPlayed()});
+        String sql = "insert into music_file_info (" + COLUMNS + ") values (null, ?, ?, ?, ?, ?)";
+        getJdbcTemplate().update(sql, new Object[]{info.getPath(), info.getComment(),
+                                                   info.getPlayCount(), info.getLastPlayed(), info.isEnabled()});
         LOG.info("Created music file info for " + info.getPath());
     }
 
@@ -101,9 +127,9 @@ public class MusicFileInfoDao extends AbstractDao {
      * @param info The music file info to update.
      */
     public void updateMusicFileInfo(MusicFileInfo info) {
-        String sql = "update music_file_info set path=?, comment=?, play_count=?, last_played=? where id=?";
+        String sql = "update music_file_info set path=?, comment=?, play_count=?, last_played=?, enabled=? where id=?";
         getJdbcTemplate().update(sql, new Object[]{info.getPath(), info.getComment(),
-                                                   info.getPlayCount(), info.getLastPlayed(), info.getId()});
+                                                   info.getPlayCount(), info.getLastPlayed(), info.isEnabled(), info.getId()});
     }
 
     /**
@@ -152,7 +178,7 @@ public class MusicFileInfoDao extends AbstractDao {
 
     private static class MusicFileInfoRowMapper implements RowMapper {
         public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new MusicFileInfo(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getTimestamp(5));
+            return new MusicFileInfo(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getTimestamp(5), rs.getBoolean(6));
         }
     }
 

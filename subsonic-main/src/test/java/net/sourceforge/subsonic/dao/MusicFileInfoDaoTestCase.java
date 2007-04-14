@@ -1,13 +1,17 @@
 package net.sourceforge.subsonic.dao;
 
-import net.sourceforge.subsonic.domain.*;
-import org.springframework.dao.*;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicFileInfo;
+import net.sourceforge.subsonic.domain.User;
+import org.springframework.dao.DataAccessException;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Unit test of {@link MusicFileInfoDao}.
+ *
  * @author Sindre Mehus
  */
 public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
@@ -219,7 +223,8 @@ public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
         try {
             musicFileInfoDao.setRatingForUser("sindre", musicFile, 1);
             fail("Expected exception.");
-        } catch (DataAccessException x) {}
+        } catch (DataAccessException x) {
+        }
 
         userDao.createUser(new User("sindre", "secret"));
         userDao.createUser(new User("bente", "secret"));
@@ -257,6 +262,41 @@ public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
         musicFileInfoDao.setRatingForUser("sindre", musicFile, null);
         assertNull("Error in getRatingForUser().", musicFileInfoDao.getRatingForUser("sindre", musicFile));
         assertNull("Error in getAverageRating().", musicFileInfoDao.getAverageRating(musicFile));
+    }
+
+    public void testGetAllMusicFileInfos() {
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo("a"));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo("b"));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo("c"));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo("d"));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo("e"));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo("f"));
+
+        MusicFileInfo d = musicFileInfoDao.getMusicFileInfoForPath("d");
+        d.setEnabled(false);
+        musicFileInfoDao.updateMusicFileInfo(d);
+
+        List<MusicFileInfo> list = musicFileInfoDao.getAllMusicFileInfos(0, 0);
+        assertTrue("Error in getAllMusicFileInfos().", list.isEmpty());
+
+        list = musicFileInfoDao.getAllMusicFileInfos(0, 3);
+        assertEquals("Error in getAllMusicFileInfos().", 3, list.size());
+        assertEquals("Error in getAllMusicFileInfos().", "a", list.get(0).getPath());
+        assertEquals("Error in getAllMusicFileInfos().", "b", list.get(1).getPath());
+        assertEquals("Error in getAllMusicFileInfos().", "c", list.get(2).getPath());
+
+        list = musicFileInfoDao.getAllMusicFileInfos(3, 2);
+        assertEquals("Error in getAllMusicFileInfos().", 2, list.size());
+        assertEquals("Error in getAllMusicFileInfos().", "d", list.get(0).getPath());
+        assertEquals("Error in getAllMusicFileInfos().", "e", list.get(1).getPath());
+
+        list = musicFileInfoDao.getAllMusicFileInfos(4, 100);
+        assertEquals("Error in getAllMusicFileInfos().", 2, list.size());
+        assertEquals("Error in getAllMusicFileInfos().", "e", list.get(0).getPath());
+        assertEquals("Error in getAllMusicFileInfos().", "f", list.get(1).getPath());
+
+        list = musicFileInfoDao.getAllMusicFileInfos(100, 1);
+        assertTrue("Error in getAllMusicFileInfos().", list.isEmpty());
     }
 
 

@@ -1,13 +1,34 @@
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.util.*;
-import org.apache.commons.io.*;
-import org.apache.commons.lang.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.MediaLibraryStatistics;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicFileInfo;
+import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.util.StringUtil;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * Provides services for searching for music.
@@ -30,17 +51,20 @@ public class SearchService {
     private SettingsService settingsService;
     private SecurityService securityService;
     private MusicFileService musicFileService;
+    private MusicInfoService musicInfoService;
 
     /**
-    * Returns whether the search index exists.
-    * @return Whether the search index exists.
-    */
+     * Returns whether the search index exists.
+     *
+     * @return Whether the search index exists.
+     */
     public synchronized boolean isIndexCreated() {
         return getIndexFile().exists();
     }
 
     /**
      * Returns whether the search index is currently being created.
+     *
      * @return Whether the search index is currently being created.
      */
     public synchronized boolean isIndexBeingCreated() {
@@ -60,51 +84,97 @@ public class SearchService {
 
         Thread thread = new Thread("Search Index Generator") {
             public void run() {
-                deleteOldIndexFiles();
-                LOG.info("Starting to create search index.");
-                PrintWriter writer = null;
-
-                try {
-
-                    // Get existing index.
-                    Map<File, Line> oldIndex = getIndex();
-
-                    writer = new PrintWriter(new FileWriter(getIndexFile()));
-
-                    // Create a scanner for visiting all music files.
-                    Scanner scanner = new Scanner(writer, oldIndex);
-
-                    // Read entire music directory.
-                    for (MusicFolder musicFolder : settingsService.getAllMusicFolders()) {
-                        MusicFile root = musicFileService.getMusicFile(musicFolder.getPath());
-                        root.accept(scanner);
-                    }
-
-                    // Clear memory cache.
-                    synchronized (SearchService.this) {
-                        cachedIndex = null;
-                        cachedSongs = null;
-                        cachedAlbums = null;
-                        statistics = null;
-                    }
-
-                    LOG.info("Created search index with " + scanner.getCount() + " entries.");
-
-                } catch (Exception x) {
-                    LOG.error("Failed to create search index.", x);
-                } finally {
-                    creatingIndex = false;
-                    IOUtils.closeQuietly(writer);
-                }
-            }};
+                doCreateIndex();
+            }
+        };
 
         thread.setPriority(Thread.MIN_PRIORITY);
         thread.start();
     }
 
-    /**
-     * Schedule background execution of index creation.
-     */
+    private void doCreateIndex() {
+        deleteOldIndexFiles();
+        LOG.info("Starting to create search index.");
+        PrintWriter writer = null;
+
+        try {
+
+            // Get existing index.
+            Map<File, Line> oldIndex = getIndex();
+
+            writer = new PrintWriter(new FileWriter(getIndexFile()));
+
+            // Create a scanner for visiting all music files.
+            Scanner scanner = new Scanner(writer, oldIndex);
+
+            // Read entire music directory.
+            for (MusicFolder musicFolder : settingsService.getAllMusicFolders()) {
+                MusicFile root = musicFileService.getMusicFile(musicFolder.getPath());
+                root.accept(scanner);
+            }
+
+            // Clear memory cache.
+            writer.flush();
+            writer.close();
+            synchronized (this) {
+                cachedIndex = null;
+                cachedSongs = null;
+                cachedAlbums = null;
+                statistics = null;
+                getIndex();
+            }
+
+            // Now, clean up music_file_info table.
+            cleanMusicFileInfo();
+
+            LOG.info("Created search index with " + scanner.getCount() + " entries.");
+
+        } catch (Exception x) {
+            LOG.error("Failed to create search index.", x);
+        } finally {
+            creatingIndex = false;
+            IOUtils.closeQuietly(writer);
+        }
+    }
+
+    private void cleanMusicFileInfo() {
+
+        // Create sorted set of albums.
+        SortedSet<String> albums = new TreeSet<String>();
+        for (Line line : cachedAlbums) {
+            albums.add(line.file.getPath());
+        }
+
+        // Page through music_file_info table.
+        int offset = 0;
+        int count = 100;
+        while (true) {
+            List<MusicFileInfo> infos = musicInfoService.getAllMusicFileInfos(offset, count);
+            if (infos.isEmpty()) {
+                break;
+            }
+            offset += infos.size();
+
+            for (MusicFileInfo info : infos) {
+
+                // Disable row if album does not exist on disk any more.
+                if (info.isEnabled() && !albums.contains(info.getPath())) {
+                    info.setEnabled(false);
+                    musicInfoService.updateMusicFileInfo(info);
+                    LOG.debug("Logically deleting info for album " + info.getPath() + ". Not found on disk.");
+                }
+
+                // Enable row if album has reoccured on disk.
+                else if (!info.isEnabled() && albums.contains(info.getPath())) {
+                    info.setEnabled(true);
+                    musicInfoService.updateMusicFileInfo(info);
+                    LOG.debug("Logically undeleting info for album " + info.getPath() + ". Found on disk.");
+                }
+            }
+        }
+    }
+
+    /** Schedule background execution of index creation. */
     public synchronized void schedule() {
         if (timer != null) {
             timer.cancel();
@@ -146,12 +216,12 @@ public class SearchService {
     /**
      * Similar to {@link #search}, but uses a simple heuristic approach to get the most relevant matches first.
      *
-     * @param query Text to match.
-     * @param maxHits The maximum number of hits to return.
+     * @param query         Text to match.
+     * @param maxHits       The maximum number of hits to return.
      * @param includeArtist Whether to include artist name in search.
-     * @param includeAlbum Whether to include album name in search.
-     * @param includeTitle Whether to include song title in search.
-     * @param newerThan Only return music files newer than this date. If <code>null</code>, this parameter has no effect.
+     * @param includeAlbum  Whether to include album name in search.
+     * @param includeTitle  Whether to include song title in search.
+     * @param newerThan     Only return music files newer than this date. If <code>null</code>, this parameter has no effect.
      * @return A list of music files fulfilling the search criteria.
      * @throws IOException If an I/O error occurs.
      */
@@ -162,7 +232,7 @@ public class SearchService {
         }
 
         // Step one: search for exact match.
-        List<MusicFile> resultOne = search(new String[] {query}, maxHits, includeArtist, includeAlbum, includeTitle, newerThan);
+        List<MusicFile> resultOne = search(new String[]{query}, maxHits, includeArtist, includeAlbum, includeTitle, newerThan);
 
         // If a substantial amount of hits were found, return it.
         if (resultOne.size() > maxHits / 10) {
@@ -186,12 +256,12 @@ public class SearchService {
      * Search for music files fulfilling the given search criteria. Only songs (files, not directories)
      * are returned.
      *
-     * @param query Array of strings to match. All of the strings must match.
-     * @param maxHits The maximum number of hits to return.
+     * @param query         Array of strings to match. All of the strings must match.
+     * @param maxHits       The maximum number of hits to return.
      * @param includeArtist Whether to include artist name in search.
-     * @param includeAlbum Whether to include album name in search.
-     * @param includeTitle Whether to include song title in search.
-     * @param newerThan Only return music files newer than this date. If <code>null</code>, this parameter has no effect.
+     * @param includeAlbum  Whether to include album name in search.
+     * @param includeTitle  Whether to include song title in search.
+     * @param newerThan     Only return music files newer than this date. If <code>null</code>, this parameter has no effect.
      * @return A list of music files fulfilling the search criteria.
      * @throws IOException If an I/O error occurs.
      */
@@ -203,7 +273,7 @@ public class SearchService {
         }
 
         if (query.length == 0) {
-            query = new String[] {""};
+            query = new String[]{""};
         }
 
         // Convert query to upper case for slightly better performance.
@@ -213,7 +283,7 @@ public class SearchService {
 
         long newerThanTime = newerThan == null ? 0 : newerThan.getTime();
 
-        Map<File,Line> index = getIndex();
+        Map<File, Line> index = getIndex();
 
         for (Line line : index.values()) {
             try {
@@ -225,8 +295,8 @@ public class SearchService {
                 boolean isMatch = false;
                 for (String criteria : query) {
                     boolean isArtistMatch = includeArtist && StringUtils.contains(line.artist, criteria);
-                    boolean isAlbumMatch  = includeAlbum  && StringUtils.contains(line.album, criteria);
-                    boolean isTitleMatch  = includeTitle  && StringUtils.contains(line.title, criteria);
+                    boolean isAlbumMatch = includeAlbum && StringUtils.contains(line.album, criteria);
+                    boolean isTitleMatch = includeTitle && StringUtils.contains(line.title, criteria);
                     isMatch = isArtistMatch || isAlbumMatch || isTitleMatch;
                     if (!isMatch) {
                         break;
@@ -253,6 +323,7 @@ public class SearchService {
 
     /**
      * Returns media libaray statistics, including the number of artists, albums and songs.
+     *
      * @return Media library statistics.
      * @throws IOException If an I/O error occurs.
      */
@@ -267,7 +338,8 @@ public class SearchService {
     }
 
     /**
-     * Returns a number of random songs
+     * Returns a number of random songs.
+     *
      * @param count Maximum number of songs to return.
      * @return Array of random songs
      * @throws IOException If an I/O error occurs.
@@ -304,9 +376,10 @@ public class SearchService {
     }
 
     /**
-     * Returns a number of random albums
+     * Returns a number of random albums.
+     *
      * @param count Maximum number of albums to return.
-     * @return Array of random albums
+     * @return Array of random albums.
      * @throws IOException If an I/O error occurs.
      */
     public List<MusicFile> getRandomAlbums(int count) throws IOException {
@@ -342,8 +415,9 @@ public class SearchService {
 
     /**
      * Returns a number of least recently modified music files. Only directories (albums) are returned.
+     *
      * @param offset Number of music files to skip.
-     * @param count Maximum number of music files to return.
+     * @param count  Maximum number of music files to return.
      * @return Array of new music files.
      * @throws IOException If an I/O error occurs.
      */
@@ -374,20 +448,21 @@ public class SearchService {
     }
 
     /**
-    * Returns the search index as a map from files to {@link Line} instances.
-    * @return The search index.
-    * @throws IOException If an I/O error occurs.
-    */
+     * Returns the search index as a map from files to {@link Line} instances.
+     *
+     * @return The search index.
+     * @throws IOException If an I/O error occurs.
+     */
     private synchronized Map<File, Line> getIndex() throws IOException {
         if (!isIndexCreated()) {
-            return new TreeMap<File,Line>();
+            return new TreeMap<File, Line>();
         }
 
         if (cachedIndex != null) {
             return cachedIndex;
         }
 
-        cachedIndex = new TreeMap<File,Line>();
+        cachedIndex = new TreeMap<File, Line>();
 
         // Statistics.
         int songCount = 0;
@@ -444,6 +519,7 @@ public class SearchService {
 
     /**
      * Returns the file containing the index.
+     *
      * @return The file containing the index.
      */
     private File getIndexFile() {
@@ -452,6 +528,7 @@ public class SearchService {
 
     /**
      * Returns the index file for the given index version.
+     *
      * @param version The index version.
      * @return The index file for the given index version.
      */
@@ -460,9 +537,7 @@ public class SearchService {
         return new File(home, "subsonic" + version + ".index");
     }
 
-    /**
-     * Deletes old versions of the index file.
-     */
+    /** Deletes old versions of the index file. */
     private void deleteOldIndexFiles() {
         for (int i = 2; i < INDEX_VERSION; i++) {
             File file = getIndexFile(i);
@@ -490,9 +565,11 @@ public class SearchService {
         this.musicFileService = musicFileService;
     }
 
-    /**
-     * Contains the content of a single line in the index file.
-     */
+    public void setMusicInfoService(MusicInfoService musicInfoService) {
+        this.musicInfoService = musicInfoService;
+    }
+
+    /** Contains the content of a single line in the index file. */
     static class Line {
 
         /** Column separator. */
@@ -501,18 +578,20 @@ public class SearchService {
         private boolean isFile;
         private boolean isAlbum;
         private boolean isDirectory;
-        private long    lastModified;
-        private File    file;
-        private long    length;
-        private String  artist;
-        private String  album;
-        private String  title;
-        private String  year;
+        private long lastModified;
+        private File file;
+        private long length;
+        private String artist;
+        private String album;
+        private String title;
+        private String year;
 
-        private Line() {}
+        private Line() {
+        }
 
         /**
          * Creates a line instance by parsing the given string.
+         *
          * @param s The string to parse.
          * @return The line created by parsing the string.
          */
@@ -526,11 +605,11 @@ public class SearchService {
             line.lastModified = Long.parseLong(tokens[1]);
             line.file = new File(tokens[2]);
             if (line.isFile) {
-                line.length  = Long.parseLong(tokens[3]);
+                line.length = Long.parseLong(tokens[3]);
                 line.artist = tokens[4].length() == 0 ? null : tokens[4];
-                line.album  = tokens[5].length() == 0 ? null : tokens[5];
-                line.title  = tokens[6].length() == 0 ? null : tokens[6];
-                line.year   = tokens[7].length() == 0 ? null : tokens[7];
+                line.album = tokens[5].length() == 0 ? null : tokens[5];
+                line.title = tokens[6].length() == 0 ? null : tokens[6];
+                line.year = tokens[7].length() == 0 ? null : tokens[7];
             }
 
             return line;
@@ -538,9 +617,10 @@ public class SearchService {
 
         /**
          * Creates a line instance representing the given music file.
-         * @param file The music file.
+         *
+         * @param file  The music file.
          * @param index The existing search index. Used to avoid parsing metadata if the file has not changed
-         * since the last time the search index was created.
+         *              since the last time the search index was created.
          * @return A line instance representing the given music file.
          */
         public static Line forFile(MusicFile file, Map<File, Line> index) {
@@ -570,15 +650,16 @@ public class SearchService {
             if (line.isFile) {
                 line.length = file.length();
                 line.artist = StringUtils.upperCase(metaData.getArtist());
-                line.album  = StringUtils.upperCase(metaData.getAlbum());
-                line.title  = StringUtils.upperCase(metaData.getTitle());
-                line.year   = metaData.getYear();
+                line.album = StringUtils.upperCase(metaData.getAlbum());
+                line.title = StringUtils.upperCase(metaData.getTitle());
+                line.year = metaData.getYear();
             }
             return line;
         }
 
         /**
          * Returns the content of this line as a string.
+         *
          * @return The content of this line as a string.
          */
         public String toString() {
