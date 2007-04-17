@@ -47,6 +47,12 @@
             parent.frames.main.location.href = "savePlaylist.view?";
         } else if (id == "downloadPlaylist") {
             location.href = "download.view?player=${model.player.id}";
+        } else if (id == "sortByTrack") {
+            location.href = "playlist.view?sortByTrack";
+        } else if (id == "sortByArtist") {
+            location.href = "playlist.view?sortByArtist";
+        } else if (id == "sortByAlbum") {
+            location.href = "playlist.view?sortByAlbum";
         } else if (id == "selectAll") {
             selectAll(true);
             onSelectionChange();
@@ -142,6 +148,9 @@
             <c:if test="${model.user.downloadRole}">
                 <option id="downloadPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
             </c:if>
+            <option id="sortByTrack">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.sortbytrack"/></option>
+            <option id="sortByAlbum">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.sortbyalbum"/></option>
+            <option id="sortByArtist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.sortbyartist"/></option>
             <option disabled="disabled"><fmt:message key="playlist.more.selection"/></option>
             <option id="selectAll">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.selectall"/></option>
             <option id="selectNone">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.selectnone"/></option>

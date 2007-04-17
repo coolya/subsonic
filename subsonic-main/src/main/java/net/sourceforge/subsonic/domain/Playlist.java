@@ -1,5 +1,7 @@
 package net.sourceforge.subsonic.domain;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.*;
 import java.util.*;
 
@@ -7,7 +9,6 @@ import java.util.*;
  * A playlist is a list of music files that are associated to a remote player.
  *
  * @author Sindre Mehus
- * @version $Revision: 1.11 $ $Date: 2006/01/10 22:39:35 $
  */
 public class Playlist {
 
@@ -192,6 +193,48 @@ public class Playlist {
     }
 
     /**
+     * Sorts the playlist according to the given sort order.
+     */
+    public synchronized void sort(final SortOrder sortOrder) {
+        makeBackup();
+        MusicFile currentFile = getCurrentFile();
+
+        Comparator<MusicFile> comparator = new Comparator<MusicFile>() {
+            public int compare(MusicFile a, MusicFile b) {
+                switch (sortOrder) {
+                    case TRACK:
+                        Integer trackA = a.getMetaData().getTrackNumber();
+                        Integer trackB = b.getMetaData().getTrackNumber();
+                        if (trackA == null) {
+                            trackA = 0;
+                        }
+                        if (trackB == null) {
+                            trackB = 0;
+                        }
+                        return trackA.compareTo(trackB);
+
+                    case ARTIST:
+                        String artistA = StringUtils.trimToEmpty(a.getMetaData().getArtist());
+                        String artistB = StringUtils.trimToEmpty(b.getMetaData().getArtist());
+                        return artistA.compareTo(artistB);
+
+                    case ALBUM:
+                        String albumA = StringUtils.trimToEmpty(a.getMetaData().getAlbum());
+                        String albumB = StringUtils.trimToEmpty(b.getMetaData().getAlbum());
+                        return albumA.compareTo(albumB);
+                    default:
+                        return 0;
+                }
+            }
+        };
+
+        Collections.sort(files, comparator);
+        if (currentFile != null) {
+            index = files.indexOf(currentFile);
+        }
+    }
+
+    /**
      * Moves the song at the given index one step up.
      * @param index The playlist index.
      */
@@ -288,16 +331,25 @@ public class Playlist {
         return length;
     }
 
+    private void makeBackup() {
+        filesBackup = new ArrayList<MusicFile>(files);
+        indexBackup = index;
+    }
+
     /**
-    * Playlist status.
-    */
+     * Playlist status.
+     */
     public enum Status {
         PLAYING,
         STOPPED
     }
 
-    private void makeBackup() {
-        filesBackup = new ArrayList<MusicFile>(files);
-        indexBackup = index;
+    /**
+     * Playlist sort order.
+     */
+    public enum SortOrder {
+        TRACK,
+        ARTIST,
+        ALBUM
     }
 }

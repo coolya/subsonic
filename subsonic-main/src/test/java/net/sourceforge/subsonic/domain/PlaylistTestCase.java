@@ -3,6 +3,8 @@ package net.sourceforge.subsonic.domain;
 import junit.framework.*;
 import net.sourceforge.subsonic.domain.Playlist.*;
 
+import java.io.IOException;
+
 /**
  * Unit test of {@link Playlist}.
  *
@@ -165,6 +167,40 @@ public class PlaylistTestCase extends TestCase {
         assertPlaylistEquals(playlist, 0, "A", "B", "C");
     }
 
+    public void testOrder() throws IOException {
+        Playlist playlist = new Playlist();
+        playlist.addFile(new TestMusicFile(2, "Artist A", "Album B"));
+        playlist.addFile(new TestMusicFile(1, "Artist C", "Album C"));
+        playlist.addFile(new TestMusicFile(3, "Artist B", "Album A"));
+        playlist.addFile(new TestMusicFile(null, "Artist D", "Album D"));
+        playlist.setIndex(2);
+        assertEquals("Error in sort.", new Integer(3), playlist.getCurrentFile().getMetaData().getTrackNumber());
+
+        // Order by track.
+        playlist.sort(SortOrder.TRACK);
+        assertEquals("Error in sort().", null, playlist.getFile(0).getMetaData().getTrackNumber());
+        assertEquals("Error in sort().", new Integer(1), playlist.getFile(1).getMetaData().getTrackNumber());
+        assertEquals("Error in sort().", new Integer(2), playlist.getFile(2).getMetaData().getTrackNumber());
+        assertEquals("Error in sort().", new Integer(3), playlist.getFile(3).getMetaData().getTrackNumber());
+        assertEquals("Error in sort().", new Integer(3), playlist.getCurrentFile().getMetaData().getTrackNumber());
+
+        // Order by artist.
+        playlist.sort(SortOrder.ARTIST);
+        assertEquals("Error in sort().", "Artist A", playlist.getFile(0).getMetaData().getArtist());
+        assertEquals("Error in sort().", "Artist B", playlist.getFile(1).getMetaData().getArtist());
+        assertEquals("Error in sort().", "Artist C", playlist.getFile(2).getMetaData().getArtist());
+        assertEquals("Error in sort().", "Artist D", playlist.getFile(3).getMetaData().getArtist());
+        assertEquals("Error in sort().", new Integer(3), playlist.getCurrentFile().getMetaData().getTrackNumber());
+
+        // Order by album.
+        playlist.sort(SortOrder.ALBUM);
+        assertEquals("Error in sort().", "Album A", playlist.getFile(0).getMetaData().getAlbum());
+        assertEquals("Error in sort().", "Album B", playlist.getFile(1).getMetaData().getAlbum());
+        assertEquals("Error in sort().", "Album C", playlist.getFile(2).getMetaData().getAlbum());
+        assertEquals("Error in sort().", "Album D", playlist.getFile(3).getMetaData().getAlbum());
+        assertEquals("Error in sort().", new Integer(3), playlist.getCurrentFile().getMetaData().getTrackNumber());
+    }
+
     private void assertPlaylistEquals(Playlist playlist, int index, String... songs) {
         assertEquals(songs.length, playlist.size());
         for (int i = 0; i < songs.length; i++) {
@@ -190,6 +226,7 @@ public class PlaylistTestCase extends TestCase {
     private static class TestMusicFile extends MusicFile {
 
         private String name;
+        private MetaData metaData;
 
         TestMusicFile() {}
 
@@ -197,24 +234,43 @@ public class PlaylistTestCase extends TestCase {
             this.name = name;
         }
 
+        TestMusicFile(Integer track, String artist, String album) {
+            metaData = new MetaData();
+            if (track != null) {
+                metaData.setTrackNumber(track);
+            }
+            metaData.setArtist(artist);
+            metaData.setAlbum(album);
+        }
+
+        @Override
         public String getName() {
             return name;
         }
 
-        public MusicFile[] getChildren(boolean recurse) {
-            return new MusicFile[] {this};
-        }
-
+        @Override
         public boolean exists() {
             return true;
         }
 
+        @Override
         public boolean isFile() {
             return true;
         }
 
+        @Override
         public boolean isDirectory() {
             return false;
+        }
+
+        @Override
+        public MetaData getMetaData() {
+            return metaData;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return this == o;
         }
     }
 }

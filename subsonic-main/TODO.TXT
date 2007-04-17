@@ -9,6 +9,7 @@ Donators shouldn't have to see ads.
 Switch to "Now playing" after 3 minutes.
 Logically delete/undelete metadata for albums that disappear/reappear on disk.
 Mark music_file_info as disabled if path doesn't exist.
+Added menu option to sort playlist by track, album or artist.
 
 TODO IN 3.1
 =============
@@ -25,7 +26,7 @@ Track titles that begin with numbers (http://www.activeobjects.no/subsonic/forum
 Fault-tolerant transcoding FLAC>MP3 (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=545)
 Use checkbox/combobox mechanism (like gmail) in playlist (and main). Must be able to select all.
 Append selected tracks to previously saved playlist (bring up dialog for selecting).
-Add menu option for sorting playlist on artist, album, track. (Put in combobox).
+
 Save playlists in database?  Access rights.
 
 By default, activate transcoders when new players are created. Create new transcoding attribute: default on/off for new players.

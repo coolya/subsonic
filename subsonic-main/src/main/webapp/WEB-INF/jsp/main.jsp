@@ -48,7 +48,7 @@
             <sub:url value="donate.view" var="donateUrl">
                 <sub:param name="path" value="${model.dir.path}"/>
             </sub:url>
-            <a href="${donateUrl}">Donate</a> to disable ads
+            <a href="${donateUrl}" style="text-decoration:underline">Donate</a> to disable ads
         </div>
         <div>
         <script type="text/javascript"><!--

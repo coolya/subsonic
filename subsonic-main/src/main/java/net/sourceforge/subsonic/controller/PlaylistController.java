@@ -101,6 +101,15 @@ public class PlaylistController extends ParameterizableViewController {
         } else if (request.getParameter("shuffle") != null) {
             index = -1;
             playlist.shuffle();
+        } else if (request.getParameter("sortByTrack") != null) {
+            index = -1;
+            playlist.sort(Playlist.SortOrder.TRACK);
+        } else if (request.getParameter("sortByArtist") != null) {
+            index = -1;
+            playlist.sort(Playlist.SortOrder.ARTIST);
+        } else if (request.getParameter("sortByAlbum") != null) {
+            index = -1;
+            playlist.sort(Playlist.SortOrder.ALBUM);
         } else if (request.getParameter("repeat") != null) {
             index = -1;
             playlist.setRepeatEnabled(!playlist.isRepeatEnabled());
