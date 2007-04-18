@@ -59,6 +59,28 @@
                     <option value="50"><fmt:message key="more.random.songs"><fmt:param value="50"/></fmt:message></option>
                 </select>
             </td>
+            <td><fmt:message key="more.random.genre"/></td>
+            <td>
+                <select name="genre">
+                    <option value="any"><fmt:message key="more.random.anygenre"/></option>
+                    <c:forEach items="${model.genres}" var="genre">
+                        <option value="${genre}">${genre}</option>
+                    </c:forEach>
+                </select>
+            </td>
+            <td><fmt:message key="more.random.year"/></td>
+            <td>
+                <select name="year">
+                    <option value="any"><fmt:message key="more.random.anyyear"/></option>
+                    <option value="2000 9999">&gt; 2000</option>
+                    <option value="1990 1999">1990 &ndash; 1999</option>
+                    <option value="1980 1989">1980 &ndash; 1989</option>
+                    <option value="1970 1979">1970 &ndash; 1979</option>
+                    <option value="1960 1969">1960 &ndash; 1969</option>
+                    <option value="1950 1959">1950 &ndash; 1959</option>
+                    <option value="0 1950">&lt; 1950</option>
+                </select>
+            </td>
             <td>
                 <input type="submit" value="<fmt:message key="more.random.ok"/>">
             </td>

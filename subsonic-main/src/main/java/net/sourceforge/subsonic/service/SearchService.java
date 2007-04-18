@@ -29,6 +29,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.Collections;
 
 /**
  * Provides services for searching for music.
@@ -37,13 +38,14 @@ import java.util.TreeSet;
  */
 public class SearchService {
 
-    private static final int INDEX_VERSION = 8;
+    private static final int INDEX_VERSION = 9;
     private static final Random RANDOM = new Random(System.currentTimeMillis());
     private static final Logger LOG = Logger.getLogger(SearchService.class);
 
     private Map<File, Line> cachedIndex;
     private List<Line> cachedSongs;
     private SortedSet<Line> cachedAlbums;  // Sorted chronologically.
+    private SortedSet<String> cachedGenres;
     private MediaLibraryStatistics statistics;
 
     private boolean creatingIndex;
@@ -120,6 +122,7 @@ public class SearchService {
                 cachedIndex = null;
                 cachedSongs = null;
                 cachedAlbums = null;
+                cachedGenres = null;
                 statistics = null;
                 getIndex();
             }
@@ -341,10 +344,13 @@ public class SearchService {
      * Returns a number of random songs.
      *
      * @param count Maximum number of songs to return.
+     * @param genre Only return songs of the given genre. May be <code>null</code>.
+     * @param fromYear Only return songs released after (or in) this year. May be <code>null</code>.
+     * @param toYear Only return songs released before (or in) this year. May be <code>null</code>.
      * @return Array of random songs
      * @throws IOException If an I/O error occurs.
      */
-    public List<MusicFile> getRandomSongs(int count) throws IOException {
+    public List<MusicFile> getRandomSongs(int count, String genre, Integer fromYear, Integer toYear) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>(count);
 
         // Ensure that index is read to memory.
@@ -354,10 +360,46 @@ public class SearchService {
             return result;
         }
 
+        // Filter by genre and genre, if required.
+        List<Line> songs = cachedSongs;
+        if (genre != null || fromYear != null) {
+            songs = new ArrayList<Line>();
+
+            String fromYearString = fromYear == null ? null : String.valueOf(fromYear);
+            String toYearString = toYear == null ? null : String.valueOf(toYear);
+
+            for (Line song : cachedSongs) {
+
+                // Skip if wrong genre.
+                if (genre != null && !genre.equalsIgnoreCase(song.genre)) {
+                    continue;
+                }
+
+                // Skip if wrong year.
+                if (fromYearString != null) {
+                    if (song.year == null) {
+                        continue;
+                    }
+                    if (song.year.compareTo(fromYearString) < 0) {
+                        continue;
+                    }
+                    if (song.year.compareTo(toYearString) > 0) {
+                        continue;
+                    }
+                }
+
+                songs.add(song);
+            }
+        }
+
+        if (songs.isEmpty()) {
+            return result;
+        }
+
         // Note: To avoid duplicates, we iterate over more than the requested number of items.
         for (int i = 0; i < count * 10; i++) {
-            int n = RANDOM.nextInt(cachedSongs.size());
-            File file = cachedSongs.get(n).file;
+            int n = RANDOM.nextInt(songs.size());
+            File file = songs.get(n).file;
 
             if (file.exists() && securityService.isReadAllowed(file)) {
                 MusicFile musicFile = musicFileService.getMusicFile(file);
@@ -376,12 +418,30 @@ public class SearchService {
     }
 
     /**
-     * Returns a number of random albums.
+     * Returns all genres in the music collection.
      *
-     * @param count Maximum number of albums to return.
-     * @return Array of random albums.
+     * @return Sorted set of genres.
      * @throws IOException If an I/O error occurs.
      */
+    public Set<String> getGenres() throws IOException {
+
+        // Ensure that index is read to memory.
+        getIndex();
+
+        if (!isIndexCreated() || isIndexBeingCreated()) {
+            return Collections.emptySet();
+        }
+
+        return Collections.unmodifiableSortedSet(cachedGenres);
+    }
+
+    /**
+    * Returns a number of random albums.
+    *
+    * @param count Maximum number of albums to return.
+    * @return Array of random albums.
+    * @throws IOException If an I/O error occurs.
+    */
     public List<MusicFile> getRandomAlbums(int count) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>(count);
 
@@ -471,6 +531,7 @@ public class SearchService {
         Set<String> albums = new HashSet<String>();
 
         cachedSongs = new ArrayList<Line>();
+        cachedGenres = new TreeSet<String>();
         cachedAlbums = new TreeSet<Line>(new Comparator<Line>() {
             public int compare(Line line1, Line line2) {
                 if (line2.lastModified < line1.lastModified) {
@@ -502,6 +563,9 @@ public class SearchService {
                         artists.add(line.artist);
                         albums.add(line.album);
                         cachedSongs.add(line);
+                        if (line.genre != null) {
+                            cachedGenres.add(line.genre);
+                        }
                     }
 
                 } catch (Exception x) {
@@ -585,6 +649,7 @@ public class SearchService {
         private String album;
         private String title;
         private String year;
+        private String genre;
 
         private Line() {
         }
@@ -610,6 +675,7 @@ public class SearchService {
                 line.album = tokens[5].length() == 0 ? null : tokens[5];
                 line.title = tokens[6].length() == 0 ? null : tokens[6];
                 line.year = tokens[7].length() == 0 ? null : tokens[7];
+                line.genre = tokens[8].length() == 0 ? null : tokens[8];
             }
 
             return line;
@@ -653,6 +719,7 @@ public class SearchService {
                 line.album = StringUtils.upperCase(metaData.getAlbum());
                 line.title = StringUtils.upperCase(metaData.getTitle());
                 line.year = metaData.getYear();
+                line.genre = StringUtils.capitalize(StringUtils.lowerCase(metaData.getGenre()));
             }
             return line;
         }
@@ -679,7 +746,8 @@ public class SearchService {
             buf.append(artist == null ? "" : artist).append(SEPARATOR);
             buf.append(album == null ? "" : album).append(SEPARATOR);
             buf.append(title == null ? "" : title).append(SEPARATOR);
-            buf.append(year == null ? "" : year);
+            buf.append(year == null ? "" : year).append(SEPARATOR);
+            buf.append(genre == null ? "" : genre);
 
             return buf.toString();
         }

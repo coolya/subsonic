@@ -18,6 +18,7 @@ public class MoreController extends ParameterizableViewController {
 
     private SettingsService settingsService;
     private SecurityService securityService;
+    private SearchService searchService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -34,6 +35,7 @@ public class MoreController extends ParameterizableViewController {
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         map.put("uploadDirectory", uploadDirectory);
+        map.put("genres", searchService.getGenres());
         return result;
     }
 
@@ -43,5 +45,9 @@ public class MoreController extends ParameterizableViewController {
 
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
+    }
+
+    public void setSearchService(SearchService searchService) {
+        this.searchService = searchService;
     }
 }

@@ -10,9 +10,13 @@ Switch to "Now playing" after 3 minutes.
 Logically delete/undelete metadata for albums that disappear/reappear on disk.
 Mark music_file_info as disabled if path doesn't exist.
 Added menu option to sort playlist by track, album or artist.
+Now possible to specify genre and decade when generating random playlist.
 
 TODO IN 3.1
 =============
+
+FLAC > OGG audioscrobbling problem (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=597)
+Support MUSICBRAINZ_TRACKID (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=597)
 Check out http://www.javazoom.net/jlgui/jnlp_configurator.jsp
 
 http://localhost:8080/subsonic/stream?player=1&suffix=.mp3
@@ -39,7 +43,6 @@ Add to adlinks:
 Replace jid3 with jaudiotagger.
 Drag'n'drop in playlist.
 Fix description in Freshmeat.
-Genre-based random playlist. And year-based.
 ID3 problems (http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=952#952)
 Make sure podcast works with playlist names with non-latin chars.
 Test Google Web Toolkit?
