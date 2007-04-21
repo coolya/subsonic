@@ -1,16 +1,21 @@
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.dao.*;
-import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.dao.PlayerDao;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.Transcoding;
 
-import javax.servlet.http.*;
-import java.util.*;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Provides services for maintaining the set of players.
  *
- * @see Player
  * @author Sindre Mehus
+ * @see Player
  */
 public class PlayerService {
     private static final String COOKIE_NAME = "player";
@@ -18,6 +23,7 @@ public class PlayerService {
     private PlayerDao playerDao;
     private StatusService statusService;
     private SecurityService securityService;
+    private TranscodingService transcodingService;
 
     /**
      * Equivalent to <code>getPlayer(request, response, true)</code> .
@@ -29,10 +35,11 @@ public class PlayerService {
     /**
      * Returns the player associated with the given HTTP request.  If no such player exists, a new
      * one is created.
-     * @param request The HTTP request.
-     * @param response The HTTP response.
+     *
+     * @param request              The HTTP request.
+     * @param response             The HTTP response.
      * @param remoteControlEnabled Whether this method should return a remote-controlled player.
-     * @param isStreamRequest Whether the HTTP request is a request for streaming data.
+     * @param isStreamRequest      Whether the HTTP request is a request for streaming data.
      * @return The player associated with the given HTTP request.
      */
     public synchronized Player getPlayer(HttpServletRequest request, HttpServletResponse response,
@@ -60,7 +67,7 @@ public class PlayerService {
         // If no player was found, create it.
         if (player == null) {
             player = new Player();
-            playerDao.createPlayer(player);
+            createPlayer(player);
         }
 
         // Update player data.
@@ -102,6 +109,7 @@ public class PlayerService {
 
     /**
      * Updates the given player.
+     *
      * @param player The player to update.
      */
     public void updatePlayer(Player player) {
@@ -110,6 +118,7 @@ public class PlayerService {
 
     /**
      * Returns the player with the given ID.
+     *
      * @param id The unique player ID.
      * @return The player with the given ID, or <code>null</code> if no such player exists.
      */
@@ -127,6 +136,7 @@ public class PlayerService {
 
     /**
      * Returns whether the given player is connected.
+     *
      * @param player The player in question.
      * @return Whether the player is connected.
      */
@@ -137,8 +147,9 @@ public class PlayerService {
     /**
      * Returns the player with the given IP address and username. If no username is given, only IP address is
      * used as search criteria.
+     *
      * @param ipAddress The IP address.
-     * @param username The remote user.
+     * @param username  The remote user.
      * @return The player with the given IP address, or <code>null</code> if no such player exists.
      */
     private Player getPlayerByIpAddressAndUsername(final String ipAddress, final String username) {
@@ -157,6 +168,7 @@ public class PlayerService {
 
     /**
      * Reads the player ID from the cookie in the HTTP request.
+     *
      * @param request The IP HTTP request.
      * @return The player ID embedded in the cookie, or <code>null</code> if cookie is not present.
      */
@@ -174,15 +186,17 @@ public class PlayerService {
     }
 
     /**
-    * Returns all currently registered players.
-    * @return All currently registered players.
-    */
+     * Returns all currently registered players.
+     *
+     * @return All currently registered players.
+     */
     public Player[] getAllPlayers() {
         return playerDao.getAllPlayers();
     }
 
     /**
      * Removes the player with the given ID.
+     *
      * @param id The unique player ID.
      */
     public synchronized void removePlayerById(String id) {
@@ -191,17 +205,42 @@ public class PlayerService {
 
     /**
      * Creates and returns a clone of the given player.
+     *
      * @param playerId The ID of the player to clone.
      * @return The cloned player.
      */
     public Player clonePlayer(String playerId) {
         Player player = getPlayerById(playerId);
         if (player.getName() != null) {
-            player.setName(player.getName() +  " (copy)");
+            player.setName(player.getName() + " (copy)");
         }
 
-        playerDao.createPlayer(player);
+        createPlayer(player);
         return player;
+    }
+
+    /**
+     * Creates the given player, and activates all transcodings that
+     * are configured to be "default active".
+     *
+     * @param player The player to create.
+     */
+    private void createPlayer(Player player) {
+        playerDao.createPlayer(player);
+
+        Transcoding[] transcodings = transcodingService.getAllTranscodings();
+        List<Transcoding> defaultTranscodings = new ArrayList<Transcoding>();
+        for (Transcoding transcoding : transcodings) {
+            if (transcoding.isDefaultActive()) {
+                defaultTranscodings.add(transcoding);
+            }
+        }
+
+        int[] transcodingIds = new int[defaultTranscodings.size()];
+        for (int i = 0; i < transcodingIds.length; i++) {
+            transcodingIds[i] = defaultTranscodings.get(i).getId();
+        }
+        transcodingService.setTranscodingsForPlayer(player, transcodingIds);
     }
 
     public void setStatusService(StatusService statusService) {
@@ -214,5 +253,9 @@ public class PlayerService {
 
     public void setPlayerDao(PlayerDao playerDao) {
         this.playerDao = playerDao;
+    }
+
+    public void setTranscodingService(TranscodingService transcodingService) {
+        this.transcodingService = transcodingService;
     }
 }

@@ -22,7 +22,13 @@ public class Schema31 extends Schema {
         if (!columnExists(template, "enabled", "music_file_info")) {
             LOG.info("Database column 'music_file_info.enabled' not found.  Creating it.");
             template.execute("alter table music_file_info add enabled boolean default true not null");
-            LOG.info("Database columns 'music_file_info' was added successfully.");
+            LOG.info("Database column 'music_file_info.enabled' was added successfully.");
+        }
+
+        if (!columnExists(template, "default_active", "transcoding")) {
+            LOG.info("Database column 'transcoding.default_active' not found.  Creating it.");
+            template.execute("alter table transcoding add default_active boolean default true not null");
+            LOG.info("Database column 'transcoding.default_active' was added successfully.");
         }
     }
 }

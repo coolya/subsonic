@@ -61,6 +61,7 @@
         <property name="playerDao" ref="playerDao"/>
         <property name="statusService" ref="statusService"/>
         <property name="securityService" ref="securityService"/>
+        <property name="transcodingService" ref="transcodingService"/>
     </bean>
 
     <bean id="playlistService" class="net.sourceforge.subsonic.service.PlaylistService">

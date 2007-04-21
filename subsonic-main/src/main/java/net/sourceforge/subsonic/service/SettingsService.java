@@ -26,8 +26,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Date;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * Provides persistent storage of application settings and preferences.
@@ -106,6 +104,7 @@ public class SettingsService {
     private String[] cachedCoverArtMaskArray;
     private String[] cachedMusicMaskArray;
     private static File subsonicHome;
+    private long settingsLastChanged;
 
     public SettingsService() {
         File propertyFile = getPropertyFile();
@@ -158,6 +157,8 @@ public class SettingsService {
         } finally {
             IOUtils.closeQuietly(out);
         }
+
+        settingsChanged();
     }
 
     private File getPropertyFile() {
@@ -527,6 +528,7 @@ public class SettingsService {
      */
     public void createMusicFolder(MusicFolder musicFolder) {
         musicFolderDao.createMusicFolder(musicFolder);
+        settingsChanged();
     }
 
     /**
@@ -536,6 +538,7 @@ public class SettingsService {
      */
     public void deleteMusicFolder(Integer id) {
         musicFolderDao.deleteMusicFolder(id);
+        settingsChanged();
     }
 
     /**
@@ -545,6 +548,7 @@ public class SettingsService {
      */
     public void updateMusicFolder(MusicFolder musicFolder) {
         musicFolderDao.updateMusicFolder(musicFolder);
+        settingsChanged();
     }
 
     /**
@@ -596,6 +600,7 @@ public class SettingsService {
      */
     public void createInternetRadio(InternetRadio radio) {
         internetRadioDao.createInternetRadio(radio);
+        settingsChanged();
     }
 
     /**
@@ -605,6 +610,7 @@ public class SettingsService {
      */
     public void deleteInternetRadio(Integer id) {
         internetRadioDao.deleteInternetRadio(id);
+        settingsChanged();
     }
 
     /**
@@ -614,6 +620,7 @@ public class SettingsService {
      */
     public void updateInternetRadio(InternetRadio radio) {
         internetRadioDao.updateInternetRadio(radio);
+        settingsChanged();
     }
 
     /**
@@ -661,6 +668,7 @@ public class SettingsService {
      */
     public void updateUserSettings(UserSettings settings) {
         userDao.updateUserSettings(settings);
+        settingsChanged();
     }
 
     private void setProperty(String key, String value) {
@@ -679,6 +687,14 @@ public class SettingsService {
         }
 
         return result.toArray(new String[0]);
+    }
+
+    private void settingsChanged() {
+        settingsLastChanged = System.currentTimeMillis();
+    }
+
+    public long getSettingsLastChanged() {
+        return settingsLastChanged;
     }
 
     public void setInternetRadioDao(InternetRadioDao internetRadioDao) {

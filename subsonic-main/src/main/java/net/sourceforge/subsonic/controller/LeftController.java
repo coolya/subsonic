@@ -1,26 +1,51 @@
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.service.*;
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.util.*;
-import org.springframework.web.servlet.*;
-import org.springframework.web.servlet.support.*;
-import org.springframework.web.servlet.mvc.*;
+import net.sourceforge.subsonic.domain.MediaLibraryStatistics;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.domain.MusicIndex;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.SearchService;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.util.StringUtil;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.LastModified;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
-import javax.servlet.http.*;
-import java.util.*;
-import java.io.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Controller for the left index frame.
  *
  * @author Sindre Mehus
  */
-public class LeftController extends ParameterizableViewController {
+public class LeftController extends ParameterizableViewController implements LastModified {
+
     private SearchService searchService;
     private SettingsService settingsService;
     private SecurityService securityService;
     private MusicFileService musicFileService;
+
+    public long getLastModified(HttpServletRequest request) {
+        MusicFolder[] musicFolders = settingsService.getAllMusicFolders();
+
+        long lastModified = settingsService.getSettingsLastChanged();
+        for (MusicFolder musicFolder : musicFolders) {
+            File file = musicFolder.getPath();
+            lastModified = Math.max(lastModified, file.lastModified());
+        }
+
+        return lastModified;
+    }
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -39,7 +64,7 @@ public class LeftController extends ParameterizableViewController {
                 }
             }
         }
-        MusicFolder[] musicFoldersToUse = selectedMusicFolder == null ? allMusicFolders : new MusicFolder[] {selectedMusicFolder};
+        MusicFolder[] musicFoldersToUse = selectedMusicFolder == null ? allMusicFolders : new MusicFolder[]{selectedMusicFolder};
         String indexString = settingsService.getIndexString();
         String[] ignoredArticles = settingsService.getIgnoredArticlesAsArray();
         String[] shortcuts = settingsService.getShortcutsAsArray();

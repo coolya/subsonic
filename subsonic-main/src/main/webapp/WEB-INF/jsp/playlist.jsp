@@ -195,7 +195,8 @@
                         </c:otherwise>
                     </c:choose>
 
-                    <td ${class} style="padding-left: 0.45em; padding-right:0.35em"><input type="checkbox" class="checkbox" id="songIndex${i}" onchange="onSelectionChange()"/></td>
+                    <td style="padding-left: 0.1em"><input type="checkbox" class="checkbox" id="songIndex${i}" onchange="onSelectionChange()"/></td>
+                    <td ${class} style="padding-right:0.25em"/>
 
                     <c:if test="${model.visibility.trackNumberVisible}">
                         <td ${class} style="padding-right:0.5em;text-align:right">

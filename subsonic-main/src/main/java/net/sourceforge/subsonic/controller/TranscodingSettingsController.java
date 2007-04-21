@@ -52,10 +52,11 @@ public class TranscodingSettingsController extends ParameterizableViewController
         String step2 = StringUtils.trimToNull(request.getParameter("step2"));
         String step3 = StringUtils.trimToNull(request.getParameter("step3"));
         boolean enabled = request.getParameter("enabled") != null;
+        boolean defaultActive = request.getParameter("defaultActive") != null;
         boolean create = request.getParameter("create") != null;
         boolean delete = request.getParameter("delete") != null;
 
-        Transcoding transcoding = new Transcoding(id == null? null : new Integer(id), name, sourceFormat, targetFormat, step1, step2, step3, enabled);
+        Transcoding transcoding = new Transcoding(id == null? null : new Integer(id), name, sourceFormat, targetFormat, step1, step2, step3, enabled, defaultActive);
 
         if (delete) {
             transcodingService.deleteTranscoding(new Integer(id));
