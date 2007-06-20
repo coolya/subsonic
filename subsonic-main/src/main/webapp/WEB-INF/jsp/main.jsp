@@ -40,14 +40,12 @@
 
 <!--todo-->
 <%--<c:if test="${not empty model.adReferrer}">--%>
-    <div style="float:right;">
-        <div class="detail" style="margin-bottom:1em">
+        <div class="detail" style="text-align:center;padding-top:3em;float:right">
             <sub:url value="donate.view" var="donateUrl">
                 <sub:param name="path" value="${model.dir.path}"/>
             </sub:url>
             <a href="${donateUrl}" style="text-decoration:underline">Donate</a> to Subsonic!
-            <br/>(And remove this)
-        </div>
+            <br/>(and remove this)
     </div>
 <%--</c:if>--%>
 
