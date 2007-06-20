@@ -16,17 +16,17 @@ import java.util.*;
 public class SearchServiceTestCase extends TestCase {
 
     public void testLine() {
-        doTestLine("myArtist", "myAlbum", "myTitle", "myYear", "foo.mp3", 12345678, 2394872834L);
-        doTestLine("myArtist", "myAlbum", "myTitle", "",       "foo.mp3", 12345678, 2394872834L);
-        doTestLine("myArtist", "myAlbum", "myTitle", null,     "foo.mp3", 12345678, 2394872834L);
-        doTestLine("",         "myAlbum", "myTitle", null,     "foo.mp3", 12345678, 2394872834L);
-        doTestLine("",         "",        "myTitle", null,     "foo.mp3", 12345678, 2394872834L);
-        doTestLine("",         "",        "",        null,     "foo.mp3", 12345678, 2394872834L);
-        doTestLine("",         "",        "",        "",       "foo.mp3", 12345678, 2394872834L);
+        doTestLine("myArtist", "myAlbum", "myTitle", "myYear", "foo.mp3", "rock", 12345678, 2394872834L);
+        doTestLine("myArtist", "myAlbum", "myTitle", "",       "foo.mp3", "rock", 12345678, 2394872834L);
+        doTestLine("myArtist", "myAlbum", "myTitle", null,     "foo.mp3", "", 12345678, 2394872834L);
+        doTestLine("",         "myAlbum", "myTitle", null,     "foo.mp3", "", 12345678, 2394872834L);
+        doTestLine("",         "",        "myTitle", null,     "foo.mp3", "", 12345678, 2394872834L);
+        doTestLine("",         "",        "",        null,     "foo.mp3", "", 12345678, 2394872834L);
+        doTestLine("",         "",        "",        "",       "foo.mp3", "", 12345678, 2394872834L);
     }
 
     private void doTestLine(final String artist, final String album, final String title, final String year,
-                            final String path, final long lastModified, final long length) {
+                            final String path, final String genre, final long lastModified, final long length) {
 
         MusicFile file = new MusicFile() {
             public synchronized MetaData getMetaData() {
@@ -35,6 +35,7 @@ public class SearchServiceTestCase extends TestCase {
                 metaData.setAlbum(album);
                 metaData.setTitle(title);
                 metaData.setYear(year);
+                metaData.setGenre(genre);
                 return metaData;
             }
             public File getFile() {
@@ -63,7 +64,8 @@ public class SearchServiceTestCase extends TestCase {
                           StringUtils.upperCase(artist) + SearchService.Line.SEPARATOR +
                           StringUtils.upperCase(album) + SearchService.Line.SEPARATOR +
                           StringUtils.upperCase(title) + SearchService.Line.SEPARATOR +
-                          yearString;
+                          yearString + SearchService.Line.SEPARATOR +
+                          StringUtils.capitalize(genre);
 
         assertEquals("Error in toString().", expected, line.toString());
         assertEquals("Error in forFile().",  expected, SearchService.Line.forFile(file, new HashMap<File, SearchService.Line>()).toString());
