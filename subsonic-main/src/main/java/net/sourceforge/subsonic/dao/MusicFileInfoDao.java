@@ -65,6 +65,7 @@ public class MusicFileInfoDao extends AbstractDao {
             return new ArrayList<String>();
         }
         String sql = "select path from user_rating " +
+                     "where exists (select 1 from music_file_info where user_rating.path = music_file_info.path and enabled=true) " + 
                      "group by path " +
                      "order by avg(rating) desc " +
                      " limit " + count + " offset " + offset;

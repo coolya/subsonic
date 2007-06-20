@@ -55,6 +55,14 @@ public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
 
     public void testGetHighestRated() {
         userDao.createUser(new User("sindre", "secret"));
+
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "a", null, 0, new Date()));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "b", null, 0, new Date()));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "d", null, 0, new Date()));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "e", null, 0, new Date()));
+        musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "f", null, 0, new Date()));
+
+
         musicFileInfoDao.setRatingForUser("sindre", new MusicFile(new File("f")), 5);
         musicFileInfoDao.setRatingForUser("sindre", new MusicFile(new File("b")), 4);
         musicFileInfoDao.setRatingForUser("sindre", new MusicFile(new File("d")), 3);

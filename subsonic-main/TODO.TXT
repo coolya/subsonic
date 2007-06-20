@@ -16,7 +16,6 @@ Implemented support for browser caching of left frame.
 
 TODO IN 3.1
 =============
-Must exclude disabled albums in MusicFileInfoDao.getHighestRated()
 Podcast receiver.
 Expose lame args for downsampling.
 Merge artists with same name, but different music folders.

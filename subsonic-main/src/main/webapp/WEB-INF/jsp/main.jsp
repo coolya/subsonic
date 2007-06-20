@@ -9,9 +9,6 @@
     <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
-    <%--<c:if test="${not empty model.adReferrer}">--%>
-        <script type="text/javascript" src="<c:url value="/script/adsense.js"/>"></script>
-    <%--</c:if>--%>
 </head><body>
 
 <c:if test="${model.updateNowPlaying}">
@@ -48,29 +45,9 @@
             <sub:url value="donate.view" var="donateUrl">
                 <sub:param name="path" value="${model.dir.path}"/>
             </sub:url>
-            <a href="${donateUrl}" style="text-decoration:underline">Donate</a> to disable ads
+            <a href="${donateUrl}" style="text-decoration:underline">Donate</a> to Subsonic!
+            <br/>(And remove this)
         </div>
-        <div>
-        <script type="text/javascript"><!--
-        google_ad_client = "pub-0717623072243542";
-        google_alternate_color = "<spring:theme code="backgroundColor"/>";
-        google_ad_width = 160;
-        google_ad_height = 600;
-        google_ad_format = "160x600_as";
-        google_ad_type = "text_image";
-        google_ad_channel = "0505456490";
-        google_color_border = "<spring:theme code="backgroundColor"/>";
-        google_color_bg = "<spring:theme code="backgroundColor"/>";
-        google_color_link = "<spring:theme code="linkColor"/>";
-        google_color_text = "<spring:theme code="textColor"/>";
-        google_color_url = "<spring:theme code="linkColor"/>";
-
-        <%--showAds("${model.adReferrer}");--%>
-//        showAds("http://www.audio.com/");
-        showAds("http://subsonic.sourceforge.net/changelog.html");
-
-        //--></script>
-            </div>
     </div>
 <%--</c:if>--%>
 
