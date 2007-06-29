@@ -4,14 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.sourceforge.subsonic</groupId>
     <artifactId>subsonic-site</artifactId>
-    <version>3.0</version>
     <name/>
     <packaging>pom</packaging>
 
     <parent>
         <groupId>net.sourceforge.subsonic</groupId>
         <artifactId>subsonic</artifactId>
-        <version>3.0</version>
+        <version>3.1.beta1</version>
     </parent>
 
     <distributionManagement>

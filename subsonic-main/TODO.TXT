@@ -38,11 +38,6 @@ Fault-tolerant transcoding FLAC>MP3 (http://www.activeobjects.no/subsonic/forum/
 Use checkbox/combobox mechanism (like gmail) in playlist (and main). Must be able to select all.
 Append selected tracks to previously saved playlist (bring up dialog for selecting).
 Save playlists in database?  Access rights.
-Add to adlinks:
-  www.beyerdynamic.com (and other hifi stuff)
-  www.last.fm/charts (for instance)
-  thinkgeek.com
-  www.audio.com
 
 
 DESIGN, PODCAST RECEIVER
