@@ -14,44 +14,19 @@ Added new attribute "default" to transcodings. When "default" is true, the trans
 for new players.
 Implemented support for browser caching of left frame.
 Fix commented adsense code in main.jsp
-Expose lame args for downsampling.
+Made downsampling command configurable.
 
 TODO IN 3.1
 =============
+Move "logout" under search search field.
 Fix PayPal donations on site.
 Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
 Test playlist checkbox stuff, in particular download auth.
 Use checkbox/combobox mechanism (like gmail) in playlist (and main). Must be able to select all.
 
-
-DESIGN, PODCAST RECEIVER
-========================
-
-Podcast                               Time  Release Date   Status      Description
----------------------------------------------------------------------------------
-[] NRK P1 - Her og nå                                                  Et aktuelt nyhetsmagasin.
-[] A D + Her og nå 01.05.2007         57:05 01.05.2007     Downloaded  Nyheter, reportasjer, debatter.
-[] A D + Her og nå 02.05.2007         54:35 02.05.2007     Error       Nyheter, reportasjer, debatter.
-
-[] NRK P1 - Herreavdelingen                                            Høydepunkter fra Finn Bjelke og Yan Friis.
-[] A D + Herreavdelingen 01.05.2007   57:05 01.05.2007     Downloading Mark i pc'en.
-[] A D + Herreavdelingen 02.05.2007   54:35 02.05.2007     Downloaded  Dusjing med sensor.
-[] A D + Herreavdelingen 03.05.2007   46:37 03.05.2007     New         Rulling i gul snø.
-
-[-> Delete selected]
-[-> Check for new episodes]
-
-Subscribe to podcast URL    [http://          ] [OK]
-
-Save podcasts in directory  [c:/music/podcasts]
-Check for new episodes      [Every day        ] at [3:00] (?)
-Keep                        [Last 10 episodes ] [Save]
-
-(Last stuff only visible if admin)
-
-
 BACKLOG
 ===========================
+Reformat all java code.
 Append selected tracks to previously saved playlist (bring up dialog for selecting).
 Save playlists in database?  Access rights.
 Check out non-Latin ID3 problem (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=527)
@@ -229,5 +204,31 @@ MPC radio, Leaving So Soon
 FLAC Lossless, A Bad Dream
 Monkey Lossless (ape), Hamburg Song
 Frog Lossless, Put It Behind You
+
+DESIGN, PODCAST RECEIVER
+========================
+
+Podcast                               Time  Release Date   Status      Description
+---------------------------------------------------------------------------------
+[] NRK P1 - Her og nå                                                  Et aktuelt nyhetsmagasin.
+[] A D + Her og nå 01.05.2007         57:05 01.05.2007     Downloaded  Nyheter, reportasjer, debatter.
+[] A D + Her og nå 02.05.2007         54:35 02.05.2007     Error       Nyheter, reportasjer, debatter.
+
+[] NRK P1 - Herreavdelingen                                            Høydepunkter fra Finn Bjelke og Yan Friis.
+[] A D + Herreavdelingen 01.05.2007   57:05 01.05.2007     Downloading Mark i pc'en.
+[] A D + Herreavdelingen 02.05.2007   54:35 02.05.2007     Downloaded  Dusjing med sensor.
+[] A D + Herreavdelingen 03.05.2007   46:37 03.05.2007     New         Rulling i gul snø.
+
+[-> Delete selected]
+[-> Check for new episodes]
+
+Subscribe to podcast URL    [http://          ] [OK]
+
+Save podcasts in directory  [c:/music/podcasts]
+Check for new episodes      [Every day        ] at [3:00] (?)
+Keep                        [Last 10 episodes ] [Save]
+
+(Last stuff only visible if admin)
+
 
 openclipart.org

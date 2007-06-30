@@ -19,11 +19,14 @@ public class MissingTranslations  {
         mk.load(MissingTranslations.class.getResourceAsStream("/net/sourceforge/subsonic/i18n/ResourceBundle_" + locale2 + ".properties"));
 
         System.out.println("\nMessages present in locale " + locale1 + " and missing in locale " + locale2 + ":");
+        int count = 0;
         for (Map.Entry<Object, Object> entry : enSorted.entrySet()) {
             if (!mk.containsKey(entry.getKey())) {
                 System.out.println(entry.getKey() + " = " + entry.getValue());
+                count++;
             }
-
         }
+
+        System.out.println("\nTotal: " + count);
     }
 }
