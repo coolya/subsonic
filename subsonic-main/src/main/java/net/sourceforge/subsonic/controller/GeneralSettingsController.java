@@ -21,6 +21,7 @@ public class GeneralSettingsController extends SimpleFormController {
         GeneralSettingsCommand command = new GeneralSettingsCommand();
         command.setCoverArtLimit(String.valueOf(settingsService.getCoverArtLimit()));
         command.setCoverArtMask(settingsService.getCoverArtMask());
+        command.setDownsampleCommand(settingsService.getDownsamplingCommand());
         command.setDownloadLimit(String.valueOf(settingsService.getDownloadBitrateLimit()));
         command.setUploadLimit(String.valueOf(settingsService.getUploadBitrateLimit()));
         command.setStreamPort(String.valueOf(settingsService.getStreamPort()));
@@ -79,6 +80,7 @@ public class GeneralSettingsController extends SimpleFormController {
         settingsService.setPlaylistFolder(command.getPlaylistFolder());
         settingsService.setMusicMask(command.getMusicMask());
         settingsService.setCoverArtMask(command.getCoverArtMask());
+        settingsService.setDownsamplingCommand(command.getDownsampleCommand());
         settingsService.setWelcomeMessage(command.getWelcomeMessage());
         settingsService.setThemeId(theme.getId());
         settingsService.setLocale(locale);

@@ -59,6 +59,7 @@ public class SettingsService {
     private static final String KEY_LICENSE_EMAIL = "LicenseEmail";
     private static final String KEY_LICENSE_CODE = "LicenseCode";
     private static final String KEY_LICENSE_DATE = "LicenseDate";
+    private static final String KEY_DOWNSAMPLING_COMMAND = "DownsamplingCommand";
 
     // Default values.
     private static final String DEFAULT_INDEX_STRING = "A B C D E F G H I J K L M N O P Q R S T U V W X-Z(XYZ)";
@@ -81,13 +82,14 @@ public class SettingsService {
     private static final String DEFAULT_LICENSE_EMAIL = null;
     private static final String DEFAULT_LICENSE_CODE = null;
     private static final String DEFAULT_LICENSE_DATE = null;
+    private static final String DEFAULT_DOWNSAMPLING_COMMAND = "lame -S -h -b %b %s -";
 
     // Array of all keys.  Used to clean property file.
     private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_SHORTCUTS, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
                                           KEY_COVER_ART_MASK, KEY_COVER_ART_LIMIT, KEY_WELCOME_MESSAGE, KEY_LOCALE_LANGUAGE,
                                           KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_THEME_ID, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
                                           KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT, KEY_LICENSE_EMAIL,
-                                          KEY_LICENSE_CODE, KEY_LICENSE_DATE};
+                                          KEY_LICENSE_CODE, KEY_LICENSE_DATE, KEY_DOWNSAMPLING_COMMAND};
 
     private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
     private static final String THEMES_FILE = "/net/sourceforge/subsonic/theme/themes.txt";
@@ -382,8 +384,16 @@ public class SettingsService {
         }
 
         // Little point in doing anything more fancy, since there are
-        // easier ways to disable ads.
+        // easier ways to disable the nag messages.
         return license.equalsIgnoreCase(StringUtil.md5Hex(email.toLowerCase()));
+    }
+
+    public String getDownsamplingCommand() {
+        return properties.getProperty(KEY_DOWNSAMPLING_COMMAND, DEFAULT_DOWNSAMPLING_COMMAND);
+    }
+
+    public void setDownsamplingCommand(String command) {
+        setProperty(KEY_DOWNSAMPLING_COMMAND, command);
     }
 
     /**

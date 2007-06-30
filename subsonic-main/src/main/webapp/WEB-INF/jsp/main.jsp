@@ -38,16 +38,14 @@
     </script>
 </c:if>
 
-<!--todo-->
-<%--<c:if test="${not empty model.adReferrer}">--%>
-        <div class="detail" style="text-align:center;padding-top:3em;float:right">
-            <sub:url value="donate.view" var="donateUrl">
-                <sub:param name="path" value="${model.dir.path}"/>
-            </sub:url>
-            <a href="${donateUrl}" style="text-decoration:underline">Donate</a> to Subsonic!
-            <br/>(and remove this)
+<c:if test="${model.showAd}">
+    <div class="detail" style="text-align:center;padding-top:3em;padding-right:1em;float:right">
+        <sub:url value="donate.view" var="donateUrl">
+            <sub:param name="path" value="${model.dir.path}"/>
+        </sub:url>
+        <fmt:message key="main.donate"><fmt:param value="${donateUrl}"/></fmt:message>
     </div>
-<%--</c:if>--%>
+</c:if>
 
 <div style="margin-right:160px">
 <h1>

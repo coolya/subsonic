@@ -13,31 +13,15 @@ Now possible to specify genre and decade when generating random playlist.
 Added new attribute "default" to transcodings. When "default" is true, the transcoding is automatically activated
 for new players.
 Implemented support for browser caching of left frame.
+Fix commented adsense code in main.jsp
+Expose lame args for downsampling.
 
 TODO IN 3.1
 =============
-Podcast receiver.
-Expose lame args for downsampling.
-Merge artists with same name, but different music folders.
-Create checkbox and combobox menu in main.jsp.
-FLAC > OGG audioscrobbling problem (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=597)
-Support MUSICBRAINZ_TRACKID (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=597)
-Check out http://www.javazoom.net/jlgui/jnlp_configurator.jsp
-Fix commented adsense code in main.jsp
-Check out asx/asf: http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=638
-
-http://localhost:8080/subsonic/stream?player=1&suffix=.mp3
-http://localhost:8080/subsonic/stream?playlist=foo.m3u&suffix=.mp3
-http://eivind.com:8080/subsonic/stream?playlist=test.m3u&suffix=.mp3
-
+Fix PayPal donations on site.
 Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
 Test playlist checkbox stuff, in particular download auth.
-Check out non-Latin ID3 problem (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=527)
-Track titles that begin with numbers (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=170) (For instance "13 humler")
-Fault-tolerant transcoding FLAC>MP3 (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=545)
 Use checkbox/combobox mechanism (like gmail) in playlist (and main). Must be able to select all.
-Append selected tracks to previously saved playlist (bring up dialog for selecting).
-Save playlists in database?  Access rights.
 
 
 DESIGN, PODCAST RECEIVER
@@ -63,9 +47,16 @@ Save podcasts in directory  [c:/music/podcasts]
 Check for new episodes      [Every day        ] at [3:00] (?)
 Keep                        [Last 10 episodes ] [Save]
 
-
 (Last stuff only visible if admin)
 
+
+BACKLOG
+===========================
+Append selected tracks to previously saved playlist (bring up dialog for selecting).
+Save playlists in database?  Access rights.
+Check out non-Latin ID3 problem (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=527)
+Track titles that begin with numbers (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=170) (For instance "13 humler")
+Fault-tolerant transcoding FLAC>MP3 (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=545)
 Replace jid3 with jaudiotagger.
 Drag'n'drop in playlist.
 Fix description in Freshmeat.
@@ -74,11 +65,13 @@ Make sure podcast works with playlist names with non-latin chars.
 Test Google Web Toolkit?
 Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownloads/default.aspx)
 Show next/prev 100 hits.
-Fix PayPal donations on site.
-
-
-BACKLOG
-===========================
+Podcast receiver.
+Merge artists with same name, but different music folders.
+Create checkbox and combobox menu in main.jsp.
+FLAC > OGG audioscrobbling problem (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=597)
+Support MUSICBRAINZ_TRACKID (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=597)
+Check out http://www.javazoom.net/jlgui/jnlp_configurator.jsp
+Check out asx/asf: http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=638
 Make podcast work in iTunes.
 Longer cache expiry period for images.
 RSS feed for newest content.

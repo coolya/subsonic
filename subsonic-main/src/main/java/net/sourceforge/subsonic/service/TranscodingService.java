@@ -6,6 +6,7 @@ import net.sourceforge.subsonic.dao.*;
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.io.*;
 import org.apache.commons.io.filefilter.*;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.*;
 import java.util.*;
@@ -123,11 +124,10 @@ public class TranscodingService {
 
             TranscodeScheme transcodeScheme = getTranscodeScheme(player);
             boolean downsample = transcodeScheme != TranscodeScheme.OFF;
-            int maxBitRate = transcodeScheme.getMaxBitRate();
-
             Integer bitRate = musicFile.getMetaData().getBitRate();
-            if (downsample && bitRate != null && bitRate > maxBitRate) {
-                return getDownsampledInputStream(musicFile, maxBitRate);
+
+            if (downsample && bitRate != null && bitRate > transcodeScheme.getMaxBitRate()) {
+                return getDownsampledInputStream(musicFile, transcodeScheme);
             }
         } catch (Exception x) {
             LOG.warn("Failed to transcode " + musicFile + ". Using original.", x);
@@ -220,13 +220,13 @@ public class TranscodingService {
 
     /**
      * Returns a downsampled input stream to the music file.
-     * @param bitRate The bitrate to downsample to.
+     * @param transcodeScheme Contains the bitrate to downsample to.
      * @return An input stream to the downsampled music file.
      * @exception IOException If an I/O error occurs.
      */
-    private InputStream getDownsampledInputStream(MusicFile musicFile, int bitRate) throws IOException {
-        String command = "lame -S -h -b " + String.valueOf(bitRate) + " %s -";
-        return new TranscodeInputStream(createCommand(command, null, musicFile), null);
+    private InputStream getDownsampledInputStream(MusicFile musicFile, TranscodeScheme transcodeScheme) throws IOException {
+        String command = settingsService.getDownsamplingCommand();
+        return new TranscodeInputStream(createCommand(command, transcodeScheme, musicFile), null);
     }
 
     /**
@@ -234,7 +234,13 @@ public class TranscodingService {
      * @return Whether downsampling is supported.
      */
     public boolean isDownsamplingSupported() {
-        String[] command = createCommand("lame", null, null);
+        String commandLine = settingsService.getDownsamplingCommand();
+        String firstWord = StringUtils.substringBefore(commandLine, " ");
+        if (StringUtils.isEmpty(firstWord)) {
+            firstWord = commandLine;
+        }
+
+        String[] command = createCommand(firstWord, null, null);
 
         try {
             Process process = Runtime.getRuntime().exec(command);

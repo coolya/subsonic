@@ -90,60 +90,7 @@
         <property name="settingsService" ref="settingsService"/>
     </bean>
 
-    <bean id="adService" class="net.sourceforge.subsonic.service.AdService">
-        <property name="adInterval" value="5"/>
-        <property name="adReferrers">
-            <list>
-                <value>http://subsonic.sourceforge.net/</value>
-                <value>http://allmusic.com/</value>
-                <value>http://www.last.fm/</value>
-                <value>http://www.amazon.com/</value>
-                <value>http://www.redhat.com/</value>
-                <value>http://www.playstation.com/</value>
-                <value>http://www.pcmag.com/</value>
-                <value>http://www.activeobjects.no/subsonic/forum/</value>
-                <value>http://www.divx.com/</value>
-                <value>http://www.pcgamer.com/</value>
-                <value>http://www.slimdevices.com/</value>
-                <value>http://www.whathifi.com/</value>
-                <value>http://www.rollingstone.com/</value>
-                <value>http://music.aol.com/</value>
-                <value>http://www.winamp.com/</value>
-                <value>http://www.linux.org/</value>
-                <value>http://www.garmin.com/</value>
-                <value>http://www.pcworld.com/</value>
-                <value>http://www.apple.com/itunes/</value>
-                <value>http://www.imdb.com/</value>
-                <value>http://www.bmw.com/</value>
-                <value>http://www.sonyericsson.com/</value>
-                <value>http://www.toyota.com/</value>
-                <value>http://www.mtv.com/</value>
-                <value>http://www.jinzora.org/</value>
-                <value>http://www.meedio.com/</value>
-                <value>http://music.msn.com/</value>
-                <value>http://www.cheapbooks.com/</value>
-                <value>http://www.nokia.com/</value>
-                <value>http://www.playboy.com/</value>
-                <value>http://www.allofmp3.com/</value>
-                <value>http://www.mp3.com/</value>
-                <value>http://www.napster.com/</value>
-                <value>http://www.debian.org/</value>
-                <value>http://www.freenas.org/</value>
-                <value>http://www.microsoft.com/</value>
-                <value>http://www.gpsworld.com/</value>
-                <value>http://www.sony.com/</value>
-                <value>http://www.xbox.com/</value>
-                <value>http://www.hdtvmagazine.com/</value>
-                <value>http://www.hdtvuk.tv/</value>
-                <value>http://www.skype.com/</value>
-                <value>http://www.pandora.com/</value>
-                <value>http://www.blogger.com/</value>
-                <value>http://www.laptopmag.com/</value>
-                <value>http://www.digitalcamera-hq.com/</value>
-            </list>
-        </property>
-    </bean>
-
+    
     <!-- AJAX services -->
 
     <bean id="ajaxNowPlayingService" class="net.sourceforge.subsonic.ajax.NowPlayingService">

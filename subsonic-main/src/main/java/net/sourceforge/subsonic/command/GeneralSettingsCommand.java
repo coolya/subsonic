@@ -12,6 +12,7 @@ public class GeneralSettingsCommand {
     private String playlistFolder;
     private String musicMask;
     private String coverArtMask;
+    private String downsampleCommand;
     private String index;
     private String ignoredArticles;
     private String shortcuts;
@@ -48,6 +49,14 @@ public class GeneralSettingsCommand {
 
     public void setCoverArtMask(String coverArtMask) {
         this.coverArtMask = coverArtMask;
+    }
+
+    public String getDownsampleCommand() {
+        return downsampleCommand;
+    }
+
+    public void setDownsampleCommand(String downsampleCommand) {
+        this.downsampleCommand = downsampleCommand;
     }
 
     public String getIndex() {

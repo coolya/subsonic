@@ -78,6 +78,16 @@
         <tr><td colspan="3">&nbsp;</td></tr>
 
         <tr>
+            <td><fmt:message key="generalsettings.downsamplecommand"/></td>
+            <td>
+                <form:input path="downsampleCommand" size="70"/>
+                <a href="helpPopup.view?topic=downsampleCommand" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+            </td>
+        </tr>
+
+        <tr><td colspan="3">&nbsp;</td></tr>
+
+        <tr>
             <td><fmt:message key="generalsettings.language"/></td>
             <td>
                 <form:select path="localeIndex" cssStyle="width:15em">

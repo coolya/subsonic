@@ -4,7 +4,6 @@ import net.sourceforge.subsonic.domain.CoverArtScheme;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicFileInfo;
 import net.sourceforge.subsonic.domain.Player;
-import net.sourceforge.subsonic.service.AdService;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicInfoService;
 import net.sourceforge.subsonic.service.PlayerService;
@@ -23,10 +22,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.LinkedList;
 
 /**
  * Controller for the main page.
@@ -35,12 +34,15 @@ import java.util.LinkedList;
  */
 public class MainController extends ParameterizableViewController {
 
+    private static final int AD_INTERVAL = 4;
+
     private SecurityService securityService;
     private PlayerService playerService;
     private SettingsService settingsService;
     private MusicInfoService musicInfoService;
+
     private MusicFileService musicFileService;
-    private AdService adService;
+    private int pageCount;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -58,7 +60,7 @@ public class MainController extends ParameterizableViewController {
         map.put("multipleArtists", isMultipleArtists(children));
         map.put("visibility", settingsService.getUserSettings(securityService.getCurrentUsername(request)).getMainVisibility());
         map.put("updateNowPlaying", request.getParameter("updateNowPlaying") != null);
-        map.put("adReferrer", adService.getAdReferrer(dir));
+        map.put("showAd", pageCount++ % AD_INTERVAL == 0);
 
         MusicFileInfo musicInfo = musicInfoService.getMusicFileInfoForPath(path);
         int playCount = musicInfo == null ? 0 : musicInfo.getPlayCount();
@@ -179,9 +181,5 @@ public class MainController extends ParameterizableViewController {
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
-    }
-
-    public void setAdService(AdService adService) {
-        this.adService = adService;
     }
 }
