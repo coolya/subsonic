@@ -60,7 +60,7 @@ public class MainController extends ParameterizableViewController {
         map.put("multipleArtists", isMultipleArtists(children));
         map.put("visibility", settingsService.getUserSettings(securityService.getCurrentUsername(request)).getMainVisibility());
         map.put("updateNowPlaying", request.getParameter("updateNowPlaying") != null);
-        map.put("showAd", pageCount++ % AD_INTERVAL == 0);
+        map.put("showAd", shouldShowAd());
 
         MusicFileInfo musicInfo = musicInfoService.getMusicFileInfoForPath(path);
         int playCount = musicInfo == null ? 0 : musicInfo.getPlayCount();
@@ -105,6 +105,13 @@ public class MainController extends ParameterizableViewController {
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
+    }
+
+    private boolean shouldShowAd() {
+
+        return (pageCount++ % AD_INTERVAL == 0) &&
+               !(settingsService.isLicenseValid(settingsService.getLicenseEmail(),
+                                                settingsService.getLicenseCode()));
     }
 
     private List<MusicFile> getAncestors(MusicFile dir) throws IOException {

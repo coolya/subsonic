@@ -1,12 +1,12 @@
 TODO IN 3.1
 =============
-Move "logout" under search search field.
 Fix PayPal donations on site.
 Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
 Test playlist checkbox stuff, in particular download auth.
 
 BACKLOG
 ===========================
+Move "logout" under search search field.
 Reformat all java code.
 Append selected tracks to previously saved playlist (bring up dialog for selecting).
 Save playlists in database?  Access rights.

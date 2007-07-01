@@ -25,7 +25,7 @@
                         for new players.</li>
                     <li>New: Implemented support for browser caching of left frame (with artist list).</li>
                     <li>New: Made downsampling command configurable.</li>
-                    <li>New: Switch to "Now playing" after 3 minutes of inactivity</li>
+                    <li>New: Switch to "Now playing" after 3 minutes of inactivity.</li>
                     <li>New: Album page now has link to artist.</li>
                     <li>Bugfix: Logically delete/undelete metadata for albums that disappear/reappear on disk.</li>
                     <li>Bugfix: Fixed ugly checkboxes in IE.</li>
