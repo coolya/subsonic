@@ -19,16 +19,22 @@ public class MusicFile {
     private static final Logger LOG = Logger.getLogger(MusicFile.class);
 
     private File file;
+    private boolean isFile;
+    private boolean isDirectory;
     private MetaData metaData;
     private Set<String> excludes;
 
     /**
-     * Do not use this method directly. Instead, use {@link MusicFileService#getMusicFile}.
-     *
-     * @param file A file on the local file system.
-     */
+    * Do not use this method directly. Instead, use {@link MusicFileService#getMusicFile}.
+    *
+    * @param file A file on the local file system.
+    */
     public MusicFile(File file) {
         this.file = file;
+
+        // Cache these values for performance.
+        isFile = file.isFile();
+        isDirectory = file.isDirectory();
     }
 
     /**
@@ -49,7 +55,7 @@ public class MusicFile {
      * @return Whether this music file is a normal file (and not a directory).
      */
     public boolean isFile() {
-        return file.isFile();
+        return isFile;
     }
 
     /**
@@ -57,7 +63,7 @@ public class MusicFile {
      * @return Whether this music file is a directory.
      */
     public boolean isDirectory() {
-        return file.isDirectory();
+        return isDirectory;
     }
 
     /**
@@ -67,11 +73,7 @@ public class MusicFile {
      * @throws IOException If an I/O error occurs.
      */
     public boolean isAlbum() throws IOException {
-        if (isFile()) {
-            return false;
-        }
-
-        return getFirstChild() != null;
+        return !isFile && getFirstChild() != null;
     }
 
     /**
@@ -256,7 +258,7 @@ public class MusicFile {
      * @throws IOException If an I/O error occurs.
      */
     public void accept(Visitor visitor) throws IOException {
-        if (isFile() || visitor.includeDirectories()) {
+        if (isFile || visitor.includeDirectories()) {
             visitor.visit(this);
         }
 

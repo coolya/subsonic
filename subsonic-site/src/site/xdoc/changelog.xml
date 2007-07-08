@@ -15,6 +15,12 @@
 
         <section name="Change Log">
 
+            <subsection name="Subsonic 3.1.beta2 - XXXXX, 2007">
+                <ul>
+                    <li>New: Optimized scanning of music folders. Dramatic improvement for network disks.</li>
+                </ul>
+            </subsection>
+
             <subsection name="Subsonic 3.1.beta1 - Jun 30, 2007">
                 <ul>
                     <li>New: Now possible to specify genre and decade when generating random playlist.</li>
