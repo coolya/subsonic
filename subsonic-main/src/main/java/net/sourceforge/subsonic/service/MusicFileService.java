@@ -52,9 +52,11 @@ public class MusicFileService {
     public MusicFile getMusicFile(File file) {
         Element element = musicFileCache.get(file);
         if (element != null) {
-            // Check if cache is obsolete.
-            if (element.getCreationTime() > file.lastModified()) {
-                return (MusicFile) element.getObjectValue();
+
+            // Check if cache is up-to-date.
+            MusicFile cachedMusicFile = (MusicFile) element.getObjectValue();
+            if (cachedMusicFile.lastModified() >= file.lastModified()) {
+                return cachedMusicFile;
             }
         }
 
@@ -93,7 +95,8 @@ public class MusicFileService {
         // Look in cache.
         Element element = coverArtCache.get(dir);
         if (element != null) {
-            // Check if cache is obsolete.
+
+            // Check if cache is up-to-date.
             if (element.getCreationTime() > getDirectoryLastModified(dir.getFile())) {
                 List<File> result = (List<File>) element.getObjectValue();
                 return result.subList(0, Math.min(limit, result.size()));
@@ -119,8 +122,10 @@ public class MusicFileService {
     public synchronized List<MusicFile> getChildDirectories(MusicFile parent) throws IOException {
         Element element = childDirCache.get(parent);
         if (element != null) {
-            // Check if cache is obsolete.
-            if (element.getCreationTime() > parent.lastModified()) {
+
+            // Check if cache is up-to-date.
+            MusicFile cachedParent = (MusicFile) element.getObjectKey();
+            if (cachedParent.lastModified() >= parent.lastModified()) {
                 return (List<MusicFile>) element.getObjectValue();
             }
         }

@@ -21,6 +21,7 @@ public class MusicFile {
     private File file;
     private boolean isFile;
     private boolean isDirectory;
+    private long lastModified;
     private MetaData metaData;
     private Set<String> excludes;
 
@@ -35,6 +36,7 @@ public class MusicFile {
         // Cache these values for performance.
         isFile = file.isFile();
         isDirectory = file.isDirectory();
+        lastModified = file.lastModified();
     }
 
     /**
@@ -96,7 +98,7 @@ public class MusicFile {
      * @return The time since this music file was last modified, in milliseconds since the epoch.
      */
     public long lastModified() {
-        return file.lastModified();
+        return lastModified;
     }
 
     /**
