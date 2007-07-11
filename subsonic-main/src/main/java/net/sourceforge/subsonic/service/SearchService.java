@@ -353,7 +353,7 @@ public class SearchService {
     public List<MusicFile> getRandomSongs(int count, String genre, Integer fromYear, Integer toYear) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>(count);
 
-        if (!isIndexCreated() || isIndexBeingCreated() || cachedSongs.isEmpty()) {
+        if (!isIndexCreated() || isIndexBeingCreated() || cachedSongs == null || cachedSongs.isEmpty()) {
             return result;
         }
 
@@ -445,7 +445,7 @@ public class SearchService {
     public List<MusicFile> getRandomAlbums(int count) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>(count);
 
-        if (!isIndexCreated() || isIndexBeingCreated() || cachedSongs.isEmpty()) {
+        if (!isIndexCreated() || isIndexBeingCreated() || cachedSongs == null || cachedSongs.isEmpty()) {
             return result;
         }
 
