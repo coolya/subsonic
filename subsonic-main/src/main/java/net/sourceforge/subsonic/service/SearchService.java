@@ -353,12 +353,12 @@ public class SearchService {
     public List<MusicFile> getRandomSongs(int count, String genre, Integer fromYear, Integer toYear) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>(count);
 
-        // Ensure that index is read to memory.
-        getIndex();
-
         if (!isIndexCreated() || isIndexBeingCreated() || cachedSongs.isEmpty()) {
             return result;
         }
+
+        // Ensure that index is read to memory.
+        getIndex();
 
         // Filter by genre and genre, if required.
         List<Line> songs = cachedSongs;
@@ -425,12 +425,12 @@ public class SearchService {
      */
     public Set<String> getGenres() throws IOException {
 
-        // Ensure that index is read to memory.
-        getIndex();
-
         if (!isIndexCreated() || isIndexBeingCreated()) {
             return Collections.emptySet();
         }
+
+        // Ensure that index is read to memory.
+        getIndex();
 
         return Collections.unmodifiableSortedSet(cachedGenres);
     }
@@ -445,12 +445,12 @@ public class SearchService {
     public List<MusicFile> getRandomAlbums(int count) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>(count);
 
-        // Ensure that index is read to memory.
-        getIndex();
-
         if (!isIndexCreated() || isIndexBeingCreated() || cachedSongs.isEmpty()) {
             return result;
         }
+
+        // Ensure that index is read to memory.
+        getIndex();
 
         // Note: To avoid duplicates, we iterate over more than the requested number of items.
         for (int i = 0; i < count * 20; i++) {
@@ -484,12 +484,12 @@ public class SearchService {
     public List<MusicFile> getNewestAlbums(int offset, int count) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>(count);
 
-        // Ensure that index is read to memory.
-        getIndex();
-
         if (!isIndexCreated() || isIndexBeingCreated()) {
             return result;
         }
+
+        // Ensure that index is read to memory.
+        getIndex();
 
         int n = 0;
         for (Line line : cachedAlbums) {

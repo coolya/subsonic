@@ -1,5 +1,7 @@
+
 TODO IN 3.1
 =============
+Edit genre.
 Fix PayPal donations on site.
 Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
 Test playlist checkbox stuff, in particular download auth.

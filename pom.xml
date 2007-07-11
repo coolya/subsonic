@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.sourceforge.subsonic</groupId>
     <artifactId>subsonic</artifactId>
-    <version>3.1.beta1</version>
+    <version>3.1.beta2</version>
     <name>Subsonic</name>
     <packaging>pom</packaging>
     <organization>
@@ -96,7 +96,7 @@
                     <downloadJavadocs>true</downloadJavadocs>
                 </configuration>
             </plugin>
-            
+
         </plugins>
     </build>
 </project>

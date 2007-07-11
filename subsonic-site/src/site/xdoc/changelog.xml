@@ -18,11 +18,14 @@
             <subsection name="Subsonic 3.1.beta2 - XXXXX, 2007">
                 <ul>
                     <li>New: Optimized scanning of music folders. Dramatic improvement for network disks.</li>
+                    <li>Bugfix: Fixed minor concurrency bug in search index creation.</li>
+                    <li>Bugfix: Make cache work if clocks on remote disks are out of sync.</li>
                 </ul>
             </subsection>
 
             <subsection name="Subsonic 3.1.beta1 - Jun 30, 2007">
                 <ul>
+                    <li>New: Added checkboxes to songs in playlist, with option to perform operations on all selected songs.</li>
                     <li>New: Now possible to specify genre and decade when generating random playlist.</li>
                     <li>New: Added menu option to sort playlist by track, album or artist.</li>
                     <li>New: Audioscrobbling is now more fault-tolerant. Will retry if Last.fm is down.</li>

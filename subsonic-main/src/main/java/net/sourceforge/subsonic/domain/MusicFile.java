@@ -42,7 +42,9 @@ public class MusicFile {
     /**
      * Empty constructor.  Used for testing purposes only.
      */
-    protected MusicFile() {}
+    protected MusicFile() {
+        isFile = true;
+    }
 
     /**
      * Returns the underlying {@link File}.
