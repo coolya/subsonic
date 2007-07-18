@@ -20,6 +20,7 @@
                     <li>New: Optimized scanning of music folders. Dramatic improvement for network disks.</li>
                     <li>Bugfix: Fixed minor concurrency bug in search index creation.</li>
                     <li>Bugfix: Make cache work if clocks on remote disks are out of sync.</li>
+                    <li>Bugfix: Ensure that cover art images are ordered alphabetically.</li>
                 </ul>
             </subsection>
 

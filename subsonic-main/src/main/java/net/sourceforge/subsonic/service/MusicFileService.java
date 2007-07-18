@@ -12,6 +12,8 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Provides services for instantiating and caching music files and cover art.
@@ -151,6 +153,18 @@ public class MusicFileService {
         }
 
         File[] files = dir.getFile().listFiles();
+
+        // Sort alphabetically
+        Arrays.sort(files, new Comparator<File>() {
+            public int compare(File a, File b) {
+                if (a.isFile() && b.isDirectory()) {
+                    return 1;
+                }
+                if (a.isDirectory() && b.isFile()) {
+                    return -1;
+                }
+                return a.getName().compareToIgnoreCase(b.getName());
+            }});
 
         for (File file : files) {
             if (file.isDirectory() && !dir.isExcluded(file)) {
