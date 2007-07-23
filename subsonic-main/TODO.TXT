@@ -1,15 +1,12 @@
-
 TODO IN 3.1
 =============
-Edit genre.
 Fix PayPal donations on site.
 Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
 Test playlist checkbox stuff, in particular download auth.
-Improve performance of music index generation (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=818)
-Make cache work even when clocks on remote disks are out of sync. (Cache MusicFile.lastModified)
 
 BACKLOG
 ===========================
+Add support for editing genre.
 Move "logout" under search search field.
 Reformat all java code.
 Append selected tracks to previously saved playlist (bring up dialog for selecting).
@@ -37,7 +34,6 @@ Longer cache expiry period for images.
 RSS feed for newest content.
 Rename "Appearance" settings to "Personal".
 Show what other users are playing. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=359)
-Make LAME args configurable.
 LDAP support.
 Web proxy support (for audioscrobbler, amazon etc)?
 Missing refresh when changing from no cover art.

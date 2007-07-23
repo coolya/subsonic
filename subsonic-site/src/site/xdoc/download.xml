@@ -21,19 +21,13 @@
                 <a href="changelog.html">(What's new?)</a>
             </p>
             <p>
-               Download latest beta release: <a href="download_beta_redirect.html"><b>Subsonic 3.1.beta2</b></a>
-               <a href="changelog.html">(What's new?)</a>
+                Download latest beta release: <a href="download_beta_redirect.html"><b>Subsonic 3.1.beta2</b></a>
+                <a href="changelog.html">(What's new?)</a>
             </p>
 
             <p>
                 Older versions, as well as source releases, can be downloaded from
                 <a href="http://sourceforge.net/projects/subsonic/">SourceForge</a>.
-                Subsonic is free, but you can contribute to the project by giving a donation.
-                25% of your donation will be allocated to charity. Thank you :-)
-                <br/>
-                <a href="http://sourceforge.net/donate/index.php?group_id=126265">
-                    <img src="images/donate.gif"/>
-                </a>
             </p>
 
             <subsection name="Installing Subsonic for the first time">
