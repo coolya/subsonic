@@ -21,6 +21,7 @@
                     <li>Bugfix: Fixed minor concurrency bug in search index creation.</li>
                     <li>Bugfix: Make cache work if clocks on remote disks are out of sync.</li>
                     <li>Bugfix: Ensure that cover art images are ordered alphabetically.</li>
+                    <li>Bugfix: Remove nag message for licensed users.</li>
                 </ul>
             </subsection>
 
