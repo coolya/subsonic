@@ -15,7 +15,7 @@
         <td><fmt:message key="searchsettings.auto"/></td>
         <td>
             <form:select path="interval">
-                <fmt:message key="searchsettings.interval.never" var="never"/>
+                <fmt:message key="searchsettings.interval.never" var="manually"/>
                 <fmt:message key="searchsettings.interval.one" var="one"/>
                 <form:option value="-1" label="${never}"/>
                 <form:option value="1" label="${one}"/>

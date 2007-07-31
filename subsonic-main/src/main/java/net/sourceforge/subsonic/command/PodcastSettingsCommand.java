@@ -10,7 +10,6 @@ import net.sourceforge.subsonic.controller.PodcastSettingsController;
 public class PodcastSettingsCommand {
 
     private String interval;
-    private String hour;
     private String directory;
     private String episodeCount;
 
@@ -20,14 +19,6 @@ public class PodcastSettingsCommand {
 
     public void setInterval(String interval) {
         this.interval = interval;
-    }
-
-    public String getHour() {
-        return hour;
-    }
-
-    public void setHour(String hour) {
-        this.hour = hour;
     }
 
     public String getDirectory() {

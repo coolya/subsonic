@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Calendar;
 import java.util.concurrent.*;
 
 /**
@@ -62,29 +61,17 @@ public class PodcastService {
         }
 
         int hoursBetween = settingsService.getPodcastUpdateInterval();
-        int hour = settingsService.getPodcastUpdateHour();
 
         if (hoursBetween == -1) {
             LOG.info("Automatic Podcast update disabled.");
             return;
         }
 
-        Date now = new Date();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(now);
-        cal.set(Calendar.HOUR_OF_DAY, hour);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-
-        if (cal.getTime().before(now)) {
-            cal.add(Calendar.DATE, 1);
-        }
-
-        Date firstTime = cal.getTime();
         long periodMillis = hoursBetween * 60L * 1000L;
-        long initialDelayMillis = firstTime.getTime() - now.getTime();
+        long initialDelayMillis = 5L * 60L * 1000L;
 
         scheduledRefresh = scheduledExecutor.scheduleAtFixedRate(task, initialDelayMillis, periodMillis, TimeUnit.MILLISECONDS);
+        Date firstTime = new Date(System.currentTimeMillis() + initialDelayMillis);
         LOG.info("Automatic Podcast update scheduleds to run every " + hoursBetween + " hour(s), starting at " + firstTime);
     }
 

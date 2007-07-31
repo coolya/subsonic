@@ -54,7 +54,6 @@ public class SettingsService {
     private static final String KEY_INDEX_CREATION_INTERVAL = "IndexCreationInterval";
     private static final String KEY_INDEX_CREATION_HOUR = "IndexCreationHour";
     private static final String KEY_PODCAST_UPDATE_INTERVAL = "PodcastUpdateInterval";
-    private static final String KEY_PODCAST_UPDATE_HOUR = "PodcastUpdateHour";
     private static final String KEY_PODCAST_DIRECTORY = "PodcastDirectory";
     private static final String KEY_PODCAST_EPISODE_COUNT = "PodcastEpisodeCount";
     private static final String KEY_DOWNLOAD_BITRATE_LIMIT = "DownloadBitrateLimit";
@@ -81,7 +80,6 @@ public class SettingsService {
     private static final int DEFAULT_INDEX_CREATION_INTERVAL = 1;
     private static final int DEFAULT_INDEX_CREATION_HOUR = 3;
     private static final int DEFAULT_PODCAST_UPDATE_INTERVAL = 24;
-    private static final int DEFAULT_PODCAST_UPDATE_HOUR = 1;
     private static final String DEFAULT_PODCAST_DIRECTORY = "c:/music/podcast";
     private static final int DEFAULT_PODCAST_EPISODE_COUNT = 10;
     private static final long DEFAULT_DOWNLOAD_BITRATE_LIMIT = 0;
@@ -96,7 +94,7 @@ public class SettingsService {
     private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_SHORTCUTS, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
                                           KEY_COVER_ART_MASK, KEY_COVER_ART_LIMIT, KEY_WELCOME_MESSAGE, KEY_LOCALE_LANGUAGE,
                                           KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_THEME_ID, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
-                                          KEY_PODCAST_UPDATE_INTERVAL, KEY_PODCAST_UPDATE_HOUR, KEY_PODCAST_DIRECTORY, KEY_PODCAST_EPISODE_COUNT,
+                                          KEY_PODCAST_UPDATE_INTERVAL, KEY_PODCAST_DIRECTORY, KEY_PODCAST_EPISODE_COUNT,
                                           KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT,
                                           KEY_LICENSE_EMAIL, KEY_LICENSE_CODE, KEY_LICENSE_DATE, KEY_DOWNSAMPLING_COMMAND};
 
@@ -344,16 +342,6 @@ public class SettingsService {
      */
     public void setPodcastUpdateInterval(int hours) {
         setProperty(KEY_PODCAST_UPDATE_INTERVAL, String.valueOf(hours));
-    }
-
-    /** Returns the hour of day (0 - 23) when Podcast update should run. */
-    public int getPodcastUpdateHour() {
-        return Integer.parseInt(properties.getProperty(KEY_PODCAST_UPDATE_HOUR, String.valueOf(DEFAULT_PODCAST_UPDATE_HOUR)));
-    }
-
-    /** Sets the hour of day (0 - 23) when automatic Podcast update should run. */
-    public void setPodcastUpdateHour(int hour) {
-        setProperty(KEY_PODCAST_UPDATE_HOUR, String.valueOf(hour));
     }
 
     /** Returns the number of Podcast episodes to keep (-1 to keep all). */

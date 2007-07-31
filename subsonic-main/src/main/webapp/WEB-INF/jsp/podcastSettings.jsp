@@ -15,24 +15,15 @@
         <td><fmt:message key="podcastsettings.update"/></td>
         <td>
             <form:select path="interval">
-                <fmt:message key="podcastsettings.interval.never" var="never"/>
+                <fmt:message key="podcastsettings.interval.manually" var="manually"/>
                 <fmt:message key="podcastsettings.interval.hourly" var="hourly"/>
                 <fmt:message key="podcastsettings.interval.daily" var="daily"/>
                 <fmt:message key="podcastsettings.interval.weekly" var="weekly"/>
 
-                <form:option value="-1" label="${never}"/>
+                <form:option value="-1" label="${manually}"/>
                 <form:option value="1" label="${hourly}"/>
                 <form:option value="24" label="${daily}"/>
                 <form:option value="168" label="${weekly}"/>
-            </form:select>
-        </td>
-
-        <td>
-            <form:select path="hour">
-                <c:forEach begin="0" end="23" var="hour">
-                    <fmt:message key="podcastsettings.hour" var="hourLabel"><fmt:param value="${hour}"/></fmt:message>
-                    <form:option value="${hour}" label="${hourLabel}"/>
-                </c:forEach>
             </form:select>
         </td>
     </tr>
@@ -57,12 +48,12 @@
     </tr>
 
     <tr>
-        <td>Save Podcasts in directory</td>
-        <td colspan="2"><form:input path="directory"/></td>
+        <td><fmt:message key="podcastsettings.directory"/></td>
+        <td><form:input path="directory"/></td>
     </tr>
 
     <tr>
-        <td colspan="3">
+        <td colspan="2">
             <input type="submit" value="<fmt:message key="common.save"/>"/>
         </td>
     </tr>
