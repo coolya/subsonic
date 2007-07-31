@@ -18,11 +18,12 @@ public class PodcastEpisode {
     private String description;
     private Date publishDate;
     private String duration;
-    private Long length;
+    private Long bytesTotal;
+    private Long bytesDownloaded;
     private Status status;
 
     public PodcastEpisode(Integer id, Integer channelId, String url, String path, String title,
-                          String description, Date publishDate, String duration, Long length, Status status) {
+                          String description, Date publishDate, String duration, Long length, Long bytesDownloaded, Status status) {
         this.id = id;
         this.channelId = channelId;
         this.url = url;
@@ -31,7 +32,8 @@ public class PodcastEpisode {
         this.description = description;
         this.publishDate = publishDate;
         this.duration = duration;
-        this.length = length;
+        this.bytesTotal = length;
+        this.bytesDownloaded = bytesDownloaded;
         this.status = status;
     }
 
@@ -91,12 +93,33 @@ public class PodcastEpisode {
         this.duration = duration;
     }
 
-    public Long getLength() {
-        return length;
+    public Long getBytesTotal() {
+        return bytesTotal;
     }
 
-    public void setLength(Long length) {
-        this.length = length;
+    public void setBytesTotal(Long bytesTotal) {
+        this.bytesTotal = bytesTotal;
+    }
+
+    public Long getBytesDownloaded() {
+        return bytesDownloaded;
+    }
+
+    public Double getCompletionRate() {
+        if (bytesTotal == null || bytesTotal == 0) {
+            return null;
+        }
+        if (bytesDownloaded == null) {
+            return 0.0;
+        }
+
+        double d = bytesDownloaded;
+        double t = bytesTotal;
+        return d / t;
+    }
+
+    public void setBytesDownloaded(Long bytesDownloaded) {
+        this.bytesDownloaded = bytesDownloaded;
     }
 
     public Status getStatus() {

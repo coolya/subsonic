@@ -2,11 +2,12 @@
 COMPLETED IN 3.2.BETA1
 ======================
 Display what other users are playing (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=359)
+Get proper Podcast icon.
 
 
 TODO IN 3.2
 =============
-Get proper Podcast icon.
+Find out why tomcat doesn't shut down properly.  Log4j?  Executors?
 "Random" very slow when no music folders.
 Merge artists with same name, but different music folders.
 Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownloads/default.aspx)

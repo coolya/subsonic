@@ -46,7 +46,8 @@ public class Schema32 extends Schema {
                              "description varchar," +
                              "publish_date datetime," +
                              "duration varchar," +
-                             "length bigint," +
+                             "bytes_total bigint," +
+                             "bytes_downloaded bigint," +
                              "status varchar not null," +
                              "foreign key (channel_id) references podcast_channel(id) on delete cascade)");
             LOG.info("Database table 'podcast_episode' was created successfully.");

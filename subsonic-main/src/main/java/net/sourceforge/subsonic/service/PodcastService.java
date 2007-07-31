@@ -29,6 +29,9 @@ import java.util.concurrent.*;
  */
 public class PodcastService {
 
+
+    // TODO: Keep last N episodes.
+
     private static final Logger LOG = Logger.getLogger(PodcastService.class);
     private static final DateFormat RSS_DATE_FORMAT = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
     private static final Namespace ITUNES_NAMESPACE = Namespace.getNamespace("http://www.itunes.com/DTDs/Podcast-1.0.dtd");
@@ -39,9 +42,7 @@ public class PodcastService {
     private ScheduledFuture<?> scheduledRefresh;
     private PodcastDao podcastDao;
     private SettingsService settingsService;
-
-    // TODO: Create podcast settings.
-
+    private SecurityService securityService;
 
     public PodcastService() {
         refreshExecutor = Executors.newSingleThreadExecutor();
@@ -192,7 +193,7 @@ public class PodcastService {
                     LOG.warn("Failed to parse publish date.", x);
                 }
                 PodcastEpisode episode = new PodcastEpisode(null, channel.getId(), url, null, title, description, date,
-                                                            duration, length, PodcastEpisode.Status.NEW);
+                                                            duration, length, 0L, PodcastEpisode.Status.NEW);
                 podcastDao.createEpisode(episode);
                 LOG.info("Created Podcast episode " + title);
             }
@@ -200,9 +201,6 @@ public class PodcastService {
     }
 
     private void downloadEpisode(PodcastChannel channel, PodcastEpisode episode) {
-        episode.setStatus(PodcastEpisode.Status.DOWNLOADING);
-        podcastDao.updateEpisode(episode);
-
         InputStream in = null;
         OutputStream out = null;
 
@@ -213,14 +211,42 @@ public class PodcastService {
             File file = getFile(channel, episode);
             out = new FileOutputStream(file);
 
-            // TODO: Cancel download if episode is deleted.
-            LOG.info("Starting to download Podcast from " + episode.getUrl());
-            int n = IOUtils.copy(in, out);
-            LOG.info("Downloaded " + n + " bytes from Podcast " + episode.getUrl());
-
+            episode.setStatus(PodcastEpisode.Status.DOWNLOADING);
             episode.setPath(file.getPath());
-            episode.setStatus(PodcastEpisode.Status.DOWNLOADED);
             podcastDao.updateEpisode(episode);
+
+            LOG.info("Starting to download Podcast from " + episode.getUrl());
+
+            byte[] buffer = new byte[4096];
+            long bytesDownloaded = 0;
+            int n;
+            long nextLogCount = 30000L;
+
+            while ((n = in.read(buffer)) != -1) {
+                out.write(buffer, 0, n);
+                bytesDownloaded += n;
+
+                if (bytesDownloaded > nextLogCount) {
+                    episode.setBytesDownloaded(bytesDownloaded);
+                    nextLogCount += 30000L;
+                    if (podcastDao.updateEpisode(episode) == 0) {
+                        break;
+                    }
+                }
+            }
+
+            episode.setBytesDownloaded(bytesDownloaded);
+            if (podcastDao.updateEpisode(episode) == 0) {
+                LOG.info("Podcast " + episode.getUrl() + " was deleted. Aborting download.");
+                IOUtils.closeQuietly(out);
+                file.delete();
+            } else {
+                LOG.info("Downloaded " + bytesDownloaded + " bytes from Podcast " + episode.getUrl());
+                episode.setStatus(PodcastEpisode.Status.DOWNLOADED);
+                podcastDao.updateEpisode(episode);
+                deleteObsoleteEpisodes(channel);
+            }
+
         } catch (Exception x) {
             LOG.warn("Failed to download Podcast from " + episode.getUrl(), x);
             episode.setStatus(PodcastEpisode.Status.ERROR);
@@ -231,14 +257,32 @@ public class PodcastService {
         }
     }
 
+    private void deleteObsoleteEpisodes(PodcastChannel channel) {
+        int episodeCount = settingsService.getPodcastEpisodeCount();
+        if (episodeCount == -1) {
+            return;
+        }
+
+        PodcastEpisode[] episodes = getEpisodes(channel.getId());
+        int episodesToDelete = Math.max(0, episodes.length - episodeCount);
+        for (int i = 0; i < episodesToDelete; i++) {
+            deleteEpisode(episodes[i].getId());
+            LOG.info("Deleted old Podcast episode " + episodes[i].getUrl());
+        }
+    }
+
     private File getFile(PodcastChannel channel, PodcastEpisode episode) {
 
-        // TODO: Make sure it's allowed to write to given directory.
-        File podcastDir = new File("c:/podcasts"); // TODO
+        File podcastDir = new File(settingsService.getPodcastFolder());
         File channelDir = new File(podcastDir, channel.getTitle()); // TODO: Make title file-system safe.
         channelDir.mkdirs();
 
-        return new File(channelDir, episode.getTitle() + ".mp3");
+        File file = new File(channelDir, episode.getTitle() + ".mp3");  //TODO: .mp3?
+
+        if (!securityService.isWriteAllowed(file)) {
+            throw new SecurityException("Access denied to file " + file);
+        }
+        return file;
     }
 
     /**
@@ -279,5 +323,9 @@ public class PodcastService {
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 }

@@ -128,8 +128,17 @@
                     <span class="detail"><fmt:formatDate value="${episode.publishDate}" dateStyle="medium"/></span>
                 </td>
 
-                <td ${class} style="padding-left:1.5em">
-                    <span class="detail"><fmt:message key="podcastreceiver.episodestatus.${fn:toLowerCase(episode.status)}"/></span>
+                <td ${class} style="padding-left:1.5em;text-align:center">
+                    <span class="detail">
+                    <c:choose>
+                        <c:when test="${episode.status eq 'DOWNLOADING'}">
+                            <fmt:formatNumber type="percent" value="${episode.completionRate}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <fmt:message key="podcastreceiver.episodestatus.${fn:toLowerCase(episode.status)}"/>
+                        </c:otherwise>
+                    </c:choose>
+                    </span>
                 </td>
 
                 <td ${class} style="padding-left:1.5em">
@@ -161,7 +170,7 @@
         <table>
             <tr>
                 <td>Subscribe to Podcast</td>
-                <td><input type="text" name="add" value="http://"/></td>
+                <td><input type="text" name="add" value="http://" style="width:15em"/></td>
                 <td><input type="submit" value="<fmt:message key="common.ok"/>"/></td>
             </tr>
         </table>

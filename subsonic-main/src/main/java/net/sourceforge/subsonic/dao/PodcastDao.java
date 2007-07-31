@@ -19,7 +19,7 @@ public class PodcastDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(PodcastDao.class);
     private static final String CHANNEL_COLUMNS = "id, url, title, description";
-    private static final String EPISODE_COLUMNS = "id, channel_id, url, path, title, description, publish_date, duration, length, status";
+    private static final String EPISODE_COLUMNS = "id, channel_id, url, path, title, description, publish_date, duration, bytes_total, bytes_downloaded, status";
 
     private PodcastChannelRowMapper channelRowMapper = new PodcastChannelRowMapper();
     private PodcastEpisodeRowMapper episodeRowMapper = new PodcastEpisodeRowMapper();
@@ -73,10 +73,11 @@ public class PodcastDao extends AbstractDao {
      * @param episode The Podcast episode to create.
      */
     public void createEpisode(PodcastEpisode episode) {
-        String sql = "insert into podcast_episode (" + EPISODE_COLUMNS + ") values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into podcast_episode (" + EPISODE_COLUMNS + ") values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         getJdbcTemplate().update(sql, new Object[]{episode.getChannelId(), episode.getUrl(), episode.getPath(),
                                                    episode.getTitle(), episode.getDescription(), episode.getPublishDate(),
-                                                   episode.getDuration(), episode.getLength(), episode.getStatus().name()});
+                                                   episode.getDuration(), episode.getBytesTotal(), episode.getBytesDownloaded(),
+                                                   episode.getStatus().name()});
         LOG.info("Created Podcast episode " + episode.getUrl());
     }
 
@@ -106,12 +107,14 @@ public class PodcastDao extends AbstractDao {
      * Updates the given Podcast episode.
      *
      * @param episode The Podcast episode to update.
+     * @return The number of episodes updated (zero or one).
      */
-    public void updateEpisode(PodcastEpisode episode) {
-        String sql = "update podcast_episode set url=?, path=?, title=?, description=?, publish_date=?, duration=?, length=?, status=? where id=?";
-        getJdbcTemplate().update(sql, new Object[]{episode.getUrl(), episode.getPath(), episode.getTitle(),
-                                                   episode.getDescription(), episode.getPublishDate(), episode.getDuration(),
-                                                   episode.getLength(), episode.getStatus().name(), episode.getId()});
+    public int updateEpisode(PodcastEpisode episode) {
+        String sql = "update podcast_episode set url=?, path=?, title=?, description=?, publish_date=?, duration=?, bytes_total=?, bytes_downloaded=?, status=? where id=?";
+        return getJdbcTemplate().update(sql, new Object[]{episode.getUrl(), episode.getPath(), episode.getTitle(),
+                                                         episode.getDescription(), episode.getPublishDate(), episode.getDuration(),
+                                                         episode.getBytesTotal(), episode.getBytesDownloaded(), episode.getStatus().name(),
+                                                         episode.getId()});
     }
 
     /**
@@ -134,8 +137,8 @@ public class PodcastDao extends AbstractDao {
     private static class PodcastEpisodeRowMapper implements RowMapper {
         public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new PodcastEpisode(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5),
-                                      rs.getString(6), rs.getTimestamp(7), rs.getString(8), rs.getLong(9),
-                                      PodcastEpisode.Status.valueOf(rs.getString(10)));
+                                      rs.getString(6), rs.getTimestamp(7), rs.getString(8), (Long) rs.getObject(9),
+                                      (Long) rs.getObject(10), PodcastEpisode.Status.valueOf(rs.getString(11)));
         }
     }
 }

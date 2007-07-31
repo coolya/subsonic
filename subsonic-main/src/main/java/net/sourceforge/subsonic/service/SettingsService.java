@@ -54,7 +54,7 @@ public class SettingsService {
     private static final String KEY_INDEX_CREATION_INTERVAL = "IndexCreationInterval";
     private static final String KEY_INDEX_CREATION_HOUR = "IndexCreationHour";
     private static final String KEY_PODCAST_UPDATE_INTERVAL = "PodcastUpdateInterval";
-    private static final String KEY_PODCAST_DIRECTORY = "PodcastDirectory";
+    private static final String KEY_PODCAST_FOLDER = "PodcastFolder";
     private static final String KEY_PODCAST_EPISODE_COUNT = "PodcastEpisodeCount";
     private static final String KEY_DOWNLOAD_BITRATE_LIMIT = "DownloadBitrateLimit";
     private static final String KEY_UPLOAD_BITRATE_LIMIT = "UploadBitrateLimit";
@@ -80,7 +80,7 @@ public class SettingsService {
     private static final int DEFAULT_INDEX_CREATION_INTERVAL = 1;
     private static final int DEFAULT_INDEX_CREATION_HOUR = 3;
     private static final int DEFAULT_PODCAST_UPDATE_INTERVAL = 24;
-    private static final String DEFAULT_PODCAST_DIRECTORY = "c:/music/podcast";
+    private static final String DEFAULT_PODCAST_FOLDER = "c:/music/Podcast";
     private static final int DEFAULT_PODCAST_EPISODE_COUNT = 10;
     private static final long DEFAULT_DOWNLOAD_BITRATE_LIMIT = 0;
     private static final long DEFAULT_UPLOAD_BITRATE_LIMIT = 0;
@@ -94,7 +94,7 @@ public class SettingsService {
     private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_SHORTCUTS, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
                                           KEY_COVER_ART_MASK, KEY_COVER_ART_LIMIT, KEY_WELCOME_MESSAGE, KEY_LOCALE_LANGUAGE,
                                           KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_THEME_ID, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
-                                          KEY_PODCAST_UPDATE_INTERVAL, KEY_PODCAST_DIRECTORY, KEY_PODCAST_EPISODE_COUNT,
+                                          KEY_PODCAST_UPDATE_INTERVAL, KEY_PODCAST_FOLDER, KEY_PODCAST_EPISODE_COUNT,
                                           KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT,
                                           KEY_LICENSE_EMAIL, KEY_LICENSE_CODE, KEY_LICENSE_DATE, KEY_DOWNSAMPLING_COMMAND};
 
@@ -354,14 +354,14 @@ public class SettingsService {
         setProperty(KEY_PODCAST_EPISODE_COUNT, String.valueOf(count));
     }
 
-    /** Returns the Podcast download directory. */
-    public String getPodcastDirectory() {
-        return properties.getProperty(KEY_PODCAST_DIRECTORY, DEFAULT_PODCAST_DIRECTORY);
+    /** Returns the Podcast download folder. */
+    public String getPodcastFolder() {
+        return properties.getProperty(KEY_PODCAST_FOLDER, DEFAULT_PODCAST_FOLDER);
     }
 
-    /** Sets the Podcast download directory. */
-    public void setPodcastDirectory(String directory) {
-        setProperty(KEY_PODCAST_DIRECTORY, directory);
+    /** Sets the Podcast download folder. */
+    public void setPodcastFolder(String folder) {
+        setProperty(KEY_PODCAST_FOLDER, folder);
     }
 
     /** @return The download bitrate limit in Kbit/s. Zero if unlimited. */

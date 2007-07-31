@@ -22,7 +22,7 @@ public class PodcastSettingsController extends SimpleFormController {
 
         command.setInterval(String.valueOf(settingsService.getPodcastUpdateInterval()));
         command.setEpisodeCount(String.valueOf(settingsService.getPodcastEpisodeCount()));
-        command.setDirectory(settingsService.getPodcastDirectory());
+        command.setFolder(settingsService.getPodcastFolder());
         return command;
     }
 
@@ -31,7 +31,7 @@ public class PodcastSettingsController extends SimpleFormController {
 
         settingsService.setPodcastUpdateInterval(Integer.parseInt(command.getInterval()));
         settingsService.setPodcastEpisodeCount(Integer.parseInt(command.getEpisodeCount()));
-        settingsService.setPodcastDirectory(command.getDirectory());
+        settingsService.setPodcastFolder(command.getFolder());
         settingsService.save();
 
         podcastService.schedule();

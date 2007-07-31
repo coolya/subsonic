@@ -61,7 +61,7 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
     public void testCreateEpisode() {
         int channelId = createChannel();
         PodcastEpisode episode = new PodcastEpisode(null, channelId, "http://bar", "path", "title", "description",
-                                                    new Date(), "12:34", 3276213L, PodcastEpisode.Status.NEW);
+                                                    new Date(), "12:34", null, null, PodcastEpisode.Status.NEW);
         podcastDao.createEpisode(episode);
 
         PodcastEpisode newEpisode = podcastDao.getEpisodes(channelId)[0];
@@ -74,7 +74,7 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
 
         int channelId = createChannel();
         PodcastEpisode episode = new PodcastEpisode(null, channelId, "http://bar", "path", "title", "description",
-                                                    new Date(), "12:34", 3276213L, PodcastEpisode.Status.NEW);
+                                                    new Date(), "12:34", 3276213L, 2341234L, PodcastEpisode.Status.NEW);
         podcastDao.createEpisode(episode);
 
         int episodeId = podcastDao.getEpisodes(channelId)[0].getId();
@@ -87,7 +87,7 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
     public void testUpdateEpisode() {
         int channelId = createChannel();
         PodcastEpisode episode = new PodcastEpisode(null, channelId, "http://bar", null, null, null,
-                                                    null, null, null, PodcastEpisode.Status.NEW);
+                                                    null, null, null, null, PodcastEpisode.Status.NEW);
         podcastDao.createEpisode(episode);
         episode = podcastDao.getEpisodes(channelId)[0];
 
@@ -97,7 +97,8 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
         episode.setDescription("Description");
         episode.setPublishDate(new Date());
         episode.setDuration("1:20");
-        episode.setLength(87628374612L);
+        episode.setBytesTotal(87628374612L);
+        episode.setBytesDownloaded(9086L);
         episode.setStatus(PodcastEpisode.Status.DOWNLOADING);
 
         podcastDao.updateEpisode(episode);
@@ -112,7 +113,7 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong number of episodes.", 0, podcastDao.getEpisodes(channelId).length);
 
         PodcastEpisode episode = new PodcastEpisode(null, channelId, "http://bar", null, null, null,
-                                                    null, null, null, PodcastEpisode.Status.NEW);
+                                                    null, null, null, null, PodcastEpisode.Status.NEW);
 
         podcastDao.createEpisode(episode);
         assertEquals("Wrong number of episodes.", 1, podcastDao.getEpisodes(channelId).length);
@@ -131,7 +132,7 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
     public void testCascadingDelete() {
         int channelId = createChannel();
         PodcastEpisode episode = new PodcastEpisode(null, channelId, "http://bar", null, null, null,
-                                                    null, null, null, PodcastEpisode.Status.NEW);
+                                                    null, null, null, null, PodcastEpisode.Status.NEW);
         podcastDao.createEpisode(episode);
         podcastDao.createEpisode(episode);
         assertEquals("Wrong number of episodes.", 2, podcastDao.getEpisodes(channelId).length);
@@ -159,6 +160,8 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong description.", expected.getDescription(), actual.getDescription());
         assertEquals("Wrong date.", expected.getPublishDate(), actual.getPublishDate());
         assertEquals("Wrong duration.", expected.getDuration(), actual.getDuration());
+        assertEquals("Wrong bytes total.", expected.getBytesTotal(), actual.getBytesTotal());
+        assertEquals("Wrong bytes downloaded.", expected.getBytesDownloaded(), actual.getBytesDownloaded());
         assertEquals("Wrong status.", expected.getStatus(), actual.getStatus());
     }
 

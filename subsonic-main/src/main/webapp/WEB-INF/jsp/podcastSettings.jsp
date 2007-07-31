@@ -14,7 +14,7 @@
     <tr>
         <td><fmt:message key="podcastsettings.update"/></td>
         <td>
-            <form:select path="interval">
+            <form:select path="interval" cssStyle="width:15em">
                 <fmt:message key="podcastsettings.interval.manually" var="manually"/>
                 <fmt:message key="podcastsettings.interval.hourly" var="hourly"/>
                 <fmt:message key="podcastsettings.interval.daily" var="daily"/>
@@ -31,7 +31,7 @@
     <tr>
         <td><fmt:message key="podcastsettings.keep"/></td>
         <td>
-            <form:select path="episodeCount">
+            <form:select path="episodeCount" cssStyle="width:15em">
                 <fmt:message key="podcastsettings.keep.all" var="all"/>
                 <fmt:message key="podcastsettings.keep.one" var="one"/>
 
@@ -48,8 +48,8 @@
     </tr>
 
     <tr>
-        <td><fmt:message key="podcastsettings.directory"/></td>
-        <td><form:input path="directory"/></td>
+        <td><fmt:message key="podcastsettings.folder"/></td>
+        <td><form:input path="folder" cssStyle="width:15em"/></td>
     </tr>
 
     <tr>
