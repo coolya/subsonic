@@ -27,6 +27,7 @@ public abstract class DaoTestCaseBase extends TestCase {
     protected MusicFolderDao musicFolderDao;
     protected UserDao userDao;
     protected TranscodingDao transcodingDao;
+    protected PodcastDao podcastDao;
 
     protected DaoTestCaseBase() {
         daoHelper = new DaoHelper();
@@ -37,6 +38,7 @@ public abstract class DaoTestCaseBase extends TestCase {
         musicFolderDao = new MusicFolderDao();
         userDao = new UserDao();
         transcodingDao = new TranscodingDao();
+        podcastDao = new PodcastDao();
 
         playerDao.setDaoHelper(daoHelper);
         internetRadioDao.setDaoHelper(daoHelper);
@@ -44,6 +46,7 @@ public abstract class DaoTestCaseBase extends TestCase {
         musicFolderDao.setDaoHelper(daoHelper);
         userDao.setDaoHelper(daoHelper);
         transcodingDao.setDaoHelper(daoHelper);
+        podcastDao.setDaoHelper(daoHelper);
     }
 
     protected JdbcTemplate getJdbcTemplate() {

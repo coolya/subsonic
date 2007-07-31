@@ -16,6 +16,7 @@ public class AppearanceSettingsCommand {
     private Theme[] themes;
     private UserSettings.Visibility mainVisibility;
     private UserSettings.Visibility playlistVisibility;
+    private boolean showNowPlayingEnabled;
     private boolean finalVersionNotificationEnabled;
     private boolean betaVersionNotificationEnabled;
     private boolean lastFmEnabled;
@@ -77,6 +78,14 @@ public class AppearanceSettingsCommand {
 
     public void setPlaylistVisibility(UserSettings.Visibility playlistVisibility) {
         this.playlistVisibility = playlistVisibility;
+    }
+
+    public boolean isShowNowPlayingEnabled() {
+        return showNowPlayingEnabled;
+    }
+
+    public void setShowNowPlayingEnabled(boolean showNowPlayingEnabled) {
+        this.showNowPlayingEnabled = showNowPlayingEnabled;
     }
 
     public boolean isFinalVersionNotificationEnabled() {

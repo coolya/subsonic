@@ -8,6 +8,7 @@
             <value>
                 PATTERN_TYPE_APACHE_ANT
                 /wap**=httpSessionContextIntegrationFilter,logoutFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,basicExceptionTranslationFilter,filterInvocationInterceptor
+                /podcastReceiver**=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
                 /podcast**=httpSessionContextIntegrationFilter,logoutFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,basicExceptionTranslationFilter,filterInvocationInterceptor
                 /**=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
             </value>
@@ -91,6 +92,7 @@
                 /musicFolderSettings.view=ROLE_ADMIN
                 /internetRadioSettings.view=ROLE_ADMIN
                 /searchSettings.view=ROLE_ADMIN
+                /podcastSettings.view=ROLE_ADMIN
 
                 /deletePlaylist.view=ROLE_PLAYLIST
                 /savePlaylist.view=ROLE_PLAYLIST
@@ -103,6 +105,8 @@
                 /editTags.view=ROLE_COVERART
 
                 /setMusicFileInfo.view=ROLE_COMMENT
+
+                /podcastReceiverAdmin.view=ROLE_PODCAST
 
                 /**=IS_AUTHENTICATED_REMEMBERED
             </value>

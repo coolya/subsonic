@@ -69,6 +69,10 @@
                 <td><form:checkbox path="commentRole" id="comment" cssClass="checkbox"/></td>
                 <td><label for="comment"><fmt:message key="usersettings.comment"/></label></td>
             </tr>
+            <tr>
+                <td><form:checkbox path="podcastRole" id="podcast" cssClass="checkbox"/></td>
+                <td><label for="podcast"><fmt:message key="usersettings.podcast"/></label></td>
+            </tr>
         </table>
     </c:if>
 

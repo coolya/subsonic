@@ -37,7 +37,7 @@ body {
 
 /* The secondary foreground color used for h1, details etc (gray). */
 h1, .detail, .albumComment {
-    color: dimgray;
+    color: #696969;
 }
 
 /* Foreground color used for h2, bold and tr. */

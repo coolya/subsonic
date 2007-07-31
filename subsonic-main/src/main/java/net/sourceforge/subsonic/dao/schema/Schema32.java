@@ -1,0 +1,65 @@
+package net.sourceforge.subsonic.dao.schema;
+
+import net.sourceforge.subsonic.Logger;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+/**
+ * Used for creating and evolving the database schema.
+ * This class implementes the database schema for Subsonic version 3.2.
+ *
+ * @author Sindre Mehus
+ */
+public class Schema32 extends Schema {
+    private static final Logger LOG = Logger.getLogger(Schema32.class);
+
+    public void execute(JdbcTemplate template) {
+
+        if (template.queryForInt("select count(*) from version where version = 8") == 0) {
+            LOG.info("Updating database schema to version 8.");
+            template.execute("insert into version values (8)");
+        }
+
+        if (!columnExists(template, "show_now_playing", "user_settings")) {
+            LOG.info("Database column 'user_settings.show_now_playing' not found.  Creating it.");
+            template.execute("alter table user_settings add show_now_playing boolean default true not null");
+            LOG.info("Database column 'user_settings.show_now_playing' was added successfully.");
+        }
+
+        if (!tableExists(template, "podcast_channel")) {
+            LOG.info("Database table 'podcast_channel' not found.  Creating it.");
+            template.execute("create table podcast_channel (" +
+                             "id identity," +
+                             "url varchar not null," +
+                             "title varchar," +
+                             "description varchar)");
+            LOG.info("Database table 'podcast_channel' was created successfully.");
+        }
+
+        if (!tableExists(template, "podcast_episode")) {
+            LOG.info("Database table 'podcast_episode' not found.  Creating it.");
+            template.execute("create table podcast_episode (" +
+                             "id identity," +
+                             "channel_id int not null," +
+                             "url varchar not null," +
+                             "path varchar," +
+                             "title varchar," +
+                             "description varchar," +
+                             "publish_date datetime," +
+                             "duration varchar," +
+                             "length bigint," +
+                             "status varchar not null," +
+                             "foreign key (channel_id) references podcast_channel(id) on delete cascade)");
+            LOG.info("Database table 'podcast_episode' was created successfully.");
+        }
+
+        if (template.queryForInt("select count(*) from role where id = 7") == 0) {
+            LOG.info("Role 'podcast' not found in database. Creating it.");
+            template.execute("insert into role values (7, 'podcast')");
+            template.execute("insert into user_role " +
+                             "select distinct u.username, 7 from user u, user_role ur " +
+                             "where u.username = ur.username and ur.role_id = 1");
+            LOG.info("Role 'podcast' was created successfully.");
+        }
+
+    }
+}

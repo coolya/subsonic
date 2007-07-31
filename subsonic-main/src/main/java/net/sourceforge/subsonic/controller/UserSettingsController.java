@@ -83,6 +83,7 @@ public class UserSettingsController extends SimpleFormController {
         user.setPlaylistRole(command.isPlaylistRole());
         user.setCoverArtRole(command.isCoverArtRole());
         user.setCommentRole(command.isCommentRole());
+        user.setPodcastRole(command.isPodcastRole());
 
         if (command.isPasswordChange()) {
             user.setPassword(command.getPassword());

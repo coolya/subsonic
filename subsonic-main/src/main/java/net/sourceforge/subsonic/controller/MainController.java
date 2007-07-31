@@ -1,9 +1,6 @@
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.domain.CoverArtScheme;
-import net.sourceforge.subsonic.domain.MusicFile;
-import net.sourceforge.subsonic.domain.MusicFileInfo;
-import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicInfoService;
 import net.sourceforge.subsonic.service.PlayerService;
@@ -50,7 +47,12 @@ public class MainController extends ParameterizableViewController {
         Player player = playerService.getPlayer(request, response);
         String path = request.getParameter("path");
         MusicFile dir = musicFileService.getMusicFile(path);
+        if (dir.isFile()) {
+            dir = dir.getParent();
+        }
+
         List<MusicFile> children = dir.getChildren(true, true);
+        UserSettings userSettings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
 
         map.put("dir", dir);
         map.put("ancestors", getAncestors(dir));
@@ -58,8 +60,9 @@ public class MainController extends ParameterizableViewController {
         map.put("player", player);
         map.put("user", securityService.getCurrentUser(request));
         map.put("multipleArtists", isMultipleArtists(children));
-        map.put("visibility", settingsService.getUserSettings(securityService.getCurrentUsername(request)).getMainVisibility());
+        map.put("visibility", userSettings.getMainVisibility());
         map.put("updateNowPlaying", request.getParameter("updateNowPlaying") != null);
+        map.put("showNowPlaying", userSettings.isShowNowPlayingEnabled());
         map.put("showAd", shouldShowAd());
 
         MusicFileInfo musicInfo = musicInfoService.getMusicFileInfoForPath(path);

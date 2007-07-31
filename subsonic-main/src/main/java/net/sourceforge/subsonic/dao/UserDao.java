@@ -23,7 +23,7 @@ public class UserDao extends AbstractDao {
                                                         "main_year, main_bit_rate, main_duration, main_format, main_file_size, " +
                                                         "playlist_caption_cutoff, playlist_track_number, playlist_artist, playlist_album, playlist_genre, " +
                                                         "playlist_year, playlist_bit_rate, playlist_duration, playlist_format, playlist_file_size, " +
-                                                        "last_fm_enabled, last_fm_username, last_fm_password, transcode_scheme";
+                                                        "last_fm_enabled, last_fm_username, last_fm_password, transcode_scheme, show_now_playing";
 
     private static final Integer ROLE_ID_ADMIN      = 1;
     private static final Integer ROLE_ID_DOWNLOAD   = 2;
@@ -31,6 +31,7 @@ public class UserDao extends AbstractDao {
     private static final Integer ROLE_ID_PLAYLIST   = 4;
     private static final Integer ROLE_ID_COVER_ART  = 5;
     private static final Integer ROLE_ID_COMMENT    = 6;
+    private static final Integer ROLE_ID_PODCAST    = 7;
 
     private UserRowMapper userRowMapper = new UserRowMapper();
     private UserSettingsRowMapper userSettingsRowMapper = new UserSettingsRowMapper();
@@ -152,7 +153,8 @@ public class UserDao extends AbstractDao {
                                                    playlist.isGenreVisible(), playlist.isYearVisible(), playlist.isBitRateVisible(), playlist.isDurationVisible(),
                                                    playlist.isFormatVisible(), playlist.isFileSizeVisible(),
                                                    settings.isLastFmEnabled(), settings.getLastFmUsername(), settings.getLastFmPassword(),
-                                                   settings.getTranscodeScheme().name()});
+                                                   settings.getTranscodeScheme().name(),
+                                                   settings.isShowNowPlayingEnabled()});
     }
 
     private void readRoles(User user) {
@@ -171,6 +173,8 @@ public class UserDao extends AbstractDao {
                 user.setCoverArtRole(true);
             } else if (ROLE_ID_COMMENT.equals(role)) {
                 user.setCommentRole(true);
+            } else if (ROLE_ID_PODCAST.equals(role)) {
+                user.setPodcastRole(true);
             } else {
                 LOG.warn("Unknown role: '" + role + '\'');
             }
@@ -198,6 +202,9 @@ public class UserDao extends AbstractDao {
         }
         if (user.isCommentRole()) {
             getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_COMMENT});
+        }
+        if (user.isPodcastRole()) {
+            getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_PODCAST});
         }
     }
 
@@ -243,6 +250,7 @@ public class UserDao extends AbstractDao {
             settings.setLastFmPassword(rs.getString(col++));
 
             settings.setTranscodeScheme(TranscodeScheme.valueOf(rs.getString(col++)));
+            settings.setShowNowPlayingEnabled(rs.getBoolean(col++));
 
             return settings;
         }

@@ -56,6 +56,14 @@
         <property name="playlistService" ref="playlistService"/>
         <property name="settingsService" ref="settingsService"/>
     </bean>
+    <bean id="podcastReceiverController" class="net.sourceforge.subsonic.controller.PodcastReceiverController">
+        <property name="viewName" value="podcastReceiver"/>
+        <property name="podcastService" ref="podcastService"/>
+        <property name="securityService" ref="securityService"/>
+    </bean>
+    <bean id="podcastReceiverAdminController" class="net.sourceforge.subsonic.controller.PodcastReceiverAdminController">
+        <property name="podcastService" ref="podcastService"/>
+    </bean>
     <bean id="setMusicFileInfoController" class="net.sourceforge.subsonic.controller.SetMusicFileInfoController">
         <property name="musicInfoService" ref="musicInfoService"/>
     </bean>
@@ -139,6 +147,13 @@
     <bean id="internetRadioSettingsController" class="net.sourceforge.subsonic.controller.InternetRadioSettingsController">
         <property name="viewName" value="internetRadioSettings"/>
         <property name="settingsService" ref="settingsService"/>
+    </bean>
+    <bean id="podcastSettingsController" class="net.sourceforge.subsonic.controller.PodcastSettingsController">
+        <property name="commandClass"><value>net.sourceforge.subsonic.command.PodcastSettingsCommand</value></property>
+        <property name="successView" value="podcastSettings"/>
+        <property name="formView" value="podcastSettings"/>
+        <property name="settingsService" ref="settingsService"/>
+        <property name="podcastService" ref="podcastService"/>
     </bean>
     <bean id="searchSettingsController" class="net.sourceforge.subsonic.controller.SearchSettingsController">
         <property name="commandClass"><value>net.sourceforge.subsonic.command.SearchSettingsCommand</value></property>
@@ -288,6 +303,7 @@
                 <prop key="/transcodingSettings.view">transcodingSettingsController</prop>
                 <prop key="/internetRadioSettings.view">internetRadioSettingsController</prop>
                 <prop key="/searchSettings.view">searchSettingsController</prop>
+                <prop key="/podcastSettings.view">podcastSettingsController</prop>
                 <prop key="/generalSettings.view">generalSettingsController</prop>
                 <prop key="/appearanceSettings.view">appearanceSettingsController</prop>
                 <prop key="/userSettings.view">userSettingsController</prop>
@@ -302,6 +318,8 @@
                 <prop key="/userChart.view">userChartController</prop>
                 <prop key="/download.view">downloadController</prop>
                 <prop key="/donate.view">donateController</prop>
+                <prop key="/podcastReceiver.view">podcastReceiverController</prop>
+                <prop key="/podcastReceiverAdmin.view">podcastReceiverAdminController</prop>
                 <prop key="/podcast.view">podcastController</prop>
                 <prop key="/podcast/**">podcastController</prop>
                 <prop key="/wap/**">wapController</prop>

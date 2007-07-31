@@ -12,6 +12,7 @@ public class UserSettings {
     private String username;
     private Locale locale;
     private String themeId;
+    private boolean showNowPlayingEnabled;
     private boolean finalVersionNotificationEnabled;
     private boolean betaVersionNotificationEnabled;
     private Visibility mainVisibility = new Visibility();
@@ -47,6 +48,14 @@ public class UserSettings {
 
     public void setThemeId(String themeId) {
         this.themeId = themeId;
+    }
+
+    public boolean isShowNowPlayingEnabled() {
+        return showNowPlayingEnabled;
+    }
+
+    public void setShowNowPlayingEnabled(boolean showNowPlayingEnabled) {
+        this.showNowPlayingEnabled = showNowPlayingEnabled;
     }
 
     public boolean isFinalVersionNotificationEnabled() {

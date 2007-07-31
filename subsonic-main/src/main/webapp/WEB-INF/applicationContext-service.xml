@@ -29,6 +29,10 @@
         <property name="daoHelper" ref="daoHelper"/>
     </bean>
 
+    <bean id="podcastDao" class="net.sourceforge.subsonic.dao.PodcastDao">
+        <property name="daoHelper" ref="daoHelper"/>
+    </bean>
+
     <bean id="daoHelper" class="net.sourceforge.subsonic.dao.DaoHelper"/>
 
 
@@ -90,11 +94,18 @@
         <property name="settingsService" ref="settingsService"/>
     </bean>
 
-    
+    <bean id="podcastService" class="net.sourceforge.subsonic.service.PodcastService" init-method="schedule">
+        <property name="podcastDao" ref="podcastDao"/>
+        <property name="settingsService" ref="settingsService"/>
+    </bean>
+
+
     <!-- AJAX services -->
 
     <bean id="ajaxNowPlayingService" class="net.sourceforge.subsonic.ajax.NowPlayingService">
         <property name="playerService" ref="playerService"/>
+        <property name="statusService" ref="statusService"/>
+        <property name="musicFileService" ref="musicFileService"/>
     </bean>
 
     <bean id="ajaxTagService" class="net.sourceforge.subsonic.ajax.TagService">

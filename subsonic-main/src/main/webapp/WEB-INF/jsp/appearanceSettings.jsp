@@ -126,6 +126,10 @@
 
     <table class="indent">
         <tr>
+            <td><form:checkbox path="showNowPlayingEnabled" id="nowPlaying" cssClass="checkbox"/></td>
+            <td><label for="nowPlaying"><fmt:message key="appearancesettings.shownowplaying"/></label></td>
+        </tr>
+        <tr>
             <td><form:checkbox path="finalVersionNotificationEnabled" id="final" cssClass="checkbox"/></td>
             <td><label for="final"><fmt:message key="appearancesettings.finalversionnotification"/></label></td>
         </tr>

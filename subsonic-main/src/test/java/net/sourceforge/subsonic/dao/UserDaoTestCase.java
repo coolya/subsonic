@@ -1,13 +1,16 @@
 package net.sourceforge.subsonic.dao;
 
-import net.sourceforge.subsonic.domain.*;
-import org.springframework.dao.*;
-import org.springframework.jdbc.core.*;
+import net.sourceforge.subsonic.domain.TranscodeScheme;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.UserSettings;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.*;
+import java.util.Locale;
 
 /**
  * Unit test of {@link UserDao}.
+ *
  * @author Sindre Mehus
  */
 public class UserDaoTestCase extends DaoTestCaseBase {
@@ -26,6 +29,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         user.setDownloadRole(false);
         user.setPlaylistRole(true);
         user.setUploadRole(false);
+        user.setPodcastRole(true);
         userDao.createUser(user);
 
         User newUser = userDao.getAllUsers()[0];
@@ -40,6 +44,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         user.setDownloadRole(false);
         user.setPlaylistRole(true);
         user.setUploadRole(false);
+        user.setPodcastRole(true);
         userDao.createUser(user);
 
         user.setPassword("foo");
@@ -52,7 +57,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         user.setDownloadRole(true);
         user.setPlaylistRole(false);
         user.setUploadRole(true);
-
+        user.setPodcastRole(false);
         userDao.updateUser(user);
 
         User newUser = userDao.getAllUsers()[0];
@@ -97,12 +102,14 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         User user = new User("sindre", "secret");
         user.setAdminRole(true);
         user.setCommentRole(true);
+        user.setPodcastRole(true);
         userDao.createUser(user);
 
         String[] roles = userDao.getRolesForUser("sindre");
-        assertEquals("Wrong number of roles.", 2, roles.length);
+        assertEquals("Wrong number of roles.", 3, roles.length);
         assertEquals("Wrong role.", "admin", roles[0]);
         assertEquals("Wrong role.", "comment", roles[1]);
+        assertEquals("Wrong role.", "podcast", roles[2]);
     }
 
     public void testUserSettings() {
@@ -111,7 +118,8 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         try {
             userDao.updateUserSettings(new UserSettings("sindre"));
             fail("Expected DataIntegrityViolationException.");
-        } catch (DataIntegrityViolationException x) {}
+        } catch (DataIntegrityViolationException x) {
+        }
 
         userDao.createUser(new User("sindre", "secret"));
         assertNull("Error in getUserSettings.", userDao.getUserSettings("sindre"));
@@ -127,6 +135,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertNull("Error in getUserSettings().", userSettings.getLastFmUsername());
         assertNull("Error in getUserSettings().", userSettings.getLastFmPassword());
         assertSame("Error in getUserSettings().", TranscodeScheme.OFF, userSettings.getTranscodeScheme());
+        assertFalse("Error in getUserSettings().", userSettings.isShowNowPlayingEnabled());
 
         UserSettings settings = new UserSettings("sindre");
         settings.setLocale(Locale.SIMPLIFIED_CHINESE);
@@ -140,6 +149,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         settings.setLastFmUsername("last_user");
         settings.setLastFmPassword("last_pass");
         settings.setTranscodeScheme(TranscodeScheme.MAX_192);
+        settings.setShowNowPlayingEnabled(false);
 
         userDao.updateUserSettings(settings);
         userSettings = userDao.getUserSettings("sindre");
@@ -156,6 +166,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertEquals("Error in getUserSettings().", "last_user", userSettings.getLastFmUsername());
         assertEquals("Error in getUserSettings().", "last_pass", userSettings.getLastFmPassword());
         assertSame("Error in getUserSettings().", TranscodeScheme.MAX_192, userSettings.getTranscodeScheme());
+        assertFalse("Error in getUserSettings().", userSettings.isShowNowPlayingEnabled());
 
         userDao.deleteUser("sindre");
         assertNull("Error in cascading delete.", userDao.getUserSettings("sindre"));
@@ -173,5 +184,6 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong download role.", expected.isDownloadRole(), actual.isDownloadRole());
         assertEquals("Wrong playlist role.", expected.isPlaylistRole(), actual.isPlaylistRole());
         assertEquals("Wrong upload role.", expected.isUploadRole(), actual.isUploadRole());
+        assertEquals("Wrong podcast role.", expected.isPodcastRole(), actual.isPodcastRole());
     }
 }

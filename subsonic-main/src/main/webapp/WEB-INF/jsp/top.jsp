@@ -10,6 +10,7 @@
 <fmt:message key="top.now_playing" var="nowPlaying"/>
 <fmt:message key="top.settings" var="settings"/>
 <fmt:message key="top.status" var="status"/>
+<fmt:message key="top.podcast" var="podcast"/>
 <fmt:message key="top.more" var="more"/>
 <fmt:message key="top.help" var="help"/>
 <fmt:message key="top.search" var="search"/>
@@ -48,7 +49,7 @@
         <table><tr align="middle">
             <td style="width:40pt;padding-right:10pt"><a href="home.view?" target="main"><img src="<c:url value="/icons/home.png"/>" title="${home}" alt="${home}"/><br/>${home}</a></td>
             <td style="width:40pt;padding-right:10pt"><a href="nowPlaying.view?" target="main"><img src="<c:url value="/icons/now_playing.png"/>" title="${nowPlaying}" alt="${nowPlaying}"/><br/>${nowPlaying}</a></td>
-            <td style="width:40pt;padding-right:10pt"><a href="settings.view?" target="main"><img src="<c:url value="/icons/settings.png"/>" title="${settings}" alt="${settings}"/><br/>${settings}</a></td>
+            <td style="width:40pt;padding-right:10pt"><a href="podcastReceiver.view?" target="main"><img src="<c:url value="/icons/podcast_large.png"/>" title="${podcast}" alt="${podcast}"/><br/>${podcast}</a></td>            <td style="width:40pt;padding-right:10pt"><a href="settings.view?" target="main"><img src="<c:url value="/icons/settings.png"/>" title="${settings}" alt="${settings}"/><br/>${settings}</a></td>
             <td style="width:40pt;padding-right:10pt"><a href="status.view?" target="main"><img src="<c:url value="/icons/status.png"/>" title="${status}" alt="${status}"/><br/>${status}</a></td>
             <td style="width:40pt;padding-right:10pt"><a href="more.view?" target="main"><img src="<c:url value="/icons/more.png"/>" title="${more}" alt="${more}"/><br/>${more}</a></td>
             <td style="width:40pt;padding-right:10pt"><a href="help.view?" target="main"><img src="<c:url value="/icons/help.png"/>" title="${help}" alt="${help}"/><br/>${help}</a></td>

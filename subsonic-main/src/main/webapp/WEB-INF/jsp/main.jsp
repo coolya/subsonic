@@ -8,6 +8,7 @@
     </c:if>
     <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
 </head><body>
 
@@ -21,15 +22,15 @@
 
         function onload() {
             DWREngine.setErrorHandler(null);
-            startTimer();
+            startGetDirectoryTimer();
         }
 
-        function startTimer() {
-            nowPlayingService.getDirectory(nowPlayingCallback);
-            setTimeout("startTimer()", 10000);
+        function startGetDirectoryTimer() {
+            nowPlayingService.getDirectory(getDirectoryCallback);
+            setTimeout("startGetDirectoryTimer()", 10000);
         }
 
-        function nowPlayingCallback(dir){
+        function getDirectoryCallback(dir) {
             if (currentDir != null && currentDir != dir) {
                 location.replace("nowPlaying.view?");
             }
@@ -38,14 +39,43 @@
     </script>
 </c:if>
 
-<c:if test="${model.showAd}">
-    <div class="detail" style="text-align:center;padding-top:3em;padding-right:1em;float:right">
-        <sub:url value="donate.view" var="donateUrl">
-            <sub:param name="path" value="${model.dir.path}"/>
-        </sub:url>
-        <fmt:message key="main.donate"><fmt:param value="${donateUrl}"/></fmt:message>
-    </div>
+<c:if test="${model.showNowPlaying}">
+
+    <!-- This script uses AJAX to periodically retrieve what all users are playing. -->
+    <script type="text/javascript" language="javascript">
+
+        DWREngine.setErrorHandler(null);
+        startGetNowPlayingTimer();
+
+        function startGetNowPlayingTimer() {
+            nowPlayingService.getNowPlaying(getNowPlayingCallback);
+            setTimeout("startGetNowPlayingTimer()", 10000);
+        }
+
+        function getNowPlayingCallback(nowPlaying) {
+            var html = nowPlaying.length == 0 ? "" : "<h2><fmt:message key="main.nowplaying"/></h2>";
+            for (var i = 0; i < nowPlaying.length; i++) {
+                html += "<p class='detail'>" + nowPlaying[i].username + "<br/>";
+                html += "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'><em>" +
+                        nowPlaying[i].artist + "</em></br>" + nowPlaying[i].title + "</a></p>";
+            }
+            DWRUtil.setValue("nowPlaying", html);
+        }
+    </script>
 </c:if>
+
+<div style=";margin-top:7em;padding:0 1em 0 1em;float:right;border-left:1px solid #<spring:theme code="detailColor"/>">
+    <c:if test="${model.showAd}">
+        <div class="detail" style="text-align:center">
+            <sub:url value="donate.view" var="donateUrl">
+                <sub:param name="path" value="${model.dir.path}"/>
+            </sub:url>
+            <fmt:message key="main.donate"><fmt:param value="${donateUrl}"/></fmt:message>
+        </div>
+    </c:if>
+    <div id="nowPlaying">
+    </div>
+</div>
 
 <div style="margin-right:160px">
 <h1>

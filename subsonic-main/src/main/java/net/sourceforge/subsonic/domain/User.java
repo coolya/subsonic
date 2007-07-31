@@ -21,6 +21,7 @@ public class User {
     private boolean isPlaylistRole;
     private boolean isCoverArtRole;
     private boolean isCommentRole;
+    private boolean isPodcastRole;
 
     public User(String username, String password, long bytesStreamed, long bytesDownloaded, long bytesUploaded) {
         this.username = username;
@@ -118,6 +119,14 @@ public class User {
         this.isCoverArtRole = isCoverArtRole;
     }
 
+    public boolean isPodcastRole() {
+        return isPodcastRole;
+    }
+
+    public void setPodcastRole(boolean isPodcastRole) {
+        this.isPodcastRole = isPodcastRole;
+    }
+
     public String toString() {
         StringBuffer result = new StringBuffer(username);
 
@@ -138,6 +147,9 @@ public class User {
         }
         if (isCommentRole) {
             result.append(" [comment]");
+        }
+        if (isPodcastRole) {
+            result.append(" [podcast]");
         }
 
         return result.toString();
