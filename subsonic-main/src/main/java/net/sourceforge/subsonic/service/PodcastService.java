@@ -45,9 +45,16 @@ public class PodcastService {
     private SecurityService securityService;
 
     public PodcastService() {
-        refreshExecutor = Executors.newSingleThreadExecutor();
-        downloadExecutor = Executors.newFixedThreadPool(3);
-        scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+        ThreadFactory threadFactory = new ThreadFactory() {
+            public Thread newThread(Runnable r) {
+                Thread t = Executors.defaultThreadFactory().newThread(r);
+                t.setDaemon(true);
+                return t;
+            }
+        };
+        refreshExecutor = Executors.newSingleThreadExecutor(threadFactory);
+        downloadExecutor = Executors.newFixedThreadPool(3, threadFactory);
+        scheduledExecutor = Executors.newSingleThreadScheduledExecutor(threadFactory);
     }
 
     public synchronized void schedule() {
