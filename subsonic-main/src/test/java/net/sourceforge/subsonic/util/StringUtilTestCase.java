@@ -126,4 +126,22 @@ public class StringUtilTestCase extends TestCase {
         assertEquals("Error in md5Hex().", "d41d8cd98f00b204e9800998ecf8427e", StringUtil.md5Hex(""));
         assertEquals("Error in md5Hex().", "308ed0af23d48f6d2fd4717e77a23e0c", StringUtil.md5Hex("sindre@activeobjects.no"));
     }
+
+    public void testGetUrlFile() {
+        assertEquals("Error in getUrlFile().", "foo.mp3", StringUtil.getUrlFile("http://www.asdf.com/foo.mp3"));
+        assertEquals("Error in getUrlFile().", "foo.mp3", StringUtil.getUrlFile("http://www.asdf.com/bar/foo.mp3"));
+        assertEquals("Error in getUrlFile().", "foo", StringUtil.getUrlFile("http://www.asdf.com/bar/foo"));
+        assertEquals("Error in getUrlFile().", "foo.mp3", StringUtil.getUrlFile("http://www.asdf.com/bar/foo.mp3?a=1&b=2"));
+        assertNull("Error in getUrlFile().", StringUtil.getUrlFile("not a url"));
+        assertNull("Error in getUrlFile().", StringUtil.getUrlFile("http://www.asdf.com"));
+        assertNull("Error in getUrlFile().", StringUtil.getUrlFile("http://www.asdf.com/"));
+        assertNull("Error in getUrlFile().", StringUtil.getUrlFile("http://www.asdf.com/foo/"));
+    }
+
+    public void testFileSystemSafe() {
+        assertEquals("Error in fileSystemSafe().", "foo", StringUtil.fileSystemSafe("foo"));
+        assertEquals("Error in fileSystemSafe().", "foo.mp3", StringUtil.fileSystemSafe("foo.mp3"));
+        assertEquals("Error in fileSystemSafe().", "foo_bar", StringUtil.fileSystemSafe("foo/bar"));
+        assertEquals("Error in fileSystemSafe().", "foo_bar", StringUtil.fileSystemSafe("foo\\bar"));
+    }
 }

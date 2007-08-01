@@ -35,7 +35,7 @@ public class PodcastReceiverAdminController extends AbstractController {
         }
         if (request.getParameter("deleteEpisode") != null) {
             for (int episodeId : parseIds(request.getParameter("deleteEpisode"))) {
-                podcastService.deleteEpisode(episodeId);
+                podcastService.deleteEpisode(episodeId, true);
             }
         }
         if (request.getParameter("refresh") != null) {

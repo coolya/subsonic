@@ -1,15 +1,21 @@
 package net.sourceforge.subsonic.util;
 
-import org.apache.commons.io.*;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.*;
-import java.net.*;
-import java.text.*;
-import java.util.*;
-import java.util.regex.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Miscellaneous string utility methods.
@@ -22,27 +28,30 @@ public final class StringUtil {
     public static final String ENCODING_UTF8 = "UTF-8";
 
     private static final String[][] HTML_SUBSTITUTIONS = {
-            {"&",  "&amp;"},
-            {"<",  "&lt;"},
-            {">",  "&gt;"},
-            {"'",  "&#39;"},
+            {"&", "&amp;"},
+            {"<", "&lt;"},
+            {">", "&gt;"},
+            {"'", "&#39;"},
             {"\"", "&#34;"},
     };
 
     private static final String[][] MIME_TYPES = {
-            {"mp3",  "audio/mpeg"},
-            {"mpg",  "video/mpeg"},
+            {"mp3", "audio/mpeg"},
+            {"mpg", "video/mpeg"},
             {"mpeg", "video/mpeg"},
-            {"mp4",  "audio/mp4"},
-            {"m4a",  "audio/mp4"},
+            {"mp4", "audio/mp4"},
+            {"m4a", "audio/mp4"},
             {"mpg4", "audio/mp4"},
-            {"ogg",  "application/ogg"},
+            {"ogg", "application/ogg"},
     };
 
+    private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", ".."};
+
     /**
-     * Disallow external instantiation.
-     */
-    private StringUtil() {}
+    * Disallow external instantiation.
+    */
+    private StringUtil() {
+    }
 
     /**
      * Returns the specified string converted to a format suitable for
@@ -66,11 +75,12 @@ public final class StringUtil {
     }
 
     /**
-    * Returns the suffix (the substring after the last dot) of the given string. The dot
-    * is included in the returned suffix.
-    * @param s The string in question.
-    * @return The suffix, or an empty string if no suffix is found.
-    */
+     * Returns the suffix (the substring after the last dot) of the given string. The dot
+     * is included in the returned suffix.
+     *
+     * @param s The string in question.
+     * @return The suffix, or an empty string if no suffix is found.
+     */
     public static String getSuffix(String s) {
         int index = s.lastIndexOf('.');
         return index == -1 ? "" : s.substring(index);
@@ -79,6 +89,7 @@ public final class StringUtil {
     /**
      * Removes the suffix (the substring after the last dot) of the given string. The dot is
      * also removed.
+     *
      * @param s The string in question, e.g., "foo.mp3".
      * @return The string without the suffix, e.g., "foo".
      */
@@ -88,11 +99,12 @@ public final class StringUtil {
     }
 
     /**
-    * Returns the proper MIME type for the given suffix.
-    * @param suffix The suffix, e.g., "mp3" or ".mp3".
-    * @return The corresponding MIME type, e.g., "audio/mpeg". If no MIME type is found,
-    *  <code>application/octet-stream</code> is returned.
-    */
+     * Returns the proper MIME type for the given suffix.
+     *
+     * @param suffix The suffix, e.g., "mp3" or ".mp3".
+     * @return The corresponding MIME type, e.g., "audio/mpeg". If no MIME type is found,
+     *         <code>application/octet-stream</code> is returned.
+     */
     public static String getMimeType(String suffix) {
         for (String[] map : MIME_TYPES) {
             if (map[0].equalsIgnoreCase(suffix) || ('.' + map[0]).equalsIgnoreCase(suffix)) {
@@ -103,19 +115,19 @@ public final class StringUtil {
     }
 
     /**
-    * Converts a byte-count to a formatted string suitable for display to the user.
-    * For instance:
-    * <ul>
-    * <li><code>format(918)</code> returns <em>"918 B"</em>.</li>
-    * <li><code>format(98765)</code> returns <em>"96 KB"</em>.</li>
-    * <li><code>format(1238476)</code> returns <em>"1.2 MB"</em>.</li>
-    * </ul>
-    * This method assumes that 1 KB is 1024 bytes.
-    *
-    * @param byteCount The number of bytes.
-    * @param locale The locale used for formatting.
-    * @return The formatted string.
-    */
+     * Converts a byte-count to a formatted string suitable for display to the user.
+     * For instance:
+     * <ul>
+     * <li><code>format(918)</code> returns <em>"918 B"</em>.</li>
+     * <li><code>format(98765)</code> returns <em>"96 KB"</em>.</li>
+     * <li><code>format(1238476)</code> returns <em>"1.2 MB"</em>.</li>
+     * </ul>
+     * This method assumes that 1 KB is 1024 bytes.
+     *
+     * @param byteCount The number of bytes.
+     * @param locale    The locale used for formatting.
+     * @return The formatted string.
+     */
     public static synchronized String formatBytes(long byteCount, Locale locale) {
 
         // More than 1 GB?
@@ -144,6 +156,7 @@ public final class StringUtil {
      * are interpreted as grouping operator. <br/>
      * For instance, the input <code>"u2 rem "greatest hits""</code> will return an array with
      * three elements: <code>{"u2", "rem", "greatest hits"}</code>
+     *
      * @param input The input string.
      * @return Array of elements.
      */
@@ -170,6 +183,7 @@ public final class StringUtil {
     /**
      * Reads lines from the given input stream. All lines are trimmed. Empty lines and lines starting
      * with "#" are skipped. The input stream is always closed by this method.
+     *
      * @param in The input stream to read from.
      * @return Array of lines.
      * @throws IOException If an I/O error occurs.
@@ -197,7 +211,8 @@ public final class StringUtil {
     /**
      * Change protocol from "https" to "http" for the given URL. The port number is also changed,
      * but not if the given URL is already "http".
-     * @param url The original URL.
+     *
+     * @param url  The original URL.
      * @param port The port number to use, for instance 443.
      * @return The transformed URL.
      * @throws MalformedURLException If the original URL is invalid.
@@ -212,6 +227,7 @@ public final class StringUtil {
 
     /**
      * Determines whether a is equal to b, taking null into account.
+     *
      * @return Whether a and b are equal, or both null.
      */
     public static boolean isEqual(Object a, Object b) {
@@ -220,6 +236,7 @@ public final class StringUtil {
 
     /**
      * Parses a locale from the given string.
+     *
      * @param s The locale string. Should be formatted as per the documentation in {@link Locale#toString()}.
      * @return The locale.
      */
@@ -244,6 +261,7 @@ public final class StringUtil {
 
     /**
      * Encodes the given string by using the hexadecimal representation of its UTF-8 bytes.
+     *
      * @param s The string to encode.
      * @return The encoded string.
      * @throws Exception If an error occurs.
@@ -258,6 +276,7 @@ public final class StringUtil {
 
     /**
      * Decodes the given string by using the hexadecimal representation of its UTF-8 bytes.
+     *
      * @param s The string to decode.
      * @return The decoded string.
      * @throws Exception If an error occurs.
@@ -286,5 +305,50 @@ public final class StringUtil {
         } catch (Exception x) {
             throw new RuntimeException(x.getMessage(), x);
         }
+    }
+
+    /**
+     * Returns the file part of an URL. For instance:
+     * <p/>
+     * <code>
+     * getUrlFile("http://archive.ncsa.uiuc.edu:80/SDG/Software/Mosaic/Demo/url-primer.html")
+     * </code>
+     * <p/>
+     * will return "url-primer.html".
+     *
+     * @param url The URL in question.
+     * @return The file part, or <code>null</code> if no file can be resolved.
+     */
+    public static String getUrlFile(String url) {
+        try {
+            String path = new URL(url).getPath();
+            if (StringUtils.isBlank(path) || path.endsWith("/")) {
+                return null;
+            }
+
+            File file = new File(path);
+            String filename = file.getName();
+            if (StringUtils.isBlank(filename)) {
+                return null;
+            }
+            return filename;
+
+        } catch (MalformedURLException x) {
+            return null;
+        }
+    }
+
+    /**
+     * Makes a given filename safe by replacing special characters like slashes ("/" and "\")
+     * with underscores ("_").
+     *
+     * @param filename The filename in question.
+     * @return The filename with special characters replaced by underscores.
+     */
+    public static String fileSystemSafe(String filename) {
+        for (String s : FILE_SYSTEM_UNSAFE) {
+            filename = filename.replace(s, "_");
+        }
+        return filename;
     }
 }
