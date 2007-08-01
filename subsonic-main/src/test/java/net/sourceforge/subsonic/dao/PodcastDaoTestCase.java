@@ -25,6 +25,18 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
         assertChannelEquals(channel, newChannel);
     }
 
+    public void testChannelId() {
+        assertEquals("Error in createChannel.", 0, podcastDao.createChannel(new PodcastChannel("http://foo")));
+        assertEquals("Error in createChannel.", 1, podcastDao.createChannel(new PodcastChannel("http://foo")));
+        assertEquals("Error in createChannel.", 2, podcastDao.createChannel(new PodcastChannel("http://foo")));
+
+        podcastDao.deleteChannel(1);
+        assertEquals("Error in createChannel.", 3, podcastDao.createChannel(new PodcastChannel("http://foo")));
+
+        podcastDao.deleteChannel(3);
+        assertEquals("Error in createChannel.", 4, podcastDao.createChannel(new PodcastChannel("http://foo")));
+    }
+
     public void testUpdateChannel() {
         PodcastChannel channel = new PodcastChannel("http://foo");
         podcastDao.createChannel(channel);
@@ -82,6 +94,28 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
         assertEpisodeEquals(episode, newEpisode);
     }
 
+    public void testGetEpisodes() {
+        int channelId = createChannel();
+        PodcastEpisode a = new PodcastEpisode(null, channelId, "a", null, null, null,
+                                              new Date(3000), null, null, null, PodcastEpisode.Status.NEW);
+        PodcastEpisode b = new PodcastEpisode(null, channelId, "b", null, null, null,
+                                              new Date(1000), null, null, null, PodcastEpisode.Status.NEW);
+        PodcastEpisode c = new PodcastEpisode(null, channelId, "c", null, null, null,
+                                              new Date(2000), null, null, null, PodcastEpisode.Status.NEW);
+        PodcastEpisode d = new PodcastEpisode(null, channelId, "c", null, null, null,
+                                              null, null, null, null, PodcastEpisode.Status.NEW);
+        podcastDao.createEpisode(a);
+        podcastDao.createEpisode(b);
+        podcastDao.createEpisode(c);
+        podcastDao.createEpisode(d);
+
+        PodcastEpisode[] episodes = podcastDao.getEpisodes(channelId);
+        assertEquals("Error in getEpisodes().", 4, episodes.length);
+        assertEpisodeEquals(a,  episodes[0]);
+        assertEpisodeEquals(c,  episodes[1]);
+        assertEpisodeEquals(b,  episodes[2]);
+        assertEpisodeEquals(d,  episodes[3]);
+    }
 
 
     public void testUpdateEpisode() {

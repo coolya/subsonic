@@ -7,6 +7,7 @@ import net.sourceforge.subsonic.domain.PodcastEpisode;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -24,7 +25,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Provides services for Podcast reception.
@@ -35,7 +41,8 @@ public class PodcastService {
 
     private static final Logger LOG = Logger.getLogger(PodcastService.class);
     private static final DateFormat RSS_DATE_FORMAT = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
-    private static final Namespace ITUNES_NAMESPACE = Namespace.getNamespace("http://www.itunes.com/DTDs/Podcast-1.0.dtd");
+    private static final Namespace[] ITUNES_NAMESPACES = {Namespace.getNamespace("http://www.itunes.com/DTDs/Podcast-1.0.dtd"),
+                                                          Namespace.getNamespace("http://www.itunes.com/dtds/podcast-1.0.dtd")};
 
     private final ExecutorService refreshExecutor;
     private final ExecutorService downloadExecutor;
@@ -61,7 +68,7 @@ public class PodcastService {
     public synchronized void schedule() {
         Runnable task = new Runnable() {
             public void run() {
-                refresh(true);
+                refreshAllChannels(true);
             }
         };
 
@@ -91,9 +98,19 @@ public class PodcastService {
      */
     public void createChannel(String url) {
         PodcastChannel channel = new PodcastChannel(url);
-        podcastDao.createChannel(channel);
+        int channelId = podcastDao.createChannel(channel);
 
-        refresh(false);
+        refreshChannels(new PodcastChannel[]{getChannel(channelId)}, true);
+    }
+
+    private PodcastChannel getChannel(int channelId) {
+        PodcastChannel[] all = getAllChannels();
+        for (PodcastChannel channel : all) {
+            if (channelId == channel.getId()) {
+                return channel;
+            }
+        }
+        return null;
     }
 
     /**
@@ -110,7 +127,8 @@ public class PodcastService {
      *
      * @param channelId      The Podcast channel ID.
      * @param includeDeleted Whether to include logically deleted episodes in the result.
-     * @return Possibly empty array of all Podcast episodes for the given channel.
+     * @return Possibly empty array of all Podcast episodes for the given channel, sorted in
+     *         reverse chronological order (newest episode first).
      */
     public PodcastEpisode[] getEpisodes(int channelId, boolean includeDeleted) {
         PodcastEpisode[] all = podcastDao.getEpisodes(channelId);
@@ -153,17 +171,22 @@ public class PodcastService {
         return null;
     }
 
-    public void refresh(final boolean downloadEpisodes) {
+    public void refreshAllChannels(boolean downloadEpisodes) {
+        refreshChannels(getAllChannels(), downloadEpisodes);
+    }
+
+    private void refreshChannels(final PodcastChannel[] channels, final boolean downloadEpisodes) {
         Runnable task = new Runnable() {
             public void run() {
-                doRefresh(downloadEpisodes);
+                doRefresh(channels, downloadEpisodes);
             }
         };
         refreshExecutor.submit(task);
     }
 
-    private void doRefresh(boolean downloadEpisodes) {
-        for (PodcastChannel channel : getAllChannels()) {
+    @SuppressWarnings({"unchecked"})
+    private void doRefresh(PodcastChannel[] channels, boolean downloadEpisodes) {
+        for (PodcastChannel channel : channels) {
 
             InputStream in = null;
             try {
@@ -207,7 +230,13 @@ public class PodcastService {
 
             String title = episodeElement.getChildTextTrim("title");
             String description = episodeElement.getChildTextTrim("description");
-            String duration = episodeElement.getChildTextTrim("duration", ITUNES_NAMESPACE);
+            String duration = null;
+            for (Namespace ns : ITUNES_NAMESPACES) {
+                duration = episodeElement.getChildTextTrim("duration", ns);
+                if (duration != null) {
+                    break;
+                }
+            }
 
             Element enclosure = episodeElement.getChild("enclosure");
             String url = enclosure.getAttributeValue("url");
@@ -236,6 +265,11 @@ public class PodcastService {
     private void downloadEpisode(PodcastChannel channel, PodcastEpisode episode) {
         InputStream in = null;
         OutputStream out = null;
+
+        if (getEpisode(episode.getId(), false) == null) {
+            LOG.info("Podcast " + episode.getUrl() + " was deleted. Aborting download.");
+            return;
+        }
 
         try {
 
@@ -307,6 +341,9 @@ public class PodcastService {
                 return;
             }
         }
+
+        // Reverse array to get chronological order (oldest episodes first).
+        ArrayUtils.reverse(episodes);
 
         int episodesToDelete = Math.max(0, episodes.length - episodeCount);
         for (int i = 0; i < episodesToDelete; i++) {

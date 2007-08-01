@@ -39,7 +39,7 @@ public class PodcastReceiverAdminController extends AbstractController {
             }
         }
         if (request.getParameter("refresh") != null) {
-            podcastService.refresh(true);
+            podcastService.refreshAllChannels(true);
         }
     }
 

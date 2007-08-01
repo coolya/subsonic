@@ -28,11 +28,14 @@ public class PodcastDao extends AbstractDao {
      * Creates a new Podcast channel.
      *
      * @param channel The Podcast channel to create.
+     * @return The ID of the newly created channel.
      */
-    public void createChannel(PodcastChannel channel) {
+    public synchronized int createChannel(PodcastChannel channel) {
         String sql = "insert into podcast_channel (" + CHANNEL_COLUMNS + ") values (null, ?, ?, ?)";
         getJdbcTemplate().update(sql, new Object[]{channel.getUrl(), channel.getTitle(), channel.getDescription()});
+
         LOG.info("Created Podcast channel " + channel.getUrl());
+        return getJdbcTemplate().queryForInt("select max(id) from podcast_channel");
     }
 
     /**
@@ -84,10 +87,11 @@ public class PodcastDao extends AbstractDao {
     /**
      * Returns all Podcast episodes for a given channel.
      *
-     * @return Possibly empty array of all Podcast episodes for the given channel.
+     * @return Possibly empty array of all Podcast episodes for the given channel, sorted in
+     *         reverse chronological order (newest episode first).
      */
     public PodcastEpisode[] getEpisodes(int channelId) {
-        String sql = "select " + EPISODE_COLUMNS + " from podcast_episode where channel_id=" + channelId;
+        String sql = "select " + EPISODE_COLUMNS + " from podcast_episode where channel_id=" + channelId + " order by publish_date desc";
         return (PodcastEpisode[]) getJdbcTemplate().query(sql, episodeRowMapper).toArray(new PodcastEpisode[0]);
     }
 
@@ -112,9 +116,9 @@ public class PodcastDao extends AbstractDao {
     public int updateEpisode(PodcastEpisode episode) {
         String sql = "update podcast_episode set url=?, path=?, title=?, description=?, publish_date=?, duration=?, bytes_total=?, bytes_downloaded=?, status=? where id=?";
         return getJdbcTemplate().update(sql, new Object[]{episode.getUrl(), episode.getPath(), episode.getTitle(),
-                                                         episode.getDescription(), episode.getPublishDate(), episode.getDuration(),
-                                                         episode.getBytesTotal(), episode.getBytesDownloaded(), episode.getStatus().name(),
-                                                         episode.getId()});
+                                                          episode.getDescription(), episode.getPublishDate(), episode.getDuration(),
+                                                          episode.getBytesTotal(), episode.getBytesDownloaded(), episode.getStatus().name(),
+                                                          episode.getId()});
     }
 
     /**
