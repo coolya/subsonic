@@ -293,10 +293,6 @@ public class PodcastService {
         }
     }
 
-    // TODO: "When new episodes are available: -> Download all, Download the most recent one, Do nothing"
-
-    // TODO: Must sort on publish date. (e.g., itavisen)
-
     private synchronized void deleteObsoleteEpisodes(PodcastChannel channel) {
         int episodeCount = settingsService.getPodcastEpisodeCount();
         if (episodeCount == -1) {

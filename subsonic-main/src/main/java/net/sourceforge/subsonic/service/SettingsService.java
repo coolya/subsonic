@@ -67,7 +67,7 @@ public class SettingsService {
     // Default values.
     private static final String DEFAULT_INDEX_STRING = "A B C D E F G H I J K L M N O P Q R S T U V W X-Z(XYZ)";
     private static final String DEFAULT_IGNORED_ARTICLES = "The El La Los Las Le Les";
-    private static final String DEFAULT_SHORTCUTS = "New Incoming";
+    private static final String DEFAULT_SHORTCUTS = "New Incoming Podcast";
     private static final String DEFAULT_PLAYLIST_FOLDER = "c:/playlists";
     private static final String DEFAULT_MUSIC_MASK = ".mp3 .ogg .aac .wav .wma";
     private static final String DEFAULT_COVER_ART_MASK = "folder.jpg cover.jpg .jpg .jpeg .gif .png";
