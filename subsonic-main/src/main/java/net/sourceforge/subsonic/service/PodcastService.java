@@ -232,13 +232,10 @@ public class PodcastService {
         for (Element episodeElement : episodeElements) {
 
             String title = episodeElement.getChildTextTrim("title");
+            String duration = getITunesElement(episodeElement, "duration");
             String description = episodeElement.getChildTextTrim("description");
-            String duration = null;
-            for (Namespace ns : ITUNES_NAMESPACES) {
-                duration = episodeElement.getChildTextTrim("duration", ns);
-                if (duration != null) {
-                    break;
-                }
+            if (StringUtils.isBlank(description)) {
+                description = getITunesElement(episodeElement, "summary");
             }
 
             Element enclosure = episodeElement.getChild("enclosure");
@@ -295,6 +292,16 @@ public class PodcastService {
             }
             podcastDao.createEpisode(episode);
         }
+    }
+
+    private String getITunesElement(Element element, String childName) {
+        for (Namespace ns : ITUNES_NAMESPACES) {
+            String value = element.getChildTextTrim(childName, ns);
+            if (value != null) {
+                return value;
+            }
+        }
+        return null;
     }
 
     private void doDownloadEpisode(PodcastEpisode episode) {

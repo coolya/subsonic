@@ -26,15 +26,17 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
     }
 
     public void testChannelId() {
-        assertEquals("Error in createChannel.", 0, podcastDao.createChannel(new PodcastChannel("http://foo")));
-        assertEquals("Error in createChannel.", 1, podcastDao.createChannel(new PodcastChannel("http://foo")));
-        assertEquals("Error in createChannel.", 2, podcastDao.createChannel(new PodcastChannel("http://foo")));
+        int channelId = podcastDao.createChannel(new PodcastChannel("http://foo"));
 
-        podcastDao.deleteChannel(1);
-        assertEquals("Error in createChannel.", 3, podcastDao.createChannel(new PodcastChannel("http://foo")));
+        assertEquals("Error in createChannel.", channelId + 1, podcastDao.createChannel(new PodcastChannel("http://foo")));
+        assertEquals("Error in createChannel.", channelId + 2, podcastDao.createChannel(new PodcastChannel("http://foo")));
+        assertEquals("Error in createChannel.", channelId + 3, podcastDao.createChannel(new PodcastChannel("http://foo")));
 
-        podcastDao.deleteChannel(3);
-        assertEquals("Error in createChannel.", 4, podcastDao.createChannel(new PodcastChannel("http://foo")));
+        podcastDao.deleteChannel(channelId + 1);
+        assertEquals("Error in createChannel.", channelId + 4, podcastDao.createChannel(new PodcastChannel("http://foo")));
+
+        podcastDao.deleteChannel(channelId + 4);
+        assertEquals("Error in createChannel.", channelId + 5, podcastDao.createChannel(new PodcastChannel("http://foo")));
     }
 
     public void testUpdateChannel() {
