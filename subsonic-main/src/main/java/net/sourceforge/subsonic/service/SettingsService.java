@@ -55,7 +55,8 @@ public class SettingsService {
     private static final String KEY_INDEX_CREATION_HOUR = "IndexCreationHour";
     private static final String KEY_PODCAST_UPDATE_INTERVAL = "PodcastUpdateInterval";
     private static final String KEY_PODCAST_FOLDER = "PodcastFolder";
-    private static final String KEY_PODCAST_EPISODE_COUNT = "PodcastEpisodeCount";
+    private static final String KEY_PODCAST_EPISODE_RETENTION_COUNT = "PodcastEpisodeRetentionCount";
+    private static final String KEY_PODCAST_EPISODE_DOWNLOAD_COUNT = "PodcastEpisodeDownloadCount";
     private static final String KEY_DOWNLOAD_BITRATE_LIMIT = "DownloadBitrateLimit";
     private static final String KEY_UPLOAD_BITRATE_LIMIT = "UploadBitrateLimit";
     private static final String KEY_STREAM_PORT = "StreamPort";
@@ -81,7 +82,8 @@ public class SettingsService {
     private static final int DEFAULT_INDEX_CREATION_HOUR = 3;
     private static final int DEFAULT_PODCAST_UPDATE_INTERVAL = 24;
     private static final String DEFAULT_PODCAST_FOLDER = "c:/music/Podcast";
-    private static final int DEFAULT_PODCAST_EPISODE_COUNT = 10;
+    private static final int DEFAULT_PODCAST_EPISODE_RETENTION_COUNT = 10;
+    private static final int DEFAULT_PODCAST_EPISODE_DOWNLOAD_COUNT = 1;
     private static final long DEFAULT_DOWNLOAD_BITRATE_LIMIT = 0;
     private static final long DEFAULT_UPLOAD_BITRATE_LIMIT = 0;
     private static final long DEFAULT_STREAM_PORT = 0;
@@ -94,8 +96,8 @@ public class SettingsService {
     private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_SHORTCUTS, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
                                           KEY_COVER_ART_MASK, KEY_COVER_ART_LIMIT, KEY_WELCOME_MESSAGE, KEY_LOCALE_LANGUAGE,
                                           KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_THEME_ID, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
-                                          KEY_PODCAST_UPDATE_INTERVAL, KEY_PODCAST_FOLDER, KEY_PODCAST_EPISODE_COUNT,
-                                          KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT,
+                                          KEY_PODCAST_UPDATE_INTERVAL, KEY_PODCAST_FOLDER, KEY_PODCAST_EPISODE_RETENTION_COUNT,
+                                          KEY_PODCAST_EPISODE_DOWNLOAD_COUNT, KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT,
                                           KEY_LICENSE_EMAIL, KEY_LICENSE_CODE, KEY_LICENSE_DATE, KEY_DOWNSAMPLING_COMMAND};
 
     private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
@@ -345,13 +347,23 @@ public class SettingsService {
     }
 
     /** Returns the number of Podcast episodes to keep (-1 to keep all). */
-    public int getPodcastEpisodeCount() {
-        return Integer.parseInt(properties.getProperty(KEY_PODCAST_EPISODE_COUNT, String.valueOf(DEFAULT_PODCAST_EPISODE_COUNT)));
+    public int getPodcastEpisodeRetentionCount() {
+        return Integer.parseInt(properties.getProperty(KEY_PODCAST_EPISODE_RETENTION_COUNT, String.valueOf(DEFAULT_PODCAST_EPISODE_RETENTION_COUNT)));
     }
 
     /** Sets the number of Podcast episodes to keep (-1 to keep all). */
-    public void setPodcastEpisodeCount(int count) {
-        setProperty(KEY_PODCAST_EPISODE_COUNT, String.valueOf(count));
+    public void setPodcastEpisodeRetentionCount(int count) {
+        setProperty(KEY_PODCAST_EPISODE_RETENTION_COUNT, String.valueOf(count));
+    }
+
+    /** Returns the number of Podcast episodes to download (-1 to download all). */
+    public int getPodcastEpisodeDownloadCount() {
+        return Integer.parseInt(properties.getProperty(KEY_PODCAST_EPISODE_DOWNLOAD_COUNT, String.valueOf(DEFAULT_PODCAST_EPISODE_DOWNLOAD_COUNT)));
+    }
+
+    /** Sets the number of Podcast episodes to download (-1 to download all). */
+    public void setPodcastEpisodeDownloadCount(int count) {
+        setProperty(KEY_PODCAST_EPISODE_DOWNLOAD_COUNT, String.valueOf(count));
     }
 
     /** Returns the Podcast download folder. */

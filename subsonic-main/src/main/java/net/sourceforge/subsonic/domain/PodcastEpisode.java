@@ -131,6 +131,6 @@ public class PodcastEpisode {
     }
 
     public static enum Status {
-        NEW, DOWNLOADING, DOWNLOADED, ERROR, DELETED
+        NEW, DOWNLOADING, DOWNLOADED, ERROR, DELETED, SKIPPED
     }
 }

@@ -4,15 +4,15 @@ COMPLETED IN 3.2.BETA1
 Display what other users are playing (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=359)
 Get proper Podcast icon.
 Add log4j.properties
+When new episodes are available: -> Download all, Download the most recent one, Do nothing.  Add status "Skipped".
+Add "Download selected".  Only applicable for "New", "Error", "Skipped".
+When adding Podcast, start downloading that channel.
 
 
 TODO IN 3.2
 =============
 Ajax-ify Amazon pages.
-When new episodes are available: -> Download all, Download the most recent one, Do nothing.  Add status "Skipped".
 Add status "Queued"?
-Add "Download selected".  Only applicable for "New", "Error", "Skipped".
-When adding Podcast, start downloading that channel.
 Wrong progress for http://atvs.vg.no/script/podcast.php?category_id=7
 Resumable Podcast downloads.
 i18n podcastReceiver.jsp

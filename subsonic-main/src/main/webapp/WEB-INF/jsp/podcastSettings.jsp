@@ -14,7 +14,7 @@
     <tr>
         <td><fmt:message key="podcastsettings.update"/></td>
         <td>
-            <form:select path="interval" cssStyle="width:15em">
+            <form:select path="interval" cssStyle="width:20em">
                 <fmt:message key="podcastsettings.interval.manually" var="manually"/>
                 <fmt:message key="podcastsettings.interval.hourly" var="hourly"/>
                 <fmt:message key="podcastsettings.interval.daily" var="daily"/>
@@ -31,7 +31,7 @@
     <tr>
         <td><fmt:message key="podcastsettings.keep"/></td>
         <td>
-            <form:select path="episodeCount" cssStyle="width:15em">
+            <form:select path="episodeRetentionCount" cssStyle="width:20em">
                 <fmt:message key="podcastsettings.keep.all" var="all"/>
                 <fmt:message key="podcastsettings.keep.one" var="one"/>
 
@@ -48,8 +48,29 @@
     </tr>
 
     <tr>
+        <td><fmt:message key="podcastsettings.download"/></td>
+        <td>
+            <form:select path="episodeDownloadCount" cssStyle="width:20em">
+                <fmt:message key="podcastsettings.download.all" var="all"/>
+                <fmt:message key="podcastsettings.download.one" var="one"/>
+                <fmt:message key="podcastsettings.download.none" var="none"/>
+
+                <form:option value="-1" label="${all}"/>
+                <form:option value="1" label="${one}"/>
+
+                <c:forTokens items="2 3 4 5 10" delims=" " var="count">
+                    <fmt:message key="podcastsettings.download.many" var="many"><fmt:param value="${count}"/></fmt:message>
+                    <form:option value="${count}" label="${many}"/>
+                </c:forTokens>
+                <form:option value="0" label="${none}"/>
+
+            </form:select>
+        </td>
+    </tr>
+
+    <tr>
         <td><fmt:message key="podcastsettings.folder"/></td>
-        <td><form:input path="folder" cssStyle="width:15em"/></td>
+        <td><form:input path="folder" cssStyle="width:20em"/></td>
     </tr>
 
     <tr>

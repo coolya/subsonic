@@ -21,10 +21,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -146,7 +143,7 @@ public class PodcastService {
     }
 
 
-    private PodcastEpisode getEpisode(int episodeId, boolean includeDeleted) {
+    public PodcastEpisode getEpisode(int episodeId, boolean includeDeleted) {
         PodcastEpisode episode = podcastDao.getEpisode(episodeId);
         if (episode == null) {
             return null;
@@ -178,14 +175,14 @@ public class PodcastService {
     private void refreshChannels(final PodcastChannel[] channels, final boolean downloadEpisodes) {
         Runnable task = new Runnable() {
             public void run() {
-                doRefresh(channels, downloadEpisodes);
+                doRefreshChannels(channels, downloadEpisodes);
             }
         };
         refreshExecutor.submit(task);
     }
 
     @SuppressWarnings({"unchecked"})
-    private void doRefresh(PodcastChannel[] channels, boolean downloadEpisodes) {
+    private void doRefreshChannels(PodcastChannel[] channels, boolean downloadEpisodes) {
         for (PodcastChannel channel : channels) {
 
             InputStream in = null;
@@ -212,19 +209,25 @@ public class PodcastService {
             for (final PodcastChannel channel : getAllChannels()) {
                 for (final PodcastEpisode episode : getEpisodes(channel.getId(), false)) {
                     if (episode.getStatus() == PodcastEpisode.Status.NEW && episode.getUrl() != null) {
-                        Runnable task = new Runnable() {
-                            public void run() {
-                                downloadEpisode(channel, episode);
-                            }
-                        };
-                        downloadExecutor.submit(task);
+                        downloadEpisode(episode);
                     }
                 }
             }
         }
     }
 
+    public void downloadEpisode(final PodcastEpisode episode) {
+        Runnable task = new Runnable() {
+            public void run() {
+                doDownloadEpisode(episode);
+            }
+        };
+        downloadExecutor.submit(task);
+    }
+
     private void refreshEpisodes(PodcastChannel channel, List<Element> episodeElements) {
+
+        List<PodcastEpisode> episodes = new ArrayList<PodcastEpisode>();
 
         for (Element episodeElement : episodeElements) {
 
@@ -240,6 +243,7 @@ public class PodcastService {
 
             Element enclosure = episodeElement.getChild("enclosure");
             String url = enclosure.getAttributeValue("url");
+
             if (getEpisode(channel.getId(), url) == null) {
                 Long length = null;
                 try {
@@ -256,13 +260,44 @@ public class PodcastService {
                 }
                 PodcastEpisode episode = new PodcastEpisode(null, channel.getId(), url, null, title, description, date,
                                                             duration, length, 0L, PodcastEpisode.Status.NEW);
-                podcastDao.createEpisode(episode);
+                episodes.add(episode);
                 LOG.info("Created Podcast episode " + title);
             }
         }
+
+        // Sort episode in reverse chronological order (newest first)
+        Collections.sort(episodes, new Comparator<PodcastEpisode>() {
+            public int compare(PodcastEpisode a, PodcastEpisode b) {
+                long timeA = a.getPublishDate() == null ? 0L : a.getPublishDate().getTime();
+                long timeB = b.getPublishDate() == null ? 0L : b.getPublishDate().getTime();
+
+                if (timeA < timeB) {
+                    return 1;
+                }
+                if (timeA > timeB) {
+                    return -1;
+                }
+                return 0;
+            }
+        });
+
+
+        // Create episodes in database, skipping the proper number of episodes.
+        int downloadCount = settingsService.getPodcastEpisodeDownloadCount();
+        if (downloadCount == -1) {
+            downloadCount = Integer.MAX_VALUE;
+        }
+
+        for (int i = 0; i < episodes.size(); i++) {
+            PodcastEpisode episode = episodes.get(i);
+            if (i >= downloadCount) {
+                episode.setStatus(PodcastEpisode.Status.SKIPPED);
+            }
+            podcastDao.createEpisode(episode);
+        }
     }
 
-    private void downloadEpisode(PodcastChannel channel, PodcastEpisode episode) {
+    private void doDownloadEpisode(PodcastEpisode episode) {
         InputStream in = null;
         OutputStream out = null;
 
@@ -272,6 +307,7 @@ public class PodcastService {
         }
 
         try {
+            PodcastChannel channel = getChannel(episode.getChannelId());
 
             URL url = new URL(episode.getUrl());
             in = url.openStream();
@@ -328,7 +364,7 @@ public class PodcastService {
     }
 
     private synchronized void deleteObsoleteEpisodes(PodcastChannel channel) {
-        int episodeCount = settingsService.getPodcastEpisodeCount();
+        int episodeCount = settingsService.getPodcastEpisodeRetentionCount();
         if (episodeCount == -1) {
             return;
         }

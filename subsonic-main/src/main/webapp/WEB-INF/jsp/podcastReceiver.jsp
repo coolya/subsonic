@@ -8,6 +8,11 @@
 <script type="text/javascript" language="javascript">
     var channelCount = ${fn:length(model.channels)};
 
+    function downloadSelected() {
+        location.href = "podcastReceiverAdmin.view?downloadChannel=" + getSelectedChannels() +
+                        "&downloadEpisode=" + getSelectedEpisodes();
+    }
+
     function deleteSelected() {
         location.href = "podcastReceiverAdmin.view?deleteChannel=" + getSelectedChannels() +
                         "&deleteEpisode=" + getSelectedEpisodes();
@@ -156,6 +161,7 @@
 
 <table><tr>
     <c:if test="${model.user.podcastRole}">
+        <td style="padding-right:2em"><div class="forward"><a href="javascript:downloadSelected()">Download selected</a></div></td>
         <td style="padding-right:2em"><div class="forward"><a href="javascript:deleteSelected()">Delete selected</a></div></td>
         <td style="padding-right:2em"><div class="forward"><a href="podcastReceiverAdmin.view?refresh=">Check for new episodes</a></div></td>
     </c:if>

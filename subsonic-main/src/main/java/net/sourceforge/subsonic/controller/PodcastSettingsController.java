@@ -21,7 +21,8 @@ public class PodcastSettingsController extends SimpleFormController {
         PodcastSettingsCommand command = new PodcastSettingsCommand();
 
         command.setInterval(String.valueOf(settingsService.getPodcastUpdateInterval()));
-        command.setEpisodeCount(String.valueOf(settingsService.getPodcastEpisodeCount()));
+        command.setEpisodeRetentionCount(String.valueOf(settingsService.getPodcastEpisodeRetentionCount()));
+        command.setEpisodeDownloadCount(String.valueOf(settingsService.getPodcastEpisodeDownloadCount()));
         command.setFolder(settingsService.getPodcastFolder());
         return command;
     }
@@ -30,7 +31,8 @@ public class PodcastSettingsController extends SimpleFormController {
         PodcastSettingsCommand command = (PodcastSettingsCommand) comm;
 
         settingsService.setPodcastUpdateInterval(Integer.parseInt(command.getInterval()));
-        settingsService.setPodcastEpisodeCount(Integer.parseInt(command.getEpisodeCount()));
+        settingsService.setPodcastEpisodeRetentionCount(Integer.parseInt(command.getEpisodeRetentionCount()));
+        settingsService.setPodcastEpisodeDownloadCount(Integer.parseInt(command.getEpisodeDownloadCount()));
         settingsService.setPodcastFolder(command.getFolder());
         settingsService.save();
 

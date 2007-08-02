@@ -11,7 +11,8 @@ public class PodcastSettingsCommand {
 
     private String interval;
     private String folder;
-    private String episodeCount;
+    private String episodeRetentionCount;
+    private String episodeDownloadCount;
 
     public String getInterval() {
         return interval;
@@ -29,11 +30,19 @@ public class PodcastSettingsCommand {
         this.folder = folder;
     }
 
-    public String getEpisodeCount() {
-        return episodeCount;
+    public String getEpisodeRetentionCount() {
+        return episodeRetentionCount;
     }
 
-    public void setEpisodeCount(String episodeCount) {
-        this.episodeCount = episodeCount;
+    public void setEpisodeRetentionCount(String episodeRetentionCount) {
+        this.episodeRetentionCount = episodeRetentionCount;
+    }
+
+    public String getEpisodeDownloadCount() {
+        return episodeDownloadCount;
+    }
+
+    public void setEpisodeDownloadCount(String episodeDownloadCount) {
+        this.episodeDownloadCount = episodeDownloadCount;
     }
 }

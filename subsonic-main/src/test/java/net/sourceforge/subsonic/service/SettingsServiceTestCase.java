@@ -36,6 +36,10 @@ public class SettingsServiceTestCase extends TestCase {
         assertNull("Wrong default license email.", settingsService.getLicenseEmail());
         assertNull("Wrong default license code.", settingsService.getLicenseCode());
         assertNull("Wrong default license date.", settingsService.getLicenseDate());
+        assertEquals("Wrong default Podcast episode retention count.", 10, settingsService.getPodcastEpisodeRetentionCount());
+        assertEquals("Wrong default Podcast episode download count.", 1, settingsService.getPodcastEpisodeDownloadCount());
+        assertEquals("Wrong default Podcast folder.", "c:/music/Podcast", settingsService.getPodcastFolder());
+        assertEquals("Wrong default Podcast update interval.", 24, settingsService.getPodcastUpdateInterval());
     }
 
     public void testChangeSettings() {
@@ -55,6 +59,10 @@ public class SettingsServiceTestCase extends TestCase {
         settingsService.setLicenseEmail("sindre@foo.bar.no");
         settingsService.setLicenseCode(null);
         settingsService.setLicenseDate(new Date(223423412351253L));
+        settingsService.setPodcastEpisodeRetentionCount(5);
+        settingsService.setPodcastEpisodeDownloadCount(-1);
+        settingsService.setPodcastFolder("d:/podcasts");
+        settingsService.setPodcastUpdateInterval(-1);
 
         verifySettings(settingsService);
 
@@ -85,5 +93,9 @@ public class SettingsServiceTestCase extends TestCase {
         assertEquals("Wrong license email.", "sindre@foo.bar.no", ss.getLicenseEmail());
         assertEquals("Wrong license code.", null, ss.getLicenseCode());
         assertEquals("Wrong license date.", new Date(223423412351253L), ss.getLicenseDate());
+        assertEquals("Wrong Podcast episode retention count.", 5, settingsService.getPodcastEpisodeRetentionCount());
+        assertEquals("Wrong Podcast episode download count.", -1, settingsService.getPodcastEpisodeDownloadCount());
+        assertEquals("Wrong Podcast folder.", "d:/podcasts", settingsService.getPodcastFolder());
+        assertEquals("Wrong Podcast update interval.", -1, settingsService.getPodcastUpdateInterval());
     }
 }
