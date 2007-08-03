@@ -78,7 +78,10 @@
         <td>
             <form:select path="coverArtSchemeName" cssStyle="width:8em">
                 <c:forEach items="${command.coverArtSchemeHolders}" var="coverArtSchemeHolder">
-                    <form:option value="${coverArtSchemeHolder.name}" label="${coverArtSchemeHolder.description}"/>
+                    <c:set var="coverArtSchemeName">
+                        <fmt:message key="playersettings.coverart.${fn:toLowerCase(coverArtSchemeHolder.name)}"/>
+                    </c:set>
+                    <form:option value="${coverArtSchemeHolder.name}" label="${coverArtSchemeName}"/>
                 </c:forEach>
             </form:select>
         </td>
