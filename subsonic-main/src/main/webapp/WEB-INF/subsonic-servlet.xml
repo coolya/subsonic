@@ -259,6 +259,10 @@
         <property name="securityService" ref="securityService"/>
         <property name="musicFileService" ref="musicFileService"/>
     </bean>
+    <bean id="dbController" class="net.sourceforge.subsonic.controller.DBController">
+        <property name="viewName" value="db"/>
+        <property name="daoHelper" ref="daoHelper"/>
+    </bean>
 
     <bean id="savePlaylistValidator" class="net.sourceforge.subsonic.validator.SavePlaylistValidator">
         <property name="playlistService" ref="playlistService"/>
@@ -318,6 +322,7 @@
                 <prop key="/userChart.view">userChartController</prop>
                 <prop key="/download.view">downloadController</prop>
                 <prop key="/donate.view">donateController</prop>
+                <prop key="/db.view">dbController</prop>
                 <prop key="/podcastReceiver.view">podcastReceiverController</prop>
                 <prop key="/podcastReceiverAdmin.view">podcastReceiverAdminController</prop>
                 <prop key="/podcast.view">podcastController</prop>

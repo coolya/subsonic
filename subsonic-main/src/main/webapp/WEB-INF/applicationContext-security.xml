@@ -93,6 +93,7 @@
                 /internetRadioSettings.view=ROLE_ADMIN
                 /searchSettings.view=ROLE_ADMIN
                 /podcastSettings.view=ROLE_ADMIN
+                /db.view=ROLE_ADMIN
 
                 /deletePlaylist.view=ROLE_PLAYLIST
                 /savePlaylist.view=ROLE_PLAYLIST
