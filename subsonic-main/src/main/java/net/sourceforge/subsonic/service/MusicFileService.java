@@ -5,15 +5,16 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 import net.sourceforge.subsonic.domain.Mp3Parser;
 import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.util.FileUtil;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Provides services for instantiating and caching music files and cover art.
@@ -140,7 +141,7 @@ public class MusicFileService {
 
     private long getDirectoryLastModified(File dir) {
         long lastModified = dir.lastModified();
-        File[] subDirs = dir.listFiles((FileFilter) DirectoryFileFilter.INSTANCE);
+        File[] subDirs = FileUtil.listFiles(dir, (FileFilter) DirectoryFileFilter.INSTANCE);
         for (File subDir : subDirs) {
             lastModified = Math.max(lastModified, subDir.lastModified());
         }
@@ -152,7 +153,7 @@ public class MusicFileService {
             return;
         }
 
-        File[] files = dir.getFile().listFiles();
+        File[] files = FileUtil.listFiles(dir.getFile());
 
         // Sort alphabetically
         Arrays.sort(files, new Comparator<File>() {

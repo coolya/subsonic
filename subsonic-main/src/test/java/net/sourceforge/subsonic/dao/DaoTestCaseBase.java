@@ -1,9 +1,10 @@
 package net.sourceforge.subsonic.dao;
 
-import junit.framework.*;
-import org.springframework.jdbc.core.*;
+import junit.framework.TestCase;
+import net.sourceforge.subsonic.util.FileUtil;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.io.*;
+import java.io.File;
 
 /**
  * Superclass for all DAO test cases.
@@ -67,7 +68,7 @@ public abstract class DaoTestCaseBase extends TestCase {
 
     private static void delete(File file) {
         if (file.isDirectory()) {
-            for (File child : file.listFiles()) {
+            for (File child : FileUtil.listFiles(file)) {
                 delete(child);
             }
         }

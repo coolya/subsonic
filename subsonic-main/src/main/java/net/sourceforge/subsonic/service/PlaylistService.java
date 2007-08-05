@@ -1,14 +1,28 @@
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.domain.*;
-import org.apache.commons.lang.*;
-import org.jdom.*;
-import org.jdom.input.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.Playlist;
+import net.sourceforge.subsonic.util.FileUtil;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.Namespace;
+import org.jdom.input.SAXBuilder;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Provides services for loading and saving playlists to and from persistent storage.
@@ -77,7 +91,7 @@ public class PlaylistService {
      */
     public File[] getSavedPlaylists() {
         List<File> result = new ArrayList<File>();
-        File[] candidates = getPlaylistDirectory().listFiles(new PlaylistFilenameFilter());
+        File[] candidates = FileUtil.listFiles(getPlaylistDirectory(), new PlaylistFilenameFilter());
 
         // Happens if playlist directory is non-existing.
         if (candidates == null) {

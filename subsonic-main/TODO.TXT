@@ -9,12 +9,11 @@ Add "Download selected".  Only applicable for "New", "Error", "Skipped".
 When adding Podcast, start downloading that channel.
 Added db admin tool.
 Use org.springframework.jdbc.core.simple.ParameterizedRowMapper
-
+Handle that listFiles returns null. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=157&start=15)
+Show error messages properly in db.view
 
 TODO IN 3.2
 =============
-Handle that listFiles returns null. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=157&start=15)
-Show error messages properly in db.view
 Experiment with UNC paths.
 Add Podcast channel description as comment when creating new directory.
 Add status to Podcast channel (New, Downloading, Downloaded, Error).

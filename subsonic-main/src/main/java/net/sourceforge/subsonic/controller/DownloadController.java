@@ -11,6 +11,7 @@ import net.sourceforge.subsonic.service.PlaylistService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.StatusService;
+import net.sourceforge.subsonic.util.FileUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipOutputStream;
@@ -294,7 +295,7 @@ public class DownloadController implements Controller {
             out.putNextEntry(zipEntry);
             out.closeEntry();
 
-            File[] children = file.listFiles();
+            File[] children = FileUtil.listFiles(file);
             for (File child : children) {
                 zip(out, root, child, status);
             }

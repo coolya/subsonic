@@ -1,12 +1,22 @@
 package net.sourceforge.subsonic.domain;
 
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.service.*;
-import net.sourceforge.subsonic.util.*;
-import org.springframework.util.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.ServiceLocator;
+import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.util.FileUtil;
+import net.sourceforge.subsonic.util.StringUtil;
+import org.springframework.util.StringUtils;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Represents a file or directory containing music. Music files can be put in a {@link Playlist},
@@ -204,7 +214,7 @@ public class MusicFile {
     public List<MusicFile> getChildren(boolean includeDirectories, boolean sort) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>();
 
-        File[] files = file.listFiles();
+        File[] files = FileUtil.listFiles(file);
         MusicFile[] musicFiles = new MusicFile[files.length];
         for (int i = 0; i < files.length; i++) {
             musicFiles[i] = createMusicFile(files[i]);
@@ -287,7 +297,7 @@ public class MusicFile {
      * @throws IOException If an I/O error occurs.
      */
     public MusicFile getFirstChild() throws IOException {
-        File[] files = file.listFiles();
+        File[] files = FileUtil.listFiles(file);
         for (File f : files) {
             if (f.isFile() && acceptMusic(f)) {
                 try {
