@@ -1,12 +1,15 @@
 package net.sourceforge.subsonic.dao;
 
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.util.*;
-import org.springframework.jdbc.core.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.TranscodeScheme;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.util.StringUtil;
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Provides user-related database services.
@@ -25,25 +28,26 @@ public class UserDao extends AbstractDao {
                                                         "playlist_year, playlist_bit_rate, playlist_duration, playlist_format, playlist_file_size, " +
                                                         "last_fm_enabled, last_fm_username, last_fm_password, transcode_scheme, show_now_playing";
 
-    private static final Integer ROLE_ID_ADMIN      = 1;
-    private static final Integer ROLE_ID_DOWNLOAD   = 2;
-    private static final Integer ROLE_ID_UPLOAD     = 3;
-    private static final Integer ROLE_ID_PLAYLIST   = 4;
-    private static final Integer ROLE_ID_COVER_ART  = 5;
-    private static final Integer ROLE_ID_COMMENT    = 6;
-    private static final Integer ROLE_ID_PODCAST    = 7;
+    private static final Integer ROLE_ID_ADMIN = 1;
+    private static final Integer ROLE_ID_DOWNLOAD = 2;
+    private static final Integer ROLE_ID_UPLOAD = 3;
+    private static final Integer ROLE_ID_PLAYLIST = 4;
+    private static final Integer ROLE_ID_COVER_ART = 5;
+    private static final Integer ROLE_ID_COMMENT = 6;
+    private static final Integer ROLE_ID_PODCAST = 7;
 
     private UserRowMapper userRowMapper = new UserRowMapper();
     private UserSettingsRowMapper userSettingsRowMapper = new UserSettingsRowMapper();
 
     /**
      * Returns the user with the given username.
+     *
      * @param username The username used when logging in.
      * @return The user, or <code>null</code> if not found.
      */
     public User getUserByName(String username) {
         String sql = "select " + USER_COLUMNS + " from user where username=?";
-        User[] users = (User[]) getJdbcTemplate().query(sql, new Object[] {username}, userRowMapper).toArray(new User[0]);
+        User[] users = (User[]) getJdbcTemplate().query(sql, new Object[]{username}, userRowMapper).toArray(new User[0]);
         if (users.length == 0) {
             return null;
         }
@@ -54,6 +58,7 @@ public class UserDao extends AbstractDao {
 
     /**
      * Returns all users.
+     *
      * @return Possibly empty array of all users.
      */
     public User[] getAllUsers() {
@@ -67,6 +72,7 @@ public class UserDao extends AbstractDao {
 
     /**
      * Creates a new user.
+     *
      * @param user The user to create.
      */
     public void createUser(User user) {
@@ -78,6 +84,7 @@ public class UserDao extends AbstractDao {
 
     /**
      * Deletes the user with the given username.
+     *
      * @param username The username.
      */
     public void deleteUser(String username) {
@@ -86,34 +93,36 @@ public class UserDao extends AbstractDao {
         }
 
         String sql = "delete from user_role where username=?";
-        getJdbcTemplate().update(sql, new Object[] {username});
+        getJdbcTemplate().update(sql, new Object[]{username});
 
         sql = "delete from user where username=?";
-        getJdbcTemplate().update(sql, new Object[] {username});
+        getJdbcTemplate().update(sql, new Object[]{username});
     }
 
     /**
-    * Updates the given user.
-    * @param user The user to update.
-    */
+     * Updates the given user.
+     *
+     * @param user The user to update.
+     */
     public void updateUser(User user) {
         String sql = "update user set password=?, bytes_streamed=?, bytes_downloaded=?, bytes_uploaded=? " +
                      "where username=?";
-        getJdbcTemplate().update(sql, new Object[] {user.getPassword(), user.getBytesStreamed(),
-                                                    user.getBytesDownloaded(), user.getBytesUploaded(),
-                                                    user.getUsername()});
+        getJdbcTemplate().update(sql, new Object[]{user.getPassword(), user.getBytesStreamed(),
+                                                   user.getBytesDownloaded(), user.getBytesUploaded(),
+                                                   user.getUsername()});
         writeRoles(user);
     }
 
     /**
      * Returns the name of the roles for the given user.
+     *
      * @param username The user name.
      * @return Roles the user is granted.
      */
     public String[] getRolesForUser(String username) {
         String sql = "select r.name from role r, user_role ur " +
                      "where ur.username=? and ur.role_id=r.id";
-        List<?> roles = getJdbcTemplate().queryForList(sql, new Object[] {username}, String.class);
+        List<?> roles = getJdbcTemplate().queryForList(sql, new Object[]{username}, String.class);
         String[] result = new String[roles.size()];
         for (int i = 0; i < result.length; i++) {
             result[i] = (String) roles.get(i);
@@ -123,6 +132,7 @@ public class UserDao extends AbstractDao {
 
     /**
      * Returns settings for the given user.
+     *
      * @param username The username.
      * @return User-specific settings, or <code>null</code> if no such settings exist.
      */
@@ -135,6 +145,7 @@ public class UserDao extends AbstractDao {
 
     /**
      * Updates settings for the given username, creating it if necessary.
+     *
      * @param settings The user-specific settings.
      */
     public void updateUserSettings(UserSettings settings) {
@@ -159,7 +170,7 @@ public class UserDao extends AbstractDao {
 
     private void readRoles(User user) {
         String sql = "select role_id from user_role where username=?";
-        List<?> roles = getJdbcTemplate().queryForList(sql, new Object[] {user.getUsername()}, Integer.class);
+        List<?> roles = getJdbcTemplate().queryForList(sql, new Object[]{user.getUsername()}, Integer.class);
         for (Object role : roles) {
             if (ROLE_ID_ADMIN.equals(role)) {
                 user.setAdminRole(true);
@@ -183,39 +194,39 @@ public class UserDao extends AbstractDao {
 
     private void writeRoles(User user) {
         String sql = "delete from user_role where username=?";
-        getJdbcTemplate().update(sql, new Object[] {user.getUsername()});
+        getJdbcTemplate().update(sql, new Object[]{user.getUsername()});
         sql = "insert into user_role (username, role_id) values(?, ?)";
         if (user.isAdminRole()) {
-            getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_ADMIN});
+            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_ADMIN});
         }
         if (user.isDownloadRole()) {
-            getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_DOWNLOAD});
+            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_DOWNLOAD});
         }
         if (user.isUploadRole()) {
-            getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_UPLOAD});
+            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_UPLOAD});
         }
         if (user.isPlaylistRole()) {
-            getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_PLAYLIST});
+            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_PLAYLIST});
         }
         if (user.isCoverArtRole()) {
-            getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_COVER_ART});
+            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_COVER_ART});
         }
         if (user.isCommentRole()) {
-            getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_COMMENT});
+            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_COMMENT});
         }
         if (user.isPodcastRole()) {
-            getJdbcTemplate().update(sql, new Object[] {user.getUsername(), ROLE_ID_PODCAST});
+            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_PODCAST});
         }
     }
 
-    private static class UserRowMapper implements RowMapper {
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+    private static class UserRowMapper implements ParameterizedRowMapper<User> {
+        public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new User(rs.getString(1), rs.getString(2), rs.getLong(3), rs.getLong(4), rs.getLong(5));
         }
     }
 
-    private static class UserSettingsRowMapper implements RowMapper {
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+    private static class UserSettingsRowMapper implements ParameterizedRowMapper<UserSettings> {
+        public UserSettings mapRow(ResultSet rs, int rowNum) throws SQLException {
             int col = 1;
             UserSettings settings = new UserSettings(rs.getString(col++));
             settings.setLocale(StringUtil.parseLocale(rs.getString(col++)));

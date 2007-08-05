@@ -34,4 +34,12 @@
     </table>
 </c:if>
 
+<c:if test="${not empty model.error}">
+    <h1 style="margin-top:2em">Error</h1>
+
+    <p class="warning">
+        ${model.error}
+    </p>
+</c:if>
+
 </body></html>

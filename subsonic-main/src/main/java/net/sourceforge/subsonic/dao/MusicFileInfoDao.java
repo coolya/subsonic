@@ -5,7 +5,7 @@ import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicFileInfo;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -65,7 +65,7 @@ public class MusicFileInfoDao extends AbstractDao {
             return new ArrayList<String>();
         }
         String sql = "select path from user_rating " +
-                     "where exists (select 1 from music_file_info where user_rating.path = music_file_info.path and enabled=true) " + 
+                     "where exists (select 1 from music_file_info where user_rating.path = music_file_info.path and enabled=true) " +
                      "group by path " +
                      "order by avg(rating) desc " +
                      " limit " + count + " offset " + offset;
@@ -177,8 +177,8 @@ public class MusicFileInfoDao extends AbstractDao {
     }
 
 
-    private static class MusicFileInfoRowMapper implements RowMapper {
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+    private static class MusicFileInfoRowMapper implements ParameterizedRowMapper<MusicFileInfo> {
+        public MusicFileInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new MusicFileInfo(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getTimestamp(5), rs.getBoolean(6));
         }
     }

@@ -1,17 +1,25 @@
 package net.sourceforge.subsonic.dao;
 
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.domain.*;
-import org.springframework.jdbc.core.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.CoverArtScheme;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.Playlist;
+import net.sourceforge.subsonic.domain.TranscodeScheme;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Provides player-related database services.
  *
  * @author Sindre Mehus
  */
+@SuppressWarnings({"unchecked"})
 public class PlayerDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(PlayerDao.class);
@@ -23,6 +31,7 @@ public class PlayerDao extends AbstractDao {
 
     /**
      * Returns all players.
+     *
      * @return Possibly empty array of all users.
      */
     public Player[] getAllPlayers() {
@@ -32,6 +41,7 @@ public class PlayerDao extends AbstractDao {
 
     /**
      * Creates a new player.
+     *
      * @param player The player to create.
      */
     public synchronized void createPlayer(Player player) {
@@ -39,10 +49,10 @@ public class PlayerDao extends AbstractDao {
         int id = template.queryForInt("select max(id) from player") + 1;
         player.setId(String.valueOf(id));
         String sql = "insert into player (" + COLUMNS + ") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        template.update(sql, new Object[] {player.getId(), player.getName(), player.getType(), player.getUsername(),
-                                           player.getIpAddress(), player.isAutoControlEnabled(),
-                                           player.getLastSeen(), player.getCoverArtScheme().name(),
-                                           player.getTranscodeScheme().name(), player.isDynamicIp()});
+        template.update(sql, new Object[]{player.getId(), player.getName(), player.getType(), player.getUsername(),
+                                          player.getIpAddress(), player.isAutoControlEnabled(),
+                                          player.getLastSeen(), player.getCoverArtScheme().name(),
+                                          player.getTranscodeScheme().name(), player.isDynamicIp()});
         addPlaylist(player);
 
         LOG.info("Created player " + id + '.');
@@ -50,16 +60,18 @@ public class PlayerDao extends AbstractDao {
 
     /**
      * Deletes the player with the given ID.
+     *
      * @param id The player ID.
      */
     public void deletePlayer(String id) {
         String sql = "delete from player where id=?";
-        getJdbcTemplate().update(sql, new Object[] {id});
+        getJdbcTemplate().update(sql, new Object[]{id});
         playlists.remove(id);
     }
 
     /**
      * Updates the given player.
+     *
      * @param player The player to update.
      */
     public void updatePlayer(Player player) {
@@ -74,10 +86,10 @@ public class PlayerDao extends AbstractDao {
                      "transcode_scheme = ?, " +
                      "dynamic_ip = ? " +
                      "where id = ?";
-        getJdbcTemplate().update(sql, new Object[] {player.getName(), player.getType(), player.getUsername(),
-                                                    player.getIpAddress(), player.isAutoControlEnabled(),
-                                                    player.getLastSeen(), player.getCoverArtScheme().name(),
-                                                    player.getTranscodeScheme().name(), player.isDynamicIp(), player.getId()});
+        getJdbcTemplate().update(sql, new Object[]{player.getName(), player.getType(), player.getUsername(),
+                                                   player.getIpAddress(), player.isAutoControlEnabled(),
+                                                   player.getLastSeen(), player.getCoverArtScheme().name(),
+                                                   player.getTranscodeScheme().name(), player.isDynamicIp(), player.getId()});
     }
 
     private void addPlaylist(Player player) {
@@ -89,8 +101,8 @@ public class PlayerDao extends AbstractDao {
         player.setPlaylist(playlist);
     }
 
-    private class PlayerRowMapper implements RowMapper {
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+    private class PlayerRowMapper implements ParameterizedRowMapper<Player> {
+        public Player mapRow(ResultSet rs, int rowNum) throws SQLException {
             Player player = new Player();
             int col = 1;
             player.setId(rs.getString(col++));

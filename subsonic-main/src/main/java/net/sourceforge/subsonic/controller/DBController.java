@@ -1,6 +1,8 @@
 package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.dao.DaoHelper;
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
@@ -8,6 +10,7 @@ import org.springframework.web.servlet.mvc.ParameterizableViewController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,7 +28,13 @@ public class DBController extends ParameterizableViewController {
         String query = request.getParameter("query");
         if (query != null) {
             map.put("query", query);
-            map.put("result", daoHelper.getJdbcTemplate().query(query, new ColumnMapRowMapper()));
+
+            try {
+                List<?> result = daoHelper.getJdbcTemplate().query(query, new ColumnMapRowMapper());
+                map.put("result", result);
+            } catch (DataAccessException x) {
+                map.put("error", ExceptionUtils.getRootCause(x).getMessage());
+            }
         }
 
         ModelAndView result = super.handleRequestInternal(request, response);

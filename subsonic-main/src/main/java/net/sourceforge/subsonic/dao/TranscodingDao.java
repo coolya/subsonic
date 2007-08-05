@@ -2,7 +2,7 @@ package net.sourceforge.subsonic.dao;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.Transcoding;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -63,10 +63,10 @@ public class TranscodingDao extends AbstractDao {
      */
     public void createTranscoding(Transcoding transcoding) {
         String sql = "insert into transcoding (" + COLUMNS + ") values (null, ?, ?, ?, ?, ?, ?, ?, ?)";
-        getJdbcTemplate().update(sql, new Object[] {transcoding.getName(), transcoding.getSourceFormat(),
-                                                              transcoding.getTargetFormat(), transcoding.getStep1(),
-                                                              transcoding.getStep2(), transcoding.getStep3(),
-                                                              transcoding.isEnabled(), transcoding.isDefaultActive()});
+        getJdbcTemplate().update(sql, new Object[]{transcoding.getName(), transcoding.getSourceFormat(),
+                                                   transcoding.getTargetFormat(), transcoding.getStep1(),
+                                                   transcoding.getStep2(), transcoding.getStep3(),
+                                                   transcoding.isEnabled(), transcoding.isDefaultActive()});
         TranscodingDao.LOG.info("Created transcoding " + transcoding.getName());
     }
 
@@ -95,8 +95,8 @@ public class TranscodingDao extends AbstractDao {
                                                    transcoding.getId()});
     }
 
-    private static class TranscodingRowMapper implements RowMapper {
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+    private static class TranscodingRowMapper implements ParameterizedRowMapper<Transcoding> {
+        public Transcoding mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Transcoding(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
                                    rs.getString(6), rs.getString(7), rs.getBoolean(8), rs.getBoolean(9));
         }
