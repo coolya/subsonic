@@ -4,6 +4,7 @@ import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.PodcastDao;
 import net.sourceforge.subsonic.domain.PodcastChannel;
 import net.sourceforge.subsonic.domain.PodcastEpisode;
+import net.sourceforge.subsonic.domain.MusicFileInfo;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -48,6 +49,7 @@ public class PodcastService {
     private PodcastDao podcastDao;
     private SettingsService settingsService;
     private SecurityService securityService;
+    private MusicInfoService musicInfoService;
 
     public PodcastService() {
         ThreadFactory threadFactory = new ThreadFactory() {
@@ -399,7 +401,21 @@ public class PodcastService {
 
         File podcastDir = new File(settingsService.getPodcastFolder());
         File channelDir = new File(podcastDir, StringUtil.fileSystemSafe(channel.getTitle()));
-        channelDir.mkdirs();
+
+        if (!channelDir.exists()) {
+            boolean ok = channelDir.mkdirs();
+            if (!ok) {
+                throw new RuntimeException("Failed to create directory " + channelDir);
+            }
+            MusicFileInfo info = musicInfoService.getMusicFileInfoForPath(channelDir.getPath());
+            if (info == null) {
+                musicInfoService.createMusicFileInfo(new MusicFileInfo(channelDir.getPath()));
+                info = musicInfoService.getMusicFileInfoForPath(channelDir.getPath());
+            }
+            info.setEnabled(true);
+            info.setComment(channel.getDescription());
+            musicInfoService.updateMusicFileInfo(info);
+        }
 
         String filename = StringUtil.getUrlFile(episode.getUrl());
         if (filename == null) {
@@ -477,5 +493,9 @@ public class PodcastService {
 
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
+    }
+
+    public void setMusicInfoService(MusicInfoService musicInfoService) {
+        this.musicInfoService = musicInfoService;
     }
 }

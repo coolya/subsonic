@@ -1,6 +1,7 @@
 
 COMPLETED IN 3.2.BETA1
 ======================
+Podcast receiver.
 Display what other users are playing (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=359)
 Get proper Podcast icon.
 Add log4j.properties
@@ -11,9 +12,12 @@ Added db admin tool.
 Use org.springframework.jdbc.core.simple.ParameterizedRowMapper
 Handle that listFiles returns null. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=157&start=15)
 Show error messages properly in db.view
+Create taglib for enum i18n.
 
 TODO IN 3.2
 =============
+Fix problem with album comment not showing up with podcast folders.
+Display warning if Podcast folder is not within a music folder.
 Experiment with UNC paths.
 Add Podcast channel description as comment when creating new directory.
 Add status to Podcast channel (New, Downloading, Downloaded, Error).
@@ -27,8 +31,6 @@ i18n podcastReceiver.jsp
 "Random" very slow when no music folders.
 Merge artists with same name, but different music folders.
 Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownloads/default.aspx)
-Podcast receiver.
-Create taglib for enum i18n.
 Test if dwr javascripts are cached in browser (especially for "now playing")
 
 TODO IN 3.1
