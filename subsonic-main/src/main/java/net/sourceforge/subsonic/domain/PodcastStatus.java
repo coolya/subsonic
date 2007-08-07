@@ -7,5 +7,5 @@ package net.sourceforge.subsonic.domain;
  * @author Sindre Mehus
  */
 public enum PodcastStatus {
-    NEW, DOWNLOADING, DOWNLOADED, ERROR, DELETED, SKIPPED
+    NEW, DOWNLOADING, COMPLETED, ERROR, DELETED, SKIPPED
 }

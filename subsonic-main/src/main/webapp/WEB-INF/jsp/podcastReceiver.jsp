@@ -73,7 +73,7 @@
                 <span title="${title}"><b><str:truncateNicely upper="40">${title}</str:truncateNicely></b></span>
             </td>
             <td ${class} style="padding-left:1.5em;text-align:center;">
-                <span class="detail"><fmt:message key="podcastreceiver.episodestatus.${fn:toLowerCase(channel.key.status)}"/></span>
+                <span class="detail"><fmt:message key="podcastreceiver.status.${fn:toLowerCase(channel.key.status)}"/></span>
             </td>
             <td ${class} style="padding-left:1.5em">
                 <c:choose>
@@ -150,7 +150,7 @@
                             <fmt:formatNumber type="percent" value="${episode.completionRate}"/>
                         </c:when>
                         <c:otherwise>
-                            <fmt:message key="podcastreceiver.episodestatus.${fn:toLowerCase(episode.status)}"/>
+                            <fmt:message key="podcastreceiver.status.${fn:toLowerCase(episode.status)}"/>
                         </c:otherwise>
                     </c:choose>
                     </span>
@@ -178,13 +178,13 @@
 
 <table><tr>
     <c:if test="${model.user.podcastRole}">
-        <td style="padding-right:2em"><div class="forward"><a href="javascript:downloadSelected()">Download selected</a></div></td>
-        <td style="padding-right:2em"><div class="forward"><a href="javascript:deleteSelected()">Delete selected</a></div></td>
-        <td style="padding-right:2em"><div class="forward"><a href="podcastReceiverAdmin.view?refresh=">Check for new episodes</a></div></td>
+        <td style="padding-right:2em"><div class="forward"><a href="javascript:downloadSelected()"><fmt:message key="podcastreceiver.downloadselected"/></a></div></td>
+        <td style="padding-right:2em"><div class="forward"><a href="javascript:deleteSelected()"><fmt:message key="podcastreceiver.deleteselected"/></a></div></td>
+        <td style="padding-right:2em"><div class="forward"><a href="podcastReceiverAdmin.view?refresh="><fmt:message key="podcastreceiver.check"/></a></div></td>
     </c:if>
-    <td style="padding-right:2em"><div class="forward"><a href="podcastReceiver.view?">Refresh page</a></div></td>
+    <td style="padding-right:2em"><div class="forward"><a href="podcastReceiver.view?"><fmt:message key="podcastreceiver.refresh"/></a></div></td>
     <c:if test="${model.user.adminRole}">
-        <td style="padding-right:2em"><div class="forward"><a href="podcastSettings.view?">Podcast settings</a></div></td>
+        <td style="padding-right:2em"><div class="forward"><a href="podcastSettings.view?"><fmt:message key="podcastreceiver.settings"/></a></div></td>
     </c:if>
 </tr></table>
 
@@ -192,7 +192,7 @@
     <form method="post" action="podcastReceiverAdmin.view?">
         <table>
             <tr>
-                <td>Subscribe to Podcast</td>
+                <td><fmt:message key="podcastreceiver.subscribe"/></td>
                 <td><input type="text" name="add" value="http://" style="width:15em" onclick="select()"/></td>
                 <td><input type="submit" value="<fmt:message key="common.ok"/>"/></td>
             </tr>

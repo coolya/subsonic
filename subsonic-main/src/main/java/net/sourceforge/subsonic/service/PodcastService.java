@@ -206,7 +206,7 @@ public class PodcastService {
 
                 channel.setTitle(channelElement.getChildTextTrim("title"));
                 channel.setDescription(channelElement.getChildTextTrim("description"));
-                channel.setStatus(PodcastStatus.DOWNLOADED);
+                channel.setStatus(PodcastStatus.COMPLETED);
                 channel.setErrorMessage(null);
                 podcastDao.updateChannel(channel);
 
@@ -373,7 +373,7 @@ public class PodcastService {
                 podcastDao.updateEpisode(episode);
                 LOG.info("Downloaded " + bytesDownloaded + " bytes from Podcast " + episode.getUrl());
                 IOUtils.closeQuietly(out);
-                episode.setStatus(PodcastStatus.DOWNLOADED);
+                episode.setStatus(PodcastStatus.COMPLETED);
                 podcastDao.updateEpisode(episode);
                 deleteObsoleteEpisodes(channel);
             }
