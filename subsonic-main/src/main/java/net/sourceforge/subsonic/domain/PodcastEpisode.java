@@ -20,10 +20,12 @@ public class PodcastEpisode {
     private String duration;
     private Long bytesTotal;
     private Long bytesDownloaded;
-    private Status status;
+    private PodcastStatus status;
+    private String errorMessage;
 
     public PodcastEpisode(Integer id, Integer channelId, String url, String path, String title,
-                          String description, Date publishDate, String duration, Long length, Long bytesDownloaded, Status status) {
+                          String description, Date publishDate, String duration, Long length, Long bytesDownloaded,
+                          PodcastStatus status, String errorMessage) {
         this.id = id;
         this.channelId = channelId;
         this.url = url;
@@ -35,6 +37,7 @@ public class PodcastEpisode {
         this.bytesTotal = length;
         this.bytesDownloaded = bytesDownloaded;
         this.status = status;
+        this.errorMessage = errorMessage;
     }
 
     public Integer getId() {
@@ -122,15 +125,19 @@ public class PodcastEpisode {
         this.bytesDownloaded = bytesDownloaded;
     }
 
-    public Status getStatus() {
+    public PodcastStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(PodcastStatus status) {
         this.status = status;
     }
 
-    public static enum Status {
-        NEW, DOWNLOADING, DOWNLOADED, ERROR, DELETED, SKIPPED
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }

@@ -1,10 +1,9 @@
 package net.sourceforge.subsonic.util;
 
-import junit.framework.*;
+import junit.framework.TestCase;
 
-import java.util.*;
-
-import org.apache.commons.codec.digest.DigestUtils;
+import java.util.Locale;
+import java.util.Arrays;
 
 /**
  * Unit test of {@link StringUtil}.
@@ -82,13 +81,28 @@ public class StringUtilTestCase extends TestCase {
         assertEquals(0, StringUtil.split(null).length);
     }
 
-   private void doTestSplit(String input, String... expected) {
+    private void doTestSplit(String input, String... expected) {
         String[] actual = StringUtil.split(input);
         assertEquals("Wrong number of elements.", expected.length, actual.length);
 
         for (int i = 0; i < expected.length; i++) {
             assertEquals("Wrong criteria.", expected[i], actual[i]);
         }
+    }
+
+    public void testParseInts() {
+        doTestParseInts("123", 123);
+        doTestParseInts("1 2 3", 1, 2, 3);
+        doTestParseInts("10  20 \t\n 30", 10, 20, 30);
+
+        assertTrue("Error in parseInts().", StringUtil.parseInts(null).length == 0);
+        assertTrue("Error in parseInts().", StringUtil.parseInts("").length == 0);
+        assertTrue("Error in parseInts().", StringUtil.parseInts(" ").length == 0);
+        assertTrue("Error in parseInts().", StringUtil.parseInts("  ").length == 0);
+    }
+
+    private void doTestParseInts(String s, int... expected) {
+        assertEquals("Error in parseInts().", Arrays.toString(expected), Arrays.toString(StringUtil.parseInts(s)));
     }
 
     public void testToHttpUrl() throws Exception {

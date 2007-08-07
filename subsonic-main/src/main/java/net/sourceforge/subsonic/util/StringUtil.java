@@ -4,7 +4,11 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -48,8 +52,8 @@ public final class StringUtil {
     private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", ".."};
 
     /**
-    * Disallow external instantiation.
-    */
+     * Disallow external instantiation.
+     */
     private StringUtil() {
     }
 
@@ -209,6 +213,26 @@ public final class StringUtil {
     }
 
     /**
+     * Converts the given string of whitespace-separated integers to an <code>int</code> array.
+     *
+     * @param s String consisting of integers separated by whitespace.
+     * @return The corresponding array of ints.
+     * @throws NumberFormatException If string contains non-parseable text.
+     */
+    public static int[] parseInts(String s) {
+        if (s == null) {
+            return new int[0];
+        }
+
+        String[] strings = StringUtils.split(s);
+        int[] ints = new int[strings.length];
+        for (int i = 0; i < strings.length; i++) {
+            ints[i] = Integer.parseInt(strings[i]);
+        }
+        return ints;
+    }
+
+    /**
      * Change protocol from "https" to "http" for the given URL. The port number is also changed,
      * but not if the given URL is already "http".
      *
@@ -351,4 +375,5 @@ public final class StringUtil {
         }
         return filename;
     }
+
 }

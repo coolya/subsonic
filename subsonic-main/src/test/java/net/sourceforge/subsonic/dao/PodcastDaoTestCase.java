@@ -2,6 +2,7 @@ package net.sourceforge.subsonic.dao;
 
 import net.sourceforge.subsonic.domain.PodcastChannel;
 import net.sourceforge.subsonic.domain.PodcastEpisode;
+import net.sourceforge.subsonic.domain.PodcastStatus;
 
 import java.util.Date;
 
@@ -47,6 +48,8 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
         channel.setUrl("http://bar");
         channel.setTitle("Title");
         channel.setDescription("Description");
+        channel.setStatus(PodcastStatus.ERROR);
+        channel.setErrorMessage("Something went terribly wrong.");
 
         podcastDao.updateChannel(channel);
         PodcastChannel newChannel = podcastDao.getAllChannels()[0];
@@ -75,7 +78,7 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
     public void testCreateEpisode() {
         int channelId = createChannel();
         PodcastEpisode episode = new PodcastEpisode(null, channelId, "http://bar", "path", "title", "description",
-                                                    new Date(), "12:34", null, null, PodcastEpisode.Status.NEW);
+                                                    new Date(), "12:34", null, null, PodcastStatus.NEW, null);
         podcastDao.createEpisode(episode);
 
         PodcastEpisode newEpisode = podcastDao.getEpisodes(channelId)[0];
@@ -88,7 +91,7 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
 
         int channelId = createChannel();
         PodcastEpisode episode = new PodcastEpisode(null, channelId, "http://bar", "path", "title", "description",
-                                                    new Date(), "12:34", 3276213L, 2341234L, PodcastEpisode.Status.NEW);
+                                                    new Date(), "12:34", 3276213L, 2341234L, PodcastStatus.NEW, "error");
         podcastDao.createEpisode(episode);
 
         int episodeId = podcastDao.getEpisodes(channelId)[0].getId();
@@ -99,13 +102,13 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
     public void testGetEpisodes() {
         int channelId = createChannel();
         PodcastEpisode a = new PodcastEpisode(null, channelId, "a", null, null, null,
-                                              new Date(3000), null, null, null, PodcastEpisode.Status.NEW);
+                                              new Date(3000), null, null, null, PodcastStatus.NEW, null);
         PodcastEpisode b = new PodcastEpisode(null, channelId, "b", null, null, null,
-                                              new Date(1000), null, null, null, PodcastEpisode.Status.NEW);
+                                              new Date(1000), null, null, null, PodcastStatus.NEW, "error");
         PodcastEpisode c = new PodcastEpisode(null, channelId, "c", null, null, null,
-                                              new Date(2000), null, null, null, PodcastEpisode.Status.NEW);
+                                              new Date(2000), null, null, null, PodcastStatus.NEW, null);
         PodcastEpisode d = new PodcastEpisode(null, channelId, "c", null, null, null,
-                                              null, null, null, null, PodcastEpisode.Status.NEW);
+                                              null, null, null, null, PodcastStatus.NEW, "");
         podcastDao.createEpisode(a);
         podcastDao.createEpisode(b);
         podcastDao.createEpisode(c);
@@ -123,7 +126,7 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
     public void testUpdateEpisode() {
         int channelId = createChannel();
         PodcastEpisode episode = new PodcastEpisode(null, channelId, "http://bar", null, null, null,
-                                                    null, null, null, null, PodcastEpisode.Status.NEW);
+                                                    null, null, null, null, PodcastStatus.NEW, null);
         podcastDao.createEpisode(episode);
         episode = podcastDao.getEpisodes(channelId)[0];
 
@@ -135,7 +138,8 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
         episode.setDuration("1:20");
         episode.setBytesTotal(87628374612L);
         episode.setBytesDownloaded(9086L);
-        episode.setStatus(PodcastEpisode.Status.DOWNLOADING);
+        episode.setStatus(PodcastStatus.DOWNLOADING);
+        episode.setErrorMessage("Some error");
 
         podcastDao.updateEpisode(episode);
         PodcastEpisode newEpisode = podcastDao.getEpisodes(channelId)[0];
@@ -149,7 +153,7 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong number of episodes.", 0, podcastDao.getEpisodes(channelId).length);
 
         PodcastEpisode episode = new PodcastEpisode(null, channelId, "http://bar", null, null, null,
-                                                    null, null, null, null, PodcastEpisode.Status.NEW);
+                                                    null, null, null, null, PodcastStatus.NEW, null);
 
         podcastDao.createEpisode(episode);
         assertEquals("Wrong number of episodes.", 1, podcastDao.getEpisodes(channelId).length);
@@ -168,7 +172,7 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
     public void testCascadingDelete() {
         int channelId = createChannel();
         PodcastEpisode episode = new PodcastEpisode(null, channelId, "http://bar", null, null, null,
-                                                    null, null, null, null, PodcastEpisode.Status.NEW);
+                                                    null, null, null, null, PodcastStatus.NEW, null);
         podcastDao.createEpisode(episode);
         podcastDao.createEpisode(episode);
         assertEquals("Wrong number of episodes.", 2, podcastDao.getEpisodes(channelId).length);
@@ -187,6 +191,8 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong URL.", expected.getUrl(), actual.getUrl());
         assertEquals("Wrong title.", expected.getTitle(), actual.getTitle());
         assertEquals("Wrong description.", expected.getDescription(), actual.getDescription());
+        assertSame("Wrong status.", expected.getStatus(), actual.getStatus());
+        assertEquals("Wrong error message.", expected.getErrorMessage(), actual.getErrorMessage());
     }
 
     private void assertEpisodeEquals(PodcastEpisode expected, PodcastEpisode actual) {
@@ -198,7 +204,8 @@ public class PodcastDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong duration.", expected.getDuration(), actual.getDuration());
         assertEquals("Wrong bytes total.", expected.getBytesTotal(), actual.getBytesTotal());
         assertEquals("Wrong bytes downloaded.", expected.getBytesDownloaded(), actual.getBytesDownloaded());
-        assertEquals("Wrong status.", expected.getStatus(), actual.getStatus());
+        assertSame("Wrong status.", expected.getStatus(), actual.getStatus());
+        assertEquals("Wrong error message.", expected.getErrorMessage(), actual.getErrorMessage());
     }
 
 }

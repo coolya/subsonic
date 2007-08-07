@@ -13,18 +13,17 @@ Use org.springframework.jdbc.core.simple.ParameterizedRowMapper
 Handle that listFiles returns null. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=157&start=15)
 Show error messages properly in db.view
 Create taglib for enum i18n.
+Experiment with UNC paths.
+Add status to Podcast channel (New, Downloading, Downloaded, Error).
+Show Podcast error messages (as popup?)
 
 TODO IN 3.2
 =============
 Fix problem with album comment not showing up with podcast folders.
 Display warning if Podcast folder is not within a music folder.
-Experiment with UNC paths.
 Add Podcast channel description as comment when creating new directory.
-Add status to Podcast channel (New, Downloading, Downloaded, Error).
-Show Podcast error messages (as popup?)
 Remove stream status after end of playlist is reached.
 Ajax-ify Amazon pages.
-Add status "Queued"?
 Wrong progress for http://atvs.vg.no/script/podcast.php?category_id=7
 Resumable Podcast downloads.
 i18n podcastReceiver.jsp

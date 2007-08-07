@@ -31,7 +31,9 @@ public class Schema32 extends Schema {
                              "id identity," +
                              "url varchar not null," +
                              "title varchar," +
-                             "description varchar)");
+                             "description varchar," +
+                             "status varchar not null," +
+                             "error_message varchar)");
             LOG.info("Database table 'podcast_channel' was created successfully.");
         }
 
@@ -49,6 +51,7 @@ public class Schema32 extends Schema {
                              "bytes_total bigint," +
                              "bytes_downloaded bigint," +
                              "status varchar not null," +
+                             "error_message varchar," +
                              "foreign key (channel_id) references podcast_channel(id) on delete cascade)");
             LOG.info("Database table 'podcast_episode' was created successfully.");
         }

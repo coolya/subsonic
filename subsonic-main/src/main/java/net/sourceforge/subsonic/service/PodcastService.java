@@ -2,9 +2,10 @@ package net.sourceforge.subsonic.service;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.PodcastDao;
+import net.sourceforge.subsonic.domain.MusicFileInfo;
 import net.sourceforge.subsonic.domain.PodcastChannel;
 import net.sourceforge.subsonic.domain.PodcastEpisode;
-import net.sourceforge.subsonic.domain.MusicFileInfo;
+import net.sourceforge.subsonic.domain.PodcastStatus;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -22,7 +23,12 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -137,7 +143,7 @@ public class PodcastService {
 
         List<PodcastEpisode> filtered = new ArrayList<PodcastEpisode>();
         for (PodcastEpisode episode : all) {
-            if (episode.getStatus() != PodcastEpisode.Status.DELETED) {
+            if (episode.getStatus() != PodcastStatus.DELETED) {
                 filtered.add(episode);
             }
         }
@@ -150,7 +156,7 @@ public class PodcastService {
         if (episode == null) {
             return null;
         }
-        if (episode.getStatus() == PodcastEpisode.Status.DELETED && !includeDeleted) {
+        if (episode.getStatus() == PodcastStatus.DELETED && !includeDeleted) {
             return null;
         }
         return episode;
@@ -189,6 +195,10 @@ public class PodcastService {
 
             InputStream in = null;
             try {
+                channel.setStatus(PodcastStatus.DOWNLOADING);
+                channel.setErrorMessage(null);
+                podcastDao.updateChannel(channel);
+
                 URL url = new URL(channel.getUrl());
                 in = url.openStream();
                 Document document = new SAXBuilder().build(in);
@@ -196,12 +206,17 @@ public class PodcastService {
 
                 channel.setTitle(channelElement.getChildTextTrim("title"));
                 channel.setDescription(channelElement.getChildTextTrim("description"));
+                channel.setStatus(PodcastStatus.DOWNLOADED);
+                channel.setErrorMessage(null);
                 podcastDao.updateChannel(channel);
 
                 refreshEpisodes(channel, channelElement.getChildren("item"));
 
             } catch (Exception x) {
                 LOG.warn("Failed to get/parse RSS file for Podcast channel " + channel.getUrl(), x);
+                channel.setStatus(PodcastStatus.ERROR);
+                channel.setErrorMessage(x.toString());
+                podcastDao.updateChannel(channel);
             } finally {
                 IOUtils.closeQuietly(in);
             }
@@ -210,7 +225,7 @@ public class PodcastService {
         if (downloadEpisodes) {
             for (final PodcastChannel channel : getAllChannels()) {
                 for (final PodcastEpisode episode : getEpisodes(channel.getId(), false)) {
-                    if (episode.getStatus() == PodcastEpisode.Status.NEW && episode.getUrl() != null) {
+                    if (episode.getStatus() == PodcastStatus.NEW && episode.getUrl() != null) {
                         downloadEpisode(episode);
                     }
                 }
@@ -258,7 +273,7 @@ public class PodcastService {
                     LOG.warn("Failed to parse publish date.", x);
                 }
                 PodcastEpisode episode = new PodcastEpisode(null, channel.getId(), url, null, title, description, date,
-                                                            duration, length, 0L, PodcastEpisode.Status.NEW);
+                                                            duration, length, 0L, PodcastStatus.NEW, null);
                 episodes.add(episode);
                 LOG.info("Created Podcast episode " + title);
             }
@@ -280,7 +295,6 @@ public class PodcastService {
             }
         });
 
-
         // Create episodes in database, skipping the proper number of episodes.
         int downloadCount = settingsService.getPodcastEpisodeDownloadCount();
         if (downloadCount == -1) {
@@ -290,7 +304,7 @@ public class PodcastService {
         for (int i = 0; i < episodes.size(); i++) {
             PodcastEpisode episode = episodes.get(i);
             if (i >= downloadCount) {
-                episode.setStatus(PodcastEpisode.Status.SKIPPED);
+                episode.setStatus(PodcastStatus.SKIPPED);
             }
             podcastDao.createEpisode(episode);
         }
@@ -323,7 +337,9 @@ public class PodcastService {
             File file = getFile(channel, episode);
             out = new FileOutputStream(file);
 
-            episode.setStatus(PodcastEpisode.Status.DOWNLOADING);
+            episode.setStatus(PodcastStatus.DOWNLOADING);
+            episode.setBytesDownloaded(0L);
+            episode.setErrorMessage(null);
             episode.setPath(file.getPath());
             podcastDao.updateEpisode(episode);
 
@@ -357,14 +373,15 @@ public class PodcastService {
                 podcastDao.updateEpisode(episode);
                 LOG.info("Downloaded " + bytesDownloaded + " bytes from Podcast " + episode.getUrl());
                 IOUtils.closeQuietly(out);
-                episode.setStatus(PodcastEpisode.Status.DOWNLOADED);
+                episode.setStatus(PodcastStatus.DOWNLOADED);
                 podcastDao.updateEpisode(episode);
                 deleteObsoleteEpisodes(channel);
             }
 
         } catch (Exception x) {
             LOG.warn("Failed to download Podcast from " + episode.getUrl(), x);
-            episode.setStatus(PodcastEpisode.Status.ERROR);
+            episode.setStatus(PodcastStatus.ERROR);
+            episode.setErrorMessage(x.toString());
             podcastDao.updateEpisode(episode);
         } finally {
             IOUtils.closeQuietly(in);
@@ -382,7 +399,7 @@ public class PodcastService {
 
         // Don't do anything if other episodes of the same channel is currently downloading.
         for (PodcastEpisode episode : episodes) {
-            if (episode.getStatus() == PodcastEpisode.Status.DOWNLOADING) {
+            if (episode.getStatus() == PodcastStatus.DOWNLOADING) {
                 return;
             }
         }
@@ -458,7 +475,7 @@ public class PodcastService {
      *
      * @param episodeId     The Podcast episode ID.
      * @param logicalDelete Whether to perform a logical delete by setting the
-     *                      episode status to {@link PodcastEpisode.Status#DELETED}.
+     *                      episode status to {@link PodcastStatus#DELETED}.
      */
     public void deleteEpisode(int episodeId, boolean logicalDelete) {
         PodcastEpisode episode = podcastDao.getEpisode(episodeId);
@@ -476,7 +493,8 @@ public class PodcastService {
         }
 
         if (logicalDelete) {
-            episode.setStatus(PodcastEpisode.Status.DELETED);
+            episode.setStatus(PodcastStatus.DELETED);
+            episode.setErrorMessage(null);
             podcastDao.updateEpisode(episode);
         } else {
             podcastDao.deleteEpisode(episodeId);

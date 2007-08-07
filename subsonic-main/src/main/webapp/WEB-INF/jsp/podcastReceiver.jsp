@@ -69,11 +69,21 @@
         <tr style="margin:0;padding:0;border:0">
             <td colspan="2"/>
             <td><input type="checkbox" class="checkbox" id="channel${i.index}" value="${channel.key.id}"/></td>
-            <td ${class} colspan="4" style="padding-left:0.25em">
+            <td ${class} colspan="3" style="padding-left:0.25em">
                 <span title="${title}"><b><str:truncateNicely upper="40">${title}</str:truncateNicely></b></span>
             </td>
+            <td ${class} style="padding-left:1.5em;text-align:center;">
+                <span class="detail"><fmt:message key="podcastreceiver.episodestatus.${fn:toLowerCase(channel.key.status)}"/></span>
+            </td>
             <td ${class} style="padding-left:1.5em">
-                <span class="detail" title="${channel.key.description}"><str:truncateNicely upper="100">${channel.key.description}</str:truncateNicely></span>
+                <c:choose>
+                    <c:when test="${channel.key.status eq 'ERROR'}">
+                        <span class="detail warning" title="${channel.key.errorMessage}"><str:truncateNicely upper="100">${channel.key.errorMessage}</str:truncateNicely></span>
+                    </c:when>
+                    <c:otherwise>
+                        <span class="detail" title="${channel.key.description}"><str:truncateNicely upper="100">${channel.key.description}</str:truncateNicely></span>
+                    </c:otherwise>
+                </c:choose>
             </td>
         </tr>
 
@@ -147,7 +157,14 @@
                 </td>
 
                 <td ${class} style="padding-left:1.5em">
-                    <span class="detail" title="${episode.description}"><str:truncateNicely upper="100">${episode.description}</str:truncateNicely></span>
+                    <c:choose>
+                        <c:when test="${episode.status eq 'ERROR'}">
+                            <span class="detail warning" title="${episode.errorMessage}"><str:truncateNicely upper="100">${episode.errorMessage}</str:truncateNicely></span>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="detail" title="${episode.description}"><str:truncateNicely upper="100">${episode.description}</str:truncateNicely></span>
+                        </c:otherwise>
+                    </c:choose>
                 </td>
 
             </tr>

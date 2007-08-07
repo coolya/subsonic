@@ -8,7 +8,7 @@ import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
-import org.apache.commons.lang.StringUtils;
+import net.sourceforge.subsonic.util.StringUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
@@ -117,7 +117,7 @@ public class PlaylistController extends ParameterizableViewController {
             sendM3U = true;
             playlist.setIndex(Integer.parseInt(request.getParameter("skip")));
         } else if (request.getParameter("remove") != null) {
-            int[] indexes = parseIndexes(request.getParameter("remove"));
+            int[] indexes = StringUtil.parseInts(request.getParameter("remove"));
             if (indexes.length > 0) {
                 index = indexes[0];
             }
@@ -147,15 +147,6 @@ public class PlaylistController extends ParameterizableViewController {
 
         map.put("sendM3U", player.isAutoControlEnabled() && isCurrentPlayer && sendM3U);
         map.put("anchor", anchor);
-    }
-
-    private int[] parseIndexes(String s) {
-        String[] strings = StringUtils.split(s);
-        int[] ints = new int[strings.length];
-        for (int i = 0; i < strings.length; i++) {
-            ints[i] = Integer.parseInt(strings[i]);
-        }
-        return ints;
     }
 
     private List<Player> getPlayers(User user) {

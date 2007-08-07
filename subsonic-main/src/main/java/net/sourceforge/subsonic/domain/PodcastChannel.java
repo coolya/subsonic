@@ -12,16 +12,22 @@ public class PodcastChannel {
     private String url;
     private String title;
     private String description;
+    private PodcastStatus status;
+    private String errorMessage;
 
-    public PodcastChannel(Integer id, String url, String title, String description) {
+    public PodcastChannel(Integer id, String url, String title, String description,
+                          PodcastStatus status, String errorMessage) {
         this.id = id;
         this.url = url;
         this.title = title;
         this.description = description;
+        this.status = status;
+        this.errorMessage = errorMessage;
     }
 
     public PodcastChannel(String url) {
         this.url = url;
+        status = PodcastStatus.NEW;
     }
 
     public Integer getId() {
@@ -50,5 +56,21 @@ public class PodcastChannel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public PodcastStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PodcastStatus status) {
+        this.status = status;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }
