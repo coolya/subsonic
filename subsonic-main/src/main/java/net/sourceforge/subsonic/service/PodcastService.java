@@ -65,7 +65,7 @@ public class PodcastService {
                 return t;
             }
         };
-        refreshExecutor = Executors.newSingleThreadExecutor(threadFactory);
+        refreshExecutor = Executors.newFixedThreadPool(5, threadFactory);
         downloadExecutor = Executors.newFixedThreadPool(3, threadFactory);
         scheduledExecutor = Executors.newSingleThreadScheduledExecutor(threadFactory);
     }
@@ -73,7 +73,9 @@ public class PodcastService {
     public synchronized void schedule() {
         Runnable task = new Runnable() {
             public void run() {
+                LOG.info("Starting scheduled Podcast refresh.");
                 refreshAllChannels(true);
+                LOG.info("Completed scheduled Podcast refresh.");
             }
         };
 
@@ -181,53 +183,50 @@ public class PodcastService {
     }
 
     private void refreshChannels(final PodcastChannel[] channels, final boolean downloadEpisodes) {
-        Runnable task = new Runnable() {
-            public void run() {
-                doRefreshChannels(channels, downloadEpisodes);
-            }
-        };
-        refreshExecutor.submit(task);
+        for (final PodcastChannel channel : channels) {
+            Runnable task = new Runnable() {
+                public void run() {
+                    doRefreshChannel(channel, downloadEpisodes);
+                }
+            };
+            refreshExecutor.submit(task);
+        }
     }
 
     @SuppressWarnings({"unchecked"})
-    private void doRefreshChannels(PodcastChannel[] channels, boolean downloadEpisodes) {
-        for (PodcastChannel channel : channels) {
+    private void doRefreshChannel(PodcastChannel channel, boolean downloadEpisodes) {
+        InputStream in = null;
+        try {
+            channel.setStatus(PodcastStatus.DOWNLOADING);
+            channel.setErrorMessage(null);
+            podcastDao.updateChannel(channel);
 
-            InputStream in = null;
-            try {
-                channel.setStatus(PodcastStatus.DOWNLOADING);
-                channel.setErrorMessage(null);
-                podcastDao.updateChannel(channel);
+            URL url = new URL(channel.getUrl());
+            in = url.openStream();
+            Document document = new SAXBuilder().build(in);
+            Element channelElement = document.getRootElement().getChild("channel");
 
-                URL url = new URL(channel.getUrl());
-                in = url.openStream();
-                Document document = new SAXBuilder().build(in);
-                Element channelElement = document.getRootElement().getChild("channel");
+            channel.setTitle(channelElement.getChildTextTrim("title"));
+            channel.setDescription(channelElement.getChildTextTrim("description"));
+            channel.setStatus(PodcastStatus.COMPLETED);
+            channel.setErrorMessage(null);
+            podcastDao.updateChannel(channel);
 
-                channel.setTitle(channelElement.getChildTextTrim("title"));
-                channel.setDescription(channelElement.getChildTextTrim("description"));
-                channel.setStatus(PodcastStatus.COMPLETED);
-                channel.setErrorMessage(null);
-                podcastDao.updateChannel(channel);
+            refreshEpisodes(channel, channelElement.getChildren("item"));
 
-                refreshEpisodes(channel, channelElement.getChildren("item"));
-
-            } catch (Exception x) {
-                LOG.warn("Failed to get/parse RSS file for Podcast channel " + channel.getUrl(), x);
-                channel.setStatus(PodcastStatus.ERROR);
-                channel.setErrorMessage(x.toString());
-                podcastDao.updateChannel(channel);
-            } finally {
-                IOUtils.closeQuietly(in);
-            }
+        } catch (Exception x) {
+            LOG.warn("Failed to get/parse RSS file for Podcast channel " + channel.getUrl(), x);
+            channel.setStatus(PodcastStatus.ERROR);
+            channel.setErrorMessage(x.toString());
+            podcastDao.updateChannel(channel);
+        } finally {
+            IOUtils.closeQuietly(in);
         }
 
         if (downloadEpisodes) {
-            for (final PodcastChannel channel : getAllChannels()) {
-                for (final PodcastEpisode episode : getEpisodes(channel.getId(), false)) {
-                    if (episode.getStatus() == PodcastStatus.NEW && episode.getUrl() != null) {
-                        downloadEpisode(episode);
-                    }
+            for (final PodcastEpisode episode : getEpisodes(channel.getId(), false)) {
+                if (episode.getStatus() == PodcastStatus.NEW && episode.getUrl() != null) {
+                    downloadEpisode(episode);
                 }
             }
         }

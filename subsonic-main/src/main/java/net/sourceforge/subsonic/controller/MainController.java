@@ -65,7 +65,7 @@ public class MainController extends ParameterizableViewController {
         map.put("showNowPlaying", userSettings.isShowNowPlayingEnabled());
         map.put("showAd", shouldShowAd());
 
-        MusicFileInfo musicInfo = musicInfoService.getMusicFileInfoForPath(path);
+        MusicFileInfo musicInfo = musicInfoService.getMusicFileInfoForPath(dir.getPath());
         int playCount = musicInfo == null ? 0 : musicInfo.getPlayCount();
         String comment = musicInfo == null ? null : musicInfo.getComment();
         Date lastPlayed = musicInfo == null ? null : musicInfo.getLastPlayed();

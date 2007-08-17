@@ -16,29 +16,35 @@ Create taglib for enum i18n.
 Experiment with UNC paths.
 Add status to Podcast channel (New, Downloading, Downloaded, Error).
 Show Podcast error messages (as popup?)
+Add Podcast channel description as comment when creating new directory.
+i18n podcastReceiver.jsp
 
 TODO IN 3.2
 =============
+ASX (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=638)
+Check out OGG, WAV parsing in http://jajuk.info (http://entagged.sourceforge.net/developer.php)
+Check out jajuk LyricsService.
+Create installer for Windows. http://nsis.sourceforge.net
+New theme.
+Freshmeat registration of 3.1
+Make it possible to cancel/resume Podcast downloads. ("Cancel selected")
+Podcast checkboxes should only be visible if user has proper permissions.
+Podcast admin links should only be enabled if user  has proper permissions.
 Fix problem with album comment not showing up with podcast folders.
 Display warning if Podcast folder is not within a music folder.
-Add Podcast channel description as comment when creating new directory.
 Remove stream status after end of playlist is reached.
 Ajax-ify Amazon pages.
 Wrong progress for http://atvs.vg.no/script/podcast.php?category_id=7
 Resumable Podcast downloads.
-i18n podcastReceiver.jsp
 "Random" very slow when no music folders.
 Merge artists with same name, but different music folders.
 Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownloads/default.aspx)
 Test if dwr javascripts are cached in browser (especially for "now playing")
 
-TODO IN 3.1
-=============
-Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
-Test playlist checkbox stuff, in particular download auth.
-
 BACKLOG
 ===========================
+Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
+Test playlist checkbox stuff, in particular download auth.
 Add support for editing genre.
 Move "logout" under search search field.
 Reformat all java code.
@@ -216,34 +222,6 @@ FLAC Lossless, A Bad Dream
 Monkey Lossless (ape), Hamburg Song
 Frog Lossless, Put It Behind You
 
-DESIGN, PODCAST RECEIVER
-========================
-
-Podcast                               Time  Publish date   Status      Description
----------------------------------------------------------------------------------
-[] NRK P1 - Her og nå                                                  Et aktuelt nyhetsmagasin.
-[] A D + Her og nå 01.05.2007         57:05 01.05.2007     Downloaded  Nyheter, reportasjer, debatter.
-[] A D + Her og nå 02.05.2007         54:35 02.05.2007     Error       Nyheter, reportasjer, debatter.
-
-[] NRK P1 - Herreavdelingen                                            Høydepunkter fra Finn Bjelke og Yan Friis.
-[] A D + Herreavdelingen 01.05.2007   57:05 01.05.2007     Downloading Mark i pc'en.
-[] A D + Herreavdelingen 02.05.2007   54:35 02.05.2007     Downloaded  Dusjing med sensor.
-[] A D + Herreavdelingen 03.05.2007   46:37 03.05.2007     New         Rulling i gul snø.
-
--> Delete selected   -> Check for new episodes   -> Refresh page   -> Podcast settings
-
-Subscribe to podcast URL    [http://          ] [OK]
-
-
-
-Podcast settings
-================
-
-Save Podcasts in directory  [c:/music/podcasts]
-Check for new episodes      [Every day        ] at [3:00] (?)
-Keep                        [Last 10 episodes ] [Save]
-
-(Last stuff only visible if admin)
-
-
+MISCELLANEOUS
+=============
 openclipart.org
