@@ -88,7 +88,7 @@ public class PodcastService {
             return;
         }
 
-        long periodMillis = hoursBetween * 60L * 1000L;
+        long periodMillis = hoursBetween * 60L * 60L * 1000L;
         long initialDelayMillis = 5L * 60L * 1000L;
 
         scheduledRefresh = scheduledExecutor.scheduleAtFixedRate(task, initialDelayMillis, periodMillis, TimeUnit.MILLISECONDS);
