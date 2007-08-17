@@ -2,6 +2,14 @@
 
 <html><head>
     <%@ include file="head.jsp" %>
+
+    <script type="text/javascript" language="javascript">
+        function deletePlaylist(deleteUrl) {
+            if (confirm("<fmt:message key="playlist.load.confirm_delete"/>")) {
+                location.href = deleteUrl;
+            }
+        }
+    </script>
 </head><body>
 
 <h1><fmt:message key="playlist.load.title"/></h1>
@@ -26,7 +34,7 @@
                             <div class="forward"><a href="${downloadUrl}"><fmt:message key="common.download"/></a></div>
                         </c:if>
                         <c:if test="${model.user.playlistRole}">
-                            <div class="forward"><a href="${deleteUrl}"><fmt:message key="playlist.load.delete"/></a></div>
+                            <div class="forward"><a href="javascript:deletePlaylist('${deleteUrl}')"><fmt:message key="playlist.load.delete"/></a></div>
                         </c:if>
                     </td>
                 </tr>

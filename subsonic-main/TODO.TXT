@@ -18,6 +18,7 @@ Add status to Podcast channel (New, Downloading, Downloaded, Error).
 Show Podcast error messages (as popup?)
 Add Podcast channel description as comment when creating new directory.
 i18n podcastReceiver.jsp
+Added confirmation dialog when deleting playlists and podcasts.
 
 TODO IN 3.2
 =============

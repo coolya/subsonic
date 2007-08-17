@@ -14,8 +14,10 @@
     }
 
     function deleteSelected() {
-        location.href = "podcastReceiverAdmin.view?deleteChannel=" + getSelectedChannels() +
-                        "&deleteEpisode=" + getSelectedEpisodes();
+        if (confirm("<fmt:message key="podcastreceiver.confirmdelete"/>")) {
+            location.href = "podcastReceiverAdmin.view?deleteChannel=" + getSelectedChannels() +
+                            "&deleteEpisode=" + getSelectedEpisodes();
+        }
     }
 
     function getSelectedChannels() {
