@@ -22,7 +22,7 @@
     <select name="musicFolderId" style="width:100%" onchange="location='left.view?musicFolderId=' + options[selectedIndex].value;" >
         <option value="-1"><fmt:message key="left.allfolders"/></option>
         <c:forEach items="${model.musicFolders}" var="musicFolder">
-            <option ${model.selectedMusicFolder == musicFolder ? "selected" : ""} value="${musicFolder.id}">${musicFolder.name}</option>
+            <option ${model.selectedMusicFolder.id == musicFolder.id ? "selected" : ""} value="${musicFolder.id}">${musicFolder.name}</option>
         </c:forEach>
     </select>
 </c:if>

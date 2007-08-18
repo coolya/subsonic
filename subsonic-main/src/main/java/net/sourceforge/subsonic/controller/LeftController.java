@@ -4,6 +4,7 @@ import net.sourceforge.subsonic.domain.MediaLibraryStatistics;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicFolder;
 import net.sourceforge.subsonic.domain.MusicIndex;
+import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
@@ -36,6 +37,7 @@ public class LeftController extends ParameterizableViewController implements Las
     private MusicFileService musicFileService;
 
     public long getLastModified(HttpServletRequest request) {
+        saveSelectedMusicFolder(request);
         MusicFolder[] musicFolders = settingsService.getAllMusicFolders();
 
         long lastModified = settingsService.getSettingsLastChanged();
@@ -48,22 +50,14 @@ public class LeftController extends ParameterizableViewController implements Las
     }
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        saveSelectedMusicFolder(request);
         Map<String, Object> map = new HashMap<String, Object>();
 
         MediaLibraryStatistics statistics = searchService.getStatistics();
         Locale locale = RequestContextUtils.getLocale(request);
 
         MusicFolder[] allMusicFolders = settingsService.getAllMusicFolders();
-        MusicFolder selectedMusicFolder = null;
-        if (request.getParameter("musicFolderId") != null) {
-            int musicFolderId = Integer.parseInt(request.getParameter("musicFolderId"));
-            for (MusicFolder musicFolder : allMusicFolders) {
-                if (musicFolderId == musicFolder.getId()) {
-                    selectedMusicFolder = musicFolder;
-                    break;
-                }
-            }
-        }
+        MusicFolder selectedMusicFolder = getSelectedMusicFolder(request);
         MusicFolder[] musicFoldersToUse = selectedMusicFolder == null ? allMusicFolders : new MusicFolder[]{selectedMusicFolder};
         String indexString = settingsService.getIndexString();
         String[] ignoredArticles = settingsService.getIgnoredArticlesAsArray();
@@ -91,6 +85,33 @@ public class LeftController extends ParameterizableViewController implements Las
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
+    }
+
+    private void saveSelectedMusicFolder(HttpServletRequest request) {
+        if (request.getParameter("musicFolderId") == null) {
+            return;
+        }
+        int musicFolderId = Integer.parseInt(request.getParameter("musicFolderId"));
+
+        UserSettings settings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
+        settings.setSelectedMusicFolderId(musicFolderId);
+        settingsService.updateUserSettings(settings);
+    }
+
+    /**
+     * Returns the selected music folder, or <code>null</code> if all music folders should be displayed.
+     */
+    private MusicFolder getSelectedMusicFolder(HttpServletRequest request) {
+        UserSettings settings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
+        int musicFolderId = settings.getSelectedMusicFolderId();
+
+        for (MusicFolder musicFolder : settingsService.getAllMusicFolders()) {
+            if (musicFolderId == musicFolder.getId()) {
+                return musicFolder;
+            }
+        }
+
+        return null;
     }
 
     private List<MusicFile> getShortcuts(MusicFolder[] musicFoldersToUse, String[] shortcuts) {

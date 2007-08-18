@@ -25,6 +25,12 @@ public class Schema32 extends Schema {
             LOG.info("Database column 'user_settings.show_now_playing' was added successfully.");
         }
 
+        if (!columnExists(template, "selected_music_folder_id", "user_settings")) {
+            LOG.info("Database column 'user_settings.selected_music_folder_id' not found.  Creating it.");
+            template.execute("alter table user_settings add selected_music_folder_id int default -1 not null");
+            LOG.info("Database column 'user_settings.selected_music_folder_id' was added successfully.");
+        }
+
         if (!tableExists(template, "podcast_channel")) {
             LOG.info("Database table 'podcast_channel' not found.  Creating it.");
             template.execute("create table podcast_channel (" +

@@ -21,6 +21,7 @@ public class UserSettings {
     private String lastFmUsername;
     private String lastFmPassword;
     private TranscodeScheme transcodeScheme = TranscodeScheme.OFF;
+    private int selectedMusicFolderId = -1;
 
     public UserSettings(String username) {
         this.username = username;
@@ -120,6 +121,14 @@ public class UserSettings {
 
     public void setTranscodeScheme(TranscodeScheme transcodeScheme) {
         this.transcodeScheme = transcodeScheme;
+    }
+
+    public int getSelectedMusicFolderId() {
+        return selectedMusicFolderId;
+    }
+
+    public void setSelectedMusicFolderId(int selectedMusicFolderId) {
+        this.selectedMusicFolderId = selectedMusicFolderId;
     }
 
     /**

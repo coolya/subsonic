@@ -136,6 +136,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertNull("Error in getUserSettings().", userSettings.getLastFmPassword());
         assertSame("Error in getUserSettings().", TranscodeScheme.OFF, userSettings.getTranscodeScheme());
         assertFalse("Error in getUserSettings().", userSettings.isShowNowPlayingEnabled());
+        assertEquals("Error in getUserSettings().", -1, userSettings.getSelectedMusicFolderId());
 
         UserSettings settings = new UserSettings("sindre");
         settings.setLocale(Locale.SIMPLIFIED_CHINESE);
@@ -150,6 +151,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         settings.setLastFmPassword("last_pass");
         settings.setTranscodeScheme(TranscodeScheme.MAX_192);
         settings.setShowNowPlayingEnabled(false);
+        settings.setSelectedMusicFolderId(3);
 
         userDao.updateUserSettings(settings);
         userSettings = userDao.getUserSettings("sindre");
@@ -167,6 +169,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertEquals("Error in getUserSettings().", "last_pass", userSettings.getLastFmPassword());
         assertSame("Error in getUserSettings().", TranscodeScheme.MAX_192, userSettings.getTranscodeScheme());
         assertFalse("Error in getUserSettings().", userSettings.isShowNowPlayingEnabled());
+        assertEquals("Error in getUserSettings().", 3, userSettings.getSelectedMusicFolderId());
 
         userDao.deleteUser("sindre");
         assertNull("Error in cascading delete.", userDao.getUserSettings("sindre"));
