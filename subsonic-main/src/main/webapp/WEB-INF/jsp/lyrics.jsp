@@ -34,14 +34,17 @@
 </head>
 <body onload="getLyrics('${model.artist}', '${model.song}')">
 
-<table><tr>
-    <td><fmt:message key="lyrics.artist"/></td>
-    <td style="padding-left:0.50em"><input id="artist" type="text" value="${model.artist}"/></td>
-    <td style="padding-left:0.75em"><fmt:message key="lyrics.song"/></td>
-    <td style="padding-left:0.50em"><input id="song" type="text" value="${model.song}"/></td>
-    <td style="padding-left:0.75em"><input type="submit" value="<fmt:message key="lyrics.search"/>" onclick="getLyrics(DWRUtil.getValue('artist'), DWRUtil.getValue('song'))"/>
-    </td>
-</tr>
+<table>
+    <tr>
+        <td><fmt:message key="lyrics.artist"/></td>
+        <td style="padding-left:0.50em"><input id="artist" type="text" size="40" value="${model.artist}"/></td>
+        <td style="padding-left:0.75em"><input type="submit" value="<fmt:message key="lyrics.search"/>" style="width:6em" onclick="getLyrics(DWRUtil.getValue('artist'), DWRUtil.getValue('song'))"/></td>
+    </tr>
+    <tr>
+        <td><fmt:message key="lyrics.song"/></td>
+        <td style="padding-left:0.50em"><input id="song" type="text" size="40" value="${model.song}"/></td>
+        <td style="padding-left:0.75em"><input type="submit" value="<fmt:message key="common.close"/>" style="width:6em" onclick="self.close()"/></td>
+    </tr>
 </table>
 
 <hr/>

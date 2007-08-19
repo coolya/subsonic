@@ -58,8 +58,8 @@
                 html += "<p class='detail'>" + nowPlaying[i].username + "<br/>" +
                         "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'><em>" +
                         nowPlaying[i].artist + "</em></br>" + nowPlaying[i].title + "</a></br>" +
-                        "<a href='" + nowPlaying[i].lyricsUrl + "' onclick=\"return popupSize(this, 'help', 465, 600)\">[" +
-                        "<fmt:message key="main.lyrics"/>" + "]</a></p>";
+                        "<span class='forward' style='background-position: 0px 2px'><a href='" + nowPlaying[i].lyricsUrl + "' onclick=\"return popupSize(this, 'help', 430, 550)\">" +
+                        "<fmt:message key="main.lyrics"/>" + "</a></span></p>";
             }
             DWRUtil.setValue("nowPlaying", html);
         }
