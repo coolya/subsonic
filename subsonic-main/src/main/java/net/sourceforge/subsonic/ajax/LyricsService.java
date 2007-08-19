@@ -26,18 +26,18 @@ public class LyricsService {
      *
      * @param artist The artist.
      * @param song   The song.
-     * @return The lyrics, or <code>null</code> if not found.
+     * @return The lyrics, never <code>null</code> .
      */
-    public String getLyrics(String artist, String song) {
+    public LyricsInfo getLyrics(String artist, String song) {
         try {
             String url = BASE_URL + "tema1en.php?artist=" +
                          URLEncoder.encode(artist, StringUtil.ENCODING_UTF8) +
                          "&songname=" +
                          URLEncoder.encode(song, StringUtil.ENCODING_UTF8);
-            return getLyrics(new URL(url));
+            return new LyricsInfo(getLyrics(new URL(url)));
         } catch (Exception x) {
             LOG.warn("Failed to get lyrics for song '" + song + "'.", x);
-            return null;
+            return new LyricsInfo(null);
         }
     }
 

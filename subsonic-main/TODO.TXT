@@ -24,6 +24,9 @@ Fetch lyrics from the internet.
 
 TODO IN 3.2
 =============
+Make popup location work in Opera.
+Show matching song/artist in lyrics view.
+Show player name in "Now playing"
 Select all in textfield for settings image url.
 XSPF (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=69)
 ASX (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=638)
