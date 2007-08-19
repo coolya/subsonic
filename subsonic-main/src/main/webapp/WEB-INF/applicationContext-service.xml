@@ -110,6 +110,8 @@
         <property name="musicFileService" ref="musicFileService"/>
     </bean>
 
+    <bean id="ajaxLyricsService" class="net.sourceforge.subsonic.ajax.LyricsService"/>
+    
     <bean id="ajaxTagService" class="net.sourceforge.subsonic.ajax.TagService">
         <property name="musicFileService" ref="musicFileService"/>
     </bean>

@@ -1,6 +1,5 @@
 package net.sourceforge.subsonic.dao;
 
-import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.PodcastChannel;
 import net.sourceforge.subsonic.domain.PodcastEpisode;
 import net.sourceforge.subsonic.domain.PodcastStatus;
@@ -19,7 +18,6 @@ import java.util.List;
 @SuppressWarnings({"unchecked"})
 public class PodcastDao extends AbstractDao {
 
-    private static final Logger LOG = Logger.getLogger(PodcastDao.class);
     private static final String CHANNEL_COLUMNS = "id, url, title, description, status, error_message";
     private static final String EPISODE_COLUMNS = "id, channel_id, url, path, title, description, publish_date, " +
                                                   "duration, bytes_total, bytes_downloaded, status, error_message";
@@ -38,7 +36,6 @@ public class PodcastDao extends AbstractDao {
         getJdbcTemplate().update(sql, new Object[]{null, channel.getUrl(), channel.getTitle(), channel.getDescription(),
                                                    channel.getStatus().name(), channel.getErrorMessage()});
 
-        LOG.info("Created Podcast channel " + channel.getUrl());
         return getJdbcTemplate().queryForInt("select max(id) from podcast_channel");
     }
 
@@ -71,7 +68,6 @@ public class PodcastDao extends AbstractDao {
     public void deleteChannel(int id) {
         String sql = "delete from podcast_channel where id=?";
         getJdbcTemplate().update(sql, new Object[]{id});
-        LOG.info("Deleted Podcast channel with ID " + id);
     }
 
     /**
@@ -85,7 +81,6 @@ public class PodcastDao extends AbstractDao {
                                                    episode.getTitle(), episode.getDescription(), episode.getPublishDate(),
                                                    episode.getDuration(), episode.getBytesTotal(), episode.getBytesDownloaded(),
                                                    episode.getStatus().name(), episode.getErrorMessage()});
-        LOG.info("Created Podcast episode " + episode.getUrl());
     }
 
     /**
@@ -134,7 +129,6 @@ public class PodcastDao extends AbstractDao {
     public void deleteEpisode(int id) {
         String sql = "delete from podcast_episode where id=?";
         getJdbcTemplate().update(sql, new Object[]{id});
-        LOG.info("Deleted Podcast episode with ID " + id);
     }
 
     private static class PodcastChannelRowMapper implements RowMapper {

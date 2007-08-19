@@ -7,18 +7,20 @@ package net.sourceforge.subsonic.ajax;
  */
 public class NowPlayingInfo {
 
-    private String username;
-    private String artist;
-    private String title;
-    private String tooltip;
-    private String albumUrl;
+    private final String username;
+    private final String artist;
+    private final String title;
+    private final String tooltip;
+    private final String albumUrl;
+    private final String lyricsUrl;
 
-    public NowPlayingInfo(String user, String artist, String title, String tooltip,  String albumUrl) {
+    public NowPlayingInfo(String user, String artist, String title, String tooltip, String albumUrl, String lyricsUrl) {
         this.username = user;
         this.artist = artist;
         this.title = title;
         this.tooltip = tooltip;
         this.albumUrl = albumUrl;
+        this.lyricsUrl = lyricsUrl;
     }
 
     public String getUsername() {
@@ -39,5 +41,9 @@ public class NowPlayingInfo {
 
     public String getAlbumUrl() {
         return albumUrl;
+    }
+
+    public String getLyricsUrl() {
+        return lyricsUrl;
     }
 }

@@ -55,9 +55,11 @@
         function getNowPlayingCallback(nowPlaying) {
             var html = nowPlaying.length == 0 ? "" : "<h2><fmt:message key="main.nowplaying"/></h2>";
             for (var i = 0; i < nowPlaying.length; i++) {
-                html += "<p class='detail'>" + nowPlaying[i].username + "<br/>";
-                html += "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'><em>" +
-                        nowPlaying[i].artist + "</em></br>" + nowPlaying[i].title + "</a></p>";
+                html += "<p class='detail'>" + nowPlaying[i].username + "<br/>" +
+                        "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'><em>" +
+                        nowPlaying[i].artist + "</em></br>" + nowPlaying[i].title + "</a></br>" +
+                        "<a href='" + nowPlaying[i].lyricsUrl + "' onclick=\"return popupSize(this, 'help', 465, 600)\">[" +
+                        "<fmt:message key="main.lyrics"/>" + "]</a></p>";
             }
             DWRUtil.setValue("nowPlaying", html);
         }

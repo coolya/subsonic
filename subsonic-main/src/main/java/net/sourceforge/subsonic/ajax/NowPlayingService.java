@@ -71,12 +71,16 @@ public class NowPlayingService {
                 String title = musicFile.getMetaData().getTitle();
                 String albumUrl = url.replaceFirst("/dwr/.*", "/main.view?pathUtf8Hex=" +
                                                               StringUtil.utf8HexEncode(musicFile.getParent().getPath()));
+                String lyricsUrl = url.replaceFirst("/dwr/.*", "/lyrics.view?artistUtf8Hex=" +
+                                                               StringUtil.utf8HexEncode(musicFile.getMetaData().getArtist()) +
+                                                               "&songUtf8Hex=" +
+                                                               StringUtil.utf8HexEncode(musicFile.getMetaData().getTitle()));
 
                 String tooltip = artist + " &ndash; " + title;
                 artist = StringUtils.abbreviate(artist, 30);
                 title = StringUtils.abbreviate(title, 30);
 
-                result.add(new NowPlayingInfo(player.getUsername(), artist, title, tooltip, albumUrl));
+                result.add(new NowPlayingInfo(player.getUsername(), artist, title, tooltip, albumUrl, lyricsUrl));
             }
         }
 

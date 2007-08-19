@@ -10,6 +10,10 @@
             <param name="beanName" value="ajaxNowPlayingService"/>
         </create>
 
+        <create creator="spring" javascript="lyricsService">
+            <param name="beanName" value="ajaxLyricsService"/>
+        </create>
+
         <create creator="spring" javascript="tagService">
             <param name="beanName" value="ajaxTagServiceSecure"/>
         </create>
