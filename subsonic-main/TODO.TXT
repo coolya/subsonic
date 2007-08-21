@@ -24,6 +24,7 @@ Fetch lyrics from the internet.
 
 TODO IN 3.2
 =============
+Get lyrics from http://www.metrolyrics.com/
 Make popup location work in Opera.
 Show matching song/artist in lyrics view.
 Show player name in "Now playing"
