@@ -13,6 +13,8 @@
 
         function getLyrics(artist, song) {
             window.focus();
+            window.moveTo(300, 200);
+
             $("wait").style.display = "inline";
             $("lyrics").style.display = "none";
             $("noLyricsFound").style.display = "none";
@@ -20,7 +22,7 @@
         }
 
         function getLyricsCallback(lyricsInfo) {
-            DWRUtil.setValue("lyrics", lyricsInfo.lyrics);
+            DWRUtil.setValue("lyricsText", lyricsInfo.lyrics);
             $("wait").style.display = "none";
             if (lyricsInfo.lyrics != null) {
                 $("lyrics").style.display = "inline";
@@ -51,7 +53,14 @@
 <hr/>
 <p id="wait"><b><fmt:message key="lyrics.wait"/></b></p>
 <p id="noLyricsFound" style="display:none"><b><fmt:message key="lyrics.nolyricsfound"/></b></p>
-<div id="lyrics" style="display:none;"></div>
+
+<div id="lyrics" style="display:none;">
+    <div id="lyricsText"></div>
+
+    <p class="detail" style="text-align:right">
+        <fmt:message key="lyrics.courtesy"/>
+    </p>
+</div>
 
 <hr/>
 <p style="text-align:center">
