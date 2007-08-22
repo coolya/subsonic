@@ -2,12 +2,19 @@ package net.sourceforge.subsonic.ajax;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.util.StringUtil;
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Provides AJAX-enabled services for retrieving song lyrics, by screen-scraping http://www.lyrc.com.ar.
@@ -19,7 +26,7 @@ import java.net.URLEncoder;
 public class LyricsService {
 
     private static final Logger LOG = Logger.getLogger(LyricsService.class);
-    private static final String BASE_URL = "http://www.lyrc.com.ar/en/";
+
 
     /**
      * Returns lyrics for the given song and artist.
@@ -30,58 +37,118 @@ public class LyricsService {
      */
     public LyricsInfo getLyrics(String artist, String song) {
         try {
-            String url = BASE_URL + "tema1en.php?artist=" +
-                         URLEncoder.encode(artist, StringUtil.ENCODING_UTF8) +
-                         "&songname=" +
-                         URLEncoder.encode(song, StringUtil.ENCODING_UTF8);
-            return new LyricsInfo(getLyrics(new URL(url)));
+
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("search", '"' + artist + "\" \"" + song + '"');
+            params.put("category", "artisttitle");
+
+            String searchResult = executePostRequest("http://www.metrolyrics.com/search.php", params);
+            String lyricsUrl = getLyricsUrl(searchResult);
+            if (lyricsUrl == null) {
+                return new LyricsInfo(null);
+            }
+            String lyrics = executeGetRequest(lyricsUrl);
+            return new LyricsInfo(getLyrics(lyrics));
+
         } catch (Exception x) {
             LOG.warn("Failed to get lyrics for song '" + song + "'.", x);
             return new LyricsInfo(null);
         }
     }
 
-    private String getLyrics(URL url) throws IOException {
-        InputStream in = null;
+    /**
+     * Extracts the lyrics URL from the given HTML text.
+     *
+     * @param html The HTML containing search results from http://www.metrolyrics.com/search.php
+     * @return The first lyrics URL in the HTML, or <code>null</code> if not found.
+     */
+    protected String getLyricsUrl(String html) {
+
+        // Grep for the following pattern:
+        // <td class="First"><a href="http://www.metrolyrics.com/a-song-for-departure-lyrics-manic-street-preachers.html">A Song For Departure</a></td>
+
+        Pattern pattern = Pattern.compile("<td class=\"First\"><a href=\"(.*?)\"");
+        Matcher matcher = pattern.matcher(html);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return null;
+    }
+
+    /**
+     * Extracts the lyrics from the given HTML text.
+     *
+     * @param html The HTML containing the lyrics, e.g., http://www.metrolyrics.com/a-song-for-departure-lyrics-manic-street-preachers.html
+     * @return The extracted lyrics.
+     */
+    protected String getLyrics(String html) {
+
+        // Remove all occurrences of:   <class id="NoSteal">[xxxx lyrics on http://www.metrolyrics.com]</class>
+        html = html.replaceAll("<class id=\"NoSteal\".*</class>", "");
+
+        // Find first occurrence of:  <div id="SongText">
+        int index = html.indexOf("<div id=\"SongText\">");
+        if (index == -1) {
+            return null;
+        }
+
+        // Open a reader from this point.
+        BufferedReader reader = new BufferedReader(new StringReader(html.substring(index)));
+
+        // Read line by line, appending only the relevant lines to the lyrics.
+        StringBuffer lyrics = new StringBuffer();
+        int divCount = 0;
         try {
-            in = url.openStream();
-            String html = IOUtils.toString(in, StringUtil.ENCODING_LATIN);
-            if (html.contains("Suggestions : <br>")) { // More than one posibility, take the first one
-                String s = html.substring(html.indexOf("Suggestions : <br>"));
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
 
-                s = s.substring(s.indexOf("tema1en.php"));
-                s = s.substring(0, s.indexOf("\""));
+                if (line.contains("<div")) {
+                    divCount++;
+                } else if (line.contains("</div>")) {
+                    divCount--;
+                } else if (divCount == 1) {
+                    lyrics.append(line);
+                }
 
-                return getLyrics(new URL(BASE_URL + s));
+                if (divCount == 0) {
+                    break;
+                }
+            }
+        } catch (IOException x) {
+            return null;
+        }
 
+        return lyrics.length() == 0 ? null : lyrics.toString().trim();
+    }
+
+    private String executeGetRequest(String url) throws IOException {
+        return executeRequest(new GetMethod(url));
+    }
+
+    private String executePostRequest(String url, Map<String, String> parameters) throws IOException {
+        PostMethod method = new PostMethod(url);
+
+        for (Map.Entry<String, String> entry : parameters.entrySet()) {
+            method.addParameter(entry.getKey(), entry.getValue());
+        }
+        return executeRequest(method);
+    }
+
+    private String executeRequest(HttpMethod method) throws IOException {
+        HttpClient client = new HttpClient();
+        client.getParams().setContentCharset(StringUtil.ENCODING_UTF8);
+
+        try {
+            int statusCode = client.executeMethod(method);
+
+            if (statusCode != HttpStatus.SC_OK) {
+                throw new IOException("Method failed: " + method.getStatusLine());
             }
 
-            // Remove html before lyrics
-            html = html.substring(html.indexOf("</table>") + 8);
-
-            // Remove html after lyrics
-            int pPos = html.indexOf("<p>");
-            int brPos = html.indexOf("<br>");
-
-            if (pPos == -1) {
-                pPos = Integer.MAX_VALUE;
-            }
-
-            if (brPos == -1) {
-                brPos = Integer.MAX_VALUE;
-            }
-
-            html = html.substring(0, pPos < brPos ? pPos : brPos);
-
-            // Bad parsing....
-            if (html.contains("<head>")) {
-                return null;
-            }
-
-            return html;
+            return method.getResponseBodyAsString();
 
         } finally {
-            IOUtils.closeQuietly(in);
+            method.releaseConnection();
         }
+
     }
 }
