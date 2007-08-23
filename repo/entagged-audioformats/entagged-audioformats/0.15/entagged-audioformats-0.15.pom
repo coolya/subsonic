@@ -1,0 +1,6 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>entagged-audioformats</groupId>
+  <artifactId>entagged-audioformats</artifactId>
+  <version>0.15</version>
+</project>
