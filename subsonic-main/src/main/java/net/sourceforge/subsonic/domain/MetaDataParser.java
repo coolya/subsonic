@@ -153,7 +153,7 @@ public abstract class MetaDataParser {
         private MetaDataParser[] parsers;
 
         private Factory() {
-            parsers = new MetaDataParser[]{new Mp3Parser(), new OggParser(), new DefaultMetaDataParser()};
+            parsers = new MetaDataParser[]{new EntaggedParser(), new DefaultMetaDataParser()};
         }
 
         /**

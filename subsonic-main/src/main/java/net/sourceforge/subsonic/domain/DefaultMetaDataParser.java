@@ -7,7 +7,6 @@ package net.sourceforge.subsonic.domain;
  */
 public class DefaultMetaDataParser extends MetaDataParser {
 
-
     /**
      * Parses meta data for the given music file. No guessing or reformatting is done.
      *

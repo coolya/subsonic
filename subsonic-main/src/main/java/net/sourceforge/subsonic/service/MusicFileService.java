@@ -3,7 +3,7 @@ package net.sourceforge.subsonic.service;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
-import net.sourceforge.subsonic.domain.Mp3Parser;
+import net.sourceforge.subsonic.domain.EntaggedParser;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.util.FileUtil;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
@@ -165,7 +165,8 @@ public class MusicFileService {
                     return -1;
                 }
                 return a.getName().compareToIgnoreCase(b.getName());
-            }});
+            }
+        });
 
         for (File file : files) {
             if (file.isDirectory() && !dir.isExcluded(file)) {
@@ -192,8 +193,8 @@ public class MusicFileService {
             }
         }
 
-        // Look for embedded images in MP3 files. (Only check first MP3 file encountered).
-        Mp3Parser parser = new Mp3Parser();
+        // Look for embedded images in audiofiles. (Only check first audio file encountered).
+        EntaggedParser parser = new EntaggedParser();
         for (File candidate : candidates) {
             MusicFile musicFile = getMusicFile(candidate);
             if (parser.isApplicable(musicFile)) {

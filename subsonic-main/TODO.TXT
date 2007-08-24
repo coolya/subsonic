@@ -23,6 +23,7 @@ Remember selected music folder across sessions (http://www.activeobjects.no/subs
 Fetch lyrics from the internet.
 Get lyrics from http://www.metrolyrics.com/
 Show metrolyrics credits.
+Use Entagged parsing.
 
 TODO IN 3.2
 =============

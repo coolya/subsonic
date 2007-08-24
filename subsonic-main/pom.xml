@@ -102,24 +102,6 @@
         </dependency>
 
         <dependency>
-            <groupId>jid3</groupId>
-            <artifactId>jid3</artifactId>
-            <version>0.46</version>
-        </dependency>
-
-        <dependency>
-            <groupId>jaudiotagger</groupId>
-            <artifactId>jaudiotagger</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>jvorbiscomment</groupId>
-            <artifactId>jvorbiscomment</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-
-        <dependency>
             <groupId>entagged-audioformats</groupId>
             <artifactId>entagged-audioformats</artifactId>
             <version>0.15</version>

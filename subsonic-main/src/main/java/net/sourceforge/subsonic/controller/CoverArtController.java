@@ -1,20 +1,24 @@
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.domain.Mp3Parser;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.EntaggedParser;
 import net.sourceforge.subsonic.domain.MusicFile;
-import net.sourceforge.subsonic.service.*;
-import org.apache.commons.codec.digest.*;
-import org.apache.commons.io.*;
-import org.apache.commons.lang.*;
-import org.springframework.web.bind.*;
-import org.springframework.web.servlet.*;
-import org.springframework.web.servlet.mvc.*;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
+import org.springframework.web.servlet.mvc.LastModified;
 
-import javax.imageio.*;
-import javax.servlet.http.*;
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 
 /**
@@ -116,6 +120,10 @@ public class CoverArtController implements Controller, LastModified {
                 in = getImageInputStream(file);
                 out = new FileOutputStream(cachedImage);
                 BufferedImage image = ImageIO.read(in);
+                if (image == null) {
+                    throw new Exception("Unable to decode image.");
+                }
+
                 image = scale(image, size, size);
                 ImageIO.write(image, "jpeg", out);
 
@@ -135,12 +143,12 @@ public class CoverArtController implements Controller, LastModified {
     }
 
     /**
-     * Returns an input stream to the image in the given file.  If the file is an MP3 file,
+     * Returns an input stream to the image in the given file.  If the file is an audio file,
      * the embedded ID3 image (APIC) is returned.
      */
     private InputStream getImageInputStream(File file) throws IOException {
-        Mp3Parser parser = new Mp3Parser();
         MusicFile musicFile = musicFileService.getMusicFile(file);
+        EntaggedParser parser = new EntaggedParser();
         if (parser.isApplicable(musicFile)) {
             return new ByteArrayInputStream(parser.getImageData(musicFile));
         } else {
