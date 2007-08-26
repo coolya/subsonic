@@ -214,6 +214,14 @@
         <property name="settingsService" ref="settingsService"/>
         <property name="musicFileService" ref="musicFileService"/>
     </bean>
+    <bean id="webPlayerController" class="net.sourceforge.subsonic.controller.WebPlayerController">
+        <property name="viewName" value="webPlayer"/>
+    </bean>
+    <bean id="xspfPlaylistController" class="net.sourceforge.subsonic.controller.XspfPlaylistController">
+        <property name="viewName" value="xspfPlaylist"/>
+        <property name="playerService" ref="playerService"/>
+        <property name="musicFileService" ref="musicFileService"/>
+    </bean>
     <bean id="coverArtController" class="net.sourceforge.subsonic.controller.CoverArtController">
         <property name="securityService" ref="securityService"/>
         <property name="musicFileService" ref="musicFileService"/>
@@ -235,6 +243,7 @@
         <property name="statusService" ref="statusService"/>
         <property name="securityService" ref="securityService"/>
         <property name="settingsService" ref="settingsService"/>
+        <property name="musicFileService" ref="musicFileService"/>
         <property name="musicInfoService" ref="musicInfoService"/>
         <property name="transcodingService" ref="transcodingService"/>
         <property name="audioScrobblerService" ref="audioScrobblerService"/>
@@ -321,6 +330,8 @@
                 <prop key="/home.view">homeController</prop>
                 <prop key="/editTags.view">editTagsController</prop>
                 <prop key="/playlist.view">playlistController</prop>
+                <prop key="/webPlayer.view">webPlayerController</prop>
+                <prop key="/xspfPlaylist.view">xspfPlaylistController</prop>
                 <prop key="/coverArt.view">coverArtController</prop>
                 <prop key="/statusChart.view">statusChartController</prop>
                 <prop key="/userChart.view">userChartController</prop>

@@ -14,6 +14,7 @@ import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.service.TranscodingService;
+import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
@@ -44,6 +45,7 @@ public class StreamController implements Controller {
     private SettingsService settingsService;
     private TranscodingService transcodingService;
     private AudioScrobblerService audioScrobblerService;
+    private MusicFileService musicFileService;
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -65,6 +67,17 @@ public class StreamController implements Controller {
                 LOG.info("Incoming Podcast request for playlist " + playlistName);
             }
 
+            // If "path" request parameter is set, this is a request for a single file
+            // (typically from the embedded Flash player). In that case, create a separate
+            // playlist (in order to support multiple parallell streams).
+            String path = request.getParameter("path");
+            boolean isSingleFile = path != null;
+            if (isSingleFile) {
+                Playlist playlist = new Playlist();
+                playlist.addFile(musicFileService.getMusicFile(path));
+                player.setPlaylist(playlist);
+            }
+
             Playlist playlist = player.getPlaylist();
 
             String userAgent = request.getHeader("user-agent");
@@ -74,7 +87,7 @@ public class StreamController implements Controller {
             streamEndpoint = player.getUsername() + '@' + request.getRemoteHost() + ':' + request.getRemotePort() + " (" + userAgent + ')';
 
             // Terminate any other streams to this player.
-            if (!isPodcast) {
+            if (!isPodcast && !isSingleFile) {
                 TransferStatus[] currentStatuses = statusService.getStreamStatusesForPlayer(player);
                 for (TransferStatus streamStatus : currentStatuses) {
                     streamStatus.terminate();
@@ -116,7 +129,7 @@ public class StreamController implements Controller {
                 }
 
                 if (playlist.getStatus() == Playlist.Status.STOPPED) {
-                    if (isPodcast) {
+                    if (isPodcast || isSingleFile) {
                         break;
                     } else {
                         sendDummy(buf, out);
@@ -178,6 +191,10 @@ public class StreamController implements Controller {
 
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
+    }
+
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
     }
 
     public void setMusicInfoService(MusicInfoService musicInfoService) {
