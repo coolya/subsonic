@@ -4,6 +4,7 @@
 <head>
     <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
+    <title>Subsonic</title>
 </head>
 
 <body class="bgcolor2">
@@ -27,7 +28,6 @@
            type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"
            align="middle" height="155" width="600"></embed>
 </object>
-
 
 </body>
 </html>
