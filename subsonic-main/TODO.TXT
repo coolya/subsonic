@@ -36,7 +36,6 @@ Set content-length in streamController whenever possible.  Would improve flash p
 
 TODO IN 3.2
 =============
-Add version number to xspf_player.swf
 Display warning if Podcast folder is not within a music folder.
 Add support for editing genre.
 RejectedExecutionHandler handling in ThreadPoolExecutor constructor.

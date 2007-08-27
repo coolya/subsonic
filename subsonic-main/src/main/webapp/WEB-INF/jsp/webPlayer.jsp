@@ -32,7 +32,7 @@
     <%-- Hack to force Flash player to reload playlist. --%>
     <c:param name="dummy" value="${model.dummy}"/>
 </c:url>
-<c:url var="playerUrl" value="/flash/xspf_player.swf?playlist_url=${playlistUrl}&autoplay=true&autoload=true"/>
+<c:url var="playerUrl" value="/flash/xspf_player-0.2.3.swf?playlist_url=${playlistUrl}&autoplay=true&autoload=true"/>
 
 <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
         codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0"
