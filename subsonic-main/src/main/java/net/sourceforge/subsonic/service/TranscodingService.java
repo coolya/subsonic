@@ -1,23 +1,28 @@
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.util.*;
-import net.sourceforge.subsonic.dao.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.dao.TranscodingDao;
 import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.io.*;
-import org.apache.commons.io.filefilter.*;
+import net.sourceforge.subsonic.io.InputStreamReaderThread;
+import net.sourceforge.subsonic.io.TranscodeInputStream;
+import net.sourceforge.subsonic.util.StringUtil;
+import org.apache.commons.io.filefilter.PrefixFileFilter;
 import org.apache.commons.lang.StringUtils;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides services for transcoding media. Transcoding is the process of
  * converting an audio stream to a different format and/or bit rate. The latter is
  * also called downsampling.
  *
- * @see TranscodeInputStream
  * @author Sindre Mehus
+ * @see TranscodeInputStream
  */
 public class TranscodingService {
 
@@ -28,6 +33,7 @@ public class TranscodingService {
 
     /**
      * Returns all transcodings. Disabled transcodings are not included.
+     *
      * @return Possibly empty array of all transcodings.
      */
     public Transcoding[] getAllTranscodings() {
@@ -36,6 +42,7 @@ public class TranscodingService {
 
     /**
      * Returns all transcodings.
+     *
      * @param includeAll Whether disabled transcodings should be included.
      * @return Possibly empty array of all transcodings.
      */
@@ -52,6 +59,7 @@ public class TranscodingService {
 
     /**
      * Returns all active transcodings for the given player. Only enabled transcodings are returned.
+     *
      * @param player The player.
      * @return All active transcodings for the player.
      */
@@ -68,7 +76,8 @@ public class TranscodingService {
 
     /**
      * Sets the list of active transcodings for the given player.
-     * @param player The player.
+     *
+     * @param player         The player.
      * @param transcodingIds ID's of the active transcodings.
      */
     public void setTranscodingsForPlayer(Player player, int[] transcodingIds) {
@@ -77,6 +86,7 @@ public class TranscodingService {
 
     /**
      * Creates a new transcoding.
+     *
      * @param transcoding The transcoding to create.
      */
     public void createTranscoding(Transcoding transcoding) {
@@ -85,6 +95,7 @@ public class TranscodingService {
 
     /**
      * Deletes the transcoding with the given ID.
+     *
      * @param id The transcoding ID.
      */
     public void deleteTranscoding(Integer id) {
@@ -93,11 +104,33 @@ public class TranscodingService {
 
     /**
      * Updates the given transcoding.
+     *
      * @param transcoding The transcoding to update.
      */
     public void updateTranscoding(Transcoding transcoding) {
         transcodingDao.updateTranscoding(transcoding);
     }
+
+    /**
+     * Returns whether transcoding and/or downsampling is required for the given music file and player combination.
+     *
+     * @param musicFile The music file.
+     * @param player    The player.
+     * @return Whether transcoding and/or downsampling will be performed if invoking the
+     *         {@link #getTranscodedInputStream(MusicFile,Player)} method with the same arguments.
+     */
+    public boolean isTranscodingRequired(MusicFile musicFile, Player player) {
+        if (getTranscoding(musicFile, player) != null) {
+            return true;
+        }
+
+        TranscodeScheme transcodeScheme = getTranscodeScheme(player);
+        boolean downsample = transcodeScheme != TranscodeScheme.OFF;
+        Integer bitRate = musicFile.getMetaData().getBitRate();
+
+        return downsample && bitRate != null && bitRate > transcodeScheme.getMaxBitRate();
+    }
+
 
     /**
      * Returns a possibly transcoded or downsampled input stream for the given music file and player combination.
@@ -111,7 +144,7 @@ public class TranscodingService {
      * Otherwise, a normal input stream to the original file is returned.
      *
      * @param musicFile The music file.
-     * @param player The player.
+     * @param player    The player.
      * @return A possible transcoded or downsampled input stream.
      * @throws IOException If an I/O error occurs.
      */
@@ -151,8 +184,9 @@ public class TranscodingService {
 
     /**
      * Returns an input stream by applying the given transcoding to the given music file.
-     * @param musicFile The music file.
-     * @param transcoding The transcoding to apply.
+     *
+     * @param musicFile       The music file.
+     * @param transcoding     The transcoding to apply.
      * @param transcodeScheme The transcoding (resampling) scheme. May be <code>null</code>.
      * @return The transcoded input stream.
      * @throws IOException If an I/O error occurs.
@@ -180,9 +214,10 @@ public class TranscodingService {
      * <li>Replacing occurrcences of "%b" with the max bitrate from the transcode scheme.</li>
      * <li>Prepending the path of the transcoder directory if the transcoder is found there.</li>
      * </ul>
-     * @param command The command line string.
+     *
+     * @param command         The command line string.
      * @param transcodeScheme The transcoding (resampling) scheme. May be <code>null</code>.
-     * @param musicFile The music file to use when replacing "%s".  May be <code>null</code>.
+     * @param musicFile       The music file to use when replacing "%s".  May be <code>null</code>.
      * @return The prepared command array.
      */
     private String[] createCommand(String command, TranscodeScheme transcodeScheme, MusicFile musicFile) {
@@ -220,9 +255,10 @@ public class TranscodingService {
 
     /**
      * Returns a downsampled input stream to the music file.
+     *
      * @param transcodeScheme Contains the bitrate to downsample to.
      * @return An input stream to the downsampled music file.
-     * @exception IOException If an I/O error occurs.
+     * @throws IOException If an I/O error occurs.
      */
     private InputStream getDownsampledInputStream(MusicFile musicFile, TranscodeScheme transcodeScheme) throws IOException {
         String command = settingsService.getDownsamplingCommand();
@@ -231,6 +267,7 @@ public class TranscodingService {
 
     /**
      * Returns whether downsampling is supported (i.e., whether LAME is installed or not.)
+     *
      * @return Whether downsampling is supported.
      */
     public boolean isDownsamplingSupported() {
@@ -258,6 +295,7 @@ public class TranscodingService {
 
     /**
      * Returns whether the given transcoder is installed in SUBSONIC_HOME/transcode.
+     *
      * @return Whether the transcoder is installed.
      */
     private boolean isTranscoderInstalled(String transcoder) {

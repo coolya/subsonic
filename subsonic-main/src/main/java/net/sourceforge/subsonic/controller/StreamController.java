@@ -74,8 +74,14 @@ public class StreamController implements Controller {
             boolean isSingleFile = path != null;
             if (isSingleFile) {
                 Playlist playlist = new Playlist();
-                playlist.addFile(musicFileService.getMusicFile(path));
+                MusicFile file = musicFileService.getMusicFile(path);
+                playlist.addFile(file);
                 player.setPlaylist(playlist);
+
+                // Set content length unless transcoding/downsampling will be done.
+                if (!transcodingService.isTranscodingRequired(file, player)) {
+                    response.setContentLength((int) file.length());
+                }
             }
 
             Playlist playlist = player.getPlaylist();
