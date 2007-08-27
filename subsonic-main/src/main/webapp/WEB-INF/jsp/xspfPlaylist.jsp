@@ -21,7 +21,7 @@
         <track>
             <location>${streamUrl}</location>
             <image>${coverArtUrl}</image>
-            <annotation>${song.musicFile.title}</annotation>
+            <annotation>${song.musicFile.metaData.artist} - ${song.musicFile.title}</annotation>
         </track>
 
 </c:forEach>

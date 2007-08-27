@@ -138,7 +138,7 @@
         </c:choose>
         <td> | <a href="playlist.view?undo"><fmt:message key="playlist.undo"/></a></td>
                 <c:if test="${not empty model.songs}">
-        <td> | <a href="webPlayer.view"><fmt:message key="playlist.webplayer"/></a></td>
+        <td> | <a href="webPlayer.view?"><fmt:message key="playlist.webplayer"/></a></td>
                 </c:if>
 
         <td> | <select id="moreActions" onchange="actionSelected(this.options[selectedIndex].id)">
