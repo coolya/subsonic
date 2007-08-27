@@ -80,7 +80,12 @@ public class NowPlayingService {
                 artist = StringUtils.abbreviate(artist, 30);
                 title = StringUtils.abbreviate(title, 30);
 
-                result.add(new NowPlayingInfo(player.getUsername(), artist, title, tooltip, albumUrl, lyricsUrl));
+                String user = player.getUsername();
+                if (StringUtils.isNotBlank(player.getName())) {
+                    user += "@" + player.getName();
+                }
+
+                result.add(new NowPlayingInfo(user, artist, title, tooltip, albumUrl, lyricsUrl));
             }
         }
 

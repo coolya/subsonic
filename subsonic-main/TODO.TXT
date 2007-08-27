@@ -31,11 +31,12 @@ Show matching song/artist in lyrics view.
 "Web Player" or "Flash Player" option in playlist.  Open in playlist frame.
 In Web Player: "-> Detach player"   "-> Back to playlist"
 XSPF (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=69)
+Show player name in "Now playing"
 
 TODO IN 3.2
 =============
-Show player name in "Now playing"
 Display warning if Podcast folder is not within a music folder.
+Add support for editing genre.
 
 BACKLOG
 ===========================
@@ -54,7 +55,6 @@ Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownload
 Test if dwr javascripts are cached in browser (especially for "now playing")
 Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
 Test playlist checkbox stuff, in particular download auth.
-Add support for editing genre.
 Move "logout" under search search field.
 Reformat all java code.
 Append selected tracks to previously saved playlist (bring up dialog for selecting).
