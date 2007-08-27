@@ -42,17 +42,17 @@ public class LyricsService {
             params.put("search", '"' + artist + "\" \"" + song + '"');
             params.put("category", "artisttitle");
 
-            String searchResult = executePostRequest("http://www.metrolyrics.com/search.php", params);
-            String lyricsUrl = getLyricsUrl(searchResult);
+            String searchResultHtml = executePostRequest("http://www.metrolyrics.com/search.php", params);
+            String lyricsUrl = getLyricsUrl(searchResultHtml);
             if (lyricsUrl == null) {
-                return new LyricsInfo(null);
+                return new LyricsInfo();
             }
-            String lyrics = executeGetRequest(lyricsUrl);
-            return new LyricsInfo(getLyrics(lyrics));
+            String lyricsHtml = executeGetRequest(lyricsUrl);
+            return new LyricsInfo(getLyrics(lyricsHtml), getHeader(lyricsHtml));
 
         } catch (Exception x) {
             LOG.warn("Failed to get lyrics for song '" + song + "'.", x);
-            return new LyricsInfo(null);
+            return new LyricsInfo();
         }
     }
 
@@ -118,6 +118,25 @@ public class LyricsService {
         }
 
         return lyrics.length() == 0 ? null : lyrics.toString().trim();
+    }
+
+    /**
+     * Extracts the header (containing the matching artist/song) from the given HTML text.
+     *
+     * @param html The HTML containing the lyrics, e.g., http://www.metrolyrics.com/a-song-for-departure-lyrics-manic-street-preachers.html
+     * @return The extracted header text.
+     */
+    protected String getHeader(String html) {
+        
+        // Grep for the following pattern:
+        // 	<h3>Manic Street Preachers - A Song For Departure Lyrics</h3>
+
+        Pattern pattern = Pattern.compile("<h3>(.*) Lyrics</h3>");
+        Matcher matcher = pattern.matcher(html);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return null;
     }
 
     private String executeGetRequest(String url) throws IOException {

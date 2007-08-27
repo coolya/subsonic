@@ -71,4 +71,26 @@ public class LyricsServiceTestCase extends TestCase {
             IOUtils.closeQuietly(in);
         }
     }
+
+    public void testGetHeader1() throws IOException {
+        InputStream in = getClass().getResourceAsStream("metrolyrics_lyrics_1.html");
+        try {
+            String html = IOUtils.toString(in);
+            String header = lyricsService.getHeader(html);
+            assertEquals("Error in getHeader().", "Manic Street Preachers - A Song For Departure", header);
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
+    }
+
+    public void testGetHeader2() throws IOException {
+        InputStream in = getClass().getResourceAsStream("metrolyrics_lyrics_2.html");
+        try {
+            String html = IOUtils.toString(in);
+            String header = lyricsService.getHeader(html);
+            assertEquals("Error in getHeader().", "Manic Street Preachers - Imperial Bodybags", header);
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
+    }
 }

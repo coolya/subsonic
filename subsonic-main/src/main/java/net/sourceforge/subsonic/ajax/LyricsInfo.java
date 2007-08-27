@@ -8,12 +8,22 @@ package net.sourceforge.subsonic.ajax;
 public class LyricsInfo {
 
     private final String lyrics;
+    private final String header;
 
-    public LyricsInfo(String lyrics) {
+    public LyricsInfo() {
+        this(null, null);
+    }
+
+    public LyricsInfo(String lyrics, String header) {
         this.lyrics = lyrics;
+        this.header = header;
     }
 
     public String getLyrics() {
         return lyrics;
+    }
+
+    public String getHeader() {
+        return header;
     }
 }

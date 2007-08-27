@@ -22,6 +22,7 @@
         }
 
         function getLyricsCallback(lyricsInfo) {
+            DWRUtil.setValue("lyricsHeader", lyricsInfo.header);
             DWRUtil.setValue("lyricsText", lyricsInfo.lyrics);
             $("wait").style.display = "none";
             if (lyricsInfo.lyrics != null) {
@@ -51,10 +52,12 @@
 </table>
 
 <hr/>
-<p id="wait"><b><fmt:message key="lyrics.wait"/></b></p>
-<p id="noLyricsFound" style="display:none"><b><fmt:message key="lyrics.nolyricsfound"/></b></p>
+<h2 id="wait"><fmt:message key="lyrics.wait"/></h2>
+<h2 id="noLyricsFound" style="display:none"><fmt:message key="lyrics.nolyricsfound"/></h2>
 
 <div id="lyrics" style="display:none;">
+    <h2 id="lyricsHeader" style="text-align:center;margin-bottom:1em"></h2>
+
     <div id="lyricsText"></div>
 
     <p class="detail" style="text-align:right">
