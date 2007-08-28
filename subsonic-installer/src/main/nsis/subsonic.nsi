@@ -25,10 +25,10 @@ Page instfiles
 ; The stuff to install
 Section "" ;No components page, name is not important
 
-  ; Set output path to the installation directory.
-  SetOutPath $INSTDIR\jetty
+  SetOutPath $INSTDIR
+  File ..\..\..\..\subsonic-booter\target\subsonic-booter-3.2.beta1-jar-with-dependencies.jar
 
-  ; Put file there
+  SetOutPath $INSTDIR\jetty
   File ..\..\..\..\subsonic-main\target\subsonic.war
 
 SectionEnd ; end the section

@@ -22,7 +22,9 @@
         </dependency>
 
     </dependencies>
+
     <build>
+        <finalName>subsonic-${project.version}</finalName>
         <plugins>
 
             <!-- Configuration of assembly plugin for creating source and binary distributions. -->

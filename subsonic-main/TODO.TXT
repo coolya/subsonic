@@ -41,9 +41,22 @@ Add support for editing genre.
 RejectedExecutionHandler handling in ThreadPoolExecutor constructor.
 Norwegian translation
 
+DESIGN, INSTALLER
+===========================
+Installer should check if Java 6 is installed, and if not guide user to install it.
+Create maven modules "subsonic-jetty" and "subsonic-nsis" etc.
+Uninstall option.
+Find out how to launch Java apps.
+Install in "c:/program files/subsonic"
+Deploy webapp in "c:/program files/subsonic/jetty"
+Should SUBSONIC_HOME be "c:/documents and settings/xxx/Application Data/Subsonic"?  Probably good for uninstall/upgrade.
+Memory and port settings must be configurable.
+Use Tray api.
+Create installer for Windows. http://nsis.sourceforge.net.  Combine with Jetty?  Tray icon.  How to launch app?
+
+
 BACKLOG
 ===========================
-Create installer for Windows. http://nsis.sourceforge.net
 ASX (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=638)
 Make it possible to cancel/resume Podcast downloads. ("Cancel selected")
 New theme.

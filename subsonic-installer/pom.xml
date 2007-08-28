@@ -14,16 +14,24 @@
     </parent>
 
     <properties>
-        <nsis.home>c:/Program Files/NSIS</nsis.home>
+        <nsis.home>c:/ProgramFiler/NSIS</nsis.home>
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>net.sourceforge.subsonic</groupId>
             <artifactId>subsonic-main</artifactId>
             <version>${project.version}</version>
             <type>war</type>
         </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.subsonic</groupId>
+            <artifactId>subsonic-booter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
