@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.sourceforge.subsonic</groupId>
+    <artifactId>subsonic-installer</artifactId>
+    <packaging>pom</packaging>
+    <name>Subsonic Installer</name>
+
+    <parent>
+        <groupId>net.sourceforge.subsonic</groupId>
+        <artifactId>subsonic</artifactId>
+        <version>3.2.beta1</version>
+    </parent>
+
+    <properties>
+        <nsis.home>c:/Program Files/NSIS</nsis.home>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.sourceforge.subsonic</groupId>
+            <artifactId>subsonic-main</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <configuration>
+                            <tasks>
+                                <echo>Compiling NSIS script...</echo>
+                                <mkdir dir="${project.build.directory}"/>
+                                <exec executable="${nsis.home}/makensis">
+                                    <arg value="${basedir}/src/main/nsis/subsonic.nsi"/>
+                                    <arg value="-XOutFile ${project.build.directory}/subsonic-${project.version}-installer.exe"/>
+                                </exec>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

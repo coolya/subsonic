@@ -54,6 +54,7 @@
         <module>subsonic-main</module>
         <module>subsonic-amazon</module>
         <module>subsonic-site</module>
+        <module>subsonic-installer</module>
     </modules>
 
     <build>
