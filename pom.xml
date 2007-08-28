@@ -56,40 +56,11 @@
         <module>subsonic-site</module>
         <module>subsonic-booter</module>
         <module>subsonic-installer</module>
+        <module>subsonic-assembly</module>
     </modules>
 
     <build>
         <plugins>
-
-            <!-- Configuration of assembly plugin for creating source and binary distributions. -->
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/bin.xml</descriptor>
-                        <descriptor>src/main/assembly/src.xml</descriptor>
-                    </descriptors>
-                </configuration>
-            </plugin>
-
-            <!-- Work-around since the target directory is not created automatically. -->
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <configuration>
-                            <tasks>
-                                <mkdir dir="target"/>
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-idea-plugin</artifactId>

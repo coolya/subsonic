@@ -8,7 +8,7 @@
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
-            <directory>subsonic-main</directory>
+            <directory>../subsonic-main</directory>
             <outputDirectory></outputDirectory>
             <includes>
                 <include>README.TXT</include>
@@ -16,7 +16,7 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>subsonic-main/target</directory>
+            <directory>../subsonic-main/target</directory>
             <outputDirectory></outputDirectory>
             <includes>
                 <include>*.war</include>
