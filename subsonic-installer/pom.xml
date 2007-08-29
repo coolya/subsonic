@@ -14,7 +14,7 @@
     </parent>
 
     <properties>
-        <nsis.home>c:/ProgramFiler/NSIS</nsis.home>
+        <nsis.home>c:/Program Files/NSIS</nsis.home>
     </properties>
 
     <dependencies>
@@ -48,7 +48,7 @@
                                 <mkdir dir="${project.build.directory}"/>
                                 <exec executable="${nsis.home}/makensis">
                                     <arg value="${basedir}/src/main/nsis/subsonic.nsi"/>
-                                    <arg value="-XOutFile ${project.build.directory}/subsonic-${project.version}-installer.exe"/>
+                                    <arg value="-XOutFile ${project.build.directory}/subsonic-${project.version}-setup.exe"/>
                                 </exec>
                             </tasks>
                         </configuration>
