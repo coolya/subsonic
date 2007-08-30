@@ -43,16 +43,19 @@ Norwegian translation
 
 DESIGN, INSTALLER
 ===========================
-Installer should check if Java 6 is installed, and if not guide user to install it.
-Create maven modules "subsonic-jetty" and "subsonic-nsis" etc.
-Uninstall option.
-Find out how to launch Java apps.
-Install in "c:/program files/subsonic"
-Deploy webapp in "c:/program files/subsonic/jetty"
-Should SUBSONIC_HOME be "c:/documents and settings/xxx/Application Data/Subsonic"?  Probably good for uninstall/upgrade.
+Copy license and version number in installer.
+Get license for exe4j.
+Tray icon.
+Clean up .exe4j file.
 Memory and port settings must be configurable.
+Clean up .vmoptions file.
+Service description in .exe4j.
+Handle port in use gracefully.
+Java 5 vs 6 compiling and running
+Installer should check if Java 6 is installed, and if not guide user to install it.
+Should SUBSONIC_HOME be "c:/documents and settings/xxx/Application Data/Subsonic"?  Probably good for uninstall/upgrade.
 Use Tray api.
-Create installer for Windows. http://nsis.sourceforge.net.  Combine with Jetty?  Tray icon.  How to launch app?
+Create installer for Windows. http://nsis.sourceforge.net.
 
 
 BACKLOG

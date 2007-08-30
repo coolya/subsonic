@@ -44,6 +44,19 @@
         <plugins>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>ISO-8859-1</encoding>
+                    <verbose>false</verbose>
+                    <compilerVersion>1.6</compilerVersion>
+                    <showWarnings>true</showWarnings>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <!--Version 2.1 doesn't work with dependencies of type 'pom'.-->
                 <version>2.2-beta-1</version>
@@ -51,20 +64,17 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                    <archive>
-                        <manifestFile>${basedir}/src/main/resources/META-INF/MANIFEST.MF</manifestFile>
-                    </archive>
                 </configuration>
 
                 <!-- Create executable jar file with all dependencies during 'package' phase. -->
                 <executions>
-                    <!--<execution>-->
-                        <!--<id>make-assembly</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>attached</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attached</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
 

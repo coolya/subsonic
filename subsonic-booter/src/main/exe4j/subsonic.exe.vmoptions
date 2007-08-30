@@ -1,2 +1,3 @@
 -Xmx128m
+-Dsubsonic.port=8080
 -Dsubsonic.home=c:/subsonic-dev

@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Extension-Name: Subsonic
-Specification-Vendor: Subsonic
-Implementation-Vendor: Subsonic
-Implementation-Title: Subsonic
-Main-Class: net.sourceforge.subsonic.booter.Main
-SplashScreen-Image: net/sourceforge/subsonic/booter/images/splash.png
