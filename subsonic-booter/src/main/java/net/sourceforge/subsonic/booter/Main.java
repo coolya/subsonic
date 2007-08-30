@@ -35,17 +35,17 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         new Main();
-//        JFrame frame = new JFrame("Subsonic");
-//
-//        frame.addWindowListener(new WindowAdapter() {
-//            public void windowClosing(WindowEvent e) {
-//                System.exit(0);
-//            }
-//        });
-//
-//        String dir = System.getProperty("user.dir");
-//        frame.getContentPane().add(new JLabel(dir));
-//        frame.setBounds(300, 300, 300, 200);
-//        frame.setVisible(true);
+        JFrame frame = new JFrame("Subsonic");
+
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+
+        String dir = System.getProperty("user.dir");
+        frame.getContentPane().add(new JLabel(dir));
+        frame.setBounds(300, 300, 300, 200);
+        frame.setVisible(true);
     }
 }

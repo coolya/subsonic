@@ -1,0 +1,2 @@
+-Xmx128m
+-Dsubsonic.home=c:/subsonic-dev

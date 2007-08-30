@@ -12,6 +12,10 @@
         <version>3.2.beta1</version>
     </parent>
 
+    <properties>
+        <exe4j.home>c:/Program Files/exe4j</exe4j.home>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -36,14 +40,17 @@
     </dependencies>
 
     <build>
+        <finalName>subsonic-booter</finalName>
         <plugins>
 
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
+                <!--Version 2.1 doesn't work with dependencies of type 'pom'.-->
+                <version>2.2-beta-1</version>
                 <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/jar-with-dependencies.xml</descriptor>
-                    </descriptors>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
                     <archive>
                         <manifestFile>${basedir}/src/main/resources/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
@@ -51,11 +58,32 @@
 
                 <!-- Create executable jar file with all dependencies during 'package' phase. -->
                 <executions>
+                    <!--<execution>-->
+                        <!--<id>make-assembly</id>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>attached</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
                     <execution>
-                        <id>make-assembly</id>
                         <phase>package</phase>
+                        <configuration>
+                            <tasks>
+                                <echo>Compiling exe4j...</echo>
+                                <copy file="${basedir}/src/main/exe4j/subsonic.exe.vmoptions" todir="${project.build.directory}"/>
+                                <exec executable="${exe4j.home}/bin/exe4jc">
+                                    <arg value="${basedir}/src/main/exe4j/subsonic.exe4j"/>
+                                </exec>
+                            </tasks>
+                        </configuration>
                         <goals>
-                            <goal>attached</goal>
+                            <goal>run</goal>
                         </goals>
                     </execution>
                 </executions>
