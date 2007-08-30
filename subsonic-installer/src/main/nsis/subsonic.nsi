@@ -53,7 +53,11 @@ Section "Subsonic"
   File ..\..\..\..\subsonic-booter\target\subsonic.exe
   File ..\..\..\..\subsonic-booter\target\subsonic.exe.vmoptions
   File ..\..\..\..\subsonic-booter\target\subsonic-booter-jar-with-dependencies.jar
+  File ..\..\..\..\subsonic-main\LICENSE.TXT
+  File ..\..\..\..\subsonic-main\README.TXT
   File ..\..\..\..\subsonic-main\target\subsonic.war
+  File ..\..\..\..\subsonic-main\target\classes\version.txt
+  File ..\..\..\..\subsonic-main\target\classes\build_number.txt
 
   # Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\Subsonic "Install_Dir" "$INSTDIR"

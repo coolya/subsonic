@@ -43,6 +43,7 @@ Norwegian translation
 
 DESIGN, INSTALLER
 ===========================
+Don't overwrite .vmoptions?
 Add "Open in browser" to tray icon.
 Copy license and version number in installer.
 Get license for exe4j.
