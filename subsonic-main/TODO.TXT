@@ -43,6 +43,7 @@ Norwegian translation
 
 DESIGN, INSTALLER
 ===========================
+Add "Open in browser" to tray icon.
 Copy license and version number in installer.
 Get license for exe4j.
 Tray icon.
