@@ -1,10 +1,14 @@
 package net.sourceforge.subsonic.booter;
 
 
+import org.jdesktop.jdic.desktop.Desktop;
+import org.jdesktop.jdic.tray.SystemTray;
+import org.jdesktop.jdic.tray.TrayIcon;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,15 +47,26 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         new Main();
-
-        SystemTray tray = SystemTray.getSystemTray();
+        SystemTray tray = SystemTray.getDefaultSystemTray();
 
         URL url = Main.class.getResource("/images/subsonic.png");
         Image image = Toolkit.getDefaultToolkit().createImage(url);
 
-        trayIcon = new TrayIcon(image, "Subsonic Media Streamer", createTrayPopupMenu());
-        tray.add(trayIcon);
-//
+        trayIcon = new TrayIcon(new ImageIcon(image), "Subsonic Media Streamer", createTrayPopupMenu());
+        tray.addTrayIcon(trayIcon);
+
+        trayIcon.displayMessage("Subsonic", "Subsonic is running. Click here to open browser.", TrayIcon.INFO_MESSAGE_TYPE);
+        trayIcon.addBalloonActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Desktop.browse(new URL("http://localhost:8080/subsonic/"));
+                } catch (Exception x) {
+                    x.printStackTrace();
+                }
+            }
+        });
+
+        //
 //        JFrame frame = new JFrame("Subsonic");
 //
 //        frame.addWindowListener(new WindowAdapter() {
@@ -66,12 +81,12 @@ public class Main {
 //        frame.setVisible(true);
     }
 
-    private static PopupMenu createTrayPopupMenu() {
-        PopupMenu popupMenu = new PopupMenu("Subsonic");
+    private static JPopupMenu createTrayPopupMenu() {
+        JPopupMenu popupMenu = new JPopupMenu("Subsonic");
         popupMenu.add("Subsonic");
         popupMenu.addSeparator();
-        MenuItem exitMenuItem = new MenuItem("Exit");
-        MenuItem settingsMenuItem = new MenuItem("Settings...");
+        JMenuItem exitMenuItem = new JMenuItem("Exit");
+        JMenuItem settingsMenuItem = new JMenuItem("Settings...");
 
         exitMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -87,7 +102,7 @@ public class Main {
 
     private static void exit() {
         if (trayIcon != null) {
-            SystemTray.getSystemTray().remove(trayIcon);
+            SystemTray.getDefaultSystemTray().removeTrayIcon(trayIcon);
         }
 
         System.exit(0);

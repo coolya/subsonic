@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <exe4j version="4.0.3" transformSequenceNumber="1">
-  <directoryPresets config="../resources/images" />
+  <directoryPresets config="." />
   <application name="Subsonic" distributionSourceDir="../../../target">
     <languages>
       <principalLanguage id="en" customLocalizationFile="" />
@@ -18,7 +18,7 @@
       <versionLine x="318" y="4" text="version %VERSION%" font="Arial" fontSize="8" fontColor="0,0,0" fontWeight="500" />
     </text>
   </splashScreen>
-  <java mainClass="net.sourceforge.subsonic.booter.Main" vmParameters="" arguments="" allowVMPassthroughParameters="true" preferredVM="" minVersion="1.6" maxVersion="" allowBetaVM="true" jdkOnly="false">
+  <java mainClass="net.sourceforge.subsonic.booter.Main" vmParameters="" arguments="" allowVMPassthroughParameters="true" preferredVM="" minVersion="1.5" maxVersion="" allowBetaVM="true" jdkOnly="false">
     <searchSequence>
       <registry />
       <envVar name="JAVA_HOME" />
@@ -27,7 +27,9 @@
     <classPath>
       <archive location="./subsonic-booter-jar-with-dependencies.jar" failOnError="false" />
     </classPath>
-    <nativeLibraryDirectories />
+    <nativeLibraryDirectories>
+      <directory name="." />
+    </nativeLibraryDirectories>
   </java>
   <includedFiles />
   <unextractableFiles />

@@ -53,6 +53,8 @@ Section "Subsonic"
   File ..\..\..\..\subsonic-booter\target\subsonic.exe
   File ..\..\..\..\subsonic-booter\target\subsonic.exe.vmoptions
   File ..\..\..\..\subsonic-booter\target\subsonic-booter-jar-with-dependencies.jar
+  File ..\..\..\..\subsonic-booter\target\jdic.dll
+  File ..\..\..\..\subsonic-booter\target\tray.dll
   File ..\..\..\..\subsonic-main\LICENSE.TXT
   File ..\..\..\..\subsonic-main\README.TXT
   File ..\..\..\..\subsonic-main\target\subsonic.war
@@ -115,11 +117,11 @@ Function CheckInstalledJRE
     # Read the value from the registry into the $0 register
     ReadRegStr $0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" CurrentVersion
 
-    # Check JRE version. At least 1.6 is required.
+    # Check JRE version. At least 1.5 is required.
     #   $1=0  Versions are equal
     #   $1=1  Installed version is newer
     #   $1=2  Installed version is older (or non-existent)
-    ${VersionCompare} $0 "1.6" $1
+    ${VersionCompare} $0 "1.5" $1
     IntCmp $1 2 InstallJRE 0 0
     Return
 
