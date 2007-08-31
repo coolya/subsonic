@@ -41,27 +41,24 @@ Add support for editing genre.
 RejectedExecutionHandler handling in ThreadPoolExecutor constructor.
 Norwegian translation
 
-DESIGN, INSTALLER
-===========================
-Don't overwrite .vmoptions?
+Installer:
+Update web pages.
+Add check for admin rights.
+Don't overwrite .vmoptions?  Not now.
 Add "Open in browser" to tray icon.
-Copy license and version number in installer.
+Verify that war updates works with installer and booter.
 Get license for exe4j.
-Tray icon.
 Clean up .exe4j file.
 Memory and port settings must be configurable.
 Clean up .vmoptions file.
 Service description in .exe4j.
 Handle port in use gracefully.
-Java 5 vs 6 compiling and running
-Installer should check if Java 6 is installed, and if not guide user to install it.
 Should SUBSONIC_HOME be "c:/documents and settings/xxx/Application Data/Subsonic"?  Probably good for uninstall/upgrade.
-Use Tray api.
-Create installer for Windows. http://nsis.sourceforge.net.
 
 
 BACKLOG
 ===========================
+If first time login, tell user admin username/password in login page.
 ASX (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=638)
 Make it possible to cancel/resume Podcast downloads. ("Cancel selected")
 New theme.

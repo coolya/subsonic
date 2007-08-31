@@ -1,6 +1,5 @@
 package net.sourceforge.subsonic.booter;
 
-
 import org.jdesktop.jdic.desktop.Desktop;
 import org.jdesktop.jdic.tray.SystemTray;
 import org.jdesktop.jdic.tray.TrayIcon;
@@ -37,7 +36,7 @@ public class Main {
 
         WebAppContext context = new WebAppContext();
 //        context.setTempDirectory(new File("/tmp/jetty"));
-        context.setContextPath("/subsonic");
+        context.setContextPath("/subsonic");  // TODO: Use "/"
 //        context.setWar("file:///projects/subsonic/trunk/subsonic-main/target/subsonic.war");
         context.setWar("subsonic.war");
 
@@ -55,7 +54,8 @@ public class Main {
         trayIcon = new TrayIcon(new ImageIcon(image), "Subsonic Media Streamer", createTrayPopupMenu());
         tray.addTrayIcon(trayIcon);
 
-        trayIcon.displayMessage("Subsonic", "Subsonic is running. Click here to open browser.", TrayIcon.INFO_MESSAGE_TYPE);
+        trayIcon.displayMessage("Subsonic", "Subsonic is now running. Click this balloon to get started.",
+                                TrayIcon.INFO_MESSAGE_TYPE);
         trayIcon.addBalloonActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
