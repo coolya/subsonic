@@ -58,6 +58,7 @@ Should SUBSONIC_HOME be "c:/documents and settings/xxx/Application Data/Subsonic
 
 BACKLOG
 ===========================
+Add "play count" to Podcasts.
 If first time login, tell user admin username/password in login page.
 ASX (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=638)
 Make it possible to cancel/resume Podcast downloads. ("Cancel selected")
