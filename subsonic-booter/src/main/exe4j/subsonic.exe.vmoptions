@@ -1,3 +1,3 @@
--Xmx128m
--Dsubsonic.port=8080
+-Xmx64m
+-Dsubsonic.port=80
 -Dsubsonic.contextPath=/

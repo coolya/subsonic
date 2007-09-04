@@ -1,13 +1,11 @@
 package net.sourceforge.subsonic.booter;
 
-import org.jdesktop.jdic.desktop.Desktop;
 import org.jdesktop.jdic.tray.SystemTray;
 import org.jdesktop.jdic.tray.TrayIcon;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.URL;
 
 /**
@@ -34,7 +32,7 @@ public class TrayController {
     private void createActions() {
         openAction = new AbstractAction("Open") {
             public void actionPerformed(ActionEvent e) {
-                openBrowser();
+                subsonicController.openBrowser();
             }
         };
 
@@ -52,23 +50,21 @@ public class TrayController {
 
         exitAction = new AbstractAction("Exit") {
             public void actionPerformed(ActionEvent e) {
-                SystemTray.getDefaultSystemTray().removeTrayIcon(trayIcon);
-                System.exit(0);
+                subsonicController.exit();
             }
         };
     }
 
     private void createComponents() {
-        URL url = Main.class.getResource("/images/subsonic.png");
+        URL url = Main.class.getResource("/images/subsonic-16.png");
         Image image = Toolkit.getDefaultToolkit().createImage(url);
 
         JPopupMenu menu = new JPopupMenu();
-        JMenuItem item = menu.add(openAction);
+        JMenuItem item = menu.add(statusAction);
         item.setFont(item.getFont().deriveFont(Font.BOLD));
-
-        menu.addSeparator();
-        menu.add(statusAction);
         menu.add(settingsAction);
+        menu.addSeparator();
+        menu.add(openAction);
         menu.addSeparator();
         menu.add(exitAction);
 
@@ -76,20 +72,8 @@ public class TrayController {
     }
 
     private void addBehaviour() {
-        trayIcon.addBalloonActionListener(openAction);
-
-        // TODO: REMOVE
-        trayIcon.addBalloonActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Balloon action listener");
-            }
-        });
-
-        trayIcon.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Action listener");
-            }
-        });
+        trayIcon.addActionListener(statusAction);
+        trayIcon.addBalloonActionListener(statusAction);
     }
 
     private void installComponents() {
@@ -98,13 +82,8 @@ public class TrayController {
                                 TrayIcon.INFO_MESSAGE_TYPE);
     }
 
-    private void openBrowser() {
-        try {
-            String url = "http://localhost:" + subsonicController.getPort() + subsonicController.getContextPath();
-            Desktop.browse(new URL(url));
-        } catch (Exception x) {
-            x.printStackTrace();
-        }
+    public void uninstallComponents() {
+        SystemTray.getDefaultSystemTray().removeTrayIcon(trayIcon);
     }
 
 }

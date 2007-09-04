@@ -13,7 +13,7 @@
     </parent>
 
     <properties>
-        <exe4j.home>c:/ProgramFiler/exe4j</exe4j.home>
+        <exe4j.home>c:/Program Files/exe4j</exe4j.home>
     </properties>
 
     <dependencies>
@@ -31,16 +31,16 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jdesktop</groupId>
-            <artifactId>jdic</artifactId>
-            <version>0.9.3</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.mortbay.jetty</groupId>
             <artifactId>jsp-2.0</artifactId>
             <version>6.1.5</version>
             <type>pom</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jdesktop</groupId>
+            <artifactId>jdic</artifactId>
+            <version>0.9.3</version>
         </dependency>
 
         <dependency>

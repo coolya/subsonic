@@ -7,8 +7,13 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.*;
+import java.net.URL;
 
 /**
+ * TODO: Bring frame to front when activated by tray icon.
+ * TODO: Frame icon graphics.
+ * TODO: Tray icon graphics.
+ *
  * @author Sindre Mehus
  */
 public class SubsonicFrame extends JFrame {
@@ -27,6 +32,10 @@ public class SubsonicFrame extends JFrame {
         createComponents();
         layoutComponents();
         addBehaviour();
+
+
+        URL url = Main.class.getResource("/images/subsonic-32.png");
+        setIconImage(Toolkit.getDefaultToolkit().createImage(url));
 
         pack();
         centerComponent();
@@ -67,11 +76,14 @@ public class SubsonicFrame extends JFrame {
 
     public void showStatus() {
         tabbedPane.setSelectedComponent(statusPanel);
+        pack();
         setVisible(true);
     }
 
     public void showSettings() {
+        settingsPanel.setValues();
         tabbedPane.setSelectedComponent(settingsPanel);
+        pack();
         setVisible(true);
     }
 }
