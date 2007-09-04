@@ -14,7 +14,7 @@
     </parent>
 
     <properties>
-        <nsis.home>c:/ProgramFiler/NSIS</nsis.home>
+        <nsis.home>c:/Program Files/NSIS</nsis.home>
     </properties>
 
     <dependencies>
