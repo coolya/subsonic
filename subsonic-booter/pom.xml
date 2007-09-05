@@ -95,6 +95,9 @@
                                 <copy file="${basedir}/src/main/native/jdic.dll" todir="${project.build.directory}"/>
                                 <copy file="${basedir}/src/main/exe4j/subsonic.exe.vmoptions" todir="${project.build.directory}"/>
                                 <exec executable="${exe4j.home}/bin/exe4jc">
+                                    <arg value="--license=L-SINDRE_MEHUS#14926715500010001-1ty7dbe11l10ll#140"/>
+                                </exec>
+                                <exec executable="${exe4j.home}/bin/exe4jc">
                                     <arg value="${basedir}/src/main/exe4j/subsonic.exe4j"/>
                                 </exec>
                             </tasks>

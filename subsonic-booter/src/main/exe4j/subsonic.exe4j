@@ -8,14 +8,14 @@
   </application>
   <executable name="subsonic" type="1" iconSet="true" iconFile="../resources/images/subsonic-16.ico" executableDir="" redirectStderr="false" stderrFile="error.log" redirectStdout="false" stdoutFile="output.log" failOnStderrOutput="true" executableMode="3" changeWorkingDirectory="true" workingDirectory="." singleInstance="true" serviceStartType="2" serviceDependencies="" serviceDescription="Subsonic Media Streamer" jreLocation="" executionLevel="asInvoker" amd64="false">
     <messageSet>
-      <message id="NoJvmFound" text="Hjalla. No JVM could be found on your system. Please define EXE4J_JAVA_HOME to point to an installed JDK or JRE or download a JRE from www.java.com." />
+      <message id="NoJvmFound" text="No JVM could be found on your system. Please define EXE4J_JAVA_HOME to point to an installed JDK or JRE or download a JRE from www.java.com." />
     </messageSet>
     <versionInfo include="false" fileVersion="" fileDescription="" legalCopyright="" internalName="" companyName="" productVersion="" />
   </executable>
-  <splashScreen show="false" autoOff="true" alwaysOnTop="true" width="413" height="62" bitmapFile="../resources/images/splash.gif">
+  <splashScreen show="false" autoOff="false" alwaysOnTop="false" width="-1" height="-1" bitmapFile="">
     <text>
-      <statusLine x="118" y="48" text="Starting Subsonic..." font="Arial" fontSize="8" fontColor="0,0,0" fontWeight="500" />
-      <versionLine x="318" y="4" text="version %VERSION%" font="Arial" fontSize="8" fontColor="0,0,0" fontWeight="500" />
+      <statusLine x="0" y="0" text="" font="Arial" fontSize="8" fontColor="0,0,0" fontWeight="500" />
+      <versionLine x="0" y="0" text="" font="Arial" fontSize="8" fontColor="0,0,0" fontWeight="500" />
     </text>
   </splashScreen>
   <java mainClass="net.sourceforge.subsonic.booter.Main" vmParameters="" arguments="" allowVMPassthroughParameters="true" preferredVM="" minVersion="1.5" maxVersion="" allowBetaVM="true" jdkOnly="false">
@@ -28,7 +28,6 @@
       <archive location="./subsonic-booter-jar-with-dependencies.jar" failOnError="false" />
     </classPath>
     <nativeLibraryDirectories>
-
       <directory name="." />
     </nativeLibraryDirectories>
   </java>

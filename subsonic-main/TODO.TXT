@@ -42,6 +42,9 @@ RejectedExecutionHandler handling in ThreadPoolExecutor constructor.
 Norwegian translation
 
 Installer:
+Round MB in booter.
+Fix exe4j message bundle.
+Popup status window when starting.
 Update web pages.
 Add check for admin rights.
 Don't overwrite .vmoptions?  Not now.
