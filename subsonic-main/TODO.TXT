@@ -36,6 +36,7 @@ Set content-length in streamController whenever possible.  Would improve flash p
 
 TODO IN 3.2
 =============
+Bug when rendering multiple status charts in parallell. Must probably synchronize.
 Display warning if Podcast folder is not within a music folder.
 Add support for editing genre.
 RejectedExecutionHandler handling in ThreadPoolExecutor constructor.
