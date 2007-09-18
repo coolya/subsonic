@@ -15,6 +15,19 @@
 
         <section name="Change Log">
 
+            <subsection name="Subsonic 3.2.beta1 - Sep 19, 2007">
+                <ul>
+                    <li>New: Download Podcasts with the new integrated Podcast receiver.</li>
+                    <li>New: Fetch lyrics automatically from www.metrolyrics.com.</li>
+                    <li>New: See what others are playing in the new "Now playing" sidebar.</li>
+                    <li>New: Play music directly in the browser with the new integrated Flash-based player.</li>
+                    <li>New: New tag engine (entagged.sourceforge.net) supports tags in a lot of formats (mp3, ogg, flac, wav, wma, etc).</li>
+                    <li>New: Added confirmation dialog when deleting playlists.</li>
+                    <li>New: Remember selected music folder (in left frame) across sessions.</li>
+                    <li>Tech: Added db admin tool.</li>
+                </ul>
+            </subsection>
+
             <subsection name="Subsonic 3.1 - Jul 30, 2007">
                 <p>(No changes since 3.1.beta2)</p>
             </subsection>

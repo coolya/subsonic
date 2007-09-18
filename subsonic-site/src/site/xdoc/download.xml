@@ -16,14 +16,23 @@
         </script>
 
         <section name="Download">
+            <table>
+                <tr>
+                    <td>Latest stable release</td><td>Subsonic 3.1</td><td>Windows installer not available</td><td><a href="download_redirect.html">Download WAR</a> (instructions)</td><td><a href="changelog.html">What's new?</a></td>
+                </tr>
+                <tr>
+                    <td>Latest beta release</td><td>Subsonic 3.2.beta1</td><td><a href="download_win_beta_redirect.html">Download Windows installer</a></td><td><a href="download_beta_redirect.html">Download WAR</a> (instructions)</td><td><a href="changelog.html">What's new?</a></td>
+                </tr>
+            </table>
+
             <p>
                 Download latest stable release: <a href="download_redirect.html"><b>Subsonic 3.1</b></a>
                 <a href="changelog.html">(What's new?)</a>
             </p>
-            <!--<p>-->
-                <!--Download latest beta release: <a href="download_beta_redirect.html"><b>Subsonic 3.2.beta1</b></a>-->
-                <!--<a href="changelog.html">(What's new?)</a>-->
-            <!--</p>-->
+            <p>
+                Download latest beta release: <a href="download_beta_redirect.html"><b>Subsonic 3.2.beta1</b></a>
+                <a href="changelog.html">(What's new?)</a>
+            </p>
 
             <p>
                 Older versions, as well as source releases, can be downloaded from

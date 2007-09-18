@@ -5,6 +5,8 @@ import com.jgoodies.looks.windows.WindowsLookAndFeel;
 import javax.swing.*;
 
 /**
+ * Application entry point for Subsonic booter.
+ *
  * @author Sindre Mehus
  */
 public class Main {

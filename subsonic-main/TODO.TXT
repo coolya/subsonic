@@ -1,4 +1,10 @@
 
+
+Latest stable release  3.1        Windows installer not available   Download WAR (instructions)   What's new?
+Latest beta release    3.2.beta1  Download Windows installer        Download WAR (instructions)   What's new?
+
+
+
 COMPLETED IN 3.2.BETA1
 ======================
 Podcast receiver.
@@ -41,23 +47,13 @@ Display warning if Podcast folder is not within a music folder.
 Add support for editing genre.
 RejectedExecutionHandler handling in ThreadPoolExecutor constructor.
 Norwegian translation
+Precompile JSPs for Jetty and Dekoh.
+Separate modules "subsonic-precompiled-jetty" and "subsonic-precompiled-dekoh".
 
 Installer:
-Round MB in booter.
-Fix exe4j message bundle.
-Popup status window when starting.
 Update web pages.
 Add check for admin rights.
-Don't overwrite .vmoptions?  Not now.
-Add "Open in browser" to tray icon.
 Verify that war updates works with installer and booter.
-Get license for exe4j.
-Clean up .exe4j file.
-Memory and port settings must be configurable.
-Clean up .vmoptions file.
-Service description in .exe4j.
-Handle port in use gracefully.
-Should SUBSONIC_HOME be "c:/documents and settings/xxx/Application Data/Subsonic"?  Probably good for uninstall/upgrade.
 
 
 BACKLOG

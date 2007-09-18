@@ -10,9 +10,8 @@ import java.awt.*;
 import java.net.URL;
 
 /**
- * TODO: Bring frame to front when activated by tray icon.
- * TODO: Frame icon graphics.
- * TODO: Tray icon graphics.
+ * Frame that is activated by the tray icon. Contains a tabbed pane
+ * with status and settings panels.
  *
  * @author Sindre Mehus
  */
@@ -32,7 +31,6 @@ public class SubsonicFrame extends JFrame {
         createComponents();
         layoutComponents();
         addBehaviour();
-
 
         URL url = Main.class.getResource("/images/subsonic-32.png");
         setIconImage(Toolkit.getDefaultToolkit().createImage(url));
@@ -75,9 +73,11 @@ public class SubsonicFrame extends JFrame {
     }
 
     public void showStatus() {
+        settingsPanel.setValues();
         tabbedPane.setSelectedComponent(statusPanel);
         pack();
         setVisible(true);
+        toFront();
     }
 
     public void showSettings() {
@@ -85,5 +85,6 @@ public class SubsonicFrame extends JFrame {
         tabbedPane.setSelectedComponent(settingsPanel);
         pack();
         setVisible(true);
+        toFront();
     }
 }

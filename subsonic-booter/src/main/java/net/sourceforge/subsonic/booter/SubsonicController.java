@@ -1,15 +1,18 @@
 package net.sourceforge.subsonic.booter;
 
+import org.jdesktop.jdic.desktop.Desktop;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
-import org.jdesktop.jdic.desktop.Desktop;
 
-import java.util.Date;
-import java.net.URL;
 import java.net.BindException;
+import java.net.URL;
+import java.util.Date;
 
 /**
+ * Responsible for deploying the Subsonic web app in
+ * the embedded Jetty container.
+ *
  * @author Sindre Mehus
  */
 public class SubsonicController {
@@ -17,6 +20,7 @@ public class SubsonicController {
     public static final int DEFAULT_PORT = 80;
     public static final int DEFAULT_MEMORY_LIMIT = 64;
     public static final String DEFAULT_CONTEXT_PATH = "/";
+    private static final int MAX_IDLE_TIME_MILLIS = 2 * 60 * 60 * 1000;
 
     private TrayController trayController;
     private Throwable exception;
@@ -33,6 +37,7 @@ public class SubsonicController {
 
             Server server = new Server();
             SelectChannelConnector connector = new SelectChannelConnector();
+            connector.setMaxIdleTime(MAX_IDLE_TIME_MILLIS);
             connector.setPort(getPort());
             server.addConnector(connector);
 
@@ -67,8 +72,7 @@ public class SubsonicController {
     }
 
     public int getMemoryLimit() {
-        // TODO: Round
-        return (int) (Runtime.getRuntime().maxMemory() / 1024L / 1024L);
+        return (int) Math.round((Runtime.getRuntime().maxMemory() / 1024.0 / 1024.0));
     }
 
     public String getErrorMessage() {
@@ -107,7 +111,7 @@ public class SubsonicController {
         long freeBytes = Runtime.getRuntime().freeMemory();
         long totalBytes = Runtime.getRuntime().totalMemory();
         long usedBytes = totalBytes - freeBytes;
-        return (int) (usedBytes / 1024L / 1024L);
+        return (int) Math.round(usedBytes / 1024.0 / 1024.0);
     }
 
     public void exit() {

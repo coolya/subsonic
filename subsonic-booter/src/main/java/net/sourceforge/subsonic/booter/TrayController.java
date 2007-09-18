@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.net.URL;
 
 /**
+ * Controls the Subsonic tray icon.
+ * 
  * @author Sindre Mehus
  */
 public class TrayController {

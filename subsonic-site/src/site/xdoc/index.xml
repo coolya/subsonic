@@ -50,7 +50,8 @@
             <p>
                 In addition to being a streaming media server, Subsonic works very well as a local jukebox. The
                 intuitive web interface, as well as search and index facilities, are optimized for efficient browsing through large
-                media libraries.
+                media libraries.  Subsonic also comes with an integrated Podcast receiver, with many of the same features
+                as you find in iTunes.
             </p>
 
             <p>
@@ -71,15 +72,18 @@
                         <li>Transcoding engine allows for streaming of a variety of lossy and lossless formats by
                             converting to MP3 on-the-fly.</li>
                         <li>Works with any network-enabled media player, such as Winamp, iTunes, XMMS, MusicMatch and
-                            Windows Media Player.</li>
+                            Windows Media Player. Also includes an embedded Flash-based player.</li>
                         <li>Displays cover art, dynamically scaling it to fit nicely on the screen. Supports images
                             embedded in ID3.</li>
+                    </ul>
+                    <ul>
                         <li>You can assign ratings and comments to albums.</li>
-                        <li>Finds cover art and album info using Amazon Web Services.</li>
+                        <li>Finds cover art, lyrics and album info using web services (Amazon, MetroLyrics etc).</li>
+                        <li>Downloads Podcasts with the integrated Podcast receiver.</li>
                         <li>Audioscrobbling support. Automatically register what you're playing on last.fm</li>
                     </ul>
                     <ul>
-                        <li>Tag editing of MP3 and OGG Vorbis files.</li>
+                        <li>Tag parsing and editing of MP3, OGG, FLAC, WMA and APE files.</li>
                         <li>On-the-fly resampling to lower bitrates using the high-quality LAME encoder.</li>
                         <li>Common playlist features (add, remove, rearrange, repeat, shuffle, undo).</li>
                         <li>Playlists can be saved and restored. M3U, PLS and XSPF formats are supported.</li>
@@ -122,9 +126,12 @@
             <subsection name="Requirements">
                 <p>
                     Subsonic works with most operating systems, including Windows, Linux, Mac and Solaris.
-                    The Subsonic server requires <a href="http://www.java.com/">Java</a> (version 5.0 or later)
+                    The Windows installer includes all you need, and installs Subsonic as a service. If you opt
+                    for the WAR download, you must install <a href="http://www.java.com/">Java</a> (version 5.0 or later)
                     and a JSP container such as <a href="http://tomcat.apache.org/">Tomcat</a> (version 5.5 or later),
                     both of which are available at no charge.
+                </p>
+                <p>
                     To receive streams you need a web browser (tested on recent versions of Firefox, Opera and IE) and a
                     media player (Winamp, Windows Media Player etc). Refer to the <a href="faq.html">FAQ</a>
                     for a list of recommended players.
