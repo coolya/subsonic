@@ -73,14 +73,14 @@
                             converting to MP3 on-the-fly.</li>
                         <li>Works with any network-enabled media player, such as Winamp, iTunes, XMMS, MusicMatch and
                             Windows Media Player. Also includes an embedded Flash-based player.</li>
-                        <li>Displays cover art, dynamically scaling it to fit nicely on the screen. Supports images
-                            embedded in ID3.</li>
+                        <li>Download Podcasts with the integrated Podcast receiver.</li>
                     </ul>
                     <ul>
-                        <li>You can assign ratings and comments to albums.</li>
-                        <li>Finds cover art, lyrics and album info using web services (Amazon, MetroLyrics etc).</li>
-                        <li>Downloads Podcasts with the integrated Podcast receiver.</li>
                         <li>Audioscrobbling support. Automatically register what you're playing on last.fm</li>
+                        <li>Finds cover art, lyrics and album info using web services (Amazon, MetroLyrics etc).</li>
+                        <li>You can assign ratings and comments to albums.</li>
+                        <li>Displays cover art, dynamically scaling it to fit nicely on the screen. Supports images
+                            embedded in ID3.</li>
                     </ul>
                     <ul>
                         <li>Tag parsing and editing of MP3, OGG, FLAC, WMA and APE files.</li>
