@@ -39,15 +39,20 @@
                 <label for="remember"><fmt:message key="login.remember"/></label>
             </td>
         </tr>
-        <c:if test="${model.logout}">
-            <tr><td colspan="2" style="padding-top:10px"><b><fmt:message key="login.logout"/></b></td></tr>
-        </c:if>
-        <c:if test="${model.error}">
-            <tr><td colspan="2" style="padding-top:10px"><b class="warning"><fmt:message key="login.error"/></b></td></tr>
+            <c:if test="${model.logout}">
+                <tr><td colspan="2" style="padding-top:10px"><b><fmt:message key="login.logout"/></b></td></tr>
+            </c:if>
+            <c:if test="${model.error}">
+                <tr><td colspan="2" style="padding-top:10px"><b class="warning"><fmt:message key="login.error"/></b></td></tr>
+            </c:if>
+
+        </table>
+
+        <c:if test="${model.insecure}">
+            <p><b class="warning"><fmt:message key="login.insecure"/></b></p>
         </c:if>
 
-    </table>
-        </div>
+    </div>
 </form>
 </body>
 </html>

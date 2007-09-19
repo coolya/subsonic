@@ -262,7 +262,9 @@
         <property name="validator" ref="donateValidator"/>
         <property name="settingsService" ref="settingsService"/>
     </bean>
-    <bean id="multiController" class="net.sourceforge.subsonic.controller.MultiController"/>
+    <bean id="multiController" class="net.sourceforge.subsonic.controller.MultiController">
+        <property name="securityService" ref="securityService"/>
+    </bean>
     <bean id="wapController" class="net.sourceforge.subsonic.controller.WapController">
         <property name="settingsService" ref="settingsService"/>
         <property name="playerService" ref="playerService"/>

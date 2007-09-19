@@ -1,41 +1,9 @@
-COMPLETED IN 3.2.BETA1
-======================
-Podcast receiver.
-Display what other users are playing (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=359)
-Get proper Podcast icon.
-Add log4j.properties
-When new episodes are available: -> Download all, Download the most recent one, Do nothing.  Add status "Skipped".
-Add "Download selected".  Only applicable for "New", "Error", "Skipped".
-When adding Podcast, start downloading that channel.
-Added db admin tool.
-Use org.springframework.jdbc.core.simple.ParameterizedRowMapper
-Handle that listFiles returns null. (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=157&start=15)
-Show error messages properly in db.view
-Create taglib for enum i18n.
-Experiment with UNC paths.
-Add status to Podcast channel (New, Downloading, Downloaded, Error).
-Show Podcast error messages (as popup?)
-Add Podcast channel description as comment when creating new directory.
-i18n podcastReceiver.jsp
-Added confirmation dialog when deleting playlists and podcasts.
-Remember selected music folder across sessions (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=866)
-Fetch lyrics from the internet.
-Get lyrics from http://www.metrolyrics.com/
-Show metrolyrics credits.
-Use Entagged parsing.
-Make popup location work in Opera.
-Check out OGG, WAV parsing in http://jajuk.info (http://entagged.sourceforge.net/developer.php)
-Freshmeat registration of 3.1
-Show matching song/artist in lyrics view.
-"Web Player" or "Flash Player" option in playlist.  Open in playlist frame.
-In Web Player: "-> Detach player"   "-> Back to playlist"
-XSPF (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=69)
-Show player name in "Now playing"
-Set content-length in streamController whenever possible.  Would improve flash player.
+COMPLETED IN 3.2
+=================
+If first time login, tell user admin username/password in login page.
 
 TODO IN 3.2
 =============
-If first time login, tell user admin username/password in login page.
 Bug when rendering multiple status charts in parallell. Must probably synchronize.
 Display warning if Podcast folder is not within a music folder.
 Add support for editing genre.
@@ -44,14 +12,9 @@ Norwegian translation
 Precompile JSPs for Jetty and Dekoh.
 Separate modules "subsonic-precompiled-jetty" and "subsonic-precompiled-dekoh".
 
-Installer:
-Update web pages.
-Add check for admin rights.
-Verify that war updates works with installer and booter.
-
-
 BACKLOG
 ===========================
+Add check for admin rights in installer.
 Add "play count" to Podcasts.
 ASX (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=638)
 Make it possible to cancel/resume Podcast downloads. ("Cancel selected")
