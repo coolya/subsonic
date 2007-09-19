@@ -204,6 +204,7 @@ HOW TO RELEASE
 Set JAVA_HOME to 1.5.
 Update version number in pom.xml etc.
 mvn clean install
+cd subsonic-assembly
 mvn assembly:assembly
 mv target/subsonic-2.7-bin.zip target/subsonic-2.7.zip
 Deploy
