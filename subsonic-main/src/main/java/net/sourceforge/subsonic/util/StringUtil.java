@@ -49,7 +49,7 @@ public final class StringUtil {
             {"ogg", "application/ogg"},
     };
 
-    private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", ".."};
+    private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", "..", ":"};
 
     /**
      * Disallow external instantiation.
@@ -364,14 +364,14 @@ public final class StringUtil {
 
     /**
      * Makes a given filename safe by replacing special characters like slashes ("/" and "\")
-     * with underscores ("_").
+     * with dashes ("-").
      *
      * @param filename The filename in question.
      * @return The filename with special characters replaced by underscores.
      */
     public static String fileSystemSafe(String filename) {
         for (String s : FILE_SYSTEM_UNSAFE) {
-            filename = filename.replace(s, "_");
+            filename = filename.replace(s, "-");
         }
         return filename;
     }

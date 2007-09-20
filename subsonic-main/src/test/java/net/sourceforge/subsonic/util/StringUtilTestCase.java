@@ -155,7 +155,8 @@ public class StringUtilTestCase extends TestCase {
     public void testFileSystemSafe() {
         assertEquals("Error in fileSystemSafe().", "foo", StringUtil.fileSystemSafe("foo"));
         assertEquals("Error in fileSystemSafe().", "foo.mp3", StringUtil.fileSystemSafe("foo.mp3"));
-        assertEquals("Error in fileSystemSafe().", "foo_bar", StringUtil.fileSystemSafe("foo/bar"));
-        assertEquals("Error in fileSystemSafe().", "foo_bar", StringUtil.fileSystemSafe("foo\\bar"));
+        assertEquals("Error in fileSystemSafe().", "foo-bar", StringUtil.fileSystemSafe("foo/bar"));
+        assertEquals("Error in fileSystemSafe().", "foo-bar", StringUtil.fileSystemSafe("foo\\bar"));
+        assertEquals("Error in fileSystemSafe().", "foo-bar", StringUtil.fileSystemSafe("foo:bar"));
     }
 }
