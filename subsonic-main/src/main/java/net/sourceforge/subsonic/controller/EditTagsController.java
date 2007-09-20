@@ -29,7 +29,9 @@ public class EditTagsController extends ParameterizableViewController {
             map.put("defaultArtist", metaData.getArtist());
             map.put("defaultAlbum", metaData.getAlbum());
             map.put("defaultYear", metaData.getYear());
+            map.put("defaultGenre", metaData.getGenre());
         }
+        map.put("allGenres", EntaggedParser.DEFAULT_GENRES);
 
         List<Song> songs = new ArrayList<Song>();
         for (MusicFile file : files) {
@@ -56,6 +58,7 @@ public class EditTagsController extends ParameterizableViewController {
         song.setArtist(metaData.getArtist());
         song.setAlbum(metaData.getAlbum());
         song.setYear(metaData.getYear());
+        song.setGenre(metaData.getGenre());
         return song;
     }
 
@@ -75,6 +78,7 @@ public class EditTagsController extends ParameterizableViewController {
         private String artist;
         private String album;
         private String year;
+        private String genre;
 
         public String getPath() {
             return path;
@@ -138,6 +142,14 @@ public class EditTagsController extends ParameterizableViewController {
 
         public void setYear(String year) {
             this.year = year;
+        }
+
+        public String getGenre() {
+            return genre;
+        }
+
+        public void setGenre(String genre) {
+            this.genre = genre;
         }
     }
 }

@@ -28,6 +28,12 @@
             DWRUtil.setValue("year" + i, year);
         }
     }
+    function setGenre() {
+        var genre = DWRUtil.getValue("genreAll");
+        for (i = 0; i < fileCount; i++) {
+            DWRUtil.setValue("genre" + i, genre);
+        }
+    }
     function suggestTitle() {
         for (i = 0; i < fileCount; i++) {
             var title = DWRUtil.getValue("suggestedTitle" + i);
@@ -56,8 +62,9 @@
         var album = DWRUtil.getValue("album" + index);
         var title = DWRUtil.getValue("title" + index);
         var year = DWRUtil.getValue("year" + index);
+        var genre = DWRUtil.getValue("genre" + index);
         DWRUtil.setValue("status" + index, "<fmt:message key="edittags.working"/>");
-        tagService.setTags(setTagsCallback, path, track, artist, album, title, year);
+        tagService.setTags(setTagsCallback, path, track, artist, album, title, year, genre);
     }
     function setTagsCallback(result) {
         var message;
@@ -93,14 +100,25 @@
         <th class="ruleTableHeader"><fmt:message key="edittags.artist"/></th>
         <th class="ruleTableHeader"><fmt:message key="edittags.album"/></th>
         <th class="ruleTableHeader"><fmt:message key="edittags.year"/></th>
+        <th class="ruleTableHeader"><fmt:message key="edittags.genre"/></th>
         <th class="ruleTableHeader" width="60pt"><fmt:message key="edittags.status"/></th></tr>
     <tr><th class="ruleTableHeader"></th>
         <th class="ruleTableHeader"></th>
         <th class="ruleTableHeader"><a href="javascript:suggestTitle()"><fmt:message key="edittags.suggest"/></a> |
             <a href="javascript:resetTitle()"><fmt:message key="edittags.reset"/></a></th>
-        <th class="ruleTableHeader"><input type="text" name="artistAll" size="15" onkeypress="DWRUtil.onReturn(event, setArtist)" value="${model.defaultArtist}"/>&nbsp;<a href="javascript:setArtist()"><fmt:message key="edittags.set"/></a></th>
-        <th class="ruleTableHeader"><input type="text" name="albumAll" size="15" onkeypress="DWRUtil.onReturn(event, setAlbum)" value="${model.defaultAlbum}"/>&nbsp;<a href="javascript:setAlbum()"><fmt:message key="edittags.set"/></a></th>
-        <th class="ruleTableHeader"><input type="text" name="yearAll" size="5" onkeypress="DWRUtil.onReturn(event, setYear)" value="${model.defaultYear}"/>&nbsp;<a href="javascript:setYear()"><fmt:message key="edittags.set"/></a></th>
+        <th class="ruleTableHeader" style="white-space: nowrap"><input type="text" name="artistAll" size="15" onkeypress="DWRUtil.onReturn(event, setArtist)" value="${model.defaultArtist}"/>&nbsp;<a href="javascript:setArtist()"><fmt:message key="edittags.set"/></a></th>
+        <th class="ruleTableHeader" style="white-space: nowrap"><input type="text" name="albumAll" size="15" onkeypress="DWRUtil.onReturn(event, setAlbum)" value="${model.defaultAlbum}"/>&nbsp;<a href="javascript:setAlbum()"><fmt:message key="edittags.set"/></a></th>
+        <th class="ruleTableHeader" style="white-space: nowrap"><input type="text" name="yearAll" size="5" onkeypress="DWRUtil.onReturn(event, setYear)" value="${model.defaultYear}"/>&nbsp;<a href="javascript:setYear()"><fmt:message key="edittags.set"/></a></th>
+        <th class="ruleTableHeader" style="white-space: nowrap">
+            <select name="genreAll" style="width:7em">
+                <option value=""/>
+                <c:forEach items="${model.allGenres}" var="genre">
+                    <option ${genre eq model.defaultGenre ? "selected" : ""} value="${genre}">${genre}</option>
+                </c:forEach>
+            </select>
+
+            <a href="javascript:setGenre()"><fmt:message key="edittags.set"/></a>
+        </th>
         <th class="ruleTableHeader"></th>
     </tr>
 
@@ -116,6 +134,7 @@
             <td class="ruleTableCell"><input type="text" size="15" name="artist${loopStatus.count - 1}" value="${song.artist}"/></td>
             <td class="ruleTableCell"><input type="text" size="15" name="album${loopStatus.count - 1}" value="${song.album}"/></td>
             <td class="ruleTableCell"><input type="text" size="5"  name="year${loopStatus.count - 1}" value="${song.year}"/></td>
+            <td class="ruleTableCell"><input type="text" name="genre${loopStatus.count - 1}" value="${song.genre}" style="width:7em"/></td>
             <td class="ruleTableCell"><div id="status${loopStatus.count - 1}"/></td>
         </tr>
     </c:forEach>

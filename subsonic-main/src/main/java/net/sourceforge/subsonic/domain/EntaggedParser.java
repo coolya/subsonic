@@ -21,6 +21,9 @@ import java.util.regex.Pattern;
  */
 public class EntaggedParser extends MetaDataParser {
 
+    /** Tags supported by id3v1. */
+    public static final String[] DEFAULT_GENRES = Tag.DEFAULT_GENRES;
+
     private static final Logger LOG = Logger.getLogger(EntaggedParser.class);
     private static final Pattern GENRE_PATTERN = Pattern.compile("\\((\\d+)\\)");
 
@@ -73,8 +76,8 @@ public class EntaggedParser extends MetaDataParser {
         Matcher matcher = GENRE_PATTERN.matcher(genre);
         if (matcher.matches()) {
             int genreId = Integer.parseInt(matcher.group(1));
-            if (genreId >= 0 && genreId < Tag.DEFAULT_GENRES.length) {
-                return Tag.DEFAULT_GENRES[genreId];
+            if (genreId >= 0 && genreId < DEFAULT_GENRES.length) {
+                return DEFAULT_GENRES[genreId];
             }
         }
 

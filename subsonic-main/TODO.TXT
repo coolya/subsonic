@@ -1,11 +1,11 @@
 CHANGED IN 3.2
 ==============
 Now able to save podcasts with colons in the name.
+Add support for editing genre.
 
 TODO IN 3.2
 =============
 Display warning if Podcast folder is not within a music folder.
-Add support for editing genre.
 RejectedExecutionHandler handling in ThreadPoolExecutor constructor.
 Norwegian translation
 Precompile JSPs for Jetty and Dekoh.
