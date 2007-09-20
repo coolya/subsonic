@@ -67,6 +67,8 @@ public class NowPlayingService {
 
             if (player != null && player.getUsername() != null && file != null) {
                 MusicFile musicFile = musicFileService.getMusicFile(file);
+                List<File> coverArts = musicFileService.getCoverArt(musicFile.getParent(), 1);
+
                 String artist = musicFile.getMetaData().getArtist();
                 String title = musicFile.getMetaData().getTitle();
                 String albumUrl = url.replaceFirst("/dwr/.*", "/main.view?pathUtf8Hex=" +
@@ -75,17 +77,21 @@ public class NowPlayingService {
                                                                StringUtil.utf8HexEncode(musicFile.getMetaData().getArtist()) +
                                                                "&songUtf8Hex=" +
                                                                StringUtil.utf8HexEncode(musicFile.getMetaData().getTitle()));
+                String coverArtUrl = coverArts.isEmpty() ? null :
+                                     url.replaceFirst("/dwr/.*", "/coverArt.view?size=32&pathUtf8Hex=" +
+                                                                 StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
 
                 String tooltip = artist + " &ndash; " + title;
-                artist = StringUtils.abbreviate(artist, 30);
-                title = StringUtils.abbreviate(title, 30);
 
                 String user = player.getUsername();
                 if (StringUtils.isNotBlank(player.getName())) {
                     user += "@" + player.getName();
                 }
+                artist = StringUtils.abbreviate(artist, 25);
+                title = StringUtils.abbreviate(title, 25);
+                user = StringUtils.abbreviate(user, 25);
 
-                result.add(new NowPlayingInfo(user, artist, title, tooltip, albumUrl, lyricsUrl));
+                result.add(new NowPlayingInfo(user, artist, title, tooltip, albumUrl, lyricsUrl, coverArtUrl));
             }
         }
 

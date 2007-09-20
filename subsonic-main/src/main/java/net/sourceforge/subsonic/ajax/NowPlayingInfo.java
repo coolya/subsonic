@@ -13,14 +13,16 @@ public class NowPlayingInfo {
     private final String tooltip;
     private final String albumUrl;
     private final String lyricsUrl;
+    private final String coverArtUrl;
 
-    public NowPlayingInfo(String user, String artist, String title, String tooltip, String albumUrl, String lyricsUrl) {
+    public NowPlayingInfo(String user, String artist, String title, String tooltip, String albumUrl, String lyricsUrl, String coverArtUrl) {
         this.username = user;
         this.artist = artist;
         this.title = title;
         this.tooltip = tooltip;
         this.albumUrl = albumUrl;
         this.lyricsUrl = lyricsUrl;
+        this.coverArtUrl = coverArtUrl;
     }
 
     public String getUsername() {
@@ -45,5 +47,9 @@ public class NowPlayingInfo {
 
     public String getLyricsUrl() {
         return lyricsUrl;
+    }
+
+    public String getCoverArtUrl() {
+        return coverArtUrl;
     }
 }

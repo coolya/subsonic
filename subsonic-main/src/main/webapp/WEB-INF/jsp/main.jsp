@@ -53,20 +53,26 @@
         }
 
         function getNowPlayingCallback(nowPlaying) {
-            var html = nowPlaying.length == 0 ? "" : "<h2><fmt:message key="main.nowplaying"/></h2>";
+            var html = nowPlaying.length == 0 ? "" : "<h2><fmt:message key="main.nowplaying"/></h2><table>";
             for (var i = 0; i < nowPlaying.length; i++) {
-                html += "<p class='detail'>" + nowPlaying[i].username + "<br/>" +
+                html += "<tr><td class='detail' style='padding-top:1em;padding-right:1em'>" + nowPlaying[i].username + "<br/>" +
                         "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'><em>" +
-                        nowPlaying[i].artist + "</em></br>" + nowPlaying[i].title + "</a></br>" +
+                        nowPlaying[i].artist + "</em><br/>" + nowPlaying[i].title + "</a><br/>" +
                         "<span class='forward' style='background-position: 0px 2px'><a href='" + nowPlaying[i].lyricsUrl + "' onclick=\"return popupSize(this, 'help', 430, 550)\">" +
-                        "<fmt:message key="main.lyrics"/>" + "</a></span></p>";
+                        "<fmt:message key="main.lyrics"/>" + "</a></span></td><td style='padding-top:1em'>";
+
+                if (nowPlaying[i].coverArtUrl != null) {
+                    html += "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'><img src='" + nowPlaying[i].coverArtUrl + "'/></a>";
+                }
+                html += "</td></tr>";
             }
+            html += "</table>";
             DWRUtil.setValue("nowPlaying", html);
         }
     </script>
 </c:if>
 
-<div style=";margin-top:7em;padding:0 1em 0 1em;float:right;border-left:1px solid #<spring:theme code="detailColor"/>">
+<div style="margin-top:7em;padding:0 1em 0 1em;float:right;border-left:1px solid #<spring:theme code="detailColor"/>">
     <c:if test="${model.showAd}">
         <div class="detail" style="text-align:center">
             <sub:url value="donate.view" var="donateUrl">

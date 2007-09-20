@@ -2,6 +2,7 @@ CHANGED IN 3.2
 ==============
 Now able to save podcasts with colons in the name.
 Add support for editing genre.
+Show miniature album images in "Now playing" sidebar.
 
 TODO IN 3.2
 =============
@@ -13,7 +14,7 @@ Separate modules "subsonic-precompiled-jetty" and "subsonic-precompiled-dekoh".
 
 BACKLOG
 ===========================
-Show mini coverarts in "Now playing" and "Next/Prev Album".
+Show mini coverarts "Next/Prev Album".
 Avatar support
 Add check for admin rights in installer.
 Add "play count" to Podcasts.
