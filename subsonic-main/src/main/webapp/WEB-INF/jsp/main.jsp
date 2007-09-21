@@ -62,7 +62,8 @@
                         "<fmt:message key="main.lyrics"/>" + "</a></span></td><td style='padding-top:1em'>";
 
                 if (nowPlaying[i].coverArtUrl != null) {
-                    html += "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'><img src='" + nowPlaying[i].coverArtUrl + "'/></a>";
+                    html += "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'>" +
+                            "<img src='" + nowPlaying[i].coverArtUrl + "' width='32' height='32'/></a>";
                 }
                 html += "</td></tr>";
             }
