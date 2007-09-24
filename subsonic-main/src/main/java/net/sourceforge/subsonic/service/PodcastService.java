@@ -255,7 +255,16 @@ public class PodcastService {
             }
 
             Element enclosure = episodeElement.getChild("enclosure");
+            if (enclosure == null) {
+                LOG.debug("No enclosure found for episode " + title);
+                continue;
+            }
+
             String url = enclosure.getAttributeValue("url");
+            if (url == null) {
+                LOG.debug("No enclosure URL found for episode " + title);
+                continue;
+            }
 
             if (getEpisode(channel.getId(), url) == null) {
                 Long length = null;

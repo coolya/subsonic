@@ -3,6 +3,7 @@ CHANGED IN 3.2
 Now able to save podcasts with colons in the name.
 Add support for editing genre.
 Show miniature album images in "Now playing" sidebar.
+Handle Podcast channels without enclosures.
 
 TODO IN 3.2
 =============
@@ -11,9 +12,12 @@ RejectedExecutionHandler handling in ThreadPoolExecutor constructor.
 Norwegian translation
 Precompile JSPs for Jetty and Dekoh.
 Separate modules "subsonic-precompiled-jetty" and "subsonic-precompiled-dekoh".
+Fix javascript error in playlist in IE.
+Display the sub folder count next to the artist folder (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=905)
 
 BACKLOG
 ===========================
+Show/Hide Podcast channel description (e.g., Java Posse)
 Show mini coverarts "Next/Prev Album".
 Avatar support
 Add check for admin rights in installer.
