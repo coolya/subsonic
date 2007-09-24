@@ -3,7 +3,8 @@ CHANGED IN 3.2
 Now able to save podcasts with colons in the name.
 Add support for editing genre.
 Show miniature album images in "Now playing" sidebar.
-Handle Podcast channels without enclosures.
+Bugfix: Handle Podcast channels without enclosures.
+Bugfix: Handle song, album and artist names with special characters (<, > etc)
 
 TODO IN 3.2
 =============

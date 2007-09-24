@@ -241,18 +241,18 @@
                             </c:if>
 
                             <td ${class} style="padding-right:1.25em">
-                                <span title="${child.title}"><str:truncateNicely upper="${cutoff}">${child.title}</str:truncateNicely></span>
+                                <span title="${child.title}"><str:truncateNicely upper="${cutoff}">${fn:escapeXml(child.title)}</str:truncateNicely></span>
                             </td>
 
                             <c:if test="${model.visibility.albumVisible}">
                                 <td ${class} style="padding-right:1.25em">
-                                    <span class="detail" title="${child.metaData.album}"><str:truncateNicely upper="${cutoff}">${child.metaData.album}</str:truncateNicely></span>
+                                    <span class="detail" title="${child.metaData.album}"><str:truncateNicely upper="${cutoff}">${fn:escapeXml(child.metaData.album)}</str:truncateNicely></span>
                                 </td>
                             </c:if>
 
                             <c:if test="${model.visibility.artistVisible and model.multipleArtists}">
                                 <td ${class} style="padding-right:1.25em">
-                                    <span class="detail" title="${child.metaData.artist}"><str:truncateNicely upper="${cutoff}">${child.metaData.artist}</str:truncateNicely></span>
+                                    <span class="detail" title="${child.metaData.artist}"><str:truncateNicely upper="${cutoff}">${fn:escapeXml(child.metaData.artist)}</str:truncateNicely></span>
                                 </td>
                             </c:if>
 
@@ -339,7 +339,7 @@
             <sub:param name="path" value="${model.previousAlbum.path}"/>
         </sub:url>
         <td style="padding-right:10pt"><div class="back"><a href="${previousUrl}" title="${model.previousAlbum.name}">
-            <str:truncateNicely upper="30">${model.previousAlbum.name}</str:truncateNicely>
+            <str:truncateNicely upper="30">${fn:escapeXml(model.previousAlbum.name)}</str:truncateNicely>
         </a></div></td>
     </c:if>
     <c:if test="${not empty model.nextAlbum}">
@@ -347,7 +347,7 @@
             <sub:param name="path" value="${model.nextAlbum.path}"/>
         </sub:url>
         <td><div class="forward"><a href="${nextUrl}" title="${model.nextAlbum.name}">
-            <str:truncateNicely upper="30">${model.nextAlbum.name}</str:truncateNicely>
+            <str:truncateNicely upper="30">${fn:escapeXml(model.nextAlbum.name)}</str:truncateNicely>
         </a></div></td>
     </c:if>
 </table>

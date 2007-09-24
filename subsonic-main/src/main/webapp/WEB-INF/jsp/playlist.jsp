@@ -211,18 +211,18 @@
                         <c:if test="${song.current}">
                             <img src="<c:url value="/icons/current.gif"/>" alt=""/>
                         </c:if>
-                        <a href="playlist.view?skip=${i}" title="${song.musicFile.metaData.title}">${song.current ? "<b>" : ""}<str:truncateNicely upper="${cutoff}">${song.musicFile.title}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
+                        <a href="playlist.view?skip=${i}" title="${song.musicFile.metaData.title}">${song.current ? "<b>" : ""}<str:truncateNicely upper="${cutoff}">${fn:escapeXml(song.musicFile.title)}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
                     </td>
 
                     <c:if test="${model.visibility.albumVisible}">
                         <td ${class} style="padding-right:1.25em">
-                            <span class="detail" title="${song.musicFile.metaData.album}"><a target="main" href="${mainUrl}"><str:truncateNicely upper="${cutoff}">${song.musicFile.metaData.album}</str:truncateNicely></a></span>
+                            <span class="detail" title="${song.musicFile.metaData.album}"><a target="main" href="${mainUrl}"><str:truncateNicely upper="${cutoff}">${fn:escapeXml(song.musicFile.metaData.album)}</str:truncateNicely></a></span>
                         </td>
                     </c:if>
 
                     <c:if test="${model.visibility.artistVisible}">
                         <td ${class} style="padding-right:1.25em">
-                            <span class="detail" title="${song.musicFile.metaData.artist}"><str:truncateNicely upper="${cutoff}">${song.musicFile.metaData.artist}</str:truncateNicely></span>
+                            <span class="detail" title="${song.musicFile.metaData.artist}"><str:truncateNicely upper="${cutoff}">${fn:escapeXml(song.musicFile.metaData.artist)}</str:truncateNicely></span>
                         </td>
                     </c:if>
 
