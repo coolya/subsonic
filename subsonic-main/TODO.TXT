@@ -1,9 +1,9 @@
 CHANGED IN 3.2
 ==============
-Now able to save podcasts with colons in the name.
-Add support for editing genre.
+Added support for editing genre.
 Show miniature album images in "Now playing" sidebar.
-Bugfix: Handle Podcast channels without enclosures.
+Bugfix: Handle podcasts with colons in the name.
+Bugfix: Handle podcasts without enclosures.
 Bugfix: Handle song, album and artist names with special characters (<, > etc)
 
 TODO IN 3.2
@@ -11,13 +11,15 @@ TODO IN 3.2
 Display warning if Podcast folder is not within a music folder.
 RejectedExecutionHandler handling in ThreadPoolExecutor constructor.
 Norwegian translation
-Precompile JSPs for Jetty and Dekoh.
-Separate modules "subsonic-precompiled-jetty" and "subsonic-precompiled-dekoh".
+Precompile JSPs for Dekoh. Separate modules "subsonic-precompiled-jetty" and "subsonic-precompiled-dekoh".
 Fix javascript error in playlist in IE.
 Display the sub folder count next to the artist folder (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=905)
 
 BACKLOG
 ===========================
+Use Flash player for Internet Radio (optional setting per radio channel).
+Be able to collapse/expand episodes.
+Select and delete all episodes of a given status.
 Show/Hide Podcast channel description (e.g., Java Posse)
 Show mini coverarts "Next/Prev Album".
 Avatar support
@@ -44,7 +46,6 @@ Save playlists in database?  Access rights.
 Check out non-Latin ID3 problem (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=527)
 Track titles that begin with numbers (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=170) (For instance "13 humler")
 Fault-tolerant transcoding FLAC>MP3 (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=545)
-Replace jid3 with jaudiotagger.
 Drag'n'drop in playlist.
 Fix description in Freshmeat.
 ID3 problems (http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=952#952)
@@ -180,7 +181,7 @@ mv target/subsonic-2.7-bin.zip target/subsonic-2.7.zip
 Deploy
 Check that correct local version is displayed.
 Commit
-Create file release at SourceForge.
+Create file release at SourceForge. Use passive FTP to upload files.
 cd subsonic-site
 mvn site:site
 mvn site:deploy
