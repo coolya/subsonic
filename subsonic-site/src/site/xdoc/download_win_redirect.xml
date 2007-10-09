@@ -3,12 +3,12 @@
 <document>
 
     <properties>
-        <title>Download Beta</title>
+        <title>Download</title>
         <author email="sindre_mehus@users.sourceforge.net">Sindre Mehus</author>
     </properties>
 
     <head>
-        <meta http-equiv="REFRESH" content="3;URL=http://prdownloads.sourceforge.net/subsonic/subsonic-3.2.beta1-setup.exe"/>
+        <meta http-equiv="REFRESH" content="3;URL=http://prdownloads.sourceforge.net/subsonic/subsonic-3.2-setup.exe"/>
     </head>
 
 
@@ -22,7 +22,7 @@
         <section name="Download">
             <p>
                 You are being redirected to the SourceForge download center. Please wait!<br/>
-                (Click <a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.2.beta1-setup.exe">here</a>
+                (Click <a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.2-setup.exe">here</a>
                 if nothing happens.)
             </p>
         </section>

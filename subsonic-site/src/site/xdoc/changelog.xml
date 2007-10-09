@@ -15,6 +15,16 @@
 
         <section name="Change Log">
 
+            <subsection name="Subsonic 3.2 - Oct 09, 2007">
+                <ul>
+                    <li>New: Added support for editing genre in ID3 tags.</li>
+                    <li>New: Show miniature album images in "Now playing" sidebar.</li>
+                    <li>Bugfix: Handle podcasts with colons in the name.</li>
+                    <li>Bugfix: Handle podcasts without enclosures.</li>
+                    <li>Bugfix: Handle song, album and artist names with special characters (&lt;, &gt; etc)</li>
+                </ul>
+            </subsection>
+
             <subsection name="Subsonic 3.2.beta1 - Sep 19, 2007">
                 <ul>
                     <li>New: Download Podcasts with the new integrated Podcast receiver.</li>

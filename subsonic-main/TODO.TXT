@@ -1,25 +1,16 @@
-CHANGED IN 3.2
-==============
-Added support for editing genre.
-Show miniature album images in "Now playing" sidebar.
-Bugfix: Handle podcasts with colons in the name.
-Bugfix: Handle podcasts without enclosures.
-Bugfix: Handle song, album and artist names with special characters (<, > etc)
-
-TODO IN 3.2
-=============
+BACKLOG
+===========================
+Caching bug, selected music folder.  At least in IE and FF.
 Display warning if Podcast folder is not within a music folder.
 RejectedExecutionHandler handling in ThreadPoolExecutor constructor.
 Norwegian translation
 Precompile JSPs for Dekoh. Separate modules "subsonic-precompiled-jetty" and "subsonic-precompiled-dekoh".
 Fix javascript error in playlist in IE.
 Display the sub folder count next to the artist folder (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=905)
-
-BACKLOG
-===========================
-Use Flash player for Internet Radio (optional setting per radio channel).
-Be able to collapse/expand episodes.
-Select and delete all episodes of a given status.
+Facebook integration
+Focus on username field when login page is displayed.
+Artist-level comments.
+Support proxies (e.g., mod_proxy) http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=907
 Show/Hide Podcast channel description (e.g., Java Posse)
 Show mini coverarts "Next/Prev Album".
 Avatar support
