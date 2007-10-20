@@ -19,5 +19,8 @@ no
 # Macedonian
 mk
 
+# Russian
+ru
+
 # Simplified Chinese
 zh_CN

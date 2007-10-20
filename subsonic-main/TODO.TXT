@@ -1,5 +1,15 @@
+DONE IN 3.3
+===========
+Added Russian translation by Iaroslav Andrusiak.
+
 BACKLOG
 ===========================
+Add ad for Amazon mp3.
+Integrate with Amazon mp3.
+Adobe Flex (mail from Tom Sugden)
+   http://www.virtub.com/
+   http://desktop.ebay.com/
+Make some features available to donors only.
 Caching bug, selected music folder.  At least in IE and FF.
 Display warning if Podcast folder is not within a music folder.
 RejectedExecutionHandler handling in ThreadPoolExecutor constructor.
