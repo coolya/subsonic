@@ -2,28 +2,32 @@ DONE IN 3.3
 ===========
 Added Russian translation by Iaroslav Andrusiak.
 
-BACKLOG
-===========================
+TODO IN 3.3
+===========
 Add ad for Amazon mp3.
-Integrate with Amazon mp3.
+Display warning if Podcast folder is not within a music folder. Make security consistent.
+Focus on username field when login page is displayed.
+Support proxies (e.g., mod_proxy) http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=907
 Adobe Flex (mail from Tom Sugden)
    http://www.virtub.com/
    http://desktop.ebay.com/
+
+BACKLOG
+===========================
+Integrate with Amazon mp3.
 Make some features available to donors only.
 Caching bug, selected music folder.  At least in IE and FF.
-Display warning if Podcast folder is not within a music folder.
 RejectedExecutionHandler handling in ThreadPoolExecutor constructor.
 Norwegian translation
 Precompile JSPs for Dekoh. Separate modules "subsonic-precompiled-jetty" and "subsonic-precompiled-dekoh".
 Fix javascript error in playlist in IE.
 Display the sub folder count next to the artist folder (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=905)
 Facebook integration
-Focus on username field when login page is displayed.
 Artist-level comments.
-Support proxies (e.g., mod_proxy) http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=907
 Show/Hide Podcast channel description (e.g., Java Posse)
 Show mini coverarts "Next/Prev Album".
-Avatar support
+Avatar support.
+Improve Flash player.
 Add check for admin rights in installer.
 Add "play count" to Podcasts.
 ASX (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=638)
