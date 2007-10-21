@@ -1,12 +1,12 @@
 DONE IN 3.3
 ===========
 Added Russian translation by Iaroslav Andrusiak.
+Added ad for Amazon mp3.
+Focus on username field when login page is displayed.
 
 TODO IN 3.3
 ===========
-Add ad for Amazon mp3.
 Display warning if Podcast folder is not within a music folder. Make security consistent.
-Focus on username field when login page is displayed.
 Support proxies (e.g., mod_proxy) http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=907
 Adobe Flex (mail from Tom Sugden)
    http://www.virtub.com/

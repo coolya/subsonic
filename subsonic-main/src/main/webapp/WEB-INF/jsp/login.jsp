@@ -11,7 +11,7 @@
         }
     </script>
 
-</head><body>
+</head><body onload="document.getElementById('j_username').focus()">
 
 <form action="<c:url value="/j_acegi_security_check"/>" method="POST">
     <div class="bgcolor2" align="center" style="border:1px solid black; padding:20px 50px 20px 50px; margin-top:100px">
@@ -24,7 +24,7 @@
 
         <tr>
             <td style="padding-right:10px"><fmt:message key="login.username"/></td>
-            <td><input type="text" name="j_username" style="width:12em" tabindex="1"></td>
+            <td><input type="text" id="j_username" name="j_username" style="width:12em" tabindex="1"></td>
         </tr>
 
         <tr>
