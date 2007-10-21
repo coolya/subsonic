@@ -78,16 +78,6 @@
         <tr><td colspan="3">&nbsp;</td></tr>
 
         <tr>
-            <td><fmt:message key="generalsettings.downsamplecommand"/></td>
-            <td>
-                <form:input path="downsampleCommand" size="70"/>
-                <a href="helpPopup.view?topic=downsampleCommand" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
-            </td>
-        </tr>
-
-        <tr><td colspan="3">&nbsp;</td></tr>
-
-        <tr>
             <td><fmt:message key="generalsettings.language"/></td>
             <td>
                 <form:select path="localeIndex" cssStyle="width:15em">
@@ -108,40 +98,6 @@
                     </c:forEach>
                 </form:select>
                 <a href="helpPopup.view?topic=theme" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
-            </td>
-        </tr>
-
-        <tr><td colspan="3">&nbsp;</td></tr>
-
-        <tr>
-            <td><fmt:message key="generalsettings.coverartlimit"/></td>
-            <td>
-                <form:input path="coverArtLimit" size="8"/>
-                <a href="helpPopup.view?topic=coverArtLimit" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
-            </td>
-        </tr>
-
-        <tr>
-            <td><fmt:message key="generalsettings.downloadlimit"/></td>
-            <td>
-                <form:input path="downloadLimit" size="8"/>
-                <a href="helpPopup.view?topic=downloadLimit" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
-            </td>
-        </tr>
-
-        <tr>
-            <td><fmt:message key="generalsettings.uploadlimit"/></td>
-            <td>
-                <form:input path="uploadLimit" size="8"/>
-                <a href="helpPopup.view?topic=uploadLimit" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
-            </td>
-        </tr>
-
-        <tr>
-            <td><fmt:message key="generalsettings.streamport"/></td>
-            <td>
-                <form:input path="streamPort" size="8"/>
-                <a href="helpPopup.view?topic=streamPort" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
             </td>
         </tr>
 

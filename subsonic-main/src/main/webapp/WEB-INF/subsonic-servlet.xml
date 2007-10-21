@@ -171,6 +171,12 @@
         <property name="formView" value="generalSettings"/>
         <property name="settingsService" ref="settingsService"/>
     </bean>
+    <bean id="advancedSettingsController" class="net.sourceforge.subsonic.controller.AdvancedSettingsController">
+        <property name="commandClass"><value>net.sourceforge.subsonic.command.AdvancedSettingsCommand</value></property>
+        <property name="successView" value="advancedSettings"/>
+        <property name="formView" value="advancedSettings"/>
+        <property name="settingsService" ref="settingsService"/>
+    </bean>
     <bean id="personalSettingsController" class="net.sourceforge.subsonic.controller.PersonalSettingsController">
         <property name="commandClass"><value>net.sourceforge.subsonic.command.PersonalSettingsCommand</value></property>
         <property name="successView" value="personalSettings"/>
@@ -324,6 +330,7 @@
                 <prop key="/searchSettings.view">searchSettingsController</prop>
                 <prop key="/podcastSettings.view">podcastSettingsController</prop>
                 <prop key="/generalSettings.view">generalSettingsController</prop>
+                <prop key="/advancedSettings.view">advancedSettingsController</prop>
                 <prop key="/personalSettings.view">personalSettingsController</prop>
                 <prop key="/userSettings.view">userSettingsController</prop>
                 <prop key="/passwordSettings.view">passwordSettingsController</prop>

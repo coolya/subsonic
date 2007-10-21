@@ -19,12 +19,7 @@ public class GeneralSettingsController extends SimpleFormController {
 
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         GeneralSettingsCommand command = new GeneralSettingsCommand();
-        command.setCoverArtLimit(String.valueOf(settingsService.getCoverArtLimit()));
         command.setCoverArtMask(settingsService.getCoverArtMask());
-        command.setDownsampleCommand(settingsService.getDownsamplingCommand());
-        command.setDownloadLimit(String.valueOf(settingsService.getDownloadBitrateLimit()));
-        command.setUploadLimit(String.valueOf(settingsService.getUploadBitrateLimit()));
-        command.setStreamPort(String.valueOf(settingsService.getStreamPort()));
         command.setIgnoredArticles(settingsService.getIgnoredArticles());
         command.setShortcuts(settingsService.getShortcuts().replaceAll("\"", "&quot;"));
         command.setIndex(settingsService.getIndexString());
@@ -80,24 +75,9 @@ public class GeneralSettingsController extends SimpleFormController {
         settingsService.setPlaylistFolder(command.getPlaylistFolder());
         settingsService.setMusicMask(command.getMusicMask());
         settingsService.setCoverArtMask(command.getCoverArtMask());
-        settingsService.setDownsamplingCommand(command.getDownsampleCommand());
         settingsService.setWelcomeMessage(command.getWelcomeMessage());
         settingsService.setThemeId(theme.getId());
         settingsService.setLocale(locale);
-
-        try {
-            settingsService.setCoverArtLimit(Integer.parseInt(command.getCoverArtLimit()));
-        } catch (NumberFormatException x) { /* Intentionally ignored. */ }
-        try {
-            settingsService.setDownloadBitrateLimit(Long.parseLong(command.getDownloadLimit()));
-        } catch (NumberFormatException x) { /* Intentionally ignored. */ }
-        try {
-            settingsService.setUploadBitrateLimit(Long.parseLong(command.getUploadLimit()));
-        } catch (NumberFormatException x) { /* Intentionally ignored. */ }
-        try {
-            settingsService.setStreamPort(Integer.parseInt(command.getStreamPort()));
-        } catch (NumberFormatException x) { /* Intentionally ignored. */ }
-        settingsService.save();
 
         command.setShortcuts(command.getShortcuts().replaceAll("\"", "&quot;"));
     }

@@ -4,6 +4,7 @@ Added Russian translation by Iaroslav Andrusiak.
 Added ad for Amazon mp3.
 Focus on username field when login page is displayed.
 Renamed "Appearance" settings to "Personal".
+Created new settings pane "Advanced".
 
 TODO IN 3.3
 ===========

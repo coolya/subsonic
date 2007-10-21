@@ -12,15 +12,10 @@ public class GeneralSettingsCommand {
     private String playlistFolder;
     private String musicMask;
     private String coverArtMask;
-    private String downsampleCommand;
     private String index;
     private String ignoredArticles;
     private String shortcuts;
     private String welcomeMessage;
-    private String coverArtLimit;
-    private String downloadLimit;
-    private String uploadLimit;
-    private String streamPort;
     private String localeIndex;
     private String[] locales;
     private String themeIndex;
@@ -49,14 +44,6 @@ public class GeneralSettingsCommand {
 
     public void setCoverArtMask(String coverArtMask) {
         this.coverArtMask = coverArtMask;
-    }
-
-    public String getDownsampleCommand() {
-        return downsampleCommand;
-    }
-
-    public void setDownsampleCommand(String downsampleCommand) {
-        this.downsampleCommand = downsampleCommand;
     }
 
     public String getIndex() {
@@ -89,38 +76,6 @@ public class GeneralSettingsCommand {
 
     public void setWelcomeMessage(String welcomeMessage) {
         this.welcomeMessage = welcomeMessage;
-    }
-
-    public String getCoverArtLimit() {
-        return coverArtLimit;
-    }
-
-    public void setCoverArtLimit(String coverArtLimit) {
-        this.coverArtLimit = coverArtLimit;
-    }
-
-    public String getDownloadLimit() {
-        return downloadLimit;
-    }
-
-    public void setDownloadLimit(String downloadLimit) {
-        this.downloadLimit = downloadLimit;
-    }
-
-    public String getUploadLimit() {
-        return uploadLimit;
-    }
-
-    public String getStreamPort() {
-        return streamPort;
-    }
-
-    public void setStreamPort(String streamPort) {
-        this.streamPort = streamPort;
-    }
-
-    public void setUploadLimit(String uploadLimit) {
-        this.uploadLimit = uploadLimit;
     }
 
     public String getLocaleIndex() {

@@ -88,6 +88,7 @@
                 /icons/**=IS_AUTHENTICATED_ANONYMOUSLY
 
                 /generalSettings.view=ROLE_ADMIN
+                /advancedSettings.view=ROLE_ADMIN
                 /userSettings.view=ROLE_ADMIN
                 /musicFolderSettings.view=ROLE_ADMIN
                 /internetRadioSettings.view=ROLE_ADMIN
