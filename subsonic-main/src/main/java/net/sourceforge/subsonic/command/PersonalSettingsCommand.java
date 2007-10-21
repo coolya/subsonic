@@ -4,11 +4,11 @@ import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.controller.*;
 
 /**
- * Command used in {@link AppearanceSettingsController}.
+ * Command used in {@link PersonalSettingsController}.
  *
  * @author Sindre Mehus
  */
-public class AppearanceSettingsCommand {
+public class PersonalSettingsCommand {
     private User user;
     private String localeIndex;
     private String[] locales;

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1" %>
 <%@ include file="include.jsp" %>
 
-<c:set var="categories" value="${param.restricted ? 'appearance password player' : 'musicFolder general appearance user player transcoding internetRadio podcast search'}"/>
+<c:set var="categories" value="${param.restricted ? 'personal password player' : 'musicFolder general personal user player transcoding internetRadio podcast search'}"/>
 <h1>
     <img src="<c:url value="/icons/settings.png"/>" alt=""/>
     <fmt:message key="settingsheader.title"/>

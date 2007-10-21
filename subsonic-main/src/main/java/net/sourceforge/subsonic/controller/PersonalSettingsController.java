@@ -10,17 +10,17 @@ import javax.servlet.http.*;
 import java.util.*;
 
 /**
- * Controller for the page used to administrate per-user appearance settings.
+ * Controller for the page used to administrate per-user settings.
  *
  * @author Sindre Mehus
  */
-public class AppearanceSettingsController extends SimpleFormController {
+public class PersonalSettingsController extends SimpleFormController {
 
     private SettingsService settingsService;
     private SecurityService securityService;
 
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
-        AppearanceSettingsCommand command = new AppearanceSettingsCommand();
+        PersonalSettingsCommand command = new PersonalSettingsCommand();
 
         User user = securityService.getCurrentUser(request);
         UserSettings userSettings = settingsService.getUserSettings(user.getUsername());
@@ -64,7 +64,7 @@ public class AppearanceSettingsController extends SimpleFormController {
     }
 
     protected void doSubmitAction(Object comm) throws Exception {
-        AppearanceSettingsCommand command = (AppearanceSettingsCommand) comm;
+        PersonalSettingsCommand command = (PersonalSettingsCommand) comm;
 
         int localeIndex = Integer.parseInt(command.getLocaleIndex());
         Locale locale = null;
