@@ -6,6 +6,7 @@ import net.sourceforge.subsonic.domain.TransferStatus;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.StatusService;
+import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.util.StringUtil;
 import uk.ltd.getahead.dwr.WebContext;
 import uk.ltd.getahead.dwr.WebContextFactory;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Provides AJAX-enabled services for retrieving the currently playing file and directory.
@@ -28,6 +31,7 @@ public class NowPlayingService {
     private PlayerService playerService;
     private StatusService statusService;
     private MusicFileService musicFileService;
+    private SettingsService settingsService;
 
     /**
      * Returns the path of the currently playing file (for the current user).
@@ -56,8 +60,8 @@ public class NowPlayingService {
      */
     public NowPlayingInfo[] getNowPlaying() throws Exception {
 
-        WebContext webContext = WebContextFactory.get();
-        String url = webContext.getHttpServletRequest().getRequestURL().toString();
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        String url = request.getRequestURL().toString();
 
         List<NowPlayingInfo> result = new ArrayList<NowPlayingInfo>();
         for (TransferStatus status : statusService.getAllStreamStatuses()) {
@@ -80,6 +84,14 @@ public class NowPlayingService {
                 String coverArtUrl = coverArts.isEmpty() ? null :
                                      url.replaceFirst("/dwr/.*", "/coverArt.view?size=32&pathUtf8Hex=" +
                                                                  StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
+
+                // Rewrite URLs in case we're behind a proxy.
+                if (settingsService.isRewriteUrlEnabled()) {
+                    String referer = request.getHeader("referer");
+                    albumUrl = StringUtil.rewriteUrl(albumUrl, referer);
+                    lyricsUrl = StringUtil.rewriteUrl(lyricsUrl, referer);
+                    coverArtUrl = StringUtil.rewriteUrl(coverArtUrl, referer);
+                }
 
                 String tooltip = artist + " &ndash; " + title;
 
@@ -114,5 +126,9 @@ public class NowPlayingService {
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
     }
 }

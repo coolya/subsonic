@@ -64,6 +64,7 @@ public class SettingsService {
     private static final String KEY_LICENSE_CODE = "LicenseCode";
     private static final String KEY_LICENSE_DATE = "LicenseDate";
     private static final String KEY_DOWNSAMPLING_COMMAND = "DownsamplingCommand";
+    private static final String KEY_REWRITE_URL = "RewriteUrl";
 
     // Default values.
     private static final String DEFAULT_INDEX_STRING = "A B C D E F G H I J K L M N O P Q R S T U V W X-Z(XYZ)";
@@ -91,6 +92,7 @@ public class SettingsService {
     private static final String DEFAULT_LICENSE_CODE = null;
     private static final String DEFAULT_LICENSE_DATE = null;
     private static final String DEFAULT_DOWNSAMPLING_COMMAND = "lame -S -h -b %b %s -";
+    private static final boolean DEFAULT_REWRITE_URL = true;
 
     // Array of all keys.  Used to clean property file.
     private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_SHORTCUTS, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
@@ -98,7 +100,7 @@ public class SettingsService {
                                           KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_THEME_ID, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
                                           KEY_PODCAST_UPDATE_INTERVAL, KEY_PODCAST_FOLDER, KEY_PODCAST_EPISODE_RETENTION_COUNT,
                                           KEY_PODCAST_EPISODE_DOWNLOAD_COUNT, KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT,
-                                          KEY_LICENSE_EMAIL, KEY_LICENSE_CODE, KEY_LICENSE_DATE, KEY_DOWNSAMPLING_COMMAND};
+                                          KEY_LICENSE_EMAIL, KEY_LICENSE_CODE, KEY_LICENSE_DATE, KEY_DOWNSAMPLING_COMMAND, KEY_REWRITE_URL};
 
     private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
     private static final String THEMES_FILE = "/net/sourceforge/subsonic/theme/themes.txt";
@@ -449,6 +451,14 @@ public class SettingsService {
 
     public void setDownsamplingCommand(String command) {
         setProperty(KEY_DOWNSAMPLING_COMMAND, command);
+    }
+
+    public boolean isRewriteUrlEnabled() {
+        return Boolean.valueOf(properties.getProperty(KEY_REWRITE_URL, String.valueOf(DEFAULT_REWRITE_URL)));
+    }
+
+    public void setRewriteUrlEnabled(boolean rewriteUrl) {
+        properties.setProperty(KEY_REWRITE_URL, String.valueOf(rewriteUrl));
     }
 
     /**

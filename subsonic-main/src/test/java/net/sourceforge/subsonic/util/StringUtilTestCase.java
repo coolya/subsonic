@@ -159,4 +159,19 @@ public class StringUtilTestCase extends TestCase {
         assertEquals("Error in fileSystemSafe().", "foo-bar", StringUtil.fileSystemSafe("foo\\bar"));
         assertEquals("Error in fileSystemSafe().", "foo-bar", StringUtil.fileSystemSafe("foo:bar"));
     }
+
+    public void testRewriteUrl() {
+        assertEquals("Error in rewriteUrl().", "http://foo/", StringUtil.rewriteUrl("http://foo/", "http://foo/"));
+        assertEquals("Error in rewriteUrl().", "http://foo:81/", StringUtil.rewriteUrl("http://foo/", "http://foo:81/"));
+        assertEquals("Error in rewriteUrl().", "http://bar/", StringUtil.rewriteUrl("http://foo/", "http://bar/"));
+        assertEquals("Error in rewriteUrl().", "http://bar.com/", StringUtil.rewriteUrl("http://foo.com/", "http://bar.com/"));
+        assertEquals("Error in rewriteUrl().", "http://bar.com/", StringUtil.rewriteUrl("http://foo.com/", "http://bar.com/"));
+        assertEquals("Error in rewriteUrl().", "http://bar.com/a", StringUtil.rewriteUrl("http://foo.com/a", "http://bar.com/"));
+        assertEquals("Error in rewriteUrl().", "http://bar.com/a/b", StringUtil.rewriteUrl("http://foo.com/a/b", "http://bar.com/c"));
+        assertEquals("Error in rewriteUrl().", "http://bar.com:8080/a?b=1&c=2", StringUtil.rewriteUrl("http://foo.com/a?b=1&c=2", "http://bar.com:8080/e?f=3"));
+        assertEquals("Error in rewriteUrl().", "http://foo.com:8080/a?b=1&c=2", StringUtil.rewriteUrl("http://foo.com/a?b=1&c=2", "http://foo.com:8080/e?f=3"));
+        assertEquals("Error in rewriteUrl().", "http://foo/", StringUtil.rewriteUrl("http://foo/", "not:a:url"));
+        assertEquals("Error in rewriteUrl().", "http://foo/", StringUtil.rewriteUrl("http://foo/", ""));
+        assertEquals("Error in rewriteUrl().", "http://foo/", StringUtil.rewriteUrl("http://foo/", null));
+    }
 }

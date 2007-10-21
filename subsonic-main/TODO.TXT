@@ -8,9 +8,9 @@ Created new settings pane "Advanced".
 
 TODO IN 3.3
 ===========
-Refactor settings: create "Advanced" and "Personal".
-Display warning if Podcast folder is not within a music folder. Make security consistent.
 Support proxies (e.g., mod_proxy) http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=907
+Advanced setting: Rewrite URLs if behind proxy.  Default on.
+Display warning if Podcast folder is not within a music folder. Make security consistent.
 Adobe Flex (mail from Tom Sugden)
    http://www.virtub.com/
    http://desktop.ebay.com/

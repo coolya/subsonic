@@ -40,6 +40,7 @@ public class SettingsServiceTestCase extends TestCase {
         assertEquals("Wrong default Podcast episode download count.", 1, settingsService.getPodcastEpisodeDownloadCount());
         assertEquals("Wrong default Podcast folder.", "c:/music/Podcast", settingsService.getPodcastFolder());
         assertEquals("Wrong default Podcast update interval.", 24, settingsService.getPodcastUpdateInterval());
+        assertEquals("Wrong default rewrite URL enabled.", true, settingsService.isRewriteUrlEnabled());
     }
 
     public void testChangeSettings() {
@@ -63,6 +64,7 @@ public class SettingsServiceTestCase extends TestCase {
         settingsService.setPodcastEpisodeDownloadCount(-1);
         settingsService.setPodcastFolder("d:/podcasts");
         settingsService.setPodcastUpdateInterval(-1);
+        settingsService.setRewriteUrlEnabled(false);
 
         verifySettings(settingsService);
 
@@ -97,5 +99,6 @@ public class SettingsServiceTestCase extends TestCase {
         assertEquals("Wrong Podcast episode download count.", -1, settingsService.getPodcastEpisodeDownloadCount());
         assertEquals("Wrong Podcast folder.", "d:/podcasts", settingsService.getPodcastFolder());
         assertEquals("Wrong Podcast update interval.", -1, settingsService.getPodcastUpdateInterval());
+        assertEquals("Wrong default rewrite URL enabled.", false, settingsService.isRewriteUrlEnabled());
     }
 }

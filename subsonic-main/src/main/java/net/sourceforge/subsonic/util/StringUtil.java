@@ -363,12 +363,31 @@ public final class StringUtil {
     }
 
     /**
-     * Makes a given filename safe by replacing special characters like slashes ("/" and "\")
-     * with dashes ("-").
+     * Rewrites the URL by changing the host and port.
      *
-     * @param filename The filename in question.
-     * @return The filename with special characters replaced by underscores.
+     * @param urlToRewrite The URL to rewrite.
+     * @param urlWithHostAndPort Use host and port from this URL.
+     * @return The rewritten URL, or an unchanged URL if either argument is not a proper URL.
      */
+    public static String rewriteUrl(String urlToRewrite, String urlWithHostAndPort) {
+        try {
+            URL urlA = new URL(urlToRewrite);
+            URL urlB = new URL(urlWithHostAndPort);
+
+            URL result = new URL(urlA.getProtocol(), urlB.getHost(), urlB.getPort(), urlA.getFile());
+            return result.toExternalForm();
+        } catch (MalformedURLException x) {
+            return urlToRewrite;
+        }
+    }
+
+    /**
+    * Makes a given filename safe by replacing special characters like slashes ("/" and "\")
+    * with dashes ("-").
+    *
+    * @param filename The filename in question.
+    * @return The filename with special characters replaced by underscores.
+    */
     public static String fileSystemSafe(String filename) {
         for (String s : FILE_SYSTEM_UNSAFE) {
             filename = filename.replace(s, "-");
