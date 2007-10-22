@@ -37,6 +37,12 @@ public class M3UController implements Controller {
         String url = request.getRequestURL().toString();
         url = url.replaceFirst("play.m3u.*", s);
 
+        // Rewrite URLs in case we're behind a proxy.
+        if (settingsService.isRewriteUrlEnabled()) {
+            String referer = request.getHeader("referer");
+            url = StringUtil.rewriteUrl(url, referer);
+        }
+                
         // Change protocol and port, if specified. (To make it work with players that don't support SSL.)
         int streamPort = settingsService.getStreamPort();
         if (streamPort != 0) {
