@@ -112,7 +112,7 @@
 </h1>
 
 <h2>
-    <c:if test="${not model.dir.parent.root}">
+    <c:if test="${model.navigateUpAllowed}">
         <sub:url value="main.view" var="upUrl">
             <sub:param name="path" value="${model.dir.parent.path}"/>
         </sub:url>

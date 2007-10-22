@@ -8,7 +8,7 @@
         <description>Subsonic Podcast</description>
         <language>en-us</language>
         <image>
-            <url>http://subsonic.sourceforge.net/images/subsonic.jpg</url>
+            <url>http://subsonic.sourceforge.net/images/subsonic_black.png</url>
             <title>Subsonic Podcast</title>
         </image>
 

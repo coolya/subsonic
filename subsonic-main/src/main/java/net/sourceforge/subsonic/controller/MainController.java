@@ -1,6 +1,10 @@
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.domain.CoverArtScheme;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicFileInfo;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicInfoService;
 import net.sourceforge.subsonic.service.PlayerService;
@@ -65,6 +69,12 @@ public class MainController extends ParameterizableViewController {
         map.put("showNowPlaying", userSettings.isShowNowPlayingEnabled());
         map.put("showAd", shouldShowAd());
 
+        try {
+            map.put("navigateUpAllowed", !dir.getParent().isRoot());
+        } catch (SecurityException x) {
+            // Happens if Podcast directory is outside music folder.
+        }
+
         MusicFileInfo musicInfo = musicInfoService.getMusicFileInfoForPath(dir.getPath());
         int playCount = musicInfo == null ? 0 : musicInfo.getPlayCount();
         String comment = musicInfo == null ? null : musicInfo.getComment();
@@ -120,10 +130,14 @@ public class MainController extends ParameterizableViewController {
     private List<MusicFile> getAncestors(MusicFile dir) throws IOException {
         LinkedList<MusicFile> result = new LinkedList<MusicFile>();
 
-        MusicFile parent = dir.getParent();
-        while (parent != null && !parent.isRoot()) {
-            result.addFirst(parent);
-            parent = parent.getParent();
+        try {
+            MusicFile parent = dir.getParent();
+            while (parent != null && !parent.isRoot()) {
+                result.addFirst(parent);
+                parent = parent.getParent();
+            }
+        } catch (SecurityException x) {
+            // Happens if Podcast directory is outside music folder.
         }
         return result;
     }

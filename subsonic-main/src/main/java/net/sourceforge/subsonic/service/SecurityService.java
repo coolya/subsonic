@@ -117,9 +117,8 @@ public class SecurityService implements UserDetailsService {
     * @return Whether the given file may be read.
     */
     public boolean isReadAllowed(File file) {
-        // Allowed to read from both music folder and playlist folder.
-        // TODO: Allow reading from podcast folder.
-        return isInMusicFolder(file) || isInPlaylistFolder(file);
+        // Allowed to read from both music folder, playlist folder and podcast folder.
+        return isInMusicFolder(file) || isInPlaylistFolder(file) || isInPodcastFolder(file);
     }
 
     /**
