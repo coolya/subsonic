@@ -3,23 +3,23 @@
 <html><head>
     <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
 
     <script type="text/javascript" language="javascript">
         function enableLastFmFields() {
-            var display = "none";
-            var checkbox = document.getElementById("lastFm");
-            var table = document.getElementById("lastFmTable");
+            var checkbox = $("lastFm");
+            var table = $("lastFmTable");
+
             if (checkbox && checkbox.checked) {
-                display = "inline";
-            }
-            if (table) {
-                table.style.display = display;
+                table.show();
+            } else {
+                table.hide();
             }
         }
     </script>
 </head>
 
-<body onload="javascript:enableLastFmFields()">
+<body onload="enableLastFmFields()">
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="personal"/>

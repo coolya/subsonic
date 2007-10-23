@@ -3,6 +3,7 @@
 <html><head>
     <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
 </head>
 
 <body onload="enablePasswordFields()">
@@ -13,14 +14,13 @@
 
 <script type="text/javascript" language="javascript">
     function enablePasswordFields() {
-        var display = "none";
-        var checkbox = document.getElementById("passwordChange");
-        var table = document.getElementById("passwordTable");
+        var checkbox = $("passwordChange");
+        var table = $("passwordTable");
+
         if (checkbox && checkbox.checked) {
-            display = "inline";
-        }
-        if (table) {
-            table.style.display = display;
+            table.show();
+        } else {
+            table.hide();
         }
     }
 </script>

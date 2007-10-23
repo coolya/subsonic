@@ -10,10 +10,10 @@ Advanced setting: Rewrite URLs if behind proxy.  Default on.
 Updated http://subsonic.sourceforge.net/images/subsonic.jpg (used in podcast)
 Don't throw SecurityException if podcast folder is outside music folder.
 Make it possible to collapse/expand Podcast episodes.
+Use prototype.js for showing/hiding elements.
 
 TODO IN 3.3
 ===========
-Use prototype.js for showing/hiding elements.
 Adobe Flex (mail from Tom Sugden)
    http://www.virtub.com/
    http://desktop.ebay.com/
