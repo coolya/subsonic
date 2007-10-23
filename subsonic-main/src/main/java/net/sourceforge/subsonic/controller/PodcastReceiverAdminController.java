@@ -24,7 +24,7 @@ public class PodcastReceiverAdminController extends AbstractController {
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         handleParameters(request);
-        return new ModelAndView(new RedirectView("podcastReceiver.view?"));
+        return new ModelAndView(new RedirectView("podcastReceiver.view?expandedChannels=" + request.getParameter("expandedChannels")));
     }
 
     private void handleParameters(HttpServletRequest request) {

@@ -5,6 +5,7 @@ import net.sourceforge.subsonic.domain.PodcastEpisode;
 import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.service.PodcastService;
 import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.util.StringUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
@@ -38,6 +39,7 @@ public class PodcastReceiverController extends ParameterizableViewController {
 
         map.put("user", user);
         map.put("channels", channels);
+        map.put("expandedChannels", StringUtil.parseInts(request.getParameter("expandedChannels")));
         return result;
     }
 

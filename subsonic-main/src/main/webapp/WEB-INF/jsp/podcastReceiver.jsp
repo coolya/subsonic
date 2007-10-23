@@ -2,7 +2,7 @@
 
 <html><head>
     <%@ include file="head.jsp" %>
-    <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
 </head><body>
 
 <script type="text/javascript" language="javascript">
@@ -10,14 +10,60 @@
 
     function downloadSelected() {
         location.href = "podcastReceiverAdmin.view?downloadChannel=" + getSelectedChannels() +
-                        "&downloadEpisode=" + getSelectedEpisodes();
+                        "&downloadEpisode=" + getSelectedEpisodes() +
+                        "&expandedChannels=" + getExpandedChannels();
     }
 
     function deleteSelected() {
         if (confirm("<fmt:message key="podcastreceiver.confirmdelete"/>")) {
             location.href = "podcastReceiverAdmin.view?deleteChannel=" + getSelectedChannels() +
-                            "&deleteEpisode=" + getSelectedEpisodes();
+            "&deleteEpisode=" + getSelectedEpisodes() +
+            "&expandedChannels=" + getExpandedChannels();
         }
+    }
+
+    function refreshChannels() {
+        location.href = "podcastReceiverAdmin.view?refresh=" +
+                        "&expandedChannels=" + getExpandedChannels();
+    }
+
+    function refreshPage() {
+        location.href = "podcastReceiver.view?expandedChannels=" + getExpandedChannels();
+    }
+
+    function toggleEpisodes(channelIndex) {
+        for (var i = 0; i < episodeCount; i++) {
+            var row = $("episodeRow" + i);
+            if (row.title == "channel" + channelIndex) {
+                row.toggle();
+                $("channelExpanded" + channelIndex).checked = row.visible() ? "checked" : "";
+            }
+        }
+    }
+
+    function toggleAllEpisodes(visible) {
+        for (var i = 0; i < episodeCount; i++) {
+            var row = $("episodeRow" + i);
+            if (visible) {
+                row.show();
+            } else {
+                row.hide();
+            }
+        }
+        for (var i = 0; i < channelCount; i++) {
+            $("channelExpanded" + i).checked = visible ? "checked" : "";
+        }
+    }
+
+    function getExpandedChannels() {
+        var result = "";
+        for (var i = 0; i < channelCount; i++) {
+            var checkbox = $("channelExpanded" + i);
+            if (checkbox.checked) {
+                result += (checkbox.value + " ");
+            }
+        }
+        return result;
     }
 
     function getSelectedChannels() {
@@ -48,7 +94,12 @@
     <fmt:message key="podcastreceiver.title"/>
 </h1>
 
-<table class="indent" style="border-collapse:collapse;white-space:nowrap">
+<table><tr>
+    <td style="padding-right:2em"><div class="forward"><a href="javascript:toggleAllEpisodes(true)"><fmt:message key="podcastreceiver.expandall"/></a></div></td>
+    <td style="padding-right:2em"><div class="forward"><a href="javascript:toggleAllEpisodes(false)"><fmt:message key="podcastreceiver.collapseall"/></a></div></td>
+</tr></table>
+
+<table style="border-collapse:collapse;white-space:nowrap">
 
     <c:set var="episodeCount" value="0"/>
 
@@ -68,11 +119,25 @@
             <c:set var="title" value="${channel.key.url}"/>
         </c:if>
 
+        <c:set var="channelExpanded" value="false"/>
+        <c:forEach items="${model.expandedChannels}" var="expandedChannelId">
+            <c:if test="${expandedChannelId eq channel.key.id}">
+                <c:set var="channelExpanded" value="true"/>
+            </c:if>
+        </c:forEach>
+
         <tr style="margin:0;padding:0;border:0">
             <td colspan="2"/>
-            <td><input type="checkbox" class="checkbox" id="channel${i.index}" value="${channel.key.id}"/></td>
+            <td>
+                <input type="checkbox" class="checkbox" id="channel${i.index}" value="${channel.key.id}"/>
+                <input type="checkbox" class="checkbox" id="channelExpanded${i.index}" value="${channel.key.id}" style="display:none"
+                       <c:if test="${channelExpanded}">checked="checked"</c:if>/>
+            </td>
             <td ${class} colspan="3" style="padding-left:0.25em">
-                <span title="${title}"><b><str:truncateNicely upper="40">${title}</str:truncateNicely></b></span>
+                <a href="javascript:toggleEpisodes(${i.index})">
+                    <span title="${title}"><b><str:truncateNicely upper="40">${title}</str:truncateNicely></b></span>
+                    (${fn:length(channel.value)})
+                </a>
             </td>
             <td ${class} style="padding-left:1.5em;text-align:center;">
                 <span class="detail"><fmt:message key="podcastreceiver.status.${fn:toLowerCase(channel.key.status)}"/></span>
@@ -99,9 +164,7 @@
                     <c:set var="class" value=""/>
                 </c:otherwise>
             </c:choose>
-
-            <tr style="margin:0;padding:0;border:0">
-
+            <tr title="channel${i.index}" id="episodeRow${episodeCount}" style="margin:0;padding:0;border:0;display:${channelExpanded ? "table-row" : "none"}">
                 <c:choose>
                     <c:when test="${empty episode.path}">
                         <td colspan="2"/>
@@ -182,9 +245,9 @@
     <c:if test="${model.user.podcastRole}">
         <td style="padding-right:2em"><div class="forward"><a href="javascript:downloadSelected()"><fmt:message key="podcastreceiver.downloadselected"/></a></div></td>
         <td style="padding-right:2em"><div class="forward"><a href="javascript:deleteSelected()"><fmt:message key="podcastreceiver.deleteselected"/></a></div></td>
-        <td style="padding-right:2em"><div class="forward"><a href="podcastReceiverAdmin.view?refresh="><fmt:message key="podcastreceiver.check"/></a></div></td>
+        <td style="padding-right:2em"><div class="forward"><a href="javascript:refreshChannels()"><fmt:message key="podcastreceiver.check"/></a></div></td>
     </c:if>
-    <td style="padding-right:2em"><div class="forward"><a href="podcastReceiver.view?"><fmt:message key="podcastreceiver.refresh"/></a></div></td>
+    <td style="padding-right:2em"><div class="forward"><a href="javascript:refreshPage()"><fmt:message key="podcastreceiver.refresh"/></a></div></td>
     <c:if test="${model.user.adminRole}">
         <td style="padding-right:2em"><div class="forward"><a href="podcastSettings.view?"><fmt:message key="podcastreceiver.settings"/></a></div></td>
     </c:if>
