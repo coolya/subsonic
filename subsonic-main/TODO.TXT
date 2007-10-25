@@ -11,6 +11,7 @@ Updated http://subsonic.sourceforge.net/images/subsonic.jpg (used in podcast)
 Don't throw SecurityException if podcast folder is outside music folder.
 Make it possible to collapse/expand Podcast episodes.
 Use prototype.js for showing/hiding elements.
+Handle track number on the form "3/12" (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=951)
 
 TODO IN 3.3
 ===========
@@ -20,7 +21,8 @@ Adobe Flex (mail from Tom Sugden)
    http://www.openamf.com/cms/
    http://www.graniteds.org/
 
-Support byte-range requests (both download and streaming)   
+Support byte-range requests (both download and streaming)
+Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownloads/default.aspx)
 
 BACKLOG
 ===========================
@@ -50,7 +52,6 @@ Wrong progress for http://atvs.vg.no/script/podcast.php?category_id=7
 Resumable Podcast downloads.
 "Random" very slow when no music folders.
 Merge artists with same name, but different music folders.
-Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownloads/default.aspx)
 Test if dwr javascripts are cached in browser (especially for "now playing")
 Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
 Test playlist checkbox stuff, in particular download auth.

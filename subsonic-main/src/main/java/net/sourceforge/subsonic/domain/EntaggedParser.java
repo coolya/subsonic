@@ -26,6 +26,7 @@ public class EntaggedParser extends MetaDataParser {
 
     private static final Logger LOG = Logger.getLogger(EntaggedParser.class);
     private static final Pattern GENRE_PATTERN = Pattern.compile("\\((\\d+)\\)");
+    private static final Pattern TRACK_NUMBER_PATTERN = Pattern.compile("(\\d+)/\\d+");
 
     /**
      * Parses meta data for the given music file. No guessing or reformatting is done.
@@ -46,13 +47,7 @@ public class EntaggedParser extends MetaDataParser {
             metaData.setTitle(StringUtils.trimToNull(tag.getFirstTitle()));
             metaData.setYear(StringUtils.trimToNull(tag.getFirstYear()));
             metaData.setGenre(mapGenre(StringUtils.trimToNull(tag.getFirstGenre())));
-
-            try {
-                int track = Integer.parseInt(StringUtils.trimToNull(tag.getFirstTrack()));
-                if (track > 0) {
-                    metaData.setTrackNumber(track);
-                }
-            } catch (NumberFormatException x) { /* Ignored */ }
+            metaData.setTrackNumber(parseTrackNumber(StringUtils.trimToNull(tag.getFirstTrack())));
 
             metaData.setVariableBitRate(audioFile.isVbr());
             metaData.setBitRate(audioFile.getBitrate());
@@ -85,11 +80,35 @@ public class EntaggedParser extends MetaDataParser {
     }
 
     /**
-     * Updates the given file with the given meta data.
-     *
-     * @param file     The music file to update.
-     * @param metaData The new meta data.
+     * Parses the track number from the given string.  Also supports
+     * track numbers on the form "4/12".
      */
+    private Integer parseTrackNumber(String trackNumber) {
+        if (trackNumber == null) {
+            return null;
+        }
+
+        try {
+            return new Integer(trackNumber);
+        } catch (NumberFormatException x) {
+            Matcher matcher = TRACK_NUMBER_PATTERN.matcher(trackNumber);
+            if (matcher.matches()) {
+                try {
+                    return new Integer(matcher.group(1));
+                } catch (NumberFormatException e) {
+                    return null;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+    * Updates the given file with the given meta data.
+    *
+    * @param file     The music file to update.
+    * @param metaData The new meta data.
+    */
     @Override
     public void setMetaData(MusicFile file, MusicFile.MetaData metaData) {
 
