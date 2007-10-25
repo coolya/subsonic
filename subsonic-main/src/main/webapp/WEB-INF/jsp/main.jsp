@@ -9,6 +9,7 @@
     <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
 </head><body>
 
@@ -189,16 +190,8 @@
 
     <script type='text/javascript'>
         function toggleComment() {
-            var commentForm = document.getElementById('commentForm');
-            var commentDiv = document.getElementById('comment');
-
-            if (commentForm.style.display == "none")  {
-                commentForm.style.display = "";
-                commentDiv.style.display = "none";
-            } else {
-                commentForm.style.display = "none";
-                commentDiv.style.display = "";
-            }
+            $("commentForm").toggle();
+            $("comment").toggle();
         }
     </script>
 

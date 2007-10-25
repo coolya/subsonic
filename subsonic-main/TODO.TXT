@@ -17,6 +17,10 @@ TODO IN 3.3
 Adobe Flex (mail from Tom Sugden)
    http://www.virtub.com/
    http://desktop.ebay.com/
+   http://www.openamf.com/cms/
+   http://www.graniteds.org/
+
+Support byte-range requests (both download and streaming)   
 
 BACKLOG
 ===========================
