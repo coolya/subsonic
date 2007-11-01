@@ -174,4 +174,28 @@ public class StringUtilTestCase extends TestCase {
         assertEquals("Error in rewriteUrl().", "http://foo/", StringUtil.rewriteUrl("http://foo/", ""));
         assertEquals("Error in rewriteUrl().", "http://foo/", StringUtil.rewriteUrl("http://foo/", null));
     }
+
+    public void testParseRange() {
+        doTestParseRange(0L, 499L, "bytes=0-499");
+        doTestParseRange(500L, 999L, "bytes=500-999");
+        doTestParseRange(9500L, null, "bytes=9500-");
+
+        doTestParseRange(null, null, null);
+        doTestParseRange(null, null, "");
+        doTestParseRange(null, null, "bytes");
+        doTestParseRange(null, null, "bytes=a-b");
+        doTestParseRange(null, null, "bytes=-100-500");
+        doTestParseRange(null, null, "bytes=-500");
+        doTestParseRange(null, null, "bytes=500-600,601-999");
+    }
+
+    private void doTestParseRange(Long expectedFrom, Long expectedTo, String range) {
+        Long[] actual = StringUtil.parseRange(range);
+        if (expectedFrom == null && expectedTo == null) {
+            assertNull("Error in parseRange().", actual);
+        } else {
+            assertEquals("Error in parseRange().", expectedFrom, actual[0]);
+            assertEquals("Error in parseRange().", expectedTo, actual[1]);
+        }
+    }
 }

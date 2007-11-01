@@ -365,7 +365,7 @@ public final class StringUtil {
     /**
      * Rewrites the URL by changing the host and port.
      *
-     * @param urlToRewrite The URL to rewrite.
+     * @param urlToRewrite       The URL to rewrite.
      * @param urlWithHostAndPort Use host and port from this URL.
      * @return The rewritten URL, or an unchanged URL if either argument is not a proper URL.
      */
@@ -382,12 +382,12 @@ public final class StringUtil {
     }
 
     /**
-    * Makes a given filename safe by replacing special characters like slashes ("/" and "\")
-    * with dashes ("-").
-    *
-    * @param filename The filename in question.
-    * @return The filename with special characters replaced by underscores.
-    */
+     * Makes a given filename safe by replacing special characters like slashes ("/" and "\")
+     * with dashes ("-").
+     *
+     * @param filename The filename in question.
+     * @return The filename with special characters replaced by underscores.
+     */
     public static String fileSystemSafe(String filename) {
         for (String s : FILE_SYSTEM_UNSAFE) {
             filename = filename.replace(s, "-");
@@ -395,4 +395,36 @@ public final class StringUtil {
         return filename;
     }
 
+    /**
+     * Parses the given string as a HTTP header byte range.  See chapter 14.36.1 in RFC 2068
+     * for details.
+     * <p/>
+     * Only a subset of the allowed syntaxes are supported. Only ranges which specify first-byte-pos
+     * are supported. The last-byte-pos is optional.
+     *
+     * @param range The range from the HTTP header, for instance "bytes=0-499" or "bytes=500-"
+     * @return An array of length two containing first-byte-pos and last-byte-pos (the latter may be <code>null</code>).
+     *         The method returns <code>null</code> if the range syntax is not supported.
+     */
+    public static Long[] parseRange(String range) {
+        if (range == null) {
+            return null;
+        }
+
+        Pattern pattern = Pattern.compile("bytes=(\\d+)-(\\d*)");
+        Matcher matcher = pattern.matcher(range);
+
+        if (matcher.matches()) {
+            String from = matcher.group(1);
+            String to = matcher.group(2);
+
+            Long[] result = new Long[2];
+            result[0] = new Long(from);
+            if (StringUtils.isNotBlank(to)) {
+                result[1] = new Long(to);
+            }
+            return result;
+        }
+        return null;
+    }
 }
