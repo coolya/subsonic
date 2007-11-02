@@ -16,6 +16,7 @@ import net.sourceforge.subsonic.util.FileUtil;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.LongRange;
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipOutputStream;
 import org.springframework.web.servlet.ModelAndView;
@@ -65,10 +66,10 @@ public class DownloadController implements Controller {
 
             response.setHeader("ETag", path);
             response.setHeader("Accept-Ranges", "bytes");
-            Long[] range = StringUtil.parseRange(request.getHeader("Range"));
+            LongRange range = StringUtil.parseRange(request.getHeader("Range"));
             if (range != null) {
                 response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
-                LOG.info("Got range: " + range[0] + "-" + range[1]);
+                LOG.info("Got range: " + range);
             }
 
             if (path != null) {
@@ -133,7 +134,7 @@ public class DownloadController implements Controller {
      * @param range    The byte range, may be <code>null</code>.
      * @throws IOException If an I/O error occurs.
      */
-    private void downloadFile(HttpServletResponse response, TransferStatus status, File file, Long[] range) throws IOException {
+    private void downloadFile(HttpServletResponse response, TransferStatus status, File file, LongRange range) throws IOException {
         LOG.info("Starting to download '" + file + "' to " + status.getPlayer());
         status.setFile(file);
 
@@ -147,13 +148,6 @@ public class DownloadController implements Controller {
         LOG.info("Downloaded '" + file + "' to " + status.getPlayer());
     }
 
-    private OutputStream wrapRangeOutputStream(OutputStream out, Long[] range) {
-        if (range == null) {
-            return out;
-        }
-        return new RangeOutputStream(out, range[0], range[1]);
-    }
-
     /**
      * Downloads all files in a directory (including sub-directories). The files are packed together in an
      * uncompressed zip-file.
@@ -164,7 +158,7 @@ public class DownloadController implements Controller {
      * @param range    The byte range, may be <code>null</code>.
      * @throws IOException If an I/O error occurs.
      */
-    private void downloadDirectory(HttpServletResponse response, TransferStatus status, File file, Long[] range) throws IOException {
+    private void downloadDirectory(HttpServletResponse response, TransferStatus status, File file, LongRange range) throws IOException {
         String zipFileName = file.getName() + ".zip";
         LOG.info("Starting to download '" + zipFileName + "' to " + status.getPlayer());
         response.setContentType("application/x-download");
@@ -189,7 +183,7 @@ public class DownloadController implements Controller {
      * @param range    The byte range, may be <code>null</code>.
      * @throws IOException If an I/O error occurs.
      */
-    private void downloadPlaylist(HttpServletResponse response, TransferStatus status, Playlist playlist, int[] indexes, Long[] range) throws IOException {
+    private void downloadPlaylist(HttpServletResponse response, TransferStatus status, Playlist playlist, int[] indexes, LongRange range) throws IOException {
         if (indexes != null && indexes.length == 1) {
             downloadFile(response, status, playlist.getFile(indexes[0]).getFile(), range);
             return;
@@ -222,6 +216,13 @@ public class DownloadController implements Controller {
         LOG.info("Downloaded '" + zipFileName + "' to " + status.getPlayer());
     }
 
+    private OutputStream wrapRangeOutputStream(OutputStream out, LongRange range) {
+        if (range == null) {
+            return out;
+        }
+        return new RangeOutputStream(out, range.getMinimumLong(), range.getMaximumLong());
+    }
+
     /**
      * Utility method for writing the content of a given file to a given output stream.
      *
@@ -231,7 +232,7 @@ public class DownloadController implements Controller {
      * @param range  The byte range, may be <code>null</code>.
      * @throws IOException If an I/O error occurs.
      */
-    private void copyFileToStream(File file, OutputStream out, TransferStatus status, Long[] range) throws IOException {
+    private void copyFileToStream(File file, OutputStream out, TransferStatus status, LongRange range) throws IOException {
         LOG.info("Downloading " + file + " to " + status.getPlayer());
 
         final int bufferSize = 16 * 1024; // 16 Kbit
@@ -250,9 +251,8 @@ public class DownloadController implements Controller {
                 }
                 out.write(buf, 0, n);
 
-                // TODO: Make range class.
                 // Don't sleep if outside range.
-                if (range != null && range[0] > status.getBytesSkipped()) {
+                if (range != null && !range.containsLong(status.getBytesSkipped() + status.getBytesTransfered())) {
                     status.addBytesSkipped(n);
                     continue;
                 }
@@ -296,7 +296,7 @@ public class DownloadController implements Controller {
      * @param range  The byte range, may be <code>null</code>.
      * @throws IOException If an I/O error occurs.
      */
-    private void zip(ZipOutputStream out, File root, File file, TransferStatus status, Long[] range) throws IOException {
+    private void zip(ZipOutputStream out, File root, File file, TransferStatus status, LongRange range) throws IOException {
         String zipName = file.getCanonicalPath().substring(root.getCanonicalPath().length() + 1);
 
         if (file.isFile()) {

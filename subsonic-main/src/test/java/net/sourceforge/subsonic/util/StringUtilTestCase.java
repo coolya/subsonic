@@ -5,6 +5,8 @@ import junit.framework.TestCase;
 import java.util.Locale;
 import java.util.Arrays;
 
+import org.apache.commons.lang.math.LongRange;
+
 /**
  * Unit test of {@link StringUtil}.
  *
@@ -176,26 +178,26 @@ public class StringUtilTestCase extends TestCase {
     }
 
     public void testParseRange() {
+        doTestParseRange(0L, 0L, "bytes=0-0");
+        doTestParseRange(0L, 1L, "bytes=0-1");
+        doTestParseRange(100L, 100L, "bytes=100-100");
         doTestParseRange(0L, 499L, "bytes=0-499");
         doTestParseRange(500L, 999L, "bytes=500-999");
-        doTestParseRange(9500L, null, "bytes=9500-");
+        doTestParseRange(9500L, Long.MAX_VALUE, "bytes=9500-");
 
-        doTestParseRange(null, null, null);
-        doTestParseRange(null, null, "");
-        doTestParseRange(null, null, "bytes");
-        doTestParseRange(null, null, "bytes=a-b");
-        doTestParseRange(null, null, "bytes=-100-500");
-        doTestParseRange(null, null, "bytes=-500");
-        doTestParseRange(null, null, "bytes=500-600,601-999");
+        assertNull("Error in parseRange().", StringUtil.parseRange(null));
+        assertNull("Error in parseRange().", StringUtil.parseRange(""));
+        assertNull("Error in parseRange().", StringUtil.parseRange("bytes"));
+        assertNull("Error in parseRange().", StringUtil.parseRange("bytes=a-b"));
+        assertNull("Error in parseRange().", StringUtil.parseRange("bytes=-100-500"));
+        assertNull("Error in parseRange().", StringUtil.parseRange("bytes=-500"));
+        assertNull("Error in parseRange().", StringUtil.parseRange("bytes=500-600,601-999"));
+        assertNull("Error in parseRange().", StringUtil.parseRange("bytes=200-100"));
     }
 
-    private void doTestParseRange(Long expectedFrom, Long expectedTo, String range) {
-        Long[] actual = StringUtil.parseRange(range);
-        if (expectedFrom == null && expectedTo == null) {
-            assertNull("Error in parseRange().", actual);
-        } else {
-            assertEquals("Error in parseRange().", expectedFrom, actual[0]);
-            assertEquals("Error in parseRange().", expectedTo, actual[1]);
-        }
+    private void doTestParseRange(long expectedFrom, long expectedTo, String range) {
+        LongRange actual = StringUtil.parseRange(range);
+        assertEquals("Error in parseRange().", expectedFrom, actual.getMinimumLong());
+        assertEquals("Error in parseRange().", expectedTo, actual.getMaximumLong());
     }
 }

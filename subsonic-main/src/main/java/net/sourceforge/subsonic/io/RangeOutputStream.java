@@ -34,10 +34,10 @@ public class RangeOutputStream extends FilterOutputStream {
      * @param start The starting position.
      * @param end   The ending position.
      */
-    public RangeOutputStream(OutputStream out, Long start, Long end) {
+    public RangeOutputStream(OutputStream out, long start, long end) {
         super(out);
-        this.start = start == null ? 0L : start;
-        this.end = end == null ? Long.MAX_VALUE : end;
+        this.start = start;
+        this.end = end;
         pos = 0;
     }
 

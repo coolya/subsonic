@@ -3,6 +3,7 @@ package net.sourceforge.subsonic.util;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.LongRange;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -403,10 +404,11 @@ public final class StringUtil {
      * are supported. The last-byte-pos is optional.
      *
      * @param range The range from the HTTP header, for instance "bytes=0-499" or "bytes=500-"
-     * @return An array of length two containing first-byte-pos and last-byte-pos (the latter may be <code>null</code>).
-     *         The method returns <code>null</code> if the range syntax is not supported.
+     * @return A range object (using inclusive values). If the last-byte-pos is not given, the end of
+     * the returned range is {@link Long#MAX_VALUE}. The method returns <code>null</code> if the syntax
+     * of the given range is not supported.
      */
-    public static Long[] parseRange(String range) {
+    public static LongRange parseRange(String range) {
         if (range == null) {
             return null;
         }
@@ -415,15 +417,17 @@ public final class StringUtil {
         Matcher matcher = pattern.matcher(range);
 
         if (matcher.matches()) {
-            String from = matcher.group(1);
-            String to = matcher.group(2);
+            String firstString = matcher.group(1);
+            String lastString = StringUtils.trimToNull(matcher.group(2));
 
-            Long[] result = new Long[2];
-            result[0] = new Long(from);
-            if (StringUtils.isNotBlank(to)) {
-                result[1] = new Long(to);
+            long first = Long.parseLong(firstString);
+            long last = lastString == null ? Long.MAX_VALUE : Long.parseLong(lastString);
+
+            if (first > last) {
+                return null;
             }
-            return result;
+
+            return new LongRange(first, last);
         }
         return null;
     }
