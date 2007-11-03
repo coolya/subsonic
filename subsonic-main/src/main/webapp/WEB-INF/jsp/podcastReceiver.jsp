@@ -127,13 +127,12 @@
         </c:forEach>
 
         <tr style="margin:0;padding:0;border:0">
-            <td colspan="2"/>
             <td>
                 <input type="checkbox" class="checkbox" id="channel${i.index}" value="${channel.key.id}"/>
                 <input type="checkbox" class="checkbox" id="channelExpanded${i.index}" value="${channel.key.id}" style="display:none"
                        <c:if test="${channelExpanded}">checked="checked"</c:if>/>
             </td>
-            <td ${class} colspan="3" style="padding-left:0.25em">
+            <td ${class} colspan="5" style="padding-left:0.25em">
                 <a href="javascript:toggleEpisodes(${i.index})">
                     <span title="${title}"><b><str:truncateNicely upper="40">${title}</str:truncateNicely></b></span>
                     (${fn:length(channel.value)})
@@ -165,9 +164,12 @@
                 </c:otherwise>
             </c:choose>
             <tr title="channel${i.index}" id="episodeRow${episodeCount}" style="margin:0;padding:0;border:0;display:${channelExpanded ? "table-row" : "none"}">
+
+                <td><input type="checkbox" class="checkbox" id="episode${episodeCount}" value="${episode.id}"/></td>
+
                 <c:choose>
                     <c:when test="${empty episode.path}">
-                        <td colspan="2"/>
+                        <td ${class} colspan="2"/>
                     </c:when>
                     <c:otherwise>
                         <c:import url="playAddDownload.jsp">
@@ -178,7 +180,6 @@
                     </c:otherwise>
                 </c:choose>
 
-                <td><input type="checkbox" class="checkbox" id="episode${episodeCount}" value="${episode.id}"/></td>
                 <c:set var="episodeCount" value="${episodeCount + 1}"/>
 
 
@@ -187,7 +188,7 @@
                 </sub:url>
 
 
-                <td ${class} style="padding-left:1.25em">
+                <td ${class} style="padding-left:0.6em">
                     <span title="${episode.title}">
                         <c:choose>
                             <c:when test="${empty episode.path}">
@@ -255,6 +256,7 @@
 
 <c:if test="${model.user.podcastRole}">
     <form method="post" action="podcastReceiverAdmin.view?">
+        <input type="hidden" name="expandedChannels" value=""/>
         <table>
             <tr>
                 <td><fmt:message key="podcastreceiver.subscribe"/></td>

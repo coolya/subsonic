@@ -17,6 +17,7 @@ Support byte-range requests (both download and streaming)
 Change look-and-feel for booter.
 Fixed concurrency bug when rendering wiki markup.
 Amazon Unbox
+Improve layout in Podcast view.
 
 TODO IN 3.3
 ===========
