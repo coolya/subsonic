@@ -13,6 +13,8 @@ Make it possible to collapse/expand Podcast episodes.
 Use prototype.js for showing/hiding elements.
 Handle track number on the form "3/12" (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=951)
 Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownloads/default.aspx)
+Support byte-range requests (both download and streaming)
+Change look-and-feel for booter.
 
 TODO IN 3.3
 ===========
@@ -23,9 +25,6 @@ Adobe Flex (mail from Tom Sugden)
    http://www.openamf.com/cms/
    http://www.graniteds.org/
 
-Don't sleep in DownloadController if end of range is reached. Make range class.
-Support byte-range requests (both download and streaming)
-Change look-and-feel for booter.
 
 java.util.ConcurrentModificationException
 	at java.util.AbstractList$Itr.checkForComodification(AbstractList.java:449)

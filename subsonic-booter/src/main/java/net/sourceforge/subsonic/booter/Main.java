@@ -1,6 +1,6 @@
 package net.sourceforge.subsonic.booter;
 
-import com.jgoodies.looks.windows.WindowsLookAndFeel;
+import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 
 import javax.swing.*;
 
@@ -18,7 +18,7 @@ public class Main {
 
         // Set look-and-feel.
         try {
-            UIManager.setLookAndFeel(new WindowsLookAndFeel());
+            UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
         } catch (Exception x) {
             System.err.println("Failed to set look-and-feel.\n" + x);
         }
