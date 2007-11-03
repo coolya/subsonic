@@ -75,10 +75,9 @@
 </c:if>
 
 <div style="margin-top:7em;padding:0 1em 0 1em;float:right;border-left:1px solid #<spring:theme code="detailColor"/>">
-    <c:if test="${model.showAd}">
+    <c:if test="${not empty model.ad}">
         <div class="detail" style="text-align:center">
-            <iframe src="http://rcm.amazon.com/e/cm?t=subsonic-20&o=1&p=40&l=ur1&category=mp3&banner=0TBQHNYNA4B47J02NFG2&f=ifr" width="120" height="60"
-                    scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
+                ${model.ad}
             <br/>
             <br/>
             <sub:url value="donate.view" var="donateUrl">

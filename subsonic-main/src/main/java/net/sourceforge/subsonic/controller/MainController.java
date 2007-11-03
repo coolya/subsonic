@@ -5,6 +5,7 @@ import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicFileInfo;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.service.AdService;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicInfoService;
 import net.sourceforge.subsonic.service.PlayerService;
@@ -41,8 +42,8 @@ public class MainController extends ParameterizableViewController {
     private PlayerService playerService;
     private SettingsService settingsService;
     private MusicInfoService musicInfoService;
-
     private MusicFileService musicFileService;
+    private AdService adService;
     private int pageCount;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -67,7 +68,9 @@ public class MainController extends ParameterizableViewController {
         map.put("visibility", userSettings.getMainVisibility());
         map.put("updateNowPlaying", request.getParameter("updateNowPlaying") != null);
         map.put("showNowPlaying", userSettings.isShowNowPlayingEnabled());
-        map.put("showAd", shouldShowAd());
+        if (!isLicensed()) {
+            map.put("ad", adService.getAd());
+        }
 
         try {
             map.put("navigateUpAllowed", !dir.getParent().isRoot());
@@ -120,11 +123,9 @@ public class MainController extends ParameterizableViewController {
         return result;
     }
 
-    private boolean shouldShowAd() {
-
-        return (pageCount++ % AD_INTERVAL == 0) &&
-               !(settingsService.isLicenseValid(settingsService.getLicenseEmail(),
-                                                settingsService.getLicenseCode()));
+    private boolean isLicensed() {
+        return settingsService.isLicenseValid(settingsService.getLicenseEmail(),
+                                              settingsService.getLicenseCode());
     }
 
     private List<MusicFile> getAncestors(MusicFile dir) throws IOException {
@@ -205,5 +206,9 @@ public class MainController extends ParameterizableViewController {
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
+    }
+
+    public void setAdService(AdService adService) {
+        this.adService = adService;
     }
 }
