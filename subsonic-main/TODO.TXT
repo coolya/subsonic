@@ -15,6 +15,7 @@ Handle track number on the form "3/12" (http://www.activeobjects.no/subsonic/for
 Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownloads/default.aspx)
 Support byte-range requests (both download and streaming)
 Change look-and-feel for booter.
+Fixed concurrency bug when rendering wiki markup.
 
 TODO IN 3.3
 ===========
@@ -25,16 +26,6 @@ Adobe Flex (mail from Tom Sugden)
    http://www.openamf.com/cms/
    http://www.graniteds.org/
 
-
-java.util.ConcurrentModificationException
-	at java.util.AbstractList$Itr.checkForComodification(AbstractList.java:449)
-	at java.util.AbstractList$Itr.next(AbstractList.java:420)
-	at org.radeox.filter.FilterPipe.filter(FilterPipe.java:161)
-	at org.radeox.engine.BaseRenderEngine.render(BaseRenderEngine.java:108)
-	at net.sourceforge.subsonic.taglib.WikiTag.doEndTag(WikiTag.java:30)
-	at org.apache.jsp.WEB_002dINF.jsp.main_jsp._jspx_meth_sub_wiki_0(main_jsp.java:2182)
-	at org.apache.jsp.WEB_002dINF.jsp.main_jsp._jspx_meth_c_if_10(main_jsp.java:1806)
-	at org.apache.jsp.WEB_002dINF.jsp.main_jsp._jspService(main_jsp.java:259)
 
 BACKLOG
 ===========================

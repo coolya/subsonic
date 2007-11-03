@@ -27,8 +27,10 @@ public class WikiTag extends BodyTagSupport {
     }
 
     public int doEndTag() throws JspException {
-        String result = RENDER_ENGINE.render(StringEscapeUtils.unescapeXml(text), RENDER_CONTEXT);
-
+        String result;
+        synchronized (RENDER_ENGINE) {
+            result = RENDER_ENGINE.render(StringEscapeUtils.unescapeXml(text), RENDER_CONTEXT);
+        }
         try {
             pageContext.getOut().print(result);
         } catch (IOException x) {
