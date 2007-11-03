@@ -88,8 +88,6 @@ public class StreamController implements Controller {
 
                 if (range != null) {
                     response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
-
-                    // TODO: Set "Content-Range" ?
                     LOG.info("Got range: " + range);
                 }
 

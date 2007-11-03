@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.sourceforge.subsonic</groupId>
     <artifactId>subsonic</artifactId>
-    <version>3.2</version>
+    <version>3.3.beta1</version>
     <name>Subsonic</name>
     <packaging>pom</packaging>
     <organization>
@@ -57,7 +57,7 @@
         <module>subsonic-booter</module>
         <module>subsonic-installer</module>
         <module>subsonic-assembly</module>
-        <module>subsonic-dekoh</module>
+        <!--<module>subsonic-dekoh</module>-->
     </modules>
 
     <build>
