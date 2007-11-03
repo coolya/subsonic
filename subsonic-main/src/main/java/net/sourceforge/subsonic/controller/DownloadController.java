@@ -144,7 +144,7 @@ public class DownloadController implements Controller {
             response.setContentLength((int) file.length());
         }
 
-        copyFileToStream(file, wrapRangeOutputStream(response.getOutputStream(), range), status, range);
+        copyFileToStream(file, RangeOutputStream.wrap(response.getOutputStream(), range), status, range);
         LOG.info("Downloaded '" + file + "' to " + status.getPlayer());
     }
 
@@ -164,7 +164,7 @@ public class DownloadController implements Controller {
         response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", "attachment; filename=\"" + zipFileName + '"');
 
-        ZipOutputStream out = new ZipOutputStream(wrapRangeOutputStream(response.getOutputStream(), range));
+        ZipOutputStream out = new ZipOutputStream(RangeOutputStream.wrap(response.getOutputStream(), range));
         out.setMethod(ZipOutputStream.STORED);  // No compression.
 
         zip(out, file.getParentFile(), file, status, range);
@@ -194,7 +194,7 @@ public class DownloadController implements Controller {
         response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", "attachment; filename=\"" + zipFileName + '"');
 
-        ZipOutputStream out = new ZipOutputStream(wrapRangeOutputStream(response.getOutputStream(), range));
+        ZipOutputStream out = new ZipOutputStream(RangeOutputStream.wrap(response.getOutputStream(), range));
         out.setMethod(ZipOutputStream.STORED);  // No compression.
 
         List<MusicFile> musicFiles = new ArrayList<MusicFile>();
@@ -214,13 +214,6 @@ public class DownloadController implements Controller {
 
         out.close();
         LOG.info("Downloaded '" + zipFileName + "' to " + status.getPlayer());
-    }
-
-    private OutputStream wrapRangeOutputStream(OutputStream out, LongRange range) {
-        if (range == null) {
-            return out;
-        }
-        return new RangeOutputStream(out, range.getMinimumLong(), range.getMaximumLong());
     }
 
     /**

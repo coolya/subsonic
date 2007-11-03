@@ -1,5 +1,7 @@
 package net.sourceforge.subsonic.io;
 
+import org.apache.commons.lang.math.Range;
+
 import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -26,6 +28,22 @@ public class RangeOutputStream extends FilterOutputStream {
      * The current position.
      */
     protected long pos;
+
+    /**
+     * Wraps the given output stream in a RangeOutputStream, using the values
+     * in the given range, unless the range is <code>null</code> in which case
+     * the original OutputStream is returned.
+     *
+     * @param out   The output stream to wrap in a RangeOutputStream.
+     * @param range The range, may be <code>null</code>.
+     * @return The possibly wrapped output stream.
+     */
+    public static OutputStream wrap(OutputStream out, Range range) {
+        if (range == null) {
+            return out;
+        }
+        return new RangeOutputStream(out, range.getMinimumLong(), range.getMaximumLong());
+    }
 
     /**
      * Creates the stream with the passed start and end.
