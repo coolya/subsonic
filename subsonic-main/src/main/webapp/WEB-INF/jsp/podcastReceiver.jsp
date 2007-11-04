@@ -105,15 +105,6 @@
 
     <c:forEach items="${model.channels}" var="channel" varStatus="i">
 
-        <c:choose>
-            <c:when test="${empty class}">
-                <c:set var="class" value="class='bgcolor2'"/>
-            </c:when>
-            <c:otherwise>
-                <c:set var="class" value=""/>
-            </c:otherwise>
-        </c:choose>
-
         <c:set var="title" value="${channel.key.title}"/>
         <c:if test="${empty title}">
             <c:set var="title" value="${channel.key.url}"/>
@@ -127,21 +118,21 @@
         </c:forEach>
 
         <tr style="margin:0;padding:0;border:0">
-            <td>
+            <td style="padding-top:1em">
                 <input type="checkbox" class="checkbox" id="channel${i.index}" value="${channel.key.id}"/>
                 <input type="checkbox" class="checkbox" id="channelExpanded${i.index}" value="${channel.key.id}" style="display:none"
                        <c:if test="${channelExpanded}">checked="checked"</c:if>/>
             </td>
-            <td ${class} colspan="5" style="padding-left:0.25em">
+            <td colspan="5" style="padding-left:0.25em;padding-top:1em">
                 <a href="javascript:toggleEpisodes(${i.index})">
                     <span title="${title}"><b><str:truncateNicely upper="40">${title}</str:truncateNicely></b></span>
                     (${fn:length(channel.value)})
                 </a>
             </td>
-            <td ${class} style="padding-left:1.5em;text-align:center;">
+            <td style="padding-left:1.5em;padding-top:1em;text-align:center;">
                 <span class="detail"><fmt:message key="podcastreceiver.status.${fn:toLowerCase(channel.key.status)}"/></span>
             </td>
-            <td ${class} style="padding-left:1.5em">
+            <td style="padding-left:1.5em;padding-top:1em">
                 <c:choose>
                     <c:when test="${channel.key.status eq 'ERROR'}">
                         <span class="detail warning" title="${channel.key.errorMessage}"><str:truncateNicely upper="100">${channel.key.errorMessage}</str:truncateNicely></span>
@@ -152,6 +143,8 @@
                 </c:choose>
             </td>
         </tr>
+
+        <c:set var="class" value=""/>
 
         <c:forEach items="${channel.value}" var="episode" varStatus="j">
 
@@ -242,7 +235,7 @@
     var episodeCount = ${episodeCount};
 </script>
 
-<table><tr>
+<table style="padding-top:1em"><tr>
     <c:if test="${model.user.podcastRole}">
         <td style="padding-right:2em"><div class="forward"><a href="javascript:downloadSelected()"><fmt:message key="podcastreceiver.downloadselected"/></a></div></td>
         <td style="padding-right:2em"><div class="forward"><a href="javascript:deleteSelected()"><fmt:message key="podcastreceiver.deleteselected"/></a></div></td>

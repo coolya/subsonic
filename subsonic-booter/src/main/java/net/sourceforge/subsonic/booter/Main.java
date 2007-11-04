@@ -19,6 +19,7 @@ public class Main {
         // Set look-and-feel.
         try {
             UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
+            System.err.println(UIManager.getLookAndFeel());
         } catch (Exception x) {
             System.err.println("Failed to set look-and-feel.\n" + x);
         }
