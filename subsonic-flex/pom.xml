@@ -1,0 +1,159 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.sourceforge.subsonic</groupId>
+    <artifactId>subsonic-flex</artifactId>
+    <!--<packaging>swf</packaging>-->
+    <name>Subsonic Flex</name>
+
+    <parent>
+        <groupId>net.sourceforge.subsonic</groupId>
+        <artifactId>subsonic</artifactId>
+        <version>3.3.beta1</version>
+    </parent>
+
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>ServeBox</id>-->
+            <!--<name>ServeBox Repository</name>-->
+            <!--<url>http://www.servebox.com/maven</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
+
+    <!--<pluginRepositories>-->
+        <!--<pluginRepository>-->
+            <!--<id>ServeBox</id>-->
+            <!--<name>ServeBox Repository</name>-->
+            <!--<url>http://www.servebox.com/maven</url>-->
+        <!--</pluginRepository>-->
+    <!--</pluginRepositories>-->
+
+    <!--<properties>-->
+        <!--<servebox.version>0.9.2</servebox.version>-->
+
+    <!--</properties>-->
+
+    <!--<dependencies>-->
+
+        <!--<dependency>-->
+            <!--<groupId>adobe-flex2</groupId>-->
+            <!--<artifactId>automation</artifactId>-->
+            <!--<version>2.0.1</version>-->
+            <!--<type>swc</type>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>adobe-flex2</groupId>-->
+            <!--<artifactId>flex</artifactId>-->
+            <!--<version>2.0.1</version>-->
+            <!--<type>swc</type>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>adobe-flex2</groupId>-->
+            <!--<artifactId>framework</artifactId>-->
+            <!--<version>2.0.1</version>-->
+            <!--<type>swc</type>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>adobe-flex2</groupId>-->
+            <!--<artifactId>rpc</artifactId>-->
+            <!--<version>2.0.1</version>-->
+            <!--<type>swc</type>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>adobe-flex2</groupId>-->
+            <!--<artifactId>utilities</artifactId>-->
+            <!--<version>2.0.1</version>-->
+            <!--<type>swc</type>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>org.servebox.foundry</groupId>-->
+            <!--<artifactId>servebox-commons</artifactId>-->
+            <!--<version>${servebox.version}</version>-->
+            <!--<type>swc</type>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.servebox.foundry</groupId>-->
+            <!--<artifactId>servebox-foundry</artifactId>-->
+            <!--<version>${servebox.version}</version>-->
+            <!--<type>swc</type>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.servebox.foundry</groupId>-->
+            <!--<artifactId>servebox-toolbox</artifactId>-->
+            <!--<version>${servebox.version}</version>-->
+            <!--<type>swc</type>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>adobe-flex2.locales.en_US</groupId>-->
+            <!--<version>2.0.1</version>-->
+            <!--<artifactId>automation_rb</artifactId>-->
+            <!--<type>swc</type>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>adobe-flex2.locales.en_US</groupId>-->
+            <!--<version>2.0.1</version>-->
+            <!--<artifactId>rpc_rb</artifactId>-->
+            <!--<type>swc</type>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>adobe-flex2.locales.en_US</groupId>-->
+            <!--<version>2.0.1</version>-->
+            <!--<artifactId>framework_rb</artifactId>-->
+            <!--<type>swc</type>-->
+        <!--</dependency>-->
+    <!--</dependencies>-->
+
+
+    <!--<build>-->
+
+        <!--<plugins>-->
+
+            <!--<plugin>-->
+                <!--<groupId>org.servebox.flex2</groupId>-->
+                <!--<artifactId>flex2-plugin</artifactId>-->
+                <!--<version>${servebox.version}</version>-->
+                <!--<extensions>true</extensions>-->
+                <!--<configuration>-->
+                    <!--<sourceDirectory>src/main/flex</sourceDirectory>-->
+                    <!--<mxmlFile>HelloWorld.mxml</mxmlFile>-->
+                    <!--<flexSdkHome>c:/progs/flex_sdk_2_Hotfix3</flexSdkHome>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+
+        <!--</plugins>-->
+
+    <!--</build>-->
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <configuration>
+                            <tasks>
+                                <echo>Compiling Flex...</echo>
+                                <mkdir dir="${project.build.directory}"/>
+                                <exec executable="${flex.home}/bin/mxmlc.exe">
+                                    <arg value="${basedir}/src/main/flex/HelloWorld.mxml"/>
+                                    <arg value="-output"/>
+                                    <arg value="${project.build.directory}/HelloWorld.swf"/>
+                                </exec>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

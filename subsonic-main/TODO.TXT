@@ -17,6 +17,8 @@ Support byte-range requests (both download and streaming)
 Fixed concurrency bug when rendering wiki markup.
 Amazon Unbox
 Improve layout in Podcast view.
+Change look-and-feel for booter.
+Amazon Omakasa, using artist as keyword?
 
 TODO IN 3.3
 ===========
@@ -27,11 +29,16 @@ Adobe Flex (mail from Tom Sugden)
    http://www.openamf.com/cms/
    http://www.graniteds.org/
 Dekoh
-Change look-and-feel for booter.
 Fix caching bug of left.jsp when changing theme.
+Update default media types to display.
+
+
 
 BACKLOG
 ===========================
+Random radio mode (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=964)
+
+
 Integrate with Amazon mp3.
 Make some features available to donors only.
 Caching bug, selected music folder.  At least in IE and FF.
