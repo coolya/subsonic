@@ -122,4 +122,9 @@
 
     <bean id="ajaxTransferService" class="net.sourceforge.subsonic.ajax.TransferService"/>
 
+
+    <!-- XFire web services -->
+
+    <bean id="subsonicWebService" class="net.sourceforge.subsonic.webservice.SubsonicWebServiceImpl"/>
+
 </beans>

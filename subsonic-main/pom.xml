@@ -90,6 +90,24 @@
         </dependency>
 
         <dependency>
+            <groupId>org.codehaus.xfire</groupId>
+            <artifactId>xfire-jaxb2</artifactId>
+            <version>1.2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.xfire</groupId>
+            <artifactId>xfire-spring</artifactId>
+            <version>1.2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.xfire</groupId>
+            <artifactId>xfire-java5</artifactId>
+            <version>1.2.6</version>
+        </dependency>
+
+        <dependency>
             <groupId>ant-zip</groupId>
             <artifactId>ant-zip</artifactId>
             <version>1.6.2</version>

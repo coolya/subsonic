@@ -11,6 +11,7 @@
         <param-value>
             /WEB-INF/applicationContext-service.xml
             /WEB-INF/applicationContext-security.xml
+            classpath:org/codehaus/xfire/spring/xfire.xml
         </param-value>
     </context-param>
 
@@ -35,6 +36,13 @@
         </init-param>
     </servlet>
 
+    <servlet>
+        <servlet-name>xfire</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>subsonic</servlet-name>
         <url-pattern>*.view</url-pattern>
@@ -55,10 +63,13 @@
         <servlet-name>subsonic</servlet-name>
         <url-pattern>/stream/*</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>dwr-invoker</servlet-name>
         <url-pattern>/dwr/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>xfire</servlet-name>
+        <url-pattern>/ws/*</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>
