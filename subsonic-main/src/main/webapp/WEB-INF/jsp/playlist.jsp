@@ -117,29 +117,33 @@
         </select></td>
 
         <c:choose>
-            <c:when test="${model.isPlaying}">
-                <td><a href="playlist.view?stop"><fmt:message key="playlist.stop"/></a> | </td>
+            <c:when test="${model.isPlaying and not model.player.clientSidePlaylist}">
+                <td><b><a href="playlist.view?stop"><fmt:message key="playlist.stop"/></a></b> | </td>
             </c:when>
             <c:otherwise>
-                <td><a href="playlist.view?start"><fmt:message key="playlist.start"/></a> | </td>
+                <td><b><a href="playlist.view?start"><fmt:message key="playlist.start"/></a></b> | </td>
             </c:otherwise>
         </c:choose>
 
         <td><a href="playlist.view?clear"><fmt:message key="playlist.clear"/></a></td>
         <td> | <a href="playlist.view?shuffle"><fmt:message key="playlist.shuffle"/></a></td>
 
-        <c:choose>
-            <c:when test="${model.repeatEnabled}">
-                <td> | <a href="playlist.view?repeat"><fmt:message key="playlist.repeat_on"/></a></td>
-            </c:when>
-            <c:otherwise>
-                <td> | <a href="playlist.view?repeat"><fmt:message key="playlist.repeat_off"/></a></td>
-            </c:otherwise>
-        </c:choose>
+        <c:if test="${not model.player.clientSidePlaylist}">
+            <c:choose>
+                <c:when test="${model.repeatEnabled}">
+                    <td> | <a href="playlist.view?repeat"><fmt:message key="playlist.repeat_on"/></a></td>
+                </c:when>
+                <c:otherwise>
+                    <td> | <a href="playlist.view?repeat"><fmt:message key="playlist.repeat_off"/></a></td>
+                </c:otherwise>
+            </c:choose>
+        </c:if>
+
         <td> | <a href="playlist.view?undo"><fmt:message key="playlist.undo"/></a></td>
                 <c:if test="${not empty model.songs}">
         <td> | <a href="webPlayer.view?"><fmt:message key="playlist.webplayer"/></a></td>
                 </c:if>
+        <td> | <a href="playerSettings.view?id=${model.player.id}" target="main"><fmt:message key="playlist.settings"/></a></td>
 
         <td> | <select id="moreActions" onchange="actionSelected(this.options[selectedIndex].id)">
             <option id="top" selected="selected"><fmt:message key="playlist.more"/></option>
@@ -208,10 +212,17 @@
                     </c:if>
 
                     <td ${class} style="padding-right:1.25em">
-                        <c:if test="${song.current}">
-                            <img src="<c:url value="/icons/current.gif"/>" alt=""/>
-                        </c:if>
-                        <a href="playlist.view?skip=${i}" title="${song.musicFile.metaData.title}">${song.current ? "<b>" : ""}<str:truncateNicely upper="${cutoff}">${fn:escapeXml(song.musicFile.title)}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
+                        <c:choose>
+                            <c:when test="${model.player.clientSidePlaylist}">
+                                <span title="${song.musicFile.metaData.title}"><str:truncateNicely upper="${cutoff}">${fn:escapeXml(song.musicFile.title)}</str:truncateNicely></span>
+                            </c:when>
+                            <c:otherwise>
+                                <c:if test="${song.current}">
+                                    <img src="<c:url value="/icons/current.gif"/>" alt=""/>
+                                </c:if>
+                                <a href="playlist.view?skip=${i}" title="${song.musicFile.metaData.title}">${song.current ? "<b>" : ""}<str:truncateNicely upper="${cutoff}">${fn:escapeXml(song.musicFile.title)}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
+                            </c:otherwise>
+                        </c:choose>
                     </td>
 
                     <c:if test="${model.visibility.albumVisible}">

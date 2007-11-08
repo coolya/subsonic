@@ -1,10 +1,10 @@
 package net.sourceforge.subsonic.domain;
 
-import java.util.*;
+import java.util.Date;
 
 /**
  * Represens a remote player.  A player has a unique ID, a user-defined name, a logged-on user,
- * miscellaneous identifiers, and an associated playlist. <p/>
+ * miscellaneous identifiers, and an associated playlist.
  *
  * @author Sindre Mehus
  */
@@ -17,6 +17,7 @@ public class Player {
     private String ipAddress;
     private boolean isDynamicIp = true;
     private boolean isAutoControlEnabled = true;
+    private boolean isClientSidePlaylist = false;
     private Date lastSeen;
     private CoverArtScheme coverArtScheme = CoverArtScheme.MEDIUM;
     private TranscodeScheme transcodeScheme = TranscodeScheme.OFF;
@@ -25,6 +26,7 @@ public class Player {
 
     /**
      * Returns the player ID.
+     *
      * @return The player ID.
      */
     public String getId() {
@@ -33,6 +35,7 @@ public class Player {
 
     /**
      * Sets the player ID.
+     *
      * @param id The player ID.
      */
     public void setId(String id) {
@@ -41,6 +44,7 @@ public class Player {
 
     /**
      * Returns the user-defined player name.
+     *
      * @return The user-defined player name.
      */
     public String getName() {
@@ -49,6 +53,7 @@ public class Player {
 
     /**
      * Sets the user-defined player name.
+     *
      * @param name The user-defined player name.
      */
     public void setName(String name) {
@@ -57,6 +62,7 @@ public class Player {
 
     /**
      * Returns the player type, e.g., WinAmp, iTunes.
+     *
      * @return The player type.
      */
     public String getType() {
@@ -65,6 +71,7 @@ public class Player {
 
     /**
      * Sets the player type, e.g., WinAmp, iTunes.
+     *
      * @param type The player type.
      */
     public void setType(String type) {
@@ -73,6 +80,7 @@ public class Player {
 
     /**
      * Returns the logged-in user.
+     *
      * @return The logged-in user.
      */
     public String getUsername() {
@@ -81,6 +89,7 @@ public class Player {
 
     /**
      * Sets the logged-in username.
+     *
      * @param username The logged-in username.
      */
     public void setUsername(String username) {
@@ -89,6 +98,7 @@ public class Player {
 
     /**
      * Returns whether the player is automatically started.
+     *
      * @return Whether the player is automatically started.
      */
     public boolean isAutoControlEnabled() {
@@ -97,6 +107,7 @@ public class Player {
 
     /**
      * Sets whether the player is automatically started.
+     *
      * @param isAutoControlEnabled Whether the player is automatically started.
      */
     public void setAutoControlEnabled(boolean isAutoControlEnabled) {
@@ -104,7 +115,26 @@ public class Player {
     }
 
     /**
+     * Returns whether the player itself controls the playlist.
+     *
+     * @return Whether the player itself controls the playlist.
+     */
+    public boolean isClientSidePlaylist() {
+        return isClientSidePlaylist;
+    }
+
+    /**
+     * Sets whether the player itself controls the playlist.
+     *
+     * @param isClientSidePlaylist Whether the player itself controls the playlist.
+     */
+    public void setClientSidePlaylist(boolean isClientSidePlaylist) {
+        this.isClientSidePlaylist = isClientSidePlaylist;
+    }
+
+    /**
      * Returns the time when the player was last seen.
+     *
      * @return The time when the player was last seen.
      */
     public Date getLastSeen() {
@@ -113,6 +143,7 @@ public class Player {
 
     /**
      * Sets the time when the player was last seen.
+     *
      * @param lastSeen The time when the player was last seen.
      */
     public void setLastSeen(Date lastSeen) {
@@ -121,6 +152,7 @@ public class Player {
 
     /**
      * Returns the cover art scheme.
+     *
      * @return The cover art scheme.
      */
     public CoverArtScheme getCoverArtScheme() {
@@ -129,6 +161,7 @@ public class Player {
 
     /**
      * Sets the cover art scheme.
+     *
      * @param coverArtScheme The cover art scheme.
      */
     public void setCoverArtScheme(CoverArtScheme coverArtScheme) {
@@ -137,6 +170,7 @@ public class Player {
 
     /**
      * Returns the transcode scheme.
+     *
      * @return The transcode scheme.
      */
     public TranscodeScheme getTranscodeScheme() {
@@ -145,6 +179,7 @@ public class Player {
 
     /**
      * Sets the transcode scheme.
+     *
      * @param transcodeScheme The transcode scheme.
      */
     public void setTranscodeScheme(TranscodeScheme transcodeScheme) {
@@ -153,6 +188,7 @@ public class Player {
 
     /**
      * Returns the IP address of the player.
+     *
      * @return The IP address of the player.
      */
     public String getIpAddress() {
@@ -161,6 +197,7 @@ public class Player {
 
     /**
      * Sets the IP address of the player.
+     *
      * @param ipAddress The IP address of the player.
      */
     public void setIpAddress(String ipAddress) {
@@ -169,6 +206,7 @@ public class Player {
 
     /**
      * Returns whether this player has a dynamic IP address.
+     *
      * @return Whether this player has a dynamic IP address.
      */
     public boolean isDynamicIp() {
@@ -177,6 +215,7 @@ public class Player {
 
     /**
      * Sets whether this player has a dynamic IP address.
+     *
      * @param dynamicIp Whether this player has a dynamic IP address.
      */
     public void setDynamicIp(boolean dynamicIp) {
@@ -185,6 +224,7 @@ public class Player {
 
     /**
      * Returns the player's playlist.
+     *
      * @return The player's playlist
      */
     public Playlist getPlaylist() {
@@ -193,6 +233,7 @@ public class Player {
 
     /**
      * Sets the player's playlist.
+     *
      * @param playlist The player's playlist.
      */
     public void setPlaylist(Playlist playlist) {
@@ -201,6 +242,7 @@ public class Player {
 
     /**
      * Returns a string representation of the player.
+     *
      * @return A string representation of the player.
      */
     public String getDescription() {
@@ -217,6 +259,7 @@ public class Player {
 
     /**
      * Returns a string representation of the player.
+     *
      * @return A string representation of the player.
      * @see #getDescription()
      */

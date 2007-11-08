@@ -1,9 +1,12 @@
 package net.sourceforge.subsonic.command;
 
-import net.sourceforge.subsonic.controller.*;
-import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.controller.PlayerSettingsController;
+import net.sourceforge.subsonic.domain.CoverArtScheme;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.TranscodeScheme;
+import net.sourceforge.subsonic.domain.Transcoding;
 
-import java.util.*;
+import java.util.Date;
 
 /**
  * Command used in {@link PlayerSettingsController}.
@@ -18,6 +21,7 @@ public class PlayerSettingsCommand {
     private Date lastSeen;
     private boolean isDynamicIp;
     private boolean isAutoControlEnabled;
+    private boolean isClientSidePlaylist;
     private String coverArtSchemeName;
     private String transcodeSchemeName;
     private boolean transcodingSupported;
@@ -28,6 +32,7 @@ public class PlayerSettingsCommand {
     private EnumHolder[] coverArtSchemeHolders;
     private Player[] players;
     private boolean isAdmin;
+    private boolean isReloadNeeded;
 
     public String getPlayerId() {
         return playerId;
@@ -83,6 +88,14 @@ public class PlayerSettingsCommand {
 
     public void setAutoControlEnabled(boolean autoControlEnabled) {
         isAutoControlEnabled = autoControlEnabled;
+    }
+
+    public boolean isClientSidePlaylist() {
+        return isClientSidePlaylist;
+    }
+
+    public void setClientSidePlaylist(boolean clientSidePlaylist) {
+        isClientSidePlaylist = clientSidePlaylist;
     }
 
     public String getCoverArtSchemeName() {
@@ -171,6 +184,14 @@ public class PlayerSettingsCommand {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public boolean isReloadNeeded() {
+        return isReloadNeeded;
+    }
+
+    public void setReloadNeeded(boolean reloadNeeded) {
+        isReloadNeeded = reloadNeeded;
     }
 
     /**

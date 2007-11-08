@@ -24,7 +24,7 @@ public class PlayerDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(PlayerDao.class);
     private static final String COLUMNS = "id, name, type, username, ip_address, auto_control_enabled, " +
-                                          "last_seen, cover_art_scheme, transcode_scheme, dynamic_ip";
+                                          "last_seen, cover_art_scheme, transcode_scheme, dynamic_ip, client_side_playlist";
 
     private PlayerRowMapper rowMapper = new PlayerRowMapper();
     private Map<String, Playlist> playlists = Collections.synchronizedMap(new HashMap<String, Playlist>());
@@ -48,11 +48,11 @@ public class PlayerDao extends AbstractDao {
         JdbcTemplate template = getJdbcTemplate();
         int id = template.queryForInt("select max(id) from player") + 1;
         player.setId(String.valueOf(id));
-        String sql = "insert into player (" + COLUMNS + ") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into player (" + COLUMNS + ") values (" + questionMarks(COLUMNS) + ")";
         template.update(sql, new Object[]{player.getId(), player.getName(), player.getType(), player.getUsername(),
                                           player.getIpAddress(), player.isAutoControlEnabled(),
                                           player.getLastSeen(), player.getCoverArtScheme().name(),
-                                          player.getTranscodeScheme().name(), player.isDynamicIp()});
+                                          player.getTranscodeScheme().name(), player.isDynamicIp(), player.isClientSidePlaylist()});
         addPlaylist(player);
 
         LOG.info("Created player " + id + '.');
@@ -84,12 +84,14 @@ public class PlayerDao extends AbstractDao {
                      "last_seen = ?," +
                      "cover_art_scheme = ?," +
                      "transcode_scheme = ?, " +
-                     "dynamic_ip = ? " +
+                     "dynamic_ip = ?, " +
+                     "client_side_playlist = ? " +
                      "where id = ?";
         getJdbcTemplate().update(sql, new Object[]{player.getName(), player.getType(), player.getUsername(),
                                                    player.getIpAddress(), player.isAutoControlEnabled(),
                                                    player.getLastSeen(), player.getCoverArtScheme().name(),
-                                                   player.getTranscodeScheme().name(), player.isDynamicIp(), player.getId()});
+                                                   player.getTranscodeScheme().name(), player.isDynamicIp(),
+                                                   player.isClientSidePlaylist(), player.getId()});
     }
 
     private void addPlaylist(Player player) {
@@ -115,6 +117,7 @@ public class PlayerDao extends AbstractDao {
             player.setCoverArtScheme(CoverArtScheme.valueOf(rs.getString(col++)));
             player.setTranscodeScheme(TranscodeScheme.valueOf(rs.getString(col++)));
             player.setDynamicIp(rs.getBoolean(col++));
+            player.setClientSidePlaylist(rs.getBoolean(col++));
 
             addPlaylist(player);
             return player;

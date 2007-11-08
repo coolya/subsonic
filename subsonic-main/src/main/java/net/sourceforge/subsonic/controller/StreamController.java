@@ -20,6 +20,7 @@ import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.lang.math.LongRange;
+import org.apache.commons.io.IOUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.FileInputStream;
 import java.util.Arrays;
 
 /**
@@ -76,23 +78,25 @@ public class StreamController implements Controller {
             String path = request.getParameter("path");
             boolean isSingleFile = path != null;
             LongRange range = null;
+
             if (isSingleFile) {
                 Playlist playlist = new Playlist();
                 MusicFile file = musicFileService.getMusicFile(path);
                 playlist.addFile(file);
                 player.setPlaylist(playlist);
+                boolean transcodingRequired = transcodingService.isTranscodingRequired(file, player);
 
-                response.setHeader("ETag", path);
-                response.setHeader("Accept-Ranges", "bytes");
-                range = StringUtil.parseRange(request.getHeader("Range"));
+                if (!transcodingRequired) {
+                    response.setHeader("ETag", path);
+                    response.setHeader("Accept-Ranges", "bytes");
+                    range = StringUtil.parseRange(request.getHeader("Range"));
+                }
 
                 if (range != null) {
                     response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
+                    response.setContentLength((int) (file.length() - range.getMinimumLong()));
                     LOG.info("Got range: " + range);
-                }
-
-                // Set content length unless transcoding/downsampling will be done.
-                else if (!transcodingService.isTranscodingRequired(file, player)) {
+                } else {
                     response.setContentLength((int) file.length());
                 }
             }
@@ -125,7 +129,7 @@ public class StreamController implements Controller {
 
             // Enabled SHOUTcast, if requested.
             boolean isShoutCastRequested = "1".equals(request.getHeader("icy-metadata"));
-            if (isShoutCastRequested && range == null) {
+            if (isShoutCastRequested && !isSingleFile) {
                 response.setHeader("icy-metaint", "" + ShoutCastOutputStream.META_DATA_INTERVAL);
                 response.setHeader("icy-notice1", "This stream is served using Subsonic");
                 response.setHeader("icy-notice2", "Subsonic - Free media streamer - subsonic.sourceforge.net");

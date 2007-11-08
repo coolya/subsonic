@@ -1,9 +1,17 @@
 package net.sourceforge.subsonic.dao;
 
-import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.domain.CoverArtScheme;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.Playlist;
+import net.sourceforge.subsonic.domain.TranscodeScheme;
 
-import java.util.*;
+import java.util.Date;
 
+/**
+ * Unit test of {@link PlayerDao}.
+ *
+ * @author Sindre Mehus
+ */
 public class PlayerDaoTestCase extends DaoTestCaseBase {
 
     protected void setUp() throws Exception {
@@ -18,6 +26,7 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         player.setIpAddress("ipaddress");
         player.setDynamicIp(false);
         player.setAutoControlEnabled(false);
+        player.setClientSidePlaylist(true);
         player.setLastSeen(new Date());
         player.setCoverArtScheme(CoverArtScheme.LARGE);
         player.setTranscodeScheme(TranscodeScheme.MAX_160);
@@ -30,9 +39,10 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
     public void testDefaultValues() {
         playerDao.createPlayer(new Player());
         Player player = playerDao.getAllPlayers()[0];
-        
+
         assertTrue("Player should have dynamic IP by default.", player.isDynamicIp());
         assertTrue("Player should be auto-controlled by default.", player.isAutoControlEnabled());
+        assertFalse("Player should have server-side playlist by default.", player.isClientSidePlaylist());
     }
 
 
@@ -82,6 +92,7 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         player.setIpAddress("ipaddress");
         player.setDynamicIp(true);
         player.setAutoControlEnabled(false);
+        player.setClientSidePlaylist(true);
         player.setLastSeen(new Date());
         player.setCoverArtScheme(CoverArtScheme.LARGE);
         player.setTranscodeScheme(TranscodeScheme.MAX_160);
@@ -114,6 +125,7 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong IP address.", expected.getIpAddress(), actual.getIpAddress());
         assertEquals("Wrong dynamic IP.", expected.isDynamicIp(), actual.isDynamicIp());
         assertEquals("Wrong auto control enabled.", expected.isAutoControlEnabled(), actual.isAutoControlEnabled());
+        assertEquals("Wrong client-side playlist.", expected.isClientSidePlaylist(), actual.isClientSidePlaylist());
         assertEquals("Wrong last seen.", expected.getLastSeen().getTime(), actual.getLastSeen().getTime());
         assertEquals("Wrong cover art scheme.", expected.getCoverArtScheme(), actual.getCoverArtScheme());
         assertEquals("Wrong transcode scheme.", expected.getTranscodeScheme(), actual.getTranscodeScheme());

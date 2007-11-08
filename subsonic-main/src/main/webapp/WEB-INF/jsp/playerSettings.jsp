@@ -125,6 +125,15 @@
             <img src="${helpUrl}" alt="${help}" title="${help}"></a></td>
     </tr>
 
+    <tr>
+        <td colspan="2">
+            <form:checkbox path="clientSidePlaylist" id="clientSidePlaylist" cssClass="checkbox"/>
+            <label for="clientSidePlaylist"><fmt:message key="playersettings.clientsideplaylist"/></label>
+        </td>
+        <td><a href="helpPopup.view?topic=clientSidePlaylist" onclick="return popup(this, 'help')">
+            <img src="${helpUrl}" alt="${help}" title="${help}"></a></td>
+    </tr>
+
 </table>
 
     <c:if test="${not empty command.allTranscodings}">
@@ -146,5 +155,9 @@
 
 </c:otherwise>
 </c:choose>
+
+<c:if test="${command.reloadNeeded}">
+    <script language="javascript" type="text/javascript">parent.frames.playlist.location.href="playlist.view?"</script>
+</c:if>
 
 </body></html>

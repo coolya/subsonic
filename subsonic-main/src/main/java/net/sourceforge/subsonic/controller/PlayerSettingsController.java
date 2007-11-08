@@ -42,6 +42,7 @@ public class PlayerSettingsController extends SimpleFormController {
             command.setLastSeen(player.getLastSeen());
             command.setDynamicIp(player.isDynamicIp());
             command.setAutoControlEnabled(player.isAutoControlEnabled());
+            command.setClientSidePlaylist(player.isClientSidePlaylist());
             command.setCoverArtSchemeName(player.getCoverArtScheme().name());
             command.setTranscodeSchemeName(player.getTranscodeScheme().name());
             command.setAllTranscodings(transcodingService.getAllTranscodings());
@@ -68,6 +69,7 @@ public class PlayerSettingsController extends SimpleFormController {
         Player player = playerService.getPlayerById(command.getPlayerId());
 
         player.setAutoControlEnabled(command.isAutoControlEnabled());
+        player.setClientSidePlaylist(command.isClientSidePlaylist());
         player.setCoverArtScheme(CoverArtScheme.valueOf(command.getCoverArtSchemeName()));
         player.setDynamicIp(command.isDynamicIp());
         player.setName(command.getName());
@@ -75,6 +77,8 @@ public class PlayerSettingsController extends SimpleFormController {
 
         playerService.updatePlayer(player);
         transcodingService.setTranscodingsForPlayer(player, command.getActiveTranscodingIds());
+
+        command.setReloadNeeded(true);
     }
 
     private List<Player> getPlayers(HttpServletRequest request) {
@@ -82,9 +86,8 @@ public class PlayerSettingsController extends SimpleFormController {
         String username = user.getUsername();
         Player[] players = playerService.getAllPlayers();
         List<Player> authorizedPlayers = new ArrayList<Player>();
-        for (int i = 0; i < players.length; i++) {
-            Player player = players[i];
 
+        for (Player player : players) {
             // Only display authorized players.
             if (user.isAdminRole() || username.equals(player.getUsername())) {
                 authorizedPlayers.add(player);

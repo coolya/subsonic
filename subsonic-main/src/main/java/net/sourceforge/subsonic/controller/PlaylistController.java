@@ -73,6 +73,7 @@ public class PlaylistController extends ParameterizableViewController {
 
         // Whether a new M3U file should be sent, forcing the remote player to reconnect.
         boolean sendM3U = false;
+        boolean serverSidePlaylist = !player.isClientSidePlaylist();
 
         // The index of interest. Either the index of the currently playing song, or the index of the song
         // the user has done an operation on (add, remove, move up/down, skip).  Used to jump to
@@ -88,7 +89,7 @@ public class PlaylistController extends ParameterizableViewController {
             sendM3U = true;
             playlist.setStatus(Playlist.Status.STOPPED);
         } else if (request.getParameter("play") != null) {
-            sendM3U = true;
+            sendM3U = serverSidePlaylist;
             MusicFile file = musicFileService.getMusicFile(request.getParameter("play"));
             playlist.addFile(file, false);
         } else if (request.getParameter("add") != null) {
@@ -96,7 +97,7 @@ public class PlaylistController extends ParameterizableViewController {
             playlist.addFile(file);
             index = playlist.size() - 1;
         } else if (request.getParameter("clear") != null) {
-            sendM3U = true;
+            sendM3U = serverSidePlaylist;
             playlist.clear();
         } else if (request.getParameter("shuffle") != null) {
             index = -1;
@@ -114,7 +115,7 @@ public class PlaylistController extends ParameterizableViewController {
             index = -1;
             playlist.setRepeatEnabled(!playlist.isRepeatEnabled());
         } else if (request.getParameter("skip") != null) {
-            sendM3U = true;
+            sendM3U = serverSidePlaylist;
             playlist.setIndex(Integer.parseInt(request.getParameter("skip")));
         } else if (request.getParameter("remove") != null) {
             int[] indexes = StringUtil.parseInts(request.getParameter("remove"));
@@ -134,7 +135,7 @@ public class PlaylistController extends ParameterizableViewController {
             index++;
         } else if (request.getParameter("undo") != null) {
             index = -1;
-            sendM3U = true;
+            sendM3U = serverSidePlaylist;
             playlist.undo();
         }
 
