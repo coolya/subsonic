@@ -37,7 +37,7 @@ import mx.controls.Alert;
                     <path>sdf</path>
                 </in0>
             </mx:request>
-        </mx:operation>
+        </mx:operation>c
 
         <mx:operation name="add">
             <mx:request>
@@ -54,7 +54,7 @@ import mx.controls.Alert;
 
     <mx:Button label="List artists" click="subsonicWS.getMusicFiles.send()"/>
     <mx:Label text="Artists:"/>
-    <!--<mx:Label text="{subsonicWS.getMusicFiles.lastResult}"/>-->
+    <mx:Label text="{subsonicWS.getMusicFiles.lastResult}"/>
 
     <mx:Button label="Get album" click="subsonicWS.getMusicFile.send()"/>
     <mx:Label text="Album:"/>
