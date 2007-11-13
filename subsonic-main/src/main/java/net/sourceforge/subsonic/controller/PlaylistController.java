@@ -89,7 +89,7 @@ public class PlaylistController extends ParameterizableViewController {
             sendM3U = true;
             playlist.setStatus(Playlist.Status.STOPPED);
         } else if (request.getParameter("play") != null) {
-            sendM3U = serverSidePlaylist;
+            sendM3U = true;
             MusicFile file = musicFileService.getMusicFile(request.getParameter("play"));
             playlist.addFile(file, false);
         } else if (request.getParameter("add") != null) {
