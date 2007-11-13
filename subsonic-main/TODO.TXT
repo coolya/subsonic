@@ -19,6 +19,7 @@ Amazon Unbox
 Improve layout in Podcast view.
 Change look-and-feel for booter.
 Implemented client-side playlist.
+Added "Play on phone" option to wap interface.
 
 TODO IN 3.3
 ===========
@@ -40,10 +41,9 @@ Update default media types to display.
 BACKLOG
 ===========================
 DAAP support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=976
-Start m3u directly from wap. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=975
 Amazon Omakasa, using artist as keyword?
 Random radio mode (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=964)
-Option for unlimited download/upload if on LAN.  Remember to support proxies. 
+Option for unlimited download/upload if on LAN.  Remember to support proxies.
 
 Integrate with Amazon mp3.
 Make some features available to donors only.

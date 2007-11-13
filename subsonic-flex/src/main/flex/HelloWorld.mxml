@@ -37,7 +37,7 @@ import mx.controls.Alert;
                     <path>sdf</path>
                 </in0>
             </mx:request>
-        </mx:operation>c
+        </mx:operation>
 
         <mx:operation name="add">
             <mx:request>

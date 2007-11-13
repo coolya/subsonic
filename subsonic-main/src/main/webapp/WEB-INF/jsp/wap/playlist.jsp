@@ -33,6 +33,7 @@
                 <c:set var="playlist" value="${model.players[0].playlist}"/>
 
                 <c:if test="${not empty playlist.files}">
+                <b><a href="<c:url value="/play.m3u"/>">[<fmt:message key="wap.playlist.play"/>]</a></b><br/>
                 <b><a href="<c:url value="/wap/playlist.view?clear"/>">[<fmt:message key="wap.playlist.clear"/>]</a></b><br/>
         </small></p>
         <p><small>
