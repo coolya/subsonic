@@ -29,7 +29,6 @@ public class SubsonicController {
     public SubsonicController() {
         deployWebApp();
         trayController = new TrayController(this);
-
     }
 
     private void deployWebApp() {
@@ -82,10 +81,8 @@ public class SubsonicController {
         if (exception instanceof BindException) {
             return "Address already in use. Please change port number.";
         }
-        if (exception.getMessage() != null) {
-            return exception.getMessage();
-        }
-        return exception.getClass().getName();
+
+        return exception.toString();
     }
 
     public void showStatus() {

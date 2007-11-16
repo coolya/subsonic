@@ -20,26 +20,23 @@ Improve layout in Podcast view.
 Change look-and-feel for booter.
 Implemented client-side playlist.
 Added "Play on phone" option to wap interface.
+Update translation from forum.
 
 TODO IN 3.3
 ===========
-Use Axis instead of XFire?
-Walk-thru Restaurant sample app - http://www.adobe.com/devnet/flex/articles/restaurant_app_05.html
-Flash for Java programmers - http://techpolesen.blogspot.com/2007/07/flash-for-java-programmers-lesson-5.html
-
-Update translation from forum.
-Adobe Flex (mail from Tom Sugden)
-   http://www.virtub.com/
-   http://desktop.ebay.com/
-   http://www.openamf.com/cms/
-   http://www.graniteds.org/
-Dekoh
-Fix caching bug of left.jsp when changing theme.
-Update default media types to display.
-
+Comment out XFire and Flex stuff.
+Add shoutcast also for byte-range requests.
+Test with WMP etc.
 
 BACKLOG
 ===========================
+Fix caching bug of left.jsp when changing theme etc.
+Dekoh
+Adobe Flex (mail from Tom Sugden)
+Update default media types to display.
+Use Axis instead of XFire?
+Walk-thru Restaurant sample app - http://www.adobe.com/devnet/flex/articles/restaurant_app_05.html
+Flash for Java programmers - http://techpolesen.blogspot.com/2007/07/flash-for-java-programmers-lesson-5.html
 DAAP support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=976
 Amazon Omakasa, using artist as keyword?
 Random radio mode (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=964)

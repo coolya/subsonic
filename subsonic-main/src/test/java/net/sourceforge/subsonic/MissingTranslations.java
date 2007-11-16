@@ -7,6 +7,7 @@ public class MissingTranslations  {
 
     public static void main(String[] args) throws IOException {
         diff("en", "no");
+        diff("no", "en");
 //        diff("en", "mk");
     }
 
