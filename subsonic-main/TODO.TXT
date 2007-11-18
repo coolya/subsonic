@@ -37,6 +37,7 @@ Adobe Flex (mail from Tom Sugden)
 Dekoh
 Fix caching bug of left.jsp when changing theme.
 Update default media types to display.
+Use em instead of pt when padding.
 
 BACKLOG
 ===========================

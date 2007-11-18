@@ -123,7 +123,7 @@
 
     <table>
         <tr>
-            <td style="padding-right:7pt">
+            <td style="padding-right:1.5em">
                 <select name="listSize" onchange="location='home.view?listType=${model.listType}&listOffset=${model.listOffset}&listSize=' + options[selectedIndex].value;">
                     <c:forTokens items="5 10 15 20 30 40 50" delims=" " var="size">
                         <option ${size eq model.listSize ? "selected" : ""} value="${size}"><fmt:message key="home.listsize"><fmt:param value="${size}"/></fmt:message></option>
@@ -148,8 +148,8 @@
                         <c:param name="listSize" value="${model.listSize}"/>
                     </c:url>
 
-                    <td style="padding-right:7pt"><fmt:message key="home.albums"><fmt:param value="${model.listOffset + 1}"/><fmt:param value="${model.listOffset + model.listSize}"/></fmt:message></td>
-                    <td style="padding-right:7pt"><div class="back"><a href="${previousUrl}"><fmt:message key="common.previous"/></a></div></td>
+                    <td style="padding-right:1.5em"><fmt:message key="home.albums"><fmt:param value="${model.listOffset + 1}"/><fmt:param value="${model.listOffset + model.listSize}"/></fmt:message></td>
+                    <td style="padding-right:1.5em"><div class="back"><a href="${previousUrl}"><fmt:message key="common.previous"/></a></div></td>
                     <td><div class="forward"><a href="${nextUrl}"><fmt:message key="common.next"/></a></div></td>
                 </c:otherwise>
             </c:choose>

@@ -51,6 +51,11 @@ a:link, a:active, a:visited, a:link *, a:active *, a:visited * {
     color: #97D9FF
 }
 
+/* Link hover color */
+a:hover, a:hover * {
+    color: orange;
+}
+
 /* Scrollbar colors (supported on IE and Opera) */
 body {
     scrollbar-face-color: #031331;
@@ -73,7 +78,7 @@ body {
 }
 
 h1, h2, th {
-    font-weight:lighter;
+    font-weight:normal;
 }
 
 input, select {
