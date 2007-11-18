@@ -17,6 +17,10 @@
     background-color: #DEE3E7
 }
 
+/* Put stuff here if you need to customize the body of the main frame. */
+.mainframe {
+}
+
 /* Background color for selected header. */
 .headerSelected {
     background-color: lightyellow;

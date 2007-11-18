@@ -3,7 +3,8 @@
 <html><head>
     <%@ include file="head.jsp" %>
     <title><fmt:message key="helppopup.title"/></title>
-</head><body>
+</head>
+<body class="mainframe">
 
 <script type="text/javascript">
     window.focus();

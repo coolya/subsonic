@@ -3,7 +3,7 @@
 <html><head>
     <%@ include file="head.jsp" %>
 </head>
-<body>
+<body class="mainframe">
 
 <h1><fmt:message key="changecoverart.title"/></h1>
 <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.path}"/></sub:url>

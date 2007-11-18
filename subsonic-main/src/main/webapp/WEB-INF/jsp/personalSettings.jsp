@@ -19,7 +19,7 @@
     </script>
 </head>
 
-<body onload="enableLastFmFields()">
+<body class="mainframe" onload="enableLastFmFields()">
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="personal"/>

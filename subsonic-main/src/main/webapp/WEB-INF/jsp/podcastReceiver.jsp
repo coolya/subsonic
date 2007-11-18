@@ -3,7 +3,8 @@
 <html><head>
     <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
-</head><body>
+</head>
+<body class="mainframe">
 
 <script type="text/javascript" language="javascript">
     var channelCount = ${fn:length(model.channels)};

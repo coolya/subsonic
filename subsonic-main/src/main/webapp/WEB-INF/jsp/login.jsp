@@ -11,7 +11,8 @@
         }
     </script>
 
-</head><body onload="document.getElementById('j_username').focus()">
+</head>
+<body class="mainframe" onload="document.getElementById('j_username').focus()">
 
 <form action="<c:url value="/j_acegi_security_check"/>" method="POST">
     <div class="bgcolor2" align="center" style="border:1px solid black; padding:20px 50px 20px 50px; margin-top:100px">

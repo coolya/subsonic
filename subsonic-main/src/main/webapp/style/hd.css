@@ -8,12 +8,19 @@
 
 /* The primary background color. */
 .bgcolor1, body {
-    background-color: #091C47;
+    background-color: #000843;
 }
 
 /* The secondary background color. */
 .bgcolor2, .ruleTableHeader, .log {
-    background-color: #031331
+    background-color: #00042E
+}
+
+/* Put stuff here if you need to customize the body of the main frame. */
+.mainframe {
+    background-image:url('../icons/hd/background.png');
+    background-repeat:no-repeat;
+    background-color: #00042E
 }
 
 /* Background color for selected header, log etc. */
@@ -24,11 +31,11 @@
 /* Background color for form controls. */
 input, select {
     background-color: #CFD1D6;
-    border: 1px solid #031331;
+    border: 1px solid #00042E;
 }
 
 .checkbox {
-    border: 1px solid #031331;
+    border: 1px solid #00042E;
 }
 
 /* The primary foreground color. */
@@ -58,13 +65,13 @@ a:hover, a:hover * {
 
 /* Scrollbar colors (supported on IE and Opera) */
 body {
-    scrollbar-face-color: #031331;
-    scrollbar-highlight-color: #091C47;
-    scrollbar-shadow-color: #031331;
-    scrollbar-3dlight-color: #031331;
-    scrollbar-arrow-color: #091C47;
-    scrollbar-track-color: #091C47;
-    scrollbar-darkshadow-color: #091C47;
+    scrollbar-face-color: #00042E;
+    scrollbar-highlight-color: #000843;
+    scrollbar-shadow-color: #00042E;
+    scrollbar-3dlight-color: #00042E;
+    scrollbar-arrow-color: #000843;
+    scrollbar-track-color: #000843;
+    scrollbar-darkshadow-color: #000843;
 }
 
 /* Font 1 */

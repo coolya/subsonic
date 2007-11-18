@@ -4,7 +4,8 @@
     <%@ include file="head.jsp" %>
     <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
     <meta http-equiv="REFRESH" content="20;URL=status.view">
-</head><body>
+</head>
+<body class="mainframe">
 
 <h1>
     <img src="<c:url value="/icons/status.png"/>" alt=""/>

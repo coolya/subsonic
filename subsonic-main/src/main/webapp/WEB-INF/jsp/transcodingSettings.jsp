@@ -2,7 +2,8 @@
 
 <html><head>
     <%@ include file="head.jsp" %>
-</head><body>
+</head>
+<body class="mainframe">
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="transcoding"/>

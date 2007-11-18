@@ -38,7 +38,8 @@
         }
     </script>
 
-</head><body onload="${model.uploadEnabled ? "refreshProgress()" : ""}">
+</head>
+<body class="mainframe" onload="${model.uploadEnabled ? "refreshProgress()" : ""}">
 
 <h1>
     <img src="<c:url value="/icons/more.png"/>" alt=""/>

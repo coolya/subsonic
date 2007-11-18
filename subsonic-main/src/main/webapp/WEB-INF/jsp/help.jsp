@@ -2,7 +2,8 @@
 
 <html><head>
     <%@ include file="head.jsp" %>
-</head><body>
+</head>
+<body class="mainframe">
 
 <c:choose>
     <c:when test="${empty model.buildDate}">

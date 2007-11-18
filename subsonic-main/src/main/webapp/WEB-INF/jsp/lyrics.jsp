@@ -34,7 +34,7 @@
     </script>
 
 </head>
-<body onload="getLyrics('${model.artist}', '${model.song}')">
+<body class="mainframe" onload="getLyrics('${model.artist}', '${model.song}')">
 
 <table>
     <tr>

@@ -6,8 +6,8 @@
     <c:if test="${model.listType eq 'random'}">
         <meta http-equiv="refresh" content="20">
     </c:if>
-</head><body>
-
+</head>
+<body class="mainframe">
 <h1>
     <img src="<c:url value="/icons/home.png"/>" alt=""/>
     ${model.welcomeMessage}

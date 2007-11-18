@@ -10,7 +10,8 @@
             }
         }
     </script>
-</head><body>
+</head>
+<body class="mainframe">
 
 <h1><fmt:message key="playlist.load.title"/></h1>
 <c:choose>

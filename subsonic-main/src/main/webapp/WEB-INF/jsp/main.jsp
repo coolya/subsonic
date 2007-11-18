@@ -11,7 +11,7 @@
     <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
-</head><body>
+</head><body class="mainframe">
 
 <c:if test="${model.updateNowPlaying}">
 

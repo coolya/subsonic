@@ -2,7 +2,8 @@
 
 <html><head>
     <%@ include file="head.jsp" %>
-</head><body>
+</head>
+<body class="mainframe">
 
 <h1><fmt:message key="playlist.save.title"/></h1>
 <form:form commandName="command" method="post" action="savePlaylist.view">

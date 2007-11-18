@@ -6,7 +6,7 @@
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
 </head>
 
-<body onload="enablePasswordFields()">
+<body class="mainframe" onload="enablePasswordFields()">
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="user"/>

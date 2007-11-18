@@ -2,7 +2,8 @@
 
 <html><head>
     <%@ include file="head.jsp" %>
-</head><body>
+</head>
+<body class="mainframe">
 
 <h1>
     <img src="<c:url value="/icons/search_small.png"/>" alt=""/>

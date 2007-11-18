@@ -4,7 +4,7 @@
 <head>
     <%@ include file="head.jsp" %>
 </head>
-<body>
+<body class="mainframe">
 
 <h1>
     <img src="<c:url value="/icons/donate.png"/>" alt=""/>
