@@ -75,8 +75,8 @@ body {
 }
 
 /* Font 1 */
-body, h2, form, label, table, a {
-    font-family: arial, sans-serif;
+body, h2, form, label, table, a, h1, h1 a, .logo {
+    font-family: calibri, arial, sans-serif;
 }
 
 body {

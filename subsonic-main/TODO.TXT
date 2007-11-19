@@ -24,6 +24,7 @@ Added "Hi-Def" theme.
 
 TODO IN 3.3
 ===========
+Use calibri font all over.
 Longer caching of icons.
 Spacing in home.jsp
 Use Axis instead of XFire?
