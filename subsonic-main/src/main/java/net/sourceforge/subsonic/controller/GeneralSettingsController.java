@@ -78,6 +78,7 @@ public class GeneralSettingsController extends SimpleFormController {
         settingsService.setWelcomeMessage(command.getWelcomeMessage());
         settingsService.setThemeId(theme.getId());
         settingsService.setLocale(locale);
+        settingsService.save();
 
         command.setShortcuts(command.getShortcuts().replaceAll("\"", "&quot;"));
     }

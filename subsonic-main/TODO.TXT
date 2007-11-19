@@ -24,6 +24,8 @@ Added "Hi-Def" theme.
 
 TODO IN 3.3
 ===========
+Longer caching of icons.
+Spacing in home.jsp
 Use Axis instead of XFire?
 Walk-thru Restaurant sample app - http://www.adobe.com/devnet/flex/articles/restaurant_app_05.html
 Flash for Java programmers - http://techpolesen.blogspot.com/2007/07/flash-for-java-programmers-lesson-5.html
