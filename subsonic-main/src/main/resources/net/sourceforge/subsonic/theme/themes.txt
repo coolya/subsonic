@@ -13,5 +13,6 @@ black "Back In Black"
 # Theme with sandy colors.
 sandstorm "Sandstorm"
 
-# Theme designed for large HDTV screens.
-hd "Hi-Def"
+# Themes designed for large HDTV screens.
+hd768 "HD-768"
+hd1080 "HD-1080"

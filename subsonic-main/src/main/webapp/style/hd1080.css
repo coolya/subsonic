@@ -1,5 +1,5 @@
 /*
- * CSS styleshet for the "Hi-Def" theme.
+ * CSS styleshet for the "HD-1080" theme.
  *
  * Author: Sindre Mehus
  */
@@ -75,7 +75,7 @@ body {
 }
 
 /* Font 1 */
-body, h2, form, label, table, a, h1, h1 a, .logo {
+body, h2, form, input, select, label, table, a, h1, h1 a, .logo {
     font-family: calibri, arial, sans-serif;
 }
 
