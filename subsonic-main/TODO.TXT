@@ -20,11 +20,11 @@ Improve layout in Podcast view.
 Change look-and-feel for booter.
 Implemented client-side playlist.
 Added "Play on phone" option to wap interface.
-Added "Hi-Def" theme.
+Added HD themes.
+Moved index from top to left frame.
 
 TODO IN 3.3
 ===========
-Use calibri font all over.
 Longer caching of icons.
 Spacing in home.jsp
 Use Axis instead of XFire?

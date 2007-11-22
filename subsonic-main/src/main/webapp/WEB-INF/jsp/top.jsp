@@ -16,34 +16,13 @@
 <fmt:message key="top.search" var="search"/>
 
 <table style="margin:0"><tr valign="middle">
-    <td class="logo"><a href="help.view?" target="main"><img src="<spring:theme code="logoImage"/>" title="${help}" alt=""/></a></td>
-    <td style="padding-left:20pt; padding-right:20pt">
+    <td class="logo" style="padding-right:2em"><a href="help.view?" target="main"><img src="<spring:theme code="logoImage"/>" title="${help}" alt=""/></a></td>
 
-        <c:choose>
-            <c:when test="${model.musicFoldersExist}">
-                <c:if test="${fn:length(model.indexes) > 1}">
-                    <div style="white-space:nowrap;">
-                        <c:forEach begin="0" end="${fn:length(model.indexes) / 2 - 1}" var="i">
-                            <c:set var="index" value="${model.indexes[i]}"/>
-                            <a style="cursor:pointer" onclick="javascript:parent.frames.left.location.hash='${index.index}'">${index.index}</a>
-                        </c:forEach>
-                    </div>
-
-                    <div style="white-space:nowrap;">
-                        <c:forEach begin="${fn:length(model.indexes) / 2}" end="${fn:length(model.indexes) - 1}" var="i">
-                            <c:set var="index" value="${model.indexes[i]}"/>
-                            <a style="cursor:pointer" onclick="javascript:parent.frames.left.location.hash='${index.index}'">${index.index}</a>
-                        </c:forEach>
-                    </div>
-                </c:if>
-            </c:when>
-
-            <c:otherwise>
-                <p class="warning"><fmt:message key="top.missing"/></p>
-            </c:otherwise>
-        </c:choose>
-
-    </td>
+    <c:if test="${not model.musicFoldersExist}">
+        <td style="padding-right:2em">
+            <p class="warning"><fmt:message key="top.missing"/></p>
+        </td>
+    </c:if>
 
     <td>
         <table><tr align="middle">
@@ -54,7 +33,7 @@
             <td style="width:4em;padding-right:1.5em"><a href="more.view?" target="main"><img src="<c:url value="/icons/more.png"/>" title="${more}" alt="${more}"/><br/>${more}</a></td>
             <td style="width:4em;padding-right:1.5em"><a href="help.view?" target="main"><img src="<c:url value="/icons/help.png"/>" title="${help}" alt="${help}"/><br/>${help}</a></td>
 
-            <td style="padding-left:15pt">
+            <td style="padding-left:2em">
                 <table><tr>
                     <form method="post" action="search.view" target="main" name="searchForm">
                         <td><input type="text" name="query" id="query" size="14" value="${search}" onclick="javascript:document.searchForm.query.select();"/></td>

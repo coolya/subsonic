@@ -5,6 +5,13 @@
 </head>
 
 <body class="bgcolor2">
+<a name="top"/>
+
+<div style="padding-bottom:0.5em">
+    <c:forEach items="${model.indexes}" var="index">
+        <a href="#${index.index}">${index.index}</a>
+    </c:forEach>
+</div>
 
 <c:if test="${model.statistics != null}">
     <div class="detail">
@@ -63,7 +70,7 @@
 
 <c:forEach items="${model.indexedChildren}" var="entry">
     <a name="${entry.key.index}"/>
-    <h2>${entry.key.index}</h2>
+    <h2><a href="#top">${entry.key.index}</a></h2>
 
     <c:forEach items="${entry.value}" var="child">
         <p class="dense">

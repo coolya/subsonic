@@ -23,16 +23,10 @@ public class TopController extends ParameterizableViewController {
         Map<String, Object> map = new HashMap<String, Object>();
 
         MusicFolder[] allMusicFolders = settingsService.getAllMusicFolders();
-        String indexString = settingsService.getIndexString();
-        String[] ignoredArticles = settingsService.getIgnoredArticlesAsArray();
-        String[] shortcuts = settingsService.getShortcutsAsArray();
-        List<MusicIndex> musicIndex = MusicIndex.createIndexesFromExpression(indexString);
-        Map<MusicIndex, List<MusicFile>> indexedChildren = MusicIndex.getIndexedChildren(allMusicFolders, musicIndex, ignoredArticles, shortcuts);
         String username = securityService.getCurrentUsername(request);
 
         map.put("username", username);
         map.put("musicFoldersExist", allMusicFolders.length > 0);
-        map.put("indexes", indexedChildren.keySet().toArray(new MusicIndex[0]));
 
         UserSettings userSettings = settingsService.getUserSettings(username);
         if (userSettings.isFinalVersionNotificationEnabled() && versionService.isNewFinalVersionAvailable()) {

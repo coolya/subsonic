@@ -80,6 +80,7 @@ public class LeftController extends ParameterizableViewController implements Las
         }
 
         map.put("indexedChildren", indexedChildren);
+        map.put("indexes", indexedChildren.keySet());
         map.put("downloadEnabled", securityService.getCurrentUser(request).isDownloadRole());
 
         ModelAndView result = super.handleRequestInternal(request, response);
