@@ -16,6 +16,7 @@
 
         <section name="Screenshots">
             <p>Click on an image to enlarge it.</p>
+            <a href="images/15.png"><img src="images/t15.png" hspace="10" vspace="10"/></a>
             <a href="images/01.png"><img src="images/t01.png" hspace="10" vspace="10"/></a>
             <a href="images/02.png"><img src="images/t02.png" hspace="10" vspace="10"/></a>
             <a href="images/03.png"><img src="images/t03.png" hspace="10" vspace="10"/></a>

@@ -15,6 +15,25 @@
 
         <section name="Change Log">
 
+            <subsection name="Subsonic 3.3.beta1 - Nov 23, 2007">
+                <ul>
+                    <li>New: Implemented client-side playlists, including random skipping within songs
+                        (see <em>Settings &gt; Players &gt; Playlist is managed by player</em>).</li>
+                    <li>New: Support resumable downloads.</li>
+                    <li>New: Rewrite stream URL if Subsonic is behind a proxy.</li>
+                    <li>New: Added two new themes designed for large HD screens.</li>
+                    <li>New: Added Russian translation by Iaroslav Andrusiak.</li>
+                    <li>New: Made it possible to collapse/expand Podcast episodes. Improved layout and usability.</li>
+                    <li>New: Added "Play on phone" option to wap interface.</li>
+                    <li>New: Auto-focus on username field in login page.</li>
+                    <li>New: Created new settings categories "Advanced" and "Personal".</li>
+                    <li>New: Moved index from top to left frame.</li>
+                    <li>Bugfix: Support Podcast folder that is located outside music folder.</li>
+                    <li>Bugfix: Handle track number on the form "3/12"</li>
+                    <li>Bugfix: Fixed concurrency bug when rendering wiki markup.</li>
+                </ul>
+            </subsection>
+
             <subsection name="Subsonic 3.2 - Oct 09, 2007">
                 <ul>
                     <li>New: Added support for editing genre in ID3 tags.</li>

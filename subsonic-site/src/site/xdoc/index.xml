@@ -17,17 +17,20 @@
         </script>
 
         <section name="Welcome to Subsonic!">
-            <p>
-                <a href="screenshots.html">
-                    <img src="images/t04.png" alt="Screenshots" hspace="10" vspace="10" align="right"/>
-                </a>
-            </p>
 
             <p>
                 <a href="download.html">
                     <img src="images/download.gif" alt="Download"/>
                 </a>
-                <br/>
+            </p>
+
+            <p>
+                <a href="screenshots.html">
+                    <img src="images/t15.png" alt="Screenshots" hspace="10" vspace="10" align="right"/>
+                </a>
+            </p>
+
+            <p>
                 Subsonic is a free, web-based media streamer, providing access to your entire music collection wherever
                 you are. Use it to share your music with friends, or to listen to your own music while at work. You can
                 stream to multiple players simultaneously, for instance to one player in your kitchen and another in
@@ -114,8 +117,8 @@
                         <li>Provides links to album reviews and more at Google Music and allmusic.com.</li>
                         <li>Full internationalization support. Currently available translations: English, Norwegian,
                             Macedonian (by Stefan Ivanovski), Simplified Chinese (by Neil Gao), Spanish (by Jorge Bueno Magdalena),
-                            German (by Harald Weiss), and Dutch (by Ronald Knot).</li>
-                        <li>Theme support. Currently ships with four themes.</li>
+                            German (by Harald Weiss), Dutch (by Ronald Knot), and Russian (by Iaroslav Andrusiak).</li>
+                        <li>Theme support. Currently ships with six themes.</li>
                     </ul>
                     <ul>
                         <li>... and more. <a href="download.html">Download</a> and see for yourself!</li>
@@ -156,11 +159,7 @@
 
         <footer>
             <a href="http://sourceforge.net/projects/subsonic/">
-                <img src="http://sourceforge.net/sflogo.php?group_id=126265&amp;type=1" alt="SourceForge.net"/>
-            </a>
-            <a href="http://www.shareup.com/Subsonic-download-47278.html">
-                <img src="images/shareup.gif" width="90" height="33" alt="Shareup Networks"/>
-            </a>
+                <img src="http://sourceforge.net/sflogo.php?group_id=126265&amp;type=1" alt="SourceForge.net"/></a>
         </footer>
 
     </body>

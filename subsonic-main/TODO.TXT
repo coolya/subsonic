@@ -1,49 +1,14 @@
-DONE IN 3.3
-===========
-Added Russian translation by Iaroslav Andrusiak.
-Added ad for Amazon mp3.
-Focus on username field when login page is displayed.
-Renamed "Appearance" settings to "Personal".
-Created new settings pane "Advanced".
-Support proxies (e.g., mod_proxy) http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=907
-Advanced setting: Rewrite URLs if behind proxy.  Default on.
-Updated http://subsonic.sourceforge.net/images/subsonic.jpg (used in podcast)
-Don't throw SecurityException if podcast folder is outside music folder.
-Make it possible to collapse/expand Podcast episodes.
-Use prototype.js for showing/hiding elements.
-Handle track number on the form "3/12" (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=951)
-Resumable downloads. (http://msdn.microsoft.com/msdnmag/issues/06/09/webdownloads/default.aspx)
-Support byte-range requests (both download and streaming)
-Fixed concurrency bug when rendering wiki markup.
-Amazon Unbox
-Improve layout in Podcast view.
-Change look-and-feel for booter.
-Implemented client-side playlist.
-Added "Play on phone" option to wap interface.
-Added HD themes.
-Moved index from top to left frame.
-
-TODO IN 3.3
-===========
-Longer caching of icons.
+BACKLOG
+===========================
 Spacing in home.jsp
-Use Axis instead of XFire?
-Walk-thru Restaurant sample app - http://www.adobe.com/devnet/flex/articles/restaurant_app_05.html
-Flash for Java programmers - http://techpolesen.blogspot.com/2007/07/flash-for-java-programmers-lesson-5.html
-
-Update translation from forum.
 Adobe Flex (mail from Tom Sugden)
-   http://www.virtub.com/
-   http://desktop.ebay.com/
-   http://www.openamf.com/cms/
-   http://www.graniteds.org/
-Dekoh
+  Use Axis instead of XFire?
+  Walk-thru Restaurant sample app - http://www.adobe.com/devnet/flex/articles/restaurant_app_05.html
+  Flash for Java programmers - http://techpolesen.blogspot.com/2007/07/flash-for-java-programmers-lesson-5.html
 Fix caching bug of left.jsp when changing theme.
 Update default media types to display.
 Use em instead of pt when padding.
-
-BACKLOG
-===========================
+Longer caching of icons.
 DAAP support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=976
 Amazon Omakasa, using artist as keyword?
 Random radio mode (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=964)
@@ -204,8 +169,6 @@ Option to create structure based on tags.
 Zip and unzip fails with accented characters.  Use commons vfs, or some other lib.
 Log when zipping individual files.
 Add online help to search index update.
-Specify context path.
-HDTV-mode.
 Vis "lignende" album.
 Add "Play" authorization.
 
