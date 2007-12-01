@@ -66,7 +66,7 @@ public class SecurityService implements UserDetailsService {
      * @return The name of the logged-in user, or <code>null</code>.
      */
     public String getCurrentUsername(HttpServletRequest request) {
-        return new SecurityContextHolderAwareRequestWrapper(request).getRemoteUser();
+        return new SecurityContextHolderAwareRequestWrapper(request, null).getRemoteUser();
     }
 
     /**
