@@ -284,6 +284,10 @@
         <property name="viewName" value="db"/>
         <property name="daoHelper" ref="daoHelper"/>
     </bean>
+    <bean id="flexController" class="net.sourceforge.subsonic.controller.FlexController">
+        <property name="musicFileService" ref="musicFileService"/>
+        <property name="settingsService" ref="settingsService"/>
+    </bean>
 
     <bean id="savePlaylistValidator" class="net.sourceforge.subsonic.validator.SavePlaylistValidator">
         <property name="playlistService" ref="playlistService"/>
@@ -353,6 +357,7 @@
                 <prop key="/podcast.view">podcastController</prop>
                 <prop key="/podcast/**">podcastController</prop>
                 <prop key="/wap/**">wapController</prop>
+                <prop key="/flex/**">flexController</prop>
                 <prop key="/play.m3u">m3uController</prop>
                 <prop key="/stream/**">streamController</prop>
             </props>

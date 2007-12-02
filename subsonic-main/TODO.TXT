@@ -1,3 +1,11 @@
+FLEX TODO
+=========
+Use flashvars to tell base url.
+XML preamble
+Set proper content type and encoding.
+Fix wrapper HTML
+Use IntelliJ 7.
+
 TODO IN 3.3
 ===========
 Fix genre (17)Rock -> Rock.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=991

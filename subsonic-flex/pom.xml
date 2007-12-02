@@ -23,7 +23,7 @@
                 <configuration>
                     <flexHome>${flex.home}</flexHome>
                     <useNetwork>true</useNetwork>
-                    <main>HelloWorld.mxml</main>
+                    <main>subsonic.mxml</main>
                     <debug>true</debug>
                 </configuration>
             </plugin>

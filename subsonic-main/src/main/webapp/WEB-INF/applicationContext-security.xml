@@ -83,6 +83,7 @@
                 PATTERN_TYPE_APACHE_ANT
 
                 /login.view=IS_AUTHENTICATED_ANONYMOUSLY
+                /flex/**=IS_AUTHENTICATED_ANONYMOUSLY
                 /stream/**=IS_AUTHENTICATED_ANONYMOUSLY
                 /style/**=IS_AUTHENTICATED_ANONYMOUSLY
                 /icons/**=IS_AUTHENTICATED_ANONYMOUSLY

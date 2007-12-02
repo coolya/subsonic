@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" name="Subsonic" verticalGap="10" width="400">
+    <mx:Script>
+        <![CDATA[
+import mx.controls.Alert;
+]]>
+    </mx:Script>
+
+    <mx:Label text="Flash Player Version: {flash.system.Capabilities.version}, Debug Player: {flash.system.Capabilities.isDebugger}"/>
+
+    <mx:HTTPService id="getArtists"
+                    url="../flex/getArtists.view"
+                    showBusyCursor="true"
+                    fault="Alert.show(event.fault.faultString)">
+    </mx:HTTPService>
+
+    <mx:Button label="List" click="getArtists.send()"/>
+    <mx:List width="100%" id="artists" labelField="name" dataProvider="{getArtists.lastResult.artists.artist}"/>
+
+    <mx:Label text="{artists.selectedItem.name}"/>
+    <mx:Label text="{artists.selectedItem.path}"/>
+
+</mx:Application>
