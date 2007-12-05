@@ -25,9 +25,10 @@ Adobe Flex (mail from Tom Sugden)
   Walk-thru Restaurant sample app - http://www.adobe.com/devnet/flex/articles/restaurant_app_05.html
   Flash for Java programmers - http://techpolesen.blogspot.com/2007/07/flash-for-java-programmers-lesson-5.html
 Fix caching bug of left.jsp when changing theme.
-Update default media types to display.
 Use em instead of pt when padding.
-Longer caching of icons.
+
+BACKLOG
+===========================
 DAAP support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=976
 Amazon Omakasa, using artist as keyword?
 Random radio mode (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=964)
