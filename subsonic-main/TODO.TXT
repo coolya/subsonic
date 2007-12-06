@@ -1,13 +1,13 @@
 FLEX TODO
 =========
 Use flashvars to tell base url.
-XML preamble
-Set proper content type and encoding.
 Fix wrapper HTML
 Use IntelliJ 7.
+Create Back button.
 
 TODO IN 3.3
 ===========
+Make index always visible.
 Fix genre (17)Rock -> Rock.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=991
 "Playlist is managed by player" feature in Subsonic 3.3beta1 does not transcode non-mp3 formats for streaming. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=993
 Retag track number in podcasts. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2003
@@ -19,6 +19,7 @@ Upgraded to Spring 2.5
 
 BACKLOG
 ===========================
+Use YUI menus: http://developer.yahoo.com/yui/menu/
 Spacing in home.jsp
 Adobe Flex (mail from Tom Sugden)
   Use Axis instead of XFire?

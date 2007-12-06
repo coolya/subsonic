@@ -7,6 +7,7 @@ import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.util.XMLBuilder;
+import net.sourceforge.subsonic.Logger;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -23,6 +24,8 @@ import java.util.Map;
  */
 public class FlexController extends MultiActionController {
 
+    private static final Logger LOG = Logger.getLogger(FlexController.class);
+
     private MusicFileService musicFileService;
     private SettingsService settingsService;
 
@@ -35,8 +38,7 @@ public class FlexController extends MultiActionController {
         List<MusicIndex> musicIndex = MusicIndex.createIndexesFromExpression(indexString);
         Map<MusicIndex, List<MusicFile>> indexedChildren = MusicIndex.getIndexedChildren(allMusicFolders, musicIndex, ignoredArticles, shortcuts);
 
-        // TODO: XML preamble
-        XMLBuilder builder = new XMLBuilder();
+        XMLBuilder builder = createXMLBuilder();
         builder.add("artists");
 
         for (List<MusicFile> list : indexedChildren.values()) {
@@ -50,10 +52,49 @@ public class FlexController extends MultiActionController {
 
         builder.end();
 
+        initResponse(response);
         PrintWriter writer = response.getWriter();
         writer.print(builder.toString());
 
         return null;
+    }
+
+    public ModelAndView getMusicFiles(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String path = request.getParameter("path");
+        LOG.info("getMusicFiles: " + path);
+        MusicFile dir = musicFileService.getMusicFile(path);
+        if (dir.isFile()) {
+            dir = dir.getParent();
+        }
+
+        List<MusicFile> children = dir.getChildren(true, true);
+
+        XMLBuilder builder = createXMLBuilder();
+        builder.add("musicFiles");
+        for (MusicFile child : children) {
+            builder.add("musicFile");
+            builder.add("name", StringUtil.toHtml(child.getNameWithoutSuffix()));
+            builder.add("path", StringUtil.toHtml(child.getPath()));
+            builder.add("isDirectory", child.isDirectory());
+            builder.end();
+        }
+        builder.end();
+
+        initResponse(response);
+        PrintWriter writer = response.getWriter();
+        writer.print(builder.toString());
+
+        return null;
+    }
+
+    private XMLBuilder createXMLBuilder() {
+        XMLBuilder builder = new XMLBuilder();
+        builder.preamble("UTF-8");
+        return builder;
+    }
+
+    private void initResponse(HttpServletResponse response) {
+        response.setContentType("text/xml;charset=UTF-8");
     }
 
     public void setMusicFileService(MusicFileService musicFileService) {
