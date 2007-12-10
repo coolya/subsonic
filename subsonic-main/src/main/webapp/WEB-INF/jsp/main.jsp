@@ -8,7 +8,6 @@
     </c:if>
     <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
 </head><body class="mainframe">
@@ -69,7 +68,7 @@
                 html += "</td></tr>";
             }
             html += "</table>";
-            DWRUtil.setValue("nowPlaying", html);
+            $('nowPlaying').innerHTML = html;
         }
     </script>
 </c:if>

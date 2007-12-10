@@ -1,5 +1,6 @@
 TODO IN 3.3
 ===========
+Make it compile with Java 5.
 Make background image repeat in x-direction?
 Make index always visible.
 Fix genre (17)Rock -> Rock.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=991
@@ -14,6 +15,7 @@ Upgraded to Spring 2.5
 Improved layout of left and main frame.
 Move "#" category to the bottom.
 Case-insensitive sorting of artists.
+Amazon Omakasa
 
 FLEX TODO
 =========
@@ -29,7 +31,6 @@ Spacing in home.jsp
 Fix caching bug of left.jsp when changing theme.
 Use em instead of pt when padding.
 DAAP support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=976
-Amazon Omakasa, using artist as keyword?
 Random radio mode (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=964)
 Option for unlimited download/upload if on LAN.  Remember to support proxies.
 Integrate with Amazon mp3.
