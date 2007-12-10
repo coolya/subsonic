@@ -90,7 +90,7 @@
     </div>
 </div>
 
-<div style="margin-right:160px">
+<div style="position:absolute;">
 <h1>
     <img src="<c:url value="/icons/now_playing.png"/>" alt=""/>
 

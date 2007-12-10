@@ -1,12 +1,7 @@
-FLEX TODO
-=========
-Use flashvars to tell base url.
-Fix wrapper HTML
-Use IntelliJ 7.
-Create Back button.
-
 TODO IN 3.3
 ===========
+Case-insensitive sorting. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1003
+Make background image repeat in x-direction?
 Make index always visible.
 Fix genre (17)Rock -> Rock.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=991
 "Playlist is managed by player" feature in Subsonic 3.3beta1 does not transcode non-mp3 formats for streaming. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=993
@@ -16,25 +11,25 @@ DONE IN 3.3
 ===========
 Upgraded to Acegi 1.0.5
 Upgraded to Spring 2.5
+Improved layout of main frame.
+
+FLEX TODO
+=========
+Use flashvars to tell base url.
+Fix wrapper HTML
+Use IntelliJ 7.
+Create Back button.
 
 BACKLOG
 ===========================
 Use YUI menus: http://developer.yahoo.com/yui/menu/
 Spacing in home.jsp
-Adobe Flex (mail from Tom Sugden)
-  Use Axis instead of XFire?
-  Walk-thru Restaurant sample app - http://www.adobe.com/devnet/flex/articles/restaurant_app_05.html
-  Flash for Java programmers - http://techpolesen.blogspot.com/2007/07/flash-for-java-programmers-lesson-5.html
 Fix caching bug of left.jsp when changing theme.
 Use em instead of pt when padding.
-
-BACKLOG
-===========================
 DAAP support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=976
 Amazon Omakasa, using artist as keyword?
 Random radio mode (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=964)
 Option for unlimited download/upload if on LAN.  Remember to support proxies.
-
 Integrate with Amazon mp3.
 Make some features available to donors only.
 Caching bug, selected music folder.  At least in IE and FF.
