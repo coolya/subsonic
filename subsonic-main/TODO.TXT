@@ -11,7 +11,7 @@ DONE IN 3.3
 ===========
 Upgraded to Acegi 1.0.5
 Upgraded to Spring 2.5
-Improved layout of main frame.
+Improved layout of left and main frame.
 
 FLEX TODO
 =========

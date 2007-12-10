@@ -26,22 +26,20 @@
 </c:if>
 
 <c:if test="${fn:length(model.musicFolders) > 1}">
-    <select name="musicFolderId" style="width:100%" onchange="location='left.view?musicFolderId=' + options[selectedIndex].value;" >
-        <option value="-1"><fmt:message key="left.allfolders"/></option>
-        <c:forEach items="${model.musicFolders}" var="musicFolder">
-            <option ${model.selectedMusicFolder.id == musicFolder.id ? "selected" : ""} value="${musicFolder.id}">${musicFolder.name}</option>
-        </c:forEach>
-    </select>
+    <div style="padding-top:1em">
+        <select name="musicFolderId" style="width:100%" onchange="location='left.view?musicFolderId=' + options[selectedIndex].value;" >
+            <option value="-1"><fmt:message key="left.allfolders"/></option>
+            <c:forEach items="${model.musicFolders}" var="musicFolder">
+                <option ${model.selectedMusicFolder.id == musicFolder.id ? "selected" : ""} value="${musicFolder.id}">${musicFolder.name}</option>
+            </c:forEach>
+        </select>
+    </div>
 </c:if>
 
 <c:if test="${not empty model.shortcuts}">
-    <h2><fmt:message key="left.shortcut"/></h2>
+    <h2 class="bgcolor1"><fmt:message key="left.shortcut"/></h2>
     <c:forEach items="${model.shortcuts}" var="shortcut">
-        <p class="dense">
-            <c:import url="playAddDownload.jsp">
-                <c:param name="path" value="${shortcut.path}"/>
-                <c:param name="downloadEnabled" value="${model.downloadEnabled}"/>
-            </c:import>
+        <p class="dense" style="padding-left:0.5em">
             <sub:url value="main.view" var="mainUrl">
                 <sub:param name="path" value="${shortcut.path}"/>
             </sub:url>
@@ -51,7 +49,7 @@
 </c:if>
 
 <c:if test="${not empty model.radios}">
-    <h2><fmt:message key="left.radio"/></h2>
+    <h2 class="bgcolor1"><fmt:message key="left.radio"/></h2>
     <c:forEach items="${model.radios}" var="radio">
         <p class="dense">
             <a target="hidden" href="${radio.streamUrl}">
@@ -69,17 +67,19 @@
 </c:if>
 
 <c:forEach items="${model.indexedChildren}" var="entry">
-    <a name="${entry.key.index}"/>
-    <h2><a href="#top">${entry.key.index}</a></h2>
+    <table class="bgcolor1" style="width:100%;padding:0;margin:1em 0 0 0;border:0">
+        <tr style="padding:0;margin:0;border:0">
+            <th style="text-align:left;padding:0;margin:0;border:0"><a name="${entry.key.index}"/>
+                <h2 style="padding:0;margin:0;border:0">${entry.key.index}
+            </th>
+            <th style="text-align:right;">
+                <a href="#top"><img width="13" height="13" src="<spring:theme code="upImage"/>"/></a>
+            </th>
+        </tr>
+    </table>
 
     <c:forEach items="${entry.value}" var="child">
-        <p class="dense">
-
-            <c:import url="playAddDownload.jsp">
-                <c:param name="path" value="${child.path}"/>
-                <c:param name="downloadEnabled" value="${model.downloadEnabled}"/>
-            </c:import>
-
+        <p class="dense" style="padding-left:0.5em">
             <span title="${child.name}">
                 <c:choose>
                     <c:when test="${child.directory}">
