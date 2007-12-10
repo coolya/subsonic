@@ -5,14 +5,15 @@ import net.sourceforge.subsonic.service.ServiceLocator;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
-import java.util.Collections;
 import java.util.regex.PatternSyntaxException;
 
 /**
@@ -167,17 +168,33 @@ public class MusicIndex {
                                                                       String[] ignoredArticles, String[] shortcuts) throws IOException {
         Comparator<MusicIndex> indexComparator = new Comparator<MusicIndex>() {
             public int compare(MusicIndex a, MusicIndex b) {
-                return indexes.indexOf(a) - indexes.indexOf(b);
+                int indexA = indexes.indexOf(a);
+                int indexB = indexes.indexOf(b);
+
+                if (indexA == -1) {
+                    indexA = Integer.MAX_VALUE;
+                }
+                if (indexB == -1) {
+                    indexB = Integer.MAX_VALUE;
+                }
+
+                if (indexA < indexB) {
+                    return -1;
+                }
+                if (indexA > indexB) {
+                    return 1;
+                }
+                return 0;
             }
         };
 
         Comparator<MusicFile> musicFileComparator = new Comparator<MusicFile>() {
             public int compare(MusicFile a, MusicFile b) {
-                return a.getName().compareTo(b.getName());
+                return a.getName().compareToIgnoreCase(b.getName());
             }
         };
 
-        Map<MusicIndex, List<MusicFile>> result = new TreeMap<MusicIndex, List<MusicFile>>(indexComparator);
+        SortedMap<MusicIndex, List<MusicFile>> result = new TreeMap<MusicIndex, List<MusicFile>>(indexComparator);
         Set<String> shortcutSet = new HashSet<String>();
         for (String shortcut : shortcuts) {
             shortcutSet.add(shortcut);
