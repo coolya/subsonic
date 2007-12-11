@@ -24,7 +24,7 @@
 
             <p>3. In the same directory is the file <code>ResourceBundle_en.properties</code> which is the English translation.
                 Use this (or any other file) as the basis for your translation. Better yet, use the latest version from the
-                <a href="http://svn.sourceforge.net/viewcvs.cgi/subsonic/trunk/subsonic-main/src/main/resources/net/sourceforge/subsonic/i18n/">SVN repository</a>.</p>
+                <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/resources/net/sourceforge/subsonic/i18n/">SVN repository</a>.</p>
 
             <p>4. Create the new resource file, for instance <code>ResourceBundle_it.properties</code>. I recommend saving it outside
                 Tomcat to make sure it's not accidentally deleted.</p>
