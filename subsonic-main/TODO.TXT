@@ -1,5 +1,6 @@
 TODO IN 3.3
 ===========
+Fix caching bug of left.jsp when changing theme etc.
 Make background image repeat in x-direction?
 Make index always visible.
 Fix genre (17)Rock -> Rock.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=991
@@ -28,7 +29,6 @@ BACKLOG
 ===========================
 Use YUI menus: http://developer.yahoo.com/yui/menu/
 Spacing in home.jsp
-Fix caching bug of left.jsp when changing theme.
 Use em instead of pt when padding.
 DAAP support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=976
 Random radio mode (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=964)

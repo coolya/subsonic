@@ -58,7 +58,7 @@ public class UploadController extends ParameterizableViewController {
             FileItemFactory factory = new MonitoredDiskFileItemFactory(listener);
             ServletFileUpload upload = new ServletFileUpload(factory);
 
-            List items = upload.parseRequest(request);
+            List<?> items = upload.parseRequest(request);
 
             // First, look for "dir" and "unzip" parameters.
             for (Object o : items) {
@@ -134,7 +134,7 @@ public class UploadController extends ParameterizableViewController {
 
         try {
 
-            Enumeration entries = zipFile.getEntries();
+            Enumeration<?> entries = zipFile.getEntries();
 
             while (entries.hasMoreElements()) {
                 ZipEntry entry = (ZipEntry) entries.nextElement();
