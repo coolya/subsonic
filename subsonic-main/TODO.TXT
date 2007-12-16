@@ -3,7 +3,6 @@ TODO IN 3.3
 Fix caching bug of left.jsp when changing theme etc.
 Make background image repeat in x-direction?
 Make index always visible.
-Fix genre (17)Rock -> Rock.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=991
 Retag track number in podcasts. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2003
 Alternative blue theme with normal fonts.
 
@@ -18,6 +17,7 @@ Case-insensitive sorting of artists.
 Amazon Omakasa
 Make it compile with Java 5.
 Sort genres in "Edit tags".
+Fix genre (17)Rock -> Rock.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=991
 
 FLEX TODO
 =========

@@ -3,13 +3,15 @@ package net.sourceforge.subsonic.domain;
 import entagged.audioformats.AudioFile;
 import entagged.audioformats.AudioFileIO;
 import entagged.audioformats.Tag;
-import entagged.audioformats.mp3.util.id3frames.ApicId3Frame;
 import entagged.audioformats.generic.TagField;
+import entagged.audioformats.mp3.util.id3frames.ApicId3Frame;
 import net.sourceforge.subsonic.Logger;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,23 +24,16 @@ import java.util.regex.Pattern;
  */
 public class EntaggedParser extends MetaDataParser {
 
-    /** Tags supported by id3v1. */
-    public static final String[] DEFAULT_GENRES = Tag.DEFAULT_GENRES;
-
     private static final Logger LOG = Logger.getLogger(EntaggedParser.class);
-    private static final Pattern GENRE_PATTERN = Pattern.compile("\\((\\d+)\\)");
+    private static final Pattern GENRE_PATTERN = Pattern.compile("\\((\\d+)\\).*");
     private static final Pattern TRACK_NUMBER_PATTERN = Pattern.compile("(\\d+)/\\d+");
 
-    static {
-        Arrays.sort(DEFAULT_GENRES);
-    }
-
     /**
-    * Parses meta data for the given music file. No guessing or reformatting is done.
-    *
-    * @param file The music file to parse.
-    * @return Meta data for the file.
-    */
+     * Parses meta data for the given music file. No guessing or reformatting is done.
+     *
+     * @param file The music file to parse.
+     * @return Meta data for the file.
+     */
     @Override
     public MusicFile.MetaData getRawMetaData(MusicFile file) {
 
@@ -66,7 +61,15 @@ public class EntaggedParser extends MetaDataParser {
     }
 
     /**
-     * Sometimes the genre is returned as "(17)", instead of "Rock".  This method
+     * Returns all tags supported by id3v1.
+     */
+    public static SortedSet<String> getID3V1Genres() {
+        return new TreeSet<String>(Arrays.asList(Tag.DEFAULT_GENRES));
+    }
+
+
+    /**
+     * Sometimes the genre is returned as "(17)" or "(17)Rock", instead of "Rock".  This method
      * maps the genre ID to the corresponding text.
      */
     private String mapGenre(String genre) {
@@ -76,8 +79,8 @@ public class EntaggedParser extends MetaDataParser {
         Matcher matcher = GENRE_PATTERN.matcher(genre);
         if (matcher.matches()) {
             int genreId = Integer.parseInt(matcher.group(1));
-            if (genreId >= 0 && genreId < DEFAULT_GENRES.length) {
-                return DEFAULT_GENRES[genreId];
+            if (genreId >= 0 && genreId < Tag.DEFAULT_GENRES.length) {
+                return Tag.DEFAULT_GENRES[genreId];
             }
         }
 
@@ -109,11 +112,11 @@ public class EntaggedParser extends MetaDataParser {
     }
 
     /**
-    * Updates the given file with the given meta data.
-    *
-    * @param file     The music file to update.
-    * @param metaData The new meta data.
-    */
+     * Updates the given file with the given meta data.
+     *
+     * @param file     The music file to update.
+     * @param metaData The new meta data.
+     */
     @Override
     public void setMetaData(MusicFile file, MusicFile.MetaData metaData) {
 

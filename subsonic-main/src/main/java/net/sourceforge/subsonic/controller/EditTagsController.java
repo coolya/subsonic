@@ -31,7 +31,7 @@ public class EditTagsController extends ParameterizableViewController {
             map.put("defaultYear", metaData.getYear());
             map.put("defaultGenre", metaData.getGenre());
         }
-        map.put("allGenres", EntaggedParser.DEFAULT_GENRES);
+        map.put("allGenres", EntaggedParser.getID3V1Genres());
 
         List<Song> songs = new ArrayList<Song>();
         for (MusicFile file : files) {
