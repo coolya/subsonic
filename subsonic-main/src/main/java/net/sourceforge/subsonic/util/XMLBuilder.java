@@ -1,7 +1,7 @@
 package net.sourceforge.subsonic.util;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.Stack;
+
 
 /**
  * Simplifies building of XML documents.
@@ -33,7 +33,7 @@ public class XMLBuilder {
     private static final String NEWLINE = "\n";
 
     private final StringBuilder buf = new StringBuilder();
-    private final Deque<String> elementStack = new ArrayDeque<String>();
+    private final Stack<String> elementStack = new Stack<String>();
 
     /**
      * Adds an XML preamble, with the given encoding. The preamble will typically
@@ -59,7 +59,7 @@ public class XMLBuilder {
      */
     public XMLBuilder add(String element, Attribute... attributes) {
         indent();
-        elementStack.addFirst(element);
+        elementStack.add(element);
         buf.append('<').append(element);
 
         if (attributes.length > 0) {
@@ -107,7 +107,7 @@ public class XMLBuilder {
             throw new IllegalStateException("There are no unclosed elements.");
         }
 
-        String element = elementStack.removeFirst();
+        String element = elementStack.remove(0);
         indent();
         buf.append("</").append(element).append('>');
         newline();

@@ -1,6 +1,5 @@
 TODO IN 3.3
 ===========
-Make it compile with Java 5.
 Make background image repeat in x-direction?
 Make index always visible.
 Fix genre (17)Rock -> Rock.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=991
@@ -16,6 +15,7 @@ Improved layout of left and main frame.
 Move "#" category to the bottom.
 Case-insensitive sorting of artists.
 Amazon Omakasa
+Make it compile with Java 5.
 
 FLEX TODO
 =========
