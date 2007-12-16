@@ -10,6 +10,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,12 +29,16 @@ public class EntaggedParser extends MetaDataParser {
     private static final Pattern GENRE_PATTERN = Pattern.compile("\\((\\d+)\\)");
     private static final Pattern TRACK_NUMBER_PATTERN = Pattern.compile("(\\d+)/\\d+");
 
+    static {
+        Arrays.sort(DEFAULT_GENRES);
+    }
+
     /**
-     * Parses meta data for the given music file. No guessing or reformatting is done.
-     *
-     * @param file The music file to parse.
-     * @return Meta data for the file.
-     */
+    * Parses meta data for the given music file. No guessing or reformatting is done.
+    *
+    * @param file The music file to parse.
+    * @return Meta data for the file.
+    */
     @Override
     public MusicFile.MetaData getRawMetaData(MusicFile file) {
 

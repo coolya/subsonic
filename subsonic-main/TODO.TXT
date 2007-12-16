@@ -17,6 +17,7 @@ Move "#" category to the bottom.
 Case-insensitive sorting of artists.
 Amazon Omakasa
 Make it compile with Java 5.
+Sort genres in "Edit tags".
 
 FLEX TODO
 =========
