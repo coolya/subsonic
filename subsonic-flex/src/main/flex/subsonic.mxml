@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" name="Subsonic" verticalGap="10" width="400"
-        initialize="listArtists(event)">
+                initialize="listArtists(event)">
     <mx:Script>
-        <![CDATA[
+<![CDATA[
 import mx.controls.Alert;
 
 private function listArtists(event:Event):void {
@@ -22,7 +22,8 @@ private function play():void {
 ]]>
     </mx:Script>
 
-    <mx:Label text="Flash Player Version: {flash.system.Capabilities.version}, Debug Player: {flash.system.Capabilities.isDebugger}"/>
+    <mx:Label
+            text="Flash Player Version: {flash.system.Capabilities.version}, Debug Player: {flash.system.Capabilities.isDebugger}"/>
 
     <mx:HTTPService id="getArtists"
                     url="../flex/getArtists.view"
