@@ -15,6 +15,20 @@
 
         <section name="Change Log">
 
+            <subsection name="Subsonic 3.3 - Dec 21, 2007">
+                <ul>
+                    <li>New: Added "HD-720" and "Barents Sea" themes.</li>
+                    <li>New: Improved layout of left and main frame.</li>
+                    <li>New: Sort genres in "Edit tags".</li>
+                    <li>Bugfix: Make transcoding work when combined with client-side playlist.</li>
+                    <li>Bugfix: Case-insensitive sorting of artists.</li>
+                    <li>Bugfix: Made genre parsing more robust.</li>
+                    <li>Tech: Upgraded to Acegi 1.0.5</li>
+                    <li>Tech: Upgraded to Spring 2.5</li>
+                    <li>Tech: Make it compile with Java 5.</li>
+                </ul>
+            </subsection>
+
             <subsection name="Subsonic 3.3.beta1 - Nov 23, 2007">
                 <ul>
                     <li>New: Implemented client-side playlists, including random skipping within songs
