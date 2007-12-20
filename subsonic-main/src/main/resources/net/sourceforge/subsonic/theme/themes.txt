@@ -13,6 +13,10 @@ black "Back In Black"
 # Theme with sandy colors.
 sandstorm "Sandstorm"
 
+# Similar to HD, but with normal fonts.
+barents "Barents Sea"
+
 # Themes designed for large HDTV screens.
+hd720 "HD-720"
 hd768 "HD-768"
 hd1080 "HD-1080"
