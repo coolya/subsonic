@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
     <bean id="filterChainProxy" class="org.acegisecurity.util.FilterChainProxy">
         <property name="filterInvocationDefinitionSource">
@@ -42,7 +43,7 @@
     </bean>
 
     <bean id="basicProcessingFilterEntryPoint" class="org.acegisecurity.ui.basicauth.BasicProcessingFilterEntryPoint">
-       <property name="realmName"><value>Subsonic</value></property>
+       <property name="realmName" value="Subsonic"/>
     </bean>
 
     <bean id="securityContextHolderAwareRequestFilter" class="org.acegisecurity.wrapper.SecurityContextHolderAwareRequestFilter"/>
@@ -165,14 +166,18 @@
     <bean id="ajaxTagServiceSecure" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target" ref="ajaxTagService"/>
         <property name="interceptorNames">
-            <idref local="ajaxServiceInterceptor"/>
+            <list>
+                <idref local="ajaxServiceInterceptor"/>
+            </list>
         </property>
     </bean>
 
     <bean id="ajaxTransferServiceSecure" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target" ref="ajaxTransferService"/>
         <property name="interceptorNames">
-            <idref local="ajaxServiceInterceptor"/>
+            <list>
+                <idref local="ajaxServiceInterceptor"/>
+            </list>
         </property>
     </bean>
 

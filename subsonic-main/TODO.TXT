@@ -28,6 +28,7 @@ Create Back button.
 
 BACKLOG
 ===========================
+Party mode http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1014
 Use YUI menus: http://developer.yahoo.com/yui/menu/
 Spacing in home.jsp
 Use em instead of pt when padding.
