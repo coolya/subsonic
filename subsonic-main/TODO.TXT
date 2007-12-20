@@ -1,23 +1,6 @@
 TODO IN 3.3
 ===========
 Fix caching bug of left.jsp when changing theme etc.
-Make background image repeat in x-direction?
-Make index always visible.
-Retag track number in podcasts. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2003
-
-DONE IN 3.3
-===========
-Make transcoding work when combined with client-side playlist.   "Playlist is managed by player" feature in Subsonic 3.3beta1 does not transcode non-mp3 formats for streaming. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=993
-Upgraded to Acegi 1.0.5
-Upgraded to Spring 2.5
-Improved layout of left and main frame.
-Move "#" category to the bottom.
-Case-insensitive sorting of artists.
-Amazon Omakasa
-Make it compile with Java 5.
-Sort genres in "Edit tags".
-Fix genre (17)Rock -> Rock.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=991
-Added "HD-720" and "Barents Sea" themes.
 
 FLEX TODO
 =========
@@ -29,6 +12,9 @@ Create Back button.
 BACKLOG
 ===========================
 Party mode http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1014
+Retag track number in podcasts. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2003
+Make background image repeat in x-direction?
+Make index always visible.
 Use YUI menus: http://developer.yahoo.com/yui/menu/
 Spacing in home.jsp
 Use em instead of pt when padding.

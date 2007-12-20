@@ -3,8 +3,8 @@
 <document>
     <body>
         <section name="">
-            <p>SUBSONIC_VERSION_BEGIN3.2SUBSONIC_VERSION_END</p>
-            <p>SUBSONIC_FULL_VERSION_BEGIN3.2SUBSONIC_FULL_VERSION_END</p>
+            <p>SUBSONIC_VERSION_BEGIN3.3SUBSONIC_VERSION_END</p>
+            <p>SUBSONIC_FULL_VERSION_BEGIN3.3SUBSONIC_FULL_VERSION_END</p>
             <p>SUBSONIC_BETA_VERSION_BEGIN3.3.beta1SUBSONIC_BETA_VERSION_END</p>
         </section>
     </body>

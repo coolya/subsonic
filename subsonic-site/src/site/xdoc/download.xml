@@ -25,16 +25,16 @@
                 </tr>
                 <tr>
                     <td><b>Current stable release</b></td>
-                    <td>Subsonic 3.2 <a href="changelog.html">(What's new?)</a></td>
+                    <td>Subsonic 3.3 <a href="changelog.html">(What's new?)</a></td>
                     <td><a href="download_win_redirect.html"><img src="images/download_small.gif" alt=""/> Download Windows installer</a></td>
                     <td><a href="download_redirect.html"><img src="images/download_small.gif" alt=""/> Download WAR</a> <a href="install.html">(Instructions)</a></td>
                 </tr>
-                <tr>
-                    <td><b>Current beta release</b></td>
-                    <td>Subsonic 3.3.beta1 <a href="changelog.html">(What's new?)</a></td>
-                    <td><a href="download_win_beta_redirect.html"><img src="images/download_small.gif" alt=""/> Download Windows installer</a></td>
-                    <td><a href="download_beta_redirect.html"><img src="images/download_small.gif" alt=""/> Download WAR</a> <a href="install.html">(Instructions)</a></td>
-                </tr>
+                <!--<tr>-->
+                    <!--<td><b>Current beta release</b></td>-->
+                    <!--<td>Subsonic 3.3.beta1 <a href="changelog.html">(What's new?)</a></td>-->
+                    <!--<td><a href="download_win_beta_redirect.html"><img src="images/download_small.gif" alt=""/> Download Windows installer</a></td>-->
+                    <!--<td><a href="download_beta_redirect.html"><img src="images/download_small.gif" alt=""/> Download WAR</a> <a href="install.html">(Instructions)</a></td>-->
+                <!--</tr>-->
             </table>
 
             <p>
