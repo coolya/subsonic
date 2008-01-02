@@ -42,10 +42,9 @@ public class SubsonicLdapBindAuthenticator implements LdapAuthenticator {
         if (user == null) {
             throw new BadCredentialsException("User does not exist.");
         }
-        // TODO
-//        if (!user.isLdapEnabled()) {
-//            throw new BadCredentialsException("LDAP authentication disabled for user.");
-//        }
+        if (!user.isLdapAuthenticated()) {
+            throw new BadCredentialsException("LDAP authentication disabled for user.");
+        }
 
         try {
             createDelegate();

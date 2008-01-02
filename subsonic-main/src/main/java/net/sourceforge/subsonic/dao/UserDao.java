@@ -20,7 +20,7 @@ import java.util.List;
 public class UserDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(UserDao.class);
-    private static final String USER_COLUMNS = "username, password, bytes_streamed, bytes_downloaded, bytes_uploaded";
+    private static final String USER_COLUMNS = "username, password, ldap_authenticated, bytes_streamed, bytes_downloaded, bytes_uploaded";
     private static final String USER_SETTINGS_COLUMNS = "username, locale, theme_id, final_version_notification, beta_version_notification, " +
                                                         "main_caption_cutoff, main_track_number, main_artist, main_album, main_genre, " +
                                                         "main_year, main_bit_rate, main_duration, main_format, main_file_size, " +
@@ -77,8 +77,8 @@ public class UserDao extends AbstractDao {
      */
     public void createUser(User user) {
         String sql = "insert into user (" + USER_COLUMNS + ") values (" + questionMarks(USER_COLUMNS) + ')';
-        getJdbcTemplate().update(sql, new Object[]{user.getUsername(), user.getPassword(), user.getBytesStreamed(),
-                                                   user.getBytesDownloaded(), user.getBytesUploaded()});
+        getJdbcTemplate().update(sql, new Object[]{user.getUsername(), user.getPassword(), user.isLdapAuthenticated(),
+                                                   user.getBytesStreamed(), user.getBytesDownloaded(), user.getBytesUploaded()});
         writeRoles(user);
     }
 
@@ -105,10 +105,10 @@ public class UserDao extends AbstractDao {
      * @param user The user to update.
      */
     public void updateUser(User user) {
-        String sql = "update user set password=?, bytes_streamed=?, bytes_downloaded=?, bytes_uploaded=? " +
+        String sql = "update user set password=?, ldap_authenticated=?, bytes_streamed=?, bytes_downloaded=?, bytes_uploaded=? " +
                      "where username=?";
-        getJdbcTemplate().update(sql, new Object[]{user.getPassword(), user.getBytesStreamed(),
-                                                   user.getBytesDownloaded(), user.getBytesUploaded(),
+        getJdbcTemplate().update(sql, new Object[]{user.getPassword(), user.isLdapAuthenticated(),
+                                                   user.getBytesStreamed(), user.getBytesDownloaded(), user.getBytesUploaded(),
                                                    user.getUsername()});
         writeRoles(user);
     }
@@ -221,7 +221,7 @@ public class UserDao extends AbstractDao {
 
     private static class UserRowMapper implements ParameterizedRowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new User(rs.getString(1), rs.getString(2), rs.getLong(3), rs.getLong(4), rs.getLong(5));
+            return new User(rs.getString(1), rs.getString(2), rs.getBoolean(3), rs.getLong(4), rs.getLong(5), rs.getLong(6));
         }
     }
 

@@ -22,7 +22,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
     }
 
     public void testCreateUser() {
-        User user = new User("sindre", "secret", 1000L, 2000L, 3000L);
+        User user = new User("sindre", "secret", false, 1000L, 2000L, 3000L);
         user.setAdminRole(true);
         user.setCommentRole(true);
         user.setCoverArtRole(true);
@@ -48,6 +48,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         userDao.createUser(user);
 
         user.setPassword("foo");
+        user.setLdapAuthenticated(true);
         user.setBytesStreamed(1);
         user.setBytesDownloaded(2);
         user.setBytesUploaded(3);
@@ -178,6 +179,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
     private void assertUserEquals(User expected, User actual) {
         assertEquals("Wrong name.", expected.getUsername(), actual.getUsername());
         assertEquals("Wrong password.", expected.getPassword(), actual.getPassword());
+        assertEquals("Wrong LDAP auth.", expected.isLdapAuthenticated(), actual.isLdapAuthenticated());
         assertEquals("Wrong bytes streamed.", expected.getBytesStreamed(), actual.getBytesStreamed());
         assertEquals("Wrong bytes downloaded.", expected.getBytesDownloaded(), actual.getBytesDownloaded());
         assertEquals("Wrong bytes uploaded.", expected.getBytesUploaded(), actual.getBytesUploaded());

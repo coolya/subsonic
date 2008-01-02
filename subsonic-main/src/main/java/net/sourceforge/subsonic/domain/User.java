@@ -11,6 +11,7 @@ public class User {
 
     private String username;
     private String password;
+    private boolean ldapAuthenticated;
     private long bytesStreamed;
     private long bytesDownloaded;
     private long bytesUploaded;
@@ -23,16 +24,18 @@ public class User {
     private boolean isCommentRole;
     private boolean isPodcastRole;
 
-    public User(String username, String password, long bytesStreamed, long bytesDownloaded, long bytesUploaded) {
+    public User(String username, String password, boolean ldapAuthenticated,
+                long bytesStreamed, long bytesDownloaded, long bytesUploaded) {
         this.username = username;
         this.password = password;
+        this.ldapAuthenticated = ldapAuthenticated;
         this.bytesStreamed = bytesStreamed;
         this.bytesDownloaded = bytesDownloaded;
         this.bytesUploaded = bytesUploaded;
     }
 
     public User(String username, String password) {
-        this(username,  password, 0, 0, 0);
+        this(username, password, false, 0, 0, 0);
     }
 
     public String getUsername() {
@@ -45,6 +48,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isLdapAuthenticated() {
+        return ldapAuthenticated;
+    }
+
+    public void setLdapAuthenticated(boolean ldapAuthenticated) {
+        this.ldapAuthenticated = ldapAuthenticated;
     }
 
     public long getBytesStreamed() {

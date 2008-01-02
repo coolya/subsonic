@@ -11,6 +11,7 @@ import net.sourceforge.subsonic.dao.schema.Schema30;
 import net.sourceforge.subsonic.dao.schema.Schema31;
 import net.sourceforge.subsonic.dao.schema.Schema32;
 import net.sourceforge.subsonic.dao.schema.Schema33;
+import net.sourceforge.subsonic.dao.schema.Schema34;
 import net.sourceforge.subsonic.service.SettingsService;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -28,7 +29,7 @@ public class DaoHelper {
     private static final Logger LOG = Logger.getLogger(DaoHelper.class);
 
     private Schema[] schemas = {new Schema25(), new Schema26(), new Schema27(), new Schema28(), new Schema29(),
-                                new Schema30(), new Schema31(), new Schema32(), new Schema33()};
+                                new Schema30(), new Schema31(), new Schema32(), new Schema33(), new Schema34()};
     private DataSource dataSource;
 
     public DaoHelper() {

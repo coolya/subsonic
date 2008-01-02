@@ -34,6 +34,9 @@ public class SecurityService implements UserDetailsService {
     * @throws DataAccessException If user could not be found for a repository-specific reason.
     */
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+        // TODO: Remove
+        LOG.debug("loadUserByUsername()");
+
         User user = getUserByName(username);
         if (user == null) {
             throw new UsernameNotFoundException("User \"" + username + "\" was not found.");
@@ -45,10 +48,11 @@ public class SecurityService implements UserDetailsService {
             authorities[i] = new GrantedAuthorityImpl("ROLE_" + roles[i].toUpperCase());
         }
 
-        // TODO: Remove
-        LOG.debug("loadUserByUsername()");
+        // If user is LDAP authenticated, disable user. The proper authentication should in that case
+        // be done by SubsonicLdapBindAuthenticator.
+        boolean enabled = !user.isLdapAuthenticated();
 
-        return new org.acegisecurity.userdetails.User(username, user.getPassword(), true, true, true, true, authorities);
+        return new org.acegisecurity.userdetails.User(username, user.getPassword(), enabled, true, true, true, authorities);
     }
 
     /**
