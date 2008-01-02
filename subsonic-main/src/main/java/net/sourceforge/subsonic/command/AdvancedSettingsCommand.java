@@ -13,6 +13,9 @@ public class AdvancedSettingsCommand {
     private String downloadLimit;
     private String uploadLimit;
     private String streamPort;
+    private boolean ldapEnabled;
+    private String ldapUrl;
+    private String ldapSearchFilter;
     private boolean isReloadNeeded;
 
     public String getDownsampleCommand() {
@@ -57,6 +60,30 @@ public class AdvancedSettingsCommand {
 
     public boolean isReloadNeeded() {
         return isReloadNeeded;
+    }
+
+    public boolean isLdapEnabled() {
+        return ldapEnabled;
+    }
+
+    public void setLdapEnabled(boolean ldapEnabled) {
+        this.ldapEnabled = ldapEnabled;
+    }
+
+    public String getLdapUrl() {
+        return ldapUrl;
+    }
+
+    public void setLdapUrl(String ldapUrl) {
+        this.ldapUrl = ldapUrl;
+    }
+
+    public String getLdapSearchFilter() {
+        return ldapSearchFilter;
+    }
+
+    public void setLdapSearchFilter(String ldapSearchFilter) {
+        this.ldapSearchFilter = ldapSearchFilter;
     }
 
     public void setReloadNeeded(boolean reloadNeeded) {

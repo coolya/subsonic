@@ -3,9 +3,22 @@
 <html><head>
     <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
+    <script type="text/javascript" language="javascript">
+        function enableLdapFields() {
+            var checkbox = $("ldap");
+            var table = $("ldapTable");
+
+            if (checkbox && checkbox.checked) {
+                table.show();
+            } else {
+                table.hide();
+            }
+        }
+    </script>
 </head>
 
-<body class="mainframe">
+<body class="mainframe" onload="enableLdapFields()">
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="advanced"/>
@@ -26,7 +39,7 @@
             </td>
         </tr>
 
-        <tr><td colspan="3">&nbsp;</td></tr>
+        <tr><td colspan="2">&nbsp;</td></tr>
 
         <tr>
             <td><fmt:message key="advancedsettings.coverartlimit"/></td>
@@ -60,9 +73,34 @@
             </td>
         </tr>
 
-        <tr><td colspan="3">&nbsp;</td></tr>
+        <tr><td colspan="2">&nbsp;</td></tr>
 
-        <tr><td align="center" colspan="2"><input type="submit" value="<fmt:message key="common.save"/>"></td></tr>
+        <tr>
+            <td colspan="2"><form:checkbox path="ldapEnabled" id="ldap" cssClass="checkbox" onclick="javascript:enableLdapFields()"/>
+                <label for="ldap"><fmt:message key="advancedsettings.ldapenabled"/></label>
+                <a href="helpPopup.view?topic=ldapEnabled" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+            </td>
+        </tr>
+
+        <table class="indent" id="ldapTable" style="padding-left:2em">
+            <tr>
+                <td><fmt:message key="advancedsettings.ldapurl"/></td>
+                <td>
+                    <form:input path="ldapUrl" size="70"/>
+                    <a href="helpPopup.view?topic=ldapUrl" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                </td>
+            </tr>
+
+            <tr>
+                <td><fmt:message key="advancedsettings.ldapsearchfilter"/></td>
+                <td>
+                    <form:input path="ldapSearchFilter" size="70"/>
+                    <a href="helpPopup.view?topic=ldapUrl" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                </td>
+            </tr>
+        </table>
+
+        <tr><td colspan="2"><input type="submit" value="<fmt:message key="common.save"/>"></td></tr>
     </table>
 </form:form>
 

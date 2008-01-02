@@ -19,7 +19,8 @@
     <bean id="httpSessionContextIntegrationFilter" class="org.acegisecurity.context.HttpSessionContextIntegrationFilter"/>
 
     <bean id="logoutFilter" class="org.acegisecurity.ui.logout.LogoutFilter">
-        <constructor-arg value="/login.view?logout"/> <!-- URL redirected to after logout -->
+        <constructor-arg value="/login.view?logout"/>
+        <!-- URL redirected to after logout -->
         <constructor-arg>
             <list>
                 <ref bean="rememberMeServices"/>
@@ -38,12 +39,16 @@
     </bean>
 
     <bean id="basicProcessingFilter" class="org.acegisecurity.ui.basicauth.BasicProcessingFilter">
-       <property name="authenticationManager"><ref local="authenticationManager"/></property>
-       <property name="authenticationEntryPoint"><ref local="basicProcessingFilterEntryPoint"/></property>
+        <property name="authenticationManager">
+            <ref local="authenticationManager"/>
+        </property>
+        <property name="authenticationEntryPoint">
+            <ref local="basicProcessingFilterEntryPoint"/>
+        </property>
     </bean>
 
     <bean id="basicProcessingFilterEntryPoint" class="org.acegisecurity.ui.basicauth.BasicProcessingFilterEntryPoint">
-       <property name="realmName" value="Subsonic"/>
+        <property name="realmName" value="Subsonic"/>
     </bean>
 
     <bean id="securityContextHolderAwareRequestFilter" class="org.acegisecurity.wrapper.SecurityContextHolderAwareRequestFilter"/>
@@ -129,7 +134,8 @@
 
     <bean id="rememberMeServices" class="org.acegisecurity.ui.rememberme.TokenBasedRememberMeServices">
         <property name="userDetailsService" ref="securityService"/>
-        <property name="tokenValiditySeconds" value="31536000"/> <!-- One year -->
+        <property name="tokenValiditySeconds" value="31536000"/>
+        <!-- One year -->
         <property name="key" value="subsonic"/>
     </bean>
 
@@ -150,6 +156,42 @@
     <bean id="daoAuthenticationProvider" class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
         <property name="userDetailsService" ref="securityService"/>
     </bean>
+
+
+    <!--TODO: REMOVE-->
+    <!--<bean id="initialDirContextFactory" class="org.acegisecurity.ldap.DefaultInitialDirContextFactory">-->
+        <!--<constructor-arg value="ldap://domain.com.hostname:389/cn=Users,dc=domain,dc=com"/>-->
+        <!--<property name="managerDn" value="CN=LDAP,CN=Users,DC=domain,DC=com"/>-->
+        <!--<property name="managerPassword" value="secretpassword"/>-->
+        <!--<property name="extraEnvVars">-->
+            <!--<map>-->
+                <!--<entry key="java.naming.referral" value="follow"/>-->
+            <!--</map>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="activeDirectoryAuthenticationProvider" class="org.acegisecurity.providers.ldap.LdapAuthenticationProvider">-->
+        <!--<constructor-arg><ref local="bindAuthenticator"/></constructor-arg>-->
+        <!--<constructor-arg><ref local="userDetailsServiceBasedAuthoritiesPopulator"/></constructor-arg>-->
+    <!--</bean>-->
+
+    <!--<bean id="bindAuthenticator" class="org.acegisecurity.providers.ldap.authenticator.BindAuthenticator">-->
+        <!--<constructor-arg><ref local="initialDirContextFactory"/></constructor-arg>-->
+        <!--<property name="userSearch"><ref local="userSearch"/></property>-->
+    <!--</bean>-->
+
+    <!--<bean id="userDetailsServiceBasedAuthoritiesPopulator" class="net.sourceforge.subsonic.ldap.UserDetailsServiceBasedAuthoritiesPopulator">-->
+        <!--<property name="userDetailsService" ref="securityService"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="userSearch" class="org.acegisecurity.ldap.search.FilterBasedLdapUserSearch">-->
+        <!--<constructor-arg value=""/>-->
+        <!--<constructor-arg value="(sAMAccountName={0})"/>-->
+        <!--<constructor-arg><ref local="initialDirContextFactory"/></constructor-arg>-->
+        <!--<property name="searchSubtree" value="true"/>-->
+        <!--<property name="derefLinkFlag" value="true"/>-->
+    <!--</bean>-->
+
 
     <!-- Authorization of AJAX services. -->
     <bean id="ajaxServiceInterceptor" class="org.acegisecurity.intercept.method.aopalliance.MethodSecurityInterceptor">

@@ -22,9 +22,11 @@ public class AdvancedSettingsController extends SimpleFormController {
         command.setDownloadLimit(String.valueOf(settingsService.getDownloadBitrateLimit()));
         command.setUploadLimit(String.valueOf(settingsService.getUploadBitrateLimit()));
         command.setStreamPort(String.valueOf(settingsService.getStreamPort()));
+        command.setLdapEnabled(settingsService.isLdapEnabled());
+        command.setLdapUrl(settingsService.getLdapUrl());
+        command.setLdapSearchFilter(settingsService.getLdapSearchFilter());
 
         return command;
-
     }
 
     protected void doSubmitAction(Object comm) throws Exception {
@@ -45,6 +47,11 @@ public class AdvancedSettingsController extends SimpleFormController {
         try {
             settingsService.setStreamPort(Integer.parseInt(command.getStreamPort()));
         } catch (NumberFormatException x) { /* Intentionally ignored. */ }
+
+        settingsService.setLdapEnabled(command.isLdapEnabled());
+        settingsService.setLdapUrl(command.getLdapUrl());
+        settingsService.setLdapSearchFilter(command.getLdapSearchFilter());
+
         settingsService.save();
     }
 

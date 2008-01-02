@@ -26,6 +26,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Date;
+import java.util.Arrays;
 
 /**
  * Provides persistent storage of application settings and preferences.
@@ -65,6 +66,9 @@ public class SettingsService {
     private static final String KEY_LICENSE_DATE = "LicenseDate";
     private static final String KEY_DOWNSAMPLING_COMMAND = "DownsamplingCommand";
     private static final String KEY_REWRITE_URL = "RewriteUrl";
+    private static final String KEY_LDAP_ENABLED = "LdapEnabled";
+    private static final String KEY_LDAP_URL = "LdapUrl";
+    private static final String KEY_LDAP_SEARCH_FILTER = "LdapSearchFilter";
 
     // Default values.
     private static final String DEFAULT_INDEX_STRING = "A B C D E F G H I J K L M N O P Q R S T U V W X-Z(XYZ)";
@@ -93,6 +97,9 @@ public class SettingsService {
     private static final String DEFAULT_LICENSE_DATE = null;
     private static final String DEFAULT_DOWNSAMPLING_COMMAND = "lame -S -h -b %b %s -";
     private static final boolean DEFAULT_REWRITE_URL = true;
+    private static final boolean DEFAULT_LDAP_ENABLED = false;
+    private static final String DEFAULT_LDAP_URL = "ldap://host.domain.com:389/cn=Users,dc=domain,dc=com";
+    private static final String DEFAULT_LDAP_SEARCH_FILTER = "(sAMAccountName={0})";
 
     // Array of all keys.  Used to clean property file.
     private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_SHORTCUTS, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
@@ -100,7 +107,9 @@ public class SettingsService {
                                           KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_THEME_ID, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
                                           KEY_PODCAST_UPDATE_INTERVAL, KEY_PODCAST_FOLDER, KEY_PODCAST_EPISODE_RETENTION_COUNT,
                                           KEY_PODCAST_EPISODE_DOWNLOAD_COUNT, KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT,
-                                          KEY_LICENSE_EMAIL, KEY_LICENSE_CODE, KEY_LICENSE_DATE, KEY_DOWNSAMPLING_COMMAND, KEY_REWRITE_URL};
+                                          KEY_LICENSE_EMAIL, KEY_LICENSE_CODE, KEY_LICENSE_DATE, KEY_DOWNSAMPLING_COMMAND, KEY_REWRITE_URL,
+                                          KEY_LDAP_ENABLED, KEY_LDAP_URL, KEY_LDAP_SEARCH_FILTER
+    };
 
     private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
     private static final String THEMES_FILE = "/net/sourceforge/subsonic/theme/themes.txt";
@@ -134,10 +143,7 @@ public class SettingsService {
             }
 
             // Remove obsolete properties.
-            Set<String> allowedKeys = new HashSet<String>();
-            for (String key : KEYS) {
-                allowedKeys.add(key);
-            }
+            Set<String> allowedKeys = new HashSet<String>(Arrays.asList(KEYS));
 
             for (Iterator<Object> iterator = properties.keySet().iterator(); iterator.hasNext();) {
                 String key = (String) iterator.next();
@@ -459,6 +465,30 @@ public class SettingsService {
 
     public void setRewriteUrlEnabled(boolean rewriteUrl) {
         properties.setProperty(KEY_REWRITE_URL, String.valueOf(rewriteUrl));
+    }
+
+    public boolean isLdapEnabled() {
+        return Boolean.valueOf(properties.getProperty(KEY_LDAP_ENABLED, String.valueOf(DEFAULT_LDAP_ENABLED)));
+    }
+
+    public void setLdapEnabled(boolean ldapEnabled) {
+        properties.setProperty(KEY_LDAP_ENABLED, String.valueOf(ldapEnabled));
+    }
+
+    public String getLdapUrl() {
+        return properties.getProperty(KEY_LDAP_URL, DEFAULT_LDAP_URL);
+    }
+
+    public void setLdapUrl(String ldapUrl) {
+        properties.setProperty(KEY_LDAP_URL, ldapUrl);
+    }
+
+    public String getLdapSearchFilter() {
+        return properties.getProperty(KEY_LDAP_SEARCH_FILTER, DEFAULT_LDAP_SEARCH_FILTER);
+    }
+
+    public void setLdapSearchFilter(String ldapSearchFilter) {
+        properties.setProperty(KEY_LDAP_SEARCH_FILTER, ldapSearchFilter);
     }
 
     /**
