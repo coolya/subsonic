@@ -30,10 +30,8 @@ public class SecurityService implements UserDetailsService {
     *
     * @param username The username presented to the {@link DaoAuthenticationProvider}
     * @return A fully populated user record (never <code>null</code>)
-    * @throws UsernameNotFoundException
-    *          if the user could not be found or the user has no GrantedAuthority
-    * @throws DataAccessException
-    *          if user could not be found for a repository-specific reason
+    * @throws UsernameNotFoundException if the user could not be found or the user has no GrantedAuthority.
+    * @throws DataAccessException If user could not be found for a repository-specific reason.
     */
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
         User user = getUserByName(username);
@@ -46,6 +44,9 @@ public class SecurityService implements UserDetailsService {
         for (int i = 0; i < roles.length; i++) {
             authorities[i] = new GrantedAuthorityImpl("ROLE_" + roles[i].toUpperCase());
         }
+
+        // TODO: Remove
+        LOG.debug("loadUserByUsername()");
 
         return new org.acegisecurity.userdetails.User(username, user.getPassword(), true, true, true, true, authorities);
     }

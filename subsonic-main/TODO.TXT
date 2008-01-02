@@ -2,18 +2,9 @@ TODO IN 3.4
 ===========
 LDAP support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2098#2098
 WAP download. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1022
-
-        DefaultInitialDirContextFactory contextFactory = new DefaultInitialDirContextFactory("ldaps://ldap.slb.com/O=SLB,C=AN");
-        BindAuthenticator authenticator = new BindAuthenticator(contextFactory);
-
-        FilterBasedLdapUserSearch userSearch = new FilterBasedLdapUserSearch("", "(alias={0})", contextFactory);
-        userSearch.setSearchSubtree(true);
-        userSearch.setDerefLinkFlag(true);
-        authenticator.setUserSearch(userSearch);
-
-        LdapUserDetails details = authenticator.authenticate("smehus", secret);
-        System.out.println(details.getDn() + " is authenticated.");
-
+Fix ehcache warning.
+Change output path of generated Amazon WS files.
+Implement per-user LDAP option. 
 
 FLEX TODO
 =========
