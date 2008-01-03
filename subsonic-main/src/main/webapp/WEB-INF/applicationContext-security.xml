@@ -158,26 +158,17 @@
 
     <bean id="daoAuthenticationProvider" class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
         <property name="userDetailsService" ref="securityService"/>
-        <property name="userCache" ref="userCache"/>
+        <property name="userCache" ref="userCacheWrapper"/>
     </bean>
 
-    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-        <!--<property name="configLocation" value="classpath:/ehcache-failsafe.xml"/>-->
-    </bean>
-
-    <bean id="userCacheBackend" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
-        <property name="cacheManager" ref="cacheManager"/>
-        <property name="cacheName" value="userCache"/>
-    </bean>
-
-    <bean id="userCache" class="org.acegisecurity.providers.dao.cache.EhCacheBasedUserCache">
-        <property name="cache" ref="userCacheBackend"/>
+    <bean id="userCacheWrapper" class="org.acegisecurity.providers.dao.cache.EhCacheBasedUserCache">
+        <property name="cache" ref="userCache"/>
     </bean>
 
     <bean id="ldapAuthenticationProvider" class="org.acegisecurity.providers.ldap.LdapAuthenticationProvider">
         <constructor-arg ref="bindAuthenticator"/>
         <constructor-arg ref="userDetailsServiceBasedAuthoritiesPopulator"/>
-        <property name="userCache" ref="userCache"/>
+        <property name="userCache" ref="userCacheWrapper"/>
     </bean>
 
     <bean id="bindAuthenticator" class="net.sourceforge.subsonic.ldap.SubsonicLdapBindAuthenticator">

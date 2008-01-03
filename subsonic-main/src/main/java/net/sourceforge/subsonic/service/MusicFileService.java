@@ -1,7 +1,6 @@
 package net.sourceforge.subsonic.service;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sourceforge.subsonic.domain.EntaggedParser;
 import net.sourceforge.subsonic.domain.MusicFile;
@@ -23,27 +22,12 @@ import java.util.List;
  */
 public class MusicFileService {
 
-    public static final int MUSIC_FILE_CACHE_SIZE = 1000;
-    public static final int CHILD_DIR_CACHE_SIZE = 100;
-    public static final int COVER_ART_CACHE_SIZE = 200;
-    public static final long COVER_ART_CACHE_TTL = 5L * 60L;  // 5 minutes
-
-    private Cache musicFileCache;
-    private Cache childDirCache;
-    private Cache coverArtCache;
+    private Ehcache musicFileCache;
+    private Ehcache childDirCache;
+    private Ehcache coverArtCache;
 
     private SecurityService securityService;
     private SettingsService settingsService;
-
-    public MusicFileService() {
-        CacheManager cacheManager = CacheManager.create();
-        musicFileCache = new Cache("MusicFileCache", MUSIC_FILE_CACHE_SIZE, false, true, 0, 0);
-        childDirCache = new Cache("ChildDirCache", CHILD_DIR_CACHE_SIZE, false, true, 0, 0);
-        coverArtCache = new Cache("CoverArtCache", COVER_ART_CACHE_SIZE, false, false, COVER_ART_CACHE_TTL, COVER_ART_CACHE_TTL);
-        cacheManager.addCache(musicFileCache);
-        cacheManager.addCache(childDirCache);
-        cacheManager.addCache(coverArtCache);
-    }
 
     /**
      * Returns a music file instance for the given file.  If possible, a cached value is returned.
@@ -222,5 +206,17 @@ public class MusicFileService {
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
+    }
+
+    public void setMusicFileCache(Ehcache musicFileCache) {
+        this.musicFileCache = musicFileCache;
+    }
+
+    public void setChildDirCache(Ehcache childDirCache) {
+        this.childDirCache = childDirCache;
+    }
+
+    public void setCoverArtCache(Ehcache coverArtCache) {
+        this.coverArtCache = coverArtCache;
     }
 }

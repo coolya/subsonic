@@ -2,7 +2,6 @@ TODO IN 3.4
 ===========
 LDAP support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2098#2098
 WAP download. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1022
-Fix ehcache warning.
 Implement per-user LDAP option. 
 
 FLEX TODO
