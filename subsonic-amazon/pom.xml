@@ -67,14 +67,14 @@
                                 <java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes"
                                       classpathref="maven.compile.classpath">
                                     <arg value="-o"/>
-                                    <arg value="${project.build.directory}/generated-sources/main/java"/>
+                                    <arg value="${project.build.directory}/generated-sources/axis"/>
                                     <arg value="-W"/>
                                     <arg value="-p"/>
                                     <arg value="com.amazon.webservices.AWSECommerceService"/>
                                     <arg value="http://webservices.amazon.com/AWSECommerceService/2006-03-08/AWSECommerceService.wsdl"/>
                                 </java>
                             </tasks>
-                            <sourceRoot>${project.build.directory}/generated-sources/main/java</sourceRoot>
+                            <sourceRoot>${project.build.directory}/generated-sources/axis</sourceRoot>
                         </configuration>
                         <goals>
                             <goal>run</goal>
