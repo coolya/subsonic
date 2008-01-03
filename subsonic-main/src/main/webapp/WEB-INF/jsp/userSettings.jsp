@@ -104,6 +104,15 @@
         </table>
     </c:if>
 
+    <c:if test="${not command.admin}">
+        <table>
+            <tr>
+                <td><form:checkbox path="ldapAuthenticated" id="ldapAuthenticated" cssClass="checkbox"/></td>
+                <td><label for="ldapAuthenticated"><fmt:message key="usersettings.ldap"/></label></td>
+            </tr>
+        </table>
+    </c:if>
+
     <c:choose>
         <c:when test="${command.new}">
 

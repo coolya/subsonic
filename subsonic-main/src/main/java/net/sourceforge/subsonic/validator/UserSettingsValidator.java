@@ -32,7 +32,7 @@ public class UserSettingsValidator implements Validator {
             }
         }
 
-        if (command.isNew() || command.isPasswordChange()) {
+        if ((command.isNew() || command.isPasswordChange()) && !command.isLdapAuthenticated()) {
             if (password == null || password.length() == 0) {
                 errors.rejectValue("password", "usersettings.nopassword");
             } else {

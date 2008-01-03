@@ -25,6 +25,7 @@ public class UserSettingsCommand {
     private boolean isDelete;
     private String password;
     private String confirmPassword;
+    private boolean isLdapAuthenticated;
 
     private String transcodeSchemeName;
     private EnumHolder[] transcodeSchemeHolders;
@@ -151,6 +152,14 @@ public class UserSettingsCommand {
         this.confirmPassword = confirmPassword;
     }
 
+    public boolean isLdapAuthenticated() {
+        return isLdapAuthenticated;
+    }
+
+    public void setLdapAuthenticated(boolean ldapAuthenticated) {
+        isLdapAuthenticated = ldapAuthenticated;
+    }
+
     public String getTranscodeSchemeName() {
         return transcodeSchemeName;
     }
@@ -196,5 +205,6 @@ public class UserSettingsCommand {
         isCoverArtRole = user != null && user.isCoverArtRole();
         isCommentRole = user != null && user.isCommentRole();
         isPodcastRole = user != null && user.isPodcastRole();
+        isLdapAuthenticated = user != null && user.isLdapAuthenticated();
     }
 }

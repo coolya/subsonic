@@ -71,12 +71,14 @@ public class UserSettingsController extends SimpleFormController {
 
     private void createUser(UserSettingsCommand command) {
         User user = new User(command.getUsername(), command.getPassword());
+        user.setLdapAuthenticated(command.isLdapAuthenticated());
         securityService.createUser(user);
         updateUser(command);
     }
 
     private void updateUser(UserSettingsCommand command) {
         User user = securityService.getUserByName(command.getUsername());
+        user.setLdapAuthenticated(command.isLdapAuthenticated());
         user.setAdminRole(command.isAdminRole());
         user.setDownloadRole(command.isDownloadRole());
         user.setUploadRole(command.isUploadRole());
