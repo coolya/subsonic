@@ -1,17 +1,21 @@
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.dao.*;
-import net.sourceforge.subsonic.domain.*;
+import net.sf.ehcache.Ehcache;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.dao.UserDao;
+import net.sourceforge.subsonic.domain.MusicFolder;
 import net.sourceforge.subsonic.domain.User;
-import org.acegisecurity.*;
-import org.acegisecurity.providers.dao.*;
-import org.acegisecurity.userdetails.*;
-import org.acegisecurity.wrapper.*;
-import org.springframework.dao.*;
+import org.acegisecurity.GrantedAuthority;
+import org.acegisecurity.GrantedAuthorityImpl;
+import org.acegisecurity.providers.dao.DaoAuthenticationProvider;
+import org.acegisecurity.userdetails.UserDetails;
+import org.acegisecurity.userdetails.UserDetailsService;
+import org.acegisecurity.userdetails.UsernameNotFoundException;
+import org.acegisecurity.wrapper.SecurityContextHolderAwareRequestWrapper;
+import org.springframework.dao.DataAccessException;
 
-import javax.servlet.http.*;
-import java.io.*;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 
 /**
  * Provides security-related services for authentication and authorization.
@@ -24,15 +28,16 @@ public class SecurityService implements UserDetailsService {
 
     private UserDao userDao;
     private SettingsService settingsService;
+    private Ehcache userCache;
 
     /**
-    * Locates the user based on the username.
-    *
-    * @param username The username presented to the {@link DaoAuthenticationProvider}
-    * @return A fully populated user record (never <code>null</code>)
-    * @throws UsernameNotFoundException if the user could not be found or the user has no GrantedAuthority.
-    * @throws DataAccessException If user could not be found for a repository-specific reason.
-    */
+     * Locates the user based on the username.
+     *
+     * @param username The username presented to the {@link DaoAuthenticationProvider}
+     * @return A fully populated user record (never <code>null</code>)
+     * @throws UsernameNotFoundException if the user could not be found or the user has no GrantedAuthority.
+     * @throws DataAccessException       If user could not be found for a repository-specific reason.
+     */
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
         // TODO: Remove
         LOG.debug("loadUserByUsername()");
@@ -57,6 +62,7 @@ public class SecurityService implements UserDetailsService {
 
     /**
      * Returns the currently logged-in user for the given HTTP request.
+     *
      * @param request The HTTP request.
      * @return The logged-in user, or <code>null</code>.
      */
@@ -67,6 +73,7 @@ public class SecurityService implements UserDetailsService {
 
     /**
      * Returns the name of the currently logged-in user.
+     *
      * @param request The HTTP request.
      * @return The name of the logged-in user, or <code>null</code>.
      */
@@ -75,16 +82,18 @@ public class SecurityService implements UserDetailsService {
     }
 
     /**
-    * Returns the user with the given username.
-    * @param username The username used when logging in.
-    * @return The user, or <code>null</code> if not found.
-    */
+     * Returns the user with the given username.
+     *
+     * @param username The username used when logging in.
+     * @return The user, or <code>null</code> if not found.
+     */
     public User getUserByName(String username) {
         return userDao.getUserByName(username);
     }
 
     /**
      * Returns all users.
+     *
      * @return Possibly empty array of all users.
      */
     public User[] getAllUsers() {
@@ -93,6 +102,7 @@ public class SecurityService implements UserDetailsService {
 
     /**
      * Creates a new user.
+     *
      * @param user The user to create.
      */
     public void createUser(User user) {
@@ -102,25 +112,31 @@ public class SecurityService implements UserDetailsService {
 
     /**
      * Deletes the user with the given username.
+     *
      * @param username The username.
      */
     public void deleteUser(String username) {
         userDao.deleteUser(username);
         LOG.info("Deleted user " + username);
+        userCache.remove(username);
     }
 
     /**
-     * Updates the password and admin status for the given user.
+     * Updates the given user.
+     *
      * @param user The user to update.
      */
     public void updateUser(User user) {
         userDao.updateUser(user);
+        // TODO: Only remove if roles have changed.  Create separate updateUserByteCounts() method.
+//        userCache.remove(user.getUsername());
     }
 
     /**
-    * Returns whether the given file may be read.
-    * @return Whether the given file may be read.
-    */
+     * Returns whether the given file may be read.
+     *
+     * @return Whether the given file may be read.
+     */
     public boolean isReadAllowed(File file) {
         // Allowed to read from both music folder, playlist folder and podcast folder.
         return isInMusicFolder(file) || isInPlaylistFolder(file) || isInPodcastFolder(file);
@@ -128,6 +144,7 @@ public class SecurityService implements UserDetailsService {
 
     /**
      * Returns whether the given file may be written, created or deleted.
+     *
      * @return Whether the given file may be written, created or deleted.
      */
     public boolean isWriteAllowed(File file) {
@@ -141,6 +158,7 @@ public class SecurityService implements UserDetailsService {
 
     /**
      * Returns whether the given file may be uploaded.
+     *
      * @return Whether the given file may be uploaded.
      */
     public boolean isUploadAllowed(File file) {
@@ -149,11 +167,12 @@ public class SecurityService implements UserDetailsService {
 
     /**
      * Returns whether the given file is located in one of the music folders (or any of their sub-folders).
+     *
      * @param file The file in question.
      * @return Whether the given file is located in one of the music folders.
      */
     private boolean isInMusicFolder(File file) {
-        MusicFolder[] folders =  settingsService.getAllMusicFolders();
+        MusicFolder[] folders = settingsService.getAllMusicFolders();
         String path = file.getPath();
         for (MusicFolder folder : folders) {
             if (isFileInFolder(path, folder.getPath().getPath())) {
@@ -165,6 +184,7 @@ public class SecurityService implements UserDetailsService {
 
     /**
      * Returns whether the given file is located in the playlist folder (or any of its sub-folders).
+     *
      * @param file The file in question.
      * @return Whether the given file is located in the playlist folder.
      */
@@ -175,6 +195,7 @@ public class SecurityService implements UserDetailsService {
 
     /**
      * Returns whether the given file is located in the Podcast folder (or any of its sub-folders).
+     *
      * @param file The file in question.
      * @return Whether the given file is located in the Podcast folder.
      */
@@ -187,7 +208,8 @@ public class SecurityService implements UserDetailsService {
      * Returns whether the given file is located in the given folder (or any of its sub-folders).
      * If the given file contains the expression ".." (indicating a reference to the parent directory),
      * this method will return <code>false</code>.
-     * @param file The file in question.
+     *
+     * @param file   The file in question.
      * @param folder The folder in question.
      * @return Whether the given file is located in the given folder.
      */
@@ -210,5 +232,9 @@ public class SecurityService implements UserDetailsService {
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    public void setUserCache(Ehcache userCache) {
+        this.userCache = userCache;
     }
 }
