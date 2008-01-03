@@ -50,6 +50,7 @@
     <bean id="securityService" class="net.sourceforge.subsonic.service.SecurityService">
         <property name="settingsService" ref="settingsService"/>
         <property name="userDao" ref="userDao"/>
+        <property name="userCache" ref="userCache"/>
     </bean>
 
     <bean id="settingsService" class="net.sourceforge.subsonic.service.SettingsService" init-method="init">
