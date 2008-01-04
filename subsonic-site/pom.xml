@@ -10,7 +10,7 @@
     <parent>
         <groupId>net.sourceforge.subsonic</groupId>
         <artifactId>subsonic</artifactId>
-        <version>3.3</version>
+        <version>3.4.beta1</version>
     </parent>
 
     <distributionManagement>
