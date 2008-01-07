@@ -26,6 +26,7 @@ public class UserSettingsCommand {
     private String password;
     private String confirmPassword;
     private boolean isLdapAuthenticated;
+    private boolean isLdapEnabled;
 
     private String transcodeSchemeName;
     private EnumHolder[] transcodeSchemeHolders;
@@ -158,6 +159,14 @@ public class UserSettingsCommand {
 
     public void setLdapAuthenticated(boolean ldapAuthenticated) {
         isLdapAuthenticated = ldapAuthenticated;
+    }
+
+    public boolean isLdapEnabled() {
+        return isLdapEnabled;
+    }
+
+    public void setLdapEnabled(boolean ldapEnabled) {
+        isLdapEnabled = ldapEnabled;
     }
 
     public String getTranscodeSchemeName() {

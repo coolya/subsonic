@@ -37,6 +37,7 @@ public class UserSettingsController extends SimpleFormController {
         command.setTranscodingSupported(transcodingService.isDownsamplingSupported());
         command.setTranscodeDirectory(transcodingService.getTranscodeDirectory().getPath());
         command.setTranscodeSchemes(TranscodeScheme.values());
+        command.setLdapEnabled(settingsService.isLdapEnabled());
 
         return command;
     }

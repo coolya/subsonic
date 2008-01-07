@@ -6,21 +6,31 @@
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
 </head>
 
-<body class="mainframe" onload="enablePasswordFields()">
+<body class="mainframe" onload="enablePasswordChangeFields()">
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="user"/>
 </c:import>
 
 <script type="text/javascript" language="javascript">
-    function enablePasswordFields() {
-        var checkbox = $("passwordChange");
-        var table = $("passwordTable");
+    function enablePasswordChangeFields() {
+        var changePasswordCheckbox = $("passwordChange");
+        var ldapCheckbox = $("ldapAuthenticated");
+        var passwordChangeTable = $("passwordChangeTable");
+        var passwordChangeCheckboxTable = $("passwordChangeCheckboxTable");
 
-        if (checkbox && checkbox.checked) {
-            table.show();
+        if (changePasswordCheckbox && changePasswordCheckbox.checked && (ldapCheckbox == null || !ldapCheckbox.checked)) {
+            passwordChangeTable.show();
         } else {
-            table.hide();
+            passwordChangeTable.hide();
+        }
+
+        if (changePasswordCheckbox) {
+            if (ldapCheckbox && ldapCheckbox.checked) {
+                passwordChangeCheckboxTable.hide();
+            } else {
+                passwordChangeCheckboxTable.show();
+            }
         }
     }
 </script>
@@ -104,10 +114,10 @@
         </table>
     </c:if>
 
-    <c:if test="${not command.admin}">
+    <c:if test="${command.ldapEnabled and not command.admin}">
         <table>
             <tr>
-                <td><form:checkbox path="ldapAuthenticated" id="ldapAuthenticated" cssClass="checkbox"/></td>
+                <td><form:checkbox path="ldapAuthenticated" id="ldapAuthenticated" cssClass="checkbox" onclick="javascript:enablePasswordChangeFields()"/></td>
                 <td><label for="ldapAuthenticated"><fmt:message key="usersettings.ldap"/></label></td>
             </tr>
         </table>
@@ -136,14 +146,14 @@
         </c:when>
 
         <c:otherwise>
-            <table>
+            <table id="passwordChangeCheckboxTable">
                 <tr>
-                    <td><form:checkbox path="passwordChange" id="passwordChange" onclick="javascript:enablePasswordFields()" cssClass="checkbox"/></td>
+                    <td><form:checkbox path="passwordChange" id="passwordChange" onclick="javascript:enablePasswordChangeFields()" cssClass="checkbox"/></td>
                     <td><label for="passwordChange"><fmt:message key="usersettings.changepassword"/></label></td>
                 </tr>
             </table>
 
-            <table id="passwordTable" style="display:none">
+            <table id="passwordChangeTable" style="display:none">
                 <tr>
                     <td><fmt:message key="usersettings.newpassword"/></td>
                     <td><form:password path="password" id="path"/></td>
