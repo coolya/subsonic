@@ -94,8 +94,8 @@
     <cache name="userCache"
            maxElementsInMemory="1000"
            eternal="false"
-           timeToIdleSeconds="7200"
-           timeToLiveSeconds="7200"
+           timeToIdleSeconds="172800"
+           timeToLiveSeconds="172800"
            overflowToDisk="false"/>
 
     <!--

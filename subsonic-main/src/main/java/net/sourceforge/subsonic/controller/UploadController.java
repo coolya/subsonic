@@ -112,10 +112,7 @@ public class UploadController extends ParameterizableViewController {
                 statusService.removeUploadStatus(status);
                 request.getSession().removeAttribute(UPLOAD_STATUS);
                 User user = securityService.getCurrentUser(request);
-                if (user != null) {
-                    user.setBytesUploaded(user.getBytesUploaded() + status.getBytesTransfered());
-                    securityService.updateUser(user);
-                }
+                securityService.updateUserByteCounts(user, 0L, 0L, status.getBytesTransfered());
             }
         }
 

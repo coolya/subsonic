@@ -128,8 +128,27 @@ public class SecurityService implements UserDetailsService {
      */
     public void updateUser(User user) {
         userDao.updateUser(user);
-        // TODO: Only remove if roles have changed.  Create separate updateUserByteCounts() method.
-//        userCache.remove(user.getUsername());
+        userCache.remove(user.getUsername());
+    }
+
+    /**
+     * Updates the byte counts for given user.
+     *
+     * @param user The user to update, may be <code>null</code>.
+     * @param bytesStreamedDelta Increment bytes streamed count with this value.
+     * @param bytesDownloadedDelta Increment bytes downloaded count with this value.
+     * @param bytesUploadedDelta Increment bytes uploaded count with this value.
+     */
+    public void updateUserByteCounts(User user, long bytesStreamedDelta, long bytesDownloadedDelta, long bytesUploadedDelta) {
+        if (user == null) {
+            return;
+        }
+
+        user.setBytesStreamed(user.getBytesStreamed() + bytesStreamedDelta);
+        user.setBytesDownloaded(user.getBytesDownloaded() + bytesDownloadedDelta);
+        user.setBytesUploaded(user.getBytesUploaded() + bytesUploadedDelta);
+
+        userDao.updateUser(user);
     }
 
     /**

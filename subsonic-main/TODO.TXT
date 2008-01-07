@@ -5,6 +5,10 @@ WAP download. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1022
 Test user caching, for instance when changing password or roles.
 Update version numbers in pom.xml
 Disable per-user ldap option if global option is disabled.
+Don't show files in left frame.
+Use table layout in main frame. Avoid clash with "Now playing".
+
+
 
 FLEX TODO
 =========

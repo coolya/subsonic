@@ -102,10 +102,7 @@ public class DownloadController implements Controller {
             if (status != null) {
                 statusService.removeDownloadStatus(status);
                 User user = securityService.getCurrentUser(request);
-                if (user != null) {
-                    user.setBytesDownloaded(user.getBytesDownloaded() + status.getBytesTransfered());
-                    securityService.updateUser(user);
-                }
+                securityService.updateUserByteCounts(user, 0L, status.getBytesTransfered(), 0L);
             }
         }
 

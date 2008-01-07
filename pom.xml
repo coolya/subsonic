@@ -58,7 +58,6 @@
         <module>subsonic-installer</module>
         <module>subsonic-assembly</module>
         <module>subsonic-flex</module>
-        <!--<module>subsonic-dekoh</module>-->
     </modules>
 
     <build>

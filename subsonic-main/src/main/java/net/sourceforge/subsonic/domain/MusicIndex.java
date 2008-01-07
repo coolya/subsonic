@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
+import java.util.Arrays;
 import java.util.regex.PatternSyntaxException;
 
 /**
@@ -195,10 +196,7 @@ public class MusicIndex {
         };
 
         SortedMap<MusicIndex, List<MusicFile>> result = new TreeMap<MusicIndex, List<MusicFile>>(indexComparator);
-        Set<String> shortcutSet = new HashSet<String>();
-        for (String shortcut : shortcuts) {
-            shortcutSet.add(shortcut);
-        }
+        Set<String> shortcutSet = new HashSet<String>(Arrays.asList(shortcuts));
 
         for (MusicFolder folder : folders) {
 

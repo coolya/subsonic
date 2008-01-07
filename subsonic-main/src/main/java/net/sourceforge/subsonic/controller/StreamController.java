@@ -170,10 +170,7 @@ public class StreamController implements Controller {
             if (status != null) {
                 statusService.removeStreamStatus(status);
                 User user = securityService.getUserByName(player.getUsername());
-                if (user != null) {
-                    user.setBytesStreamed(user.getBytesStreamed() + status.getBytesTransfered());
-                    securityService.updateUser(user);
-                }
+                securityService.updateUserByteCounts(user, status.getBytesTransfered(), 0L, 0L);
             }
             if (in != null) {
                 in.close();
