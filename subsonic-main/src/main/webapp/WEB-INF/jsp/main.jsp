@@ -73,23 +73,6 @@
     </script>
 </c:if>
 
-<div style="margin-top:7em;padding:0 1em 0 1em;float:right;border-left:1px solid #<spring:theme code="detailColor"/>">
-    <c:if test="${not empty model.ad}">
-        <div class="detail" style="text-align:center">
-                ${model.ad}
-            <br/>
-            <br/>
-            <sub:url value="donate.view" var="donateUrl">
-                <sub:param name="path" value="${model.dir.path}"/>
-            </sub:url>
-            <fmt:message key="main.donate"><fmt:param value="${donateUrl}"/></fmt:message>
-        </div>
-    </c:if>
-    <div id="nowPlaying">
-    </div>
-</div>
-
-<div style="position:absolute;">
 <h1>
     <img src="<c:url value="/icons/now_playing.png"/>" alt=""/>
 
@@ -195,7 +178,8 @@
 
 </c:if>
 
-<table cellpadding="10"><tr style="vertical-align:top;">
+<table cellpadding="10" style="width:100%">
+<tr style="vertical-align:top;">
     <td style="vertical-align:top;">
         <table style="border-collapse:collapse;white-space:nowrap">
             <c:set var="cutoff" value="${model.visibility.captionCutoff}"/>
@@ -235,24 +219,24 @@
                                 </td>
                             </c:if>
 
-                            <td ${class} style="padding-right:1.25em">
+                            <td ${class} style="padding-right:1.25em;white-space:nowrap">
                                 <span title="${child.title}"><str:truncateNicely upper="${cutoff}">${fn:escapeXml(child.title)}</str:truncateNicely></span>
                             </td>
 
                             <c:if test="${model.visibility.albumVisible}">
-                                <td ${class} style="padding-right:1.25em">
+                                <td ${class} style="padding-right:1.25em;white-space:nowrap">
                                     <span class="detail" title="${child.metaData.album}"><str:truncateNicely upper="${cutoff}">${fn:escapeXml(child.metaData.album)}</str:truncateNicely></span>
                                 </td>
                             </c:if>
 
                             <c:if test="${model.visibility.artistVisible and model.multipleArtists}">
-                                <td ${class} style="padding-right:1.25em">
+                                <td ${class} style="padding-right:1.25em;white-space:nowrap">
                                     <span class="detail" title="${child.metaData.artist}"><str:truncateNicely upper="${cutoff}">${fn:escapeXml(child.metaData.artist)}</str:truncateNicely></span>
                                 </td>
                             </c:if>
 
                             <c:if test="${model.visibility.genreVisible}">
-                                <td ${class} style="padding-right:1.25em">
+                                <td ${class} style="padding-right:1.25em;white-space:nowrap">
                                     <span class="detail">${child.metaData.genre}</span>
                                 </td>
                             </c:if>
@@ -299,7 +283,7 @@
         </table>
     </td>
 
-    <td style="vertical-align:top;">
+    <td style="vertical-align:top;width:100%">
         <c:forEach items="${model.coverArts}" var="coverArt">
             <div style="float:left; padding:5px">
                 <c:import url="coverArt.jsp">
@@ -325,6 +309,24 @@
             </c:import>
         </c:if>
     </td>
+
+    <td style="vertical-align:top;">
+        <div style="padding:0 1em 0 1em;border-left:1px solid #<spring:theme code="detailColor"/>">
+            <c:if test="${not empty model.ad}">
+                <div class="detail" style="text-align:center">
+                        ${model.ad}
+                    <br/>
+                    <br/>
+                    <sub:url value="donate.view" var="donateUrl">
+                        <sub:param name="path" value="${model.dir.path}"/>
+                    </sub:url>
+                    <fmt:message key="main.donate"><fmt:param value="${donateUrl}"/></fmt:message>
+                </div>
+            </c:if>
+            <div id="nowPlaying">
+            </div>
+        </div>
+    </td>
 </tr>
 </table>
 
@@ -346,8 +348,6 @@
         </a></div></td>
     </c:if>
 </table>
-
-</div>
 
 </body>
 </html>
