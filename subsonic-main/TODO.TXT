@@ -6,17 +6,19 @@ Test user caching, for instance when changing password or roles.
 Disable per-user ldap option if global option is disabled.
 Don't show files in left frame.
 LDAP online help.
+Implement LastModified in main.jsp
+LDAP option to automatically create users in Subsonic.
+Make temp dir configurable in booter.
+Adjust booter to make it work on Linux.
 
 DONE IN 3.4
 ===========
 Use table layout in main frame. Avoid clash with "Now playing".
 
-
 FLEX TODO
 =========
 Use flashvars to tell base url.
 Fix wrapper HTML
-Use IntelliJ 7.
 Create Back button.
 
 BACKLOG
