@@ -25,6 +25,7 @@ public class AdvancedSettingsController extends SimpleFormController {
         command.setLdapEnabled(settingsService.isLdapEnabled());
         command.setLdapUrl(settingsService.getLdapUrl());
         command.setLdapSearchFilter(settingsService.getLdapSearchFilter());
+        command.setLdapAutoShadowing(settingsService.isLdapAutoShadowing());
 
         return command;
     }
@@ -51,6 +52,7 @@ public class AdvancedSettingsController extends SimpleFormController {
         settingsService.setLdapEnabled(command.isLdapEnabled());
         settingsService.setLdapUrl(command.getLdapUrl());
         settingsService.setLdapSearchFilter(command.getLdapSearchFilter());
+        settingsService.setLdapAutoShadowing(command.isLdapAutoShadowing());
 
         settingsService.save();
     }

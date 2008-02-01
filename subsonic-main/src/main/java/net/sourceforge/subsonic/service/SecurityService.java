@@ -39,9 +39,6 @@ public class SecurityService implements UserDetailsService {
      * @throws DataAccessException       If user could not be found for a repository-specific reason.
      */
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-        // TODO: Remove
-        LOG.debug("loadUserByUsername()");
-
         User user = getUserByName(username);
         if (user == null) {
             throw new UsernameNotFoundException("User \"" + username + "\" was not found.");

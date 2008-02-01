@@ -44,6 +44,7 @@ public class SettingsServiceTestCase extends TestCase {
         assertEquals("Wrong default LDAP enabled.", false, settingsService.isLdapEnabled());
         assertEquals("Wrong default LDAP URL.", "ldap://host.domain.com:389/cn=Users,dc=domain,dc=com", settingsService.getLdapUrl());
         assertEquals("Wrong default LDAP search filter.", "(sAMAccountName={0})", settingsService.getLdapSearchFilter());
+        assertEquals("Wrong default LDAP auto-shadowing.", false, settingsService.isLdapAutoShadowing());
     }
 
     public void testChangeSettings() {
@@ -71,6 +72,7 @@ public class SettingsServiceTestCase extends TestCase {
         settingsService.setLdapEnabled(true);
         settingsService.setLdapUrl("newLdapUrl");
         settingsService.setLdapSearchFilter("newLdapSearchFilter");
+        settingsService.setLdapAutoShadowing(true);
 
         verifySettings(settingsService);
 
@@ -109,6 +111,6 @@ public class SettingsServiceTestCase extends TestCase {
         assertTrue("Wrong LDAP enabled.", settingsService.isLdapEnabled());
         assertEquals("Wrong LDAP URL.", "newLdapUrl", settingsService.getLdapUrl());
         assertEquals("Wrong LDAP search filter.", "newLdapSearchFilter", settingsService.getLdapSearchFilter());
-
+        assertTrue("Wrong LDAP auto-shadowing.", settingsService.isLdapAutoShadowing());
     }
 }

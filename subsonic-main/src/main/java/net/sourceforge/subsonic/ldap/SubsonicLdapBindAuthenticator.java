@@ -33,16 +33,19 @@ public class SubsonicLdapBindAuthenticator implements LdapAuthenticator {
     @Override
     public LdapUserDetails authenticate(String username, String password) {
 
-        // User must be defined in Subsonic, and LDAP authentication must be
-        // enabled both globally and for the given user.
+        // LDAP authentication must be enabled on the system.
         if (!settingsService.isLdapEnabled()) {
             throw new BadCredentialsException("LDAP authentication disabled.");
         }
+
+        // User must be defined in Subsonic, unless auto-shadowing is enabled.
         User user = securityService.getUserByName(username);
-        if (user == null) {
+        if (user == null && !settingsService.isLdapAutoShadowing()) {
             throw new BadCredentialsException("User does not exist.");
         }
-        if (!user.isLdapAuthenticated()) {
+
+        // LDAP authentication must be enabled for the given user.
+        if (user != null && !user.isLdapAuthenticated()) {
             throw new BadCredentialsException("LDAP authentication disabled for user.");
         }
 
@@ -51,6 +54,11 @@ public class SubsonicLdapBindAuthenticator implements LdapAuthenticator {
             LdapUserDetails details = delegateAuthenticator.authenticate(username, password);
             if (details != null) {
                 LOG.info("User '" + username + "' successfully authenticated in LDAP. DN: " + details.getDn());
+
+                if (user == null) {
+                    securityService.createUser(new User(username, "", true, 0L, 0L, 0L));
+                    LOG.info("Created local user '" + username + "' for DN " + details.getDn());
+                }
             }
 
             return details;
@@ -63,7 +71,7 @@ public class SubsonicLdapBindAuthenticator implements LdapAuthenticator {
     /**
      * Creates the delegate {@link BindAuthenticator}.
      */
-    private void createDelegate() {
+    private synchronized void createDelegate() {
 
         // Only create it if necessary.
         if (delegateAuthenticator == null || authenticatorTimestamp < settingsService.getSettingsLastChanged()) {

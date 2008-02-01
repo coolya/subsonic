@@ -16,6 +16,7 @@ public class AdvancedSettingsCommand {
     private boolean ldapEnabled;
     private String ldapUrl;
     private String ldapSearchFilter;
+    private boolean ldapAutoShadowing;
     private boolean isReloadNeeded;
 
     public String getDownsampleCommand() {
@@ -58,10 +59,6 @@ public class AdvancedSettingsCommand {
         this.uploadLimit = uploadLimit;
     }
 
-    public boolean isReloadNeeded() {
-        return isReloadNeeded;
-    }
-
     public boolean isLdapEnabled() {
         return ldapEnabled;
     }
@@ -86,7 +83,19 @@ public class AdvancedSettingsCommand {
         this.ldapSearchFilter = ldapSearchFilter;
     }
 
+    public boolean isLdapAutoShadowing() {
+        return ldapAutoShadowing;
+    }
+
+    public void setLdapAutoShadowing(boolean ldapAutoShadowing) {
+        this.ldapAutoShadowing = ldapAutoShadowing;
+    }
+
     public void setReloadNeeded(boolean reloadNeeded) {
         isReloadNeeded = reloadNeeded;
+    }
+
+    public boolean isReloadNeeded() {
+        return isReloadNeeded;
     }
 }

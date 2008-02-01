@@ -3,12 +3,12 @@ TODO IN 3.4
 WAP download. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1022
 Test user caching, for instance when changing password or roles.
 Implement LastModified in main.jsp
-LDAP option to automatically create users in Subsonic.
 Adjust booter to make it work on Linux.
 
 DONE IN 3.4
 ===========
 Disable per-user ldap option if global option is disabled.
+LDAP option to automatically create users in Subsonic.
 LDAP online help.
 LDAP support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2098#2098
 Allow more than 2 hours of idle time in Jetty.

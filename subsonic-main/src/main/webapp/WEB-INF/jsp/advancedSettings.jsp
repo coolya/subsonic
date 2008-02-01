@@ -76,7 +76,8 @@
         <tr><td colspan="2">&nbsp;</td></tr>
 
         <tr>
-            <td colspan="2"><form:checkbox path="ldapEnabled" id="ldap" cssClass="checkbox" onclick="javascript:enableLdapFields()"/>
+            <td colspan="2">
+                <form:checkbox path="ldapEnabled" id="ldap" cssClass="checkbox" onclick="javascript:enableLdapFields()"/>
                 <label for="ldap"><fmt:message key="advancedsettings.ldapenabled"/></label>
                 <a href="helpPopup.view?topic=ldap" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
             </td>
@@ -96,6 +97,14 @@
                 <td>
                     <form:input path="ldapSearchFilter" size="70"/>
                     <a href="helpPopup.view?topic=ldapSearchFilter" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <form:checkbox path="ldapAutoShadowing" id="ldapAutoShadowing" cssClass="checkbox"/>
+                    <label for="ldapAutoShadowing"><fmt:message key="advancedsettings.ldapautoshadowing"/></label>
+                    <a href="helpPopup.view?topic=ldapAutoShadowing" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
                 </td>
             </tr>
         </table>
