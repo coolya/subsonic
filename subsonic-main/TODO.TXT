@@ -2,7 +2,7 @@ TODO IN 3.4
 ===========
 WAP download. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1022
 Test user caching, for instance when changing password or roles.
-Implement LastModified in main.jsp
+Implement LastModified in main.jsp (Must test on FF)
 Adjust booter to make it work on Linux.
 
 DONE IN 3.4
@@ -16,6 +16,7 @@ Use table layout in main frame. Avoid clash with "Now playing".
 Faster startup on Windows. Extract war file to c:\subsonic\jetty.
 Create play/add/download buttons for files in left frame.
 "Highest rated" now also shows albums that have never been played. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1053
+Make index always visible (on FireFox and Opera, at least).
 
 FLEX TODO
 =========
@@ -29,7 +30,6 @@ Fix caching bug of left.jsp when changing theme etc.
 Party mode http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1014
 Retag track number in podcasts. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2003
 Make background image repeat in x-direction?
-Make index always visible.
 Use YUI menus: http://developer.yahoo.com/yui/menu/
 Spacing in home.jsp
 Use em instead of pt when padding.

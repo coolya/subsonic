@@ -109,4 +109,15 @@
         </c:if>
     </c:forEach>
 </c:forEach>
+
+<div style="height:5em"/>
+
+<div class="bgcolor2" style="opacity: 1.0; clear: both; position: fixed; bottom: 0; right: 0; left: 0;
+      padding: 0.25em 0.75em 0.25em 0.75em; border-top:1px solid black; max-width: 850px;">
+    <c:forEach items="${model.indexes}" var="index">
+        <a href="#${index.index}">${index.index}</a>
+    </c:forEach>
+</div>
+
+
 </body></html>
