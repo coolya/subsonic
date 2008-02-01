@@ -79,22 +79,34 @@
     </table>
 
     <c:forEach items="${entry.value}" var="child">
-        <p class="dense" style="padding-left:0.5em">
-            <span title="${child.name}">
-                <c:choose>
-                    <c:when test="${child.directory}">
-                        <sub:url value="main.view" var="mainUrl">
-                            <sub:param name="path" value="${child.path}"/>
-                        </sub:url>
-                        <a target="main" href="${mainUrl}"><str:truncateNicely upper="${model.captionCutoff}">${child.name}</str:truncateNicely></a>
-                    </c:when>
-                    <c:otherwise>
-                        <str:truncateNicely upper="${model.captionCutoff}">${child.name}</str:truncateNicely>
-                    </c:otherwise>
-                </c:choose>
-            </span>
-        </p>
+        <c:if test="${child.directory}">
+            <p class="dense" style="padding-left:0.5em">
+                <span title="${child.name}">
+                    <sub:url value="main.view" var="mainUrl">
+                        <sub:param name="path" value="${child.path}"/>
+                    </sub:url>
+                    <a target="main" href="${mainUrl}"><str:truncateNicely upper="${model.captionCutoff}">${child.name}</str:truncateNicely></a>
+                </span>
+            </p>
+        </c:if>
     </c:forEach>
 </c:forEach>
 
+<div style="padding-top:1em"/>
+
+<c:forEach items="${model.indexedChildren}" var="entry">
+    <c:forEach items="${entry.value}" var="child">
+        <c:if test="${not child.directory}">
+            <p class="dense" style="padding-left:0.5em">
+                <span title="${child.title}">
+                    <c:import url="playAddDownload.jsp">
+                        <c:param name="path" value="${child.path}"/>
+                        <c:param name="downloadEnabled" value="${model.downloadEnabled}"/>
+                    </c:import>
+                    <str:truncateNicely upper="${model.captionCutoff}">${child.title}</str:truncateNicely>
+                </span>
+            </p>
+        </c:if>
+    </c:forEach>
+</c:forEach>
 </body></html>
