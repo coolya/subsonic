@@ -145,6 +145,11 @@ public class MusicFileInfoDao extends AbstractDao {
         if (rating != null && rating > 0) {
             getJdbcTemplate().update("insert into user_rating values(?, ?, ?)", new Object[]{username, musicFile.getPath(), rating});
         }
+
+        // Must create music_file_info row if not existing.
+        if (getMusicFileInfoForPath(musicFile.getPath()) == null) {
+            createMusicFileInfo(new MusicFileInfo(null, musicFile.getPath(), null, 0, null));
+        }
     }
 
     /**

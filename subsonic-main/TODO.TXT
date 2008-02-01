@@ -8,7 +8,7 @@ LDAP online help.
 Implement LastModified in main.jsp
 LDAP option to automatically create users in Subsonic.
 Adjust booter to make it work on Linux.
-"Høyest Rangert" list shows played albums only. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1053
+
 
 DONE IN 3.4
 ===========
@@ -16,6 +16,7 @@ Allow more than 2 hours of idle time in Jetty.
 Use table layout in main frame. Avoid clash with "Now playing".
 Faster startup on Windows. Extract war file to c:\subsonic\jetty.
 Create play/add/download buttons for files in left frame.
+"Highest rated" now also shows albums that have never been played. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1053
 
 FLEX TODO
 =========
