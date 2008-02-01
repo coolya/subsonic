@@ -10,7 +10,7 @@ import java.net.URL;
 
 /**
  * Controls the Subsonic tray icon.
- * 
+ *
  * @author Sindre Mehus
  */
 public class TrayController {
@@ -79,13 +79,20 @@ public class TrayController {
     }
 
     private void installComponents() {
-        SystemTray.getDefaultSystemTray().addTrayIcon(trayIcon);
-        trayIcon.displayMessage("Subsonic", "Subsonic is now running. Click this balloon to get started.",
-                                TrayIcon.INFO_MESSAGE_TYPE);
+        try {
+            SystemTray.getDefaultSystemTray().addTrayIcon(trayIcon);
+            trayIcon.displayMessage("Subsonic", "Subsonic is now running. Click this balloon to get started.",
+                                    TrayIcon.INFO_MESSAGE_TYPE);
+        } catch (Throwable x) {
+            System.err.println("Disabling tray support.");
+        }
     }
 
     public void uninstallComponents() {
-        SystemTray.getDefaultSystemTray().removeTrayIcon(trayIcon);
+        try {
+            SystemTray.getDefaultSystemTray().removeTrayIcon(trayIcon);
+        } catch (Throwable x) {
+            System.err.println("Disabling tray support.");
+        }
     }
-
 }
