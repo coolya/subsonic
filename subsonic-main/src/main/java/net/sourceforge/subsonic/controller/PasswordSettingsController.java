@@ -20,6 +20,7 @@ public class PasswordSettingsController extends SimpleFormController {
         PasswordSettingsCommand command = new PasswordSettingsCommand();
         User user = securityService.getCurrentUser(request);
         command.setUsername(user.getUsername());
+        command.setLdapAuthenticated(user.isLdapAuthenticated());
         return command;
     }
 

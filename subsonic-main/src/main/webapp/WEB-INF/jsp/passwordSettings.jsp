@@ -10,23 +10,32 @@
     <c:param name="restricted" value="true"/>
 </c:import>
 
-<h2><fmt:message key="passwordsettings.title"><fmt:param>${command.username}</fmt:param></fmt:message></h2>
-<form:form method="post" action="passwordSettings.view" commandName="command">
-    <table class="indent">
-        <tr>
-            <td><fmt:message key="usersettings.newpassword"/></td>
-            <td><form:password path="password"/></td>
-            <td class="warning"><form:errors path="password"/></td>
-        </tr>
-        <tr>
-            <td><fmt:message key="usersettings.confirmpassword"/></td>
-            <td><form:password path="confirmPassword"/></td>
-            <td/>
-        </tr>
-        <tr>
-            <td colspan="3" align="center"><input type="submit" value="<fmt:message key="common.ok"/>"/></td>
-        </tr>
-    </table>
-</form:form>
+<c:choose>
+    
+    <c:when test="${command.ldapAuthenticated}">
+        <p><fmt:message key="usersettings.passwordnotsupportedforldap"/></p>
+    </c:when>
+
+    <c:otherwise>
+        <h2><fmt:message key="passwordsettings.title"><fmt:param>${command.username}</fmt:param></fmt:message></h2>
+        <form:form method="post" action="passwordSettings.view" commandName="command">
+            <table class="indent">
+                <tr>
+                    <td><fmt:message key="usersettings.newpassword"/></td>
+                    <td><form:password path="password"/></td>
+                    <td class="warning"><form:errors path="password"/></td>
+                </tr>
+                <tr>
+                    <td><fmt:message key="usersettings.confirmpassword"/></td>
+                    <td><form:password path="confirmPassword"/></td>
+                    <td/>
+                </tr>
+                <tr>
+                    <td colspan="3" align="center"><input type="submit" value="<fmt:message key="common.ok"/>"/></td>
+                </tr>
+            </table>
+        </form:form>
+    </c:otherwise>
+</c:choose>
 
 </body></html>

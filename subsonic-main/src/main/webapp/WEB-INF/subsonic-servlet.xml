@@ -298,6 +298,7 @@
     </bean>
     <bean id="userSettingsValidator" class="net.sourceforge.subsonic.validator.UserSettingsValidator">
         <property name="securityService" ref="securityService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="passwordSettingsValidator" class="net.sourceforge.subsonic.validator.PasswordSettingsValidator"/>
 

@@ -97,7 +97,7 @@ public class SettingsService {
     private static final String DEFAULT_LICENSE_DATE = null;
     private static final String DEFAULT_DOWNSAMPLING_COMMAND = "lame -S -h -b %b %s -";
     private static final boolean DEFAULT_REWRITE_URL = true;
-    private static final boolean DEFAULT_LDAP_ENABLED = false;
+    private static final boolean DEFAULT_LDAP_ENABLED = false; 
     private static final String DEFAULT_LDAP_URL = "ldap://host.domain.com:389/cn=Users,dc=domain,dc=com";
     private static final String DEFAULT_LDAP_SEARCH_FILTER = "(sAMAccountName={0})";
 

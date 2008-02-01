@@ -11,6 +11,7 @@ public class PasswordSettingsCommand {
     private String username;
     private String password;
     private String confirmPassword;
+    private boolean ldapAuthenticated;
 
     public String getUsername() {
         return username;
@@ -34,5 +35,13 @@ public class PasswordSettingsCommand {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public boolean isLdapAuthenticated() {
+        return ldapAuthenticated;
+    }
+
+    public void setLdapAuthenticated(boolean ldapAuthenticated) {
+        this.ldapAuthenticated = ldapAuthenticated;
     }
 }

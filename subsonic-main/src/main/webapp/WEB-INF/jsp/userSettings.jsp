@@ -100,7 +100,7 @@
                 <fmt:message key="common.help" var="help"/>
                 <img src="<c:url value="/icons/help_small.png"/>" alt="" title="${help}"></a></td>
             <c:if test="${not command.transcodingSupported}">
-                <td class="warning"><fmt:message key="playersettings.nolame"></fmt:message></td>
+                <td class="warning"><fmt:message key="playersettings.nolame"/></td>
             </c:if>
         </tr>
     </table>
@@ -119,6 +119,7 @@
             <tr>
                 <td><form:checkbox path="ldapAuthenticated" id="ldapAuthenticated" cssClass="checkbox" onclick="javascript:enablePasswordChangeFields()"/></td>
                 <td><label for="ldapAuthenticated"><fmt:message key="usersettings.ldap"/></label></td>
+                <td><a href="helpPopup.view?topic=ldap" onclick="return popup(this, 'help')"><img src="<c:url value="/icons/help_small.png"/>" alt="${help}" title="${help}"></a></td>
             </tr>
         </table>
     </c:if>
