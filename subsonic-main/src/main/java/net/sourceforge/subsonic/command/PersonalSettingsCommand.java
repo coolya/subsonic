@@ -16,6 +16,7 @@ public class PersonalSettingsCommand {
     private Theme[] themes;
     private UserSettings.Visibility mainVisibility;
     private UserSettings.Visibility playlistVisibility;
+    private boolean partyModeEnabled;
     private boolean showNowPlayingEnabled;
     private boolean finalVersionNotificationEnabled;
     private boolean betaVersionNotificationEnabled;
@@ -78,6 +79,14 @@ public class PersonalSettingsCommand {
 
     public void setPlaylistVisibility(UserSettings.Visibility playlistVisibility) {
         this.playlistVisibility = playlistVisibility;
+    }
+
+    public boolean isPartyModeEnabled() {
+        return partyModeEnabled;
+    }
+
+    public void setPartyModeEnabled(boolean partyModeEnabled) {
+        this.partyModeEnabled = partyModeEnabled;
     }
 
     public boolean isShowNowPlayingEnabled() {

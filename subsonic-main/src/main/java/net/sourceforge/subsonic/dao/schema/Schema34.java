@@ -25,5 +25,11 @@ public class Schema34 extends Schema {
             template.execute("alter table user add ldap_authenticated boolean default false not null");
             LOG.info("Database column 'user.ldap_authenticated' was added successfully.");
         }
+
+        if (!columnExists(template, "party_mode_enabled", "user_settings")) {
+            LOG.info("Database column 'user_settings.party_mode_enabled' not found.  Creating it.");
+            template.execute("alter table user_settings add party_mode_enabled boolean default false not null");
+            LOG.info("Database column 'user_settings.party_mode_enabled' was added successfully.");
+        }
     }
 }

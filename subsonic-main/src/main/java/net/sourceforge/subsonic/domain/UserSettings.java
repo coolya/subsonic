@@ -22,6 +22,7 @@ public class UserSettings {
     private String lastFmPassword;
     private TranscodeScheme transcodeScheme = TranscodeScheme.OFF;
     private int selectedMusicFolderId = -1;
+    private boolean partyModeEnabled;
 
     public UserSettings(String username) {
         this.username = username;
@@ -129,6 +130,14 @@ public class UserSettings {
 
     public void setSelectedMusicFolderId(int selectedMusicFolderId) {
         this.selectedMusicFolderId = selectedMusicFolderId;
+    }
+
+    public boolean isPartyModeEnabled() {
+        return partyModeEnabled;
+    }
+
+    public void setPartyModeEnabled(boolean partyModeEnabled) {
+        this.partyModeEnabled = partyModeEnabled;
     }
 
     /**

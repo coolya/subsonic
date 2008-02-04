@@ -138,6 +138,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertSame("Error in getUserSettings().", TranscodeScheme.OFF, userSettings.getTranscodeScheme());
         assertFalse("Error in getUserSettings().", userSettings.isShowNowPlayingEnabled());
         assertEquals("Error in getUserSettings().", -1, userSettings.getSelectedMusicFolderId());
+        assertFalse("Error in getUserSettings().", userSettings.isPartyModeEnabled());
 
         UserSettings settings = new UserSettings("sindre");
         settings.setLocale(Locale.SIMPLIFIED_CHINESE);
@@ -153,6 +154,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         settings.setTranscodeScheme(TranscodeScheme.MAX_192);
         settings.setShowNowPlayingEnabled(false);
         settings.setSelectedMusicFolderId(3);
+        settings.setPartyModeEnabled(true);
 
         userDao.updateUserSettings(settings);
         userSettings = userDao.getUserSettings("sindre");
@@ -171,6 +173,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertSame("Error in getUserSettings().", TranscodeScheme.MAX_192, userSettings.getTranscodeScheme());
         assertFalse("Error in getUserSettings().", userSettings.isShowNowPlayingEnabled());
         assertEquals("Error in getUserSettings().", 3, userSettings.getSelectedMusicFolderId());
+        assertTrue("Error in getUserSettings().", userSettings.isPartyModeEnabled());
 
         userDao.deleteUser("sindre");
         assertNull("Error in cascading delete.", userDao.getUserSettings("sindre"));

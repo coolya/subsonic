@@ -126,9 +126,16 @@
 
     <table class="indent">
         <tr>
+            <td><form:checkbox path="partyModeEnabled" id="partyModeEnabled" cssClass="checkbox"/></td>
+            <td><label for="partyModeEnabled"><fmt:message key="personalsettings.partymode"/></label></td>
+        </tr>
+        <tr>
             <td><form:checkbox path="showNowPlayingEnabled" id="nowPlaying" cssClass="checkbox"/></td>
             <td><label for="nowPlaying"><fmt:message key="personalsettings.shownowplaying"/></label></td>
         </tr>
+    </table>
+
+    <table class="indent">
         <tr>
             <td><form:checkbox path="finalVersionNotificationEnabled" id="final" cssClass="checkbox"/></td>
             <td><label for="final"><fmt:message key="personalsettings.finalversionnotification"/></label></td>
@@ -145,6 +152,7 @@
             <td><label for="lastFm"><fmt:message key="personalsettings.lastfmenabled"/></label></td>
         </tr>
     </table>
+
     <table id="lastFmTable" style="padding-left:2em">
         <tr>
             <td><fmt:message key="personalsettings.lastfmusername"/></td>

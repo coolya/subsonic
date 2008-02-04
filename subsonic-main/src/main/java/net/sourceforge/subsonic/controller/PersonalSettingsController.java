@@ -28,6 +28,7 @@ public class PersonalSettingsController extends SimpleFormController {
         command.setUser(user);
         command.setLocaleIndex("-1");
         command.setThemeIndex("-1");
+        command.setPartyModeEnabled(userSettings.isPartyModeEnabled());
         command.setShowNowPlayingEnabled(userSettings.isShowNowPlayingEnabled());
         command.setMainVisibility(userSettings.getMainVisibility());
         command.setPlaylistVisibility(userSettings.getPlaylistVisibility());
@@ -83,6 +84,7 @@ public class PersonalSettingsController extends SimpleFormController {
 
         settings.setLocale(locale);
         settings.setThemeId(themeId);
+        settings.setPartyModeEnabled(command.isPartyModeEnabled());
         settings.setShowNowPlayingEnabled(command.isShowNowPlayingEnabled());
         settings.setMainVisibility(command.getMainVisibility());
         settings.setPlaylistVisibility(command.getPlaylistVisibility());
