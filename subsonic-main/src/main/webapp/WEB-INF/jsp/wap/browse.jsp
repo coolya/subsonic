@@ -17,15 +17,24 @@
             <sub:url value="/wap/playlist.view" var="addUrl">
                 <sub:param name="add" value="${model.parent.path}"/>
             </sub:url>
+            <sub:url value="/wap/download.view" var="downloadUrl">
+                <sub:param name="path" value="${model.parent.path}"/>
+            </sub:url>
 
             <c:choose>
                 <c:when test="${fn:length(model.children) eq 1 and model.children[0].file}">
                     <a href="${playUrl}">[<fmt:message key="wap.browse.playone"/>]</a><br/>
                     <a href="${addUrl}">[<fmt:message key="wap.browse.addone"/>]</a><br/>
+                    <c:if test="${model.user.downloadRole}">
+                        <a href="${downloadUrl}">[<fmt:message key="wap.browse.downloadone"/>]</a><br/>
+                    </c:if>
                 </c:when>
                 <c:otherwise>
                     <a href="${playUrl}">[<fmt:message key="wap.browse.playall"/>]</a><br/>
                     <a href="${addUrl}">[<fmt:message key="wap.browse.addall"/>]</a><br/>
+                    <c:if test="${model.user.downloadRole}">
+                        <a href="${downloadUrl}">[<fmt:message key="wap.browse.downloadall"/>]</a><br/>
+                    </c:if>
                 </c:otherwise>
             </c:choose>
 

@@ -75,6 +75,7 @@ public class WapController extends MultiActionController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("parent", parent);
         map.put("children", children);
+        map.put("user", securityService.getCurrentUser(request));
 
         return new ModelAndView("wap/browse", "model", map);
     }
