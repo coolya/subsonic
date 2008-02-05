@@ -25,11 +25,23 @@
         setTimeout("startTimer()", 10000);
     }
 
-    function nowPlayingCallback(file){
+    function nowPlayingCallback(file) {
         if (currentFile != null && currentFile != file) {
             location.replace("playlist.view?");
         }
         currentFile = file;
+    }
+    function clearPlaylist() {
+    <c:choose>
+    <c:when test="${model.partyMode}">
+        if (confirm("<fmt:message key="playlist.confirmclear"/>")) {
+            location.href = "playlist.view?clear";
+        }
+    </c:when>
+    <c:otherwise>
+        location.href = "playlist.view?clear";
+    </c:otherwise>
+    </c:choose>
     }
 </script>
 
@@ -125,7 +137,7 @@
             </c:otherwise>
         </c:choose>
 
-        <td><a href="playlist.view?clear"><fmt:message key="playlist.clear"/></a></td>
+        <td><a href="javascript:clearPlaylist()"><fmt:message key="playlist.clear"/></a></td>
         <td> | <a href="playlist.view?shuffle"><fmt:message key="playlist.shuffle"/></a></td>
 
         <c:if test="${not model.player.clientSidePlaylist}">

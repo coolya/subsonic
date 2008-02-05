@@ -6,8 +6,8 @@ Adjust booter to make it work on Linux.
 Bug: Clicking on album in playlist when playing songs located in root.
 Party mode http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1014
    v Add personal setting "party mode".
-   - Remove "Play all"
-   - Remove "Add all"
+   v Remove "Play all"
+   v Remove "Add all"
    - Remove "Play" button
    - Add confirmation dialog for Playlist clear.
    - Tip: create "party user" with limited rights.
