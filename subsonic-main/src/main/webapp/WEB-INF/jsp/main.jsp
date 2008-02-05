@@ -93,6 +93,7 @@
     </c:if>
 </h1>
 
+<c:if test="${not model.partyMode}">
 <h2>
     <c:if test="${model.navigateUpAllowed}">
         <sub:url value="main.view" var="upUrl">
@@ -137,6 +138,7 @@
         </c:if>
     </c:if>
 </h2>
+</c:if>
 
 <c:if test="${model.dir.album}">
 
@@ -196,7 +198,9 @@
                 <tr style="margin:0;padding:0;border:0">
                     <c:import url="playAddDownload.jsp">
                         <c:param name="path" value="${child.path}"/>
-                        <c:param name="downloadEnabled" value="${model.user.downloadRole}"/>
+                        <c:param name="playEnabled" value="${not model.partyMode}"/>
+                        <c:param name="addEnabled" value="${not model.partyMode or not child.directory}"/>
+                        <c:param name="downloadEnabled" value="${not model.partyMode and model.user.downloadRole}"/>
                         <c:param name="asTable" value="true"/>
                     </c:import>
 

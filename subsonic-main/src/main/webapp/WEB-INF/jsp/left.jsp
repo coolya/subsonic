@@ -101,7 +101,8 @@
                 <span title="${child.title}">
                     <c:import url="playAddDownload.jsp">
                         <c:param name="path" value="${child.path}"/>
-                        <c:param name="downloadEnabled" value="${model.downloadEnabled}"/>
+                        <c:param name="playEnabled" value="${not model.partyMode}"/>
+                        <c:param name="downloadEnabled" value="${not model.partyMode and model.downloadEnabled}"/>
                     </c:import>
                     <str:truncateNicely upper="${model.captionCutoff}">${child.title}</str:truncateNicely>
                 </span>

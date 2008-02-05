@@ -4,7 +4,9 @@
 <%--
 PARAMETERS
   path: Path to album.
-  downloadEnabled: Whether the current user is allowed to download.
+  playEnabled: Whether the current user is allowed to play songs (default true).
+  addEnabled: Whether the current user is allowed to add songs to the playlist (default true).
+  downloadEnabled: Whether the current user is allowed to download songs (default false).
   asTable: Whether to put the images in td tags.
 --%>
 
@@ -19,17 +21,22 @@ PARAMETERS
 </sub:url>
 
 <c:if test="${param.asTable}"><td></c:if>
+<c:if test="${empty param.playEnabled or param.playEnabled}">
 <a target="playlist" href="${playUrl}">
     <img width="13" height="13" src="<spring:theme code="playImage"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
-
-<c:if test="${param.asTable}"></td><td></c:if>
-<a target="playlist" href="${addUrl}">
-    <img width="13" height="13" src="<spring:theme code="addImage"/>" alt="<fmt:message key="common.add"/>" title="<fmt:message key="common.add"/>"/></a>
+</c:if>
 <c:if test="${param.asTable}"></td></c:if>
 
+<c:if test="${param.asTable}"><td></c:if>
+<c:if test="${empty param.addEnabled or param.addEnabled}">
+<a target="playlist" href="${addUrl}">
+    <img width="13" height="13" src="<spring:theme code="addImage"/>" alt="<fmt:message key="common.add"/>" title="<fmt:message key="common.add"/>"/></a>
+</c:if>
+<c:if test="${param.asTable}"></td></c:if>
+
+<c:if test="${param.asTable}"><td></c:if>
 <c:if test="${param.downloadEnabled}">
-    <c:if test="${param.asTable}"><td></c:if>
     <a href="${downloadUrl}">
         <img width="13" height="13" src="<spring:theme code="downloadImage"/>" alt="<fmt:message key="common.download"/>" title="<fmt:message key="common.download"/>"/></a>
-    <c:if test="${param.asTable}"></td></c:if>
 </c:if>
+<c:if test="${param.asTable}"></td></c:if>

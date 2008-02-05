@@ -6,7 +6,7 @@ import net.sourceforge.subsonic.controller.*;
 import java.util.*;
 
 /**
- * Command used in {@link SearchController}. 
+ * Command used in {@link SearchController}.
  *
  * @author Sindre Mehus
  */
@@ -18,7 +18,8 @@ public class SearchCommand {
     private List<Match> matches;
     private boolean isIndexBeingCreated;
     private int maxHits;
-    private boolean isDownloadEnabled;
+    private boolean downloadEnabled;
+    private boolean partyModeEnabled;
 
     public String getQuery() {
         return query;
@@ -77,11 +78,19 @@ public class SearchCommand {
     }
 
     public boolean isDownloadEnabled() {
-        return isDownloadEnabled;
+        return downloadEnabled;
     }
 
     public void setDownloadEnabled(boolean downloadEnabled) {
-        this.isDownloadEnabled = downloadEnabled;
+        this.downloadEnabled = downloadEnabled;
+    }
+
+    public boolean isPartyModeEnabled() {
+        return partyModeEnabled;
+    }
+
+    public void setPartyModeEnabled(boolean partyModeEnabled) {
+        this.partyModeEnabled = partyModeEnabled;
     }
 
     public static class Match {

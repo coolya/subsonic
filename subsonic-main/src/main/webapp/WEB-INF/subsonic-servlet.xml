@@ -129,6 +129,7 @@
         <property name="formView" value="search"/>
         <property name="searchService" ref="searchService"/>
         <property name="securityService" ref="securityService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="settingsController" class="net.sourceforge.subsonic.controller.SettingsController">
         <property name="securityService" ref="securityService"/>

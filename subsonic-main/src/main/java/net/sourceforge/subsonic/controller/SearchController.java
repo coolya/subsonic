@@ -4,6 +4,7 @@ import net.sourceforge.subsonic.command.*;
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.util.*;
+import net.sourceforge.subsonic.dao.UserDao;
 import org.springframework.web.servlet.mvc.*;
 import org.springframework.web.servlet.*;
 import org.springframework.validation.*;
@@ -24,6 +25,7 @@ public class SearchController extends SimpleFormController {
 
     private SearchService searchService;
     private SecurityService securityService;
+    private SettingsService settingsService;
 
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         return new SearchCommand();
@@ -33,8 +35,11 @@ public class SearchController extends SimpleFormController {
             throws Exception {
         SearchCommand command = (SearchCommand) com;
         command.setMaxHits(MAX_HITS);
+
         User user = securityService.getCurrentUser(request);
+        UserSettings userSettings = settingsService.getUserSettings(user.getUsername());
         command.setDownloadEnabled(user.isDownloadRole());
+        command.setPartyModeEnabled(userSettings.isPartyModeEnabled());
 
         String query = getQuery(command);
         long millis = getNewerThanMillis(command);
@@ -169,5 +174,9 @@ public class SearchController extends SimpleFormController {
 
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
     }
 }

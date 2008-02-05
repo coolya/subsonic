@@ -4,6 +4,7 @@ import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SecurityService;
@@ -35,6 +36,7 @@ public class PlaylistController extends ParameterizableViewController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         User user = securityService.getCurrentUser(request);
+        UserSettings userSettings = settingsService.getUserSettings(user.getUsername());
         Player player = playerService.getPlayer(request, response);
         Playlist playlist = player.getPlaylist();
 
@@ -47,7 +49,8 @@ public class PlaylistController extends ParameterizableViewController {
         map.put("players", getPlayers(user));
         map.put("repeatEnabled", playlist.isRepeatEnabled());
         map.put("isPlaying", playlist.getStatus() == Playlist.Status.PLAYING);
-        map.put("visibility", settingsService.getUserSettings(user.getUsername()).getPlaylistVisibility());
+        map.put("visibility", userSettings.getPlaylistVisibility());
+        map.put("partyMode", userSettings.isPartyModeEnabled());
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;

@@ -64,12 +64,14 @@ public class LeftController extends ParameterizableViewController implements Las
         String[] shortcuts = settingsService.getShortcutsAsArray();
         List<MusicIndex> musicIndex = MusicIndex.createIndexesFromExpression(indexString);
         Map<MusicIndex, List<MusicFile>> indexedChildren = MusicIndex.getIndexedChildren(musicFoldersToUse, musicIndex, ignoredArticles, shortcuts);
+        UserSettings userSettings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
 
         map.put("musicFolders", allMusicFolders);
         map.put("selectedMusicFolder", selectedMusicFolder);
         map.put("radios", settingsService.getAllInternetRadios());
         map.put("shortcuts", getShortcuts(musicFoldersToUse, shortcuts));
-        map.put("captionCutoff", settingsService.getUserSettings(securityService.getCurrentUsername(request)).getMainVisibility().getCaptionCutoff());
+        map.put("captionCutoff", userSettings.getMainVisibility().getCaptionCutoff());
+        map.put("partyMode", userSettings.isPartyModeEnabled());
 
         if (statistics != null) {
             map.put("statistics", statistics);
