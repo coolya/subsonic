@@ -45,9 +45,6 @@ public class HomeController extends ParameterizableViewController {
             listType = "random";
         }
 
-        // Start creating search index, if not already existing.
-        checkIndexCreation();
-
         List<Album> albums;
         if ("highest".equals(listType)) {
             albums = getHighestRated(listOffset, listSize);
@@ -164,7 +161,7 @@ public class HomeController extends ParameterizableViewController {
                 return;
             }
         }
-        
+
         album.setArtist(file.getMetaData().getArtist());
         album.setAlbumTitle(file.getMetaData().getAlbum());
     }
@@ -184,14 +181,6 @@ public class HomeController extends ParameterizableViewController {
             }
         } catch (IOException x) {
             LOG.warn("Failed to resolve cover art for " + file, x);
-        }
-    }
-
-    private void checkIndexCreation() {
-        MusicFolder[] folders = settingsService.getAllMusicFolders();
-
-        if (!searchService.isIndexCreated() && folders.length > 0) {
-            searchService.createIndex();
         }
     }
 

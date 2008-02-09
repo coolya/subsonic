@@ -1,17 +1,24 @@
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.command.*;
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
-import net.sourceforge.subsonic.util.*;
-import net.sourceforge.subsonic.dao.UserDao;
-import org.springframework.web.servlet.mvc.*;
-import org.springframework.web.servlet.*;
-import org.springframework.validation.*;
+import net.sourceforge.subsonic.command.SearchCommand;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.service.SearchService;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.util.StringUtil;
+import org.springframework.validation.BindException;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.SimpleFormController;
 
-import javax.servlet.http.*;
-import java.util.*;
-import java.util.regex.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Controller for the search page.
@@ -46,10 +53,6 @@ public class SearchController extends SimpleFormController {
 
         if (query != null || millis != 0) {
 
-            if (!searchService.isIndexCreated()) {
-                searchService.createIndex();
-            }
-
             if (searchService.isIndexBeingCreated()) {
                 command.setIndexBeingCreated(true);
             } else {
@@ -77,12 +80,18 @@ public class SearchController extends SimpleFormController {
     private String getArtistAlbumYear(MusicFile.MetaData metaData, String[] criteria) {
 
         String artist = metaData.getArtist();
-        String album  = metaData.getAlbum();
-        String year   = metaData.getYear();
+        String album = metaData.getAlbum();
+        String year = metaData.getYear();
 
-        if ("".equals(artist)) { artist = null; }
-        if ("".equals(album)) { album = null; }
-        if ("".equals(year)) { year = null; }
+        if ("".equals(artist)) {
+            artist = null;
+        }
+        if ("".equals(album)) {
+            album = null;
+        }
+        if ("".equals(year)) {
+            year = null;
+        }
 
         StringBuffer buf = new StringBuffer();
 

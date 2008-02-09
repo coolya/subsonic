@@ -1,5 +1,6 @@
 TODO IN 3.4
 ===========
+Verify oggdec parameters, cf. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1066
 Test user caching, for instance when changing password or roles.
 Implement LastModified in main.jsp (Must test on FF)
 Adjust booter to make it work on Linux.
@@ -35,6 +36,7 @@ Create Back button.
 
 BACKLOG
 ===========================
+Add option to specify music folder in random playlist generator.
 Fix caching bug of left.jsp when changing theme etc.
 Retag track number in podcasts. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2003
 Make background image repeat in x-direction?

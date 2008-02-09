@@ -131,9 +131,6 @@ public class WapController extends MultiActionController {
 
     public ModelAndView searchResult(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String query = request.getParameter("query");
-        if (!searchService.isIndexCreated()) {
-            searchService.createIndex();
-        }
         boolean creatingIndex = searchService.isIndexBeingCreated();
 
         Map<String, Object> map = new HashMap<String, Object>();

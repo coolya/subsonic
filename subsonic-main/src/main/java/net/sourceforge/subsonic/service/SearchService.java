@@ -214,6 +214,9 @@ public class SearchService {
         timer.schedule(task, firstTime, period);
 
         LOG.info("Automatic index creation scheduled to run every " + daysBetween + " day(s), starting at " + firstTime);
+
+        // In addition, create index immediately.
+        createIndex();
     }
 
     /**
