@@ -95,8 +95,7 @@ public class WapController extends MultiActionController {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
-        for (int i = 0; i < players.length; i++) {
-            Player player = players[i];
+        for (Player player : players) {
             Playlist playlist = player.getPlaylist();
             map.put("playlist", playlist);
 
@@ -112,6 +111,12 @@ public class WapController extends MultiActionController {
                 playlist.clear();
             } else if (request.getParameter("load") != null) {
                 playlistService.loadPlaylist(playlist, request.getParameter("load"));
+            } else if (request.getParameter("random") != null) {
+                List<MusicFile> randomFiles = searchService.getRandomSongs(20, null, null, null);
+                playlist.clear();
+                for (MusicFile randomFile : randomFiles) {
+                    playlist.addFile(randomFile);
+                }
             }
         }
 

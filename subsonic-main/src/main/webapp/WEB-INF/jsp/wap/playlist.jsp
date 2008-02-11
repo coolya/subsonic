@@ -30,6 +30,8 @@
                 <c:otherwise>
                 <b><a href="<c:url value="/wap/index.view"/>">[<fmt:message key="common.home"/>]</a></b><br/>
                 <b><a href="<c:url value="/wap/loadPlaylist.view"/>">[<fmt:message key="wap.playlist.load"/>]</a></b><br/>
+                <b><a href="<c:url value="/wap/playlist.view?random"/>">[<fmt:message key="wap.playlist.random"/>]</a></b><br/>
+
                 <c:set var="playlist" value="${model.players[0].playlist}"/>
 
                 <c:if test="${not empty playlist.files}">
