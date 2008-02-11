@@ -6,11 +6,17 @@ import javax.swing.*;
 
 /**
  * Application entry point for Subsonic booter.
+ * <p/>
+ * The following system properties may be used to customize the behaviour:
+ * <ul>
+ * <li><code>subsonic.contextPath</code> - The context path at which Subsonic is deployed.  Default "/".</li>
+ * <li><code>subsonic.port</code> - The port Subsonic will listen to.  Default 80.</li>
+ * <li><code>subsonic.war</code> - Subsonic WAR file, or exploded directory.  Default "subsonic.war".</li>
+ * </ul>
  *
  * @author Sindre Mehus
  */
 public class Main {
-
 
     public Main() {
 

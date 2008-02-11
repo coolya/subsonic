@@ -21,6 +21,7 @@ public class SubsonicController {
     public static final int DEFAULT_PORT = 80;
     public static final int DEFAULT_MEMORY_LIMIT = 64;
     public static final String DEFAULT_CONTEXT_PATH = "/";
+    public static final String DEFAULT_WAR = "subsonic.war";
     private static final int MAX_IDLE_TIME_MILLIS = 2 * 24 * 60 * 60 * 1000;
 
     // Subsonic home directory.
@@ -49,7 +50,7 @@ public class SubsonicController {
             WebAppContext context = new WebAppContext();
             context.setTempDirectory(new File(getSubsonicHome(), "jetty"));
             context.setContextPath(getContextPath());
-            context.setWar("subsonic.war");
+            context.setWar(getWar());
 
             server.addHandler(context);
             server.start();
@@ -65,6 +66,15 @@ public class SubsonicController {
             contextPath = DEFAULT_CONTEXT_PATH;
         }
         return contextPath;
+    }
+
+
+    public String getWar() {
+        String war = System.getProperty("subsonic.war");
+        if (war == null) {
+            war = DEFAULT_WAR;
+        }
+        return war;
     }
 
     public int getPort() {
