@@ -1,5 +1,6 @@
 TODO IN 3.4
 ===========
+Bug in 3.4: Search index shouldn't be recreated at startup.
 Party mode: Go into random mode if the playlist is empty.
 Test user caching, for instance when changing password or roles.
 Implement LastModified in main.jsp (Must test on FF)
