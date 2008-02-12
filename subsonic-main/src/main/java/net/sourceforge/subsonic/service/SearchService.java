@@ -60,7 +60,7 @@ public class SearchService {
      *
      * @return Whether the search index exists.
      */
-    public synchronized boolean isIndexCreated() {
+    private synchronized boolean isIndexCreated() {
         return getIndexFile().exists();
     }
 
@@ -215,8 +215,11 @@ public class SearchService {
 
         LOG.info("Automatic index creation scheduled to run every " + daysBetween + " day(s), starting at " + firstTime);
 
-        // In addition, create index immediately.
-        createIndex();
+        // In addition, create index immediately if it doesn't exist on disk.
+        if (!isIndexCreated()) {
+            LOG.info("Search index not found on disk. Creating it.");
+            createIndex();
+        }
     }
 
     /**
