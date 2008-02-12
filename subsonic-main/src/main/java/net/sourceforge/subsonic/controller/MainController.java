@@ -13,6 +13,7 @@ import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,15 +37,12 @@ import java.util.Set;
  */
 public class MainController extends ParameterizableViewController {
 
-    private static final int AD_INTERVAL = 4;
-
     private SecurityService securityService;
     private PlayerService playerService;
     private SettingsService settingsService;
     private MusicInfoService musicInfoService;
     private MusicFileService musicFileService;
     private AdService adService;
-    private int pageCount;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -54,6 +52,11 @@ public class MainController extends ParameterizableViewController {
         MusicFile dir = musicFileService.getMusicFile(path);
         if (dir.isFile()) {
             dir = dir.getParent();
+        }
+
+        // Redirect if root directory.
+        if (dir.isRoot()) {
+            return new ModelAndView(new RedirectView("home.view?"));
         }
 
         List<MusicFile> children = dir.getChildren(true, true);
