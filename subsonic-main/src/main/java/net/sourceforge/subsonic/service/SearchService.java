@@ -5,6 +5,7 @@ import net.sourceforge.subsonic.domain.MediaLibraryStatistics;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicFileInfo;
 import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.domain.RandomSearchCriteria;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -349,14 +350,16 @@ public class SearchService {
     /**
      * Returns a number of random songs.
      *
-     * @param count Maximum number of songs to return.
-     * @param genre Only return songs of the given genre. May be <code>null</code>.
-     * @param fromYear Only return songs released after (or in) this year. May be <code>null</code>.
-     * @param toYear Only return songs released before (or in) this year. May be <code>null</code>.
-     * @return Array of random songs
+     * @param criteria Search criteria.
+     * @return Array of random songs.
      * @throws IOException If an I/O error occurs.
      */
-    public List<MusicFile> getRandomSongs(int count, String genre, Integer fromYear, Integer toYear) throws IOException {
+    public List<MusicFile> getRandomSongs(RandomSearchCriteria criteria) throws IOException {
+        int count = criteria.getCount();
+        String genre = criteria.getGenre();
+        Integer fromYear = criteria.getFromYear();
+        Integer toYear = criteria.getToYear();
+
         List<MusicFile> result = new ArrayList<MusicFile>(count);
 
         if (!isIndexCreated() || isIndexBeingCreated() || cachedSongs == null || cachedSongs.isEmpty()) {

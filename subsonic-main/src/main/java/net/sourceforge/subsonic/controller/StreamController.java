@@ -18,6 +18,7 @@ import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.service.TranscodingService;
+import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.lang.math.LongRange;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,6 +49,7 @@ public class StreamController implements Controller {
     private TranscodingService transcodingService;
     private AudioScrobblerService audioScrobblerService;
     private MusicFileService musicFileService;
+    private SearchService searchService;
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -122,7 +124,7 @@ public class StreamController implements Controller {
             String contentType = StringUtil.getMimeType(request.getParameter("suffix"));
             response.setContentType(contentType);
 
-            in = new PlaylistInputStream(player, status, transcodingService, musicInfoService, audioScrobblerService);
+            in = new PlaylistInputStream(player, status, transcodingService, musicInfoService, audioScrobblerService, searchService);
             OutputStream out = RangeOutputStream.wrap(response.getOutputStream(), range);
 
             // Enabled SHOUTcast, if requested.
@@ -228,5 +230,9 @@ public class StreamController implements Controller {
 
     public void setAudioScrobblerService(AudioScrobblerService audioScrobblerService) {
         this.audioScrobblerService = audioScrobblerService;
+    }
+
+    public void setSearchService(SearchService searchService) {
+        this.searchService = searchService;
     }
 }

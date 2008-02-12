@@ -1,10 +1,16 @@
 TODO IN 3.4
 ===========
 Party mode: Go into random mode if the playlist is empty.
+Party mode: online help
 Test user caching, for instance when changing password or roles.
 Implement LastModified in main.jsp (Must test on FF)
 Adjust booter to make it work on Linux.
 Double-write genres? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
+Support "random" parameter in StreamController.  Can be used both for party mode (?) and radio mode.
+Or create new option "Create new random playlist when end is reached" in "Random playlist". Should work fine with server-side playlist.
+Maybe just set a property "random" on the playlist (including details about genre, year etc)?
+o "Play random songs when end of playlist is reached"
+o "Play more random songs when end of playlist is reached"
 
 DONE IN 3.4
 ===========

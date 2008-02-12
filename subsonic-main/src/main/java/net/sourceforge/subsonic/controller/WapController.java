@@ -112,7 +112,7 @@ public class WapController extends MultiActionController {
             } else if (request.getParameter("load") != null) {
                 playlistService.loadPlaylist(playlist, request.getParameter("load"));
             } else if (request.getParameter("random") != null) {
-                List<MusicFile> randomFiles = searchService.getRandomSongs(20, null, null, null);
+                List<MusicFile> randomFiles = searchService.getRandomSongs(new RandomSearchCriteria(20, null, null, null));
                 playlist.clear();
                 for (MusicFile randomFile : randomFiles) {
                     playlist.addFile(randomFile);

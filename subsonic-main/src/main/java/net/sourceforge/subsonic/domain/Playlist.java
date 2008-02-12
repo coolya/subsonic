@@ -2,8 +2,11 @@ package net.sourceforge.subsonic.domain;
 
 import org.apache.commons.lang.StringUtils;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * A playlist is a list of music files that are associated to a remote player.
@@ -16,17 +19,23 @@ public class Playlist {
     private boolean repeatEnabled;
     private String name = "(unnamed)";
     private Status status = Status.PLAYING;
+    private RandomSearchCriteria randomSearchCriteria;
 
-    /** The index of the current song, or -1 is the end of the playlist is reached.
-     * Note that both the index and the playlist size can be zero. */
+    /**
+     * The index of the current song, or -1 is the end of the playlist is reached.
+     * Note that both the index and the playlist size can be zero.
+     */
     private int index = 0;
 
-    /** Used for undo functionality. */
+    /**
+     * Used for undo functionality.
+     */
     private List<MusicFile> filesBackup = new ArrayList<MusicFile>();
     private int indexBackup = 0;
 
     /**
      * Returns the user-defined name of the playlist.
+     *
      * @return The name of the playlist, or <code>null</code> if no name has been assigned.
      */
     public synchronized String getName() {
@@ -35,6 +44,7 @@ public class Playlist {
 
     /**
      * Sets the user-defined name of the playlist.
+     *
      * @param name The name of the playlist.
      */
     public synchronized void setName(String name) {
@@ -43,6 +53,7 @@ public class Playlist {
 
     /**
      * Returns the current song in the playlist.
+     *
      * @return The current song in the playlist, or <code>null</code> if no current song exists.
      */
     public synchronized MusicFile getCurrentFile() {
@@ -65,14 +76,16 @@ public class Playlist {
 
     /**
      * Returns all music files in the playlist.
+     *
      * @return All music files in the playlist.
      */
     public synchronized MusicFile[] getFiles() {
-        return files.toArray(new MusicFile[0]);
+        return files.toArray(new MusicFile[files.size()]);
     }
 
     /**
      * Returns the music file at the given index.
+     *
      * @param index The index.
      * @return The music file at the given index.
      * @throws IndexOutOfBoundsException If the index is out of range.
@@ -82,8 +95,8 @@ public class Playlist {
     }
 
     /**
-    * Skip to the next song in the playlist.
-    */
+     * Skip to the next song in the playlist.
+     */
     public synchronized void next() {
         index++;
 
@@ -95,6 +108,7 @@ public class Playlist {
 
     /**
      * Returns the number of songs in the playlists.
+     *
      * @return The number of songs in the playlists.
      */
     public synchronized int size() {
@@ -103,6 +117,7 @@ public class Playlist {
 
     /**
      * Returns whether the playlist is empty.
+     *
      * @return Whether the playlist is empty.
      */
     public synchronized boolean isEmpty() {
@@ -111,6 +126,7 @@ public class Playlist {
 
     /**
      * Returns the index of the current song.
+     *
      * @return The index of the current song, or -1 if the end of the playlist is reached.
      */
     public synchronized int getIndex() {
@@ -119,6 +135,7 @@ public class Playlist {
 
     /**
      * Sets the index of the current song.
+     *
      * @param index The index of the current song.
      */
     public synchronized void setIndex(int index) {
@@ -130,9 +147,10 @@ public class Playlist {
     /**
      * Adds a music file to the playlist.  If the given file is a directory, all its children
      * will be added recursively.
-     * @param file The music file to add.
+     *
+     * @param file   The music file to add.
      * @param append Whether existing songs in the playlist should be kept.
-     * @exception IOException If an I/O error occurs.
+     * @throws IOException If an I/O error occurs.
      */
     public synchronized void addFile(MusicFile file, boolean append) throws IOException {
         makeBackup();
@@ -147,8 +165,9 @@ public class Playlist {
     /**
      * Adds a music file to the playlist.  If the given file is a directory, all its children
      * will be added recursively.
+     *
      * @param file The music file to add.
-     * @exception IOException If an I/O error occurs.
+     * @throws IOException If an I/O error occurs.
      */
     public synchronized void addFile(MusicFile file) throws IOException {
         addFile(file, true);
@@ -156,6 +175,7 @@ public class Playlist {
 
     /**
      * Removes the music file at the given index.
+     *
      * @param index The playlist index.
      */
     public synchronized void removeFileAt(int index) {
@@ -236,6 +256,7 @@ public class Playlist {
 
     /**
      * Moves the song at the given index one step up.
+     *
      * @param index The playlist index.
      */
     public synchronized void moveUp(int index) {
@@ -254,6 +275,7 @@ public class Playlist {
 
     /**
      * Moves the song at the given index one step down.
+     *
      * @param index The playlist index.
      */
     public synchronized void moveDown(int index) {
@@ -272,6 +294,7 @@ public class Playlist {
 
     /**
      * Returns whether the playlist is repeating.
+     *
      * @return Whether the playlist is repeating.
      */
     public synchronized boolean isRepeatEnabled() {
@@ -280,6 +303,7 @@ public class Playlist {
 
     /**
      * Sets whether the playlist is repeating.
+     *
      * @param repeatEnabled Whether the playlist is repeating.
      */
     public synchronized void setRepeatEnabled(boolean repeatEnabled) {
@@ -302,6 +326,7 @@ public class Playlist {
 
     /**
      * Returns the playlist status.
+     *
      * @return The playlist status.
      */
     public synchronized Status getStatus() {
@@ -310,6 +335,7 @@ public class Playlist {
 
     /**
      * Sets the playlist status.
+     *
      * @param status The playlist status.
      */
     public synchronized void setStatus(Status status) {
@@ -320,7 +346,26 @@ public class Playlist {
     }
 
     /**
+     * Returns the criteria used to generate this random playlist.
+     *
+     * @return The search criteria, or <code>null</code> if this is not a random playlist.
+     */
+    public synchronized RandomSearchCriteria getRandomSearchCriteria() {
+        return randomSearchCriteria;
+    }
+
+    /**
+     * Sets the criteria used to generate this random playlist.
+     *
+     * @param randomSearchCriteria The search criteria, or <code>null</code> if this is not a random playlist.
+     */
+    public synchronized void setRandomSearchCriteria(RandomSearchCriteria randomSearchCriteria) {
+        this.randomSearchCriteria = randomSearchCriteria;
+    }
+
+    /**
      * Returns the total length in bytes.
+     *
      * @return The total length in bytes.
      */
     public synchronized long length() {

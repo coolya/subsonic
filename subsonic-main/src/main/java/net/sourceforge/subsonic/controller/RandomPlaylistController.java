@@ -1,16 +1,21 @@
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
-import net.sourceforge.subsonic.util.StringUtil;
-import org.springframework.web.servlet.*;
-import org.springframework.web.servlet.mvc.*;
-import org.springframework.web.bind.ServletRequestUtils;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.Playlist;
+import net.sourceforge.subsonic.domain.RandomSearchCriteria;
+import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.service.SearchService;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
-import javax.servlet.http.*;
-import javax.servlet.ServletRequest;
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Controller for the creating a random playlist.
@@ -45,7 +50,8 @@ public class RandomPlaylistController extends ParameterizableViewController {
         Playlist playlist = player.getPlaylist();
         playlist.clear();
 
-        List<MusicFile> randomFiles = searchService.getRandomSongs(size, genre, fromYear, toYear);
+        RandomSearchCriteria criteria = new RandomSearchCriteria(size, genre, fromYear, toYear);
+        List<MusicFile> randomFiles = searchService.getRandomSongs(criteria);
         for (MusicFile randomFile : randomFiles) {
             playlist.addFile(randomFile);
         }

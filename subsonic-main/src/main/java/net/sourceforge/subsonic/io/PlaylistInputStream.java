@@ -8,6 +8,7 @@ import net.sourceforge.subsonic.domain.TransferStatus;
 import net.sourceforge.subsonic.service.AudioScrobblerService;
 import net.sourceforge.subsonic.service.MusicInfoService;
 import net.sourceforge.subsonic.service.TranscodingService;
+import net.sourceforge.subsonic.service.SearchService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +24,7 @@ public class PlaylistInputStream extends InputStream {
 
     private final Player player;
     private final TransferStatus status;
+    private final SearchService searchService;
     private final TranscodingService transcodingService;
     private final MusicInfoService musicInfoService;
     private final AudioScrobblerService audioScrobblerService;
@@ -31,14 +33,20 @@ public class PlaylistInputStream extends InputStream {
     private InputStream currentInputStream;
 
     public PlaylistInputStream(Player player, TransferStatus status, TranscodingService transcodingService,
-                               MusicInfoService musicInfoService, AudioScrobblerService audioScrobblerService) {
+                               MusicInfoService musicInfoService, AudioScrobblerService audioScrobblerService,
+                               SearchService searchService) {
         this.transcodingService = transcodingService;
         this.musicInfoService = musicInfoService;
         this.audioScrobblerService = audioScrobblerService;
         this.player = player;
         this.status = status;
+        this.searchService = searchService;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int read(byte[] b) throws IOException {
         prepare();
         if (currentInputStream == null) {
@@ -57,7 +65,15 @@ public class PlaylistInputStream extends InputStream {
     }
 
     private void prepare() throws IOException {
-        MusicFile file = player.getPlaylist().getCurrentFile();
+        Playlist playlist = player.getPlaylist();
+
+//        if (playlist.getIndex() == -1) {
+        // TODO: If playlist is in auto-random mode, populate it with new random songs.
+//
+//        }
+
+
+        MusicFile file = playlist.getCurrentFile();
         if (file == null) {
             close();
         } else if (!file.equals(currentFile)) {
@@ -83,6 +99,10 @@ public class PlaylistInputStream extends InputStream {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void close() throws IOException {
         try {
             if (currentInputStream != null) {
@@ -94,6 +114,10 @@ public class PlaylistInputStream extends InputStream {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int read() throws IOException {
         byte[] b = new byte[1];
         int n = read(b);
