@@ -22,7 +22,7 @@ public class SubsonicController {
     public static final int DEFAULT_MEMORY_LIMIT = 64;
     public static final String DEFAULT_CONTEXT_PATH = "/";
     public static final String DEFAULT_WAR = "subsonic.war";
-    private static final int MAX_IDLE_TIME_MILLIS = 2 * 24 * 60 * 60 * 1000;
+    private static final int MAX_IDLE_TIME_MILLIS = 7 * 24 * 60 * 60 * 1000; // One week.
 
     // Subsonic home directory.
     private static final File SUBSONIC_HOME_WINDOWS = new File("c:/subsonic");

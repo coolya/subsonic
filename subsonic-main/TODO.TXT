@@ -5,11 +5,11 @@ Test user caching, for instance when changing password or roles.
 Implement LastModified in main.jsp (Must test on FF)
 Adjust booter to make it work on Linux.
 Bug: Clicking on album in playlist when playing songs located in root.
-Consolidate use of SearchService.createIndex().  Should probably be private?
 Double-write genres? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
 
 DONE IN 3.4
 ===========
+Cover art "Change" has wrong layout.
 Random playlist option in WAP interface.
 Party mode http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1014
 WAP download. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1022

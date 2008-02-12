@@ -304,13 +304,15 @@
         </c:forEach>
 
         <c:if test="${model.showGenericCoverArt}">
-            <c:import url="coverArt.jsp">
-                <c:param name="albumPath" value="${model.dir.path}"/>
-                <c:param name="coverArtSize" value="${model.coverArtSize}"/>
-                <c:param name="showLink" value="false"/>
-                <c:param name="showZoom" value="false"/>
-                <c:param name="showChange" value="${model.user.coverArtRole}"/>
-            </c:import>
+            <div style="float:left; padding:5px">
+                <c:import url="coverArt.jsp">
+                    <c:param name="albumPath" value="${model.dir.path}"/>
+                    <c:param name="coverArtSize" value="${model.coverArtSize}"/>
+                    <c:param name="showLink" value="false"/>
+                    <c:param name="showZoom" value="false"/>
+                    <c:param name="showChange" value="${model.user.coverArtRole}"/>
+                </c:import>
+            </div>
         </c:if>
     </td>
 
