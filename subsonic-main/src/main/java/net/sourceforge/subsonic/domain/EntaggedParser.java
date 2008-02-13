@@ -96,19 +96,25 @@ public class EntaggedParser extends MetaDataParser {
             return null;
         }
 
+        Integer result = null;
+
         try {
-            return new Integer(trackNumber);
+            result = new Integer(trackNumber);
         } catch (NumberFormatException x) {
             Matcher matcher = TRACK_NUMBER_PATTERN.matcher(trackNumber);
             if (matcher.matches()) {
                 try {
-                    return new Integer(matcher.group(1));
+                    result = new Integer(matcher.group(1));
                 } catch (NumberFormatException e) {
                     return null;
                 }
             }
         }
-        return null;
+
+        if (Integer.valueOf(0).equals(result)) {
+            return null;
+        }
+        return result;
     }
 
     /**

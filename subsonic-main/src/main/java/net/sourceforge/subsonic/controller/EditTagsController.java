@@ -34,8 +34,8 @@ public class EditTagsController extends ParameterizableViewController {
         map.put("allGenres", EntaggedParser.getID3V1Genres());
 
         List<Song> songs = new ArrayList<Song>();
-        for (MusicFile file : files) {
-            songs.add(createSong(file));
+        for (int i = 0; i < files.size(); i++) {
+            songs.add(createSong(files.get(i), i));
         }
         map.put("path", path);
         map.put("songs", songs);
@@ -45,16 +45,17 @@ public class EditTagsController extends ParameterizableViewController {
         return result;
     }
 
-    private Song createSong(MusicFile file) {
+    private Song createSong(MusicFile file, int index) {
         MetaDataParser parser = MetaDataParser.Factory.getInstance().getParser(file);
         MusicFile.MetaData metaData = parser.getRawMetaData(file);
 
         Song song = new Song();
         song.setPath(file.getPath());
         song.setFileName(file.getName());
-        song.setSuggestedTitle(parser.guessTitle(file));
         song.setTrack(metaData.getTrackNumber());
+        song.setSuggestedTrack(index + 1);
         song.setTitle(metaData.getTitle());
+        song.setSuggestedTitle(parser.guessTitle(file));
         song.setArtist(metaData.getArtist());
         song.setAlbum(metaData.getAlbum());
         song.setYear(metaData.getYear());
@@ -72,6 +73,7 @@ public class EditTagsController extends ParameterizableViewController {
     public static class Song {
         private String path;
         private String fileName;
+        private Integer suggestedTrack;
         private Integer track;
         private String suggestedTitle;
         private String title;
@@ -94,6 +96,14 @@ public class EditTagsController extends ParameterizableViewController {
 
         public void setFileName(String fileName) {
             this.fileName = fileName;
+        }
+
+        public Integer getSuggestedTrack() {
+            return suggestedTrack;
+        }
+
+        public void setSuggestedTrack(Integer suggestedTrack) {
+            this.suggestedTrack = suggestedTrack;
         }
 
         public Integer getTrack() {

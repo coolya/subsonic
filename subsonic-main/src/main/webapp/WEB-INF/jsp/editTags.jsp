@@ -47,6 +47,18 @@
             DWRUtil.setValue("title" + i, title);
         }
     }
+    function suggestTrack() {
+        for (i = 0; i < fileCount; i++) {
+            var track = DWRUtil.getValue("suggestedTrack" + i);
+            DWRUtil.setValue("track" + i, track);
+        }
+    }
+    function resetTrack() {
+        for (i = 0; i < fileCount; i++) {
+            var track = DWRUtil.getValue("originalTrack" + i);
+            DWRUtil.setValue("track" + i, track);
+        }
+    }
     function updateTags() {
         document.getElementById("save").disabled = true;
         index = 0;
@@ -102,9 +114,12 @@
         <th class="ruleTableHeader"><fmt:message key="edittags.album"/></th>
         <th class="ruleTableHeader"><fmt:message key="edittags.year"/></th>
         <th class="ruleTableHeader"><fmt:message key="edittags.genre"/></th>
-        <th class="ruleTableHeader" width="60pt"><fmt:message key="edittags.status"/></th></tr>
-    <tr><th class="ruleTableHeader"></th>
-        <th class="ruleTableHeader"></th>
+        <th class="ruleTableHeader" width="60pt"><fmt:message key="edittags.status"/></th>
+    </tr>
+    <tr>
+        <th class="ruleTableHeader"/>
+        <th class="ruleTableHeader"><a href="javascript:suggestTrack()"><fmt:message key="edittags.suggest.short"/></a> |
+            <a href="javascript:resetTrack()"><fmt:message key="edittags.reset.short"/></a></th>
         <th class="ruleTableHeader"><a href="javascript:suggestTitle()"><fmt:message key="edittags.suggest"/></a> |
             <a href="javascript:resetTitle()"><fmt:message key="edittags.reset"/></a></th>
         <th class="ruleTableHeader" style="white-space: nowrap"><input type="text" name="artistAll" size="15" onkeypress="DWRUtil.onReturn(event, setArtist)" value="${model.defaultArtist}"/>&nbsp;<a href="javascript:setArtist()"><fmt:message key="edittags.set"/></a></th>
@@ -120,7 +135,7 @@
 
             <a href="javascript:setGenre()"><fmt:message key="edittags.set"/></a>
         </th>
-        <th class="ruleTableHeader"></th>
+        <th class="ruleTableHeader"/>
     </tr>
 
     <c:forEach items="${model.songs}" var="song" varStatus="loopStatus">
@@ -129,6 +144,8 @@
             <input type="hidden" name="path${loopStatus.count - 1}" value="${song.path}"/>
             <input type="hidden" name="suggestedTitle${loopStatus.count - 1}" value="${song.suggestedTitle}"/>
             <input type="hidden" name="originalTitle${loopStatus.count - 1}" value="${song.title}"/>
+            <input type="hidden" name="suggestedTrack${loopStatus.count - 1}" value="${song.suggestedTrack}"/>
+            <input type="hidden" name="originalTrack${loopStatus.count - 1}" value="${song.track}"/>
             <td class="ruleTableCell" title="${song.fileName}">${fileName}</td>
             <td class="ruleTableCell"><input type="text" size="5" name="track${loopStatus.count - 1}" value="${song.track}"/></td>
             <td class="ruleTableCell"><input type="text" size="30" name="title${loopStatus.count - 1}" value="${song.title}"/></td>
