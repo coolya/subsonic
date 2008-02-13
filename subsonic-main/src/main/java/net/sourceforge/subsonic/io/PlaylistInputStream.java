@@ -12,6 +12,7 @@ import net.sourceforge.subsonic.service.SearchService;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * Implementation of {@link InputStream} which reads from a {@link Playlist}.
@@ -67,11 +68,10 @@ public class PlaylistInputStream extends InputStream {
     private void prepare() throws IOException {
         Playlist playlist = player.getPlaylist();
 
-//        if (playlist.getIndex() == -1) {
-        // TODO: If playlist is in auto-random mode, populate it with new random songs.
-//
-//        }
-
+        // If playlist is in auto-random mode, populate it with new random songs.
+        if (playlist.getIndex() == -1 && playlist.getRandomSearchCriteria() != null) {
+            populateRandomPlaylist(playlist);
+        }
 
         MusicFile file = playlist.getCurrentFile();
         if (file == null) {
@@ -85,6 +85,16 @@ public class PlaylistInputStream extends InputStream {
             currentFile = file;
             status.setFile(currentFile.getFile());
         }
+    }
+
+    private void populateRandomPlaylist(Playlist playlist) throws IOException {
+        playlist.clear();
+        List<MusicFile> files = searchService.getRandomSongs(playlist.getRandomSearchCriteria());
+        for (MusicFile file : files) {
+            playlist.addFile(file);
+        }
+
+        LOG.info("Recreated random playlist with " + playlist.size() + " songs.");
     }
 
     private void updateStatistics(MusicFile file) {

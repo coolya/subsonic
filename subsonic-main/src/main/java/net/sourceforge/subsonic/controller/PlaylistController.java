@@ -95,13 +95,16 @@ public class PlaylistController extends ParameterizableViewController {
             sendM3U = true;
             MusicFile file = musicFileService.getMusicFile(request.getParameter("play"));
             playlist.addFile(file, false);
+            playlist.setRandomSearchCriteria(null);
         } else if (request.getParameter("add") != null) {
             MusicFile file = musicFileService.getMusicFile(request.getParameter("add"));
             playlist.addFile(file);
             index = playlist.size() - 1;
+            playlist.setRandomSearchCriteria(null);
         } else if (request.getParameter("clear") != null) {
             sendM3U = serverSidePlaylist;
             playlist.clear();
+            playlist.setRandomSearchCriteria(null);
         } else if (request.getParameter("shuffle") != null) {
             index = -1;
             playlist.shuffle();

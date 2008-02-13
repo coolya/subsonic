@@ -56,6 +56,10 @@ public class RandomPlaylistController extends ParameterizableViewController {
             playlist.addFile(randomFile);
         }
 
+        if (request.getParameter("autoRandom") != null) {
+            playlist.setRandomSearchCriteria(criteria);
+        }
+
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("reloadFrames", reloadFrames);
 

@@ -11,6 +11,8 @@ Or create new option "Create new random playlist when end is reached" in "Random
 Maybe just set a property "random" on the playlist (including details about genre, year etc)?
 o "Play random songs when end of playlist is reached"
 o "Play more random songs when end of playlist is reached"
+Suggest track number in tag editor.
+Add option to specify music folder in random playlist generator.
 
 DONE IN 3.4
 ===========
@@ -38,7 +40,6 @@ Create Back button.
 
 BACKLOG
 ===========================
-Add option to specify music folder in random playlist generator.
 Fix caching bug of left.jsp when changing theme etc.
 Retag track number in podcasts. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2003
 Make background image repeat in x-direction?

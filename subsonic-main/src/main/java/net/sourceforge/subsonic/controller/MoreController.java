@@ -19,6 +19,7 @@ public class MoreController extends ParameterizableViewController {
     private SettingsService settingsService;
     private SecurityService securityService;
     private SearchService searchService;
+    private PlayerService playerService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -36,6 +37,8 @@ public class MoreController extends ParameterizableViewController {
         result.addObject("model", map);
         map.put("uploadDirectory", uploadDirectory);
         map.put("genres", searchService.getGenres());
+        map.put("clientSidePlaylist", playerService.getPlayer(request, response).isClientSidePlaylist());
+
         return result;
     }
 
@@ -49,5 +52,9 @@ public class MoreController extends ParameterizableViewController {
 
     public void setSearchService(SearchService searchService) {
         this.searchService = searchService;
+    }
+
+    public void setPlayerService(PlayerService playerService) {
+        this.playerService = playerService;
     }
 }

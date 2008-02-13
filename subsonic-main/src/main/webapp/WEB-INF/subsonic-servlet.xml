@@ -39,6 +39,7 @@
         <property name="settingsService" ref="settingsService"/>
         <property name="securityService" ref="securityService"/>
         <property name="searchService" ref="searchService"/>
+        <property name="playerService" ref="playerService"/>
     </bean>
     <bean id="uploadController" class="net.sourceforge.subsonic.controller.UploadController">
         <property name="viewName" value="upload"/>

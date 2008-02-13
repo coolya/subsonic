@@ -48,7 +48,7 @@
 
 <h2><img src="<c:url value="/icons/random.png"/>" width="16" height="16" alt=""/>&nbsp;<fmt:message key="more.random.title"/></h2>
 
-<form method="post" action="randomPlaylist.view">
+<form method="post" action="randomPlaylist.view?">
     <table>
         <tr>
             <td><fmt:message key="more.random.text"/></td>
@@ -86,6 +86,14 @@
                 <input type="submit" value="<fmt:message key="more.random.ok"/>">
             </td>
         </tr>
+        <c:if test="${not model.clientSidePlaylist}">
+            <tr>
+                <td colspan="7">
+                    <input type="checkbox" name="autoRandom" id="autoRandom" class="checkbox"/>
+                    <label for="autoRandom"><fmt:message key="more.random.auto"/></label>
+                </td>
+            </tr>
+        </c:if>
     </table>
 </form>
 
