@@ -6,16 +6,13 @@ Test user caching, for instance when changing password or roles.
 Implement LastModified in main.jsp (Must test on FF)
 Adjust booter to make it work on Linux.
 Double-write genres? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
-Support "random" parameter in StreamController.  Can be used both for party mode (?) and radio mode.
-Or create new option "Create new random playlist when end is reached" in "Random playlist". Should work fine with server-side playlist.
-Maybe just set a property "random" on the playlist (including details about genre, year etc)?
-o "Play random songs when end of playlist is reached"
-o "Play more random songs when end of playlist is reached"
+Add auto-random option to party mode.
 Suggest track number in tag editor.
-Add option to specify music folder in random playlist generator.
 
 DONE IN 3.4
 ===========
+Added option to specify music folder in random playlist generator.
+Created new option "Play more random songs when end of playlist is reached" in "Random playlist".
 Bug: Clicking on album in playlist when playing songs located in root.
 Cover art "Change" has wrong layout.
 Random playlist option in WAP interface.

@@ -108,13 +108,7 @@ public class LeftController extends ParameterizableViewController implements Las
         UserSettings settings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
         int musicFolderId = settings.getSelectedMusicFolderId();
 
-        for (MusicFolder musicFolder : settingsService.getAllMusicFolders()) {
-            if (musicFolderId == musicFolder.getId()) {
-                return musicFolder;
-            }
-        }
-
-        return null;
+        return settingsService.getMusicFolderById(musicFolderId);
     }
 
     private List<MusicFile> getShortcuts(MusicFolder[] musicFoldersToUse, String[] shortcuts) {

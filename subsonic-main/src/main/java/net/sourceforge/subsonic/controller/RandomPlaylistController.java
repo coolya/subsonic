@@ -46,11 +46,16 @@ public class RandomPlaylistController extends ParameterizableViewController {
             toYear = Integer.parseInt(tmp[1]);
         }
 
+        Integer musicFolderId = ServletRequestUtils.getRequiredIntParameter(request, "musicFolderId");
+        if (musicFolderId == -1) {
+            musicFolderId = null;
+        }
+        
         Player player = playerService.getPlayer(request, response);
         Playlist playlist = player.getPlaylist();
         playlist.clear();
 
-        RandomSearchCriteria criteria = new RandomSearchCriteria(size, genre, fromYear, toYear);
+        RandomSearchCriteria criteria = new RandomSearchCriteria(size, genre, fromYear, toYear, musicFolderId);
         List<MusicFile> randomFiles = searchService.getRandomSongs(criteria);
         for (MusicFile randomFile : randomFiles) {
             playlist.addFile(randomFile);

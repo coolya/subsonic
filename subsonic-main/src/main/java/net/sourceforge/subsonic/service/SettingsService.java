@@ -637,6 +637,22 @@ public class SettingsService {
     }
 
     /**
+     * Returns the music folder with the given ID.
+     *
+     * @param id The ID.
+     * @return The music folder with the given ID, or <code>null</code> if not found.
+     */
+    public MusicFolder getMusicFolderById(Integer id) {
+        MusicFolder[] all = getAllMusicFolders();
+        for (MusicFolder folder : all) {
+            if (id.equals(folder.getId())) {
+                return folder;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Creates a new music folder.
      *
      * @param musicFolder The music folder to create.

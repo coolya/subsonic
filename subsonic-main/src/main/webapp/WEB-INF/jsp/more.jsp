@@ -82,13 +82,22 @@
                     <option value="0 1950">&lt; 1950</option>
                 </select>
             </td>
+            <td><fmt:message key="more.random.folder"/></td>
+            <td>
+                <select name="musicFolderId">
+                    <option value="-1"><fmt:message key="more.random.anyfolder"/></option>
+                    <c:forEach items="${model.musicFolders}" var="musicFolder">
+                        <option value="${musicFolder.id}">${musicFolder.name}</option>
+                    </c:forEach>
+                </select>
+            </td>
             <td>
                 <input type="submit" value="<fmt:message key="more.random.ok"/>">
             </td>
         </tr>
         <c:if test="${not model.clientSidePlaylist}">
             <tr>
-                <td colspan="7">
+                <td colspan="9">
                     <input type="checkbox" name="autoRandom" id="autoRandom" class="checkbox"/>
                     <label for="autoRandom"><fmt:message key="more.random.auto"/></label>
                 </td>

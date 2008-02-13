@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -30,7 +31,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.Collections;
 
 /**
  * Provides services for searching for music.
@@ -178,7 +178,9 @@ public class SearchService {
         }
     }
 
-    /** Schedule background execution of index creation. */
+    /**
+     * Schedule background execution of index creation.
+     */
     public synchronized void schedule() {
         if (timer != null) {
             timer.cancel();
@@ -356,10 +358,6 @@ public class SearchService {
      */
     public List<MusicFile> getRandomSongs(RandomSearchCriteria criteria) throws IOException {
         int count = criteria.getCount();
-        String genre = criteria.getGenre();
-        Integer fromYear = criteria.getFromYear();
-        Integer toYear = criteria.getToYear();
-
         List<MusicFile> result = new ArrayList<MusicFile>(count);
 
         if (!isIndexCreated() || isIndexBeingCreated() || cachedSongs == null || cachedSongs.isEmpty()) {
@@ -369,9 +367,18 @@ public class SearchService {
         // Ensure that index is read to memory.
         getIndex();
 
-        // Filter by genre and genre, if required.
+        String genre = criteria.getGenre();
+        Integer fromYear = criteria.getFromYear();
+        Integer toYear = criteria.getToYear();
+        String musicFolderPath = null;
+        if (criteria.getMusicFolderId() != null) {
+            MusicFolder musicFolder = settingsService.getMusicFolderById(criteria.getMusicFolderId());
+            musicFolderPath = musicFolder.getPath().getPath().toUpperCase() + File.separator;
+        }
+
+        // Filter by genre, year and music folder, if required.
         List<Line> songs = cachedSongs;
-        if (genre != null || fromYear != null) {
+        if (genre != null || fromYear != null || musicFolderPath != null) {
             songs = new ArrayList<Line>();
 
             String fromYearString = fromYear == null ? null : String.valueOf(fromYear);
@@ -397,6 +404,14 @@ public class SearchService {
                     }
                 }
 
+                // Skip if wrong music folder.
+                if (musicFolderPath != null) {
+                    String filePath = song.file.getPath().toUpperCase();
+                    if (!filePath.startsWith(musicFolderPath)) {
+                        continue;
+                    }
+                }
+
                 songs.add(song);
             }
         }
@@ -405,7 +420,7 @@ public class SearchService {
             return result;
         }
 
-        // Note: To avoid duplicates, we iterate over more than the requested number of items.
+        // Note: To avoid duplicates, we iterate over more than the requested number of songs.
         for (int i = 0; i < count * 10; i++) {
             int n = RANDOM.nextInt(songs.size());
             File file = songs.get(n).file;
@@ -415,7 +430,7 @@ public class SearchService {
                 if (!result.contains(musicFile)) {
                     result.add(musicFile);
 
-                    // Enough items found?
+                    // Enough songs found?
                     if (result.size() == count) {
                         break;
                     }
@@ -445,12 +460,12 @@ public class SearchService {
     }
 
     /**
-    * Returns a number of random albums.
-    *
-    * @param count Maximum number of albums to return.
-    * @return Array of random albums.
-    * @throws IOException If an I/O error occurs.
-    */
+     * Returns a number of random albums.
+     *
+     * @param count Maximum number of albums to return.
+     * @return Array of random albums.
+     * @throws IOException If an I/O error occurs.
+     */
     public List<MusicFile> getRandomAlbums(int count) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>(count);
 
@@ -610,7 +625,9 @@ public class SearchService {
         return new File(home, "subsonic" + version + ".index");
     }
 
-    /** Deletes old versions of the index file. */
+    /**
+     * Deletes old versions of the index file.
+     */
     private void deleteOldIndexFiles() {
         for (int i = 2; i < INDEX_VERSION; i++) {
             File file = getIndexFile(i);
@@ -642,10 +659,14 @@ public class SearchService {
         this.musicInfoService = musicInfoService;
     }
 
-    /** Contains the content of a single line in the index file. */
+    /**
+     * Contains the content of a single line in the index file.
+     */
     static class Line {
 
-        /** Column separator. */
+        /**
+         * Column separator.
+         */
         static final String SEPARATOR = " ixYxi ";
 
         private boolean isFile;
