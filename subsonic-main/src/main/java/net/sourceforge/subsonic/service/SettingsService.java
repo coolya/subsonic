@@ -770,6 +770,7 @@ public class SettingsService {
         settings.setFinalVersionNotificationEnabled(true);
         settings.setBetaVersionNotificationEnabled(false);
         settings.setShowNowPlayingEnabled(true);
+        settings.setPartyModeEnabled(false);
         settings.setLastFmEnabled(false);
         settings.setLastFmUsername(null);
         settings.setLastFmPassword(null);
