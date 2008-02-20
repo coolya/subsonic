@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Main-Class: net.sourceforge.subsonic.booter.Main
+SplashScreen-Image: images/subsonic-64.png
