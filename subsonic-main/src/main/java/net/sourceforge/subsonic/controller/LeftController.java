@@ -36,6 +36,10 @@ public class LeftController extends ParameterizableViewController implements Las
     private SecurityService securityService;
     private MusicFileService musicFileService;
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public long getLastModified(HttpServletRequest request) {
         saveSelectedMusicFolder(request);
         MusicFolder[] musicFolders = settingsService.getAllMusicFolders();
@@ -49,11 +53,11 @@ public class LeftController extends ParameterizableViewController implements Las
         return lastModified;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        // The "Expires" HTTP header is set to avoid overly eager caching in Firefox.
-        response.setHeader("Expires", "Thu, 01 Dec 1994 16:00:00 GMT");
-
         saveSelectedMusicFolder(request);
         Map<String, Object> map = new HashMap<String, Object>();
 

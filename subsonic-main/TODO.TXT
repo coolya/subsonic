@@ -1,16 +1,18 @@
 TODO IN 3.4
 ===========
-VERIFY: Fix caching bug of left.jsp when changing theme etc.
 Party mode: Go into random mode if the playlist is empty.
 Party mode: online help
 Test user caching, for instance when changing password or roles.
-Implement LastModified in main.jsp (Must test on FF)
+Implement LastModified in main.jsp (Must test on FF).  Must add timestamp on music_file_info. Problem with cover art scheme.
 Adjust booter to make it work on Linux.
 Double-write genres? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
 Add auto-random option to party mode.
+Add logging "Subsonic is started. Please visit http://localhost/sdfskdj"
 
 DONE IN 3.4
 ===========
+Add Main-class manifest to jar.
+Bugfix: Support quotes in search field and shortcut field.
 Fix caching bug of left.jsp when changing theme etc.
 Suggest track number in tag editor.
 Don't display track number zero.
