@@ -21,7 +21,7 @@ public class GeneralSettingsController extends SimpleFormController {
         GeneralSettingsCommand command = new GeneralSettingsCommand();
         command.setCoverArtMask(settingsService.getCoverArtMask());
         command.setIgnoredArticles(settingsService.getIgnoredArticles());
-        command.setShortcuts(settingsService.getShortcuts().replaceAll("\"", "&quot;"));
+        command.setShortcuts(settingsService.getShortcuts());
         command.setIndex(settingsService.getIndexString());
         command.setMusicMask(settingsService.getMusicMask());
         command.setPlaylistFolder(settingsService.getPlaylistFolder());
@@ -79,8 +79,6 @@ public class GeneralSettingsController extends SimpleFormController {
         settingsService.setThemeId(theme.getId());
         settingsService.setLocale(locale);
         settingsService.save();
-
-        command.setShortcuts(command.getShortcuts().replaceAll("\"", "&quot;"));
     }
 
     public void setSettingsService(SettingsService settingsService) {

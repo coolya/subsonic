@@ -11,6 +11,7 @@ import net.sourceforge.subsonic.util.StringUtil;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,7 +49,7 @@ public class SearchController extends SimpleFormController {
         command.setDownloadEnabled(user.isDownloadRole());
         command.setPartyModeEnabled(userSettings.isPartyModeEnabled());
 
-        String query = getQuery(command);
+        String query = StringUtils.trimToNull(command.getQuery());
         long millis = getNewerThanMillis(command);
 
         if (query != null || millis != 0) {
@@ -142,16 +143,6 @@ public class SearchController extends SimpleFormController {
         } catch (Exception x) {
             return text;
         }
-    }
-
-    private String getQuery(SearchCommand command) {
-        String query = command.getQuery();
-
-        if (query == null || "".equals(query)) {
-            return null;
-        }
-        command.setQuery(query.replaceAll("\"", "&quot;"));
-        return query;
     }
 
     private long getNewerThanMillis(SearchCommand command) {
