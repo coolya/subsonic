@@ -7,10 +7,12 @@ Implement LastModified in main.jsp (Must test on FF).  Must add timestamp on mus
 Adjust booter to make it work on Linux.
 Double-write genres? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
 Add auto-random option to party mode.
+Create per-channel podcast settings. At least enable/disable.
 Add logging "Subsonic is started. Please visit http://localhost/sdfskdj"
 
 DONE IN 3.4
 ===========
+Bugfix: Player selection in WAP interface now works.
 Add Main-class manifest to jar.
 Bugfix: Support quotes in search field and shortcut field.
 Fix caching bug of left.jsp when changing theme etc.
@@ -19,6 +21,7 @@ Don't display track number zero.
 Added option to specify music folder in random playlist generator.
 Created new option "Play more random songs when end of playlist is reached" in "Random playlist".
 Bug: Clicking on album in playlist when playing songs located in root.
+Consolidate use of SearchService.createIndex().  Should probably be private?
 Cover art "Change" has wrong layout.
 Random playlist option in WAP interface.
 Party mode http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1014
@@ -68,7 +71,6 @@ Add check for admin rights in installer.
 Add "play count" to Podcasts.
 ASX (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=638)
 Make it possible to cancel/resume Podcast downloads. ("Cancel selected")
-New theme.
 Select all in textfield for settings image url (and other textfields?)
 Remove stream status after end of playlist is reached.
 Ajax-ify Amazon pages.
