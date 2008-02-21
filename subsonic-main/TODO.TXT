@@ -8,10 +8,10 @@ Adjust booter to make it work on Linux.
 Double-write genres? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
 Add auto-random option to party mode.
 Create per-channel podcast settings. At least enable/disable.
-Add logging "Subsonic is started. Please visit http://localhost/sdfskdj"
 
 DONE IN 3.4
 ===========
+Add logging "Subsonic is started. Please visit http://localhost/sdfskdj"
 Bugfix: Player selection in WAP interface now works.
 Add Main-class manifest to jar.
 Bugfix: Support quotes in search field and shortcut field.

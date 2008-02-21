@@ -30,7 +30,8 @@ public class Main {
             System.err.println("Failed to set look-and-feel.\n" + x);
         }
 
-        new SubsonicController();
+        SubsonicController controller = new SubsonicController();
+        System.err.println("Subsonic running on " + controller.getURL());
     }
 
     public static void main(String[] args) {
