@@ -102,7 +102,7 @@
                     <ul>
                         <li>Supports multiple simultaneous players. The playlist for any player can be managed from any location.</li>
                         <li>Secure. Users must log in using a username and password. Users can be assigned different
-                            privileges. Supports HTTPS/SSL encryption.</li>
+                            privileges. Supports HTTPS/SSL encryption. Also supports LDAP and Active Directory authentication.</li>
                         <li>Lean web interface optimized for constrained bandwidth environments and efficient browsing
                             through large music collections.</li>
                         <li>WAP interface allows you to control Subsonic from any mobile phone or PDA.</li>

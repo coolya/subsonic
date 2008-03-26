@@ -1,41 +1,6 @@
 TODO IN 3.4
 ===========
-Party mode: Go into random mode if the playlist is empty.
 Party mode: online help
-Test user caching, for instance when changing password or roles.
-Implement LastModified in main.jsp (Must test on FF).  Must add timestamp on music_file_info. Problem with cover art scheme.
-Adjust booter to make it work on Linux.
-Double-write genres? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
-Add auto-random option to party mode.
-Create per-channel podcast settings. At least enable/disable.
-
-DONE IN 3.4
-===========
-Add logging "Subsonic is started. Please visit http://localhost/sdfskdj"
-Bugfix: Player selection in WAP interface now works.
-Add Main-class manifest to jar.
-Bugfix: Support quotes in search field and shortcut field.
-Fix caching bug of left.jsp when changing theme etc.
-Suggest track number in tag editor.
-Don't display track number zero.
-Added option to specify music folder in random playlist generator.
-Created new option "Play more random songs when end of playlist is reached" in "Random playlist".
-Bug: Clicking on album in playlist when playing songs located in root.
-Consolidate use of SearchService.createIndex().  Should probably be private?
-Cover art "Change" has wrong layout.
-Random playlist option in WAP interface.
-Party mode http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1014
-WAP download. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1022
-Disable per-user ldap option if global option is disabled.
-LDAP option to automatically create users in Subsonic.
-LDAP online help.
-LDAP support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2098#2098
-Allow more than 2 hours of idle time in Jetty.
-Use table layout in main frame. Avoid clash with "Now playing".
-Faster startup on Windows. Extract war file to c:\subsonic\jetty.
-Create play/add/download buttons for files in left frame.
-"Highest rated" now also shows albums that have never been played. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1053
-Make index always visible (on FireFox and Opera, at least).
 
 FLEX TODO
 =========
@@ -45,6 +10,12 @@ Create Back button.
 
 BACKLOG
 ===========================
+Add Wikipedia support.
+Add Wikipedia and Google icon on album page.
+Implement LastModified in main.jsp (Must test on FF).  Must add timestamp on music_file_info. Problem with cover art scheme.
+Double-write genres? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
+Party mode: Go into random mode if the playlist is finished.
+Create per-channel podcast settings. At least enable/disable.
 Retag track number in podcasts. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2003
 Make background image repeat in x-direction?
 Use YUI menus: http://developer.yahoo.com/yui/menu/

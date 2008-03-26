@@ -14,6 +14,28 @@
         </script>
 
         <section name="Change Log">
+            <subsection name="Subsonic 3.4 - Mar 27, 2008">
+                <ul>
+                    <li>New: Added support for user authentication in LDAP, including Microsoft Active Directory.</li>
+                    <li>New: Implemented "Party mode" with a simpler user interface.</li>
+                    <li>New: Added option to specify music folder in "Random playlist".</li>
+                    <li>New: Added option "Play more random songs when end of playlist is reached" in "Random playlist".</li>
+                    <li>New: Implemented download option in WAP interface.</li>
+                    <li>New: Implemented random playlist option in WAP interface.</li>
+                    <li>New: Make index always visible (doesn't work in IE).</li>
+                    <li>New: Added play/add/download buttons for songs in left frame.</li>
+                    <li>New: Suggest track number in tag editor.</li>
+                    <li>Bugfix: Fixed faulty layout in main frame.</li>
+                    <li>Bugfix: Fixed caching bug of left frame (when changing theme etc).</li>
+                    <li>Bugfix: "Highest rated" now also shows albums that have never been played.</li>
+                    <li>Bugfix: Player selection in WAP interface now works.</li>
+                    <li>Bugfix: Support quotes in search field and shortcut field.</li>
+                    <li>Bugfix: Don't display track number zero.</li>
+                    <li>Tech: Faster start-up on Windows. Extract war file to SUBSONIC_HOME/jetty instead of temp directory.</li>
+                    <li>Tech: Made it possible to run the Jetty version on Linux and other platforms.</li>
+                    <li>Tech: Allow up to one week of idle time in Jetty.</li>
+                </ul>
+            </subsection>
 
             <subsection name="Subsonic 3.3 - Dec 23, 2007">
                 <ul>
