@@ -192,6 +192,7 @@ Deploy
 Check that correct local version is displayed.
 Commit
 Create file release at SourceForge. Use passive FTP to upload files.
+Remember to upload .exe installer.
 cd subsonic-site
 mvn site:site
 mvn site:deploy
