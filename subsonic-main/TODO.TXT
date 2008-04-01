@@ -3,6 +3,7 @@ TODO IN 3.4
 Party mode: online help
 Create jar download.
 Log error if subsonic.war not found.
+Use filter for subsonic version in site xml's.
 
 FLEX TODO
 =========
