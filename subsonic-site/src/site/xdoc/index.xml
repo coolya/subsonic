@@ -132,7 +132,8 @@
                     The Windows installer includes all you need, and installs Subsonic as a service. If you opt
                     for the WAR download, you must install <a href="http://www.java.com/">Java</a> (version 5.0 or later)
                     and a JSP container such as <a href="http://tomcat.apache.org/">Tomcat</a> (version 5.5 or later),
-                    both of which are available at no charge.
+                    both of which are available at no charge. There is also a stand-alone version available which
+                    doesn't require Tomcat.
                 </p>
                 <p>
                     To receive streams you need a web browser (tested on recent versions of Firefox, Opera and IE) and a

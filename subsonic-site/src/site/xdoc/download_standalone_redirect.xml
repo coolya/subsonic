@@ -3,9 +3,13 @@
 <document>
 
     <properties>
-        <title>Installation</title>
+        <title>Download</title>
         <author email="sindre_mehus@users.sourceforge.net">Sindre Mehus</author>
     </properties>
+
+    <head>
+        <meta http-equiv="REFRESH" content="3;URL=http://prdownloads.sourceforge.net/subsonic/subsonic-3.3-standalone.zip"/>
+    </head>
 
 
     <body>
@@ -15,17 +19,12 @@
             urchinTracker();
         </script>
 
-        <section name="Installation">
+        <section name="Download">
             <p>
-                There are three different ways to install Subsonic. Please select below:
-
-                <ul>
-                    <li><a href="install_windows.html">Windows installation</a></li>
-                    <li><a href="install_war.html">WAR installation</a></li>
-                    <li><a href="install_standalone.html">Stand-alone installation</a></li>
-                </ul>
+                You are being redirected to the SourceForge download center. Please wait!<br/>
+                (Click <a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.3-standalone.zip">here</a>
+                if nothing happens.)
             </p>
-
         </section>
 
     </body>

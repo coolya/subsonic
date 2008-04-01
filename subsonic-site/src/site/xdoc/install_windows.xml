@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<document>
+
+    <properties>
+        <title>Windows Installation</title>
+        <author email="sindre_mehus@users.sourceforge.net">Sindre Mehus</author>
+    </properties>
+
+
+    <body>
+        <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            _uacct = 'UA-110410-1';
+            urchinTracker();
+        </script>
+
+        <section name="Windows Installation">
+            <p>
+                On Windows, the easiest way to install Subsonic is using the provided Windows Installer.
+            </p>
+            <p>
+                It installs Subsonic as a service (available in Control Panel &gt; Services) that
+                is started automatically when you log on to Windows. It also creates links in the Start Menu
+                (All Programs &gt; Subsonic &gt; Start/Stop Subsonic).
+
+            </p>
+            <p>
+                When Subsonic is running, a small icon (the yellow submarine) is displayed in the notification area of
+                the task bar. Click on it to change settings or to see status.
+            </p>
+        </section>
+
+    </body>
+</document>

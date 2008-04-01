@@ -19,7 +19,11 @@
         <menu name="Subsonic">
             <item name="Overview"         href="index.html"/>
             <item name="Download"         href="download.html"/>
-            <item name="Install"          href="install.html"/>
+            <item name="Installation"     href="install.html" collapse="true">
+                <item name="Windows"      href="install_windows.html"/>
+                <item name="WAR"          href="install_war.html"/>
+                <item name="Stand-alone"  href="install_standalone.html"/>
+            </item>
             <item name="Screenshots"      href="screenshots.html"/>
             <item name="Change Log"       href="changelog.html"/>
             <item name="Transcoding"      href="transcode.html"/>
