@@ -14,7 +14,7 @@
         </script>
 
         <section name="Change Log">
-            <subsection name="Subsonic 3.4 - Mar 27, 2008">
+            <subsection name="Subsonic 3.4.beta1 - Mar 28, 2008">
                 <ul>
                     <li>New: Added support for user authentication in LDAP, including Microsoft Active Directory.</li>
                     <li>New: Implemented "Party mode" with a simpler user interface.</li>
