@@ -171,9 +171,14 @@
             <sub:url value="allmusic.view" var="allmusicUrl">
                 <sub:param name="album" value="${album}"/>
             </sub:url>
+            <sub:url value="http://www.last.fm/music/" var="lastFmUrl" encoding="UTF-8">
+                <sub:param name="q" value="\"${artist}\" \"${album}\""/>
+                <sub:param name="m" value="albums"/>
+            </sub:url>
             <fmt:message key="top.search"/> <a target="_blank" href="${googleUrl}">Google</a> |
             <a target="_blank" href="${wikipediaUrl}">Wikipedia</a> |
-            <a target="_blank" href="${allmusicUrl}">allmusic</a> 
+            <a target="_blank" href="${allmusicUrl}">allmusic</a> |
+            <a target="_blank" href="${lastFmUrl}">Last.fm</a>
         </c:if>
     </span>
 
