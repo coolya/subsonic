@@ -74,6 +74,14 @@ public class SubsonicController {
         if (war == null) {
             war = DEFAULT_WAR;
         }
+
+        File file = new File(war);
+        if (file.exists()) {
+            System.out.println("Using WAR file: " + file.getAbsolutePath());
+        } else {
+            System.err.println("Error: WAR file not found: " + file.getAbsolutePath());
+        }
+
         return war;
     }
 

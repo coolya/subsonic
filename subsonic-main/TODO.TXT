@@ -1,11 +1,10 @@
 TODO IN 3.4
 ===========
-Party mode: online help
-Log error if subsonic.war not found.
-Use filter for subsonic version in site xml's.
 
 DONE IN 3.4
 ===========
+Party mode: online help
+Log error if subsonic.war not found.
 Create jar download.
 Rewrite install.xml.  Make separate descriptions for each download type (exe, war, jar).
 Change screenshot in sourceforge, freshmeat and download.
@@ -18,6 +17,7 @@ Create Back button.
 
 BACKLOG
 ===========================
+Use filter for subsonic version in site xml's.
 Add download/upload speedometer.
 Add Wikipedia support.
 Add Wikipedia and Google icon on album page.
