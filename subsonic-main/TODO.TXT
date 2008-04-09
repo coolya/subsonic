@@ -18,6 +18,7 @@ Create Back button.
 
 BACKLOG
 ===========================
+Add download/upload speedometer.
 Add Wikipedia support.
 Add Wikipedia and Google icon on album page.
 Implement LastModified in main.jsp (Must test on FF).  Must add timestamp on music_file_info. Problem with cover art scheme.

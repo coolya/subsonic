@@ -15,6 +15,7 @@ public class SettingsServiceTestCase extends TestCase {
 
     private SettingsService settingsService;
 
+    @Override
     protected void setUp() throws Exception {
         System.setProperty("subsonic.home", SUBSONIC_HOME.getPath());
         new File(SUBSONIC_HOME, "subsonic.properties").delete();
@@ -43,6 +44,8 @@ public class SettingsServiceTestCase extends TestCase {
         assertEquals("Wrong default rewrite URL enabled.", true, settingsService.isRewriteUrlEnabled());
         assertEquals("Wrong default LDAP enabled.", false, settingsService.isLdapEnabled());
         assertEquals("Wrong default LDAP URL.", "ldap://host.domain.com:389/cn=Users,dc=domain,dc=com", settingsService.getLdapUrl());
+        assertNull("Wrong default LDAP manager DN.", settingsService.getLdapManagerDn());
+        assertNull("Wrong default LDAP manager password.", settingsService.getLdapManagerPassword());
         assertEquals("Wrong default LDAP search filter.", "(sAMAccountName={0})", settingsService.getLdapSearchFilter());
         assertEquals("Wrong default LDAP auto-shadowing.", false, settingsService.isLdapAutoShadowing());
     }
@@ -71,6 +74,8 @@ public class SettingsServiceTestCase extends TestCase {
         settingsService.setRewriteUrlEnabled(false);
         settingsService.setLdapEnabled(true);
         settingsService.setLdapUrl("newLdapUrl");
+        settingsService.setLdapManagerDn("admin");
+        settingsService.setLdapManagerPassword("secret");
         settingsService.setLdapSearchFilter("newLdapSearchFilter");
         settingsService.setLdapAutoShadowing(true);
 
@@ -110,6 +115,8 @@ public class SettingsServiceTestCase extends TestCase {
         assertEquals("Wrong rewrite URL enabled.", false, settingsService.isRewriteUrlEnabled());
         assertTrue("Wrong LDAP enabled.", settingsService.isLdapEnabled());
         assertEquals("Wrong LDAP URL.", "newLdapUrl", settingsService.getLdapUrl());
+        assertEquals("Wrong LDAP manager DN.", "admin", settingsService.getLdapManagerDn());
+        assertEquals("Wrong LDAP manager password.", "secret", settingsService.getLdapManagerPassword());
         assertEquals("Wrong LDAP search filter.", "newLdapSearchFilter", settingsService.getLdapSearchFilter());
         assertTrue("Wrong LDAP auto-shadowing.", settingsService.isLdapAutoShadowing());
     }

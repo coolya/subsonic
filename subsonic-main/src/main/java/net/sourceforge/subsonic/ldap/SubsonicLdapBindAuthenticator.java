@@ -10,6 +10,7 @@ import org.acegisecurity.ldap.search.FilterBasedLdapUserSearch;
 import org.acegisecurity.providers.ldap.LdapAuthenticator;
 import org.acegisecurity.providers.ldap.authenticator.BindAuthenticator;
 import org.acegisecurity.userdetails.ldap.LdapUserDetails;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -77,6 +78,14 @@ public class SubsonicLdapBindAuthenticator implements LdapAuthenticator {
         if (delegateAuthenticator == null || authenticatorTimestamp < settingsService.getSettingsLastChanged()) {
 
             DefaultInitialDirContextFactory contextFactory = new DefaultInitialDirContextFactory(settingsService.getLdapUrl());
+
+            String managerDn = settingsService.getLdapManagerDn();
+            String managerPassword = settingsService.getLdapManagerPassword();
+            if (StringUtils.isNotEmpty(managerDn) && StringUtils.isNotEmpty(managerPassword)) {
+                contextFactory.setManagerDn(managerDn);
+                contextFactory.setManagerPassword(managerPassword);
+            }
+
             Map<String, String> extraEnvVars = new HashMap<String, String>();
             extraEnvVars.put("java.naming.referral", "follow");
             contextFactory.setExtraEnvVars(extraEnvVars);

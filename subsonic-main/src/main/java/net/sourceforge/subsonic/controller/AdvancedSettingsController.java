@@ -3,6 +3,7 @@ package net.sourceforge.subsonic.controller;
 import net.sourceforge.subsonic.command.AdvancedSettingsCommand;
 import net.sourceforge.subsonic.service.SettingsService;
 import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +16,7 @@ public class AdvancedSettingsController extends SimpleFormController {
 
     private SettingsService settingsService;
 
+    @Override
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         AdvancedSettingsCommand command = new AdvancedSettingsCommand();
         command.setCoverArtLimit(String.valueOf(settingsService.getCoverArtLimit()));
@@ -25,11 +27,13 @@ public class AdvancedSettingsController extends SimpleFormController {
         command.setLdapEnabled(settingsService.isLdapEnabled());
         command.setLdapUrl(settingsService.getLdapUrl());
         command.setLdapSearchFilter(settingsService.getLdapSearchFilter());
+        command.setLdapManagerDn(settingsService.getLdapManagerDn());
         command.setLdapAutoShadowing(settingsService.isLdapAutoShadowing());
 
         return command;
     }
 
+    @Override
     protected void doSubmitAction(Object comm) throws Exception {
         AdvancedSettingsCommand command = (AdvancedSettingsCommand) comm;
 
@@ -52,7 +56,12 @@ public class AdvancedSettingsController extends SimpleFormController {
         settingsService.setLdapEnabled(command.isLdapEnabled());
         settingsService.setLdapUrl(command.getLdapUrl());
         settingsService.setLdapSearchFilter(command.getLdapSearchFilter());
+        settingsService.setLdapManagerDn(command.getLdapManagerDn());
         settingsService.setLdapAutoShadowing(command.isLdapAutoShadowing());
+
+        if (StringUtils.isNotEmpty(command.getLdapManagerPassword())) {
+            settingsService.setLdapManagerPassword(command.getLdapManagerPassword());
+        }
 
         settingsService.save();
     }

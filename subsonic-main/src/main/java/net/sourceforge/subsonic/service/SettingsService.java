@@ -68,6 +68,8 @@ public class SettingsService {
     private static final String KEY_REWRITE_URL = "RewriteUrl";
     private static final String KEY_LDAP_ENABLED = "LdapEnabled";
     private static final String KEY_LDAP_URL = "LdapUrl";
+    private static final String KEY_LDAP_MANAGER_DN = "LdapManagerDn";
+    private static final String KEY_LDAP_MANAGER_PASSWORD = "LdapManagerPassword";
     private static final String KEY_LDAP_SEARCH_FILTER = "LdapSearchFilter";
     private static final String KEY_LDAP_AUTO_SHADOWING = "LdapAutoShadowing";
 
@@ -100,6 +102,8 @@ public class SettingsService {
     private static final boolean DEFAULT_REWRITE_URL = true;
     private static final boolean DEFAULT_LDAP_ENABLED = false;
     private static final String DEFAULT_LDAP_URL = "ldap://host.domain.com:389/cn=Users,dc=domain,dc=com";
+    private static final String DEFAULT_LDAP_MANAGER_DN = null;
+    private static final String DEFAULT_LDAP_MANAGER_PASSWORD = null;
     private static final String DEFAULT_LDAP_SEARCH_FILTER = "(sAMAccountName={0})";
     private static final boolean DEFAULT_LDAP_AUTO_SHADOWING = false;
 
@@ -110,7 +114,7 @@ public class SettingsService {
                                           KEY_PODCAST_UPDATE_INTERVAL, KEY_PODCAST_FOLDER, KEY_PODCAST_EPISODE_RETENTION_COUNT,
                                           KEY_PODCAST_EPISODE_DOWNLOAD_COUNT, KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT,
                                           KEY_LICENSE_EMAIL, KEY_LICENSE_CODE, KEY_LICENSE_DATE, KEY_DOWNSAMPLING_COMMAND, KEY_REWRITE_URL,
-                                          KEY_LDAP_ENABLED, KEY_LDAP_URL, KEY_LDAP_SEARCH_FILTER, KEY_LDAP_AUTO_SHADOWING
+                                          KEY_LDAP_ENABLED, KEY_LDAP_URL, KEY_LDAP_MANAGER_DN, KEY_LDAP_MANAGER_PASSWORD, KEY_LDAP_SEARCH_FILTER, KEY_LDAP_AUTO_SHADOWING
     };
 
     private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
@@ -491,6 +495,33 @@ public class SettingsService {
 
     public void setLdapSearchFilter(String ldapSearchFilter) {
         properties.setProperty(KEY_LDAP_SEARCH_FILTER, ldapSearchFilter);
+    }
+
+    public String getLdapManagerDn() {
+        return properties.getProperty(KEY_LDAP_MANAGER_DN, DEFAULT_LDAP_MANAGER_DN);
+    }
+
+    public void setLdapManagerDn(String ldapManagerDn) {
+        properties.setProperty(KEY_LDAP_MANAGER_DN, ldapManagerDn);
+    }
+
+    public String getLdapManagerPassword() {
+        String s = properties.getProperty(KEY_LDAP_MANAGER_PASSWORD, DEFAULT_LDAP_MANAGER_PASSWORD);
+        try {
+            return StringUtil.utf8HexDecode(s);
+        } catch (Exception x) {
+            LOG.warn("Failed to decode LDAP manager password.", x);
+            return s;
+        }
+    }
+
+    public void setLdapManagerPassword(String ldapManagerPassword) {
+        try {
+            ldapManagerPassword = StringUtil.utf8HexEncode(ldapManagerPassword);
+        } catch (Exception x) {
+            LOG.warn("Failed to encode LDAP manager password.", x);
+        }
+        properties.setProperty(KEY_LDAP_MANAGER_PASSWORD, ldapManagerPassword);
     }
 
     public boolean isLdapAutoShadowing() {

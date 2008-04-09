@@ -16,6 +16,8 @@ public class AdvancedSettingsCommand {
     private boolean ldapEnabled;
     private String ldapUrl;
     private String ldapSearchFilter;
+    private String ldapManagerDn;
+    private String ldapManagerPassword;
     private boolean ldapAutoShadowing;
     private boolean isReloadNeeded;
 
@@ -81,6 +83,22 @@ public class AdvancedSettingsCommand {
 
     public void setLdapSearchFilter(String ldapSearchFilter) {
         this.ldapSearchFilter = ldapSearchFilter;
+    }
+
+    public String getLdapManagerDn() {
+        return ldapManagerDn;
+    }
+
+    public void setLdapManagerDn(String ldapManagerDn) {
+        this.ldapManagerDn = ldapManagerDn;
+    }
+
+    public String getLdapManagerPassword() {
+        return ldapManagerPassword;
+    }
+
+    public void setLdapManagerPassword(String ldapManagerPassword) {
+        this.ldapManagerPassword = ldapManagerPassword;
     }
 
     public boolean isLdapAutoShadowing() {

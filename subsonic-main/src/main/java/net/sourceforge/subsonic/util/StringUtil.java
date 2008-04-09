@@ -182,7 +182,7 @@ public final class StringUtil {
             result.add(element);
         }
 
-        return result.toArray(new String[0]);
+        return result.toArray(new String[result.size()]);
     }
 
     /**
@@ -205,7 +205,7 @@ public final class StringUtil {
                     result.add(line);
                 }
             }
-            return result.toArray(new String[0]);
+            return result.toArray(new String[result.size()]);
 
         } finally {
             IOUtils.closeQuietly(in);
