@@ -82,9 +82,10 @@
         </sub:url>
         <a href="${ancestorUrl}">${ancestor.name}</a> &ndash;
     </c:forEach>
-    ${model.dir.name}&nbsp;&nbsp;
+    ${model.dir.name}
 
     <c:if test="${model.dir.album and model.averageRating gt 0}">
+        &nbsp;&nbsp;
         <c:import url="rating.jsp">
             <c:param name="path" value="${model.dir.path}"/>
             <c:param name="readonly" value="true"/>
@@ -156,6 +157,19 @@
             <fmt:message key="main.lastplayed">
                 <fmt:param><fmt:formatDate type="date" dateStyle="long" value="${model.lastPlayed}"/></fmt:param>
             </fmt:message>
+        </c:if>
+
+        <c:set var="artist" value="${model.children[0].metaData.artist}"/>
+        <c:set var="album" value="${model.children[0].metaData.album}"/>
+        <c:if test="${not empty artist and not empty album}">
+            <sub:url value="http://www.google.com/musicsearch" var="googleUrl" encoding="UTF-8">
+                <sub:param name="q" value="\"${artist}\" \"${album}\""/>
+            </sub:url>
+            <sub:url value="http://en.wikipedia.org/wiki/Special:Search" var="wikipediaUrl" encoding="UTF-8">
+                <sub:param name="search" value="\"${artist}\" \"${album}\""/>
+            </sub:url>
+            <fmt:message key="top.search"/> <a target="_blank" href="${googleUrl}">Google</a> |
+            <a target="_blank" href="${wikipediaUrl}">Wikipedia</a>
         </c:if>
     </span>
 

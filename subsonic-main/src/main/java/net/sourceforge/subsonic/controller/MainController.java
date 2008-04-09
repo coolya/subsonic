@@ -44,6 +44,7 @@ public class MainController extends ParameterizableViewController {
     private MusicFileService musicFileService;
     private AdService adService;
 
+    @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
 
