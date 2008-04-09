@@ -19,8 +19,6 @@ BACKLOG
 ===========================
 Use filter for subsonic version in site xml's.
 Add download/upload speedometer.
-Add Wikipedia support.
-Add Wikipedia and Google icon on album page.
 Implement LastModified in main.jsp (Must test on FF).  Must add timestamp on music_file_info. Problem with cover art scheme.
 Double-write genres? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
 Party mode: Go into random mode if the playlist is finished.
