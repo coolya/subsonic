@@ -168,8 +168,12 @@
             <sub:url value="http://en.wikipedia.org/wiki/Special:Search" var="wikipediaUrl" encoding="UTF-8">
                 <sub:param name="search" value="\"${artist}\" \"${album}\""/>
             </sub:url>
+            <sub:url value="allmusic.view" var="allmusicUrl">
+                <sub:param name="album" value="${album}"/>
+            </sub:url>
             <fmt:message key="top.search"/> <a target="_blank" href="${googleUrl}">Google</a> |
-            <a target="_blank" href="${wikipediaUrl}">Wikipedia</a>
+            <a target="_blank" href="${wikipediaUrl}">Wikipedia</a> |
+            <a target="_blank" href="${allmusicUrl}">allmusic</a> 
         </c:if>
     </span>
 

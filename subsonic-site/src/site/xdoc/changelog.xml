@@ -17,7 +17,7 @@
             <subsection name="Subsonic 3.4 - Xxx 00, 2008">
                 <ul>
                     <li>New: Added optional setting for LDAP bind DN and password.</li>
-                    <li>New: Added quick links to Google and Wikipedia.</li>
+                    <li>New: Added quick links to Google, Wikipedia and allmusic.</li>
                 </ul>
             </subsection>
 

@@ -81,36 +81,5 @@
     </table>
 </c:if>
 
-<c:if test="${not empty command.album}">
-
-    <sub:url value="allmusic.view" var="allmusicUrl">
-        <sub:param name="album" value="${command.album}"/>
-    </sub:url>
-    <sub:url value="http://www.google.com/musicsearch" var="googleUrl" encoding="UTF-8">
-        <c:choose>
-            <c:when test="${not empty command.artist}">
-                <sub:param name="q" value="\"${command.artist}\" \"${command.album}\""/>
-            </c:when>
-            <c:otherwise>
-                <sub:param name="q" value="\"${command.album}\""/>
-            </c:otherwise>
-        </c:choose>
-    </sub:url>
-    <br/>
-    <b>
-        <fmt:message key="albuminfo.allmusic">
-            <fmt:param value="${command.album}"/>
-            <fmt:param value="<a target='_blank' href='${allmusicUrl}'>allmusic.com</a>"/>
-        </fmt:message>
-    </b>
-    <br/>
-    <b>
-        <fmt:message key="albuminfo.google">
-            <fmt:param value="${command.album}"/>
-            <fmt:param value="<a target='_blank' href='${googleUrl}'>Google Music</a>"/>
-        </fmt:message>
-    </b>
-</c:if>
-
 </body>
 </html>
