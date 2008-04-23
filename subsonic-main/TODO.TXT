@@ -17,6 +17,7 @@ Create Back button.
 
 BACKLOG
 ===========================
+Read-only view. (= Play music role) http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2435
 Use filter for subsonic version in site xml's.
 Add download/upload speedometer.
 Implement LastModified in main.jsp (Must test on FF).  Must add timestamp on music_file_info. Problem with cover art scheme.
