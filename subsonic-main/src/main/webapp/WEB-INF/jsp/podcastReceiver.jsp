@@ -124,7 +124,7 @@
                 <input type="checkbox" class="checkbox" id="channelExpanded${i.index}" value="${channel.key.id}" style="display:none"
                        <c:if test="${channelExpanded}">checked="checked"</c:if>/>
             </td>
-            <td colspan="5" style="padding-left:0.25em;padding-top:1em">
+            <td colspan="6" style="padding-left:0.25em;padding-top:1em">
                 <a href="javascript:toggleEpisodes(${i.index})">
                     <span title="${title}"><b><str:truncateNicely upper="40">${title}</str:truncateNicely></b></span>
                     (${fn:length(channel.value)})
@@ -163,7 +163,7 @@
 
                 <c:choose>
                     <c:when test="${empty episode.path}">
-                        <td ${class} colspan="2"/>
+                        <td ${class} colspan="3"/>
                     </c:when>
                     <c:otherwise>
                         <c:import url="playAddDownload.jsp">
