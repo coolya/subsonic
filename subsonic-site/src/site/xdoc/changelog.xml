@@ -14,10 +14,11 @@
         </script>
 
         <section name="Change Log">
-            <subsection name="Subsonic 3.4 - Xxx 00, 2008">
+            <subsection name="Subsonic 3.4 - Apr 27, 2008">
                 <ul>
                     <li>New: Added optional setting for LDAP bind DN and password.</li>
                     <li>New: Added quick links to Google, Wikipedia, allmusic and Last.fm.</li>
+                    <li>New: Added standalone installation option.</li>
                     <li>Bugfix: Fixed layout problems in Podcast page.</li>
                     <li>Bugfix: Clean up partially downloaded Podcast episodes at start-up.</li>
                     <li>Bugfix: Old Podcast episodes were in some cases not deleted.</li>

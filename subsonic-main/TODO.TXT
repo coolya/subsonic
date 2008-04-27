@@ -17,6 +17,10 @@ Create Back button.
 
 BACKLOG
 ===========================
+Ajaxify changeCoverart.jsp.  Also support www.discogs.com (and Google or whatever).
+One save button for transcoding settings etc.
+Make it possible to not let other people see what I'm playing.
+Per-song rating.
 Read-only view. (= Play music role) http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2435
 Use filter for subsonic version in site xml's.
 Add download/upload speedometer.
