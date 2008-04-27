@@ -70,6 +70,20 @@ public class PodcastService {
         scheduledExecutor = Executors.newSingleThreadScheduledExecutor(threadFactory);
     }
 
+    public synchronized void init() {
+        // Clean up partial downloads.
+        for (PodcastChannel channel : getAllChannels()) {
+            for (PodcastEpisode episode : getEpisodes(channel.getId(), false)) {
+                if (episode.getStatus() == PodcastStatus.DOWNLOADING) {
+                    deleteEpisode(episode.getId(), false);
+                    LOG.info("Deleted Podcast episode '" + episode.getTitle() + "' since download was interrupted.");
+                }
+            }
+        }
+
+        schedule();
+    }
+
     public synchronized void schedule() {
         Runnable task = new Runnable() {
             public void run() {
@@ -149,9 +163,8 @@ public class PodcastService {
                 filtered.add(episode);
             }
         }
-        return filtered.toArray(new PodcastEpisode[0]);
+        return filtered.toArray(new PodcastEpisode[filtered.size()]);
     }
-
 
     public PodcastEpisode getEpisode(int episodeId, boolean includeDeleted) {
         PodcastEpisode episode = podcastDao.getEpisode(episodeId);

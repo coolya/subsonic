@@ -99,7 +99,7 @@
         <property name="settingsService" ref="settingsService"/>
     </bean>
 
-    <bean id="podcastService" class="net.sourceforge.subsonic.service.PodcastService" init-method="schedule">
+    <bean id="podcastService" class="net.sourceforge.subsonic.service.PodcastService" init-method="init">
         <property name="podcastDao" ref="podcastDao"/>
         <property name="settingsService" ref="settingsService"/>
         <property name="securityService" ref="securityService"/>

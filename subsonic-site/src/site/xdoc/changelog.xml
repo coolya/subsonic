@@ -19,6 +19,8 @@
                     <li>New: Added optional setting for LDAP bind DN and password.</li>
                     <li>New: Added quick links to Google, Wikipedia, allmusic and Last.fm.</li>
                     <li>Bugfix: Fixed layout problems in Podcast page.</li>
+                    <li>Bugfix: Clean up partially downloaded Podcast episodes at start-up.</li>
+                    <li>Bugfix: Old Podcast episodes were in some cases not deleted.</li>
                 </ul>
             </subsection>
 
