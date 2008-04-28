@@ -4,7 +4,7 @@
 
     <properties>
         <title>Free Media Streamer</title>
-        <author email="sindre_mehus@users.sourceforge.net">Sindre Mehus</author>
+        <author email="sindre@activeobjects.no">Sindre Mehus</author>
     </properties>
 
 
@@ -134,8 +134,7 @@
                     and a JSP container such as <a href="http://tomcat.apache.org/">Tomcat</a> (version 5.5 or later),
                     both of which are available at no charge. There is also a stand-alone version available which
                     doesn't require Tomcat.
-                </p>
-                <p>
+                    <br/>
                     To receive streams you need a web browser (tested on recent versions of Firefox, Opera and IE) and a
                     media player (Winamp, Windows Media Player etc). Refer to the <a href="faq.html">FAQ</a>
                     for a list of recommended players.
@@ -149,9 +148,12 @@
                 </p>
             </subsection>
 
-            <subsection name="Feedback">
+            <subsection name="About">
                 <p>
-                    Subsonic is developed and maintained by Sindre Mehus (<a href="mailto:sindre_mehus@users.sourceforge.net">sindre_mehus@users.sourceforge.net</a>).
+                    <img src="images/sindre.jpeg" alt="Sindre Mehus" hspace="10" vspace="10" align="right"/>
+                    Subsonic is developed and maintained by Sindre Mehus (<a href="mailto:sindre@activeobjects.no">sindre@activeobjects.no</a>).
+                    I live in Oslo, Norway and work as a Java software contractor.
+                    <br/>
                     If you have any questions, comments or suggestions for improvements, please visit the <a href="forum.html">Subsonic Forum</a>.
                 </p>
             </subsection>

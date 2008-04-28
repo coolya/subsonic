@@ -2,7 +2,7 @@
 <document>
     <properties>
         <title>Translating</title>
-        <author email="sindre_mehus@users.sourceforge.net">Sindre Mehus</author>
+        <author email="sindre@activeobjects.no">Sindre Mehus</author>
     </properties>
 
     <body>
@@ -41,7 +41,7 @@
 
             <p>7. You have to restart Tomcat for the changes to have effect.</p>
 
-            <p>8. When you're done, send the new language file to <a href="mailto:sindre_mehus@users.sourceforge.net">sindre_mehus@users.sourceforge.net</a></p>
+            <p>8. When you're done, send the new language file to <a href="mailto:sindre@activeobjects.no">sindre@activeobjects.no</a></p>
 
         </section>
 
