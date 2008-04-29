@@ -57,7 +57,6 @@
         <module>subsonic-booter</module>
         <module>subsonic-installer</module>
         <module>subsonic-assembly</module>
-        <module>subsonic-flex</module>
     </modules>
 
     <build>

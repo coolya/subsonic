@@ -1,13 +1,6 @@
-TODO IN 3.4
-===========
-
-DONE IN 3.4
-===========
-Party mode: online help
-Log error if subsonic.war not found.
-Create jar download.
-Rewrite install.xml.  Make separate descriptions for each download type (exe, war, jar).
-Change screenshot in sourceforge, freshmeat and download.
+DONE IN 3.5
+-----------
+Fixed source release.
 
 FLEX TODO
 =========

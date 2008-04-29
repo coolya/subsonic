@@ -43,6 +43,14 @@
         </fileSet>
 
         <fileSet>
+            <directory>../subsonic-amazon</directory>
+            <includes>
+                <include>pom.xml</include>
+            </includes>
+            <outputDirectory>subsonic-amazon</outputDirectory>
+        </fileSet>
+
+        <fileSet>
             <directory>../subsonic-booter</directory>
             <includes>
                 <include>src/**</include>
