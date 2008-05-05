@@ -1,15 +1,14 @@
+TODO IN 3.5
+-----------
+Proper sorting of "The" artists. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1144
+
 DONE IN 3.5
 -----------
 Fixed source release.
 
-FLEX TODO
-=========
-Use flashvars to tell base url.
-Fix wrapper HTML
-Create Back button.
-
 BACKLOG
 ===========================
+Improve player management.
 Ajaxify changeCoverart.jsp.  Also support www.discogs.com (and Google or whatever).
 One save button for transcoding settings etc.
 Make it possible to not let other people see what I'm playing.

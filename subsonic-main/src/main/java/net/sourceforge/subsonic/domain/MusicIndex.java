@@ -166,7 +166,7 @@ public class MusicIndex {
      */
     public static Map<MusicIndex, List<MusicFile>> getIndexedChildren(MusicFolder[] folders,
                                                                       final List<MusicIndex> indexes,
-                                                                      String[] ignoredArticles, String[] shortcuts) throws IOException {
+                                                                      final String[] ignoredArticles, String[] shortcuts) throws IOException {
         Comparator<MusicIndex> indexComparator = new Comparator<MusicIndex>() {
             public int compare(MusicIndex a, MusicIndex b) {
                 int indexA = indexes.indexOf(a);
@@ -191,7 +191,9 @@ public class MusicIndex {
 
         Comparator<MusicFile> musicFileComparator = new Comparator<MusicFile>() {
             public int compare(MusicFile a, MusicFile b) {
-                return a.getName().compareToIgnoreCase(b.getName());
+                String nameA = removeIgnoredArticles(a.getName(), ignoredArticles);
+                String nameB = removeIgnoredArticles(b.getName(), ignoredArticles);
+                return nameA.compareToIgnoreCase(nameB);
             }
         };
 
@@ -224,6 +226,15 @@ public class MusicIndex {
         }
 
         return result;
+    }
+
+    private static String removeIgnoredArticles(String s, String[] ignoredArticles) {
+        for (String article : ignoredArticles) {
+            if (s.startsWith(article + " ")) {
+                return s.substring(article.length() + 1);
+            }
+        }
+        return s;
     }
 
     /**
