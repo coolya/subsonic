@@ -15,6 +15,7 @@ import java.util.Locale;
  */
 public class UserDaoTestCase extends DaoTestCaseBase {
 
+    @Override
     protected void setUp() throws Exception {
         JdbcTemplate template = getJdbcTemplate();
         template.execute("delete from user_role");
@@ -139,6 +140,8 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertFalse("Error in getUserSettings().", userSettings.isShowNowPlayingEnabled());
         assertEquals("Error in getUserSettings().", -1, userSettings.getSelectedMusicFolderId());
         assertFalse("Error in getUserSettings().", userSettings.isPartyModeEnabled());
+        assertFalse("Error in getUserSettings().", userSettings.isNowPlayingAllowed());
+        assertFalse("Error in getUserSettings().", userSettings.isWebPlayerDefault());
 
         UserSettings settings = new UserSettings("sindre");
         settings.setLocale(Locale.SIMPLIFIED_CHINESE);
@@ -155,6 +158,8 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         settings.setShowNowPlayingEnabled(false);
         settings.setSelectedMusicFolderId(3);
         settings.setPartyModeEnabled(true);
+        settings.setNowPlayingAllowed(true);
+        settings.setWebPlayerDefault(true);
 
         userDao.updateUserSettings(settings);
         userSettings = userDao.getUserSettings("sindre");
@@ -174,6 +179,8 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertFalse("Error in getUserSettings().", userSettings.isShowNowPlayingEnabled());
         assertEquals("Error in getUserSettings().", 3, userSettings.getSelectedMusicFolderId());
         assertTrue("Error in getUserSettings().", userSettings.isPartyModeEnabled());
+        assertTrue("Error in getUserSettings().", userSettings.isNowPlayingAllowed());
+        assertTrue("Error in getUserSettings().", userSettings.isWebPlayerDefault());
 
         userDao.deleteUser("sindre");
         assertNull("Error in cascading delete.", userDao.getUserSettings("sindre"));

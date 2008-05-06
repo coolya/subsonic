@@ -26,7 +26,8 @@ public class UserDao extends AbstractDao {
                                                         "main_year, main_bit_rate, main_duration, main_format, main_file_size, " +
                                                         "playlist_caption_cutoff, playlist_track_number, playlist_artist, playlist_album, playlist_genre, " +
                                                         "playlist_year, playlist_bit_rate, playlist_duration, playlist_format, playlist_file_size, " +
-                                                        "last_fm_enabled, last_fm_username, last_fm_password, transcode_scheme, show_now_playing, selected_music_folder_id, party_mode_enabled";
+                                                        "last_fm_enabled, last_fm_username, last_fm_password, transcode_scheme, show_now_playing, selected_music_folder_id, " +
+                                                        "party_mode_enabled, now_playing_allowed, web_player_default";
 
     private static final Integer ROLE_ID_ADMIN = 1;
     private static final Integer ROLE_ID_DOWNLOAD = 2;
@@ -165,7 +166,8 @@ public class UserDao extends AbstractDao {
                                                    playlist.isFormatVisible(), playlist.isFileSizeVisible(),
                                                    settings.isLastFmEnabled(), settings.getLastFmUsername(), settings.getLastFmPassword(),
                                                    settings.getTranscodeScheme().name(), settings.isShowNowPlayingEnabled(),
-                                                   settings.getSelectedMusicFolderId(), settings.isPartyModeEnabled()});
+                                                   settings.getSelectedMusicFolderId(), settings.isPartyModeEnabled(), settings.isNowPlayingAllowed(),
+                                                   settings.isWebPlayerDefault()});
     }
 
     private void readRoles(User user) {
@@ -264,6 +266,8 @@ public class UserDao extends AbstractDao {
             settings.setShowNowPlayingEnabled(rs.getBoolean(col++));
             settings.setSelectedMusicFolderId(rs.getInt(col++));
             settings.setPartyModeEnabled(rs.getBoolean(col++));
+            settings.setNowPlayingAllowed(rs.getBoolean(col++));
+            settings.setWebPlayerDefault(rs.getBoolean(col++));
 
             return settings;
         }

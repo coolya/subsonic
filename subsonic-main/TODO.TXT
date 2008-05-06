@@ -1,6 +1,7 @@
 TODO IN 3.5
 -----------
 Proper sorting of "The" artists. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1144
+Encrypt passwords in database.
 
 DONE IN 3.5
 -----------

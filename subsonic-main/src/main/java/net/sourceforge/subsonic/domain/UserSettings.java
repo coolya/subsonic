@@ -23,6 +23,8 @@ public class UserSettings {
     private TranscodeScheme transcodeScheme = TranscodeScheme.OFF;
     private int selectedMusicFolderId = -1;
     private boolean partyModeEnabled;
+    private boolean nowPlayingAllowed;
+    private boolean webPlayerDefault;
 
     public UserSettings(String username) {
         this.username = username;
@@ -138,6 +140,22 @@ public class UserSettings {
 
     public void setPartyModeEnabled(boolean partyModeEnabled) {
         this.partyModeEnabled = partyModeEnabled;
+    }
+
+    public boolean isNowPlayingAllowed() {
+        return nowPlayingAllowed;
+    }
+
+    public void setNowPlayingAllowed(boolean nowPlayingAllowed) {
+        this.nowPlayingAllowed = nowPlayingAllowed;
+    }
+
+    public boolean isWebPlayerDefault() {
+        return webPlayerDefault;
+    }
+
+    public void setWebPlayerDefault(boolean webPlayerDefault) {
+        this.webPlayerDefault = webPlayerDefault;
     }
 
     /**
