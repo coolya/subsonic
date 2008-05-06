@@ -31,7 +31,6 @@ public class SubsonicLdapBindAuthenticator implements LdapAuthenticator {
     private long authenticatorTimestamp;
     private BindAuthenticator delegateAuthenticator;
 
-    @Override
     public LdapUserDetails authenticate(String username, String password) {
 
         // LDAP authentication must be enabled on the system.

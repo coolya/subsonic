@@ -39,7 +39,6 @@ public class LeftController extends ParameterizableViewController implements Las
     /**
      * {@inheritDoc}
      */
-    @Override
     public long getLastModified(HttpServletRequest request) {
         saveSelectedMusicFolder(request);
         MusicFolder[] musicFolders = settingsService.getAllMusicFolders();
