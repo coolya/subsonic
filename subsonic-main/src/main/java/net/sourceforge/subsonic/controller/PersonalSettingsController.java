@@ -19,6 +19,7 @@ public class PersonalSettingsController extends SimpleFormController {
     private SettingsService settingsService;
     private SecurityService securityService;
 
+    @Override
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         PersonalSettingsCommand command = new PersonalSettingsCommand();
 
@@ -30,6 +31,8 @@ public class PersonalSettingsController extends SimpleFormController {
         command.setThemeIndex("-1");
         command.setPartyModeEnabled(userSettings.isPartyModeEnabled());
         command.setShowNowPlayingEnabled(userSettings.isShowNowPlayingEnabled());
+        command.setNowPlayingAllowed(userSettings.isNowPlayingAllowed());
+        command.setWebPlayerDefault(userSettings.isWebPlayerDefault());
         command.setMainVisibility(userSettings.getMainVisibility());
         command.setPlaylistVisibility(userSettings.getPlaylistVisibility());
         command.setFinalVersionNotificationEnabled(userSettings.isFinalVersionNotificationEnabled());
@@ -64,6 +67,7 @@ public class PersonalSettingsController extends SimpleFormController {
         return command;
     }
 
+    @Override
     protected void doSubmitAction(Object comm) throws Exception {
         PersonalSettingsCommand command = (PersonalSettingsCommand) comm;
 
@@ -86,6 +90,8 @@ public class PersonalSettingsController extends SimpleFormController {
         settings.setThemeId(themeId);
         settings.setPartyModeEnabled(command.isPartyModeEnabled());
         settings.setShowNowPlayingEnabled(command.isShowNowPlayingEnabled());
+        settings.setNowPlayingAllowed(command.isNowPlayingAllowed());
+        settings.setWebPlayerDefault(command.isWebPlayerDefault());
         settings.setMainVisibility(command.getMainVisibility());
         settings.setPlaylistVisibility(command.getPlaylistVisibility());
         settings.setFinalVersionNotificationEnabled(command.isFinalVersionNotificationEnabled());

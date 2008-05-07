@@ -3,22 +3,21 @@ package net.sourceforge.subsonic.ajax;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.TransferStatus;
+import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
-import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
 import uk.ltd.getahead.dwr.WebContext;
 import uk.ltd.getahead.dwr.WebContextFactory;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Provides AJAX-enabled services for retrieving the currently playing file and directory.
@@ -70,6 +69,13 @@ public class NowPlayingService {
             File file = status.getFile();
 
             if (player != null && player.getUsername() != null && file != null) {
+
+                String username = player.getUsername();
+                UserSettings userSettings = settingsService.getUserSettings(username);
+                if (!userSettings.isNowPlayingAllowed()) {
+                    continue;
+                }
+
                 MusicFile musicFile = musicFileService.getMusicFile(file);
                 List<File> coverArts = musicFileService.getCoverArt(musicFile.getParent(), 1);
 
@@ -95,19 +101,18 @@ public class NowPlayingService {
 
                 String tooltip = artist + " &ndash; " + title;
 
-                String user = player.getUsername();
                 if (StringUtils.isNotBlank(player.getName())) {
-                    user += "@" + player.getName();
+                    username += "@" + player.getName();
                 }
                 artist = StringUtils.abbreviate(artist, 25);
                 title = StringUtils.abbreviate(title, 25);
-                user = StringUtils.abbreviate(user, 25);
+                username = StringUtils.abbreviate(username, 25);
 
-                result.add(new NowPlayingInfo(user, artist, title, tooltip, albumUrl, lyricsUrl, coverArtUrl));
+                result.add(new NowPlayingInfo(username, artist, title, tooltip, albumUrl, lyricsUrl, coverArtUrl));
             }
         }
 
-        return result.toArray(new NowPlayingInfo[0]);
+        return result.toArray(new NowPlayingInfo[result.size()]);
     }
 
     private MusicFile getCurrentMusicFile() {

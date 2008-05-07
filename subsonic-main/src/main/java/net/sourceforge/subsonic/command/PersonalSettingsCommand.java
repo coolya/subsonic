@@ -18,6 +18,8 @@ public class PersonalSettingsCommand {
     private UserSettings.Visibility playlistVisibility;
     private boolean partyModeEnabled;
     private boolean showNowPlayingEnabled;
+    private boolean nowPlayingAllowed;
+    private boolean webPlayerDefault;
     private boolean finalVersionNotificationEnabled;
     private boolean betaVersionNotificationEnabled;
     private boolean lastFmEnabled;
@@ -95,6 +97,22 @@ public class PersonalSettingsCommand {
 
     public void setShowNowPlayingEnabled(boolean showNowPlayingEnabled) {
         this.showNowPlayingEnabled = showNowPlayingEnabled;
+    }
+
+    public boolean isNowPlayingAllowed() {
+        return nowPlayingAllowed;
+    }
+
+    public void setNowPlayingAllowed(boolean nowPlayingAllowed) {
+        this.nowPlayingAllowed = nowPlayingAllowed;
+    }
+
+    public boolean isWebPlayerDefault() {
+        return webPlayerDefault;
+    }
+
+    public void setWebPlayerDefault(boolean webPlayerDefault) {
+        this.webPlayerDefault = webPlayerDefault;
     }
 
     public boolean isFinalVersionNotificationEnabled() {

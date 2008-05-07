@@ -1,10 +1,11 @@
 TODO IN 3.5
 -----------
-Proper sorting of "The" artists. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1144
-Encrypt passwords in database.
+Obfuscate passwords in database. (Prefix with "enc:" for instance).  Also last.fm password.
 
 DONE IN 3.5
 -----------
+Added option "Let others see what I am playing"
+Proper sorting of "The" artists. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1144
 Fixed source release.
 
 BACKLOG
