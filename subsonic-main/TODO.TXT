@@ -5,6 +5,7 @@ Obfuscate passwords in database. (Prefix with "enc:" for instance).  Also last.f
 DONE IN 3.5
 -----------
 Added option "Let others see what I am playing"
+Added option "Always use web player"
 Proper sorting of "The" artists. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1144
 Fixed source release.
 

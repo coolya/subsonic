@@ -226,6 +226,8 @@
     </bean>
     <bean id="webPlayerController" class="net.sourceforge.subsonic.controller.WebPlayerController">
         <property name="viewName" value="webPlayer"/>
+        <property name="settingsService" ref="settingsService"/>
+        <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="xspfPlaylistController" class="net.sourceforge.subsonic.controller.XspfPlaylistController">
         <property name="viewName" value="xspfPlaylist"/>

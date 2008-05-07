@@ -11,6 +11,7 @@ import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +34,7 @@ public class PlaylistController extends ParameterizableViewController {
     private SettingsService settingsService;
     private MusicFileService musicFileService;
 
+    @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         User user = securityService.getCurrentUser(request);
@@ -42,6 +44,10 @@ public class PlaylistController extends ParameterizableViewController {
 
         Map<String, Object> map = new HashMap<String, Object>();
         handleParameters(request, playlist, player, map);
+
+        if (userSettings.isWebPlayerDefault()) {
+            return new ModelAndView(new RedirectView("webPlayer.view?"));
+        }
 
         map.put("user", user);
         map.put("player", player);

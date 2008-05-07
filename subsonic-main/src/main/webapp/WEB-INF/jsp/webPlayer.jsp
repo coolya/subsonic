@@ -21,7 +21,7 @@
 
 <body class="bgcolor2" <c:if test="${model.detached}">onload="window.focus();window.moveTo(300, 200);"</c:if>>
 
-<c:if test="${not model.detached}">
+<c:if test="${not model.detached and not model.default}">
     <table><tr>
         <td style="padding-right:2em"><div class="back"><a href="playlist.view?"><fmt:message key="webplayer.back"/></a></div></td>
         <td style="padding-right:2em"><div class="forward"><a href="javascript:detach()"><fmt:message key="webplayer.detach"/></a></div></td>
