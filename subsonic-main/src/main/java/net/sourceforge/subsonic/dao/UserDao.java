@@ -78,7 +78,7 @@ public class UserDao extends AbstractDao {
      */
     public void createUser(User user) {
         String sql = "insert into user (" + USER_COLUMNS + ") values (" + questionMarks(USER_COLUMNS) + ')';
-        getJdbcTemplate().update(sql, new Object[]{user.getUsername(), user.getPassword(), user.isLdapAuthenticated(),
+        getJdbcTemplate().update(sql, new Object[]{user.getUsername(), encrypt(user.getPassword()), user.isLdapAuthenticated(),
                                                    user.getBytesStreamed(), user.getBytesDownloaded(), user.getBytesUploaded()});
         writeRoles(user);
     }
@@ -108,7 +108,7 @@ public class UserDao extends AbstractDao {
     public void updateUser(User user) {
         String sql = "update user set password=?, ldap_authenticated=?, bytes_streamed=?, bytes_downloaded=?, bytes_uploaded=? " +
                      "where username=?";
-        getJdbcTemplate().update(sql, new Object[]{user.getPassword(), user.isLdapAuthenticated(),
+        getJdbcTemplate().update(sql, new Object[]{encrypt(user.getPassword()), user.isLdapAuthenticated(),
                                                    user.getBytesStreamed(), user.getBytesDownloaded(), user.getBytesUploaded(),
                                                    user.getUsername()});
         writeRoles(user);
@@ -164,10 +164,35 @@ public class UserDao extends AbstractDao {
                                                    playlist.getCaptionCutoff(), playlist.isTrackNumberVisible(), playlist.isArtistVisible(), playlist.isAlbumVisible(),
                                                    playlist.isGenreVisible(), playlist.isYearVisible(), playlist.isBitRateVisible(), playlist.isDurationVisible(),
                                                    playlist.isFormatVisible(), playlist.isFileSizeVisible(),
-                                                   settings.isLastFmEnabled(), settings.getLastFmUsername(), settings.getLastFmPassword(),
+                                                   settings.isLastFmEnabled(), settings.getLastFmUsername(), encrypt(settings.getLastFmPassword()),
                                                    settings.getTranscodeScheme().name(), settings.isShowNowPlayingEnabled(),
                                                    settings.getSelectedMusicFolderId(), settings.isPartyModeEnabled(), settings.isNowPlayingAllowed(),
                                                    settings.isWebPlayerDefault()});
+    }
+
+    private static String encrypt(String s) {
+        if (s == null) {
+            return null;
+        }
+        try {
+            return "enc:" + StringUtil.utf8HexEncode(s);
+        } catch (Exception e) {
+            return s;
+        }
+    }
+
+    private static String decrypt(String s) {
+        if (s == null) {
+            return null;
+        }
+        if (!s.startsWith("enc:")) {
+            return s;
+        }
+        try {
+            return StringUtil.utf8HexDecode(s.substring(4));
+        } catch (Exception e) {
+            return s;
+        }
     }
 
     private void readRoles(User user) {
@@ -221,9 +246,9 @@ public class UserDao extends AbstractDao {
         }
     }
 
-    private static class UserRowMapper implements ParameterizedRowMapper<User> {
+    private class UserRowMapper implements ParameterizedRowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new User(rs.getString(1), rs.getString(2), rs.getBoolean(3), rs.getLong(4), rs.getLong(5), rs.getLong(6));
+            return new User(rs.getString(1), decrypt(rs.getString(2)), rs.getBoolean(3), rs.getLong(4), rs.getLong(5), rs.getLong(6));
         }
     }
 
@@ -260,7 +285,7 @@ public class UserDao extends AbstractDao {
 
             settings.setLastFmEnabled(rs.getBoolean(col++));
             settings.setLastFmUsername(rs.getString(col++));
-            settings.setLastFmPassword(rs.getString(col++));
+            settings.setLastFmPassword(decrypt(rs.getString(col++)));
 
             settings.setTranscodeScheme(TranscodeScheme.valueOf(rs.getString(col++)));
             settings.setShowNowPlayingEnabled(rs.getBoolean(col++));
