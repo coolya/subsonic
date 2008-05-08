@@ -73,7 +73,7 @@ public class UrlTag extends BodyTagSupport {
             result.append('?');
 
             for (int i = 0; i < parameters.size(); i++) {
-                Parameter parameter =  parameters.get(i);
+                Parameter parameter = parameters.get(i);
                 try {
                     result.append(parameter.getName());
                     if (isUtf8Hex() && !isAsciiAlphaNumeric(parameter.getValue())) {

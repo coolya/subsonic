@@ -5,6 +5,7 @@ import net.sourceforge.subsonic.service.ServiceLocator;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -12,9 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.SortedSet;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
-import java.util.Arrays;
+import java.util.TreeSet;
 import java.util.regex.PatternSyntaxException;
 
 /**
@@ -164,6 +166,7 @@ public class MusicIndex {
      * @return A map from music indexes to lists of music files that are direct children of this music file.
      * @throws IOException If an I/O error occurs.
      */
+    @Deprecated
     public static Map<MusicIndex, List<MusicFile>> getIndexedChildren(MusicFolder[] folders,
                                                                       final List<MusicIndex> indexes,
                                                                       final String[] ignoredArticles, String[] shortcuts) throws IOException {
@@ -228,6 +231,93 @@ public class MusicIndex {
         return result;
     }
 
+    /**
+     * Returns a map from music indexes to sets of artists that are direct children of the given music folders.
+     *
+     * @param folders         The music folders.
+     * @param indexes         The list of indexes to use when grouping the children.
+     * @param ignoredArticles Articles to ignore (typically "The", "El", "Las" etc),
+     * @param shortcuts       Shortcuts that should be ignored.
+     * @return A map from music indexes to sets of artists that are direct children of this music file.
+     * @throws IOException If an I/O error occurs.
+     */
+    public static SortedMap<MusicIndex, SortedSet<Artist>> getIndexedArtists(MusicFolder[] folders, final List<MusicIndex> indexes,
+                                                                             final String[] ignoredArticles, String[] shortcuts) throws IOException {
+        Comparator<MusicIndex> indexComparator = new Comparator<MusicIndex>() {
+            public int compare(MusicIndex a, MusicIndex b) {
+                int indexA = indexes.indexOf(a);
+                int indexB = indexes.indexOf(b);
+
+                if (indexA == -1) {
+                    indexA = Integer.MAX_VALUE;
+                }
+                if (indexB == -1) {
+                    indexB = Integer.MAX_VALUE;
+                }
+
+                if (indexA < indexB) {
+                    return -1;
+                }
+                if (indexA > indexB) {
+                    return 1;
+                }
+                return 0;
+            }
+        };
+
+        SortedSet<Artist> artists = createArtists(folders, ignoredArticles, shortcuts);
+        SortedMap<MusicIndex, SortedSet<Artist>> result = new TreeMap<MusicIndex, SortedSet<Artist>>(indexComparator);
+
+        for (Artist artist : artists) {
+            MusicIndex index = getIndex(artist, indexes);
+            SortedSet<Artist> artistSet = result.get(index);
+            if (artistSet == null) {
+                artistSet = new TreeSet<Artist>();
+                result.put(index, artistSet);
+            }
+            artistSet.add(artist);
+        }
+
+        return result;
+    }
+
+    private static SortedSet<Artist> createArtists(MusicFolder[] folders, String[] ignoredArticles,
+                                                   String[] shortcuts) throws IOException {
+        SortedMap<String, Artist> artistMap = new TreeMap<String, Artist>();
+        Set<String> shortcutSet = new HashSet<String>(Arrays.asList(shortcuts));
+
+        for (MusicFolder folder : folders) {
+
+            MusicFile parent = ServiceLocator.getMusicFileService().getMusicFile(folder.getPath());
+            List<MusicFile> children = ServiceLocator.getMusicFileService().getChildDirectories(parent);
+            for (MusicFile child : children) {
+                if (shortcutSet.contains(child.getName())) {
+                    continue;
+                }
+
+                String sortableName = createSortableName(child.getName(), ignoredArticles);
+                Artist artist = artistMap.get(sortableName);
+                if (artist == null) {
+                    artist = new Artist(child.getName(), sortableName);
+                    artistMap.put(sortableName, artist);
+                }
+                artist.addMusicFile(child);
+            }
+        }
+
+        return new TreeSet<Artist>(artistMap.values());
+    }
+
+    private static String createSortableName(String name, String[] ignoredArticles) {
+        for (String article : ignoredArticles) {
+            if (name.startsWith(article + " ")) {
+                return name.substring(article.length() + 1) + ", " + article;
+            }
+        }
+        return name;
+    }
+
+    @Deprecated
     private static String removeIgnoredArticles(String s, String[] ignoredArticles) {
         for (String article : ignoredArticles) {
             if (s.startsWith(article + " ")) {
@@ -238,6 +328,24 @@ public class MusicIndex {
     }
 
     /**
+     * Returns the music index to which the given artist belongs.
+     *
+     * @param artist          The artist in question.
+     * @param indexes         List of available indexes.
+     * @return The music index to which this music file belongs, or {@link MusicIndex#OTHER} if no index applies.
+     */
+    private static MusicIndex getIndex(Artist artist, List<MusicIndex> indexes) {
+        for (MusicIndex index : indexes) {
+            for (String prefix : index.getPrefixes()) {
+                if (artist.getSortableName().startsWith(prefix)) {
+                    return index;
+                }
+            }
+        }
+        return MusicIndex.OTHER;
+    }
+
+    /**
      * Returns the music index to which the given music file belongs.
      *
      * @param musicFile       The music file in question.
@@ -245,6 +353,7 @@ public class MusicIndex {
      * @param ignoredArticles Articles to ignore (typically "The", "El", "Las" etc),
      * @return The music index to which this music file belongs, or {@link MusicIndex#OTHER} if no index applies.
      */
+    @Deprecated
     private static MusicIndex getIndex(MusicFile musicFile, List<MusicIndex> indexes, String[] ignoredArticles) {
 
         // Remove ignored articles.
@@ -267,5 +376,53 @@ public class MusicIndex {
             }
         }
         return MusicIndex.OTHER;
+    }
+
+    public static class Artist implements Comparable<Artist> {
+        private final String name;
+        private final String sortableName;
+        private final List<MusicFile> musicFiles = new ArrayList<MusicFile>();
+
+        public Artist(String name, String sortableName) {
+            this.name = name;
+            this.sortableName = sortableName;
+        }
+
+        public void addMusicFile(MusicFile musicFile) {
+            musicFiles.add(musicFile);
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getSortableName() {
+            return sortableName;
+        }
+
+        public List<MusicFile> getMusicFiles() {
+            return musicFiles;
+        }
+
+        public int compareTo(Artist artist) {
+            return sortableName.compareToIgnoreCase(artist.sortableName);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Artist artist = (Artist) o;
+            return sortableName.equalsIgnoreCase(artist.sortableName);
+        }
+
+        @Override
+        public int hashCode() {
+            return sortableName.hashCode();
+        }
     }
 }

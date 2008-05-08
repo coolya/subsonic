@@ -1,13 +1,21 @@
 TODO IN 3.5
 -----------
+Make MusicIndexService.
+Remove deprecated stuff in MusicIndex (currently used in wap interface).
 
 DONE IN 3.5
 -----------
+Merge artists with same name, but different music folders.
+Proper sorting of "The" artists. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1144
 Obfuscate passwords in database. (Prefix with "enc:" for instance).  Also last.fm password.
 Added option "Let others see what I am playing"
 Added option "Always use web player"
 Proper sorting of "The" artists. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1144
 Fixed source release.
+Support Flash player by default.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1077
+Allow reservation of Now Playing info.
+Use table layout in Personal settings.
+
 
 BACKLOG
 ===========================
@@ -55,7 +63,6 @@ Ajax-ify Amazon pages.
 Wrong progress for http://atvs.vg.no/script/podcast.php?category_id=7
 Resumable Podcast downloads.
 "Random" very slow when no music folders.
-Merge artists with same name, but different music folders.
 Test if dwr javascripts are cached in browser (especially for "now playing")
 Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
 Test playlist checkbox stuff, in particular download auth.

@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.SortedMap;
 
 /**
  * Controller for the left index frame.
@@ -70,7 +72,7 @@ public class LeftController extends ParameterizableViewController implements Las
         String[] ignoredArticles = settingsService.getIgnoredArticlesAsArray();
         String[] shortcuts = settingsService.getShortcutsAsArray();
         List<MusicIndex> musicIndex = MusicIndex.createIndexesFromExpression(indexString);
-        Map<MusicIndex, List<MusicFile>> indexedChildren = MusicIndex.getIndexedChildren(musicFoldersToUse, musicIndex, ignoredArticles, shortcuts);
+        SortedMap<MusicIndex,SortedSet<MusicIndex.Artist>> indexedArtists = MusicIndex.getIndexedArtists(musicFoldersToUse, musicIndex, ignoredArticles, shortcuts);
         UserSettings userSettings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
 
         map.put("musicFolders", allMusicFolders);
@@ -88,8 +90,8 @@ public class LeftController extends ParameterizableViewController implements Las
             map.put("bytes", StringUtil.formatBytes(bytes, locale));
         }
 
-        map.put("indexedChildren", indexedChildren);
-        map.put("indexes", indexedChildren.keySet());
+        map.put("indexedArtists", indexedArtists);
+        map.put("indexes", indexedArtists.keySet());
         map.put("downloadEnabled", securityService.getCurrentUser(request).isDownloadRole());
 
         ModelAndView result = super.handleRequestInternal(request, response);

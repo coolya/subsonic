@@ -13,8 +13,8 @@ import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,7 +49,8 @@ public class MainController extends ParameterizableViewController {
         Map<String, Object> map = new HashMap<String, Object>();
 
         Player player = playerService.getPlayer(request, response);
-        String path = request.getParameter("path");
+        String[] paths = request.getParameterValues("path");
+        String path = paths[0];
         MusicFile dir = musicFileService.getMusicFile(path);
         if (dir.isFile()) {
             dir = dir.getParent();
@@ -60,7 +61,7 @@ public class MainController extends ParameterizableViewController {
             return new ModelAndView(new RedirectView("home.view?"));
         }
 
-        List<MusicFile> children = dir.getChildren(true, true);
+        List<MusicFile> children = paths.length == 1 ? dir.getChildren(true, true) : getMultiFolderChildren(paths);
         UserSettings userSettings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
 
         map.put("dir", dir);
@@ -125,6 +126,18 @@ public class MainController extends ParameterizableViewController {
 
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
+        return result;
+    }
+
+    private List<MusicFile> getMultiFolderChildren(String[] paths) throws IOException {
+        List<MusicFile> result = new ArrayList<MusicFile>();
+        for (String path : paths) {
+            MusicFile dir = musicFileService.getMusicFile(path);
+            if (dir.isFile()) {
+                dir = dir.getParent();
+            }
+            result.addAll(dir.getChildren(true, true));
+        }
         return result;
     }
 
