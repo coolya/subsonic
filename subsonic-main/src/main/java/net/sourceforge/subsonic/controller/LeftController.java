@@ -9,6 +9,7 @@ import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.MusicIndexService;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.LastModified;
@@ -37,6 +38,7 @@ public class LeftController extends ParameterizableViewController implements Las
     private SettingsService settingsService;
     private SecurityService securityService;
     private MusicFileService musicFileService;
+    private MusicIndexService musicIndexService;
 
     /**
      * {@inheritDoc}
@@ -68,11 +70,8 @@ public class LeftController extends ParameterizableViewController implements Las
         MusicFolder[] allMusicFolders = settingsService.getAllMusicFolders();
         MusicFolder selectedMusicFolder = getSelectedMusicFolder(request);
         MusicFolder[] musicFoldersToUse = selectedMusicFolder == null ? allMusicFolders : new MusicFolder[]{selectedMusicFolder};
-        String indexString = settingsService.getIndexString();
-        String[] ignoredArticles = settingsService.getIgnoredArticlesAsArray();
         String[] shortcuts = settingsService.getShortcutsAsArray();
-        List<MusicIndex> musicIndex = MusicIndex.createIndexesFromExpression(indexString);
-        SortedMap<MusicIndex,SortedSet<MusicIndex.Artist>> indexedArtists = MusicIndex.getIndexedArtists(musicFoldersToUse, musicIndex, ignoredArticles, shortcuts);
+        SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists = musicIndexService.getIndexedArtists(musicFoldersToUse);
         UserSettings userSettings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
 
         map.put("musicFolders", allMusicFolders);
@@ -149,5 +148,9 @@ public class LeftController extends ParameterizableViewController implements Las
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
+    }
+
+    public void setMusicIndexService(MusicIndexService musicIndexService) {
+        this.musicIndexService = musicIndexService;
     }
 }

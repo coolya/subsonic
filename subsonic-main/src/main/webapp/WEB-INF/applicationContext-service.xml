@@ -88,6 +88,10 @@
         <property name="musicFileService" ref="musicFileService"/>
     </bean>
 
+    <bean id="musicIndexService" class="net.sourceforge.subsonic.service.MusicIndexService">
+        <property name="settingsService" ref="settingsService"/>
+    </bean>
+
     <bean id="amazonSearchService" class="net.sourceforge.subsonic.service.AmazonSearchService"/>
 
     <bean id="audioScrobblerService" class="net.sourceforge.subsonic.service.AudioScrobblerService">

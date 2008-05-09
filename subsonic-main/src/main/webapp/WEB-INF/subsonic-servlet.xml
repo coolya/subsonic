@@ -10,6 +10,7 @@
         <property name="securityService" ref="securityService"/>
         <property name="settingsService" ref="settingsService"/>
         <property name="musicFileService" ref="musicFileService"/>
+        <property name="musicIndexService" ref="musicIndexService"/>
     </bean>
     <bean id="statusController" class="net.sourceforge.subsonic.controller.StatusController">
         <property name="viewName" value="status"/>
@@ -285,6 +286,7 @@
         <property name="searchService" ref="searchService"/>
         <property name="securityService" ref="securityService"/>
         <property name="musicFileService" ref="musicFileService"/>
+        <property name="musicIndexService" ref="musicIndexService"/>
     </bean>
     <bean id="dbController" class="net.sourceforge.subsonic.controller.DBController">
         <property name="viewName" value="db"/>
@@ -292,6 +294,7 @@
     </bean>
     <bean id="flexController" class="net.sourceforge.subsonic.controller.FlexController">
         <property name="musicFileService" ref="musicFileService"/>
+        <property name="musicIndexService" ref="musicIndexService"/>
         <property name="settingsService" ref="settingsService"/>
     </bean>
 

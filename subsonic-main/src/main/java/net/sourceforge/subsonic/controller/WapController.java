@@ -1,12 +1,30 @@
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
-import org.springframework.web.servlet.*;
-import org.springframework.web.servlet.mvc.multiaction.*;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.domain.MusicIndex;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.Playlist;
+import net.sourceforge.subsonic.domain.RandomSearchCriteria;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.MusicIndexService;
+import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.service.PlaylistService;
+import net.sourceforge.subsonic.service.SearchService;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
-import javax.servlet.http.*;
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.SortedSet;
 
 /**
  * Multi-controller used for wap pages.
@@ -21,6 +39,7 @@ public class WapController extends MultiActionController {
     private SearchService searchService;
     private SecurityService securityService;
     private MusicFileService musicFileService;
+    private MusicIndexService musicIndexService;
 
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return wap(request, response);
@@ -34,25 +53,22 @@ public class WapController extends MultiActionController {
             map.put("noMusic", true);
         } else {
 
-            String indexString = settingsService.getIndexString();
-            String[] ignoredArticles = settingsService.getIgnoredArticlesAsArray();
-            String[] shortcuts = new String[0];
-            Map<MusicIndex, List<MusicFile>> children = MusicIndex.getIndexedChildren(folders, MusicIndex.createIndexesFromExpression(indexString),
-                                                                                      ignoredArticles, shortcuts);
+            SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> allArtists = musicIndexService.getIndexedArtists(folders);
+
             // If an index is given as parameter, only show music files for this index.
             String index = request.getParameter("index");
             if (index != null) {
-                List<MusicFile> musicFiles = children.get(new MusicIndex(index));
-                if (musicFiles == null) {
+                SortedSet<MusicIndex.Artist> artists = allArtists.get(new MusicIndex(index));
+                if (artists == null) {
                     map.put("noMusic", true);
                 } else {
-                    map.put("artists", musicFiles);
+                    map.put("artists", artists);
                 }
             }
 
             // Otherwise, list all indexes.
             else {
-                map.put("indexes", children.keySet());
+                map.put("indexes", allArtists.keySet());
             }
         }
 
@@ -89,7 +105,7 @@ public class WapController extends MultiActionController {
         if (playerId != null) {
             Player player = playerService.getPlayerById(playerId);
             if (player != null) {
-                players = new Player[] {player};
+                players = new Player[]{player};
             }
         }
 
@@ -195,5 +211,9 @@ public class WapController extends MultiActionController {
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
+    }
+
+    public void setMusicIndexService(MusicIndexService musicIndexService) {
+        this.musicIndexService = musicIndexService;
     }
 }

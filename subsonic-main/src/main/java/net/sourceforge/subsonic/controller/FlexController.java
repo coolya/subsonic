@@ -1,13 +1,14 @@
 package net.sourceforge.subsonic.controller;
 
+import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicFolder;
 import net.sourceforge.subsonic.domain.MusicIndex;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.MusicIndexService;
 import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.util.XMLBuilder;
-import net.sourceforge.subsonic.Logger;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -15,7 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
+import java.util.SortedMap;
+import java.util.SortedSet;
 
 /**
  * Multi-controller used for remote Flex services.
@@ -27,25 +29,22 @@ public class FlexController extends MultiActionController {
     private static final Logger LOG = Logger.getLogger(FlexController.class);
 
     private MusicFileService musicFileService;
+    private MusicIndexService musicIndexService;
     private SettingsService settingsService;
 
     public ModelAndView getArtists(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         MusicFolder[] allMusicFolders = settingsService.getAllMusicFolders();
-        String indexString = settingsService.getIndexString();
-        String[] ignoredArticles = settingsService.getIgnoredArticlesAsArray();
-        String[] shortcuts = settingsService.getShortcutsAsArray();
-        List<MusicIndex> musicIndex = MusicIndex.createIndexesFromExpression(indexString);
-        Map<MusicIndex, List<MusicFile>> indexedChildren = MusicIndex.getIndexedChildren(allMusicFolders, musicIndex, ignoredArticles, shortcuts);
+        SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists = musicIndexService.getIndexedArtists(allMusicFolders);
 
         XMLBuilder builder = createXMLBuilder();
         builder.add("artists");
 
-        for (List<MusicFile> list : indexedChildren.values()) {
-            for (MusicFile musicFile : list) {
+        for (SortedSet<MusicIndex.Artist> list : indexedArtists.values()) {
+            for (MusicIndex.Artist artist : list) {
                 builder.add("artist");
-                builder.add("name", StringUtil.toHtml(musicFile.getName()));
-                builder.add("path", StringUtil.toHtml(musicFile.getPath()));
+                builder.add("name", StringUtil.toHtml(artist.getName()));
+                builder.add("path", StringUtil.toHtml(artist.getMusicFiles().get(0).getPath()));
                 builder.end();
             }
         }
@@ -103,5 +102,9 @@ public class FlexController extends MultiActionController {
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
+    }
+
+    public void setMusicIndexService(MusicIndexService musicIndexService) {
+        this.musicIndexService = musicIndexService;
     }
 }

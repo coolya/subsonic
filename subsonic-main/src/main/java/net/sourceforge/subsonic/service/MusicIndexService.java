@@ -1,0 +1,188 @@
+package net.sourceforge.subsonic.service;
+
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.domain.MusicIndex;
+import net.sourceforge.subsonic.domain.MusicIndex.Artist;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.StringTokenizer;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+/**
+ * Provides services for grouping artists by index.
+ *
+ * @author Sindre Mehus
+ */
+public class MusicIndexService {
+
+    private SettingsService settingsService;
+
+    /**
+     * Returns a map from music indexes to sets of artists that are direct children of the given music folders.
+     *
+     * @param folders The music folders.
+     * @return A map from music indexes to sets of artists that are direct children of this music file.
+     * @throws IOException If an I/O error occurs.
+     */
+    public SortedMap<MusicIndex, SortedSet<Artist>> getIndexedArtists(MusicFolder[] folders) throws IOException {
+
+        String[] ignoredArticles = settingsService.getIgnoredArticlesAsArray();
+        String[] shortcuts = settingsService.getShortcutsAsArray();
+        final List<MusicIndex> indexes = createIndexesFromExpression(settingsService.getIndexString());
+
+        Comparator<MusicIndex> indexComparator = new Comparator<MusicIndex>() {
+            public int compare(MusicIndex a, MusicIndex b) {
+                int indexA = indexes.indexOf(a);
+                int indexB = indexes.indexOf(b);
+
+                if (indexA == -1) {
+                    indexA = Integer.MAX_VALUE;
+                }
+                if (indexB == -1) {
+                    indexB = Integer.MAX_VALUE;
+                }
+
+                if (indexA < indexB) {
+                    return -1;
+                }
+                if (indexA > indexB) {
+                    return 1;
+                }
+                return 0;
+            }
+        };
+
+        SortedSet<Artist> artists = createArtists(folders, ignoredArticles, shortcuts);
+        SortedMap<MusicIndex, SortedSet<Artist>> result = new TreeMap<MusicIndex, SortedSet<Artist>>(indexComparator);
+
+        for (Artist artist : artists) {
+            MusicIndex index = getIndex(artist, indexes);
+            SortedSet<Artist> artistSet = result.get(index);
+            if (artistSet == null) {
+                artistSet = new TreeSet<Artist>();
+                result.put(index, artistSet);
+            }
+            artistSet.add(artist);
+        }
+
+        return result;
+    }
+
+    /**
+     * Creates a new instance by parsing the given expression.  The expression consists of an index name, followed by
+     * an optional list of one-character prefixes. For example:<p/>
+     * <p/>
+     * The expression <em>"A"</em> will create the index <em>"A" -&gt; ["A"]</em><br/>
+     * The expression <em>"The"</em> will create the index <em>"The" -&gt; ["The"]</em><br/>
+     * The expression <em>"A(A&Aring;&AElig;)"</em> will create the index <em>"A" -&gt; ["A", "&Aring;", "&AElig;"]</em><br/>
+     * The expression <em>"X-Z(XYZ)"</em> will create the index <em>"X-Z" -&gt; ["X", "Y", "Z"]</em>
+     *
+     * @param expr The expression to parse.
+     * @return A new instance.
+     */
+    protected MusicIndex createIndexFromExpression(String expr) {
+        int separatorIndex = expr.indexOf('(');
+        if (separatorIndex == -1) {
+
+            MusicIndex index = new MusicIndex(expr);
+            index.addPrefix(expr);
+            return index;
+        }
+
+        MusicIndex index = new MusicIndex(expr.substring(0, separatorIndex));
+        String prefixString = expr.substring(separatorIndex + 1, expr.length() - 1);
+        for (int i = 0; i < prefixString.length(); i++) {
+            index.addPrefix(prefixString.substring(i, i + 1));
+        }
+        return index;
+    }
+
+    /**
+     * Creates a list of music indexes by parsing the given expression.  The expression is a space-separated list of
+     * sub-expressions, for which the rules described in {@link #createIndexFromExpression} apply.
+     *
+     * @param expr The expression to parse.
+     * @return A list of music indexes.
+     */
+    protected List<MusicIndex> createIndexesFromExpression(String expr) {
+        List<MusicIndex> result = new ArrayList<MusicIndex>();
+
+        StringTokenizer tokenizer = new StringTokenizer(expr, " ");
+        while (tokenizer.hasMoreTokens()) {
+            MusicIndex index = createIndexFromExpression(tokenizer.nextToken());
+            result.add(index);
+        }
+
+        return result;
+    }
+
+    private SortedSet<Artist> createArtists(MusicFolder[] folders, String[] ignoredArticles,
+                                            String[] shortcuts) throws IOException {
+        SortedMap<String, Artist> artistMap = new TreeMap<String, Artist>();
+        Set<String> shortcutSet = new HashSet<String>(Arrays.asList(shortcuts));
+
+        for (MusicFolder folder : folders) {
+
+            MusicFile parent = ServiceLocator.getMusicFileService().getMusicFile(folder.getPath());
+            List<MusicFile> children = ServiceLocator.getMusicFileService().getChildDirectories(parent);
+            for (MusicFile child : children) {
+                if (shortcutSet.contains(child.getName())) {
+                    continue;
+                }
+
+                String sortableName = createSortableName(child.getName(), ignoredArticles);
+                Artist artist = artistMap.get(sortableName);
+                if (artist == null) {
+                    artist = new Artist(child.getName(), sortableName);
+                    artistMap.put(sortableName, artist);
+                }
+                artist.addMusicFile(child);
+            }
+        }
+
+        return new TreeSet<Artist>(artistMap.values());
+    }
+
+    private String createSortableName(String name, String[] ignoredArticles) {
+        String uppercaseName = name.toUpperCase();
+        for (String article : ignoredArticles) {
+            if (uppercaseName.startsWith(article.toUpperCase() + " ")) {
+                return name.substring(article.length() + 1) + ", " + article;
+            }
+        }
+        return name;
+    }
+
+    /**
+     * Returns the music index to which the given artist belongs.
+     *
+     * @param artist  The artist in question.
+     * @param indexes List of available indexes.
+     * @return The music index to which this music file belongs, or {@link MusicIndex#OTHER} if no index applies.
+     */
+    private MusicIndex getIndex(Artist artist, List<MusicIndex> indexes) {
+        String sortableName = artist.getSortableName().toUpperCase();
+        for (MusicIndex index : indexes) {
+            for (String prefix : index.getPrefixes()) {
+                if (sortableName.startsWith(prefix.toUpperCase())) {
+                    return index;
+                }
+            }
+        }
+        return MusicIndex.OTHER;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
+    }
+}

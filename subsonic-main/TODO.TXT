@@ -1,13 +1,14 @@
 TODO IN 3.5
 -----------
-Make MusicIndexService.
-Remove deprecated stuff in MusicIndex (currently used in wap interface).
 Improve player management.
 Ajaxify changeCoverart.jsp.  Also support www.discogs.com (and Google or whatever).
 Create per-channel podcast settings. At least enable/disable.
 
 DONE IN 3.5
 -----------
+Make MusicIndexService.
+Remove deprecated stuff in MusicIndex (currently used in wap interface).
+Must be case insensitive when grouping artist by index.
 Merge artists with same name, but different music folders.
 Proper sorting of "The" artists. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1144
 Obfuscate passwords in database. (Prefix with "enc:" for instance).  Also last.fm password.

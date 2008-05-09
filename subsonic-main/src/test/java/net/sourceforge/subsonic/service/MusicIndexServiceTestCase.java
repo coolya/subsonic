@@ -1,29 +1,32 @@
-package net.sourceforge.subsonic.domain;
+package net.sourceforge.subsonic.service;
+
+
+import junit.framework.TestCase;
+import net.sourceforge.subsonic.domain.MusicIndex;
+
+import java.util.List;
 
 /**
  * Unit test of {@link MusicIndex}.
+ *
  * @author Sindre Mehus
- * @version $Revision: 1.2 $ $Date: 2005/02/27 12:44:18 $
  */
+public class MusicIndexServiceTestCase extends TestCase {
 
-import junit.framework.*;
-
-import java.util.*;
-
-public class MusicIndexTestCase extends TestCase {
+    private final MusicIndexService musicIndexService = new MusicIndexService();
 
     public void testCreateIndexFromExpression() throws Exception {
-        MusicIndex index = MusicIndex.createIndexFromExpression("A");
+        MusicIndex index = musicIndexService.createIndexFromExpression("A");
         assertEquals("A", index.getIndex());
         assertEquals(1, index.getPrefixes().size());
         assertEquals("A", index.getPrefixes().get(0));
 
-        index = MusicIndex.createIndexFromExpression("The");
+        index = musicIndexService.createIndexFromExpression("The");
         assertEquals("The", index.getIndex());
         assertEquals(1, index.getPrefixes().size());
         assertEquals("The", index.getPrefixes().get(0));
 
-        index = MusicIndex.createIndexFromExpression("X-Z(XYZ)");
+        index = musicIndexService.createIndexFromExpression("X-Z(XYZ)");
         assertEquals("X-Z", index.getIndex());
         assertEquals(3, index.getPrefixes().size());
         assertEquals("X", index.getPrefixes().get(0));
@@ -32,7 +35,7 @@ public class MusicIndexTestCase extends TestCase {
     }
 
     public void testCreateIndexesFromExpression() throws Exception {
-        List<MusicIndex> indexes = MusicIndex.createIndexesFromExpression("A B  The X-Z(XYZ)");
+        List<MusicIndex> indexes = musicIndexService.createIndexesFromExpression("A B  The X-Z(XYZ)");
         assertEquals(4, indexes.size());
 
         assertEquals("A", indexes.get(0).getIndex());
