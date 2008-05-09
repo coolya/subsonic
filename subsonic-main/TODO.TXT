@@ -2,6 +2,9 @@ TODO IN 3.5
 -----------
 Make MusicIndexService.
 Remove deprecated stuff in MusicIndex (currently used in wap interface).
+Improve player management.
+Ajaxify changeCoverart.jsp.  Also support www.discogs.com (and Google or whatever).
+Create per-channel podcast settings. At least enable/disable.
 
 DONE IN 3.5
 -----------
@@ -16,13 +19,9 @@ Support Flash player by default.  http://www.activeobjects.no/subsonic/forum/vie
 Allow reservation of Now Playing info.
 Use table layout in Personal settings.
 
-
 BACKLOG
 ===========================
-Improve player management.
-Ajaxify changeCoverart.jsp.  Also support www.discogs.com (and Google or whatever).
 One save button for transcoding settings etc.
-Make it possible to not let other people see what I'm playing.
 Per-song rating.
 Read-only view. (= Play music role) http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2435
 Use filter for subsonic version in site xml's.
@@ -30,7 +29,6 @@ Add download/upload speedometer.
 Implement LastModified in main.jsp (Must test on FF).  Must add timestamp on music_file_info. Problem with cover art scheme.
 Double-write genres? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
 Party mode: Go into random mode if the playlist is finished.
-Create per-channel podcast settings. At least enable/disable.
 Retag track number in podcasts. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2003
 Make background image repeat in x-direction?
 Use YUI menus: http://developer.yahoo.com/yui/menu/
@@ -63,6 +61,7 @@ Ajax-ify Amazon pages.
 Wrong progress for http://atvs.vg.no/script/podcast.php?category_id=7
 Resumable Podcast downloads.
 "Random" very slow when no music folders.
+Merge artists with same name, but different music folders.
 Test if dwr javascripts are cached in browser (especially for "now playing")
 Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
 Test playlist checkbox stuff, in particular download auth.
