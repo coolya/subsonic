@@ -1,10 +1,12 @@
 TODO IN 3.5
 -----------
+One save button for transcoding settings etc.
 Improve player management.
 Create per-channel podcast settings. At least enable/disable.
 
 DONE IN 3.5
 -----------
+Simplified user interface in "Internet TV/radio" settings page.
 Ajaxify changeCoverart.jsp.  Also support www.discogs.com (and Google or whatever).
 Clean up ChangeCoverArtController.
 Display error if getCoverArtImages() fails.
@@ -24,7 +26,6 @@ Use table layout in Personal settings.
 
 BACKLOG
 ===========================
-One save button for transcoding settings etc.
 Per-song rating.
 Read-only view. (= Play music role) http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2435
 Use filter for subsonic version in site xml's.

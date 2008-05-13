@@ -1,12 +1,15 @@
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
-import org.springframework.web.servlet.*;
-import org.springframework.web.servlet.mvc.*;
+import net.sourceforge.subsonic.domain.InternetRadio;
+import net.sourceforge.subsonic.service.SettingsService;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
+import org.apache.commons.lang.StringUtils;
 
-import javax.servlet.http.*;
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller for the page used to administrate the set of internet radio/tv stations.
@@ -17,6 +20,7 @@ public class InternetRadioSettingsController extends ParameterizableViewControll
 
     private SettingsService settingsService;
 
+    @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Map<String, Object> map = new HashMap<String, Object>();
@@ -38,6 +42,7 @@ public class InternetRadioSettingsController extends ParameterizableViewControll
 
     /**
      * Determine if the given request represents a form submission.
+     *
      * @param request current HTTP request
      * @return if the request represents a form submission
      */
@@ -46,31 +51,42 @@ public class InternetRadioSettingsController extends ParameterizableViewControll
     }
 
     private String handleParameters(HttpServletRequest request) {
-        String id = request.getParameter("id");
-        String streamUrl = request.getParameter("streamUrl");
-        String homepageUrl = request.getParameter("homepageUrl");
-        String name = request.getParameter("name");
-        boolean enabled = request.getParameter("enabled") != null;
-        boolean create = request.getParameter("create") != null;
-        boolean delete = request.getParameter("delete") != null;
+        InternetRadio[] radios = settingsService.getAllInternetRadios(true);
+        for (InternetRadio radio : radios) {
+            Integer id = radio.getId();
+            String streamUrl = getParameter(request, "streamUrl", id);
+            String homepageUrl = getParameter(request, "homepageUrl", id);
+            String name = getParameter(request, "name", id);
+            boolean enabled = getParameter(request, "enabled", id) != null;
+            boolean delete = getParameter(request, "delete", id) != null;
 
-        if (delete) {
-            settingsService.deleteInternetRadio(new Integer(id));
-        } else {
-
-            if (name.length() == 0) {
-                return "internetradiosettings.noname";
-            }
-            if (streamUrl.length() == 0) {
-                return "internetradiosettings.nourl";
-            }
-            if (create) {
-                settingsService.createInternetRadio(new InternetRadio(name, streamUrl, homepageUrl, enabled));
+            if (delete) {
+                settingsService.deleteInternetRadio(id);
             } else {
-                settingsService.updateInternetRadio(new InternetRadio(new Integer(id), name, streamUrl, homepageUrl, enabled));
+                if (StringUtils.isBlank(name)) {
+                    return "internetradiosettings.noname";
+                }
+                if (StringUtils.isBlank(streamUrl)) {
+                    return "internetradiosettings.nourl";
+                }
+                settingsService.updateInternetRadio(new InternetRadio(id, name, streamUrl, homepageUrl, enabled));
             }
         }
+
+        String name = request.getParameter("name");
+        String streamUrl = request.getParameter("streamUrl");
+        String homepageUrl = request.getParameter("homepageUrl");
+        boolean enabled = request.getParameter("enabled") != null;
+
+        if (StringUtils.isNotBlank(name) && StringUtils.isNotBlank(streamUrl)) {
+            settingsService.createInternetRadio(new InternetRadio(name, streamUrl, homepageUrl, enabled));
+        }
+
         return null;
+    }
+
+    private String getParameter(HttpServletRequest request, String name, Integer radioId) {
+        return request.getParameter(name + "[" + radioId + "]");
     }
 
     public void setSettingsService(SettingsService settingsService) {
