@@ -14,6 +14,10 @@
             <param name="beanName" value="ajaxLyricsService"/>
         </create>
 
+        <create creator="spring" javascript="coverArtService">
+            <param name="beanName" value="ajaxCoverArtService"/>
+        </create>
+
         <create creator="spring" javascript="tagService">
             <param name="beanName" value="ajaxTagServiceSecure"/>
         </create>

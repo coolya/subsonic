@@ -118,8 +118,7 @@
         <property name="playerService" ref="playerService"/>
     </bean>
     <bean id="changeCoverArtController" class="net.sourceforge.subsonic.controller.ChangeCoverArtController">
-        <property name="amazonSearchService" ref="amazonSearchService"/>
-        <property name="securityService" ref="securityService"/>
+        <property name="viewName" value="changeCoverArt"/>
         <property name="musicFileService" ref="musicFileService"/>
     </bean>
     <bean id="nowPlayingController" class="net.sourceforge.subsonic.controller.NowPlayingController">

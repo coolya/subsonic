@@ -44,7 +44,7 @@ public class AmazonSearchService {
         long t1 = System.currentTimeMillis();
         LOG.info("Found " + result.size() + " cover image(s) at Amazon.com in " + (t1 - t0) + " ms.");
 
-        return result.toArray(new String[0]);
+        return result.toArray(new String[result.size()]);
     }
 
     /**
@@ -96,7 +96,7 @@ public class AmazonSearchService {
         long t1 = System.currentTimeMillis();
         LOG.info("Found " + result.size() + " album(s) at Amazon.com in " + (t1 - t0) + " ms.");
 
-        return result.toArray(new AmazonAlbumInfo[0]);
+        return result.toArray(new AmazonAlbumInfo[result.size()]);
     }
 
     private List<Item> search(String artist, String album, String... responseGroups) throws Exception {
@@ -124,9 +124,7 @@ public class AmazonSearchService {
             if (items == null) {
                 items = new Item[0];
             }
-            for (Item item : items) {
-                result.add(item);
-            }
+            result.addAll(Arrays.asList(items));
         }
         return result;
     }

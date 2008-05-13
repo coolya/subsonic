@@ -6,6 +6,8 @@ Create per-channel podcast settings. At least enable/disable.
 
 DONE IN 3.5
 -----------
+Clean up ChangeCoverArtController.
+Display error if getCoverArtImages() fails.
 Make MusicIndexService.
 Remove deprecated stuff in MusicIndex (currently used in wap interface).
 Must be case insensitive when grouping artist by index.
