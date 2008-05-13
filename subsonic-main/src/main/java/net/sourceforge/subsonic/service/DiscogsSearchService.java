@@ -41,14 +41,12 @@ public class DiscogsSearchService {
         long t0 = System.currentTimeMillis();
 
         String query = URLEncoder.encode(artist + " " + album, StringUtil.ENCODING_UTF8);
-        String url = "http://www.discogs.com/search?type=release&q=" + query + "&f=xml&api_key" + DISCOGS_API_KEY;
+        String url = "http://www.discogs.com/search?type=release&q=" + query + "&f=xml&api_key=" + DISCOGS_API_KEY;
         String searchResult = executeRequest(url);
-//        System.out.println(searchResult);
 
         List<String> result = new ArrayList<String>();
         List<Integer> releaseIds = parseReleaseIds(searchResult);
         for (Integer releaseId : releaseIds) {
-            System.out.println(releaseId);
             result.addAll(getImagesForRelease(releaseId));
             if (result.size() >= 10) {
                 break;
@@ -63,7 +61,6 @@ public class DiscogsSearchService {
     private List<String> getImagesForRelease(int releaseId) throws Exception {
         String url = "http://www.discogs.com/release/" + releaseId + "?f=xml&api_key" + DISCOGS_API_KEY;
         String searchResult = executeRequest(url);
-//        System.out.println(searchResult);
 
         SAXBuilder builder = new SAXBuilder();
         Document document = builder.build(new StringReader(searchResult));
@@ -81,7 +78,6 @@ public class DiscogsSearchService {
                 String imageUrl = image.getAttributeValue("uri");
                 if (imageUrl != null) {
                     imageUrls.add(imageUrl);
-                    System.out.println(imageUrl);
                 }
             }
         }
@@ -134,10 +130,5 @@ public class DiscogsSearchService {
             method.releaseConnection();
         }
         return result;
-    }
-
-    public static void main(String[] args) throws Exception {
-        DiscogsSearchService service = new DiscogsSearchService();
-        service.getCoverArtImages("REM", "Monster");
     }
 }

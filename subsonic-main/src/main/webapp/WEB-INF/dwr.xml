@@ -29,6 +29,7 @@
         <convert converter="bean" match="net.sourceforge.subsonic.ajax.UploadInfo"/>
         <convert converter="bean" match="net.sourceforge.subsonic.ajax.NowPlayingInfo"/>
         <convert converter="bean" match="net.sourceforge.subsonic.ajax.LyricsInfo"/>
+        <convert converter="bean" match="net.sourceforge.subsonic.ajax.CoverArtInfo"/>
 
     </allow>
 </dwr>

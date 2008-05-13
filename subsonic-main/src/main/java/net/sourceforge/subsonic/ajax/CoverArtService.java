@@ -9,11 +9,16 @@ import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.io.IOUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
+
+import uk.ltd.getahead.dwr.WebContextFactory;
 
 /**
  * Provides AJAX-enabled services for retrieving cover art images.
@@ -39,25 +44,52 @@ public class CoverArtService {
      * @param album   The album to search for.
      * @return A possibly empty array of URLs of cover art images.
      */
-    public String[] getCoverArtImages(String service, String artist, String album) {
+    public CoverArtInfo[] getCoverArtImages(String service, String artist, String album) {
         if ("amazon".equals(service)) {
-            try {
-                return amazonSearchService.getCoverArtImages(artist, album);
-            } catch (Exception x) {
-                LOG.warn("Failed to search for images at Amazon.", x);
-                return new String[0];
-            }
+            return getAmazonCoverArtImages(artist, album);
         } else if ("discogs".equals(service)) {
-            try {
-                return discogsSearchService.getCoverArtImages(artist, album);
-            } catch (Exception x) {
-                LOG.warn("Failed to search for images at Discogs.", x);
-                return new String[0];
-            }
+            return getDiscogsCoverArtImages(artist, album);
         }
 
         LOG.warn("Unsupported cover art service: " + service);
-        return new String[0];
+        return new CoverArtInfo[0];
+    }
+
+    private CoverArtInfo[] getDiscogsCoverArtImages(String artist, String album) {
+        try {
+            String[] urls = discogsSearchService.getCoverArtImages(artist, album);
+            CoverArtInfo[] result = new CoverArtInfo[urls.length];
+            for (int i = 0; i < urls.length; i++) {
+                // Must fetch Discogs images thru proxy, since Discogs doesn't allow the
+                // HTTP "referer" request header.
+                result[i] = new CoverArtInfo(toProxyURL(urls[i]), urls[i]);
+            }
+            return result;
+        } catch (Exception x) {
+            LOG.warn("Failed to search for images at Discogs.", x);
+            return new CoverArtInfo[0];
+        }
+    }
+
+    private CoverArtInfo[] getAmazonCoverArtImages(String artist, String album) {
+        try {
+            String[] urls = amazonSearchService.getCoverArtImages(artist, album);
+            CoverArtInfo[] result = new CoverArtInfo[urls.length];
+            for (int i = 0; i < urls.length; i++) {
+                result[i] = new CoverArtInfo(urls[i], urls[i]);
+            }
+            return result;
+        } catch (Exception x) {
+            LOG.warn("Failed to search for images at Amazon.", x);
+            return new CoverArtInfo[0];
+        }
+    }
+
+    private String toProxyURL(String url) throws UnsupportedEncodingException {
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        String requestUrl = request.getRequestURL().toString();
+        String proxyUrl = requestUrl.replaceFirst("/dwr/.*", "/proxy.view?url=");
+        return proxyUrl + URLEncoder.encode(url, StringUtil.ENCODING_UTF8);
     }
 
     /**

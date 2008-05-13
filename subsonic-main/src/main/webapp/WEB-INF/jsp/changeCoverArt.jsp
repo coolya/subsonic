@@ -26,7 +26,7 @@
         function getImagesCallback(imageUrls) {
             var html = "";
             for (var i = 0; i < imageUrls.length; i++) {
-                html += "<a href=\"javascript:setImage('" + imageUrls[i] + "')\"><img src='" + imageUrls[i] + "' style='padding:5pt' alt=''/></a>";
+                html += "<a href=\"javascript:setImage('" + imageUrls[i].imageDownloadUrl + "')\"><img src='" + imageUrls[i].imagePreviewUrl + "' style='padding:5pt' alt=''/></a>";
             }
             DWRUtil.setValue("images", html);
 
@@ -68,8 +68,8 @@
     <td><input id="artist" name="artist" type="text" value="${model.artist}"/></td>
     <td style="padding-left:0.25em"><fmt:message key="changecoverart.album"/></td>
     <td><input id="album" name="album" type="text" value="${model.album}"/></td>
-    <td style="padding-left:0.25em"><input type="submit" value="<fmt:message key="changecoverart.searchamazon"/>" onclick="getImages('amazon')"/></td>
-    <td style="padding-left:0.25em"><input type="submit" value="<fmt:message key="changecoverart.searchdiscogs"/>" onclick="getImages('discogs')"/></td>
+    <td style="padding-left:0.5em"><input type="submit" value="<fmt:message key="changecoverart.searchamazon"/>" onclick="getImages('amazon')"/></td>
+    <td><input type="submit" value="<fmt:message key="changecoverart.searchdiscogs"/>" onclick="getImages('discogs')"/></td>
 </tr></table>
 
 <table><tr>
