@@ -63,30 +63,30 @@ public class InternetRadioSettingsController extends ParameterizableViewControll
             if (delete) {
                 settingsService.deleteInternetRadio(id);
             } else {
-                if (StringUtils.isBlank(name)) {
+                if (name == null) {
                     return "internetradiosettings.noname";
                 }
-                if (StringUtils.isBlank(streamUrl)) {
+                if (streamUrl == null) {
                     return "internetradiosettings.nourl";
                 }
                 settingsService.updateInternetRadio(new InternetRadio(id, name, streamUrl, homepageUrl, enabled));
             }
         }
 
-        String name = request.getParameter("name");
-        String streamUrl = request.getParameter("streamUrl");
-        String homepageUrl = request.getParameter("homepageUrl");
-        boolean enabled = request.getParameter("enabled") != null;
+        String name = StringUtils.trimToNull(request.getParameter("name"));
+        String streamUrl = StringUtils.trimToNull(request.getParameter("streamUrl"));
+        String homepageUrl = StringUtils.trimToNull(request.getParameter("homepageUrl"));
+        boolean enabled = StringUtils.trimToNull(request.getParameter("enabled")) != null;
 
-        if (StringUtils.isNotBlank(name) && StringUtils.isNotBlank(streamUrl)) {
+        if (name != null && streamUrl != null) {
             settingsService.createInternetRadio(new InternetRadio(name, streamUrl, homepageUrl, enabled));
         }
 
         return null;
     }
 
-    private String getParameter(HttpServletRequest request, String name, Integer radioId) {
-        return request.getParameter(name + "[" + radioId + "]");
+    private String getParameter(HttpServletRequest request, String name, Integer id) {
+        return StringUtils.trimToNull(request.getParameter(name + "[" + id + "]"));
     }
 
     public void setSettingsService(SettingsService settingsService) {

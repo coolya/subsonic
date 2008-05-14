@@ -4,6 +4,7 @@ import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.domain.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.*;
 import java.util.*;
@@ -18,6 +19,7 @@ public class MusicFolderSettingsController extends ParameterizableViewController
 
     private SettingsService settingsService;
 
+    @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Map<String, Object> map = new HashMap<String, Object>();
@@ -47,33 +49,51 @@ public class MusicFolderSettingsController extends ParameterizableViewController
     }
 
     private String handleParameters(HttpServletRequest request) {
-        String id = request.getParameter("id");
-        String path = request.getParameter("path");
-        String name = request.getParameter("name");
-        boolean enabled = request.getParameter("enabled") != null;
-        boolean create = request.getParameter("create") != null;
-        boolean delete = request.getParameter("delete") != null;
 
-        if (delete) {
-            settingsService.deleteMusicFolder(new Integer(id));
-        } else {
+        for (MusicFolder musicFolder : settingsService.getAllMusicFolders(true)) {
+            Integer id = musicFolder.getId();
 
-            if (path.length() == 0) {
+            String path = getParameter(request, "path", id);
+            String name = getParameter(request, "name", id);
+            boolean enabled = getParameter(request, "enabled", id) != null;
+            boolean delete = getParameter(request, "delete", id) != null;
+
+            if (delete) {
+                settingsService.deleteMusicFolder(id);
+            } else if (path == null) {
                 return "musicfoldersettings.nopath";
-            }
-
-            File file = new File(path);
-            if (name.length() == 0) {
-                name = file.getName();
-            }
-
-            if (create) {
-                settingsService.createMusicFolder(new MusicFolder(file, name, enabled));
-            } else if (id != null) {
-                settingsService.updateMusicFolder(new MusicFolder(new Integer(id), file, name, enabled));
+            } else {
+                File file = new File(path);
+                if (name == null) {
+                    name = file.getName();
+                }
+                musicFolder.setName(name);
+                musicFolder.setPath(file);
+                musicFolder.setEnabled(enabled);
+                settingsService.updateMusicFolder(musicFolder);
             }
         }
+
+        String name = StringUtils.trimToNull(request.getParameter("name"));
+        String path = StringUtils.trimToNull(request.getParameter("path"));
+        boolean enabled = StringUtils.trimToNull(request.getParameter("enabled")) != null;
+
+        if (name != null || path != null) {
+            if (path == null) {
+                return "musicfoldersettings.nopath";
+            }
+            File file = new File(path);
+            if (name == null) {
+                name = file.getName();
+            }
+            settingsService.createMusicFolder(new MusicFolder(file, name, enabled));
+        }
+
         return null;
+    }
+
+    private String getParameter(HttpServletRequest request, String name, Integer id) {
+        return StringUtils.trimToNull(request.getParameter(name + "[" + id + "]"));
     }
 
     public void setSettingsService(SettingsService settingsService) {
