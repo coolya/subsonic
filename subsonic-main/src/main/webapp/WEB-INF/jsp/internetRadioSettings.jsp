@@ -24,8 +24,8 @@
             <td><input type="text" name="name[${radio.id}]" size="20" value="${radio.name}"/></td>
             <td><input type="text" name="streamUrl[${radio.id}]" size="40" value="${radio.streamUrl}"/></td>
             <td><input type="text" name="homepageUrl[${radio.id}]" size="40" value="${radio.homepageUrl}"/></td>
-            <td align="center"><input type="checkbox" ${radio.enabled ? "checked" : ""} name="enabled[${radio.id}]" class="checkbox"/></td>
-            <td align="center"><input type="checkbox" name="delete[${radio.id}]" class="checkbox"/></td>
+            <td align="center" style="padding-left:1em"><input type="checkbox" ${radio.enabled ? "checked" : ""} name="enabled[${radio.id}]" class="checkbox"/></td>
+            <td align="center" style="padding-left:1em"><input type="checkbox" name="delete[${radio.id}]" class="checkbox"/></td>
         </tr>
     </c:forEach>
 
@@ -37,7 +37,7 @@
         <td><input type="text" name="name" size="20"/></td>
         <td><input type="text" name="streamUrl" size="40"/></td>
         <td><input type="text" name="homepageUrl" size="40"/></td>
-        <td align="center"><input name="enabled" checked type="checkbox" class="checkbox"/></td>
+        <td align="center" style="padding-left:1em"><input name="enabled" checked type="checkbox" class="checkbox"/></td>
         <td/>
     </tr>
 

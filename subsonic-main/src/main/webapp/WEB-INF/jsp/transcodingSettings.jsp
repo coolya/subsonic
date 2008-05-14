@@ -31,9 +31,9 @@
             <td><input  style="font-family:monospace" type="text" name="step1[${transcoding.id}]" size="22" value="${transcoding.step1}"/></td>
             <td><input  style="font-family:monospace" type="text" name="step2[${transcoding.id}]" size="22" value="${transcoding.step2}"/></td>
             <td><input  style="font-family:monospace" type="text" name="step3[${transcoding.id}]" size="22" value="${transcoding.step3}"/></td>
-            <td align="center"><input type="checkbox" ${transcoding.defaultActive ? "checked" : ""} name="defaultActive[${transcoding.id}]" class="checkbox"/></td>
-            <td align="center"><input type="checkbox" ${transcoding.enabled ? "checked" : ""} name="enabled[${transcoding.id}]" class="checkbox"/></td>
-            <td align="center"><input type="checkbox" name="delete[${transcoding.id}]" class="checkbox"/></td>
+            <td align="center" style="padding-left:1em"><input type="checkbox" ${transcoding.defaultActive ? "checked" : ""} name="defaultActive[${transcoding.id}]" class="checkbox"/></td>
+            <td align="center" style="padding-left:1em"><input type="checkbox" ${transcoding.enabled ? "checked" : ""} name="enabled[${transcoding.id}]" class="checkbox"/></td>
+            <td align="center" style="padding-left:1em"><input type="checkbox" name="delete[${transcoding.id}]" class="checkbox"/></td>
         </tr>
     </c:forEach>
 
@@ -48,8 +48,8 @@
         <td><input  style="font-family:monospace" type="text" name="step1" size="22" value="${model.newTranscoding.step1}"/></td>
         <td><input  style="font-family:monospace" type="text" name="step2" size="22" value="${model.newTranscoding.step2}"/></td>
         <td><input  style="font-family:monospace" type="text" name="step3" size="22" value="${model.newTranscoding.step3}"/></td>
-        <td align="center"><input name="defaultActive" checked type="checkbox" class="checkbox"/></td>
-        <td align="center"><input name="enabled" checked type="checkbox" class="checkbox"/></td>
+        <td align="center" style="padding-left:1em"><input name="defaultActive" checked type="checkbox" class="checkbox"/></td>
+        <td align="center" style="padding-left:1em"><input name="enabled" checked type="checkbox" class="checkbox"/></td>
         <td/>
     </tr>
 
