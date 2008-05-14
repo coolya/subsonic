@@ -7,6 +7,7 @@ Create per-channel podcast settings. At least enable/disable.
 DONE IN 3.5
 -----------
 Simplified user interface in "Internet TV/radio" settings page.
+Simplified user interface in "Transcoding" settings page.
 Ajaxify changeCoverart.jsp.  Also support www.discogs.com (and Google or whatever).
 Clean up ChangeCoverArtController.
 Display error if getCoverArtImages() fails.

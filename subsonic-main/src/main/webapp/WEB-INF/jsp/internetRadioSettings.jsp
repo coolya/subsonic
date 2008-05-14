@@ -32,6 +32,7 @@
     <tr>
         <th colspan="5" align="left" style="padding-top:1em"><fmt:message key="internetradiosettings.add"/></th>
     </tr>
+
     <tr>
         <td><input type="text" name="name" size="20"/></td>
         <td><input type="text" name="streamUrl" size="40"/></td>
@@ -41,7 +42,8 @@
     </tr>
 
     <tr>
-        <td style="padding-top:2em" colspan="5" align="center"><input type="submit" value="<fmt:message key="common.save"/>"/></td>
+        <td style="padding-top:2em" colspan="3" align="center"><input type="submit" value="<fmt:message key="common.save"/>"/></td>
+        <td colspan="2"/>
     </tr>
 </table>
 </form>
