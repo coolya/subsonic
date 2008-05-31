@@ -3,9 +3,12 @@ TODO IN 3.5
 One save button for transcoding settings etc.
 Improve player management.
 Create per-channel podcast settings. At least enable/disable.
+Fix minor bug with letter appearing if only file (not directory) exists. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1023
+RTSP support
 
 DONE IN 3.5
 -----------
+Bugfix: Make it work without X11 server.
 Simplified user interface in "Internet TV/radio" settings page.
 Simplified user interface in "Transcoding" settings page.
 Simplified user interface in "Music Folder" settings page.

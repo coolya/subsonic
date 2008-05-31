@@ -35,7 +35,11 @@ public class SubsonicController {
 
     public SubsonicController() {
         deployWebApp();
-        trayController = new TrayController(this);
+        try {
+            trayController = new TrayController(this);
+        } catch (Throwable x) {
+            System.err.println("Disabling tray support.");
+        }
     }
 
     private void deployWebApp() {
