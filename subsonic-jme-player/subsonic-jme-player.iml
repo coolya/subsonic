@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module relativePaths="true" type="J2ME_MODULE" version="4">
+  <component name="J2ME Module Properties">
+    <mobileApplicationType name="MIDP" />
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntryProperties />
+  </component>
+  <component name="com.intellij.j2meplugin.module.settings.midp.MIDPSettings">
+    <setting name="MIDlet-1" module.settings.user.defined.value="AudioPlayer,,net.sourceforge.subsonic.jmeplayer.AudioPlayer" />
+    <setting name="MIDlet-Jar-Size" module.settings.user.defined.value="2022" />
+    <setting name="MIDlet-Jar-URL" module.settings.user.defined.value="subsonic-jme-player.jar" />
+    <setting name="MIDlet-Name" module.settings.user.defined.value="subsonic-jme-player" />
+    <setting name="MIDlet-Vendor" module.settings.user.defined.value="My Vendor" />
+    <setting name="MIDlet-Version" module.settings.user.defined.value="1.0" />
+    <setting name="MicroEdition-Configuration" module.settings.user.defined.value="CLDC-1.0" />
+    <setting name="MicroEdition-Profile" module.settings.user.defined.value="MIDP-2.0" />
+    <jarUrl jarUrlName="$MODULE_DIR$/subsonic-jme-player.jar" />
+    <descriptionPath path="$MODULE_DIR$/subsonic-jme-player.jad" useUserDescriptor="false" />
+    <manifest useUserManifest="false" />
+  </component>
+</module>
+
