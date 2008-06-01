@@ -32,14 +32,12 @@
 package net.sourceforge.subsonic.jmeplayer;
 
 
-import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Command;
+import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Displayable;
-import javax.microedition.midlet.MIDlet;
 import javax.microedition.media.Manager;
 import javax.microedition.media.Player;
-import javax.microedition.media.MediaException;
-import java.io.InputStream;
+import javax.microedition.midlet.MIDlet;
 
 
 /**
@@ -112,7 +110,6 @@ public class AudioPlayer extends MIDlet implements CommandListener {
                 x.printStackTrace();
             }
         }
-
 
 
     }
