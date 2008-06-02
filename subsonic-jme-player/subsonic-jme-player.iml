@@ -15,7 +15,9 @@
   </component>
   <component name="com.intellij.j2meplugin.module.settings.midp.MIDPSettings">
     <setting name="MIDlet-1" module.settings.user.defined.value="AudioPlayer,,net.sourceforge.subsonic.jmeplayer.AudioPlayer" />
-    <setting name="MIDlet-Jar-Size" module.settings.user.defined.value="16283" />
+    <setting name="MIDlet-2" module.settings.user.defined.value="GuiTests,,net.sourceforge.subsonic.jmeplayer.GuiTests" />
+    <setting name="MIDlet-3" module.settings.user.defined.value="SubsonicPlayer,,net.sourceforge.subsonic.jmeplayer.SubsonicPlayer" />
+    <setting name="MIDlet-Jar-Size" module.settings.user.defined.value="28097" />
     <setting name="MIDlet-Jar-URL" module.settings.user.defined.value="subsonic-jme-player.jar" />
     <setting name="MIDlet-Name" module.settings.user.defined.value="subsonic-jme-player" />
     <setting name="MIDlet-Vendor" module.settings.user.defined.value="My Vendor" />

@@ -32,12 +32,17 @@
 package net.sourceforge.subsonic.jmeplayer;
 
 
+import javax.microedition.io.Connector;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.media.Manager;
 import javax.microedition.media.Player;
 import javax.microedition.midlet.MIDlet;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 
 /**
@@ -47,6 +52,7 @@ import javax.microedition.midlet.MIDlet;
  */
 public class AudioPlayer extends MIDlet implements CommandListener {
 
+    private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
     private Player player;
 
     public AudioPlayer() {
@@ -59,6 +65,15 @@ public class AudioPlayer extends MIDlet implements CommandListener {
      * when the MIDlet was paused, call its playSound method.
      */
     public void startApp() {
+
+        try {
+            InputStream in = Connector.openInputStream("http://www.ericgiguere.com/nanoxml/index.html");
+            System.out.println(toString(in));
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         String[] mediaTypes = Manager.getSupportedContentTypes(null);
         for (int i = 0; i < mediaTypes.length; i++) {
             System.out.println(mediaTypes[i]);
@@ -115,6 +130,28 @@ public class AudioPlayer extends MIDlet implements CommandListener {
     }
 
     public void commandAction(Command c, Displayable s) {
+    }
+
+
+    public static String toString(InputStream input) throws IOException {
+        return new String(toByteArray(input), "UTF-8");
+    }
+
+    public static byte[] toByteArray(InputStream input) throws IOException {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        copy(input, output);
+        return output.toByteArray();
+    }
+
+    public static int copy(InputStream input, OutputStream output) throws IOException {
+        byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+        int count = 0;
+        int n = 0;
+        while (-1 != (n = input.read(buffer))) {
+            output.write(buffer, 0, n);
+            count += n;
+        }
+        return count;
     }
 
 }

@@ -6,31 +6,47 @@
  */
 package net.sourceforge.subsonic.jmeplayer.nanoxml;
 
-import java.util.Vector;
+import javax.microedition.io.Connector;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * @author Sindre Mehus
  */
 public class Test {
 
-    public static void main(String[] args) {
+    /**
+     * The default buffer size to use.
+     */
+    private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
 
-        String xml = "<artists>\n" +
-                     "  <artist name='abba'/>\n" +
-                     "  <artist name='acdc'/>\n" +
-                     "</artists>";
+    public static void main(String[] args) throws IOException {
 
+        InputStream in = Connector.openInputStream("http://www.ericgiguere.com/nanoxml/index.html");
+        System.out.println(toString(in));
+        in.close();
+    }
 
-        kXMLElement element = new kXMLElement();
-        element.parseString(xml);
-        System.out.println(element);
+    public static String toString(InputStream input) throws IOException {
+        return new String(toByteArray(input), "UTF-8");
+    }
 
-        Vector children = element.getChildren();
-        for (int i = 0; i < children.size(); i++) {
-            kXMLElement child = (kXMLElement) children.elementAt(i);
-//            System.out.println(child);
-            System.out.println(child.getProperty("name"));
+    public static byte[] toByteArray(InputStream input) throws IOException {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        copy(input, output);
+        return output.toByteArray();
+    }
+
+    public static int copy(InputStream input, OutputStream output) throws IOException {
+        byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+        int count = 0;
+        int n = 0;
+        while (-1 != (n = input.read(buffer))) {
+            output.write(buffer, 0, n);
+            count += n;
         }
-        System.out.println(children.size());
+        return count;
     }
 }
