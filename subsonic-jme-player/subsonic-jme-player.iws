@@ -15,20 +15,16 @@
     <option name="historyRevisionsNumber" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/net" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/AudioPlayer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/subsonic-jme-player.iws" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/net/sourceforge" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/subsonic-jme-player.ipr" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/subsonic-jme-player.iml" />
+    <list default="true" name="Default" comment="Added XML parser.">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/readme.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/kXMLElement.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/kXMLPrintWriter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/kXMLStringWriter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/kXMLParseException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/Test.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/subsonic-jme-player.iml" afterPath="$PROJECT_DIR$/subsonic-jme-player.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/subsonic-jme-player.iws" afterPath="$PROJECT_DIR$/subsonic-jme-player.iws" />
     </list>
     <ignored path="subsonic-jme-player.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,6 +43,21 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <line_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/Test.java" line="33" class="nanoxml.Test" package="nanoxml">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -91,13 +102,186 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AudioPlayer.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/AudioPlayer.java">
+      <file leaf-file-name="Test.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/Test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="76" column="9" selection-start="3128" selection-end="3128" vertical-scroll-proportion="0.70415646">
+            <state line="17" column="36" selection-start="495" selection-end="495" vertical-scroll-proportion="0.36823106">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="kXMLParseException.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/kXMLParseException.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="52" column="13" selection-start="1821" selection-end="1821" vertical-scroll-proportion="-0.38989168">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="readme.txt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/readme.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="kXMLElement.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/kXMLElement.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="65" column="13" selection-start="2257" selection-end="2257" vertical-scroll-proportion="0.43862817">
               <folding>
-                <element signature="imports" expanded="true" />
+                <marker date="1212407208029" expanded="true" signature="2478:2530" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="2569:2669" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="2703:2776" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="2809:2915" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="2949:3002" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="3046:3107" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="3155:3213" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="3242:3297" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="3334:4031" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="4059:4113" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="4119:4852" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="4905:4959" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="4965:5665" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="5722:5792" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="5798:6533" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="6642:6712" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="6718:7748" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="7901:7977" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="7983:9012" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="9235:9825" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="9830:9864" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="9911:9956" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="9998:10092" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="10097:10206" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="10290:10428" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="10434:10543" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="10624:10769" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="10775:10839" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="10873:10936" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="10942:10990" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="11041:11084" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="11090:11147" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="11193:11238" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="11244:11298" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="11333:11416" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="11422:11547" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="11582:11611" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="11617:11684" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="11714:11741" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="11747:11914" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="12064:12616" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="12621:12631" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="12695:12774" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="12779:12789" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="12865:12992" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="12997:13122" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="13167:13300" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="13306:13426" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="13521:13668" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="13674:13803" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="13892:14375" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="14381:14506" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="14704:15177" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="15183:15375" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="15525:15905" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="15911:16104" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="16272:16811" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="16817:17109" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="17280:18014" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="18020:18106" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="18140:18168" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="18174:18247" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="18296:18455" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="18461:18770" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="18865:18905" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="18911:19220" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="19369:20076" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="20082:20263" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="20341:20414" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="20420:20695" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="20813:20931" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="20937:21221" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="21377:21450" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="21456:21740" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="21945:22064" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="22070:22352" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="22516:22574" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="22580:22862" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="23078:23208" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="23214:23496" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="23715:25269" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="25275:25701" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="25943:27218" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="27224:27311" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="27361:27439" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="27445:27483" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="27526:27662" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="27668:28070" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="28282:28648" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="28654:29012" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="29250:30011" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="30017:30060" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="30112:30291" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="30297:30671" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="30967:35531" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="35537:35686" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="35830:36163" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="36169:36408" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="36628:37597" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="37603:38069" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="38277:39309" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="39315:39563" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="39763:39968" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="39974:40069" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="40115:40152" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="40158:40241" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="40287:40323" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="40329:40626" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="40806:41672" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="41678:41975" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="42179:42801" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="42807:43044" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="43224:44599" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="44605:44669" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="44764:47086" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="47092:47144" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="47176:47291" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="47297:47349" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="47389:47419" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="47425:47477" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="47553:49692" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="49698:49751" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="49855:51054" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="51060:51159" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="51221:51347" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="51353:51449" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="51621:51815" placeholder="{...}" />
+                <marker date="1212407208029" expanded="true" signature="51821:51881" placeholder="/**...*/" />
+                <marker date="1212407208029" expanded="true" signature="51947:52071" placeholder="{...}" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="kXMLStringWriter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/kXMLStringWriter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="13" selection-start="85" selection-end="85" vertical-scroll-proportion="0.12274368">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="kXMLPrintWriter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/kXMLPrintWriter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="16" selection-start="88" selection-end="88" vertical-scroll-proportion="-0.5216606">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -145,14 +329,6 @@
           <option name="myItemId" value="subsonic-jme-player" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="&lt; Sun Java(TM) Wireless Toolkit 2.5.2 for CLDC &gt;" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
       </PATH>
       <PATH>
         <PATH_ELEMENT>
@@ -164,29 +340,7 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\subsonic\trunk\subsonic-jme-player" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="subsonic-jme-player" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="subsonic-jme-player" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\subsonic\trunk\subsonic-jme-player" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\subsonic\trunk\subsonic-jme-player\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\subsonic\trunk\subsonic-jme-player\src\main" />
+          <option name="myItemId" value="PsiDirectory:D:\projects\subsonic\trunk\subsonic-jme-player" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -200,30 +354,86 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\subsonic\trunk\subsonic-jme-player" />
+          <option name="myItemId" value="PsiDirectory:D:\projects\subsonic\trunk\subsonic-jme-player" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\subsonic\trunk\subsonic-jme-player\src" />
+          <option name="myItemId" value="PsiDirectory:D:\projects\subsonic\trunk\subsonic-jme-player\src" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\subsonic\trunk\subsonic-jme-player\src\main" />
+          <option name="myItemId" value="PsiDirectory:D:\projects\subsonic\trunk\subsonic-jme-player\src\main" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="subsonic-jme-player" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="subsonic-jme-player" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\projects\subsonic\trunk\subsonic-jme-player" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\subsonic\trunk\subsonic-jme-player\src\main\java" />
+          <option name="myItemId" value="PsiDirectory:D:\projects\subsonic\trunk\subsonic-jme-player\src" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\subsonic\trunk\subsonic-jme-player\src\main\java\net\sourceforge\subsonic\jmeplayer" />
+          <option name="myItemId" value="PsiDirectory:D:\projects\subsonic\trunk\subsonic-jme-player\src\main" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\projects\subsonic\trunk\subsonic-jme-player\src\main\java" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\projects\subsonic\trunk\subsonic-jme-player\src\main\java\net\sourceforge\subsonic\jmeplayer" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="subsonic-jme-player" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="subsonic-jme-player" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\projects\subsonic\trunk\subsonic-jme-player" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\projects\subsonic\trunk\subsonic-jme-player\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\projects\subsonic\trunk\subsonic-jme-player\src\main" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\projects\subsonic\trunk\subsonic-jme-player\src\main\java" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\projects\subsonic\trunk\subsonic-jme-player\src\main\java\net\sourceforge\subsonic\jmeplayer" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\projects\subsonic\trunk\subsonic-jme-player\src\main\java\net\sourceforge\subsonic\jmeplayer\nanoxml" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
     </subPane>
   </component>
   <component name="ProjectReloadState">
-    <option name="STATE" value="2" />
+    <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="0.16666667" version="1" splitterProportion="0.5">
@@ -248,24 +458,37 @@
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
   </component>
-  <component name="RunManager" selected="J2ME.net.sourceforge.subsonic.jmeplayer.AudioPlayer">
-    <tempConfiguration default="false" name="net.sourceforge.subsonic.jmeplayer.AudioPlayer" type="#com.intellij.j2meplugin.run.J2MEConfigurationType" factoryName="J2ME">
+  <component name="Regex">
+    <option name="pos1" value="218" />
+    <option name="pos2" value="218" />
+    <option name="pos3" value="162" />
+    <option name="pos4" value="444" />
+    <option name="pos5" value="162" />
+    <option name="autoUpdate" value="true" />
+    <option name="referenceOn" value="false" />
+    <option name="referencePos" value="0" />
+    <option name="showLabels" value="true" />
+  </component>
+  <component name="RunManager" selected="Application.Test">
+    <tempConfiguration default="false" name="Test" type="Application" factoryName="Application" enabled="false" merge="false">
+      <option name="MAIN_CLASS_NAME" value="net.sourceforge.subsonic.jmeplayer.nanoxml.Test" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
       <module name="subsonic-jme-player" />
-      <USER_OPTIONS />
-      <option name="TARGET_DEVICE_NAME" />
-      <option name="COMMAND_LINE_PARAMETERS" value="" />
-      <option name="MAIN_CLASS_NAME" value="net.sourceforge.subsonic.jmeplayer.AudioPlayer" />
-      <option name="JAD_NAME" value="C:\projects\subsonic\trunk\subsonic-jme-player\subsonic-jme-player.jad" />
-      <option name="IS_CLASSES" value="true" />
-      <option name="IS_OTA" value="false" />
-      <option name="INSTALL" value="" />
-      <option name="REMOVE" />
-      <option name="RUN" />
-      <option name="TRANSIENT" value="" />
-      <option name="FORCE" />
-      <option name="TO_START" value="" />
-      <option name="SELECTION" value="1" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="10826" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <method>
         <option name="Make" value="true" />
@@ -290,6 +513,25 @@
       </option>
       <envs />
     </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="C:/Program Files/JetBrains/IntelliJ IDEA 6.0/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+    </configuration>
     <configuration default="true" type="#com.intellij.j2meplugin.run.J2MEConfigurationType" factoryName="J2ME">
       <module name="subsonic-jme-player" />
       <USER_OPTIONS />
@@ -310,25 +552,6 @@
         <option name="Make" value="true" />
       </method>
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="C:/Program Files/JetBrains/IntelliJ IDEA 6.0/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-    </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-    </configuration>
     <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
       <option name="MAIN_CLASS_NAME" />
       <option name="VM_PARAMETERS" />
@@ -341,9 +564,12 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="" />
       <envs />
+      <method>
+        <option name="Make" value="true" />
+      </method>
     </configuration>
     <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="J2ME.net.sourceforge.subsonic.jmeplayer.AudioPlayer" />
+      <item index="0" class="java.lang.String" itemvalue="Application.Test" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -373,7 +599,7 @@
     <option name="UPDATE_RUN_STATUS" value="false" />
     <option name="UPDATE_RECURSIVELY" value="true" />
     <option name="MERGE_DRY_RUN" value="false" />
-    <configuration useDefault="true">C:\Documents and Settings\Sindre\Programdata\Subversion</configuration>
+    <configuration useDefault="true">C:\Documents and Settings\smehus\Application Data\Subversion</configuration>
     <upgradeMode>auto</upgradeMode>
   </component>
   <component name="TodoView" selected-index="0">
@@ -397,30 +623,32 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1522" height="1022" extended-state="0" />
-    <editor active="true" />
+    <frame x="-4" y="-4" width="1757" height="1172" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.50553095" order="8" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.43726236" order="8" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="1" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="1" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="3" />
+      <window_info id="Profile" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39923954" order="3" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32964602" order="8" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.54372627" order="8" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="7" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="1" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="0" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24948876" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24911869" order="0" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="2" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="6" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5265487" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4163498" order="2" />
+      <window_info id="Regex" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="5" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="0" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="2" />
@@ -486,40 +714,184 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/progs/WTK2.5.2/lib/midpapi21.jar!/javax/microedition/midlet/MIDlet.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="28" selection-start="556" selection-end="556" vertical-scroll-proportion="0.2972028">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/progs/WTK2.5.2/lib/midpapi21.jar!/javax/microedition/media/Manager.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="37" selection-start="917" selection-end="917" vertical-scroll-proportion="0.33682984">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/progs/WTK2.5.2/lib/midpapi21.jar!/gov/nist/siplite/parser/URLParser.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="4" selection-start="886" selection-end="886" vertical-scroll-proportion="0.8717949">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/subsonic-jme-player.jad">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="280" selection-end="280" vertical-scroll-proportion="0.34871796">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/AudioPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="9" selection-start="3128" selection-end="3128" vertical-scroll-proportion="0.70415646">
+        <state line="88" column="15" selection-start="3512" selection-end="3512" vertical-scroll-proportion="0.25813448">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/kXMLStringWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="13" selection-start="85" selection-end="85" vertical-scroll-proportion="0.12274368">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/readme.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/kXMLPrintWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="16" selection-start="88" selection-end="88" vertical-scroll-proportion="-0.5216606">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/kXMLElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="13" selection-start="2257" selection-end="2257" vertical-scroll-proportion="0.43862817">
+          <folding>
+            <marker date="1212407208029" expanded="true" signature="2478:2530" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="2569:2669" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="2703:2776" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="2809:2915" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="2949:3002" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="3046:3107" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="3155:3213" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="3242:3297" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="3334:4031" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="4059:4113" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="4119:4852" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="4905:4959" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="4965:5665" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="5722:5792" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="5798:6533" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="6642:6712" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="6718:7748" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="7901:7977" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="7983:9012" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="9235:9825" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="9830:9864" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="9911:9956" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="9998:10092" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="10097:10206" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="10290:10428" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="10434:10543" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="10624:10769" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="10775:10839" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="10873:10936" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="10942:10990" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="11041:11084" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="11090:11147" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="11193:11238" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="11244:11298" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="11333:11416" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="11422:11547" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="11582:11611" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="11617:11684" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="11714:11741" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="11747:11914" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="12064:12616" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="12621:12631" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="12695:12774" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="12779:12789" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="12865:12992" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="12997:13122" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="13167:13300" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="13306:13426" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="13521:13668" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="13674:13803" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="13892:14375" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="14381:14506" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="14704:15177" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="15183:15375" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="15525:15905" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="15911:16104" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="16272:16811" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="16817:17109" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="17280:18014" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="18020:18106" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="18140:18168" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="18174:18247" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="18296:18455" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="18461:18770" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="18865:18905" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="18911:19220" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="19369:20076" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="20082:20263" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="20341:20414" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="20420:20695" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="20813:20931" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="20937:21221" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="21377:21450" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="21456:21740" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="21945:22064" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="22070:22352" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="22516:22574" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="22580:22862" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="23078:23208" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="23214:23496" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="23715:25269" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="25275:25701" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="25943:27218" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="27224:27311" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="27361:27439" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="27445:27483" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="27526:27662" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="27668:28070" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="28282:28648" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="28654:29012" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="29250:30011" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="30017:30060" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="30112:30291" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="30297:30671" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="30967:35531" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="35537:35686" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="35830:36163" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="36169:36408" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="36628:37597" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="37603:38069" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="38277:39309" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="39315:39563" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="39763:39968" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="39974:40069" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="40115:40152" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="40158:40241" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="40287:40323" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="40329:40626" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="40806:41672" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="41678:41975" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="42179:42801" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="42807:43044" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="43224:44599" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="44605:44669" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="44764:47086" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="47092:47144" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="47176:47291" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="47297:47349" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="47389:47419" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="47425:47477" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="47553:49692" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="49698:49751" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="49855:51054" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="51060:51159" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="51221:51347" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="51353:51449" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="51621:51815" placeholder="{...}" />
+            <marker date="1212407208029" expanded="true" signature="51821:51881" placeholder="/**...*/" />
+            <marker date="1212407208029" expanded="true" signature="51947:52071" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/kXMLParseException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="13" selection-start="1821" selection-end="1821" vertical-scroll-proportion="-0.38989168">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/sourceforge/subsonic/jmeplayer/nanoxml/Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="36" selection-start="495" selection-end="495" vertical-scroll-proportion="0.36823106">
+          <folding />
         </state>
       </provider>
     </entry>
