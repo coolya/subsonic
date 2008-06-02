@@ -36,3 +36,5 @@ o Create cache from path to <directory> info.
 o Create service proxy, with mock implementation to simplify development of gui.
 
 o Only support for playing one song.
+
+o BreadCrumbTrail

@@ -48,6 +48,9 @@
       <entry name="?*.html" />
       <entry name="?*.dtd" />
       <entry name="?*.tld" />
+      <entry name="?*.wav" />
+      <entry name="?*.jts" />
+      <entry name="?*.mid" />
     </wildcardResourcePatterns>
   </component>
   <component name="DependenciesAnalyzeManager">

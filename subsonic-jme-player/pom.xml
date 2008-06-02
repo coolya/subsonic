@@ -1,0 +1,61 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.sourceforge.subsonic</groupId>
+    <artifactId>subsonic-jme-player</artifactId>
+    <name>Subsonic JME Player</name>
+
+    <parent>
+        <groupId>net.sourceforge.subsonic</groupId>
+        <artifactId>subsonic</artifactId>
+        <version>3.4</version>
+    </parent>
+
+    <properties>
+        <wtk.home>c:\progs\WTK2.5.2</wtk.home>
+    </properties>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.microemu</groupId>
+            <artifactId>microemulator</artifactId>
+            <scope>provided</scope>
+            <version>2.0.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>com.pyx4me</groupId>
+                <artifactId>j2me-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <wtkHome>${wtk.home}</wtkHome>
+                    <proguard>false</proguard>
+                    <obfuscate>false</obfuscate>
+                    <jadAttributes>
+                        <Created-By>Sindre Mehus</Created-By>
+                    </jadAttributes>
+                    <midlets>
+                        <MIDlet>
+                            <name>AudioPlayer</name>
+                            <!--<icon>/me2-icon.png</icon>-->
+                            <class>net.sourceforge.subsonic.jmeplayer.AudioPlayer</class>
+                        </MIDlet>
+                    </midlets>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
