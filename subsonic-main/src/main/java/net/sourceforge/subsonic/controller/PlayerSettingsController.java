@@ -4,6 +4,7 @@ import net.sourceforge.subsonic.command.*;
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
 import org.springframework.web.servlet.mvc.*;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.*;
 import java.util.*;
@@ -19,6 +20,7 @@ public class PlayerSettingsController extends SimpleFormController {
     private SecurityService securityService;
     private TranscodingService transcodingService;
 
+    @Override
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
 
         handleRequestParameters(request);
@@ -58,12 +60,13 @@ public class PlayerSettingsController extends SimpleFormController {
         command.setTranscodeDirectory(transcodingService.getTranscodeDirectory().getPath());
         command.setCoverArtSchemes(CoverArtScheme.values());
         command.setTranscodeSchemes(TranscodeScheme.values());
-        command.setPlayers(players.toArray(new Player[0]));
+        command.setPlayers(players.toArray(new Player[players.size()]));
         command.setAdmin(user.isAdminRole());
 
         return command;
     }
 
+    @Override
     protected void doSubmitAction(Object comm) throws Exception {
         PlayerSettingsCommand command = (PlayerSettingsCommand) comm;
         Player player = playerService.getPlayerById(command.getPlayerId());
@@ -72,7 +75,7 @@ public class PlayerSettingsController extends SimpleFormController {
         player.setClientSidePlaylist(command.isClientSidePlaylist());
         player.setCoverArtScheme(CoverArtScheme.valueOf(command.getCoverArtSchemeName()));
         player.setDynamicIp(command.isDynamicIp());
-        player.setName(command.getName());
+        player.setName(StringUtils.trimToNull(command.getName()));
         player.setTranscodeScheme(TranscodeScheme.valueOf(command.getTranscodeSchemeName()));
 
         playerService.updatePlayer(player);

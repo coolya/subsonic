@@ -3,6 +3,7 @@ package net.sourceforge.subsonic.service;
 import net.sourceforge.subsonic.dao.PlayerDao;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Transcoding;
+import net.sourceforge.subsonic.Logger;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,8 @@ import java.util.List;
  * @see Player
  */
 public class PlayerService {
+
+    private static final Logger LOG = Logger.getLogger(TranscodingService.class);
     private static final String COOKIE_NAME = "player";
 
     private PlayerDao playerDao;
@@ -68,11 +71,14 @@ public class PlayerService {
         if (player == null) {
             player = new Player();
             createPlayer(player);
+            LOG.debug("Created player " + player.getId() + " (remoteControlEnabled: " + remoteControlEnabled +
+                      ", isStreamRequest: " + isStreamRequest + ", remoteUser: " + remoteUser +
+                      ", ip: " + request.getRemoteAddr() + ").");
         }
 
         // Update player data.
         boolean isUpdate = false;
-        if (remoteUser != null && !remoteUser.equals(player.getUsername())) {
+        if (remoteUser != null && player.getUsername() == null) {
             player.setUsername(remoteUser);
             isUpdate = true;
         }
