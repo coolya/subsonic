@@ -6,26 +6,31 @@
  */
 package net.sourceforge.subsonic.jmeplayer.screens;
 
-import net.sourceforge.subsonic.jmeplayer.Util;
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
 
+import javax.microedition.io.Connector;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.StringItem;
 import javax.microedition.media.Manager;
 import javax.microedition.media.Player;
 import javax.microedition.media.PlayerListener;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author Sindre Mehus
  */
 public class PlayScreen extends Form implements PlayerListener {
 
-    private StringItem nowPlayingItem;
-    private StringItem statusItem;
-    private MusicDirectory.Entry musicDirectoryEntry;
+    private final StringItem nowPlayingItem;
+    private final StringItem statusItem;
+    private MusicDirectory.Entry entry;
     private Player player;
+    private MonitoredInputStream input;
+    private String status = "Stopped";
 
     // TODO: Add player listener
 
@@ -37,24 +42,30 @@ public class PlayScreen extends Form implements PlayerListener {
         statusItem = new StringItem("Status: ", null);
         append(nowPlayingItem);
         append(statusItem);
+
+        TimerTask task = new TimerTask() {
+            public void run() {
+                updateStatus();
+            }
+        };
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(task, 0L, 1000L);
     }
 
     public void setMusicDirectoryEntry(MusicDirectory.Entry entry) {
-        this.musicDirectoryEntry = entry;
+        this.entry = entry;
         nowPlayingItem.setText(entry.getName());
     }
 
-    public void start() throws Exception {
+    public synchronized void start() throws Exception {
         stop();
         createPlayer();
-        System.out.println("Player created.");
-        player.prefetch();
-        System.out.println("Player prefetched.");
+        status = "Buffering";
         player.start();
-        System.out.println("Player started.");
     }
 
-    public void stop() throws Exception {
+    public synchronized void stop() throws Exception {
+        status = "Stopped";
         if (player != null) {
             // TODO
             try {
@@ -64,24 +75,110 @@ public class PlayScreen extends Form implements PlayerListener {
                 e.printStackTrace();
             } finally {
                 player = null;
+                input = null;
             }
         }
     }
 
     private void createPlayer() throws Exception {
-        String url = musicDirectoryEntry.getUrl();
+        status = "Connecting";
+        String url = entry.getUrl();
+        InputStream in;
         if (url.startsWith("resource:")) {
-            InputStream in = getClass().getResourceAsStream(url.substring(9));
-            String contentType = Util.guessContentType(url);
-            player = Manager.createPlayer(in, contentType);
+            in = getClass().getResourceAsStream(url.substring(9));
         } else {
-            player = Manager.createPlayer(url);
+            in = Connector.openInputStream(url);
         }
 
+        input = new MonitoredInputStream(in);
+        player = Manager.createPlayer(input, entry.getContentType());
         player.addPlayerListener(this);
     }
 
+    private void updateStatus() {
+        String s = status;
+        if (input != null) {
+            s += " - " + input.getBytesRead() + " bytes read.";
+        }
+        statusItem.setText(s);
+    }
+
     public void playerUpdate(Player player, String event, Object eventData) {
-        statusItem.setText(event + " - " + eventData);
+        switch (player.getState()) {
+            case Player.PREFETCHED:
+                status = "Ready";
+                break;
+            case Player.STARTED:
+                status = "Playing";
+                break;
+            case Player.CLOSED:
+                status = "Stopped";
+                break;
+            default:
+                System.out.println("state: " + player.getState());
+                break;
+        }
+    }
+
+    private static final class MonitoredInputStream extends InputStream {
+
+        private final InputStream in;
+        private long bytesRead;
+
+        public MonitoredInputStream(InputStream in) {
+            this.in = in;
+        }
+
+        public long getBytesRead() {
+            return bytesRead;
+        }
+
+        public int read() throws IOException {
+            int n = in.read();
+            if (n != -1) {
+                bytesRead++;
+            }
+            return n;
+        }
+
+        public int read(byte[] bytes) throws IOException {
+            int n = in.read(bytes);
+            if (n != -1) {
+                bytesRead += n;
+            }
+            return n;
+        }
+
+        public int read(byte[] bytes, int off, int len) throws IOException {
+            int n = in.read(bytes, off, len);
+            if (n != -1) {
+                bytesRead += n;
+            }
+            return n;
+        }
+
+        public long skip(long l) throws IOException {
+            return in.skip(l);
+        }
+
+        public int available() throws IOException {
+            return in.available();
+        }
+
+        public void close() throws IOException {
+            in.close();
+        }
+
+        public synchronized void mark(int i) {
+            in.mark(i);
+        }
+
+        public synchronized void reset() throws IOException {
+            in.reset();
+        }
+
+        public boolean markSupported() {
+            return in.markSupported();
+        }
     }
 }

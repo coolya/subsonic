@@ -32,11 +32,11 @@ public class MockMusicServiceImpl implements MusicService {
         String parentPath = path.substring(0, path.lastIndexOf('/'));
 
         MusicDirectory.Entry[] children = new MusicDirectory.Entry[]{
-                new MusicDirectory.Entry("http - wav", path + "/pcm.wav", false, "http://www.nch.com.au/acm/8k16bitpcm.wav"),
-                new MusicDirectory.Entry("http - mid", path + "/joy.mid", false, "http://people.nnu.edu/WDHUGHES/Joy.MID"),
-                new MusicDirectory.Entry("http - mp3", path + "/bach.mp3", false, "http://www.sotone.com/samples/!2-A.Brain_Bach.4th.mvmt.mp3"),
-                new MusicDirectory.Entry("bark.wav", path + "/bark.wav", false, "resource:/audio/bark.wav"),
-                new MusicDirectory.Entry("pattern.mid", path + "/pattern.mid", false, "resource:/audio/pattern.mid")
+                new MusicDirectory.Entry("http - wav", path + "/pcm.wav", false, "http://www.nch.com.au/acm/8k16bitpcm.wav", "audio/x-wav"),
+                new MusicDirectory.Entry("http - mid", path + "/joy.mid", false, "http://people.nnu.edu/WDHUGHES/Joy.MID", "audio/midi"),
+                new MusicDirectory.Entry("http - mp3", path + "/bach.mp3", false, "http://www.sotone.com/samples/!2-A.Brain_Bach.4th.mvmt.mp3", "audio/mpeg"),
+                new MusicDirectory.Entry("bark.wav", path + "/bark.wav", false, "resource:/audio/bark.wav", "audio/x-wav"),
+                new MusicDirectory.Entry("pattern.mid", path + "/pattern.mid", false, "resource:/audio/pattern.mid", "audio/midi")
         };
 
         return new MusicDirectory(name, path, parentPath, children);

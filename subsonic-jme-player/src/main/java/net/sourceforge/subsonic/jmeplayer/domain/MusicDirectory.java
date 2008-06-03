@@ -37,13 +37,15 @@ public class MusicDirectory {
         private final String name;
         private final String path;
         private final boolean directory;
-        private String url;
+        private final String url;
+        private final String contentType;
 
-        public Entry(String name, String path, boolean directory, String url) {
+        public Entry(String name, String path, boolean directory, String url, String contentType) {
             this.name = name;
             this.path = path;
             this.directory = directory;
             this.url = url;
+            this.contentType = contentType;
         }
 
         public String getName() {
@@ -60,6 +62,10 @@ public class MusicDirectory {
 
         public String getUrl() {
             return url;
+        }
+
+        public String getContentType() {
+            return contentType;
         }
     }
 }

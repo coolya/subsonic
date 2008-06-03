@@ -38,3 +38,5 @@ o Create service proxy, with mock implementation to simplify development of gui.
 o Only support for playing one song.
 
 o BreadCrumbTrail
+
+o Use checkboxes to select which songs to play?  Plus button to select all.
