@@ -14,14 +14,16 @@ import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.StringItem;
 import javax.microedition.media.Manager;
 import javax.microedition.media.Player;
+import javax.microedition.media.PlayerListener;
 import java.io.InputStream;
 
 /**
  * @author Sindre Mehus
  */
-public class PlayScreen extends Form {
+public class PlayScreen extends Form implements PlayerListener {
 
     private StringItem nowPlayingItem;
+    private StringItem statusItem;
     private MusicDirectory.Entry musicDirectoryEntry;
     private Player player;
 
@@ -32,7 +34,9 @@ public class PlayScreen extends Form {
         addCommand(new Command("Back", Command.BACK, 1));
         addCommand(new Command("Play", Command.ITEM, 1));
         nowPlayingItem = new StringItem("Now playing: ", null);
+        statusItem = new StringItem("Status: ", null);
         append(nowPlayingItem);
+        append(statusItem);
     }
 
     public void setMusicDirectoryEntry(MusicDirectory.Entry entry) {
@@ -44,6 +48,8 @@ public class PlayScreen extends Form {
         stop();
         createPlayer();
         System.out.println("Player created.");
+        player.prefetch();
+        System.out.println("Player prefetched.");
         player.start();
         System.out.println("Player started.");
     }
@@ -71,5 +77,11 @@ public class PlayScreen extends Form {
         } else {
             player = Manager.createPlayer(url);
         }
+
+        player.addPlayerListener(this);
+    }
+
+    public void playerUpdate(Player player, String event, Object eventData) {
+        statusItem.setText(event + " - " + eventData);
     }
 }

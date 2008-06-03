@@ -14,18 +14,16 @@
     <orderEntryProperties />
   </component>
   <component name="com.intellij.j2meplugin.module.settings.midp.MIDPSettings">
-    <setting name="MIDlet-1" module.settings.user.defined.value="AudioPlayer,,net.sourceforge.subsonic.jmeplayer.AudioPlayer" />
-    <setting name="MIDlet-2" module.settings.user.defined.value="GuiTests,,net.sourceforge.subsonic.jmeplayer.GuiTests" />
-    <setting name="MIDlet-3" module.settings.user.defined.value="SubsonicPlayer,,net.sourceforge.subsonic.jmeplayer.SubsonicPlayer" />
-    <setting name="MIDlet-Jar-Size" module.settings.user.defined.value="48396" />
+    <setting name="MIDlet-1" module.settings.user.defined.value="Subsonic, /icons/App.png, net.sourceforge.subsonic.jmeplayer.SubsonicPlayer" />
+    <setting name="MIDlet-Jar-Size" module.settings.user.defined.value="48678" />
     <setting name="MIDlet-Jar-URL" module.settings.user.defined.value="subsonic-jme-player.jar" />
     <setting name="MIDlet-Name" module.settings.user.defined.value="subsonic-jme-player" />
-    <setting name="MIDlet-Vendor" module.settings.user.defined.value="My Vendor" />
+    <setting name="MIDlet-Vendor" module.settings.user.defined.value="Sindre Mehus" />
     <setting name="MIDlet-Version" module.settings.user.defined.value="1.0" />
     <setting name="MicroEdition-Configuration" module.settings.user.defined.value="CLDC-1.0" />
     <setting name="MicroEdition-Profile" module.settings.user.defined.value="MIDP-2.0" />
     <jarUrl jarUrlName="$MODULE_DIR$/subsonic-jme-player.jar" />
-    <descriptionPath path="$MODULE_DIR$/subsonic-jme-player.jad" useUserDescriptor="false" />
+    <descriptionPath path="$MODULE_DIR$/subsonic-jme-player.jad" useUserDescriptor="true" />
     <manifest useUserManifest="false" />
   </component>
 </module>
