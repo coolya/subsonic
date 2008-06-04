@@ -26,37 +26,52 @@ public class PlayerController implements PlayerListener {
     public static final int PLAYING = 3;
     public static final int PAUSED = 4;
 
-    private PlayerControllerListener listener;
+    private final PlayerControllerListener listener;
+    private int index;
     private MusicDirectory.Entry[] entries;
     private Player player;
     private MonitoredInputStream input;
-    private int state;
+    private int state = STOPPED;
     private boolean busy;
 
+    public PlayerController(PlayerControllerListener listener) {
+        this.listener = listener;
+        listener.busy(false);
+        listener.songChanged(null);
+        listener.stateChanged(state);
+    }
 
-    public void setListener(PlayerControllerListener listener) {
-
-        /* TODO: Send events when:
+    /* TODO: Send events when:
         o State changes.
         o Song changes.
         o Busy state changes.
         o An error occurs?
         */
-        this.listener = listener;
-    }
 
-    public void setEntries(MusicDirectory.Entry[] entries) {
+    public synchronized void setEntries(MusicDirectory.Entry[] entries) {
+        clear();
         this.entries = entries;
+        if (entries.length > 0) {
+            listener.songChanged(entries[0]);
+        }
     }
 
-    public void clear() {
+    public synchronized void clear() {
+        stop();
+        entries = new MusicDirectory.Entry[0];
+        index = 0;
+        listener.songChanged(null);
     }
 
-    public MusicDirectory.Entry getCurrent() {
-        return null;
+    public synchronized MusicDirectory.Entry getCurrent() {
+        if (index < 0 || index >= entries.length) {
+            return null;
+        }
+
+        return entries[index];
     }
 
-    public void play() {
+    public synchronized void play() {
         if (state != STOPPED) {
             System.out.println("Can't play() in state " + state);
             return;
@@ -83,7 +98,7 @@ public class PlayerController implements PlayerListener {
         });
     }
 
-    public void pause() {
+    public synchronized void pause() {
         if (state != PLAYING) {
             System.out.println("Can't pause() in state " + state);
             return;
@@ -106,7 +121,7 @@ public class PlayerController implements PlayerListener {
         });
     }
 
-    public void resume() {
+    public synchronized void resume() {
         if (state != PAUSED) {
             System.out.println("Can't resume() in state " + state);
             return;
@@ -125,35 +140,69 @@ public class PlayerController implements PlayerListener {
                 }
             }
         });
-
     }
 
-//    public void stop() {
-//    }
+    public synchronized void stop() {
+        if (state == STOPPED) {
+            return;
+        }
 
-    //
+        try {
+            player.stop();
+            player.close();
+        } catch (Exception x) {
+            handleException(x);
+        }
+        player = null;
+        input = null;
 
-    public void next() {
+        setState(STOPPED);
     }
 
-    public void previous() {
+    public synchronized void next() {
+        if (isBusy()) {
+            System.out.println("Can't next() when busy.");
+            return;
+        }
+
+        stop();
+        index = (index + 1) % entries.length;
+
+        // TODO: Should not play if end of playlist reached.
+        play();
     }
 
-    public int getState() {
-        return 0;
+    public synchronized void previous() {
+        if (isBusy()) {
+            System.out.println("Can't previous() when busy.");
+            return;
+        }
+
+        stop();
+        index = (index - 1) % entries.length;
+
+        // TODO: Should not play if start of playlist reached.
+        play();
     }
 
-    private void setState(int state) {
-        this.state = state;
-        // TODO: Notify listener
+    public synchronized int getState() {
+        return state;
+    }
+
+    private synchronized void setState(int state) {
+        if (this.state != state) {
+            this.state = state;
+            listener.stateChanged(state);
+        }
     }
 
     public long getBytesRead() {
-        return 0L;
+        return input == null ? 0L : input.getBytesRead();
     }
 
     private synchronized void setBusy(boolean busy) {
         this.busy = busy;
+        listener.busy(busy);
     }
 
     public synchronized boolean isBusy() {
@@ -174,8 +223,8 @@ public class PlayerController implements PlayerListener {
     }
 
     private void handleException(Exception x) {
-        // TODO
         x.printStackTrace();
+        listener.error(x);
     }
 
     private void createPlayer() throws Exception {
@@ -191,6 +240,8 @@ public class PlayerController implements PlayerListener {
         input = new MonitoredInputStream(in);
         player = Manager.createPlayer(input, entry.getContentType());
         player.addPlayerListener(this);
+
+        listener.songChanged(entry);
     }
 
     public void playerUpdate(Player player, String event, Object eventData) {
@@ -198,7 +249,7 @@ public class PlayerController implements PlayerListener {
         if (PlayerListener.STARTED.equals(event)) {
             setState(PLAYING);
         } else if (PlayerListener.END_OF_MEDIA.equals(event)) {
-            // TODO
+            next();
         } else {
             System.out.println("Got event: " + event);
         }

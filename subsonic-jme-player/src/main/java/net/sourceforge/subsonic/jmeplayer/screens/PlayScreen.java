@@ -6,45 +6,43 @@
  */
 package net.sourceforge.subsonic.jmeplayer.screens;
 
+import net.sourceforge.subsonic.jmeplayer.PlayerController;
+import net.sourceforge.subsonic.jmeplayer.PlayerControllerListener;
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
 
-import javax.microedition.io.Connector;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.StringItem;
-import javax.microedition.media.Manager;
-import javax.microedition.media.Player;
-import javax.microedition.media.PlayerListener;
-import java.io.InputStream;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
  * @author Sindre Mehus
  */
-public class PlayScreen extends Form implements PlayerListener {
+public class PlayScreen extends Form implements PlayerControllerListener {
 
+    private final PlayerController playerController;
     private final StringItem nowPlayingItem;
-    private final StringItem statusItem;
-    private MusicDirectory.Entry entry;
-    private Player player;
-    private MonitoredInputStream input;
-    private String status = "Stopped";
-
-    // TODO: Add player listener
+    private final StringItem stateItem;
+    private final StringItem bytesReadItem;
 
     public PlayScreen() {
-        super("Playing");
+        super("Player");
         addCommand(new Command("Back", Command.BACK, 1));
         addCommand(new Command("Play", Command.ITEM, 1));
         nowPlayingItem = new StringItem("Now playing: ", null);
-        statusItem = new StringItem("Status: ", null);
+        stateItem = new StringItem("Status: ", null);
+        bytesReadItem = new StringItem("Bytes read: ", null);
+
         append(nowPlayingItem);
-        append(statusItem);
+        append(stateItem);
+        append(bytesReadItem);
+
+        playerController = new PlayerController(this);
 
         TimerTask task = new TimerTask() {
             public void run() {
-                updateStatus();
+                updateBytesRead();
             }
         };
         Timer timer = new Timer();
@@ -52,71 +50,56 @@ public class PlayScreen extends Form implements PlayerListener {
     }
 
     public void setMusicDirectoryEntry(MusicDirectory.Entry entry) {
-        this.entry = entry;
-        nowPlayingItem.setText(entry.getName());
+        playerController.setEntries(new MusicDirectory.Entry[]{entry});
+//        nowPlayingItem.setText(entry.getName());
     }
 
-    public synchronized void start() throws Exception {
-        stop();
-        createPlayer();
-        status = "Buffering";
-        player.start();
+    public void start() {
+        playerController.play();
     }
 
-    public synchronized void stop() throws Exception {
-        status = "Stopped";
-        if (player != null) {
-            // TODO
-            try {
-                player.stop();
-                player.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                player = null;
-                input = null;
-            }
-        }
+    public void stop() throws Exception {
+        playerController.stop();
     }
 
-    private void createPlayer() throws Exception {
-        status = "Connecting";
-        String url = entry.getUrl();
-        InputStream in;
-        if (url.startsWith("resource:")) {
-            in = getClass().getResourceAsStream(url.substring(9));
-        } else {
-            in = Connector.openInputStream(url);
-        }
-
-        input = new MonitoredInputStream(in);
-        player = Manager.createPlayer(input, entry.getContentType());
-        player.addPlayerListener(this);
+    private void updateBytesRead() {
+        bytesReadItem.setText(String.valueOf(playerController.getBytesRead()));
     }
 
-    private void updateStatus() {
-        String s = status;
-        if (input != null) {
-            s += " - " + input.getBytesRead() + " bytes read.";
-        }
-        statusItem.setText(s);
-    }
-
-    public void playerUpdate(Player player, String event, Object eventData) {
-        switch (player.getState()) {
-            case Player.PREFETCHED:
-                status = "Ready";
+    public void stateChanged(int state) {
+        String text;
+        switch (state) {
+            case PlayerController.STOPPED:
+                text = "Stopped";
                 break;
-            case Player.STARTED:
-                status = "Playing";
+            case PlayerController.CONNECTING:
+                text = "Connecting";
                 break;
-            case Player.CLOSED:
-                status = "Stopped";
+            case PlayerController.BUFFERING:
+                text = "Buffering";
+                break;
+            case PlayerController.PLAYING:
+                text = "Playing";
+                break;
+            case PlayerController.PAUSED:
+                text = "Paused";
                 break;
             default:
-                System.out.println("state: " + player.getState());
+                text = "Unknown state";
                 break;
         }
+        stateItem.setText(text);
     }
 
+    public void songChanged(MusicDirectory.Entry entry) {
+        nowPlayingItem.setText(entry == null ? null : entry.getName());
+    }
+
+    public void error(Exception x) {
+        // TODO
+    }
+
+    public void busy(boolean busy) {
+        // TODO
+    }
 }
