@@ -17,7 +17,9 @@ public interface PlayerControllerListener {
 
     void songChanged(MusicDirectory.Entry entry);
 
-    void error(Exception x);
+    void error(String message);
 
     void busy(boolean busy);
+
+    void bytesRead(long n);
 }

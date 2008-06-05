@@ -7,12 +7,12 @@
 package net.sourceforge.subsonic.jmeplayer;
 
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
-import net.sourceforge.subsonic.jmeplayer.screens.MonitoredInputStream;
 
 import javax.microedition.io.Connector;
 import javax.microedition.media.Manager;
 import javax.microedition.media.Player;
 import javax.microedition.media.PlayerListener;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -26,7 +26,7 @@ public class PlayerController implements PlayerListener {
     public static final int PLAYING = 3;
     public static final int PAUSED = 4;
 
-    private final PlayerControllerListener listener;
+    private PlayerControllerListener listener;
     private int index;
     private MusicDirectory.Entry[] entries = {};
     private Player player;
@@ -34,11 +34,12 @@ public class PlayerController implements PlayerListener {
     private int state = STOPPED;
     private boolean busy;
 
-    public PlayerController(PlayerControllerListener listener) {
+    public void setListener(PlayerControllerListener listener) {
         this.listener = listener;
         listener.busy(false);
         notifySongChanged();
         listener.stateChanged(state);
+        listener.bytesRead(0L);
     }
 
     /* TODO: Send events when:
@@ -61,6 +62,14 @@ public class PlayerController implements PlayerListener {
         notifySongChanged();
     }
 
+    public synchronized int size() {
+        return entries.length;
+    }
+
+    public synchronized int getCurrentIndex() {
+        return index;
+    }
+
     public synchronized MusicDirectory.Entry getCurrent() {
         if (index < 0 || index >= entries.length) {
             return null;
@@ -72,10 +81,6 @@ public class PlayerController implements PlayerListener {
     public synchronized void play() {
         if (state != STOPPED) {
             System.out.println("Can't play() in state " + state);
-            return;
-        }
-        if (isBusy()) {
-            System.out.println("Can't play() when busy.");
             return;
         }
 
@@ -101,10 +106,6 @@ public class PlayerController implements PlayerListener {
             System.out.println("Can't pause() in state " + state);
             return;
         }
-        if (isBusy()) {
-            System.out.println("Can't pause() when busy.");
-            return;
-        }
 
         execute(new Runnable() {
             public void run() {
@@ -122,10 +123,6 @@ public class PlayerController implements PlayerListener {
     public synchronized void resume() {
         if (state != PAUSED) {
             System.out.println("Can't resume() in state " + state);
-            return;
-        }
-        if (isBusy()) {
-            System.out.println("Can't resume() when busy.");
             return;
         }
 
@@ -153,16 +150,12 @@ public class PlayerController implements PlayerListener {
         }
         player = null;
         input = null;
+        listener.bytesRead(0L);
 
         setState(STOPPED);
     }
 
     public synchronized void next() {
-        if (isBusy()) {
-            System.out.println("Can't next() when busy.");
-            return;
-        }
-
         int previousState = state;
         stop();
         if (index < entries.length - 1) {
@@ -175,11 +168,6 @@ public class PlayerController implements PlayerListener {
     }
 
     public synchronized void previous() {
-        if (isBusy()) {
-            System.out.println("Can't previous() when busy.");
-            return;
-        }
-
         int previousState = state;
         stop();
         if (index > 0) {
@@ -200,10 +188,6 @@ public class PlayerController implements PlayerListener {
             this.state = state;
             listener.stateChanged(state);
         }
-    }
-
-    public long getBytesRead() {
-        return input == null ? 0L : input.getBytesRead();
     }
 
     private synchronized void setBusy(boolean busy) {
@@ -233,7 +217,8 @@ public class PlayerController implements PlayerListener {
     }
 
     private void handleException(Exception x) {
-        listener.error(x);
+        x.printStackTrace();
+        listener.error(x.getMessage()); //TODO: Include exception class name.
     }
 
     private void createPlayer() throws Exception {
@@ -260,10 +245,75 @@ public class PlayerController implements PlayerListener {
         } else if (PlayerListener.END_OF_MEDIA.equals(event)) {
             next();
         } else if (PlayerListener.ERROR.equals(event)) {
-            listener.error(new Exception(eventData == null ? null : eventData.toString()));
+            listener.error("Error: " + eventData);
             next();
         } else {
             System.out.println("Got event: " + event);
+        }
+    }
+
+    /**
+     * @author Sindre Mehus
+     */
+    public class MonitoredInputStream extends InputStream {
+
+        private final InputStream in;
+        private long bytesRead;
+
+        public MonitoredInputStream(InputStream in) {
+            this.in = in;
+            listener.bytesRead(0L);
+        }
+
+        public int read() throws IOException {
+            int n = in.read();
+            if (n != -1) {
+                bytesRead++;
+                listener.bytesRead(bytesRead);
+            }
+            return n;
+        }
+
+        public int read(byte[] bytes) throws IOException {
+            int n = in.read(bytes);
+            if (n != -1) {
+                bytesRead += n;
+                listener.bytesRead(bytesRead);
+            }
+            return n;
+        }
+
+        public int read(byte[] bytes, int off, int len) throws IOException {
+            int n = in.read(bytes, off, len);
+            if (n != -1) {
+                bytesRead += n;
+                listener.bytesRead(bytesRead);
+            }
+            return n;
+        }
+
+        public long skip(long l) throws IOException {
+            return in.skip(l);
+        }
+
+        public int available() throws IOException {
+            return in.available();
+        }
+
+        public void close() throws IOException {
+            in.close();
+        }
+
+        public synchronized void mark(int i) {
+            in.mark(i);
+        }
+
+        public synchronized void reset() throws IOException {
+            in.reset();
+        }
+
+        public boolean markSupported() {
+            return in.markSupported();
         }
     }
 }

@@ -18,10 +18,13 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.StringItem;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
+ * TODO: Format bytes with kB/MB?
+ * TODO: Pause music on incoming call.
+ * TODO: Avoid menu flickering.  Coalesce songChanged() and stateChange().
+ * TODO: What to do on lengthy service (http) calls.
+ *
  * @author Sindre Mehus
  */
 public class PlayerScreen extends Form implements PlayerControllerListener, CommandListener {
@@ -46,7 +49,7 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
         this.display = display;
         addCommand(backCommand);
 
-        nowPlayingItem = new StringItem("Now playing: ", null);
+        nowPlayingItem = new StringItem(null, null);
         stateItem = new StringItem("Status: ", null);
         bytesReadItem = new StringItem("Bytes read: ", null);
 
@@ -54,36 +57,39 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
         append(stateItem);
         append(bytesReadItem);
 
-        playerController = new PlayerController(this);
+        playerController = new PlayerController();
+        playerController.setListener(this);
 
         setCommandListener(this);
-
-        TimerTask task = new TimerTask() {
-            public void run() {
-                updateBytesRead();
-            }
-        };
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(task, 0L, 1000L);
     }
 
     public void setMusicDirectoryEntries(MusicDirectory.Entry[] entries) {
         playerController.setEntries(entries);
     }
 
-    private void updateBytesRead() {
-        bytesReadItem.setText(String.valueOf(playerController.getBytesRead()));
-    }
-
     public void stateChanged(int state) {
+        int size = playerController.size();
+        int index = playerController.getCurrentIndex();
+        boolean nextEnabled = index < size - 1;
+        boolean previousEnabled = index > 0;
+
+        // TODO: Make Command subclass with setEnabled() method.
         String text;
         switch (state) {
             case PlayerController.STOPPED:
                 addCommand(playCommand);
                 removeCommand(pauseCommand);
                 removeCommand(resumeCommand);
-                addCommand(previousCommand);
-                addCommand(nextCommand);
+                if (previousEnabled) {
+                    addCommand(previousCommand);
+                } else {
+                    removeCommand(previousCommand);
+                }
+                if (nextEnabled) {
+                    addCommand(nextCommand);
+                } else {
+                    removeCommand(nextCommand);
+                }
                 removeCommand(stopCommand);
                 text = "Stopped";
                 break;
@@ -91,8 +97,16 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
                 removeCommand(playCommand);
                 removeCommand(pauseCommand);
                 removeCommand(resumeCommand);
-                addCommand(previousCommand);
-                addCommand(nextCommand);
+                if (previousEnabled) {
+                    addCommand(previousCommand);
+                } else {
+                    removeCommand(previousCommand);
+                }
+                if (nextEnabled) {
+                    addCommand(nextCommand);
+                } else {
+                    removeCommand(nextCommand);
+                }
                 addCommand(stopCommand);
                 text = "Connecting";
                 break;
@@ -100,8 +114,16 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
                 removeCommand(playCommand);
                 removeCommand(pauseCommand);
                 removeCommand(resumeCommand);
-                addCommand(previousCommand);
-                addCommand(nextCommand);
+                if (previousEnabled) {
+                    addCommand(previousCommand);
+                } else {
+                    removeCommand(previousCommand);
+                }
+                if (nextEnabled) {
+                    addCommand(nextCommand);
+                } else {
+                    removeCommand(nextCommand);
+                }
                 addCommand(stopCommand);
                 text = "Buffering";
                 break;
@@ -109,8 +131,16 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
                 removeCommand(playCommand);
                 addCommand(pauseCommand);
                 removeCommand(resumeCommand);
-                addCommand(previousCommand);
-                addCommand(nextCommand);
+                if (previousEnabled) {
+                    addCommand(previousCommand);
+                } else {
+                    removeCommand(previousCommand);
+                }
+                if (nextEnabled) {
+                    addCommand(nextCommand);
+                } else {
+                    removeCommand(nextCommand);
+                }
                 addCommand(stopCommand);
                 text = "Playing";
                 break;
@@ -118,8 +148,16 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
                 removeCommand(playCommand);
                 removeCommand(pauseCommand);
                 addCommand(resumeCommand);
-                addCommand(previousCommand);
-                addCommand(nextCommand);
+                if (previousEnabled) {
+                    addCommand(previousCommand);
+                } else {
+                    removeCommand(previousCommand);
+                }
+                if (nextEnabled) {
+                    addCommand(nextCommand);
+                } else {
+                    removeCommand(nextCommand);
+                }
                 addCommand(stopCommand);
                 text = "Paused";
                 break;
@@ -131,13 +169,27 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
     }
 
     public void songChanged(MusicDirectory.Entry entry) {
-        nowPlayingItem.setText(entry == null ? null : entry.getName());
+        String text = "";
+        int size = playerController.size();
+        int index = playerController.getCurrentIndex();
+        if (size > 1) {
+            text = (index + 1) + " of " + size + " - ";
+        }
+        if (entry != null) {
+            text += entry.getName();
+        }
+        nowPlayingItem.setText(text);
+
+        stateChanged(playerController.getState());
     }
 
-    public void error(Exception x) {
-        x.printStackTrace();
+    public void bytesRead(long n) {
+        bytesReadItem.setText(String.valueOf(n));
+    }
+
+    public void error(String message) {
         Alert alert = new Alert("Error");
-        alert.setString(x.getMessage());
+        alert.setString(message);
         alert.setType(AlertType.ERROR);
         alert.setTimeout(Alert.FOREVER);
         display.setCurrent(alert);

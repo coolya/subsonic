@@ -16,7 +16,7 @@ import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
 public class MockMusicServiceImpl implements MusicService {
 
 
-    public ArtistIndex[] getArtistIndexes() {
+    public ArtistIndex[] getArtistIndexes() throws Exception {
         return new ArtistIndex[]{
                 new ArtistIndex("A", new Artist[]{new Artist("A-Ha", "/music/1"),
                                                   new Artist("Accept", "/music/2"),
@@ -34,7 +34,7 @@ public class MockMusicServiceImpl implements MusicService {
         MusicDirectory.Entry[] children = new MusicDirectory.Entry[]{
                 new MusicDirectory.Entry("res - bark.wav", path + "/bark.wav", false, "resource:/audio/bark.wav", "audio/x-wav"),
                 new MusicDirectory.Entry("http - mp3", path + "/foo.mp3", false, "http://www.loopmasters.com/products/wav-mp3/Sh_120%20Rhodes%20Loop%207C.mp3", "audio/mpeg"),
-                new MusicDirectory.Entry("res - mp3", path + "/rhodes.mp3", false, "resource:/rhodes.mp3", "audio/mpeg"),
+                new MusicDirectory.Entry("res - mp3", path + "/rhodes.mp3", false, "resource:/audio/rhodes.mp3", "audio/mpeg"),
                 new MusicDirectory.Entry("http - mid", path + "/joy.mid", false, "http://people.nnu.edu/WDHUGHES/Joy.MID", "audio/midi"),
                 new MusicDirectory.Entry("res - pattern.mid", path + "/pattern.mid", false, "resource:/audio/pattern.mid", "audio/midi"),
                 new MusicDirectory.Entry("http - mp3 long", path + "/foo.mp3", false, "http://www.blueaudio.com/audio/Blue%20Audio%20-%20Tonight.mp3", "audio/mpeg"),
