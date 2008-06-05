@@ -24,18 +24,23 @@ public class MusicDirectoryScreen extends List {
         addCommand(new Command("Select", Command.ITEM, 1));
     }
 
-    public MusicDirectory.Entry getSelectedEntry() {
-        return musicDirectory.getChildren()[getSelectedIndex()];
-    }
-
     public void setMusicDirectory(MusicDirectory musicDirectory) {
         this.musicDirectory = musicDirectory;
         setTitle(musicDirectory.getName());
         deleteAll();
+        append("[Play all]", null);
         for (int i = 0; i < musicDirectory.getChildren().length; i++) {
             MusicDirectory.Entry entry = musicDirectory.getChildren()[i];
             // TODO: Add icon indicating whether this is a song or album.
             append(entry.getName(), null);
         }
+    }
+
+    public MusicDirectory.Entry[] getSelectedEntries() {
+        int index = getSelectedIndex();
+        if (index == 0) {
+            return musicDirectory.getChildren(false);
+        }
+        return new MusicDirectory.Entry[]{musicDirectory.getChildren()[getSelectedIndex() - 1]};
     }
 }

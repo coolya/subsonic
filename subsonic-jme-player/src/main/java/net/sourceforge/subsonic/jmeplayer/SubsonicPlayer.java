@@ -11,13 +11,11 @@ import net.sourceforge.subsonic.jmeplayer.domain.ArtistIndex;
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
 import net.sourceforge.subsonic.jmeplayer.screens.AllArtistIndexes;
 import net.sourceforge.subsonic.jmeplayer.screens.MusicDirectoryScreen;
-import net.sourceforge.subsonic.jmeplayer.screens.PlayScreen;
+import net.sourceforge.subsonic.jmeplayer.screens.PlayerScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.SingleArtistIndex;
 import net.sourceforge.subsonic.jmeplayer.service.MockMusicServiceImpl;
 import net.sourceforge.subsonic.jmeplayer.service.MusicService;
 
-import javax.microedition.lcdui.Alert;
-import javax.microedition.lcdui.AlertType;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
@@ -34,8 +32,7 @@ public class SubsonicPlayer extends MIDlet {
     private AllArtistIndexes allArtistIndexes;
     private SingleArtistIndex singleArtistIndex;
     private MusicDirectoryScreen musicDirectoryScreen;
-    private PlayScreen playScreen;
-
+    private PlayerScreen playerScreen;
     private MusicService musicService;
 
     public void startApp() throws MIDletStateChangeException {
@@ -67,56 +64,21 @@ public class SubsonicPlayer extends MIDlet {
                 if (command.getCommandType() == Command.BACK) {
                     display.setCurrent(singleArtistIndex); // TODO: Should rather show parent.
                 } else {
-                    MusicDirectory.Entry entry = musicDirectoryScreen.getSelectedEntry();
-                    if (entry.isDirectory()) {
-                        musicDirectoryScreen.setMusicDirectory(musicService.getMusicDirectory(entry.getPath()));
+                    MusicDirectory.Entry[] entries = musicDirectoryScreen.getSelectedEntries();
+                    if (entries.length == 1 && entries[0].isDirectory()) {
+                        musicDirectoryScreen.setMusicDirectory(musicService.getMusicDirectory(entries[0].getPath()));
                     } else {
-                        playScreen.setMusicDirectoryEntry(entry);
-                        display.setCurrent(playScreen);
+                        playerScreen.setMusicDirectoryEntries(entries);
+                        display.setCurrent(playerScreen);
                     }
                 }
             }
         });
 
-        playScreen = new PlayScreen();
-        playScreen.setCommandListener(new CommandListener() {
-            public void commandAction(Command command, Displayable displayable) {
-                if (command.getCommandType() == Command.BACK) {
-                    stopPlayer();
-                    display.setCurrent(musicDirectoryScreen);
-                } else {
-                    startPlayer();
-                }
-            }
-        });
+        playerScreen = new PlayerScreen(display);
+        playerScreen.setMusicDirectoryScreen(musicDirectoryScreen);
 
         showIndex(null);
-    }
-
-    private void startPlayer() {
-        Runnable runnable = new Runnable() {
-            public void run() {
-                try {
-                    playScreen.start();
-                } catch (Exception e) {
-                    showException(e);
-                }
-            }
-        };
-        new Thread(runnable).start();
-    }
-
-    private void stopPlayer() {
-        Runnable runnable = new Runnable() {
-            public void run() {
-                try {
-                    playScreen.stop();
-                } catch (Exception e) {
-                    showException(e);
-                }
-            }
-        };
-        new Thread(runnable).start();
     }
 
     public void pauseApp() {
@@ -125,11 +87,11 @@ public class SubsonicPlayer extends MIDlet {
 
     public void destroyApp(boolean unconditional) {
         // TODO
-        try {
-            playScreen.stop();
-        } catch (Exception x) {
-            x.printStackTrace();
-        }
+//        try {
+//            playerScreen.stop();
+//        } catch (Exception x) {
+//            x.printStackTrace();
+//        }
         notifyDestroyed();
     }
 
@@ -146,14 +108,5 @@ public class SubsonicPlayer extends MIDlet {
             singleArtistIndex.setArtistIndex(index);
             display.setCurrent(singleArtistIndex);
         }
-    }
-
-    private void showException(Exception e) {
-        e.printStackTrace();
-        Alert alert = new Alert("Error");
-        alert.setString(e.getMessage());
-        alert.setType(AlertType.ERROR);
-        alert.setTimeout(Alert.FOREVER);
-        display.setCurrent(alert);
     }
 }

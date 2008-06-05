@@ -28,7 +28,7 @@ public class PlayerController implements PlayerListener {
 
     private final PlayerControllerListener listener;
     private int index;
-    private MusicDirectory.Entry[] entries;
+    private MusicDirectory.Entry[] entries = {};
     private Player player;
     private MonitoredInputStream input;
     private int state = STOPPED;
@@ -37,7 +37,7 @@ public class PlayerController implements PlayerListener {
     public PlayerController(PlayerControllerListener listener) {
         this.listener = listener;
         listener.busy(false);
-        listener.songChanged(null);
+        notifySongChanged();
         listener.stateChanged(state);
     }
 
@@ -51,16 +51,14 @@ public class PlayerController implements PlayerListener {
     public synchronized void setEntries(MusicDirectory.Entry[] entries) {
         clear();
         this.entries = entries;
-        if (entries.length > 0) {
-            listener.songChanged(entries[0]);
-        }
+        notifySongChanged();
     }
 
     public synchronized void clear() {
         stop();
         entries = new MusicDirectory.Entry[0];
         index = 0;
-        listener.songChanged(null);
+        notifySongChanged();
     }
 
     public synchronized MusicDirectory.Entry getCurrent() {
@@ -165,11 +163,15 @@ public class PlayerController implements PlayerListener {
             return;
         }
 
+        int previousState = state;
         stop();
-        index = (index + 1) % entries.length;
-
-        // TODO: Should not play if end of playlist reached.
-        play();
+        if (index < entries.length - 1) {
+            index++;
+            notifySongChanged();
+            if (previousState != STOPPED && previousState != PAUSED) {
+                play();
+            }
+        }
     }
 
     public synchronized void previous() {
@@ -178,11 +180,15 @@ public class PlayerController implements PlayerListener {
             return;
         }
 
+        int previousState = state;
         stop();
-        index = (index - 1) % entries.length;
-
-        // TODO: Should not play if start of playlist reached.
-        play();
+        if (index > 0) {
+            index--;
+            notifySongChanged();
+            if (previousState != STOPPED && previousState != PAUSED) {
+                play();
+            }
+        }
     }
 
     public synchronized int getState() {
@@ -209,6 +215,10 @@ public class PlayerController implements PlayerListener {
         return busy;
     }
 
+    private void notifySongChanged() {
+        listener.songChanged(getCurrent());
+    }
+
     private void execute(final Runnable runnable) {
         setBusy(true);
         new Thread(new Runnable() {
@@ -223,7 +233,6 @@ public class PlayerController implements PlayerListener {
     }
 
     private void handleException(Exception x) {
-        x.printStackTrace();
         listener.error(x);
     }
 
@@ -241,7 +250,7 @@ public class PlayerController implements PlayerListener {
         player = Manager.createPlayer(input, entry.getContentType());
         player.addPlayerListener(this);
 
-        listener.songChanged(entry);
+        notifySongChanged();
     }
 
     public void playerUpdate(Player player, String event, Object eventData) {
@@ -249,6 +258,9 @@ public class PlayerController implements PlayerListener {
         if (PlayerListener.STARTED.equals(event)) {
             setState(PLAYING);
         } else if (PlayerListener.END_OF_MEDIA.equals(event)) {
+            next();
+        } else if (PlayerListener.ERROR.equals(event)) {
+            listener.error(new Exception(eventData == null ? null : eventData.toString()));
             next();
         } else {
             System.out.println("Got event: " + event);

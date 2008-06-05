@@ -1,5 +1,7 @@
 package net.sourceforge.subsonic.jmeplayer.domain;
 
+import java.util.Vector;
+
 /**
  * @author Sindre Mehus
  */
@@ -30,7 +32,26 @@ public class MusicDirectory {
     }
 
     public Entry[] getChildren() {
-        return children;
+        return getChildren(true);
+    }
+
+    public Entry[] getChildren(boolean includeDirs) {
+        if (includeDirs) {
+            return children;
+        }
+
+        Vector files = new Vector(children.length);
+        for (int i = 0; i < children.length; i++) {
+            Entry child = children[i];
+            if (!child.isDirectory()) {
+                files.addElement(child);
+            }
+        }
+        Entry[] result = new Entry[files.size()];
+        for (int i = 0; i < files.size(); i++) {
+            result[i] = (Entry) files.elementAt(i);
+        }
+        return result;
     }
 
     public static class Entry {
