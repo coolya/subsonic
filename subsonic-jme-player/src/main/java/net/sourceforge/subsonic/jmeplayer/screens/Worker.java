@@ -2,6 +2,8 @@ package net.sourceforge.subsonic.jmeplayer.screens;
 
 import net.sourceforge.subsonic.jmeplayer.Util;
 
+import javax.microedition.lcdui.Command;
+import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 
@@ -22,6 +24,13 @@ public abstract class Worker implements Runnable {
 
         currentDisplayable = display.getCurrent();
         waitScreen.setMessage(message);
+
+        waitScreen.addCommand(new Command("Cancel", Command.CANCEL, 0));
+        waitScreen.setCommandListener(new CommandListener() {
+            public void commandAction(Command command, Displayable displayable) {
+                cancel();
+            }
+        });
     }
 
     public void start() {
@@ -75,9 +84,10 @@ public abstract class Worker implements Runnable {
         cancelled = true;
         try {
             interrupt();
-            display.setCurrent(currentDisplayable);
         } catch (Throwable x) {
             x.printStackTrace();
+        } finally {
+            display.setCurrent(currentDisplayable);
         }
     }
 
@@ -86,12 +96,14 @@ public abstract class Worker implements Runnable {
             Object result = doInBackground();
             if (!cancelled) {
                 done(result);
+                display.setCurrent(nextDisplayable);
             }
-            display.setCurrent(nextDisplayable);
         } catch (Throwable x) {
             if (!cancelled) {
                 error(x);
             }
+        } finally {
+            waitScreen.stop();
         }
     }
 }

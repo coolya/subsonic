@@ -59,7 +59,7 @@ public class MockXMLMusicServiceImpl implements MusicService {
 
     public MusicDirectory getMusicDirectory(String path) throws Exception {
         System.out.println("Sleeping... ");
-        Thread.sleep(2000L);
+        Thread.sleep(5000L);
         System.out.println("Done.");
 
         Reader reader;

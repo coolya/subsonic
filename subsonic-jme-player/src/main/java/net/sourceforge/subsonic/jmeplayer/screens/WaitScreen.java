@@ -13,6 +13,7 @@ public class WaitScreen extends Canvas {
 
     private int width, height, x, y, radius;
     private String message;
+    private Timer timer;
 
     public WaitScreen() {
         count = 0;
@@ -38,13 +39,19 @@ public class WaitScreen extends Canvas {
                 repaint();
             }
         };
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule(task, 0, interval);
+
+        // TODO: stop timer when screen disappears.
     }
 
     public void setMessage(String s) {
         message = s;
         repaint();
+    }
+
+    public void stop() {
+        timer.cancel();
     }
 
     public void paint(Graphics g) {

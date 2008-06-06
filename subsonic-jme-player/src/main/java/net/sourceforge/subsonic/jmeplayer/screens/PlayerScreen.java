@@ -211,4 +211,8 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
             playerController.stop();
         }
     }
+
+    public void stop() {
+        playerController.stop();
+    }
 }

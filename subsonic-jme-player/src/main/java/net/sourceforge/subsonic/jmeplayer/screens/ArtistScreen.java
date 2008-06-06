@@ -30,12 +30,16 @@ public class ArtistScreen extends List {
         this.musicService = musicService;
         this.display = display;
 
-        addCommand(new Command("Back", Command.BACK, 1));
-        addCommand(new Command("Select", Command.ITEM, 1));
+        final Command selectCommand = new Command("Select", Command.ITEM, 1);
+        final Command backCommand = new Command("Back", Command.BACK, 2);
+
+        addCommand(selectCommand);
+        addCommand(backCommand);
+        setSelectCommand(selectCommand);
 
         setCommandListener(new CommandListener() {
             public void commandAction(Command command, Displayable displayable) {
-                if (command.getCommandType() == Command.BACK) {
+                if (command == backCommand) {
                     display.setCurrent(indexScreen);
                 } else {
                     Artist artist = index.getArtists()[getSelectedIndex()];

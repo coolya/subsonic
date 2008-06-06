@@ -20,16 +20,28 @@ public class IndexScreen extends List {
     private final MusicService musicService;
     private final Display display;
     private ArtistScreen artistScreen;
+    private MainScreen mainScreen;
 
     public IndexScreen(MusicService musicService, Display display) {
         super("Select Index", IMPLICIT);
         this.musicService = musicService;
         this.display = display;
 
-        addCommand(new Command("Select", Command.ITEM, 1));
+        final Command selectCommand = new Command("Select", Command.ITEM, 1);
+        final Command backCommand = new Command("Back", Command.BACK, 2);
+
+        addCommand(selectCommand);
+        addCommand(backCommand);
+        setSelectCommand(selectCommand);
+
         setCommandListener(new CommandListener() {
             public void commandAction(Command command, Displayable displayable) {
-                showArtistScreen();
+                if (command == selectCommand) {
+                    artistScreen.setIndex(indexes[getSelectedIndex()]);
+                    IndexScreen.this.display.setCurrent(artistScreen);
+                } else {
+                    IndexScreen.this.display.setCurrent(mainScreen);
+                }
             }
         });
     }
@@ -55,9 +67,8 @@ public class IndexScreen extends List {
         }.start();
     }
 
-    private void showArtistScreen() {
-        artistScreen.setIndex(indexes[getSelectedIndex()]);
-        display.setCurrent(artistScreen);
+    public void setMainScreen(MainScreen mainScreen) {
+        this.mainScreen = mainScreen;
     }
 
     public void setArtistScreen(ArtistScreen artistScreen) {
