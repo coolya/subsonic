@@ -5,8 +5,11 @@ import net.sourceforge.subsonic.jmeplayer.screens.IndexScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.MainScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.MusicDirectoryScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.PlayerScreen;
-import net.sourceforge.subsonic.jmeplayer.service.MockXMLMusicServiceImpl;
+import net.sourceforge.subsonic.jmeplayer.service.CachedMusicService;
+import net.sourceforge.subsonic.jmeplayer.service.HTTPMusicServiceDataSource;
 import net.sourceforge.subsonic.jmeplayer.service.MusicService;
+import net.sourceforge.subsonic.jmeplayer.service.MusicServiceDataSource;
+import net.sourceforge.subsonic.jmeplayer.service.XMLMusicService;
 
 import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.MIDlet;
@@ -22,7 +25,10 @@ public class SubsonicMIDlet extends MIDlet {
 
     public SubsonicMIDlet() {
         display = Display.getDisplay(this);
-        MusicService musicService = new MockXMLMusicServiceImpl();
+
+        MusicServiceDataSource dataSource = new HTTPMusicServiceDataSource();
+//        MusicServiceDataSource dataSource = new TestMusicServiceDataSource();
+        MusicService musicService = new CachedMusicService(new XMLMusicService(dataSource));
 
         MainScreen mainScreen = new MainScreen(musicService, this, display);
         IndexScreen indexScreen = new IndexScreen(musicService, display);
