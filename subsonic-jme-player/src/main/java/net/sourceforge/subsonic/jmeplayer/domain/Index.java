@@ -5,16 +5,16 @@ package net.sourceforge.subsonic.jmeplayer.domain;
  */
 public class Index {
 
-    private final String index;
+    private final String name;
     private final Artist[] artists;
 
-    public Index(String index, Artist[] artists) {
-        this.index = index;
+    public Index(String name, Artist[] artists) {
+        this.name = name;
         this.artists = artists;
     }
 
-    public String getIndex() {
-        return index;
+    public String getName() {
+        return name;
     }
 
     public Artist[] getArtists() {
