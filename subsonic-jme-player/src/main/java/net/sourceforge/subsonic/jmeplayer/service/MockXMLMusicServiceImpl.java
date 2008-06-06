@@ -1,11 +1,12 @@
 package net.sourceforge.subsonic.jmeplayer.service;
 
-import net.sourceforge.subsonic.jmeplayer.domain.Artist;
 import net.sourceforge.subsonic.jmeplayer.domain.ArtistIndex;
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
-import net.sourceforge.subsonic.jmeplayer.nanoxml.kXMLElement;
 
-import java.util.Vector;
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 
 /**
  * @author Sindre Mehus
@@ -38,49 +39,35 @@ public class MockXMLMusicServiceImpl implements MusicService {
                                                         "</directory>";
 
     public ArtistIndex[] getArtistIndexes() throws Exception {
-        kXMLElement root = new kXMLElement();
-        root.parseString(ARTIST_INDEX_XML);
-
-        Vector children = root.getChildren();
-        ArtistIndex[] artistIndexes = new ArtistIndex[children.size()];
-        for (int i = 0; i < children.size(); i++) {
-            kXMLElement artistIndexElement = (kXMLElement) children.elementAt(i);
-            Vector artistChildren = artistIndexElement.getChildren();
-            Artist[] artists = new Artist[artistChildren.size()];
-            for (int j = 0; j < artistChildren.size(); j++) {
-                kXMLElement artistElement = (kXMLElement) artistChildren.elementAt(j);
-                artists[j] = new Artist(artistElement.getProperty("name"), artistElement.getProperty("path"));
-            }
-            artistIndexes[i] = new ArtistIndex(artistIndexElement.getProperty("index"), artists);
+        Reader reader = createReader(ARTIST_INDEX_XML);
+        try {
+            return new ArtistIndexParser().parse(reader);
+        } finally {
+            reader.close();
         }
+    }
 
-        return artistIndexes;
+    private Reader createReader(String s) throws UnsupportedEncodingException {
+        byte[] bytes = s.getBytes("UTF-8");
+        return new InputStreamReader(new ByteArrayInputStream(bytes));
     }
 
 
-    public MusicDirectory getMusicDirectory(String path) {
-        kXMLElement root = new kXMLElement();
-
+    public MusicDirectory getMusicDirectory(String path) throws Exception {
+        Reader reader;
         if (path.equals("c:/music/abba")) {
-            root.parseString(MUSIC_DIRECTORY_XML_1);
+            reader = createReader(MUSIC_DIRECTORY_XML_1);
         } else if (path.equals("c:/music/abba/gold")) {
-            root.parseString(MUSIC_DIRECTORY_XML_2);
+            reader = createReader(MUSIC_DIRECTORY_XML_2);
         } else {
             throw new RuntimeException("Invalid path: " + path);
         }
 
-        Vector children = root.getChildren();
-        MusicDirectory.Entry[] entries = new MusicDirectory.Entry[children.size()];
-        for (int i = 0; i < children.size(); i++) {
-            kXMLElement childElement = (kXMLElement) children.elementAt(i);
-            entries[i] = new MusicDirectory.Entry(childElement.getProperty("name"),
-                                                  childElement.getProperty("path"),
-                                                  childElement.getProperty("isDir", "true", "false", false),
-                                                  childElement.getProperty("url"),
-                                                  childElement.getProperty("contentType"));
+        try {
+            return new MusicDirectoryParser().parse(reader);
+        } finally {
+            reader.close();
         }
-
-        return new MusicDirectory(root.getProperty("name"), root.getProperty("path"), root.getProperty("parent"), entries);
     }
 
     public static void main(String[] args) throws Exception {

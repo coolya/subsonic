@@ -1,5 +1,5 @@
 MIDlet-1: SubsonicPlayer, /icons/App.png, net.sourceforge.subsonic.jmeplayer.SubsonicPlayer
-MIDlet-Jar-Size: 55925
+MIDlet-Jar-Size: 48182
 MIDlet-Jar-URL: subsonic-jme-player.jar
 MIDlet-Name: Subsonic
 MIDlet-Vendor: Sindre Mehus

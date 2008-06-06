@@ -1,18 +1,12 @@
-/*
- * (c) Copyright WesternGeco. Unpublished work, created 2008. All rights
- * reserved under copyright laws. This information is confidential and is
- * the trade property of WesternGeco. Do not use, disclose, or reproduce
- * without the prior written permission of the owner.
- */
 package net.sourceforge.subsonic.jmeplayer;
 
 import net.sourceforge.subsonic.jmeplayer.domain.Artist;
 import net.sourceforge.subsonic.jmeplayer.domain.ArtistIndex;
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
-import net.sourceforge.subsonic.jmeplayer.screens.AllArtistIndexes;
+import net.sourceforge.subsonic.jmeplayer.screens.ArtistScreen;
+import net.sourceforge.subsonic.jmeplayer.screens.IndexScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.MusicDirectoryScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.PlayerScreen;
-import net.sourceforge.subsonic.jmeplayer.screens.SingleArtistIndex;
 import net.sourceforge.subsonic.jmeplayer.service.MockXMLMusicServiceImpl;
 import net.sourceforge.subsonic.jmeplayer.service.MusicService;
 
@@ -24,13 +18,13 @@ import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
 /**
- *
+ * // TODO: Add Exit command to menu
  */
 public class SubsonicPlayer extends MIDlet {
 
     private Display display;
-    private AllArtistIndexes allArtistIndexes;
-    private SingleArtistIndex singleArtistIndex;
+    private IndexScreen indexScreen;
+    private ArtistScreen artistScreen;
     private MusicDirectoryScreen musicDirectoryScreen;
     private PlayerScreen playerScreen;
     private MusicService musicService;
@@ -47,21 +41,21 @@ public class SubsonicPlayer extends MIDlet {
             x.printStackTrace();
         }
 
-        allArtistIndexes = new AllArtistIndexes(indexes);
-        allArtistIndexes.setCommandListener(new CommandListener() {
+        indexScreen = new IndexScreen(indexes);
+        indexScreen.setCommandListener(new CommandListener() {
             public void commandAction(Command command, Displayable displayable) {
-                showIndex(allArtistIndexes.getSelectedArtistIndex());
+                showIndex(indexScreen.getSelectedArtistIndex());
             }
         });
 
-        singleArtistIndex = new SingleArtistIndex();
-        singleArtistIndex.setCommandListener(new CommandListener() {
+        artistScreen = new ArtistScreen();
+        artistScreen.setCommandListener(new CommandListener() {
             public void commandAction(Command command, Displayable displayable) {
                 if (command.getCommandType() == Command.BACK) {
                     showIndex(null);
                 } else {
-                    Artist artist = singleArtistIndex.getSelectedArtist();
-                    showDirectory(artist.getName(), artist.getPath());
+                    Artist artist = artistScreen.getSelectedArtist();
+                    showDirectory(artist.getPath());
                 }
             }
         });
@@ -70,11 +64,16 @@ public class SubsonicPlayer extends MIDlet {
         musicDirectoryScreen.setCommandListener(new CommandListener() {
             public void commandAction(Command command, Displayable displayable) {
                 if (command.getCommandType() == Command.BACK) {
-                    display.setCurrent(singleArtistIndex); // TODO: Should rather show parent.
+                    display.setCurrent(artistScreen); // TODO: Should rather show parent.
                 } else {
                     MusicDirectory.Entry[] entries = musicDirectoryScreen.getSelectedEntries();
                     if (entries.length == 1 && entries[0].isDirectory()) {
-                        musicDirectoryScreen.setMusicDirectory(musicService.getMusicDirectory(entries[0].getPath()));
+                        try {
+                            musicDirectoryScreen.setMusicDirectory(musicService.getMusicDirectory(entries[0].getPath()));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            // TODO
+                        }
                     } else {
                         playerScreen.setMusicDirectoryEntries(entries);
                         display.setCurrent(playerScreen);
@@ -103,17 +102,22 @@ public class SubsonicPlayer extends MIDlet {
         notifyDestroyed();
     }
 
-    private void showDirectory(String name, String path) {
-        musicDirectoryScreen.setMusicDirectory(musicService.getMusicDirectory(path));
-        display.setCurrent(musicDirectoryScreen);
+    private void showDirectory(String path) {
+        try {
+            musicDirectoryScreen.setMusicDirectory(musicService.getMusicDirectory(path));
+            display.setCurrent(musicDirectoryScreen);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO
+        }
     }
 
     private void showIndex(ArtistIndex index) {
         if (index == null) {
-            display.setCurrent(allArtistIndexes);
+            display.setCurrent(indexScreen);
         } else {
-            singleArtistIndex.setArtistIndex(index);
-            display.setCurrent(singleArtistIndex);
+            artistScreen.setArtistIndex(index);
+            display.setCurrent(artistScreen);
         }
     }
 }

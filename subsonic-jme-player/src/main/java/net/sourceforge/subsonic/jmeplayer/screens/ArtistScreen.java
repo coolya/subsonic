@@ -1,9 +1,3 @@
-/*
- * (c) Copyright WesternGeco. Unpublished work, created 2008. All rights
- * reserved under copyright laws. This information is confidential and is
- * the trade property of WesternGeco. Do not use, disclose, or reproduce
- * without the prior written permission of the owner.
- */
 package net.sourceforge.subsonic.jmeplayer.screens;
 
 import net.sourceforge.subsonic.jmeplayer.domain.Artist;
@@ -15,11 +9,11 @@ import javax.microedition.lcdui.List;
 /**
  * @author Sindre Mehus
  */
-public class SingleArtistIndex extends List {
+public class ArtistScreen extends List {
 
     private ArtistIndex artistIndex;
 
-    public SingleArtistIndex() {
+    public ArtistScreen() {
         super("Select Artist", IMPLICIT);
         addCommand(new Command("Back", Command.BACK, 1));
         addCommand(new Command("Select", Command.ITEM, 1));
