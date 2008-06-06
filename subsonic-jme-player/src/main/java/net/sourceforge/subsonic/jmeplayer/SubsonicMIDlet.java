@@ -6,9 +6,9 @@ import net.sourceforge.subsonic.jmeplayer.screens.MainScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.MusicDirectoryScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.PlayerScreen;
 import net.sourceforge.subsonic.jmeplayer.service.CachedMusicService;
-import net.sourceforge.subsonic.jmeplayer.service.HTTPMusicServiceDataSource;
 import net.sourceforge.subsonic.jmeplayer.service.MusicService;
 import net.sourceforge.subsonic.jmeplayer.service.MusicServiceDataSource;
+import net.sourceforge.subsonic.jmeplayer.service.TestMusicServiceDataSource;
 import net.sourceforge.subsonic.jmeplayer.service.XMLMusicService;
 
 import javax.microedition.lcdui.Display;
@@ -26,8 +26,8 @@ public class SubsonicMIDlet extends MIDlet {
     public SubsonicMIDlet() {
         display = Display.getDisplay(this);
 
-        MusicServiceDataSource dataSource = new HTTPMusicServiceDataSource();
-//        MusicServiceDataSource dataSource = new TestMusicServiceDataSource();
+//        MusicServiceDataSource dataSource = new HTTPMusicServiceDataSource();
+        MusicServiceDataSource dataSource = new TestMusicServiceDataSource();
         MusicService musicService = new CachedMusicService(new XMLMusicService(dataSource));
 
         MainScreen mainScreen = new MainScreen(musicService, this, display);
