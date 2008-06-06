@@ -38,7 +38,11 @@ public class MockXMLMusicServiceImpl implements MusicService {
                                                         "  <child path='c:/music/abba/6.mp3' name='http - mp3 long' isDir='false' contentType='audio/mpeg' url='http://www.blueaudio.com/audio/Blue%20Audio%20-%20Tonight.mp3'/>\n" +
                                                         "</directory>";
 
+
     public Index[] getIndexes() throws Exception {
+        System.out.println("Sleeping... ");
+        Thread.sleep(2000L);
+        System.out.println("Done.");
         Reader reader = createReader(INDEX_XML);
         try {
             return new IndexParser().parse(reader);
@@ -54,6 +58,10 @@ public class MockXMLMusicServiceImpl implements MusicService {
 
 
     public MusicDirectory getMusicDirectory(String path) throws Exception {
+        System.out.println("Sleeping... ");
+        Thread.sleep(2000L);
+        System.out.println("Done.");
+
         Reader reader;
         if (path.equals("c:/music/abba")) {
             reader = createReader(MUSIC_DIRECTORY_XML_1);
@@ -68,6 +76,9 @@ public class MockXMLMusicServiceImpl implements MusicService {
         } finally {
             reader.close();
         }
+    }
+
+    public void interrupt() {
     }
 
     public static void main(String[] args) throws Exception {

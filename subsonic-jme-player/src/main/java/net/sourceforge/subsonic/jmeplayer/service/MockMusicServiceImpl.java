@@ -36,4 +36,7 @@ public class MockMusicServiceImpl implements MusicService {
 
         return new MusicDirectory(name, path, parentPath, children);
     }
+
+    public void interrupt() {
+    }
 }

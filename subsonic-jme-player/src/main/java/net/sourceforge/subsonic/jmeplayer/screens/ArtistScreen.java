@@ -39,7 +39,7 @@ public class ArtistScreen extends List {
                     display.setCurrent(indexScreen);
                 } else {
                     Artist artist = index.getArtists()[getSelectedIndex()];
-                    showDirectory(artist.getPath());
+                    musicDirectoryScreen.setPath(artist.getPath());
                 }
             }
         });
@@ -52,16 +52,6 @@ public class ArtistScreen extends List {
         for (int i = 0; i < index.getArtists().length; i++) {
             Artist artist = index.getArtists()[i];
             append(artist.getName(), null);
-        }
-    }
-
-    private void showDirectory(String path) {
-        try {
-            musicDirectoryScreen.setMusicDirectory(musicService.getMusicDirectory(path));
-            display.setCurrent(musicDirectoryScreen);
-        } catch (Exception e) {
-            e.printStackTrace();
-            // TODO
         }
     }
 

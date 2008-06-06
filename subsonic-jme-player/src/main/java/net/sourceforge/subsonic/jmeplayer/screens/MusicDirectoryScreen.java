@@ -35,12 +35,7 @@ public class MusicDirectoryScreen extends List {
                 } else {
                     MusicDirectory.Entry[] entries = getSelectedEntries();
                     if (entries.length == 1 && entries[0].isDirectory()) {
-                        try {
-                            setMusicDirectory(musicService.getMusicDirectory(entries[0].getPath()));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            // TODO
-                        }
+                        setPath(entries[0].getPath());
                     } else {
                         playerScreen.setMusicDirectoryEntries(entries);
                         display.setCurrent(playerScreen);
@@ -50,7 +45,24 @@ public class MusicDirectoryScreen extends List {
         });
     }
 
-    public void setMusicDirectory(MusicDirectory musicDirectory) {
+    public void setPath(final String path) {
+        new Worker(display, MusicDirectoryScreen.this, "Contacting server...") {
+            protected Object doInBackground() throws Throwable {
+                return musicService.getMusicDirectory(path);
+            }
+
+            protected void done(Object result) {
+                setMusicDirectory((MusicDirectory) result);
+            }
+
+
+            protected void interrupt() throws Exception {
+                musicService.interrupt();
+            }
+        }.start();
+    }
+
+    private void setMusicDirectory(MusicDirectory musicDirectory) {
         this.musicDirectory = musicDirectory;
         setTitle(musicDirectory.getName());
         deleteAll();
@@ -77,4 +89,5 @@ public class MusicDirectoryScreen extends List {
     public void setPlayerScreen(PlayerScreen playerScreen) {
         this.playerScreen = playerScreen;
     }
+
 }

@@ -36,6 +36,7 @@ public class SubsonicPlayer extends MIDlet {
         playerScreen.setMusicDirectoryScreen(musicDirectoryScreen);
 
         display.setCurrent(indexScreen);
+        indexScreen.loadIndexes();
     }
 
     public void pauseApp() {

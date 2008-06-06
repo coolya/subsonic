@@ -1,0 +1,97 @@
+package net.sourceforge.subsonic.jmeplayer.screens;
+
+import net.sourceforge.subsonic.jmeplayer.Util;
+
+import javax.microedition.lcdui.Display;
+import javax.microedition.lcdui.Displayable;
+
+/**
+ * @author Sindre Mehus
+ */
+public abstract class Worker implements Runnable {
+
+    private final WaitScreen waitScreen = new WaitScreen();
+    private final Display display;
+    private final Displayable currentDisplayable;
+    private final Displayable nextDisplayable;
+    private boolean cancelled;
+
+    protected Worker(Display display, Displayable nextDisplayable, String message) {
+        this.display = display;
+        this.nextDisplayable = nextDisplayable;
+
+        currentDisplayable = display.getCurrent();
+        waitScreen.setMessage(message);
+    }
+
+    public void start() {
+        cancelled = false;
+        display.setCurrent(waitScreen);
+        new Thread(this).start();
+    }
+
+    /**
+     * Computes a result, or throws an exception if unable to do so.
+     * <p/>
+     * Note: this method is executed in a background thread.
+     *
+     * @return The computed result.
+     * @throws Throwable If unable to compute a result.
+     */
+    protected abstract Object doInBackground() throws Throwable;
+
+    /**
+     * Executed on the <i>Event Dispatch Thread</i> after the {@link #doInBackground}
+     * method is finished. The default implementation does nothing. Subclasses may override
+     * this method to perform completion actions on the <i>Event Dispatch Thread</i>
+     *
+     * @param result The result that was computed by {@link #doInBackground}.
+     */
+    protected void done(Object result) {
+    }
+
+    /**
+     * Executed on the <i>Event Dispatch Thread</i> if the {@link #doInBackground}
+     * method throws an exception. The default implementation does nothing.
+     * Subclasses may override this method to perform completion actions on the <i>Event Dispatch Thread</i>
+     *
+     * @param exception The exception thrown from {@link #doInBackground}.
+     */
+    private void error(Throwable exception) {
+        Util.showError(exception, display, currentDisplayable);
+    }
+
+    /**
+     * Attempts to interrupt the background computation.
+     * The default implementation does nothing.
+     */
+    protected void interrupt() throws Exception {
+    }
+
+    /**
+     * Cancels this worker.
+     */
+    public void cancel() {
+        cancelled = true;
+        try {
+            interrupt();
+            display.setCurrent(currentDisplayable);
+        } catch (Throwable x) {
+            x.printStackTrace();
+        }
+    }
+
+    public final void run() {
+        try {
+            Object result = doInBackground();
+            if (!cancelled) {
+                done(result);
+            }
+            display.setCurrent(nextDisplayable);
+        } catch (Throwable x) {
+            if (!cancelled) {
+                error(x);
+            }
+        }
+    }
+}

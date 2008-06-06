@@ -211,8 +211,7 @@ public class PlayerController implements PlayerListener {
     }
 
     private void handleException(Exception x) {
-        x.printStackTrace();
-        listener.error(x.getMessage()); //TODO: Include exception class name.
+        listener.error(x);
     }
 
     private void createPlayer() throws Exception {
@@ -239,7 +238,7 @@ public class PlayerController implements PlayerListener {
         } else if (PlayerListener.END_OF_MEDIA.equals(event)) {
             next();
         } else if (PlayerListener.ERROR.equals(event)) {
-            listener.error("Error: " + eventData);
+            listener.error(new Exception("Error: " + eventData));
             next();
         } else {
             System.out.println("Got event: " + event);

@@ -1,11 +1,10 @@
 package net.sourceforge.subsonic.jmeplayer.screens;
 
+import net.sourceforge.subsonic.jmeplayer.Util;
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
 import net.sourceforge.subsonic.jmeplayer.player.PlayerController;
 import net.sourceforge.subsonic.jmeplayer.player.PlayerControllerListener;
 
-import javax.microedition.lcdui.Alert;
-import javax.microedition.lcdui.AlertType;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
@@ -181,12 +180,8 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
         bytesReadItem.setText(String.valueOf(n));
     }
 
-    public void error(String message) {
-        Alert alert = new Alert("Error");
-        alert.setString(message);
-        alert.setType(AlertType.ERROR);
-        alert.setTimeout(Alert.FOREVER);
-        display.setCurrent(alert);
+    public void error(Throwable x) {
+        Util.showError(x, display, this);
     }
 
     public void busy(boolean busy) {

@@ -10,4 +10,6 @@ public interface MusicService {
     Index[] getIndexes() throws Exception;
 
     MusicDirectory getMusicDirectory(String path) throws Exception;
+
+    void interrupt();
 }

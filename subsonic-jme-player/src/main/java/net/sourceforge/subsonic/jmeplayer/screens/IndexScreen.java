@@ -26,8 +26,6 @@ public class IndexScreen extends List {
         this.musicService = musicService;
         this.display = display;
 
-        loadIndexes();
-
         addCommand(new Command("Select", Command.ITEM, 1));
         setCommandListener(new CommandListener() {
             public void commandAction(Command command, Displayable displayable) {
@@ -36,19 +34,25 @@ public class IndexScreen extends List {
         });
     }
 
-    private void loadIndexes() {
-        try {
-            indexes = musicService.getIndexes();
-        } catch (Exception x) {
-            // TODO
-            x.printStackTrace();
-        }
+    public void loadIndexes() {
+        new Worker(display, IndexScreen.this, "Contacting server...") {
+            protected Object doInBackground() throws Throwable {
+                return musicService.getIndexes();
+            }
 
-        deleteAll();
-        for (int i = 0; i < indexes.length; i++) {
-            Index index = indexes[i];
-            append(index.getName(), null);
-        }
+            protected void done(Object result) {
+                indexes = (Index[]) result;
+                deleteAll();
+                for (int i = 0; i < indexes.length; i++) {
+                    Index index = indexes[i];
+                    append(index.getName(), null);
+                }
+            }
+
+            protected void interrupt() throws Exception {
+                musicService.interrupt();
+            }
+        }.start();
     }
 
     private void showArtistScreen() {

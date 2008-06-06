@@ -41,3 +41,5 @@ o Only support for playing one song.
 o BreadCrumbTrail
 
 o Use checkboxes to select which songs to play?  Plus button to select all.
+
+o Create main menu.
