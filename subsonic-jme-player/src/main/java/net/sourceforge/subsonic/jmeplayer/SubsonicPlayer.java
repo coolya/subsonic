@@ -13,7 +13,7 @@ import net.sourceforge.subsonic.jmeplayer.screens.AllArtistIndexes;
 import net.sourceforge.subsonic.jmeplayer.screens.MusicDirectoryScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.PlayerScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.SingleArtistIndex;
-import net.sourceforge.subsonic.jmeplayer.service.MockMusicServiceImpl;
+import net.sourceforge.subsonic.jmeplayer.service.MockXMLMusicServiceImpl;
 import net.sourceforge.subsonic.jmeplayer.service.MusicService;
 
 import javax.microedition.lcdui.Command;
@@ -37,9 +37,17 @@ public class SubsonicPlayer extends MIDlet {
 
     public void startApp() throws MIDletStateChangeException {
         display = Display.getDisplay(this);
-        musicService = new MockMusicServiceImpl();
+        musicService = new MockXMLMusicServiceImpl();
 
-        allArtistIndexes = new AllArtistIndexes(musicService.getArtistIndexes());
+        ArtistIndex[] indexes = new ArtistIndex[0];
+        try {
+            indexes = musicService.getArtistIndexes();
+        } catch (Exception x) {
+            // TODO
+            x.printStackTrace();
+        }
+
+        allArtistIndexes = new AllArtistIndexes(indexes);
         allArtistIndexes.setCommandListener(new CommandListener() {
             public void commandAction(Command command, Displayable displayable) {
                 showIndex(allArtistIndexes.getSelectedArtistIndex());
@@ -96,7 +104,6 @@ public class SubsonicPlayer extends MIDlet {
     }
 
     private void showDirectory(String name, String path) {
-        System.out.println("showDirectory(" + name + ", " + path + ")");
         musicDirectoryScreen.setMusicDirectory(musicService.getMusicDirectory(path));
         display.setCurrent(musicDirectoryScreen);
     }

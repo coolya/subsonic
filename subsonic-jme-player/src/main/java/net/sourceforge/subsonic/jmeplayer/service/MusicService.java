@@ -13,7 +13,7 @@ import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
  * @author Sindre Mehus
  */
 public interface MusicService {
-    ArtistIndex[] getArtistIndexes();
+    ArtistIndex[] getArtistIndexes() throws Exception;
 
     MusicDirectory getMusicDirectory(String path);
 }
