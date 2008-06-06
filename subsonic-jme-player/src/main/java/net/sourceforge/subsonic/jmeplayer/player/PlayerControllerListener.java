@@ -1,4 +1,4 @@
-package net.sourceforge.subsonic.jmeplayer;
+package net.sourceforge.subsonic.jmeplayer.player;
 
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
 

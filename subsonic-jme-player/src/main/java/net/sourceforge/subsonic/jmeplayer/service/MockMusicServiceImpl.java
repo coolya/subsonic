@@ -1,7 +1,7 @@
 package net.sourceforge.subsonic.jmeplayer.service;
 
 import net.sourceforge.subsonic.jmeplayer.domain.Artist;
-import net.sourceforge.subsonic.jmeplayer.domain.ArtistIndex;
+import net.sourceforge.subsonic.jmeplayer.domain.Index;
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
 
 /**
@@ -10,14 +10,14 @@ import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
 public class MockMusicServiceImpl implements MusicService {
 
 
-    public ArtistIndex[] getArtistIndexes() throws Exception {
-        return new ArtistIndex[]{
-                new ArtistIndex("A", new Artist[]{new Artist("A-Ha", "/music/1"),
-                                                  new Artist("Accept", "/music/2"),
-                                                  new Artist("Anja Garbarek", "/music/3")}),
-                new ArtistIndex("B", new Artist[]{new Artist("Bad Liver", "/music/4"),
-                                                  new Artist("Bauhaus", "/music/5"),
-                                                  new Artist("The Beatles", "/music/6")}),
+    public Index[] getIndexes() throws Exception {
+        return new Index[]{
+                new Index("A", new Artist[]{new Artist("A-Ha", "/music/1"),
+                                            new Artist("Accept", "/music/2"),
+                                            new Artist("Anja Garbarek", "/music/3")}),
+                new Index("B", new Artist[]{new Artist("Bad Liver", "/music/4"),
+                                            new Artist("Bauhaus", "/music/5"),
+                                            new Artist("The Beatles", "/music/6")}),
         };
     }
 

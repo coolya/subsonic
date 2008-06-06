@@ -1,7 +1,7 @@
 package net.sourceforge.subsonic.jmeplayer.screens;
 
 import net.sourceforge.subsonic.jmeplayer.domain.Artist;
-import net.sourceforge.subsonic.jmeplayer.domain.ArtistIndex;
+import net.sourceforge.subsonic.jmeplayer.domain.Index;
 
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.List;
@@ -11,7 +11,7 @@ import javax.microedition.lcdui.List;
  */
 public class ArtistScreen extends List {
 
-    private ArtistIndex artistIndex;
+    private Index index;
 
     public ArtistScreen() {
         super("Select Artist", IMPLICIT);
@@ -19,17 +19,17 @@ public class ArtistScreen extends List {
         addCommand(new Command("Select", Command.ITEM, 1));
     }
 
-    public void setArtistIndex(ArtistIndex artistIndex) {
-        this.artistIndex = artistIndex;
-        setTitle("Select Artist: " + artistIndex.getIndex());
+    public void setArtistIndex(Index index) {
+        this.index = index;
+        setTitle("Select Artist: " + index.getIndex());
         deleteAll();
-        for (int i = 0; i < artistIndex.getArtists().length; i++) {
-            Artist artist = artistIndex.getArtists()[i];
+        for (int i = 0; i < index.getArtists().length; i++) {
+            Artist artist = index.getArtists()[i];
             append(artist.getName(), null);
         }
     }
 
     public Artist getSelectedArtist() {
-        return artistIndex.getArtists()[getSelectedIndex()];
+        return index.getArtists()[getSelectedIndex()];
     }
 }

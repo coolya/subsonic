@@ -1,8 +1,8 @@
 package net.sourceforge.subsonic.jmeplayer.screens;
 
-import net.sourceforge.subsonic.jmeplayer.PlayerController;
-import net.sourceforge.subsonic.jmeplayer.PlayerControllerListener;
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
+import net.sourceforge.subsonic.jmeplayer.player.PlayerController;
+import net.sourceforge.subsonic.jmeplayer.player.PlayerControllerListener;
 
 import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.AlertType;

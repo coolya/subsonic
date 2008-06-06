@@ -1,6 +1,6 @@
 package net.sourceforge.subsonic.jmeplayer.service;
 
-import net.sourceforge.subsonic.jmeplayer.domain.ArtistIndex;
+import net.sourceforge.subsonic.jmeplayer.domain.Index;
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
 
 import java.io.ByteArrayInputStream;
@@ -13,15 +13,15 @@ import java.io.UnsupportedEncodingException;
  */
 public class MockXMLMusicServiceImpl implements MusicService {
 
-    private static final String ARTIST_INDEX_XML = "<artistIndexes lastModified='237462836472342'>\n" +
-                                                   "  <artistIndex index='A'>\n" +
-                                                   "    <artist name='ABBA' path='c:/music/abba'/>\n" +
-                                                   "    <artist name='Alphaville' path='c:/music/alphaville'/>\n" +
-                                                   "  </artistIndex>\n" +
-                                                   "  <artistIndex index='XYZ'>\n" +
-                                                   "    <artist name='The Zoo' path='c:/music/the zoo'/>\n" +
-                                                   "  </artistIndex>\n" +
-                                                   "</artistIndexes>";
+    private static final String INDEX_XML = "<indexes lastModified='237462836472342'>\n" +
+                                            "  <index name='A'>\n" +
+                                            "    <artist name='ABBA' path='c:/music/abba'/>\n" +
+                                            "    <artist name='Alphaville' path='c:/music/alphaville'/>\n" +
+                                            "  </index>\n" +
+                                            "  <index name='XYZ'>\n" +
+                                            "    <artist name='The Zoo' path='c:/music/the zoo'/>\n" +
+                                            "  </index>\n" +
+                                            "</indexes>";
 
 
     private static final String MUSIC_DIRECTORY_XML_1 = "<directory path='c:/music/abba' name='ABBA' parent='c:/music'>\n" +
@@ -38,10 +38,10 @@ public class MockXMLMusicServiceImpl implements MusicService {
                                                         "  <child path='c:/music/abba/6.mp3' name='http - mp3 long' isDir='false' contentType='audio/mpeg' url='http://www.blueaudio.com/audio/Blue%20Audio%20-%20Tonight.mp3'/>\n" +
                                                         "</directory>";
 
-    public ArtistIndex[] getArtistIndexes() throws Exception {
-        Reader reader = createReader(ARTIST_INDEX_XML);
+    public Index[] getIndexes() throws Exception {
+        Reader reader = createReader(INDEX_XML);
         try {
-            return new ArtistIndexParser().parse(reader);
+            return new IndexParser().parse(reader);
         } finally {
             reader.close();
         }
@@ -71,9 +71,9 @@ public class MockXMLMusicServiceImpl implements MusicService {
     }
 
     public static void main(String[] args) throws Exception {
-//        ArtistIndex[] indexes = new MockXMLMusicServiceImpl().getArtistIndexes();
+//        Index[] indexes = new MockXMLMusicServiceImpl().getArtistIndexes();
 //        for (int i = 0; i < indexes.length; i++) {
-//            ArtistIndex index = indexes[i];
+//            Index index = indexes[i];
 //            System.out.println(index.getIndex());
 //            Artist[] artists = index.getArtists();
 //            for (int j = 0; j < artists.length; j++) {

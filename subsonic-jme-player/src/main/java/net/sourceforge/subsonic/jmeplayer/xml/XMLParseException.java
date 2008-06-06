@@ -1,4 +1,4 @@
-package net.sourceforge.subsonic.jmeplayer.nanoxml;
+package net.sourceforge.subsonic.jmeplayer.xml;
 
 /**
  * An XMLParseException is thrown when an error occurs while parsing an XML

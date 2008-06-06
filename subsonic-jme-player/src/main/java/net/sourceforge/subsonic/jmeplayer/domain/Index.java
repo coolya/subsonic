@@ -3,12 +3,12 @@ package net.sourceforge.subsonic.jmeplayer.domain;
 /**
  * @author Sindre Mehus
  */
-public class ArtistIndex {
+public class Index {
 
     private final String index;
     private final Artist[] artists;
 
-    public ArtistIndex(String index, Artist[] artists) {
+    public Index(String index, Artist[] artists) {
         this.index = index;
         this.artists = artists;
     }

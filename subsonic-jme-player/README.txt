@@ -1,14 +1,14 @@
 <versionInfo version="3.4" buildDate="12.23.2008" buildNumber=1234/>
 
-<artistIndexes lastModified="237462836472342">
-  <artistIndex index="A">
+<indexes lastModified="237462836472342">
+  <index name="A">
     <artist name="ABBA" path="c:/music/abba"/>
     <artist name="Alphaville" path="c:/music/alphaville"/>
-  </artistIndex>
-  <artistIndex index="XYZ">
+  </index>
+  <index name="XYZ">
     <artist name="Zoo, The" path="c:/music/the zoo"/>
-  </artistIndex>
-</artistIndexes>
+  </index>
+</indexes>
 
 <directory path="c:/music/abba" name="ABBA" parent="c:/music">
   <children>

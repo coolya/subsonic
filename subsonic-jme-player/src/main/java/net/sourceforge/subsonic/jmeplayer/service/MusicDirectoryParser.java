@@ -1,7 +1,7 @@
 package net.sourceforge.subsonic.jmeplayer.service;
 
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
-import net.sourceforge.subsonic.jmeplayer.nanoxml.XMLElement;
+import net.sourceforge.subsonic.jmeplayer.xml.XMLElement;
 
 import java.io.Reader;
 import java.util.Vector;

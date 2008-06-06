@@ -50,7 +50,7 @@
                         <MIDlet>
                             <name>AudioPlayer</name>
                             <!--<icon>/me2-icon.png</icon>-->
-                            <class>net.sourceforge.subsonic.jmeplayer.AudioPlayer</class>
+                            <class>net.sourceforge.subsonic.jmeplayer.SubsonicPlayer</class>
                         </MIDlet>
                     </midlets>
                 </configuration>

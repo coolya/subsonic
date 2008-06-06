@@ -1,4 +1,4 @@
-package net.sourceforge.subsonic.jmeplayer.nanoxml;
+package net.sourceforge.subsonic.jmeplayer.xml;
 
 import java.io.IOException;
 import java.io.Reader;
