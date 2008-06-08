@@ -35,6 +35,6 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
         if (!baseUrl.endsWith("/")) {
             baseUrl += "/";
         }
-        return baseUrl;
+        return baseUrl + "mobile/";
     }
 }

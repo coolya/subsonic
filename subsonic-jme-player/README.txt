@@ -10,12 +10,10 @@
   </index>
 </indexes>
 
-<directory path="c:/music/abba" name="ABBA" parent="c:/music">
-  <children>
+<directory path="c:/music/abba" name="ABBA">
     <child path="c:/music/abba/bestof" name="Best Of" isDir="true" coverart="c:/music/abba/bestof/folder.jpg"/>
     <child path="c:/music/abba/gold" name="Gold" isDir="true"/>
     <child path="c:/music/abba/foo.mp3" name="Foo" isDir="false" contentType="audio/mpeg"/>
-  </children>
 </directory>
 
 http://localhost/subsonic/xml/getVersionInfo?user=sindre&password=secret

@@ -16,10 +16,16 @@ public final class Util {
     public static void showError(Throwable error, Display display, Displayable currentDisplayable) {
         error.printStackTrace();
         Alert alert = new Alert("Error");
-        alert.setString(error.getMessage());
+        alert.setString(getErrorMessage(error));
         alert.setType(AlertType.ERROR);
         alert.setTimeout(Alert.FOREVER);
         display.setCurrent(alert, currentDisplayable);
+    }
+
+    private static String getErrorMessage(Throwable error) {
+        String className = error.getClass().getName();
+        className = className.substring(className.lastIndexOf('.') + 1);
+        return className + " - " + error.getMessage();
     }
 
     public static String trimToNull(String s) {
