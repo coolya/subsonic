@@ -13,11 +13,6 @@ import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.StringItem;
 
 /**
- * TODO: Format bytes with kB/MB?
- * TODO: Pause music on incoming call.
- * TODO: Avoid menu flickering.  Coalesce songChanged() and stateChange().
- * TODO: What to do on lengthy service (http) calls.
- *
  * @author Sindre Mehus
  */
 public class PlayerScreen extends Form implements PlayerControllerListener, CommandListener {
@@ -66,7 +61,6 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
         boolean nextEnabled = index < size - 1;
         boolean previousEnabled = index > 0;
 
-        // TODO: Make Command subclass with setEnabled() method.
         String text;
         switch (state) {
             case PlayerController.STOPPED:
@@ -185,7 +179,6 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
     }
 
     public void busy(boolean busy) {
-        // TODO
     }
 
     public void setMusicDirectoryScreen(MusicDirectoryScreen musicDirectoryScreen) {
@@ -193,7 +186,6 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
     }
 
     public void commandAction(Command command, Displayable displayable) {
-        // TODO: Implement all commands
         if (command == backCommand) {
             playerController.stop();
             display.setCurrent(musicDirectoryScreen);

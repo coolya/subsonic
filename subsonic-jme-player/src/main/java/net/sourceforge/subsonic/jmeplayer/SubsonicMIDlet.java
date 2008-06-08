@@ -5,10 +5,11 @@ import net.sourceforge.subsonic.jmeplayer.screens.IndexScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.MainScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.MusicDirectoryScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.PlayerScreen;
+import net.sourceforge.subsonic.jmeplayer.screens.SettingsScreen;
 import net.sourceforge.subsonic.jmeplayer.service.CachedMusicService;
+import net.sourceforge.subsonic.jmeplayer.service.HTTPMusicServiceDataSource;
 import net.sourceforge.subsonic.jmeplayer.service.MusicService;
 import net.sourceforge.subsonic.jmeplayer.service.MusicServiceDataSource;
-import net.sourceforge.subsonic.jmeplayer.service.TestMusicServiceDataSource;
 import net.sourceforge.subsonic.jmeplayer.service.XMLMusicService;
 
 import javax.microedition.lcdui.Display;
@@ -26,17 +27,21 @@ public class SubsonicMIDlet extends MIDlet {
     public SubsonicMIDlet() {
         display = Display.getDisplay(this);
 
-//        MusicServiceDataSource dataSource = new HTTPMusicServiceDataSource();
-        MusicServiceDataSource dataSource = new TestMusicServiceDataSource();
+        SettingsController settingsController = new SettingsController(this);
+        MusicServiceDataSource dataSource = new HTTPMusicServiceDataSource(settingsController);
+//        MusicServiceDataSource dataSource = new TestMusicServiceDataSource();
         MusicService musicService = new CachedMusicService(new XMLMusicService(dataSource));
 
         MainScreen mainScreen = new MainScreen(musicService, this, display);
+        SettingsScreen settingsScreen = new SettingsScreen(display, settingsController);
         IndexScreen indexScreen = new IndexScreen(musicService, display);
-        ArtistScreen artistScreen = new ArtistScreen(musicService, display);
+        ArtistScreen artistScreen = new ArtistScreen(display);
         MusicDirectoryScreen musicDirectoryScreen = new MusicDirectoryScreen(musicService, display);
         playerScreen = new PlayerScreen(display);
 
         mainScreen.setIndexScreen(indexScreen);
+        mainScreen.setSettingsScreen(settingsScreen);
+        settingsScreen.setMainScreen(mainScreen);
         indexScreen.setMainScreen(mainScreen);
         indexScreen.setArtistScreen(artistScreen);
         artistScreen.setIndexScreen(indexScreen);

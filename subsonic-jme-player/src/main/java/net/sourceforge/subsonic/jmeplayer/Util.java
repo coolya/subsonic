@@ -13,7 +13,6 @@ public final class Util {
     private Util() {
     }
 
-    //TODO: Include exception class name.
     public static void showError(Throwable error, Display display, Displayable currentDisplayable) {
         error.printStackTrace();
         Alert alert = new Alert("Error");
@@ -21,5 +20,14 @@ public final class Util {
         alert.setType(AlertType.ERROR);
         alert.setTimeout(Alert.FOREVER);
         display.setCurrent(alert, currentDisplayable);
+    }
+
+    public static String trimToNull(String s) {
+        if (s == null) {
+            return null;
+        }
+
+        s = s.trim();
+        return s.length() == 0 ? null : s;
     }
 }

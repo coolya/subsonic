@@ -18,6 +18,7 @@ public class MainScreen extends List {
 
     private final Display display;
     private IndexScreen indexScreen;
+    private SettingsScreen settingsScreen;
 
     public MainScreen(MusicService musicService, final SubsonicMIDlet midlet, final Display display) {
         super("Subsonic", IMPLICIT);
@@ -57,16 +58,21 @@ public class MainScreen extends List {
         });
     }
 
-    public void setIndexScreen(IndexScreen indexScreen) {
-        this.indexScreen = indexScreen;
-    }
-
     private void music() {
         display.setCurrent(indexScreen);
         indexScreen.loadIndexes();
     }
 
     private void settings() {
-        // TODO
+        display.setCurrent(settingsScreen);
+        settingsScreen.load();
+    }
+
+    public void setSettingsScreen(SettingsScreen settingsScreen) {
+        this.settingsScreen = settingsScreen;
+    }
+
+    public void setIndexScreen(IndexScreen indexScreen) {
+        this.indexScreen = indexScreen;
     }
 }

@@ -41,8 +41,6 @@ public class WaitScreen extends Canvas {
         };
         timer = new Timer();
         timer.schedule(task, 0, interval);
-
-        // TODO: stop timer when screen disappears.
     }
 
     public void setMessage(String s) {

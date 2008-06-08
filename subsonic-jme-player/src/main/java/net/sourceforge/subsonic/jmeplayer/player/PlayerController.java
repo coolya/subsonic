@@ -36,13 +36,6 @@ public class PlayerController implements PlayerListener {
         listener.bytesRead(0L);
     }
 
-    /* TODO: Send events when:
-        o State changes.
-        o Song changes.
-        o Busy state changes.
-        o An error occurs?
-        */
-
     public synchronized void setEntries(MusicDirectory.Entry[] entries) {
         clear();
         this.entries = entries;

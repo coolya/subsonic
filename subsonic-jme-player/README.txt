@@ -23,6 +23,21 @@ http://localhost/subsonic/xml/getVersionInfo?user=sindre&password=secret
 http://localhost/subsonic/xml/getArtistIndexes?user=sindre&password=secret
 http://localhost/subsonic/xml/getDirectory?user=sindre&password=secret&path=c:/music/abba
 
+Handle busy state in player controller.
+Go to parent dir when browsing back (?)
+Add icon indicating whether this song or album.
+Format bytes with kB/MB?
+Pause music on incoming call.
+Avoid menu flickering.  Coalesce songChanged() and stateChange().
+Improve layout in PlayerScreen.
+Create Help menu in Settings.
+Stop animation timer when screen disappears.  Make sure there are not a lot of threads used.
+Refactor PlayerScreen.stateChanged(). Make Command subclass with setEnabled() method?
+Include exception class name in Util.showError()
+Implement musicdirectory cachin in CachedMusicService.
+Make Maven build work.
+
+
 o Authentication
   - send username/password in each request?
 
