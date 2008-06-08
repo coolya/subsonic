@@ -11,6 +11,7 @@ import net.sourceforge.subsonic.jmeplayer.service.HTTPMusicServiceDataSource;
 import net.sourceforge.subsonic.jmeplayer.service.MusicService;
 import net.sourceforge.subsonic.jmeplayer.service.MusicServiceDataSource;
 import net.sourceforge.subsonic.jmeplayer.service.XMLMusicService;
+import net.sourceforge.subsonic.jmeplayer.service.TestMusicServiceDataSource;
 
 import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.MIDlet;

@@ -25,7 +25,7 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
     }
 
     public Reader getMusicDirectoryReader(String path) throws Exception {
-        String url = getBaseUrl() + "getMusicDirectory.view";
+        String url = getBaseUrl() + "getMusicDirectory.view?pathUtf8Hex=" + path;
         InputStream in = Connector.openInputStream(url);
         return new InputStreamReader(in);
     }

@@ -6,8 +6,6 @@ import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicIndexService;
 import net.sourceforge.subsonic.service.PlayerService;
-import net.sourceforge.subsonic.service.PlaylistService;
-import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.TranscodingService;
@@ -34,9 +32,6 @@ public class MobileController extends MultiActionController {
 
     private SettingsService settingsService;
     private PlayerService playerService;
-    private PlaylistService playlistService;
-    private SearchService searchService;
-    private SecurityService securityService;
     private MusicFileService musicFileService;
     private MusicIndexService musicIndexService;
     private TranscodingService transcodingService;
@@ -97,7 +92,7 @@ public class MobileController extends MultiActionController {
             for (MusicIndex.Artist artist : entry.getValue()) {
                 for (MusicFile musicFile : artist.getMusicFiles()) {
                     if (musicFile.isDirectory()) {
-                        out.println("  <artist name='" + artist.getName() + "' path='" + musicFile.getPath() + "'/>");
+                        out.println("  <artist name='" + artist.getName() + "' path='" + StringUtil.utf8HexEncode(musicFile.getPath()) + "'/>");
                     }
                 }
             }
@@ -115,22 +110,25 @@ public class MobileController extends MultiActionController {
         MusicFile musicFile = musicFileService.getMusicFile(request.getParameter("path"));
         String baseUrl = getBaseUrl(request);
 
+        // TODO: Share code with M3UController.
+        // TODO: Make it work with SSL.
         response.setContentType("text/xml");
         response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
         PrintWriter out = response.getWriter();
         out.println("<?xml version='1.0' encoding='UTF-8'?>");
-        out.println("<musicDirectory name='" + musicFile.getName() + "' path='" + musicFile.getPath() + "'>");
+        out.println("<directory name='" + musicFile.getName() + "' path='" + StringUtil.utf8HexEncode(musicFile.getPath()) + "'>");
 
         // TODO: Do not include contentType and URL if directory.
         for (MusicFile child : musicFile.getChildren(true, true)) {
             String suffix = transcodingService.getSuffix(player, child);
             String contentType = StringUtil.getMimeType(suffix);
-            String url;
-            out.println("<child name='" + child.getTitle() + "' path='" + child.getPath() + "' isDir='" + child.isDirectory() +
-                        " contentType='" + contentType + "' url='" + url + "'/>");
+            String url = baseUrl + "stream?pathUtf8Hex=" + StringUtil.utf8HexEncode(child.getPath()) + "&suffix=." + suffix;
+            String path = StringUtil.utf8HexEncode(child.getPath());
+            out.println("<child name='" + child.getTitle() + "' path='" + path + "' isDir='" + child.isDirectory() +
+                        "' contentType='" + contentType + "' url='" + url + "'/>");
         }
 
-        out.println("</musicDirectory>");
+        out.println("</directory>");
         return null;
     }
 
@@ -159,16 +157,7 @@ public class MobileController extends MultiActionController {
         this.playerService = playerService;
     }
 
-    public void setPlaylistService(PlaylistService playlistService) {
-        this.playlistService = playlistService;
-    }
-
-    public void setSearchService(SearchService searchService) {
-        this.searchService = searchService;
-    }
-
     public void setSecurityService(SecurityService securityService) {
-        this.securityService = securityService;
     }
 
     public void setMusicFileService(MusicFileService musicFileService) {

@@ -293,8 +293,6 @@
     <bean id="mobileController" class="net.sourceforge.subsonic.controller.MobileController">
         <property name="settingsService" ref="settingsService"/>
         <property name="playerService" ref="playerService"/>
-        <property name="playlistService" ref="playlistService"/>
-        <property name="searchService" ref="searchService"/>
         <property name="securityService" ref="securityService"/>
         <property name="musicFileService" ref="musicFileService"/>
         <property name="musicIndexService" ref="musicIndexService"/>

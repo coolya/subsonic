@@ -333,7 +333,7 @@ public class XMLElement {
         char[] input = null;
         int size = 0;
 
-        for (; ;) {
+        while (true) {
             if (input == null) {
                 input = new char[blockSize];
             } else {
@@ -351,6 +351,7 @@ public class XMLElement {
             size += charsRead;
         }
 
+        System.out.println(new String(input, 0, size));
         parseCharArray(input, 0, size, startingLineNr);
     }
 

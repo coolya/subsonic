@@ -12,6 +12,7 @@ public class TestMusicServiceDataSource implements MusicServiceDataSource {
     private static final String INDEX_XML = "<indexes lastModified='237462836472342'>\n" +
                                             "  <index name='A'>\n" +
                                             "    <artist name='ABBA' path='c:/music/abba'/>\n" +
+                                            "    <artist name='Alanis Morisette' path='c:/music/Alanis Morisette'/>\n" +
                                             "    <artist name='Alphaville' path='c:/music/alphaville'/>\n" +
                                             "  </index>\n" +
                                             "  <index name='XYZ'>\n" +
@@ -35,6 +36,12 @@ public class TestMusicServiceDataSource implements MusicServiceDataSource {
                                                         "</directory>";
 
 
+    private static final String MUSIC_DIRECTORY_XML_3 = "<?xml version='1.0' encoding='UTF-8'?>\n" +
+                                                        "<musicDirectory name='Alanis Morisette' path='c:\\music\\Alanis Morisette'>\n" +
+                                                        "<child name='Jagged Little Pill' path='c:\\music\\Alanis Morisette\\Jagged Little Pill' isDir='true' contentType='application/octet-stream' url='http://localhost:8080/stream?path=c:\\music\\Alanis Morisette&suffix=.null'/>\n" +
+                                                        "</musicDirectory>";
+
+
     public Reader getIndexesReader() throws Exception {
         System.out.println("Sleeping... ");
         Thread.sleep(1000L);
@@ -49,6 +56,8 @@ public class TestMusicServiceDataSource implements MusicServiceDataSource {
 
         if (path.equals("c:/music/abba")) {
             return createReader(MUSIC_DIRECTORY_XML_1);
+        } else if (path.equals("c:/music/Alanis Morisette")) {
+            return createReader(MUSIC_DIRECTORY_XML_3);
         } else if (path.equals("c:/music/abba/gold")) {
             return createReader(MUSIC_DIRECTORY_XML_2);
         } else {
