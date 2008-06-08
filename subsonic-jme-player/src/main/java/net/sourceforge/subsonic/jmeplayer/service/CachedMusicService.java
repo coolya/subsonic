@@ -10,11 +10,16 @@ import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
  */
 public class CachedMusicService implements MusicService {
 
+    private static final int CACHE_SIZE = 20;
+
     private final MusicService musicService;
+    private final LRUCache cachedMusicDirectories;
     private Index[] cachedIndexes;
+
 
     public CachedMusicService(MusicService musicService) {
         this.musicService = musicService;
+        cachedMusicDirectories = new LRUCache(CACHE_SIZE);
     }
 
     public Index[] getIndexes() throws Exception {
@@ -25,7 +30,12 @@ public class CachedMusicService implements MusicService {
     }
 
     public MusicDirectory getMusicDirectory(String path) throws Exception {
-        return musicService.getMusicDirectory(path);
+        MusicDirectory dir = (MusicDirectory) cachedMusicDirectories.get(path);
+        if (dir == null) {
+            dir = musicService.getMusicDirectory(path);
+            cachedMusicDirectories.put(path, dir);
+        }
+        return dir;
     }
 
     public void interrupt() {

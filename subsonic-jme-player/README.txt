@@ -18,11 +18,12 @@
   </children>
 </directory>
 
-
 http://localhost/subsonic/xml/getVersionInfo?user=sindre&password=secret
 http://localhost/subsonic/xml/getArtistIndexes?user=sindre&password=secret
 http://localhost/subsonic/xml/getDirectory?user=sindre&password=secret&path=c:/music/abba
 
+Implement version info.
+Implement Abaout page.
 Handle busy state in player controller.
 Go to parent dir when browsing back (?)
 Add icon indicating whether this song or album.
@@ -36,25 +37,9 @@ Refactor PlayerScreen.stateChanged(). Make Command subclass with setEnabled() me
 Include exception class name in Util.showError()
 Implement musicdirectory cachin in CachedMusicService.
 Make Maven build work.
-
-
-o Authentication
-  - send username/password in each request?
-
-o Use UTF8HEX in paths.
-
-o Use multicontroller, ala wap.
-
-o Cache all artists.
-
-o Create cache from path to <directory> info.
-
-o Create service proxy, with mock implementation to simplify development of gui.
-
-o Only support for playing one song.
-
-o BreadCrumbTrail
-
-o Use checkboxes to select which songs to play?  Plus button to select all.
-
-o Create main menu.
+Authentication. Send username/password in each request?
+Use UTF8HEX in paths.
+Use multicontroller, ala wap.
+BreadCrumbTrail
+Use checkboxes to select which songs to play?  Plus button to select all.
+Show coverart.

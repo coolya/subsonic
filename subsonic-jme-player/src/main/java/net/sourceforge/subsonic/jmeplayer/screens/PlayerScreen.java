@@ -10,6 +10,8 @@ import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
+import javax.microedition.lcdui.Item;
+import javax.microedition.lcdui.Spacer;
 import javax.microedition.lcdui.StringItem;
 
 /**
@@ -33,15 +35,22 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
     private final Command previousCommand = new Command("Previous", Command.ITEM, 7);
 
     public PlayerScreen(Display display) {
-        super("Player");
+        super("Subsonic Player");
         this.display = display;
         addCommand(backCommand);
 
         nowPlayingItem = new StringItem(null, null);
-        stateItem = new StringItem("Status: ", null);
+        stateItem = new StringItem(null, null);
         bytesReadItem = new StringItem("Bytes read: ", null);
+        Spacer spacer = new Spacer(1, 6);
+
+        nowPlayingItem.setLayout(Item.LAYOUT_NEWLINE_AFTER);
+        stateItem.setLayout(Item.LAYOUT_NEWLINE_AFTER);
+        bytesReadItem.setLayout(Item.LAYOUT_NEWLINE_AFTER);
+        spacer.setLayout(Item.LAYOUT_NEWLINE_AFTER);
 
         append(nowPlayingItem);
+        append(spacer);
         append(stateItem);
         append(bytesReadItem);
 
@@ -149,7 +158,7 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
                 text = "Paused";
                 break;
             default:
-                text = "Unknown state";
+                text = "Unknown";
                 break;
         }
         stateItem.setText(text);
@@ -165,7 +174,7 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
         if (entry != null) {
             text += entry.getName();
         }
-        nowPlayingItem.setText(text);
+        nowPlayingItem.setLabel(text);
 
         stateChanged(playerController.getState());
     }

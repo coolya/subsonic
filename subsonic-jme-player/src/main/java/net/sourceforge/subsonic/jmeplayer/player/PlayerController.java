@@ -233,8 +233,6 @@ public class PlayerController implements PlayerListener {
         } else if (PlayerListener.ERROR.equals(event)) {
             listener.error(new Exception("Error: " + eventData));
             next();
-        } else {
-            System.out.println("Got event: " + event);
         }
     }
 
