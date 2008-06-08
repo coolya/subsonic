@@ -68,7 +68,8 @@
         <property name="podcastService" ref="podcastService"/>
         <property name="securityService" ref="securityService"/>
     </bean>
-    <bean id="podcastReceiverAdminController" class="net.sourceforge.subsonic.controller.PodcastReceiverAdminController">
+    <bean id="podcastReceiverAdminController"
+          class="net.sourceforge.subsonic.controller.PodcastReceiverAdminController">
         <property name="podcastService" ref="podcastService"/>
     </bean>
     <bean id="setMusicFileInfoController" class="net.sourceforge.subsonic.controller.SetMusicFileInfoController">
@@ -151,7 +152,8 @@
         <property name="viewName" value="transcodingSettings"/>
         <property name="transcodingService" ref="transcodingService"/>
     </bean>
-    <bean id="internetRadioSettingsController" class="net.sourceforge.subsonic.controller.InternetRadioSettingsController">
+    <bean id="internetRadioSettingsController"
+          class="net.sourceforge.subsonic.controller.InternetRadioSettingsController">
         <property name="viewName" value="internetRadioSettings"/>
         <property name="settingsService" ref="settingsService"/>
     </bean>
@@ -288,6 +290,15 @@
         <property name="musicFileService" ref="musicFileService"/>
         <property name="musicIndexService" ref="musicIndexService"/>
     </bean>
+    <bean id="mobileController" class="net.sourceforge.subsonic.controller.MobileController">
+        <property name="settingsService" ref="settingsService"/>
+        <property name="playerService" ref="playerService"/>
+        <property name="playlistService" ref="playlistService"/>
+        <property name="searchService" ref="searchService"/>
+        <property name="securityService" ref="securityService"/>
+        <property name="musicFileService" ref="musicFileService"/>
+        <property name="musicIndexService" ref="musicIndexService"/>
+    </bean>
     <bean id="dbController" class="net.sourceforge.subsonic.controller.DBController">
         <property name="viewName" value="db"/>
         <property name="daoHelper" ref="daoHelper"/>
@@ -369,7 +380,7 @@
                 <prop key="/podcast/**">podcastController</prop>
                 <prop key="/wap/download.view">downloadController</prop>
                 <prop key="/wap/**">wapController</prop>
-                <!--<prop key="/flex/**">flexController</prop>-->
+                <prop key="/mobile/**">mobileController</prop>
                 <prop key="/play.m3u">m3uController</prop>
                 <prop key="/stream/**">streamController</prop>
             </props>

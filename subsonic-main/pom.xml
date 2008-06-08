@@ -102,21 +102,21 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>org.codehaus.xfire</groupId>-->
-            <!--<artifactId>xfire-jaxb2</artifactId>-->
-            <!--<version>1.2.6</version>-->
+        <!--<groupId>org.codehaus.xfire</groupId>-->
+        <!--<artifactId>xfire-jaxb2</artifactId>-->
+        <!--<version>1.2.6</version>-->
         <!--</dependency>-->
 
         <!--<dependency>-->
-            <!--<groupId>org.codehaus.xfire</groupId>-->
-            <!--<artifactId>xfire-spring</artifactId>-->
-            <!--<version>1.2.6</version>-->
+        <!--<groupId>org.codehaus.xfire</groupId>-->
+        <!--<artifactId>xfire-spring</artifactId>-->
+        <!--<version>1.2.6</version>-->
         <!--</dependency>-->
 
         <!--<dependency>-->
-            <!--<groupId>org.codehaus.xfire</groupId>-->
-            <!--<artifactId>xfire-java5</artifactId>-->
-            <!--<version>1.2.6</version>-->
+        <!--<groupId>org.codehaus.xfire</groupId>-->
+        <!--<artifactId>xfire-java5</artifactId>-->
+        <!--<version>1.2.6</version>-->
         <!--</dependency>-->
 
         <dependency>
@@ -131,12 +131,11 @@
             <version>2006-03-08</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>net.sourceforge.subsonic</groupId>-->
-            <!--<artifactId>subsonic-flex</artifactId>-->
-            <!--<version>${project.version}</version>-->
-            <!--<type>swf</type>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>net.sourceforge.subsonic</groupId>
+            <artifactId>subsonic-jme-player</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>entagged-audioformats</groupId>
@@ -231,6 +230,9 @@
                                 <echo file="${project.build.directory}/classes/build_number.txt">${build.number}</echo>
                                 <echo file="${project.build.directory}/classes/build_date.txt">${DSTAMP}</echo>
                                 <echo file="${project.build.directory}/classes/version.txt">${pom.version}</echo>
+                                <!--TODO: Avoid hardcoding of directory-->
+                                <copy file="${basedir}/../subsonic-jme-player/target/subsonic-jme-player.jar"
+                                      tofile="${project.build.directory}/classes/net/sourceforge/subsonic/controller/subsonic-jme-player.jar"/>
                             </tasks>
                         </configuration>
                         <goals>
@@ -239,34 +241,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!--<plugin>-->
-                <!--<artifactId>maven-dependency-plugin</artifactId>-->
-                    <!--<execution>-->
-                        <!--<id>copy-flex-resources</id>-->
-                        <!--<phase>process-classes</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>copy-dependencies</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<outputDirectory>${project.build.directory}/flex-resources/flash</outputDirectory>-->
-                            <!--<includeTypes>swf,swc</includeTypes>-->
-                            <!--<stripVersion>true</stripVersion>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-
-            <!--<plugin>-->
-                <!--<artifactId>maven-war-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<webResources>-->
-                        <!--<resource>-->
-                            <!--<directory>${project.build.directory}/flex-resources</directory>-->
-                        <!--</resource>-->
-                    <!--</webResources>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
 
         </plugins>
     </build>
