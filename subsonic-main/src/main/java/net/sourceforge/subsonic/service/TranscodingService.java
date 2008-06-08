@@ -2,7 +2,11 @@ package net.sourceforge.subsonic.service;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.TranscodingDao;
-import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.TranscodeScheme;
+import net.sourceforge.subsonic.domain.Transcoding;
+import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.io.InputStreamReaderThread;
 import net.sourceforge.subsonic.io.TranscodeInputStream;
 import net.sourceforge.subsonic.util.StringUtil;
@@ -54,7 +58,7 @@ public class TranscodingService {
                 result.add(transcoding);
             }
         }
-        return result.toArray(new Transcoding[0]);
+        return result.toArray(new Transcoding[result.size()]);
     }
 
     /**
@@ -71,7 +75,7 @@ public class TranscodingService {
                 result.add(transcoding);
             }
         }
-        return result.toArray(new Transcoding[0]);
+        return result.toArray(new Transcoding[result.size()]);
     }
 
     /**
@@ -131,6 +135,17 @@ public class TranscodingService {
         return downsample && bitRate != null && bitRate > transcodeScheme.getMaxBitRate();
     }
 
+    /**
+     * Returns the suffix for the given player and music file, taking transcodings into account.
+     *
+     * @param player The player in question.
+     * @param file   The music player.
+     * @return The file suffix, e.g., "mp3".
+     */
+    public String getSuffix(Player player, MusicFile file) {
+        Transcoding transcoding = getTranscoding(file, player);
+        return transcoding != null ? transcoding.getTargetFormat() : file.getSuffix();
+    }
 
     /**
      * Returns a possibly transcoded or downsampled input stream for the given music file and player combination.

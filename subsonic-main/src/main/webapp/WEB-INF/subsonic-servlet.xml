@@ -298,6 +298,7 @@
         <property name="securityService" ref="securityService"/>
         <property name="musicFileService" ref="musicFileService"/>
         <property name="musicIndexService" ref="musicIndexService"/>
+        <property name="transcodingService" ref="transcodingService"/>
     </bean>
     <bean id="dbController" class="net.sourceforge.subsonic.controller.DBController">
         <property name="viewName" value="db"/>

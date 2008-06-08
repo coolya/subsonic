@@ -1,14 +1,19 @@
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
-import net.sourceforge.subsonic.util.*;
-import org.springframework.web.servlet.*;
-import org.springframework.web.servlet.mvc.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.Playlist;
+import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.TranscodingService;
+import net.sourceforge.subsonic.util.StringUtil;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
 
-import javax.servlet.http.*;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -61,7 +66,7 @@ public class M3UController implements Controller {
                 duration = -1;
             }
             out.println("#EXTINF:" + duration + "," + metaData.getArtist() + " - " + metaData.getTitle());
-            out.println(url + "player=" + player.getId() + "&pathUtf8Hex=" + StringUtil.utf8HexEncode(musicFile.getPath()) + "&suffix=." +  getSuffix(player, musicFile));
+            out.println(url + "player=" + player.getId() + "&pathUtf8Hex=" + StringUtil.utf8HexEncode(musicFile.getPath()) + "&suffix=." + transcodingService.getSuffix(player, musicFile));
         }
     }
 
@@ -80,14 +85,9 @@ public class M3UController implements Controller {
         out.println(url);
     }
 
-    private String getSuffix(Player player, MusicFile file) {
-        Transcoding transcoding = transcodingService.getTranscoding(file, player);
-        return transcoding != null ? transcoding.getTargetFormat() : file.getSuffix();
-    }
-
     private String getSuffix(Player player) {
         Playlist playlist = player.getPlaylist();
-        return playlist.isEmpty() ? null : getSuffix(player, playlist.getFile(0));
+        return playlist.isEmpty() ? null : transcodingService.getSuffix(player, playlist.getFile(0));
     }
 
     public void setPlayerService(PlayerService playerService) {

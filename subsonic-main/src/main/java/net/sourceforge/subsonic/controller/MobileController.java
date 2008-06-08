@@ -1,5 +1,8 @@
 package net.sourceforge.subsonic.controller;
 
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicIndex;
+import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicIndexService;
 import net.sourceforge.subsonic.service.PlayerService;
@@ -7,6 +10,7 @@ import net.sourceforge.subsonic.service.PlaylistService;
 import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.io.IOUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,8 +19,11 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.SortedSet;
 
 /**
  * Multi-controller used for mobile phone pages.
@@ -25,14 +32,6 @@ import java.util.Map;
  */
 public class MobileController extends MultiActionController {
 
-    /*
-    TODO:
-    mobilePlayerJar.jar
-    mobilePlayerJad.jad
-    index.view
-    getDitt.xml (Move to different controller?)
-    getDatt.xml(Move to different controller?)
-     */
     private SettingsService settingsService;
     private PlayerService playerService;
     private PlaylistService playlistService;
@@ -40,6 +39,7 @@ public class MobileController extends MultiActionController {
     private SecurityService securityService;
     private MusicFileService musicFileService;
     private MusicIndexService musicIndexService;
+    private TranscodingService transcodingService;
 
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return mobile(request, response);
@@ -81,6 +81,63 @@ public class MobileController extends MultiActionController {
         return null;
     }
 
+    public ModelAndView getIndexes(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        authenticate(request);
+
+        response.setContentType("text/xml");
+        response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
+        PrintWriter out = response.getWriter();
+        SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists = musicIndexService.getIndexedArtists(settingsService.getAllMusicFolders());
+
+        // TODO: Use XMLWriter.
+        out.println("<?xml version='1.0' encoding='UTF-8'?>");
+        out.println("<indexes>");
+        for (Map.Entry<MusicIndex, SortedSet<MusicIndex.Artist>> entry : indexedArtists.entrySet()) {
+            out.println(" <index name='" + entry.getKey().getIndex() + "'>");
+            for (MusicIndex.Artist artist : entry.getValue()) {
+                for (MusicFile musicFile : artist.getMusicFiles()) {
+                    if (musicFile.isDirectory()) {
+                        out.println("  <artist name='" + artist.getName() + "' path='" + musicFile.getPath() + "'/>");
+                    }
+                }
+            }
+            out.println(" </index>");
+        }
+        out.println("</indexes>");
+        return null;
+    }
+
+    public ModelAndView getMusicDirectory(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        authenticate(request);
+
+        Player player = playerService.getPlayer(request, response);
+
+        MusicFile musicFile = musicFileService.getMusicFile(request.getParameter("path"));
+        String baseUrl = getBaseUrl(request);
+
+        response.setContentType("text/xml");
+        response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
+        PrintWriter out = response.getWriter();
+        out.println("<?xml version='1.0' encoding='UTF-8'?>");
+        out.println("<musicDirectory name='" + musicFile.getName() + "' path='" + musicFile.getPath() + "'>");
+
+        // TODO: Do not include contentType and URL if directory.
+        for (MusicFile child : musicFile.getChildren(true, true)) {
+            String suffix = transcodingService.getSuffix(player, child);
+            String contentType = StringUtil.getMimeType(suffix);
+            String url;
+            out.println("<child name='" + child.getTitle() + "' path='" + child.getPath() + "' isDir='" + child.isDirectory() +
+                        " contentType='" + contentType + "' url='" + url + "'/>");
+        }
+
+        out.println("</musicDirectory>");
+        return null;
+    }
+
+    private void authenticate(HttpServletRequest request) {
+//        TODO
+    }
+
     private int getJarSize() throws Exception {
         InputStream in = getJarInputStream();
         try {
@@ -120,5 +177,9 @@ public class MobileController extends MultiActionController {
 
     public void setMusicIndexService(MusicIndexService musicIndexService) {
         this.musicIndexService = musicIndexService;
+    }
+
+    public void setTranscodingService(TranscodingService transcodingService) {
+        this.transcodingService = transcodingService;
     }
 }
