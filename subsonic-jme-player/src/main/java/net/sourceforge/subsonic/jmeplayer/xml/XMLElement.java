@@ -9,8 +9,23 @@ import java.util.Vector;
 /**
  * XMLElement is a representation of an XML object. The object is able to parse
  * XML code.
+ *
+ * @author Sindre Mehus
  */
 public class XMLElement {
+
+    /**
+     * Conversion table for &amp;...; tags.
+     */
+    private static final Hashtable CONVERSION_TABLE = new Hashtable(5);
+
+    static {
+        CONVERSION_TABLE.put("lt", "<");
+        CONVERSION_TABLE.put("gt", ">");
+        CONVERSION_TABLE.put("quot", "\"");
+        CONVERSION_TABLE.put("apos", "'");
+        CONVERSION_TABLE.put("amp", "&");
+    }
 
     /**
      * The attributes given to the object.
@@ -39,165 +54,16 @@ public class XMLElement {
 
 
     /**
-     * Conversion table for &amp;...; tags.
-     */
-    private Hashtable conversionTable;
-
-
-    /**
-     * Whether to skip leading whitespace in CDATA.
-     */
-    private boolean skipLeadingWhitespace;
-
-
-    /**
      * The line number where the element starts.
      */
     private int lineNumber;
 
-
-    /**
-     * Whether the parsing is case sensitive.
-     */
-    private boolean ignoreCase;
-
-
-    /**
-     * Creates a new XML element. The following settings are used:
-     * <DL><DT>Conversion table</DT>
-     * <DD>Minimal XML conversions: <CODE>&amp;amp; &amp;lt; &amp;gt;
-     * &amp;apos; &amp;quot;</CODE></DD>
-     * <DT>Skip whitespace in contents</DT>
-     * <DD><CODE>false</CODE></DD>
-     * <DT>Ignore Case</DT>
-     * <DD><CODE>true</CODE></DD>
-     * </DL>
-     */
     public XMLElement() {
-        this(new Hashtable(), false, true, true);
-    }
-
-
-    /**
-     * Creates a new XML element. The following settings are used:
-     * <DL><DT>Conversion table</DT>
-     * <DD><I>conversionTable</I> combined with the minimal XML
-     * conversions: <CODE>&amp;amp; &amp;lt; &amp;gt;
-     * &amp;apos; &amp;quot;</CODE></DD>
-     * <DT>Skip whitespace in contents</DT>
-     * <DD><CODE>false</CODE></DD>
-     * <DT>Ignore Case</DT>
-     * <DD><CODE>true</CODE></DD>
-     * </DL>
-     */
-    public XMLElement(Hashtable conversionTable) {
-        this(conversionTable, false, true, true);
-    }
-
-
-    /**
-     * Creates a new XML element. The following settings are used:
-     * <DL><DT>Conversion table</DT>
-     * <DD>Minimal XML conversions: <CODE>&amp;amp; &amp;lt; &amp;gt;
-     * &amp;apos; &amp;quot;</CODE></DD>
-     * <DT>Skip whitespace in contents</DT>
-     * <DD><I>skipLeadingWhitespace</I></DD>
-     * <DT>Ignore Case</DT>
-     * <DD><CODE>true</CODE></DD>
-     * </DL>
-     */
-    public XMLElement(boolean skipLeadingWhitespace) {
-        this(new Hashtable(), skipLeadingWhitespace, true, true);
-    }
-
-
-    /**
-     * Creates a new XML element. The following settings are used:
-     * <DL><DT>Conversion table</DT>
-     * <DD><I>conversionTable</I> combined with the minimal XML
-     * conversions: <CODE>&amp;amp; &amp;lt; &amp;gt;
-     * &amp;apos; &amp;quot;</CODE></DD>
-     * <DT>Skip whitespace in contents</DT>
-     * <DD><I>skipLeadingWhitespace</I></DD>
-     * <DT>Ignore Case</DT>
-     * <DD><CODE>true</CODE></DD>
-     * </DL>
-     */
-    public XMLElement(Hashtable conversionTable,
-                      boolean skipLeadingWhitespace) {
-        this(conversionTable, skipLeadingWhitespace, true, true);
-    }
-
-
-    /**
-     * Creates a new XML element. The following settings are used:
-     * <DL><DT>Conversion table</DT>
-     * <DD><I>conversionTable</I>, eventually combined with the minimal XML
-     * conversions: <CODE>&amp;amp; &amp;lt; &amp;gt;
-     * &amp;apos; &amp;quot;</CODE>
-     * (depending on <I>fillBasicConversionTable</I>)</DD>
-     * <DT>Skip whitespace in contents</DT>
-     * <DD><I>skipLeadingWhitespace</I></DD>
-     * <DT>Ignore Case</DT>
-     * <DD><I>ignoreCase</I></DD>
-     * </DL>
-     * <p/>
-     * This constructor should <I>only</I> be called from XMLElement itself
-     * to create child elements.
-     *
-     * @see XMLElement#XMLElement()
-     * @see XMLElement#XMLElement(boolean)
-     * @see XMLElement#XMLElement(java.util.Hashtable)
-     * @see XMLElement#XMLElement(java.util.Hashtable,boolean)
-     */
-    public XMLElement(Hashtable conversionTable,
-                      boolean skipLeadingWhitespace,
-                      boolean ignoreCase) {
-        this(conversionTable, skipLeadingWhitespace, true, ignoreCase);
-    }
-
-
-    /**
-     * Creates a new XML element. The following settings are used:
-     * <DL><DT>Conversion table</DT>
-     * <DD><I>conversionTable</I>, eventually combined with the minimal XML
-     * conversions: <CODE>&amp;amp; &amp;lt; &amp;gt;
-     * &amp;apos; &amp;quot;</CODE>
-     * (depending on <I>fillBasicConversionTable</I>)</DD>
-     * <DT>Skip whitespace in contents</DT>
-     * <DD><I>skipLeadingWhitespace</I></DD>
-     * <DT>Ignore Case</DT>
-     * <DD><I>ignoreCase</I></DD>
-     * </DL>
-     * <p/>
-     * This constructor should <I>only</I> be called from XMLElement itself
-     * to create child elements.
-     *
-     * @see XMLElement#XMLElement()
-     * @see XMLElement#XMLElement(boolean)
-     * @see XMLElement#XMLElement(java.util.Hashtable)
-     * @see XMLElement#XMLElement(java.util.Hashtable,boolean)
-     */
-    protected XMLElement(Hashtable conversionTable,
-                         boolean skipLeadingWhitespace,
-                         boolean fillBasicConversionTable,
-                         boolean ignoreCase) {
-        this.ignoreCase = ignoreCase;
-        this.skipLeadingWhitespace = skipLeadingWhitespace;
-        this.conversionTable = conversionTable;
         tagName = null;
         contents = "";
         attributes = null;
         children = null;
         lineNumber = 0;
-
-        if (fillBasicConversionTable) {
-            this.conversionTable.put("lt", "<");
-            this.conversionTable.put("gt", ">");
-            this.conversionTable.put("quot", "\"");
-            this.conversionTable.put("apos", "'");
-            this.conversionTable.put("amp", "&");
-        }
     }
 
     private Hashtable getAttributes() {
@@ -235,18 +101,12 @@ public class XMLElement {
         return lineNumber;
     }
 
-    /**
-     */
-
     private static String getProperty(Hashtable h, String key) {
         if (h == null) {
             return null;
         }
         return (String) h.get(key);
     }
-
-    /**
-     */
 
     private static String getProperty(Hashtable h, String key, String def) {
         if (h == null) {
@@ -261,13 +121,8 @@ public class XMLElement {
      * method returns <CODE>null</CODE>.
      */
     public String getProperty(String key) {
-        if (ignoreCase) {
-            key = key.toUpperCase();
-        }
-
         return getProperty(attributes, key);
     }
-
 
     /**
      * Returns a boolean property of the object. If the property is missing,
@@ -277,10 +132,6 @@ public class XMLElement {
                                String trueValue,
                                String falseValue,
                                boolean defaultValue) {
-        if (ignoreCase) {
-            key = key.toUpperCase();
-        }
-
         String val = getProperty(attributes, key);
 
         if (val == null) {
@@ -318,17 +169,6 @@ public class XMLElement {
      * @throws XMLParseException   if an error occurred while parsing the read data
      */
     public void parseFromReader(Reader reader) throws IOException, XMLParseException {
-        parseFromReader(reader, 1);
-    }
-
-
-    /**
-     * Reads an XML definition from a java.io.Reader and parses it.
-     *
-     * @throws java.io.IOException if an error occurred while reading the input
-     * @throws XMLParseException   if an error occurred while parsing the read data
-     */
-    public void parseFromReader(Reader reader, int startingLineNr) throws IOException, XMLParseException {
         int blockSize = 4096;
         char[] input = null;
         int size = 0;
@@ -352,7 +192,7 @@ public class XMLElement {
         }
 
         System.out.println(new String(input, 0, size));
-        parseCharArray(input, 0, size, startingLineNr);
+        parseCharArray(input, 0, size, 1);
     }
 
 
@@ -406,8 +246,7 @@ public class XMLElement {
         int[] contentOffset = new int[1];
         int[] contentSize = new int[1];
         int contentLineNr = currentLineNr[0];
-        offset = scanContent(input, offset, end,
-                             contentOffset, contentSize, currentLineNr);
+        offset = scanContent(input, offset, end, contentOffset, contentSize, currentLineNr);
 
         if (contentSize[0] > 0) {
             scanChildren(input, contentOffset[0], contentSize[0],
@@ -416,8 +255,7 @@ public class XMLElement {
             if (children != null && children.size() > 0) {
                 contents = null;
             } else {
-                processContents(input, contentOffset[0],
-                                contentSize[0], contentLineNr);
+                processContents(input, contentOffset[0], contentSize[0]);
 
                 for (int i = 0; i < contents.length(); i++) {
                     if (contents.charAt(i) > ' ') {
@@ -441,48 +279,9 @@ public class XMLElement {
      * @throws XMLParseException if an error occurred while parsing the array
      * @see XMLElement#decodeString
      */
-    private void processContents(char[] input, int contentOffset, int contentSize, int contentLineNr)
+    private void processContents(char[] input, int contentOffset, int contentSize)
             throws XMLParseException {
-        int[] lineNr = new int[1];
-        lineNr[0] = contentLineNr;
-
-        if (!skipLeadingWhitespace) {
-            String str = new String(input, contentOffset, contentSize);
-            contents = decodeString(str);
-            return;
-        }
-
-        StringBuffer result = new StringBuffer(contentSize);
-        int end = contentSize + contentOffset;
-
-        for (int i = contentOffset; i < end; i++) {
-            char ch = input[i];
-
-            // The end of the contents is always a < character, so there's
-            // no danger for bounds violation
-            while ((ch == '\r') || (ch == '\n')) {
-                lineNr[0]++;
-                result.append(ch);
-
-                i++;
-                ch = input[i];
-
-                if (ch != '\n') {
-                    result.append(ch);
-                }
-
-                do {
-                    i++;
-                    ch = input[i];
-                } while ((ch == ' ') || (ch == '\t'));
-            }
-
-            if (i < end) {
-                result.append(input[i]);
-            }
-        }
-
-        contents = decodeString(result.toString());
+        contents = decodeString(new String(input, contentOffset, contentSize));
     }
 
 
@@ -536,7 +335,7 @@ public class XMLElement {
                 return;
             }
 
-            XMLElement child = new XMLElement(conversionTable, skipLeadingWhitespace, false, ignoreCase);
+            XMLElement child = new XMLElement();
             offset = child.parseCharArray(input, offset, end, lineNr);
             getChildren().addElement(child);
         }
@@ -566,12 +365,7 @@ public class XMLElement {
             throw expectedInput("'>'", lineNr[0]);
         }
 
-        if (skipLeadingWhitespace) {
-            offset = skipWhitespace(input, offset + 1, end, lineNr);
-        } else {
-            offset++;
-        }
-
+        offset++;
         contentOffset[0] = offset;
         int level = 0;
         char[] tag = tagName.toCharArray();
@@ -631,10 +425,7 @@ public class XMLElement {
                         offset += tag.length + 2;
 
                         try {
-                            offset = skipWhitespace(input, offset,
-                                                    end + tag.length
-                                                    + 2,
-                                                    lineNr);
+                            offset = skipWhitespace(input, offset, end + tag.length + 2, lineNr);
                         }
                         catch (XMLParseException e) {
                             // ignore
@@ -665,15 +456,6 @@ public class XMLElement {
 
         if (level >= 0) {
             throw unexpectedEndOfData(lineNr[0]);
-        }
-
-        if (skipLeadingWhitespace) {
-            int i = contentOffset[0] + contentSize[0] - 1;
-
-            while ((contentSize[0] >= 0) && (input[i] <= ' ')) {
-                i--;
-                contentSize[0]--;
-            }
         }
 
         return offset;
@@ -718,10 +500,6 @@ public class XMLElement {
         }
 
         offset = skipWhitespace(input, offset + key.length(), end, lineNr);
-
-        if (ignoreCase) {
-            key = key.toUpperCase();
-        }
 
         if (input[offset] != '=') {
             throw valueMissingForAttribute(key, lineNr[0]);
@@ -963,17 +741,12 @@ public class XMLElement {
 
                 if (key.charAt(0) == '#') {
                     if (key.charAt(1) == 'x') {
-                        result.append((char) (Integer.
-                                parseInt(key.substring(2),
-                                         16)));
+                        result.append((char) (Integer.parseInt(key.substring(2), 16)));
                     } else {
-                        result.append((char) (Integer.
-                                parseInt(key.substring(1),
-                                         10)));
+                        result.append((char) (Integer.parseInt(key.substring(1), 10)));
                     }
                 } else {
-                    result.append(getProperty(conversionTable,
-                                              key, "&" + key + ';'));
+                    result.append(getProperty(CONVERSION_TABLE, key, "&" + key + ';'));
                 }
             } else if (index3 <= index4) {
                 int end = (s + "]]>").indexOf("]]>", index3 + 9);
@@ -990,7 +763,6 @@ public class XMLElement {
 
         return result.toString();
     }
-
 
     /**
      * Creates a parse exception for when an invalid value is given to a
