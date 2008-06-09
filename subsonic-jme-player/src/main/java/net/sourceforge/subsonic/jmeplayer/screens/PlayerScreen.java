@@ -19,11 +19,11 @@ import javax.microedition.lcdui.StringItem;
  */
 public class PlayerScreen extends Form implements PlayerControllerListener, CommandListener {
 
-    private final PlayerController playerController;
     private final StringItem nowPlayingItem;
     private final StringItem stateItem;
     private final StringItem bytesReadItem;
     private final Display display;
+    private PlayerController playerController;
     private MusicDirectoryScreen musicDirectoryScreen;
 
     private final Command backCommand = new Command("Back", Command.BACK, 1);
@@ -54,10 +54,12 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
         append(stateItem);
         append(bytesReadItem);
 
-        playerController = new PlayerController();
-        playerController.setListener(this);
-
         setCommandListener(this);
+    }
+
+    public void setPlayerController(PlayerController playerController) {
+        this.playerController = playerController;
+        playerController.setListener(this);
     }
 
     public void setMusicDirectoryEntries(MusicDirectory.Entry[] entries) {

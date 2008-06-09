@@ -1,5 +1,6 @@
 package net.sourceforge.subsonic.jmeplayer.player;
 
+import net.sourceforge.subsonic.jmeplayer.SettingsController;
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
 
 import javax.microedition.io.Connector;
@@ -21,6 +22,7 @@ public class PlayerController implements PlayerListener {
     public static final int PAUSED = 4;
 
     private PlayerControllerListener listener;
+    private SettingsController settingsController;
     private int index;
     private MusicDirectory.Entry[] entries = {};
     private Player player;
@@ -208,6 +210,10 @@ public class PlayerController implements PlayerListener {
         if (url.startsWith("resource:")) {
             in = getClass().getResourceAsStream(url.substring(9));
         } else {
+            int player = settingsController.getPlayer();
+            if (player > 0) {
+                url += "&player=" + player;
+            }
             in = Connector.openInputStream(url);
         }
 
@@ -233,6 +239,10 @@ public class PlayerController implements PlayerListener {
             listener.error(new Exception("Error: " + eventData));
             next();
         }
+    }
+
+    public void setSettingsController(SettingsController settingsController) {
+        this.settingsController = settingsController;
     }
 
     /**
