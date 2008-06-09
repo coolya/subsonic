@@ -28,7 +28,6 @@ public class PlayerController implements PlayerListener {
     private Player player;
     private MonitoredInputStream input;
     private int state = STOPPED;
-    private boolean busy;
 
     public void setListener(PlayerControllerListener listener) {
         this.listener = listener;
@@ -74,20 +73,18 @@ public class PlayerController implements PlayerListener {
         }
         setState(CONNECTING);
 
-        execute(new Runnable() {
+        new Thread() {
             public void run() {
                 try {
                     createPlayer();
-
                     setState(BUFFERING);
                     player.start();
-
                 } catch (Exception x) {
                     stop();
                     handleException(x);
                 }
             }
-        });
+        }.start();
     }
 
     public synchronized void pause() {
@@ -124,11 +121,12 @@ public class PlayerController implements PlayerListener {
             return;
         }
 
-        try {
-            player.stop();
-            player.close();
-        } catch (Exception x) {
-            handleException(x);
+        if (player != null) {
+            try {
+                player.close();
+            } catch (Exception x) {
+                handleException(x);
+            }
         }
         player = null;
         input = null;
@@ -172,31 +170,8 @@ public class PlayerController implements PlayerListener {
         }
     }
 
-    private synchronized void setBusy(boolean busy) {
-        this.busy = busy;
-        listener.busy(busy);
-    }
-
-    public synchronized boolean isBusy() {
-        return busy;
-    }
-
     private void notifySongChanged() {
         listener.songChanged(getCurrent());
-    }
-
-    private void execute(final Runnable runnable) {
-        // TODO: Throw exception if busy?
-//        setBusy(true);
-        new Thread(new Runnable() {
-            public void run() {
-//                try {
-                runnable.run();
-//                } finally {
-//                    setBusy(false);
-//                }
-            }
-        }).start();
     }
 
     private void handleException(Exception x) {
