@@ -15,7 +15,7 @@ public class SettingsController {
     private static final String FALLBACK_BASE_URL = "http://yourhost/subsonic";
     private static final String DEFAULT_USERNAME = null;
     private static final String DEFAULT_PASSWORD = null;
-    private static final String DEFAULT_PLAYER = null;
+    private static final int DEFAULT_PLAYER = 0;
 
     private RecordStore recordStore;
 
@@ -23,7 +23,7 @@ public class SettingsController {
     private String baseUrl;
     private String username = DEFAULT_USERNAME;
     private String password = DEFAULT_PASSWORD;
-    private String player = DEFAULT_PLAYER;
+    private int player = DEFAULT_PLAYER;
 
     public SettingsController(SubsonicMIDlet subsonicMidlet) {
         String baseUrlFromAppProperty = subsonicMidlet.getAppProperty("Subsonic-Base-URL");
@@ -51,7 +51,7 @@ public class SettingsController {
         return password;
     }
 
-    public String getPlayer() {
+    public int getPlayer() {
         return player;
     }
 
@@ -70,9 +70,9 @@ public class SettingsController {
         writeRecord(RECORD_ID_PASSWORD, password);
     }
 
-    public void setPlayer(String player) {
+    public void setPlayer(int player) {
         this.player = player;
-        writeRecord(RECORD_ID_PLAYER, player);
+        writeRecord(RECORD_ID_PLAYER, String.valueOf(player));
     }
 
     private void initRecordStore() throws Exception {
@@ -86,7 +86,7 @@ public class SettingsController {
             addRecord(DEFAULT_PASSWORD);
         }
         if (recordStore.getNextRecordID() == RECORD_ID_PLAYER) {
-            addRecord(DEFAULT_PLAYER);
+            addRecord(String.valueOf(DEFAULT_PLAYER));
         }
     }
 
@@ -94,7 +94,7 @@ public class SettingsController {
         baseUrl = readRecord(RECORD_ID_BASE_URL);
         username = readRecord(RECORD_ID_USERNAME);
         password = readRecord(RECORD_ID_PASSWORD);
-        player = readRecord(RECORD_ID_PLAYER);
+        player = Integer.parseInt(readRecord(RECORD_ID_PLAYER));
     }
 
     private String readRecord(int recordId) throws Exception {
