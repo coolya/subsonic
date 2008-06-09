@@ -70,19 +70,19 @@ public class PlayerController implements PlayerListener {
             System.out.println("Can't play() in state " + state);
             return;
         }
+        setState(CONNECTING);
 
         execute(new Runnable() {
             public void run() {
                 try {
-                    setState(CONNECTING);
                     createPlayer();
 
                     setState(BUFFERING);
                     player.start();
 
                 } catch (Exception x) {
+                    stop();
                     handleException(x);
-                    setState(STOPPED);
                 }
             }
         });
@@ -94,17 +94,13 @@ public class PlayerController implements PlayerListener {
             return;
         }
 
-        execute(new Runnable() {
-            public void run() {
-                try {
-                    player.stop();
-                    setState(PAUSED);
-
-                } catch (Exception x) {
-                    handleException(x);
-                }
-            }
-        });
+        try {
+            player.stop();
+            setState(PAUSED);
+        } catch (Exception x) {
+            stop();
+            handleException(x);
+        }
     }
 
     public synchronized void resume() {
@@ -113,15 +109,12 @@ public class PlayerController implements PlayerListener {
             return;
         }
 
-        execute(new Runnable() {
-            public void run() {
-                try {
-                    player.start();
-                } catch (Exception x) {
-                    handleException(x);
-                }
-            }
-        });
+        try {
+            player.start();
+        } catch (Exception x) {
+            stop();
+            handleException(x);
+        }
     }
 
     public synchronized void stop() {
@@ -191,14 +184,15 @@ public class PlayerController implements PlayerListener {
     }
 
     private void execute(final Runnable runnable) {
-        setBusy(true);
+        // TODO: Throw exception if busy?
+//        setBusy(true);
         new Thread(new Runnable() {
             public void run() {
-                try {
-                    runnable.run();
-                } finally {
-                    setBusy(false);
-                }
+//                try {
+                runnable.run();
+//                } finally {
+//                    setBusy(false);
+//                }
             }
         }).start();
     }
@@ -225,6 +219,11 @@ public class PlayerController implements PlayerListener {
     }
 
     public void playerUpdate(Player player, String event, Object eventData) {
+
+        if (player != this.player && this.player != null) {
+            System.out.println("Got event '" + event + "' from unknown player.");
+            return;
+        }
 
         if (PlayerListener.STARTED.equals(event)) {
             setState(PLAYING);

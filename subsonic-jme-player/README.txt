@@ -41,3 +41,5 @@ Use multicontroller, ala wap.
 BreadCrumbTrail
 Use checkboxes to select which songs to play?  Plus button to select all.
 Show coverart.
+Show media time and duration.
+Use combobox to select player ID. Default "Auto".
