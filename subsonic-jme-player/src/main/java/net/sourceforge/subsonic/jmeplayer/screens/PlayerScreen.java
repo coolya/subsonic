@@ -42,7 +42,7 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
         nowPlayingItem = new StringItem(null, null);
         stateItem = new StringItem(null, null);
         bytesReadItem = new StringItem("Bytes read: ", null);
-        Spacer spacer = new Spacer(1, 6);
+        Spacer spacer = new Spacer(1, 12);
 
         nowPlayingItem.setLayout(Item.LAYOUT_NEWLINE_AFTER);
         stateItem.setLayout(Item.LAYOUT_NEWLINE_AFTER);
@@ -182,7 +182,7 @@ public class PlayerScreen extends Form implements PlayerControllerListener, Comm
     }
 
     public void bytesRead(long n) {
-        bytesReadItem.setText(String.valueOf(n));
+        bytesReadItem.setText(Util.formatBytes(n));
     }
 
     public void error(Throwable x) {
