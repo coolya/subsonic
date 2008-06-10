@@ -1,5 +1,8 @@
 package net.sourceforge.subsonic.jmeplayer.xml;
 
+import net.sourceforge.subsonic.jmeplayer.Log;
+import net.sourceforge.subsonic.jmeplayer.LogFactory;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Hashtable;
@@ -13,6 +16,8 @@ import java.util.Vector;
  * @author Sindre Mehus
  */
 public class XMLElement {
+
+    private static final Log LOG = LogFactory.create("XMLElement");
 
     /**
      * Conversion table for &amp;...; tags.
@@ -191,7 +196,10 @@ public class XMLElement {
             size += charsRead;
         }
 
-        System.out.println(new String(input, 0, size));
+        if (LogFactory.isLoggingEnabled()) {
+            LOG.debug(new String(input, 0, size));
+        }
+
         parseCharArray(input, 0, size, 1);
     }
 

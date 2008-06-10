@@ -1,5 +1,8 @@
 package net.sourceforge.subsonic.jmeplayer.service;
 
+import net.sourceforge.subsonic.jmeplayer.Log;
+import net.sourceforge.subsonic.jmeplayer.LogFactory;
+
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -7,6 +10,8 @@ import java.util.Hashtable;
  * @author Sindre Mehus
  */
 public class LRUCache {
+
+    private static final Log LOG = LogFactory.create("LRUCache");
 
     private final int capacity;
     private final Hashtable map;
@@ -18,7 +23,10 @@ public class LRUCache {
 
     public synchronized Object get(Object key) {
         TimestampedValue value = (TimestampedValue) map.get(key);
-        System.out.println("Cache " + (value == null ? "miss" : "hit") + " for " + key + ". Size is " + map.size());
+        if (LogFactory.isLoggingEnabled()) {
+            LOG.debug("Cache " + (value == null ? "miss" : "hit") + " for " + key + ". Size is " + map.size());
+        }
+
         if (value != null) {
             value.updateTimestamp();
             return value.getValue();

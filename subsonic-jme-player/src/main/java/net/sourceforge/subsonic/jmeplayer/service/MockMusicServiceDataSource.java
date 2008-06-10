@@ -43,16 +43,12 @@ public class MockMusicServiceDataSource implements MusicServiceDataSource {
 
 
     public Reader getIndexesReader() throws Exception {
-        System.out.println("Sleeping... ");
         Thread.sleep(500L);
-        System.out.println("Done.");
         return createReader(INDEX_XML);
     }
 
     public Reader getMusicDirectoryReader(String path) throws Exception {
-        System.out.println("Sleeping... ");
         Thread.sleep(250L);
-        System.out.println("Done.");
 
         if (path.equals("c:/music/abba")) {
             return createReader(MUSIC_DIRECTORY_XML_1);

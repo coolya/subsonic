@@ -1,5 +1,7 @@
 package net.sourceforge.subsonic.jmeplayer.player;
 
+import net.sourceforge.subsonic.jmeplayer.Log;
+import net.sourceforge.subsonic.jmeplayer.LogFactory;
 import net.sourceforge.subsonic.jmeplayer.SettingsController;
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
 
@@ -20,6 +22,8 @@ public class PlayerController implements PlayerListener {
     public static final int BUFFERING = 2;
     public static final int PLAYING = 3;
     public static final int PAUSED = 4;
+
+    private static final Log LOG = LogFactory.create("PlayerController");
 
     private PlayerControllerListener listener;
     private SettingsController settingsController;
@@ -67,7 +71,7 @@ public class PlayerController implements PlayerListener {
 
     public synchronized void play() {
         if (state != STOPPED) {
-            System.out.println("Can't play() in state " + state);
+            LOG.warn("Can't play() in state " + state);
             return;
         }
         setState(CONNECTING);
@@ -88,7 +92,7 @@ public class PlayerController implements PlayerListener {
 
     public synchronized void pause() {
         if (state != PLAYING) {
-            System.out.println("Can't pause() in state " + state);
+            LOG.warn("Can't pause() in state " + state);
             return;
         }
 
@@ -103,7 +107,7 @@ public class PlayerController implements PlayerListener {
 
     public synchronized void resume() {
         if (state != PAUSED) {
-            System.out.println("Can't resume() in state " + state);
+            LOG.warn("Can't resume() in state " + state);
             return;
         }
 
@@ -174,6 +178,7 @@ public class PlayerController implements PlayerListener {
     }
 
     private void handleException(Exception x) {
+        LOG.error("Got exception.", x);
         listener.error(x);
     }
 
@@ -190,18 +195,23 @@ public class PlayerController implements PlayerListener {
             }
             in = Connector.openInputStream(url);
         }
-
+        LOG.info("Opening URL " + url);
         input = new MonitoredInputStream(in);
-        player = Manager.createPlayer(input, entry.getContentType());
-        player.addPlayerListener(this);
 
+        LOG.info("Creating player for URL " + url);
+        player = Manager.createPlayer(input, entry.getContentType());
+        LOG.info("Player created for URL " + url + ": " + player);
+
+        player.addPlayerListener(this);
         notifySongChanged();
     }
 
     public void playerUpdate(Player player, String event, Object eventData) {
 
+        LOG.debug("Got event '" + event + "' from player " + player);
+
         if (player != this.player && this.player != null) {
-            System.out.println("Got event '" + event + "' from unknown player.");
+            LOG.warn("Got event '" + event + "' from unknown player.");
             return;
         }
 
@@ -237,6 +247,8 @@ public class PlayerController implements PlayerListener {
             if (n != -1) {
                 bytesRead++;
                 listener.bytesRead(bytesRead);
+            } else {
+                LOG.debug("End of stream reached.");
             }
             return n;
         }
@@ -246,6 +258,8 @@ public class PlayerController implements PlayerListener {
             if (n != -1) {
                 bytesRead += n;
                 listener.bytesRead(bytesRead);
+            } else {
+                LOG.debug("End of stream reached.");
             }
             return n;
         }
@@ -255,11 +269,14 @@ public class PlayerController implements PlayerListener {
             if (n != -1) {
                 bytesRead += n;
                 listener.bytesRead(bytesRead);
+            } else {
+                LOG.debug("End of stream reached.");
             }
             return n;
         }
 
         public long skip(long l) throws IOException {
+            LOG.debug("Stream skipped.");
             return in.skip(l);
         }
 
@@ -268,14 +285,17 @@ public class PlayerController implements PlayerListener {
         }
 
         public void close() throws IOException {
+            LOG.debug("Stream closed.");
             in.close();
         }
 
         public synchronized void mark(int i) {
+            LOG.debug("Stream marked.");
             in.mark(i);
         }
 
         public synchronized void reset() throws IOException {
+            LOG.debug("Stream reset.");
             in.reset();
         }
 

@@ -30,6 +30,7 @@ public class SubsonicMIDlet extends MIDlet {
         display = Display.getDisplay(this);
 
         SettingsController settingsController = new SettingsController(this);
+        LogFactory.setLoggingEnabled(settingsController.isDebug());
         PlayerController playerController = new PlayerController();
         playerController.setSettingsController(settingsController);
 
