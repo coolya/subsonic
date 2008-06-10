@@ -1,6 +1,8 @@
 
 [2008-05-14 14:17:02,867] DEBUG TranscodingService - Created player 3 (remoteControlEnabled: false, isStreamRequest: true,  remoteUser: null,       ip: 134.32.202.220).
 [2008-05-14 16:48:01,340] DEBUG TranscodingService - Created player 4 (remoteControlEnabled: true,  isStreamRequest: false, remoteUser: ekrogsveen, ip: 134.32.202.220).
+[2008-06-02 09:40:30,976] DEBUG TranscodingService - Created player 6 (remoteControlEnabled: true, isStreamRequest: false, remoteUser: aknatten, ip: 134.32.202.55).
+
 
 TODO IN 3.5
 -----------
