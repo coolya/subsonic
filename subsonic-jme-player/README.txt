@@ -27,15 +27,12 @@ Go to parent dir when browsing back (?)
 Add icon indicating whether this is song or album.
 Pause music on incoming call.
 Avoid menu flickering.  Coalesce songChanged() and stateChange().
-Improve layout in PlayerScreen.
 Create Help menu in Settings.
 Stop animation timer when screen disappears.  Make sure there are not a lot of threads used.
 Refactor PlayerScreen.stateChanged(). Make Command subclass with setEnabled() method?
 Include exception class name in Util.showError()
 Make Maven build work.
 Authentication. Send username/password in each request?
-Use UTF8HEX in paths.
-Use multicontroller, ala wap.
 BreadCrumbTrail
 Use checkboxes to select which songs to play?  Plus button to select all.
 Show coverart.
