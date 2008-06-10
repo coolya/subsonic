@@ -59,7 +59,6 @@ public class MainScreen extends List {
     }
 
     private void music() {
-        display.setCurrent(indexScreen);
         indexScreen.loadIndexes();
     }
 

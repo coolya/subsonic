@@ -44,11 +44,8 @@ Set default player ID in jad.
 Escape < > & ' " in XML.
 Make it possible to switch between test data and real data runtime.
 Don't append "player" parameter when using test data.
-
 Add debug printing of player events etc.
 Always use "KB".
-Get some short MP3's for testing.
-Go back to main screen if loading indexes fails.
 Change layout of PlayScreen:
 -----------------------------
 |  2 of 6                   |
