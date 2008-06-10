@@ -185,7 +185,7 @@ public class PlayerController implements PlayerListener {
             in = getClass().getResourceAsStream(url.substring(9));
         } else {
             int player = settingsController.getPlayer();
-            if (player > 0) {
+            if (player > 0 && !settingsController.isMock()) {
                 url += "&player=" + player;
             }
             in = Connector.openInputStream(url);

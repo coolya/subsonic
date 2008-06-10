@@ -8,7 +8,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * @author Sindre Mehus
  */
-public class TestMusicServiceDataSource implements MusicServiceDataSource {
+public class MockMusicServiceDataSource implements MusicServiceDataSource {
     private static final String INDEX_XML = "<indexes lastModified='237462836472342'>\n" +
                                             "  <index name='A'>\n" +
                                             "    <artist name='ABBA' path='c:/music/abba'/>\n" +

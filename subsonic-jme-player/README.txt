@@ -42,10 +42,9 @@ Show coverart.
 Show media time and duration.
 Set default player ID in jad.
 Escape < > & ' " in XML.
-Make it possible to switch between test data and real data runtime.
-Don't append "player" parameter when using test data.
 Add debug printing of player events etc.
 Implement "longName".
+Implement logger.
 Change layout of PlayScreen:
 -----------------------------
 |  2 of 6                   |

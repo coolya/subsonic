@@ -28,6 +28,7 @@ public class SettingsScreen extends Form {
     private final TextField usernameTextField;
     private final TextField passwordTextField;
     private final ChoiceGroup playerChoiceGroup;
+    private final ChoiceGroup optionsChoiceGroup;
 
     public SettingsScreen(final Display display, SettingsController settingsController) {
         super("Settings");
@@ -44,16 +45,22 @@ public class SettingsScreen extends Form {
         usernameTextField = new TextField("Username", null, 50, TextField.NON_PREDICTIVE);
         passwordTextField = new TextField("Password", null, 50, TextField.PASSWORD | TextField.NON_PREDICTIVE);
         playerChoiceGroup = new ChoiceGroup("Player ID", Choice.POPUP, playerChoices, null);
+        optionsChoiceGroup = new ChoiceGroup("Options", Choice.MULTIPLE);
+
+        optionsChoiceGroup.append("Debug", null);
+        optionsChoiceGroup.append("Mock", null);
 
         baseUrlTextField.setLayout(Item.LAYOUT_NEWLINE_AFTER);
         usernameTextField.setLayout(Item.LAYOUT_NEWLINE_AFTER);
         passwordTextField.setLayout(Item.LAYOUT_NEWLINE_AFTER);
         playerChoiceGroup.setLayout(Item.LAYOUT_NEWLINE_AFTER);
+        optionsChoiceGroup.setLayout(Item.LAYOUT_NEWLINE_AFTER);
 
         append(baseUrlTextField);
         append(usernameTextField);
         append(passwordTextField);
         append(playerChoiceGroup);
+        append(optionsChoiceGroup);
 
         final Command saveCommand = new Command("Save", Command.OK, 1);
         final Command cancelCommand = new Command("Cancel", Command.CANCEL, 2);
@@ -77,13 +84,20 @@ public class SettingsScreen extends Form {
         usernameTextField.setString(settingsController.getUsername());
         passwordTextField.setString(settingsController.getPassword());
         playerChoiceGroup.setSelectedIndex(Math.min(settingsController.getPlayer(), MAX_PLAYER - 1), true);
+        optionsChoiceGroup.setSelectedFlags(new boolean[]{settingsController.isDebug(), settingsController.isMock()});
     }
 
     private void save() {
+        boolean[] selectedFlags = new boolean[2];
+        optionsChoiceGroup.getSelectedFlags(selectedFlags);
+
         settingsController.setBaseUrl(Util.trimToNull(baseUrlTextField.getString()));
         settingsController.setUsername(Util.trimToNull(usernameTextField.getString()));
         settingsController.setPassword(Util.trimToNull(passwordTextField.getString()));
         settingsController.setPlayer(playerChoiceGroup.getSelectedIndex());
+        settingsController.setDebug(selectedFlags[0]);
+        settingsController.setMock(selectedFlags[1]);
+
         display.setCurrent(mainScreen);
     }
 

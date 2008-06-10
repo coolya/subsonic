@@ -8,9 +8,10 @@ import net.sourceforge.subsonic.jmeplayer.screens.MusicDirectoryScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.PlayerScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.SettingsScreen;
 import net.sourceforge.subsonic.jmeplayer.service.CachedMusicService;
+import net.sourceforge.subsonic.jmeplayer.service.HTTPMusicServiceDataSource;
+import net.sourceforge.subsonic.jmeplayer.service.MockMusicServiceDataSource;
 import net.sourceforge.subsonic.jmeplayer.service.MusicService;
 import net.sourceforge.subsonic.jmeplayer.service.MusicServiceDataSource;
-import net.sourceforge.subsonic.jmeplayer.service.TestMusicServiceDataSource;
 import net.sourceforge.subsonic.jmeplayer.service.XMLMusicService;
 
 import javax.microedition.lcdui.Display;
@@ -32,8 +33,13 @@ public class SubsonicMIDlet extends MIDlet {
         PlayerController playerController = new PlayerController();
         playerController.setSettingsController(settingsController);
 
-//        MusicServiceDataSource dataSource = new HTTPMusicServiceDataSource(settingsController);
-        MusicServiceDataSource dataSource = new TestMusicServiceDataSource();
+        boolean mock = settingsController.isMock();
+        MusicServiceDataSource dataSource;
+        if (mock) {
+            dataSource = new MockMusicServiceDataSource();
+        } else {
+            dataSource = new HTTPMusicServiceDataSource(settingsController);
+        }
         MusicService musicService = new CachedMusicService(new XMLMusicService(dataSource));
 
         MainScreen mainScreen = new MainScreen(musicService, this, display);
