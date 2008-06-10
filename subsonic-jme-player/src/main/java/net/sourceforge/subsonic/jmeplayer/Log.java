@@ -1,5 +1,7 @@
 package net.sourceforge.subsonic.jmeplayer;
 
+import java.util.Date;
+
 /**
  * @author Sindre Mehus
  */
@@ -36,7 +38,8 @@ public class Log {
     private void log(String message, String severity, Throwable throwable) {
         if (loggingEnabled) {
             StringBuffer buf = new StringBuffer(64);
-            buf.append(severity).append(" ").append(name).append(" ").append(message);
+            buf.append(new Date()).append(" ");
+            buf.append(severity).append(" ").append(name).append(" - ").append(message);
             System.out.println(buf);
             if (throwable != null) {
                 throwable.printStackTrace();
