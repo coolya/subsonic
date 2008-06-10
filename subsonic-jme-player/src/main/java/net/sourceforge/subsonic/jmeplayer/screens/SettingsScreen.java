@@ -56,14 +56,14 @@ public class SettingsScreen extends Form {
         append(playerChoiceGroup);
 
         final Command saveCommand = new Command("Save", Command.OK, 1);
-        final Command backCommand = new Command("Back", Command.BACK, 2);
+        final Command cancelCommand = new Command("Cancel", Command.CANCEL, 2);
 
         addCommand(saveCommand);
-        addCommand(backCommand);
+        addCommand(cancelCommand);
 
         setCommandListener(new CommandListener() {
             public void commandAction(Command command, Displayable displayable) {
-                if (command == backCommand) {
+                if (command == cancelCommand) {
                     display.setCurrent(mainScreen);
                 } else if (command == saveCommand) {
                     save();

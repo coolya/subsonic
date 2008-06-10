@@ -42,3 +42,31 @@ Show coverart.
 Show media time and duration.
 Set default player ID in jad.
 Escape < > & ' " in XML.
+Make it possible to switch between test data and real data runtime.
+Don't append "player" parameter when using test data.
+
+Add debug printing of player events etc.
+Always use "KB".
+Get some short MP3's for testing.
+Go back to main screen if loading indexes fails.
+Change layout of PlayScreen:
+-----------------------------
+|  2 of 6                   |
+|  World Leader Pretend (b) |
+|  R.E.M (b)                |
+|                           |
+|  Playing (36 KB)          |
+|                           |
+|    ---------------        |
+|    |             |        |
+|    |  Coverart   |        |
+|    |             |        |
+|    ---------------        |
+|                           |
+| Pause               Menu  |
+-----------------------------
+
+On-device debugging with Sony Ericsson Toolkit
+file://localhost/C:/progs/SonyEricsson/JavaME_SDK_CLDC/docs/index.html
+http://developer.sonyericsson.com/thread/44274?tstart=0
+http://developer.sonyericsson.com/docs/DOC-1734
