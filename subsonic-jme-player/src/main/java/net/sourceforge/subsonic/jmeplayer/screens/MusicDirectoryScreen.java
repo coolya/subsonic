@@ -41,7 +41,7 @@ public class MusicDirectoryScreen extends List {
                     if (entries.length == 1 && entries[0].isDirectory()) {
                         setPath(entries[0].getPath());
                     } else {
-                        playerScreen.setMusicDirectoryEntries(entries);
+                        playerScreen.setMusicDirectoryEntries(musicDirectory, entries);
                         display.setCurrent(playerScreen);
                     }
                 }

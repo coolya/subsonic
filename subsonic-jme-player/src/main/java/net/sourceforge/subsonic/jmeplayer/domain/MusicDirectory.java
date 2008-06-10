@@ -8,12 +8,14 @@ import java.util.Vector;
 public class MusicDirectory {
 
     private final String name;
+    private final String longName;
     private final String path;
     private final String parentPath;
     private final Entry[] children;
 
-    public MusicDirectory(String name, String path, String parentPath, Entry[] children) {
+    public MusicDirectory(String name, String longName, String path, String parentPath, Entry[] children) {
         this.name = name;
+        this.longName = longName;
         this.path = path;
         this.parentPath = parentPath;
         this.children = children;
@@ -21,6 +23,10 @@ public class MusicDirectory {
 
     public String getName() {
         return name;
+    }
+
+    public String getLongName() {
+        return longName;
     }
 
     public String getPath() {

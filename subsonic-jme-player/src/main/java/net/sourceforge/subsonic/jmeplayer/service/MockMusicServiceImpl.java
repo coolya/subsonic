@@ -34,7 +34,7 @@ public class MockMusicServiceImpl implements MusicService {
                 new MusicDirectory.Entry("http - mp3 long", path + "/foo.mp3", false, "http://www.blueaudio.com/audio/Blue%20Audio%20-%20Tonight.mp3", "audio/mpeg"),
         };
 
-        return new MusicDirectory(name, path, parentPath, children);
+        return new MusicDirectory(name, name, path, parentPath, children);
     }
 
     public void interrupt() {

@@ -31,7 +31,6 @@ public class PlayerController implements PlayerListener {
 
     public void setListener(PlayerControllerListener listener) {
         this.listener = listener;
-        listener.busy(false);
         notifySongChanged();
         listener.stateChanged(state);
         listener.bytesRead(0L);

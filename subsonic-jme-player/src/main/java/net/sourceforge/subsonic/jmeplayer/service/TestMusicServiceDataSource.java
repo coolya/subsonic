@@ -21,12 +21,12 @@ public class TestMusicServiceDataSource implements MusicServiceDataSource {
                                             "</indexes>";
 
 
-    private static final String MUSIC_DIRECTORY_XML_1 = "<directory path='c:/music/abba' name='ABBA' parent='c:/music'>\n" +
+    private static final String MUSIC_DIRECTORY_XML_1 = "<directory path='c:/music/abba' name='ABBA' longName='ABBA' parent='c:/music'>\n" +
                                                         "  <child path='c:/music/abba/gold' name='Gold' isDir='true'/>\n" +
                                                         "  <child path='c:/music/abba/1.mp3' name='res - bark.wav' isDir='false' contentType='audio/x-wav' url='resource:/audio/bark.wav'/>\n" +
                                                         "</directory>";
 
-    private static final String MUSIC_DIRECTORY_XML_2 = "<directory path='c:/music/abba/gold' name='Gold' parent='c:/music/abba'>\n" +
+    private static final String MUSIC_DIRECTORY_XML_2 = "<directory path='c:/music/abba/gold' name='Gold' longName='ABBA - Gold' parent='c:/music/abba'>\n" +
                                                         "  <child path='c:/music/abba/1.mp3' name='res - bark.wav' isDir='false' contentType='audio/x-wav' url='resource:/audio/bark.wav'/>\n" +
                                                         "  <child path='c:/music/abba/4.mp3' name='http - mid' isDir='false' contentType='audio/midi' url='http://people.nnu.edu/WDHUGHES/Joy.MID'/>\n" +
                                                         "  <child path='c:/music/abba/5.mp3' name='res - pattern.mid' isDir='false' contentType='audio/midi' url='resource:/audio/pattern.mid'/>\n" +
@@ -37,9 +37,9 @@ public class TestMusicServiceDataSource implements MusicServiceDataSource {
 
 
     private static final String MUSIC_DIRECTORY_XML_3 = "<?xml version='1.0' encoding='UTF-8'?>\n" +
-                                                        "<musicDirectory name='Alanis Morisette' path='c:\\music\\Alanis Morisette'>\n" +
+                                                        "<directory name='Alanis Morisette'  longName='Alanis Morisette' path='c:\\music\\Alanis Morisette'>\n" +
                                                         "<child name='Jagged Little Pill' path='c:\\music\\Alanis Morisette\\Jagged Little Pill' isDir='true' contentType='application/octet-stream' url='http://localhost:8080/stream?path=c:\\music\\Alanis Morisette&suffix=.null'/>\n" +
-                                                        "</musicDirectory>";
+                                                        "</directory>";
 
 
     public Reader getIndexesReader() throws Exception {

@@ -45,7 +45,7 @@ Escape < > & ' " in XML.
 Make it possible to switch between test data and real data runtime.
 Don't append "player" parameter when using test data.
 Add debug printing of player events etc.
-Always use "KB".
+Implement "longName".
 Change layout of PlayScreen:
 -----------------------------
 |  2 of 6                   |

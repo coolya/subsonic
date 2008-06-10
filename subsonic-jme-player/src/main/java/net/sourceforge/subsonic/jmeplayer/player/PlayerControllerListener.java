@@ -13,7 +13,5 @@ public interface PlayerControllerListener {
 
     void error(Throwable x);
 
-    void busy(boolean busy);
-
     void bytesRead(long n);
 }

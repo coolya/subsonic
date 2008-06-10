@@ -26,6 +26,7 @@ public class MusicDirectoryParser {
                                                   childElement.getProperty("contentType"));
         }
 
-        return new MusicDirectory(root.getProperty("name"), root.getProperty("path"), root.getProperty("parent"), entries);
+        return new MusicDirectory(root.getProperty("name"), root.getProperty("longName"),
+                                  root.getProperty("path"), root.getProperty("parent"), entries);
     }
 }
