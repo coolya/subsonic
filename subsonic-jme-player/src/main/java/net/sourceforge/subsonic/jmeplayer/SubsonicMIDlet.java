@@ -1,5 +1,6 @@
 package net.sourceforge.subsonic.jmeplayer;
 
+import net.sourceforge.subsonic.jmeplayer.player.DownloadController;
 import net.sourceforge.subsonic.jmeplayer.player.PlayerController;
 import net.sourceforge.subsonic.jmeplayer.screens.ArtistScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.IndexScreen;
@@ -23,16 +24,21 @@ import javax.microedition.midlet.MIDletStateChangeException;
  */
 public class SubsonicMIDlet extends MIDlet {
 
+    private static final Log LOG = LogFactory.create("SubsonicMIDlet");
+
     private final Display display;
     private PlayerScreen playerScreen;
 
     public SubsonicMIDlet() {
-        display = Display.getDisplay(this);
+        LOG.info("Creating midlet");
 
+        display = Display.getDisplay(this);
         SettingsController settingsController = new SettingsController(this);
-        LogFactory.setLoggingEnabled(settingsController.isDebug());
+
         PlayerController playerController = new PlayerController();
         playerController.setSettingsController(settingsController);
+        DownloadController downloadController = new DownloadController();
+        downloadController.setSettingsController(settingsController);
 
         boolean mock = settingsController.isMock();
         MusicServiceDataSource dataSource;
@@ -52,6 +58,7 @@ public class SubsonicMIDlet extends MIDlet {
 
         mainScreen.setIndexScreen(indexScreen);
         mainScreen.setSettingsScreen(settingsScreen);
+        mainScreen.setDownloadController(downloadController);
         settingsScreen.setMainScreen(mainScreen);
         indexScreen.setMainScreen(mainScreen);
         indexScreen.setArtistScreen(artistScreen);
@@ -70,12 +77,14 @@ public class SubsonicMIDlet extends MIDlet {
      * or when it returns from paused mode.
      */
     public void startApp() throws MIDletStateChangeException {
+        LOG.info("Starting midlet");
     }
 
     /**
      * Called when this MIDlet is paused.
      */
     public void pauseApp() {
+        LOG.info("Pausing midlet");
         playerScreen.stop();
     }
 
@@ -84,6 +93,7 @@ public class SubsonicMIDlet extends MIDlet {
      * by the garbage collector.
      */
     public void destroyApp(boolean unconditional) {
+        LOG.info("Destroying midlet");
         playerScreen.stop();
         display.setCurrent(null);
     }

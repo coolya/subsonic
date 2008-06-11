@@ -4,7 +4,7 @@ package net.sourceforge.subsonic.jmeplayer;
  * @author Sindre Mehus
  */
 public class LogFactory {
-    private static boolean loggingEnabled = false;
+    private static boolean loggingEnabled = true;
 
     private LogFactory() {
     }
