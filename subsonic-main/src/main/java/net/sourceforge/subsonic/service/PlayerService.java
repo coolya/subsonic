@@ -1,9 +1,10 @@
 package net.sourceforge.subsonic.service;
 
+import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.PlayerDao;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Transcoding;
-import net.sourceforge.subsonic.Logger;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ public class PlayerService {
 
     private static final Logger LOG = Logger.getLogger(TranscodingService.class);
     private static final String COOKIE_NAME = "player";
+    private static final int COOKIE_EXPIRY = 365 * 24 * 3600; // One year
 
     private PlayerDao playerDao;
     private StatusService statusService;
@@ -101,7 +103,12 @@ public class PlayerService {
         // Set cookie in response.
         if (response != null) {
             Cookie cookie = new Cookie(COOKIE_NAME, player.getId());
-            cookie.setMaxAge(Integer.MAX_VALUE);
+            cookie.setMaxAge(COOKIE_EXPIRY);
+            String path = request.getContextPath();
+            if (StringUtils.isEmpty(path)) {
+                path = "/";
+            }
+            cookie.setPath(path);
             response.addCookie(cookie);
         }
 
