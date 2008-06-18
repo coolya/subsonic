@@ -72,6 +72,19 @@ public class LyricsServiceTestCase extends TestCase {
         }
     }
 
+    public void testGetLyrics3() throws IOException {
+        InputStream in = getClass().getResourceAsStream("metrolyrics_lyrics_3.html");
+        try {
+            String html = IOUtils.toString(in);
+            String lyrics = lyricsService.getLyrics(html);
+            assertNotNull("Error in getLyrics().", lyrics);
+            System.out.println(lyrics);
+            assertTrue("Error in getLyrics().", lyrics.startsWith("&#73;&#32;&#97;"));
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
+    }
+
     public void testGetHeader1() throws IOException {
         InputStream in = getClass().getResourceAsStream("metrolyrics_lyrics_1.html");
         try {

@@ -86,8 +86,14 @@ public class LyricsService {
         // Remove all occurrences of:   <class id="NoSteal">[xxxx lyrics on http://www.metrolyrics.com]</class>
         html = html.replaceAll("<class id=\"NoSteal\".*</class>", "");
 
-        // Find first occurrence of:  <div id="SongText">
-        int index = html.indexOf("<div id=\"SongText\">");
+        // Find first occurrence of: <div id="LyricBody">
+        int index = html.indexOf("<div id=\"LyricBody\">");
+
+        // If not found, find first occurrence of:  <div id="SongText">
+        if (index == -1) {
+            index = html.indexOf("<div id=\"SongText\">");
+        }
+
         if (index == -1) {
             return null;
         }
@@ -97,18 +103,21 @@ public class LyricsService {
 
         // Read line by line, appending only the relevant lines to the lyrics.
         StringBuffer lyrics = new StringBuffer();
-        int divCount = 0;
         try {
+            int divCount = 0;
             for (String line = reader.readLine(); line != null; line = reader.readLine()) {
 
                 if (line.contains("<div")) {
                     divCount++;
                 } else if (line.contains("</div>")) {
                     divCount--;
+                } else if (line.contains("<span id=\"lyrics\">") ||
+                           line.contains("</span>")||
+                           line.contains("<noscript")) {
+                    continue;
                 } else if (divCount == 1) {
                     lyrics.append(line);
                 }
-
                 if (divCount == 0) {
                     break;
                 }
@@ -127,7 +136,7 @@ public class LyricsService {
      * @return The extracted header text.
      */
     protected String getHeader(String html) {
-        
+
         // Grep for the following pattern:
         // 	<h3>Manic Street Preachers - A Song For Departure Lyrics</h3>
 
