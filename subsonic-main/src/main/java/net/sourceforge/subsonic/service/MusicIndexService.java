@@ -26,6 +26,7 @@ import java.util.TreeSet;
 public class MusicIndexService {
 
     private SettingsService settingsService;
+    private MusicFileService musicFileService;
 
     /**
      * Returns a map from music indexes to sets of artists that are direct children of the given music folders.
@@ -133,10 +134,10 @@ public class MusicIndexService {
 
         for (MusicFolder folder : folders) {
 
-            MusicFile parent = ServiceLocator.getMusicFileService().getMusicFile(folder.getPath());
-            List<MusicFile> children = ServiceLocator.getMusicFileService().getChildDirectories(parent);
+            MusicFile parent = musicFileService.getMusicFile(folder.getPath());
+            List<MusicFile> children = musicFileService.getChildDirectories(parent);
             for (MusicFile child : children) {
-                if (shortcutSet.contains(child.getName())) {
+                if (shortcutSet.contains(child.getName()) || !child.isDirectory()) {
                     continue;
                 }
 
@@ -184,5 +185,9 @@ public class MusicIndexService {
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
+    }
+
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
     }
 }

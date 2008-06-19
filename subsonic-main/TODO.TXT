@@ -8,12 +8,12 @@ TODO IN 3.5
 -----------
 Check out mobile streaming with ORB. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=68&sid=3ff930e6a52fc8e9b462d5ff84c0026a
 Create per-channel podcast settings. At least enable/disable.
-Fix minor bug with letter appearing if only file (not directory) exists. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1023
 RTSP support.  http://wap.rubberduckmedialab.com/
 http://www.nero.com/eng/nero-aac-codec.html
 
 DONE IN 3.5
 -----------
+Fix minor bug with letter appearing if only file (not directory) exists. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1023
 Nicer controls in modern browsers (Opera 9.5, Firefox 3, IE 7)
 Don't mess up buttons etc in some skins.
 Bugfix: Make lyrics work.

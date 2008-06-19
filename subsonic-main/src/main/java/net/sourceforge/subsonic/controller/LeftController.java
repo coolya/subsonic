@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -72,6 +73,7 @@ public class LeftController extends ParameterizableViewController implements Las
         MusicFolder[] musicFoldersToUse = selectedMusicFolder == null ? allMusicFolders : new MusicFolder[]{selectedMusicFolder};
         String[] shortcuts = settingsService.getShortcutsAsArray();
         SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists = musicIndexService.getIndexedArtists(musicFoldersToUse);
+        List<MusicFile> singleSongs = getSingleSongs(musicFoldersToUse);
         UserSettings userSettings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
 
         map.put("musicFolders", allMusicFolders);
@@ -90,6 +92,7 @@ public class LeftController extends ParameterizableViewController implements Las
         }
 
         map.put("indexedArtists", indexedArtists);
+        map.put("singleSongs", singleSongs);
         map.put("indexes", indexedArtists.keySet());
         map.put("downloadEnabled", securityService.getCurrentUser(request).isDownloadRole());
 
@@ -117,6 +120,15 @@ public class LeftController extends ParameterizableViewController implements Las
         int musicFolderId = settings.getSelectedMusicFolderId();
 
         return settingsService.getMusicFolderById(musicFolderId);
+    }
+
+    private List<MusicFile> getSingleSongs(MusicFolder[] folders) throws IOException {
+        List<MusicFile> result = new ArrayList<MusicFile>();
+        for (MusicFolder folder : folders) {
+            MusicFile parent = musicFileService.getMusicFile(folder.getPath());
+            result.addAll(parent.getChildren(false, true));
+        }
+        return result;
     }
 
     private List<MusicFile> getShortcuts(MusicFolder[] musicFoldersToUse, String[] shortcuts) {

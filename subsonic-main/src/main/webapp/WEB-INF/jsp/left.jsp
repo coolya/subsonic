@@ -79,38 +79,32 @@
     </table>
 
     <c:forEach items="${entry.value}" var="artist">
-        <c:if test="${artist.musicFiles[0].directory}">
-            <p class="dense" style="padding-left:0.5em">
-                <span title="${artist.name}">
-                    <sub:url value="main.view" var="mainUrl">
-                        <c:forEach items="${artist.musicFiles}" var="musicFile">
-                            <sub:param name="path" value="${musicFile.path}"/>
-                        </c:forEach>
-                    </sub:url>
-                    <a target="main" href="${mainUrl}"><str:truncateNicely upper="${model.captionCutoff}">${artist.name}</str:truncateNicely></a>
-                </span>
-            </p>
-        </c:if>
+        <p class="dense" style="padding-left:0.5em">
+            <span title="${artist.name}">
+                <sub:url value="main.view" var="mainUrl">
+                    <c:forEach items="${artist.musicFiles}" var="musicFile">
+                        <sub:param name="path" value="${musicFile.path}"/>
+                    </c:forEach>
+                </sub:url>
+                <a target="main" href="${mainUrl}"><str:truncateNicely upper="${model.captionCutoff}">${artist.name}</str:truncateNicely></a>
+            </span>
+        </p>
     </c:forEach>
 </c:forEach>
 
 <div style="padding-top:1em"/>
 
-<c:forEach items="${model.indexedArtists}" var="entry">
-    <c:forEach items="${entry.value}" var="artist">
-        <c:if test="${not artist.musicFiles[0].directory}">
-            <p class="dense" style="padding-left:0.5em">
-                <span title="${artist.musicFiles[0].title}">
-                    <c:import url="playAddDownload.jsp">
-                        <c:param name="path" value="${artist.musicFiles[0].path}"/>
-                        <c:param name="playEnabled" value="${not model.partyMode}"/>
-                        <c:param name="downloadEnabled" value="${not model.partyMode and model.downloadEnabled}"/>
-                    </c:import>
-                    <str:truncateNicely upper="${model.captionCutoff}">${artist.musicFiles[0].title}</str:truncateNicely>
-                </span>
-            </p>
-        </c:if>
-    </c:forEach>
+<c:forEach items="${model.singleSongs}" var="song">
+    <p class="dense" style="padding-left:0.5em">
+        <span title="${song.title}">
+            <c:import url="playAddDownload.jsp">
+                <c:param name="path" value="${song.path}"/>
+                <c:param name="playEnabled" value="${not model.partyMode}"/>
+                <c:param name="downloadEnabled" value="${not model.partyMode and model.downloadEnabled}"/>
+            </c:import>
+            <str:truncateNicely upper="${model.captionCutoff}">${song.title}</str:truncateNicely>
+        </span>
+    </p>
 </c:forEach>
 
 <div style="height:5em"/>
