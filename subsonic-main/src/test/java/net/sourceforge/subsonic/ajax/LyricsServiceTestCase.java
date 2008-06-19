@@ -78,7 +78,6 @@ public class LyricsServiceTestCase extends TestCase {
             String html = IOUtils.toString(in);
             String lyrics = lyricsService.getLyrics(html);
             assertNotNull("Error in getLyrics().", lyrics);
-            System.out.println(lyrics);
             assertTrue("Error in getLyrics().", lyrics.startsWith("&#73;&#32;&#97;"));
         } finally {
             IOUtils.closeQuietly(in);

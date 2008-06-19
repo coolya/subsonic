@@ -28,16 +28,6 @@
     background-color: #CFD1D6;
 }
 
-/* Background color for form controls. */
-input, select {
-    background-color: #CFD1D6;
-    border: 1px solid #00042E;
-}
-
-.checkbox {
-    border: 1px solid #00042E;
-}
-
 /* The primary foreground color. */
 body {
     color: #CFD1D6;

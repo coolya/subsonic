@@ -22,23 +22,6 @@
     background-color: #DDDDDD;
 }
 
-/* Background color for form controls. */
-input, select {
-    background-color: #DDDDDD;
-    border: 1px solid #4D4C52;
-}
-
-.checkbox {
-    border: 1px solid #4D4C52;
-    width: 14px;
-    height: 14px;
-}
-
-/* Hover color for form controls. */
-input:hover, select:hover {
-    background-color: white;
-}
-
 /* The primary foreground color. */
 body {
     color: #DDDDDD;
