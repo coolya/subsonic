@@ -23,6 +23,7 @@ public class User {
     private boolean isCoverArtRole;
     private boolean isCommentRole;
     private boolean isPodcastRole;
+    private boolean isStreamRole;
 
     public User(String username, String password, boolean ldapAuthenticated,
                 long bytesStreamed, long bytesDownloaded, long bytesUploaded) {
@@ -138,6 +139,15 @@ public class User {
         this.isPodcastRole = isPodcastRole;
     }
 
+    public boolean isStreamRole() {
+        return isStreamRole;
+    }
+
+    public void setStreamRole(boolean streamRole) {
+        isStreamRole = streamRole;
+    }
+
+    @Override
     public String toString() {
         StringBuffer result = new StringBuffer(username);
 
@@ -161,6 +171,9 @@ public class User {
         }
         if (isPodcastRole) {
             result.append(" [podcast]");
+        }
+        if (isStreamRole) {
+            result.append(" [stream]");
         }
 
         return result.toString();

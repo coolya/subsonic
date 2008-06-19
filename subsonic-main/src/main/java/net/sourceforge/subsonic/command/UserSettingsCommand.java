@@ -17,6 +17,7 @@ public class UserSettingsCommand {
     private boolean isCoverArtRole;
     private boolean isCommentRole;
     private boolean isPodcastRole;
+    private boolean isStreamRole;
 
     private User[] users;
     private boolean isAdmin;
@@ -95,6 +96,14 @@ public class UserSettingsCommand {
 
     public void setPodcastRole(boolean podcastRole) {
         isPodcastRole = podcastRole;
+    }
+
+    public boolean isStreamRole() {
+        return isStreamRole;
+    }
+
+    public void setStreamRole(boolean streamRole) {
+        isStreamRole = streamRole;
     }
 
     public User[] getUsers() {
@@ -214,6 +223,7 @@ public class UserSettingsCommand {
         isCoverArtRole = user != null && user.isCoverArtRole();
         isCommentRole = user != null && user.isCommentRole();
         isPodcastRole = user != null && user.isPodcastRole();
+        isStreamRole = user != null && user.isStreamRole();
         isLdapAuthenticated = user != null && user.isLdapAuthenticated();
     }
 }

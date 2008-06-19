@@ -36,6 +36,7 @@ public class UserDao extends AbstractDao {
     private static final Integer ROLE_ID_COVER_ART = 5;
     private static final Integer ROLE_ID_COMMENT = 6;
     private static final Integer ROLE_ID_PODCAST = 7;
+    private static final Integer ROLE_ID_STREAM = 8;
 
     private UserRowMapper userRowMapper = new UserRowMapper();
     private UserSettingsRowMapper userSettingsRowMapper = new UserSettingsRowMapper();
@@ -213,6 +214,8 @@ public class UserDao extends AbstractDao {
                 user.setCommentRole(true);
             } else if (ROLE_ID_PODCAST.equals(role)) {
                 user.setPodcastRole(true);
+            } else if (ROLE_ID_STREAM.equals(role)) {
+                user.setStreamRole(true);
             } else {
                 LOG.warn("Unknown role: '" + role + '\'');
             }
@@ -243,6 +246,9 @@ public class UserDao extends AbstractDao {
         }
         if (user.isPodcastRole()) {
             getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_PODCAST});
+        }
+        if (user.isStreamRole()) {
+            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_STREAM});
         }
     }
 

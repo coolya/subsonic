@@ -19,6 +19,7 @@ public class UserSettingsController extends SimpleFormController {
     private SettingsService settingsService;
     private TranscodingService transcodingService;
 
+    @Override
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         UserSettingsCommand command = new UserSettingsCommand();
 
@@ -31,6 +32,7 @@ public class UserSettingsController extends SimpleFormController {
 
         } else {
             command.setNew(true);
+            command.setStreamRole(true);
         }
 
         command.setUsers(securityService.getAllUsers());
@@ -53,6 +55,7 @@ public class UserSettingsController extends SimpleFormController {
         return null;
     }
 
+    @Override
     protected void doSubmitAction(Object comm) throws Exception {
         UserSettingsCommand command = (UserSettingsCommand) comm;
 
@@ -87,6 +90,7 @@ public class UserSettingsController extends SimpleFormController {
         user.setCoverArtRole(command.isCoverArtRole());
         user.setCommentRole(command.isCommentRole());
         user.setPodcastRole(command.isPodcastRole());
+        user.setStreamRole(command.isStreamRole());
 
         if (command.isPasswordChange()) {
             user.setPassword(command.getPassword());
@@ -105,6 +109,7 @@ public class UserSettingsController extends SimpleFormController {
         command.setDelete(false);
         command.setPasswordChange(false);
         command.setNew(true);
+        command.setStreamRole(true);
         command.setPassword(null);
         command.setConfirmPassword(null);
         command.setTranscodeSchemeName(null);
