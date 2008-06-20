@@ -94,7 +94,7 @@ public class LeftController extends ParameterizableViewController implements Las
         map.put("indexedArtists", indexedArtists);
         map.put("singleSongs", singleSongs);
         map.put("indexes", indexedArtists.keySet());
-        map.put("downloadEnabled", securityService.getCurrentUser(request).isDownloadRole());
+        map.put("user", securityService.getCurrentUser(request));
 
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);

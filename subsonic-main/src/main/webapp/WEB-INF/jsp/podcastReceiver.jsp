@@ -168,6 +168,8 @@
                     <c:otherwise>
                         <c:import url="playAddDownload.jsp">
                             <c:param name="path" value="${episode.path}"/>
+                            <c:param name="playEnabled" value="${model.user.streamRole and not model.partyMode}"/>
+                            <c:param name="addEnabled" value="${model.user.streamRole and not model.partyMode}"/>
                             <c:param name="downloadEnabled" value="false"/>
                             <c:param name="asTable" value="true"/>
                         </c:import>

@@ -57,10 +57,17 @@ public class StreamController implements Controller {
         PlaylistInputStream in = null;
         String streamEndpoint = null;
         Player player = playerService.getPlayer(request, response, false, true);
+        User user = securityService.getUserByName(player.getUsername());
+
         try {
 
+            if (!user.isStreamRole()) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Streaming is forbidden for user " + user.getUsername());
+                return null;
+            }
+
             // If "playlist" request parameter is set, this is a Podcast request. In that case, create a separate
-            // playlist (in order to support multiple parallell Podcast streams).
+            // playlist (in order to support multiple parallel Podcast streams).
             String playlistName = request.getParameter("playlist");
             boolean isPodcast = playlistName != null;
             if (isPodcast) {
@@ -73,7 +80,7 @@ public class StreamController implements Controller {
 
             // If "path" request parameter is set, this is a request for a single file
             // (typically from the embedded Flash player). In that case, create a separate
-            // playlist (in order to support multiple parallell streams). Also, enable
+            // playlist (in order to support multiple parallel streams). Also, enable
             // partial download (HTTP byte range).
             String path = request.getParameter("path");
             boolean isSingleFile = path != null;
@@ -171,7 +178,6 @@ public class StreamController implements Controller {
         } finally {
             if (status != null) {
                 statusService.removeStreamStatus(status);
-                User user = securityService.getUserByName(player.getUsername());
                 securityService.updateUserByteCounts(user, status.getBytesTransfered(), 0L, 0L);
             }
             if (in != null) {

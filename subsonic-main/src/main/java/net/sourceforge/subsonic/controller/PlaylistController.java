@@ -43,7 +43,7 @@ public class PlaylistController extends ParameterizableViewController {
         Playlist playlist = player.getPlaylist();
 
         Map<String, Object> map = new HashMap<String, Object>();
-        handleParameters(request, playlist, player, map);
+        handleParameters(request, playlist, player, map, user);
 
         if (userSettings.isWebPlayerDefault()) {
             return new ModelAndView(new RedirectView("webPlayer.view?"));
@@ -78,7 +78,8 @@ public class PlaylistController extends ParameterizableViewController {
         return result;
     }
 
-    private void handleParameters(HttpServletRequest request, Playlist playlist, Player player, Map<String, Object> map) throws IOException {
+    private void handleParameters(HttpServletRequest request, Playlist playlist, Player player,
+                                  Map<String, Object> map, User user) throws IOException {
 
         // Whether a new M3U file should be sent, forcing the remote player to reconnect.
         boolean sendM3U = false;
@@ -158,7 +159,7 @@ public class PlaylistController extends ParameterizableViewController {
 
         boolean isCurrentPlayer = player.getIpAddress() != null && player.getIpAddress().equals(request.getRemoteAddr());
 
-        map.put("sendM3U", player.isAutoControlEnabled() && isCurrentPlayer && sendM3U);
+        map.put("sendM3U", player.isAutoControlEnabled() && isCurrentPlayer && user.isStreamRole() && sendM3U);
         map.put("anchor", anchor);
     }
 

@@ -99,8 +99,9 @@
         <span title="${song.title}">
             <c:import url="playAddDownload.jsp">
                 <c:param name="path" value="${song.path}"/>
-                <c:param name="playEnabled" value="${not model.partyMode}"/>
-                <c:param name="downloadEnabled" value="${not model.partyMode and model.downloadEnabled}"/>
+                <c:param name="playEnabled" value="${model.user.streamRole and not model.partyMode}"/>
+                <c:param name="addEnabled" value="${model.user.streamRole}"/>
+                <c:param name="downloadEnabled" value="${model.user.downloadRole and not model.partyMode}"/>
             </c:import>
             <str:truncateNicely upper="${model.captionCutoff}">${song.title}</str:truncateNicely>
         </span>

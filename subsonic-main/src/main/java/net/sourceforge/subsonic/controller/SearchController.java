@@ -35,10 +35,12 @@ public class SearchController extends SimpleFormController {
     private SecurityService securityService;
     private SettingsService settingsService;
 
+    @Override
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         return new SearchCommand();
     }
 
+    @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object com, BindException errors)
             throws Exception {
         SearchCommand command = (SearchCommand) com;
@@ -46,7 +48,7 @@ public class SearchController extends SimpleFormController {
 
         User user = securityService.getCurrentUser(request);
         UserSettings userSettings = settingsService.getUserSettings(user.getUsername());
-        command.setDownloadEnabled(user.isDownloadRole());
+        command.setUser(user);
         command.setPartyModeEnabled(userSettings.isPartyModeEnabled());
 
         String query = StringUtils.trimToNull(command.getQuery());

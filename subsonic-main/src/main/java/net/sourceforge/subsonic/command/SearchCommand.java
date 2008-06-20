@@ -18,7 +18,7 @@ public class SearchCommand {
     private List<Match> matches;
     private boolean isIndexBeingCreated;
     private int maxHits;
-    private boolean downloadEnabled;
+    private User user;
     private boolean partyModeEnabled;
 
     public String getQuery() {
@@ -77,12 +77,12 @@ public class SearchCommand {
         return maxHits;
     }
 
-    public boolean isDownloadEnabled() {
-        return downloadEnabled;
+    public User getUser() {
+        return user;
     }
 
-    public void setDownloadEnabled(boolean downloadEnabled) {
-        this.downloadEnabled = downloadEnabled;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public boolean isPartyModeEnabled() {

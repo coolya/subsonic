@@ -128,14 +128,16 @@
             </c:forEach>
         </select></td>
 
-        <c:choose>
-            <c:when test="${model.isPlaying and not model.player.clientSidePlaylist}">
-                <td><b><a href="playlist.view?stop"><fmt:message key="playlist.stop"/></a></b> | </td>
-            </c:when>
-            <c:otherwise>
-                <td><b><a href="playlist.view?start"><fmt:message key="playlist.start"/></a></b> | </td>
-            </c:otherwise>
-        </c:choose>
+       <c:if test="${model.user.streamRole}">
+           <c:choose>
+               <c:when test="${model.isPlaying and not model.player.clientSidePlaylist}">
+                   <td><b><a href="playlist.view?stop"><fmt:message key="playlist.stop"/></a></b> | </td>
+               </c:when>
+               <c:otherwise>
+                   <td><b><a href="playlist.view?start"><fmt:message key="playlist.start"/></a></b> | </td>
+               </c:otherwise>
+           </c:choose>
+       </c:if>
 
         <td><a href="javascript:clearPlaylist()"><fmt:message key="playlist.clear"/></a></td>
         <td> | <a href="playlist.view?shuffle"><fmt:message key="playlist.shuffle"/></a></td>
@@ -152,7 +154,7 @@
         </c:if>
 
         <td> | <a href="playlist.view?undo"><fmt:message key="playlist.undo"/></a></td>
-                <c:if test="${not empty model.songs}">
+                <c:if test="${model.user.streamRole and not empty model.songs}">
         <td> | <a href="webPlayer.view?"><fmt:message key="playlist.webplayer"/></a></td>
                 </c:if>
         <td> | <a href="playerSettings.view?id=${model.player.id}" target="main"><fmt:message key="playlist.settings"/></a></td>

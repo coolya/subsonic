@@ -100,7 +100,7 @@
         <sub:url value="main.view" var="upUrl">
             <sub:param name="path" value="${model.dir.parent.path}"/>
         </sub:url>
-        <a href="${upUrl}"><fmt:message key="main.up"/></a> |
+        <a href="${upUrl}"><fmt:message key="main.up"/></a>
     </c:if>
 
     <sub:url value="playlist.view" var="playUrl">
@@ -110,8 +110,10 @@
         <sub:param name="add" value="${model.dir.path}"/>
     </sub:url>
 
-    <a target="playlist" href="${playUrl}"><fmt:message key="main.playall"/></a> |
-    <a target="playlist" href="${addUrl}"><fmt:message key="main.addall"/></a>
+    <c:if test="${model.user.streamRole}">
+        | <a target="playlist" href="${playUrl}"><fmt:message key="main.playall"/></a>
+        | <a target="playlist" href="${addUrl}"><fmt:message key="main.addall"/></a>
+    </c:if>
 
     <c:if test="${model.dir.album}">
 
@@ -222,9 +224,9 @@
                 <tr style="margin:0;padding:0;border:0">
                     <c:import url="playAddDownload.jsp">
                         <c:param name="path" value="${child.path}"/>
-                        <c:param name="playEnabled" value="${not model.partyMode}"/>
-                        <c:param name="addEnabled" value="${not model.partyMode or not child.directory}"/>
-                        <c:param name="downloadEnabled" value="${not model.partyMode and model.user.downloadRole}"/>
+                        <c:param name="playEnabled" value="${model.user.streamRole and not model.partyMode}"/>
+                        <c:param name="addEnabled" value="${model.user.streamRole and (not model.partyMode or not child.directory)}"/>
+                        <c:param name="downloadEnabled" value="${model.user.downloadRole and not model.partyMode}"/>
                         <c:param name="asTable" value="true"/>
                     </c:import>
 

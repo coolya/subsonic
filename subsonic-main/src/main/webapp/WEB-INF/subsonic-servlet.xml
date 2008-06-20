@@ -67,6 +67,7 @@
         <property name="viewName" value="podcastReceiver"/>
         <property name="podcastService" ref="podcastService"/>
         <property name="securityService" ref="securityService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="podcastReceiverAdminController"
           class="net.sourceforge.subsonic.controller.PodcastReceiverAdminController">

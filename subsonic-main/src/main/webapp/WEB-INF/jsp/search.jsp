@@ -75,9 +75,9 @@
         <tr>
             <c:import url="playAddDownload.jsp">
                 <c:param name="path" value="${match.musicFile.path}"/>
-                <c:param name="playEnabled" value="${not command.partyModeEnabled}"/>
-                <c:param name="addEnabled" value="${not command.partyModeEnabled or not match.musicFile.directory}"/>
-                <c:param name="downloadEnabled" value="${not command.partyModeEnabled and command.downloadEnabled}"/>
+                <c:param name="playEnabled" value="${command.user.streamRole and not command.partyModeEnabled}"/>
+                <c:param name="addEnabled" value="${command.user.streamRole and (not command.partyModeEnabled or not match.musicFile.directory)}"/>
+                <c:param name="downloadEnabled" value="${command.user.downloadRole and not command.partyModeEnabled}"/>
                 <c:param name="asTable" value="true"/>
             </c:import>
 

@@ -3,9 +3,12 @@ package net.sourceforge.subsonic.controller;
 import net.sourceforge.subsonic.domain.PodcastChannel;
 import net.sourceforge.subsonic.domain.PodcastEpisode;
 import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.service.PodcastService;
 import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.util.StringUtil;
+import net.sourceforge.subsonic.dao.UserDao;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
@@ -24,7 +27,9 @@ public class PodcastReceiverController extends ParameterizableViewController {
 
     private PodcastService podcastService;
     private SecurityService securityService;
+    private SettingsService settingsService;
 
+    @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Map<String, Object> map = new HashMap<String, Object>();
@@ -35,9 +40,12 @@ public class PodcastReceiverController extends ParameterizableViewController {
         for (PodcastChannel channel : podcastService.getAllChannels()) {
             channels.put(channel, podcastService.getEpisodes(channel.getId(), false));
         }
+
         User user = securityService.getCurrentUser(request);
+        UserSettings userSettings = settingsService.getUserSettings(user.getUsername());
 
         map.put("user", user);
+        map.put("partyMode", userSettings.isPartyModeEnabled());
         map.put("channels", channels);
         map.put("expandedChannels", StringUtil.parseInts(request.getParameter("expandedChannels")));
         return result;
@@ -49,5 +57,9 @@ public class PodcastReceiverController extends ParameterizableViewController {
 
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
     }
 }
