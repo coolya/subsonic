@@ -34,6 +34,10 @@
         <property name="daoHelper" ref="daoHelper"/>
     </bean>
 
+    <bean id="avatarDao" class="net.sourceforge.subsonic.dao.AvatarDao">
+        <property name="daoHelper" ref="daoHelper"/>
+    </bean>
+
     <bean id="daoHelper" class="net.sourceforge.subsonic.dao.DaoHelper"/>
 
 
@@ -57,6 +61,7 @@
         <property name="internetRadioDao" ref="internetRadioDao"/>
         <property name="musicFolderDao" ref="musicFolderDao"/>
         <property name="userDao" ref="userDao"/>
+        <property name="avatarDao" ref="avatarDao"/>
     </bean>
 
     <bean id="searchService" class="net.sourceforge.subsonic.service.SearchService" init-method="schedule">

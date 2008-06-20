@@ -4,10 +4,12 @@ import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.InternetRadioDao;
 import net.sourceforge.subsonic.dao.MusicFolderDao;
 import net.sourceforge.subsonic.dao.UserDao;
+import net.sourceforge.subsonic.dao.AvatarDao;
 import net.sourceforge.subsonic.domain.InternetRadio;
 import net.sourceforge.subsonic.domain.MusicFolder;
 import net.sourceforge.subsonic.domain.Theme;
 import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.domain.Avatar;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.io.IOUtils;
 
@@ -128,6 +130,7 @@ public class SettingsService {
     private InternetRadioDao internetRadioDao;
     private MusicFolderDao musicFolderDao;
     private UserDao userDao;
+    private AvatarDao avatarDao;
 
     private String[] cachedCoverArtMaskArray;
     private String[] cachedMusicMaskArray;
@@ -837,6 +840,25 @@ public class SettingsService {
         settingsChanged();
     }
 
+    /**
+     * Returns all system avatars.
+     *
+     * @return All system avatars.
+     */
+    public Avatar[] getAllSystemAvatars() {
+        return avatarDao.getAllSystemAvatars();
+    }
+
+    /**
+     * Returns the system avatar with the given ID.
+     *
+     * @param id The system avatar ID.
+     * @return The avatar or <code>null</code> if not found.
+     */
+    public Avatar getSystemAvatar(int id) {
+        return avatarDao.getSystemAvatar(id);
+    }
+
     private void setProperty(String key, String value) {
         if (value == null) {
             properties.remove(key);
@@ -873,5 +895,9 @@ public class SettingsService {
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    public void setAvatarDao(AvatarDao avatarDao) {
+        this.avatarDao = avatarDao;
     }
 }

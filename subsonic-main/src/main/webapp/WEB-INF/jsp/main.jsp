@@ -55,7 +55,11 @@
         function getNowPlayingCallback(nowPlaying) {
             var html = nowPlaying.length == 0 ? "" : "<h2><fmt:message key="main.nowplaying"/></h2><table>";
             for (var i = 0; i < nowPlaying.length; i++) {
-                html += "<tr><td class='detail' style='padding-top:1em;padding-right:1em'>" + nowPlaying[i].username + "<br/>" +
+                html += "<tr><td colspan='2' class='detail' style='padding-top:1em'>" +
+                        "<img src='http://localhost:8080/icons/user-24.png' style='padding-right:5pt'/>" +
+                        nowPlaying[i].username + "</td></tr>"
+
+                html += "<tr><td class='detail' style='padding-right:1em'>" +
                         "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'><em>" +
                         nowPlaying[i].artist + "</em><br/>" + nowPlaying[i].title + "</a><br/>" +
                         "<span class='forward' style='background-position: 0px 2px'><a href='" + nowPlaying[i].lyricsUrl + "' onclick=\"return popupSize(this, 'help', 430, 550)\">" +

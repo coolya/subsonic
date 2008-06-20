@@ -2,6 +2,11 @@ package net.sourceforge.subsonic.dao.schema;
 
 import net.sourceforge.subsonic.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.apache.commons.io.IOUtils;
+
+import java.util.Date;
+import java.io.InputStream;
+import java.io.IOException;
 
 /**
  * Used for creating and evolving the database schema.
@@ -31,7 +36,7 @@ public class Schema35 extends Schema {
             LOG.info("Database column 'user_settings.web_player_default' not found.  Creating it.");
             template.execute("alter table user_settings add web_player_default boolean default false not null");
             LOG.info("Database column 'user_settings.web_player_default' was added successfully.");
-         }
+        }
 
         if (template.queryForInt("select count(*) from role where id = 8") == 0) {
             LOG.info("Role 'stream' not found in database. Creating it.");
@@ -41,5 +46,35 @@ public class Schema35 extends Schema {
                              "where u.username = ur.username");
             LOG.info("Role 'stream' was created successfully.");
         }
+
+        if (!tableExists(template, "system_avatar")) {
+            LOG.info("Database table 'system_avatar' not found.  Creating it.");
+            template.execute("create table system_avatar (" +
+                             "id identity," +
+                             "name varchar," +
+                             "created_date datetime not null," +
+                             "mime_type varchar not null," +
+                             "width int not null," +
+                             "height int not null," +
+                             "data binary not null)");
+            LOG.info("Database table 'system_avatar' was created successfully.");
+            createAvatar(template, "system-avatar-1.png");
+        }
+    }
+
+    private void createAvatar(JdbcTemplate template, String avatar) {
+        InputStream in = null;
+        try {
+            in = getClass().getResourceAsStream(avatar);
+            byte[] imageData = IOUtils.toByteArray(in);
+            template.update("insert into system_avatar values (null, ?, ?, ?, ?, ?, ?)",
+                            new Object[]{avatar, new Date(), "image/png", 24, 24, imageData});
+            LOG.info("Created avatar " + avatar);
+        } catch (IOException x) {
+            LOG.error("Failed to create avatar " + avatar, x);
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
+
     }
 }

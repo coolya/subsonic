@@ -241,6 +241,9 @@
         <property name="securityService" ref="securityService"/>
         <property name="musicFileService" ref="musicFileService"/>
     </bean>
+    <bean id="avatarController" class="net.sourceforge.subsonic.controller.AvatarController">
+        <property name="settingsService" ref="settingsService"/>
+    </bean>
     <bean id="proxyController" class="net.sourceforge.subsonic.controller.ProxyController"/>
     <bean id="statusChartController" class="net.sourceforge.subsonic.controller.StatusChartController">
         <property name="statusService" ref="statusService"/>
@@ -368,6 +371,7 @@
                 <prop key="/webPlayer.view">webPlayerController</prop>
                 <prop key="/xspfPlaylist.view">xspfPlaylistController</prop>
                 <prop key="/coverArt.view">coverArtController</prop>
+                <prop key="/avatar.view">avatarController</prop>
                 <prop key="/proxy.view">proxyController</prop>
                 <prop key="/statusChart.view">statusChartController</prop>
                 <prop key="/userChart.view">userChartController</prop>
