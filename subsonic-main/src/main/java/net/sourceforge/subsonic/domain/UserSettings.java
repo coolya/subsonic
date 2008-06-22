@@ -25,6 +25,8 @@ public class UserSettings {
     private boolean partyModeEnabled;
     private boolean nowPlayingAllowed;
     private boolean webPlayerDefault;
+    private AvatarScheme avatarScheme;
+    private Integer avatarId;
 
     public UserSettings(String username) {
         this.username = username;
@@ -156,6 +158,22 @@ public class UserSettings {
 
     public void setWebPlayerDefault(boolean webPlayerDefault) {
         this.webPlayerDefault = webPlayerDefault;
+    }
+
+    public AvatarScheme getAvatarScheme() {
+        return avatarScheme;
+    }
+
+    public void setAvatarScheme(AvatarScheme avatarScheme) {
+        this.avatarScheme = avatarScheme;
+    }
+
+    public Integer getAvatarId() {
+        return avatarId;
+    }
+
+    public void setAvatarId(Integer avatarId) {
+        this.avatarId = avatarId;
     }
 
     /**

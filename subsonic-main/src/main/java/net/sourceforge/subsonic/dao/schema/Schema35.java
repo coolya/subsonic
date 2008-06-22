@@ -1,12 +1,12 @@
 package net.sourceforge.subsonic.dao.schema;
 
 import net.sourceforge.subsonic.Logger;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.apache.commons.io.IOUtils;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.Date;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
 
 /**
  * Used for creating and evolving the database schema.
@@ -58,23 +58,26 @@ public class Schema35 extends Schema {
                              "height int not null," +
                              "data binary not null)");
             LOG.info("Database table 'system_avatar' was created successfully.");
-            createAvatar(template, "system-avatar-1.png");
         }
+        createAvatar(template, "system-avatar-1.png", 24, 24);
+        createAvatar(template, "system-avatar-2.png", 24, 35);
     }
 
-    private void createAvatar(JdbcTemplate template, String avatar) {
-        InputStream in = null;
-        try {
-            in = getClass().getResourceAsStream(avatar);
-            byte[] imageData = IOUtils.toByteArray(in);
-            template.update("insert into system_avatar values (null, ?, ?, ?, ?, ?, ?)",
-                            new Object[]{avatar, new Date(), "image/png", 24, 24, imageData});
-            LOG.info("Created avatar " + avatar);
-        } catch (IOException x) {
-            LOG.error("Failed to create avatar " + avatar, x);
-        } finally {
-            IOUtils.closeQuietly(in);
-        }
+    private void createAvatar(JdbcTemplate template, String avatar, int width, int height) {
+        if (template.queryForInt("select count(*) from system_avatar where name = ?", new Object[]{avatar}) == 0) {
 
+            InputStream in = null;
+            try {
+                in = getClass().getResourceAsStream(avatar);
+                byte[] imageData = IOUtils.toByteArray(in);
+                template.update("insert into system_avatar values (null, ?, ?, ?, ?, ?, ?)",
+                                new Object[]{avatar, new Date(), "image/png", width, height, imageData});
+                LOG.info("Created avatar '" + avatar + "'.");
+            } catch (IOException x) {
+                LOG.error("Failed to create avatar '" + avatar + "'.", x);
+            } finally {
+                IOUtils.closeQuietly(in);
+            }
+        }
     }
 }

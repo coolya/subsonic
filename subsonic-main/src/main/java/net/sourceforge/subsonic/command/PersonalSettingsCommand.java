@@ -14,6 +14,8 @@ public class PersonalSettingsCommand {
     private String[] locales;
     private String themeIndex;
     private Theme[] themes;
+    private int avatarId;
+    private Avatar[] avatars;
     private UserSettings.Visibility mainVisibility;
     private UserSettings.Visibility playlistVisibility;
     private boolean partyModeEnabled;
@@ -65,6 +67,22 @@ public class PersonalSettingsCommand {
 
     public void setThemes(Theme[] themes) {
         this.themes = themes;
+    }
+
+    public int getAvatarId() {
+        return avatarId;
+    }
+
+    public void setAvatarId(int avatarId) {
+        this.avatarId = avatarId;
+    }
+
+    public Avatar[] getAvatars() {
+        return avatars;
+    }
+
+    public void setAvatars(Avatar[] avatars) {
+        this.avatars = avatars;
     }
 
     public UserSettings.Visibility getMainVisibility() {
