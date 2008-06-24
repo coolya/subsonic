@@ -7,7 +7,9 @@ Scale user avatars to 24x24 and store in database.
 Two tables: system_avatar and user_avatar
 For now, system_avatar should be read-only.
 Save content-type in database.
-
+Find some nice 32x32 avatars.
+Max allowed size should be 64x64.
+Should make it possible to retrieve avatars without reading the binary column.
 
 user.systemAvatarId
 user.customAvatarId
@@ -24,6 +26,7 @@ height
 
 TODO IN 3.5
 -----------
+Fix "bars" (|) in main.jsp
 Avatar support.
 Check out mobile streaming with ORB. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=68&sid=3ff930e6a52fc8e9b462d5ff84c0026a
 Create per-channel podcast settings. At least enable/disable.

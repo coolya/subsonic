@@ -3,6 +3,7 @@ package net.sourceforge.subsonic.dao;
 import net.sourceforge.subsonic.domain.TranscodeScheme;
 import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.domain.AvatarScheme;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -147,6 +148,8 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertFalse("Error in getUserSettings().", userSettings.isPartyModeEnabled());
         assertFalse("Error in getUserSettings().", userSettings.isNowPlayingAllowed());
         assertFalse("Error in getUserSettings().", userSettings.isWebPlayerDefault());
+        assertSame("Error in getUserSettings().", AvatarScheme.NONE, userSettings.getAvatarScheme());
+        assertNull("Error in getUserSettings().", userSettings.getSystemAvatarId());
 
         UserSettings settings = new UserSettings("sindre");
         settings.setLocale(Locale.SIMPLIFIED_CHINESE);
@@ -165,6 +168,8 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         settings.setPartyModeEnabled(true);
         settings.setNowPlayingAllowed(true);
         settings.setWebPlayerDefault(true);
+        settings.setAvatarScheme(AvatarScheme.SYSTEM);
+        settings.setSystemAvatarId(1);
 
         userDao.updateUserSettings(settings);
         userSettings = userDao.getUserSettings("sindre");
@@ -186,6 +191,8 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertTrue("Error in getUserSettings().", userSettings.isPartyModeEnabled());
         assertTrue("Error in getUserSettings().", userSettings.isNowPlayingAllowed());
         assertTrue("Error in getUserSettings().", userSettings.isWebPlayerDefault());
+        assertSame("Error in getUserSettings().", AvatarScheme.SYSTEM, userSettings.getAvatarScheme());
+        assertEquals("Error in getUserSettings().", 1, userSettings.getSystemAvatarId().intValue());
 
         userDao.deleteUser("sindre");
         assertNull("Error in cascading delete.", userDao.getUserSettings("sindre"));

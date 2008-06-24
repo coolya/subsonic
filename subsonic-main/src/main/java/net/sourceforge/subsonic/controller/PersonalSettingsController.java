@@ -30,6 +30,7 @@ public class PersonalSettingsController extends SimpleFormController {
         command.setLocaleIndex("-1");
         command.setThemeIndex("-1");
         command.setAvatars(settingsService.getAllSystemAvatars());
+        command.setAvatarId(getAvatarId(userSettings));
         command.setPartyModeEnabled(userSettings.isPartyModeEnabled());
         command.setShowNowPlayingEnabled(userSettings.isShowNowPlayingEnabled());
         command.setNowPlayingAllowed(userSettings.isNowPlayingAllowed());
@@ -99,6 +100,8 @@ public class PersonalSettingsController extends SimpleFormController {
         settings.setBetaVersionNotificationEnabled(command.isBetaVersionNotificationEnabled());
         settings.setLastFmEnabled(command.isLastFmEnabled());
         settings.setLastFmUsername(command.getLastFmUsername());
+        settings.setSystemAvatarId(getSystemAvatarId(command));
+        settings.setAvatarScheme(getAvatarScheme(command));
 
         if (StringUtils.isNotBlank(command.getLastFmPassword())) {
             settings.setLastFmPassword(command.getLastFmPassword());
@@ -107,6 +110,30 @@ public class PersonalSettingsController extends SimpleFormController {
         settingsService.updateUserSettings(settings);
 
         command.setReloadNeeded(true);
+    }
+
+    private int getAvatarId(UserSettings userSettings) {
+        AvatarScheme avatarScheme = userSettings.getAvatarScheme();
+        return avatarScheme == AvatarScheme.SYSTEM ? userSettings.getSystemAvatarId() : avatarScheme.getCode();
+    }
+
+    private AvatarScheme getAvatarScheme(PersonalSettingsCommand command) {
+        if (command.getAvatarId() == AvatarScheme.NONE.getCode()) {
+            return AvatarScheme.NONE;
+        }
+        if (command.getAvatarId() == AvatarScheme.CUSTOM.getCode()) {
+            return AvatarScheme.CUSTOM;
+        }
+        return AvatarScheme.SYSTEM;
+    }
+
+    private Integer getSystemAvatarId(PersonalSettingsCommand command) {
+        int avatarId = command.getAvatarId();
+        if (avatarId == AvatarScheme.NONE.getCode() ||
+            avatarId == AvatarScheme.CUSTOM.getCode()) {
+            return null;
+        }
+        return avatarId;
     }
 
     public void setSettingsService(SettingsService settingsService) {

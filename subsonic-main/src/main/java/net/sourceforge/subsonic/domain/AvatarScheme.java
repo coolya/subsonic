@@ -21,6 +21,7 @@ public enum AvatarScheme {
      * The custom avatar should be displayed.
      */
     CUSTOM(-2);
+
     private final int code;
 
     AvatarScheme(int code) {

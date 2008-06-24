@@ -61,6 +61,22 @@ public class Schema35 extends Schema {
         }
         createAvatar(template, "system-avatar-1.png", 24, 24);
         createAvatar(template, "system-avatar-2.png", 24, 35);
+        createAvatar(template, "system-avatar-3.png", 48, 48);
+        createAvatar(template, "system-avatar-4.png", 32, 32);
+        createAvatar(template, "system-avatar-5.png", 64, 64);
+
+        if (!columnExists(template, "avatar_scheme", "user_settings")) {
+            LOG.info("Database column 'user_settings.avatar_scheme' not found.  Creating it.");
+            template.execute("alter table user_settings add avatar_scheme varchar default 'NONE' not null");
+            LOG.info("Database column 'user_settings.avatar_scheme' was added successfully.");
+        }
+
+        if (!columnExists(template, "system_avatar_id", "user_settings")) {
+            LOG.info("Database column 'user_settings.system_avatar_id' not found.  Creating it.");
+            template.execute("alter table user_settings add system_avatar_id int");
+            template.execute("alter table user_settings add foreign key (system_avatar_id) references system_avatar(id)");
+            LOG.info("Database column 'user_settings.system_avatar_id' was added successfully.");
+        }
     }
 
     private void createAvatar(JdbcTemplate template, String avatar, int width, int height) {

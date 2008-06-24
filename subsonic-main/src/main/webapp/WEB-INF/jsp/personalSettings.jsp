@@ -182,6 +182,9 @@
         <label for="avatar-${avatar.id}"><img src="${avatarUrl}" alt="" width="${avatar.width}" height="${avatar.height}" style="padding-right:5pt"/></label>
     </c:forEach>
 
+    <form:radiobutton id="customAvatar" path="avatarId" value="-2"/>
+    <label for="customAvatar"><fmt:message key="personalsettings.avatar.custom"/></label>
+
     <p/>
     <p/>
 

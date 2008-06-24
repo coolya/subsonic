@@ -371,6 +371,10 @@ public final class StringUtil {
      * @return The rewritten URL, or an unchanged URL if either argument is not a proper URL.
      */
     public static String rewriteUrl(String urlToRewrite, String urlWithHostAndPort) {
+        if (urlToRewrite == null) {
+            return null;
+        }
+
         try {
             URL urlA = new URL(urlToRewrite);
             URL urlB = new URL(urlWithHostAndPort);

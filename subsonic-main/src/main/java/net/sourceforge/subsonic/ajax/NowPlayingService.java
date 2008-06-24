@@ -4,6 +4,7 @@ import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.TransferStatus;
 import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.domain.AvatarScheme;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SettingsService;
@@ -91,12 +92,18 @@ public class NowPlayingService {
                                      url.replaceFirst("/dwr/.*", "/coverArt.view?size=32&pathUtf8Hex=" +
                                                                  StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
 
+                String avatarUrl = null;
+                if (userSettings.getAvatarScheme() == AvatarScheme.SYSTEM) {
+                    avatarUrl = url.replaceFirst("/dwr/.*", "/avatar.view?id=" + userSettings.getSystemAvatarId());
+                }
+
                 // Rewrite URLs in case we're behind a proxy.
                 if (settingsService.isRewriteUrlEnabled()) {
                     String referer = request.getHeader("referer");
                     albumUrl = StringUtil.rewriteUrl(albumUrl, referer);
                     lyricsUrl = StringUtil.rewriteUrl(lyricsUrl, referer);
                     coverArtUrl = StringUtil.rewriteUrl(coverArtUrl, referer);
+                    avatarUrl = StringUtil.rewriteUrl(avatarUrl, referer);
                 }
 
                 String tooltip = artist + " &ndash; " + title;
@@ -108,7 +115,7 @@ public class NowPlayingService {
                 title = StringUtils.abbreviate(title, 25);
                 username = StringUtils.abbreviate(username, 25);
 
-                result.add(new NowPlayingInfo(username, artist, title, tooltip, albumUrl, lyricsUrl, coverArtUrl));
+                result.add(new NowPlayingInfo(username, artist, title, tooltip, albumUrl, lyricsUrl, coverArtUrl, avatarUrl));
             }
         }
 

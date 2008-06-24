@@ -4,6 +4,7 @@ import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.TranscodeScheme;
 import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.domain.AvatarScheme;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
@@ -27,7 +28,7 @@ public class UserDao extends AbstractDao {
                                                         "playlist_caption_cutoff, playlist_track_number, playlist_artist, playlist_album, playlist_genre, " +
                                                         "playlist_year, playlist_bit_rate, playlist_duration, playlist_format, playlist_file_size, " +
                                                         "last_fm_enabled, last_fm_username, last_fm_password, transcode_scheme, show_now_playing, selected_music_folder_id, " +
-                                                        "party_mode_enabled, now_playing_allowed, web_player_default";
+                                                        "party_mode_enabled, now_playing_allowed, web_player_default, avatar_scheme, system_avatar_id";
 
     private static final Integer ROLE_ID_ADMIN = 1;
     private static final Integer ROLE_ID_DOWNLOAD = 2;
@@ -168,7 +169,7 @@ public class UserDao extends AbstractDao {
                                                    settings.isLastFmEnabled(), settings.getLastFmUsername(), encrypt(settings.getLastFmPassword()),
                                                    settings.getTranscodeScheme().name(), settings.isShowNowPlayingEnabled(),
                                                    settings.getSelectedMusicFolderId(), settings.isPartyModeEnabled(), settings.isNowPlayingAllowed(),
-                                                   settings.isWebPlayerDefault()});
+                                                   settings.isWebPlayerDefault(), settings.getAvatarScheme().name(), settings.getSystemAvatarId()});
     }
 
     private static String encrypt(String s) {
@@ -299,6 +300,8 @@ public class UserDao extends AbstractDao {
             settings.setPartyModeEnabled(rs.getBoolean(col++));
             settings.setNowPlayingAllowed(rs.getBoolean(col++));
             settings.setWebPlayerDefault(rs.getBoolean(col++));
+            settings.setAvatarScheme(AvatarScheme.valueOf(rs.getString(col++)));
+            settings.setSystemAvatarId((Integer) rs.getObject(col++));
 
             return settings;
         }

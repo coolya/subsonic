@@ -55,9 +55,12 @@
         function getNowPlayingCallback(nowPlaying) {
             var html = nowPlaying.length == 0 ? "" : "<h2><fmt:message key="main.nowplaying"/></h2><table>";
             for (var i = 0; i < nowPlaying.length; i++) {
-                html += "<tr><td colspan='2' class='detail' style='padding-top:1em'>" +
-                        "<img src='http://localhost:8080/icons/user-24.png' style='padding-right:5pt'/>" +
-                        nowPlaying[i].username + "</td></tr>"
+                html += "<tr><td colspan='2' style='padding-top:1em;white-space:nowrap'>";
+
+                if (nowPlaying[i].avatarUrl != null) {
+                    html += "<img src='" + nowPlaying[i].avatarUrl + "' style='padding-right:5pt'/>";
+                }
+                html += "<b>" + nowPlaying[i].username + "</b></td></tr>"
 
                 html += "<tr><td class='detail' style='padding-right:1em'>" +
                         "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'><em>" +
@@ -104,7 +107,7 @@
         <sub:url value="main.view" var="upUrl">
             <sub:param name="path" value="${model.dir.parent.path}"/>
         </sub:url>
-        <a href="${upUrl}"><fmt:message key="main.up"/></a>
+        <a href="${upUrl}"><fmt:message key="main.up"/></a> |
     </c:if>
 
     <sub:url value="playlist.view" var="playUrl">
@@ -115,8 +118,8 @@
     </sub:url>
 
     <c:if test="${model.user.streamRole}">
-        | <a target="playlist" href="${playUrl}"><fmt:message key="main.playall"/></a>
-        | <a target="playlist" href="${addUrl}"><fmt:message key="main.addall"/></a>
+        <a target="playlist" href="${playUrl}"><fmt:message key="main.playall"/></a> |
+        <a target="playlist" href="${addUrl}"><fmt:message key="main.addall"/></a> |
     </c:if>
 
     <c:if test="${model.dir.album}">
@@ -125,23 +128,23 @@
             <sub:url value="download.view" var="downloadUrl">
                 <sub:param name="path" value="${model.dir.path}"/>
             </sub:url>
-            | <a href="${downloadUrl}"><fmt:message key="common.download"/></a>
+            <a href="${downloadUrl}"><fmt:message key="common.download"/></a> |
         </c:if>
 
         <sub:url value="albumInfo.view" var="albumInfoUrl">
             <sub:param name="path" value="${model.dir.path}"/>
         </sub:url>
-        | <a href="${albumInfoUrl}"><fmt:message key="main.albuminfo"/></a>
+        <a href="${albumInfoUrl}"><fmt:message key="main.albuminfo"/></a> |
 
         <c:if test="${model.user.coverArtRole}">
             <sub:url value="editTags.view" var="editTagsUrl">
                 <sub:param name="path" value="${model.dir.path}"/>
             </sub:url>
-            | <a href="${editTagsUrl}"><fmt:message key="main.tags"/></a>
+            <a href="${editTagsUrl}"><fmt:message key="main.tags"/></a> |
         </c:if>
 
         <c:if test="${model.user.commentRole}">
-            | <a href="javascript:toggleComment()"><fmt:message key="main.comment"/></a>
+            <a href="javascript:toggleComment()"><fmt:message key="main.comment"/></a>
         </c:if>
     </c:if>
 </h2>
