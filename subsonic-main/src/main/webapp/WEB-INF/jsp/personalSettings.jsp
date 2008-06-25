@@ -169,6 +169,10 @@
         </tr>
     </table>
 
+    <p style="padding-top:1em;padding-bottom:1em">
+        <input type="submit" value="<fmt:message key="common.save"/>"/>
+    </p>
+
     <h2><fmt:message key="personalsettings.avatar.title"/></h2>
 
     <p style="padding-top:1em">
@@ -178,7 +182,7 @@
             </c:url>
             <span style="white-space:nowrap;">
                 <form:radiobutton id="avatar-${avatar.id}" path="avatarId" value="${avatar.id}"/>
-                <label for="avatar-${avatar.id}"><img src="${avatarUrl}" alt="" width="${avatar.width}" height="${avatar.height}" style="padding-right:2em;padding-bottom:1em"/></label>
+                <label for="avatar-${avatar.id}"><img src="${avatarUrl}" alt="" style="padding-right:2em;padding-bottom:1em"/></label>
             </span>
         </c:forEach>
     </p>
@@ -188,11 +192,26 @@
     </p>
     <p>
         <form:radiobutton id="customAvatar" path="avatarId" value="-2"/>
-        <label for="customAvatar"><fmt:message key="personalsettings.avatar.custom"/></label>
+        <label for="customAvatar"><fmt:message key="personalsettings.avatar.custom"/>
+            <c:if test="${not empty command.customAvatar}">
+                <sub:url value="avatar.view" var="avatarUrl">
+                    <sub:param name="username" value="${command.user.username}"/>
+                </sub:url>
+                <img src="${avatarUrl}" alt="" style="padding-right:2em"/>
+            </c:if>
+        </label>
     </p>
-
-    <input type="submit" value="<fmt:message key="common.save"/>"/>
 </form:form>
+
+<form method="post" enctype="multipart/form-data" action="avatarUpload.view">
+    <table>
+        <tr>
+            <td style="padding-right:1em"><fmt:message key="personalsettings.avatar.changecustom"/></td>
+            <td style="padding-right:1em"><input type="file" id="file" name="file" size="40"/></td>
+            <td style="padding-right:1em"><input type="submit" value="<fmt:message key="personalsettings.avatar.upload"/>"/></td>
+        </tr>
+    </table>
+</form>
 
 <c:if test="${command.reloadNeeded}">
     <script language="javascript" type="text/javascript">

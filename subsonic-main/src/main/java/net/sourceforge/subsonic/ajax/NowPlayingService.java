@@ -89,12 +89,14 @@ public class NowPlayingService {
                                                                "&songUtf8Hex=" +
                                                                StringUtil.utf8HexEncode(musicFile.getMetaData().getTitle()));
                 String coverArtUrl = coverArts.isEmpty() ? null :
-                                     url.replaceFirst("/dwr/.*", "/coverArt.view?size=32&pathUtf8Hex=" +
+                                     url.replaceFirst("/dwr/.*", "/coverArt.view?size=48&pathUtf8Hex=" +
                                                                  StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
 
                 String avatarUrl = null;
                 if (userSettings.getAvatarScheme() == AvatarScheme.SYSTEM) {
                     avatarUrl = url.replaceFirst("/dwr/.*", "/avatar.view?id=" + userSettings.getSystemAvatarId());
+                } else if (userSettings.getAvatarScheme() == AvatarScheme.CUSTOM) {
+                    avatarUrl = url.replaceFirst("/dwr/.*", "/avatar.view?username=" + username);
                 }
 
                 // Rewrite URLs in case we're behind a proxy.

@@ -30,6 +30,7 @@ public class PersonalSettingsController extends SimpleFormController {
         command.setLocaleIndex("-1");
         command.setThemeIndex("-1");
         command.setAvatars(settingsService.getAllSystemAvatars());
+        command.setCustomAvatar(settingsService.getCustomAvatar(user.getUsername()));
         command.setAvatarId(getAvatarId(userSettings));
         command.setPartyModeEnabled(userSettings.isPartyModeEnabled());
         command.setShowNowPlayingEnabled(userSettings.isShowNowPlayingEnabled());

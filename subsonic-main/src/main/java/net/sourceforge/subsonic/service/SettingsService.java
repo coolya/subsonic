@@ -859,6 +859,26 @@ public class SettingsService {
         return avatarDao.getSystemAvatar(id);
     }
 
+    /**
+     * Returns the custom avatar for the given user.
+     *
+     * @param username The username.
+     * @return The avatar or <code>null</code> if not found.
+     */
+    public Avatar getCustomAvatar(String username) {
+        return avatarDao.getCustomAvatar(username);
+    }
+
+    /**
+     * Sets the custom avatar for the given user.
+     *
+     * @param avatar The avatar, or <code>null</code> to remove the avatar.
+     * @param username The username.
+     */
+    public void setCustomAvatar(Avatar avatar, String username) {
+        avatarDao.setCustomAvatar(avatar, username);
+    }
+
     private void setProperty(String key, String value) {
         if (value == null) {
             properties.remove(key);

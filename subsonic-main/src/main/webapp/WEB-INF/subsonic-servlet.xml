@@ -191,6 +191,10 @@
         <property name="settingsService" ref="settingsService"/>
         <property name="securityService" ref="securityService"/>
     </bean>
+    <bean id="avatarUploadController" class="net.sourceforge.subsonic.controller.AvatarUploadController">
+        <property name="settingsService" ref="settingsService"/>
+        <property name="secturityService" ref="securityService"/>
+    </bean>
     <bean id="userSettingsController" class="net.sourceforge.subsonic.controller.UserSettingsController">
         <property name="sessionForm" value="true"/>
         <property name="commandClass" value="net.sourceforge.subsonic.command.UserSettingsCommand"/>
@@ -361,6 +365,7 @@
                 <prop key="/generalSettings.view">generalSettingsController</prop>
                 <prop key="/advancedSettings.view">advancedSettingsController</prop>
                 <prop key="/personalSettings.view">personalSettingsController</prop>
+                <prop key="/avatarUpload.view">avatarUploadController</prop>
                 <prop key="/userSettings.view">userSettingsController</prop>
                 <prop key="/passwordSettings.view">passwordSettingsController</prop>
                 <prop key="/allmusic.view">allmusicController</prop>

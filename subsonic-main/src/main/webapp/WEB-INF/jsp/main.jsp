@@ -70,7 +70,7 @@
 
                 if (nowPlaying[i].coverArtUrl != null) {
                     html += "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'>" +
-                            "<img src='" + nowPlaying[i].coverArtUrl + "' width='32' height='32'/></a>";
+                            "<img src='" + nowPlaying[i].coverArtUrl + "' width='48' height='48'/></a>";
                 }
                 html += "</td></tr>";
             }

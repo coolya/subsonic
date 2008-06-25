@@ -26,6 +26,9 @@ height
 
 TODO IN 3.5
 -----------
+Rescale if bigger than 64x64
+Remove width, height and mimetype.
+Add "Icons courtesy of xxx, yyy, zzz".
 Check out Yahoo ads.
 Fix "bars" (|) in main.jsp
 Avatar support.

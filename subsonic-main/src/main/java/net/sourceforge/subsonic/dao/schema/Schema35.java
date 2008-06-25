@@ -73,6 +73,7 @@ public class Schema35 extends Schema {
                              "width int not null," +
                              "height int not null," +
                              "data binary not null," +
+                             "username varchar not null," +
                              "foreign key (username) references user(username) on delete cascade)");
             LOG.info("Database table 'custom_avatar' was created successfully.");
         }

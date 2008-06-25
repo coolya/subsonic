@@ -16,6 +16,7 @@ public class PersonalSettingsCommand {
     private Theme[] themes;
     private int avatarId;
     private Avatar[] avatars;
+    private Avatar customAvatar;
     private UserSettings.Visibility mainVisibility;
     private UserSettings.Visibility playlistVisibility;
     private boolean partyModeEnabled;
@@ -83,6 +84,14 @@ public class PersonalSettingsCommand {
 
     public void setAvatars(Avatar[] avatars) {
         this.avatars = avatars;
+    }
+
+    public Avatar getCustomAvatar() {
+        return customAvatar;
+    }
+
+    public void setCustomAvatar(Avatar customAvatar) {
+        this.customAvatar = customAvatar;
     }
 
     public UserSettings.Visibility getMainVisibility() {
