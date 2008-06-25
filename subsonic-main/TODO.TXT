@@ -26,6 +26,7 @@ height
 
 TODO IN 3.5
 -----------
+Check out Yahoo ads.
 Fix "bars" (|) in main.jsp
 Avatar support.
 Check out mobile streaming with ORB. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=68&sid=3ff930e6a52fc8e9b462d5ff84c0026a

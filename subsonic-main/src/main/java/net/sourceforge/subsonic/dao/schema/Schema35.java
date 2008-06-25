@@ -59,11 +59,9 @@ public class Schema35 extends Schema {
                              "data binary not null)");
             LOG.info("Database table 'system_avatar' was created successfully.");
         }
-        createAvatar(template, "system-avatar-1.png", 24, 24);
-        createAvatar(template, "system-avatar-2.png", 24, 35);
-        createAvatar(template, "system-avatar-3.png", 48, 48);
-        createAvatar(template, "system-avatar-4.png", 32, 32);
-        createAvatar(template, "system-avatar-5.png", 64, 64);
+        for (int i = 1; i <= 40; i++) {
+            createAvatar(template, "system-avatar-" + i + ".png", 48, 48);
+        }
 
         if (!columnExists(template, "avatar_scheme", "user_settings")) {
             LOG.info("Database column 'user_settings.avatar_scheme' not found.  Creating it.");

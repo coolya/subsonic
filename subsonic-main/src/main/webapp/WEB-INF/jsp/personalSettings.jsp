@@ -171,22 +171,25 @@
 
     <h2><fmt:message key="personalsettings.avatar.title"/></h2>
 
-    <form:radiobutton id="noAvatar" path="avatarId" value="-1"/>
-    <label for="noAvatar"><fmt:message key="personalsettings.avatar.none"/></label>
-
-    <c:forEach items="${command.avatars}" var="avatar">
-        <c:url value="avatar.view" var="avatarUrl">
-            <c:param name="id" value="${avatar.id}"/>
-        </c:url>
-        <form:radiobutton id="avatar-${avatar.id}" path="avatarId" value="${avatar.id}"/>
-        <label for="avatar-${avatar.id}"><img src="${avatarUrl}" alt="" width="${avatar.width}" height="${avatar.height}" style="padding-right:5pt"/></label>
-    </c:forEach>
-
-    <form:radiobutton id="customAvatar" path="avatarId" value="-2"/>
-    <label for="customAvatar"><fmt:message key="personalsettings.avatar.custom"/></label>
-
-    <p/>
-    <p/>
+    <p style="padding-top:1em">
+        <c:forEach items="${command.avatars}" var="avatar">
+            <c:url value="avatar.view" var="avatarUrl">
+                <c:param name="id" value="${avatar.id}"/>
+            </c:url>
+            <span style="white-space:nowrap;">
+                <form:radiobutton id="avatar-${avatar.id}" path="avatarId" value="${avatar.id}"/>
+                <label for="avatar-${avatar.id}"><img src="${avatarUrl}" alt="" width="${avatar.width}" height="${avatar.height}" style="padding-right:2em;padding-bottom:1em"/></label>
+            </span>
+        </c:forEach>
+    </p>
+    <p>
+        <form:radiobutton id="noAvatar" path="avatarId" value="-1"/>
+        <label for="noAvatar"><fmt:message key="personalsettings.avatar.none"/></label>
+    </p>
+    <p>
+        <form:radiobutton id="customAvatar" path="avatarId" value="-2"/>
+        <label for="customAvatar"><fmt:message key="personalsettings.avatar.custom"/></label>
+    </p>
 
     <input type="submit" value="<fmt:message key="common.save"/>"/>
 </form:form>

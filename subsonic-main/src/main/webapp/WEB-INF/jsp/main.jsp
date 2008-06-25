@@ -55,7 +55,7 @@
         function getNowPlayingCallback(nowPlaying) {
             var html = nowPlaying.length == 0 ? "" : "<h2><fmt:message key="main.nowplaying"/></h2><table>";
             for (var i = 0; i < nowPlaying.length; i++) {
-                html += "<tr><td colspan='2' style='padding-top:1em;white-space:nowrap'>";
+                html += "<tr><td colspan='2' class='detail' style='padding-top:1em;white-space:nowrap'>";
 
                 if (nowPlaying[i].avatarUrl != null) {
                     html += "<img src='" + nowPlaying[i].avatarUrl + "' style='padding-right:5pt'/>";
