@@ -28,7 +28,6 @@ public class AvatarDao extends AbstractDao {
         return (Avatar[]) getJdbcTemplate().query(sql, rowMapper).toArray(new Avatar[0]);
     }
 
-
     /**
      * Returns the system avatar with the given ID.
      *
@@ -39,6 +38,35 @@ public class AvatarDao extends AbstractDao {
         String sql = "select " + COLUMNS + " from system_avatar where id=" + id;
         List<?> result = getJdbcTemplate().query(sql, rowMapper);
         return (Avatar) (result.isEmpty() ? null : result.get(0));
+    }
+
+    /**
+     * Returns the custom avatar for the given user.
+     *
+     * @param username The username.
+     * @return The avatar or <code>null</code> if not found.
+     */
+    public Avatar getCustomAvatar(String username) {
+        String sql = "select " + COLUMNS + " from custom_avatar where username=?";
+        List<?> result = getJdbcTemplate().query(sql, new Object[] {username}, rowMapper);
+        return (Avatar) (result.isEmpty() ? null : result.get(0));
+    }
+
+    /**
+     * Sets the custom avatar for the given user.
+     *
+     * @param avatar The avatar, or <code>null</code> to remove the avatar.
+     * @param username The username.
+     */
+    public void setCustomAvatar(Avatar avatar, String username) {
+        String sql = "delete from custom_avatar where username=?";
+        getJdbcTemplate().update(sql, new Object[] {username});
+
+        if (avatar != null) {
+            getJdbcTemplate().update("insert into custom_avatar(" + COLUMNS + ", username) values(" + questionMarks(COLUMNS) + ", ?)",
+                                     new Object[]{null, avatar.getName(), avatar.getCreatedDate(), avatar.getMimeType(),
+                                                  avatar.getWidth(), avatar.getHeight(), avatar.getData(), username});
+        }
     }
 
     private static class AvatarRowMapper implements ParameterizedRowMapper<Avatar> {

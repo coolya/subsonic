@@ -63,6 +63,20 @@ public class Schema35 extends Schema {
             createAvatar(template, "system-avatar-" + i + ".png", 48, 48);
         }
 
+        if (!tableExists(template, "custom_avatar")) {
+            LOG.info("Database table 'custom_avatar' not found.  Creating it.");
+            template.execute("create table custom_avatar (" +
+                             "id identity," +
+                             "name varchar," +
+                             "created_date datetime not null," +
+                             "mime_type varchar not null," +
+                             "width int not null," +
+                             "height int not null," +
+                             "data binary not null," +
+                             "foreign key (username) references user(username) on delete cascade)");
+            LOG.info("Database table 'custom_avatar' was created successfully.");
+        }
+
         if (!columnExists(template, "avatar_scheme", "user_settings")) {
             LOG.info("Database column 'user_settings.avatar_scheme' not found.  Creating it.");
             template.execute("alter table user_settings add avatar_scheme varchar default 'NONE' not null");
