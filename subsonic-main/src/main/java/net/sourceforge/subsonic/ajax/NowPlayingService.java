@@ -95,7 +95,7 @@ public class NowPlayingService {
                 String avatarUrl = null;
                 if (userSettings.getAvatarScheme() == AvatarScheme.SYSTEM) {
                     avatarUrl = url.replaceFirst("/dwr/.*", "/avatar.view?id=" + userSettings.getSystemAvatarId());
-                } else if (userSettings.getAvatarScheme() == AvatarScheme.CUSTOM) {
+                } else if (userSettings.getAvatarScheme() == AvatarScheme.CUSTOM && settingsService.getCustomAvatar(username) != null) {
                     avatarUrl = url.replaceFirst("/dwr/.*", "/avatar.view?username=" + username);
                 }
 
