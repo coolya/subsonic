@@ -4,42 +4,51 @@ import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.Avatar;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Controller which receives uploaded avatar images.
  *
  * @author Sindre Mehus
  */
-public class AvatarUploadController implements Controller {
+public class AvatarUploadController extends ParameterizableViewController {
 
     private static final Logger LOG = Logger.getLogger(AvatarUploadController.class);
+    private static final int MAX_AVATAR_SIZE = 64;
 
     private SettingsService settingsService;
     private SecurityService secturityService;
 
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        // Check that we have a file upload request
+    @Override
+    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String username = secturityService.getCurrentUsername(request);
+
+        // Check that we have a file upload request.
         if (!ServletFileUpload.isMultipartContent(request)) {
             throw new Exception("Illegal request.");
         }
 
+        Map<String, Object> map = new HashMap<String, Object>();
         FileItemFactory factory = new DiskFileItemFactory();
         ServletFileUpload upload = new ServletFileUpload(factory);
         List<?> items = upload.parseRequest(request);
@@ -53,35 +62,51 @@ public class AvatarUploadController implements Controller {
                 byte[] data = item.get();
 
                 if (StringUtils.isNotBlank(fileName) && data.length > 0) {
-                    String username = secturityService.getCurrentUsername(request);
-                    if (!createAvatar(fileName, data, username, response)) {
-                        return null;
-                    }
+                    createAvatar(fileName, data, username, map);
+                    break;
                 }
             }
         }
 
-        return new ModelAndView(new RedirectView("personalSettings.view?"));
+        map.put("username", username);
+        map.put("avatar", settingsService.getCustomAvatar(username));
+        ModelAndView result = super.handleRequestInternal(request, response);
+        result.addObject("model", map);
+        return result;
     }
 
-    private boolean createAvatar(String name, byte[] data, String username, HttpServletResponse response) throws IOException {
+    private void createAvatar(String fileName, byte[] data, String username, Map<String, Object> map) throws IOException {
 
         BufferedImage image;
         try {
             image = ImageIO.read(new ByteArrayInputStream(data));
-            if (image.getWidth() > 64 || image.getHeight() > 64) {
-                response.sendError(HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE, "Image must not be larger than 64 x 64 pixels.");
-                return false;
+            if (image == null) {
+                throw new Exception("Failed to decode incoming image: " + fileName + " (" + data.length + " bytes).");
             }
-        } catch (Exception x) {
-            response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "Failed to decode image.");
-            return false;
-        }
+            int width = image.getWidth();
+            int height = image.getHeight();
+            String mimeType = StringUtil.getMimeType(StringUtil.getSuffix(fileName));
 
-        Avatar avatar = new Avatar(0, name, new Date(), "image/png", 48, 48, data);
-        settingsService.setCustomAvatar(avatar, username);
-        LOG.info("Uploaded avatar '" + name + "' (" + data.length + " bytes) for user " + username);
-        return true;
+            // Scale down image if necessary.
+            if (width > MAX_AVATAR_SIZE || height > MAX_AVATAR_SIZE) {
+                double scaleFactor = (double) MAX_AVATAR_SIZE / (double) Math.max(width, height);
+                height = (int) (height * scaleFactor);
+                width = (int) (width * scaleFactor);
+                image = CoverArtController.scale(image, width, height);
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                ImageIO.write(image, "jpeg", out);
+                data = out.toByteArray();
+                mimeType = StringUtil.getMimeType("jpeg");
+                map.put("resized", true);
+            }
+            Avatar avatar = new Avatar(0, fileName, new Date(), mimeType, width, height, data);
+            settingsService.setCustomAvatar(avatar, username);
+            LOG.info("Created avatar '" + fileName + "' (" + data.length + " bytes) for user " + username);
+
+        } catch (Exception x) {
+            LOG.warn("Failed to upload personal image: " + x, x);
+            map.put("error", x);
+        }
     }
 
     public void setSettingsService(SettingsService settingsService) {

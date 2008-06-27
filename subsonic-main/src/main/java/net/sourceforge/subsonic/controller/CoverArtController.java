@@ -170,7 +170,7 @@ public class CoverArtController implements Controller, LastModified {
         return dir;
     }
 
-    public BufferedImage scale(BufferedImage image, int width, int height) {
+    public static BufferedImage scale(BufferedImage image, int width, int height) {
         int w = image.getWidth();
         int h = image.getHeight();
         BufferedImage thumb = image;

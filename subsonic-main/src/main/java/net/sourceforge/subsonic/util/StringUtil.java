@@ -48,6 +48,11 @@ public final class StringUtil {
             {"m4a", "audio/mp4"},
             {"mpg4", "audio/mp4"},
             {"ogg", "application/ogg"},
+            {"gif", "image/gif"},
+            {"jpg", "image/jpeg"},
+            {"jpeg", "image/jpeg"},
+            {"png", "image/png"},
+            {"bmp", "image/bmp"},
     };
 
     private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", "..", ":"};

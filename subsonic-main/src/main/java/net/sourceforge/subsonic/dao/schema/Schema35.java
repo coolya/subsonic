@@ -18,6 +18,58 @@ public class Schema35 extends Schema {
 
     private static final Logger LOG = Logger.getLogger(Schema35.class);
 
+    private static final String[] AVATARS = {
+            "Formal",
+            "Engineer",
+            "Footballer",
+            "Green-Boy",
+
+            "Linux-Zealot",
+            "Mac-Zealot",
+            "Windows-Zealot",
+            "Army-Officer",
+            "Beatnik",
+            "All-Caps",
+            "Clown",
+            "Commie-Pinko",
+            "Forum-Flirt",
+            "Gamer",
+            "Hopelessly-Addicted",
+            "Jekyll-And-Hyde",
+            "Joker",
+            "Lurker",
+            "Moderator",
+            "Newbie",
+            "No-Dissent",
+            "Performer",
+            "Push-My-Button",
+            "Ray-Of-Sunshine",
+            "Red-Hot-Chili-Peppers-1",
+            "Red-Hot-Chili-Peppers-2",
+            "Red-Hot-Chili-Peppers-3",
+            "Red-Hot-Chili-Peppers-4",
+            "Ringmaster",
+            "Rumor-Junkie",
+            "Sozzled-Surfer",
+            "Statistician",
+            "Tech-Support",
+            "The-Guru",
+            "The-Referee",
+            "Troll",
+            "Uptight",
+
+            "Fire-Guitar",
+            "Drum",
+            "Headphones",
+            "Mic",
+            "Turntable",
+            "Vinyl",
+
+            "Cool",
+            "Laugh",
+            "Study",
+    };
+
     @Override
     public void execute(JdbcTemplate template) {
 
@@ -59,8 +111,9 @@ public class Schema35 extends Schema {
                              "data binary not null)");
             LOG.info("Database table 'system_avatar' was created successfully.");
         }
-        for (int i = 1; i <= 40; i++) {
-            createAvatar(template, "system-avatar-" + i + ".png", 48, 48);
+
+        for (String avatar : AVATARS) {
+            createAvatar(template, avatar);
         }
 
         if (!tableExists(template, "custom_avatar")) {
@@ -92,15 +145,15 @@ public class Schema35 extends Schema {
         }
     }
 
-    private void createAvatar(JdbcTemplate template, String avatar, int width, int height) {
+    private void createAvatar(JdbcTemplate template, String avatar) {
         if (template.queryForInt("select count(*) from system_avatar where name = ?", new Object[]{avatar}) == 0) {
 
             InputStream in = null;
             try {
-                in = getClass().getResourceAsStream(avatar);
+                in = getClass().getResourceAsStream(avatar + ".png");
                 byte[] imageData = IOUtils.toByteArray(in);
                 template.update("insert into system_avatar values (null, ?, ?, ?, ?, ?, ?)",
-                                new Object[]{avatar, new Date(), "image/png", width, height, imageData});
+                                new Object[]{avatar, new Date(), "image/png", 48, 48, imageData});
                 LOG.info("Created avatar '" + avatar + "'.");
             } catch (IOException x) {
                 LOG.error("Failed to create avatar '" + avatar + "'.", x);

@@ -22,13 +22,27 @@ content_type
 width
 height
 
+Author:	Afterglow (Cian Walsh)
+Homepage:	http://www.afterglow.ie
+
+Author:	Aha-Soft
+Homepage:	http://www.aha-soft.com
+
+Author:	Icons-Land
+Homepage:	http://www.icons-land.com
+
+Linkware:
+Author:	Iconshock
+Homepage:	http://www.iconshock.com
 
 
 TODO IN 3.5
 -----------
-Rename system avatars, and reorder them.
+Fix erroneous caching of help.jsp (and others?)
+Verify that LastModified works for avatars.
 Rescale if bigger than 64x64
 Remove width, height and mimetype?
+Show avatar name as "alt".
 Add "Icons courtesy of xxx, yyy, zzz".
 Check out Yahoo ads.
 Fix "bars" (|) in main.jsp
@@ -68,6 +82,7 @@ Use table layout in Personal settings.
 
 BACKLOG
 ===========================
+Proper jukebox support. Check out jlgui. and see how jinzora does it. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1188
 Per-song rating.
 Use filter for subsonic version in site xml's.
 Add download/upload speedometer.

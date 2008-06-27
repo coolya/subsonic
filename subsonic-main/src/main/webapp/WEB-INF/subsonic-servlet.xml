@@ -192,6 +192,7 @@
         <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="avatarUploadController" class="net.sourceforge.subsonic.controller.AvatarUploadController">
+        <property name="viewName" value="avatarUploadResult"/>
         <property name="settingsService" ref="settingsService"/>
         <property name="secturityService" ref="securityService"/>
     </bean>

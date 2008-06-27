@@ -182,7 +182,7 @@
             </c:url>
             <span style="white-space:nowrap;">
                 <form:radiobutton id="avatar-${avatar.id}" path="avatarId" value="${avatar.id}"/>
-                <label for="avatar-${avatar.id}"><img src="${avatarUrl}" alt="" style="padding-right:2em;padding-bottom:1em"/></label>
+                <label for="avatar-${avatar.id}"><img src="${avatarUrl}" alt="${avatar.name}" width="${avatar.width}" height="${avatar.height}" style="padding-right:2em;padding-bottom:1em"/></label>
             </span>
         </c:forEach>
     </p>
@@ -197,7 +197,7 @@
                 <sub:url value="avatar.view" var="avatarUrl">
                     <sub:param name="username" value="${command.user.username}"/>
                 </sub:url>
-                <img src="${avatarUrl}" alt="" style="padding-right:2em"/>
+                <img src="${avatarUrl}" alt="${command.customAvatar.name}" width="${command.customAvatar.width}" height="${command.customAvatar.height}" style="padding-right:2em"/>
             </c:if>
         </label>
     </p>
@@ -212,6 +212,10 @@
         </tr>
     </table>
 </form>
+
+<p class="detail" style="text-align:right">
+    <fmt:message key="personalsettings.avatar.courtesy"/>
+</p>
 
 <c:if test="${command.reloadNeeded}">
     <script language="javascript" type="text/javascript">
