@@ -63,8 +63,11 @@ public class AvatarUploadController extends ParameterizableViewController {
 
                 if (StringUtils.isNotBlank(fileName) && data.length > 0) {
                     createAvatar(fileName, data, username, map);
-                    break;
+                } else {
+                    map.put("error", new Exception("Missing file."));
+                    LOG.warn("Failed to upload personal image. No file specified.");
                 }
+                break;
             }
         }
 

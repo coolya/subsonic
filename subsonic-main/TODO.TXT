@@ -1,57 +1,12 @@
-Analysis, Avatar support.
---------------------------
-System avatars vs User avatars.
-Store binary in database.
-Install default system avatars at startup.
-Scale user avatars to 24x24 and store in database.
-Two tables: system_avatar and user_avatar
-For now, system_avatar should be read-only.
-Save content-type in database.
-Find some nice 32x32 avatars.
-Max allowed size should be 64x64.
-Should make it possible to retrieve avatars without reading the binary column.
-
-user.systemAvatarId
-user.customAvatarId
-
-
-id
-created_date
-data
-content_type
-width
-height
-
-Author:	Afterglow (Cian Walsh)
-Homepage:	http://www.afterglow.ie
-
-Author:	Aha-Soft
-Homepage:	http://www.aha-soft.com
-
-Author:	Icons-Land
-Homepage:	http://www.icons-land.com
-
-Linkware:
-Author:	Iconshock
-Homepage:	http://www.iconshock.com
-
-
 TODO IN 3.5
 -----------
+Complete JME player. (Authentication)
 Fix erroneous caching of help.jsp (and others?)
 Verify that LastModified works for avatars.
-Rescale if bigger than 64x64
-Remove width, height and mimetype?
-Show avatar name as "alt".
-Add "Icons courtesy of xxx, yyy, zzz".
-Check out Yahoo ads.
-Fix "bars" (|) in main.jsp
-Avatar support.
-Check out mobile streaming with ORB. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=68&sid=3ff930e6a52fc8e9b462d5ff84c0026a
-Create per-channel podcast settings. At least enable/disable.
 
 DONE IN 3.5
 -----------
+Avatar support.
 Read-only view. (= Play music role) http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2435
 Fix minor bug with letter appearing if only file (not directory) exists. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1023
 Nicer controls in modern browsers (Opera 9.5, Firefox 3, IE 7)
@@ -83,6 +38,8 @@ Use table layout in Personal settings.
 BACKLOG
 ===========================
 Proper jukebox support. Check out jlgui. and see how jinzora does it. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1188
+Create per-channel podcast settings. At least enable/disable.
+Should make it possible to retrieve avatars without reading the binary column.
 Per-song rating.
 Use filter for subsonic version in site xml's.
 Add download/upload speedometer.

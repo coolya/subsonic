@@ -107,7 +107,8 @@
         <sub:url value="main.view" var="upUrl">
             <sub:param name="path" value="${model.dir.parent.path}"/>
         </sub:url>
-        <a href="${upUrl}"><fmt:message key="main.up"/></a> |
+        <a href="${upUrl}"><fmt:message key="main.up"/></a>
+        <c:set var="needSep" value="true"/>
     </c:if>
 
     <sub:url value="playlist.view" var="playUrl">
@@ -118,8 +119,10 @@
     </sub:url>
 
     <c:if test="${model.user.streamRole}">
+        <c:if test="${needSep}">|</c:if>
         <a target="playlist" href="${playUrl}"><fmt:message key="main.playall"/></a> |
-        <a target="playlist" href="${addUrl}"><fmt:message key="main.addall"/></a> |
+        <a target="playlist" href="${addUrl}"><fmt:message key="main.addall"/></a>
+        <c:set var="needSep" value="true"/>
     </c:if>
 
     <c:if test="${model.dir.album}">
@@ -128,22 +131,29 @@
             <sub:url value="download.view" var="downloadUrl">
                 <sub:param name="path" value="${model.dir.path}"/>
             </sub:url>
-            <a href="${downloadUrl}"><fmt:message key="common.download"/></a> |
+            <c:if test="${needSep}">|</c:if>
+            <a href="${downloadUrl}"><fmt:message key="common.download"/></a>
+            <c:set var="needSep" value="true"/>
         </c:if>
 
         <sub:url value="albumInfo.view" var="albumInfoUrl">
             <sub:param name="path" value="${model.dir.path}"/>
         </sub:url>
-        <a href="${albumInfoUrl}"><fmt:message key="main.albuminfo"/></a> |
+        <c:if test="${needSep}">|</c:if>
+        <a href="${albumInfoUrl}"><fmt:message key="main.albuminfo"/></a>
+        <c:set var="needSep" value="true"/>
 
         <c:if test="${model.user.coverArtRole}">
             <sub:url value="editTags.view" var="editTagsUrl">
                 <sub:param name="path" value="${model.dir.path}"/>
             </sub:url>
-            <a href="${editTagsUrl}"><fmt:message key="main.tags"/></a> |
+            <c:if test="${needSep}">|</c:if>
+            <a href="${editTagsUrl}"><fmt:message key="main.tags"/></a>
+            <c:set var="needSep" value="true"/>
         </c:if>
 
         <c:if test="${model.user.commentRole}">
+            <c:if test="${needSep}">|</c:if>
             <a href="javascript:toggleComment()"><fmt:message key="main.comment"/></a>
         </c:if>
     </c:if>
