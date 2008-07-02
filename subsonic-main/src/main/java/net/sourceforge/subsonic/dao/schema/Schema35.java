@@ -19,55 +19,19 @@ public class Schema35 extends Schema {
     private static final Logger LOG = Logger.getLogger(Schema35.class);
 
     private static final String[] AVATARS = {
-            "Formal",
-            "Engineer",
-            "Footballer",
-            "Green-Boy",
+            "Formal", "Engineer", "Footballer", "Green-Boy",
 
-            "Linux-Zealot",
-            "Mac-Zealot",
-            "Windows-Zealot",
-            "Army-Officer",
-            "Beatnik",
-            "All-Caps",
-            "Clown",
-            "Commie-Pinko",
-            "Forum-Flirt",
-            "Gamer",
-            "Hopelessly-Addicted",
-            "Jekyll-And-Hyde",
-            "Joker",
-            "Lurker",
-            "Moderator",
-            "Newbie",
-            "No-Dissent",
-            "Performer",
-            "Push-My-Button",
-            "Ray-Of-Sunshine",
-            "Red-Hot-Chili-Peppers-1",
-            "Red-Hot-Chili-Peppers-2",
-            "Red-Hot-Chili-Peppers-3",
-            "Red-Hot-Chili-Peppers-4",
-            "Ringmaster",
-            "Rumor-Junkie",
-            "Sozzled-Surfer",
-            "Statistician",
-            "Tech-Support",
-            "The-Guru",
-            "The-Referee",
-            "Troll",
-            "Uptight",
+            "Linux-Zealot", "Mac-Zealot", "Windows-Zealot", "Army-Officer", "Beatnik",
+            "All-Caps", "Clown", "Commie-Pinko", "Forum-Flirt", "Gamer", "Hopelessly-Addicted",
+            "Jekyll-And-Hyde", "Joker", "Lurker", "Moderator", "Newbie", "No-Dissent",
+            "Performer", "Push-My-Button", "Ray-Of-Sunshine", "Red-Hot-Chili-Peppers-1",
+            "Red-Hot-Chili-Peppers-2", "Red-Hot-Chili-Peppers-3", "Red-Hot-Chili-Peppers-4",
+            "Ringmaster", "Rumor-Junkie", "Sozzled-Surfer", "Statistician", "Tech-Support",
+            "The-Guru", "The-Referee", "Troll", "Uptight",
 
-            "Fire-Guitar",
-            "Drum",
-            "Headphones",
-            "Mic",
-            "Turntable",
-            "Vinyl",
+            "Fire-Guitar", "Drum", "Headphones", "Mic", "Turntable", "Vinyl",
 
-            "Cool",
-            "Laugh",
-            "Study",
+            "Cool", "Laugh", "Study"
     };
 
     @Override
@@ -93,9 +57,7 @@ public class Schema35 extends Schema {
         if (template.queryForInt("select count(*) from role where id = 8") == 0) {
             LOG.info("Role 'stream' not found in database. Creating it.");
             template.execute("insert into role values (8, 'stream')");
-            template.execute("insert into user_role " +
-                             "select distinct u.username, 8 from user u, user_role ur " +
-                             "where u.username = ur.username");
+            template.execute("insert into user_role select distinct u.username, 8 from user u");
             LOG.info("Role 'stream' was created successfully.");
         }
 
