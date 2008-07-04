@@ -37,6 +37,15 @@ public class DaoHelper {
     public DaoHelper() {
         dataSource = createDataSource();
         checkDatabase();
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                System.err.println("Shutting down database.");
+                getJdbcTemplate().execute("shutdown");
+                System.err.println("Done.");
+            }
+        });
     }
 
     /**
