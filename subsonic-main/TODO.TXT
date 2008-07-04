@@ -1,8 +1,11 @@
 TODO IN 3.5
 -----------
+Upgrade HSQL.  Find out why dao unit tests fail.
 Complete JME player. (Authentication)
 Fix erroneous caching of help.jsp (and others?)
 Verify that LastModified works for avatars.
+Avatar update in user_settings is not case sensitive when it comes to username.
+
 
 DONE IN 3.5
 -----------

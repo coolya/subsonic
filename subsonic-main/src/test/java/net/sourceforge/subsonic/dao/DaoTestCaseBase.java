@@ -50,6 +50,12 @@ public abstract class DaoTestCaseBase extends TestCase {
         podcastDao.setDaoHelper(daoHelper);
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
+        getJdbcTemplate().execute("shutdown");
+    }
+
     protected JdbcTemplate getJdbcTemplate() {
         return daoHelper.getJdbcTemplate();
     }
