@@ -16,13 +16,19 @@
         <section name="Change Log">
             <subsection name="Subsonic 3.5.beta1 - Jul 10, 2008">
                 <ul>
-                    <li>New: </li>
-                    <li>New: </li>
-                    <li>New: </li>
-                    <li>New: </li>
-                    <li>New: </li>
-                    <li>Bugfix: </li>
-                    <li>Bugfix: Make lyrics work. See <a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2588">this forum topic</a>.</li>
+                    <li>New: Implemented music player for Java-enabled mobile phones. See <a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2580">this forum topic</a>.</li>
+                    <li>New: Support for personal images (avatars).</li>
+                    <li>New: Support "read-only" view. See <a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2435">this forum topic</a>.</li>
+                    <li>New: Simplified user interface in settings pages. Now only one "Save" button.</li>
+                    <li>New: Improved usability of coverart search page. Now also searches discogs.com.</li>
+                    <li>New: Merge artists with same name, but located in different music folders.</li>
+                    <li>New: Added option "Let others see what I am playing"</li>
+                    <li>New: Added option "Always use web player". See <a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1077">this forum topic</a>.</li>
+                    <li>New: Nicer controls in modern browsers (Opera 9.5, Firefox 3, IE 7).</li>
+                    <li>Bugfix: Lots of extra players are no longer created.</li>
+                    <li>Bugfix: Fix minor bug with letter appearing if only file (not directory) exists. See <a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1023">this forum topic</a>.</li>
+                    <li>Bugfix: Make standalone version work on Linux without X11 server.</li>
+                    <li>Bugfix: Make lyrics work again. See <a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2588">this forum topic</a>.</li>
                     <li>Bugfix: Proper sorting of "The" artists. See <a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1144">this forum topic</a>.</li>
                     <li>Bugfix: Make source release build.</li>
                 </ul>

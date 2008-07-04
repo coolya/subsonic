@@ -5,34 +5,8 @@ Complete JME player. (Authentication)
 Fix erroneous caching of help.jsp (and others?)
 Verify that LastModified works for avatars.
 Avatar update in user_settings is not case sensitive when it comes to username.
-
-
-DONE IN 3.5
------------
-Upgrade HSQL.  Find out why dao unit tests fail.Avatar support.
-Read-only view. (= Play music role) http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2435
-Fix minor bug with letter appearing if only file (not directory) exists. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1023
-Nicer controls in modern browsers (Opera 9.5, Firefox 3, IE 7)
-Don't mess up buttons etc in some skins.
-Bugfix: Improve player management. (fixed cookie bug).
-Bugfix: Make it work without X11 server.
-Simplified user interface in "Internet TV/radio" settings page.
-Simplified user interface in "Transcoding" settings page.
-Simplified user interface in "Music Folder" settings page.
-Ajaxify changeCoverart.jsp.  Also support www.discogs.com (and Google or whatever).
-Clean up ChangeCoverArtController.
-One save button for transcoding settings etc.
-Display error if getCoverArtImages() fails.
-Make MusicIndexService.
-Remove deprecated stuff in MusicIndex (currently used in wap interface).
-Must be case insensitive when grouping artist by index.
-Merge artists with same name, but different music folders.
-Obfuscate passwords in database. (Prefix with "enc:" for instance).  Also last.fm password.
-Added option "Let others see what I am playing"
-Added option "Always use web player"
-Support Flash player by default.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1077
-Allow reservation of Now Playing info.
-Use table layout in Personal settings.
+Write a tutorial of how to install the JME player, and link from the changelog.
+Verify that maven build works.
 
 BACKLOG
 ===========================
