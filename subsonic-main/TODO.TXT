@@ -1,6 +1,6 @@
 TODO IN 3.5
 -----------
-Upgrade HSQL.  Find out why dao unit tests fail.
+Highlight current song in playlist also if playlist is client-side.
 Complete JME player. (Authentication)
 Fix erroneous caching of help.jsp (and others?)
 Verify that LastModified works for avatars.
@@ -9,7 +9,7 @@ Avatar update in user_settings is not case sensitive when it comes to username.
 
 DONE IN 3.5
 -----------
-Avatar support.
+Upgrade HSQL.  Find out why dao unit tests fail.Avatar support.
 Read-only view. (= Play music role) http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2435
 Fix minor bug with letter appearing if only file (not directory) exists. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1023
 Nicer controls in modern browsers (Opera 9.5, Firefox 3, IE 7)
