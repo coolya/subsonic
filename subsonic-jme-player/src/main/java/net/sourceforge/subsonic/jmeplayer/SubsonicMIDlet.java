@@ -1,6 +1,5 @@
 package net.sourceforge.subsonic.jmeplayer;
 
-import net.sourceforge.subsonic.jmeplayer.player.DownloadController;
 import net.sourceforge.subsonic.jmeplayer.player.PlayerController;
 import net.sourceforge.subsonic.jmeplayer.screens.ArtistScreen;
 import net.sourceforge.subsonic.jmeplayer.screens.IndexScreen;
@@ -37,8 +36,6 @@ public class SubsonicMIDlet extends MIDlet {
 
         PlayerController playerController = new PlayerController();
         playerController.setSettingsController(settingsController);
-        DownloadController downloadController = new DownloadController();
-        downloadController.setSettingsController(settingsController);
 
         boolean mock = settingsController.isMock();
         MusicServiceDataSource dataSource;
@@ -58,7 +55,6 @@ public class SubsonicMIDlet extends MIDlet {
 
         mainScreen.setIndexScreen(indexScreen);
         mainScreen.setSettingsScreen(settingsScreen);
-        mainScreen.setDownloadController(downloadController);
         settingsScreen.setMainScreen(mainScreen);
         indexScreen.setMainScreen(mainScreen);
         indexScreen.setArtistScreen(artistScreen);

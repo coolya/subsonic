@@ -4,8 +4,6 @@ import net.sourceforge.subsonic.jmeplayer.domain.Index;
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
 
 /**
- * TODO: Implement
- *
  * @author Sindre Mehus
  */
 public class CachedMusicService implements MusicService {
@@ -15,7 +13,6 @@ public class CachedMusicService implements MusicService {
     private final MusicService musicService;
     private final LRUCache cachedMusicDirectories;
     private Index[] cachedIndexes;
-
 
     public CachedMusicService(MusicService musicService) {
         this.musicService = musicService;
