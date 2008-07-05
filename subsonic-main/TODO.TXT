@@ -1,16 +1,38 @@
+Analysis, Jukebox
+-----------------
+JNI Winamp wrapper
+Javazoom lib
+Skip all non-mp3 files.
+Check out ogg support.
+How to integrate it with subsonic?
+Play local files or stream? The advantage of streaming is that it will show in the Now Playing area.
+Must be possible to remote control. Pause/resume/skip etc
+
+Use cases:
+1. Configure player to be of type "jukebox".
+2. User clicks "play"; this gets to PlaylistController.
+   PlaylistController updates playlist as per usual, and if a track change is required, it notifies the local Jukebox thingy.
+3. (Internal). Juxebox reaches EOM. It should then proceed to the next track in the playlist.
+4. User interacts with the playlist, e.g., skip to next track. Then need to interrupt the current song.
+
+
+TODO IN 3.6
+-----------
+Proper jukebox support. Check out jlayer. and see how jinzora does it. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1188
+
+
 TODO IN 3.5
 -----------
-Highlight current song in playlist also if playlist is client-side.
-Complete JME player. (Authentication)
+Complete JME player. (Authentication, use XMLWriter)
+Add "mobile" parameter to JME urls, and tear down other streams?
 Fix erroneous caching of help.jsp (and others?)
 Verify that LastModified works for avatars.
-Avatar update in user_settings is not case sensitive when it comes to username.
 Write a tutorial of how to install the JME player, and link from the changelog.
-Verify that maven build works.
+
 
 BACKLOG
 ===========================
-Proper jukebox support. Check out jlgui. and see how jinzora does it. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1188
+iPod/iPhone support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1200
 Create per-channel podcast settings. At least enable/disable.
 Should make it possible to retrieve avatars without reading the binary column.
 Per-song rating.

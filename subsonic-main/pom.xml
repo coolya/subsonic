@@ -186,6 +186,12 @@
         </dependency>
 
         <dependency>
+            <groupId>net.javazoom</groupId>
+            <artifactId>jlayer</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.1</version>
@@ -214,7 +220,8 @@
                                 <echo file="${project.build.directory}/classes/version.txt">${pom.version}</echo>
                                 <!--TODO: Avoid hardcoding of directory-->
                                 <copy file="${basedir}/../subsonic-jme-player/target/subsonic-jme-player-${project.version}-me.jar"
-                                      tofile="${project.build.directory}/classes/net/sourceforge/subsonic/controller/subsonic-jme-player.jar"/>
+                                      tofile="${project.build.directory}/classes/net/sourceforge/subsonic/controller/subsonic-jme-player.jar"
+                                      failonerror="false"/>
                             </tasks>
                         </configuration>
                         <goals>

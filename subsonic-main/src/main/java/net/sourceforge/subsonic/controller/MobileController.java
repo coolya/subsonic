@@ -3,12 +3,14 @@ package net.sourceforge.subsonic.controller;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicIndex;
 import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.Version;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicIndexService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.TranscodingService;
+import net.sourceforge.subsonic.service.VersionService;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.io.IOUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,33 +37,20 @@ public class MobileController extends MultiActionController {
     private MusicFileService musicFileService;
     private MusicIndexService musicIndexService;
     private TranscodingService transcodingService;
-
-    public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return mobile(request, response);
-    }
-
-    public ModelAndView mobile(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        // TODO
-        return null;
-    }
+    private SecurityService securityService;
+    private VersionService versionService;
 
     public ModelAndView playerJad(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
+
+        // Note: The MIDP specification requires that the version is of the form X.Y[.Z], where X, Y, Z are
+        // integers betweeen 0 and 99.
+        String version = versionService.getLocalVersion().toString().replaceAll("beta.*", "");
+
         map.put("baseUrl", getBaseUrl(request));
         map.put("jarSize", getJarSize());
+        map.put("version", version);
         return new ModelAndView("mobile/playerJad", "model", map);
-    }
-
-    private String getBaseUrl(HttpServletRequest request) {
-        String baseUrl = request.getRequestURL().toString();
-        baseUrl = baseUrl.replaceFirst("/mobile.*", "/");
-
-        // Rewrite URLs in case we're behind a proxy.
-        if (settingsService.isRewriteUrlEnabled()) {
-            String referer = request.getHeader("referer");
-            baseUrl = StringUtil.rewriteUrl(baseUrl, referer);
-        }
-        return baseUrl;
     }
 
     public ModelAndView playerJar(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -132,8 +121,22 @@ public class MobileController extends MultiActionController {
         return null;
     }
 
+    private String getBaseUrl(HttpServletRequest request) {
+        String baseUrl = request.getRequestURL().toString();
+        baseUrl = baseUrl.replaceFirst("/mobile.*", "/");
+
+        // Rewrite URLs in case we're behind a proxy.
+        if (settingsService.isRewriteUrlEnabled()) {
+            String referer = request.getHeader("referer");
+            baseUrl = StringUtil.rewriteUrl(baseUrl, referer);
+        }
+        return baseUrl;
+    }
+
     private void authenticate(HttpServletRequest request) {
-//        TODO
+        // TODO: What about LDAP-authenticated users?
+        String username = request.getParameter("u");
+        String password = request.getParameter("p");
     }
 
     private int getJarSize() throws Exception {
@@ -158,6 +161,7 @@ public class MobileController extends MultiActionController {
     }
 
     public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 
     public void setMusicFileService(MusicFileService musicFileService) {
@@ -170,5 +174,9 @@ public class MobileController extends MultiActionController {
 
     public void setTranscodingService(TranscodingService transcodingService) {
         this.transcodingService = transcodingService;
+    }
+
+    public void setVersionService(VersionService versionService) {
+        this.versionService = versionService;
     }
 }

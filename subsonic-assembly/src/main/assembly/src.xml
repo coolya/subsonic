@@ -51,6 +51,15 @@
         </fileSet>
 
         <fileSet>
+            <directory>../subsonic-jme-player</directory>
+            <includes>
+                <include>src/**</include>
+                <include>pom.xml</include>
+            </includes>
+            <outputDirectory>subsonic-jme-player</outputDirectory>
+        </fileSet>
+
+        <fileSet>
             <directory>../subsonic-booter</directory>
             <includes>
                 <include>src/**</include>

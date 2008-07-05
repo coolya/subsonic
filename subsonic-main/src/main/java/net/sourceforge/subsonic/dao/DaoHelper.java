@@ -33,11 +33,19 @@ public class DaoHelper {
                                 new Schema30(), new Schema31(), new Schema32(), new Schema33(), new Schema34(),
                                 new Schema35()};
     private DataSource dataSource;
+    private static boolean shutdownHookAdded;
 
     public DaoHelper() {
         dataSource = createDataSource();
         checkDatabase();
+        addShutdownHook();
+    }
 
+    private void addShutdownHook() {
+        if (shutdownHookAdded) {
+            return;
+        }
+        shutdownHookAdded = true;
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {

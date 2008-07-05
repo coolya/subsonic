@@ -5,7 +5,7 @@ MIDlet-Jar-Size: ${model.jarSize}
 MIDlet-Jar-URL: playerJar.view
 MIDlet-Name: Subsonic
 MIDlet-Vendor: Sindre Mehus
-MIDlet-Version: 1.0
+MIDlet-Version: ${model.version}
 MicroEdition-Configuration: CLDC-1.0
 MicroEdition-Profile: MIDP-2.0
 Subsonic-Base-URL: ${model.baseUrl}
