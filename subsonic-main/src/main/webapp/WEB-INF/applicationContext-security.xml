@@ -11,13 +11,13 @@
                 /wap**=httpSessionContextIntegrationFilter,logoutFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,basicExceptionTranslationFilter,filterInvocationInterceptor
                 /podcastReceiver**=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
                 /podcast**=httpSessionContextIntegrationFilter,logoutFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,basicExceptionTranslationFilter,filterInvocationInterceptor
+                /mobile/**=httpSessionContextIntegrationFilter,logoutFilter,requestParameterProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,basicExceptionTranslationFilter,filterInvocationInterceptor
                 /**=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
             </value>
         </property>
     </bean>
 
-    <bean id="httpSessionContextIntegrationFilter"
-          class="org.acegisecurity.context.HttpSessionContextIntegrationFilter"/>
+    <bean id="httpSessionContextIntegrationFilter" class="org.acegisecurity.context.HttpSessionContextIntegrationFilter"/>
 
     <bean id="logoutFilter" class="org.acegisecurity.ui.logout.LogoutFilter">
         <constructor-arg value="/login.view?logout"/>
@@ -40,20 +40,19 @@
     </bean>
 
     <bean id="basicProcessingFilter" class="org.acegisecurity.ui.basicauth.BasicProcessingFilter">
-        <property name="authenticationManager">
-            <ref local="authenticationManager"/>
-        </property>
-        <property name="authenticationEntryPoint">
-            <ref local="basicProcessingFilterEntryPoint"/>
-        </property>
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="authenticationEntryPoint" ref="basicProcessingFilterEntryPoint"/>
+    </bean>
+
+    <bean id="requestParameterProcessingFilter" class="net.sourceforge.subsonic.security.RequestParameterProcessingFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
     </bean>
 
     <bean id="basicProcessingFilterEntryPoint" class="org.acegisecurity.ui.basicauth.BasicProcessingFilterEntryPoint">
         <property name="realmName" value="Subsonic"/>
     </bean>
 
-    <bean id="securityContextHolderAwareRequestFilter"
-          class="org.acegisecurity.wrapper.SecurityContextHolderAwareRequestFilter"/>
+    <bean id="securityContextHolderAwareRequestFilter" class="org.acegisecurity.wrapper.SecurityContextHolderAwareRequestFilter"/>
 
     <bean id="rememberMeProcessingFilter" class="org.acegisecurity.ui.rememberme.RememberMeProcessingFilter">
         <property name="authenticationManager" ref="authenticationManager"/>
@@ -91,10 +90,11 @@
                 PATTERN_TYPE_APACHE_ANT
 
                 /login.view=IS_AUTHENTICATED_ANONYMOUSLY
-                /mobile/**=IS_AUTHENTICATED_ANONYMOUSLY
                 /stream/**=IS_AUTHENTICATED_ANONYMOUSLY
                 /style/**=IS_AUTHENTICATED_ANONYMOUSLY
                 /icons/**=IS_AUTHENTICATED_ANONYMOUSLY
+                /wap/playerJad.view=IS_AUTHENTICATED_ANONYMOUSLY
+                /wap/playerJar.view=IS_AUTHENTICATED_ANONYMOUSLY
 
                 /generalSettings.view=ROLE_ADMIN
                 /advancedSettings.view=ROLE_ADMIN

@@ -298,26 +298,19 @@
         <property name="securityService" ref="securityService"/>
         <property name="musicFileService" ref="musicFileService"/>
         <property name="musicIndexService" ref="musicIndexService"/>
+        <property name="versionService" ref="versionService"/>
     </bean>
     <bean id="mobileController" class="net.sourceforge.subsonic.controller.MobileController">
         <property name="settingsService" ref="settingsService"/>
         <property name="playerService" ref="playerService"/>
-        <property name="securityService" ref="securityService"/>
         <property name="musicFileService" ref="musicFileService"/>
         <property name="musicIndexService" ref="musicIndexService"/>
         <property name="transcodingService" ref="transcodingService"/>
-        <property name="versionService" ref="versionService"/>
     </bean>
     <bean id="dbController" class="net.sourceforge.subsonic.controller.DBController">
         <property name="viewName" value="db"/>
         <property name="daoHelper" ref="daoHelper"/>
     </bean>
-    <bean id="flexController" class="net.sourceforge.subsonic.controller.FlexController">
-        <property name="musicFileService" ref="musicFileService"/>
-        <property name="musicIndexService" ref="musicIndexService"/>
-        <property name="settingsService" ref="settingsService"/>
-    </bean>
-
     <bean id="savePlaylistValidator" class="net.sourceforge.subsonic.validator.SavePlaylistValidator">
         <property name="playlistService" ref="playlistService"/>
     </bean>

@@ -1,5 +1,7 @@
 package net.sourceforge.subsonic.util;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.util.Stack;
 
 
@@ -51,7 +53,7 @@ public class XMLBuilder {
     }
 
     /**
-     * Adds an element with the given name and properties.
+     * Adds an element with the given name and attributes.
      *
      * @param element    The element name.
      * @param attributes The element attributes.
@@ -59,7 +61,7 @@ public class XMLBuilder {
      */
     public XMLBuilder add(String element, Attribute... attributes) {
         indent();
-        elementStack.add(element);
+        elementStack.push(element);
         buf.append('<').append(element);
 
         if (attributes.length > 0) {
@@ -78,6 +80,18 @@ public class XMLBuilder {
     }
 
     /**
+     * Adds an element with the given name and a single attribute.
+     *
+     * @param element        The element name.
+     * @param attributeKey   The attributes key.
+     * @param attributeValue The attributes value.
+     * @return A reference to this object.
+     */
+    public XMLBuilder add(String element, String attributeKey, Object attributeValue) {
+        return add(element, new Attribute(attributeKey, attributeValue));
+    }
+
+    /**
      * Adds the element with the given name and value. The element is also closed, so
      * there is no need to call {@link #end()}.
      *
@@ -85,11 +99,11 @@ public class XMLBuilder {
      * @param value   The element value. If <code>null</code>, the element will be empty.
      * @return A reference to this object.
      */
-    public XMLBuilder add(String element, Object value) {
+    public XMLBuilder addClosed(String element, Object value) {
         indent();
         buf.append('<').append(element).append('>');
         if (value != null) {
-            buf.append(value);
+            buf.append(StringEscapeUtils.escapeXml(value.toString()));
         }
         buf.append("</").append(element).append('>');
         newline();
@@ -107,10 +121,22 @@ public class XMLBuilder {
             throw new IllegalStateException("There are no unclosed elements.");
         }
 
-        String element = elementStack.remove(0);
+        String element = elementStack.pop();
         indent();
         buf.append("</").append(element).append('>');
         newline();
+        return this;
+    }
+
+    /**
+     * Closes all unclosed elements.
+     *
+     * @return A reference to this object.
+     */
+    public XMLBuilder endAll() {
+        while (!elementStack.isEmpty()) {
+            end();
+        }
         return this;
     }
 
@@ -145,15 +171,15 @@ public class XMLBuilder {
     public static class Attribute {
 
         private final String key;
-        private final String value;
+        private final Object value;
 
-        public Attribute(String key, String value) {
+        public Attribute(String key, Object value) {
             this.key = key;
             this.value = value;
         }
 
         private void append(StringBuilder buf) {
-            buf.append(key).append("=\"").append(value).append("\"");
+            buf.append(key).append("=\"").append(StringEscapeUtils.escapeXml(value.toString())).append("\"");
         }
     }
 }

@@ -14,11 +14,15 @@ import net.sourceforge.subsonic.service.PlaylistService;
 import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.VersionService;
+import net.sourceforge.subsonic.util.StringUtil;
+import org.apache.commons.io.IOUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +44,7 @@ public class WapController extends MultiActionController {
     private SecurityService securityService;
     private MusicFileService musicFileService;
     private MusicIndexService musicIndexService;
+    private VersionService versionService;
 
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return wap(request, response);
@@ -189,6 +194,56 @@ public class WapController extends MultiActionController {
         return settings(request, response);
     }
 
+    public ModelAndView playerJad(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        // Note: The MIDP specification requires that the version is of the form X.Y[.Z], where X, Y, Z are
+        // integers betweeen 0 and 99.
+        String version = versionService.getLocalVersion().toString().replaceAll("\\.beta.*", "");
+
+        map.put("baseUrl", getBaseUrl(request));
+        map.put("jarSize", getJarSize());
+        map.put("version", version);
+        return new ModelAndView("mobile/playerJad", "model", map);
+    }
+
+    public ModelAndView playerJar(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.setContentType("application/java-archive");
+        response.setContentLength(getJarSize());
+        InputStream in = getJarInputStream();
+        try {
+            IOUtils.copy(in, response.getOutputStream());
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
+        return null;
+    }
+
+    private int getJarSize() throws Exception {
+        InputStream in = getJarInputStream();
+        try {
+            return IOUtils.toByteArray(in).length;
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
+    }
+
+    private String getBaseUrl(HttpServletRequest request) {
+        String baseUrl = request.getRequestURL().toString();
+        baseUrl = baseUrl.replaceFirst("/wap.*", "/");
+
+        // Rewrite URLs in case we're behind a proxy.
+        if (settingsService.isRewriteUrlEnabled()) {
+            String referer = request.getHeader("referer");
+            baseUrl = StringUtil.rewriteUrl(baseUrl, referer);
+        }
+        return baseUrl;
+    }
+
+    private InputStream getJarInputStream() {
+        return getClass().getResourceAsStream("subsonic-jme-player.jar");
+    }
+
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
     }
@@ -215,5 +270,9 @@ public class WapController extends MultiActionController {
 
     public void setMusicIndexService(MusicIndexService musicIndexService) {
         this.musicIndexService = musicIndexService;
+    }
+
+    public void setVersionService(VersionService versionService) {
+        this.versionService = versionService;
     }
 }

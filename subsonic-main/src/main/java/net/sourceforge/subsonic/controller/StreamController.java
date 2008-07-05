@@ -116,8 +116,10 @@ public class StreamController implements Controller {
             }
             streamEndpoint = player.getUsername() + '@' + request.getRemoteHost() + ':' + request.getRemotePort() + " (" + userAgent + ')';
 
+            boolean isMobile = request.getParameter("mobile") != null;
+
             // Terminate any other streams to this player.
-            if (!isPodcast && !isSingleFile) {
+            if (isMobile || (!isPodcast && !isSingleFile)) {
                 TransferStatus[] currentStatuses = statusService.getStreamStatusesForPlayer(player);
                 for (TransferStatus streamStatus : currentStatuses) {
                     streamStatus.terminate();

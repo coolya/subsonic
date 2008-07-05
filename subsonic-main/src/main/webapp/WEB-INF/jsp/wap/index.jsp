@@ -27,7 +27,7 @@
                 </b>
                 <br/>
                 <b>
-                    <a href="<c:url value="/mobile/playerJad.view"/>">[<fmt:message key="wap.index.download"/>]</a>
+                    <a href="<c:url value="/wap/playerJad.view"/>">[<fmt:message key="wap.index.download"/>]</a>
                 </b>
                 <br/>
             </small>

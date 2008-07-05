@@ -18,18 +18,17 @@ Use cases:
 
 TODO IN 3.6
 -----------
+Upgrade to Spring Security.
 Proper jukebox support. Check out jlayer. and see how jinzora does it. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1188
 
 
 TODO IN 3.5
 -----------
 Complete JME player.
-  o Authentication, custom acegi thing?
-  o Use XMLBuilder. Must escape all quotes, ampersands etc
+  o Fix threading bug.
+  o Send error xml in ageci filter. Wrap all xmls in a container.
   o Remove sample audio.
-  o User proper icon.
 
-Add "mobile" parameter to JME urls, and tear down other streams?
 Fix erroneous caching of help.jsp (and others?)
 Verify that LastModified works for avatars.
 Write a tutorial of how to install the JME player, and link from the changelog.
