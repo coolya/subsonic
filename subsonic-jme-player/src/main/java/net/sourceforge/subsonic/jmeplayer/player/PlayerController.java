@@ -80,11 +80,17 @@ public class PlayerController implements PlayerListener {
             public void run() {
                 try {
                     createPlayer();
+                } catch (Throwable x) {
+                    stop();
+                    handleException(x, "Create player");
+                    return;
+                }
+                try {
                     setState(BUFFERING);
                     player.start();
-                } catch (Exception x) {
+                } catch (Throwable x) {
                     stop();
-                    handleException(x);
+                    handleException(x, "Start player");
                 }
             }
         }.start();
@@ -99,9 +105,9 @@ public class PlayerController implements PlayerListener {
         try {
             player.stop();
             setState(PAUSED);
-        } catch (Exception x) {
+        } catch (Throwable x) {
             stop();
-            handleException(x);
+            handleException(x, "Stop player");
         }
     }
 
@@ -113,22 +119,20 @@ public class PlayerController implements PlayerListener {
 
         try {
             player.start();
-        } catch (Exception x) {
+        } catch (Throwable x) {
             stop();
-            handleException(x);
+            handleException(x, "Create player");
         }
     }
 
     public synchronized void stop() {
-        if (state == STOPPED) {
-            return;
-        }
-
         if (player != null) {
             try {
+                LOG.debug("Trying to close player.");
                 player.close();
-            } catch (Exception x) {
-                handleException(x);
+                LOG.debug("Player closed successfully.");
+            } catch (Throwable x) {
+                handleException(x, "Close player");
             }
         }
         player = null;
@@ -168,6 +172,7 @@ public class PlayerController implements PlayerListener {
 
     private synchronized void setState(int state) {
         if (this.state != state) {
+            LOG.debug("State change: " + this.state + " -> " + state);
             this.state = state;
             listener.stateChanged(state);
         }
@@ -177,8 +182,9 @@ public class PlayerController implements PlayerListener {
         listener.songChanged(getCurrent());
     }
 
-    private void handleException(Exception x) {
-        LOG.error("Got exception.", x);
+
+    private void handleException(Throwable x, String message) {
+        LOG.error("Error in '" + message + "':", x);
         listener.error(x);
     }
 
@@ -186,6 +192,8 @@ public class PlayerController implements PlayerListener {
         MusicDirectory.Entry entry = getCurrent();
         String url = entry.getUrl();
         InputStream in;
+
+        LOG.info("Opening URL " + url);
         if (url.startsWith("resource:")) {
             in = getClass().getResourceAsStream(url.substring(9));
         } else {
@@ -195,7 +203,10 @@ public class PlayerController implements PlayerListener {
             }
             in = Connector.openInputStream(url);
         }
-        LOG.info("Opening URL " + url);
+
+        // TODO: Fix threading bug. If the player controller was stopped while this thread
+        // was connecting etc, it should abort. Maybe create own subclass of Thread with a cancel() method.
+        // Look at code samples on the internet.
         input = new MonitoredInputStream(in);
 
         LOG.info("Creating player for URL " + url);
