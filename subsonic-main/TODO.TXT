@@ -23,7 +23,12 @@ Proper jukebox support. Check out jlayer. and see how jinzora does it. http://ww
 
 TODO IN 3.5
 -----------
-Complete JME player. (Authentication, use XMLWriter)
+Complete JME player.
+  o Authentication, custom acegi thing?
+  o Use XMLBuilder. Must escape all quotes, ampersands etc
+  o Remove sample audio.
+  o User proper icon.
+
 Add "mobile" parameter to JME urls, and tear down other streams?
 Fix erroneous caching of help.jsp (and others?)
 Verify that LastModified works for avatars.

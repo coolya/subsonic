@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/vnd.sun.j2me.app-descriptor; charset=utf-8" pageEncoding="iso-8859-1" %>
 <%@ include file="../include.jsp" %>
-MIDlet-1: Subsonic, /icons/App.png, net.sourceforge.subsonic.jmeplayer.SubsonicMIDlet
+MIDlet-1: Subsonic, /icons/subsonic.png, net.sourceforge.subsonic.jmeplayer.SubsonicMIDlet
 MIDlet-Jar-Size: ${model.jarSize}
 MIDlet-Jar-URL: playerJar.view
 MIDlet-Name: Subsonic

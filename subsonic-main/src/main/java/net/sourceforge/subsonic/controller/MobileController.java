@@ -45,7 +45,7 @@ public class MobileController extends MultiActionController {
 
         // Note: The MIDP specification requires that the version is of the form X.Y[.Z], where X, Y, Z are
         // integers betweeen 0 and 99.
-        String version = versionService.getLocalVersion().toString().replaceAll("beta.*", "");
+        String version = versionService.getLocalVersion().toString().replaceAll("\\.beta.*", "");
 
         map.put("baseUrl", getBaseUrl(request));
         map.put("jarSize", getJarSize());
@@ -111,7 +111,7 @@ public class MobileController extends MultiActionController {
         for (MusicFile child : musicFile.getChildren(true, true)) {
             String suffix = transcodingService.getSuffix(player, child);
             String contentType = StringUtil.getMimeType(suffix);
-            String url = baseUrl + "stream?pathUtf8Hex=" + StringUtil.utf8HexEncode(child.getPath()) + "&suffix=." + suffix;
+            String url = baseUrl + "stream?pathUtf8Hex=" + StringUtil.utf8HexEncode(child.getPath()) + "&mobile";
             String path = StringUtil.utf8HexEncode(child.getPath());
             out.println("<child name='" + child.getTitle() + "' path='" + path + "' isDir='" + child.isDirectory() +
                         "' contentType='" + contentType + "' url='" + url + "'/>");

@@ -48,6 +48,8 @@ public final class StringUtil {
             {"m4a", "audio/mp4"},
             {"mpg4", "audio/mp4"},
             {"ogg", "application/ogg"},
+            {"mid", "audio/midi"},
+            {"wav", "audio/x-wav"},
             {"gif", "image/gif"},
             {"jpg", "image/jpeg"},
             {"jpeg", "image/jpeg"},
