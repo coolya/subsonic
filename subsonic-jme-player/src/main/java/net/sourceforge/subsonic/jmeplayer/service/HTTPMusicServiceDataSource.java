@@ -19,13 +19,13 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
     }
 
     public Reader getIndexesReader() throws Exception {
-        String url = getBaseUrl() + "getIndexes.view";
+        String url = getBaseUrl() + "getIndexes.view?u=" + settingsController.getUsername() + "&p=" + settingsController.getPassword();
         InputStream in = Connector.openInputStream(url);
         return new InputStreamReader(in);
     }
 
     public Reader getMusicDirectoryReader(String path) throws Exception {
-        String url = getBaseUrl() + "getMusicDirectory.view?pathUtf8Hex=" + path;
+        String url = getBaseUrl() + "getMusicDirectory.view?pathUtf8Hex=" + path + "&u=" + settingsController.getUsername() + "&p=" + settingsController.getPassword();
 
         int player = settingsController.getPlayer();
         if (player > 0) {
