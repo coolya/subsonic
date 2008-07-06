@@ -4,6 +4,7 @@ import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.AlertType;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
+import java.io.InputStream;
 
 /**
  * @author Sindre Mehus
@@ -37,4 +38,14 @@ public final class Util {
         return s.length() == 0 ? null : s;
     }
 
+    public static void closeQuietly(InputStream input) {
+        if (input == null) {
+            return;
+        }
+        try {
+            input.close();
+        } catch (Exception x) {
+            // Ignored.
+        }
+    }
 }

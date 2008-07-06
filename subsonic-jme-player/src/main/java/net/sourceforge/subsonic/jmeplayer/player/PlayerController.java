@@ -3,10 +3,12 @@ package net.sourceforge.subsonic.jmeplayer.player;
 import net.sourceforge.subsonic.jmeplayer.Log;
 import net.sourceforge.subsonic.jmeplayer.LogFactory;
 import net.sourceforge.subsonic.jmeplayer.SettingsController;
+import net.sourceforge.subsonic.jmeplayer.Util;
 import net.sourceforge.subsonic.jmeplayer.domain.MusicDirectory;
 
 import javax.microedition.io.Connector;
 import javax.microedition.media.Manager;
+import javax.microedition.media.MediaException;
 import javax.microedition.media.Player;
 import javax.microedition.media.PlayerListener;
 import java.io.IOException;
@@ -29,9 +31,8 @@ public class PlayerController implements PlayerListener {
     private SettingsController settingsController;
     private int index;
     private MusicDirectory.Entry[] entries = {};
-    private Player player;
-    private MonitoredInputStream input;
     private int state = STOPPED;
+    private PlayerController.PlayerThread playerThread;
 
     public void setListener(PlayerControllerListener listener) {
         this.listener = listener;
@@ -74,26 +75,15 @@ public class PlayerController implements PlayerListener {
             LOG.warn("Can't play() in state " + state);
             return;
         }
+        if (playerThread != null) {
+            LOG.warn("Stopping unexpected existing player");
+            playerThread.closePlayer();
+        }
+
         setState(CONNECTING);
 
-        new Thread() {
-            public void run() {
-                try {
-                    createPlayer();
-                } catch (Throwable x) {
-                    stop();
-                    handleException(x, "Create player");
-                    return;
-                }
-                try {
-                    setState(BUFFERING);
-                    player.start();
-                } catch (Throwable x) {
-                    stop();
-                    handleException(x, "Start player");
-                }
-            }
-        }.start();
+        playerThread = new PlayerThread();
+        playerThread.start();
     }
 
     public synchronized void pause() {
@@ -103,7 +93,7 @@ public class PlayerController implements PlayerListener {
         }
 
         try {
-            player.stop();
+            playerThread.stopPlayer();
             setState(PAUSED);
         } catch (Throwable x) {
             stop();
@@ -118,25 +108,24 @@ public class PlayerController implements PlayerListener {
         }
 
         try {
-            player.start();
+            playerThread.startPlayer();
         } catch (Throwable x) {
             stop();
-            handleException(x, "Create player");
+            handleException(x, "Resume player");
         }
     }
 
     public synchronized void stop() {
-        if (player != null) {
+        if (playerThread != null) {
             try {
                 LOG.debug("Trying to close player.");
-                player.close();
+                playerThread.closePlayer();
                 LOG.debug("Player closed successfully.");
             } catch (Throwable x) {
                 handleException(x, "Close player");
             }
         }
-        player = null;
-        input = null;
+        playerThread = null;
         listener.bytesRead(0L);
 
         setState(STOPPED);
@@ -188,43 +177,10 @@ public class PlayerController implements PlayerListener {
         listener.error(x);
     }
 
-    private void createPlayer() throws Exception {
-        MusicDirectory.Entry entry = getCurrent();
-        String url = entry.getUrl();
-        InputStream in;
-
-        LOG.info("Opening URL " + url);
-        if (url.startsWith("resource:")) {
-            in = getClass().getResourceAsStream(url.substring(9));
-        } else {
-            int player = settingsController.getPlayer();
-            if (player > 0 && !settingsController.isMock()) {
-                url += "&player=" + player;
-            }
-            in = Connector.openInputStream(url);
-        }
-
-        // TODO: Fix threading bug. If the player controller was stopped while this thread
-        // was connecting etc, it should abort. Maybe create own subclass of Thread with a cancel() method.
-        // Look at code samples on the internet.
-        input = new MonitoredInputStream(in);
-
-        LOG.info("Creating player for URL " + url);
-        player = Manager.createPlayer(input, entry.getContentType());
-        LOG.info("Player created for URL " + url + ": " + player);
-
-        player.addPlayerListener(this);
-        notifySongChanged();
-    }
 
     public void playerUpdate(Player player, String event, Object eventData) {
 
         LOG.debug("Got event '" + event + "' from player " + player);
-
-        if (player != this.player && this.player != null) {
-            LOG.warn("Got event '" + event + "' from unknown player.");
-            return;
-        }
 
         if (PlayerListener.STARTED.equals(event)) {
             setState(PLAYING);
@@ -314,4 +270,87 @@ public class PlayerController implements PlayerListener {
             return in.markSupported();
         }
     }
+
+    public class PlayerThread extends Thread {
+        private Player player;
+        private boolean closed;
+        private MonitoredInputStream input;
+
+        public void run() {
+            try {
+                createPlayer();
+            } catch (Throwable x) {
+                if (!closed) {
+                    closePlayer();
+                    handleException(x, "Create player");
+                }
+                return;
+            }
+            if (closed) {
+                return;
+            }
+            try {
+                setState(BUFFERING);
+                player.start();
+            } catch (Throwable x) {
+                closePlayer();
+                handleException(x, "Start player");
+            }
+        }
+
+        public void closePlayer() {
+            closed = true;
+            if (player != null) {
+                player.close();
+            }
+            Util.closeQuietly(input);
+        }
+
+        private void createPlayer() throws Exception {
+            MusicDirectory.Entry entry = getCurrent();
+            String url = entry.getUrl();
+            InputStream in;
+
+            LOG.info("Opening URL " + url);
+            if (url.startsWith("resource:")) {
+                in = getClass().getResourceAsStream(url.substring(9));
+            } else {
+                int player = settingsController.getPlayer();
+                if (player > 0 && !settingsController.isMock()) {
+                    url += "&player=" + player;
+                }
+                in = Connector.openInputStream(url);
+            }
+
+            if (closed) {
+                return;
+            }
+
+            input = new MonitoredInputStream(in);
+
+            LOG.info("Creating player for URL " + url);
+            player = Manager.createPlayer(input, entry.getContentType());
+            LOG.info("Player created for URL " + url + ": " + player);
+
+            if (closed) {
+                return;
+            }
+
+            player.addPlayerListener(PlayerController.this);
+            notifySongChanged();
+        }
+
+        public void stopPlayer() throws MediaException {
+            if (player != null) {
+                player.stop();
+            }
+        }
+
+        public void startPlayer() throws MediaException {
+            if (player != null) {
+                player.start();
+            }
+        }
+    }
+
 }
