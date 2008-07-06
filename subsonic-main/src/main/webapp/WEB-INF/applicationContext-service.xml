@@ -127,6 +127,7 @@
         <property name="securityService" ref="securityService"/>
         <property name="musicInfoService" ref="musicInfoService"/>
         <property name="transcodingService" ref="transcodingService"/>
+        <property name="searchService" ref="searchService"/>
         <property name="audioScrobblerService" ref="audioScrobblerService"/>
     </bean>
 

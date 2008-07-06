@@ -22,6 +22,7 @@ public class JukeboxService {
     private StatusService statusService;
     private TranscodingService transcodingService;
     private MusicInfoService musicInfoService;
+    private SearchService searchService;
     private AudioScrobblerService audioScrobblerService;
 
     /**
@@ -63,6 +64,10 @@ public class JukeboxService {
         this.musicInfoService = musicInfoService;
     }
 
+    public void setSearchService(SearchService searchService) {
+        this.searchService = searchService;
+    }
+
     public void setAudioScrobblerService(AudioScrobblerService audioScrobblerService) {
         this.audioScrobblerService = audioScrobblerService;
     }
@@ -83,7 +88,7 @@ public class JukeboxService {
             try {
                 LOG.info("Starting jukebox player.");
                 status = statusService.createStreamStatus(subsonicPlayer);
-                in = new PlaylistInputStream(subsonicPlayer, status, transcodingService, musicInfoService, audioScrobblerService, null);
+                in = new PlaylistInputStream(subsonicPlayer, status, transcodingService, musicInfoService, audioScrobblerService, searchService);
                 jlPlayer = new javazoom.jl.player.Player(in);
                 jlPlayer.play(Integer.MAX_VALUE);
             } catch (Throwable x) {

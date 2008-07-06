@@ -7,7 +7,11 @@ import javazoom.jl.player.Player;
 
 import java.io.InputStream;
 import java.io.FileInputStream;
+import java.io.ByteArrayInputStream;
 import java.net.URL;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.ArrayUtils;
 
 /**
  * @author Sindre Mehus
@@ -15,8 +19,13 @@ import java.net.URL;
 public class Scratch {
 
     public Scratch() throws Exception {
-        InputStream in = new FileInputStream("c:/music/Samples/Drum Loop 2.mp3");
-//        InputStream in = new URL("http://192.168.0.7/subsonic/stream?player=3&suffix=.mp3").openStream();
+
+        byte[] bytesA = IOUtils.toByteArray(new FileInputStream("c:/music/Samples/Hello.mp3"));
+        byte[] bytesB = IOUtils.toByteArray(new FileInputStream("c:/music/Samples/Organ.mp3"));
+
+        byte[] bytes = ArrayUtils.addAll(bytesA, bytesB);
+        InputStream in = new ByteArrayInputStream(bytes);
+
         Player player = new Player(in);
         System.out.println("start");
         player.play();
