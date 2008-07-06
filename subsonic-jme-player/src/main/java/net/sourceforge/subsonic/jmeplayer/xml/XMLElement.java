@@ -153,7 +153,7 @@ public class XMLElement {
     /**
      * Returns the class (i.e. the name indicated in the tag) of the object.
      */
-    private String getTagName() {
+    public String getTagName() {
         return tagName;
     }
 

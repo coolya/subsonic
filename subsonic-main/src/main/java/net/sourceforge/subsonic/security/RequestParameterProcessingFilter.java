@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.security;
 
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.util.XMLBuilder;
 import org.acegisecurity.Authentication;
 import org.acegisecurity.AuthenticationException;
 import org.acegisecurity.BadCredentialsException;
@@ -63,12 +64,21 @@ public class RequestParameterProcessingFilter implements Filter {
             LOG.info("Authentication failed for user " + username);
 
             SecurityContextHolder.getContext().setAuthentication(null);
-            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Wrong username/password");
+            sendErrorXml(httpResponse);
 
             return;
         }
 
         chain.doFilter(request, response);
+    }
+
+    private void sendErrorXml(HttpServletResponse httpResponse) throws IOException {
+        XMLBuilder builder = new XMLBuilder();
+
+        builder.preamble("UTF-8");
+        builder.addClosed("error", "Wrong username/password.");
+
+        httpResponse.getWriter().write(builder.toString());
     }
 
     /**

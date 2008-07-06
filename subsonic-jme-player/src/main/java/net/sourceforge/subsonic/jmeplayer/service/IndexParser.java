@@ -10,11 +10,12 @@ import java.util.Vector;
 /**
  * @author Sindre Mehus
  */
-public class IndexParser {
+public class IndexParser extends AbstractParser {
 
     public Index[] parse(Reader reader) throws Exception {
         XMLElement root = new XMLElement();
         root.parseFromReader(reader);
+        checkForError(root);
 
         Vector children = root.getChildren();
         Index[] indexes = new Index[children.size()];

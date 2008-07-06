@@ -9,11 +9,12 @@ import java.util.Vector;
 /**
  * @author Sindre Mehus
  */
-public class MusicDirectoryParser {
+public class MusicDirectoryParser extends AbstractParser {
 
     public MusicDirectory parse(Reader reader) throws Exception {
         XMLElement root = new XMLElement();
         root.parseFromReader(reader);
+        checkForError(root);
 
         Vector children = root.getChildren();
         MusicDirectory.Entry[] entries = new MusicDirectory.Entry[children.size()];
