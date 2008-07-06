@@ -9,6 +9,7 @@ import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.JukeboxService;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -33,6 +34,7 @@ public class PlaylistController extends ParameterizableViewController {
     private SecurityService securityService;
     private SettingsService settingsService;
     private MusicFileService musicFileService;
+    private JukeboxService jukeboxService;
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -159,8 +161,13 @@ public class PlaylistController extends ParameterizableViewController {
 
         boolean isCurrentPlayer = player.getIpAddress() != null && player.getIpAddress().equals(request.getRemoteAddr());
 
-        map.put("sendM3U", player.isAutoControlEnabled() && isCurrentPlayer && user.isStreamRole() && sendM3U);
+        map.put("sendM3U", player.isAutoControlEnabled() && !player.isJukebox() && isCurrentPlayer && user.isStreamRole() && sendM3U);
         map.put("anchor", anchor);
+
+        if (sendM3U && player.isJukebox()) {
+            jukeboxService.play(player);
+        }
+
     }
 
     private List<Player> getPlayers(User user) {
@@ -189,6 +196,10 @@ public class PlaylistController extends ParameterizableViewController {
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
+    }
+
+    public void setJukeboxService(JukeboxService jukeboxService) {
+        this.jukeboxService = jukeboxService;
     }
 
     /** Contains information about a single song in the playlist. */

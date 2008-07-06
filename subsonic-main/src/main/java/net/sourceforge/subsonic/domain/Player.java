@@ -18,10 +18,10 @@ public class Player {
     private boolean isDynamicIp = true;
     private boolean isAutoControlEnabled = true;
     private boolean isClientSidePlaylist = false;
+    private boolean isJukebox = false;
     private Date lastSeen;
     private CoverArtScheme coverArtScheme = CoverArtScheme.MEDIUM;
     private TranscodeScheme transcodeScheme = TranscodeScheme.OFF;
-
     private Playlist playlist;
 
     /**
@@ -130,6 +130,25 @@ public class Player {
      */
     public void setClientSidePlaylist(boolean isClientSidePlaylist) {
         this.isClientSidePlaylist = isClientSidePlaylist;
+    }
+
+
+    /**
+     * Returns whether this player operates in jukebox mode.
+     *
+     * @return Whether this player operates in jukebox mode.
+     */
+    public boolean isJukebox() {
+        return isJukebox;
+    }
+
+    /**
+     * Sets whether this player operates in jukebox mode.
+     *
+     * @param jukebox Whether this player operates in jukebox mode.
+     */
+    public void setJukebox(boolean jukebox) {
+        isJukebox = jukebox;
     }
 
     /**

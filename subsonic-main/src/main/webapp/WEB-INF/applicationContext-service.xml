@@ -122,6 +122,14 @@
         <property name="adInterval" value="4"/>
     </bean>
 
+    <bean id="jukeboxService" class="net.sourceforge.subsonic.service.JukeboxService">
+        <property name="statusService" ref="statusService"/>
+        <property name="securityService" ref="securityService"/>
+        <property name="musicInfoService" ref="musicInfoService"/>
+        <property name="transcodingService" ref="transcodingService"/>
+        <property name="audioScrobblerService" ref="audioScrobblerService"/>
+    </bean>
+
     <!-- AJAX services -->
 
     <bean id="ajaxNowPlayingService" class="net.sourceforge.subsonic.ajax.NowPlayingService">

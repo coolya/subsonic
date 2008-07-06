@@ -24,7 +24,7 @@ public class PlayerDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(PlayerDao.class);
     private static final String COLUMNS = "id, name, type, username, ip_address, auto_control_enabled, " +
-                                          "last_seen, cover_art_scheme, transcode_scheme, dynamic_ip, client_side_playlist";
+                                          "last_seen, cover_art_scheme, transcode_scheme, dynamic_ip, client_side_playlist, jukebox";
 
     private PlayerRowMapper rowMapper = new PlayerRowMapper();
     private Map<String, Playlist> playlists = Collections.synchronizedMap(new HashMap<String, Playlist>());
@@ -52,7 +52,8 @@ public class PlayerDao extends AbstractDao {
         template.update(sql, new Object[]{player.getId(), player.getName(), player.getType(), player.getUsername(),
                                           player.getIpAddress(), player.isAutoControlEnabled(),
                                           player.getLastSeen(), player.getCoverArtScheme().name(),
-                                          player.getTranscodeScheme().name(), player.isDynamicIp(), player.isClientSidePlaylist()});
+                                          player.getTranscodeScheme().name(), player.isDynamicIp(),
+                                          player.isClientSidePlaylist(), player.isJukebox()});
         addPlaylist(player);
 
         LOG.info("Created player " + id + '.');
@@ -85,13 +86,14 @@ public class PlayerDao extends AbstractDao {
                      "cover_art_scheme = ?," +
                      "transcode_scheme = ?, " +
                      "dynamic_ip = ?, " +
-                     "client_side_playlist = ? " +
+                     "client_side_playlist = ?, " +
+                     "jukebox = ? " +
                      "where id = ?";
         getJdbcTemplate().update(sql, new Object[]{player.getName(), player.getType(), player.getUsername(),
                                                    player.getIpAddress(), player.isAutoControlEnabled(),
                                                    player.getLastSeen(), player.getCoverArtScheme().name(),
                                                    player.getTranscodeScheme().name(), player.isDynamicIp(),
-                                                   player.isClientSidePlaylist(), player.getId()});
+                                                   player.isClientSidePlaylist(), player.isJukebox(), player.getId()});
     }
 
     private void addPlaylist(Player player) {
@@ -118,6 +120,7 @@ public class PlayerDao extends AbstractDao {
             player.setTranscodeScheme(TranscodeScheme.valueOf(rs.getString(col++)));
             player.setDynamicIp(rs.getBoolean(col++));
             player.setClientSidePlaylist(rs.getBoolean(col++));
+            player.setJukebox(rs.getBoolean(col++));
 
             addPlaylist(player);
             return player;

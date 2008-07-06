@@ -48,13 +48,31 @@ public class PlaylistInputStream extends InputStream {
      * {@inheritDoc}
      */
     @Override
+    public int read() throws IOException {
+        byte[] b = new byte[1];
+        int n = read(b);
+        return n == -1 ? -1 : b[0];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int read(byte[] b) throws IOException {
+        return read(b, 0, b.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int read(byte[] b, int off, int len) throws IOException {
         prepare();
         if (currentInputStream == null) {
             return -1;
         }
 
-        int n = currentInputStream.read(b);
+        int n = currentInputStream.read(b, off, len);
 
         if (n == -1) {
             player.getPlaylist().next();
@@ -122,15 +140,5 @@ public class PlaylistInputStream extends InputStream {
             currentInputStream = null;
             currentFile = null;
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int read() throws IOException {
-        byte[] b = new byte[1];
-        int n = read(b);
-        return n == -1 ? -1 : b[0];
     }
 }

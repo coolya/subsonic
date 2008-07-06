@@ -105,7 +105,13 @@ public class Schema35 extends Schema {
             template.execute("alter table user_settings add foreign key (system_avatar_id) references system_avatar(id)");
             LOG.info("Database column 'user_settings.system_avatar_id' was added successfully.");
         }
-    }
+
+        if (!columnExists(template, "jukebox", "player")) {
+             LOG.info("Database column 'player.jukebox' not found.  Creating it.");
+             template.execute("alter table player add jukebox boolean default false not null");
+             LOG.info("Database column 'player.jukebox' was added successfully.");
+         }
+     }
 
     private void createAvatar(JdbcTemplate template, String avatar) {
         if (template.queryForInt("select count(*) from system_avatar where name = ?", new Object[]{avatar}) == 0) {

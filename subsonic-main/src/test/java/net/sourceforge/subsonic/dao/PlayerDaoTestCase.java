@@ -27,6 +27,7 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         player.setDynamicIp(false);
         player.setAutoControlEnabled(false);
         player.setClientSidePlaylist(true);
+        player.setJukebox(true);
         player.setLastSeen(new Date());
         player.setCoverArtScheme(CoverArtScheme.LARGE);
         player.setTranscodeScheme(TranscodeScheme.MAX_160);
@@ -86,6 +87,7 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
     public void testUpdatePlayer() {
         Player player = new Player();
         playerDao.createPlayer(player);
+        assertPlayerEquals(player, playerDao.getAllPlayers()[0]);
 
         player.setName("name");
         player.setUsername("username");
@@ -93,6 +95,7 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         player.setDynamicIp(true);
         player.setAutoControlEnabled(false);
         player.setClientSidePlaylist(true);
+        player.setJukebox(true);
         player.setLastSeen(new Date());
         player.setCoverArtScheme(CoverArtScheme.LARGE);
         player.setTranscodeScheme(TranscodeScheme.MAX_160);
@@ -126,7 +129,8 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong dynamic IP.", expected.isDynamicIp(), actual.isDynamicIp());
         assertEquals("Wrong auto control enabled.", expected.isAutoControlEnabled(), actual.isAutoControlEnabled());
         assertEquals("Wrong client-side playlist.", expected.isClientSidePlaylist(), actual.isClientSidePlaylist());
-        assertEquals("Wrong last seen.", expected.getLastSeen().getTime(), actual.getLastSeen().getTime());
+        assertEquals("Wrong jukebox mode.", expected.isJukebox(), actual.isJukebox());
+        assertEquals("Wrong last seen.", expected.getLastSeen(), actual.getLastSeen());
         assertEquals("Wrong cover art scheme.", expected.getCoverArtScheme(), actual.getCoverArtScheme());
         assertEquals("Wrong transcode scheme.", expected.getTranscodeScheme(), actual.getTranscodeScheme());
     }

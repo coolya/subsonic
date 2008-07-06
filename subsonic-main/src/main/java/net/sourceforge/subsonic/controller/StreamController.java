@@ -21,6 +21,7 @@ import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.lang.math.LongRange;
+import org.apache.commons.io.IOUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -182,9 +183,7 @@ public class StreamController implements Controller {
                 statusService.removeStreamStatus(status);
                 securityService.updateUserByteCounts(user, status.getBytesTransfered(), 0L, 0L);
             }
-            if (in != null) {
-                in.close();
-            }
+            IOUtils.closeQuietly(in);
             LOG.info("Stopping stream " + streamEndpoint);
         }
         return null;

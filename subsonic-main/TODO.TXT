@@ -18,10 +18,15 @@ Use cases:
 
 TODO IN 3.6
 -----------
+Make Stop work in jukebox mode.
+Make contiuous random mode work in jukebox mode.
+Make repeat work in jukebox mode.
 Upgrade to Spring Security.
 Proper jukebox support. Check out jlayer. and see how jinzora does it. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1188
 iPod/iPhone support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1200
 Remove Mock/Debug options from JME player.
+Remove FAQ (and link to it from webapp)
+New sceenshots
 
 BACKLOG
 ===========================
@@ -209,8 +214,10 @@ mv target/subsonic-2.7-bin.zip target/subsonic-2.7.zip
 Deploy
 Check that correct local version is displayed.
 Commit
-Create file release at SourceForge. Use passive FTP to upload files.
-Remember to upload .exe installer.
+Upload files to SourceForge (in separate shell).
+  rsync -avP -e ssh subsonic-assembly/target/*   sindre_mehus@frs.sourceforge.net:uploads/
+  rsync -avP -e ssh subsonic-installer/target/*  sindre_mehus@frs.sourceforge.net:uploads/
+Create file release at SourceForge.
 cd subsonic-site
 mvn site:site
 mvn site:deploy
