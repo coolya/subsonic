@@ -18,7 +18,7 @@ Use cases:
 
 TODO IN 3.6
 -----------
-Make Stop work in jukebox mode.
+GUI for toggling jukebox mode.
 Make contiuous random mode work in jukebox mode.
 Make repeat work in jukebox mode.
 Upgrade to Spring Security.

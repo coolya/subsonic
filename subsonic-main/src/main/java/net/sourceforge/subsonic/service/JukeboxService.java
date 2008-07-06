@@ -4,6 +4,7 @@ import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.TransferStatus;
 import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.io.PlaylistInputStream;
 import org.apache.commons.io.IOUtils;
 
@@ -30,8 +31,10 @@ public class JukeboxService {
      */
     public synchronized void play(Player player) {
         stop();
-        thread = new JuxeboxThread(player);
-        thread.start();
+        if (player.getPlaylist().getStatus() == Playlist.Status.PLAYING) {
+            thread = new JuxeboxThread(player);
+            thread.start();
+        }
     }
 
     /**
