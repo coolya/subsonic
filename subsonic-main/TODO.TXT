@@ -20,18 +20,13 @@ TODO IN 3.6
 -----------
 Upgrade to Spring Security.
 Proper jukebox support. Check out jlayer. and see how jinzora does it. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1188
-
-
-TODO IN 3.5
------------
-Fix erroneous caching of help.jsp (and others?)
-Verify that LastModified works for avatars.
-Write a tutorial of how to install the JME player, and link from the changelog.
-
+iPod/iPhone support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1200
+Remove Mock/Debug options from JME player.
 
 BACKLOG
 ===========================
-iPod/iPhone support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1200
+Fix erroneous caching of help.jsp (and others?)
+Verify that LastModified works for avatars.
 Create per-channel podcast settings. At least enable/disable.
 Should make it possible to retrieve avatars without reading the binary column.
 Per-song rating.

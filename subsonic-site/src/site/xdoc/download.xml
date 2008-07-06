@@ -31,20 +31,20 @@
                     <td><a href="download_standalone_redirect.html"><img src="images/download_small.gif" alt=""/> Download stand-alone</a> <a href="install_standalone.html">(Instructions)</a></td>
                     <td><a href="download_redirect.html"><img src="images/download_small.gif" alt=""/> Download WAR</a> <a href="install_war.html">(Instructions)</a></td>
                 </tr>
-                <tr>
-                    <td><b>Current beta release</b></td>
-                    <td><em>No beta is available right now.</em></td>
-                    <td/>
-                    <td/>
-                    <td/>
-                </tr>
                 <!--<tr>-->
                     <!--<td><b>Current beta release</b></td>-->
-                    <!--<td>Subsonic 3.5.beta1 <a href="changelog.html">(What's new?)</a></td>-->
-                    <!--<td><a href="download_win_beta_redirect.html"><img src="images/download_small.gif" alt=""/> Download Windows installer</a> <a href="install_windows.html">(Instructions)</a></td>-->
-                    <!--<td><a href="download_standalone_beta_redirect.html"><img src="images/download_small.gif" alt=""/> Download stand-alone</a> <a href="install_standalone.html">(Instructions)</a></td>-->
-                    <!--<td><a href="download_beta_redirect.html"><img src="images/download_small.gif" alt=""/> Download WAR</a> <a href="install_war.html">(Instructions)</a></td>-->
+                    <!--<td><em>No beta is available right now.</em></td>-->
+                    <!--<td/>-->
+                    <!--<td/>-->
+                    <!--<td/>-->
                 <!--</tr>-->
+                <tr>
+                    <td><b>Current beta release</b></td>
+                    <td>Subsonic 3.5.beta1 <a href="changelog.html">(What's new?)</a></td>
+                    <td><a href="download_win_beta_redirect.html"><img src="images/download_small.gif" alt=""/> Download Windows installer</a> <a href="install_windows.html">(Instructions)</a></td>
+                    <td><a href="download_standalone_beta_redirect.html"><img src="images/download_small.gif" alt=""/> Download stand-alone</a> <a href="install_standalone.html">(Instructions)</a></td>
+                    <td><a href="download_beta_redirect.html"><img src="images/download_small.gif" alt=""/> Download WAR</a> <a href="install_war.html">(Instructions)</a></td>
+                </tr>
             </table>
 
             <p>
