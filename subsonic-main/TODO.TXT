@@ -43,7 +43,6 @@ java.lang.NullPointerException
 
 TODO IN 3.6
 -----------
-JLayer often stops between songs.
 GUI for toggling jukebox mode.
 Make contiuous random mode work in jukebox mode.
 Make repeat work in jukebox mode.

@@ -2,9 +2,9 @@ package net.sourceforge.subsonic.service;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.domain.TransferStatus;
 import net.sourceforge.subsonic.domain.User;
-import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.io.PlaylistInputStream;
 import org.apache.commons.io.IOUtils;
 
@@ -73,32 +73,35 @@ public class JukeboxService {
     }
 
     private class JuxeboxThread extends Thread {
-        private Player subsonicPlayer;
         private javazoom.jl.player.Player jlPlayer;
+        private final Player subsonicPlayer;
+        private final TransferStatus status;
+        private final PlaylistInputStream in;
 
         public JuxeboxThread(Player subsonicPlayer) {
             this.subsonicPlayer = subsonicPlayer;
+            status = statusService.createStreamStatus(subsonicPlayer);
+            in = new PlaylistInputStream(subsonicPlayer, status, transcodingService, musicInfoService, audioScrobblerService, searchService);
+            try {
+                jlPlayer = new javazoom.jl.player.Player(in);
+            } catch (Throwable x) {
+                statusService.removeStreamStatus(status);
+                LOG.error("Failed to create jukebox player.", x);
+            }
         }
 
         @Override
         public void run() {
-            User user = securityService.getUserByName(subsonicPlayer.getUsername());
-            TransferStatus status = null;
-            PlaylistInputStream in = null;
             try {
                 LOG.info("Starting jukebox player.");
-                status = statusService.createStreamStatus(subsonicPlayer);
-                in = new PlaylistInputStream(subsonicPlayer, status, transcodingService, musicInfoService, audioScrobblerService, searchService);
-                jlPlayer = new javazoom.jl.player.Player(in);
-                jlPlayer.play(Integer.MAX_VALUE);
+                jlPlayer.play();
             } catch (Throwable x) {
                 LOG.error("Failed to start jukebox player.", x);
             } finally {
                 LOG.info("Stopping jukebox player.");
-                if (status != null) {
-                    statusService.removeStreamStatus(status);
-                    securityService.updateUserByteCounts(user, status.getBytesTransfered(), 0L, 0L);
-                }
+                statusService.removeStreamStatus(status);
+                User user = securityService.getUserByName(subsonicPlayer.getUsername());
+                securityService.updateUserByteCounts(user, status.getBytesTransfered(), 0L, 0L);
                 IOUtils.closeQuietly(in);
             }
         }
