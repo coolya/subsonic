@@ -74,9 +74,11 @@ public class PlaylistInputStream extends InputStream {
 
         int n = currentInputStream.read(b, off, len);
 
+        // If end of song reached, skip to next song and call read() again.
         if (n == -1) {
             player.getPlaylist().next();
             close();
+            return read(b, off, len);
         } else {
             status.addBytesTransfered(n);
         }
