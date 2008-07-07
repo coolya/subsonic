@@ -48,7 +48,7 @@ public class UserDao extends AbstractDao {
      * @param username The username used when logging in.
      * @return The user, or <code>null</code> if not found.
      */
-    public User getUserByName(String username) {
+    public synchronized User getUserByName(String username) {
         String sql = "select " + USER_COLUMNS + " from user where username=?";
         User[] users = (User[]) getJdbcTemplate().query(sql, new Object[]{username}, userRowMapper).toArray(new User[0]);
         if (users.length == 0) {
@@ -107,7 +107,8 @@ public class UserDao extends AbstractDao {
      *
      * @param user The user to update.
      */
-    public void updateUser(User user) {
+    public synchronized void updateUser(User user) {
+        // Note: Method is synchronized with getUser() method.
         String sql = "update user set password=?, ldap_authenticated=?, bytes_streamed=?, bytes_downloaded=?, bytes_uploaded=? " +
                      "where username=?";
         getJdbcTemplate().update(sql, new Object[]{encrypt(user.getPassword()), user.isLdapAuthenticated(),

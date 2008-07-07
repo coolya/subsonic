@@ -41,24 +41,6 @@ java.lang.NullPointerException
 	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:396)
 	at org.mortbay.thread.BoundedThreadPool$PoolThread.run(BoundedThreadPool.java:442)
 
-Analysis, Jukebox
------------------
-JNI Winamp wrapper
-Javazoom lib
-Skip all non-mp3 files.
-Check out ogg support.
-How to integrate it with subsonic?
-Play local files or stream? The advantage of streaming is that it will show in the Now Playing area.
-Must be possible to remote control. Pause/resume/skip etc
-
-Use cases:
-1. Configure player to be of type "jukebox".
-2. User clicks "play"; this gets to PlaylistController.
-   PlaylistController updates playlist as per usual, and if a track change is required, it notifies the local Jukebox thingy.
-3. (Internal). Juxebox reaches EOM. It should then proceed to the next track in the playlist.
-4. User interacts with the playlist, e.g., skip to next track. Then need to interrupt the current song.
-
-
 TODO IN 3.6
 -----------
 JLayer often stops between songs.
