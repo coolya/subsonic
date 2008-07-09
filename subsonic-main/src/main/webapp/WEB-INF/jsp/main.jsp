@@ -12,7 +12,13 @@
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoom.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoomHTML.js"/>"></script>
-</head><body class="mainframe" onload="setupZoom()">
+</head><body class="mainframe" onload="onload()">
+
+<script type="text/javascript" language="javascript">
+    function onload() {
+        setupZoom('<c:url value="/"/>');
+    }
+</script>
 
 <c:if test="${model.updateNowPlaying}">
 

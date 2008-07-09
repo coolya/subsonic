@@ -41,8 +41,7 @@ var includeFade    = 1;    // Set to 1 to fade the image in / out as it zooms
 var minBorder      = 90;   // Amount of padding between large, scaled down images, and the window edges
 var shadowSettings = '0px 5px 25px rgba(0, 0, 0, '; // Blur, radius, color of shadow for compatible browsers
 
-// Location of the zoom and shadow images
-var zoomImagesURI;
+var zoomImagesURI   = '/javascript/fancyzoom/zoom/'; // Location of the zoom and shadow images
 
 // Init. Do not add anything below this line, unless it's something awesome.
 
@@ -65,31 +64,32 @@ if (navigator.userAgent.indexOf("MSIE") != -1) {
 
 // Zoom: Setup The Page! Called in your <body>'s onLoad handler.
 
-function setupZoom(baseURI) {
-    zoomImagesURI = baseURI + '/javascript/fancyzoom/images/';
-
-    prepZooms();
+function setupZoom() {
+	prepZooms();
 	insertZoomHTML();
 	zoomdiv = document.getElementById(zoomID);
 	zoomimg = document.getElementById(theID);
 }
 
-// Zoom: Inject Javascript functions into hrefs with a "zoom" rel.
+// Zoom: Inject Javascript functions into hrefs pointing to images, one by one!
+// Skip any href that contains a rel="nozoom" tag.
 // This is done at page load time via an onLoad() handler.
 
 function prepZooms() {
-    if (! document.getElementsByTagName) {
+	if (! document.getElementsByTagName) {
 		return;
 	}
 	var links = document.getElementsByTagName("a");
 	for (i = 0; i < links.length; i++) {
-        if (links[i].getAttribute("href")) {
-            if (links[i].getAttribute("rel") == "zoom") {
-                links[i].onclick = function (event) { return zoomClick(this, event); };
-                links[i].onmouseover = function () { zoomPreload(this); };
-            }
-        }
-    }
+		if (links[i].getAttribute("href")) {
+			if (links[i].getAttribute("href").search(/(.*)\.(jpg|jpeg|gif|png|bmp|tif|tiff)/gi) != -1) {
+				if (links[i].getAttribute("rel") != "nozoom") {
+					links[i].onclick = function (event) { return zoomClick(this, event); };
+					links[i].onmouseover = function () { zoomPreload(this); };
+				}
+			}
+		}
+	}
 }
 
 // Zoom: Load an image into an image object. When done loading, function sets preloadActive to false,
