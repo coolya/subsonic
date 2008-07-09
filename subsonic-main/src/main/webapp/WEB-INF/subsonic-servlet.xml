@@ -348,7 +348,6 @@
                 <prop key="/changeCoverArt.view">changeCoverArtController</prop>
                 <prop key="/login.view">multiController</prop>
                 <prop key="/index.view">multiController</prop>
-                <prop key="/zoomCoverArt.view">multiController</prop>
                 <prop key="/nowPlaying.view">nowPlayingController</prop>
                 <prop key="/search.view">searchController</prop>
                 <prop key="/settings.view">settingsController</prop>

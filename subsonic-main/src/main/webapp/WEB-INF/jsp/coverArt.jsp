@@ -26,7 +26,7 @@ PARAMETERS
         <sub:param name="path" value="${param.albumPath}"/>
     </sub:url>
 
-    <sub:url value="coverArt.view" var="coverArtUrl">
+    <sub:url value="/coverArt.view" var="coverArtUrl">
         <c:if test="${not empty param.coverArtSize}">
             <sub:param name="size" value="${param.coverArtSize}"/>
         </c:if>
@@ -34,14 +34,23 @@ PARAMETERS
             <sub:param name="path" value="${param.coverArtPath}"/>
         </c:if>
     </sub:url>
+    <sub:url value="/coverArt.view" var="zoomCoverArtUrl">
+        <c:if test="${not empty param.coverArtPath}">
+            <sub:param name="path" value="${param.coverArtPath}"/>
+        </c:if>
+    </sub:url>
+
 
     <div class="outerpair1">
         <div class="outerpair2">
             <div class="shadowbox">
                 <div class="innerbox">
-                    <c:if test="${param.showLink}"><a href="${mainUrl}" title="${param.albumName}"></c:if>
+                    <c:choose>
+                        <c:when test="${param.showLink}"><a href="${mainUrl}" title="${param.albumName}"></c:when>
+                        <c:when test="${param.showZoom}"><a href="${zoomCoverArtUrl}" rel="zoom" title="${param.albumName}"></c:when>
+                    </c:choose>
                         <img src="${coverArtUrl}" alt="${param.albumName}"/>
-                        <c:if test="${param.showLink}"></a></c:if>
+                        <c:if test="${param.showLink or param.showZoom}"></a></c:if>
                 </div>
             </div>
         </div>
@@ -61,10 +70,7 @@ PARAMETERS
     </c:if>
 
     <c:if test="${param.showZoom}">
-        <sub:url value="/zoomCoverArt.view" var="zoomCoverArtUrl">
-            <sub:param name="path" value="${param.coverArtPath}"/>
-        </sub:url>
-        <a class="detail" href="${zoomCoverArtUrl}" onclick="return popup(this, 'Cover')"><fmt:message key="coverart.zoom"/></a>
+        <a class="detail" rel="zoom" title="${param.albumName}" href="${zoomCoverArtUrl}"><fmt:message key="coverart.zoom"/></a>
     </c:if>
 
     <c:if test="${not param.showZoom and not param.showChange and param.showCaption}">

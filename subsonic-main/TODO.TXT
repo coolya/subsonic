@@ -41,14 +41,25 @@ java.lang.NullPointerException
 	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:396)
 	at org.mortbay.thread.BoundedThreadPool$PoolThread.run(BoundedThreadPool.java:442)
 
+DONE IN 3.5
+------------
+Incredibly fancy cover art zoom.
+
 TODO IN 3.6
 -----------
+Use fancyzoom for screenshots also.
+Fancyzoom doesn't find images in IE.
 GUI for toggling jukebox mode.
 Make contiuous random mode work in jukebox mode.
 Make repeat work in jukebox mode.
 Upgrade to Spring Security.
 Proper jukebox support. Check out jlayer. and see how jinzora does it. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1188
-iPod/iPhone support. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1200
+iPod/iPhone support.
+   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1200
+   http://www.alloysoft.com/
+   http://developer.apple.com/webapps
+   http://developer.apple.com/internet/webcontent/bestwebdev.html
+
 Remove Mock/Debug options from JME player.
 Remove FAQ (and link to it from webapp)
 New sceenshots

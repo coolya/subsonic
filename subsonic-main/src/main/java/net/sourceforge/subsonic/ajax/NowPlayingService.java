@@ -91,6 +91,9 @@ public class NowPlayingService {
                 String coverArtUrl = coverArts.isEmpty() ? null :
                                      url.replaceFirst("/dwr/.*", "/coverArt.view?size=48&pathUtf8Hex=" +
                                                                  StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
+                String coverArtZoomUrl = coverArts.isEmpty() ? null :
+                                         url.replaceFirst("/dwr/.*", "/coverArt.view?pathUtf8Hex=" +
+                                                                     StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
 
                 String avatarUrl = null;
                 if (userSettings.getAvatarScheme() == AvatarScheme.SYSTEM) {
@@ -105,19 +108,20 @@ public class NowPlayingService {
                     albumUrl = StringUtil.rewriteUrl(albumUrl, referer);
                     lyricsUrl = StringUtil.rewriteUrl(lyricsUrl, referer);
                     coverArtUrl = StringUtil.rewriteUrl(coverArtUrl, referer);
+                    coverArtZoomUrl = StringUtil.rewriteUrl(coverArtZoomUrl, referer);
                     avatarUrl = StringUtil.rewriteUrl(avatarUrl, referer);
                 }
 
-                String tooltip = artist + " &ndash; " + title;
+                String tooltip = StringUtil.toHtml(artist)+ " &ndash; " + StringUtil.toHtml(title);
 
                 if (StringUtils.isNotBlank(player.getName())) {
                     username += "@" + player.getName();
                 }
-                artist = StringUtils.abbreviate(artist, 25);
-                title = StringUtils.abbreviate(title, 25);
-                username = StringUtils.abbreviate(username, 25);
+                artist = StringUtil.toHtml(StringUtils.abbreviate(artist, 25));
+                title = StringUtil.toHtml(StringUtils.abbreviate(title, 25));
+                username = StringUtil.toHtml(StringUtils.abbreviate(username, 25));
 
-                result.add(new NowPlayingInfo(username, artist, title, tooltip, albumUrl, lyricsUrl, coverArtUrl, avatarUrl));
+                result.add(new NowPlayingInfo(username, artist, title, tooltip, albumUrl, lyricsUrl, coverArtUrl, coverArtZoomUrl,avatarUrl));
             }
         }
 

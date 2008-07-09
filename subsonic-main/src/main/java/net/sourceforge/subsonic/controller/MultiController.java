@@ -35,12 +35,6 @@ public class MultiController extends MultiActionController {
         return new ModelAndView("index");
     }
 
-    public ModelAndView zoomCoverArt(HttpServletRequest request, HttpServletResponse response) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("path", request.getParameter("path"));
-        return new ModelAndView("zoomCoverArt", "model", map);
-    }
-
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
     }

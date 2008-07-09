@@ -10,7 +10,9 @@
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
-</head><body class="mainframe">
+    <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoom.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoomHTML.js"/>"></script>
+</head><body class="mainframe" onload="setupZoom()">
 
 <c:if test="${model.updateNowPlaying}">
 
@@ -18,12 +20,8 @@
     <script type="text/javascript" language="javascript">
 
         var currentDir = null;
-        window.onload = onload();
-
-        function onload() {
-            DWREngine.setErrorHandler(null);
-            startGetDirectoryTimer();
-        }
+        DWREngine.setErrorHandler(null);
+        startGetDirectoryTimer();
 
         function startGetDirectoryTimer() {
             nowPlayingService.getDirectory(getDirectoryCallback);
@@ -69,13 +67,14 @@
                         "<fmt:message key="main.lyrics"/>" + "</a></span></td><td style='padding-top:1em'>";
 
                 if (nowPlaying[i].coverArtUrl != null) {
-                    html += "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'>" +
+                    html += "<a title='" + nowPlaying[i].tooltip + "' rel='zoom' href='" + nowPlaying[i].coverArtZoomUrl + "'>" +
                             "<img src='" + nowPlaying[i].coverArtUrl + "' width='48' height='48'/></a>";
                 }
                 html += "</td></tr>";
             }
             html += "</table>";
             $('nowPlaying').innerHTML = html;
+            prepZooms();
         }
     </script>
 </c:if>
