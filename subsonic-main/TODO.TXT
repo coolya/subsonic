@@ -41,9 +41,10 @@ java.lang.NullPointerException
 	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:396)
 	at org.mortbay.thread.BoundedThreadPool$PoolThread.run(BoundedThreadPool.java:442)
 
-DONE IN 3.5
-------------
+DONE IN 3.5.beta2
+------------------
 Incredibly fancy cover art zoom.
+Updated German translation (Thanks to Jörg Frommann)
 
 TODO IN 3.6
 -----------
