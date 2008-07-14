@@ -63,10 +63,10 @@ if (navigator.userAgent.indexOf("MSIE") != -1) {
 	var browserIsIE = true;
 }
 
-// Zoom: Setup The Page! Called in your <body>'s onLoad handler.
+// Zoom: Setup The Page! Called in your <body>'s onLoad handler. 
 
 function setupZoom(baseURI) {
-    zoomImagesURI = baseURI + '/javascript/fancyzoom/images/';
+    zoomImagesURI = baseURI + 'script/fancyzoom/images/';
 
     prepZooms();
 	insertZoomHTML();
