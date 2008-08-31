@@ -1,55 +1,26 @@
-Error when downloading "Samples".
-java.lang.NullPointerException
-	at org.acegisecurity.ui.ExceptionTranslationFilter.handleException(ExceptionTranslationFilter.java:229)
-	at org.acegisecurity.ui.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:176)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.providers.anonymous.AnonymousProcessingFilter.doFilter(AnonymousProcessingFilter.java:125)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.ui.rememberme.RememberMeProcessingFilter.doFilter(RememberMeProcessingFilter.java:142)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.wrapper.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:81)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.ui.basicauth.BasicProcessingFilter.doFilter(BasicProcessingFilter.java:173)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.ui.AbstractProcessingFilter.doFilter(AbstractProcessingFilter.java:271)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.ui.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.context.HttpSessionContextIntegrationFilter.doFilter(HttpSessionContextIntegrationFilter.java:249)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.util.FilterChainProxy.doFilter(FilterChainProxy.java:149)
-	at org.acegisecurity.util.FilterToBeanProxy.doFilter(FilterToBeanProxy.java:98)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1084)
-	at net.sourceforge.subsonic.filter.RequestEncodingFilter.doFilter(RequestEncodingFilter.java:25)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1084)
-	at net.sourceforge.subsonic.filter.ParameterDecodingFilter.doFilter(ParameterDecodingFilter.java:36)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1084)
-	at net.sourceforge.subsonic.filter.BootstrapVerificationFilter.doFilter(BootstrapVerificationFilter.java:36)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1084)
-	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:360)
-	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
-	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:181)
-	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:712)
-	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:405)
-	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:139)
-	at org.mortbay.jetty.Server.handle(Server.java:313)
-	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:506)
-	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:830)
-	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:514)
-	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:211)
-	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:381)
-	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:396)
-	at org.mortbay.thread.BoundedThreadPool$PoolThread.run(BoundedThreadPool.java:442)
-
 DONE IN 3.5.beta2
 ------------------
 Incredibly fancy cover art zoom.
 Updated German translation (Thanks to Jörg Frommann)
 
+TODO FOR RIPSERVER
+------------------
+Change SettingsService.DEFAULT_PODCAST_FOLDER.
+Change SettingsService.DEFAULT_THEME_ID.
+Change "c:/music" in Schema26.
+Add new theme "Ripserver"
+Include FLAC, WAV transcoding.
+
 TODO IN 3.6
 -----------
-Use fancyzoom for screenshots also.
-Fancyzoom doesn't find images in IE.
+Make new homepage. (Check out http://www.mediamonkey.com)
+Improve help popup.
+  o Create taglib?
+  o http://home.comcast.net/~jscheuer1/side/mybox/
+  o http://www.nickstakenburg.com/projects/prototip2/
+Update PayPal icons.
+Make tray icon work. Upgrade to jdic 0.9.5. (see forum)
+Artist-level comments (see forum)
 GUI for toggling jukebox mode.
 Make contiuous random mode work in jukebox mode.
 Make repeat work in jukebox mode.
@@ -94,7 +65,6 @@ Precompile JSPs for Dekoh. Separate modules "subsonic-precompiled-jetty" and "su
 Fix javascript error in playlist in IE.
 Display the sub folder count next to the artist folder (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=905)
 Facebook integration
-Artist-level comments.
 Show/Hide Podcast channel description (e.g., Java Posse)
 Show mini coverarts "Next/Prev Album".
 Improve Flash player.
@@ -292,3 +262,47 @@ MISCELLANEOUS
 =============
 openclipart.org
 http://www.nero.com/eng/nero-aac-codec.html
+
+Error when downloading "Samples".
+java.lang.NullPointerException
+	at org.acegisecurity.ui.ExceptionTranslationFilter.handleException(ExceptionTranslationFilter.java:229)
+	at org.acegisecurity.ui.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:176)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
+	at org.acegisecurity.providers.anonymous.AnonymousProcessingFilter.doFilter(AnonymousProcessingFilter.java:125)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
+	at org.acegisecurity.ui.rememberme.RememberMeProcessingFilter.doFilter(RememberMeProcessingFilter.java:142)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
+	at org.acegisecurity.wrapper.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:81)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
+	at org.acegisecurity.ui.basicauth.BasicProcessingFilter.doFilter(BasicProcessingFilter.java:173)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
+	at org.acegisecurity.ui.AbstractProcessingFilter.doFilter(AbstractProcessingFilter.java:271)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
+	at org.acegisecurity.ui.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
+	at org.acegisecurity.context.HttpSessionContextIntegrationFilter.doFilter(HttpSessionContextIntegrationFilter.java:249)
+	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
+	at org.acegisecurity.util.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.acegisecurity.util.FilterToBeanProxy.doFilter(FilterToBeanProxy.java:98)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1084)
+	at net.sourceforge.subsonic.filter.RequestEncodingFilter.doFilter(RequestEncodingFilter.java:25)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1084)
+	at net.sourceforge.subsonic.filter.ParameterDecodingFilter.doFilter(ParameterDecodingFilter.java:36)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1084)
+	at net.sourceforge.subsonic.filter.BootstrapVerificationFilter.doFilter(BootstrapVerificationFilter.java:36)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1084)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:360)
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:181)
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:712)
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:405)
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:139)
+	at org.mortbay.jetty.Server.handle(Server.java:313)
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:506)
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:830)
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:514)
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:211)
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:381)
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:396)
+	at org.mortbay.thread.BoundedThreadPool$PoolThread.run(BoundedThreadPool.java:442)
+
