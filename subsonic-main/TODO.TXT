@@ -7,9 +7,11 @@ TODO FOR RIPSERVER
 ------------------
 Change SettingsService.DEFAULT_PODCAST_FOLDER.
 Change SettingsService.DEFAULT_THEME_ID.
+Change default playlist folder?
 Change "c:/music" in Schema26.
 Add new theme "Ripserver"
 Include FLAC, WAV transcoding.
+Disable ads?
 
 TODO IN 3.6
 -----------
