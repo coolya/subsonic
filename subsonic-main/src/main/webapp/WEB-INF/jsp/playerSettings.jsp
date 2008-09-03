@@ -13,7 +13,7 @@
 
 <fmt:message key="common.help" var="help"/>
 <fmt:message key="common.unknown" var="unknown"/>
-<c:url value="/icons/help_small.png" var="helpUrl"/>
+<spring:theme code="helpPopupImage" var="helpUrl"/>
 
 <c:choose>
 <c:when test="${empty command.players}">

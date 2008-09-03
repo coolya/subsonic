@@ -3,7 +3,7 @@
 
 <c:set var="categories" value="${param.restricted ? 'personal password player' : 'musicFolder general advanced personal user player transcoding internetRadio podcast search'}"/>
 <h1>
-    <img src="<c:url value="/icons/settings.png"/>" alt=""/>
+    <img src="<spring:theme code="settingsImage"/>" alt=""/>
     <fmt:message key="settingsheader.title"/>
 </h1>
 

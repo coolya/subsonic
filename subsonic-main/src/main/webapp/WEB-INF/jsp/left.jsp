@@ -53,7 +53,7 @@
     <c:forEach items="${model.radios}" var="radio">
         <p class="dense">
             <a target="hidden" href="${radio.streamUrl}">
-                <img width="13" height="13" src="<spring:theme code="playImage"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
+                <img src="<spring:theme code="playImage"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
             <c:choose>
                 <c:when test="${empty radio.homepageUrl}">
                     ${radio.name}
@@ -73,7 +73,7 @@
                 <h2 style="padding:0;margin:0;border:0">${entry.key.index}
             </th>
             <th style="text-align:right;">
-                <a href="#top"><img width="13" height="13" src="<spring:theme code="upImage"/>"/></a>
+                <a href="#top"><img src="<spring:theme code="upImage"/>"/></a>
             </th>
         </tr>
     </table>

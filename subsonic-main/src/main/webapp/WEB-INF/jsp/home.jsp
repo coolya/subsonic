@@ -9,7 +9,7 @@
 </head>
 <body class="mainframe">
 <h1>
-    <img src="<c:url value="/icons/home.png"/>" alt=""/>
+    <img src="<spring:theme code="homeImage"/>" alt=""/>
     ${model.welcomeMessage}
 </h1>
 

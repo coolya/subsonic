@@ -24,7 +24,7 @@
 </c:choose>
 
 <h1>
-    <img src="<c:url value="/icons/help.png"/>" alt=""/>
+    <img src="<spring:theme code="helpImage"/>" alt=""/>
     <fmt:message key="help.title"/>
 </h1>
 
@@ -47,11 +47,11 @@
 <p/>
 
 <table width="75%"><tr>
-    <td><a href="<c:url value="/donate.view"/>"><img src="<c:url value="/icons/donate.gif"/>" alt=""/></a></td>
+    <td><a href="<c:url value="/donate.view"/>"><img src="<spring:theme code="paypalImage"/>" alt=""/></a></td>
     <td><fmt:message key="help.donate"/></td>
 </tr></table>
 
-<h2><img src="<c:url value="/icons/log.png"/>" width="22" height="22" alt=""/>&nbsp;<fmt:message key="help.log"/></h2>
+<h2><img src="<spring:theme code="logImage"/>" alt=""/>&nbsp;<fmt:message key="help.log"/></h2>
 
 <table cellpadding="2" class="log indent">
     <c:forEach items="${model.logEntries}" var="entry">

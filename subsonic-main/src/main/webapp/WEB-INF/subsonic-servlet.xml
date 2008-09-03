@@ -395,8 +395,9 @@
         <property name="basename" value="net.sourceforge.subsonic.i18n.ResourceBundle"/>
     </bean>
 
-    <bean id="themeSource" class="org.springframework.ui.context.support.ResourceBundleThemeSource">
+    <bean id="themeSource" class="net.sourceforge.subsonic.theme.SubsonicThemeSource">
         <property name="basenamePrefix" value="net.sourceforge.subsonic.theme."/>
+        <property name="defaultResourceBundle" value="net.sourceforge.subsonic.theme.default"/>
     </bean>
 
     <bean id="localeResolver"

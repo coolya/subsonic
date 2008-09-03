@@ -91,7 +91,7 @@
 </script>
 
 <h1>
-    <img src="<c:url value="/icons/podcast_large.png"/>" alt=""/>
+    <img src="<spring:theme code="podcastLargeImage"/>" alt=""/>
     <fmt:message key="podcastreceiver.title"/>
 </h1>
 

@@ -7,7 +7,7 @@
 <body class="mainframe">
 
 <h1>
-    <img src="<c:url value="/icons/donate.png"/>" alt=""/>
+    <img src="<spring:theme code="donateImage"/>" alt=""/>
     <fmt:message key="donate.title"/>
 </h1>
 <c:if test="${not empty command.path}">
@@ -84,7 +84,7 @@
         <td>
             <table>
                 <tr>
-                    <td><a href="${donate10Url}" target="_blank"><img src="<c:url value="/icons/donate.gif"/>" alt=""/></a> </td>
+                    <td><a href="${donate10Url}" target="_blank"><img src="<spring:theme code="paypalImage"/>" alt=""/></a> </td>
                 </tr>
                 <tr>
                     <td class="detail" style="text-align:center;"><fmt:message key="donate.amount"><fmt:param value="$10"/></fmt:message></td>
@@ -94,7 +94,7 @@
         <td>
             <table>
                 <tr>
-                    <td><a href="${donate20Url}" target="_blank"><img src="<c:url value="/icons/donate.gif"/>" alt=""/></a> </td>
+                    <td><a href="${donate20Url}" target="_blank"><img src="<spring:theme code="paypalImage"/>" alt=""/></a> </td>
                 </tr>
                 <tr>
                     <td class="detail" style="text-align:center;"><fmt:message key="donate.amount"><fmt:param value="$20"/></fmt:message></td>
@@ -104,7 +104,7 @@
         <td>
             <table>
                 <tr>
-                    <td><a href="${donate50Url}" target="_blank"><img src="<c:url value="/icons/donate.gif"/>" alt=""/></a> </td>
+                    <td><a href="${donate50Url}" target="_blank"><img src="<spring:theme code="paypalImage"/>" alt=""/></a> </td>
                 </tr>
                 <tr>
                     <td class="detail" style="text-align:center;"><fmt:message key="donate.amount"><fmt:param value="$50"/></fmt:message></td>
@@ -114,7 +114,7 @@
         <td>
             <table>
                 <tr>
-                    <td><a href="${donate100Url}" target="_blank"><img src="<c:url value="/icons/donate.gif"/>" alt=""/></a> </td>
+                    <td><a href="${donate100Url}" target="_blank"><img src="<spring:theme code="paypalImage"/>" alt=""/></a> </td>
                 </tr>
                 <tr>
                     <td class="detail" style="text-align:center;"><fmt:message key="donate.amount"><fmt:param value="$100"/></fmt:message></td>
@@ -124,7 +124,7 @@
         <td>
             <table>
                 <tr>
-                    <td><a href="${donateAnyUrl}" target="_blank"><img src="<c:url value="/icons/donate.gif"/>" alt=""/></a> </td>
+                    <td><a href="${donateAnyUrl}" target="_blank"><img src="<spring:theme code="paypalImage"/>" alt=""/></a> </td>
                 </tr>
                 <tr>
                     <td class="detail" style="text-align:center;"><fmt:message key="donate.amount"><fmt:param value="???"/></fmt:message></td>

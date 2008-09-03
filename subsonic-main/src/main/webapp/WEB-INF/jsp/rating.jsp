@@ -47,5 +47,5 @@ PARAMETERS
 </sub:url>
 
 <c:if test="${not param.readonly}">
-    | <a href="${clearRatingUrl}"><img src="<c:url value="/icons/clearRating.png"/>" alt="" title="<fmt:message key="rating.clearrating"/>" style="margin-left:-3px; margin-right:5px"/></a>
+    | <a href="${clearRatingUrl}"><img src="<spring:theme code="clearRatingImage"/>" alt="" title="<fmt:message key="rating.clearrating"/>" style="margin-left:-3px; margin-right:5px"/></a>
 </c:if>

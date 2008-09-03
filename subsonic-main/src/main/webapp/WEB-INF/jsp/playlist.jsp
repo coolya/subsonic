@@ -195,13 +195,13 @@
                 <c:set var="i" value="${loopStatus.count - 1}"/>
                 <tr style="margin:0;padding:0;border:0">
 
-                    <td><a name="${i}" href="playlist.view?remove=${i}"><img width="13" height="13" src="<spring:theme code="removeImage"/>"
+                    <td><a name="${i}" href="playlist.view?remove=${i}"><img src="<spring:theme code="removeImage"/>"
                                                                  alt="<fmt:message key="playlist.remove"/>"
                                                                  title="<fmt:message key="playlist.remove"/>"/></a></td>
-                    <td><a href="playlist.view?up=${i}"><img width="13" height="13" src="<spring:theme code="upImage"/>"
+                    <td><a href="playlist.view?up=${i}"><img src="<spring:theme code="upImage"/>"
                                                              alt="<fmt:message key="playlist.up"/>"
                                                              title="<fmt:message key="playlist.up"/>"/></a></td>
-                    <td><a href="playlist.view?down=${i}"><img width="13" height="13" src="<spring:theme code="downImage"/>"
+                    <td><a href="playlist.view?down=${i}"><img src="<spring:theme code="downImage"/>"
                                                                alt="<fmt:message key="playlist.down"/>"
                                                                title="<fmt:message key="playlist.down"/>"/></a></td>
                     <sub:url value="main.view" var="mainUrl">
@@ -232,7 +232,7 @@
                             </c:when>
                             <c:otherwise>
                                 <c:if test="${song.current}">
-                                    <img src="<c:url value="/icons/current.gif"/>" alt=""/>
+                                    <img src="<spring:theme code="currentImage"/>" alt=""/>
                                 </c:if>
                                 <a href="playlist.view?skip=${i}" title="${song.musicFile.metaData.title}">${song.current ? "<b>" : ""}<str:truncateNicely upper="${cutoff}">${fn:escapeXml(song.musicFile.title)}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
                             </c:otherwise>

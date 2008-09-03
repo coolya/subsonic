@@ -8,7 +8,7 @@
 <body class="mainframe">
 
 <h1>
-    <img src="<c:url value="/icons/status.png"/>" alt=""/>
+    <img src="<spring:theme code="statusImage"/>" alt=""/>
     <fmt:message key="status.title"/>
 </h1>
 

@@ -30,7 +30,7 @@
 
 <fmt:message key="common.help" var="help"/>
 <fmt:message key="common.default" var="default"/>
-<c:url value="/icons/help_small.png" var="helpUrl"/>
+<spring:theme code="helpPopupImage" var="helpUrl"/>
 
 <form:form method="post" action="personalSettings.view" commandName="command">
 

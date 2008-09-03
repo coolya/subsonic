@@ -23,20 +23,20 @@ PARAMETERS
 <c:if test="${param.asTable}"><td></c:if>
 <c:if test="${empty param.playEnabled or param.playEnabled}">
 <a target="playlist" href="${playUrl}">
-    <img width="13" height="13" src="<spring:theme code="playImage"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
+    <img src="<spring:theme code="playImage"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
 </c:if>
 <c:if test="${param.asTable}"></td></c:if>
 
 <c:if test="${param.asTable}"><td></c:if>
 <c:if test="${empty param.addEnabled or param.addEnabled}">
 <a target="playlist" href="${addUrl}">
-    <img width="13" height="13" src="<spring:theme code="addImage"/>" alt="<fmt:message key="common.add"/>" title="<fmt:message key="common.add"/>"/></a>
+    <img src="<spring:theme code="addImage"/>" alt="<fmt:message key="common.add"/>" title="<fmt:message key="common.add"/>"/></a>
 </c:if>
 <c:if test="${param.asTable}"></td></c:if>
 
 <c:if test="${param.asTable}"><td></c:if>
 <c:if test="${param.downloadEnabled}">
     <a href="${downloadUrl}">
-        <img width="13" height="13" src="<spring:theme code="downloadImage"/>" alt="<fmt:message key="common.download"/>" title="<fmt:message key="common.download"/>"/></a>
+        <img src="<spring:theme code="downloadImage"/>" alt="<fmt:message key="common.download"/>" title="<fmt:message key="common.download"/>"/></a>
 </c:if>
 <c:if test="${param.asTable}"></td></c:if>

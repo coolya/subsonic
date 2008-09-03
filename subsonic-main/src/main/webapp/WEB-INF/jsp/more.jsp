@@ -42,11 +42,11 @@
 <body class="mainframe" onload="${model.uploadEnabled ? "refreshProgress()" : ""}">
 
 <h1>
-    <img src="<c:url value="/icons/more.png"/>" alt=""/>
+    <img src="<spring:theme code="moreImage"/>" alt=""/>
     <fmt:message key="more.title"/>
 </h1>
 
-<h2><img src="<c:url value="/icons/random.png"/>" width="16" height="16" alt=""/>&nbsp;<fmt:message key="more.random.title"/></h2>
+<h2><img src="<spring:theme code="randomImage"/>" alt=""/>&nbsp;<fmt:message key="more.random.title"/></h2>
 
 <form method="post" action="randomPlaylist.view?">
     <table>
@@ -106,15 +106,15 @@
     </table>
 </form>
 
-<h2><img src="<c:url value="/icons/wap.png"/>" width="16" height="16" alt=""/>&nbsp;<fmt:message key="more.mobile.title"/></h2>
+<h2><img src="<spring:theme code="wapImage"/>" alt=""/>&nbsp;<fmt:message key="more.mobile.title"/></h2>
 <fmt:message key="more.mobile.text"/>
 
-<h2><img src="<c:url value="/icons/podcast.png"/>" width="16" height="16" alt=""/>&nbsp;<fmt:message key="more.podcast.title"/></h2>
+<h2><img src="<spring:theme code="podcastImage"/>" alt=""/>&nbsp;<fmt:message key="more.podcast.title"/></h2>
 <fmt:message key="more.podcast.text"/>
 
 <c:if test="${model.uploadEnabled}">
 
-    <h2><img src="<c:url value="/icons/upload.gif"/>" width="16" height="16" alt=""/>&nbsp;<fmt:message key="more.upload.title"/></h2>
+    <h2><img src="<spring:theme code="uploadImage"/>" alt=""/>&nbsp;<fmt:message key="more.upload.title"/></h2>
 
     <form method="post" enctype="multipart/form-data" action="upload.view">
         <table>

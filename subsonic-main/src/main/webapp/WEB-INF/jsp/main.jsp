@@ -86,7 +86,7 @@
 </c:if>
 
 <h1>
-    <img src="<c:url value="/icons/now_playing.png"/>" alt=""/>
+    <img src="<spring:theme code="nowPlayingImage"/>" alt=""/>
 
     <c:forEach items="${model.ancestors}" var="ancestor">
         <sub:url value="main.view" var="ancestorUrl">

@@ -12,7 +12,7 @@
 </c:import>
 
 <fmt:message key="common.help" var="help"/>
-<c:url value="/icons/help_small.png" var="helpUrl"/>
+<spring:theme code="helpPopupImage" var="helpUrl"/>
 
 <form:form method="post" action="generalSettings.view" commandName="command">
 

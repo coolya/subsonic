@@ -7,7 +7,7 @@
 <body class="mainframe">
 
 <h1>
-    <img src="<c:url value="/icons/settings.png"/>" alt=""/>
+    <img src="<spring:theme code="settingsImage"/>" alt=""/>
     <fmt:message key="avataruploadresult.title"/>
 </h1>
 

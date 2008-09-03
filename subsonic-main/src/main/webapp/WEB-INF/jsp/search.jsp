@@ -6,7 +6,7 @@
 <body class="mainframe">
 
 <h1>
-    <img src="<c:url value="/icons/search_small.png"/>" alt=""/>
+    <img src="<spring:theme code="searchImage"/>" alt=""/>
     <fmt:message key="search.title"/>
 </h1>
 
