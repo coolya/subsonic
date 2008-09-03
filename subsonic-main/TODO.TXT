@@ -5,6 +5,8 @@ Updated German translation (Thanks to Jörg Frommann)
 
 TODO FOR RIPSERVER
 ------------------
+themeable favicon
+Remove unchanged graphics
 Change SettingsService.DEFAULT_PODCAST_FOLDER.
 Change SettingsService.DEFAULT_THEME_ID.
 Change default playlist folder?

@@ -20,3 +20,6 @@ barents "Barents Sea"
 hd720 "HD-720"
 hd768 "HD-768"
 hd1080 "HD-1080"
+
+# Default theme when pre-installed on Ripserver NAS.
+ripserver "Ripserver"
