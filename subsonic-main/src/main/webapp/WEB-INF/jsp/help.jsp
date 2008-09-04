@@ -2,6 +2,7 @@
 
 <html><head>
     <%@ include file="head.jsp" %>
+    <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
 </head>
 <body class="mainframe">
 

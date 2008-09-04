@@ -5,8 +5,9 @@ Updated German translation (Thanks to Jörg Frommann)
 
 TODO FOR RIPSERVER
 ------------------
-themeable favicon
-Remove unchanged graphics
+   Remove unchanged graphics
+x  Add license notices
+x  themeable favicon
 x  Change SettingsService.DEFAULT_PODCAST_FOLDER.
 x  Change SettingsService.DEFAULT_THEME_ID.
 x  Change default playlist folder.
@@ -17,6 +18,7 @@ x  Disable ads
 
 TODO IN 3.6
 -----------
+Change license?
 Make notification area work with Vista.
 Make new homepage. (Check out http://www.mediamonkey.com)
 Improve help popup.
