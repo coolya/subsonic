@@ -7,16 +7,17 @@ TODO FOR RIPSERVER
 ------------------
 themeable favicon
 Remove unchanged graphics
-Change SettingsService.DEFAULT_PODCAST_FOLDER.
-Change SettingsService.DEFAULT_THEME_ID.
-Change default playlist folder?
-Change "c:/music" in Schema26.
-Add new theme "Ripserver"
-Include FLAC, WAV transcoding.
-Disable ads?
+x  Change SettingsService.DEFAULT_PODCAST_FOLDER.
+x  Change SettingsService.DEFAULT_THEME_ID.
+x  Change default playlist folder.
+x  Change "c:/music" in Schema26.
+x  Add new theme "Ripserver"
+x  Include FLAC, WAV transcoding.
+x  Disable ads
 
 TODO IN 3.6
 -----------
+Make notification area work with Vista.
 Make new homepage. (Check out http://www.mediamonkey.com)
 Improve help popup.
   o Create taglib?

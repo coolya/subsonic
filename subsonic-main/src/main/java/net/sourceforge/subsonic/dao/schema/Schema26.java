@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.dao.schema;
 
 import net.sourceforge.subsonic.*;
+import net.sourceforge.subsonic.util.Util;
 import org.springframework.jdbc.core.*;
 
 /**
@@ -26,7 +27,7 @@ public class Schema26 extends Schema{
                              "path varchar not null," +
                              "name varchar not null," +
                              "enabled boolean not null)");
-            template.execute("insert into music_folder values (null, 'c:\\music', 'Music', true)");
+            template.execute("insert into music_folder values (null, '" + getDefaultMusicFolder() + "', 'Music', true)");
             LOG.info("Database table 'music_folder' was created successfully.");
         }
 
@@ -86,5 +87,9 @@ public class Schema26 extends Schema{
                              "where u.username = ur.username and ur.role_id in (1, 5)");
             LOG.info("Role 'comment' was created successfully.");
         }
+    }
+
+    private String getDefaultMusicFolder() {
+        return Util.isRipserver() ? "/media/Music" : "c:\\music";
     }
 }
