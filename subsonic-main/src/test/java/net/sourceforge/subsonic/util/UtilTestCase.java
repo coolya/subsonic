@@ -2,11 +2,6 @@ package net.sourceforge.subsonic.util;
 
 import junit.framework.TestCase;
 
-import java.util.Locale;
-import java.util.Arrays;
-
-import org.apache.commons.lang.math.LongRange;
-
 /**
  * Unit test of {@link Util}.
  *

@@ -16,6 +16,12 @@ x  Add new theme "Ripserver"
 x  Include FLAC, WAV transcoding.
 x  Disable ads
 
+TODO IN 3.5.beta2
+-----------
+Add ".mp3" suffix to stream URLs in mobile player.
+Update version in pom.xml
+Fix bugs with read-only mode http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1204
+Streaming forbidden for user admin. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1268
 TODO IN 3.6
 -----------
 Change license?
@@ -31,6 +37,8 @@ Artist-level comments (see forum)
 GUI for toggling jukebox mode.
 Make contiuous random mode work in jukebox mode.
 Make repeat work in jukebox mode.
+Make xxx work in jukebox mode.
+Should everybody be allowed to enable jukebox mode?
 Upgrade to Spring Security.
 Proper jukebox support. Check out jlayer. and see how jinzora does it. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1188
 iPod/iPhone support.
@@ -45,6 +53,8 @@ New sceenshots
 
 BACKLOG
 ===========================
+Nicer popup for lyrics and online help.
+Add option for one player per user http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1255
 Fix erroneous caching of help.jsp (and others?)
 Verify that LastModified works for avatars.
 Create per-channel podcast settings. At least enable/disable.
