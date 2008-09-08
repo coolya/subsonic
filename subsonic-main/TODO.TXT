@@ -2,9 +2,11 @@ DONE IN 3.5.beta2
 ------------------
 Incredibly fancy cover art zoom.
 Updated German translation (Thanks to Jörg Frommann)
+Added Ripserver theme
 
 TODO FOR RIPSERVER
 ------------------
+   Add license notice for booter libs.
    Remove unchanged graphics
 x  Add license notices
 x  themeable favicon
@@ -22,8 +24,11 @@ Add ".mp3" suffix to stream URLs in mobile player.
 Update version in pom.xml
 Fix bugs with read-only mode http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1204
 Streaming forbidden for user admin. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1268
+
 TODO IN 3.6
 -----------
+Add transcoding pack. Integrate with Windows installer. Enable by default (if certain system property is set).
+Include getting started (html) in installer.  And add it to start menu.
 Change license?
 Make notification area work with Vista.
 Make new homepage. (Check out http://www.mediamonkey.com)
