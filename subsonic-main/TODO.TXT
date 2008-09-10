@@ -1,8 +1,9 @@
 DONE IN 3.5.beta2
 ------------------
 Incredibly fancy cover art zoom.
-Updated German translation (Thanks to Jörg Frommann)
+Updated German translation (thanks to Jörg Frommann) and Norwegian translation (thanks to jigsaw)
 Added Ripserver theme
+Bugfix: Made tray icon work on Vista.
 
 TODO FOR RIPSERVER
 ------------------
@@ -20,6 +21,7 @@ x  Disable ads
 
 TODO IN 3.5.beta2
 -----------
+Make balloon popup work.
 Add ".mp3" suffix to stream URLs in mobile player.
 Update version in pom.xml
 Fix bugs with read-only mode http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1204
@@ -28,7 +30,7 @@ Streaming forbidden for user admin. http://www.activeobjects.no/subsonic/forum/v
 TODO IN 3.6
 -----------
 Add transcoding pack. Integrate with Windows installer. Enable by default (if certain system property is set).
-Include getting started (html) in installer.  And add it to start menu.
+Include getting started (html) in installer.  And add it to start menu. Also create link to subsonic home page in Start menu.
 Change license?
 Make notification area work with Vista.
 Make new homepage. (Check out http://www.mediamonkey.com)
@@ -37,7 +39,6 @@ Improve help popup.
   o http://home.comcast.net/~jscheuer1/side/mybox/
   o http://www.nickstakenburg.com/projects/prototip2/
 Update PayPal icons.
-Make tray icon work. Upgrade to jdic 0.9.5. (see forum)
 Artist-level comments (see forum)
 GUI for toggling jukebox mode.
 Make contiuous random mode work in jukebox mode.

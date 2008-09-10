@@ -53,8 +53,6 @@ Section "Subsonic"
   File ..\..\..\..\subsonic-booter\target\subsonic.exe
   File ..\..\..\..\subsonic-booter\target\subsonic.exe.vmoptions
   File ..\..\..\..\subsonic-booter\target\subsonic-booter-jar-with-dependencies.jar
-  File ..\..\..\..\subsonic-booter\target\jdic.dll
-  File ..\..\..\..\subsonic-booter\target\tray.dll
   File ..\..\..\..\subsonic-main\LICENSE.TXT
   File ..\..\..\..\subsonic-main\README.TXT
   File ..\..\..\..\subsonic-main\target\subsonic.war

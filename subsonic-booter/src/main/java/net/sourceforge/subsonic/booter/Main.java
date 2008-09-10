@@ -20,8 +20,6 @@ public class Main {
 
     public Main() {
 
-        System.setProperty("javax.swing.adjustPopupLocationToFit", "false");
-
         // Set look-and-feel.
         try {
             UIManager.setLookAndFeel(new PlasticXPLookAndFeel());

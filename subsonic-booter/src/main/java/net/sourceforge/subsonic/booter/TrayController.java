@@ -1,8 +1,5 @@
 package net.sourceforge.subsonic.booter;
 
-import org.jdesktop.jdic.tray.SystemTray;
-import org.jdesktop.jdic.tray.TrayIcon;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,10 +22,14 @@ public class TrayController {
 
     public TrayController(SubsonicController subsonicController) {
         this.subsonicController = subsonicController;
-        createActions();
-        createComponents();
-        addBehaviour();
-        installComponents();
+        try {
+            createActions();
+            createComponents();
+            addBehaviour();
+            installComponents();
+        } catch (Throwable x) {
+            System.err.println("Disabling tray support.");
+        }
     }
 
     private void createActions() {
@@ -61,36 +62,36 @@ public class TrayController {
         URL url = Main.class.getResource("/images/subsonic-16.png");
         Image image = Toolkit.getDefaultToolkit().createImage(url);
 
-        JPopupMenu menu = new JPopupMenu();
-        JMenuItem item = menu.add(statusAction);
-        item.setFont(item.getFont().deriveFont(Font.BOLD));
-        menu.add(settingsAction);
+        PopupMenu menu = new PopupMenu();
+        menu.add(createMenuItem(openAction));
         menu.addSeparator();
-        menu.add(openAction);
+        menu.add(createMenuItem(statusAction));
+        menu.add(createMenuItem(settingsAction));
         menu.addSeparator();
-        menu.add(exitAction);
+        menu.add(createMenuItem(exitAction));
 
-        trayIcon = new TrayIcon(new ImageIcon(image), "Subsonic Media Streamer", menu);
+        trayIcon = new TrayIcon(image, "Subsonic Media Streamer", menu);
+    }
+
+    private MenuItem createMenuItem(Action action) {
+        MenuItem menuItem = new MenuItem((String) action.getValue(Action.NAME));
+        menuItem.addActionListener(action);
+        return menuItem;
     }
 
     private void addBehaviour() {
         trayIcon.addActionListener(statusAction);
-        trayIcon.addBalloonActionListener(statusAction);
     }
 
-    private void installComponents() {
-        try {
-            SystemTray.getDefaultSystemTray().addTrayIcon(trayIcon);
-            trayIcon.displayMessage("Subsonic", "Subsonic is now running. Click this balloon to get started.",
-                                    TrayIcon.INFO_MESSAGE_TYPE);
-        } catch (Throwable x) {
-            System.err.println("Disabling tray support.");
-        }
+    private void installComponents() throws Throwable {
+        SystemTray.getSystemTray().add(trayIcon);
+        trayIcon.displayMessage("Subsonic", "Subsonic is now running. Click this balloon to get started.",
+                                TrayIcon.MessageType.INFO);
     }
 
     public void uninstallComponents() {
         try {
-            SystemTray.getDefaultSystemTray().removeTrayIcon(trayIcon);
+            SystemTray.getSystemTray().remove(trayIcon);
         } catch (Throwable x) {
             System.err.println("Disabling tray support.");
         }

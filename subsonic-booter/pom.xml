@@ -38,12 +38,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jdesktop</groupId>
-            <artifactId>jdic</artifactId>
-            <version>0.9.3</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.jgoodies</groupId>
             <artifactId>looks</artifactId>
             <version>2.1.4</version>
@@ -94,8 +88,6 @@
                         <configuration>
                             <tasks>
                                 <echo>Compiling exe4j...</echo>
-                                <copy file="${basedir}/src/main/native/tray.dll" todir="${project.build.directory}"/>
-                                <copy file="${basedir}/src/main/native/jdic.dll" todir="${project.build.directory}"/>
                                 <copy file="${basedir}/src/main/exe4j/subsonic.exe.vmoptions" todir="${project.build.directory}"/>
                                 <exec executable="${exe4j.home}/bin/exe4jc">
                                     <arg value="--license=L-SINDRE_MEHUS#14926715500010001-1ty7dbe11l10ll#140"/>

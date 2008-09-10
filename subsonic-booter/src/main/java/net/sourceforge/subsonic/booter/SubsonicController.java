@@ -1,6 +1,5 @@
 package net.sourceforge.subsonic.booter;
 
-import org.jdesktop.jdic.desktop.Desktop;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
@@ -8,7 +7,9 @@ import org.mortbay.jetty.webapp.WebAppContext;
 import java.io.File;
 import java.net.BindException;
 import java.net.URL;
+import java.net.URI;
 import java.util.Date;
+import java.awt.*;
 
 /**
  * Responsible for deploying the Subsonic web app in
@@ -156,8 +157,8 @@ public class SubsonicController {
 
     public void openBrowser() {
         try {
-            Desktop.browse(new URL(getURL()));
-        } catch (Exception x) {
+            Desktop.getDesktop().browse(new URI(getURL()));
+        } catch (Throwable x) {
             x.printStackTrace();
         }
     }
