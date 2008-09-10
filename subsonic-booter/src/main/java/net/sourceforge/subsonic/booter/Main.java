@@ -12,6 +12,7 @@ import javax.swing.*;
  * <li><code>subsonic.contextPath</code> - The context path at which Subsonic is deployed.  Default "/".</li>
  * <li><code>subsonic.port</code> - The port Subsonic will listen to.  Default 80.</li>
  * <li><code>subsonic.war</code> - Subsonic WAR file, or exploded directory.  Default "subsonic.war".</li>
+ * <li><code>subsonic.createLinkFile</code> - If set to "true", a Subsonic.url file is created in the working directory.</li>
  * </ul>
  *
  * @author Sindre Mehus

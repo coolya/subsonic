@@ -20,6 +20,8 @@ InstallDirRegKey HKLM "Software\Subsonic" "Install_Dir"
 
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Header\orange.bmp"
+!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\Getting Started.html"
+!define MUI_FINISHPAGE_SHOWREADME_TEXT "View Getting Started document"
 
 #--------------------------------
 # Pages
@@ -30,6 +32,7 @@ Page custom CheckInstalledJRE
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_PAGE_FINISH
 
 !insertmacro MUI_UNPAGE_WELCOME
 !insertmacro MUI_UNPAGE_CONFIRM
@@ -46,6 +49,9 @@ Section "Subsonic"
   ExecWait '"$INSTDIR\subsonic.exe" -stop'
   ExecWait '"$INSTDIR\subsonic.exe" -uninstall'
 
+  # Remove shortcuts, if any
+  Delete "$SMPROGRAMS\Subsonic\*.*"
+
   # Set output path to the installation directory.
   SetOutPath $INSTDIR
 
@@ -55,6 +61,7 @@ Section "Subsonic"
   File ..\..\..\..\subsonic-booter\target\subsonic-booter-jar-with-dependencies.jar
   File ..\..\..\..\subsonic-main\LICENSE.TXT
   File ..\..\..\..\subsonic-main\README.TXT
+  File "..\..\..\..\subsonic-main\Getting Started.html"
   File ..\..\..\..\subsonic-main\target\subsonic.war
   File ..\..\..\..\subsonic-main\target\classes\version.txt
   File ..\..\..\..\subsonic-main\target\classes\build_number.txt
@@ -79,9 +86,11 @@ SectionEnd
 Section "Start Menu Shortcuts"
 
   CreateDirectory "$SMPROGRAMS\Subsonic"
-  CreateShortCut "$SMPROGRAMS\Subsonic\Start Subsonic.lnk"     "$INSTDIR\subsonic.exe"  "-start" "$INSTDIR\subsonic.exe"  0
-  CreateShortCut "$SMPROGRAMS\Subsonic\Stop Subsonic.lnk"      "$INSTDIR\subsonic.exe"  "-stop"  "$INSTDIR\subsonic.exe"  0
-  CreateShortCut "$SMPROGRAMS\Subsonic\Uninstall Subsonic.lnk" "$INSTDIR\uninstall.exe" ""       "$INSTDIR\uninstall.exe" 0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Open Subsonic.lnk"          "$INSTDIR\subsonic.url"         ""       "$INSTDIR\subsonic.exe"  0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Start Subsonic server.lnk"  "$INSTDIR\subsonic.exe"         "-start" "$INSTDIR\subsonic.exe"  0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Stop Subsonic server.lnk"   "$INSTDIR\subsonic.exe"         "-stop"  "$INSTDIR\subsonic.exe"  0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Uninstall Subsonic.lnk"     "$INSTDIR\uninstall.exe"        ""       "$INSTDIR\uninstall.exe" 0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Getting Started.lnk"        "$INSTDIR\Getting Started.html" ""       "$INSTDIR\Getting Started.html" 0
 
 SectionEnd
 

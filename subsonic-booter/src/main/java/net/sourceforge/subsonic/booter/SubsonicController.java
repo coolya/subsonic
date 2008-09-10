@@ -4,12 +4,14 @@ import org.mortbay.jetty.Server;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
 
+import java.awt.*;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.net.BindException;
-import java.net.URL;
 import java.net.URI;
 import java.util.Date;
-import java.awt.*;
 
 /**
  * Responsible for deploying the Subsonic web app in
@@ -35,11 +37,36 @@ public class SubsonicController {
     private File subsonicHome;
 
     public SubsonicController() {
+        createLinkFile();
         deployWebApp();
         try {
             trayController = new TrayController(this);
         } catch (Throwable x) {
             System.err.println("Disabling tray support.");
+        }
+    }
+
+    private void createLinkFile() {
+        if ("true".equals(System.getProperty("subsonic.createLinkFile"))) {
+            Writer writer = null;
+            try {
+                writer = new FileWriter("subsonic.url");
+                writer.append("[InternetShortcut]");
+                writer.append(System.getProperty("line.separator"));
+                writer.append("URL=").append(getURL());
+                writer.flush();
+            } catch (Throwable x) {
+                System.err.println("Failed to create subsonic.url.");
+                x.printStackTrace();
+            } finally {
+                if (writer != null) {
+                    try {
+                        writer.close();
+                    } catch (IOException x) {
+                        // Ignored
+                    }
+                }
+            }
         }
     }
 

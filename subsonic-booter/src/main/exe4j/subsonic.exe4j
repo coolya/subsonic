@@ -18,7 +18,7 @@
       <versionLine x="0" y="0" text="" font="Arial" fontSize="8" fontColor="0,0,0" fontWeight="500" />
     </text>
   </splashScreen>
-  <java mainClass="net.sourceforge.subsonic.booter.Main" vmParameters="" arguments="" allowVMPassthroughParameters="true" preferredVM="" minVersion="1.5" maxVersion="" allowBetaVM="true" jdkOnly="false">
+  <java mainClass="net.sourceforge.subsonic.booter.Main" vmParameters="-Dsubsonic.createLinkFile=true" arguments="" allowVMPassthroughParameters="true" preferredVM="" minVersion="1.5" maxVersion="" allowBetaVM="true" jdkOnly="false">
     <searchSequence>
       <registry />
       <envVar name="JAVA_HOME" />
@@ -27,9 +27,7 @@
     <classPath>
       <archive location="./subsonic-booter-jar-with-dependencies.jar" failOnError="false" />
     </classPath>
-    <nativeLibraryDirectories>
-      <directory name="." />
-    </nativeLibraryDirectories>
+    <nativeLibraryDirectories />
   </java>
   <includedFiles />
   <unextractableFiles />
