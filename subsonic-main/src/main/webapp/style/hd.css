@@ -20,6 +20,7 @@
 .mainframe {
     background-image:url('../icons/hd/background.png');
     background-repeat:no-repeat;
+    background-attachment:fixed;
     background-color: #00042E
 }
 

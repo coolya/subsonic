@@ -19,6 +19,7 @@
 .mainframe {
     background-image:url('../icons/ripserver/background.png');
     background-repeat:no-repeat;
+	background-attachment:fixed;
     background-color: #FFFFFF
 }
 
