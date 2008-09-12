@@ -1,38 +1,15 @@
-DONE IN 3.5.beta2
-------------------
-Incredibly fancy cover art zoom.
-Updated German translation (thanks to Jörg Frommann) and Norwegian translation (thanks to jigsaw)
-Added Ripserver theme
-Bugfix: Made tray icon work on Vista.
-
-TODO FOR RIPSERVER
-------------------
-   Add license notice for booter libs.
-   Remove unchanged graphics
-x  Add license notices
-x  themeable favicon
-x  Change SettingsService.DEFAULT_PODCAST_FOLDER.
-x  Change SettingsService.DEFAULT_THEME_ID.
-x  Change default playlist folder.
-x  Change "c:/music" in Schema26.
-x  Add new theme "Ripserver"
-x  Include FLAC, WAV transcoding.
-x  Disable ads
-
 TODO IN 3.5.beta2
 -----------
 Finish getting started document
 Ensure proper order in start menu.
-Make balloon popup work.
 Add ".mp3" suffix to stream URLs in mobile player.
-Update version in pom.xml
 Fix bugs with read-only mode http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1204
 Streaming forbidden for user admin. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1268
+Add transcoding pack. Integrate with Windows installer. Enable by default (if certain system property is set).
 
 TODO IN 3.6
 -----------
 Sort albums by year. (And show year). http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
-Add transcoding pack. Integrate with Windows installer. Enable by default (if certain system property is set).
 Include getting started (html) in installer.  And add it to start menu. Also create link to subsonic home page in Start menu.
 Change license?
 Make new homepage. (Check out http://www.mediamonkey.com)

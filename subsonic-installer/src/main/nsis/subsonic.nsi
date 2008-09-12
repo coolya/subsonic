@@ -76,6 +76,10 @@ Section "Subsonic"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Subsonic" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
 
+  # Write transcoding pack files.
+  SetOutPath "c:\subsonic\transcode"
+  File ..\..\..\..\subsonic-transcode\windows\*.*
+
   # Install and start service.
   ExecWait '"$INSTDIR\subsonic.exe" -install'
   ExecWait '"$INSTDIR\subsonic.exe" -start'
