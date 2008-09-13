@@ -21,6 +21,7 @@
                     <li>New: Updated German translation (thanks to Jörg Frommann) and Norwegian translation (thanks to jigsaw).</li>
                     <li>New: Added Ripserver theme.</li>
                     <li>Bugfix: Made tray icon work on Vista (requires Java 6 or later).</li>
+                    <li>Bugfix: Disable random playlist functionality if user is not authorized to play music.</li>
                 </ul>
             </subsection>
 

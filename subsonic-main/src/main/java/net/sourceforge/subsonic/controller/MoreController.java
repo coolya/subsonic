@@ -24,9 +24,6 @@ public class MoreController extends ParameterizableViewController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
 
-        User user = securityService.getCurrentUser(request);
-        map.put("uploadEnabled", user.isUploadRole());
-
         String uploadDirectory = null;
         MusicFolder[] musicFolders = settingsService.getAllMusicFolders();
         if (musicFolders.length > 0) {
@@ -35,6 +32,7 @@ public class MoreController extends ParameterizableViewController {
 
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
+        map.put("user", securityService.getCurrentUser(request));
         map.put("uploadDirectory", uploadDirectory);
         map.put("genres", searchService.getGenres());
         map.put("musicFolders", settingsService.getAllMusicFolders());
