@@ -4,7 +4,7 @@ WELCOME TO SUBSONIC!
 
 Subsonic is a free, web-based media streamer and jukebox.
 
-More information, installation instructions and FAQ is found at http://subsonic.sourceforge.net/
+More information, including installation instructions, is found at http://subsonic.sourceforge.net/
 
 Subsonic is free software distributed under the LGPL open-source licence.  See
 LICENSE.TXT for more details.
