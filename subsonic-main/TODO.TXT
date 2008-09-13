@@ -15,7 +15,6 @@ Improve help popup.
   o Create taglib?
   o http://home.comcast.net/~jscheuer1/side/mybox/
   o http://www.nickstakenburg.com/projects/prototip2/
-Update PayPal icons.
 Artist-level comments (see forum)
 GUI for toggling jukebox mode.
 Make contiuous random mode work in jukebox mode.
