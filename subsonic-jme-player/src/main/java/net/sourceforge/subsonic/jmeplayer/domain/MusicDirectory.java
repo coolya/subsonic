@@ -66,13 +66,15 @@ public class MusicDirectory {
         private final boolean directory;
         private final String url;
         private final String contentType;
+        private final String suffix;
 
-        public Entry(String name, String path, boolean directory, String url, String contentType) {
+        public Entry(String name, String path, boolean directory, String url, String contentType, String suffix) {
             this.name = name;
             this.path = path;
             this.directory = directory;
             this.url = url;
             this.contentType = contentType;
+            this.suffix = suffix;
         }
 
         public String getName() {
@@ -93,6 +95,10 @@ public class MusicDirectory {
 
         public String getContentType() {
             return contentType;
+        }
+
+        public String getSuffix() {
+            return suffix;
         }
     }
 }

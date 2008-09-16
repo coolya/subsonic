@@ -179,7 +179,9 @@ public class XMLBuilder {
         }
 
         private void append(StringBuilder buf) {
-            buf.append(key).append("=\"").append(StringEscapeUtils.escapeXml(value.toString())).append("\"");
+            if (key != null && value!= null) {
+                buf.append(key).append("=\"").append(StringEscapeUtils.escapeXml(value.toString())).append("\"");
+            }
         }
     }
 }

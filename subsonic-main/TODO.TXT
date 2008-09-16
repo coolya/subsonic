@@ -1,8 +1,8 @@
 TODO IN 3.5.beta2
 -----------
+Add French translation.
 Finish getting started document
 Ensure proper order in start menu.
-Add ".mp3" suffix to stream URLs in mobile player.
 Add transcoding pack. Integrate with Windows installer. Enable by default (if certain system property is set).
 
 TODO IN 3.6
@@ -138,8 +138,6 @@ Replace methods in my StringUtil with corresponding in Spring.
 Batch download of cover arts.
 Use Rico for rounded edges. http://openrico.org
 Use cewolf?
-Playlist popup window.
-Use cool coverart dialog popup (see Google Web Toolkit).
 Use dialog popup for online help.
 Make another theme with smaller fonts.
 Make image size themeable?

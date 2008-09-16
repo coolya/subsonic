@@ -319,6 +319,7 @@ public class PlayerController implements PlayerListener {
                 if (player > 0 && !settingsController.isMock()) {
                     url += "&player=" + player;
                 }
+                url += "&suffix=." + entry.getSuffix();
                 in = Connector.openInputStream(url);
             }
 

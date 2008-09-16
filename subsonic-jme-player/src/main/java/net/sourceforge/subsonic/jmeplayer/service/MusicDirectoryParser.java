@@ -24,7 +24,8 @@ public class MusicDirectoryParser extends AbstractParser {
                                                   childElement.getProperty("path"),
                                                   childElement.getProperty("isDir", "true", "false", false),
                                                   childElement.getProperty("url"),
-                                                  childElement.getProperty("contentType"));
+                                                  childElement.getProperty("contentType"),
+                                                  childElement.getProperty("suffix"));
         }
 
         return new MusicDirectory(root.getProperty("name"), root.getProperty("longName"),

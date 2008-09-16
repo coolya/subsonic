@@ -87,7 +87,7 @@ public class MobileController extends MultiActionController {
 
             builder.add("child", new Attribute("name", child.getTitle()),
                         new Attribute("path", path), new Attribute("isDir", child.isDirectory()),
-                        new Attribute("contentType", contentType), new Attribute("url", url));
+                        new Attribute("contentType", contentType), new Attribute("suffix", suffix), new Attribute("url", url));
             builder.end();
         }
 
