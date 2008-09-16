@@ -26,8 +26,16 @@
         </repository>
     </repositories>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>Codehaus Repository</id>
+            <url>http://repository.codehaus.org/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <scm>
         <connection>scm:svn:https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk</connection>
+        <developerConnection>scm:svn:https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk</developerConnection>
         <url>http://subsonic.svn.sourceforge.net/viewvc/subsonic/</url>
     </scm>
 

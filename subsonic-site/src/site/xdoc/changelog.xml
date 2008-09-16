@@ -23,6 +23,7 @@
                     <li>Bugfix: Streaming to mobile phones now works better.</li>
                     <li>Bugfix: Made tray icon work on Vista (requires Java 6 or later).</li>
                     <li>Bugfix: Disable random playlist functionality if user is not authorized to play music.</li>
+                    <li>Tech: Build number is now identical to Subversion revision.</li>
                 </ul>
             </subsection>
 
