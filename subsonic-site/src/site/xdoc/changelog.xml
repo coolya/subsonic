@@ -17,8 +17,10 @@
             <subsection name="Subsonic 3.5.beta2 - Sep 15, 2008">
                 <ul>
                     <li>New: Fancy cover art zoom.</li>
+                    <li>New: Remove artist name from album name.</li>
                     <li>New: Transcoding pack is now included in Windows installer.</li>
                     <li>New: Updated German translation (thanks to Jörg Frommann) and Norwegian translation (thanks to jigsaw).</li>
+                    <li>New: Added French translation (thanks to JohnDillinger).</li>
                     <li>New: Added Ripserver theme.</li>
                     <li>Bugfix: Streaming to mobile phones now works better.</li>
                     <li>Bugfix: Made tray icon work on Vista (requires Java 6 or later).</li>

@@ -1,14 +1,10 @@
-TODO IN 3.5.beta2
------------
-Add French translation.
-Finish getting started document.  Add it to assemblies.
-Ensure proper order in start menu.
-Add transcoding pack. Integrate with Windows installer. Enable by default (if certain system property is set).
-
 TODO IN 3.6
 -----------
+Replace Flash player.
+New logo.
+last.fm problem.
+Remove player dynamic ip property?
 Sort albums by year. (And show year). http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
-Include getting started (html) in installer.  And add it to start menu. Also create link to subsonic home page in Start menu.
 Change license?
 Make new homepage. (Check out http://www.mediamonkey.com)
 Improve help popup.
@@ -30,13 +26,17 @@ iPod/iPhone support.
    http://developer.apple.com/internet/webcontent/bestwebdev.html
 
 Remove Mock/Debug options from JME player.
-New sceenshots
+New screenshots
+Bundle with open-source UPnP app?
 
 BACKLOG
 ===========================
+Smooth scrolling when clicking index letters.
 Nicer popup for lyrics and online help.
 Add option for one player per user http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1255
 Fix erroneous caching of help.jsp (and others?)
+Add volume control to jme player.
+Add volume control to jukebox player.
 Verify that LastModified works for avatars.
 Create per-channel podcast settings. At least enable/disable.
 Should make it possible to retrieve avatars without reading the binary column.
@@ -58,14 +58,12 @@ Integrate with Amazon mp3.
 Make some features available to donors only.
 Caching bug, selected music folder.  At least in IE and FF.
 RejectedExecutionHandler handling in ThreadPoolExecutor constructor.
-Norwegian translation
 Precompile JSPs for Dekoh. Separate modules "subsonic-precompiled-jetty" and "subsonic-precompiled-dekoh".
 Fix javascript error in playlist in IE.
 Display the sub folder count next to the artist folder (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=905)
 Facebook integration
 Show/Hide Podcast channel description (e.g., Java Posse)
 Show mini coverarts "Next/Prev Album".
-Improve Flash player.
 Add check for admin rights in installer.
 Add "play count" to Podcasts.
 ASX (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=638)
@@ -76,7 +74,6 @@ Ajax-ify Amazon pages.
 Wrong progress for http://atvs.vg.no/script/podcast.php?category_id=7
 Resumable Podcast downloads.
 "Random" very slow when no music folders.
-Merge artists with same name, but different music folders.
 Test if dwr javascripts are cached in browser (especially for "now playing")
 Better IE support in playlist checkbox stuff. Instead of disabling (which isn't supported in IE, set font color to gray).
 Test playlist checkbox stuff, in particular download auth.
@@ -93,7 +90,6 @@ ID3 problems (http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=952#952
 Make sure podcast works with playlist names with non-latin chars.
 Test Google Web Toolkit?
 Show next/prev 100 hits.
-Podcast receiver.
 Create checkbox and combobox menu in main.jsp.
 FLAC > OGG audioscrobbling problem (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=597)
 Support MUSICBRAINZ_TRACKID (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=597)
@@ -102,22 +98,18 @@ Check out asx/asf: http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=63
 Make podcast work in iTunes.
 Longer cache expiry period for images.
 RSS feed for newest content.
-Rename "Appearance" settings to "Personal".
 Web proxy support (for audioscrobbler, amazon etc)?
 Missing refresh when changing from no cover art.
 Resolve problem with MetaData NullPointerException. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=112
 Don't show empty statistics.
 AJAX error dialog from Dave.
-Transcode download
 Remove "user" column from status.jsp?
 Sometimes a song is started twice. Two m3u's sent?
 Profiling (http://www.yourkit.com/)
 Lucene?
 Invalidate browser cache when changing cover art image.
-Show list of currently active users.
 http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=94
 Mails from Dave (IP change problem).
-Get link from https://jaudiotagger.dev.java.net/
 Why is Player.id a String, not an Integer?
 Upload broken in IE.
 Upload popup?
@@ -130,7 +122,6 @@ Use cookie.setPath()?
       cookie.setPath(request.getContextPath());
 Use AJAX to change random albums on home page, one at a time.
 Implement pure AJAX version of playlist.jsp.
-Get updated Macedonian resource bundle.
 Check Javascript error on IE.
 Photo support?
 User-based folder access
@@ -140,7 +131,6 @@ Use Rico for rounded edges. http://openrico.org
 Use cewolf?
 Use dialog popup for online help.
 Make another theme with smaller fonts.
-Make image size themeable?
 Make fancy css background for playlist toolbar.
 Use CSS overflow: auto for scrolling in playlist?
 Use Spring StringUtils.cleanPath()?
@@ -148,12 +138,10 @@ Option to show exception details in error log.
 Quick link to "#" doesn't work.
 Should receive feedback when changing passwords, creating users etc.
 java.io.FileNotFoundException: C:\music\The Alan Parsons Project\The Best of The Alan Parsons Project\folder.jpg (Access is denied)
-Access control of players.  Avoid security hole for deleting other people's players.
 Use HTML 4.01, validate all pages.
 Create taglib for help popup.
 Make it work on Java Application Server 8.1.  (web.xml element order)
 Make it work on Geronimo.
-Make it work on Jetty
 Drop ResourceBundle_en.
 Upload quota per user.
 Specify upload directory per user. Option to delete files?
@@ -162,7 +150,6 @@ Support forward proxies.
 Hvis spilleren har "Auto-control enabled" skrudd av, så vises det en ny knapp "Stream" i playlista som kan brukes for å få m3u-en.
 Replace use of arrays with type-safe collections.
 "Mini" interface for phones, pda's etc.
-Create installer for Windows. http://nsis.sourceforge.net
 Message system (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=24)
 Longer log file. Option to not display DEBUG lines in help.jsp.
 Kant rundt hele vinduet, som i forum.
@@ -173,7 +160,6 @@ Use MusicFile.isAlbum()
 Simplify new/random in SearchService.
 If the album-name contains an apostrof ( ' ), then I get an error when I search for cover-art
 Provide links to podcast, settings, help, message board, wishlist on home page.
-New icon for wap.
 Check that multi-discs are not included in random and newest albums.  Change implementation of isAlbum.
 Integrate Windows Media Player in web page.
 Fetch current version asynchronously.
@@ -194,7 +180,6 @@ Quiz
 Emulator 3G-telefon
 XHTML Mobile Profile
 Add mp3-player as applet.
-Automatisk finne lyrics-ting.
 Parse tags for wma etc.
 No SHOUTcast if playlist is empty.
 i18n of enums.
@@ -204,11 +189,10 @@ Zip and unzip fails with accented characters.  Use commons vfs, or some other li
 Log when zipping individual files.
 Add online help to search index update.
 Vis "lignende" album.
-Add "Play" authorization.
 
 HOW TO RELEASE
 ===============================
-Set JAVA_HOME to 1.5.
+Set JAVA_HOME to 1.6.
 Update version number in pom.xml etc.
 mvn clean install
 cd subsonic-assembly

@@ -133,12 +133,22 @@ public class MusicFile {
     }
 
     /**
-     * Returns the name of the music file. This is just the last name in the pathname's name
-     * sequence.
+     * Returns the name of the music file. This is normally just the last name in
+     * the pathname's name sequence.
      * @return  The name of the music file.
      */
     public String getName() {
-        return file.getName();
+        String name = file.getName();
+        try {
+            // Remove artist name from album name, if present.
+            String parentName = getParent().getName() +  " - ";
+            if (name.startsWith(parentName)) {
+                name = name.substring(parentName.length());
+            }
+        } catch (Exception x) {
+            // Ignored
+        }
+        return name;
     }
 
     /**

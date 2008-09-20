@@ -4,6 +4,9 @@
 # English
 en
 
+# French
+fr
+
 # Spanish
 es
 

@@ -29,6 +29,7 @@
                 <include>build.number</include>
                 <include>LICENCE.TXT</include>
                 <include>README.TXT</include>
+                <include>Getting Started.html</include>
             </includes>
             <outputDirectory>subsonic-main</outputDirectory>
         </fileSet>

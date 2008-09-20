@@ -16,6 +16,7 @@ import java.util.*;
 public class HelpController extends ParameterizableViewController {
     private VersionService versionService;
 
+    @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
 
@@ -33,7 +34,7 @@ public class HelpController extends ParameterizableViewController {
         map.put("localVersion", versionService.getLocalVersion());
         map.put("buildDate", versionService.getLocalBuildDate());
         map.put("buildNumber", versionService.getLocalBuildNumber());
-        map.put("serverInfo", request.getSession().getServletContext().getServerInfo());
+        map.put("serverInfo", request.getSession().getServletContext().getServerInfo() + ", java " + System.getProperty("java.version"));
         map.put("usedMemory", totalMemory - freeMemory);
         map.put("totalMemory", totalMemory);
         map.put("logEntries", Logger.getLatestLogEntries());
