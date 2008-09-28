@@ -26,7 +26,7 @@
             <includes>
                 <include>src/**</include>
                 <include>pom.xml</include>
-                <include>build.number</include>
+                <include>target/classes/build_number.txt</include>
                 <include>LICENCE.TXT</include>
                 <include>README.TXT</include>
                 <include>Getting Started.html</include>

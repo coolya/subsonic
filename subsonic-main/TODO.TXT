@@ -1,10 +1,29 @@
+TODO IN 3.5
+---------------
+Remove c:\subsonic\jetty in installer.
+
+
+TODO IN 3.5.beta2
+-----------
+Add French translation.
+Finish getting started document.  Add it to assemblies.
+Ensure proper order in start menu.
+Add transcoding pack. Integrate with Windows installer. Enable by default (if certain system property is set).
+
 TODO IN 3.6
 -----------
+Create subsonic.bat
+Improve getting started.
+Rename to subsonic-3.5.beta2-war.zip
+Rename "Media Streamer" to "Music Streamer"
+New screen shots.
+Look at maven release plugin.
+Sort albums by year. (And show year). http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
+Include getting started (html) in installer.  And add it to start menu. Also create link to subsonic home page in Start menu.
 Replace Flash player.
 New logo.
 last.fm problem.
 Remove player dynamic ip property?
-Sort albums by year. (And show year). http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
 Change license?
 Make new homepage. (Check out http://www.mediamonkey.com)
 Improve help popup.
@@ -31,6 +50,7 @@ Bundle with open-source UPnP app?
 
 BACKLOG
 ===========================
+Uninstaller should optionally delete c:\subsonic
 Smooth scrolling when clicking index letters.
 Nicer popup for lyrics and online help.
 Add option for one player per user http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1255

@@ -52,6 +52,9 @@ Section "Subsonic"
   # Remove shortcuts, if any
   Delete "$SMPROGRAMS\Subsonic\*.*"
 
+  # Remove previous Jetty temp directory.
+  RMDir /r "c:\subsonic\jetty"
+
   # Set output path to the installation directory.
   SetOutPath $INSTDIR
 
