@@ -35,14 +35,18 @@ public class SubsonicController {
     private Throwable exception;
     private SubsonicFrame frame;
     private File subsonicHome;
+    private final boolean settingsMode;
 
-    public SubsonicController() {
-        createLinkFile();
-        deployWebApp();
-        try {
-            trayController = new TrayController(this);
-        } catch (Throwable x) {
-            System.err.println("Disabling tray support.");
+    public SubsonicController(boolean settingsMode) {
+        this.settingsMode = settingsMode;
+        if (!settingsMode) {
+            createLinkFile();
+            deployWebApp();
+            try {
+                trayController = new TrayController(this);
+            } catch (Throwable x) {
+                System.err.println("Disabling tray support.");
+            }
         }
     }
 
@@ -72,7 +76,6 @@ public class SubsonicController {
 
     private void deployWebApp() {
         try {
-
             Server server = new Server();
             SelectChannelConnector connector = new SelectChannelConnector();
             connector.setMaxIdleTime(MAX_IDLE_TIME_MILLIS);
@@ -86,6 +89,8 @@ public class SubsonicController {
 
             server.addHandler(context);
             server.start();
+
+            System.err.println("Subsonic running on " + getURL());
         } catch (Throwable x) {
             x.printStackTrace();
             exception = x;
@@ -152,7 +157,7 @@ public class SubsonicController {
 
     private synchronized SubsonicFrame getFrame() {
         if (frame == null) {
-            frame = new SubsonicFrame(this);
+            frame = new SubsonicFrame(this, settingsMode);
         }
         return frame;
     }

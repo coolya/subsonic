@@ -95,6 +95,9 @@
                                 <exec executable="${exe4j.home}/bin/exe4jc">
                                     <arg value="${basedir}/src/main/exe4j/subsonic.exe4j"/>
                                 </exec>
+                                <exec executable="${exe4j.home}/bin/exe4jc">
+                                    <arg value="${basedir}/src/main/exe4j/settings.exe4j"/>
+                                </exec>
                             </tasks>
                         </configuration>
                         <goals>

@@ -14,12 +14,14 @@ import javax.swing.*;
  * <li><code>subsonic.war</code> - Subsonic WAR file, or exploded directory.  Default "subsonic.war".</li>
  * <li><code>subsonic.createLinkFile</code> - If set to "true", a Subsonic.url file is created in the working directory.</li>
  * </ul>
+ * <p/>
+ * If invoked with command line argument "-settings", no deployment is done, but the settings dialog is displayed.
  *
  * @author Sindre Mehus
  */
 public class Main {
 
-    public Main() {
+    public Main(boolean settingsMode) {
 
         // Set look-and-feel.
         try {
@@ -29,17 +31,26 @@ public class Main {
             System.err.println("Failed to set look-and-feel.\n" + x);
         }
 
-        SubsonicController controller = new SubsonicController();
-        System.err.println("Subsonic running on " + controller.getURL());
+        SubsonicController controller = new SubsonicController(settingsMode);
+        if (settingsMode) {
+            controller.showSettings();
+        }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        final boolean settingsMode = args.length > 0 && "-settings".equals(args[0]);
+
         Runnable runnable = new Runnable() {
             public void run() {
-                new Main();
+                new Main(settingsMode);
             }
         };
 
         SwingUtilities.invokeLater(runnable);
+
+        final Object o = new Object();
+        synchronized (o) {
+            o.wait();
+        }
     }
 }

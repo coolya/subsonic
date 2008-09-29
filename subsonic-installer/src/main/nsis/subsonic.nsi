@@ -62,6 +62,7 @@ Section "Subsonic"
   File ..\..\..\..\subsonic-booter\target\subsonic.exe
   File ..\..\..\..\subsonic-booter\target\subsonic.exe.vmoptions
   File ..\..\..\..\subsonic-booter\target\subsonic-booter-jar-with-dependencies.jar
+  File ..\..\..\..\subsonic-booter\target\settings.exe
   File ..\..\..\..\subsonic-main\LICENSE.TXT
   File ..\..\..\..\subsonic-main\README.TXT
   File "..\..\..\..\subsonic-main\Getting Started.html"
@@ -93,11 +94,12 @@ SectionEnd
 Section "Start Menu Shortcuts"
 
   CreateDirectory "$SMPROGRAMS\Subsonic"
-  CreateShortCut "$SMPROGRAMS\Subsonic\Open Subsonic.lnk"          "$INSTDIR\subsonic.url"         ""       "$INSTDIR\subsonic.exe"  0
-  CreateShortCut "$SMPROGRAMS\Subsonic\Start Subsonic server.lnk"  "$INSTDIR\subsonic.exe"         "-start" "$INSTDIR\subsonic.exe"  0
-  CreateShortCut "$SMPROGRAMS\Subsonic\Stop Subsonic server.lnk"   "$INSTDIR\subsonic.exe"         "-stop"  "$INSTDIR\subsonic.exe"  0
-  CreateShortCut "$SMPROGRAMS\Subsonic\Uninstall Subsonic.lnk"     "$INSTDIR\uninstall.exe"        ""       "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\Subsonic\Getting Started.lnk"        "$INSTDIR\Getting Started.html" ""       "$INSTDIR\Getting Started.html" 0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Open Subsonic.lnk"          "$INSTDIR\subsonic.url"         ""           "$INSTDIR\subsonic.exe"  0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Start Subsonic server.lnk"  "$INSTDIR\subsonic.exe"         "-start"     "$INSTDIR\subsonic.exe"  0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Stop Subsonic server.lnk"   "$INSTDIR\subsonic.exe"         "-stop"      "$INSTDIR\subsonic.exe"  0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Settings.lnk"               "$INSTDIR\settings.exe"         ""           "$INSTDIR\subsonic.exe"  0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Uninstall Subsonic.lnk"     "$INSTDIR\uninstall.exe"        ""           "$INSTDIR\uninstall.exe" 0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Getting Started.lnk"        "$INSTDIR\Getting Started.html" ""           "$INSTDIR\Getting Started.html" 0
 
 SectionEnd
 

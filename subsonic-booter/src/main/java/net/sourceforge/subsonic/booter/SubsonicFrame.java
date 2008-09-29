@@ -1,12 +1,14 @@
 package net.sourceforge.subsonic.booter;
 
-import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.factories.ButtonBarFactory;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.URL;
 
 /**
@@ -18,6 +20,7 @@ import java.net.URL;
 public class SubsonicFrame extends JFrame {
 
     private final SubsonicController subsonicController;
+    private final boolean settingsMode;
 
     private JTabbedPane tabbedPane;
     private StatusPanel statusPanel;
@@ -25,9 +28,10 @@ public class SubsonicFrame extends JFrame {
 
     private JButton closeButton;
 
-    public SubsonicFrame(SubsonicController subsonicController) {
+    public SubsonicFrame(SubsonicController subsonicController, boolean settingsMode) {
         super("Subsonic");
         this.subsonicController = subsonicController;
+        this.settingsMode = settingsMode;
         createComponents();
         layoutComponents();
         addBehaviour();
@@ -46,14 +50,19 @@ public class SubsonicFrame extends JFrame {
     }
 
     private void createComponents() {
-        statusPanel = new StatusPanel(subsonicController);
-        settingsPanel = new SettingsPanel(subsonicController);
+        if (!settingsMode) {
+            statusPanel = new StatusPanel(subsonicController);
+        }
+        settingsPanel = new SettingsPanel();
+
         tabbedPane = new JTabbedPane();
         closeButton = new JButton("Close");
     }
 
     private void layoutComponents() {
-        tabbedPane.add("Status", statusPanel);
+        if (!settingsMode) {
+            tabbedPane.add("Status", statusPanel);
+        }
         tabbedPane.add("Settings", settingsPanel);
 
         JPanel pane = (JPanel) getContentPane();
@@ -67,9 +76,23 @@ public class SubsonicFrame extends JFrame {
     private void addBehaviour() {
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setVisible(false);
+                onClose();
             }
         });
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                onClose();
+            }
+        });
+    }
+
+    private void onClose() {
+        if (settingsMode) {
+            System.exit(0);
+        } else {
+            setVisible(false);
+        }
     }
 
     public void showStatus() {

@@ -12,17 +12,15 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  * Panel displaying the settings of the Subsonic service.
- * <p/>
- * TODO: Add button to restore default
  *
  * @author Sindre Mehus
  */
 public class SettingsPanel extends JPanel {
-
-    private final SubsonicController subsonicController;
 
     private JTextField portTextField;
     private JComboBox contextPathComboBox;
@@ -30,8 +28,7 @@ public class SettingsPanel extends JPanel {
     private JButton defaultButton;
     private JButton saveButton;
 
-    public SettingsPanel(SubsonicController subsonicController) {
-        this.subsonicController = subsonicController;
+    public SettingsPanel() {
         createComponents();
         configureComponents();
         layoutComponents();
@@ -40,9 +37,42 @@ public class SettingsPanel extends JPanel {
     }
 
     public void setValues() {
-        portTextField.setText(String.valueOf(subsonicController.getPort()));
-        memoryTextField.setText(String.valueOf(subsonicController.getMemoryLimit()));
-        contextPathComboBox.setSelectedItem(subsonicController.getContextPath());
+        portTextField.setText(String.valueOf(getPortFromOptionsFile()));
+        memoryTextField.setText(String.valueOf(getMemoryLimitFromOptionsFile()));
+        contextPathComboBox.setSelectedItem(getContextPathFromOptionsFile());
+    }
+
+    private int getPortFromOptionsFile() {
+        try {
+            String s = grep("-Dsubsonic.port=(\\d+)");
+            return Integer.parseInt(s);
+        } catch (Exception x) {
+            x.printStackTrace();
+            return SubsonicController.DEFAULT_PORT;
+        }
+    }
+
+    private int getMemoryLimitFromOptionsFile() {
+        try {
+            String s = grep("-Xmx(\\d+)m");
+            return Integer.parseInt(s);
+        } catch (Exception x) {
+            x.printStackTrace();
+            return SubsonicController.DEFAULT_MEMORY_LIMIT;
+        }
+    }
+
+    private String getContextPathFromOptionsFile() {
+        try {
+            String s = grep("-Dsubsonic.contextPath=(.*)");
+            if (s == null) {
+                throw new NullPointerException();
+            }
+            return s;
+        } catch (Exception x) {
+            x.printStackTrace();
+            return SubsonicController.DEFAULT_CONTEXT_PATH;
+        }
     }
 
     private void createComponents() {
@@ -80,12 +110,9 @@ public class SettingsPanel extends JPanel {
                 try {
                     saveSettings(getMemoryLimit(), getPort(), getContextPath());
 
-                    int result = JOptionPane.showConfirmDialog(SettingsPanel.this,
-                                                               "You need to shut down Subsonic for the new settings to take effect. Would you like do it now?",
-                                                               "Settings changed", JOptionPane.YES_NO_OPTION);
-                    if (result == JOptionPane.YES_OPTION) {
-                        subsonicController.exit();
-                    }
+                    JOptionPane.showMessageDialog(SettingsPanel.this,
+                                                  "Please restart Subsonic for the new settings to take effect.",
+                                                  "Settings changed", JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (Exception x) {
                     JOptionPane.showMessageDialog(SettingsPanel.this, x.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
@@ -137,10 +164,7 @@ public class SettingsPanel extends JPanel {
     }
 
     private void saveSettings(int memoryLimit, int port, String contextPath) throws SettingsException {
-        File file = new File("subsonic.exe.vmoptions");
-        if (!file.isFile() || !file.exists()) {
-            throw new SettingsException("File " + file.getAbsolutePath() + " not found.");
-        }
+        File file = getOptionsFile();
 
         java.util.List<String> lines = readLines(file);
         java.util.List<String> newLines = new ArrayList<String>();
@@ -177,6 +201,14 @@ public class SettingsPanel extends JPanel {
         writeLines(file, newLines);
     }
 
+    private File getOptionsFile() throws SettingsException {
+        File file = new File("subsonic.exe.vmoptions");
+        if (!file.isFile() || !file.exists()) {
+            throw new SettingsException("File " + file.getAbsolutePath() + " not found.");
+        }
+        return file;
+    }
+
     private List<String> readLines(File file) throws SettingsException {
         List<String> lines = new ArrayList<String>();
         BufferedReader reader = null;
@@ -205,6 +237,18 @@ public class SettingsPanel extends JPanel {
         } finally {
             closeQuietly(writer);
         }
+    }
+
+    private String grep(String regexp) throws SettingsException {
+        Pattern pattern = Pattern.compile(regexp);
+        File file = getOptionsFile();
+        for (String line : readLines(file)) {
+            Matcher matcher = pattern.matcher(line);
+            if (matcher.matches()) {
+                return matcher.group(1);
+            }
+        }
+        return null;
     }
 
     private void closeQuietly(Reader reader) {
