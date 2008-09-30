@@ -1,0 +1,221 @@
+/* ---------- Banner ----------- */
+#banner-full {
+	width: 900px;
+	height: 199px;
+	background: url('../img/banner-bg.gif') 0px 0px no-repeat;
+	overflow: hidden;
+	position: relative;
+	border-top: 1px solid #5c5c5c;
+	border-bottom: 1px solid #4e4e4e;
+}
+#bannercontent {
+	z-index: 100;
+}
+#newversion {
+	width: 90px;
+	height: 90px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 5000;
+}
+#bannercontent {
+	position: absolute;
+	left: 0px;
+}
+#banner-full .slide {
+	width: 900px;
+	height: 201px;
+	position: absolute;
+}
+#banner-full .slidecontent {
+	position: relative;
+	width: 900px;
+	height: 201px;
+}
+/* ----------- Banner Full - Slide 1 ---------- */
+#banner-full .slide1 .screenshot {
+	position: absolute;
+	bottom: 0px;
+	left: 10px;
+}
+#banner-full .slide1 .title {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+}
+#banner-full .slide1 .getgold {
+	position: absolute;
+	top: 103px;
+	right: 16px;
+}
+#banner-full .slide1 .downloadnow {
+	position: absolute;
+	top: 103px;
+	right: 123px;
+}
+#banner-full .slide1 .text {
+	position: absolute;
+	top: 20px;
+	left: 330px;
+	width: 310px;
+	line-height: 1.4em;
+	color: #aaa;
+}
+/* ----------- Banner Full - Slide 3 ---------- */
+#banner-full .slide2 .screenshot {
+	position: absolute;
+	top: 0px;
+	left: 20px;
+}
+#banner-full .slide3 .screenshot {
+	position: absolute;
+	top: 0px;
+	left: 40px;
+}
+#banner-full .slide4 .screenshot {
+	position: absolute;
+	top: 0px;
+	left: 20px;
+}
+#banner-full .slide5 .screenshot {
+	position: absolute;
+	top: 0px;
+	left: 10px;
+}
+#banner-full .slide2 .title,
+#banner-full .slide3 .title,
+#banner-full .slide4 .title,
+#banner-full .slide5 .title {
+	width: 380px;
+	height: 65px;
+	position: absolute;
+	top: 20px;
+	left: 475px;
+}
+#banner-full .slide2 .title .large,
+#banner-full .slide3 .title .large,
+#banner-full .slide4 .title .large,
+#banner-full .slide5 .title .large {
+	font-size: 34px;
+	font-weight: bold;
+	line-height: normal;
+	color: #fff;
+}
+#banner-full .slide2 .title .small,
+#banner-full .slide3 .title .small,
+#banner-full .slide4 .title .small,
+#banner-full .slide5 .title .small {
+	font-size: 14px;
+	font-style: italic;
+	color: #ddd;
+}
+#banner-full .slide2 .text,
+#banner-full .slide3 .text,
+#banner-full .slide4 .text,
+#banner-full .slide5 .text {
+	position: absolute;
+	top: 95px;
+	left: 475px;
+	width: 380px;
+	line-height: 1.4em;
+	color: #aaa;
+}
+/* ----------- Banner ---------- */
+#bannernavigation {
+	z-index: 10000;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	width: 120px;
+	height: 24px;
+	display: none;
+}
+#bannernavigation #banner-prev {
+	width: 55px;
+	height: 24px;
+	background: url('../img/button-prev.gif') 0px -24px;
+	text-indent: -99999px;
+	float: left;
+	cursor: pointer;
+}
+#bannernavigation #banner-next {
+	width: 55px;
+	height: 24px;
+	background: url('../img/button-next.gif') 0px -24px;
+	text-indent: -99999px;
+	float: right;
+	cursor: pointer;
+}
+#bannernavigation .hover {
+	background-position: 0px 0px !important;
+}
+#bannercontent .slide1 {left:0px;}
+#bannercontent .slide2 {left:900px;}
+#bannercontent .slide3 {left:1800px;}
+#bannercontent .slide4 {left:2700px;}
+#bannercontent .slide5 {left:3600px;}
+#bannercontent .slide6 {left:4500px;}
+#bannercontent .slide7 {left:5400px;}
+#bannercontent .slide8 {left:6300px;}
+#bannercontent .slide9 {left:7200px;}
+#bannercontent .slide10 {left:8100px;}
+/* ----------- Banner Mini ---------- */
+#banner-mini {
+	border-top: 1px solid #5c5c5c;
+	border-bottom: 1px solid #4e4e4e;
+	width: 900px;
+	height: 90px;
+	background: url('../img/banner-bg.gif') 0px 0px no-repeat;
+	overflow: hidden;
+	position: relative;
+	color: #aaa;
+}
+#banner-mini .slide {
+	width: 900px;
+	height: 90px;
+	position: absolute;
+}
+#banner-mini .slidecontent {
+	position: relative;
+	width: 900px;
+	height: 90px;
+}
+#banner-mini .slide .screenshot {
+	position: absolute;
+	top: -50px;
+	left: 20px;
+}
+#banner-mini .slide .title {
+	position: absolute;
+	top: 18px;
+	left: 475px;
+}
+#banner-mini .slide .text {
+	position: absolute;
+	top: 18px;
+	left: 465px;
+	width: 410px;
+	font-size: 16px;
+	line-height: 1.6em;
+}
+#banner-mini .slide .image {
+	position: absolute;
+	top: 0px;
+	left: 10px;
+}
+#banner-mini .slide3 .image {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+#banner-mini .slide4 .text {
+	position: absolute;
+	left: 450px;
+	width: 260px;
+}
+#banner-mini .slide4 .downloadnow {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+}
