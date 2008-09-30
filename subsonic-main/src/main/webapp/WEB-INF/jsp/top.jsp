@@ -48,7 +48,7 @@
 
             <td style="padding-left:15pt;text-align:center;">
                 <p class="detail">
-                    <a href="j_acegi_logout" target="_top"><fmt:message key="top.logout"><fmt:param value="${model.username}"/></fmt:message></a>
+                    <a href="j_acegi_logout" target="_top"><fmt:message key="top.logout"><fmt:param value="${model.user.username}"/></fmt:message></a>
                 </p>
             </td>
 

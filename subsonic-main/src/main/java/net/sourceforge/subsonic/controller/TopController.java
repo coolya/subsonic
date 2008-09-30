@@ -23,12 +23,12 @@ public class TopController extends ParameterizableViewController {
         Map<String, Object> map = new HashMap<String, Object>();
 
         MusicFolder[] allMusicFolders = settingsService.getAllMusicFolders();
-        String username = securityService.getCurrentUsername(request);
+        User user = securityService.getCurrentUser(request);
 
-        map.put("username", username);
+        map.put("user", user);
         map.put("musicFoldersExist", allMusicFolders.length > 0);
 
-        UserSettings userSettings = settingsService.getUserSettings(username);
+        UserSettings userSettings = settingsService.getUserSettings(user.getUsername());
         if (userSettings.isFinalVersionNotificationEnabled() && versionService.isNewFinalVersionAvailable()) {
             map.put("newVersionAvailable", true);
             map.put("latestVersion", versionService.getLatestFinalVersion());

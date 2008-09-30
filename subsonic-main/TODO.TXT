@@ -1,5 +1,7 @@
 TODO IN 3.5
 ---------------
+Improve getting started.
+Rename to subsonic-3.5.beta2-war.zip
 
 TODO IN 3.5.beta2
 -----------
@@ -13,8 +15,6 @@ TODO IN 3.6
 Improve install instructions.
 Require Java 6 in exe4j.
 Create subsonic.bat
-Improve getting started.
-Rename to subsonic-3.5.beta2-war.zip
 Rename "Media Streamer" to "Music Streamer"
 New screen shots.
 Look at maven release plugin.
