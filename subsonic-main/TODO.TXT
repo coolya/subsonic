@@ -1,3 +1,10 @@
+TODO IN WEB
+------------
+Create version.html
+sf.net logo
+subsonic logo
+Smooth scroll
+
 TODO IN 3.5
 ---------------
 Improve getting started.

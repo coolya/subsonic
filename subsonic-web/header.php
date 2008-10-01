@@ -9,7 +9,7 @@
 
     <script type="text/javascript" language="javascript" src="inc/js/jquery-1.2.1.min.js"></script>
     <script type="text/javascript" language="javascript" src="inc/js/jquery.scrollTo.js"></script>
-    <script type="text/javascript" language="javascript" src="inc/js/jquery.localscroll.js"></script>
+    <!--<script type="text/javascript" language="javascript" src="inc/js/jquery.localscroll.js"></script>-->
     <script type="text/javascript" language="javascript" src="inc/js/jquery.newsticker.js"></script>
     <script type="text/javascript" language="javascript" src="inc/js/jquery.translate-1.0.6.min.js"></script>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>

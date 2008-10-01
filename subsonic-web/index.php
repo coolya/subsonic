@@ -15,7 +15,7 @@
 
 <div id="content">
 <div id="main-col">
-    <h1>MediaMonkey</h1>
+    <h1>Welcome to Subsonic!</h1>
 
     <div class="floatcontainer margin10-t margin10-b">
         <ul class="stars column-left">
@@ -29,34 +29,46 @@
             <li>Record CDs and convert MP3s, M4A, OGG, FLAC and WMA files etc. into other formats.</li>
             <li>Create playlists and let Auto-DJ &amp; Party Mode take care of your party.</li>
             <li>Sync iPhones, iPods, &amp; MP3 players, converting &amp; leveling tracks on-the-fly.</li>
-            <li><a href="/information/">Plus much more...</a></li>
+            <li><a href="features.php">Plus much more...</a></li>
         </ul>
     </div>
 
     <div class="featureitem">
-        <div class="heading">What others are saying...</div>
+        <div class="heading">What is Subsonic?</div>
         <div class="content">
             <div class="wide-content">
-                <ul id="home-reviews">
-                    <li><em>&ldquo;We can see the winner: Mediamonkey pips (beats) Winamp to the post! iTunes is
-                        left for dust trailing behind by 8 points.&rdquo;</em> &mdash; <strong><a
-                            href="http://www.skytopia.com/project/articles/music/players.html" target="_blank">Skytopia:
-                        Windows Music Manager Shootout, May 2008</a></strong></li>
-                    <li><em>&ldquo;Considering the overall fit and finish of this application, it'll be tough to
-                        find anything you won't like about it. Although it is definitely geared toward managing
-                        extensive collections, just about anyone will appreciate the comprehensive feature
-                        set.&rdquo;</em> &mdash; <strong><a href="http://download.com.com/3000-2141-10109807.html"
-                                                            target="_blank">Download.com Review</a></strong></li>
-                    <li><em>&ldquo;I just wanted to thank you for such an awesome piece of kit. I've used
-                        (MediaMonkey) every day for six months, I couldn't be without it. It's no understatement to
-                        say it's improved the quality of my life.&rdquo;</em></li>
-                    <li><em>&ldquo;...When I decided to put my entire CD collection on my pc in mp3 format,
-                        RealJukebox just bogged down unbearably (9000+ songs). (MediaMonkey) is the first thing I
-                        tried and I have been running it nonstop since then. I have had no trouble with slowdowns,
-                        freezing, stalling, and it does things that RJ doesn't do, such as normalization of volume.
-                        It's fairly intuitive, more so than RJ, and it's free!&rdquo;</em> &mdash;
-                        <strong>Nate</strong></li>
-                </ul>
+
+                <p>
+                    Subsonic is a free, web-based media streamer, providing access to your entire music collection whuterever
+                    you are. Use it to share your music with friends, or to listen to your own music while at work. You can
+                    stream to multiple players simultaneously, for instance to one player in your kitchen and another in
+                    your living room.
+                </p>
+
+                <p>
+                    Subsonic is designed to handle very large music collections (many thousand albums). It uses a
+                    combination of directory structure and tag parsing to organize the music. Although optimized for MP3 streaming, it
+                    works for any audio or video format that can stream over HTTP (for instance AAC and OGG). By using transcoder
+                    plug-ins, Subsonic supports on-the-fly conversion and streaming of virtually any audio format, including WMA, FLAC, APE,
+                    Musepack, WavPack, Shorten and OptimFROG.
+                </p>
+
+                <p>
+                    If you have constrained bandwidth, you may set an upper limit for the bitrate of the music streams.
+                    Subsonic will then automatically resample the music to a suitable bitrate.
+                </p>
+
+                <p>
+                    In addition to being a streaming media server, Subsonic works very well as a local jukebox. The
+                    intuitive web interface, as well as search and index facilities, are optimized for efficient browsing through large
+                    media libraries.  Subsonic also comes with an integrated Podcast receiver, with many of the same features
+                    as you find in iTunes.
+                </p>
+
+                <p>
+                    Subsonic is free software distributed under the <a href="http://www.gnu.org/copyleft/lesser.html">LGPL</a>
+                    open-source license.
+                </p>
             </div>
         </div>
     </div>
@@ -65,40 +77,33 @@
 
 <div id="side-col">
     <div class="sidebox">
-        <h2>Subscribe to the News</h2>
-
-        <form method="post" action="/news/subscribe/">
-            <div><label for="s2_email">Email:</label> <input type="text" name="email" value="" size="20"
-                                                             id="s2_email"/></div>
-            <div><label for="s2_subscribe"><input type="radio" name="s2_action" id="s2_subscribe" value="subscribe"
-                                                  checked="checked"/> Subscribe</label></div>
-            <div><label for="s2_unsubscribe"><input type="radio" name="s2_action" id="s2_unsubscribe"
-                                                    value="unsubscribe"/> Unsubscribe</label></div>
-            <div>
-                <button type="submit">Subscribe</button>
-            </div>
-        </form>
+        <h2>Download Subsonic</h2>
+        <p>
+            Available for Windows, Mac, Linux and Unix.
+        </p>
+        <p>
+            <a href="download.php"><img src="inc/img/button-download.gif" alt="Download" style="display:block;margin-left:auto;margin-right:auto;"/></a>
+        </p>
     </div>
-    <div class="sidebox sidenews"><h2>Recent News</h2>
-        <ul class="list">
-            <li><a href="http://www.mediamonkey.com/news/2008/08/11/support-news/">Support News</a></li>
-            <li>
-                <a href="http://www.mediamonkey.com/news/2008/06/19/mediamonkey-303-music-manager-launches-supports-100000-tracks/">MediaMonkey
-                    3.0.3 Music Manager Launches, Supports 100,000+ Tracks</a></li>
-            <li><a href="http://www.mediamonkey.com/news/2008/02/01/mediamonkey-302-released/">MediaMonkey 3.0.2
-                Released!</a></li>
-            <li><a href="http://www.mediamonkey.com/news/2007/12/25/mediamonkey-301-released/">MediaMonkey 3.0.1
-                Released!</a></li>
-            <li><a href="http://www.mediamonkey.com/news/2007/01/30/5/">MediaMonkey 2.5.5 Released!</a></li>
-        </ul>
+    <div class="sidebox">
+        <h2>About</h2>
+        <p>
+            <img src="inc/img/sindre.jpeg" alt="Sindre Mehus" hspace="10" vspace="10" style="float:right"/>
+            Subsonic is developed by <a href="mailto:sindre@activeobjects.no">Sindre Mehus</a>.
+            I live in Oslo, Norway and work as a Java software contractor.
+        </p>
+        <p>
+            If you have any questions, comments or suggestions for improvements, please visit the <a href="forum.php">Subsonic Forum</a>.
+        </p>
     </div>
-    <div class="awards-side">
-        <ul id="awards-fader">
-            <li><a href="http://download.com.com/3000-2141-10109807.html"><img
-                    src="inc/img/reviews/cnet_top_rated.gif" alt="download.com 5-star review"/></a></li>
-            <li><a href="http://www.freewaregenius.com/2006/12/06/mediamonkey/"><img
-                    src="inc/img/reviews/freeware_genius_5.gif" alt="download.com 5-star review"/></a></li>
-        </ul>
+    <div class="sidebox">
+        <h2>Get involved!</h2>
+        <p>
+            I'm looking for volunteers who'd like to translate Subsonic to new languages, and to improve existing translations. Interested? Please read <a href="translate.php">this</a>.
+        </p>
+    </div>
+    <div style="margin-top:4em">
+        <a href="http://sourceforge.net/projects/subsonic/"><img src="http://sourceforge.net/sflogo.php?group_id=126265&type=4" alt="SourceForge.net" style="display:block;margin-left:auto;margin-right:auto"/></a>
     </div>
 </div>
 <div class="clear">

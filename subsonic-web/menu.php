@@ -7,15 +7,15 @@
 <div id="nav">
     <ul>
         <li id="menu-home"><a href="index.php" class="<?php if ($current == 'home') echo('open');?>"><span>Home</span></a></li>
-        <li id="menu-information"><a href="information.php" class="<?php if ($current == 'information') echo('open');?>"><span>Information</span></a></li>
-        <li id="menu-download"><a href="http://www.mediamonkey.com/download/"><span>Download</span></a></li>
-        <li id="menu-addons"><a href="http://www.mediamonkey.com/addons/general/"><span>Addons</span></a></li>
-        <li id="menu-news"><a href="http://www.mediamonkey.com/news/"><span>News</span></a></li>
-        <li id="menu-support"><a href="http://www.mediamonkey.com/support/"><span>Support</span></a></li>
-        <li id="menu-forum"><a href="http://www.mediamonkey.com/forum/"><span>Forum</span></a></li>
-        <li id="menu-develop"><a href="http://www.mediamonkey.com/develop/"><span>Develop</span></a></li>
+        <li id="menu-features"><a href="features.php" class="<?php if ($current == 'features') echo('open');?>"><span>Features</span></a></li>
+        <li id="menu-screenshots"><a href="screenshots.php" class="<?php if ($current == 'screenshots') echo('open');?>"><span>Screenshots</span></a></li>
+        <li id="menu-download"><a href="download.php" class="<?php if ($current == 'download') echo('open');?>"><span>Download</span></a></li>
+        <li id="menu-installation"><a href="installation.php" class="<?php if ($current == 'installation') echo('open');?>"><span>Installation</span></a></li>
+        <!--<li id="menu-transcoding"><a href="transcoding.php" class="<?php if ($current == 'transcoding') echo('open');?>"><span>Transcoding</span></a></li>-->
+        <li id="menu-changelog"><a href="changelog.php" class="<?php if ($current == 'changelog') echo('open');?>"><span>Change Log</span></a></li>
+        <li id="menu-forum"><a href="forum.php" class="<?php if ($current == 'forum') echo('open');?>"><span>Forum</span></a></li>
+        <li id="menu-merchandise"><a href="merchandise.php" class="<?php if ($current == 'merchandise') echo('open');?>"><span>Merchandise</span></a></li>
     </ul>
-    <a href="http://www.mediamonkey.com/download/" id="getgold">Get MediaMonkey Gold</a>
 </div>
 <hr/>
 <div id="banner-full">

@@ -2,7 +2,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <?php
-    $current = 'information';
+    $current = 'features';
     include("header.php");
 ?>
 
@@ -363,20 +363,11 @@
         </ul>
     </div>
 </div>
-<div class="clear"></div>
+<div class="clear">
+</div>
 </div>
 <hr/>
-<div id="footer">
-    <a href="http://www.cleverstarfish.com/" id="starfish"><img src="inc/img/cleverstarfish.gif"
-                                                                alt="Site by Clever Starfish"/></a>
-
-    <div class="footercontent">
-        <div>&copy; Copyright 2008 Ventis Media</div>
-        <div><a href="http://www.mediamonkey.com/sitemap/">Sitemap</a> | <a href="http://www.mediamonkey.com/contact/">Contact</a>
-            | <a href="http://www.mediamonkey.com/privacy/">Privacy</a> | <a
-                href="http://www.mediamonkey.com/affiliates/">Affiliates</a></div>
-    </div>
-</div>
+<?php include("footer.php"); ?>
 </div>
 
 
