@@ -101,9 +101,9 @@ ol {
 #logo {
 	position: absolute;
 	left: 20px;
-	top: 20px;
-	width: 465px;
-	height: 95px;
+	top: 28px;
+	width: 451px;
+	height: 82px;
 	z-index: 9999;
 }
 #content {
