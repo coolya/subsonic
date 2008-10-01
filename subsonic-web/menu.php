@@ -1,4 +1,4 @@
-<div id="logo"><img src="inc/img/monkey-logo.png" alt="MediaMonkey"/></div>
+<div id="logo"><a href="index.php"><img src="inc/img/subsonic-inverse.png" alt="Subsonic"/></a></div>
 
 <div class="hide">
 </div>
@@ -14,7 +14,6 @@
         <!--<li id="menu-transcoding"><a href="transcoding.php" class="<?php if ($current == 'transcoding') echo('open');?>"><span>Transcoding</span></a></li>-->
         <li id="menu-changelog"><a href="changelog.php" class="<?php if ($current == 'changelog') echo('open');?>"><span>Change Log</span></a></li>
         <li id="menu-forum"><a href="forum.php" class="<?php if ($current == 'forum') echo('open');?>"><span>Forum</span></a></li>
-        <li id="menu-merchandise"><a href="merchandise.php" class="<?php if ($current == 'merchandise') echo('open');?>"><span>Merchandise</span></a></li>
     </ul>
 </div>
 <hr/>

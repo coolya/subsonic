@@ -101,8 +101,8 @@ ol {
 #logo {
 	position: absolute;
 	left: 20px;
-	top: 23px;
-	width: 271px;
+	top: 20px;
+	width: 465px;
 	height: 95px;
 	z-index: 9999;
 }
@@ -322,7 +322,6 @@ tr.table-altrow {
 table.featuretable td {
 	padding: 6px 10px 6px 10px;
 	text-align: center;
-	font-size: 11px;
 }
 table.featuretable td.buttons {
 	padding: 6px 4px;
@@ -332,6 +331,7 @@ table.featuretable td.meta {
 }
 td.featurename {
 	text-align: left !important;
+    width: 70%;
 }
 .important {
 	color: #911;

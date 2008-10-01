@@ -15,7 +15,7 @@
 
 <div id="content">
 <div id="main-col">
-<h1>Subsonic Change Log</h1>
+<h1 class="bottomspace">Subsonic Change Log</h1>
 
 <a name="3.5"/>
 <h2 class="div">Subsonic 3.5 - Sep XX, 2008</h2>
