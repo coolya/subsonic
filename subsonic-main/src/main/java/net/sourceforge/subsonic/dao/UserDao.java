@@ -48,7 +48,7 @@ public class UserDao extends AbstractDao {
      * @param username The username used when logging in.
      * @return The user, or <code>null</code> if not found.
      */
-    public synchronized User getUserByName(String username) {
+    public User getUserByName(String username) {
         String sql = "select " + USER_COLUMNS + " from user where username=?";
         User[] users = (User[]) getJdbcTemplate().query(sql, new Object[]{username}, userRowMapper).toArray(new User[0]);
         if (users.length == 0) {
@@ -107,8 +107,7 @@ public class UserDao extends AbstractDao {
      *
      * @param user The user to update.
      */
-    public synchronized void updateUser(User user) {
-        // Note: Method is synchronized with getUser() method.
+    public void updateUser(User user) {
         String sql = "update user set password=?, ldap_authenticated=?, bytes_streamed=?, bytes_downloaded=?, bytes_uploaded=? " +
                      "where username=?";
         getJdbcTemplate().update(sql, new Object[]{encrypt(user.getPassword()), user.isLdapAuthenticated(),
@@ -199,58 +198,62 @@ public class UserDao extends AbstractDao {
     }
 
     private void readRoles(User user) {
-        String sql = "select role_id from user_role where username=?";
-        List<?> roles = getJdbcTemplate().queryForList(sql, new Object[]{user.getUsername()}, Integer.class);
-        for (Object role : roles) {
-            if (ROLE_ID_ADMIN.equals(role)) {
-                user.setAdminRole(true);
-            } else if (ROLE_ID_DOWNLOAD.equals(role)) {
-                user.setDownloadRole(true);
-            } else if (ROLE_ID_UPLOAD.equals(role)) {
-                user.setUploadRole(true);
-            } else if (ROLE_ID_PLAYLIST.equals(role)) {
-                user.setPlaylistRole(true);
-            } else if (ROLE_ID_COVER_ART.equals(role)) {
-                user.setCoverArtRole(true);
-            } else if (ROLE_ID_COMMENT.equals(role)) {
-                user.setCommentRole(true);
-            } else if (ROLE_ID_PODCAST.equals(role)) {
-                user.setPodcastRole(true);
-            } else if (ROLE_ID_STREAM.equals(role)) {
-                user.setStreamRole(true);
-            } else {
-                LOG.warn("Unknown role: '" + role + '\'');
+        synchronized (user.getUsername().intern()) {
+            String sql = "select role_id from user_role where username=?";
+            List<?> roles = getJdbcTemplate().queryForList(sql, new Object[]{user.getUsername()}, Integer.class);
+            for (Object role : roles) {
+                if (ROLE_ID_ADMIN.equals(role)) {
+                    user.setAdminRole(true);
+                } else if (ROLE_ID_DOWNLOAD.equals(role)) {
+                    user.setDownloadRole(true);
+                } else if (ROLE_ID_UPLOAD.equals(role)) {
+                    user.setUploadRole(true);
+                } else if (ROLE_ID_PLAYLIST.equals(role)) {
+                    user.setPlaylistRole(true);
+                } else if (ROLE_ID_COVER_ART.equals(role)) {
+                    user.setCoverArtRole(true);
+                } else if (ROLE_ID_COMMENT.equals(role)) {
+                    user.setCommentRole(true);
+                } else if (ROLE_ID_PODCAST.equals(role)) {
+                    user.setPodcastRole(true);
+                } else if (ROLE_ID_STREAM.equals(role)) {
+                    user.setStreamRole(true);
+                } else {
+                    LOG.warn("Unknown role: '" + role + '\'');
+                }
             }
         }
     }
 
     private void writeRoles(User user) {
-        String sql = "delete from user_role where username=?";
-        getJdbcTemplate().update(sql, new Object[]{user.getUsername()});
-        sql = "insert into user_role (username, role_id) values(?, ?)";
-        if (user.isAdminRole()) {
-            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_ADMIN});
-        }
-        if (user.isDownloadRole()) {
-            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_DOWNLOAD});
-        }
-        if (user.isUploadRole()) {
-            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_UPLOAD});
-        }
-        if (user.isPlaylistRole()) {
-            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_PLAYLIST});
-        }
-        if (user.isCoverArtRole()) {
-            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_COVER_ART});
-        }
-        if (user.isCommentRole()) {
-            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_COMMENT});
-        }
-        if (user.isPodcastRole()) {
-            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_PODCAST});
-        }
-        if (user.isStreamRole()) {
-            getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_STREAM});
+        synchronized (user.getUsername().intern()) {
+            String sql = "delete from user_role where username=?";
+            getJdbcTemplate().update(sql, new Object[]{user.getUsername()});
+            sql = "insert into user_role (username, role_id) values(?, ?)";
+            if (user.isAdminRole()) {
+                getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_ADMIN});
+            }
+            if (user.isDownloadRole()) {
+                getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_DOWNLOAD});
+            }
+            if (user.isUploadRole()) {
+                getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_UPLOAD});
+            }
+            if (user.isPlaylistRole()) {
+                getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_PLAYLIST});
+            }
+            if (user.isCoverArtRole()) {
+                getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_COVER_ART});
+            }
+            if (user.isCommentRole()) {
+                getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_COMMENT});
+            }
+            if (user.isPodcastRole()) {
+                getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_PODCAST});
+            }
+            if (user.isStreamRole()) {
+                getJdbcTemplate().update(sql, new Object[]{user.getUsername(), ROLE_ID_STREAM});
+            }
         }
     }
 

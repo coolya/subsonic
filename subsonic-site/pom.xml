@@ -17,7 +17,7 @@
         <site>
             <id>subsonic-website</id>
             <name>SourceForge</name>
-            <url>scp://shell.sourceforge.net/home/groups/s/su/subsonic/htdocs/</url>
+            <url>scp://web.sourceforge.net/home/groups/s/su/subsonic/htdocs/</url>
         </site>
     </distributionManagement>
 

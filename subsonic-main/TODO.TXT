@@ -22,6 +22,8 @@ Add transcoding pack. Integrate with Windows installer. Enable by default (if ce
 
 TODO IN 3.6
 -----------
+Log error if podcast delete file doesn't succeed.
+Podcast duplicate files. nrk_verdt_aa_vite_2008-0820-1203_24459.mp3 + nrk_verdt_aa_vite_2008-0820-1203_244590.mp3
 Improve install instructions.
 Require Java 6 in exe4j.
 Create subsonic.bat
@@ -32,7 +34,8 @@ Sort albums by year. (And show year). http://www.activeobjects.no/subsonic/forum
 Include getting started (html) in installer.  And add it to start menu. Also create link to subsonic home page in Start menu.
 Replace Flash player.
 New logo.
-last.fm problem.
+last.fm problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1278
+Show total playlist duration.
 Remove player dynamic ip property?
 Change license?
 Make new homepage. (Check out http://www.mediamonkey.com)
@@ -237,7 +240,10 @@ Upload files to SourceForge (in separate shell).
 Create file release at SourceForge.
 cd subsonic-site
 mvn site:site
-mvn site:deploy
+####mvn site:deploy
+Upload files to SourceForge (in separate shell).
+  rsync -avP -e ssh subsonic-site/target/site/*  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
+
 svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-2.7.beta1 -m "Tagging 2.7.beta1."
 Register at freshmeat.
 Post message on forum.
