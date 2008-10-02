@@ -601,3 +601,9 @@ a.button.gold:hover {
 	float: left;
 	margin-right: 10px;
 }
+
+.img-center {
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+}

@@ -82,7 +82,7 @@
             Available for Windows, Mac, Linux and Unix.
         </p>
         <p>
-            <a href="download.php"><img src="inc/img/button-download.gif" alt="Download" style="display:block;margin-left:auto;margin-right:auto;"/></a>
+            <a href="download.php"><img src="inc/img/button-download.gif" alt="Download" class="img-center"/></a>
         </p>
     </div>
     <div class="sidebox">
@@ -103,7 +103,7 @@
         </p>
     </div>
     <div style="margin-top:4em">
-        <a href="http://sourceforge.net/projects/subsonic/"><img src="http://sourceforge.net/sflogo.php?group_id=126265&type=4" alt="SourceForge.net" style="display:block;margin-left:auto;margin-right:auto"/></a>
+        <a href="http://sourceforge.net/projects/subsonic/"><img src="http://sourceforge.net/sflogo.php?group_id=126265&type=4" alt="SourceForge.net" class="img-center"/></a>
     </div>
 </div>
 <div class="clear">
