@@ -13,6 +13,15 @@ es
 # German
 de
 
+# Italian
+it
+
+# Russian
+ru
+
+# Simplified Chinese
+zh_CN
+
 # Dutch
 nl
 
@@ -22,8 +31,3 @@ no
 # Macedonian
 mk
 
-# Russian
-ru
-
-# Simplified Chinese
-zh_CN

@@ -20,6 +20,7 @@
 <a name="3.5"/>
 <h2 class="div">Subsonic 3.5 - Sep XX, 2008</h2>
 <ul>
+    <li><span class="bugid">New:</span> Added Italian translation (thanks to Michele Petrecca).
     <li><span class="bugid">New:</span> Smooth scrolling in jump list.</li>
     <li><span class="bugid">Bugfix:</span> Added start menu item "Settings" as work-around for missing tray icon in
         Vista.
