@@ -17,8 +17,7 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
-<a name="3.5"/>
-<h2 class="div">Subsonic 3.5 - Sep XX, 2008</h2>
+<a name="3.5"><h2 class="div">Subsonic 3.5 - Sep XX, 2008</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Added Italian translation (thanks to Michele Petrecca).
     <li><span class="bugid">New:</span> Smooth scrolling in jump list.</li>
@@ -30,8 +29,7 @@
     </li>
 </ul>
 
-<a name="3.5.beta2"/>
-<h2 class="div">Subsonic 3.5.beta2 - Sep 23, 2008</h2>
+<a name="3.5.beta2"><h2 class="div">Subsonic 3.5.beta2 - Sep 23, 2008</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Fancy cover art zoom.</li>
     <li><span class="bugid">New:</span> Remove artist name from album name.</li>
@@ -49,9 +47,7 @@
     <li><span class="bugid">Tech:</span> Build number is now identical to Subversion revision.</li>
 </ul>
 
-
-<a name="3.5.beta1"/>
-<h2 class="div">Subsonic 3.5.beta1 - Jul 10, 2008</h2>
+<a name="3.5.beta1"><h2 class="div">Subsonic 3.5.beta1 - Jul 10, 2008</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Implemented music player for Java-enabled mobile phones.
         (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1203">More</a>)
@@ -82,9 +78,7 @@
     <li><span class="bugid">Bugfix:</span> Make source release build.</li>
 </ul>
 
-
-<a name="3.4"/>
-<h2 class="div">Subsonic 3.4 - Apr 27, 2008</h2>
+<a name="3.4"><h2 class="div">Subsonic 3.4 - Apr 27, 2008</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Added optional setting for LDAP bind DN and password.</li>
     <li><span class="bugid">New:</span> Added quick links to Google, Wikipedia, allmusic and Last.fm.</li>
@@ -94,9 +88,7 @@
     <li><span class="bugid">Bugfix:</span> Old Podcast episodes were in some cases not deleted.</li>
 </ul>
 
-
-<a name="3.4.beta1"/>
-<h2 class="div">Subsonic 3.4.beta1 - Mar 28, 2008</h2>
+<a name="3.4.beta1"><h2 class="div">Subsonic 3.4.beta1 - Mar 28, 2008</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Added support for user authentication in LDAP, including Microsoft Active
         Directory.
@@ -124,9 +116,7 @@
     <li><span class="bugid">Tech:</span> Allow up to one week of idle time in Jetty.</li>
 </ul>
 
-
-<a name="3.3"/>
-<h2 class="div">Subsonic 3.3 - Dec 23, 2007</h2>
+<a name="3.3"><h2 class="div">Subsonic 3.3 - Dec 23, 2007</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Added "HD-720" and "Barents Sea" themes.</li>
     <li><span class="bugid">New:</span> Improved layout of left and main frame.</li>
@@ -139,9 +129,7 @@
     <li><span class="bugid">Tech:</span> Make it compile with Java 5.</li>
 </ul>
 
-
-<a name="3.3.beta1"/>
-<h2 class="div">Subsonic 3.3.beta1 - Nov 23, 2007</h2>
+<a name="3.3.beta1"><h2 class="div">Subsonic 3.3.beta1 - Nov 23, 2007</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Implemented client-side playlists, including random skipping within songs
         (see <em>Settings &gt; Players &gt; Playlist is managed by player</em>).
@@ -162,9 +150,7 @@
     <li><span class="bugid">Bugfix:</span> Fixed concurrency bug when rendering wiki markup.</li>
 </ul>
 
-
-<a name="3.2"/>
-<h2 class="div">Subsonic 3.2 - Oct 09, 2007</h2>
+<a name="3.2"><h2 class="div">Subsonic 3.2 - Oct 09, 2007</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Added support for editing genre in ID3 tags.</li>
     <li><span class="bugid">New:</span> Show miniature album images in "Now playing" sidebar.</li>
@@ -174,9 +160,7 @@
     </li>
 </ul>
 
-
-<a name="3.2.beta1"/>
-<h2 class="div">Subsonic 3.2.beta1 - Sep 19, 2007</h2>
+<a name="3.2.beta1"><h2 class="div">Subsonic 3.2.beta1 - Sep 19, 2007</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Download Podcasts with the new integrated Podcast receiver.</li>
     <li><span class="bugid">New:</span> One-click installation with the new Windows installer.</li>
@@ -194,15 +178,10 @@
     <li><span class="bugid">Tech:</span> Added db admin tool.</li>
 </ul>
 
-
-<a name="3.1"/>
-<h2 class="div">Subsonic 3.1 - Jul 30, 2007</h2>
-
+<a name="3.1"><h2 class="div">Subsonic 3.1 - Jul 30, 2007</h2></a>
 <p>(No changes since 3.1.beta2)</p>
 
-
-<a name="3.1.beta2"/>
-<h2 class="div">Subsonic 3.1.beta2 - Jul 23, 2007</h2>
+<a name="3.1.beta2"><h2 class="div">Subsonic 3.1.beta2 - Jul 23, 2007</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Optimized scanning of music folders. Dramatic improvement for network disks.
     </li>
@@ -212,9 +191,7 @@
     <li><span class="bugid">Bugfix:</span> Remove nag message for licensed users.</li>
 </ul>
 
-
-<a name="3.1.beta1"/>
-<h2 class="div">Subsonic 3.1.beta1 - Jun 30, 2007</h2>
+<a name="3.1.beta1"><h2 class="div">Subsonic 3.1.beta1 - Jun 30, 2007</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Added checkboxes to songs in playlist, with option to perform operations on all
         selected songs.
@@ -238,9 +215,7 @@
     <li><span class="bugid">Bugfix:</span> Fixed ugly checkboxes in IE.</li>
 </ul>
 
-
-<a name="3.0"/>
-<h2 class="div">Subsonic 3.0 - Mar 22, 2007</h2>
+<a name="3.0"><h2 class="div">Subsonic 3.0 - Mar 22, 2007</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Added Google ads.</li>
     <li><span class="bugid">Tech:</span> Upgraded <a href="http://code.google.com/p/jvorbiscomment/">jvorbiscomment</a>
@@ -249,9 +224,7 @@
     <li><span class="bugid">Bugfix:</span> Artists from different music folders are now properly sorted.</li>
 </ul>
 
-
-<a name="3.0.beta2"/>
-<h2 class="div">Subsonic 3.0.beta2 - Feb 24, 2007</h2>
+<a name="3.0.beta2"><h2 class="div">Subsonic 3.0.beta2 - Feb 24, 2007</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Added per-user bitrate limit.</li>
     <li><span class="bugid">New:</span> Show error message in browser if Subsonic home can't be created.</li>
@@ -262,9 +235,7 @@
     <li><span class="bugid">Bugfix:</span> last.fm password must no longer be entered every time.</li>
 </ul>
 
-
-<a name="3.0.beta1"/>
-<h2 class="div">Subsonic 3.0.beta1 - Feb 04, 2007</h2>
+<a name="3.0.beta1"><h2 class="div">Subsonic 3.0.beta1 - Feb 04, 2007</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Audioscrobbling support. Automatically register what you're playing on last.fm.
     </li>
@@ -279,9 +250,7 @@
     <li><span class="bugid">Tech:</span> Upgraded Spring and Acegi to latest versions.</li>
 </ul>
 
-
-<a name="2.9"/>
-<h2 class="div">Subsonic 2.9 - Nov 13, 2006</h2>
+<a name="2.9"><h2 class="div">Subsonic 2.9 - Nov 13, 2006</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Added German translation by Harald Weiss.</li>
     <li><span class="bugid">New:</span> Show server version and memory usage in help page.</li>
@@ -293,9 +262,7 @@
     <li><span class="bugid">Bugfix:</span> Improve track number removal from title.</li>
 </ul>
 
-
-<a name="2.9.beta1"/>
-<h2 class="div">Subsonic 2.9.beta1 - Oct 16, 2006</h2>
+<a name="2.9.beta1"><h2 class="div">Subsonic 2.9.beta1 - Oct 16, 2006</h2></a>
 <ul>
     <li><span class="bugid">Bugfix:</span> Avoid excessive disk and memory usage when (re)scanning the music library
         (bug introduced in 2.8).
@@ -319,9 +286,7 @@
     <li><span class="bugid">New:</span> Search results are now better sorted.</li>
 </ul>
 
-
-<a name="2.8"/>
-<h2 class="div">Subsonic 2.8 - Sep 07, 2006</h2>
+<a name="2.8"><h2 class="div">Subsonic 2.8 - Sep 07, 2006</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Added option for transcoders to obey the player max bitrate setting.</li>
     <li><span class="bugid">New:</span> Sort songs by track number.</li>
@@ -336,9 +301,7 @@
     <li><span class="bugid">Bugfix:</span> Proper rendering of directories with both files and sub-directories.</li>
 </ul>
 
-
-<a name="2.8.beta1"/>
-<h2 class="div">Subsonic 2.8.beta1 - Aug 13, 2006</h2>
+<a name="2.8.beta1"><h2 class="div">Subsonic 2.8.beta1 - Aug 13, 2006</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Transcoding plugin framework.</li>
     <li><span class="bugid">New:</span> VBR (variable bitrate) detection and resampling.</li>
@@ -360,8 +323,7 @@
     <li><span class="bugid">Tech:</span> Springified DAO's and data source.</li>
 </ul>
 
-<a name="2.7"/>
-<h2 class="div">Subsonic 2.7 - Jun 12, 2006</h2>
+<a name="2.7"><h2 class="div">Subsonic 2.7 - Jun 12, 2006</h2></a>
 <ul>
     <li><span class="bugid">Tech:</span> Subsonic was completely rewritten to use the Spring MVC framework.</li>
     <li><span class="bugid">New:</span> Theme support. Now ships with two themes, "Subsonic Default" and "2 minutes to
@@ -393,9 +355,7 @@
     </li>
 </ul>
 
-
-<a name="2.6"/>
-<h2 class="div">Subsonic 2.6 - Mar 10, 2006</h2>
+<a name="2.6"><h2 class="div">Subsonic 2.6 - Mar 10, 2006</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Nicer layout, colors and icons. Customizable welcome message. Option to limit
         number of cover art images to display.
@@ -430,8 +390,7 @@
     <li><span class="bugid">Bugfix:</span> Clicking index in top frame sometimes caused reloading of left frame.</li>
 </ul>
 
-<a name="2.5"/>
-<h2 class="div">Subsonic 2.5 - Nov 25, 2005</h2>
+<a name="2.5"><h2 class="div">Subsonic 2.5 - Nov 25, 2005</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Implemented user management. Users are easily created, deleted and assigned
         different privileges.
@@ -449,9 +408,7 @@
     </li>
 </ul>
 
-
-<a name="2.4"/>
-<h2 class="div">Subsonic 2.4 - Oct 10, 2005</h2>
+<a name="2.4"><h2 class="div">Subsonic 2.4 - Oct 10, 2005</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Download cover art and album info from Amazon web service.</li>
     <li><span class="bugid">New:</span> Show selection of random albums on welcome page.</li>
@@ -460,9 +417,7 @@
     <li><span class="bugid">Bugfix:</span> Use user-wide (not system-wide) preferences on non-Windows platforms.</li>
 </ul>
 
-
-<a name="2.3"/>
-<h2 class="div">Subsonic 2.3 - May 28, 2005</h2>
+<a name="2.3"><h2 class="div">Subsonic 2.3 - May 28, 2005</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Full internationalization support.</li>
     <li><span class="bugid">New:</span> Automatic update of search index at specified intervals.</li>
@@ -481,9 +436,7 @@
     <li><span class="bugid">New:</span> Show log in help page.</li>
 </ul>
 
-
-<a name="2.2"/>
-<h2 class="div">Subsonic 2.2 - March 17, 2005</h2>
+<a name="2.2"><h2 class="div">Subsonic 2.2 - March 17, 2005</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Implemented SHOUTcast support.</li>
     <li><span class="bugid">New:</span> Added "Album info" which links to reviews etc at allmusic.com.</li>
@@ -496,8 +449,7 @@
     <li><span class="bugid">Bugfix:</span> Use ID3v2 tags instead of ID3v1, if both are present.</li>
 </ul>
 
-<a name="2.1"/>
-<h2 class="div">Subsonic 2.1 - March 8, 2005</h2>
+<a name="2.1"><h2 class="div">Subsonic 2.1 - March 8, 2005</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Added more search options.</li>
     <li><span class="bugid">New:</span> Added support for downloading an entire directory structure as a zip file.</li>
@@ -511,8 +463,7 @@
     <li><span class="bugid">Bugfix:</span> Some minor bug fixes.</li>
 </ul>
 
-<a name="2.0"/>
-<h2 class="div">Subsonic 2.0 - February 27, 2005</h2>
+<a name="2.0"><h2 class="div">Subsonic 2.0 - February 27, 2005</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Added WAP interface for controlling Subsonic from a mobile phone or PDA.</li>
     <li><span class="bugid">New:</span> Added option to generate a random playlist.</li>
@@ -522,8 +473,7 @@
     <li><span class="bugid">New:</span> ANT support.</li>
 </ul>
 
-<a name="1.0"/>
-<h2 class="div">Subsonic 1.0 - February 10, 2005</h2>
+<a name="1.0"><h2 class="div">Subsonic 1.0 - February 10, 2005</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Added chart for displaying bitrates last few minutes.</li>
     <li><span class="bugid">New:</span> Implemented transcoding to lower bitrates.</li>
@@ -531,13 +481,10 @@
     <li><span class="bugid">New:</span> Support PLS and M3U playlists.</li>
 </ul>
 
-
-<h2 class="div">Subsonic 0.1 - December 14, 2004</h2>
-<a name="0.1"/>
+<a name="0.1"><h2 class="div">Subsonic 0.1 - December 14, 2004</h2></a>
 <ul>
     <li>Initial release.</li>
 </ul>
-
 
 </div>
 
