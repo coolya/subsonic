@@ -92,7 +92,7 @@
         <sub:url value="main.view" var="ancestorUrl">
             <sub:param name="path" value="${ancestor.path}"/>
         </sub:url>
-        <a href="${ancestorUrl}">${ancestor.name}</a> &ndash;
+        <a href="${ancestorUrl}">${ancestor.name}</a> &raquo;
     </c:forEach>
     ${model.dir.name}
 
