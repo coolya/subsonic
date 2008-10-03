@@ -14,6 +14,8 @@
     <script type="text/javascript" language="javascript" src="inc/js/jquery.translate-1.0.6.min.js"></script>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript" language="javascript" src="inc/js/scripts.js"></script>
+    <script type="text/javascript" language="javascript" src="inc/js/FancyZoom.js"></script>
+    <script type="text/javascript" language="javascript" src="inc/js/FancyZoomHTML.js"></script>
 
     <!--[if lte IE 6]>
      <link rel="stylesheet" type="text/css" href="inc/css/pngfix.css" />

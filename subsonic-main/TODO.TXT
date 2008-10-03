@@ -7,6 +7,7 @@ Smooth scroll
 Add flag icons to translation div.  Rewrite text.
 Add graphics to "What is" div.
 Add google analytics.
+Add shadow to images
 
 TODO IN 3.5
 ---------------
