@@ -33,96 +33,112 @@
         <code>admin</code>.  Go to <code>Settings &gt; Users</code> to change password and create new users.
     </p>
 
-    <a name="window"><h2 class="div">Windows installation</h2></a>
-    <p><b>Requirements: </b>Java 5 or later (<a href="http://www.java.com">Download</a>)</p>
-    <p>
-        On Windows, the easiest way to install Subsonic is using the provided Windows Installer: <code>subsonic-x.x-setup.exe</code>.
-    </p>
-    <a href="inc/img/windows-installer.png"><img class="img-right" src="inc/img/windows-installer-small.png" alt="Windows Installer"/></a>
-    <p>
-        It installs Subsonic as a service, available in <code>Control Panel &gt; Administrative Tools &gt; Services</code>, that is started automatically when you log on to Windows.
-    </p>
-    <p>
-        It also creates links in the Start Menu: <code>Start &gt; All Programs &gt; Subsonic</code>. From this menu you can start/stop the Subsonic service, open the Subsonic web page, or
-        change basic settings such as which port number Subsonic should use.
-    </p>
-    <p>
-        After installing and starting Subsonic, open the Subsonic web page on <a href="http://localhost">http://localhost</a>.
-    </p>
+<div class="featureitem">
+    <a name="window"><div class="heading">Windows installation</div></a>
+    <div class="content">
+        <div class="wide-content">
+            <p><b>Requirements: </b>Java 5 or later (<a href="http://www.java.com">Download</a>)</p>
+            <p>
+                On Windows, the easiest way to install Subsonic is using the provided Windows Installer: <code>subsonic-x.x-setup.exe</code>.
+            </p>
+            <a href="inc/img/windows-installer.png"><img class="img-right" src="inc/img/windows-installer-small.png" alt="Windows Installer"/></a>
+            <p>
+                It installs Subsonic as a service, available in <code>Control Panel &gt; Administrative Tools &gt; Services</code>, that is started automatically when you log on to Windows.
+            </p>
+            <p>
+                It also creates links in the Start Menu: <code>Start &gt; All Programs &gt; Subsonic</code>. From this menu you can start/stop the Subsonic service, open the Subsonic web page, or
+                change basic settings such as which port number Subsonic should use.
+            </p>
+            <p>
+                After installing and starting Subsonic, open the Subsonic web page on <a href="http://localhost">http://localhost</a>.
+            </p>
+        </div>
+    </div>
+</div>
 
-    <a name="standalone"><h2 class="div">Stand-alone installation</h2></a>
-    <p><b>Requirements: </b>Java 5 or later (<a href="http://www.java.com">Download</a>)</p>
-    <p>
-        This is Subsonic with an embedded Jetty server. Recommended for most Linux and Mac users.
-    </p>
-    <ul>
-        <li>Unpack the zip-file <code>subsonic-x.x-standalone.zip</code> to <code>SUBSONIC_HOME/standalone</code>.
-            <code>SUBSONIC_HOME</code> is typically <code>c:\subsonic</code> on Windows, and <code>/var/subsonic</code> on Unix-based operating systems.</li>
-        <li>Optionally configure the startup script <code>SUBSONIC_HOME/standalone/subsonic.sh</code></li>
-        <li>Execute the startup script.</li>
-        <li>Open the Subsonic web page. The default address is <a href="http://localhost:8080">http://localhost:8080</a>.</li>
-    </ul>
+<div class="featureitem">
+    <a name="standalone"><div class="heading">Stand-alone installation</div></a>
+    <div class="content">
+        <div class="wide-content">
+            <p><b>Requirements: </b>Java 5 or later (<a href="http://www.java.com">Download</a>)</p>
+            <p>
+                This is Subsonic with an embedded Jetty server. Recommended for most Linux and Mac users.
+            </p>
+            <ul>
+                <li>Unpack the zip-file <code>subsonic-x.x-standalone.zip</code> to <code>SUBSONIC_HOME/standalone</code>.
+                    <code>SUBSONIC_HOME</code> is typically <code>c:\subsonic</code> on Windows, and <code>/var/subsonic</code> on Unix-based operating systems.</li>
+                <li>Optionally configure the startup script <code>SUBSONIC_HOME/standalone/subsonic.sh</code></li>
+                <li>Execute the startup script.</li>
+                <li>Open the Subsonic web page. The default address is <a href="http://localhost:8080">http://localhost:8080</a>.</li>
+            </ul>
+        </div>
+    </div>
+</div>
 
-    <a name="war"><h2 class="div">WAR installation</h2></a>
-    <p><b>Requirements: </b>Java 5 or later (<a href="http://www.java.com">Download</a>). A servlet container supporting Servlet 2.4 and JSP 2.0.</p>
+<div class="featureitem">
+    <a name="war"><div class="heading">WAR installation</div></a>
+    <div class="content">
+        <div class="wide-content">
+            <p><b>Requirements: </b>Java 5 or later (<a href="http://www.java.com">Download</a>). A servlet container supporting Servlet 2.4 and JSP 2.0.</p>
 
-    <p>
-        Use this option if you want to deploy Subsonic in an external server, such as Tomcat, Jetty or Geronimo. Subsonic comes
-        packaged as a standard Java web application, <code>subsonic.war</code>, which can be easily deployed in any compatible servlet container.
-        The most commonly used server is Tomcat, and the rest of this section describes how to install or upgrade Subsonic on a Tomcat server.
-    </p>
+            <p>
+                Use this option if you want to deploy Subsonic in an external server, such as Tomcat, Jetty, GlassFish or Geronimo. Subsonic comes
+                packaged as a standard Java web application, <code>subsonic.war</code>, which can be easily deployed in any compatible servlet container.
+                The most commonly used server is Tomcat, and the rest of this section describes how to install or upgrade Subsonic on a Tomcat server.
+            </p>
 
-    <ul>
-        <li>Stop Tomcat if it's running.</li>
-        <li>Remove these files and directories if they exist:
-        <ul>
-            <li><code>TOMCAT_HOME/webapps/subsonic.war</code></li>
-            <li><code>TOMCAT_HOME/webapps/subsonic</code></li>
-            <li><code>TOMCAT_HOME/work</code></li>
-        </ul>
-        </li>
-        <li>Copy the file <code>subsonic.war</code> to <code>TOMCAT_HOME/webapps</code>.</li>
-        <li>Start Tomcat.</li>
-        <li>Point your web browser to <a href="http://localhost/subsonic">http://localhost/subsonic</a> (or
-            <a href="http://localhost:8080/subsonic">http://localhost:8080/subsonic</a> if you installed Tomcat on port 8080.)</li>
-    </ul>
+            <ul>
+                <li>Stop Tomcat if it's running.</li>
+                <li>Remove these files and directories if they exist:
+                    <ul>
+                        <li><code>TOMCAT_HOME/webapps/subsonic.war</code></li>
+                        <li><code>TOMCAT_HOME/webapps/subsonic</code></li>
+                        <li><code>TOMCAT_HOME/work</code></li>
+                    </ul>
+                </li>
+                <li>Copy the file <code>subsonic.war</code> to <code>TOMCAT_HOME/webapps</code>.</li>
+                <li>Start Tomcat.</li>
+                <li>Point your web browser to <a href="http://localhost/subsonic">http://localhost/subsonic</a> (or
+                    <a href="http://localhost:8080/subsonic">http://localhost:8080/subsonic</a> if you installed Tomcat on port 8080.)</li>
+            </ul>
 
-    <p><b>Notes</b></p>
-    <ul>
-        <li> If you installed Tomcat as a Windows Service, you can start and stop it from the service manager: <code>Control Panel &gt; Administrative Tools &gt; Services</code>.</li>
-        <li><code>TOMCAT_HOME</code> refers to the directory in which you installed Tomcat. On Windows this is normally <code>C:\Program Files\Apache Software Foundation\Tomcat 5.5</code></li>
-        <li>On Linux, Subsonic keeps its files in <code>/var/subsonic</code>. Depending on your configuration, Tomcat may not be permitted to create this directory, in which case
-            you have to create it manually: <code>mkdir /var/subsonic; chown tomcat:tomcat /var/subsonic</code></li>
-    </ul>
+            <p><b>Notes</b></p>
+            <ul>
+                <li> If you installed Tomcat as a Windows Service, you can start and stop it from the service manager: <code>Control Panel &gt; Administrative Tools &gt; Services</code>.</li>
+                <li><code>TOMCAT_HOME</code> refers to the directory in which you installed Tomcat. On Windows this is normally <code>C:\Program Files\Apache Software Foundation\Tomcat 5.5</code></li>
+                <li>On Linux, Subsonic keeps its files in <code>/var/subsonic</code>. Depending on your configuration, Tomcat may not be permitted to create this directory, in which case
+                    you have to create it manually: <code>mkdir /var/subsonic; chown tomcat:tomcat /var/subsonic</code></li>
+            </ul>
 
-    <p><b>Troubleshooting</b></p>
-    <p>
-        If you experience any problems, please make sure you follow the installation instructions above. Here's a list of suggestions of what to do if it still doesn't work:
-    </p>
-    <ul>
-        <li>Restart Tomcat.</li>
-        <li>Reinstall Subsonic.</li>
-        <li>Upgrade to the latest Tomcat version (at least if you're using Tomcat 5.0 or earlier).</li>
-        <li>Look for errors in the Subsonic log, <code>c:\subsonic\subsonic.log</code> or <code>/var/subsonic/subsonic.log</code>.</li>
-        <li>Look for errors in the Tomcat logs, <code>TOMCAT_HOME/logs</code>.</li>
-        <li>Post a message to the <a href="forum.php">Subsonic forum</a>. Please let us know what Subsonic version, Tomcat version and
-            operating system you're using. Also, please give a detailed description of the problem. This way, we'll be able to help you faster.</li>
-    </ul>
+            <p><b>Troubleshooting</b></p>
+            <p>
+                If you experience any problems, please make sure you follow the installation instructions above. Here's a list of suggestions of what to do if it still doesn't work:
+            </p>
+            <ul>
+                <li>Restart Tomcat.</li>
+                <li>Reinstall Subsonic.</li>
+                <li>Upgrade to the latest Tomcat version (at least if you're using Tomcat 5.0 or earlier).</li>
+                <li>Look for errors in the Subsonic log, <code>c:\subsonic\subsonic.log</code> or <code>/var/subsonic/subsonic.log</code>.</li>
+                <li>Look for errors in the Tomcat logs, <code>TOMCAT_HOME/logs</code>.</li>
+                <li>Post a message to the <a href="forum.php">Subsonic forum</a>. Please let us know what Subsonic version, Tomcat version and
+                    operating system you're using. Also, please give a detailed description of the problem. This way, we'll be able to help you faster.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 </div>
 
 <div id="side-col">
 
     <div class="sidebox">
         <h2>Releases</h2>
+        TODO
         <ul class="list">
             <li><a href="#3.5">Subsonic 3.5</a></li>
             <li><a href="#3.5.beta2">Subsonic 3.5.beta2</a></li>
         </ul>
     </div>
-
-    <!--<div style="margin-top:4em">-->
-        <!--<img class="img-center" src="inc/img/windows-installer.png" alt="Windows Installer"/>-->
-    <!--</div>-->
 
 </div>
 

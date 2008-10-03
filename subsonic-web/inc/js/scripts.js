@@ -1,31 +1,31 @@
 $(document).ready(function() {
-	
-	$.localScroll();
+
+    $.localScroll();
 
 	$("#home-reviews").newsticker().css({height:'6em'});
 	$("#awards-fader").newsticker().css({height:'110px'});
-	
+
 	$('#whygetgoldbox').hide();
 	$('a.whygetgold').click(function(){
 		$('#whygetgoldbox').slideToggle('slow');
 		return false;
 	});
-	
+
 	$('#existinggoldbox').hide();
 	$('a.existinggold').click(function(){
 		$('#existinggoldbox').slideToggle('slow');
 		return false;
 	});
-	
+
 	/* ---------- Banner Control/Animation ---------- */
 
 	// $('#bannernavigation').show();
-	
+
 	currentSlide = 0;
 	numberSlides = $('#bannercontent div.slide').length;
-	
+
 	numberSlides--; // making the numbers work!
-	
+
 	function slideTo(slideNumber) {
 		currentSlide = slideNumber;
 		if(currentSlide>numberSlides) {
@@ -47,14 +47,14 @@ $(document).ready(function() {
 		slidePosition = slideNumber*900;
 		$('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1000,complete:bannerLoop});
 	}
-	
+
 	slideTo(0);
-	
+
 	$('#banner-full').prepend('<div id="slideprogress"><div></div></div>');
 	$('#banner-mini').prepend('<div id="slideprogress"><div></div></div>');
 	$('#slideprogress').css({width:'100px',height:'2px',right:'4px',bottom:'4px',border:'1px solid #fff',position:'absolute'}).fadeTo(1,.3);
 	$('#slideprogress div').css({width:'0px',height:'2px',backgroundColor:'#ccc'});
-	
+
 	function bannerLoop() {
 		$('#slideprogress div').animate({width:'100%'},{duration:10000,easing:'linear',complete:bannerLoop2});
 	}
@@ -67,7 +67,7 @@ $(document).ready(function() {
 	$('#banner-next').click(function() {
 		slideTo(currentSlide+1);
 	});
-	
+
 	$('#banner-prev').click(function() {
 		slideTo(currentSlide-1);
 	});
@@ -84,7 +84,7 @@ $(document).ready(function() {
 		$(this).removeClass('hover');
 	});
 	*/
-	
+
 	/* ----------- Menu Actions ----------
 	$('#menu-information a,#menu-addons a').click(function() {
 		$('#nav a').removeClass('active');
@@ -104,5 +104,5 @@ $(document).ready(function() {
 	}, function() {
 		$('#language .list').slideUp(1);
 	});
-	
+
 });
