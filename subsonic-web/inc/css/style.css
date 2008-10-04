@@ -331,7 +331,7 @@ table.featuretable td.meta {
 }
 td.featurename {
 	text-align: left !important;
-    width: 70%;
+    width: 50%;
 }
 .important {
 	color: #911;

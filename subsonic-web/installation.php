@@ -8,7 +8,7 @@
 
 <body class="section-home page-home">
 
-<a name="top"/>
+<a name="top"></a>
 
 <div id="container">
 <?php include("menu.php");?>
@@ -16,25 +16,26 @@
 <div id="content">
 <div id="main-col">
 <h1 class="bottomspace">Installing Subsonic</h1>
-    <p>
-        Subsonic features several flexible installation options.  Select the one which suits you best:
-    </p>
+<p>
+    Subsonic features several flexible installation options.  Select the one which suits you best:
+</p>
 
-    <ul class="list">
-        <li><a href="#window">Windows installation</a></li>
-        <li><a href="#standalone">Stand-alone installation</a></li>
-        <li><a href="#war">WAR installation</a></li>
-    </ul>
+<ul class="list">
+    <li><a href="#windows">Windows installation</a></li>
+    <li><a href="#standalone">Stand-alone installation</a></li>
+    <li><a href="#war">WAR installation</a></li>
+</ul>
 
-    <p><b>Important!</b>
-        <a href="inc/img/change-password.png"><img src="inc/img/change-password-small.png" alt="Change password" class="img-right"/></a>
-        Immediately after installing Subsonic you should change the admin password to secure the server.
-        Point your browser to the Subsonic web page (see URL below), and log in with username <code>admin</code> and password
-        <code>admin</code>.  Go to <code>Settings &gt; Users</code> to change password and create new users.
-    </p>
+<a href="inc/img/change-password.png"><img src="inc/img/change-password-small.png" alt="Change password" class="img-right"/></a>
+<p class="bottomspace"><b>Important!</b>
+    Immediately after installing Subsonic you should change the admin password to secure the server.
+    Point your browser to the Subsonic web page (see URL below), and log in with username <code>admin</code> and password
+    <code>admin</code>.  Go to <code>Settings &gt; Users</code> to change password and create new users.
+</p>
 
 <div class="featureitem">
-    <a name="window"><div class="heading">Windows installation</div></a>
+    <a name="windows"></a>
+    <div class="heading">Windows installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
     <div class="content">
         <div class="wide-content">
             <p><b>Requirements: </b>Java 5 or later (<a href="http://www.java.com">Download</a>)</p>
@@ -57,7 +58,8 @@
 </div>
 
 <div class="featureitem">
-    <a name="standalone"><div class="heading">Stand-alone installation</div></a>
+    <a name="standalone"></a>
+    <div class="heading">Stand-alone installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
     <div class="content">
         <div class="wide-content">
             <p><b>Requirements: </b>Java 5 or later (<a href="http://www.java.com">Download</a>)</p>
@@ -76,7 +78,9 @@
 </div>
 
 <div class="featureitem">
-    <a name="war"><div class="heading">WAR installation</div></a>
+    <a name="war"></a>
+
+    <div class="heading">WAR installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
     <div class="content">
         <div class="wide-content">
             <p><b>Requirements: </b>Java 5 or later (<a href="http://www.java.com">Download</a>). A servlet container supporting Servlet 2.4 and JSP 2.0.</p>
@@ -131,14 +135,8 @@
 
 <div id="side-col">
 
-    <div class="sidebox">
-        <h2>Releases</h2>
-        TODO
-        <ul class="list">
-            <li><a href="#3.5">Subsonic 3.5</a></li>
-            <li><a href="#3.5.beta2">Subsonic 3.5.beta2</a></li>
-        </ul>
-    </div>
+    <?php include("donate.php"); ?>
+    <?php include("merchandise.php"); ?>
 
 </div>
 

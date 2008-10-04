@@ -524,6 +524,9 @@
             <li><a href="#0.1">Subsonic 0.1</a></li>
         </ul>
     </div>
+
+    <?php include("donate.php"); ?>
+    
 </div>
 
 <div class="clear">
