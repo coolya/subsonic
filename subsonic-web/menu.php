@@ -18,4 +18,4 @@
 </div>
 <hr/>
 
-<?php include("banner.php"); ?>
+<!--<?php include("banner.php"); ?>-->

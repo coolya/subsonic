@@ -1,26 +1,28 @@
 TODO IN WEB
 ------------
-Create version.html
+Add screen shot to index.php
 Add flag icons to translation div.  Rewrite text.
 Add graphics to "What is" div.
 Add google analytics.
-Add shadow to images
 Transcoding
+Translation
+Banner content:
+  - Listen to your music from anywhere.  (Screenshot)
+  - Convert lossless music on the fly (FLAC logo?)
+  - Download Subsonic now.
+  - Manage huge music collections.
+  - Stream to mobile phone.
+  - Podcast receiver. (RSS logo, NRK logo, BBC logo, ...)
 
 TODO IN 3.5
 ---------------
 Improve getting started.
 Rename to subsonic-3.5.beta2-war.zip
 
-TODO IN 3.5.beta2
------------
-Add French translation.
-Finish getting started document.  Add it to assemblies.
-Ensure proper order in start menu.
-Add transcoding pack. Integrate with Windows installer. Enable by default (if certain system property is set).
 
 TODO IN 3.6
 -----------
+Playlist is cleared in SSL mode.
 Fix broken SSL, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301
 Log error if podcast delete file doesn't succeed.
 Podcast duplicate files. nrk_verdt_aa_vite_2008-0820-1203_24459.mp3 + nrk_verdt_aa_vite_2008-0820-1203_244590.mp3
