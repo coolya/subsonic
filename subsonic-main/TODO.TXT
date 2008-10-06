@@ -1,10 +1,14 @@
 TODO IN WEB
 ------------
+Create compsite image in feature page.
+Use shadow script in Gimp.
 Add screen shot to index.php
 Add flag icons to translation div.  Rewrite text.
 Add graphics to "What is" div.
 Add google analytics.
+Features
 Translation
+Mobile player (link to Forum)
 Banner content:
   - Listen to your music from anywhere.  (Screenshot)
   - Convert lossless music on the fly (FLAC logo?)

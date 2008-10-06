@@ -4,7 +4,7 @@
         Love Subsonic? Support continued development and maintenance by giving a donation.
     </p>
     <p>
-        As a donor you will receive a license key which disables ads from the Subsonic web interface.
+        As a donor you will receive a license key which disables ads in the Subsonic web interface.
     </p>
     <p>
         The suggested donation amount is $20, but you can give any amount you like.

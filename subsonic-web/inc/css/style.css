@@ -365,7 +365,8 @@ td.transcoding {
 	border-bottom: 1px solid #CBCEDC;
 }
 .featureitem .content .description {
-	margin-right: 310px;
+	/*margin-right: 310px;*/
+	margin-right: 160px;
 	padding: 10px 0 10px 10px;
 }
 .featureitem .content .wide-description {
@@ -376,7 +377,7 @@ td.transcoding {
 }
 .featureitem .content .screenshot {
 	float: right;
-	padding: 10px 10px 10px 0;
+	padding: 10px 10px 10px 0px;
 }
 .featureitem .content .buttons {
 	float: right;
