@@ -1,6 +1,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Subsonic &raquo; Free Media Streamer</title>
+    <title>Subsonic &raquo; Free Music Streamer</title>
 
     <link rel="stylesheet" type="text/css" href="inc/css/style.css"/>
     <link rel="stylesheet" type="text/css" href="inc/css/banners.css"/>

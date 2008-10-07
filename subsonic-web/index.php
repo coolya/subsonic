@@ -45,6 +45,8 @@
                     your living room.
                 </p>
 
+                <a href="inc/img/screenshots/screen01.png"><img src="inc/img/screenshots/thumb01.png" alt="" class="img-right"/></a>
+
                 <p>
                     Subsonic is designed to handle very large music collections (many thousand albums). It uses a
                     combination of directory structure and tag parsing to organize the music. Although optimized for MP3 streaming, it
@@ -77,6 +79,7 @@
 
 <div id="side-col">
     <?php include("download-subsonic.php"); ?>
+    <?php include("ripserver.php"); ?>
 
     <div class="sidebox">
         <h2>About</h2>
@@ -95,7 +98,7 @@
             I'm looking for volunteers who'd like to translate Subsonic to new languages, and to improve existing translations. Interested? Please read <a href="translate.php">this</a>.
         </p>
     </div>
-    <div style="margin-top:4em">
+    <div style="margin-top:1.75em">
         <a href="http://sourceforge.net/projects/subsonic/"><img src="http://sourceforge.net/sflogo.php?group_id=126265&type=4" alt="SourceForge.net" class="img-center"/></a>
     </div>
 </div>
