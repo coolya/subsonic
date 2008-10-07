@@ -125,6 +125,9 @@ TODO: Start with summary of what Subsonic is: web-based media streamer.
     <div class="heading">User-friendly <a href="#top" class="backtotop" title="Back To Top"><img
             src="inc/img/top.gif" alt="Back To Top" height="16" width="16"/></a></div>
     <div class="content">
+        <div class="screenshot">
+            <a href="inc/img/features/amy.png"><img src="inc/img/features/amy-small.png" alt=""/></a>
+        </div>
         <div class="description">
             <ul class="list">
                 <li>Lean web interface optimized for constrained bandwidth environments and efficient browsing through large music collections.</li>
