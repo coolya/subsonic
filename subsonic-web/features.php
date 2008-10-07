@@ -27,16 +27,7 @@ TODO: Start with summary of what Subsonic is: web-based media streamer.
             src="inc/img/top.gif" alt="Back To Top" height="16" width="16"/></a></div>
     <div class="content">
         <div class="screenshot">
-            <img src="inc/img/features/winamp.png" alt=""/>
-            <img src="inc/img/features/wmp.png" alt=""/>
-            <img src="inc/img/features/itunes.png" alt=""/>
-            <p/>
-            <img src="inc/img/features/mp3.png" alt=""/>
-            <img src="inc/img/features/flac.png" alt=""/>
-            <p/>
-            <img src="inc/img/features/lame.png" alt=""/>
-            <p/>
-            <img src="inc/img/features/shoutcast.png" alt=""/>
+            <img src="inc/img/features/media-support.png" alt=""/>
         </div>
 
         <div class="description">
@@ -65,9 +56,21 @@ TODO: Start with summary of what Subsonic is: web-based media streamer.
         </div>
         <div class="description">
             <ul class="list">
-                <li>Full internationalization support. Currently available translations: English, Norwegian, Macedonian (by Stefan Ivanovski), Simplified Chinese (by Neil Gao),
-                    Spanish (by Jorge Bueno Magdalena), German (by Harald Weiss and J&ouml;rg Frommann), Dutch (by Ronald Knot), Russian (by Iaroslav Andrusiak),
-                    Italian (Michele Petrecca), French (by JohnDillinger).</li>
+                <li>Full internationalization support. Currently available translations:<br/><br/>
+
+                    <table style="padding-left:1.5em">
+                        <tr><td>o English </td><td>(by Sindre Mehus)</td></tr>
+                        <tr><td>o French </td><td>(by JohnDillinger)</td></tr>
+                        <tr><td>o Spanish </td><td>(by Jorge Bueno Magdalena)</td></tr>
+                        <tr><td>o German </td><td>(by Harald Weiss and J&ouml;rg Frommann)</td></tr>
+                        <tr><td>o Italian </td><td>(by Michele Petrecca)</td></tr>
+                        <tr><td>o Chinese </td><td>(by Neil Gao)</td></tr>
+                        <tr><td>o Russian </td><td>(by Iaroslav Andrusiak)</td></tr>
+                        <tr><td>o Dutch </td><td>(by Ronald Knot)</td></tr>
+                        <tr><td>o Norwegian </td><td>(by Sindre Mehus)</td></tr>
+                        <tr><td>o Macedonian </td><td>(by Stefan Ivanovski)</td></tr>
+                    </table>
+                </li>
                 <li>Theme support. Currently ships with eight themes.</li>
                 <li>Configurable user interface.</li>
             </ul>
@@ -81,12 +84,17 @@ TODO: Start with summary of what Subsonic is: web-based media streamer.
     <div class="heading">Flexible <a href="#top" class="backtotop" title="Back To Top"><img
             src="inc/img/top.gif" alt="Back To Top" height="16" width="16"/></a></div>
     <div class="content">
-        <ul class="list">
-            <li>WAP interface allows you to control Subsonic from any mobile phone or PDA.</li>
-            <li>Supports multiple simultaneous players. The playlist for any player can be managed from any location.</li>
-            <li>In addition to streaming, single files or entire directories may be downloaded from Subsonic.</li>
-            <li>Files can be uploaded to Subsonic. Zip-files can be automatically unpacked.</li>
-        </ul>
+        <div class="screenshot">
+            <a href="inc/img/features/wap.png"><img src="inc/img/features/wap-small.png" alt=""/></a>
+        </div>
+        <div class="description">
+            <ul class="list">
+                <li>WAP interface allows you to control Subsonic from any mobile phone or PDA.</li>
+                <li>Supports multiple simultaneous players. The playlist for any player can be managed from any location.</li>
+                <li>In addition to streaming, single files or entire directories may be downloaded from Subsonic.</li>
+                <li>Files can be uploaded to Subsonic. Zip-files can be automatically unpacked.</li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -117,13 +125,15 @@ TODO: Start with summary of what Subsonic is: web-based media streamer.
     <div class="heading">User-friendly <a href="#top" class="backtotop" title="Back To Top"><img
             src="inc/img/top.gif" alt="Back To Top" height="16" width="16"/></a></div>
     <div class="content">
-        <ul class="list">
-            <li>Lean web interface optimized for constrained bandwidth environments and efficient browsing through large music collections.</li>
-            <li>Free-text search functionality.</li>
-            <li>Displays cover art, including images embedded in ID3 tags.</li>
-            <li>You can assign ratings and comments to albums. View best liked and most played albums.</li>
-            <li>Common playlist features (add, remove, rearrange, repeat, shuffle, undo). Playlist can be managed by server or player.</li>
-        </ul>
+        <div class="description">
+            <ul class="list">
+                <li>Lean web interface optimized for constrained bandwidth environments and efficient browsing through large music collections.</li>
+                <li>Free-text search functionality.</li>
+                <li>Displays cover art, including images embedded in ID3 tags.</li>
+                <li>You can assign ratings and comments to albums. View best liked and most played albums.</li>
+                <li>Common playlist features (add, remove, rearrange, repeat, shuffle, undo). Playlist can be managed by server or player.</li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -133,12 +143,17 @@ TODO: Start with summary of what Subsonic is: web-based media streamer.
     <div class="heading">Secure <a href="#top" class="backtotop" title="Back To Top"><img
             src="inc/img/top.gif" alt="Back To Top" height="16" width="16"/></a></div>
     <div class="content">
-        <ul class="list">
-            <li>Users must log in using a username and password. Users can be assigned different privileges.</li>
-            <li>You can specify a upload/download bandwidth limit.</li>
-            <li>Supports HTTPS/SSL encryption.</li>
-            <li>Supports authentication in LDAP and Active Directory.</li>
-        </ul>
+        <div class="screenshot">
+            <a href="inc/img/features/logon.png"><img src="inc/img/features/logon-small.png" alt=""/></a>
+        </div>
+        <div class="description">
+            <ul class="list">
+                <li>Users must log in using a username and password. Users can be assigned different privileges.</li>
+                <li>You can specify a upload/download bandwidth limit.</li>
+                <li>Supports HTTPS/SSL encryption.</li>
+                <li>Supports authentication in LDAP and Active Directory.</li>
+            </ul>
+        </div>
     </div>
 </div>
 
