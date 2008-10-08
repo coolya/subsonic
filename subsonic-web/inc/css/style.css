@@ -130,13 +130,11 @@ ol {
 #wide-col {
 	padding: 15px 20px 15px 20px;
 }
-body.page-free #side-col,
-body.page-gold #side-col {
+body.page-features #side-col {
 	float: left;
 	margin-left: 20px;
 }
-body.page-free #main-col,
-body.page-gold #main-col {
+body.page-features #main-col {
 	float: right;
 }
 /* ---------- Nav ----------- */
@@ -184,12 +182,6 @@ body.page-gold #main-col {
 	color: #a9b3d6;
 }
 /* ---------- Menu Visibility ---------- */
-body #subnav {
-	display: none;
-}
-body #subnav ul {
-	display: none;
-}
 #nav li a.open {
 	background: url('../img/topnav-hover.gif') 0px -49px repeat-x !important;
 	color: #ffffff !important;
@@ -197,14 +189,6 @@ body #subnav ul {
 #nav li#menu-home a.open {
 	background: url('../img/home-rollover.gif') 1px -49px no-repeat !important;
 	color: #ffffff !important;
-}
-body.section-support #subnav,
-body.section-addons #subnav,
-body.section-information #subnav,
-body.section-support ul#sub-menu-support,
-body.section-addons ul#sub-menu-addons,
-body.section-information ul#sub-menu-information {
-	display: block;
 }
 /* ---------- Footer ----------- */
 #footer {
@@ -299,7 +283,7 @@ td.transcoding {
 	border-bottom: 1px solid #CBCEDC;
 }
 .featureitem .content .description {
-	margin-right: 160px;
+	margin-right: 190px;
 	padding: 10px 0 10px 10px;
 }
 .featureitem .content .wide-description {

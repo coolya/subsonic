@@ -6,7 +6,7 @@
     include("header.php");
 ?>
 
-<body class="section-information page-free">
+<body class="page-features">
 
 <a name="top"/>
 

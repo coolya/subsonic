@@ -6,7 +6,7 @@
     include("header.php");
 ?>
 
-<body class="section-home page-home">
+<body>
 
 <a name="top"></a>
 
