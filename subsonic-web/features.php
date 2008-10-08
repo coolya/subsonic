@@ -17,8 +17,27 @@
 <div id="main-col">
 <h1>Subsonic Features</h1>
 
-TODO: Start with summary of what Subsonic is: web-based media streamer.
+<div class="featureitem">
+    <a name="userfriendly"></a>
 
+    <div class="heading">User-friendly <a href="#top" class="backtotop" title="Back To Top"><img
+            src="inc/img/top.gif" alt="Back To Top" height="16" width="16"/></a></div>
+    <div class="content">
+        <div class="screenshot">
+            <a href="inc/img/features/amy.png"><img src="inc/img/features/amy-small.png" alt=""/></a>
+        </div>
+        <div class="description">
+            <ul class="list">
+                <li>Listen to your music from anywhere &ndash; all you need is a browser.</li>
+                <li>Lean web interface optimized for constrained bandwidth environments and efficient browsing through large music collections.</li>
+                <li>Free-text search functionality.</li>
+                <li>Displays cover art, including images embedded in ID3 tags.</li>
+                <li>You can assign ratings and comments to albums. View best liked and most played albums.</li>
+                <li>Common playlist features (add, remove, rearrange, repeat, shuffle, undo). Playlist can be managed by server or player.</li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 <div class="featureitem">
     <a name="mediasupport"></a>
@@ -33,7 +52,7 @@ TODO: Start with summary of what Subsonic is: web-based media streamer.
         <div class="description">
             <ul class="list">
                 <li>Supports MP3, OGG, AAC and any other audio or video format that can be streamed over HTTP.</li>
-                <li><a href="transcoding.php">Transcoding engine</a> allows for streaming of a variety of lossy and lossless formats by converting to MP3 on-the-fly.</li>
+                <li><a href="transcoding.php"><b>Transcoding engine</b></a> allows for streaming of a variety of lossy and lossless formats by converting to MP3 on-the-fly.</li>
                 <li>Works with any network-enabled media player, such as Winamp, iTunes, XMMS, MusicMatch and Windows Media Player. Also includes an embedded Flash-based player.</li>
                 <li>Tag parsing and editing of MP3, OGG, FLAC, WMA and APE files.</li>
                 <li>Playlists can be saved and restored. M3U, PLS and XSPF formats are supported. Saved playlists are available as Podcasts.</li>
@@ -120,27 +139,6 @@ TODO: Start with summary of what Subsonic is: web-based media streamer.
 </div>
 
 <div class="featureitem">
-    <a name="userfriendly"></a>
-
-    <div class="heading">User-friendly <a href="#top" class="backtotop" title="Back To Top"><img
-            src="inc/img/top.gif" alt="Back To Top" height="16" width="16"/></a></div>
-    <div class="content">
-        <div class="screenshot">
-            <a href="inc/img/features/amy.png"><img src="inc/img/features/amy-small.png" alt=""/></a>
-        </div>
-        <div class="description">
-            <ul class="list">
-                <li>Lean web interface optimized for constrained bandwidth environments and efficient browsing through large music collections.</li>
-                <li>Free-text search functionality.</li>
-                <li>Displays cover art, including images embedded in ID3 tags.</li>
-                <li>You can assign ratings and comments to albums. View best liked and most played albums.</li>
-                <li>Common playlist features (add, remove, rearrange, repeat, shuffle, undo). Playlist can be managed by server or player.</li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<div class="featureitem">
     <a name="secure"></a>
 
     <div class="heading">Secure <a href="#top" class="backtotop" title="Back To Top"><img
@@ -167,13 +165,13 @@ TODO: Start with summary of what Subsonic is: web-based media streamer.
             src="inc/img/top.gif" alt="Back To Top" height="16" width="16"/></a></div>
     <div class="content">
         <div class="screenshot">
-            <img src="inc/img/features/podcast.png" alt=""/>
+            <img src="inc/img/features/extras.png" alt=""/>
         </div>
         <div class="description">
             <ul class="list">
                 <li>Download Podcasts with the integrated Podcast receiver.</li>
                 <li>Support for Internet TV and radio stations.</li>
-                <li>Stream directly to your mobile phone, using the Subsonic Mobile Player.</li>
+                <li>Stream directly to your mobile phone, using the <a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1288"><b>Subsonic Mobile Player</b></a>.</li>
             </ul>
         </div>
     </div>
@@ -186,16 +184,19 @@ TODO: Start with summary of what Subsonic is: web-based media streamer.
     <div class="sidebox">
         <h2>Features</h2>
         <ul class="list">
+            <li><a href="#userfriendly">User-friendly</a></li>
             <li><a href="#mediasupport">Media support</a></li>
             <li><a href="#customize">Customize</a></li>
             <li><a href="#flexible">Flexible</a></li>
             <li><a href="#integrate">Integrate</a></li>
-            <li><a href="#userfriendly">User-friendly</a></li>
             <li><a href="#secure">Secure</a></li>
             <li><a href="#Extras">Extras</a></li>
         </ul>
     </div>
-    </div>
+
+    <?php include("download-subsonic.php"); ?>
+    <?php include("ripserver.php"); ?>
+</div>
 
 <div class="clear">
 </div>
