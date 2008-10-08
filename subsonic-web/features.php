@@ -78,16 +78,16 @@
                 <li>Full internationalization support. Currently available translations:<br/><br/>
 
                     <table style="padding-left:1.5em">
-                        <tr><td>o English </td><td>(by Sindre Mehus)</td></tr>
-                        <tr><td>o French </td><td>(by JohnDillinger)</td></tr>
-                        <tr><td>o Spanish </td><td>(by Jorge Bueno Magdalena)</td></tr>
-                        <tr><td>o German </td><td>(by Harald Weiss and J&ouml;rg Frommann)</td></tr>
-                        <tr><td>o Italian </td><td>(by Michele Petrecca)</td></tr>
-                        <tr><td>o Chinese </td><td>(by Neil Gao)</td></tr>
-                        <tr><td>o Russian </td><td>(by Iaroslav Andrusiak)</td></tr>
-                        <tr><td>o Dutch </td><td>(by Ronald Knot)</td></tr>
-                        <tr><td>o Norwegian </td><td>(by Sindre Mehus)</td></tr>
-                        <tr><td>o Macedonian </td><td>(by Stefan Ivanovski)</td></tr>
+                        <tr><td>&#149; English </td><td>(by Sindre Mehus)</td></tr>
+                        <tr><td>&#149; French </td><td>(by JohnDillinger)</td></tr>
+                        <tr><td>&#149; Spanish </td><td>(by Jorge Bueno Magdalena)</td></tr>
+                        <tr><td>&#149; German </td><td>(by Harald Weiss and J&ouml;rg Frommann)</td></tr>
+                        <tr><td>&#149; Italian </td><td>(by Michele Petrecca)</td></tr>
+                        <tr><td>&#149; Chinese </td><td>(by Neil Gao)</td></tr>
+                        <tr><td>&#149; Russian </td><td>(by Iaroslav Andrusiak)</td></tr>
+                        <tr><td>&#149; Dutch </td><td>(by Ronald Knot)</td></tr>
+                        <tr><td>&#149; Norwegian </td><td>(by Sindre Mehus)</td></tr>
+                        <tr><td>&#149; Macedonian </td><td>(by Stefan Ivanovski)</td></tr>
                     </table>
                 </li>
                 <li>Theme support. Currently ships with eight themes.</li>
@@ -104,7 +104,7 @@
             src="inc/img/top.gif" alt="Back To Top" height="16" width="16"/></a></div>
     <div class="content">
         <div class="screenshot">
-            <a href="inc/img/features/wap.png"><img src="inc/img/features/wap-small.png" alt=""/></a>
+            <a href="inc/img/features/wap.png"><img src="inc/img/features/wap-small.png" alt="" style="padding-right:30px"/></a>
         </div>
         <div class="description">
             <ul class="list">
@@ -124,9 +124,9 @@
             src="inc/img/top.gif" alt="Back To Top" height="16" width="16"/></a></div>
     <div class="content">
         <div class="screenshot">
-            <img src="inc/img/features/last-fm.png" alt=""  style="padding-bottom:20px"/>
+            <img src="inc/img/features/last-fm.png" alt=""  style="padding-bottom:20px;padding-right:20px"/>
             <p/>
-            <img src="inc/img/features/wikipedia.png" alt=""/>
+            <img src="inc/img/features/wikipedia.png" alt="" style="padding-right:20px"/>
         </div>
         <div class="description">
             <ul class="list">

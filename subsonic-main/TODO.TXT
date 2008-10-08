@@ -1,20 +1,12 @@
 TODO IN WEB
 ------------
+Screen shots
 Add flag icons to translation div.  Rewrite text.
-Add google analytics.
 Google ads
-Features
-Translation
-Add ad for Ripserver.
-Banner content:
-  - Listen to your music from anywhere.  (Screenshot)
-  - Convert lossless music on the fly (FLAC logo?)
-  - Download Subsonic now.
-  - Manage huge music collections.
-  - Stream to mobile phone.
-  - Podcast receiver. (RSS logo, NRK logo, BBC logo, ...)
-Clean up css and javascripts
+Rewrite features
 Refactor included php's.
+Update logo in forum.
+Update logo in shop.
 
 TODO IN 3.5
 ---------------
@@ -246,7 +238,7 @@ cd subsonic-site
 mvn site:site
 ####mvn site:deploy
 Upload files to SourceForge (in separate shell).
-  rsync -avP -e ssh subsonic-site/target/site/*  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
+  rsync -avP -e ssh --exclude .svn subsonic-site/target/site/*  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
 
 svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-2.7.beta1 -m "Tagging 2.7.beta1."
 Register at freshmeat.

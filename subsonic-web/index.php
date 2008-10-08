@@ -19,16 +19,15 @@
 
     <div class="floatcontainer margin10-t margin10-b">
         <ul class="stars column-left">
-            <li>Organize music and edit tags in your audio library with a powerful, intuitive interface.</li>
-            <li>Automatically lookup and tag Album Art and other metadata.</li>
-            <li>Manage 50,000+ files in your music collection without bogging down.</li>
-            <li>Manage all genres of audio: Rock, Classical, Audiobooks, Comedy, Podcasts, etc.</li>
+            <li>Listen to your music wherever you are. Share your collection with family and friends.</li>
+            <li>Browse and manage your music collection in the user-friendly web interface.</li>
+            <li>Stream music directly to your mobile phone, using the included Subsonic Mobile Player.</li>
+            <li>Convert and stream lossless music on the fly.</li>
         </ul>
         <ul class="stars column-right">
-            <li>Play MP3s and other audio formats, and never again worry about varying volume.</li>
-            <li>Record CDs and convert MP3s, M4A, OGG, FLAC and WMA files etc. into other formats.</li>
-            <li>Create playlists and let Auto-DJ &amp; Party Mode take care of your party.</li>
-            <li>Sync iPhones, iPods, &amp; MP3 players, converting &amp; leveling tracks on-the-fly.</li>
+            <li>Manage 100,000+ files in your music collection without bogging down.</li>
+            <li>Download and listen to Podcasts.</li>
+            <li>Get cover art, lyrics, reviews and other album info from Amazon, MetroLyrics, allmusic.com, Wikipedia and Google Music.</li>
             <li><a href="features.php">Plus much more...</a></li>
         </ul>
     </div>
@@ -95,10 +94,10 @@
     <div class="sidebox">
         <h2>Get involved!</h2>
         <p>
-            I'm looking for volunteers who'd like to translate Subsonic to new languages, and to improve existing translations. Interested? Please read <a href="translate.php">this</a>.
+            Help the project by translating Subsonic to new languages, or improving existing translations. Interested? Please read <a href="translate.php">this</a>.
         </p>
     </div>
-    <div style="margin-top:1.75em">
+    <div class="bottomspace">
         <a href="http://sourceforge.net/projects/subsonic/"><img src="http://sourceforge.net/sflogo.php?group_id=126265&type=4" alt="SourceForge.net" class="img-center"/></a>
     </div>
 </div>
