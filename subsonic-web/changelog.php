@@ -22,6 +22,7 @@
     <li><span class="bugid">New:</span> New Subsonic logo (thanks to <a href="http://www.conceptualintegration.com/">Concept211</a>).
     <li><span class="bugid">New:</span> Added Italian translation (thanks to Michele Petrecca).
     <li><span class="bugid">New:</span> Smooth scrolling in jump list.</li>
+    <li><span class="bugid">New:</span> Updated AAC decoder (faad.exe) in transcoder pack.</li>
     <li><span class="bugid">Bugfix:</span> Added start menu item "Settings" as work-around for missing tray icon in
         Vista.
     </li>

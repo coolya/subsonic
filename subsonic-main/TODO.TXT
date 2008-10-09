@@ -6,7 +6,8 @@ Google ads
 Rewrite features
 Refactor included php's.
 Update logo in forum.
-Update logo in shop.
+Virus: http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1306
+Update transcoding pack.
 
 TODO IN 3.5
 ---------------
@@ -249,7 +250,7 @@ Take backup of forum.
 HOW TO RELEASE TRANSCODING PACK
 ===============================
 Create transcode_windows.zip
-scp transcode_windows.zip sindre_mehus@shell.sourceforge.net:/home/groups/s/su/subsonic/htdocs
+scp transcode_windows.zip sindre_mehus,subsonic@web.sourceforge.net:/home/groups/s/su/subsonic/htdocs
 (doesn't work inside XEmacs)
 
 XMLTV

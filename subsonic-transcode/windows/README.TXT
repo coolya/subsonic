@@ -27,7 +27,7 @@ http://flac.sourceforge.net
 
 faad
 AAC/MP4 decoder
-Build Jul 9 2004
+Build Apr 29 2008
 http://www.rarewares.org/aac.html
 
 lame
