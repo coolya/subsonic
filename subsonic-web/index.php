@@ -20,14 +20,14 @@
     <div class="floatcontainer margin10-t margin10-b">
         <ul class="stars column-left">
             <li>Listen to your music wherever you are. Share your collection with family and friends.</li>
-            <li>Browse and manage your music collection in the user-friendly web interface.</li>
-            <li>Stream music directly to your mobile phone, using the included Subsonic Mobile Player.</li>
+            <li>Browse and manage your music collection with the user-friendly web interface.</li>
+            <li>Stream music to your mobile phone, using the included <a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1288">Subsonic Mobile Player</a>.</li>
             <li>Convert and stream lossless music on the fly.</li>
         </ul>
         <ul class="stars column-right">
-            <li>Manage 100,000+ files in your music collection without bogging down.</li>
+            <li>Manage 100,000+ files in your music collection without hazzle.</li>
             <li>Download and listen to Podcasts.</li>
-            <li>Get cover art, lyrics, reviews and other album info from Amazon, MetroLyrics, allmusic.com, Wikipedia and Google Music.</li>
+            <li>Get cover art, lyrics, reviews and other album info from Amazon, Discogs, MetroLyrics, allmusic, Wikipedia and Google Music.</li>
             <li><a href="features.php">Plus much more...</a></li>
         </ul>
     </div>
@@ -38,8 +38,8 @@
             <div class="wide-content">
 
                 <p>
-                    Subsonic is a free, web-based media streamer, providing access to your entire music collection wherever
-                    you are. Use it to share your music with friends, or to listen to your own music while at work. You can
+                    Subsonic is a free, web-based media streamer, providing ubiquitous access to your music.
+                    Use it to share your music with friends, or to listen to your own music while at work. You can
                     stream to multiple players simultaneously, for instance to one player in your kitchen and another in
                     your living room.
                 </p>
@@ -47,11 +47,11 @@
                 <a href="inc/img/screenshots/screen01.png"><img src="inc/img/screenshots/thumb01.png" alt="" class="img-right"/></a>
 
                 <p>
-                    Subsonic is designed to handle very large music collections (many thousand albums). It uses a
-                    combination of directory structure and tag parsing to organize the music. Although optimized for MP3 streaming, it
-                    works for any audio or video format that can stream over HTTP (for instance AAC and OGG). By using transcoder
-                    plug-ins, Subsonic supports on-the-fly conversion and streaming of virtually any audio format, including WMA, FLAC, APE,
-                    Musepack, WavPack, Shorten and OptimFROG.
+                    Subsonic is designed to handle very large music collections (hundreds of gigabytes).
+                    Although optimized for MP3 streaming, it works for any audio or video format that can stream over HTTP,
+                    for instance AAC and OGG. By using <a href="transcoding.php">transcoder plug-ins</a>, Subsonic supports
+                    on-the-fly conversion and streaming of virtually any audio format, including WMA, FLAC, APE, Musepack,
+                    WavPack, Shorten and OptimFROG.
                 </p>
 
                 <p>
@@ -64,6 +64,10 @@
                     intuitive web interface, as well as search and index facilities, are optimized for efficient browsing through large
                     media libraries.  Subsonic also comes with an integrated Podcast receiver, with many of the same features
                     as you find in iTunes.
+                </p>
+
+                <p>
+                    Based on Java technology, Subsonic runs on most platforms, including Windows, Mac, Linux and Unix variants.
                 </p>
 
                 <p>
@@ -85,18 +89,13 @@
         <p>
             <img src="inc/img/sindre.jpeg" alt="Sindre Mehus" hspace="10" vspace="10" style="float:right"/>
             Subsonic is developed by <a href="mailto:sindre@activeobjects.no">Sindre Mehus</a>.
-            I live in Oslo, Norway and work as a Java software contractor.
+            I live in Oslo, Norway and work as a Java software consultant.
         </p>
         <p>
             If you have any questions, comments or suggestions for improvements, please visit the <a href="forum.php">Subsonic Forum</a>.
         </p>
     </div>
-    <div class="sidebox">
-        <h2>Get involved!</h2>
-        <p>
-            Help the project by translating Subsonic to new languages, or improving existing translations. Interested? Please read <a href="translate.php">this</a>.
-        </p>
-    </div>
+    <?php include("translate-subsonic.php"); ?>
     <div class="bottomspace">
         <a href="http://sourceforge.net/projects/subsonic/"><img src="http://sourceforge.net/sflogo.php?group_id=126265&type=4" alt="SourceForge.net" class="img-center"/></a>
     </div>

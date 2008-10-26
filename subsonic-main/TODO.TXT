@@ -1,33 +1,55 @@
 TODO IN WEB
 ------------
+Add Google search
 Screen shots
 Add flag icons to translation div.  Rewrite text.
-Google ads
-Rewrite features
-Refactor included php's.
+Ads
+Refactor included php's.  Create template.php?
 Update logo in forum.
-Virus: http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1306
-Update transcoding pack.
+How to remove old stuff using rsync.
 
 TODO IN 3.5
 ---------------
 Improve getting started.
 Rename to subsonic-3.5.beta2-war.zip
+Change license to non-commercial (like http://www.jeroenwijering.com/?item=JW_FLV_Media_Player)
 
+
+GUEST USER / DEMO MODE
+----------------------
+New authorization role "User is allowed to change settings and passwords".
+Should not be able to change player settings, nor select other players in combobox.
+Must gather free music collection + podcasts + internet radio
+Write forum tutorial of how to set it up, including auto-login.
+Get broadband subscription
+Get Ripserver unit
+Get funding from Ripfactory
 
 TODO IN 3.6
 -----------
-Playlist is cleared in SSL mode.
+Backlink to Ripserver home page, when using the Ripserver theme.
+Create IndexController. Let index.jsp forward to index.view.
+Permalink support?
+After logon, go to originally requested page.
+Simplify URL rewriting. Always use relative links if that works.
+Vista icon problem
 Fix broken SSL, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301
+Append selected tracks to previously saved playlist (bring up dialog for selecting).
 Log error if podcast delete file doesn't succeed.
 Podcast duplicate files. nrk_verdt_aa_vite_2008-0820-1203_24459.mp3 + nrk_verdt_aa_vite_2008-0820-1203_244590.mp3
+Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305
+Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
+User/music folder authorization.
+Show percent complete for translations.  In web page at least.
 Improve install instructions.
 Require Java 6 in exe4j.
+Make Now Playing show for some minimum amount of time.
+Random play on artist level. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1304
 Create subsonic.bat
 Rename "Media Streamer" to "Music Streamer"
 New screen shots.
 Look at maven release plugin.
-Sort albums by year. (And show year). http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
+Sort albums by year. (And show year). getCoverArt() should be made non-recursive. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
 Include getting started (html) in installer.  And add it to start menu. Also create link to subsonic home page in Start menu.
 Replace Flash player.
 New logo.
@@ -74,7 +96,6 @@ Per-song rating.
 Use filter for subsonic version in site xml's.
 Add download/upload speedometer.
 Implement LastModified in main.jsp (Must test on FF).  Must add timestamp on music_file_info. Problem with cover art scheme.
-Double-write genres? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
 Party mode: Go into random mode if the playlist is finished.
 Retag track number in podcasts. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2003
 Make background image repeat in x-direction?
@@ -109,7 +130,6 @@ Better IE support in playlist checkbox stuff. Instead of disabling (which isn't 
 Test playlist checkbox stuff, in particular download auth.
 Move "logout" under search search field.
 Reformat all java code.
-Append selected tracks to previously saved playlist (bring up dialog for selecting).
 Save playlists in database?  Access rights.
 Check out non-Latin ID3 problem (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=527)
 Track titles that begin with numbers (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=170) (For instance "13 humler")
