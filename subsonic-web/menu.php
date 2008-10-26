@@ -3,6 +3,15 @@
 <div class="hide">
 </div>
 
+<div id="search">
+    <table><tr>
+        <form method="post" action="search.php" name="searchForm">
+            <td><input type="text" name="query" id="query" size="18" value="Search" onclick="document.searchForm.query.select();"/></td>
+            <td><a href="javascript:document.searchForm.submit()"><img src="inc/img/search.png" alt="Search" title="Search"/></a></td>
+        </form>
+    </tr></table>
+</div>
+
 <hr/>
 <div id="nav">
     <ul>
@@ -17,5 +26,3 @@
     </ul>
 </div>
 <hr/>
-
-<!--<?php include("banner.php"); ?>-->

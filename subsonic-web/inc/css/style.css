@@ -307,6 +307,14 @@ td.transcoding {
 .margin20-b { margin-bottom: 20px; }
 .margin20-l { margin-left: 20px; }
 
+/* ---------- Search form ---------- */
+#search {
+	position: absolute;
+	top: 65px;
+	right: 20px;
+    /*color: white;*/
+}
+
 /* ---------- Content ---------- */
 .bugid, code, pre, td.transcoding {
 	font: 12px "Bitstream Vera Sans Mono", 'Courier New', Courier, Fixed, monospace;
