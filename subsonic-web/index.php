@@ -82,7 +82,7 @@
 
 <div id="side-col">
     <?php include("download-subsonic.php"); ?>
-    <?php include("ripserver.php"); ?>
+    <!--<?php include("ripserver.php"); ?>-->
     <?php include("about.php"); ?>
     <?php include("translate-subsonic.php"); ?>
     <div class="bottomspace">

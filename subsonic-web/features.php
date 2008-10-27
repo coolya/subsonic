@@ -197,7 +197,7 @@
     </div>
 
     <?php include("download-subsonic.php"); ?>
-    <?php include("ripserver.php"); ?>
+    <!--<?php include("ripserver.php"); ?>-->
     <?php include("translate-subsonic.php"); ?>
 </div>
 

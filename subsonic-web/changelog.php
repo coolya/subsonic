@@ -17,19 +17,15 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
-<a name="3.5"><h2 class="div">Subsonic 3.5 - Sep XX, 2008</h2></a>
-<ul>
-    <li><span class="bugid">New:</span> New Subsonic logo (thanks to <a href="http://www.conceptualintegration.com/">Concept211</a>).
-    <li><span class="bugid">New:</span> Added Italian translation (thanks to Michele Petrecca).
-    <li><span class="bugid">New:</span> Smooth scrolling in jump list.</li>
-    <li><span class="bugid">New:</span> Updated AAC decoder (faad.exe) in transcoder pack.</li>
-    <li><span class="bugid">Bugfix:</span> Added start menu item "Settings" as work-around for missing tray icon in
-        Vista.
-    </li>
-    <li><span class="bugid">Bugfix:</span> Improved Windows installer. (<a
-            href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1291">More</a>)
-    </li>
-</ul>
+<!--<a name="3.5"><h2 class="div">Subsonic 3.5 - Sep XX, 2008</h2></a>-->
+<!--<ul>-->
+    <!--<li><span class="bugid">New:</span> New Subsonic logo (thanks to <a href="http://www.conceptualintegration.com/">Concept211</a>).-->
+    <!--<li><span class="bugid">New:</span> Added Italian translation (thanks to Michele Petrecca).-->
+    <!--<li><span class="bugid">New:</span> Smooth scrolling in jump list.</li>-->
+    <!--<li><span class="bugid">New:</span> Updated AAC decoder (faad.exe) in transcoder pack.</li>-->
+    <!--<li><span class="bugid">Bugfix:</span> Added start menu item "Settings" as work-around for missing tray icon in Vista. </li>-->
+    <!--<li><span class="bugid">Bugfix:</span> Improved Windows installer. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1291">More</a>)</li>-->
+<!--</ul>-->
 
 <a name="3.5.beta2"><h2 class="div">Subsonic 3.5.beta2 - Sep 23, 2008</h2></a>
 <ul>
@@ -495,7 +491,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
-            <li><a href="#3.5">Subsonic 3.5</a></li>
+            <!--<li><a href="#3.5">Subsonic 3.5</a></li>-->
             <li><a href="#3.5.beta2">Subsonic 3.5.beta2</a></li>
             <li><a href="#3.5.beta1">Subsonic 3.5.beta1</a></li>
             <li><a href="#3.4">Subsonic 3.4</a></li>

@@ -37,7 +37,8 @@
                     <div class="wide-content">
 
                         <p>
-                            A transcoding pack for Windows with a selection of codecs can be <a href="transcode_windows.zip"><b>downloaded here</b></a>.
+                            A transcoding pack for Windows with a selection of codecs can be
+                            <a href="http://prdownloads.sourceforge.net/subsonic/transcode_windows.zip"><b>downloaded here</b></a>.
                             It supports the following media types:
                         </p>
 

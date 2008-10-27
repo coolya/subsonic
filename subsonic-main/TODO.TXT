@@ -1,12 +1,11 @@
 TODO IN WEB
 ------------
-Add Google search
+Add Ripserver ad.
 Screen shots
 Add flag icons to translation div.  Rewrite text.
 Ads
 Refactor included php's.  Create template.php?
 Update logo in forum.
-How to remove old stuff using rsync.
 
 TODO IN 3.5
 ---------------
@@ -259,7 +258,7 @@ cd subsonic-site
 mvn site:site
 ####mvn site:deploy
 Upload files to SourceForge (in separate shell).
-  rsync -avP -e ssh --exclude .svn subsonic-site/target/site/*  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
+  rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
 
 svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-2.7.beta1 -m "Tagging 2.7.beta1."
 Register at freshmeat.
@@ -269,9 +268,7 @@ Take backup of forum.
 
 HOW TO RELEASE TRANSCODING PACK
 ===============================
-Create transcode_windows.zip
-scp transcode_windows.zip sindre_mehus,subsonic@web.sourceforge.net:/home/groups/s/su/subsonic/htdocs
-(doesn't work inside XEmacs)
+Create transcode_windows.zip and release it in SourceForge FRS.
 
 XMLTV
 =====
