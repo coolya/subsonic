@@ -62,7 +62,6 @@
         <module>subsonic-main</module>
         <module>subsonic-jme-player</module>
         <module>subsonic-amazon</module>
-        <module>subsonic-site</module>
         <module>subsonic-booter</module>
         <module>subsonic-installer</module>
         <module>subsonic-assembly</module>

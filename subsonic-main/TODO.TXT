@@ -1,5 +1,6 @@
 TODO IN WEB
 ------------
+
 Add Ripserver ad.
 Screen shots
 Add flag icons to translation div.  Rewrite text.
@@ -9,8 +10,11 @@ Update logo in forum.
 
 TODO IN 3.5
 ---------------
-Improve getting started.
+Remove source tarball
+Create Maven profile to do full build (subsonic-booter, subsonic-installer, subsonic-jme-player)
 Rename to subsonic-3.5.beta2-war.zip
+Opera playlist cache problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1334
+Improve getting started.
 Change license to non-commercial (like http://www.jeroenwijering.com/?item=JW_FLV_Media_Player)
 
 
