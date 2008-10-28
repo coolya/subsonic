@@ -1,10 +1,8 @@
 TODO IN WEB
 ------------
-Don't let submarine be on top of screenshots.
 Add Ripserver ad.
 Ads
 Refactor included php's.  Create template.php?
-Update logo in forum.
 
 TODO IN 3.5
 ---------------
