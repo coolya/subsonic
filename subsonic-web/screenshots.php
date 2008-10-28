@@ -16,24 +16,17 @@
     <div id="content">
         <div id="main-col">
             <h1>Subsonic Screenshots</h1>
-            <p>
-                Coming soon. Really!
-            </p>
-            <!--<a href="inc/img/screenshots/01.png"><img src="inc/img/screenshots/t01.png" alt="" style="padding:3px"/></a>-->
-            <!--<a href="inc/img/screenshots/02.png"><img src="inc/img/screenshots/t02.png" alt="" style="padding:3px"/></a>-->
-            <!--<a href="inc/img/screenshots/03.png"><img src="inc/img/screenshots/t03.png" alt="" style="padding:3px"/></a>-->
-            <!--<a href="inc/img/screenshots/04.png"><img src="inc/img/screenshots/t04.png" alt="" style="padding:3px"/></a>-->
-            <!--<a href="inc/img/screenshots/05.png"><img src="inc/img/screenshots/t05.png" alt="" style="padding:3px"/></a>-->
-            <!--<a href="inc/img/screenshots/06.png"><img src="inc/img/screenshots/t06.png" alt="" style="padding:3px"/></a>-->
-            <!--<a href="inc/img/screenshots/07.png"><img src="inc/img/screenshots/t07.png" alt="" style="padding:3px"/></a>-->
-            <!--<a href="inc/img/screenshots/08.png"><img src="inc/img/screenshots/t08.png" alt="" style="padding:3px"/></a>-->
-            <!--<a href="inc/img/screenshots/09.png"><img src="inc/img/screenshots/t09.png" alt="" style="padding:3px"/></a>-->
-            <!--<a href="inc/img/screenshots/10.png"><img src="inc/img/screenshots/t10.png" alt="" style="padding:3px"/></a>-->
-            <!--<a href="inc/img/screenshots/11.png"><img src="inc/img/screenshots/t11.png" alt="" style="padding:3px"/></a>-->
-            <!--<a href="inc/img/screenshots/12.png"><img src="inc/img/screenshots/t12.png" alt="" style="padding:3px"/></a>-->
-            <!--<a href="inc/img/screenshots/13.png"><img src="inc/img/screenshots/t13.png" alt="" style="padding:3px"/></a>-->
-            <!--<a href="inc/img/screenshots/14.png"><img src="inc/img/screenshots/t14.png" alt="" style="padding:3px"/></a>-->
-            <!--<a href="inc/img/screenshots/15.png"><img src="inc/img/screenshots/t15.png" alt="" style="padding:3px"/></a>-->
+            <a href="inc/img/screenshots/screen02.png"><img src="inc/img/screenshots/thumb02.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen01.png"><img src="inc/img/screenshots/thumb01.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen05.png"><img src="inc/img/screenshots/thumb05.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen04.png"><img src="inc/img/screenshots/thumb04.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen06.png"><img src="inc/img/screenshots/thumb06.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen03.png"><img src="inc/img/screenshots/thumb03.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen07.png"><img src="inc/img/screenshots/thumb07.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen08.png"><img src="inc/img/screenshots/thumb08.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen09.png"><img src="inc/img/screenshots/thumb09.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen10.png"><img src="inc/img/screenshots/thumb10.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen11.png"><img src="inc/img/screenshots/thumb11.png" alt="" style="padding:3px"/></a>
         </div>
 
         <div id="side-col">

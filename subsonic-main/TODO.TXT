@@ -1,8 +1,7 @@
 TODO IN WEB
 ------------
+Don't let submarine be on top of screenshots.
 Add Ripserver ad.
-Screen shots
-Add flag icons to translation div.  Rewrite text.
 Ads
 Refactor included php's.  Create template.php?
 Update logo in forum.
@@ -27,6 +26,7 @@ Get funding from Ripfactory
 
 TODO IN 3.6
 -----------
+Create tutorial of how to build from source.
 Backlink to Ripserver home page, when using the Ripserver theme.
 Create IndexController. Let index.jsp forward to index.view.
 Permalink support?

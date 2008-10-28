@@ -77,7 +77,7 @@
             <div class="sidebox">
                 <h2>Archive</h2>
                 <p>
-                    Older versions, as well as source releases, can be downloaded from
+                    Older versions, as well as source code, can be downloaded from
                     <a href="http://sourceforge.net/projects/subsonic/">SourceForge</a>.
                 </p>
             </div>
