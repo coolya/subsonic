@@ -1,7 +1,8 @@
 TODO IN WEB
 ------------
 Add Ripserver ad.
-Ads
+Ripsonic rebranding.
+Ads, https://www.valueclickmedia.com/login.shtml
 Refactor included php's.  Create template.php?
 
 TODO IN 3.5
@@ -10,7 +11,6 @@ Create Maven profile to do full build (subsonic-booter, subsonic-installer, subs
 Opera playlist cache problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1334
 Improve getting started.
 Change license to non-commercial (like http://www.jeroenwijering.com/?item=JW_FLV_Media_Player)
-
 
 GUEST USER / DEMO MODE
 ----------------------
@@ -24,14 +24,15 @@ Get funding from Ripfactory
 
 TODO IN 3.6
 -----------
+Configurable subtitle in home page.  Or rather some message system where admin can use wiki style to post messages on front page.
 Create tutorial of how to build from source.
 Backlink to Ripserver home page, when using the Ripserver theme.
 Create IndexController. Let index.jsp forward to index.view.
 Permalink support?
 After logon, go to originally requested page.
+Fix broken SSL, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301
 Simplify URL rewriting. Always use relative links if that works.
 Vista icon problem
-Fix broken SSL, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301
 Append selected tracks to previously saved playlist (bring up dialog for selecting).
 Log error if podcast delete file doesn't succeed.
 Podcast duplicate files. nrk_verdt_aa_vite_2008-0820-1203_24459.mp3 + nrk_verdt_aa_vite_2008-0820-1203_244590.mp3
@@ -44,18 +45,13 @@ Require Java 6 in exe4j.
 Make Now Playing show for some minimum amount of time.
 Random play on artist level. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1304
 Create subsonic.bat
-Rename "Media Streamer" to "Music Streamer"
-New screen shots.
 Look at maven release plugin.
 Sort albums by year. (And show year). getCoverArt() should be made non-recursive. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
 Include getting started (html) in installer.  And add it to start menu. Also create link to subsonic home page in Start menu.
 Replace Flash player.
-New logo.
 last.fm problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1278
 Show total playlist duration.
 Remove player dynamic ip property?
-Change license?
-Make new homepage. (Check out http://www.mediamonkey.com)
 Improve help popup.
   o Create taglib?
   o http://home.comcast.net/~jscheuer1/side/mybox/
