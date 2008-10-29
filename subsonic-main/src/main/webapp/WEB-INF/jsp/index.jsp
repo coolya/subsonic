@@ -2,9 +2,10 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 
-<html><head><title>Subsonic</title>
+<html><head>
     <%@ include file="head.jsp" %>
     <link rel="alternate" type="application/rss+xml" title="Subsonic Podcast" href="podcast.view?suffix=.rss"/>
+    <title>${model.brand}</title>
 </head>
 
 <frameset rows="70,*,0" border="1" framespacing="1" frameborder="1">

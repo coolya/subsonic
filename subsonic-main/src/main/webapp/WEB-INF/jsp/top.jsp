@@ -55,7 +55,7 @@
             <c:if test="${model.newVersionAvailable}">
                 <td style="padding-left:15pt">
                     <p class="warning">
-                        <fmt:message key="top.upgrade"><fmt:param value="${model.latestVersion}"/></fmt:message>
+                        <fmt:message key="top.upgrade"><fmt:param value="${model.brand}"/><fmt:param value="${model.latestVersion}"/></fmt:message>
                     </p>
                 </td>
             </c:if>

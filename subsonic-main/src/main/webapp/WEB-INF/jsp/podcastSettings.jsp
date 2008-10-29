@@ -16,12 +16,12 @@
         <td><fmt:message key="podcastsettings.update"/></td>
         <td>
             <form:select path="interval" cssStyle="width:20em">
-                <fmt:message key="podcastsettings.interval.manually" var="manually"/>
+                <fmt:message key="podcastsettings.interval.manually" var="never"/>
                 <fmt:message key="podcastsettings.interval.hourly" var="hourly"/>
                 <fmt:message key="podcastsettings.interval.daily" var="daily"/>
                 <fmt:message key="podcastsettings.interval.weekly" var="weekly"/>
 
-                <form:option value="-1" label="${manually}"/>
+                <form:option value="-1" label="${never}"/>
                 <form:option value="1" label="${hourly}"/>
                 <form:option value="24" label="${daily}"/>
                 <form:option value="168" label="${weekly}"/>

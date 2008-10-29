@@ -26,6 +26,8 @@ public class SearchSettingsController extends SimpleFormController {
 
         command.setInterval("" + settingsService.getIndexCreationInterval());
         command.setHour("" + settingsService.getIndexCreationHour());
+        command.setBrand(settingsService.getBrand());
+
         return command;
     }
 

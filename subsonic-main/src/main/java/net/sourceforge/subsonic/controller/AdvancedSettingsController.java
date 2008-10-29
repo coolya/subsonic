@@ -29,6 +29,7 @@ public class AdvancedSettingsController extends SimpleFormController {
         command.setLdapSearchFilter(settingsService.getLdapSearchFilter());
         command.setLdapManagerDn(settingsService.getLdapManagerDn());
         command.setLdapAutoShadowing(settingsService.isLdapAutoShadowing());
+        command.setBrand(settingsService.getBrand());
 
         return command;
     }

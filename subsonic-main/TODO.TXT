@@ -1,12 +1,13 @@
 TODO IN WEB
 ------------
 Add Ripserver ad.
-Ripsonic rebranding.
 Ads, https://www.valueclickmedia.com/login.shtml
 Refactor included php's.  Create template.php?
 
 TODO IN 3.5
 ---------------
+Add OS to help pages.
+Avoid logging of DWR stuff. Add logging from Subsonic service.
 Create Maven profile to do full build (subsonic-booter, subsonic-installer, subsonic-jme-player)
 Opera playlist cache problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1334
 Improve getting started.

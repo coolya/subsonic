@@ -66,6 +66,6 @@
 </c:if>
 
 <div style="width:60%">
-    <fmt:message key="transcodingsettings.info"><fmt:param value="${model.transcodeDirectory}"/></fmt:message>
+    <fmt:message key="transcodingsettings.info"><fmt:param value="${model.transcodeDirectory}"/><fmt:param value="${model.brand}"/></fmt:message>
 </div>
 </body></html>

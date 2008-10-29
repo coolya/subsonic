@@ -37,7 +37,7 @@ public class MoreController extends ParameterizableViewController {
         map.put("genres", searchService.getGenres());
         map.put("musicFolders", settingsService.getAllMusicFolders());
         map.put("clientSidePlaylist", playerService.getPlayer(request, response).isClientSidePlaylist());
-
+        map.put("brand", settingsService.getBrand());
         return result;
     }
 

@@ -19,6 +19,7 @@ public class AdvancedSettingsCommand {
     private String ldapManagerDn;
     private String ldapManagerPassword;
     private boolean ldapAutoShadowing;
+    private String brand;
     private boolean isReloadNeeded;
 
     public String getDownsampleCommand() {
@@ -107,6 +108,14 @@ public class AdvancedSettingsCommand {
 
     public void setLdapAutoShadowing(boolean ldapAutoShadowing) {
         this.ldapAutoShadowing = ldapAutoShadowing;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getBrand() {
+        return brand;
     }
 
     public void setReloadNeeded(boolean reloadNeeded) {

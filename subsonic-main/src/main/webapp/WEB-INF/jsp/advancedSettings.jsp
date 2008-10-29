@@ -115,7 +115,7 @@
             <tr>
                 <td colspan="5">
                     <form:checkbox path="ldapAutoShadowing" id="ldapAutoShadowing" cssClass="checkbox"/>
-                    <label for="ldapAutoShadowing"><fmt:message key="advancedsettings.ldapautoshadowing"/></label>
+                    <label for="ldapAutoShadowing"><fmt:message key="advancedsettings.ldapautoshadowing"><fmt:param value="${command.brand}"/></fmt:message></label>
                     <a href="helpPopup.view?topic=ldapAutoShadowing" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
                 </td>
             </tr>

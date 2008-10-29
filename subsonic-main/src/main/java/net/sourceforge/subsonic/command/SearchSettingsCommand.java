@@ -11,6 +11,7 @@ public class SearchSettingsCommand {
     private String interval;
     private String hour;
     private boolean isCreatingIndex;
+    private String brand;
 
     public String getInterval() {
         return interval;
@@ -34,5 +35,13 @@ public class SearchSettingsCommand {
 
     public void setCreatingIndex(boolean creatingIndex) {
         isCreatingIndex = creatingIndex;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 }

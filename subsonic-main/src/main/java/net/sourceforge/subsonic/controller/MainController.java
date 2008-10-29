@@ -74,6 +74,7 @@ public class MainController extends ParameterizableViewController {
         map.put("updateNowPlaying", request.getParameter("updateNowPlaying") != null);
         map.put("showNowPlaying", userSettings.isShowNowPlayingEnabled());
         map.put("partyMode", userSettings.isPartyModeEnabled());
+        map.put("brand", settingsService.getBrand());
         if (!isLicensed()) {
             map.put("ad", adService.getAd());
         }

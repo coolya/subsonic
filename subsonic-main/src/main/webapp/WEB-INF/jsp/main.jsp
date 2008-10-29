@@ -374,7 +374,7 @@
                     <sub:url value="donate.view" var="donateUrl">
                         <sub:param name="path" value="${model.dir.path}"/>
                     </sub:url>
-                    <fmt:message key="main.donate"><fmt:param value="${donateUrl}"/></fmt:message>
+                    <fmt:message key="main.donate"><fmt:param value="${donateUrl}"/><fmt:param value="${model.brand}"/></fmt:message>
                 </div>
             </c:if>
             <div id="nowPlaying">

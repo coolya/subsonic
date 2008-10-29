@@ -2,6 +2,7 @@ package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.domain.Transcoding;
 import net.sourceforge.subsonic.service.TranscodingService;
+import net.sourceforge.subsonic.service.SettingsService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
@@ -19,6 +20,7 @@ import java.util.Map;
 public class TranscodingSettingsController extends ParameterizableViewController {
 
     private TranscodingService transcodingService;
+    private SettingsService settingsService;
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -32,6 +34,7 @@ public class TranscodingSettingsController extends ParameterizableViewController
         ModelAndView result = super.handleRequestInternal(request, response);
         map.put("transcodings", transcodingService.getAllTranscodings(true));
         map.put("transcodeDirectory", transcodingService.getTranscodeDirectory());
+        map.put("brand", settingsService.getBrand());
 
         result.addObject("model", map);
         return result;
@@ -118,5 +121,9 @@ public class TranscodingSettingsController extends ParameterizableViewController
 
     public void setTranscodingService(TranscodingService transcodingService) {
         this.transcodingService = transcodingService;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
     }
 }

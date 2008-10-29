@@ -109,7 +109,7 @@
 </c:if>
 
 <h2><img src="<spring:theme code="wapImage"/>" alt=""/>&nbsp;<fmt:message key="more.mobile.title"/></h2>
-<fmt:message key="more.mobile.text"/>
+<fmt:message key="more.mobile.text"><fmt:param value="${model.brand}"/></fmt:message>
 
 <h2><img src="<spring:theme code="podcastImage"/>" alt=""/>&nbsp;<fmt:message key="more.podcast.title"/></h2>
 <fmt:message key="more.podcast.text"/>

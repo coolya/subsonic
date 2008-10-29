@@ -14,7 +14,9 @@ import java.util.*;
  * @author Sindre Mehus
  */
 public class HelpController extends ParameterizableViewController {
+
     private VersionService versionService;
+    private SettingsService settingsService;
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -31,6 +33,7 @@ public class HelpController extends ParameterizableViewController {
         long totalMemory = Runtime.getRuntime().totalMemory();
         long freeMemory = Runtime.getRuntime().freeMemory();
 
+        map.put("brand", settingsService.getBrand());
         map.put("localVersion", versionService.getLocalVersion());
         map.put("buildDate", versionService.getLocalBuildDate());
         map.put("buildNumber", versionService.getLocalBuildNumber());
@@ -47,5 +50,9 @@ public class HelpController extends ParameterizableViewController {
 
     public void setVersionService(VersionService versionService) {
         this.versionService = versionService;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
     }
 }

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1" %>
-
+<%--@elvariable id="command" type="net.sourceforge.subsonic.command.DonateCommand"--%>
 <html>
 <head>
     <%@ include file="head.jsp" %>
@@ -77,7 +77,7 @@
 
 <div style="width:50em; max-width:50em">
 
-<fmt:message key="donate.textbefore"/>
+<fmt:message key="donate.textbefore"><fmt:param value="${command.brand}"/></fmt:message>
 
 <table cellpadding="10">
     <tr>
@@ -144,6 +144,7 @@
                 <fmt:message key="donate.licensed">
                     <fmt:param value="${command.emailAddress}"/>
                     <fmt:param value="${licenseDate}"/>
+                    <fmt:param value="${command.brand}"/>
                 </fmt:message>
         </p>
     </c:when>

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1" %>
+<%--@elvariable id="command" type="net.sourceforge.subsonic.command.SearchSettingsCommand"--%>
 
 <html><head>
     <%@ include file="head.jsp" %>
@@ -16,7 +17,7 @@
         <td><fmt:message key="searchsettings.auto"/></td>
         <td>
             <form:select path="interval">
-                <fmt:message key="searchsettings.interval.never" var="manually"/>
+                <fmt:message key="searchsettings.interval.never" var="never"/>
                 <fmt:message key="searchsettings.interval.one" var="one"/>
                 <form:option value="-1" label="${never}"/>
                 <form:option value="1" label="${one}"/>
@@ -52,7 +53,7 @@
 </form:form>
 
 <c:if test="${command.creatingIndex}">
-    <p><b><fmt:message key="searchsettings.text"/></b></p>
+    <p><b><fmt:message key="searchsettings.text"><fmt:param value="${command.brand}"/></fmt:message></b></p>
 </c:if>
 
 </body></html>

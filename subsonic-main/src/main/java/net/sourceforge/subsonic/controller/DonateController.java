@@ -29,6 +29,7 @@ public class DonateController extends SimpleFormController {
         command.setEmailAddress(email);
         command.setLicenseDate(settingsService.getLicenseDate());
         command.setLicenseValid(settingsService.isLicenseValid(email, license));
+        command.setBrand(settingsService.getBrand());
 
         return command;
     }

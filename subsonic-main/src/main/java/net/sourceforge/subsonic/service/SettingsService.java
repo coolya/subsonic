@@ -1,15 +1,15 @@
 package net.sourceforge.subsonic.service;
 
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.dao.AvatarDao;
 import net.sourceforge.subsonic.dao.InternetRadioDao;
 import net.sourceforge.subsonic.dao.MusicFolderDao;
 import net.sourceforge.subsonic.dao.UserDao;
-import net.sourceforge.subsonic.dao.AvatarDao;
+import net.sourceforge.subsonic.domain.Avatar;
 import net.sourceforge.subsonic.domain.InternetRadio;
 import net.sourceforge.subsonic.domain.MusicFolder;
 import net.sourceforge.subsonic.domain.Theme;
 import net.sourceforge.subsonic.domain.UserSettings;
-import net.sourceforge.subsonic.domain.Avatar;
 import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.util.Util;
 import org.apache.commons.io.IOUtils;
@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -28,8 +30,6 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
-import java.util.Date;
-import java.util.Arrays;
 
 /**
  * Provides persistent storage of application settings and preferences.
@@ -84,7 +84,7 @@ public class SettingsService {
     private static final String DEFAULT_MUSIC_MASK = ".mp3 .ogg .aac .flac .m4a .wav .wma";
     private static final String DEFAULT_COVER_ART_MASK = "folder.jpg cover.jpg .jpg .jpeg .gif .png";
     private static final int DEFAULT_COVER_ART_LIMIT = 30;
-    private static final String DEFAULT_WELCOME_MESSAGE = "Welcome to Subsonic!";
+    private static final String DEFAULT_WELCOME_MESSAGE = Util.isRipserver() ? "Welcome to Ripsonic!" : "Welcome to Subsonic!";
     private static final String DEFAULT_LOCALE_LANGUAGE = "en";
     private static final String DEFAULT_LOCALE_COUNTRY = "";
     private static final String DEFAULT_LOCALE_VARIANT = "";
@@ -338,12 +338,16 @@ public class SettingsService {
         setProperty(KEY_INDEX_CREATION_INTERVAL, String.valueOf(days));
     }
 
-    /** Returns the hour of day (0 - 23) when automatic index creation should run. */
+    /**
+     * Returns the hour of day (0 - 23) when automatic index creation should run.
+     */
     public int getIndexCreationHour() {
         return Integer.parseInt(properties.getProperty(KEY_INDEX_CREATION_HOUR, String.valueOf(DEFAULT_INDEX_CREATION_HOUR)));
     }
 
-    /** Sets the hour of day (0 - 23) when automatic index creation should run. */
+    /**
+     * Sets the hour of day (0 - 23) when automatic index creation should run.
+     */
     public void setIndexCreationHour(int hour) {
         setProperty(KEY_INDEX_CREATION_HOUR, String.valueOf(hour));
     }
@@ -364,62 +368,86 @@ public class SettingsService {
         setProperty(KEY_PODCAST_UPDATE_INTERVAL, String.valueOf(hours));
     }
 
-    /** Returns the number of Podcast episodes to keep (-1 to keep all). */
+    /**
+     * Returns the number of Podcast episodes to keep (-1 to keep all).
+     */
     public int getPodcastEpisodeRetentionCount() {
         return Integer.parseInt(properties.getProperty(KEY_PODCAST_EPISODE_RETENTION_COUNT, String.valueOf(DEFAULT_PODCAST_EPISODE_RETENTION_COUNT)));
     }
 
-    /** Sets the number of Podcast episodes to keep (-1 to keep all). */
+    /**
+     * Sets the number of Podcast episodes to keep (-1 to keep all).
+     */
     public void setPodcastEpisodeRetentionCount(int count) {
         setProperty(KEY_PODCAST_EPISODE_RETENTION_COUNT, String.valueOf(count));
     }
 
-    /** Returns the number of Podcast episodes to download (-1 to download all). */
+    /**
+     * Returns the number of Podcast episodes to download (-1 to download all).
+     */
     public int getPodcastEpisodeDownloadCount() {
         return Integer.parseInt(properties.getProperty(KEY_PODCAST_EPISODE_DOWNLOAD_COUNT, String.valueOf(DEFAULT_PODCAST_EPISODE_DOWNLOAD_COUNT)));
     }
 
-    /** Sets the number of Podcast episodes to download (-1 to download all). */
+    /**
+     * Sets the number of Podcast episodes to download (-1 to download all).
+     */
     public void setPodcastEpisodeDownloadCount(int count) {
         setProperty(KEY_PODCAST_EPISODE_DOWNLOAD_COUNT, String.valueOf(count));
     }
 
-    /** Returns the Podcast download folder. */
+    /**
+     * Returns the Podcast download folder.
+     */
     public String getPodcastFolder() {
         return properties.getProperty(KEY_PODCAST_FOLDER, DEFAULT_PODCAST_FOLDER);
     }
 
-    /** Sets the Podcast download folder. */
+    /**
+     * Sets the Podcast download folder.
+     */
     public void setPodcastFolder(String folder) {
         setProperty(KEY_PODCAST_FOLDER, folder);
     }
 
-    /** @return The download bitrate limit in Kbit/s. Zero if unlimited. */
+    /**
+     * @return The download bitrate limit in Kbit/s. Zero if unlimited.
+     */
     public long getDownloadBitrateLimit() {
         return Long.parseLong(properties.getProperty(KEY_DOWNLOAD_BITRATE_LIMIT, "" + DEFAULT_DOWNLOAD_BITRATE_LIMIT));
     }
 
-    /** @param limit The download bitrate limit in Kbit/s. Zero if unlimited. */
+    /**
+     * @param limit The download bitrate limit in Kbit/s. Zero if unlimited.
+     */
     public void setDownloadBitrateLimit(long limit) {
         setProperty(KEY_DOWNLOAD_BITRATE_LIMIT, "" + limit);
     }
 
-    /** @return The upload bitrate limit in Kbit/s. Zero if unlimited. */
+    /**
+     * @return The upload bitrate limit in Kbit/s. Zero if unlimited.
+     */
     public long getUploadBitrateLimit() {
         return Long.parseLong(properties.getProperty(KEY_UPLOAD_BITRATE_LIMIT, "" + DEFAULT_UPLOAD_BITRATE_LIMIT));
     }
 
-    /** @param limit The upload bitrate limit in Kbit/s. Zero if unlimited. */
+    /**
+     * @param limit The upload bitrate limit in Kbit/s. Zero if unlimited.
+     */
     public void setUploadBitrateLimit(long limit) {
         setProperty(KEY_UPLOAD_BITRATE_LIMIT, "" + limit);
     }
 
-    /** @return The non-SSL stream port. Zero if disabled. */
+    /**
+     * @return The non-SSL stream port. Zero if disabled.
+     */
     public int getStreamPort() {
         return Integer.parseInt(properties.getProperty(KEY_STREAM_PORT, "" + DEFAULT_STREAM_PORT));
     }
 
-    /** @param port The non-SSL stream port. Zero if disabled. */
+    /**
+     * @param port The non-SSL stream port. Zero if disabled.
+     */
     public void setStreamPort(int port) {
         setProperty(KEY_STREAM_PORT, "" + port);
     }
@@ -537,10 +565,10 @@ public class SettingsService {
     }
 
     /**
-    * Returns the locale (for language, date format etc).
-    *
-    * @return The locale.
-    */
+     * Returns the locale (for language, date format etc).
+     *
+     * @return The locale.
+     */
     public Locale getLocale() {
         String language = properties.getProperty(KEY_LOCALE_LANGUAGE, DEFAULT_LOCALE_LANGUAGE);
         String country = properties.getProperty(KEY_LOCALE_COUNTRY, DEFAULT_LOCALE_COUNTRY);
@@ -644,6 +672,14 @@ public class SettingsService {
         return new Locale(language, country, variant);
     }
 
+    /**
+     * Returns the "brand" name. Normally, this is just "Subsonic".
+     *
+     * @return The brand name.
+     */
+    public String getBrand() {
+        return Util.isRipserver() ? "Ripsonic" : "Subsonic";
+    }
 
     /**
      * Returns all music folders. Non-existing and disabled folders are not included.
@@ -873,7 +909,7 @@ public class SettingsService {
     /**
      * Sets the custom avatar for the given user.
      *
-     * @param avatar The avatar, or <code>null</code> to remove the avatar.
+     * @param avatar   The avatar, or <code>null</code> to remove the avatar.
      * @param username The username.
      */
     public void setCustomAvatar(Avatar avatar, String username) {

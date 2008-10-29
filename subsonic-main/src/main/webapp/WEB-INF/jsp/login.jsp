@@ -3,7 +3,7 @@
 <html><head>
     <%@ include file="head.jsp" %>
     <link href="<c:url value="/style/shadow.css"/>" rel="stylesheet">
-    <title>Subsonic</title>
+    <title>${model.brand}</title>
 
     <script type="text/javascript">
         if (window != window.top) {
@@ -50,7 +50,7 @@
         </table>
 
         <c:if test="${model.insecure}">
-            <p><b class="warning"><fmt:message key="login.insecure"/></b></p>
+            <p><b class="warning"><fmt:message key="login.insecure"><fmt:param value="${model.brand}"/></fmt:message></b></p>
         </c:if>
 
     </div>

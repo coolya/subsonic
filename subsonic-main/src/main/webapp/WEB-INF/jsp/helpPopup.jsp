@@ -2,7 +2,7 @@
 
 <html><head>
     <%@ include file="head.jsp" %>
-    <title><fmt:message key="helppopup.title"/></title>
+    <title><fmt:message key="helppopup.title"><fmt:param value="${model.brand}"/></fmt:message></title>
 </head>
 <body class="mainframe">
 
@@ -10,8 +10,8 @@
     window.focus();
 </script>
 
-<h2><fmt:message key="helppopup.${model.topic}.title"/></h2>
-<fmt:message key="helppopup.${model.topic}.text"/>
+<h2><fmt:message key="helppopup.${model.topic}.title"><fmt:param value="${model.brand}"/></fmt:message></h2>
+<fmt:message key="helppopup.${model.topic}.text"><fmt:param value="${model.brand}"/></fmt:message>
 
 <p style="text-align:center">
     <a href="javascript:self.close()">[<fmt:message key="common.close"/>]</a>

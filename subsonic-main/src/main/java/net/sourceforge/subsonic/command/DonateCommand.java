@@ -16,6 +16,7 @@ public class DonateCommand {
     private String license;
     private Date licenseDate;
     private boolean licenseValid;
+    private String brand;
 
     public String getPath() {
         return path;
@@ -55,5 +56,13 @@ public class DonateCommand {
 
     public void setLicenseValid(boolean licenseValid) {
         this.licenseValid = licenseValid;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 }

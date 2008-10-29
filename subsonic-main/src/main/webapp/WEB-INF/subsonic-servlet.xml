@@ -34,6 +34,7 @@
     <bean id="helpController" class="net.sourceforge.subsonic.controller.HelpController">
         <property name="viewName" value="help"/>
         <property name="versionService" ref="versionService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="moreController" class="net.sourceforge.subsonic.controller.MoreController">
         <property name="viewName" value="more"/>
@@ -51,6 +52,7 @@
     </bean>
     <bean id="helpPopupController" class="net.sourceforge.subsonic.controller.HelpPopupController">
         <property name="viewName" value="helpPopup"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="lyricsController" class="net.sourceforge.subsonic.controller.LyricsController">
         <property name="viewName" value="lyrics"/>
@@ -152,6 +154,7 @@
     <bean id="transcodingSettingsController" class="net.sourceforge.subsonic.controller.TranscodingSettingsController">
         <property name="viewName" value="transcodingSettings"/>
         <property name="transcodingService" ref="transcodingService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="internetRadioSettingsController"
           class="net.sourceforge.subsonic.controller.InternetRadioSettingsController">
@@ -290,6 +293,7 @@
     </bean>
     <bean id="multiController" class="net.sourceforge.subsonic.controller.MultiController">
         <property name="securityService" ref="securityService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="wapController" class="net.sourceforge.subsonic.controller.WapController">
         <property name="settingsService" ref="settingsService"/>
