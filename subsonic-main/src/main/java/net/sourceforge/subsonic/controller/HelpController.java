@@ -33,11 +33,15 @@ public class HelpController extends ParameterizableViewController {
         long totalMemory = Runtime.getRuntime().totalMemory();
         long freeMemory = Runtime.getRuntime().freeMemory();
 
+        String serverInfo = request.getSession().getServletContext().getServerInfo() +
+                            ", java " + System.getProperty("java.version") +
+                            ", " + System.getProperty("os.name");
+
         map.put("brand", settingsService.getBrand());
         map.put("localVersion", versionService.getLocalVersion());
         map.put("buildDate", versionService.getLocalBuildDate());
         map.put("buildNumber", versionService.getLocalBuildNumber());
-        map.put("serverInfo", request.getSession().getServletContext().getServerInfo() + ", java " + System.getProperty("java.version"));
+        map.put("serverInfo", serverInfo);
         map.put("usedMemory", totalMemory - freeMemory);
         map.put("totalMemory", totalMemory);
         map.put("logEntries", Logger.getLatestLogEntries());

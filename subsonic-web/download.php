@@ -20,56 +20,56 @@
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="featuretable bottomspace"
                    id="comparisontable">
                 <tr class="table-heading">
-                    <th class="featurename">Latest stable release &ndash; Subsonic 3.4</th>
+                    <th class="featurename">Latest stable release &ndash; Subsonic 3.5</th>
                     <th>Download</th>
                     <th>Instructions</th>
                 </tr>
                 <tr class="table-altrow">
                     <td class="featurename">Windows installer</td>
-                    <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.4-setup.exe"><img
+                    <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.5-setup.exe"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>
                     <td><a href="installation.php#windows"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
                 <tr>
                     <td class="featurename">Stand-alone version (all platforms)</td>
-                    <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.4-standalone.zip"><img
+                    <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.5-standalone.zip"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>
                     <td><a href="installation.php#standalone"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
                 <tr class="table-altrow">
                     <td class="featurename">WAR version (all platforms)</td>
-                    <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.4.zip"><img
+                    <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.5-war.zip"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>
                     <td><a href="installation.php#war"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
             </table>
 
-            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="featuretable bottomspace"
-                   id="comparisontable2">
-                <tr class="table-heading">
-                    <th class="featurename">Latest beta release &ndash; Subsonic 3.5.beta2</th>
-                    <th>Download</th>
-                    <th>Instructions</th>
-                </tr>
-                <tr class="table-altrow">
-                    <td class="featurename">Windows installer</td>
-                    <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.5.beta2-setup.exe"><img
-                            src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>
-                    <td><a href="installation.php#windows"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
-                </tr>
-                <tr>
-                    <td class="featurename">Stand-alone version (all platforms)</td>
-                    <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.5.beta2-standalone.zip"><img
-                            src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>
-                    <td><a href="installation.php#standalone"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
-                </tr>
-                <tr class="table-altrow">
-                    <td class="featurename">WAR version (all platforms)</td>
-                    <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.5.beta2.zip"><img
-                            src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>
-                    <td><a href="installation.php#war"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
-                </tr>
-            </table>
+            <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="featuretable bottomspace"-->
+                   <!--id="comparisontable2">-->
+                <!--<tr class="table-heading">-->
+                    <!--<th class="featurename">Latest beta release &ndash; Subsonic 3.5.beta2</th>-->
+                    <!--<th>Download</th>-->
+                    <!--<th>Instructions</th>-->
+                <!--</tr>-->
+                <!--<tr class="table-altrow">-->
+                    <!--<td class="featurename">Windows installer</td>-->
+                    <!--<td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.5.beta2-setup.exe"><img-->
+                            <!--src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>-->
+                    <!--<td><a href="installation.php#windows"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td class="featurename">Stand-alone version (all platforms)</td>-->
+                    <!--<td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.5.beta2-standalone.zip"><img-->
+                            <!--src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>-->
+                    <!--<td><a href="installation.php#standalone"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>-->
+                <!--</tr>-->
+                <!--<tr class="table-altrow">-->
+                    <!--<td class="featurename">WAR version (all platforms)</td>-->
+                    <!--<td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.5.beta2-war.zip"><img-->
+                            <!--src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>-->
+                    <!--<td><a href="installation.php#war"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>-->
+                <!--</tr>-->
+            <!--</table>-->
 
         </div>
 

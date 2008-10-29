@@ -6,10 +6,10 @@ Refactor included php's.  Create template.php?
 
 TODO IN 3.5
 ---------------
+Update version number in pom.xml etc
 Add OS to help pages.
 Avoid logging of DWR stuff. Add logging from Subsonic service.
 Create Maven profile to do full build (subsonic-booter, subsonic-installer, subsonic-jme-player)
-Opera playlist cache problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1334
 Improve getting started.
 Change license to non-commercial (like http://www.jeroenwijering.com/?item=JW_FLV_Media_Player)
 
@@ -25,6 +25,7 @@ Get funding from Ripfactory
 
 TODO IN 3.6
 -----------
+Workaround for Opera playlist/podcast/help cache problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1334
 Configurable subtitle in home page.  Or rather some message system where admin can use wiki style to post messages on front page.
 Create tutorial of how to build from source.
 Backlink to Ripserver home page, when using the Ripserver theme.

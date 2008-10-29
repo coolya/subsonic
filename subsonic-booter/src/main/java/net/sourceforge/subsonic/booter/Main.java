@@ -4,6 +4,8 @@ import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 
 import javax.swing.*;
 
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Application entry point for Subsonic booter.
  * <p/>
