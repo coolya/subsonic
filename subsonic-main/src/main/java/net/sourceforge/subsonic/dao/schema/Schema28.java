@@ -70,6 +70,7 @@ public class Schema28 extends Schema {
             template.execute("insert into transcoding values(null,'wma > mp3','wma','mp3','wmadec %s','lame -b %b -x - -',null,false)");
             template.execute("insert into transcoding values(null,'ape > mp3','ape','mp3','mac %s - -d','lame -b %b - -',null,false)");
             template.execute("insert into transcoding values(null,'m4a > mp3','m4a','mp3','faad -w %s','lame -b %b -x - -',null,false)");
+            template.execute("insert into transcoding values(null,'aac > mp3','aac','mp3','faad -w %s','lame -b %b -x - -',null,false)");
             template.execute("insert into transcoding values(null,'mpc > mp3','mpc','mp3','mppdec --wav --silent %s -','lame -b %b - -',null,false)");
             template.execute("insert into transcoding values(null,'ofr > mp3','ofr','mp3','ofr --decode --silent %s --output -','lame -b %b - -',null,false)");
             template.execute("insert into transcoding values(null,'wv > mp3','wv','mp3','wvunpack -q %s -','lame -b %b - -',null,false)");

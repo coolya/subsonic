@@ -123,24 +123,30 @@
                     <td class="transcoding">lame -b %b -x - -</td>
                 </tr>
                 <tr class="table-altrow">
+                    <td class="transcoding">aac</td>
+                    <td class="transcoding">mp3</td>
+                    <td class="transcoding">faad -w %s</td>
+                    <td class="transcoding">lame -b %b -x - -</td>
+                </tr>
+                <tr>
                     <td class="transcoding">mpc</td>
                     <td class="transcoding">mp3</td>
                     <td class="transcoding">mppdec --wav --silent %s -</td>
                     <td class="transcoding">lame -b %b - -</td>
                 </tr>
-                <tr>
+                <tr class="table-altrow">
                     <td class="transcoding">ofr</td>
                     <td class="transcoding">mp3</td>
                     <td class="transcoding">ofr --decode --silent %s --output -</td>
                     <td class="transcoding">lame -b %b - -</td>
                 </tr>
-                <tr class="table-altrow">
+                <tr>
                     <td class="transcoding">wv</td>
                     <td class="transcoding">mp3</td>
                     <td class="transcoding">wvunpack -q %s -</td>
                     <td class="transcoding">lame -b %b - -</td>
                 </tr>
-                <tr>
+                <tr class="table-altrow">
                     <td class="transcoding">shn</td>
                     <td class="transcoding">mp3</td>
                     <td class="transcoding">shorten -x %s -</td>
