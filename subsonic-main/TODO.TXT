@@ -7,9 +7,7 @@ Refactor included php's.  Create template.php?
 TODO IN 3.5
 ---------------
 Update version number in pom.xml etc
-Add OS to help pages.
 Avoid logging of DWR stuff. Add logging from Subsonic service.
-Create Maven profile to do full build (subsonic-booter, subsonic-installer, subsonic-jme-player)
 Improve getting started.
 Change license to non-commercial (like http://www.jeroenwijering.com/?item=JW_FLV_Media_Player)
 
@@ -240,10 +238,9 @@ HOW TO RELEASE
 ===============================
 Set JAVA_HOME to 1.6.
 Update version number in pom.xml etc.
-mvn clean install
+mvn clean install -P full
 cd subsonic-assembly
 mvn assembly:assembly
-mv target/subsonic-2.7-bin.zip target/subsonic-2.7.zip
 Deploy
 Check that correct local version is displayed.
 Commit
