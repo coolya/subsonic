@@ -23,7 +23,8 @@
     <li><span class="bugid">New:</span> Added Italian translation (thanks to Michele Petrecca).
     <li><span class="bugid">New:</span> Smooth scrolling in jump list.</li>
     <li><span class="bugid">New:</span> Updated AAC decoder (faad.exe) in transcoder pack.</li>
-    <li><span class="bugid">Bugfix:</span> Added start menu item "Settings" as work-around for missing tray icon in Vista. </li>
+    <li><span class="bugid">Bugfix:</span> Added start menu item "Settings" as work-around for missing tray icon in Vista.</li>
+    <li><span class="bugid">Bugfix:</span> Fixed caching problem in Opera. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1334">More</a>)</li>
     <li><span class="bugid">Bugfix:</span> Improved Windows installer. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1291">More</a>)</li>
     <li><span class="bugid">Bugfix:</span> Fixed typos in several translations.</li>
 </ul>

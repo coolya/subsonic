@@ -157,6 +157,26 @@
         <filter-name>NoCacheFilter</filter-name>
         <url-pattern>/userChart.view</url-pattern>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>NoCacheFilter</filter-name>
+        <url-pattern>/playlist.view</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>NoCacheFilter</filter-name>
+        <url-pattern>/podcastReceiver.view</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>NoCacheFilter</filter-name>
+        <url-pattern>/help.view</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>NoCacheFilter</filter-name>
+        <url-pattern>/top.view</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>NoCacheFilter</filter-name>
+        <url-pattern>/home.view</url-pattern>
+    </filter-mapping>
 
     <filter-mapping>
         <filter-name>ExpiresFilter</filter-name>
