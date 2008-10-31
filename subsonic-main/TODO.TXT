@@ -6,9 +6,6 @@ Refactor included php's.  Create template.php?
 
 TODO IN 3.5
 ---------------
-Update version number in pom.xml etc
-Avoid logging of DWR stuff. Add logging from Subsonic service.
-Improve getting started.
 Change license to non-commercial (like http://www.jeroenwijering.com/?item=JW_FLV_Media_Player)
 
 GUEST USER / DEMO MODE
@@ -16,6 +13,10 @@ GUEST USER / DEMO MODE
 New authorization role "User is allowed to change settings and passwords".
 Should not be able to change player settings, nor select other players in combobox.
 Must gather free music collection + podcasts + internet radio
+http://en.wikipedia.org/wiki/Free_music
+http://ugress.com/media_music_eps.asp
+http://ugress.com/media_music_cowboy.asp
+http://www.johndoe.no/media.php
 Write forum tutorial of how to set it up, including auto-login.
 Get broadband subscription
 Get Ripserver unit
@@ -23,32 +24,36 @@ Get funding from Ripfactory
 
 TODO IN 3.6
 -----------
-Workaround for Opera playlist/podcast/help cache problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1334
-Configurable subtitle in home page.  Or rather some message system where admin can use wiki style to post messages on front page.
+Replace Flash player.
+Demo mode.
+Configurable Welcome title, subtitle and message in home page. Use wiki notation.
+Random play on artist level. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1304
+Append selected tracks to previously saved playlist (bring up dialog for selecting).
+Sort albums by year. (And show year). getCoverArt() should be made non-recursive. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
+Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305
+Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
+
+
+BACKLOG
+==========================
+Avoid logging of DWR stuff. Add logging from Subsonic service.
 Create tutorial of how to build from source.
 Backlink to Ripserver home page, when using the Ripserver theme.
-Create IndexController. Let index.jsp forward to index.view.
 Permalink support?
 After logon, go to originally requested page.
 Fix broken SSL, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301
 Simplify URL rewriting. Always use relative links if that works.
 Vista icon problem
-Append selected tracks to previously saved playlist (bring up dialog for selecting).
 Log error if podcast delete file doesn't succeed.
 Podcast duplicate files. nrk_verdt_aa_vite_2008-0820-1203_24459.mp3 + nrk_verdt_aa_vite_2008-0820-1203_244590.mp3
-Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305
-Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
 User/music folder authorization.
 Show percent complete for translations.  In web page at least.
-Improve install instructions.
+Improve getting started.
 Require Java 6 in exe4j.
 Make Now Playing show for some minimum amount of time.
-Random play on artist level. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1304
 Create subsonic.bat
 Look at maven release plugin.
-Sort albums by year. (And show year). getCoverArt() should be made non-recursive. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
 Include getting started (html) in installer.  And add it to start menu. Also create link to subsonic home page in Start menu.
-Replace Flash player.
 last.fm problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1278
 Show total playlist duration.
 Remove player dynamic ip property?
@@ -69,18 +74,11 @@ iPod/iPhone support.
    http://www.alloysoft.com/
    http://developer.apple.com/webapps
    http://developer.apple.com/internet/webcontent/bestwebdev.html
-
 Remove Mock/Debug options from JME player.
-New screenshots
 Bundle with open-source UPnP app?
-
-BACKLOG
-===========================
 Uninstaller should optionally delete c:\subsonic
-Smooth scrolling when clicking index letters.
 Nicer popup for lyrics and online help.
 Add option for one player per user http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1255
-Fix erroneous caching of help.jsp (and others?)
 Add volume control to jme player.
 Add volume control to jukebox player.
 Verify that LastModified works for avatars.
