@@ -22,6 +22,14 @@ Get broadband subscription
 Get Ripserver unit
 Get funding from Ripfactory
 
+JW Player
+-------------
+APPEND TO PLAYLIST: http://www.jeroenwijering.com/?thread=13648
+Frame control: http://home5.inet.tele.dk/nyboe/flash/mediaplayer/crossframecontrol.htm
+Test VBR
+MOVING PLAYLIST ITEMS UP/DOWN, ADD TO PLAYLIST: http://www.jeroenwijering.com/?thread=13307
+Use latest version of http://code.google.com/p/swfobject/
+
 TODO IN 3.6
 -----------
 Replace Flash player.
