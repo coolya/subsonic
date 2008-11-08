@@ -71,9 +71,9 @@
                 </p>
 
                 <p>
-                    Subsonic is free software distributed under the <a href="http://www.gnu.org/copyleft/lesser.html">LGPL</a>
-                    open-source license.
+                    Subsonic is open-source software licensed under the <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Noncommercial license</a>.
                 </p>
+
             </div>
         </div>
     </div>
@@ -81,7 +81,7 @@
 </div>
 
 <div id="side-col">
-    <?php include("ad.php"); ?>
+    <!--<?php include("ad.php"); ?>-->
     <?php include("download-subsonic.php"); ?>
     <!--<?php include("ripserver.php"); ?>-->
     <?php include("about.php"); ?>

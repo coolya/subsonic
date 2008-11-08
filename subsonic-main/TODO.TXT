@@ -6,7 +6,16 @@ Refactor included php's.  Create template.php?
 
 TODO IN 3.5
 ---------------
+Remove ad from web page.
 Change license to non-commercial (like http://www.jeroenwijering.com/?item=JW_FLV_Media_Player)
+
+Stop subsonic.exe if it's running
+Service uninstall doesn't work.
+Start Subsonic automatically after install.
+Change Getting Started.
+Log stderr.
+Optionally put in startup folder.
+
 
 GUEST USER / DEMO MODE
 ----------------------
@@ -254,10 +263,7 @@ Upload files to SourceForge (in separate shell).
   rsync -avP -e ssh subsonic-assembly/target/*   sindre_mehus@frs.sourceforge.net:uploads/
   rsync -avP -e ssh subsonic-installer/target/*  sindre_mehus@frs.sourceforge.net:uploads/
 Create file release at SourceForge.
-cd subsonic-site
-mvn site:site
-####mvn site:deploy
-Upload files to SourceForge (in separate shell).
+Upload site:
   rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
 
 svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-2.7.beta1 -m "Tagging 2.7.beta1."
