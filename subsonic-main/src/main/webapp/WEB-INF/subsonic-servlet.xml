@@ -345,8 +345,9 @@
                 <prop key="/top.view">topController</prop>
                 <prop key="/randomPlaylist.view">randomPlaylistController</prop>
                 <prop key="/loadPlaylist.view">loadPlaylistController</prop>
-                <prop key="/loadPlaylist.view">loadPlaylistController</prop>
                 <prop key="/loadPlaylistConfirm.view">loadPlaylistController</prop>
+                <prop key="/appendPlaylist.view">loadPlaylistController</prop>
+                <prop key="/appendPlaylistConfirm.view">loadPlaylistController</prop>
                 <prop key="/deletePlaylist.view">loadPlaylistController</prop>
                 <prop key="/savePlaylist.view">savePlaylistController</prop>
                 <prop key="/changeCoverArt.view">changeCoverArtController</prop>

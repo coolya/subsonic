@@ -75,6 +75,8 @@
             location.href = "playlist.view?remove=" + getSelectedIndexes();
         } else if (id == "download") {
             location.href = "download.view?player=${model.player.id}&indexes=" + getSelectedIndexes();
+        } else if (id == "appendPlaylist") {
+            parent.frames.main.location.href = "appendPlaylist.view?indexes=" + getSelectedIndexes();
         }
         $("moreActions").selectedIndex = 0;
     }
@@ -178,6 +180,9 @@
             <option id="remove">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.remove"/></option>
             <c:if test="${model.user.downloadRole}">
                 <option id="download">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
+            </c:if>
+            <c:if test="${model.user.playlistRole}">
+                <option id="appendPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.append"/></option>
             </c:if>
         </select>
         </td>

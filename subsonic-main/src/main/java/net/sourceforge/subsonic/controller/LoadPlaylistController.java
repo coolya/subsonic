@@ -2,6 +2,7 @@ package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.util.StringUtil;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.multiaction.*;
 import org.springframework.web.servlet.view.*;
@@ -11,7 +12,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Controller for listing, loading and deleting playlists.
+ * Controller for listing, loading, appending and deleting playlists.
  *
  * @author Sindre Mehus
  */
@@ -22,7 +23,14 @@ public class LoadPlaylistController extends MultiActionController {
     private PlayerService playerService;
 
     public ModelAndView loadPlaylist(HttpServletRequest request, HttpServletResponse response) {
+        return loadOrAppendPlaylist(request, true);
+    }
 
+    public ModelAndView appendPlaylist(HttpServletRequest request, HttpServletResponse response) {
+        return loadOrAppendPlaylist(request, false);
+    }
+
+    private ModelAndView loadOrAppendPlaylist(HttpServletRequest request, boolean load) {
         Map<String, Object> map = new HashMap<String, Object>();
         List<String> playlistNames = new ArrayList<String>();
 
@@ -33,6 +41,8 @@ public class LoadPlaylistController extends MultiActionController {
             }
         }
 
+        map.put("load", load);
+        map.put("songIndexes", request.getParameter("indexes"));
         map.put("playlistDirectory", playlistService.getPlaylistDirectory());
         map.put("playlistDirectoryExists", playlistService.getPlaylistDirectory().exists());
         map.put("playlists", playlistNames);
@@ -47,6 +57,31 @@ public class LoadPlaylistController extends MultiActionController {
         String name = request.getParameter("name");
         playlistService.loadPlaylist(playlist, name);
 
+        return reload();
+    }
+
+    public ModelAndView appendPlaylistConfirm(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        // Load the existing playlist.
+        Playlist savedPlaylist = new Playlist();
+        String name = request.getParameter("name");
+        playlistService.loadPlaylist(savedPlaylist, name);
+
+        // Update the existing playlist with new entries.
+        Player player = playerService.getPlayer(request, response);
+        Playlist playlist = player.getPlaylist();
+        int[] indexes = StringUtil.parseInts(request.getParameter("indexes"));
+        for (int index : indexes) {
+            savedPlaylist.addFile(playlist.getFile(index));
+        }
+
+        // Save the playlist again.
+        playlistService.savePlaylist(savedPlaylist);
+
+        return reload();
+    }
+
+    private ModelAndView reload() {
         List<ReloadFrame> reloadFrames = new ArrayList<ReloadFrame>();
         reloadFrames.add(new ReloadFrame("playlist", "playlist.view?"));
         reloadFrames.add(new ReloadFrame("main", "nowPlaying.view?"));
