@@ -14,7 +14,7 @@
     </c:forEach>
 </div>
 
-<c:if test="${model.statistics != null}">
+<c:if test="${model.statistics.songCount gt 0}">
     <div class="detail">
         <fmt:message key="left.statistics">
             <fmt:param value="${model.statistics.artistCount}"/>
