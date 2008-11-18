@@ -17,7 +17,7 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
-<a name="3.5"><h2 class="div">Subsonic 3.5 - Nov XX, 2008</h2></a>
+<a name="3.5"><h2 class="div">Subsonic 3.5 - Nov 09, 2008</h2></a>
 <ul>
     <li><span class="bugid">New:</span> New Subsonic logo (thanks to <a href="http://www.conceptualintegration.com/">Concept211</a>).
     <li><span class="bugid">New:</span> Added Italian translation (thanks to Michele Petrecca).

@@ -4,11 +4,8 @@ Add Ripserver ad.
 Ads, https://www.valueclickmedia.com/login.shtml
 Refactor included php's.  Create template.php?
 
-TODO IN 3.5
+SUBSONIC AGENT
 ---------------
-Remove ad from web page.
-Change license to non-commercial (like http://www.jeroenwijering.com/?item=JW_FLV_Media_Player)
-
 Stop subsonic.exe if it's running
 Service uninstall doesn't work.
 Start Subsonic automatically after install.
@@ -41,6 +38,7 @@ Use latest version of http://code.google.com/p/swfobject/
 
 TODO IN 3.6
 -----------
+Error with new LAME version?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3339
 Replace Flash player.
 Demo mode.
 Configurable Welcome title, subtitle and message in home page. Use wiki notation.
@@ -49,7 +47,8 @@ Append selected tracks to previously saved playlist (bring up dialog for selecti
 Sort albums by year. (And show year). getCoverArt() should be made non-recursive. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
 Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305
 Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
-
+Remove references to FAQ in online help.
+Hide statistics if unavailable.
 
 BACKLOG
 ==========================
@@ -260,8 +259,7 @@ Deploy
 Check that correct local version is displayed.
 Commit
 Upload files to SourceForge (in separate shell).
-  rsync -avP -e ssh subsonic-assembly/target/*   sindre_mehus@frs.sourceforge.net:uploads/
-  rsync -avP -e ssh subsonic-installer/target/*  sindre_mehus@frs.sourceforge.net:uploads/
+  rsync -avP -e ssh subsonic-assembly/target/* subsonic-installer/target/*  sindre_mehus@frs.sourceforge.net:uploads/
 Create file release at SourceForge.
 Upload site:
   rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/

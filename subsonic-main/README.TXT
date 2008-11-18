@@ -13,5 +13,5 @@ If you want to use Subsonic for commercial purposes, please contact me.
 Subsonic is developed and maintained by Sindre Mehus (sindre@activeobjects.no).
 
 If you have any questions, comments or suggestions for improvements, please visit the
-Subsonic Forum (http://www.activeobjects.no/subsonic/forum).
+Subsonic Forum (http://subsonic.sourceforge.net/forum.html).
 
