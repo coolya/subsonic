@@ -51,6 +51,9 @@
                 change basic settings such as which port number Subsonic should use.
             </p>
             <p>
+                If you're upgrading an existing Subsonic installation, you don't have to uninstall the old version first. In any case, the existing Subsonic settings are preserved.
+            </p>
+            <p>
                 After installing and starting Subsonic, open the Subsonic web page on <a href="http://localhost">http://localhost</a>.
             </p>
         </div>

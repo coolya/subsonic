@@ -10,8 +10,12 @@
 <body class="mainframe">
 <h1>
     <img src="<spring:theme code="homeImage"/>" alt=""/>
-    ${model.welcomeMessage}
+    ${model.welcomeTitle}
 </h1>
+
+<c:if test="${not empty model.welcomeSubtitle}">
+    <h2>${model.welcomeSubtitle}</h2>
+</c:if>
 
 <h2>
     <c:forTokens items="random newest highest frequent recent users" delims=" " var="cat" varStatus="loopStatus">
@@ -39,6 +43,9 @@
 
 <h2><fmt:message key="home.${model.listType}.text"/></h2>
 
+<table width="100%">
+    <tr>
+        <td style="vertical-align:top;">
 <c:choose>
 <c:when test="${model.listType eq 'users'}">
     <table>
@@ -121,15 +128,15 @@
         </c:forEach>
     </table>
 
-    <table>
-        <tr>
-            <td style="padding-right:1.5em">
-                <select name="listSize" onchange="location='home.view?listType=${model.listType}&listOffset=${model.listOffset}&listSize=' + options[selectedIndex].value;">
-                    <c:forTokens items="5 10 15 20 30 40 50" delims=" " var="size">
-                        <option ${size eq model.listSize ? "selected" : ""} value="${size}"><fmt:message key="home.listsize"><fmt:param value="${size}"/></fmt:message></option>
-                    </c:forTokens>
-                </select>
-            </td>
+<table>
+    <tr>
+        <td style="padding-right:1.5em">
+            <select name="listSize" onchange="location='home.view?listType=${model.listType}&listOffset=${model.listOffset}&listSize=' + options[selectedIndex].value;">
+                <c:forTokens items="5 10 15 20 30 40 50" delims=" " var="size">
+                    <option ${size eq model.listSize ? "selected" : ""} value="${size}"><fmt:message key="home.listsize"><fmt:param value="${size}"/></fmt:message></option>
+                </c:forTokens>
+            </select>
+        </td>
 
             <c:choose>
                 <c:when test="${model.listType eq 'random'}">
@@ -157,4 +164,15 @@
     </table>
 </c:otherwise>
 </c:choose>
+        </td>
+            <c:if test="${not empty model.welcomeMessage}">
+                <td style="vertical-align:top;max-width:250px">
+                    <div style="padding:0 1em 0 1em;border-left:1px solid #<spring:theme code="detailColor"/>">
+                        <sub:wiki text="${model.welcomeMessage}"/>
+                    </div>
+                </td>
+            </c:if>
+        </tr>
+    </table>
+
 </body></html>

@@ -15,6 +15,8 @@ public class GeneralSettingsCommand {
     private String index;
     private String ignoredArticles;
     private String shortcuts;
+    private String welcomeTitle;
+    private String welcomeSubtitle;
     private String welcomeMessage;
     private String localeIndex;
     private String[] locales;
@@ -68,6 +70,22 @@ public class GeneralSettingsCommand {
 
     public void setShortcuts(String shortcuts) {
         this.shortcuts = shortcuts;
+    }
+
+    public String getWelcomeTitle() {
+        return welcomeTitle;
+    }
+
+    public void setWelcomeTitle(String welcomeTitle) {
+        this.welcomeTitle = welcomeTitle;
+    }
+
+    public String getWelcomeSubtitle() {
+        return welcomeSubtitle;
+    }
+
+    public void setWelcomeSubtitle(String welcomeSubtitle) {
+        this.welcomeSubtitle = welcomeSubtitle;
     }
 
     public String getWelcomeMessage() {

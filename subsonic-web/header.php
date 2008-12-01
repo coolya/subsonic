@@ -13,6 +13,20 @@
         urchinTracker();
     </script>
 
+    <!-- Piwik -->
+    <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://apps.sourceforge.net/piwik/subsonic/" : "http://apps.sourceforge.net/piwik/subsonic/");
+        document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        piwik_action_name = '';
+        piwik_idsite = 2;
+        piwik_url = pkBaseURL + "piwik.php";
+        piwik_log(piwik_action_name, piwik_idsite, piwik_url);
+    </script>
+    <object><noscript><p><img src="http://apps.sourceforge.net/piwik/subsonic/piwik.php?idsite=2" alt="piwik"/></p></noscript></object>
+    <!-- End Piwik Tag -->
+
     <!--[if lte IE 6]>
      <link rel="stylesheet" type="text/css" href="inc/css/pngfix.css" />
      <![endif]-->

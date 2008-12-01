@@ -67,14 +67,6 @@
             </td>
         </tr>
 
-        <tr>
-            <td><fmt:message key="generalsettings.welcomemessage"/></td>
-            <td>
-                <form:input path="welcomeMessage" size="70"/>
-                <a href="helpPopup.view?topic=welcomeMessage" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
-            </td>
-        </tr>
-
         <tr><td colspan="3">&nbsp;</td></tr>
 
         <tr>
@@ -98,6 +90,31 @@
                     </c:forEach>
                 </form:select>
                 <a href="helpPopup.view?topic=theme" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+            </td>
+        </tr>
+
+        <tr><td colspan="3">&nbsp;</td></tr>
+
+        <tr>
+            <td><fmt:message key="generalsettings.welcometitle"/></td>
+            <td>
+                <form:input path="welcomeTitle" size="70"/>
+                <a href="helpPopup.view?topic=welcomeMessage" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+            </td>
+        </tr>
+        <tr>
+            <td><fmt:message key="generalsettings.welcomesubtitle"/></td>
+            <td>
+                <form:input path="welcomeSubtitle" size="70"/>
+                <a href="helpPopup.view?topic=welcomeMessage" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;"><fmt:message key="generalsettings.welcomemessage"/></td>
+            <td>
+                <form:textarea path="welcomeMessage" rows="6" cols="70"/>
+                <a href="helpPopup.view?topic=welcomeMessage" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <fmt:message key="main.wiki"/>
             </td>
         </tr>
 

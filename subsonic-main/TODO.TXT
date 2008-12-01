@@ -1,47 +1,8 @@
-TODO IN WEB
-------------
-Add Ripserver ad.
-Ads, https://www.valueclickmedia.com/login.shtml
-Refactor included php's.  Create template.php?
-
-SUBSONIC AGENT
----------------
-Stop subsonic.exe if it's running
-Service uninstall doesn't work.
-Start Subsonic automatically after install.
-Change Getting Started.
-Log stderr.
-Optionally put in startup folder.
-
-
-GUEST USER / DEMO MODE
-----------------------
-New authorization role "User is allowed to change settings and passwords".
-Should not be able to change player settings, nor select other players in combobox.
-Must gather free music collection + podcasts + internet radio
-http://en.wikipedia.org/wiki/Free_music
-http://ugress.com/media_music_eps.asp
-http://ugress.com/media_music_cowboy.asp
-http://www.johndoe.no/media.php
-Write forum tutorial of how to set it up, including auto-login.
-Get broadband subscription
-Get Ripserver unit
-Get funding from Ripfactory
-
-JW Player
--------------
-APPEND TO PLAYLIST: http://www.jeroenwijering.com/?thread=13648
-Frame control: http://home5.inet.tele.dk/nyboe/flash/mediaplayer/crossframecontrol.htm
-Test VBR
-MOVING PLAYLIST ITEMS UP/DOWN, ADD TO PLAYLIST: http://www.jeroenwijering.com/?thread=13307
-Use latest version of http://code.google.com/p/swfobject/
-
 TODO IN 3.6
 -----------
 Error with new LAME version?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3339
 Replace Flash player.
 Demo mode.
-Configurable Welcome title, subtitle and message in home page. Use wiki notation.
 Random play on artist level. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1304
 Sort albums by year. (And show year). getCoverArt() should be made non-recursive. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
 Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305
@@ -51,11 +12,15 @@ DONE IN 3.6
 -------------
 Append selected tracks to previously saved playlist (bring up dialog for selecting).
 Hide music library statistics if unavailable.
+Configurable Welcome title, subtitle and message in home page. Use wiki notation.
 
 BACKLOG
 ==========================
+Show active users.  Improve Now playing (e.g., show how long since it happened). http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1387
+"Featured" albums. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1388
 Avoid logging of DWR stuff. Add logging from Subsonic service.
 Create tutorial of how to build from source.
+Show who played a track last. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1404
 Backlink to Ripserver home page, when using the Ripserver theme.
 Permalink support?
 After logon, go to originally requested page.
@@ -299,46 +264,37 @@ MISCELLANEOUS
 openclipart.org
 http://www.nero.com/eng/nero-aac-codec.html
 
-Error when downloading "Samples".
-java.lang.NullPointerException
-	at org.acegisecurity.ui.ExceptionTranslationFilter.handleException(ExceptionTranslationFilter.java:229)
-	at org.acegisecurity.ui.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:176)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.providers.anonymous.AnonymousProcessingFilter.doFilter(AnonymousProcessingFilter.java:125)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.ui.rememberme.RememberMeProcessingFilter.doFilter(RememberMeProcessingFilter.java:142)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.wrapper.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:81)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.ui.basicauth.BasicProcessingFilter.doFilter(BasicProcessingFilter.java:173)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.ui.AbstractProcessingFilter.doFilter(AbstractProcessingFilter.java:271)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.ui.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.context.HttpSessionContextIntegrationFilter.doFilter(HttpSessionContextIntegrationFilter.java:249)
-	at org.acegisecurity.util.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:275)
-	at org.acegisecurity.util.FilterChainProxy.doFilter(FilterChainProxy.java:149)
-	at org.acegisecurity.util.FilterToBeanProxy.doFilter(FilterToBeanProxy.java:98)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1084)
-	at net.sourceforge.subsonic.filter.RequestEncodingFilter.doFilter(RequestEncodingFilter.java:25)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1084)
-	at net.sourceforge.subsonic.filter.ParameterDecodingFilter.doFilter(ParameterDecodingFilter.java:36)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1084)
-	at net.sourceforge.subsonic.filter.BootstrapVerificationFilter.doFilter(BootstrapVerificationFilter.java:36)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1084)
-	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:360)
-	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
-	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:181)
-	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:712)
-	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:405)
-	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:139)
-	at org.mortbay.jetty.Server.handle(Server.java:313)
-	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:506)
-	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:830)
-	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:514)
-	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:211)
-	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:381)
-	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:396)
-	at org.mortbay.thread.BoundedThreadPool$PoolThread.run(BoundedThreadPool.java:442)
+
+
+SUBSONIC AGENT
+---------------
+Stop subsonic.exe if it's running
+Service uninstall doesn't work.
+Start Subsonic automatically after install.
+Change Getting Started.
+Log stderr.
+Optionally put in startup folder.
+
+
+GUEST USER / DEMO MODE
+----------------------
+New authorization role "User is allowed to change settings and passwords".
+Should not be able to change player settings, nor select other players in combobox.
+Must gather free music collection + podcasts + internet radio
+http://en.wikipedia.org/wiki/Free_music
+http://ugress.com/media_music_eps.asp
+http://ugress.com/media_music_cowboy.asp
+http://www.johndoe.no/media.php
+Write forum tutorial of how to set it up, including auto-login.
+Get broadband subscription
+Get Ripserver unit
+Get funding from Ripfactory
+
+JW Player
+-------------
+APPEND TO PLAYLIST: http://www.jeroenwijering.com/?thread=13648
+Frame control: http://home5.inet.tele.dk/nyboe/flash/mediaplayer/crossframecontrol.htm
+Test VBR
+MOVING PLAYLIST ITEMS UP/DOWN, ADD TO PLAYLIST: http://www.jeroenwijering.com/?thread=13307
+Use latest version of http://code.google.com/p/swfobject/
 

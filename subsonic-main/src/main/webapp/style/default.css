@@ -137,7 +137,7 @@ form {
     margin: 0;
 }
 
-input, select {
+input, select, textarea {
     font-size: 9pt;
 }
 

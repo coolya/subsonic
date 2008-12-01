@@ -60,6 +60,8 @@ public class HomeController extends ParameterizableViewController {
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("albums", albums);
+        map.put("welcomeTitle", settingsService.getWelcomeTitle());
+        map.put("welcomeSubtitle", settingsService.getWelcomeSubtitle());
         map.put("welcomeMessage", settingsService.getWelcomeMessage());
         map.put("isIndexBeingCreated", searchService.isIndexBeingCreated());
         map.put("listType", listType);
