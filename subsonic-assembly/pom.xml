@@ -34,6 +34,7 @@
                     <descriptors>
                         <descriptor>src/main/assembly/war.xml</descriptor>
                         <descriptor>src/main/assembly/standalone.xml</descriptor>
+                        <descriptor>src/main/assembly/src.xml</descriptor>
                     </descriptors>
                 </configuration>
             </plugin>
