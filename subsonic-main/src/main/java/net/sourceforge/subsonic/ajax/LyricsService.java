@@ -39,7 +39,7 @@ public class LyricsService {
         try {
 
             Map<String, String> params = new HashMap<String, String>();
-            params.put("search", '"' + artist + "\" \"" + song + '"');
+            params.put("search", artist + " " + song);
             params.put("category", "artisttitle");
 
             String searchResultHtml = executePostRequest("http://www.metrolyrics.com/search.php", params);

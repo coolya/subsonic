@@ -1,6 +1,7 @@
 TODO IN 3.6
 -----------
-Lyrics broken again?
+Change license to GPL.
+Add default welcome message.
 Error with new LAME version?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3339
 Replace Flash player.
 Demo mode.
@@ -11,6 +12,7 @@ Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?
 
 DONE IN 3.6
 -------------
+Fixed broken lyrics (again).
 Append selected tracks to previously saved playlist (bring up dialog for selecting).
 Hide music library statistics if unavailable.
 Configurable Welcome title, subtitle and message in home page. Use wiki notation.
