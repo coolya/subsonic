@@ -1,11 +1,12 @@
 TODO IN 3.6
 -----------
+Require Java 6 in exe4j.
+Vista icon problem.  Agent.
 Change license to GPL.
 Add default welcome message.
 Error with new LAME version?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3339
 Replace Flash player.
 Demo mode.
-Random play on artist level. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1304
 Sort albums by year. (And show year). getCoverArt() should be made non-recursive. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
 Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305
 Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
@@ -17,6 +18,7 @@ Append selected tracks to previously saved playlist (bring up dialog for selecti
 Hide music library statistics if unavailable.
 Configurable Welcome title, subtitle and message in home page. Use wiki notation.
 Source release.
+Random play on artist/album level. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1304
 
 BACKLOG
 ==========================
@@ -31,13 +33,11 @@ Permalink support?
 After logon, go to originally requested page.
 Fix broken SSL, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301
 Simplify URL rewriting. Always use relative links if that works.
-Vista icon problem
 Log error if podcast delete file doesn't succeed.
 Podcast duplicate files. nrk_verdt_aa_vite_2008-0820-1203_24459.mp3 + nrk_verdt_aa_vite_2008-0820-1203_244590.mp3
 User/music folder authorization.
 Show percent complete for translations.  In web page at least.
 Improve getting started.
-Require Java 6 in exe4j.
 Make Now Playing show for some minimum amount of time.
 Create subsonic.bat
 Look at maven release plugin.
@@ -283,7 +283,7 @@ Optionally put in startup folder.
 
 GUEST USER / DEMO MODE
 ----------------------
-New authorization role "User is allowed to change settings and passwords".
+New authorization role "User is allowed to change settings and password".
 Should not be able to change player settings, nor select other players in combobox.
 Must gather free music collection + podcasts + internet radio
 http://en.wikipedia.org/wiki/Free_music

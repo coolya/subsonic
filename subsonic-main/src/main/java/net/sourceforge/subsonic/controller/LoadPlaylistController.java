@@ -72,7 +72,7 @@ public class LoadPlaylistController extends MultiActionController {
         Playlist playlist = player.getPlaylist();
         int[] indexes = StringUtil.parseInts(request.getParameter("indexes"));
         for (int index : indexes) {
-            savedPlaylist.addFile(playlist.getFile(index));
+            savedPlaylist.addFiles(true, playlist.getFile(index));
         }
 
         // Save the playlist again.

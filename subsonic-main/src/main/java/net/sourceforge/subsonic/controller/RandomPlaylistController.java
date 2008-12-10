@@ -50,16 +50,13 @@ public class RandomPlaylistController extends ParameterizableViewController {
         if (musicFolderId == -1) {
             musicFolderId = null;
         }
-        
+
         Player player = playerService.getPlayer(request, response);
         Playlist playlist = player.getPlaylist();
-        playlist.clear();
 
         RandomSearchCriteria criteria = new RandomSearchCriteria(size, genre, fromYear, toYear, musicFolderId);
         List<MusicFile> randomFiles = searchService.getRandomSongs(criteria);
-        for (MusicFile randomFile : randomFiles) {
-            playlist.addFile(randomFile);
-        }
+        playlist.addFiles(false, randomFiles);
 
         if (request.getParameter("autoRandom") != null) {
             playlist.setRandomSearchCriteria(criteria);

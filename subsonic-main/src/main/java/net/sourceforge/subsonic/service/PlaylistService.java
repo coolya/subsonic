@@ -18,8 +18,6 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,8 +25,8 @@ import java.util.regex.Pattern;
 /**
  * Provides services for loading and saving playlists to and from persistent storage.
  *
- * @see Playlist
  * @author Sindre Mehus
+ * @see Playlist
  */
 public class PlaylistService {
 
@@ -38,10 +36,11 @@ public class PlaylistService {
     private MusicFileService musicFileService;
 
     /**
-    * Saves the given playlist to persistent storage.
-    * @param playlist The playlist to save.
-    * @throws IOException If an I/O error occurs.
-    */
+     * Saves the given playlist to persistent storage.
+     *
+     * @param playlist The playlist to save.
+     * @throws IOException If an I/O error occurs.
+     */
     public void savePlaylist(Playlist playlist) throws IOException {
         String name = playlist.getName();
 
@@ -65,9 +64,10 @@ public class PlaylistService {
 
     /**
      * Loads a named playlist from persistent storage and into the provided playlist instance.
+     *
      * @param playlist The playlist to populate. Any existing entries in the playlist will
-     * be removed.
-     * @param name The name of a previously persisted playlist.
+     *                 be removed.
+     * @param name     The name of a previously persisted playlist.
      * @throws IOException If an I/O error occurs.
      */
     public void loadPlaylist(Playlist playlist, String name) throws IOException {
@@ -87,25 +87,23 @@ public class PlaylistService {
 
     /**
      * Returns a list of all previously saved playlists.
+     *
      * @return A list of all previously saved playlists.
      */
     public File[] getSavedPlaylists() {
-        List<File> result = new ArrayList<File>();
-        File[] candidates = FileUtil.listFiles(getPlaylistDirectory(), new PlaylistFilenameFilter());
+        File[] result = FileUtil.listFiles(getPlaylistDirectory(), new PlaylistFilenameFilter());
 
         // Happens if playlist directory is non-existing.
-        if (candidates == null) {
+        if (result == null) {
             return new File[0];
         }
 
-        for (File candidate : candidates) {
-            result.add(candidate);
-        }
-        return result.toArray(new File[0]);
+        return result;
     }
 
     /**
      * Deletes the named playlist from persistent storage.
+     *
      * @param name The name of the playlist to delete.
      * @throws IOException If an I/O error occurs.
      */
@@ -117,6 +115,7 @@ public class PlaylistService {
 
     /**
      * Returns the directory where playlists are stored.
+     *
      * @return The directory where playlists are stored.
      */
     public File getPlaylistDirectory() {
@@ -151,9 +150,11 @@ public class PlaylistService {
     /**
      * Abstract superclass for playlist formats.
      */
-    private static abstract class PlaylistFormat {
+    private abstract static class PlaylistFormat {
         public abstract void loadPlaylist(Playlist playlist, BufferedReader reader, MusicFileService musicFileService) throws IOException;
+
         public abstract void savePlaylist(Playlist playlist, PrintWriter writer) throws IOException;
+
         public static PlaylistFormat getFilelistFormat(File file) {
             String name = file.getName().toLowerCase();
             if (name.endsWith(".m3u")) {
@@ -181,7 +182,7 @@ public class PlaylistService {
                     try {
                         MusicFile file = musicFileService.getMusicFile(new File(line));
                         if (file.exists()) {
-                            playlist.addFile(file);
+                            playlist.addFiles(true, file);
                         }
                     } catch (SecurityException x) {
                         LOG.warn(x.getMessage(), x);
@@ -218,7 +219,7 @@ public class PlaylistService {
                     try {
                         MusicFile file = musicFileService.getMusicFile(new File(matcher.group(1)));
                         if (file.exists()) {
-                            playlist.addFile(file);
+                            playlist.addFiles(true, file);
                         }
                     } catch (SecurityException x) {
                         LOG.warn(x.getMessage(), x);
@@ -264,17 +265,17 @@ public class PlaylistService {
             Element root = document.getRootElement();
             Namespace ns = root.getNamespace();
             Element trackList = root.getChild("trackList", ns);
-            List tracks = trackList.getChildren("track", ns);
+            List<?> tracks = trackList.getChildren("track", ns);
 
-            for (Iterator i = tracks.iterator(); i.hasNext();) {
-                Element track = (Element) i.next();
+            for (Object obj : tracks) {
+                Element track = (Element) obj;
                 String location = track.getChildText("location", ns);
                 if (location != null && location.startsWith("file://")) {
                     location = location.replaceFirst("file://", "");
                     try {
                         MusicFile file = musicFileService.getMusicFile(location);
                         if (file.exists()) {
-                            playlist.addFile(file);
+                            playlist.addFiles(true, file);
                         }
                     } catch (SecurityException x) {
                         LOG.warn(x.getMessage(), x);

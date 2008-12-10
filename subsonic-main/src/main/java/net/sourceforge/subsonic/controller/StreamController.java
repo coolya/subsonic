@@ -90,7 +90,7 @@ public class StreamController implements Controller {
             if (isSingleFile) {
                 Playlist playlist = new Playlist();
                 MusicFile file = musicFileService.getMusicFile(path);
-                playlist.addFile(file);
+                playlist.addFiles(true, file);
                 player.setPlaylist(playlist);
                 boolean transcodingRequired = transcodingService.isTranscodingRequired(file, player);
 

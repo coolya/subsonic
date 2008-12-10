@@ -5,20 +5,22 @@ import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.service.JukeboxService;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
-import net.sourceforge.subsonic.service.JukeboxService;
 import net.sourceforge.subsonic.util.StringUtil;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +83,7 @@ public class PlaylistController extends ParameterizableViewController {
     }
 
     private void handleParameters(HttpServletRequest request, Playlist playlist, Player player,
-                                  Map<String, Object> map, User user) throws IOException {
+                                  Map<String, Object> map, User user) throws Exception {
 
         // Whether a new M3U file should be sent, forcing the remote player to reconnect.
         boolean sendM3U = false;
@@ -103,11 +105,18 @@ public class PlaylistController extends ParameterizableViewController {
         } else if (request.getParameter("play") != null) {
             sendM3U = true;
             MusicFile file = musicFileService.getMusicFile(request.getParameter("play"));
-            playlist.addFile(file, false);
+            playlist.addFiles(false, file);
+            playlist.setRandomSearchCriteria(null);
+        } else if (request.getParameter("random") != null) {
+            sendM3U = true;
+            MusicFile file = musicFileService.getMusicFile(request.getParameter("random"));
+            int count = ServletRequestUtils.getRequiredIntParameter(request, "count");
+            List<MusicFile> randomFiles = getRandomChildren(file, count);
+            playlist.addFiles(false, randomFiles);
             playlist.setRandomSearchCriteria(null);
         } else if (request.getParameter("add") != null) {
             MusicFile file = musicFileService.getMusicFile(request.getParameter("add"));
-            playlist.addFile(file);
+            playlist.addFiles(true, file);
             index = playlist.size() - 1;
             playlist.setRandomSearchCriteria(null);
         } else if (request.getParameter("clear") != null) {
@@ -170,6 +179,15 @@ public class PlaylistController extends ParameterizableViewController {
 
     }
 
+    private List<MusicFile> getRandomChildren(MusicFile file, int count) throws IOException {
+        List<MusicFile> children = file.getDescendants(false, false);
+        if (children.isEmpty()) {
+            return children;
+        }
+        Collections.shuffle(children);
+        return children.subList(0, Math.min(count, children.size()));
+    }
+
     private List<Player> getPlayers(User user) {
         List<Player> result = new ArrayList<Player>();
         for (Player player : playerService.getAllPlayers()) {
@@ -202,7 +220,9 @@ public class PlaylistController extends ParameterizableViewController {
         this.jukeboxService = jukeboxService;
     }
 
-    /** Contains information about a single song in the playlist. */
+    /**
+     * Contains information about a single song in the playlist.
+     */
     public static class Song {
         private MusicFile musicFile;
         private boolean isCurrent;

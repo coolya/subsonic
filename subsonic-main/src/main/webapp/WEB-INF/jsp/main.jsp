@@ -119,6 +119,10 @@
     <sub:url value="playlist.view" var="playUrl">
         <sub:param name="play" value="${model.dir.path}"/>
     </sub:url>
+    <sub:url value="playlist.view" var="randomUrl">
+        <sub:param name="random" value="${model.dir.path}"/>
+        <sub:param name="count" value="10"/>
+    </sub:url>
     <sub:url value="playlist.view" var="addUrl">
         <sub:param name="add" value="${model.dir.path}"/>
     </sub:url>
@@ -126,6 +130,7 @@
     <c:if test="${model.user.streamRole}">
         <c:if test="${needSep}">|</c:if>
         <a target="playlist" href="${playUrl}"><fmt:message key="main.playall"/></a> |
+        <a target="playlist" href="${randomUrl}"><fmt:message key="main.playrandom"/></a> |
         <a target="playlist" href="${addUrl}"><fmt:message key="main.addall"/></a>
         <c:set var="needSep" value="true"/>
     </c:if>

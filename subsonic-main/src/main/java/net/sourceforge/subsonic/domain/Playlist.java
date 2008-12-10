@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -145,32 +146,30 @@ public class Playlist {
     }
 
     /**
-     * Adds a music file to the playlist.  If the given file is a directory, all its children
+     * Adds one or more music file to the playlist.  If a given file is a directory, all its children
      * will be added recursively.
      *
-     * @param file   The music file to add.
-     * @param append Whether existing songs in the playlist should be kept.
+     * @param append     Whether existing songs in the playlist should be kept.
+     * @param musicFiles The music files to add.
      * @throws IOException If an I/O error occurs.
      */
-    public synchronized void addFile(MusicFile file, boolean append) throws IOException {
+    public synchronized void addFiles(boolean append, Iterable<MusicFile> musicFiles) throws IOException {
         makeBackup();
         if (!append) {
             index = 0;
             files.clear();
         }
-        files.addAll(file.getDescendants(false, true));
+        for (MusicFile musicFile : musicFiles) {
+            files.addAll(musicFile.getDescendants(false, true));
+        }
         setStatus(Status.PLAYING);
     }
 
     /**
-     * Adds a music file to the playlist.  If the given file is a directory, all its children
-     * will be added recursively.
-     *
-     * @param file The music file to add.
-     * @throws IOException If an I/O error occurs.
+     * Convenience method, equivalent to {@link #addFiles(boolean, Iterable)}.
      */
-    public synchronized void addFile(MusicFile file) throws IOException {
-        addFile(file, true);
+    public synchronized void addFiles(boolean append, MusicFile... musicFiles) throws IOException {
+        addFiles(append, Arrays.asList(musicFiles));
     }
 
     /**

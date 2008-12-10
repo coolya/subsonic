@@ -27,7 +27,7 @@ public class PlaylistTestCase extends TestCase {
         playlist.setStatus(Status.STOPPED);
         assertEquals(Status.STOPPED, playlist.getStatus());
 
-        playlist.addFile(new TestMusicFile());
+        playlist.addFiles(true, new TestMusicFile());
         assertEquals(Status.PLAYING, playlist.getStatus());
 
         playlist.clear();
@@ -133,10 +133,10 @@ public class PlaylistTestCase extends TestCase {
     public void testAppend() throws Exception {
         Playlist playlist = createPlaylist(1, "A", "B", "C");
 
-        playlist.addFile(new TestMusicFile("D"), true);
+        playlist.addFiles(true, new TestMusicFile("D"));
         assertPlaylistEquals(playlist, 1, "A", "B", "C", "D");
 
-        playlist.addFile(new TestMusicFile("E"), false);
+        playlist.addFiles(false, new TestMusicFile("E"));
         assertPlaylistEquals(playlist, 0, "E");
     }
 
@@ -154,7 +154,7 @@ public class PlaylistTestCase extends TestCase {
         playlist.undo();
         assertPlaylistEquals(playlist, 0, "A", "B", "C");
 
-        playlist.addFile(new TestMusicFile());
+        playlist.addFiles(true, new TestMusicFile());
         playlist.undo();
         assertPlaylistEquals(playlist, 0, "A", "B", "C");
 
@@ -169,10 +169,10 @@ public class PlaylistTestCase extends TestCase {
 
     public void testOrder() throws IOException {
         Playlist playlist = new Playlist();
-        playlist.addFile(new TestMusicFile(2, "Artist A", "Album B"));
-        playlist.addFile(new TestMusicFile(1, "Artist C", "Album C"));
-        playlist.addFile(new TestMusicFile(3, "Artist B", "Album A"));
-        playlist.addFile(new TestMusicFile(null, "Artist D", "Album D"));
+        playlist.addFiles(true, new TestMusicFile(2, "Artist A", "Album B"));
+        playlist.addFiles(true, new TestMusicFile(1, "Artist C", "Album C"));
+        playlist.addFiles(true, new TestMusicFile(3, "Artist B", "Album A"));
+        playlist.addFiles(true, new TestMusicFile(null, "Artist D", "Album D"));
         playlist.setIndex(2);
         assertEquals("Error in sort.", new Integer(3), playlist.getCurrentFile().getMetaData().getTrackNumber());
 
@@ -217,7 +217,7 @@ public class PlaylistTestCase extends TestCase {
     private Playlist createPlaylist(int index, String... songs) throws Exception {
         Playlist playlist = new Playlist();
         for (String song : songs) {
-            playlist.addFile(new TestMusicFile(song));
+            playlist.addFiles(true, new TestMusicFile(song));
         }
         playlist.setIndex(index);
         return playlist;

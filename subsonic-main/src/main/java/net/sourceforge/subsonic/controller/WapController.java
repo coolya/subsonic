@@ -122,10 +122,10 @@ public class WapController extends MultiActionController {
 
             if (request.getParameter("play") != null) {
                 MusicFile file = musicFileService.getMusicFile(request.getParameter("play"));
-                playlist.addFile(file, false);
+                playlist.addFiles(false, file);
             } else if (request.getParameter("add") != null) {
                 MusicFile file = musicFileService.getMusicFile(request.getParameter("add"));
-                playlist.addFile(file);
+                playlist.addFiles(true, file);
             } else if (request.getParameter("skip") != null) {
                 playlist.setIndex(Integer.parseInt(request.getParameter("skip")));
             } else if (request.getParameter("clear") != null) {
@@ -134,10 +134,7 @@ public class WapController extends MultiActionController {
                 playlistService.loadPlaylist(playlist, request.getParameter("load"));
             } else if (request.getParameter("random") != null) {
                 List<MusicFile> randomFiles = searchService.getRandomSongs(new RandomSearchCriteria(20, null, null, null, null));
-                playlist.clear();
-                for (MusicFile randomFile : randomFiles) {
-                    playlist.addFile(randomFile);
-                }
+                playlist.addFiles(false, randomFiles);
             }
         }
 
