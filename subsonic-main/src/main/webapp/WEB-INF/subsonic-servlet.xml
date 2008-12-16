@@ -383,6 +383,7 @@
                 <prop key="/download.view">downloadController</prop>
                 <prop key="/donate.view">donateController</prop>
                 <prop key="/db.view">dbController</prop>
+                <prop key="/test.view">multiController</prop>
                 <prop key="/podcastReceiver.view">podcastReceiverController</prop>
                 <prop key="/podcastReceiverAdmin.view">podcastReceiverAdminController</prop>
                 <prop key="/podcast.view">podcastController</prop>

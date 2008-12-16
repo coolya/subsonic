@@ -140,6 +140,11 @@
         <property name="settingsService" ref="settingsService"/>
     </bean>
 
+    <bean id="ajaxPlaylistService" class="net.sourceforge.subsonic.ajax.PlaylistService">
+        <property name="playerService" ref="playerService"/>
+        <property name="settingsService" ref="settingsService"/>
+    </bean>
+
     <bean id="ajaxLyricsService" class="net.sourceforge.subsonic.ajax.LyricsService"/>
 
     <bean id="ajaxCoverArtService" class="net.sourceforge.subsonic.ajax.CoverArtService">

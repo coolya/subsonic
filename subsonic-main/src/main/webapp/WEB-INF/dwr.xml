@@ -10,6 +10,10 @@
             <param name="beanName" value="ajaxNowPlayingService"/>
         </create>
 
+        <create creator="spring" javascript="playlistService">
+            <param name="beanName" value="ajaxPlaylistService"/>
+        </create>
+
         <create creator="spring" javascript="lyricsService">
             <param name="beanName" value="ajaxLyricsService"/>
         </create>
@@ -26,8 +30,10 @@
             <param name="beanName" value="ajaxTransferServiceSecure"/>
         </create>
 
-        <convert converter="bean" match="net.sourceforge.subsonic.ajax.UploadInfo"/>
         <convert converter="bean" match="net.sourceforge.subsonic.ajax.NowPlayingInfo"/>
+        <convert converter="bean" match="net.sourceforge.subsonic.ajax.PlaylistInfo"/>
+        <convert converter="bean" match="net.sourceforge.subsonic.ajax.PlaylistInfo$Entry"/>
+        <convert converter="bean" match="net.sourceforge.subsonic.ajax.UploadInfo"/>
         <convert converter="bean" match="net.sourceforge.subsonic.ajax.LyricsInfo"/>
         <convert converter="bean" match="net.sourceforge.subsonic.ajax.CoverArtInfo"/>
 

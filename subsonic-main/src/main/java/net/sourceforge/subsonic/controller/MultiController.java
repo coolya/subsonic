@@ -54,6 +54,10 @@ public class MultiController extends MultiActionController {
         return new ModelAndView("index", "model", map);
     }
 
+    public ModelAndView test(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("test");
+    }
+
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
     }
