@@ -15,6 +15,7 @@
 
     function onload() {
         dwr.engine.setErrorHandler(null);
+        getPlaylist();
     }
 
     function doNothing() {
@@ -39,6 +40,7 @@
             dwr.util.setValue("title" + id, entry.title);
             dwr.util.setValue("album" + id, entry.album);
             dwr.util.setValue("artist" + id, entry.artist);
+            $("albumUrl" + id).href = entry.albumUrl;
             $("pattern" + id).style.display = "table-row";
 //            peopleCache[id] = person;
         }
@@ -55,7 +57,7 @@
     <tbody id="playlistBody">
         <tr id="pattern" style="display:none;">
             <td><span id="title">Title</span></td>
-            <td><span id="album">Album</span></td>
+            <td><a id="albumUrl"><span id="album">Album</span></a></td>
             <td><span id="artist">Artist</span></td>
         </tr>
     </tbody>
