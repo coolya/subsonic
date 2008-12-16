@@ -12,72 +12,72 @@
     var index = 0;
     var fileCount = ${fn:length(model.songs)};
     function setArtist() {
-        var artist = DWRUtil.getValue("artistAll");
+        var artist = dwr.util.getValue("artistAll");
         for (i = 0; i < fileCount; i++) {
-            DWRUtil.setValue("artist" + i, artist);
+            dwr.util.setValue("artist" + i, artist);
         }
     }
     function setAlbum() {
-        var album = DWRUtil.getValue("albumAll");
+        var album = dwr.util.getValue("albumAll");
         for (i = 0; i < fileCount; i++) {
-            DWRUtil.setValue("album" + i, album);
+            dwr.util.setValue("album" + i, album);
         }
     }
     function setYear() {
-        var year = DWRUtil.getValue("yearAll");
+        var year = dwr.util.getValue("yearAll");
         for (i = 0; i < fileCount; i++) {
-            DWRUtil.setValue("year" + i, year);
+            dwr.util.setValue("year" + i, year);
         }
     }
     function setGenre() {
-        var genre = DWRUtil.getValue("genreAll");
+        var genre = dwr.util.getValue("genreAll");
         for (i = 0; i < fileCount; i++) {
-            DWRUtil.setValue("genre" + i, genre);
+            dwr.util.setValue("genre" + i, genre);
         }
     }
     function suggestTitle() {
         for (i = 0; i < fileCount; i++) {
-            var title = DWRUtil.getValue("suggestedTitle" + i);
-            DWRUtil.setValue("title" + i, title);
+            var title = dwr.util.getValue("suggestedTitle" + i);
+            dwr.util.setValue("title" + i, title);
         }
     }
     function resetTitle() {
         for (i = 0; i < fileCount; i++) {
-            var title = DWRUtil.getValue("originalTitle" + i);
-            DWRUtil.setValue("title" + i, title);
+            var title = dwr.util.getValue("originalTitle" + i);
+            dwr.util.setValue("title" + i, title);
         }
     }
     function suggestTrack() {
         for (i = 0; i < fileCount; i++) {
-            var track = DWRUtil.getValue("suggestedTrack" + i);
-            DWRUtil.setValue("track" + i, track);
+            var track = dwr.util.getValue("suggestedTrack" + i);
+            dwr.util.setValue("track" + i, track);
         }
     }
     function resetTrack() {
         for (i = 0; i < fileCount; i++) {
-            var track = DWRUtil.getValue("originalTrack" + i);
-            DWRUtil.setValue("track" + i, track);
+            var track = dwr.util.getValue("originalTrack" + i);
+            dwr.util.setValue("track" + i, track);
         }
     }
     function updateTags() {
         document.getElementById("save").disabled = true;
         index = 0;
-        DWRUtil.setValue("errors", "");
+        dwr.util.setValue("errors", "");
         for (i = 0; i < fileCount; i++) {
-            DWRUtil.setValue("status" + i, "");
+            dwr.util.setValue("status" + i, "");
         }
         updateNextTag();
     }
     function updateNextTag() {
-        var path = DWRUtil.getValue("path" + index);
-        var artist = DWRUtil.getValue("artist" + index);
-        var track = DWRUtil.getValue("track" + index);
-        var album = DWRUtil.getValue("album" + index);
-        var title = DWRUtil.getValue("title" + index);
-        var year = DWRUtil.getValue("year" + index);
-        var genre = DWRUtil.getValue("genre" + index);
-        DWRUtil.setValue("status" + index, "<fmt:message key="edittags.working"/>");
-        tagService.setTags(setTagsCallback, path, track, artist, album, title, year, genre);
+        var path = dwr.util.getValue("path" + index);
+        var artist = dwr.util.getValue("artist" + index);
+        var track = dwr.util.getValue("track" + index);
+        var album = dwr.util.getValue("album" + index);
+        var title = dwr.util.getValue("title" + index);
+        var year = dwr.util.getValue("year" + index);
+        var genre = dwr.util.getValue("genre" + index);
+        dwr.util.setValue("status" + index, "<fmt:message key="edittags.working"/>");
+        tagService.setTags(path, track, artist, album, title, year, genre, setTagsCallback);
     }
     function setTagsCallback(result) {
         var message;
@@ -87,11 +87,11 @@
             message = "<b><fmt:message key="edittags.updated"/></b>";
         } else {
             message = "<div class='warning'><fmt:message key="edittags.error"/></div>"
-            var errors = DWRUtil.getValue("errors");
+            var errors = dwr.util.getValue("errors");
             errors += result + "<br/>";
-            DWRUtil.setValue("errors", errors);
+            dwr.util.setValue("errors", errors, { escapeHtml:false });
         }
-        DWRUtil.setValue("status" + index, message);
+        dwr.util.setValue("status" + index, message, { escapeHtml:false });
         index++;
         if (index < fileCount) {
             updateNextTag();
@@ -122,9 +122,9 @@
             <a href="javascript:resetTrack()"><fmt:message key="edittags.reset.short"/></a></th>
         <th class="ruleTableHeader"><a href="javascript:suggestTitle()"><fmt:message key="edittags.suggest"/></a> |
             <a href="javascript:resetTitle()"><fmt:message key="edittags.reset"/></a></th>
-        <th class="ruleTableHeader" style="white-space: nowrap"><input type="text" name="artistAll" size="15" onkeypress="DWRUtil.onReturn(event, setArtist)" value="${model.defaultArtist}"/>&nbsp;<a href="javascript:setArtist()"><fmt:message key="edittags.set"/></a></th>
-        <th class="ruleTableHeader" style="white-space: nowrap"><input type="text" name="albumAll" size="15" onkeypress="DWRUtil.onReturn(event, setAlbum)" value="${model.defaultAlbum}"/>&nbsp;<a href="javascript:setAlbum()"><fmt:message key="edittags.set"/></a></th>
-        <th class="ruleTableHeader" style="white-space: nowrap"><input type="text" name="yearAll" size="5" onkeypress="DWRUtil.onReturn(event, setYear)" value="${model.defaultYear}"/>&nbsp;<a href="javascript:setYear()"><fmt:message key="edittags.set"/></a></th>
+        <th class="ruleTableHeader" style="white-space: nowrap"><input type="text" name="artistAll" size="15" onkeypress="dwr.util.onReturn(event, setArtist)" value="${model.defaultArtist}"/>&nbsp;<a href="javascript:setArtist()"><fmt:message key="edittags.set"/></a></th>
+        <th class="ruleTableHeader" style="white-space: nowrap"><input type="text" name="albumAll" size="15" onkeypress="dwr.util.onReturn(event, setAlbum)" value="${model.defaultAlbum}"/>&nbsp;<a href="javascript:setAlbum()"><fmt:message key="edittags.set"/></a></th>
+        <th class="ruleTableHeader" style="white-space: nowrap"><input type="text" name="yearAll" size="5" onkeypress="dwr.util.onReturn(event, setYear)" value="${model.defaultYear}"/>&nbsp;<a href="javascript:setYear()"><fmt:message key="edittags.set"/></a></th>
         <th class="ruleTableHeader" style="white-space: nowrap">
             <select name="genreAll" style="width:7em">
                 <option value=""/>

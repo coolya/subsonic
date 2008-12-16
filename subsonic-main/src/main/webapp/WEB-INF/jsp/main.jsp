@@ -26,7 +26,7 @@
     <script type="text/javascript" language="javascript">
 
         var currentDir = null;
-        DWREngine.setErrorHandler(null);
+        dwr.engine.setErrorHandler(null);
         startGetDirectoryTimer();
 
         function startGetDirectoryTimer() {
@@ -48,7 +48,7 @@
     <!-- This script uses AJAX to periodically retrieve what all users are playing. -->
     <script type="text/javascript" language="javascript">
 
-        DWREngine.setErrorHandler(null);
+        dwr.engine.setErrorHandler(null);
         startGetNowPlayingTimer();
 
         function startGetNowPlayingTimer() {

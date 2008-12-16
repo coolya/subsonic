@@ -1,3 +1,14 @@
+AJAX PLAYLIST
+-------------
+1. Upgrade to DWR 2.0 without changing any functionality.
+2. Create new AJAX service, PlaylistService, which returns the playlist for a given player.
+3. Create new test jsp for dynamically rendering the playlist as returned from the AJAX service. (http://directwebremoting.org/dwr/examples/table)
+4. Use style.display to control what columns should be visible.
+5. Use javascript to make alternating row colors.
+6. Use javascript to create dynamic album links.
+7. Make service method for shuffling, and implement in test jsp.
+
+
 TODO IN 3.6
 -----------
 Require Java 6 in exe4j.
@@ -270,7 +281,6 @@ openclipart.org
 http://www.nero.com/eng/nero-aac-codec.html
 
 
-
 SUBSONIC AGENT
 ---------------
 Stop subsonic.exe if it's running
@@ -279,7 +289,6 @@ Start Subsonic automatically after install.
 Change Getting Started.
 Log stderr.
 Optionally put in startup folder.
-
 
 GUEST USER / DEMO MODE
 ----------------------

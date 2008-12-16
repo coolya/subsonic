@@ -8,7 +8,7 @@
 
     <script type="text/javascript" language="javascript">
 
-        DWREngine.setErrorHandler(null);
+        dwr.engine.setErrorHandler(null);
 
         function getImages(service) {
             $("wait").style.display = "inline";
@@ -18,8 +18,8 @@
             $("errorDetails").style.display = "none";
             $("noImagesFound").style.display = "none";
 
-            var artist = DWRUtil.getValue("artist");
-            var album = DWRUtil.getValue("album");
+            var artist = dwr.util.getValue("artist");
+            var album = dwr.util.getValue("album");
             coverArtService.getCoverArtImages(service, artist, album, getImagesCallback);
         }
 
@@ -28,7 +28,7 @@
             for (var i = 0; i < imageUrls.length; i++) {
                 html += "<a href=\"javascript:setImage('" + imageUrls[i].imageDownloadUrl + "')\"><img src='" + imageUrls[i].imagePreviewUrl + "' style='padding:5pt' alt=''/></a>";
             }
-            DWRUtil.setValue("images", html);
+            dwr.util.setValue("images", html, { escapeHtml:false });
 
             $("wait").style.display = "none";
             if (imageUrls.length > 0) {
@@ -45,14 +45,14 @@
             $("error").style.display = "none";
             $("errorDetails").style.display = "none";
             $("noImagesFound").style.display = "none";
-            var path = DWRUtil.getValue("path");
+            var path = dwr.util.getValue("path");
             coverArtService.setCoverArtImage(path, imageUrl, setImageCallback);
         }
 
         function setImageCallback(errorDetails) {
             $("wait").style.display = "none";
             if (errorDetails != null) {
-                DWRUtil.setValue("errorDetails", "<br/>" + errorDetails);
+                dwr.util.setValue("errorDetails", "<br/>" + errorDetails, { escapeHtml:false });
                 $("error").style.display = "inline";
                 $("errorDetails").style.display = "inline";
             } else {
@@ -76,7 +76,7 @@
     <input id="path" type="hidden" name="path" value="${model.path}"/>
     <td><label for="url"><fmt:message key="changecoverart.address"/></label></td>
     <td><input type="text" name="url" size="40" id="url" value="http://"/></td>
-    <td><input type='submit' value='<fmt:message key="common.ok"/>' onclick="setImage(DWRUtil.getValue('url'))"></td>
+    <td><input type='submit' value='<fmt:message key="common.ok"/>' onclick="setImage(dwr.util.getValue('url'))"></td>
 </tr></table>
 
 <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.path}"/></sub:url>

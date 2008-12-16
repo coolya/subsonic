@@ -14,7 +14,7 @@
     var currentFile = null;
 
     function onload() {
-        DWREngine.setErrorHandler(null);
+        dwr.engine.setErrorHandler(null);
         location.hash="${model.anchor}";
         startTimer();
         onSelectionChange();

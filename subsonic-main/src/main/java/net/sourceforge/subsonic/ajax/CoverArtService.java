@@ -18,7 +18,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
 
-import uk.ltd.getahead.dwr.WebContextFactory;
+import org.directwebremoting.WebContextFactory;
 
 /**
  * Provides AJAX-enabled services for retrieving cover art images.

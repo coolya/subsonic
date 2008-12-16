@@ -9,7 +9,7 @@
 
     <script type="text/javascript" language="javascript">
 
-        DWREngine.setErrorHandler(null);
+        dwr.engine.setErrorHandler(null);
 
         function getLyrics(artist, song) {
             window.focus();
@@ -22,8 +22,8 @@
         }
 
         function getLyricsCallback(lyricsInfo) {
-            DWRUtil.setValue("lyricsHeader", lyricsInfo.header);
-            DWRUtil.setValue("lyricsText", lyricsInfo.lyrics);
+            dwr.util.setValue("lyricsHeader", lyricsInfo.header);
+            dwr.util.setValue("lyricsText", lyricsInfo.lyrics, { escapeHtml:false });
             $("wait").style.display = "none";
             if (lyricsInfo.lyrics != null) {
                 $("lyrics").style.display = "inline";
@@ -41,7 +41,7 @@
         <td><fmt:message key="lyrics.artist"/></td>
         <td style="padding-left:0.50em"><input id="artist" type="text" size="40" value="${model.artist}" tabindex="1"/></td>
         <td style="padding-left:0.75em"><input type="submit" value="<fmt:message key="lyrics.search"/>" style="width:6em"
-                                               onclick="getLyrics(DWRUtil.getValue('artist'), DWRUtil.getValue('song'))" tabindex="3"/></td>
+                                               onclick="getLyrics(dwr.util.getValue('artist'), dwr.util.getValue('song'))" tabindex="3"/></td>
     </tr>
     <tr>
         <td><fmt:message key="lyrics.song"/></td>

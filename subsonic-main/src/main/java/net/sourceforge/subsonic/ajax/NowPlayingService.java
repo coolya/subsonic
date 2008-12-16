@@ -11,8 +11,8 @@ import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
-import uk.ltd.getahead.dwr.WebContext;
-import uk.ltd.getahead.dwr.WebContextFactory;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;

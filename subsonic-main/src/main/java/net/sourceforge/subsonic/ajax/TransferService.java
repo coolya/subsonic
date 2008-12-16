@@ -2,7 +2,7 @@ package net.sourceforge.subsonic.ajax;
 
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.controller.*;
-import uk.ltd.getahead.dwr.*;
+import org.directwebremoting.*;
 
 import javax.servlet.http.*;
 
