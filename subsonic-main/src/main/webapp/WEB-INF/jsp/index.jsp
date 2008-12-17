@@ -10,7 +10,6 @@
 
 <frameset rows="70,*,0" border="1" framespacing="1" frameborder="1">
     <frame name="upper" src="top.view?">
-
     <frameset cols="15%,85%">
         <frame name="left" src="left.view?" marginwidth="10" marginheight="10">
 
@@ -18,9 +17,7 @@
             <frame name="main" src="nowPlaying.view?" marginwidth="10" marginheight="10">
             <frame name="playlist" src="playlist.view?">
         </frameset>
-
     </frameset>
-
     <frame name="hidden" frameborder="0" noresize="noresize">
 
 </frameset>

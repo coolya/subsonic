@@ -22,7 +22,7 @@ PARAMETERS
 
 <c:if test="${param.asTable}"><td></c:if>
 <c:if test="${empty param.playEnabled or param.playEnabled}">
-<a target="playlist" href="${playUrl}">
+    <a href="javascript:noop()" onclick="top.playlist.onPlay('${param.path}')">
     <img src="<spring:theme code="playImage"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
 </c:if>
 <c:if test="${param.asTable}"></td></c:if>

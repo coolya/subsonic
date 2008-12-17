@@ -3,8 +3,10 @@
 <html><head>
     <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/dwr/interface/playlistService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
 </head>
 
 <body class="bgcolor2" onload="onload()">
@@ -17,6 +19,7 @@
         dwr.engine.setErrorHandler(null);
         location.hash="${model.anchor}";
         startTimer();
+        getPlaylist();
         onSelectionChange();
     }
 
@@ -31,18 +34,105 @@
         }
         currentFile = file;
     }
-    function clearPlaylist() {
+
+    function onClear() {
     <c:choose>
     <c:when test="${model.partyMode}">
         if (confirm("<fmt:message key="playlist.confirmclear"/>")) {
-            location.href = "playlist.view?clear";
+            playlistService.clear(playlistCallback);
         }
     </c:when>
     <c:otherwise>
-        location.href = "playlist.view?clear";
+        playlistService.clear(playlistCallback);
     </c:otherwise>
     </c:choose>
     }
+
+    function getPlaylist() {
+        playlistService.getPlaylist(playlistCallback);
+    }
+    function onPlay(path) {
+        alert("onPlay " + path);
+        playlistService.play(path, playlistCallback);
+        alert("done");
+    }
+    function onAdd(path) {
+        playlistService.add(path, playlistCallback);
+    }
+    function onShuffle() {
+        playlistService.shuffle(playlistCallback);
+    }
+    function onRemove(index) {
+        playlistService.remove(index, playlistCallback);
+    }
+    function onUp(index) {
+        playlistService.up(index, playlistCallback);
+    }
+    function onDown(index) {
+        playlistService.down(index, playlistCallback);
+    }
+
+    function playlistCallback(playlist) {
+
+        // Delete all the rows except for the "pattern" row
+        dwr.util.removeAllRows("playlistBody", { filter:function(tr) {
+            return (tr.id != "pattern");
+        }});
+
+        // Create a new set cloned from the pattern row
+        for (var i = 0; i < playlist.entries.length; i++) {
+            var entry  = playlist.entries[i];
+            var id = i + 1;
+            dwr.util.cloneNode("pattern", { idSuffix:id });
+            if ($("trackNumber" + id)) {
+                dwr.util.setValue("trackNumber" + id, entry.trackNumber);
+            }
+            if ($("title" + id)) {
+                dwr.util.setValue("title" + id, truncate(entry.title));
+                $("title" + id).title = entry.title;
+            }
+            if ($("album" + id)) {
+                dwr.util.setValue("album" + id, truncate(entry.album));
+                $("album" + id).title = entry.album;
+                $("albumUrl" + id).href = entry.albumUrl;
+            }
+            if ($("artist" + id)) {
+                dwr.util.setValue("artist" + id, truncate(entry.artist));
+                $("artist" + id).title = entry.artist;
+            }
+            if ($("genre" + id)) {
+                dwr.util.setValue("genre" + id, entry.genre);
+            }
+            if ($("year" + id)) {
+                dwr.util.setValue("year" + id, entry.year);
+            }
+            if ($("bitRate" + id)) {
+                dwr.util.setValue("bitRate" + id, entry.bitRate);
+            }
+            if ($("duration" + id)) {
+                dwr.util.setValue("duration" + id, entry.duration);
+            }
+            if ($("format" + id)) {
+                dwr.util.setValue("format" + id, entry.format);
+            }
+            if ($("fileSize" + id)) {
+                dwr.util.setValue("fileSize" + id, entry.fileSize);
+            }
+
+            $("pattern" + id).style.display = "table-row";
+            $("pattern" + id).className = (i % 2 == 0) ? "bgcolor1" : "bgcolor2";
+        }
+    }
+
+    function truncate(s) {
+        var cutoff = ${model.visibility.captionCutoff};
+
+        if (s.length > cutoff) {
+            return s.substring(0, cutoff) + "...";
+        }
+        return s;
+    }
+
 </script>
 
 <!-- actionSelected() is invoked when the users selects from the "More actions..." combo box. -->
@@ -141,8 +231,8 @@
            </c:choose>
        </c:if>
 
-        <td><a href="javascript:clearPlaylist()"><fmt:message key="playlist.clear"/></a></td>
-        <td> | <a href="playlist.view?shuffle"><fmt:message key="playlist.shuffle"/></a></td>
+        <td><a href="javascript:noop()" onclick="onClear()"><fmt:message key="playlist.clear"/></a></td>
+        <td> | <a href="javascript:noop()" onclick="onShuffle()"><fmt:message key="playlist.shuffle"/></a></td>
 
         <c:if test="${not model.player.clientSidePlaylist}">
             <c:choose>
@@ -194,6 +284,66 @@
         <p><em><fmt:message key="playlist.empty"/></em></p>
     </c:when>
     <c:otherwise>
+
+
+    <table style="border-collapse:collapse;white-space:nowrap;">
+        <tbody id="playlistBody">
+            <tr id="pattern" style="display:none;margin:0;padding:0;border:0">
+                <td class="bgcolor2"><a href="javascript:noop()">
+                    <img id="removeSong" onclick="onRemove(this.id.substring(10) - 1)" src="<spring:theme code="removeImage"/>"
+                         alt="<fmt:message key="playlist.remove"/>" title="<fmt:message key="playlist.remove"/>"/></a></td>
+                <td class="bgcolor2"><a href="javascript:noop()">
+                    <img id="up" onclick="onUp(this.id.substring(2) - 1)" src="<spring:theme code="upImage"/>"
+                         alt="<fmt:message key="playlist.up"/>" title="<fmt:message key="playlist.up"/>"/></a></td>
+                <td class="bgcolor2"><a href="javascript:noop()">
+                    <img id="down" onclick="onDown(this.id.substring(4) - 1)" src="<spring:theme code="downImage"/>"
+                         alt="<fmt:message key="playlist.down"/>" title="<fmt:message key="playlist.down"/>"/></a></td>
+
+                <td class="bgcolor2" style="padding-left: 0.1em"><input type="checkbox" class="checkbox" id="songIndex" onchange="onSelectionChange()"/></td>
+                <td style="padding-right:0.25em"/>
+
+                <c:if test="${model.visibility.trackNumberVisible}">
+                    <td style="padding-right:0.5em;text-align:right"><span class="detail" id="trackNumber">1</span></td>
+                </c:if>
+
+                <td style="padding-right:1.25em"><span id="title">Title</span></td>
+                <c:if test="${model.visibility.albumVisible}">
+                    <td style="padding-right:1.25em"><a id="albumUrl" target="main"><span id="album" class="detail">Album</span></a></td>
+                </c:if>
+
+                <c:if test="${model.visibility.artistVisible}">
+                    <td style="padding-right:1.25em"><span id="artist" class="detail">Artist</span></td>
+                </c:if>
+
+                <c:if test="${model.visibility.genreVisible}">
+                    <td style="padding-right:1.25em"><span id="genre" class="detail">Genre</span></td>
+                </c:if>
+
+                <c:if test="${model.visibility.yearVisible}">
+                    <td style="padding-right:1.25em"><span id="year" class="detail">Year</span></td>
+                </c:if>
+
+                <c:if test="${model.visibility.formatVisible}">
+                    <td style="padding-right:1.25em"><span id="format" class="detail">Format</span></td>
+                </c:if>
+
+                <c:if test="${model.visibility.fileSizeVisible}">
+                    <td style="padding-right:1.25em;text-align:right;"><span id="fileSize" class="detail">Format</span></td>
+                </c:if>
+
+                <c:if test="${model.visibility.durationVisible}">
+                    <td style="padding-right:1.25em;text-align:right;"><span id="duration" class="detail">Duration</span></td>
+                </c:if>
+
+                <c:if test="${model.visibility.bitRateVisible}">
+                    <td style="padding-right:0.25em"><span id="bitRate" class="detail">Bit Rate</span></td>
+                </c:if>
+
+            </tr>
+        </tbody>
+    </table>
+
+
         <table style="border-collapse:collapse;white-space:nowrap;">
             <c:set var="cutoff" value="${model.visibility.captionCutoff}"/>
             <c:forEach items="${model.songs}" var="song" varStatus="loopStatus">

@@ -11,7 +11,6 @@
 
 <!-- This script uses AJAX to periodically check if the current song has changed. -->
 <script type="text/javascript" language="javascript">
-    var currentFile = null;
 
     function onload() {
         dwr.engine.setErrorHandler(null);
@@ -22,10 +21,14 @@
     }
 
     function getPlaylist() {
-        playlistService.getPlaylist(getPlaylistCallback);
+        playlistService.getPlaylist(playlistCallback);
     }
 
-    function getPlaylistCallback(playlist) {
+    function shuffle() {
+        playlistService.shuffle(playlistCallback);
+    }
+
+    function playlistCallback(playlist) {
 
         // Delete all the rows except for the "pattern" row
         dwr.util.removeAllRows("playlistBody", { filter:function(tr) {
@@ -42,6 +45,7 @@
             dwr.util.setValue("artist" + id, entry.artist);
             $("albumUrl" + id).href = entry.albumUrl;
             $("pattern" + id).style.display = "table-row";
+            $("pattern" + id).className = (i % 2 == 0) ? "bgcolor1" : "bgcolor2";
 //            peopleCache[id] = person;
         }
     }
@@ -50,13 +54,14 @@
 
 
 <div>
-    <a href="javascript:doNothing()" onclick="getPlaylist()">Load playlist</a>
+    <a href="javascript:doNothing()" onclick="shuffle()">Shuffle</a>
 </div>
 
 <table border="1">
     <tbody id="playlistBody">
         <tr id="pattern" style="display:none;">
             <td><span id="title">Title</span></td>
+            <td style="display:none;"><span id="year">Year</span></td>
             <td><a id="albumUrl"><span id="album">Album</span></a></td>
             <td><span id="artist">Artist</span></td>
         </tr>

@@ -1,3 +1,6 @@
+function noop() {
+}
+
 function popup(mylink, windowname) {
     return popupSize(mylink, windowname, 400, 200);
 }
