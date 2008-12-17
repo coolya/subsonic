@@ -18,22 +18,22 @@
     function onload() {
         dwr.engine.setErrorHandler(null);
         location.hash="${model.anchor}";
-        startTimer();
+//        startTimer();
         getPlaylist();
         onSelectionChange();
     }
 
-    function startTimer() {
-        nowPlayingService.getFile(nowPlayingCallback);
-        setTimeout("startTimer()", 10000);
-    }
-
-    function nowPlayingCallback(file) {
-        if (currentFile != null && currentFile != file) {
-            location.replace("playlist.view?");
-        }
-        currentFile = file;
-    }
+//    function startTimer() {
+//        nowPlayingService.getFile(nowPlayingCallback);
+//        setTimeout("startTimer()", 10000);
+//    }
+//
+//    function nowPlayingCallback(file) {
+//        if (currentFile != null && currentFile != file) {
+//            location.replace("playlist.view?");
+//        }
+//        currentFile = file;
+//    }
 
     function onClear() {
     <c:choose>
@@ -52,9 +52,10 @@
         playlistService.getPlaylist(playlistCallback);
     }
     function onPlay(path) {
-        alert("onPlay " + path);
         playlistService.play(path, playlistCallback);
-        alert("done");
+    }
+    function onPlayRandom(path, count) {
+        playlistService.playRandom(path, count, playlistCallback);
     }
     function onAdd(path) {
         playlistService.add(path, playlistCallback);
@@ -71,8 +72,28 @@
     function onDown(index) {
         playlistService.down(index, playlistCallback);
     }
+    function onToggleRepeat() {
+        playlistService.toggleRepeat(playlistCallback);
+    }
+    function onUndo() {
+        playlistService.undo(playlistCallback);
+    }
+    function onSortByTrack() {
+        playlistService.sortByTrack(playlistCallback);
+    }
+    function onSortByArtist() {
+        playlistService.sortByArtist(playlistCallback);
+    }
+    function onSortByAlbum() {
+        playlistService.sortByAlbum(playlistCallback);
+    }
 
     function playlistCallback(playlist) {
+
+        if ($("toggleRepeat")) {
+            var text = playlist.repeatEnabled ? '<fmt:message key="playlist.repeat_off"/>' : '<fmt:message key="playlist.repeat_on"/>';
+            dwr.util.setValue("toggleRepeat", text);
+        }
 
         // Delete all the rows except for the "pattern" row
         dwr.util.removeAllRows("playlistBody", { filter:function(tr) {
@@ -150,11 +171,11 @@
         } else if (id == "downloadPlaylist") {
             location.href = "download.view?player=${model.player.id}";
         } else if (id == "sortByTrack") {
-            location.href = "playlist.view?sortByTrack";
+            onSortByTrack();
         } else if (id == "sortByArtist") {
-            location.href = "playlist.view?sortByArtist";
+            onSortByArtist();
         } else if (id == "sortByAlbum") {
-            location.href = "playlist.view?sortByAlbum";
+            onSortByAlbum();
         } else if (id == "selectAll") {
             selectAll(true);
             onSelectionChange();
@@ -235,17 +256,10 @@
         <td> | <a href="javascript:noop()" onclick="onShuffle()"><fmt:message key="playlist.shuffle"/></a></td>
 
         <c:if test="${not model.player.clientSidePlaylist}">
-            <c:choose>
-                <c:when test="${model.repeatEnabled}">
-                    <td> | <a href="playlist.view?repeat"><fmt:message key="playlist.repeat_on"/></a></td>
-                </c:when>
-                <c:otherwise>
-                    <td> | <a href="playlist.view?repeat"><fmt:message key="playlist.repeat_off"/></a></td>
-                </c:otherwise>
-            </c:choose>
+            <td> | <a href="javascript:noop()" onclick="onToggleRepeat()"><span id="toggleRepeat"><fmt:message key="playlist.repeat_on"/></span></a></td>
         </c:if>
 
-        <td> | <a href="playlist.view?undo"><fmt:message key="playlist.undo"/></a></td>
+        <td> | <a href="javascript:noop()" onclick="onUndo()"><fmt:message key="playlist.undo"/></a></td>
                 <c:if test="${model.user.streamRole and not empty model.songs}">
         <td> | <a href="webPlayer.view?"><fmt:message key="playlist.webplayer"/></a></td>
                 </c:if>
@@ -284,7 +298,6 @@
         <p><em><fmt:message key="playlist.empty"/></em></p>
     </c:when>
     <c:otherwise>
-
 
     <table style="border-collapse:collapse;white-space:nowrap;">
         <tbody id="playlistBody">
@@ -344,6 +357,7 @@
     </table>
 
 
+    <c:if test="false">
         <table style="border-collapse:collapse;white-space:nowrap;">
             <c:set var="cutoff" value="${model.visibility.captionCutoff}"/>
             <c:forEach items="${model.songs}" var="song" varStatus="loopStatus">
@@ -448,6 +462,7 @@
                 </tr>
             </c:forEach>
         </table>
+    </c:if>
     </c:otherwise>
 </c:choose>
 

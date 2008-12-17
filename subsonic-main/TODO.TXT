@@ -6,15 +6,19 @@ x  3. Create new test jsp for dynamically rendering the playlist as returned fro
 x  4. Use style.display to control what columns should be visible.
 x  5. Use javascript to make alternating row colors.
 x  6. Use javascript to create dynamic album links.
-   7. Make service method for shuffling, and implement in test jsp.
+x  7. Make service method for shuffling, and implement in test jsp.
    8. Busy icon.
-   9. Truncate text in Javascript.
+x  9. Truncate text in Javascript.
   10. Make it work in IE.
+  11. Need to refresh playlist.jsp before add/play works.
+  12. Fix Stop/Play and m3u emitting.
 
 TODO IN 3.6
 -----------
-Require Java 6 in exe4j.
+Require Java 6 in exe4j.  Update bundled Java version.
+Add buttons to stop and start Subsonic service.
 Vista icon problem.  Agent.
+Verify that subsonic.sh still works.
 Change license to GPL.
 Add default welcome message.
 Error with new LAME version?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3339

@@ -10,27 +10,24 @@ PARAMETERS
   asTable: Whether to put the images in td tags.
 --%>
 
-<sub:url value="playlist.view" var="playUrl">
-    <sub:param name="play" value="${param.path}"/>
-</sub:url>
-<sub:url value="playlist.view" var="addUrl">
-    <sub:param name="add" value="${param.path}"/>
-</sub:url>
 <sub:url value="/download.view" var="downloadUrl">
     <sub:param name="path" value="${param.path}"/>
 </sub:url>
+<c:set var="path">
+    <sub:escapeJavaScript string="${param.path}"/>
+</c:set>
 
 <c:if test="${param.asTable}"><td></c:if>
 <c:if test="${empty param.playEnabled or param.playEnabled}">
-    <a href="javascript:noop()" onclick="top.playlist.onPlay('${param.path}')">
+    <a href="javascript:noop()" onclick="top.playlist.onPlay('${path}')">
     <img src="<spring:theme code="playImage"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
 </c:if>
 <c:if test="${param.asTable}"></td></c:if>
 
 <c:if test="${param.asTable}"><td></c:if>
 <c:if test="${empty param.addEnabled or param.addEnabled}">
-<a target="playlist" href="${addUrl}">
-    <img src="<spring:theme code="addImage"/>" alt="<fmt:message key="common.add"/>" title="<fmt:message key="common.add"/>"/></a>
+    <a href="javascript:noop()" onclick="top.playlist.onAdd('${path}')">
+        <img src="<spring:theme code="addImage"/>" alt="<fmt:message key="common.add"/>" title="<fmt:message key="common.add"/>"/></a>
 </c:if>
 <c:if test="${param.asTable}"></td></c:if>
 

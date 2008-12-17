@@ -10,13 +10,19 @@ import java.util.List;
 public class PlaylistInfo {
 
     private final List<Entry> entries;
+    private final boolean repeatEnabled;
 
-    public PlaylistInfo(List<Entry> entries) {
+    public PlaylistInfo(List<Entry> entries, boolean repeatEnabled) {
         this.entries = entries;
+        this.repeatEnabled = repeatEnabled;
     }
 
     public List<Entry> getEntries() {
         return entries;
+    }
+
+    public boolean isRepeatEnabled() {
+        return repeatEnabled;
     }
 
     public static class Entry {

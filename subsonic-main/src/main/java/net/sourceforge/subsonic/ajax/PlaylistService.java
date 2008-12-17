@@ -1,25 +1,22 @@
 package net.sourceforge.subsonic.ajax;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.directwebremoting.WebContext;
-import org.directwebremoting.WebContextFactory;
-import org.springframework.web.servlet.support.RequestContextUtils;
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Playlist;
-import net.sourceforge.subsonic.service.PlayerService;
-import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.util.StringUtil;
-import net.sourceforge.subsonic.command.SearchCommand;
+import org.apache.commons.lang.StringUtils;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Provides AJAX-enabled services for manipulating the playlist of a player.
@@ -47,6 +44,15 @@ public class PlaylistService {
         MusicFile file = musicFileService.getMusicFile(path);
         Playlist playlist = getCurrentPlaylist();
         playlist.addFiles(false, file);
+        playlist.setRandomSearchCriteria(null);
+        return convert(playlist);
+    }
+
+    public PlaylistInfo playRandom(String path, int count) throws Exception {
+        MusicFile file = musicFileService.getMusicFile(path);
+        List<MusicFile> randomFiles = getRandomChildren(file, count);
+        Playlist playlist = getCurrentPlaylist();
+        playlist.addFiles(false, randomFiles);
         playlist.setRandomSearchCriteria(null);
         return convert(playlist);
     }
@@ -89,6 +95,45 @@ public class PlaylistService {
         return convert(playlist);
     }
 
+    public PlaylistInfo toggleRepeat() throws Exception {
+        Playlist playlist = getCurrentPlaylist();
+        playlist.setRepeatEnabled(!playlist.isRepeatEnabled());
+        return convert(playlist);
+    }
+
+    public PlaylistInfo undo() throws Exception {
+        Playlist playlist = getCurrentPlaylist();
+        playlist.undo();
+        return convert(playlist);
+    }
+
+    public PlaylistInfo sortByTrack() throws Exception {
+        Playlist playlist = getCurrentPlaylist();
+        playlist.sort(Playlist.SortOrder.TRACK);
+        return convert(playlist);
+    }
+
+    public PlaylistInfo sortByArtist() throws Exception {
+        Playlist playlist = getCurrentPlaylist();
+        playlist.sort(Playlist.SortOrder.ARTIST);
+        return convert(playlist);
+    }
+
+    public PlaylistInfo sortByAlbum() throws Exception {
+        Playlist playlist = getCurrentPlaylist();
+        playlist.sort(Playlist.SortOrder.ALBUM);
+        return convert(playlist);
+    }
+
+    private List<MusicFile> getRandomChildren(MusicFile file, int count) throws IOException {
+        List<MusicFile> children = file.getDescendants(false, false);
+        if (children.isEmpty()) {
+            return children;
+        }
+        Collections.shuffle(children);
+        return children.subList(0, Math.min(count, children.size()));
+    }
+
     private PlaylistInfo convert(Playlist playlist) throws Exception {
         HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
         String url = request.getRequestURL().toString();
@@ -97,15 +142,15 @@ public class PlaylistService {
         for (MusicFile file : playlist.getFiles()) {
             MusicFile.MetaData metaData = file.getMetaData();
             String albumUrl = url.replaceFirst("/dwr/.*", "/main.view?pathUtf8Hex=" +
-                    StringUtil.utf8HexEncode(file.getParent().getPath()));
+                                                          StringUtil.utf8HexEncode(file.getParent().getPath()));
 
             entries.add(new PlaylistInfo.Entry(metaData.getTrackNumber(), metaData.getTitle(), metaData.getArtist(),
-                    metaData.getAlbum(), metaData.getGenre(), metaData.getYear(), formatBitRate(metaData),
-                    metaData.getDurationAsString(), formatFormat(metaData.getFormat()),
-                    formatFileSize(metaData.getFileSize()), albumUrl));
+                                               metaData.getAlbum(), metaData.getGenre(), metaData.getYear(), formatBitRate(metaData),
+                                               metaData.getDurationAsString(), formatFormat(metaData.getFormat()),
+                                               formatFileSize(metaData.getFileSize()), albumUrl));
         }
 
-        return new PlaylistInfo(entries);
+        return new PlaylistInfo(entries, playlist.isRepeatEnabled());
     }
 
     private String formatFileSize(Long fileSize) {

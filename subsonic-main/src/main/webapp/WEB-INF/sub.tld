@@ -110,4 +110,21 @@
         </attribute>
     </tag>
 
+    <tag>
+        <description>
+            Escapes the characters in a string using JavaScript rules.
+        </description>
+        <name>escapeJavaScript</name>
+        <tag-class>net.sourceforge.subsonic.taglib.EscapeJavaScriptTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>
+                The string to escape.
+            </description>
+            <name>string</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
 </taglib>
