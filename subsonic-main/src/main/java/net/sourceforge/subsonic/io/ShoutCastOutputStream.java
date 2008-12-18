@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * Implements SHOUTcast support by decorating an existing output stream.
  * <p/>
@@ -113,7 +115,7 @@ public class ShoutCastOutputStream extends OutputStream {
     }
 
     private void writeMetaData() throws IOException {
-        String streamTitle = settingsService.getWelcomeMessage();
+        String streamTitle = StringUtils.trimToEmpty(settingsService.getWelcomeTitle());
 
         MusicFile musicFile = playlist.getCurrentFile();
         if (musicFile != null) {

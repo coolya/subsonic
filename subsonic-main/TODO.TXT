@@ -2,11 +2,6 @@ AJAX PLAYLIST
 -------------
 Busy icon.
 Make it work in IE.
-Fix Stop/Play and m3u emitting.
-Show which song is currently playing.
-Random playlist
-Simplify PlaylistController.
-Simplify playlist.jsp.
 
 TODO IN 3.6
 -----------

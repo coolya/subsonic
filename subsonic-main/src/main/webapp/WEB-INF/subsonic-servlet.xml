@@ -233,8 +233,6 @@
         <property name="playerService" ref="playerService"/>
         <property name="securityService" ref="securityService"/>
         <property name="settingsService" ref="settingsService"/>
-        <property name="musicFileService" ref="musicFileService"/>
-        <property name="jukeboxService" ref="jukeboxService"/>
     </bean>
     <bean id="webPlayerController" class="net.sourceforge.subsonic.controller.WebPlayerController">
         <property name="viewName" value="webPlayer"/>

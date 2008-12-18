@@ -10,31 +10,34 @@
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
 </head>
 
-<body class="bgcolor2" onload="onload()">
+<body class="bgcolor2" onload="onLoad()">
 
-<!-- This script uses AJAX to periodically check if the current song has changed. -->
 <script type="text/javascript" language="javascript">
-//    var currentFile = null;
+    var currentFile = null;
     var songs;
 
-    function onload() {
+    function onLoad() {
         dwr.engine.setErrorHandler(null);
-//        startTimer();
+        startTimer();
         getPlaylist();
     }
 
-//    function startTimer() {
-//        nowPlayingService.getFile(nowPlayingCallback);
-//        setTimeout("startTimer()", 10000);
-//    }
-//
-//    function nowPlayingCallback(file) {
-//        if (currentFile != null && currentFile != file) {
-//            location.replace("playlist.view?");
-//        }
-//        currentFile = file;
-//    }
+    function startTimer() {
+        <!-- Periodically check if the current song has changed. -->
+        nowPlayingService.getFile(nowPlayingCallback);
+        setTimeout("startTimer()", 10000);
+    }
 
+    function nowPlayingCallback(file) {
+        if (currentFile != null && currentFile != file) {
+            getPlaylist();
+        }
+        currentFile = file;
+    }
+
+    function getPlaylist() {
+        playlistService.getPlaylist(playlistCallback);
+    }
     function onClear() {
     <c:choose>
     <c:when test="${model.partyMode}">
@@ -47,9 +50,11 @@
     </c:otherwise>
     </c:choose>
     }
-
-    function getPlaylist() {
-        playlistService.getPlaylist(playlistCallback);
+    function onStart() {
+        playlistService.start(playlistCallback);
+    }
+    function onStop() {
+        playlistService.stop(playlistCallback);
     }
     function onSkip(index) {
         playlistService.skip(index, playlistCallback);
@@ -93,6 +98,16 @@
 
     function playlistCallback(playlist) {
         songs = playlist.entries;
+        if ($("start")) {
+            if (playlist.stopEnabled) {
+                $("start").hide();
+                $("stop").show();
+            } else {
+                $("start").show();
+                $("stop").hide();
+            }
+        }
+
         if ($("toggleRepeat")) {
             var text = playlist.repeatEnabled ? '<fmt:message key="playlist.repeat_off"/>' : '<fmt:message key="playlist.repeat_on"/>';
             dwr.util.setValue("toggleRepeat", text);
@@ -166,8 +181,8 @@
         }
     }
 
-function truncate(s) {
-    var cutoff = ${model.visibility.captionCutoff};
+    function truncate(s) {
+        var cutoff = ${model.visibility.captionCutoff};
 
         if (s.length > cutoff) {
             return s.substring(0, cutoff) + "...";
@@ -259,14 +274,8 @@ function truncate(s) {
         </select></td>
 
        <c:if test="${model.user.streamRole}">
-           <c:choose>
-               <c:when test="${model.isPlaying and not model.player.clientSidePlaylist}">
-                   <td><b><a href="playlist.view?stop"><fmt:message key="playlist.stop"/></a></b> | </td>
-               </c:when>
-               <c:otherwise>
-                   <td><b><a href="playlist.view?start"><fmt:message key="playlist.start"/></a></b> | </td>
-               </c:otherwise>
-           </c:choose>
+           <td id="stop"><b><a href="javascript:noop()" onclick="onStop()"><fmt:message key="playlist.stop"/></a></b> | </td>
+           <td id="start"><b><a href="javascript:noop()" onclick="onStart()"><fmt:message key="playlist.start"/></a></b> | </td>
        </c:if>
 
         <td><a href="javascript:noop()" onclick="onClear()"><fmt:message key="playlist.clear"/></a></td>
@@ -277,7 +286,7 @@ function truncate(s) {
         </c:if>
 
         <td> | <a href="javascript:noop()" onclick="onUndo()"><fmt:message key="playlist.undo"/></a></td>
-                <c:if test="${model.user.streamRole and not empty model.songs}">
+                <c:if test="${model.user.streamRole}">
         <td> | <a href="webPlayer.view?"><fmt:message key="playlist.webplayer"/></a></td>
                 </c:if>
         <td> | <a href="playerSettings.view?id=${model.player.id}" target="main"><fmt:message key="playlist.settings"/></a></td>
@@ -347,35 +356,27 @@ function truncate(s) {
             <c:if test="${model.visibility.albumVisible}">
                 <td style="padding-right:1.25em"><a id="albumUrl" target="main"><span id="album" class="detail">Album</span></a></td>
             </c:if>
-
             <c:if test="${model.visibility.artistVisible}">
                 <td style="padding-right:1.25em"><span id="artist" class="detail">Artist</span></td>
             </c:if>
-
             <c:if test="${model.visibility.genreVisible}">
                 <td style="padding-right:1.25em"><span id="genre" class="detail">Genre</span></td>
             </c:if>
-
             <c:if test="${model.visibility.yearVisible}">
                 <td style="padding-right:1.25em"><span id="year" class="detail">Year</span></td>
             </c:if>
-
             <c:if test="${model.visibility.formatVisible}">
                 <td style="padding-right:1.25em"><span id="format" class="detail">Format</span></td>
             </c:if>
-
             <c:if test="${model.visibility.fileSizeVisible}">
                 <td style="padding-right:1.25em;text-align:right;"><span id="fileSize" class="detail">Format</span></td>
             </c:if>
-
             <c:if test="${model.visibility.durationVisible}">
                 <td style="padding-right:1.25em;text-align:right;"><span id="duration" class="detail">Duration</span></td>
             </c:if>
-
             <c:if test="${model.visibility.bitRateVisible}">
                 <td style="padding-right:0.25em"><span id="bitRate" class="detail">Bit Rate</span></td>
             </c:if>
-
         </tr>
     </tbody>
 </table>

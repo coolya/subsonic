@@ -41,6 +41,18 @@ public class PlaylistService {
         return convert(player, false);
     }
 
+    public PlaylistInfo start() throws Exception {
+        Player player = getCurrentPlayer();
+        player.getPlaylist().setStatus(Playlist.Status.PLAYING);
+        return convert(player, true);
+    }
+
+    public PlaylistInfo stop() throws Exception {
+        Player player = getCurrentPlayer();
+        player.getPlaylist().setStatus(Playlist.Status.STOPPED);
+        return convert(player, true);
+    }
+
     public PlaylistInfo skip(int index) throws Exception {
         Player player = getCurrentPlayer();
         player.getPlaylist().setIndex(index);
@@ -154,7 +166,6 @@ public class PlaylistService {
         if (sendM3U && player.isJukebox()) {
             jukeboxService.play(player);
         }
-
         List<PlaylistInfo.Entry> entries = new ArrayList<PlaylistInfo.Entry>();
         Playlist playlist = player.getPlaylist();
         for (MusicFile file : playlist.getFiles()) {
@@ -167,8 +178,8 @@ public class PlaylistService {
                                                metaData.getDurationAsString(), formatFormat(metaData.getFormat()),
                                                formatFileSize(metaData.getFileSize()), albumUrl));
         }
-
-        return new PlaylistInfo(entries, playlist.getIndex(), playlist.isRepeatEnabled(), sendM3U);
+        boolean isStopEnabled = playlist.getStatus() == Playlist.Status.PLAYING && !player.isClientSidePlaylist();
+        return new PlaylistInfo(entries, playlist.getIndex(), isStopEnabled, playlist.isRepeatEnabled(), sendM3U);
     }
 
     private String formatFileSize(Long fileSize) {
