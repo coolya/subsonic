@@ -118,7 +118,7 @@ public class PlaylistService {
 
     public PlaylistInfo toggleRepeat() throws Exception {
         Player player = getCurrentPlayer();
-        player.getPlaylist().setRepeatEnabled(!player.getPlaylist().isRepeatEnabled());
+        player.getPlaylist().setRepeatEnabled(player.getPlaylist().isRepeatEnabled());
         return convert(player, false);
     }
 
