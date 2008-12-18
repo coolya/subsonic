@@ -10,15 +10,27 @@ import java.util.List;
 public class PlaylistInfo {
 
     private final List<Entry> entries;
+    private final int index;
     private final boolean repeatEnabled;
+    private final boolean sendM3U;
 
-    public PlaylistInfo(List<Entry> entries, boolean repeatEnabled) {
+    public PlaylistInfo(List<Entry> entries, int index, boolean repeatEnabled, boolean sendM3U) {
         this.entries = entries;
+        this.index = index;
         this.repeatEnabled = repeatEnabled;
+        this.sendM3U = sendM3U;
     }
 
     public List<Entry> getEntries() {
         return entries;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public boolean isSendM3U() {
+        return sendM3U;
     }
 
     public boolean isRepeatEnabled() {

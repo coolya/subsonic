@@ -3,6 +3,7 @@ package net.sourceforge.subsonic.ajax;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Playlist;
+import net.sourceforge.subsonic.service.JukeboxService;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.util.StringUtil;
@@ -28,7 +29,7 @@ public class PlaylistService {
 
     private PlayerService playerService;
     private MusicFileService musicFileService;
-
+    private JukeboxService jukeboxService;
 
     /**
      * Returns the playlist for the player of the current user.
@@ -36,93 +37,102 @@ public class PlaylistService {
      * @return The playlist.
      */
     public PlaylistInfo getPlaylist() throws Exception {
-        Playlist playlist = getCurrentPlaylist();
-        return convert(playlist);
+        Player player = getCurrentPlayer();
+        return convert(player, false);
+    }
+
+    public PlaylistInfo skip(int index) throws Exception {
+        Player player = getCurrentPlayer();
+        player.getPlaylist().setIndex(index);
+        boolean serverSidePlaylist = !player.isClientSidePlaylist();
+        return convert(player, serverSidePlaylist);
     }
 
     public PlaylistInfo play(String path) throws Exception {
         MusicFile file = musicFileService.getMusicFile(path);
-        Playlist playlist = getCurrentPlaylist();
-        playlist.addFiles(false, file);
-        playlist.setRandomSearchCriteria(null);
-        return convert(playlist);
+        Player player = getCurrentPlayer();
+        player.getPlaylist().addFiles(false, file);
+        player.getPlaylist().setRandomSearchCriteria(null);
+        return convert(player, true);
     }
 
     public PlaylistInfo playRandom(String path, int count) throws Exception {
         MusicFile file = musicFileService.getMusicFile(path);
         List<MusicFile> randomFiles = getRandomChildren(file, count);
-        Playlist playlist = getCurrentPlaylist();
-        playlist.addFiles(false, randomFiles);
-        playlist.setRandomSearchCriteria(null);
-        return convert(playlist);
+        Player player = getCurrentPlayer();
+        player.getPlaylist().addFiles(false, randomFiles);
+        player.getPlaylist().setRandomSearchCriteria(null);
+        return convert(player, true);
     }
 
     public PlaylistInfo add(String path) throws Exception {
         MusicFile file = musicFileService.getMusicFile(path);
-        Playlist playlist = getCurrentPlaylist();
-        playlist.addFiles(true, file);
-        playlist.setRandomSearchCriteria(null);
-        return convert(playlist);
+        Player player = getCurrentPlayer();
+        player.getPlaylist().addFiles(true, file);
+        player.getPlaylist().setRandomSearchCriteria(null);
+        return convert(player, false);
     }
 
     public PlaylistInfo clear() throws Exception {
-        Playlist playlist = getCurrentPlaylist();
-        playlist.clear();
-        return convert(playlist);
+        Player player = getCurrentPlayer();
+        player.getPlaylist().clear();
+        boolean serverSidePlaylist = !player.isClientSidePlaylist();
+        return convert(player, serverSidePlaylist);
     }
 
     public PlaylistInfo shuffle() throws Exception {
-        Playlist playlist = getCurrentPlaylist();
-        playlist.shuffle();
-        return convert(playlist);
+        Player player = getCurrentPlayer();
+        player.getPlaylist().shuffle();
+        return convert(player, false);
     }
 
     public PlaylistInfo remove(int index) throws Exception {
-        Playlist playlist = getCurrentPlaylist();
-        playlist.removeFileAt(index);
-        return convert(playlist);
+        Player player = getCurrentPlayer();
+        player.getPlaylist().removeFileAt(index);
+        return convert(player, false);
     }
 
     public PlaylistInfo up(int index) throws Exception {
-        Playlist playlist = getCurrentPlaylist();
-        playlist.moveUp(index);
-        return convert(playlist);
+        Player player = getCurrentPlayer();
+        player.getPlaylist().moveUp(index);
+        return convert(player, false);
     }
 
     public PlaylistInfo down(int index) throws Exception {
-        Playlist playlist = getCurrentPlaylist();
-        playlist.moveDown(index);
-        return convert(playlist);
+        Player player = getCurrentPlayer();
+        player.getPlaylist().moveDown(index);
+        return convert(player, false);
     }
 
     public PlaylistInfo toggleRepeat() throws Exception {
-        Playlist playlist = getCurrentPlaylist();
-        playlist.setRepeatEnabled(!playlist.isRepeatEnabled());
-        return convert(playlist);
+        Player player = getCurrentPlayer();
+        player.getPlaylist().setRepeatEnabled(!player.getPlaylist().isRepeatEnabled());
+        return convert(player, false);
     }
 
     public PlaylistInfo undo() throws Exception {
-        Playlist playlist = getCurrentPlaylist();
-        playlist.undo();
-        return convert(playlist);
+        Player player = getCurrentPlayer();
+        player.getPlaylist().undo();
+        boolean serverSidePlaylist = !player.isClientSidePlaylist();
+        return convert(player, serverSidePlaylist);
     }
 
     public PlaylistInfo sortByTrack() throws Exception {
-        Playlist playlist = getCurrentPlaylist();
-        playlist.sort(Playlist.SortOrder.TRACK);
-        return convert(playlist);
+        Player player = getCurrentPlayer();
+        player.getPlaylist().sort(Playlist.SortOrder.TRACK);
+        return convert(player, false);
     }
 
     public PlaylistInfo sortByArtist() throws Exception {
-        Playlist playlist = getCurrentPlaylist();
-        playlist.sort(Playlist.SortOrder.ARTIST);
-        return convert(playlist);
+        Player player = getCurrentPlayer();
+        player.getPlaylist().sort(Playlist.SortOrder.ARTIST);
+        return convert(player, false);
     }
 
     public PlaylistInfo sortByAlbum() throws Exception {
-        Playlist playlist = getCurrentPlaylist();
-        playlist.sort(Playlist.SortOrder.ALBUM);
-        return convert(playlist);
+        Player player = getCurrentPlayer();
+        player.getPlaylist().sort(Playlist.SortOrder.ALBUM);
+        return convert(player, false);
     }
 
     private List<MusicFile> getRandomChildren(MusicFile file, int count) throws IOException {
@@ -134,11 +144,19 @@ public class PlaylistService {
         return children.subList(0, Math.min(count, children.size()));
     }
 
-    private PlaylistInfo convert(Playlist playlist) throws Exception {
+    private PlaylistInfo convert(Player player, boolean sendM3U) throws Exception {
         HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
         String url = request.getRequestURL().toString();
 
+        boolean isCurrentPlayer = player.getIpAddress() != null && player.getIpAddress().equals(request.getRemoteAddr());
+
+        sendM3U = player.isAutoControlEnabled() && !player.isJukebox() && isCurrentPlayer && sendM3U;
+        if (sendM3U && player.isJukebox()) {
+            jukeboxService.play(player);
+        }
+
         List<PlaylistInfo.Entry> entries = new ArrayList<PlaylistInfo.Entry>();
+        Playlist playlist = player.getPlaylist();
         for (MusicFile file : playlist.getFiles()) {
             MusicFile.MetaData metaData = file.getMetaData();
             String albumUrl = url.replaceFirst("/dwr/.*", "/main.view?pathUtf8Hex=" +
@@ -150,7 +168,7 @@ public class PlaylistService {
                                                formatFileSize(metaData.getFileSize()), albumUrl));
         }
 
-        return new PlaylistInfo(entries, playlist.isRepeatEnabled());
+        return new PlaylistInfo(entries, playlist.getIndex(), playlist.isRepeatEnabled(), sendM3U);
     }
 
     private String formatFileSize(Long fileSize) {
@@ -177,10 +195,9 @@ public class PlaylistService {
         return metaData.getBitRate() + " Kbps";
     }
 
-    private Playlist getCurrentPlaylist() {
+    private Player getCurrentPlayer() {
         WebContext webContext = WebContextFactory.get();
-        Player player = playerService.getPlayer(webContext.getHttpServletRequest(), webContext.getHttpServletResponse());
-        return player.getPlaylist();
+        return playerService.getPlayer(webContext.getHttpServletRequest(), webContext.getHttpServletResponse());
     }
 
 
@@ -190,5 +207,9 @@ public class PlaylistService {
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
+    }
+
+    public void setJukeboxService(JukeboxService jukeboxService) {
+        this.jukeboxService = jukeboxService;
     }
 }

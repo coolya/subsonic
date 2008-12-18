@@ -51,6 +51,9 @@
     function getPlaylist() {
         playlistService.getPlaylist(playlistCallback);
     }
+    function onSkip(index) {
+        playlistService.skip(index, playlistCallback);
+    }
     function onPlay(path) {
         playlistService.play(path, playlistCallback);
     }
@@ -114,9 +117,17 @@
             if ($("trackNumber" + id)) {
                 dwr.util.setValue("trackNumber" + id, song.trackNumber);
             }
+            if ($("currentImage" + id) && i == playlist.index) {
+                $("currentImage" + id).show();
+            }
             if ($("title" + id)) {
                 dwr.util.setValue("title" + id, truncate(song.title));
                 $("title" + id).title = song.title;
+            }
+            if ($("titleUrl" + id)) {
+                dwr.util.setValue("titleUrl" + id, truncate(song.title));
+                $("titleUrl" + id).title = song.title;
+                $("titleUrl" + id).onclick = "onSkip('" + i + "')";
             }
             if ($("album" + id)) {
                 dwr.util.setValue("album" + id, truncate(song.album));
@@ -149,10 +160,14 @@
             $("pattern" + id).show();
             $("pattern" + id).className = (i % 2 == 0) ? "bgcolor1" : "bgcolor2";
         }
+
+        if (playlist.sendM3U) {
+            parent.frames.main.location.href="play.m3u?";
+        }
     }
 
-    function truncate(s) {
-        var cutoff = ${model.visibility.captionCutoff};
+function truncate(s) {
+    var cutoff = ${model.visibility.captionCutoff};
 
         if (s.length > cutoff) {
             return s.substring(0, cutoff) + "...";
@@ -317,7 +332,18 @@
                 <td style="padding-right:0.5em;text-align:right"><span class="detail" id="trackNumber">1</span></td>
             </c:if>
 
-            <td style="padding-right:1.25em"><span id="title">Title</span></td>
+            <td style="padding-right:1.25em">
+                <c:choose>
+                    <c:when test="${model.player.clientSidePlaylist}">
+                        <span id="title">Title</span>
+                    </c:when>
+                    <c:otherwise>
+                        <img id="currentImage" src="<spring:theme code="currentImage"/>" alt="" style="display:none"/>
+                        <a id="titleUrl" href="javascript:noop()">Title</a>
+                    </c:otherwise>
+                </c:choose>
+            </td>
+
             <c:if test="${model.visibility.albumVisible}">
                 <td style="padding-right:1.25em"><a id="albumUrl" target="main"><span id="album" class="detail">Album</span></a></td>
             </c:if>
@@ -354,115 +380,4 @@
     </tbody>
 </table>
 
-
-<c:if test="false">
-<table style="border-collapse:collapse;white-space:nowrap;">
-<c:set var="cutoff" value="${model.visibility.captionCutoff}"/>
-<c:forEach items="${model.songs}" var="song" varStatus="loopStatus">
-    <c:set var="i" value="${loopStatus.count - 1}"/>
-    <tr style="margin:0;padding:0;border:0">
-
-        <td><a name="${i}" href="playlist.view?remove=${i}"><img src="<spring:theme code="removeImage"/>"
-                                                                 alt="<fmt:message key="playlist.remove"/>"
-                                                                 title="<fmt:message key="playlist.remove"/>"/></a></td>
-                    <td><a href="playlist.view?up=${i}"><img src="<spring:theme code="upImage"/>"
-                                                             alt="<fmt:message key="playlist.up"/>"
-                                                             title="<fmt:message key="playlist.up"/>"/></a></td>
-                    <td><a href="playlist.view?down=${i}"><img src="<spring:theme code="downImage"/>"
-                                                               alt="<fmt:message key="playlist.down"/>"
-                                                               title="<fmt:message key="playlist.down"/>"/></a></td>
-                    <sub:url value="main.view" var="mainUrl">
-                        <sub:param name="path" value="${song.musicFile.parent.path}"/>
-                    </sub:url>
-                    <c:choose>
-                        <c:when test="${i % 2 == 0}">
-                            <c:set var="class" value="class='bgcolor1'"/>
-                        </c:when>
-                        <c:otherwise>
-                            <c:set var="class" value=""/>
-                        </c:otherwise>
-                    </c:choose>
-
-                    <td style="padding-left: 0.1em"><input type="checkbox" class="checkbox" id="songIndex${i}" onchange="onSelectionChange()"/></td>
-                    <td ${class} style="padding-right:0.25em"/>
-
-                    <c:if test="${model.visibility.trackNumberVisible}">
-                        <td ${class} style="padding-right:0.5em;text-align:right">
-                            <span class="detail">${song.musicFile.metaData.trackNumber}</span>
-                        </td>
-                    </c:if>
-
-                    <td ${class} style="padding-right:1.25em">
-                        <c:choose>
-                            <c:when test="${model.player.clientSidePlaylist}">
-                                <span title="${song.musicFile.metaData.title}"><str:truncateNicely upper="${cutoff}">${fn:escapeXml(song.musicFile.title)}</str:truncateNicely></span>
-                            </c:when>
-                            <c:otherwise>
-                                <c:if test="${song.current}">
-                                    <img src="<spring:theme code="currentImage"/>" alt=""/>
-                                </c:if>
-                                <a href="playlist.view?skip=${i}" title="${song.musicFile.metaData.title}">${song.current ? "<b>" : ""}<str:truncateNicely upper="${cutoff}">${fn:escapeXml(song.musicFile.title)}</str:truncateNicely>${song.current ? "</b>" : ""}</a>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-
-                    <c:if test="${model.visibility.albumVisible}">
-                        <td ${class} style="padding-right:1.25em">
-                            <span class="detail" title="${song.musicFile.metaData.album}"><a target="main" href="${mainUrl}"><str:truncateNicely upper="${cutoff}">${fn:escapeXml(song.musicFile.metaData.album)}</str:truncateNicely></a></span>
-                        </td>
-                    </c:if>
-
-                    <c:if test="${model.visibility.artistVisible}">
-                        <td ${class} style="padding-right:1.25em">
-                            <span class="detail" title="${song.musicFile.metaData.artist}"><str:truncateNicely upper="${cutoff}">${fn:escapeXml(song.musicFile.metaData.artist)}</str:truncateNicely></span>
-                        </td>
-                    </c:if>
-
-                    <c:if test="${model.visibility.genreVisible}">
-                        <td ${class} style="padding-right:1.25em">
-                            <span class="detail">${song.musicFile.metaData.genre}</span>
-                        </td>
-                    </c:if>
-
-                    <c:if test="${model.visibility.yearVisible}">
-                        <td ${class} style="padding-right:1.25em">
-                            <span class="detail">${song.musicFile.metaData.year}</span>
-                        </td>
-                    </c:if>
-
-                    <c:if test="${model.visibility.formatVisible}">
-                        <td ${class} style="padding-right:1.25em">
-                            <span class="detail">${fn:toLowerCase(song.musicFile.metaData.format)}</span>
-                        </td>
-                    </c:if>
-
-                    <c:if test="${model.visibility.fileSizeVisible}">
-                        <td ${class} style="padding-right:1.25em;text-align:right">
-                            <span class="detail"><sub:formatBytes bytes="${song.musicFile.metaData.fileSize}"/></span>
-                        </td>
-                    </c:if>
-
-                    <c:if test="${model.visibility.durationVisible}">
-                        <td ${class} style="padding-right:1.25em;text-align:right">
-                            <span class="detail">${song.musicFile.metaData.durationAsString}</span>
-                        </td>
-                    </c:if>
-
-                    <c:if test="${model.visibility.bitRateVisible}">
-                        <td ${class} style="padding-right:0.25em">
-                            <span class="detail">
-                                <c:if test="${not empty song.musicFile.metaData.bitRate}">
-                                ${song.musicFile.metaData.bitRate} Kbps ${song.musicFile.metaData.variableBitRate ? "vbr" : ""}
-                                </c:if>
-                            </span>
-                        </td>
-                    </c:if>
-                </tr>
-            </c:forEach>
-        </table>
-    </c:if>
-
-<c:if test="${model.sendM3U}">
-    <script language="javascript" type="text/javascript">parent.frames.main.location.href="play.m3u?"</script>
-</c:if>
 </body></html>

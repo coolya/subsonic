@@ -1,21 +1,12 @@
 AJAX PLAYLIST
 -------------
-x  1. Upgrade to DWR 2.0 without changing any functionality.
-x  2. Create new AJAX service, PlaylistService, which returns the playlist for a given player.
-x  3. Create new test jsp for dynamically rendering the playlist as returned from the AJAX service. (http://directwebremoting.org/dwr/examples/table)
-x  4. Use style.display to control what columns should be visible.
-x  5. Use javascript to make alternating row colors.
-x  6. Use javascript to create dynamic album links.
-x  7. Make service method for shuffling, and implement in test jsp.
-   8. Busy icon.
-x  9. Truncate text in Javascript.
-  10. Make it work in IE.
-x 11. Need to refresh playlist.jsp before add/play works.
-  12. Fix Stop/Play and m3u emitting.
-  13. Show which song is currently playing.
-  14. Random playlist
-  15. Simplify PlaylistController.
-  15. Simplify playlist.jsp.
+Busy icon.
+Make it work in IE.
+Fix Stop/Play and m3u emitting.
+Show which song is currently playing.
+Random playlist
+Simplify PlaylistController.
+Simplify playlist.jsp.
 
 TODO IN 3.6
 -----------

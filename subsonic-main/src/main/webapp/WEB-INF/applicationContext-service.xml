@@ -143,6 +143,7 @@
     <bean id="ajaxPlaylistService" class="net.sourceforge.subsonic.ajax.PlaylistService">
         <property name="playerService" ref="playerService"/>
         <property name="musicFileService" ref="musicFileService"/>
+        <property name="jukeboxService" ref="jukeboxService"/>
     </bean>
 
     <bean id="ajaxLyricsService" class="net.sourceforge.subsonic.ajax.LyricsService"/>
