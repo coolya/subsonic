@@ -2,13 +2,11 @@ AJAX PLAYLIST
 -------------
 Busy icon.
 Make it work in IE.
+Test if repeat works.
 
 TODO IN 3.6
 -----------
 Line breaks in IE.
-Require Java 6 in exe4j.  Update bundled Java version.
-Add buttons to stop and start Subsonic service.
-Vista icon problem.  Agent.
 Verify that subsonic.sh still works.
 Change license to GPL.
 Add default welcome message.
@@ -21,6 +19,7 @@ Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?
 
 DONE IN 3.6
 -------------
+New agent/service architecture.
 Fixed broken lyrics (again).
 Append selected tracks to previously saved playlist (bring up dialog for selecting).
 Hide music library statistics if unavailable.

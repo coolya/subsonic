@@ -1,4 +1,6 @@
-package net.sourceforge.subsonic.booter;
+package net.sourceforge.subsonic.booter.agent;
+
+import net.sourceforge.subsonic.booter.deployer.DeploymentStatus;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,65 +12,58 @@ import java.net.URL;
  *
  * @author Sindre Mehus
  */
-public class TrayController {
+public class TrayController implements SubsonicListener {
 
-    private final SubsonicController subsonicController;
+    private final SubsonicAgent subsonicAgent;
     private TrayIcon trayIcon;
 
     private Action openAction;
-    private Action statusAction;
-    private Action settingsAction;
-    private Action exitAction;
+    private Action controlPanelAction;
+    private Action hideAction;
 
-    public TrayController(SubsonicController subsonicController) {
-        this.subsonicController = subsonicController;
+    public TrayController(SubsonicAgent subsonicAgent) {
+        this.subsonicAgent = subsonicAgent;
         try {
             createActions();
             createComponents();
             addBehaviour();
             installComponents();
+            subsonicAgent.addListener(this);
         } catch (Throwable x) {
             System.err.println("Disabling tray support.");
         }
     }
 
     private void createActions() {
-        openAction = new AbstractAction("Open") {
+        openAction = new AbstractAction("Open Subsonic in Browser") {
             public void actionPerformed(ActionEvent e) {
-                subsonicController.openBrowser();
+                subsonicAgent.openBrowser();
             }
         };
 
-        statusAction = new AbstractAction("Status") {
+        controlPanelAction = new AbstractAction("Subsonic Control Panel") {
             public void actionPerformed(ActionEvent e) {
-                subsonicController.showStatus();
+                subsonicAgent.showControlPanel();
             }
         };
 
-        settingsAction = new AbstractAction("Settings") {
-            public void actionPerformed(ActionEvent e) {
-                subsonicController.showSettings();
-            }
-        };
 
-        exitAction = new AbstractAction("Exit") {
+        hideAction = new AbstractAction("Hide Tray Icon") {
             public void actionPerformed(ActionEvent e) {
-                subsonicController.exit();
+                subsonicAgent.exit();
             }
         };
     }
 
     private void createComponents() {
-        URL url = Main.class.getResource("/images/subsonic-16.png");
+        URL url = getClass().getResource("/images/subsonic-16.png");
         Image image = Toolkit.getDefaultToolkit().createImage(url);
 
         PopupMenu menu = new PopupMenu();
         menu.add(createMenuItem(openAction));
+        menu.add(createMenuItem(controlPanelAction));
         menu.addSeparator();
-        menu.add(createMenuItem(statusAction));
-        menu.add(createMenuItem(settingsAction));
-        menu.addSeparator();
-        menu.add(createMenuItem(exitAction));
+        menu.add(createMenuItem(hideAction));
 
         trayIcon = new TrayIcon(image, "Subsonic Media Streamer", menu);
     }
@@ -80,7 +75,7 @@ public class TrayController {
     }
 
     private void addBehaviour() {
-        trayIcon.addActionListener(statusAction);
+        trayIcon.addActionListener(controlPanelAction);
     }
 
     private void installComponents() throws Throwable {
@@ -95,5 +90,13 @@ public class TrayController {
         } catch (Throwable x) {
             System.err.println("Disabling tray support.");
         }
+    }
+
+    public void notifyDeploymentStatus(DeploymentStatus deploymentStatus) {
+        // Nothing here, but could potentially change tray icon and menu.
+    }
+
+    public void notifyServiceStatus(String serviceStatus) {
+        // Nothing here, but could potentially change tray icon and menu.
     }
 }

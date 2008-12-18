@@ -1,26 +1,35 @@
-package net.sourceforge.subsonic.booter;
+package net.sourceforge.subsonic.booter.agent;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
+import net.sourceforge.subsonic.booter.deployer.DeploymentStatus;
+import net.sourceforge.subsonic.booter.deployer.SubsonicDeployer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Panel displaying the settings of the Subsonic service.
  *
  * @author Sindre Mehus
  */
-public class SettingsPanel extends JPanel {
+public class SettingsPanel extends JPanel implements SubsonicListener {
 
     private JTextField portTextField;
     private JComboBox contextPathComboBox;
@@ -28,12 +37,13 @@ public class SettingsPanel extends JPanel {
     private JButton defaultButton;
     private JButton saveButton;
 
-    public SettingsPanel() {
+    public SettingsPanel(SubsonicAgent subsonicAgent) {
         createComponents();
         configureComponents();
         layoutComponents();
         addBehaviour();
         setValues();
+        subsonicAgent.addListener(this);
     }
 
     public void setValues() {
@@ -48,7 +58,7 @@ public class SettingsPanel extends JPanel {
             return Integer.parseInt(s);
         } catch (Exception x) {
             x.printStackTrace();
-            return SubsonicController.DEFAULT_PORT;
+            return SubsonicDeployer.DEFAULT_PORT;
         }
     }
 
@@ -58,7 +68,7 @@ public class SettingsPanel extends JPanel {
             return Integer.parseInt(s);
         } catch (Exception x) {
             x.printStackTrace();
-            return SubsonicController.DEFAULT_MEMORY_LIMIT;
+            return SubsonicDeployer.DEFAULT_MEMORY_LIMIT;
         }
     }
 
@@ -71,7 +81,7 @@ public class SettingsPanel extends JPanel {
             return s;
         } catch (Exception x) {
             x.printStackTrace();
-            return SubsonicController.DEFAULT_CONTEXT_PATH;
+            return SubsonicDeployer.DEFAULT_CONTEXT_PATH;
         }
     }
 
@@ -122,9 +132,9 @@ public class SettingsPanel extends JPanel {
 
         defaultButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                portTextField.setText(String.valueOf(SubsonicController.DEFAULT_PORT));
-                memoryTextField.setText(String.valueOf(SubsonicController.DEFAULT_MEMORY_LIMIT));
-                contextPathComboBox.setSelectedItem(SubsonicController.DEFAULT_CONTEXT_PATH);
+                portTextField.setText(String.valueOf(SubsonicDeployer.DEFAULT_PORT));
+                memoryTextField.setText(String.valueOf(SubsonicDeployer.DEFAULT_MEMORY_LIMIT));
+                contextPathComboBox.setSelectedItem(SubsonicDeployer.DEFAULT_CONTEXT_PATH);
             }
         });
     }
@@ -202,7 +212,7 @@ public class SettingsPanel extends JPanel {
     }
 
     private File getOptionsFile() throws SettingsException {
-        File file = new File("subsonic.exe.vmoptions");
+        File file = new File("subsonic-service.exe.vmoptions");
         if (!file.isFile() || !file.exists()) {
             throw new SettingsException("File " + file.getAbsolutePath() + " not found.");
         }
@@ -273,6 +283,14 @@ public class SettingsPanel extends JPanel {
         } catch (IOException x) {
             // Intentionally ignored.
         }
+    }
+
+    public void notifyDeploymentStatus(DeploymentStatus deploymentStatus) {
+        // Nothing here yet.
+    }
+
+    public void notifyServiceStatus(String serviceStatus) {
+        // Nothing here yet.
     }
 
     private static class SettingsException extends Exception {

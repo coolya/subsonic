@@ -45,12 +45,11 @@ Section "Subsonic"
 
   SectionIn RO
 
-  # Stop and uninstall service if present.
-  ExecWait '"$INSTDIR\subsonic.exe" -stop'
-  ExecWait '"$INSTDIR\subsonic.exe" -uninstall'
+  # Install for all users
+  SetShellVarContext "all"
 
-  # Remove shortcuts, if any
-  Delete "$SMPROGRAMS\Subsonic\*.*"
+  # Silently uninstall existing version.
+  ExecWait '"$INSTDIR\uninstall.exe" /S _?=$INSTDIR'
 
   # Remove previous Jetty temp directory.
   RMDir /r "c:\subsonic\jetty"
@@ -59,10 +58,11 @@ Section "Subsonic"
   SetOutPath $INSTDIR
 
   # Write files.
-  File ..\..\..\..\subsonic-booter\target\subsonic.exe
-  File ..\..\..\..\subsonic-booter\target\subsonic.exe.vmoptions
+  File ..\..\..\..\subsonic-booter\target\subsonic-agent.exe
+  File ..\..\..\..\subsonic-booter\target\subsonic-agent.exe.vmoptions
+  File ..\..\..\..\subsonic-booter\target\subsonic-service.exe
+  File ..\..\..\..\subsonic-booter\target\subsonic-service.exe.vmoptions
   File ..\..\..\..\subsonic-booter\target\subsonic-booter-jar-with-dependencies.jar
-  File ..\..\..\..\subsonic-booter\target\settings.exe
   File ..\..\..\..\subsonic-main\README.TXT
   File "..\..\..\..\subsonic-main\Getting Started.html"
   File ..\..\..\..\subsonic-main\target\subsonic.war
@@ -84,8 +84,11 @@ Section "Subsonic"
   File ..\..\..\..\subsonic-transcode\windows\*.*
 
   # Install and start service.
-  ExecWait '"$INSTDIR\subsonic.exe" -install'
-  ExecWait '"$INSTDIR\subsonic.exe" -start'
+  ExecWait '"$INSTDIR\subsonic-service.exe" -install'
+  ExecWait '"$INSTDIR\subsonic-service.exe" -start'
+
+  # Start agent.
+  Exec '"$INSTDIR\subsonic-agent.exe"'
 
 SectionEnd
 
@@ -93,12 +96,14 @@ SectionEnd
 Section "Start Menu Shortcuts"
 
   CreateDirectory "$SMPROGRAMS\Subsonic"
-  CreateShortCut "$SMPROGRAMS\Subsonic\Open Subsonic.lnk"          "$INSTDIR\subsonic.url"         ""           "$INSTDIR\subsonic.exe"  0
-  CreateShortCut "$SMPROGRAMS\Subsonic\Start Subsonic server.lnk"  "$INSTDIR\subsonic.exe"         "-start"     "$INSTDIR\subsonic.exe"  0
-  CreateShortCut "$SMPROGRAMS\Subsonic\Stop Subsonic server.lnk"   "$INSTDIR\subsonic.exe"         "-stop"      "$INSTDIR\subsonic.exe"  0
-  CreateShortCut "$SMPROGRAMS\Subsonic\Settings.lnk"               "$INSTDIR\settings.exe"         ""           "$INSTDIR\subsonic.exe"  0
-  CreateShortCut "$SMPROGRAMS\Subsonic\Uninstall Subsonic.lnk"     "$INSTDIR\uninstall.exe"        ""           "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\Subsonic\Getting Started.lnk"        "$INSTDIR\Getting Started.html" ""           "$INSTDIR\Getting Started.html" 0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Open Subsonic.lnk"          "$INSTDIR\subsonic.url"         ""        "$INSTDIR\subsonic-agent.exe"  0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Subsonic Tray Icon.lnk"     "$INSTDIR\subsonic-agent.exe"   ""        "$INSTDIR\subsonic-agent.exe"  0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Start Subsonic Service.lnk" "$INSTDIR\subsonic-service.exe" "-start"  "$INSTDIR\subsonic-service.exe"  0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Stop Subsonic Service.lnk"  "$INSTDIR\subsonic-service.exe" "-stop"   "$INSTDIR\subsonic-service.exe"  0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Uninstall Subsonic.lnk"     "$INSTDIR\uninstall.exe"        ""        "$INSTDIR\uninstall.exe" 0
+  CreateShortCut "$SMPROGRAMS\Subsonic\Getting Started.lnk"        "$INSTDIR\Getting Started.html" ""        "$INSTDIR\Getting Started.html" 0
+
+  CreateShortCut "$SMSTARTUP\Subsonic.lnk"                         "$INSTDIR\subsonic-agent.exe"   ""        "$INSTDIR\subsonic-agent.exe"  0
 
 SectionEnd
 
@@ -107,23 +112,26 @@ SectionEnd
 
 Section "Uninstall"
 
+  # Uninstall for all users
+  SetShellVarContext "all"
+
   # Stop and uninstall service if present.
-  ExecWait '"$INSTDIR\subsonic.exe" -stop'
-  ExecWait '"$INSTDIR\subsonic.exe" -uninstall'
+  ExecWait '"$INSTDIR\subsonic-service.exe" -stop'
+  ExecWait '"$INSTDIR\subsonic-service.exe" -uninstall'
+
+  # Stop agent by killing it.
+  # (Requires NSIS plugin found on http://nsis.sourceforge.net/Processes_plug-in to be installed
+  # as NSIS_HOME/Plugins/Processes.dll)
+  Processes::KillProcess "subsonic-agent"
 
   # Remove registry keys
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Subsonic"
   DeleteRegKey HKLM SOFTWARE\Subsonic
 
   # Remove files.
-  Delete $INSTDIR\*.*
-
-  # Remove shortcuts, if any
-  Delete "$SMPROGRAMS\Subsonic\*.*"
-
-  # Remove directories used
-  RMDir "$SMPROGRAMS\Subsonic"
-  RMDir "$INSTDIR"
+  Delete "$SMSTARTUP\Subsonic.lnk"
+  RMDir /r "$SMPROGRAMS\Subsonic"
+  RMDir /r "$INSTDIR"
 
 SectionEnd
 
@@ -132,18 +140,18 @@ Function CheckInstalledJRE
     # Read the value from the registry into the $0 register
     ReadRegStr $0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" CurrentVersion
 
-    # Check JRE version. At least 1.5 is required.
+    # Check JRE version. At least 1.6 is required.
     #   $1=0  Versions are equal
     #   $1=1  Installed version is newer
     #   $1=2  Installed version is older (or non-existent)
-    ${VersionCompare} $0 "1.5" $1
+    ${VersionCompare} $0 "1.6" $1
     IntCmp $1 2 InstallJRE 0 0
     Return
 
     InstallJRE:
       # Launch Java web installer.
       MessageBox MB_OK "Java 6 was not found and will now be installed."
-      File /oname=$TEMP\jre-setup.exe jre-6u2-windows-i586-p-iftw.exe
+      File /oname=$TEMP\jre-setup.exe jre-6u11-windows-i586-p-iftw.exe
       ExecWait '"$TEMP\jre-setup.exe"' $0
       Delete "$TEMP\jre-setup.exe"
 

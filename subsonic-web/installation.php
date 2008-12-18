@@ -38,7 +38,7 @@
     <div class="heading">Windows installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
     <div class="content">
         <div class="wide-content">
-            <p><b>Requirements: </b>Java 5 or later (<a href="http://www.java.com">Download</a>)</p>
+            <p><b>Requirements: </b>Java 6 or later (<a href="http://www.java.com">Download</a>)</p>
             <p>
                 On Windows, the easiest way to install Subsonic is using the provided Windows Installer: <code>subsonic-x.x-setup.exe</code>.
             </p>

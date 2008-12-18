@@ -1,7 +1,8 @@
-package net.sourceforge.subsonic.booter;
+package net.sourceforge.subsonic.booter.agent;
 
 import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.factories.ButtonBarFactory;
+import net.sourceforge.subsonic.booter.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,19 +20,16 @@ import java.net.URL;
  */
 public class SubsonicFrame extends JFrame {
 
-    private final SubsonicController subsonicController;
-    private final boolean settingsMode;
+    private final SubsonicAgent subsonicAgent;
 
     private JTabbedPane tabbedPane;
     private StatusPanel statusPanel;
     private SettingsPanel settingsPanel;
-
     private JButton closeButton;
 
-    public SubsonicFrame(SubsonicController subsonicController, boolean settingsMode) {
-        super("Subsonic");
-        this.subsonicController = subsonicController;
-        this.settingsMode = settingsMode;
+    public SubsonicFrame(SubsonicAgent subsonicAgent) {
+        super("Subsonic Control Panel");
+        this.subsonicAgent = subsonicAgent;
         createComponents();
         layoutComponents();
         addBehaviour();
@@ -50,19 +48,15 @@ public class SubsonicFrame extends JFrame {
     }
 
     private void createComponents() {
-        if (!settingsMode) {
-            statusPanel = new StatusPanel(subsonicController);
-        }
-        settingsPanel = new SettingsPanel();
+        statusPanel = new StatusPanel(subsonicAgent);
+        settingsPanel = new SettingsPanel(subsonicAgent);
 
         tabbedPane = new JTabbedPane();
         closeButton = new JButton("Close");
     }
 
     private void layoutComponents() {
-        if (!settingsMode) {
-            tabbedPane.add("Status", statusPanel);
-        }
+        tabbedPane.add("Status", statusPanel);
         tabbedPane.add("Settings", settingsPanel);
 
         JPanel pane = (JPanel) getContentPane();
@@ -88,24 +82,12 @@ public class SubsonicFrame extends JFrame {
     }
 
     private void onClose() {
-        if (settingsMode) {
-            System.exit(0);
-        } else {
-            setVisible(false);
-        }
+        setVisible(false);
     }
 
-    public void showStatus() {
+    public void showControlPanel() {
         settingsPanel.setValues();
         tabbedPane.setSelectedComponent(statusPanel);
-        pack();
-        setVisible(true);
-        toFront();
-    }
-
-    public void showSettings() {
-        settingsPanel.setValues();
-        tabbedPane.setSelectedComponent(settingsPanel);
         pack();
         setVisible(true);
         toFront();
