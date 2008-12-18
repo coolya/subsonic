@@ -10,11 +10,16 @@ x  7. Make service method for shuffling, and implement in test jsp.
    8. Busy icon.
 x  9. Truncate text in Javascript.
   10. Make it work in IE.
-  11. Need to refresh playlist.jsp before add/play works.
+x 11. Need to refresh playlist.jsp before add/play works.
   12. Fix Stop/Play and m3u emitting.
+  13. Show which song is currently playing.
+  14. Random playlist
+  15. Simplify PlaylistController.
+  15. Simplify playlist.jsp.
 
 TODO IN 3.6
 -----------
+Line breaks in IE.
 Require Java 6 in exe4j.  Update bundled Java version.
 Add buttons to stop and start Subsonic service.
 Vista icon problem.  Agent.

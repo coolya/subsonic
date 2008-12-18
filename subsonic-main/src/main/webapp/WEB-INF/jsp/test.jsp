@@ -46,7 +46,6 @@
             $("albumUrl" + id).href = entry.albumUrl;
             $("pattern" + id).style.display = "table-row";
             $("pattern" + id).className = (i % 2 == 0) ? "bgcolor1" : "bgcolor2";
-//            peopleCache[id] = person;
         }
     }
 
