@@ -2,7 +2,12 @@ AJAX PLAYLIST
 -------------
 Busy icon.
 Make it work in IE.
-Test if repeat works.
+Add stream URL to playlist entry.
+Implement player type (see note book), and possibly default player type per user.
+Implement proof-of-concept for JW player.
+Contact JW regarding license.
+Remove Web player link.
+Minimize/maximize playlist frame.
 
 TODO IN 3.6
 -----------
