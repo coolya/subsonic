@@ -43,7 +43,14 @@
 
     function playerReady(thePlayer) {
         player = $(thePlayer.id);
-        loadPlaylist();
+        player.addModelListener("STATE", "stateListener");
+    }
+
+    function stateListener(obj) { //IDLE, BUFFERING, PLAYING, PAUSED, COMPLETED
+        var currentState = obj.newstate;
+        var previousState = obj.oldstate;
+
+        dwr.util.setValue("state", previousState + " &gt; " + currentState);
     }
 
     function getPlaylist() {
@@ -52,25 +59,24 @@
 
     function playlistCallback(playlist) {
         songs = playlist.entries;
-        if (songs.length > 0) {
-
-        }
-    }
-
-    function loadPlaylist() {
         var list = new Array();
-        list[0] = {
-            author:"Author",
-            description:"Description",
-            duration:33,
-            file:"http://localhost/stream?player=2&pathUtf8Hex=653a5c6d757369635c42617265204567696c2042616e645c4162736f6c75747420496b6b652042617265204567696c2042616e645c3038202d205661736b65204d65672053656c762e6d7033&suffix=.mp3",
-            //            link:currentPlaylist[i].link,
-            //            image:currentPlaylist[i].image,
-            //            start:currentPlaylist[i].start,
-            title:"Title",
-            type:"audio/mp3"
-        };
-        player.sendEvent('LOAD', list);
+        for (var i = 0; i < songs.length; i++) {
+            var song = songs[i];
+            list[i] = {
+                author:"Author",
+                description:"Description",
+                duration:song.duration,
+                file:song.streamUrl,
+                //            link:currentPlaylist[i].link,
+                //            image:currentPlaylist[i].image,
+                //            start:currentPlaylist[i].start,
+                title:"Title",
+                type:"audio/mp3"
+            };
+        }
+        if (player) {
+            player.sendEvent('LOAD', list);
+        }
     }
 
 </script>
@@ -79,5 +85,6 @@
     <div id="placeholder">Player goes here</div>
 </div>
 
+<div id="state">Unknown</div>
 </body>
 </html>
