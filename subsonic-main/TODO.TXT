@@ -2,12 +2,13 @@ AJAX PLAYLIST
 -------------
 Busy icon.
 Make it work in IE.
-Add stream URL to playlist entry.
+Add stream URL and duration to playlist entry.
 Implement player type (see note book), and possibly default player type per user.
 Implement proof-of-concept for JW player.
 Contact JW regarding license.
 Remove Web player link.
 Minimize/maximize playlist frame.
+http://www.longtailvideo.com/support/tutorials/Javascript-API-Examples#externalcontrol
 
 TODO IN 3.6
 -----------

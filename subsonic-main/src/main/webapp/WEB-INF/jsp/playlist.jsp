@@ -163,7 +163,7 @@
                 dwr.util.setValue("bitRate" + id, song.bitRate);
             }
             if ($("duration" + id)) {
-                dwr.util.setValue("duration" + id, song.duration);
+                dwr.util.setValue("duration" + id, song.durationAsString);
             }
             if ($("format" + id)) {
                 dwr.util.setValue("format" + id, song.format);

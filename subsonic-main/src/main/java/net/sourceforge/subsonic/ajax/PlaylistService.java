@@ -172,11 +172,12 @@ public class PlaylistService {
             MusicFile.MetaData metaData = file.getMetaData();
             String albumUrl = url.replaceFirst("/dwr/.*", "/main.view?pathUtf8Hex=" +
                                                           StringUtil.utf8HexEncode(file.getParent().getPath()));
+            String streamUrl = url.replaceFirst("/dwr/.*", "/stream?player=" + player.getId() + "&pathUtf8Hex=" + StringUtil.utf8HexEncode(file.getPath()));
 
             entries.add(new PlaylistInfo.Entry(metaData.getTrackNumber(), metaData.getTitle(), metaData.getArtist(),
                                                metaData.getAlbum(), metaData.getGenre(), metaData.getYear(), formatBitRate(metaData),
-                                               metaData.getDurationAsString(), formatFormat(metaData.getFormat()),
-                                               formatFileSize(metaData.getFileSize()), albumUrl));
+                                               metaData.getDuration(), metaData.getDurationAsString(), formatFormat(metaData.getFormat()),
+                                               formatFileSize(metaData.getFileSize()), albumUrl, streamUrl));
         }
         boolean isStopEnabled = playlist.getStatus() == Playlist.Status.PLAYING && !player.isClientSidePlaylist();
         return new PlaylistInfo(entries, playlist.getIndex(), isStopEnabled, playlist.isRepeatEnabled(), sendM3U);
