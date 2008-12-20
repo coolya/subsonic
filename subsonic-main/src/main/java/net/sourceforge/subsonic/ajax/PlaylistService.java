@@ -177,7 +177,7 @@ public class PlaylistService {
             entries.add(new PlaylistInfo.Entry(metaData.getTrackNumber(), metaData.getTitle(), metaData.getArtist(),
                                                metaData.getAlbum(), metaData.getGenre(), metaData.getYear(), formatBitRate(metaData),
                                                metaData.getDuration(), metaData.getDurationAsString(), formatFormat(metaData.getFormat()),
-                                               formatFileSize(metaData.getFileSize()), albumUrl, streamUrl));
+                                               formatContentType(file), formatFileSize(metaData.getFileSize()), albumUrl, streamUrl));
         }
         boolean isStopEnabled = playlist.getStatus() == Playlist.Status.PLAYING && !player.isClientSidePlaylist();
         return new PlaylistInfo(entries, playlist.getIndex(), isStopEnabled, playlist.isRepeatEnabled(), sendM3U);
@@ -195,6 +195,10 @@ public class PlaylistService {
 
     private String formatFormat(String format) {
         return StringUtils.lowerCase(format);
+    }
+
+    private String formatContentType(MusicFile file) {
+        return StringUtil.getMimeType(file.getSuffix());
     }
 
     private String formatBitRate(MusicFile.MetaData metaData) {

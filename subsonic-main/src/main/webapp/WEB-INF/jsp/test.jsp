@@ -22,7 +22,6 @@
     function onload() {
         dwr.engine.setErrorHandler(null);
         createPlayer();
-        getPlaylist();
     }
 
     function createPlayer() {
@@ -44,13 +43,14 @@
     function playerReady(thePlayer) {
         player = $(thePlayer.id);
         player.addModelListener("STATE", "stateListener");
+        getPlaylist();
     }
 
-    function stateListener(obj) { //IDLE, BUFFERING, PLAYING, PAUSED, COMPLETED
+    function stateListener(obj) { // IDLE, BUFFERING, PLAYING, PAUSED, COMPLETED
         var currentState = obj.newstate;
         var previousState = obj.oldstate;
 
-        dwr.util.setValue("state", previousState + " &gt; " + currentState);
+        dwr.util.setValue("state", previousState + " >  " + currentState);
     }
 
     function getPlaylist() {
@@ -63,26 +63,24 @@
         for (var i = 0; i < songs.length; i++) {
             var song = songs[i];
             list[i] = {
-                author:"Author",
-                description:"Description",
+                //                author:"Author",
+                //                description:"Description",
                 duration:song.duration,
                 file:song.streamUrl,
                 //            link:currentPlaylist[i].link,
                 //            image:currentPlaylist[i].image,
                 //            start:currentPlaylist[i].start,
-                title:"Title",
-                type:"audio/mp3"
+                title:song.title,
+                type:song.contentType
             };
         }
-        if (player) {
-            player.sendEvent('LOAD', list);
-        }
+        player.sendEvent('LOAD', list);
     }
 
 </script>
 
 <div style="width:340px; height:20px;">
-    <div id="placeholder">Player goes here</div>
+    <div id="placeholder"> </div>
 </div>
 
 <div id="state">Unknown</div>
