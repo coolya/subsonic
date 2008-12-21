@@ -47,6 +47,7 @@ public class PlayerSettingsController extends SimpleFormController {
             command.setClientSidePlaylist(player.isClientSidePlaylist());
             command.setCoverArtSchemeName(player.getCoverArtScheme().name());
             command.setTranscodeSchemeName(player.getTranscodeScheme().name());
+            command.setTechnologyName(player.getTechnology().name());
             command.setAllTranscodings(transcodingService.getAllTranscodings());
             Transcoding[] activeTranscodings = transcodingService.getTranscodingsForPlayer(player);
             int[] activeTranscodingIds = new int[activeTranscodings.length];
@@ -60,6 +61,7 @@ public class PlayerSettingsController extends SimpleFormController {
         command.setTranscodeDirectory(transcodingService.getTranscodeDirectory().getPath());
         command.setCoverArtSchemes(CoverArtScheme.values());
         command.setTranscodeSchemes(TranscodeScheme.values());
+        command.setTechnologies(PlayerTechnology.values());
         command.setPlayers(players.toArray(new Player[players.size()]));
         command.setAdmin(user.isAdminRole());
 
@@ -77,6 +79,7 @@ public class PlayerSettingsController extends SimpleFormController {
         player.setDynamicIp(command.isDynamicIp());
         player.setName(StringUtils.trimToNull(command.getName()));
         player.setTranscodeScheme(TranscodeScheme.valueOf(command.getTranscodeSchemeName()));
+        player.setTechnology(PlayerTechnology.valueOf(command.getTechnologyName()));
 
         playerService.updatePlayer(player);
         transcodingService.setTranscodingsForPlayer(player, command.getActiveTranscodingIds());

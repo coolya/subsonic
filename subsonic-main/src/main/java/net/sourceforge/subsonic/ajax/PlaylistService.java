@@ -3,6 +3,7 @@ package net.sourceforge.subsonic.ajax;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Playlist;
+import net.sourceforge.subsonic.domain.PlayerTechnology;
 import net.sourceforge.subsonic.service.JukeboxService;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
@@ -162,8 +163,9 @@ public class PlaylistService {
 
         boolean isCurrentPlayer = player.getIpAddress() != null && player.getIpAddress().equals(request.getRemoteAddr());
 
-        sendM3U = player.isAutoControlEnabled() && !player.isJukebox() && isCurrentPlayer && sendM3U;
-        if (sendM3U && player.isJukebox()) {
+        boolean jukebox = player.getTechnology() == PlayerTechnology.JUKEBOX;
+        sendM3U = player.isAutoControlEnabled() && !jukebox && isCurrentPlayer && sendM3U;
+        if (sendM3U && jukebox) {
             jukeboxService.play(player);
         }
         List<PlaylistInfo.Entry> entries = new ArrayList<PlaylistInfo.Entry>();

@@ -4,6 +4,7 @@ import net.sourceforge.subsonic.domain.CoverArtScheme;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.domain.TranscodeScheme;
+import net.sourceforge.subsonic.domain.PlayerTechnology;
 
 import java.util.Date;
 
@@ -27,7 +28,7 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         player.setDynamicIp(false);
         player.setAutoControlEnabled(false);
         player.setClientSidePlaylist(true);
-        player.setJukebox(true);
+        player.setTechnology(PlayerTechnology.EXTERNAL_WITH_PLAYLIST);
         player.setLastSeen(new Date());
         player.setCoverArtScheme(CoverArtScheme.LARGE);
         player.setTranscodeScheme(TranscodeScheme.MAX_160);
@@ -45,7 +46,6 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         assertTrue("Player should be auto-controlled by default.", player.isAutoControlEnabled());
         assertFalse("Player should have server-side playlist by default.", player.isClientSidePlaylist());
     }
-
 
     public void testIdentity() {
         Player player = new Player();
@@ -90,12 +90,13 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         assertPlayerEquals(player, playerDao.getAllPlayers()[0]);
 
         player.setName("name");
+        player.setType("Winamp");
+        player.setTechnology(PlayerTechnology.WEB);
         player.setUsername("username");
         player.setIpAddress("ipaddress");
         player.setDynamicIp(true);
         player.setAutoControlEnabled(false);
         player.setClientSidePlaylist(true);
-        player.setJukebox(true);
         player.setLastSeen(new Date());
         player.setCoverArtScheme(CoverArtScheme.LARGE);
         player.setTranscodeScheme(TranscodeScheme.MAX_160);
@@ -124,12 +125,13 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
     private void assertPlayerEquals(Player expected, Player actual) {
         assertEquals("Wrong ID.", expected.getId(), actual.getId());
         assertEquals("Wrong name.", expected.getName(), actual.getName());
+        assertEquals("Wrong technology.", expected.getTechnology(), actual.getTechnology());
+        assertEquals("Wrong type.", expected.getType(), actual.getType());
         assertEquals("Wrong username.", expected.getUsername(), actual.getUsername());
         assertEquals("Wrong IP address.", expected.getIpAddress(), actual.getIpAddress());
         assertEquals("Wrong dynamic IP.", expected.isDynamicIp(), actual.isDynamicIp());
         assertEquals("Wrong auto control enabled.", expected.isAutoControlEnabled(), actual.isAutoControlEnabled());
         assertEquals("Wrong client-side playlist.", expected.isClientSidePlaylist(), actual.isClientSidePlaylist());
-        assertEquals("Wrong jukebox mode.", expected.isJukebox(), actual.isJukebox());
         assertEquals("Wrong last seen.", expected.getLastSeen(), actual.getLastSeen());
         assertEquals("Wrong cover art scheme.", expected.getCoverArtScheme(), actual.getCoverArtScheme());
         assertEquals("Wrong transcode scheme.", expected.getTranscodeScheme(), actual.getTranscodeScheme());

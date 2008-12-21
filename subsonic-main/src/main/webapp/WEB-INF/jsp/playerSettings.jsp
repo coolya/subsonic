@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1" %>
+<%--@elvariable id="command" type="net.sourceforge.subsonic.command.PlayerSettingsCommand"--%>
 
 <html><head>
     <%@ include file="head.jsp" %>
@@ -62,6 +63,19 @@
         <td><fmt:message key="playersettings.lastseen"/></td>
         <td colspan="3"><fmt:formatDate value="${command.lastSeen}" type="both" dateStyle="long" timeStyle="medium"/></td>
     </tr>
+
+    <tr>
+        <td colspan="3">&nbsp;</td>
+    </tr>
+
+    <c:forEach items="${command.technologyHolders}" var="technologyHolder">
+        <c:set var="technologyName">
+            <fmt:message key="playersettings.technology.${fn:toLowerCase(technologyHolder.name)}"/>
+        </c:set>
+        <tr><td colspan="3">
+            <form:radiobutton path="technologyName" label="${technologyName}"/>
+        </td></tr>
+    </c:forEach>
 
     <tr>
         <td colspan="3">&nbsp;</td>

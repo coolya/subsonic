@@ -10,15 +10,7 @@ http://www.longtailvideo.com/support/tutorials/Javascript-API-Examples#externalc
 AJAX-ify remove selected songs.
 If webplayer, only show following options: Player selection | Settings | Flash player
 Remove Web player link.
-Remove old player
-
-PLAYER TYPE
------------
-Web player - Play music directly in the web browser using the integrated Flash player.
-External player - Play music in your favorite player, such as WinAmp or Windows Media Player.
-External player with playlist - Same as above, but the playlist is managed by the player, rather
-than the Subsonic server.  In this mode, skipping within songs is possible.
-Jukebox - Play music directly on the audio device of the Subsonic server (Authorized users only).
+Remove old flash player
 
 
 TODO IN 3.6

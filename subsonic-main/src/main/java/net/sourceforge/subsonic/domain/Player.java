@@ -12,6 +12,7 @@ public class Player {
 
     private String id;
     private String name;
+    private PlayerTechnology technology = PlayerTechnology.EXTERNAL; // TODO: Change to WEB?
     private String type;
     private String username;
     private String ipAddress;
@@ -58,6 +59,24 @@ public class Player {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Returns the player "technology", e.g., web, external or jukebox.
+     *
+     * @return The player technology.
+     */
+    public PlayerTechnology getTechnology() {
+        return technology;
+    }
+
+    /**
+     * Sets the player "technology", e.g., web, external or jukebox.
+     *
+     * @param technology The player technology.
+     */
+    public void setTechnology(PlayerTechnology technology) {
+        this.technology = technology;
     }
 
     /**
@@ -118,7 +137,9 @@ public class Player {
      * Returns whether the player itself controls the playlist.
      *
      * @return Whether the player itself controls the playlist.
+     * @deprecated Use getTechnology() instead.
      */
+    @Deprecated
     public boolean isClientSidePlaylist() {
         return isClientSidePlaylist;
     }
@@ -127,28 +148,11 @@ public class Player {
      * Sets whether the player itself controls the playlist.
      *
      * @param isClientSidePlaylist Whether the player itself controls the playlist.
+     * @deprecated Use setTechnology() instead.
      */
+    @Deprecated
     public void setClientSidePlaylist(boolean isClientSidePlaylist) {
         this.isClientSidePlaylist = isClientSidePlaylist;
-    }
-
-
-    /**
-     * Returns whether this player operates in jukebox mode.
-     *
-     * @return Whether this player operates in jukebox mode.
-     */
-    public boolean isJukebox() {
-        return isJukebox;
-    }
-
-    /**
-     * Sets whether this player operates in jukebox mode.
-     *
-     * @param jukebox Whether this player operates in jukebox mode.
-     */
-    public void setJukebox(boolean jukebox) {
-        isJukebox = jukebox;
     }
 
     /**

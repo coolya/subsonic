@@ -5,6 +5,7 @@ import net.sourceforge.subsonic.domain.CoverArtScheme;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.TranscodeScheme;
 import net.sourceforge.subsonic.domain.Transcoding;
+import net.sourceforge.subsonic.domain.PlayerTechnology;
 
 import java.util.Date;
 
@@ -23,11 +24,13 @@ public class PlayerSettingsCommand {
     private boolean isAutoControlEnabled;
     private boolean isClientSidePlaylist;
     private String coverArtSchemeName;
+    private String technologyName;
     private String transcodeSchemeName;
     private boolean transcodingSupported;
     private String transcodeDirectory;
     private Transcoding[] allTranscodings;
     private int[] activeTranscodingIds;
+    private EnumHolder[] technologyHolders;
     private EnumHolder[] transcodeSchemeHolders;
     private EnumHolder[] coverArtSchemeHolders;
     private Player[] players;
@@ -146,7 +149,19 @@ public class PlayerSettingsCommand {
         this.activeTranscodingIds = activeTranscodingIds;
     }
 
-    public EnumHolder[] getTranscodeSchemeHolders() {
+    public EnumHolder[] getTechnologyHolders() {
+         return technologyHolders;
+     }
+
+     public void setTechnologies(PlayerTechnology[] technologies) {
+         technologyHolders = new EnumHolder[technologies.length];
+         for (int i = 0; i < technologies.length; i++) {
+             PlayerTechnology technology = technologies[i];
+             technologyHolders[i] = new EnumHolder(technology.name(), technology.toString());
+         }
+     }
+
+     public EnumHolder[] getTranscodeSchemeHolders() {
         return transcodeSchemeHolders;
     }
 
@@ -170,7 +185,15 @@ public class PlayerSettingsCommand {
         }
     }
 
-    public Player[] getPlayers() {
+    public String getTechnologyName() {
+        return technologyName;
+    }
+
+    public void setTechnologyName(String technologyName) {
+         this.technologyName = technologyName;
+     }
+
+     public Player[] getPlayers() {
         return players;
     }
 
