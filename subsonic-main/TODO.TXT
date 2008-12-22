@@ -8,7 +8,6 @@ Remove Web player link.
 Remove old flash player.
 Default player type.
 Let web player be default player.
-Skipping doesn't work in FF.
 "Nothing" works in IE.
 
 

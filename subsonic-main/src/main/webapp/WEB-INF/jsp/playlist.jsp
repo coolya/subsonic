@@ -62,7 +62,7 @@
 
     function playerReady(thePlayer) {
         player = $(thePlayer.id);
-        player.addModelListener("STATE", "stateListener");
+        player.addModelListener("STATE", stateListener);
         getPlaylist();
     }
 
@@ -276,8 +276,9 @@
             title:song.title,
             type:song.contentType
         };
-        player.sendEvent('LOAD', list);
-        player.sendEvent('PLAY');
+
+        player.sendEvent("LOAD", list);
+        player.sendEvent("PLAY");
     }
 
     function updateCurrentImage() {
