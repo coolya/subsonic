@@ -208,7 +208,7 @@
             if ($("titleUrl" + id)) {
                 dwr.util.setValue("titleUrl" + id, truncate(song.title));
                 $("titleUrl" + id).title = song.title;
-                $("titleUrl" + id).onclick = "onSkip('" + i + "')";
+                $("titleUrl" + id).onclick = function () {onSkip(this.id.substring(8) - 1)};
             }
             if ($("album" + id)) {
                 dwr.util.setValue("album" + id, truncate(song.album));
