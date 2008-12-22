@@ -1,24 +1,25 @@
 package net.sourceforge.subsonic.ajax;
 
-import net.sourceforge.subsonic.domain.MusicFile;
-import net.sourceforge.subsonic.domain.Player;
-import net.sourceforge.subsonic.domain.Playlist;
-import net.sourceforge.subsonic.domain.PlayerTechnology;
-import net.sourceforge.subsonic.service.JukeboxService;
-import net.sourceforge.subsonic.service.MusicFileService;
-import net.sourceforge.subsonic.service.PlayerService;
-import net.sourceforge.subsonic.util.StringUtil;
-import org.apache.commons.lang.StringUtils;
-import org.directwebremoting.WebContext;
-import org.directwebremoting.WebContextFactory;
-import org.springframework.web.servlet.support.RequestContextUtils;
-
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.Playlist;
+import net.sourceforge.subsonic.service.JukeboxService;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.util.StringUtil;
 
 /**
  * Provides AJAX-enabled services for manipulating the playlist of a player.
@@ -57,7 +58,7 @@ public class PlaylistService {
     public PlaylistInfo skip(int index) throws Exception {
         Player player = getCurrentPlayer();
         player.getPlaylist().setIndex(index);
-        boolean serverSidePlaylist = !player.isClientSidePlaylist();
+        boolean serverSidePlaylist = !player.isExternalWithPlaylist();
         return convert(player, serverSidePlaylist);
     }
 
@@ -89,7 +90,7 @@ public class PlaylistService {
     public PlaylistInfo clear() throws Exception {
         Player player = getCurrentPlayer();
         player.getPlaylist().clear();
-        boolean serverSidePlaylist = !player.isClientSidePlaylist();
+        boolean serverSidePlaylist = !player.isExternalWithPlaylist();
         return convert(player, serverSidePlaylist);
     }
 
@@ -119,14 +120,14 @@ public class PlaylistService {
 
     public PlaylistInfo toggleRepeat() throws Exception {
         Player player = getCurrentPlayer();
-        player.getPlaylist().setRepeatEnabled(player.getPlaylist().isRepeatEnabled());
+        player.getPlaylist().setRepeatEnabled(!player.getPlaylist().isRepeatEnabled());
         return convert(player, false);
     }
 
     public PlaylistInfo undo() throws Exception {
         Player player = getCurrentPlayer();
         player.getPlaylist().undo();
-        boolean serverSidePlaylist = !player.isClientSidePlaylist();
+        boolean serverSidePlaylist = !player.isExternalWithPlaylist();
         return convert(player, serverSidePlaylist);
     }
 
@@ -163,8 +164,11 @@ public class PlaylistService {
 
         boolean isCurrentPlayer = player.getIpAddress() != null && player.getIpAddress().equals(request.getRemoteAddr());
 
-        boolean jukebox = player.getTechnology() == PlayerTechnology.JUKEBOX;
-        sendM3U = player.isAutoControlEnabled() && !jukebox && isCurrentPlayer && sendM3U;
+        boolean jukebox = player.isJukebox();
+        boolean m3uSupported = player.isExternal() || player.isExternalWithPlaylist();
+        sendM3U = player.isAutoControlEnabled() && m3uSupported && isCurrentPlayer && sendM3U;
+
+        // TODO
         if (sendM3U && jukebox) {
             jukeboxService.play(player);
         }
@@ -173,15 +177,15 @@ public class PlaylistService {
         for (MusicFile file : playlist.getFiles()) {
             MusicFile.MetaData metaData = file.getMetaData();
             String albumUrl = url.replaceFirst("/dwr/.*", "/main.view?pathUtf8Hex=" +
-                                                          StringUtil.utf8HexEncode(file.getParent().getPath()));
+                    StringUtil.utf8HexEncode(file.getParent().getPath()));
             String streamUrl = url.replaceFirst("/dwr/.*", "/stream?player=" + player.getId() + "&pathUtf8Hex=" + StringUtil.utf8HexEncode(file.getPath()));
 
             entries.add(new PlaylistInfo.Entry(metaData.getTrackNumber(), metaData.getTitle(), metaData.getArtist(),
-                                               metaData.getAlbum(), metaData.getGenre(), metaData.getYear(), formatBitRate(metaData),
-                                               metaData.getDuration(), metaData.getDurationAsString(), formatFormat(metaData.getFormat()),
-                                               formatContentType(file), formatFileSize(metaData.getFileSize()), albumUrl, streamUrl));
+                    metaData.getAlbum(), metaData.getGenre(), metaData.getYear(), formatBitRate(metaData),
+                    metaData.getDuration(), metaData.getDurationAsString(), formatFormat(metaData.getFormat()),
+                    formatContentType(file), formatFileSize(metaData.getFileSize()), albumUrl, streamUrl));
         }
-        boolean isStopEnabled = playlist.getStatus() == Playlist.Status.PLAYING && !player.isClientSidePlaylist();
+        boolean isStopEnabled = playlist.getStatus() == Playlist.Status.PLAYING && !player.isExternalWithPlaylist();
         return new PlaylistInfo(entries, playlist.getIndex(), isStopEnabled, playlist.isRepeatEnabled(), sendM3U);
     }
 

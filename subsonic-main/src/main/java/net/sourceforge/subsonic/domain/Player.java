@@ -18,8 +18,6 @@ public class Player {
     private String ipAddress;
     private boolean isDynamicIp = true;
     private boolean isAutoControlEnabled = true;
-    private boolean isClientSidePlaylist = false;
-    private boolean isJukebox = false;
     private Date lastSeen;
     private CoverArtScheme coverArtScheme = CoverArtScheme.MEDIUM;
     private TranscodeScheme transcodeScheme = TranscodeScheme.OFF;
@@ -79,6 +77,22 @@ public class Player {
         this.technology = technology;
     }
 
+    public boolean isJukebox() {
+        return technology == PlayerTechnology.JUKEBOX;
+    }
+
+    public boolean isExternal() {
+        return technology == PlayerTechnology.EXTERNAL;
+    }
+
+    public boolean isExternalWithPlaylist() {
+        return technology == PlayerTechnology.EXTERNAL_WITH_PLAYLIST;
+    }
+
+    public boolean isWeb() {
+        return technology == PlayerTechnology.WEB;
+    }
+
     /**
      * Returns the player type, e.g., WinAmp, iTunes.
      *
@@ -131,28 +145,6 @@ public class Player {
      */
     public void setAutoControlEnabled(boolean isAutoControlEnabled) {
         this.isAutoControlEnabled = isAutoControlEnabled;
-    }
-
-    /**
-     * Returns whether the player itself controls the playlist.
-     *
-     * @return Whether the player itself controls the playlist.
-     * @deprecated Use getTechnology() instead.
-     */
-    @Deprecated
-    public boolean isClientSidePlaylist() {
-        return isClientSidePlaylist;
-    }
-
-    /**
-     * Sets whether the player itself controls the playlist.
-     *
-     * @param isClientSidePlaylist Whether the player itself controls the playlist.
-     * @deprecated Use setTechnology() instead.
-     */
-    @Deprecated
-    public void setClientSidePlaylist(boolean isClientSidePlaylist) {
-        this.isClientSidePlaylist = isClientSidePlaylist;
     }
 
     /**
@@ -286,7 +278,9 @@ public class Player {
      * @return A string representation of the player.
      * @see #getDescription()
      */
+    @Override
     public String toString() {
         return getDescription();
     }
+
 }

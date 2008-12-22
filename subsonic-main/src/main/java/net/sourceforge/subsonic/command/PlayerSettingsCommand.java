@@ -22,7 +22,6 @@ public class PlayerSettingsCommand {
     private Date lastSeen;
     private boolean isDynamicIp;
     private boolean isAutoControlEnabled;
-    private boolean isClientSidePlaylist;
     private String coverArtSchemeName;
     private String technologyName;
     private String transcodeSchemeName;
@@ -91,14 +90,6 @@ public class PlayerSettingsCommand {
 
     public void setAutoControlEnabled(boolean autoControlEnabled) {
         isAutoControlEnabled = autoControlEnabled;
-    }
-
-    public boolean isClientSidePlaylist() {
-        return isClientSidePlaylist;
-    }
-
-    public void setClientSidePlaylist(boolean clientSidePlaylist) {
-        isClientSidePlaylist = clientSidePlaylist;
     }
 
     public String getCoverArtSchemeName() {

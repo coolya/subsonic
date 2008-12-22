@@ -15,6 +15,7 @@ Remove old flash player
 
 TODO IN 3.6
 -----------
+Show active users.  Improve Now playing (e.g., show how long since it happened). http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1387
 Line breaks in IE.
 Verify that subsonic.sh still works.
 Change license to GPL.
@@ -38,7 +39,6 @@ Random play on artist/album level. http://www.activeobjects.no/subsonic/forum/vi
 
 BACKLOG
 ==========================
-Show active users.  Improve Now playing (e.g., show how long since it happened). http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1387
 "Featured" albums. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1388
 http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1407
 Avoid logging of DWR stuff. Add logging from Subsonic service.

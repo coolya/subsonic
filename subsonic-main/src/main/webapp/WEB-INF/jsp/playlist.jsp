@@ -8,18 +8,27 @@
     <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/swfobject.js"/>"></script>
 </head>
 
 <body class="bgcolor2" onload="onLoad()">
 
 <script type="text/javascript" language="javascript">
     var currentFile = null;
-    var songs;
+    var player = null;
+    var songs = null;
+    var currentStreamUrl = null;
+    var startPlayer = false;
 
     function onLoad() {
         dwr.engine.setErrorHandler(null);
+    <c:if test="${model.player.external}">
         startTimer();
+    </c:if>
         getPlaylist();
+    <c:if test="${model.player.web}">
+        createPlayer();
+    </c:if>
     }
 
     function startTimer() {
@@ -35,9 +44,39 @@
         currentFile = file;
     }
 
+    function createPlayer() {
+        var flashvars = {
+        }
+        var params = {
+            allowfullscreen:"true",
+            allowscriptaccess:"always"
+        }
+        var attributes = {
+            id:"player",
+            name:"player"
+        }
+        swfobject.embedSWF("<c:url value="/flash/player.swf"/>", "placeholder", "340", "20", "9.0.115", false, flashvars, params, attributes);
+    }
+
+    function playerReady(thePlayer) {
+        player = $(thePlayer.id);
+        player.addModelListener("STATE", "stateListener");
+        getPlaylist();
+    }
+
+    function stateListener(obj) { // IDLE, BUFFERING, PLAYING, PAUSED, COMPLETED
+        var currentState = obj.newstate;
+        var previousState = obj.oldstate;
+
+        if (currentState == "COMPLETED" && previousState == "PLAYING") {
+            skip(parseInt(getCurrentSongIndex()) + 1);
+        }
+    }
+
     function getPlaylist() {
         playlistService.getPlaylist(playlistCallback);
     }
+
     function onClear() {
     <c:choose>
     <c:when test="${model.partyMode}">
@@ -57,15 +96,25 @@
         playlistService.stop(playlistCallback);
     }
     function onSkip(index) {
+    <c:choose>
+    <c:when test="${model.player.web}">
+        skip(index);
+    </c:when>
+    <c:otherwise>
         playlistService.skip(index, playlistCallback);
+    </c:otherwise>
+    </c:choose>
     }
     function onPlay(path) {
+        startPlayer = true;
         playlistService.play(path, playlistCallback);
     }
     function onPlayRandom(path, count) {
+        startPlayer = true;
         playlistService.playRandom(path, count, playlistCallback);
     }
     function onAdd(path) {
+        startPlayer = false;
         playlistService.add(path, playlistCallback);
     }
     function onShuffle() {
@@ -132,9 +181,12 @@
             if ($("trackNumber" + id)) {
                 dwr.util.setValue("trackNumber" + id, song.trackNumber);
             }
+
+        <c:if test="${not model.player.web}">
             if ($("currentImage" + id) && i == playlist.index) {
                 $("currentImage" + id).show();
             }
+        </c:if>
             if ($("title" + id)) {
                 dwr.util.setValue("title" + id, truncate(song.title));
                 $("title" + id).title = song.title;
@@ -179,6 +231,69 @@
         if (playlist.sendM3U) {
             parent.frames.main.location.href="play.m3u?";
         }
+
+    <c:if test="${model.player.web}">
+        triggerPlayer();
+    </c:if>
+    }
+
+    function triggerPlayer() {
+        if (startPlayer) {
+            startPlayer = false;
+            if (songs.length > 0) {
+                skip(0);
+            }
+        }
+        updateCurrentImage();
+    }
+
+    function skip(index) {
+        if (index >= songs.length) {
+            return;
+        }
+
+        var song = songs[index];
+        currentStreamUrl = song.streamUrl;
+        updateCurrentImage();
+        var list = new Array();
+        list[0] = {
+            //                author:"Author",
+            //                description:"Description",
+            duration:song.duration,
+            file:song.streamUrl,
+            //            link:currentPlaylist[i].link,
+            //            image:currentPlaylist[i].image,
+            //            start:currentPlaylist[i].start,
+            title:song.title,
+            type:song.contentType
+        };
+        player.sendEvent('LOAD', list);
+        player.sendEvent('PLAY');
+    }
+
+    function updateCurrentImage() {
+        for (var i = 0; i < songs.length; i++) {
+            var song  = songs[i];
+            var id = i + 1;
+            var image = $("currentImage" + id);
+
+            if (image) {
+                if (song.streamUrl == currentStreamUrl) {
+                    image.show();
+                } else {
+                    image.hide();
+                }
+            }
+        }
+    }
+
+    function getCurrentSongIndex() {
+        for (var i = 0; i < songs.length; i++) {
+            if (songs[i].streamUrl == currentStreamUrl) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     function truncate(s) {
@@ -263,61 +378,62 @@
 
 </script>
 
-<a name="-1">
-    <h2>
-        <table style="white-space:nowrap;">
-            <tr>
-                <td><select name="player" onchange="location='playlist.view?player=' + options[selectedIndex].value;">
-                    <c:forEach items="${model.players}" var="player">
-                <option ${player.id eq model.player.id ? "selected" : ""} value="${player.id}">${player}</option>
-            </c:forEach>
-        </select></td>
+<h2>
+    <table style="white-space:nowrap;">
+        <tr>
+            <td><select name="player" onchange="location='playlist.view?player=' + options[selectedIndex].value;">
+                <c:forEach items="${model.players}" var="player">
+                    <option ${player.id eq model.player.id ? "selected" : ""} value="${player.id}">${player}</option>
+                </c:forEach>
+            </select></td>
 
-       <c:if test="${model.user.streamRole}">
-           <td id="stop"><b><a href="javascript:noop()" onclick="onStop()"><fmt:message key="playlist.stop"/></a></b> | </td>
-           <td id="start"><b><a href="javascript:noop()" onclick="onStart()"><fmt:message key="playlist.start"/></a></b> | </td>
-       </c:if>
+            <c:if test="${model.player.web}">
+                <td style="width:340px; height:20px;padding-left:10px;padding-right:10px"><div id="placeholder"> </div></td>
+            </c:if>
 
-        <td><a href="javascript:noop()" onclick="onClear()"><fmt:message key="playlist.clear"/></a></td>
-        <td> | <a href="javascript:noop()" onclick="onShuffle()"><fmt:message key="playlist.shuffle"/></a></td>
+            <c:if test="${model.user.streamRole and not model.player.web}">
+                <td id="stop"><b><a href="javascript:noop()" onclick="onStop()"><fmt:message key="playlist.stop"/></a></b> | </td>
+                <td id="start"><b><a href="javascript:noop()" onclick="onStart()"><fmt:message key="playlist.start"/></a></b> | </td>
+            </c:if>
 
-        <c:if test="${not model.player.clientSidePlaylist}">
-            <td> | <a href="javascript:noop()" onclick="onToggleRepeat()"><span id="toggleRepeat"><fmt:message key="playlist.repeat_on"/></span></a></td>
-        </c:if>
+            <td><a href="javascript:noop()" onclick="onClear()"><fmt:message key="playlist.clear"/></a> |</td>
+            <td><a href="javascript:noop()" onclick="onShuffle()"><fmt:message key="playlist.shuffle"/></a> |</td>
 
-        <td> | <a href="javascript:noop()" onclick="onUndo()"><fmt:message key="playlist.undo"/></a></td>
-                <c:if test="${model.user.streamRole}">
-        <td> | <a href="webPlayer.view?"><fmt:message key="playlist.webplayer"/></a></td>
+            <c:if test="${model.player.jukebox or model.player.external}">
+                <td><a href="javascript:noop()" onclick="onToggleRepeat()"><span id="toggleRepeat"><fmt:message key="playlist.repeat_on"/></span></a> |</td>
+            </c:if>
+
+            <td><a href="javascript:noop()" onclick="onUndo()"><fmt:message key="playlist.undo"/></a> |</td>
+
+            <td><a href="playerSettings.view?id=${model.player.id}" target="main"><fmt:message key="playlist.settings"/></a> |</td>
+
+            <td><select id="moreActions" onchange="actionSelected(this.options[selectedIndex].id)">
+                <option id="top" selected="selected"><fmt:message key="playlist.more"/></option>
+                <option disabled="disabled"><fmt:message key="playlist.more.playlist"/></option>
+                <option id="loadPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.load"/></option>
+                <c:if test="${model.user.playlistRole}">
+                    <option id="savePlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.save"/></option>
                 </c:if>
-        <td> | <a href="playerSettings.view?id=${model.player.id}" target="main"><fmt:message key="playlist.settings"/></a></td>
+                <c:if test="${model.user.downloadRole}">
+                    <option id="downloadPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
+                </c:if>
+                <option id="sortByTrack">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.sortbytrack"/></option>
+                <option id="sortByAlbum">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.sortbyalbum"/></option>
+                <option id="sortByArtist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.sortbyartist"/></option>
+                <option disabled="disabled"><fmt:message key="playlist.more.selection"/></option>
+                <option id="selectAll">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.selectall"/></option>
+                <option id="selectNone">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.selectnone"/></option>
+                <option id="remove" disabled="disabled">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.remove"/></option>
+                <c:if test="${model.user.downloadRole}">
+                    <option id="download" disabled="disabled">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
+                </c:if>
+                <c:if test="${model.user.playlistRole}">
+                    <option id="appendPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.append"/></option>
+                </c:if>
+            </select>
+            </td>
 
-        <td> | <select id="moreActions" onchange="actionSelected(this.options[selectedIndex].id)">
-            <option id="top" selected="selected"><fmt:message key="playlist.more"/></option>
-            <option disabled="disabled"><fmt:message key="playlist.more.playlist"/></option>
-            <option id="loadPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.load"/></option>
-            <c:if test="${model.user.playlistRole}">
-                <option id="savePlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.save"/></option>
-            </c:if>
-            <c:if test="${model.user.downloadRole}">
-                <option id="downloadPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
-            </c:if>
-            <option id="sortByTrack">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.sortbytrack"/></option>
-            <option id="sortByAlbum">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.sortbyalbum"/></option>
-            <option id="sortByArtist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.sortbyartist"/></option>
-            <option disabled="disabled"><fmt:message key="playlist.more.selection"/></option>
-            <option id="selectAll">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.selectall"/></option>
-            <option id="selectNone">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.selectnone"/></option>
-            <option id="remove" disabled="disabled">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.remove"/></option>
-            <c:if test="${model.user.downloadRole}">
-                <option id="download" disabled="disabled">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
-            </c:if>
-            <c:if test="${model.user.playlistRole}">
-                <option id="appendPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.append"/></option>
-            </c:if>
-        </select>
-        </td>
-    </tr></table></h2>
-</a>
+        </tr></table></h2>
 
 <p id="empty"><em><fmt:message key="playlist.empty"/></em></p>
 
@@ -343,7 +459,7 @@
 
             <td style="padding-right:1.25em">
                 <c:choose>
-                    <c:when test="${model.player.clientSidePlaylist}">
+                    <c:when test="${model.player.externalWithPlaylist}">
                         <span id="title">Title</span>
                     </c:when>
                     <c:otherwise>

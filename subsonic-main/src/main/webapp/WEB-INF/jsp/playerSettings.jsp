@@ -151,16 +151,6 @@
         <td><a href="helpPopup.view?topic=autoControl" onclick="return popup(this, 'help')">
             <img src="${helpUrl}" alt="${help}" title="${help}"></a></td>
     </tr>
-
-    <tr>
-        <td>
-            <form:checkbox path="clientSidePlaylist" id="clientSidePlaylist" cssClass="checkbox"/>
-            <label for="clientSidePlaylist"><fmt:message key="playersettings.clientsideplaylist"/></label>
-        </td>
-        <td><a href="helpPopup.view?topic=clientSidePlaylist" onclick="return popup(this, 'help')">
-            <img src="${helpUrl}" alt="${help}" title="${help}"></a></td>
-    </tr>
-
 </table>
 
     <c:if test="${not empty command.allTranscodings}">

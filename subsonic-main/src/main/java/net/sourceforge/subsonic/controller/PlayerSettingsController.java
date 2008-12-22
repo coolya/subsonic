@@ -44,7 +44,6 @@ public class PlayerSettingsController extends SimpleFormController {
             command.setLastSeen(player.getLastSeen());
             command.setDynamicIp(player.isDynamicIp());
             command.setAutoControlEnabled(player.isAutoControlEnabled());
-            command.setClientSidePlaylist(player.isClientSidePlaylist());
             command.setCoverArtSchemeName(player.getCoverArtScheme().name());
             command.setTranscodeSchemeName(player.getTranscodeScheme().name());
             command.setTechnologyName(player.getTechnology().name());
@@ -74,7 +73,6 @@ public class PlayerSettingsController extends SimpleFormController {
         Player player = playerService.getPlayerById(command.getPlayerId());
 
         player.setAutoControlEnabled(command.isAutoControlEnabled());
-        player.setClientSidePlaylist(command.isClientSidePlaylist());
         player.setCoverArtScheme(CoverArtScheme.valueOf(command.getCoverArtSchemeName()));
         player.setDynamicIp(command.isDynamicIp());
         player.setName(StringUtils.trimToNull(command.getName()));

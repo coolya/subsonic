@@ -49,7 +49,7 @@ public class M3UController implements Controller {
             LOG.info("Using non-SSL port " + streamPort + " in m3u playlist.");
         }
 
-        if (player.isClientSidePlaylist()) {
+        if (player.isExternalWithPlaylist()) {
             createClientSidePlaylist(response.getOutputStream(), player, url);
         } else {
             createServerSidePlaylist(response.getOutputStream(), player, url);
