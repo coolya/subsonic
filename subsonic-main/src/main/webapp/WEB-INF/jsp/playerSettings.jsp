@@ -49,6 +49,26 @@
 
 <form:form commandName="command" method="post" action="playerSettings.view">
 <form:hidden path="playerId"/>
+
+<table class="ruleTable indent">
+    <c:forEach items="${command.technologyHolders}" var="technologyHolder">
+        <c:set var="technologyName">
+            <fmt:message key="playersettings.technology.${fn:toLowerCase(technologyHolder.name)}.title"/>
+        </c:set>
+
+        <tr>
+            <td class="ruleTableHeader">
+                <form:radiobutton id="radio-${technologyName}" path="technologyName" value="${technologyHolder.name}"/>
+                <b><label for="radio-${technologyName}">${technologyName}</label></b>
+            </td>
+            <td class="ruleTableCell" style="width:40em">
+                <fmt:message key="playersettings.technology.${fn:toLowerCase(technologyHolder.name)}.text"/>
+            </td>
+        </tr>
+    </c:forEach>
+</table>
+
+
 <table class="indent" style="border-spacing:3pt">
     <tr>
         <td><fmt:message key="playersettings.type"/></td>
@@ -65,26 +85,13 @@
     </tr>
 
     <tr>
-        <td colspan="3">&nbsp;</td>
-    </tr>
-
-    <c:forEach items="${command.technologyHolders}" var="technologyHolder">
-        <c:set var="technologyName">
-            <fmt:message key="playersettings.technology.${fn:toLowerCase(technologyHolder.name)}"/>
-        </c:set>
-        <tr><td colspan="3">
-            <form:radiobutton path="technologyName" label="${technologyName}"/>
-        </td></tr>
-    </c:forEach>
-
-    <tr>
-        <td colspan="3">&nbsp;</td>
+        <td colspan="4">&nbsp;</td>
     </tr>
 
     <tr>
         <td><fmt:message key="playersettings.name"/></td>
         <td><form:input path="name" size="16"/></td>
-        <td><a href="helpPopup.view?topic=playerName" onclick="return popup(this, 'help')">
+        <td colspan="2"><a href="helpPopup.view?topic=playerName" onclick="return popup(this, 'help')">
             <img src="${helpUrl}" alt="${help}" title="${help}"></a></td>
     </tr>
 
@@ -100,7 +107,7 @@
                 </c:forEach>
             </form:select>
         </td>
-        <td><a href="helpPopup.view?topic=cover" onclick="return popup(this, 'help')">
+        <td colspan="2"><a href="helpPopup.view?topic=cover" onclick="return popup(this, 'help')">
             <img src="${helpUrl}" alt="${help}" title="${help}"></a></td>
     </tr>
 
@@ -114,16 +121,21 @@
             </form:select>
         </td>
         <td><a href="helpPopup.view?topic=transcode" onclick="return popup(this, 'help')">
-            <img src="${helpUrl}" alt="${help}" title="${help}"></a></td>
-        <c:if test="${not command.transcodingSupported}">
-            <td class="warning"><fmt:message key="playersettings.nolame"></fmt:message></td>
-        </c:if>
+            <img src="${helpUrl}" alt="${help}" title="${help}"></a>
+        </td>
+        <td class="warning">
+            <c:if test="${not command.transcodingSupported}">
+                <fmt:message key="playersettings.nolame"/>
+            </c:if>
+        </td>
     </tr>
 
-    <tr><td colspan="3">&nbsp;</td></tr>
+</table>
+
+<table class="indent" style="border-spacing:3pt">
 
     <tr>
-        <td colspan="2">
+        <td>
             <form:checkbox path="dynamicIp" id="dynamicIp" cssClass="checkbox"/>
             <label for="dynamicIp"><fmt:message key="playersettings.dynamicip"/></label>
         </td>
@@ -132,7 +144,7 @@
     </tr>
 
     <tr>
-        <td colspan="2">
+        <td>
             <form:checkbox path="autoControlEnabled" id="autoControlEnabled" cssClass="checkbox"/>
             <label for="autoControlEnabled"><fmt:message key="playersettings.autocontrol"/></label>
         </td>
@@ -141,7 +153,7 @@
     </tr>
 
     <tr>
-        <td colspan="2">
+        <td>
             <form:checkbox path="clientSidePlaylist" id="clientSidePlaylist" cssClass="checkbox"/>
             <label for="clientSidePlaylist"><fmt:message key="playersettings.clientsideplaylist"/></label>
         </td>
