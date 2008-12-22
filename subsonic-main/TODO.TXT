@@ -10,8 +10,10 @@ Let web player be default player.
 
 TODO IN 3.6
 -----------
+Update to 3.6.beta1 in pom.xml
 Show active users.  Improve Now playing (e.g., show how long since it happened). http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1387
 Line breaks in IE.
+Jukebox support (or hide it)
 Verify that subsonic.sh still works.
 Change license to GPL.
 Add default welcome message.

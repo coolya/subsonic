@@ -19,6 +19,7 @@ import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.service.JukeboxService;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.util.StringUtil;
 
 /**
@@ -32,6 +33,7 @@ public class PlaylistService {
     private PlayerService playerService;
     private MusicFileService musicFileService;
     private JukeboxService jukeboxService;
+    private TranscodingService transcodingService;
 
     /**
      * Returns the playlist for the player of the current user.
@@ -191,7 +193,7 @@ public class PlaylistService {
             entries.add(new PlaylistInfo.Entry(metaData.getTrackNumber(), metaData.getTitle(), metaData.getArtist(),
                     metaData.getAlbum(), metaData.getGenre(), metaData.getYear(), formatBitRate(metaData),
                     metaData.getDuration(), metaData.getDurationAsString(), formatFormat(metaData.getFormat()),
-                    formatContentType(file), formatFileSize(metaData.getFileSize()), albumUrl, streamUrl));
+                    formatContentType(player, file), formatFileSize(metaData.getFileSize()), albumUrl, streamUrl));
         }
         boolean isStopEnabled = playlist.getStatus() == Playlist.Status.PLAYING && !player.isExternalWithPlaylist();
         return new PlaylistInfo(entries, playlist.getIndex(), isStopEnabled, playlist.isRepeatEnabled(), sendM3U);
@@ -211,8 +213,9 @@ public class PlaylistService {
         return StringUtils.lowerCase(format);
     }
 
-    private String formatContentType(MusicFile file) {
-        return StringUtil.getMimeType(file.getSuffix());
+    private String formatContentType(Player player, MusicFile file) {
+        String suffix = transcodingService.getSuffix(player, file);
+        return StringUtil.getMimeType(suffix);
     }
 
     private String formatBitRate(MusicFile.MetaData metaData) {
@@ -241,5 +244,9 @@ public class PlaylistService {
 
     public void setJukeboxService(JukeboxService jukeboxService) {
         this.jukeboxService = jukeboxService;
+    }
+
+    public void setTranscodingService(TranscodingService transcodingService) {
+        this.transcodingService = transcodingService;
     }
 }
