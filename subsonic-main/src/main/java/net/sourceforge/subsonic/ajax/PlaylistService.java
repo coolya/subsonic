@@ -106,6 +106,14 @@ public class PlaylistService {
         return convert(player, false);
     }
 
+    public PlaylistInfo removeMany(int[] indexes) throws Exception {
+        Player player = getCurrentPlayer();
+        for (int i = indexes.length - 1; i >= 0; i--) {
+            player.getPlaylist().removeFileAt(indexes[i]);
+        }
+        return convert(player, false);
+    }
+
     public PlaylistInfo up(int index) throws Exception {
         Player player = getCurrentPlayer();
         player.getPlaylist().moveUp(index);

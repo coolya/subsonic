@@ -1,16 +1,15 @@
 AJAX PLAYLIST
 -------------
-Busy icon.
 Make it work in IE.
-Implement player type (see note book), and possibly default player type per user.
-Implement proof-of-concept for JW player.
 Contact JW regarding license.
 Minimize/maximize playlist frame.
 http://www.longtailvideo.com/support/tutorials/Javascript-API-Examples#externalcontrol
-AJAX-ify remove selected songs.
-If webplayer, only show following options: Player selection | Settings | Flash player
 Remove Web player link.
-Remove old flash player
+Remove old flash player.
+Default player type.
+Let web player be default player.
+Skipping doesn't work in FF.
+"Nothing" works in IE.
 
 
 TODO IN 3.6

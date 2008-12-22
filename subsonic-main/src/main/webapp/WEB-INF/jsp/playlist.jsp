@@ -46,6 +46,8 @@
 
     function createPlayer() {
         var flashvars = {
+            backcolor:"<spring:theme code="backgroundColor"/>",
+            frontcolor:"<spring:theme code="textColor"/>"
         }
         var params = {
             allowfullscreen:"true",
@@ -123,6 +125,18 @@
     function onRemove(index) {
         playlistService.remove(index, playlistCallback);
     }
+    function onRemoveMany() {
+        var indexes = new Array();
+        var counter = 0;
+        for (var i = 0; i < songs.length; i++) {
+            var index = i + 1;
+            if ($("songIndex" + index).checked) {
+                indexes[counter++] = i;
+            }
+        }
+        playlistService.removeMany(indexes, playlistCallback);
+    }
+
     function onUp(index) {
         playlistService.up(index, playlistCallback);
     }
@@ -257,13 +271,8 @@
         updateCurrentImage();
         var list = new Array();
         list[0] = {
-            //                author:"Author",
-            //                description:"Description",
             duration:song.duration,
             file:song.streamUrl,
-            //            link:currentPlaylist[i].link,
-            //            image:currentPlaylist[i].image,
-            //            start:currentPlaylist[i].start,
             title:song.title,
             type:song.contentType
         };
@@ -305,8 +314,6 @@
         return s;
     }
 
-    var downloadEnabled = ${model.user.downloadRole ? "true" : "false"};
-
     <!-- actionSelected() is invoked when the users selects from the "More actions..." combo box. -->
     function actionSelected(id) {
         if (id == "top") {
@@ -330,7 +337,7 @@
             selectAll(false);
             onSelectionChange();
         } else if (id == "remove") {
-            location.href = "playlist.view?remove=" + getSelectedIndexes();
+            onRemoveMany();
         } else if (id == "download") {
             location.href = "download.view?player=${model.player.id}&indexes=" + getSelectedIndexes();
         } else if (id == "appendPlaylist") {
@@ -372,7 +379,12 @@
 
         var download = $("moreActions").options["download"];
         if (download) {
-            download.disabled = (selectionEmpty || !downloadEnabled) ? "disabled" : "";
+            download.disabled = selectionEmpty ? "disabled" : "";
+        }
+
+        var appendPlaylist = $("moreActions").options["appendPlaylist"];
+        if (appendPlaylist) {
+            appendPlaylist.disabled = selectionEmpty ? "disabled" : "";
         }
     }
 
@@ -428,7 +440,7 @@
                     <option id="download" disabled="disabled">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
                 </c:if>
                 <c:if test="${model.user.playlistRole}">
-                    <option id="appendPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.append"/></option>
+                    <option id="appendPlaylist" disabled="disabled">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.append"/></option>
                 </c:if>
             </select>
             </td>

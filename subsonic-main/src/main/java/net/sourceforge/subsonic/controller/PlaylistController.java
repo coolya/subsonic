@@ -1,23 +1,23 @@
 package net.sourceforge.subsonic.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
+import org.springframework.web.servlet.view.RedirectView;
+
 import net.sourceforge.subsonic.domain.Player;
-import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
-import net.sourceforge.subsonic.util.StringUtil;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.ParameterizableViewController;
-import org.springframework.web.servlet.view.RedirectView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Controller for the playlist frame.
@@ -36,10 +36,8 @@ public class PlaylistController extends ParameterizableViewController {
         User user = securityService.getCurrentUser(request);
         UserSettings userSettings = settingsService.getUserSettings(user.getUsername());
         Player player = playerService.getPlayer(request, response);
-        Playlist playlist = player.getPlaylist();
 
         Map<String, Object> map = new HashMap<String, Object>();
-        handleParameters(request, playlist);
 
         if (userSettings.isWebPlayerDefault()) {
             return new ModelAndView(new RedirectView("webPlayer.view?"));
@@ -53,15 +51,6 @@ public class PlaylistController extends ParameterizableViewController {
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
-    }
-
-    private void handleParameters(HttpServletRequest request, Playlist playlist) throws Exception {
-        if (request.getParameter("remove") != null) {
-            int[] indexes = StringUtil.parseInts(request.getParameter("remove"));
-            for (int i = indexes.length - 1; i >= 0; i--) {
-                playlist.removeFileAt(indexes[i]);
-            }
-        }
     }
 
     private List<Player> getPlayers(User user) {
