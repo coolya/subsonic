@@ -54,23 +54,20 @@
             allowscriptaccess:"always"
         }
         var attributes = {
-            id:"player",
-            name:"player"
+            id:"player1",
+            name:"player1"
         }
         swfobject.embedSWF("<c:url value="/flash/player.swf"/>", "placeholder", "340", "20", "9.0.115", false, flashvars, params, attributes);
     }
 
     function playerReady(thePlayer) {
         player = $(thePlayer.id);
-        player.addModelListener("STATE", stateListener);
+        player.addModelListener("STATE", "stateListener");
         getPlaylist();
     }
 
     function stateListener(obj) { // IDLE, BUFFERING, PLAYING, PAUSED, COMPLETED
-        var currentState = obj.newstate;
-        var previousState = obj.oldstate;
-
-        if (currentState == "COMPLETED" && previousState == "PLAYING") {
+        if (obj.newstate == "COMPLETED" && obj.oldstate == "PLAYING") {
             skip(parseInt(getCurrentSongIndex()) + 1);
         }
     }

@@ -1,15 +1,12 @@
 AJAX PLAYLIST
 -------------
-Make it work in IE.
-Contact JW regarding license.
+Buy JW license.
 Minimize/maximize playlist frame.
 http://www.longtailvideo.com/support/tutorials/Javascript-API-Examples#externalcontrol
 Remove Web player link.
 Remove old flash player.
 Default player type.
 Let web player be default player.
-"Nothing" works in IE.
-
 
 TODO IN 3.6
 -----------

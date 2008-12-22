@@ -3,11 +3,12 @@
 <html>
 <head>
     <%@ include file="head.jsp" %>
+    <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/interface/playlistService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/swfobject.js"/>"></script>
 </head>
 
@@ -53,6 +54,10 @@
         dwr.util.setValue("state", previousState + " >  " + currentState);
     }
 
+    function mute() {
+        player.sendEvent("MUTE");
+    }
+
     function getPlaylist() {
         playlistService.getPlaylist(playlistCallback);
     }
@@ -84,5 +89,8 @@
 </div>
 
 <div id="state">Unknown</div>
+
+<a href="javascript:noop()" onclick="mute()">Mute</a>
+
 </body>
 </html>
