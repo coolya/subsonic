@@ -4,7 +4,6 @@ Buy JW license.
 Minimize/maximize playlist frame.
 http://www.longtailvideo.com/support/tutorials/Javascript-API-Examples#externalcontrol
 Default player type.
-Let web player be default player.
 Remove "Player has dynamic IP address" ?
 Remove "Control player automatically" ?
 Remove "Always use web player" ?

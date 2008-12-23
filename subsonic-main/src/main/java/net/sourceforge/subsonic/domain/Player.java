@@ -12,7 +12,7 @@ public class Player {
 
     private String id;
     private String name;
-    private PlayerTechnology technology = PlayerTechnology.EXTERNAL; // TODO: Change to WEB?
+    private PlayerTechnology technology = PlayerTechnology.WEB;
     private String type;
     private String username;
     private String ipAddress;
