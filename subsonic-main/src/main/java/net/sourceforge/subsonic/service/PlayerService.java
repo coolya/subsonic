@@ -4,6 +4,8 @@ import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.PlayerDao;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Transcoding;
+import net.sourceforge.subsonic.domain.TransferStatus;
+
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.Cookie;
@@ -154,7 +156,8 @@ public class PlayerService {
      * @return Whether the player is connected.
      */
     private boolean isPlayerConnected(Player player) {
-        return !statusService.getStreamStatusesForPlayer(player).isEmpty();
+        TransferStatus status = statusService.getStreamStatusForPlayer(player);
+        return status != null && status.isActive();
     }
 
     /**

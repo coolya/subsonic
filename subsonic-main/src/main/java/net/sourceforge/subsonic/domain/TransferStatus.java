@@ -1,8 +1,8 @@
 package net.sourceforge.subsonic.domain;
 
-import net.sourceforge.subsonic.util.BoundedList;
-
 import java.io.File;
+
+import net.sourceforge.subsonic.util.BoundedList;
 
 /**
  * Status for a single transfer (stream, download or upload).
@@ -21,6 +21,7 @@ public class TransferStatus {
     private long bytesTotal;
     private SampleHistory history = new SampleHistory();
     private boolean isTerminated;
+    private boolean active = true;
 
 
     /**
@@ -185,6 +186,24 @@ public class TransferStatus {
      */
     public boolean isTerminated() {
         return isTerminated;
+    }
+
+    /**
+     * Returns whether this transfer is active, i.e., if the connection is still established.
+     *
+     * @return Whether this transfer is active.
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * Sets whether this transfer is active, i.e., if the connection is still established.
+     *
+     * @param active Whether this transfer is active.
+     */
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     /**
