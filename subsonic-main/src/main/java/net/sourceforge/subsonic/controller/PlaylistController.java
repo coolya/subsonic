@@ -38,11 +38,6 @@ public class PlaylistController extends ParameterizableViewController {
         Player player = playerService.getPlayer(request, response);
 
         Map<String, Object> map = new HashMap<String, Object>();
-
-        if (userSettings.isWebPlayerDefault()) {
-            return new ModelAndView(new RedirectView("webPlayer.view?"));
-        }
-
         map.put("user", user);
         map.put("player", player);
         map.put("players", getPlayers(user));

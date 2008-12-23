@@ -3,16 +3,18 @@ AJAX PLAYLIST
 Buy JW license.
 Minimize/maximize playlist frame.
 http://www.longtailvideo.com/support/tutorials/Javascript-API-Examples#externalcontrol
-Remove Web player link.
-Remove old flash player.
 Default player type.
 Let web player be default player.
+Remove "Player has dynamic IP address" ?
+Remove "Control player automatically" ?
+Remove "Always use web player" ?
 
 TODO IN 3.6
 -----------
 Update to 3.6.beta1 in pom.xml
 Show active users.  Improve Now playing (e.g., show how long since it happened). http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1387
 Line breaks in IE.
+Playlist drag'n drop
 Jukebox support (or hide it)
 Verify that subsonic.sh still works.
 Change license to GPL.
@@ -23,6 +25,7 @@ Demo mode.
 Sort albums by year. (And show year). getCoverArt() should be made non-recursive. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
 Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305
 Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
+Should be possible to donate from web page.
 
 DONE IN 3.6
 -------------
