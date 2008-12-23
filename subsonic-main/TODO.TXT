@@ -1,6 +1,5 @@
 AJAX PLAYLIST
 -------------
-Buy JW license.
 Minimize/maximize playlist frame.
 http://www.longtailvideo.com/support/tutorials/Javascript-API-Examples#externalcontrol
 Default player type.
@@ -12,7 +11,6 @@ TODO IN 3.6
 -----------
 Update to 3.6.beta1 in pom.xml
 Show active users.  Improve Now playing (e.g., show how long since it happened). http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1387
-Line breaks in IE.
 Playlist drag'n drop
 Jukebox support (or hide it)
 Verify that subsonic.sh still works.
@@ -28,6 +26,7 @@ Should be possible to donate from web page.
 
 DONE IN 3.6
 -------------
+Bugfix: Avoid ugly line breaks in IE.
 New agent/service architecture.
 Fixed broken lyrics (again).
 Append selected tracks to previously saved playlist (bring up dialog for selecting).
