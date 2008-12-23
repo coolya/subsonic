@@ -207,7 +207,7 @@ public class PlayerService {
      *
      * @return All currently registered players.
      */
-    public Player[] getAllPlayers() {
+    public List<Player> getAllPlayers() {
         return playerDao.getAllPlayers();
     }
 

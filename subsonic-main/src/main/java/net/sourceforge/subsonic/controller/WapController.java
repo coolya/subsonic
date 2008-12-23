@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
+import java.util.Arrays;
 
 /**
  * Multi-controller used for wap pages.
@@ -104,13 +105,13 @@ public class WapController extends MultiActionController {
     public ModelAndView playlist(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // Create array of players to control. If the "player" attribute is set for this session,
         // only the player with this ID is controlled.  Otherwise, all players are controlled.
-        Player[] players = playerService.getAllPlayers();
+        List<Player> players = playerService.getAllPlayers();
 
         String playerId = (String) request.getSession().getAttribute("player");
         if (playerId != null) {
             Player player = playerService.getPlayerById(playerId);
             if (player != null) {
-                players = new Player[]{player};
+                players = Arrays.asList(player);
             }
         }
 
@@ -169,7 +170,7 @@ public class WapController extends MultiActionController {
     public ModelAndView settings(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String playerId = (String) request.getSession().getAttribute("player");
 
-        Player[] allPlayers = playerService.getAllPlayers();
+        List<Player> allPlayers = playerService.getAllPlayers();
         User user = securityService.getCurrentUser(request);
         List<Player> players = new ArrayList<Player>();
         Map<String, Object> map = new HashMap<String, Object>();

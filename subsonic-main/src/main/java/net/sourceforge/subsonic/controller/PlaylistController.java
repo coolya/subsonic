@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
-import org.springframework.web.servlet.view.RedirectView;
 
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.User;

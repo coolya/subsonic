@@ -34,13 +34,13 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         player.setTranscodeScheme(TranscodeScheme.MAX_160);
 
         playerDao.createPlayer(player);
-        Player newPlayer = playerDao.getAllPlayers()[0];
+        Player newPlayer = playerDao.getAllPlayers().get(0);
         assertPlayerEquals(player, newPlayer);
     }
 
     public void testDefaultValues() {
         playerDao.createPlayer(new Player());
-        Player player = playerDao.getAllPlayers()[0];
+        Player player = playerDao.getAllPlayers().get(0);
 
         assertTrue("Player should have dynamic IP by default.", player.isDynamicIp());
         assertTrue("Player should be auto-controlled by default.", player.isAutoControlEnabled());
@@ -51,25 +51,25 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
 
         playerDao.createPlayer(player);
         assertEquals("Wrong ID", "1", player.getId());
-        assertEquals("Wrong number of players.", 1, playerDao.getAllPlayers().length);
+        assertEquals("Wrong number of players.", 1, playerDao.getAllPlayers().size());
 
         playerDao.createPlayer(player);
         assertEquals("Wrong ID", "2", player.getId());
-        assertEquals("Wrong number of players.", 2, playerDao.getAllPlayers().length);
+        assertEquals("Wrong number of players.", 2, playerDao.getAllPlayers().size());
 
         playerDao.createPlayer(player);
         assertEquals("Wrong ID", "3", player.getId());
-        assertEquals("Wrong number of players.", 3, playerDao.getAllPlayers().length);
+        assertEquals("Wrong number of players.", 3, playerDao.getAllPlayers().size());
 
         playerDao.deletePlayer("3");
         playerDao.createPlayer(player);
         assertEquals("Wrong ID", "3", player.getId());
-        assertEquals("Wrong number of players.", 3, playerDao.getAllPlayers().length);
+        assertEquals("Wrong number of players.", 3, playerDao.getAllPlayers().size());
 
         playerDao.deletePlayer("2");
         playerDao.createPlayer(player);
         assertEquals("Wrong ID", "4", player.getId());
-        assertEquals("Wrong number of players.", 3, playerDao.getAllPlayers().length);
+        assertEquals("Wrong number of players.", 3, playerDao.getAllPlayers().size());
     }
 
     public void testPlaylist() {
@@ -86,7 +86,7 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
     public void testUpdatePlayer() {
         Player player = new Player();
         playerDao.createPlayer(player);
-        assertPlayerEquals(player, playerDao.getAllPlayers()[0]);
+        assertPlayerEquals(player, playerDao.getAllPlayers().get(0));
 
         player.setName("name");
         player.setType("Winamp");
@@ -100,24 +100,24 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         player.setTranscodeScheme(TranscodeScheme.MAX_160);
 
         playerDao.updatePlayer(player);
-        Player newPlayer = playerDao.getAllPlayers()[0];
+        Player newPlayer = playerDao.getAllPlayers().get(0);
         assertPlayerEquals(player, newPlayer);
     }
 
     public void testDeletePlayer() {
-        assertEquals("Wrong number of players.", 0, playerDao.getAllPlayers().length);
+        assertEquals("Wrong number of players.", 0, playerDao.getAllPlayers().size());
 
         playerDao.createPlayer(new Player());
-        assertEquals("Wrong number of players.", 1, playerDao.getAllPlayers().length);
+        assertEquals("Wrong number of players.", 1, playerDao.getAllPlayers().size());
 
         playerDao.createPlayer(new Player());
-        assertEquals("Wrong number of players.", 2, playerDao.getAllPlayers().length);
+        assertEquals("Wrong number of players.", 2, playerDao.getAllPlayers().size());
 
         playerDao.deletePlayer("1");
-        assertEquals("Wrong number of players.", 1, playerDao.getAllPlayers().length);
+        assertEquals("Wrong number of players.", 1, playerDao.getAllPlayers().size());
 
         playerDao.deletePlayer("2");
-        assertEquals("Wrong number of players.", 0, playerDao.getAllPlayers().length);
+        assertEquals("Wrong number of players.", 0, playerDao.getAllPlayers().size());
     }
 
     private void assertPlayerEquals(Player expected, Player actual) {

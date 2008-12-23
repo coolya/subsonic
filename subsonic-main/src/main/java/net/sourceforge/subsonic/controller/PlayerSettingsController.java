@@ -98,7 +98,7 @@ public class PlayerSettingsController extends SimpleFormController {
     private List<Player> getPlayers(HttpServletRequest request) {
         User user = securityService.getCurrentUser(request);
         String username = user.getUsername();
-        Player[] players = playerService.getAllPlayers();
+        List<Player> players = playerService.getAllPlayers();
         List<Player> authorizedPlayers = new ArrayList<Player>();
 
         for (Player player : players) {
