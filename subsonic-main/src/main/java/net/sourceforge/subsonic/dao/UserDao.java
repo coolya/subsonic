@@ -1,34 +1,34 @@
 package net.sourceforge.subsonic.dao;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.domain.TranscodeScheme;
-import net.sourceforge.subsonic.domain.User;
-import net.sourceforge.subsonic.domain.UserSettings;
-import net.sourceforge.subsonic.domain.AvatarScheme;
-import net.sourceforge.subsonic.util.StringUtil;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.AvatarScheme;
+import net.sourceforge.subsonic.domain.TranscodeScheme;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.util.StringUtil;
 
 /**
  * Provides user-related database services.
  *
  * @author Sindre Mehus
  */
-@SuppressWarnings({"unchecked"})
 public class UserDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(UserDao.class);
     private static final String USER_COLUMNS = "username, password, ldap_authenticated, bytes_streamed, bytes_downloaded, bytes_uploaded";
     private static final String USER_SETTINGS_COLUMNS = "username, locale, theme_id, final_version_notification, beta_version_notification, " +
-                                                        "main_caption_cutoff, main_track_number, main_artist, main_album, main_genre, " +
-                                                        "main_year, main_bit_rate, main_duration, main_format, main_file_size, " +
-                                                        "playlist_caption_cutoff, playlist_track_number, playlist_artist, playlist_album, playlist_genre, " +
-                                                        "playlist_year, playlist_bit_rate, playlist_duration, playlist_format, playlist_file_size, " +
-                                                        "last_fm_enabled, last_fm_username, last_fm_password, transcode_scheme, show_now_playing, selected_music_folder_id, " +
-                                                        "party_mode_enabled, now_playing_allowed, avatar_scheme, system_avatar_id";
+            "main_caption_cutoff, main_track_number, main_artist, main_album, main_genre, " +
+            "main_year, main_bit_rate, main_duration, main_format, main_file_size, " +
+            "playlist_caption_cutoff, playlist_track_number, playlist_artist, playlist_album, playlist_genre, " +
+            "playlist_year, playlist_bit_rate, playlist_duration, playlist_format, playlist_file_size, " +
+            "last_fm_enabled, last_fm_username, last_fm_password, transcode_scheme, show_now_playing, selected_music_folder_id, " +
+            "party_mode_enabled, now_playing_allowed, avatar_scheme, system_avatar_id";
 
     private static final Integer ROLE_ID_ADMIN = 1;
     private static final Integer ROLE_ID_DOWNLOAD = 2;
@@ -50,13 +50,7 @@ public class UserDao extends AbstractDao {
      */
     public User getUserByName(String username) {
         String sql = "select " + USER_COLUMNS + " from user where username=?";
-        List<?> users = getJdbcTemplate().query(sql, new Object[]{username}, userRowMapper);
-        if (users.isEmpty()) {
-            return null;
-        }
-        User user = (User) users.get(0);
-        readRoles(user);
-        return user;
+        return queryOne(sql, userRowMapper, username);
     }
 
     /**
@@ -64,13 +58,9 @@ public class UserDao extends AbstractDao {
      *
      * @return Possibly empty array of all users.
      */
-    public User[] getAllUsers() {
+    public List<User> getAllUsers() {
         String sql = "select " + USER_COLUMNS + " from user";
-        User[] users = (User[]) getJdbcTemplate().query(sql, userRowMapper).toArray(new User[0]);
-        for (User user : users) {
-            readRoles(user);
-        }
-        return users;
+        return query(sql, userRowMapper);
     }
 
     /**
@@ -80,8 +70,8 @@ public class UserDao extends AbstractDao {
      */
     public void createUser(User user) {
         String sql = "insert into user (" + USER_COLUMNS + ") values (" + questionMarks(USER_COLUMNS) + ')';
-        getJdbcTemplate().update(sql, new Object[]{user.getUsername(), encrypt(user.getPassword()), user.isLdapAuthenticated(),
-                                                   user.getBytesStreamed(), user.getBytesDownloaded(), user.getBytesUploaded()});
+        update(sql, user.getUsername(), encrypt(user.getPassword()), user.isLdapAuthenticated(),
+                user.getBytesStreamed(), user.getBytesDownloaded(), user.getBytesUploaded());
         writeRoles(user);
     }
 
@@ -96,10 +86,10 @@ public class UserDao extends AbstractDao {
         }
 
         String sql = "delete from user_role where username=?";
-        getJdbcTemplate().update(sql, new Object[]{username});
+        update(sql, username);
 
         sql = "delete from user where username=?";
-        getJdbcTemplate().update(sql, new Object[]{username});
+        update(sql, username);
     }
 
     /**
@@ -109,10 +99,10 @@ public class UserDao extends AbstractDao {
      */
     public void updateUser(User user) {
         String sql = "update user set password=?, ldap_authenticated=?, bytes_streamed=?, bytes_downloaded=?, bytes_uploaded=? " +
-                     "where username=?";
+                "where username=?";
         getJdbcTemplate().update(sql, new Object[]{encrypt(user.getPassword()), user.isLdapAuthenticated(),
-                                                   user.getBytesStreamed(), user.getBytesDownloaded(), user.getBytesUploaded(),
-                                                   user.getUsername()});
+                user.getBytesStreamed(), user.getBytesDownloaded(), user.getBytesUploaded(),
+                user.getUsername()});
         writeRoles(user);
     }
 
@@ -124,7 +114,7 @@ public class UserDao extends AbstractDao {
      */
     public String[] getRolesForUser(String username) {
         String sql = "select r.name from role r, user_role ur " +
-                     "where ur.username=? and ur.role_id=r.id";
+                "where ur.username=? and ur.role_id=r.id";
         List<?> roles = getJdbcTemplate().queryForList(sql, new Object[]{username}, String.class);
         String[] result = new String[roles.size()];
         for (int i = 0; i < result.length; i++) {
@@ -141,9 +131,7 @@ public class UserDao extends AbstractDao {
      */
     public UserSettings getUserSettings(String username) {
         String sql = "select " + USER_SETTINGS_COLUMNS + " from user_settings where username=?";
-        List<?> result = getJdbcTemplate().query(sql, new Object[]{username}, userSettingsRowMapper);
-
-        return result.isEmpty() ? null : (UserSettings) result.get(0);
+        return queryOne(sql, userSettingsRowMapper, username);
     }
 
     /**
@@ -159,17 +147,17 @@ public class UserDao extends AbstractDao {
         UserSettings.Visibility main = settings.getMainVisibility();
         UserSettings.Visibility playlist = settings.getPlaylistVisibility();
         getJdbcTemplate().update(sql, new Object[]{settings.getUsername(), locale, settings.getThemeId(),
-                                                   settings.isFinalVersionNotificationEnabled(), settings.isBetaVersionNotificationEnabled(),
-                                                   main.getCaptionCutoff(), main.isTrackNumberVisible(), main.isArtistVisible(), main.isAlbumVisible(),
-                                                   main.isGenreVisible(), main.isYearVisible(), main.isBitRateVisible(), main.isDurationVisible(),
-                                                   main.isFormatVisible(), main.isFileSizeVisible(),
-                                                   playlist.getCaptionCutoff(), playlist.isTrackNumberVisible(), playlist.isArtistVisible(), playlist.isAlbumVisible(),
-                                                   playlist.isGenreVisible(), playlist.isYearVisible(), playlist.isBitRateVisible(), playlist.isDurationVisible(),
-                                                   playlist.isFormatVisible(), playlist.isFileSizeVisible(),
-                                                   settings.isLastFmEnabled(), settings.getLastFmUsername(), encrypt(settings.getLastFmPassword()),
-                                                   settings.getTranscodeScheme().name(), settings.isShowNowPlayingEnabled(),
-                                                   settings.getSelectedMusicFolderId(), settings.isPartyModeEnabled(), settings.isNowPlayingAllowed(),
-                                                   settings.getAvatarScheme().name(), settings.getSystemAvatarId()});
+                settings.isFinalVersionNotificationEnabled(), settings.isBetaVersionNotificationEnabled(),
+                main.getCaptionCutoff(), main.isTrackNumberVisible(), main.isArtistVisible(), main.isAlbumVisible(),
+                main.isGenreVisible(), main.isYearVisible(), main.isBitRateVisible(), main.isDurationVisible(),
+                main.isFormatVisible(), main.isFileSizeVisible(),
+                playlist.getCaptionCutoff(), playlist.isTrackNumberVisible(), playlist.isArtistVisible(), playlist.isAlbumVisible(),
+                playlist.isGenreVisible(), playlist.isYearVisible(), playlist.isBitRateVisible(), playlist.isDurationVisible(),
+                playlist.isFormatVisible(), playlist.isFileSizeVisible(),
+                settings.isLastFmEnabled(), settings.getLastFmUsername(), encrypt(settings.getLastFmPassword()),
+                settings.getTranscodeScheme().name(), settings.isShowNowPlayingEnabled(),
+                settings.getSelectedMusicFolderId(), settings.isPartyModeEnabled(), settings.isNowPlayingAllowed(),
+                settings.getAvatarScheme().name(), settings.getSystemAvatarId()});
     }
 
     private static String encrypt(String s) {
@@ -259,7 +247,9 @@ public class UserDao extends AbstractDao {
 
     private class UserRowMapper implements ParameterizedRowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new User(rs.getString(1), decrypt(rs.getString(2)), rs.getBoolean(3), rs.getLong(4), rs.getLong(5), rs.getLong(6));
+            User user = new User(rs.getString(1), decrypt(rs.getString(2)), rs.getBoolean(3), rs.getLong(4), rs.getLong(5), rs.getLong(6));
+            readRoles(user);
+            return user;
         }
     }
 

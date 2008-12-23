@@ -16,6 +16,7 @@ import org.springframework.dao.DataAccessException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.List;
 
 /**
  * Provides security-related services for authentication and authorization.
@@ -93,7 +94,7 @@ public class SecurityService implements UserDetailsService {
      *
      * @return Possibly empty array of all users.
      */
-    public User[] getAllUsers() {
+    public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
 

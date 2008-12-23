@@ -1,16 +1,29 @@
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
-import org.jfree.chart.*;
-import org.jfree.chart.axis.*;
-import org.jfree.chart.plot.*;
-import org.jfree.chart.renderer.category.*;
-import org.jfree.data.category.*;
-import org.springframework.web.servlet.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Paint;
+import java.util.List;
 
-import javax.servlet.http.*;
-import java.awt.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.AxisLocation;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.springframework.web.servlet.ModelAndView;
+
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.service.SecurityService;
 
 /**
  * Controller for generating a chart showing bitrate vs time.
@@ -38,7 +51,7 @@ public class UserChartController extends AbstractChartController {
 
     private CategoryDataset createDataset(String type) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        User[] users = securityService.getAllUsers();
+        List<User> users = securityService.getAllUsers();
         for (User user : users) {
             double value;
             if ("stream".equals(type)) {

@@ -1,5 +1,7 @@
 package net.sourceforge.subsonic.dao;
 
+import java.util.List;
+
 import org.springframework.jdbc.core.*;
 
 /**
@@ -28,6 +30,19 @@ public class AbstractDao {
             }
         }
         return buf.toString();
+    }
+
+    protected int update(String sql, Object... args) {
+        return getJdbcTemplate().update(sql, args);
+    }
+
+    protected <T> List<T> query(String sql, RowMapper rowMapper, Object... args) {
+        return getJdbcTemplate().query(sql, args, rowMapper);
+    }
+
+    protected <T> T queryOne(String sql, RowMapper rowMapper, Object... args) {
+        List<T> result = query(sql, rowMapper, args);
+        return result.isEmpty() ? null : result.get(0);
     }
 
     public void setDaoHelper(DaoHelper daoHelper) {

@@ -35,7 +35,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         user.setStreamRole(true);
         userDao.createUser(user);
 
-        User newUser = userDao.getAllUsers()[0];
+        User newUser = userDao.getAllUsers().get(0);
         assertUserEquals(user, newUser);
     }
 
@@ -66,7 +66,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         user.setStreamRole(false);
         userDao.updateUser(user);
 
-        User newUser = userDao.getAllUsers()[0];
+        User newUser = userDao.getAllUsers().get(0);
         assertUserEquals(user, newUser);
         assertEquals("Wrong bytes streamed.", 1, newUser.getBytesStreamed());
         assertEquals("Wrong bytes downloaded.", 2, newUser.getBytesDownloaded());
@@ -89,19 +89,19 @@ public class UserDaoTestCase extends DaoTestCaseBase {
     }
 
     public void testDeleteUser() {
-        assertEquals("Wrong number of users.", 0, userDao.getAllUsers().length);
+        assertEquals("Wrong number of users.", 0, userDao.getAllUsers().size());
 
         userDao.createUser(new User("sindre", "secret"));
-        assertEquals("Wrong number of users.", 1, userDao.getAllUsers().length);
+        assertEquals("Wrong number of users.", 1, userDao.getAllUsers().size());
 
         userDao.createUser(new User("bente", "secret"));
-        assertEquals("Wrong number of users.", 2, userDao.getAllUsers().length);
+        assertEquals("Wrong number of users.", 2, userDao.getAllUsers().size());
 
         userDao.deleteUser("sindre");
-        assertEquals("Wrong number of users.", 1, userDao.getAllUsers().length);
+        assertEquals("Wrong number of users.", 1, userDao.getAllUsers().size());
 
         userDao.deleteUser("bente");
-        assertEquals("Wrong number of users.", 0, userDao.getAllUsers().length);
+        assertEquals("Wrong number of users.", 0, userDao.getAllUsers().size());
     }
 
     public void testGetRolesForUser() {

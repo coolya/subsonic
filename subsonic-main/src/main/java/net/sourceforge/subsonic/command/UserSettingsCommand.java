@@ -1,5 +1,7 @@
 package net.sourceforge.subsonic.command;
 
+import java.util.List;
+
 import net.sourceforge.subsonic.controller.*;
 import net.sourceforge.subsonic.domain.*;
 
@@ -19,7 +21,7 @@ public class UserSettingsCommand {
     private boolean isPodcastRole;
     private boolean isStreamRole;
 
-    private User[] users;
+    private List<User> users;
     private boolean isAdmin;
     private boolean isPasswordChange;
     private boolean isNew;
@@ -106,11 +108,11 @@ public class UserSettingsCommand {
         isStreamRole = streamRole;
     }
 
-    public User[] getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(User[] users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 

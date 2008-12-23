@@ -1,5 +1,7 @@
 package net.sourceforge.subsonic.controller;
 
+import java.util.List;
+
 import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.command.*;
@@ -47,9 +49,9 @@ public class UserSettingsController extends SimpleFormController {
     private User getUser(HttpServletRequest request) throws ServletRequestBindingException {
         Integer userIndex = ServletRequestUtils.getIntParameter(request, "userIndex");
         if (userIndex != null) {
-            User[] allUsers = securityService.getAllUsers();
-            if (userIndex >= 0 && userIndex < allUsers.length) {
-                return allUsers[userIndex];
+            List<User> allUsers = securityService.getAllUsers();
+            if (userIndex >= 0 && userIndex < allUsers.size()) {
+                return allUsers.get(userIndex);
             }
         }
         return null;
