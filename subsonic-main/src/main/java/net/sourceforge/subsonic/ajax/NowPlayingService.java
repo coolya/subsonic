@@ -121,7 +121,8 @@ public class NowPlayingService {
                 title = StringUtil.toHtml(StringUtils.abbreviate(title, 25));
                 username = StringUtil.toHtml(StringUtils.abbreviate(username, 25));
 
-                result.add(new NowPlayingInfo(username, artist, title, tooltip, albumUrl, lyricsUrl, coverArtUrl, coverArtZoomUrl,avatarUrl));
+                long minutesAgo = status.getMillisSinceLastUpdate() / 1000L / 60L;
+                result.add(new NowPlayingInfo(username, artist, title, tooltip, albumUrl, lyricsUrl, coverArtUrl, coverArtZoomUrl,avatarUrl, (int) minutesAgo));
             }
         }
 

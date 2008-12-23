@@ -25,16 +25,16 @@ public class TransferStatus {
 
 
     /**
-     * Return the number of bytes transfered.
+     * Return the number of bytes transferred.
      *
-     * @return The number of bytes transfered.
+     * @return The number of bytes transferred.
      */
     public synchronized long getBytesTransfered() {
         return bytesTransfered;
     }
 
     /**
-     * Adds the given byte count to the total number of bytes transfered.
+     * Adds the given byte count to the total number of bytes transferred.
      *
      * @param byteCount The byte count.
      */
@@ -43,9 +43,9 @@ public class TransferStatus {
     }
 
     /**
-     * Sets the number of bytes transfered.
+     * Sets the number of bytes transferred.
      *
-     * @param bytesTransfered The number of bytes transfered.
+     * @param bytesTransfered The number of bytes transferred.
      */
     public synchronized void setBytesTransfered(long bytesTransfered) {
         this.bytesTransfered = bytesTransfered;
@@ -59,6 +59,18 @@ public class TransferStatus {
                 history.add(new TransferStatus.Sample(bytesTransfered, now));
             }
         }
+    }
+
+    /**
+     * Returns the number of milliseconds since the transfer status was last updated.
+     *
+     * @return Number of milliseconds, or <code>0</code> if never updated.
+     */
+    public synchronized long getMillisSinceLastUpdate() {
+        if (history.isEmpty()) {
+            return 0L;
+        }
+        return System.currentTimeMillis() - history.getLast().timestamp;
     }
 
     /**
@@ -110,18 +122,18 @@ public class TransferStatus {
     }
 
     /**
-     * Returns the file that is currently being transfered.
+     * Returns the file that is currently being transferred.
      *
-     * @return The file that is currently being transfered.
+     * @return The file that is currently being transferred.
      */
     public synchronized File getFile() {
         return file;
     }
 
     /**
-     * Sets the file that is currently being transfered.
+     * Sets the file that is currently being transferred.
      *
-     * @param file The file that is currently being transfered.
+     * @param file The file that is currently being transferred.
      */
     public synchronized void setFile(File file) {
         this.file = file;
@@ -207,7 +219,7 @@ public class TransferStatus {
     }
 
     /**
-     * A sample containing a timestamp and the number of bytes transfered up to that point in time.
+     * A sample containing a timestamp and the number of bytes transferred up to that point in time.
      */
     public static class Sample {
         private long bytesTransfered;
@@ -216,7 +228,7 @@ public class TransferStatus {
         /**
          * Creates a new sample.
          *
-         * @param bytesTransfered The total number of bytes transfered.
+         * @param bytesTransfered The total number of bytes transferred.
          * @param timestamp       A point in time, in milliseconds.
          */
         public Sample(long bytesTransfered, long timestamp) {
@@ -225,9 +237,9 @@ public class TransferStatus {
         }
 
         /**
-         * Returns the number of bytes transfered.
+         * Returns the number of bytes transferred.
          *
-         * @return The number of bytes transfered.
+         * @return The number of bytes transferred.
          */
         public long getBytesTransfered() {
             return bytesTransfered;

@@ -16,9 +16,10 @@ public class NowPlayingInfo {
     private final String coverArtUrl;
     private final String coverArtZoomUrl;
     private final String avatarUrl;
+    private final int minutesAgo;
 
     public NowPlayingInfo(String user, String artist, String title, String tooltip, String albumUrl,
-                          String lyricsUrl, String coverArtUrl, String coverArtZoomUrl, String avatarUrl) {
+            String lyricsUrl, String coverArtUrl, String coverArtZoomUrl, String avatarUrl, int minutesAgo) {
         this.username = user;
         this.artist = artist;
         this.title = title;
@@ -28,6 +29,7 @@ public class NowPlayingInfo {
         this.coverArtUrl = coverArtUrl;
         this.coverArtZoomUrl = coverArtZoomUrl;
         this.avatarUrl = avatarUrl;
+        this.minutesAgo = minutesAgo;
     }
 
     public String getUsername() {
@@ -64,5 +66,9 @@ public class NowPlayingInfo {
 
     public String getAvatarUrl() {
         return avatarUrl;
+    }
+
+    public int getMinutesAgo() {
+        return minutesAgo;
     }
 }

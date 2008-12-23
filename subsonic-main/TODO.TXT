@@ -6,12 +6,14 @@ Default player type.
 Remove "Player has dynamic IP address" ?
 Remove "Control player automatically" ?
 Remove "Always use web player" ?
+Make it work if same song is more than once in playlist.
 
 TODO IN 3.6
 -----------
 Update to 3.6.beta1 in pom.xml
 Use dwr.util in main.jsp "now playing".
 Show active users.  Improve Now playing (e.g., show how long since it happened). http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1387
+Remove old statuses from status.jsp
 Playlist drag'n drop
 Jukebox support (or hide it)
 Verify that subsonic.sh still works.
@@ -26,6 +28,7 @@ Should be possible to donate from web page.
 
 DONE IN 3.6
 -------------
+Display "Now playing" for up to an hour, including idle time.
 Replace Flash player.
 Bugfix: Avoid ugly line breaks in IE.
 New agent/service architecture.
@@ -307,12 +310,4 @@ Write forum tutorial of how to set it up, including auto-login.
 Get broadband subscription
 Get Ripserver unit
 Get funding from Ripfactory
-
-JW Player
--------------
-APPEND TO PLAYLIST: http://www.jeroenwijering.com/?thread=13648
-Frame control: http://home5.inet.tele.dk/nyboe/flash/mediaplayer/crossframecontrol.htm
-Test VBR
-MOVING PLAYLIST ITEMS UP/DOWN, ADD TO PLAYLIST: http://www.jeroenwijering.com/?thread=13307
-Use latest version of http://code.google.com/p/swfobject/
 

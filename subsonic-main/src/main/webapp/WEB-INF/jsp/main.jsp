@@ -77,6 +77,11 @@
                             "<img src='" + nowPlaying[i].coverArtUrl + "' width='48' height='48'/></a>";
                 }
                 html += "</td></tr>";
+
+                var minutesAgo = nowPlaying[i].minutesAgo;
+                if (minutesAgo > 4 && minutesAgo < 60) {
+                    html += "<tr><td class='detail' colspan='2'>" + minutesAgo + " <fmt:message key="main.minutesago"/></td></tr>";
+                }
             }
             html += "</table>";
             $('nowPlaying').innerHTML = html;
