@@ -1,5 +1,16 @@
 package net.sourceforge.subsonic.controller;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
+
 import net.sourceforge.subsonic.domain.PodcastChannel;
 import net.sourceforge.subsonic.domain.PodcastEpisode;
 import net.sourceforge.subsonic.domain.User;
@@ -8,15 +19,6 @@ import net.sourceforge.subsonic.service.PodcastService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.util.StringUtil;
-import net.sourceforge.subsonic.dao.UserDao;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.ParameterizableViewController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * Controller for the "Podcast receiver" page.
@@ -36,7 +38,7 @@ public class PodcastReceiverController extends ParameterizableViewController {
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
 
-        Map<PodcastChannel, PodcastEpisode[]> channels = new LinkedHashMap<PodcastChannel, PodcastEpisode[]>();
+        Map<PodcastChannel, List<PodcastEpisode>> channels = new LinkedHashMap<PodcastChannel, List<PodcastEpisode>>();
         for (PodcastChannel channel : podcastService.getAllChannels()) {
             channels.put(channel, podcastService.getEpisodes(channel.getId(), false));
         }

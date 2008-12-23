@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.List;
 
 /**
  * Controller for the "Podcast receiver" page.
@@ -22,6 +23,7 @@ public class PodcastReceiverAdminController extends AbstractController {
 
     private PodcastService podcastService;
 
+    @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         handleParameters(request);
         return new ModelAndView(new RedirectView("podcastReceiver.view?expandedChannels=" + request.getParameter("expandedChannels")));
@@ -58,7 +60,7 @@ public class PodcastReceiverAdminController extends AbstractController {
             uniqueEpisodeIds.add(episodeId);
         }
         for (int channelId : channelIds) {
-            PodcastEpisode[] episodes = podcastService.getEpisodes(channelId, false);
+            List<PodcastEpisode> episodes = podcastService.getEpisodes(channelId, false);
             for (PodcastEpisode episode : episodes) {
                 uniqueEpisodeIds.add(episode.getId());
             }

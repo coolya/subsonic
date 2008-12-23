@@ -1,21 +1,5 @@
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.dao.PodcastDao;
-import net.sourceforge.subsonic.domain.MusicFileInfo;
-import net.sourceforge.subsonic.domain.PodcastChannel;
-import net.sourceforge.subsonic.domain.PodcastEpisode;
-import net.sourceforge.subsonic.domain.PodcastStatus;
-import net.sourceforge.subsonic.util.StringUtil;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.Namespace;
-import org.jdom.input.SAXBuilder;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -24,6 +8,7 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -36,6 +21,22 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.Namespace;
+import org.jdom.input.SAXBuilder;
+
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.dao.PodcastDao;
+import net.sourceforge.subsonic.domain.MusicFileInfo;
+import net.sourceforge.subsonic.domain.PodcastChannel;
+import net.sourceforge.subsonic.domain.PodcastEpisode;
+import net.sourceforge.subsonic.domain.PodcastStatus;
+import net.sourceforge.subsonic.util.StringUtil;
+
 /**
  * Provides services for Podcast reception.
  *
@@ -46,7 +47,7 @@ public class PodcastService {
     private static final Logger LOG = Logger.getLogger(PodcastService.class);
     private static final DateFormat RSS_DATE_FORMAT = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
     private static final Namespace[] ITUNES_NAMESPACES = {Namespace.getNamespace("http://www.itunes.com/DTDs/Podcast-1.0.dtd"),
-                                                          Namespace.getNamespace("http://www.itunes.com/dtds/podcast-1.0.dtd")};
+            Namespace.getNamespace("http://www.itunes.com/dtds/podcast-1.0.dtd")};
 
     private final ExecutorService refreshExecutor;
     private final ExecutorService downloadExecutor;
@@ -121,12 +122,11 @@ public class PodcastService {
         PodcastChannel channel = new PodcastChannel(url);
         int channelId = podcastDao.createChannel(channel);
 
-        refreshChannels(new PodcastChannel[]{getChannel(channelId)}, true);
+        refreshChannels(Arrays.asList(getChannel(channelId)), true);
     }
 
     private PodcastChannel getChannel(int channelId) {
-        PodcastChannel[] all = getAllChannels();
-        for (PodcastChannel channel : all) {
+        for (PodcastChannel channel : getAllChannels()) {
             if (channelId == channel.getId()) {
                 return channel;
             }
@@ -137,9 +137,9 @@ public class PodcastService {
     /**
      * Returns all Podcast channels.
      *
-     * @return Possibly empty array of all Podcast channels.
+     * @return Possibly empty list of all Podcast channels.
      */
-    public PodcastChannel[] getAllChannels() {
+    public List<PodcastChannel> getAllChannels() {
         return podcastDao.getAllChannels();
     }
 
@@ -148,11 +148,11 @@ public class PodcastService {
      *
      * @param channelId      The Podcast channel ID.
      * @param includeDeleted Whether to include logically deleted episodes in the result.
-     * @return Possibly empty array of all Podcast episodes for the given channel, sorted in
+     * @return Possibly empty list of all Podcast episodes for the given channel, sorted in
      *         reverse chronological order (newest episode first).
      */
-    public PodcastEpisode[] getEpisodes(int channelId, boolean includeDeleted) {
-        PodcastEpisode[] all = podcastDao.getEpisodes(channelId);
+    public List<PodcastEpisode> getEpisodes(int channelId, boolean includeDeleted) {
+        List<PodcastEpisode> all = podcastDao.getEpisodes(channelId);
         if (includeDeleted) {
             return all;
         }
@@ -163,7 +163,7 @@ public class PodcastService {
                 filtered.add(episode);
             }
         }
-        return filtered.toArray(new PodcastEpisode[filtered.size()]);
+        return filtered;
     }
 
     public PodcastEpisode getEpisode(int episodeId, boolean includeDeleted) {
@@ -182,8 +182,7 @@ public class PodcastService {
             return null;
         }
 
-        PodcastEpisode[] episodes = getEpisodes(channelId, true);
-        for (PodcastEpisode episode : episodes) {
+        for (PodcastEpisode episode : getEpisodes(channelId, true)) {
             if (url.equals(episode.getUrl())) {
                 return episode;
             }
@@ -195,7 +194,7 @@ public class PodcastService {
         refreshChannels(getAllChannels(), downloadEpisodes);
     }
 
-    private void refreshChannels(final PodcastChannel[] channels, final boolean downloadEpisodes) {
+    private void refreshChannels(final List<PodcastChannel> channels, final boolean downloadEpisodes) {
         for (final PodcastChannel channel : channels) {
             Runnable task = new Runnable() {
                 public void run() {
@@ -294,7 +293,7 @@ public class PodcastService {
                     LOG.warn("Failed to parse publish date.", x);
                 }
                 PodcastEpisode episode = new PodcastEpisode(null, channel.getId(), url, null, title, description, date,
-                                                            duration, length, 0L, PodcastStatus.NEW, null);
+                        duration, length, 0L, PodcastStatus.NEW, null);
                 episodes.add(episode);
                 LOG.info("Created Podcast episode " + title);
             }
@@ -416,7 +415,7 @@ public class PodcastService {
             return;
         }
 
-        PodcastEpisode[] episodes = getEpisodes(channel.getId(), false);
+        List<PodcastEpisode> episodes = getEpisodes(channel.getId(), false);
 
         // Don't do anything if other episodes of the same channel is currently downloading.
         for (PodcastEpisode episode : episodes) {
@@ -426,12 +425,12 @@ public class PodcastService {
         }
 
         // Reverse array to get chronological order (oldest episodes first).
-        ArrayUtils.reverse(episodes);
+        Collections.reverse(episodes);
 
-        int episodesToDelete = Math.max(0, episodes.length - episodeCount);
+        int episodesToDelete = Math.max(0, episodes.size() - episodeCount);
         for (int i = 0; i < episodesToDelete; i++) {
-            deleteEpisode(episodes[i].getId(), true);
-            LOG.info("Deleted old Podcast episode " + episodes[i].getUrl());
+            deleteEpisode(episodes.get(i).getId(), true);
+            LOG.info("Deleted old Podcast episode " + episodes.get(i).getUrl());
         }
     }
 
@@ -484,7 +483,7 @@ public class PodcastService {
      */
     public void deleteChannel(int channelId) {
         // Delete all associated episodes (in case they have files that need to be deleted).
-        PodcastEpisode[] episodes = getEpisodes(channelId, false);
+        List<PodcastEpisode> episodes = getEpisodes(channelId, false);
         for (PodcastEpisode episode : episodes) {
             deleteEpisode(episode.getId(), false);
         }
