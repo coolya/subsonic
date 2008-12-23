@@ -1,32 +1,35 @@
 package net.sourceforge.subsonic.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.SortedSet;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.LastModified;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
 import net.sourceforge.subsonic.domain.MediaLibraryStatistics;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicFolder;
 import net.sourceforge.subsonic.domain.MusicIndex;
 import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.MusicIndexService;
 import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
-import net.sourceforge.subsonic.service.MusicIndexService;
 import net.sourceforge.subsonic.util.StringUtil;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.LastModified;
-import org.springframework.web.servlet.mvc.ParameterizableViewController;
-import org.springframework.web.servlet.support.RequestContextUtils;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.SortedMap;
 
 /**
  * Controller for the left index frame.
@@ -46,7 +49,7 @@ public class LeftController extends ParameterizableViewController implements Las
      */
     public long getLastModified(HttpServletRequest request) {
         saveSelectedMusicFolder(request);
-        MusicFolder[] musicFolders = settingsService.getAllMusicFolders();
+        List<MusicFolder> musicFolders = settingsService.getAllMusicFolders();
 
         long lastModified = settingsService.getSettingsLastChanged();
         for (MusicFolder musicFolder : musicFolders) {
@@ -68,9 +71,9 @@ public class LeftController extends ParameterizableViewController implements Las
         MediaLibraryStatistics statistics = searchService.getStatistics();
         Locale locale = RequestContextUtils.getLocale(request);
 
-        MusicFolder[] allMusicFolders = settingsService.getAllMusicFolders();
+        List<MusicFolder> allMusicFolders = settingsService.getAllMusicFolders();
         MusicFolder selectedMusicFolder = getSelectedMusicFolder(request);
-        MusicFolder[] musicFoldersToUse = selectedMusicFolder == null ? allMusicFolders : new MusicFolder[]{selectedMusicFolder};
+        List<MusicFolder> musicFoldersToUse = selectedMusicFolder == null ? allMusicFolders : Arrays.asList(selectedMusicFolder);
         String[] shortcuts = settingsService.getShortcutsAsArray();
         SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists = musicIndexService.getIndexedArtists(musicFoldersToUse);
         List<MusicFile> singleSongs = getSingleSongs(musicFoldersToUse);
@@ -122,7 +125,7 @@ public class LeftController extends ParameterizableViewController implements Las
         return settingsService.getMusicFolderById(musicFolderId);
     }
 
-    private List<MusicFile> getSingleSongs(MusicFolder[] folders) throws IOException {
+    private List<MusicFile> getSingleSongs(List<MusicFolder> folders) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>();
         for (MusicFolder folder : folders) {
             MusicFile parent = musicFileService.getMusicFile(folder.getPath());
@@ -131,7 +134,7 @@ public class LeftController extends ParameterizableViewController implements Las
         return result;
     }
 
-    private List<MusicFile> getShortcuts(MusicFolder[] musicFoldersToUse, String[] shortcuts) {
+    private List<MusicFile> getShortcuts(List<MusicFolder> musicFoldersToUse, String[] shortcuts) {
         List<MusicFile> result = new ArrayList<MusicFile>();
 
         for (String shortcut : shortcuts) {

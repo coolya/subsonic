@@ -1,12 +1,21 @@
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
-import org.springframework.web.servlet.*;
-import org.springframework.web.servlet.mvc.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.servlet.http.*;
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
+
+import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.VersionService;
 
 /**
  * Controller for the top frame.
@@ -22,11 +31,11 @@ public class TopController extends ParameterizableViewController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
 
-        MusicFolder[] allMusicFolders = settingsService.getAllMusicFolders();
+        List<MusicFolder> allMusicFolders = settingsService.getAllMusicFolders();
         User user = securityService.getCurrentUser(request);
 
         map.put("user", user);
-        map.put("musicFoldersExist", allMusicFolders.length > 0);
+        map.put("musicFoldersExist", !allMusicFolders.isEmpty());
         map.put("brand", settingsService.getBrand());
 
         UserSettings userSettings = settingsService.getUserSettings(user.getUsername());

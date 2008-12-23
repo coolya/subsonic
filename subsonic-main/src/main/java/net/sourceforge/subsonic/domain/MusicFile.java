@@ -1,13 +1,5 @@
 package net.sourceforge.subsonic.domain;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.service.MusicFileService;
-import net.sourceforge.subsonic.service.ServiceLocator;
-import net.sourceforge.subsonic.service.SettingsService;
-import net.sourceforge.subsonic.util.FileUtil;
-import net.sourceforge.subsonic.util.StringUtil;
-import org.springframework.util.StringUtils;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,6 +9,15 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.springframework.util.StringUtils;
+
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.ServiceLocator;
+import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.util.FileUtil;
+import net.sourceforge.subsonic.util.StringUtil;
 
 /**
  * Represents a file or directory containing music. Music files can be put in a {@link Playlist},
@@ -36,10 +37,10 @@ public class MusicFile {
     private Set<String> excludes;
 
     /**
-    * Do not use this method directly. Instead, use {@link MusicFileService#getMusicFile}.
-    *
-    * @param file A file on the local file system.
-    */
+     * Do not use this method directly. Instead, use {@link MusicFileService#getMusicFile}.
+     *
+     * @param file A file on the local file system.
+     */
     public MusicFile(File file) {
         this.file = file;
 
@@ -58,6 +59,7 @@ public class MusicFile {
 
     /**
      * Returns the underlying {@link File}.
+     *
      * @return The file wrapped by this MusicFile.
      */
     public File getFile() {
@@ -66,6 +68,7 @@ public class MusicFile {
 
     /**
      * Returns whether this music file is a normal file (and not a directory).
+     *
      * @return Whether this music file is a normal file (and not a directory).
      */
     public boolean isFile() {
@@ -74,6 +77,7 @@ public class MusicFile {
 
     /**
      * Returns whether this music file is a directory.
+     *
      * @return Whether this music file is a directory.
      */
     public boolean isDirectory() {
@@ -83,6 +87,7 @@ public class MusicFile {
     /**
      * Returns whether this music file is an album, i.e., whether it is a directory containing
      * songs.
+     *
      * @return Whether this music file is an album
      * @throws IOException If an I/O error occurs.
      */
@@ -91,12 +96,13 @@ public class MusicFile {
     }
 
     /**
-    * Returns whether this music file is one of the root music folders.
-    * @return Whether this music file is one of the root music folders.
-    */
+     * Returns whether this music file is one of the root music folders.
+     *
+     * @return Whether this music file is one of the root music folders.
+     */
     public boolean isRoot() {
         SettingsService settings = ServiceLocator.getSettingsService();
-        MusicFolder[] folders = settings.getAllMusicFolders();
+        List<MusicFolder> folders = settings.getAllMusicFolders();
         for (MusicFolder folder : folders) {
             if (file.equals(folder.getPath())) {
                 return true;
@@ -107,6 +113,7 @@ public class MusicFile {
 
     /**
      * Returns the time this music file was last modified.
+     *
      * @return The time since this music file was last modified, in milliseconds since the epoch.
      */
     public long lastModified() {
@@ -117,17 +124,18 @@ public class MusicFile {
      * Returns the length of the music file.
      * The return value is unspecified if this music file is a directory.
      *
-     * @return  The length, in bytes, of the music file, or
-     *          or <code>0L</code> if the file does not exist
+     * @return The length, in bytes, of the music file, or
+     *         or <code>0L</code> if the file does not exist
      */
     public long length() {
         return file.length();
     }
 
     /**
-    * Returns whether this music file exists.
-    * @return Whether this music file exists.
-    */
+     * Returns whether this music file exists.
+     *
+     * @return Whether this music file exists.
+     */
     public boolean exists() {
         return file.exists();
     }
@@ -135,13 +143,14 @@ public class MusicFile {
     /**
      * Returns the name of the music file. This is normally just the last name in
      * the pathname's name sequence.
-     * @return  The name of the music file.
+     *
+     * @return The name of the music file.
      */
     public String getName() {
         String name = file.getName();
         try {
             // Remove artist name from album name, if present.
-            String parentName = getParent().getName() +  " - ";
+            String parentName = getParent().getName() + " - ";
             if (name.startsWith(parentName)) {
                 name = name.substring(parentName.length());
             }
@@ -154,6 +163,7 @@ public class MusicFile {
     /**
      * Same as {@link #getName}, but without file suffix (unless this music file
      * represents a directory).
+     *
      * @return The name of the file without the suffix
      */
     public String getNameWithoutSuffix() {
@@ -167,6 +177,7 @@ public class MusicFile {
 
     /**
      * Returns the file suffix, e.g., "mp3".
+     *
      * @return The file suffix.
      */
     public String getSuffix() {
@@ -174,15 +185,17 @@ public class MusicFile {
     }
 
     /**
-    * Returns the full pathname as a string.
-    * @return The full pathname as a string.
-    */
+     * Returns the full pathname as a string.
+     *
+     * @return The full pathname as a string.
+     */
     public String getPath() {
         return file.getPath();
     }
 
     /**
      * Returns meta data for this music file.
+     *
      * @return Meta data (artist, album, title etc) for this music file.
      */
     public synchronized MetaData getMetaData() {
@@ -197,6 +210,7 @@ public class MusicFile {
      * Returns the title of the music file, by attempting to parse relevant meta-data embedded in the file,
      * for instance ID3 tags in MP3 files. <p/>
      * If this music file is a directory, or if no tags are found, this method is equivalent to {@link #getNameWithoutSuffix}.
+     *
      * @return The song title of this music file.
      */
     public String getTitle() {
@@ -205,8 +219,9 @@ public class MusicFile {
 
     /**
      * Returns the parent music file.
+     *
      * @return The parent music file, or <code>null</code> if no parent exists.
-     * @exception IOException If an I/O error occurs.
+     * @throws IOException If an I/O error occurs.
      */
     public MusicFile getParent() throws IOException {
         File parent = file.getParentFile();
@@ -217,9 +232,9 @@ public class MusicFile {
      * Returns all music files that are children of this music file.
      *
      * @param includeDirectories Whether directories should be included in the result.
-     * @param sort Whether to sort files in the same directory.
+     * @param sort               Whether to sort files in the same directory.
      * @return All children music files.
-     * @exception IOException If an I/O error occurs.
+     * @throws IOException If an I/O error occurs.
      */
     public List<MusicFile> getChildren(boolean includeDirectories, boolean sort) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>();
@@ -251,9 +266,9 @@ public class MusicFile {
      * Returns all music files that are children, grand-children etc of this music file.
      *
      * @param includeDirectories Whether directories should be included in the result.
-     * @param sort Whether to sort files in the same directory.
+     * @param sort               Whether to sort files in the same directory.
      * @return All descendant music files.
-     * @exception IOException If an I/O error occurs.
+     * @throws IOException If an I/O error occurs.
      */
     public List<MusicFile> getDescendants(final boolean includeDirectories, final boolean sort) throws IOException {
         final List<MusicFile> result = new ArrayList<MusicFile>();
@@ -262,9 +277,11 @@ public class MusicFile {
             public void visit(MusicFile musicFile) {
                 result.add(musicFile);
             }
+
             public boolean includeDirectories() {
                 return includeDirectories;
             }
+
             public boolean sorted() {
                 return sort;
             }
@@ -303,6 +320,7 @@ public class MusicFile {
     /**
      * Returns the first direct child (excluding directories).
      * This method is an optimization.
+     *
      * @return The first child, or <code>null</code> if not found.
      * @throws IOException If an I/O error occurs.
      */
@@ -341,6 +359,7 @@ public class MusicFile {
     /**
      * Returns whether the given file is excluded, i.e., whether it is listed in 'subsonic_exlude.txt' in
      * the current directory.
+     *
      * @param file The child file in question.
      * @return Whether the child file is excluded.
      */
@@ -360,33 +379,44 @@ public class MusicFile {
     }
 
     /**
-    * Returns whether this music file is equal to another object.
-    * @param o The object to compare to.
-    * @return Whether this music file is equal to another object.
-    */
+     * Returns whether this music file is equal to another object.
+     *
+     * @param o The object to compare to.
+     * @return Whether this music file is equal to another object.
+     */
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MusicFile)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof MusicFile)) {
+            return false;
+        }
 
         final MusicFile musicFile = (MusicFile) o;
 
-        if (file != null ? !file.equals(musicFile.file) : musicFile.file != null) return false;
+        if (file != null ? !file.equals(musicFile.file) : musicFile.file != null) {
+            return false;
+        }
 
         return true;
     }
 
     /**
      * Returns the hash code of this music file.
+     *
      * @return The hash code of this music file.
      */
+    @Override
     public int hashCode() {
         return (file != null ? file.hashCode() : 0);
     }
 
     /**
      * Equivalent to {@link #getPath}.
+     *
      * @return This music file as a string.
      */
+    @Override
     public String toString() {
         return getPath();
     }
@@ -572,18 +602,21 @@ public class MusicFile {
 
         /**
          * Visits the given music file.
+         *
          * @param musicFile The music file to visist.
          */
         void visit(MusicFile musicFile);
 
         /**
          * Whether this visitor wants to visit directories.
+         *
          * @return Whether this visitor wants to visit directories.
          */
         boolean includeDirectories();
 
         /**
          * Whether this visitor wants to visit files in ascending order (within a given directory).
+         *
          * @return Whether this visitor wants to visit files in ascending order.
          */
         boolean sorted();

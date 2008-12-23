@@ -1,10 +1,5 @@
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.domain.MusicFile;
-import net.sourceforge.subsonic.domain.MusicFolder;
-import net.sourceforge.subsonic.domain.MusicIndex;
-import net.sourceforge.subsonic.domain.MusicIndex.Artist;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +12,11 @@ import java.util.SortedSet;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.domain.MusicIndex;
+import net.sourceforge.subsonic.domain.MusicIndex.Artist;
 
 /**
  * Provides services for grouping artists by index.
@@ -35,7 +35,7 @@ public class MusicIndexService {
      * @return A map from music indexes to sets of artists that are direct children of this music file.
      * @throws IOException If an I/O error occurs.
      */
-    public SortedMap<MusicIndex, SortedSet<Artist>> getIndexedArtists(MusicFolder[] folders) throws IOException {
+    public SortedMap<MusicIndex, SortedSet<Artist>> getIndexedArtists(List<MusicFolder> folders) throws IOException {
 
         String[] ignoredArticles = settingsService.getIgnoredArticlesAsArray();
         String[] shortcuts = settingsService.getShortcutsAsArray();
@@ -127,8 +127,8 @@ public class MusicIndexService {
         return result;
     }
 
-    private SortedSet<Artist> createArtists(MusicFolder[] folders, String[] ignoredArticles,
-                                            String[] shortcuts) throws IOException {
+    private SortedSet<Artist> createArtists(List<MusicFolder> folders, String[] ignoredArticles,
+            String[] shortcuts) throws IOException {
         SortedMap<String, Artist> artistMap = new TreeMap<String, Artist>();
         Set<String> shortcutSet = new HashSet<String>(Arrays.asList(shortcuts));
 

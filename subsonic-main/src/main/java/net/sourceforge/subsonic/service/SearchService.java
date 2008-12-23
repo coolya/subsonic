@@ -1,15 +1,5 @@
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.domain.MediaLibraryStatistics;
-import net.sourceforge.subsonic.domain.MusicFile;
-import net.sourceforge.subsonic.domain.MusicFileInfo;
-import net.sourceforge.subsonic.domain.MusicFolder;
-import net.sourceforge.subsonic.domain.RandomSearchCriteria;
-import net.sourceforge.subsonic.util.StringUtil;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -31,6 +21,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.MediaLibraryStatistics;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicFileInfo;
+import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.domain.RandomSearchCriteria;
+import net.sourceforge.subsonic.util.StringUtil;
 
 /**
  * Provides services for searching for music.
@@ -86,6 +87,7 @@ public class SearchService {
         creatingIndex = true;
 
         Thread thread = new Thread("Search Index Generator") {
+            @Override
             public void run() {
                 doCreateIndex();
             }
@@ -188,6 +190,7 @@ public class SearchService {
         timer = new Timer(true);
 
         TimerTask task = new TimerTask() {
+            @Override
             public void run() {
                 createIndex();
             }
@@ -238,7 +241,7 @@ public class SearchService {
      * @throws IOException If an I/O error occurs.
      */
     public synchronized List<MusicFile> heuristicSearch(String query, int maxHits, boolean includeArtist, boolean includeAlbum,
-                                                        boolean includeTitle, Date newerThan) throws IOException {
+            boolean includeTitle, Date newerThan) throws IOException {
         if (query == null) {
             query = "";
         }
@@ -278,7 +281,7 @@ public class SearchService {
      * @throws IOException If an I/O error occurs.
      */
     public synchronized List<MusicFile> search(String[] query, int maxHits, boolean includeArtist, boolean includeAlbum,
-                                               boolean includeTitle, Date newerThan) throws IOException {
+            boolean includeTitle, Date newerThan) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>();
         if (!isIndexCreated() || isIndexBeingCreated()) {
             return result;
@@ -759,6 +762,7 @@ public class SearchService {
          *
          * @return The content of this line as a string.
          */
+        @Override
         public String toString() {
             StringBuffer buf = new StringBuffer(256);
 

@@ -1,13 +1,21 @@
 package net.sourceforge.subsonic.controller;
 
-import org.springframework.web.servlet.mvc.*;
-import org.springframework.web.servlet.*;
-import net.sourceforge.subsonic.service.*;
-import net.sourceforge.subsonic.domain.*;
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.servlet.http.*;
-import java.util.*;
-import java.io.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
+
+import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.service.SearchService;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
 
 /**
  * Controller for the "more" page.
@@ -25,9 +33,9 @@ public class MoreController extends ParameterizableViewController {
         Map<String, Object> map = new HashMap<String, Object>();
 
         String uploadDirectory = null;
-        MusicFolder[] musicFolders = settingsService.getAllMusicFolders();
-        if (musicFolders.length > 0) {
-            uploadDirectory = new File(musicFolders[0].getPath(), "Incoming").getPath();
+        List<MusicFolder> musicFolders = settingsService.getAllMusicFolders();
+        if (musicFolders.size() > 0) {
+            uploadDirectory = new File(musicFolders.get(0).getPath(), "Incoming").getPath();
         }
 
         ModelAndView result = super.handleRequestInternal(request, response);

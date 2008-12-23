@@ -1,33 +1,34 @@
 package net.sourceforge.subsonic.dao;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.domain.MusicFolder;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
-
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.MusicFolder;
 
 /**
  * Provides database services for music folders.
  *
  * @author Sindre Mehus
  */
-@SuppressWarnings({"unchecked"})
 public class MusicFolderDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(MusicFolderDao.class);
     private static final String COLUMNS = "id, path, name, enabled";
-    private MusicFolderRowMapper rowMapper = new MusicFolderRowMapper();
+    private final MusicFolderRowMapper rowMapper = new MusicFolderRowMapper();
 
     /**
      * Returns all music folders.
      *
-     * @return Possibly empty array of all music folders.
+     * @return Possibly empty list of all music folders.
      */
-    public MusicFolder[] getAllMusicFolders() {
+    public List<MusicFolder> getAllMusicFolders() {
         String sql = "select " + COLUMNS + " from music_folder";
-        return (MusicFolder[]) getJdbcTemplate().query(sql, rowMapper).toArray(new MusicFolder[0]);
+        return query(sql, rowMapper);
     }
 
     /**
@@ -37,7 +38,7 @@ public class MusicFolderDao extends AbstractDao {
      */
     public void createMusicFolder(MusicFolder musicFolder) {
         String sql = "insert into music_folder (" + COLUMNS + ") values (null, ?, ?, ?)";
-        getJdbcTemplate().update(sql, new Object[]{musicFolder.getPath(), musicFolder.getName(), musicFolder.isEnabled()});
+        update(sql, musicFolder.getPath(), musicFolder.getName(), musicFolder.isEnabled());
         LOG.info("Created music folder " + musicFolder.getPath());
     }
 
@@ -48,7 +49,7 @@ public class MusicFolderDao extends AbstractDao {
      */
     public void deleteMusicFolder(Integer id) {
         String sql = "delete from music_folder where id=?";
-        getJdbcTemplate().update(sql, new Object[]{id});
+        update(sql, id);
         LOG.info("Deleted music folder with ID " + id);
     }
 
@@ -59,8 +60,8 @@ public class MusicFolderDao extends AbstractDao {
      */
     public void updateMusicFolder(MusicFolder musicFolder) {
         String sql = "update music_folder set path=?, name=?, enabled=? where id=?";
-        getJdbcTemplate().update(sql, new Object[]{musicFolder.getPath().getPath(), musicFolder.getName(),
-                                                   musicFolder.isEnabled(), musicFolder.getId()});
+        update(sql, musicFolder.getPath().getPath(), musicFolder.getName(),
+                musicFolder.isEnabled(), musicFolder.getId());
     }
 
     private static class MusicFolderRowMapper implements ParameterizedRowMapper<MusicFolder> {

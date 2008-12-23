@@ -1,10 +1,10 @@
 package net.sourceforge.subsonic.service;
 
-import net.sf.ehcache.Ehcache;
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.dao.UserDao;
-import net.sourceforge.subsonic.domain.MusicFolder;
-import net.sourceforge.subsonic.domain.User;
+import java.io.File;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.GrantedAuthorityImpl;
 import org.acegisecurity.providers.dao.DaoAuthenticationProvider;
@@ -14,9 +14,11 @@ import org.acegisecurity.userdetails.UsernameNotFoundException;
 import org.acegisecurity.wrapper.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.dao.DataAccessException;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.util.List;
+import net.sf.ehcache.Ehcache;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.dao.UserDao;
+import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.domain.User;
 
 /**
  * Provides security-related services for authentication and authorization.
@@ -132,10 +134,10 @@ public class SecurityService implements UserDetailsService {
     /**
      * Updates the byte counts for given user.
      *
-     * @param user The user to update, may be <code>null</code>.
-     * @param bytesStreamedDelta Increment bytes streamed count with this value.
+     * @param user                 The user to update, may be <code>null</code>.
+     * @param bytesStreamedDelta   Increment bytes streamed count with this value.
      * @param bytesDownloadedDelta Increment bytes downloaded count with this value.
-     * @param bytesUploadedDelta Increment bytes uploaded count with this value.
+     * @param bytesUploadedDelta   Increment bytes uploaded count with this value.
      */
     public void updateUserByteCounts(User user, long bytesStreamedDelta, long bytesDownloadedDelta, long bytesUploadedDelta) {
         if (user == null) {
@@ -189,7 +191,7 @@ public class SecurityService implements UserDetailsService {
      * @return Whether the given file is located in one of the music folders.
      */
     private boolean isInMusicFolder(File file) {
-        MusicFolder[] folders = settingsService.getAllMusicFolders();
+        List<MusicFolder> folders = settingsService.getAllMusicFolders();
         String path = file.getPath();
         for (MusicFolder folder : folders) {
             if (isFileInFolder(path, folder.getPath().getPath())) {

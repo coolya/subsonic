@@ -1,5 +1,21 @@
 package net.sourceforge.subsonic.controller;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.SortedSet;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicFolder;
 import net.sourceforge.subsonic.domain.MusicIndex;
@@ -16,20 +32,6 @@ import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.VersionService;
 import net.sourceforge.subsonic.util.StringUtil;
-import org.apache.commons.io.IOUtils;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.SortedSet;
-import java.util.Arrays;
 
 /**
  * Multi-controller used for wap pages.
@@ -53,9 +55,9 @@ public class WapController extends MultiActionController {
 
     public ModelAndView wap(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
-        MusicFolder[] folders = settingsService.getAllMusicFolders();
+        List<MusicFolder> folders = settingsService.getAllMusicFolders();
 
-        if (folders.length == 0) {
+        if (folders.isEmpty()) {
             map.put("noMusic", true);
         } else {
 
@@ -196,7 +198,7 @@ public class WapController extends MultiActionController {
         Map<String, Object> map = new HashMap<String, Object>();
 
         // Note: The MIDP specification requires that the version is of the form X.Y[.Z], where X, Y, Z are
-        // integers betweeen 0 and 99.
+        // integers between 0 and 99.
         String version = versionService.getLocalVersion().toString().replaceAll("\\.beta.*", "");
 
         map.put("baseUrl", getBaseUrl(request));
