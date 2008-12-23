@@ -1,5 +1,15 @@
 package net.sourceforge.subsonic.service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.io.filefilter.PrefixFileFilter;
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.TranscodingDao;
 import net.sourceforge.subsonic.domain.MusicFile;
@@ -10,15 +20,6 @@ import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.io.InputStreamReaderThread;
 import net.sourceforge.subsonic.io.TranscodeInputStream;
 import net.sourceforge.subsonic.util.StringUtil;
-import org.apache.commons.io.filefilter.PrefixFileFilter;
-import org.apache.commons.lang.StringUtils;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Provides services for transcoding media. Transcoding is the process of
@@ -38,9 +39,9 @@ public class TranscodingService {
     /**
      * Returns all transcodings. Disabled transcodings are not included.
      *
-     * @return Possibly empty array of all transcodings.
+     * @return Possibly empty list of all transcodings.
      */
-    public Transcoding[] getAllTranscodings() {
+    public List<Transcoding> getAllTranscodings() {
         return getAllTranscodings(false);
     }
 
@@ -48,17 +49,17 @@ public class TranscodingService {
      * Returns all transcodings.
      *
      * @param includeAll Whether disabled transcodings should be included.
-     * @return Possibly empty array of all transcodings.
+     * @return Possibly empty list of all transcodings.
      */
-    public Transcoding[] getAllTranscodings(boolean includeAll) {
-        Transcoding[] all = transcodingDao.getAllTranscodings();
-        List<Transcoding> result = new ArrayList<Transcoding>(all.length);
+    public List<Transcoding> getAllTranscodings(boolean includeAll) {
+        List<Transcoding> all = transcodingDao.getAllTranscodings();
+        List<Transcoding> result = new ArrayList<Transcoding>(all.size());
         for (Transcoding transcoding : all) {
             if (includeAll || transcoding.isEnabled()) {
                 result.add(transcoding);
             }
         }
-        return result.toArray(new Transcoding[result.size()]);
+        return result;
     }
 
     /**
@@ -67,15 +68,15 @@ public class TranscodingService {
      * @param player The player.
      * @return All active transcodings for the player.
      */
-    public Transcoding[] getTranscodingsForPlayer(Player player) {
-        Transcoding[] all = transcodingDao.getTranscodingsForPlayer(player.getId());
-        List<Transcoding> result = new ArrayList<Transcoding>(all.length);
+    public List<Transcoding> getTranscodingsForPlayer(Player player) {
+        List<Transcoding> all = transcodingDao.getTranscodingsForPlayer(player.getId());
+        List<Transcoding> result = new ArrayList<Transcoding>(all.size());
         for (Transcoding transcoding : all) {
             if (transcoding.isEnabled()) {
                 result.add(transcoding);
             }
         }
-        return result.toArray(new Transcoding[result.size()]);
+        return result;
     }
 
     /**

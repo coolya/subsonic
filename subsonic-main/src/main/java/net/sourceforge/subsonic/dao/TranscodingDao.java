@@ -1,18 +1,19 @@
 package net.sourceforge.subsonic.dao;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.domain.Transcoding;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.Transcoding;
 
 /**
  * Provides database services for transcoding configurations.
  *
  * @author Sindre Mehus
  */
-@SuppressWarnings({"unchecked"})
 public class TranscodingDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(TranscodingDao.class);
@@ -22,11 +23,11 @@ public class TranscodingDao extends AbstractDao {
     /**
      * Returns all transcodings.
      *
-     * @return Possibly empty array of all transcodings.
+     * @return Possibly empty list of all transcodings.
      */
-    public Transcoding[] getAllTranscodings() {
+    public List<Transcoding> getAllTranscodings() {
         String sql = "select " + COLUMNS + " from transcoding";
-        return (Transcoding[]) getJdbcTemplate().query(sql, rowMapper).toArray(new Transcoding[0]);
+        return query(sql, rowMapper);
     }
 
     /**
@@ -35,11 +36,11 @@ public class TranscodingDao extends AbstractDao {
      * @param playerId The player ID.
      * @return All active transcodings for the player.
      */
-    public Transcoding[] getTranscodingsForPlayer(String playerId) {
+    public List<Transcoding> getTranscodingsForPlayer(String playerId) {
         String sql = "select " + COLUMNS + " from transcoding, player_transcoding " +
-                     "where player_transcoding.player_id = ? " +
-                     "and   player_transcoding.transcoding_id = transcoding.id";
-        return (Transcoding[]) getJdbcTemplate().query(sql, new Object[]{playerId}, rowMapper).toArray(new Transcoding[0]);
+                "where player_transcoding.player_id = ? " +
+                "and   player_transcoding.transcoding_id = transcoding.id";
+        return query(sql, rowMapper, playerId);
     }
 
     /**
@@ -49,10 +50,10 @@ public class TranscodingDao extends AbstractDao {
      * @param transcodingIds ID's of the active transcodings.
      */
     public void setTranscodingsForPlayer(String playerId, int[] transcodingIds) {
-        getJdbcTemplate().update("delete from player_transcoding where player_id = ?", new Object[]{playerId});
+        update("delete from player_transcoding where player_id = ?", playerId);
         String sql = "insert into player_transcoding(player_id, transcoding_id) values (?, ?)";
         for (int transcodingId : transcodingIds) {
-            getJdbcTemplate().update(sql, new Object[]{playerId, transcodingId});
+            update(sql, playerId, transcodingId);
         }
     }
 
@@ -63,11 +64,11 @@ public class TranscodingDao extends AbstractDao {
      */
     public void createTranscoding(Transcoding transcoding) {
         String sql = "insert into transcoding (" + COLUMNS + ") values (null, ?, ?, ?, ?, ?, ?, ?, ?)";
-        getJdbcTemplate().update(sql, new Object[]{transcoding.getName(), transcoding.getSourceFormat(),
-                                                   transcoding.getTargetFormat(), transcoding.getStep1(),
-                                                   transcoding.getStep2(), transcoding.getStep3(),
-                                                   transcoding.isEnabled(), transcoding.isDefaultActive()});
-        TranscodingDao.LOG.info("Created transcoding " + transcoding.getName());
+        update(sql, transcoding.getName(), transcoding.getSourceFormat(),
+                transcoding.getTargetFormat(), transcoding.getStep1(),
+                transcoding.getStep2(), transcoding.getStep3(),
+                transcoding.isEnabled(), transcoding.isDefaultActive());
+        LOG.info("Created transcoding " + transcoding.getName());
     }
 
     /**
@@ -77,8 +78,8 @@ public class TranscodingDao extends AbstractDao {
      */
     public void deleteTranscoding(Integer id) {
         String sql = "delete from transcoding where id=?";
-        getJdbcTemplate().update(sql, new Object[]{id});
-        TranscodingDao.LOG.info("Deleted transcoding with ID " + id);
+        update(sql, id);
+        LOG.info("Deleted transcoding with ID " + id);
     }
 
     /**
@@ -88,17 +89,17 @@ public class TranscodingDao extends AbstractDao {
      */
     public void updateTranscoding(Transcoding transcoding) {
         String sql = "update transcoding set name=?, source_format=?, target_format=?, " +
-                     "step1=?, step2=?, step3=?, enabled=?, default_active=? where id=?";
-        getJdbcTemplate().update(sql, new Object[]{transcoding.getName(), transcoding.getSourceFormat(),
-                                                   transcoding.getTargetFormat(), transcoding.getStep1(), transcoding.getStep2(),
-                                                   transcoding.getStep3(), transcoding.isEnabled(), transcoding.isDefaultActive(),
-                                                   transcoding.getId()});
+                "step1=?, step2=?, step3=?, enabled=?, default_active=? where id=?";
+        update(sql, transcoding.getName(), transcoding.getSourceFormat(),
+                transcoding.getTargetFormat(), transcoding.getStep1(), transcoding.getStep2(),
+                transcoding.getStep3(), transcoding.isEnabled(), transcoding.isDefaultActive(),
+                transcoding.getId());
     }
 
     private static class TranscodingRowMapper implements ParameterizedRowMapper<Transcoding> {
         public Transcoding mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Transcoding(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-                                   rs.getString(6), rs.getString(7), rs.getBoolean(8), rs.getBoolean(9));
+                    rs.getString(6), rs.getString(7), rs.getBoolean(8), rs.getBoolean(9));
         }
     }
 }

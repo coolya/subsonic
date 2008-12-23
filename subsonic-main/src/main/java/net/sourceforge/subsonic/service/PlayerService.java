@@ -1,19 +1,20 @@
 package net.sourceforge.subsonic.service;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.PlayerDao;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Transcoding;
 import net.sourceforge.subsonic.domain.TransferStatus;
-
-import org.apache.commons.lang.StringUtils;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Provides services for maintaining the set of players.
@@ -50,7 +51,7 @@ public class PlayerService {
      * @return The player associated with the given HTTP request.
      */
     public synchronized Player getPlayer(HttpServletRequest request, HttpServletResponse response,
-                                         boolean remoteControlEnabled, boolean isStreamRequest) {
+            boolean remoteControlEnabled, boolean isStreamRequest) {
 
         // Find by 'player' request parameter.
         Player player = getPlayerById(request.getParameter("player"));
@@ -76,8 +77,8 @@ public class PlayerService {
             player = new Player();
             createPlayer(player);
             LOG.debug("Created player " + player.getId() + " (remoteControlEnabled: " + remoteControlEnabled +
-                      ", isStreamRequest: " + isStreamRequest + ", remoteUser: " + remoteUser +
-                      ", ip: " + request.getRemoteAddr() + ").");
+                    ", isStreamRequest: " + isStreamRequest + ", remoteUser: " + remoteUser +
+                    ", ip: " + request.getRemoteAddr() + ").");
         }
 
         // Update player data.
@@ -87,7 +88,7 @@ public class PlayerService {
             isUpdate = true;
         }
         if (player.getIpAddress() == null || isStreamRequest ||
-            (!isPlayerConnected(player) && player.isDynamicIp() && !request.getRemoteAddr().equals(player.getIpAddress()))) {
+                (!isPlayerConnected(player) && player.isDynamicIp() && !request.getRemoteAddr().equals(player.getIpAddress()))) {
             player.setIpAddress(request.getRemoteAddr());
             isUpdate = true;
         }
@@ -244,7 +245,7 @@ public class PlayerService {
     private void createPlayer(Player player) {
         playerDao.createPlayer(player);
 
-        Transcoding[] transcodings = transcodingService.getAllTranscodings();
+        List<Transcoding> transcodings = transcodingService.getAllTranscodings();
         List<Transcoding> defaultTranscodings = new ArrayList<Transcoding>();
         for (Transcoding transcoding : transcodings) {
             if (transcoding.isDefaultActive()) {

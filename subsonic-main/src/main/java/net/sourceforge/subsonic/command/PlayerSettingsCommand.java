@@ -1,13 +1,14 @@
 package net.sourceforge.subsonic.command;
 
+import java.util.Date;
+import java.util.List;
+
 import net.sourceforge.subsonic.controller.PlayerSettingsController;
 import net.sourceforge.subsonic.domain.CoverArtScheme;
 import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.PlayerTechnology;
 import net.sourceforge.subsonic.domain.TranscodeScheme;
 import net.sourceforge.subsonic.domain.Transcoding;
-import net.sourceforge.subsonic.domain.PlayerTechnology;
-
-import java.util.Date;
 
 /**
  * Command used in {@link PlayerSettingsController}.
@@ -27,7 +28,7 @@ public class PlayerSettingsCommand {
     private String transcodeSchemeName;
     private boolean transcodingSupported;
     private String transcodeDirectory;
-    private Transcoding[] allTranscodings;
+    private List<Transcoding> allTranscodings;
     private int[] activeTranscodingIds;
     private EnumHolder[] technologyHolders;
     private EnumHolder[] transcodeSchemeHolders;
@@ -124,11 +125,11 @@ public class PlayerSettingsCommand {
         this.transcodeDirectory = transcodeDirectory;
     }
 
-    public Transcoding[] getAllTranscodings() {
+    public List<Transcoding> getAllTranscodings() {
         return allTranscodings;
     }
 
-    public void setAllTranscodings(Transcoding[] allTranscodings) {
+    public void setAllTranscodings(List<Transcoding> allTranscodings) {
         this.allTranscodings = allTranscodings;
     }
 
@@ -141,18 +142,18 @@ public class PlayerSettingsCommand {
     }
 
     public EnumHolder[] getTechnologyHolders() {
-         return technologyHolders;
-     }
+        return technologyHolders;
+    }
 
-     public void setTechnologies(PlayerTechnology[] technologies) {
-         technologyHolders = new EnumHolder[technologies.length];
-         for (int i = 0; i < technologies.length; i++) {
-             PlayerTechnology technology = technologies[i];
-             technologyHolders[i] = new EnumHolder(technology.name(), technology.toString());
-         }
-     }
+    public void setTechnologies(PlayerTechnology[] technologies) {
+        technologyHolders = new EnumHolder[technologies.length];
+        for (int i = 0; i < technologies.length; i++) {
+            PlayerTechnology technology = technologies[i];
+            technologyHolders[i] = new EnumHolder(technology.name(), technology.toString());
+        }
+    }
 
-     public EnumHolder[] getTranscodeSchemeHolders() {
+    public EnumHolder[] getTranscodeSchemeHolders() {
         return transcodeSchemeHolders;
     }
 
@@ -181,10 +182,10 @@ public class PlayerSettingsCommand {
     }
 
     public void setTechnologyName(String technologyName) {
-         this.technologyName = technologyName;
-     }
+        this.technologyName = technologyName;
+    }
 
-     public Player[] getPlayers() {
+    public Player[] getPlayers() {
         return players;
     }
 

@@ -1,13 +1,23 @@
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.command.*;
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
-import org.springframework.web.servlet.mvc.*;
-import org.apache.commons.lang.StringUtils;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.servlet.http.*;
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.web.servlet.mvc.SimpleFormController;
+
+import net.sourceforge.subsonic.command.PlayerSettingsCommand;
+import net.sourceforge.subsonic.domain.CoverArtScheme;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.PlayerTechnology;
+import net.sourceforge.subsonic.domain.TranscodeScheme;
+import net.sourceforge.subsonic.domain.Transcoding;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.TranscodingService;
 
 /**
  * Controller for the player settings page.
@@ -48,10 +58,10 @@ public class PlayerSettingsController extends SimpleFormController {
             command.setTranscodeSchemeName(player.getTranscodeScheme().name());
             command.setTechnologyName(player.getTechnology().name());
             command.setAllTranscodings(transcodingService.getAllTranscodings());
-            Transcoding[] activeTranscodings = transcodingService.getTranscodingsForPlayer(player);
-            int[] activeTranscodingIds = new int[activeTranscodings.length];
-            for (int i = 0; i < activeTranscodings.length; i++) {
-                activeTranscodingIds[i] = activeTranscodings[i].getId();
+            List<Transcoding> activeTranscodings = transcodingService.getTranscodingsForPlayer(player);
+            int[] activeTranscodingIds = new int[activeTranscodings.size()];
+            for (int i = 0; i < activeTranscodings.size(); i++) {
+                activeTranscodingIds[i] = activeTranscodings.get(i).getId();
             }
             command.setActiveTranscodingIds(activeTranscodingIds);
         }
