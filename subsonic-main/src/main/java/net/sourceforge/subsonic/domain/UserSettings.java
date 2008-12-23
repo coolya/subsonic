@@ -24,7 +24,6 @@ public class UserSettings {
     private int selectedMusicFolderId = -1;
     private boolean partyModeEnabled;
     private boolean nowPlayingAllowed;
-    private boolean webPlayerDefault;
     private AvatarScheme avatarScheme = AvatarScheme.NONE;
     private Integer systemAvatarId;
 
@@ -150,14 +149,6 @@ public class UserSettings {
 
     public void setNowPlayingAllowed(boolean nowPlayingAllowed) {
         this.nowPlayingAllowed = nowPlayingAllowed;
-    }
-
-    public boolean isWebPlayerDefault() {
-        return webPlayerDefault;
-    }
-
-    public void setWebPlayerDefault(boolean webPlayerDefault) {
-        this.webPlayerDefault = webPlayerDefault;
     }
 
     public AvatarScheme getAvatarScheme() {

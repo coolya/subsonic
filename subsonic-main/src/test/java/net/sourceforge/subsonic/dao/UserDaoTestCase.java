@@ -147,7 +147,6 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertEquals("Error in getUserSettings().", -1, userSettings.getSelectedMusicFolderId());
         assertFalse("Error in getUserSettings().", userSettings.isPartyModeEnabled());
         assertFalse("Error in getUserSettings().", userSettings.isNowPlayingAllowed());
-        assertFalse("Error in getUserSettings().", userSettings.isWebPlayerDefault());
         assertSame("Error in getUserSettings().", AvatarScheme.NONE, userSettings.getAvatarScheme());
         assertNull("Error in getUserSettings().", userSettings.getSystemAvatarId());
 
@@ -167,7 +166,6 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         settings.setSelectedMusicFolderId(3);
         settings.setPartyModeEnabled(true);
         settings.setNowPlayingAllowed(true);
-        settings.setWebPlayerDefault(true);
         settings.setAvatarScheme(AvatarScheme.SYSTEM);
         settings.setSystemAvatarId(1);
 
@@ -190,7 +188,6 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertEquals("Error in getUserSettings().", 3, userSettings.getSelectedMusicFolderId());
         assertTrue("Error in getUserSettings().", userSettings.isPartyModeEnabled());
         assertTrue("Error in getUserSettings().", userSettings.isNowPlayingAllowed());
-        assertTrue("Error in getUserSettings().", userSettings.isWebPlayerDefault());
         assertSame("Error in getUserSettings().", AvatarScheme.SYSTEM, userSettings.getAvatarScheme());
         assertEquals("Error in getUserSettings().", 1, userSettings.getSystemAvatarId().intValue());
 

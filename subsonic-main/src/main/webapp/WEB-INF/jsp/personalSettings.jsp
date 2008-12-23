@@ -126,17 +126,17 @@
 
     <table class="indent">
         <tr>
-            <td><form:checkbox path="partyModeEnabled" id="partyModeEnabled" cssClass="checkbox"/></td>
+            <td><form:checkbox path="showNowPlayingEnabled" id="nowPlaying" cssClass="checkbox"/></td>
+            <td><label for="nowPlaying"><fmt:message key="personalsettings.shownowplaying"/></label></td>
+            <td style="padding-left:2em"><form:checkbox path="partyModeEnabled" id="partyModeEnabled" cssClass="checkbox"/></td>
             <td><label for="partyModeEnabled"><fmt:message key="personalsettings.partymode"/></label>
                 <a href="helpPopup.view?topic=partymode" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a></td>
-            <td style="padding-left:2em"><form:checkbox path="showNowPlayingEnabled" id="nowPlaying" cssClass="checkbox"/></td>
-            <td><label for="nowPlaying"><fmt:message key="personalsettings.shownowplaying"/></label></td>
         </tr>
         <tr>
-            <td><form:checkbox path="webPlayerDefault" id="webPlayerDefault" cssClass="checkbox"/></td>
-            <td><label for="webPlayerDefault"><fmt:message key="personalsettings.webplayerdefault"/></label></td>
-            <td style="padding-left:2em"><form:checkbox path="nowPlayingAllowed" id="nowPlayingAllowed" cssClass="checkbox"/></td>
+            <td><form:checkbox path="nowPlayingAllowed" id="nowPlayingAllowed" cssClass="checkbox"/></td>
             <td><label for="nowPlayingAllowed"><fmt:message key="personalsettings.nowplayingallowed"/></label></td>
+            <td/>
+            <td/>
         </tr>
     </table>
 

@@ -28,7 +28,7 @@ public class UserDao extends AbstractDao {
                                                         "playlist_caption_cutoff, playlist_track_number, playlist_artist, playlist_album, playlist_genre, " +
                                                         "playlist_year, playlist_bit_rate, playlist_duration, playlist_format, playlist_file_size, " +
                                                         "last_fm_enabled, last_fm_username, last_fm_password, transcode_scheme, show_now_playing, selected_music_folder_id, " +
-                                                        "party_mode_enabled, now_playing_allowed, web_player_default, avatar_scheme, system_avatar_id";
+                                                        "party_mode_enabled, now_playing_allowed, avatar_scheme, system_avatar_id";
 
     private static final Integer ROLE_ID_ADMIN = 1;
     private static final Integer ROLE_ID_DOWNLOAD = 2;
@@ -50,13 +50,13 @@ public class UserDao extends AbstractDao {
      */
     public User getUserByName(String username) {
         String sql = "select " + USER_COLUMNS + " from user where username=?";
-        User[] users = (User[]) getJdbcTemplate().query(sql, new Object[]{username}, userRowMapper).toArray(new User[0]);
-        if (users.length == 0) {
+        List<?> users = getJdbcTemplate().query(sql, new Object[]{username}, userRowMapper);
+        if (users.isEmpty()) {
             return null;
         }
-
-        readRoles(users[0]);
-        return users[0];
+        User user = (User) users.get(0);
+        readRoles(user);
+        return user;
     }
 
     /**
@@ -141,9 +141,9 @@ public class UserDao extends AbstractDao {
      */
     public UserSettings getUserSettings(String username) {
         String sql = "select " + USER_SETTINGS_COLUMNS + " from user_settings where username=?";
-        UserSettings[] result = (UserSettings[]) getJdbcTemplate().query(sql, new Object[]{username}, userSettingsRowMapper).toArray(new UserSettings[0]);
+        List<?> result = getJdbcTemplate().query(sql, new Object[]{username}, userSettingsRowMapper);
 
-        return result.length == 0 ? null : result[0];
+        return result.isEmpty() ? null : (UserSettings) result.get(0);
     }
 
     /**
@@ -169,7 +169,7 @@ public class UserDao extends AbstractDao {
                                                    settings.isLastFmEnabled(), settings.getLastFmUsername(), encrypt(settings.getLastFmPassword()),
                                                    settings.getTranscodeScheme().name(), settings.isShowNowPlayingEnabled(),
                                                    settings.getSelectedMusicFolderId(), settings.isPartyModeEnabled(), settings.isNowPlayingAllowed(),
-                                                   settings.isWebPlayerDefault(), settings.getAvatarScheme().name(), settings.getSystemAvatarId()});
+                                                   settings.getAvatarScheme().name(), settings.getSystemAvatarId()});
     }
 
     private static String encrypt(String s) {
@@ -303,7 +303,6 @@ public class UserDao extends AbstractDao {
             settings.setSelectedMusicFolderId(rs.getInt(col++));
             settings.setPartyModeEnabled(rs.getBoolean(col++));
             settings.setNowPlayingAllowed(rs.getBoolean(col++));
-            settings.setWebPlayerDefault(rs.getBoolean(col++));
             settings.setAvatarScheme(AvatarScheme.valueOf(rs.getString(col++)));
             settings.setSystemAvatarId((Integer) rs.getObject(col++));
 

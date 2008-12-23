@@ -864,7 +864,6 @@ public class SettingsService {
         settings.setShowNowPlayingEnabled(true);
         settings.setPartyModeEnabled(false);
         settings.setNowPlayingAllowed(true);
-        settings.setWebPlayerDefault(false);
         settings.setLastFmEnabled(false);
         settings.setLastFmUsername(null);
         settings.setLastFmPassword(null);
