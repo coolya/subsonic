@@ -253,7 +253,7 @@ public class DownloadController implements Controller {
                 // Calculate bitrate limit every 5 seconds.
                 if (after - lastLimitCheck > 5000) {
                     bitrateLimit = 1024L * settingsService.getDownloadBitrateLimit() /
-                                   Math.max(1, statusService.getAllDownloadStatuses().length);
+                                   Math.max(1, statusService.getAllDownloadStatuses().size());
                     lastLimitCheck = after;
                 }
 

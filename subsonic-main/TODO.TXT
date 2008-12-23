@@ -17,7 +17,6 @@ Verify that subsonic.sh still works.
 Change license to GPL.
 Add default welcome message.
 Error with new LAME version?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3339
-Replace Flash player.
 Demo mode.
 Sort albums by year. (And show year). getCoverArt() should be made non-recursive. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
 Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305
@@ -26,6 +25,7 @@ Should be possible to donate from web page.
 
 DONE IN 3.6
 -------------
+Replace Flash player.
 Bugfix: Avoid ugly line breaks in IE.
 New agent/service architecture.
 Fixed broken lyrics (again).

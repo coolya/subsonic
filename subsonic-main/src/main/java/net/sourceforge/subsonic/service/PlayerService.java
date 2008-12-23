@@ -154,7 +154,7 @@ public class PlayerService {
      * @return Whether the player is connected.
      */
     private boolean isPlayerConnected(Player player) {
-        return statusService.getStreamStatusesForPlayer(player).length > 0;
+        return !statusService.getStreamStatusesForPlayer(player).isEmpty();
     }
 
     /**

@@ -20,24 +20,25 @@ public class StatusController extends ParameterizableViewController {
 
     private StatusService statusService;
 
+    @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
 
-        TransferStatus[] streamStatuses = statusService.getAllStreamStatuses();
-        TransferStatus[] downloadStatuses = statusService.getAllDownloadStatuses();
-        TransferStatus[] uploadStatuses = statusService.getAllUploadStatuses();
+        List<TransferStatus> streamStatuses = statusService.getAllStreamStatuses();
+        List<TransferStatus> downloadStatuses = statusService.getAllDownloadStatuses();
+        List<TransferStatus> uploadStatuses = statusService.getAllUploadStatuses();
 
         Locale locale = RequestContextUtils.getLocale(request);
         List<TransferStatusHolder> transferStatuses = new ArrayList<TransferStatusHolder>();
 
-        for (int i = 0; i < streamStatuses.length; i++) {
-            transferStatuses.add(new TransferStatusHolder(streamStatuses[i], true, false, false, i, locale));
+        for (int i = 0; i < streamStatuses.size(); i++) {
+            transferStatuses.add(new TransferStatusHolder(streamStatuses.get(i), true, false, false, i, locale));
         }
-        for (int i = 0; i < downloadStatuses.length; i++) {
-            transferStatuses.add(new TransferStatusHolder(downloadStatuses[i], false, true, false, i, locale));
+        for (int i = 0; i < downloadStatuses.size(); i++) {
+            transferStatuses.add(new TransferStatusHolder(downloadStatuses.get(i), false, true, false, i, locale));
         }
-        for (int i = 0; i < uploadStatuses.length; i++) {
-            transferStatuses.add(new TransferStatusHolder(uploadStatuses[i], false, false, true, i, locale));
+        for (int i = 0; i < uploadStatuses.size(); i++) {
+            transferStatuses.add(new TransferStatusHolder(uploadStatuses.get(i), false, false, true, i, locale));
         }
 
         map.put("transferStatuses", transferStatuses);

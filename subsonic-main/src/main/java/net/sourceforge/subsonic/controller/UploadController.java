@@ -31,6 +31,7 @@ public class UploadController extends ParameterizableViewController {
     private SettingsService settingsService;
     public static final String UPLOAD_STATUS = "uploadStatus";
 
+    @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Map<String, Object> map = new HashMap<String, Object>();
@@ -201,7 +202,7 @@ public class UploadController extends ParameterizableViewController {
 
         private UploadListenerImpl(TransferStatus status) {
             this.status = status;
-            this.start = System.currentTimeMillis();
+            start = System.currentTimeMillis();
         }
 
         public void start(String fileName) {
@@ -234,7 +235,7 @@ public class UploadController extends ParameterizableViewController {
         }
 
         private long getBitrateLimit() {
-            return 1024L * settingsService.getUploadBitrateLimit() / Math.max(1, statusService.getAllUploadStatuses().length);
+            return 1024L * settingsService.getUploadBitrateLimit() / Math.max(1, statusService.getAllUploadStatuses().size());
         }
     }
 

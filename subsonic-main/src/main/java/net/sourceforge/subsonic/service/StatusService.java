@@ -28,18 +28,18 @@ public class StatusService {
         streamHistoryCache.put(status.getPlayer().getId(), status);
     }
 
-    public synchronized TransferStatus[] getAllStreamStatuses() {
-        return streamStatuses.toArray(new TransferStatus[0]);
+    public synchronized List<TransferStatus> getAllStreamStatuses() {
+        return new ArrayList<TransferStatus>(streamStatuses);
     }
 
-    public synchronized TransferStatus[] getStreamStatusesForPlayer(Player player) {
+    public synchronized List<TransferStatus> getStreamStatusesForPlayer(Player player) {
         List<TransferStatus> result = new ArrayList<TransferStatus>();
         for (TransferStatus status : getAllStreamStatuses()) {
             if (status.getPlayer().getId().equals(player.getId())) {
                 result.add(status);
             }
         }
-        return result.toArray(new TransferStatus[0]);
+        return result;
     }
 
     public synchronized TransferStatus createDownloadStatus(Player player) {
@@ -50,8 +50,8 @@ public class StatusService {
         downloadStatuses.remove(status);
     }
 
-    public synchronized TransferStatus[] getAllDownloadStatuses() {
-        return downloadStatuses.toArray(new TransferStatus[0]);
+    public synchronized List<TransferStatus> getAllDownloadStatuses() {
+        return new ArrayList<TransferStatus>(downloadStatuses);
     }
 
     public synchronized TransferStatus createUploadStatus(Player player) {
@@ -62,18 +62,8 @@ public class StatusService {
         uploadStatuses.remove(status);
     }
 
-    public synchronized TransferStatus[] getAllUploadStatuses() {
-        return uploadStatuses.toArray(new TransferStatus[0]);
-    }
-
-    public synchronized TransferStatus[] getUploadStatusesForPlayer(Player player) {
-        List<TransferStatus> result = new ArrayList<TransferStatus>();
-        for (TransferStatus status : getAllUploadStatuses()) {
-            if (status.getPlayer().getId().equals(player.getId())) {
-                result.add(status);
-            }
-        }
-        return result.toArray(new TransferStatus[0]);
+    public synchronized List<TransferStatus> getAllUploadStatuses() {
+        return new ArrayList<TransferStatus>(uploadStatuses);
     }
 
     private synchronized TransferStatus createStatus(Player player, List<TransferStatus> statusList, boolean isStream) {
@@ -94,9 +84,9 @@ public class StatusService {
 
     private TransferStatus getPreviousStatus(Player player) {
         TransferStatus result;
-        TransferStatus[] statuses = getStreamStatusesForPlayer(player);
-        if (statuses.length > 0) {
-            result = statuses[0];
+        List<TransferStatus> statuses = getStreamStatusesForPlayer(player);
+        if (!statuses.isEmpty()) {
+            result = statuses.get(0);
         } else {
             result = streamHistoryCache.get(player.getId());
         }
