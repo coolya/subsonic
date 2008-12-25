@@ -4,12 +4,12 @@ import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicFileInfo;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,7 +17,6 @@ import java.util.List;
  *
  * @author Sindre Mehus
  */
-@SuppressWarnings({"unchecked"})
 public class MusicFileInfoDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(MusicFileInfoDao.class);
@@ -31,8 +30,7 @@ public class MusicFileInfoDao extends AbstractDao {
      */
     public MusicFileInfo getMusicFileInfoForPath(String path) {
         String sql = "select " + COLUMNS + " from music_file_info where path=?";
-        List<?> result = getJdbcTemplate().query(sql, new Object[]{path}, rowMapper);
-        return (MusicFileInfo) (result.isEmpty() ? null : result.get(0));
+        return queryOne(sql, rowMapper, path);
     }
 
     /**
@@ -50,7 +48,7 @@ public class MusicFileInfoDao extends AbstractDao {
         String sql = "select " + COLUMNS + " from music_file_info " +
                      "order by id " +
                      "limit " + count + " offset " + offset;
-        return getJdbcTemplate().query(sql, rowMapper);
+        return query(sql, rowMapper);
     }
 
     /**
@@ -79,16 +77,15 @@ public class MusicFileInfoDao extends AbstractDao {
      * @param count  Maximum number of elements to return.
      * @return Info for the most frequently played music files.
      */
-    public MusicFileInfo[] getMostFrequentlyPlayed(int offset, int count) {
+    public List<MusicFileInfo> getMostFrequentlyPlayed(int offset, int count) {
         if (count < 1) {
-            return new MusicFileInfo[0];
+            return Collections.emptyList();
         }
 
-        JdbcTemplate template = getJdbcTemplate();
         String sql = "select " + COLUMNS + " from music_file_info " +
                      "where play_count > 0 and enabled=true " +
                      "order by play_count desc limit " + count + " offset " + offset;
-        return (MusicFileInfo[]) template.query(sql, rowMapper).toArray(new MusicFileInfo[0]);
+        return query(sql, rowMapper);
     }
 
     /**
@@ -98,16 +95,15 @@ public class MusicFileInfoDao extends AbstractDao {
      * @param count  Maximum number of elements to return.
      * @return Info for the most recently played music files.
      */
-    public MusicFileInfo[] getMostRecentlyPlayed(int offset, int count) {
+    public List<MusicFileInfo> getMostRecentlyPlayed(int offset, int count) {
         if (count < 1) {
-            return new MusicFileInfo[0];
+            return Collections.emptyList();
         }
 
-        JdbcTemplate template = getJdbcTemplate();
         String sql = "select " + COLUMNS + " from music_file_info " +
                      "where last_played is not null and enabled=true " +
                      "order by last_played desc limit " + count + " offset " + offset;
-        return (MusicFileInfo[]) template.query(sql, rowMapper).toArray(new MusicFileInfo[0]);
+        return query(sql, rowMapper);
     }
 
     /**
@@ -117,8 +113,7 @@ public class MusicFileInfoDao extends AbstractDao {
      */
     public void createMusicFileInfo(MusicFileInfo info) {
         String sql = "insert into music_file_info (" + COLUMNS + ") values (null, ?, ?, ?, ?, ?)";
-        getJdbcTemplate().update(sql, new Object[]{info.getPath(), info.getComment(),
-                                                   info.getPlayCount(), info.getLastPlayed(), info.isEnabled()});
+        update(sql, info.getPath(), info.getComment(), info.getPlayCount(), info.getLastPlayed(), info.isEnabled());
         LOG.info("Created music file info for " + info.getPath());
     }
 
@@ -129,8 +124,7 @@ public class MusicFileInfoDao extends AbstractDao {
      */
     public void updateMusicFileInfo(MusicFileInfo info) {
         String sql = "update music_file_info set path=?, comment=?, play_count=?, last_played=?, enabled=? where id=?";
-        getJdbcTemplate().update(sql, new Object[]{info.getPath(), info.getComment(),
-                                                   info.getPlayCount(), info.getLastPlayed(), info.isEnabled(), info.getId()});
+        update(sql, info.getPath(), info.getComment(), info.getPlayCount(), info.getLastPlayed(), info.isEnabled(), info.getId());
     }
 
     /**
@@ -141,9 +135,9 @@ public class MusicFileInfoDao extends AbstractDao {
      * @param rating    The rating between 1 and 5, or <code>null</code> to remove the rating.
      */
     public void setRatingForUser(String username, MusicFile musicFile, Integer rating) {
-        getJdbcTemplate().update("delete from user_rating where username=? and path=?", new Object[]{username, musicFile.getPath()});
+        update("delete from user_rating where username=? and path=?", username, musicFile.getPath());
         if (rating != null && rating > 0) {
-            getJdbcTemplate().update("insert into user_rating values(?, ?, ?)", new Object[]{username, musicFile.getPath(), rating});
+            update("insert into user_rating values(?, ?, ?)", username, musicFile.getPath(), rating);
         }
 
         // Must create music_file_info row if not existing.

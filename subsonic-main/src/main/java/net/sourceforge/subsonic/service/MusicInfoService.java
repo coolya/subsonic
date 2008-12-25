@@ -60,7 +60,7 @@ public class MusicInfoService {
      * @param count  Maximum number of elements to return.
      * @return Info for the most frequently played music files.
      */
-    public MusicFileInfo[] getMostFrequentlyPlayed(int offset, int count) {
+    public List<MusicFileInfo> getMostFrequentlyPlayed(int offset, int count) {
         return musicFileInfoDao.getMostFrequentlyPlayed(offset, count);
     }
 
@@ -71,7 +71,7 @@ public class MusicInfoService {
      * @param count  Maximum number of elements to return.
      * @return Info for the most recently played music files.
      */
-    public MusicFileInfo[] getMostRecentlyPlayed(int offset, int count) {
+    public List<MusicFileInfo> getMostRecentlyPlayed(int offset, int count) {
         return musicFileInfoDao.getMostRecentlyPlayed(offset, count);
     }
 

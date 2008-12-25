@@ -121,50 +121,50 @@ public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
         musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "e", null, 1, null));
         musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "c", null, 0, null));  // Not included in query.
 
-        MusicFileInfo[] mostFrequent = musicFileInfoDao.getMostFrequentlyPlayed(0, 0);
-        assertEquals("Error in getMostFrequentlyPlayed().", 0, mostFrequent.length);
+        List<MusicFileInfo> mostFrequent = musicFileInfoDao.getMostFrequentlyPlayed(0, 0);
+        assertEquals("Error in getMostFrequentlyPlayed().", 0, mostFrequent.size());
 
         mostFrequent = musicFileInfoDao.getMostFrequentlyPlayed(0, 1);
-        assertEquals("Error in getMostFrequentlyPlayed().", 1, mostFrequent.length);
-        assertEquals("Error in getMostFrequentlyPlayed().", "f", mostFrequent[0].getPath());
+        assertEquals("Error in getMostFrequentlyPlayed().", 1, mostFrequent.size());
+        assertEquals("Error in getMostFrequentlyPlayed().", "f", mostFrequent.get(0).getPath());
 
         mostFrequent = musicFileInfoDao.getMostFrequentlyPlayed(0, 2);
-        assertEquals("Error in getMostFrequentlyPlayed().", 2, mostFrequent.length);
-        assertEquals("Error in getMostFrequentlyPlayed().", "f", mostFrequent[0].getPath());
-        assertEquals("Error in getMostFrequentlyPlayed().", "b", mostFrequent[1].getPath());
+        assertEquals("Error in getMostFrequentlyPlayed().", 2, mostFrequent.size());
+        assertEquals("Error in getMostFrequentlyPlayed().", "f", mostFrequent.get(0).getPath());
+        assertEquals("Error in getMostFrequentlyPlayed().", "b", mostFrequent.get(1).getPath());
 
         mostFrequent = musicFileInfoDao.getMostFrequentlyPlayed(0, 5);
-        assertEquals("Error in getMostFrequentlyPlayed().", 5, mostFrequent.length);
-        assertEquals("Error in getMostFrequentlyPlayed().", "f", mostFrequent[0].getPath());
-        assertEquals("Error in getMostFrequentlyPlayed().", "b", mostFrequent[1].getPath());
-        assertEquals("Error in getMostFrequentlyPlayed().", "d", mostFrequent[2].getPath());
-        assertEquals("Error in getMostFrequentlyPlayed().", "a", mostFrequent[3].getPath());
-        assertEquals("Error in getMostFrequentlyPlayed().", "e", mostFrequent[4].getPath());
+        assertEquals("Error in getMostFrequentlyPlayed().", 5, mostFrequent.size());
+        assertEquals("Error in getMostFrequentlyPlayed().", "f", mostFrequent.get(0).getPath());
+        assertEquals("Error in getMostFrequentlyPlayed().", "b", mostFrequent.get(1).getPath());
+        assertEquals("Error in getMostFrequentlyPlayed().", "d", mostFrequent.get(2).getPath());
+        assertEquals("Error in getMostFrequentlyPlayed().", "a", mostFrequent.get(3).getPath());
+        assertEquals("Error in getMostFrequentlyPlayed().", "e", mostFrequent.get(4).getPath());
 
         mostFrequent = musicFileInfoDao.getMostFrequentlyPlayed(0, 6);
-        assertEquals("Error in getMostFrequentlyPlayed().", 5, mostFrequent.length);
+        assertEquals("Error in getMostFrequentlyPlayed().", 5, mostFrequent.size());
 
         mostFrequent = musicFileInfoDao.getMostFrequentlyPlayed(1, 0);
-        assertEquals("Error in getMostFrequentlyPlayed().", 0, mostFrequent.length);
+        assertEquals("Error in getMostFrequentlyPlayed().", 0, mostFrequent.size());
 
         mostFrequent = musicFileInfoDao.getMostFrequentlyPlayed(1, 1);
-        assertEquals("Error in getMostFrequentlyPlayed().", 1, mostFrequent.length);
-        assertEquals("Error in getMostFrequentlyPlayed().", "b", mostFrequent[0].getPath());
+        assertEquals("Error in getMostFrequentlyPlayed().", 1, mostFrequent.size());
+        assertEquals("Error in getMostFrequentlyPlayed().", "b", mostFrequent.get(0).getPath());
 
         mostFrequent = musicFileInfoDao.getMostFrequentlyPlayed(3, 2);
-        assertEquals("Error in getMostFrequentlyPlayed().", 2, mostFrequent.length);
-        assertEquals("Error in getMostFrequentlyPlayed().", "a", mostFrequent[0].getPath());
-        assertEquals("Error in getMostFrequentlyPlayed().", "e", mostFrequent[1].getPath());
+        assertEquals("Error in getMostFrequentlyPlayed().", 2, mostFrequent.size());
+        assertEquals("Error in getMostFrequentlyPlayed().", "a", mostFrequent.get(0).getPath());
+        assertEquals("Error in getMostFrequentlyPlayed().", "e", mostFrequent.get(1).getPath());
 
         mostFrequent = musicFileInfoDao.getMostFrequentlyPlayed(4, 10);
-        assertEquals("Error in getMostFrequentlyPlayed().", 1, mostFrequent.length);
-        assertEquals("Error in getMostFrequentlyPlayed().", "e", mostFrequent[0].getPath());
+        assertEquals("Error in getMostFrequentlyPlayed().", 1, mostFrequent.size());
+        assertEquals("Error in getMostFrequentlyPlayed().", "e", mostFrequent.get(0).getPath());
 
         mostFrequent = musicFileInfoDao.getMostFrequentlyPlayed(5, 10);
-        assertEquals("Error in getMostFrequentlyPlayed().", 0, mostFrequent.length);
+        assertEquals("Error in getMostFrequentlyPlayed().", 0, mostFrequent.size());
 
         mostFrequent = musicFileInfoDao.getMostFrequentlyPlayed(6, 10);
-        assertEquals("Error in getMostFrequentlyPlayed().", 0, mostFrequent.length);
+        assertEquals("Error in getMostFrequentlyPlayed().", 0, mostFrequent.size());
     }
 
     public void testGetMostRecentlyPlayed() {
@@ -175,50 +175,50 @@ public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
         musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "e", null, 0, new Date(1)));
         musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "c", null, 0, null));  // Not included in query.
 
-        MusicFileInfo[] mostRecent = musicFileInfoDao.getMostRecentlyPlayed(0, 0);
-        assertEquals("Error in getMostRecentlyPlayed().", 0, mostRecent.length);
+        List<MusicFileInfo> mostRecent = musicFileInfoDao.getMostRecentlyPlayed(0, 0);
+        assertEquals("Error in getMostRecentlyPlayed().", 0, mostRecent.size());
 
         mostRecent = musicFileInfoDao.getMostRecentlyPlayed(0, 1);
-        assertEquals("Error in getMostRecentlyPlayed().", 1, mostRecent.length);
-        assertEquals("Error in getMostRecentlyPlayed().", "f", mostRecent[0].getPath());
+        assertEquals("Error in getMostRecentlyPlayed().", 1, mostRecent.size());
+        assertEquals("Error in getMostRecentlyPlayed().", "f", mostRecent.get(0).getPath());
 
         mostRecent = musicFileInfoDao.getMostRecentlyPlayed(0, 2);
-        assertEquals("Error in getMostRecentlyPlayed().", 2, mostRecent.length);
-        assertEquals("Error in getMostRecentlyPlayed().", "f", mostRecent[0].getPath());
-        assertEquals("Error in getMostRecentlyPlayed().", "b", mostRecent[1].getPath());
+        assertEquals("Error in getMostRecentlyPlayed().", 2, mostRecent.size());
+        assertEquals("Error in getMostRecentlyPlayed().", "f", mostRecent.get(0).getPath());
+        assertEquals("Error in getMostRecentlyPlayed().", "b", mostRecent.get(1).getPath());
 
         mostRecent = musicFileInfoDao.getMostRecentlyPlayed(0, 5);
-        assertEquals("Error in getMostRecentlyPlayed().", 5, mostRecent.length);
-        assertEquals("Error in getMostRecentlyPlayed().", "f", mostRecent[0].getPath());
-        assertEquals("Error in getMostRecentlyPlayed().", "b", mostRecent[1].getPath());
-        assertEquals("Error in getMostRecentlyPlayed().", "d", mostRecent[2].getPath());
-        assertEquals("Error in getMostRecentlyPlayed().", "a", mostRecent[3].getPath());
-        assertEquals("Error in getMostRecentlyPlayed().", "e", mostRecent[4].getPath());
+        assertEquals("Error in getMostRecentlyPlayed().", 5, mostRecent.size());
+        assertEquals("Error in getMostRecentlyPlayed().", "f", mostRecent.get(0).getPath());
+        assertEquals("Error in getMostRecentlyPlayed().", "b", mostRecent.get(1).getPath());
+        assertEquals("Error in getMostRecentlyPlayed().", "d", mostRecent.get(2).getPath());
+        assertEquals("Error in getMostRecentlyPlayed().", "a", mostRecent.get(3).getPath());
+        assertEquals("Error in getMostRecentlyPlayed().", "e", mostRecent.get(4).getPath());
 
         mostRecent = musicFileInfoDao.getMostRecentlyPlayed(0, 6);
-        assertEquals("Error in getMostRecentlyPlayed().", 5, mostRecent.length);
+        assertEquals("Error in getMostRecentlyPlayed().", 5, mostRecent.size());
 
         mostRecent = musicFileInfoDao.getMostRecentlyPlayed(1, 0);
-        assertEquals("Error in getMostRecentlyPlayed().", 0, mostRecent.length);
+        assertEquals("Error in getMostRecentlyPlayed().", 0, mostRecent.size());
 
         mostRecent = musicFileInfoDao.getMostRecentlyPlayed(1, 1);
-        assertEquals("Error in getMostRecentlyPlayed().", 1, mostRecent.length);
-        assertEquals("Error in getMostRecentlyPlayed().", "b", mostRecent[0].getPath());
+        assertEquals("Error in getMostRecentlyPlayed().", 1, mostRecent.size());
+        assertEquals("Error in getMostRecentlyPlayed().", "b", mostRecent.get(0).getPath());
 
         mostRecent = musicFileInfoDao.getMostRecentlyPlayed(3, 2);
-        assertEquals("Error in getMostRecentlyPlayed().", 2, mostRecent.length);
-        assertEquals("Error in getMostRecentlyPlayed().", "a", mostRecent[0].getPath());
-        assertEquals("Error in getMostRecentlyPlayed().", "e", mostRecent[1].getPath());
+        assertEquals("Error in getMostRecentlyPlayed().", 2, mostRecent.size());
+        assertEquals("Error in getMostRecentlyPlayed().", "a", mostRecent.get(0).getPath());
+        assertEquals("Error in getMostRecentlyPlayed().", "e", mostRecent.get(1).getPath());
 
         mostRecent = musicFileInfoDao.getMostRecentlyPlayed(4, 10);
-        assertEquals("Error in getMostRecentlyPlayed().", 1, mostRecent.length);
-        assertEquals("Error in getMostRecentlyPlayed().", "e", mostRecent[0].getPath());
+        assertEquals("Error in getMostRecentlyPlayed().", 1, mostRecent.size());
+        assertEquals("Error in getMostRecentlyPlayed().", "e", mostRecent.get(0).getPath());
 
         mostRecent = musicFileInfoDao.getMostRecentlyPlayed(5, 10);
-        assertEquals("Error in getMostRecentlyPlayed().", 0, mostRecent.length);
+        assertEquals("Error in getMostRecentlyPlayed().", 0, mostRecent.size());
 
         mostRecent = musicFileInfoDao.getMostRecentlyPlayed(6, 10);
-        assertEquals("Error in getMostRecentlyPlayed().", 0, mostRecent.length);
+        assertEquals("Error in getMostRecentlyPlayed().", 0, mostRecent.size());
     }
 
     public void testRating() {
