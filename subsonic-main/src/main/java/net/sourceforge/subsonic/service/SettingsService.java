@@ -901,7 +901,7 @@ public class SettingsService {
      *
      * @return All system avatars.
      */
-    public Avatar[] getAllSystemAvatars() {
+    public List<Avatar> getAllSystemAvatars() {
         return avatarDao.getAllSystemAvatars();
     }
 

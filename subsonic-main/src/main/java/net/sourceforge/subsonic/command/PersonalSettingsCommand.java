@@ -1,7 +1,12 @@
 package net.sourceforge.subsonic.command;
 
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.controller.*;
+import net.sourceforge.subsonic.controller.PersonalSettingsController;
+import net.sourceforge.subsonic.domain.Avatar;
+import net.sourceforge.subsonic.domain.Theme;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.UserSettings;
+
+import java.util.List;
 
 /**
  * Command used in {@link PersonalSettingsController}.
@@ -15,7 +20,7 @@ public class PersonalSettingsCommand {
     private String themeIndex;
     private Theme[] themes;
     private int avatarId;
-    private Avatar[] avatars;
+    private List<Avatar> avatars;
     private Avatar customAvatar;
     private UserSettings.Visibility mainVisibility;
     private UserSettings.Visibility playlistVisibility;
@@ -77,11 +82,11 @@ public class PersonalSettingsCommand {
         this.avatarId = avatarId;
     }
 
-    public Avatar[] getAvatars() {
+    public List<Avatar> getAvatars() {
         return avatars;
     }
 
-    public void setAvatars(Avatar[] avatars) {
+    public void setAvatars(List<Avatar> avatars) {
         this.avatars = avatars;
     }
 
