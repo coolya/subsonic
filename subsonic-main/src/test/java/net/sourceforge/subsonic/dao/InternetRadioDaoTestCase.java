@@ -1,9 +1,10 @@
 package net.sourceforge.subsonic.dao;
 
-import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.domain.InternetRadio;
 
 /**
  * Unit test of {@link InternetRadioDao}.
+ *
  * @author Sindre Mehus
  */
 public class InternetRadioDaoTestCase extends DaoTestCaseBase {
@@ -16,14 +17,14 @@ public class InternetRadioDaoTestCase extends DaoTestCaseBase {
         InternetRadio radio = new InternetRadio("name", "streamUrl", "homePageUrl", true);
         internetRadioDao.createInternetRadio(radio);
 
-        InternetRadio newRadio = internetRadioDao.getAllInternetRadios()[0];
+        InternetRadio newRadio = internetRadioDao.getAllInternetRadios().get(0);
         assertInternetRadioEquals(radio, newRadio);
     }
 
     public void testUpdateInternetRadio() {
         InternetRadio radio = new InternetRadio("name", "streamUrl", "homePageUrl", true);
         internetRadioDao.createInternetRadio(radio);
-        radio = internetRadioDao.getAllInternetRadios()[0];
+        radio = internetRadioDao.getAllInternetRadios().get(0);
 
         radio.setName("newName");
         radio.setStreamUrl("newStreamUrl");
@@ -31,24 +32,24 @@ public class InternetRadioDaoTestCase extends DaoTestCaseBase {
         radio.setEnabled(false);
         internetRadioDao.updateInternetRadio(radio);
 
-        InternetRadio newRadio = internetRadioDao.getAllInternetRadios()[0];
+        InternetRadio newRadio = internetRadioDao.getAllInternetRadios().get(0);
         assertInternetRadioEquals(radio, newRadio);
     }
 
     public void testDeleteInternetRadio() {
-        assertEquals("Wrong number of radios.", 0, internetRadioDao.getAllInternetRadios().length);
+        assertEquals("Wrong number of radios.", 0, internetRadioDao.getAllInternetRadios().size());
 
         internetRadioDao.createInternetRadio(new InternetRadio("name", "streamUrl", "homePageUrl", true));
-        assertEquals("Wrong number of radios.", 1, internetRadioDao.getAllInternetRadios().length);
+        assertEquals("Wrong number of radios.", 1, internetRadioDao.getAllInternetRadios().size());
 
         internetRadioDao.createInternetRadio(new InternetRadio("name", "streamUrl", "homePageUrl", true));
-        assertEquals("Wrong number of radios.", 2, internetRadioDao.getAllInternetRadios().length);
+        assertEquals("Wrong number of radios.", 2, internetRadioDao.getAllInternetRadios().size());
 
-        internetRadioDao.deleteInternetRadio(internetRadioDao.getAllInternetRadios()[0].getId());
-        assertEquals("Wrong number of radios.", 1, internetRadioDao.getAllInternetRadios().length);
+        internetRadioDao.deleteInternetRadio(internetRadioDao.getAllInternetRadios().get(0).getId());
+        assertEquals("Wrong number of radios.", 1, internetRadioDao.getAllInternetRadios().size());
 
-        internetRadioDao.deleteInternetRadio(internetRadioDao.getAllInternetRadios()[0].getId());
-        assertEquals("Wrong number of radios.", 0, internetRadioDao.getAllInternetRadios().length);
+        internetRadioDao.deleteInternetRadio(internetRadioDao.getAllInternetRadios().get(0).getId());
+        assertEquals("Wrong number of radios.", 0, internetRadioDao.getAllInternetRadios().size());
     }
 
     private void assertInternetRadioEquals(InternetRadio expected, InternetRadio actual) {

@@ -1,5 +1,20 @@
 package net.sourceforge.subsonic.service;
 
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.dao.AvatarDao;
+import net.sourceforge.subsonic.dao.InternetRadioDao;
+import net.sourceforge.subsonic.dao.MusicFolderDao;
+import net.sourceforge.subsonic.dao.UserDao;
+import net.sourceforge.subsonic.domain.Avatar;
+import net.sourceforge.subsonic.domain.InternetRadio;
+import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.domain.Theme;
+import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.util.StringUtil;
+import net.sourceforge.subsonic.util.Util;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,22 +31,6 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.dao.AvatarDao;
-import net.sourceforge.subsonic.dao.InternetRadioDao;
-import net.sourceforge.subsonic.dao.MusicFolderDao;
-import net.sourceforge.subsonic.dao.UserDao;
-import net.sourceforge.subsonic.domain.Avatar;
-import net.sourceforge.subsonic.domain.InternetRadio;
-import net.sourceforge.subsonic.domain.MusicFolder;
-import net.sourceforge.subsonic.domain.Theme;
-import net.sourceforge.subsonic.domain.UserSettings;
-import net.sourceforge.subsonic.util.StringUtil;
-import net.sourceforge.subsonic.util.Util;
 
 /**
  * Provides persistent storage of application settings and preferences.
@@ -118,12 +117,12 @@ public class SettingsService {
 
     // Array of all keys.  Used to clean property file.
     private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_SHORTCUTS, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
-            KEY_COVER_ART_MASK, KEY_COVER_ART_LIMIT, KEY_WELCOME_TITLE, KEY_WELCOME_SUBTITLE, KEY_WELCOME_MESSAGE, KEY_LOCALE_LANGUAGE,
-            KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_THEME_ID, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
-            KEY_PODCAST_UPDATE_INTERVAL, KEY_PODCAST_FOLDER, KEY_PODCAST_EPISODE_RETENTION_COUNT,
-            KEY_PODCAST_EPISODE_DOWNLOAD_COUNT, KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT,
-            KEY_LICENSE_EMAIL, KEY_LICENSE_CODE, KEY_LICENSE_DATE, KEY_DOWNSAMPLING_COMMAND, KEY_REWRITE_URL,
-            KEY_LDAP_ENABLED, KEY_LDAP_URL, KEY_LDAP_MANAGER_DN, KEY_LDAP_MANAGER_PASSWORD, KEY_LDAP_SEARCH_FILTER, KEY_LDAP_AUTO_SHADOWING
+                                          KEY_COVER_ART_MASK, KEY_COVER_ART_LIMIT, KEY_WELCOME_TITLE, KEY_WELCOME_SUBTITLE, KEY_WELCOME_MESSAGE, KEY_LOCALE_LANGUAGE,
+                                          KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_THEME_ID, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
+                                          KEY_PODCAST_UPDATE_INTERVAL, KEY_PODCAST_FOLDER, KEY_PODCAST_EPISODE_RETENTION_COUNT,
+                                          KEY_PODCAST_EPISODE_DOWNLOAD_COUNT, KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT,
+                                          KEY_LICENSE_EMAIL, KEY_LICENSE_CODE, KEY_LICENSE_DATE, KEY_DOWNSAMPLING_COMMAND, KEY_REWRITE_URL,
+                                          KEY_LDAP_ENABLED, KEY_LDAP_URL, KEY_LDAP_MANAGER_DN, KEY_LDAP_MANAGER_PASSWORD, KEY_LDAP_SEARCH_FILTER, KEY_LDAP_AUTO_SHADOWING
     };
 
     private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
@@ -229,8 +228,8 @@ public class SettingsService {
                 subsonicHome = home;
             } else {
                 String message = "The directory " + home + " does not exist. Please create it and make it writable. " +
-                        "(You can override the directory location by specifying -Dsubsonic.home=... when " +
-                        "starting the servlet container.)";
+                                 "(You can override the directory location by specifying -Dsubsonic.home=... when " +
+                                 "starting the servlet container.)";
                 System.err.println("ERROR: " + message);
             }
         } else {
@@ -778,9 +777,9 @@ public class SettingsService {
     /**
      * Returns all internet radio stations. Disabled stations are not returned.
      *
-     * @return Possibly empty array of all internet radio stations.
+     * @return Possibly empty list of all internet radio stations.
      */
-    public InternetRadio[] getAllInternetRadios() {
+    public List<InternetRadio> getAllInternetRadios() {
         return getAllInternetRadios(false);
     }
 
@@ -791,8 +790,7 @@ public class SettingsService {
      * @return The internet radio station with the given ID, or <code>null</code> if not found.
      */
     public InternetRadio getInternetRadioById(Integer id) {
-        InternetRadio[] all = getAllInternetRadios();
-        for (InternetRadio radio : all) {
+        for (InternetRadio radio : getAllInternetRadios()) {
             if (id.equals(radio.getId())) {
                 return radio;
             }
@@ -804,17 +802,17 @@ public class SettingsService {
      * Returns all internet radio stations.
      *
      * @param includeAll Whether disabled stations should be included.
-     * @return Possibly empty array of all internet radio stations.
+     * @return Possibly empty list of all internet radio stations.
      */
-    public InternetRadio[] getAllInternetRadios(boolean includeAll) {
-        InternetRadio[] all = internetRadioDao.getAllInternetRadios();
-        List<InternetRadio> result = new ArrayList<InternetRadio>(all.length);
+    public List<InternetRadio> getAllInternetRadios(boolean includeAll) {
+        List<InternetRadio> all = internetRadioDao.getAllInternetRadios();
+        List<InternetRadio> result = new ArrayList<InternetRadio>(all.size());
         for (InternetRadio folder : all) {
             if (includeAll || folder.isEnabled()) {
                 result.add(folder);
             }
         }
-        return result.toArray(new InternetRadio[result.size()]);
+        return result;
     }
 
     /**
