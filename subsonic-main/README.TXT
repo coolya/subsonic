@@ -6,9 +6,8 @@ Subsonic is a free, web-based media streamer and jukebox.
 
 More information, including installation instructions, is found at http://subsonic.sourceforge.net/
 
-Subsonic is open-source software licensed under the Creative Commons Noncommercial license:
-http://creativecommons.org/licenses/by-nc-sa/3.0/
-If you want to use Subsonic for commercial purposes, please contact me.
+Subsonic is free software: you can redistribute it and/or modify it under the terms of the
+GNU General Public License.
 
 Subsonic is developed and maintained by Sindre Mehus (sindre@activeobjects.no).
 

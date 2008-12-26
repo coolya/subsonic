@@ -70,8 +70,10 @@
                     Based on Java technology, Subsonic runs on most platforms, including Windows, Mac, Linux and Unix variants.
                 </p>
 
+                <a href="http://www.gnu.org/copyleft/gpl.html"><img src="inc/img/gpl.png" alt="GPL" class="img-left"/></a>
+
                 <p>
-                    Subsonic is open-source software licensed under the <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Noncommercial license</a>.
+                    Subsonic is open-source software licensed under <a rel="license" href="http://www.gnu.org/copyleft/gpl.html">GPL</a>.
                 </p>
 
             </div>
@@ -85,7 +87,7 @@
     <?php include("download-subsonic.php"); ?>
     <!--<?php include("ripserver.php"); ?>-->
     <?php include("about.php"); ?>
-    <?php include("translate-subsonic.php"); ?>
+    <?php include("donate.php"); ?>
     <div class="bottomspace">
         <a href="http://sourceforge.net/projects/subsonic/"><img src="http://sourceforge.net/sflogo.php?group_id=126265&type=4" alt="SourceForge.net" class="img-center"/></a>
     </div>

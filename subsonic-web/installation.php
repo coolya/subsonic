@@ -139,6 +139,7 @@
 <div id="side-col">
 
     <?php include("donate.php"); ?>
+    <?php include("translate-subsonic.php"); ?>
     <?php include("merchandise.php"); ?>
 
 </div>

@@ -72,9 +72,8 @@
             </table>
 
             <p class="margin10-t">
-                <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img class="img-left" alt="Creative Commons License" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png"/></a>
-                Subsonic is open-source software licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Noncommercial license</a>.
-                If you want to use Subsonic for commercial purposes, please <a href="mailto:sindre@activeobjects.no">contact me</a>.
+                <a href="http://www.gnu.org/copyleft/gpl.html"><img class="img-left" alt="GPL" src="inc/img/gpl.png"/></a>
+                Subsonic is open-source software licensed under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</a>.
             </p>
         </div>
 

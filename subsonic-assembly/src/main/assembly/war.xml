@@ -12,6 +12,7 @@
             <outputDirectory></outputDirectory>
             <includes>
                 <include>README.TXT</include>
+                <include>LICENSE.TXT</include>
                 <include>Getting Started.html</include>
             </includes>
         </fileSet>

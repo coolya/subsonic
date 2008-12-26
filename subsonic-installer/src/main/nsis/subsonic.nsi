@@ -64,6 +64,7 @@ Section "Subsonic"
   File ..\..\..\..\subsonic-booter\target\subsonic-service.exe.vmoptions
   File ..\..\..\..\subsonic-booter\target\subsonic-booter-jar-with-dependencies.jar
   File ..\..\..\..\subsonic-main\README.TXT
+  File ..\..\..\..\subsonic-main\LICENSE.TXT
   File "..\..\..\..\subsonic-main\Getting Started.html"
   File ..\..\..\..\subsonic-main\target\subsonic.war
   File ..\..\..\..\subsonic-main\target\classes\version.txt
