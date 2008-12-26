@@ -122,7 +122,7 @@
     function onRemove(index) {
         playlistService.remove(index, playlistCallback);
     }
-    function onRemoveMany() {
+    function onRemoveSelected() {
         var indexes = new Array();
         var counter = 0;
         for (var i = 0; i < songs.length; i++) {
@@ -334,8 +334,8 @@
         } else if (id == "selectNone") {
             selectAll(false);
             onSelectionChange();
-        } else if (id == "remove") {
-            onRemoveMany();
+        } else if (id == "removeSelected") {
+            onRemoveSelected();
         } else if (id == "download") {
             location.href = "download.view?player=${model.player.id}&indexes=" + getSelectedIndexes();
         } else if (id == "appendPlaylist") {
@@ -372,8 +372,10 @@
     function onSelectionChange() {
         var selectionEmpty = isSelectionEmpty();
 
-        var remove = $("moreActions").options["remove"];
-        remove.disabled = selectionEmpty ? "disabled" : "";
+        var remove = $("moreActions").options["removeSelected"];
+        if (remove) {
+            remove.disabled = selectionEmpty ? "disabled" : "";
+        }
 
         var download = $("moreActions").options["download"];
         if (download) {
@@ -433,7 +435,7 @@
                 <option disabled="disabled"><fmt:message key="playlist.more.selection"/></option>
                 <option id="selectAll">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.selectall"/></option>
                 <option id="selectNone">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.selectnone"/></option>
-                <option id="remove" disabled="disabled">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.remove"/></option>
+                <option id="removeSelected" disabled="disabled">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.remove"/></option>
                 <c:if test="${model.user.downloadRole}">
                     <option id="download" disabled="disabled">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
                 </c:if>
