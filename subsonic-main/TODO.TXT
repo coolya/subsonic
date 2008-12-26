@@ -20,7 +20,6 @@ Demo mode.
 Sort albums by year. (And show year). getCoverArt() should be made non-recursive. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
 Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305
 Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
-Should be possible to donate from web page.
 Add Cancel button to all settings pages.
 
 DONE IN 3.6

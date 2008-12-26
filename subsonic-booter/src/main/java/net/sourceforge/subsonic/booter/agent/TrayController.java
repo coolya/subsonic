@@ -65,7 +65,7 @@ public class TrayController implements SubsonicListener {
         menu.addSeparator();
         menu.add(createMenuItem(hideAction));
 
-        trayIcon = new TrayIcon(image, "Subsonic Media Streamer", menu);
+        trayIcon = new TrayIcon(image, "Subsonic Music Streamer", menu);
     }
 
     private MenuItem createMenuItem(Action action) {
