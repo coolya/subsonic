@@ -59,30 +59,28 @@
         function getNowPlayingCallback(nowPlaying) {
             var html = nowPlaying.length == 0 ? "" : "<h2><fmt:message key="main.nowplaying"/></h2><table>";
             for (var i = 0; i < nowPlaying.length; i++) {
+                html += "<tr><td colspan='2' class='detail' style='padding-top:1em;white-space:nowrap'>";
+
+                if (nowPlaying[i].avatarUrl != null) {
+                    html += "<img src='" + nowPlaying[i].avatarUrl + "' style='padding-right:5pt'/>";
+                }
+                html += "<b>" + nowPlaying[i].username + "</b></td></tr>"
+
+                html += "<tr><td class='detail' style='padding-right:1em'>" +
+                        "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'><em>" +
+                        nowPlaying[i].artist + "</em><br/>" + nowPlaying[i].title + "</a><br/>" +
+                        "<span class='forward' style='background-position: 0px 2px'><a href='" + nowPlaying[i].lyricsUrl + "' onclick=\"return popupSize(this, 'help', 430, 550)\">" +
+                        "<fmt:message key="main.lyrics"/>" + "</a></span></td><td style='padding-top:1em'>";
+
+                if (nowPlaying[i].coverArtUrl != null) {
+                    html += "<a title='" + nowPlaying[i].tooltip + "' rel='zoom' href='" + nowPlaying[i].coverArtZoomUrl + "'>" +
+                            "<img src='" + nowPlaying[i].coverArtUrl + "' width='48' height='48'/></a>";
+                }
+                html += "</td></tr>";
+
                 var minutesAgo = nowPlaying[i].minutesAgo;
-                if (minutesAgo < 60) {
-                    html += "<tr><td colspan='2' class='detail' style='padding-top:1em;white-space:nowrap'>";
-
-                    if (nowPlaying[i].avatarUrl != null) {
-                        html += "<img src='" + nowPlaying[i].avatarUrl + "' style='padding-right:5pt'/>";
-                    }
-                    html += "<b>" + nowPlaying[i].username + "</b></td></tr>"
-
-                    html += "<tr><td class='detail' style='padding-right:1em'>" +
-                            "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'><em>" +
-                            nowPlaying[i].artist + "</em><br/>" + nowPlaying[i].title + "</a><br/>" +
-                            "<span class='forward' style='background-position: 0px 2px'><a href='" + nowPlaying[i].lyricsUrl + "' onclick=\"return popupSize(this, 'help', 430, 550)\">" +
-                            "<fmt:message key="main.lyrics"/>" + "</a></span></td><td style='padding-top:1em'>";
-
-                    if (nowPlaying[i].coverArtUrl != null) {
-                        html += "<a title='" + nowPlaying[i].tooltip + "' rel='zoom' href='" + nowPlaying[i].coverArtZoomUrl + "'>" +
-                                "<img src='" + nowPlaying[i].coverArtUrl + "' width='48' height='48'/></a>";
-                    }
-                    html += "</td></tr>";
-
-                    if (minutesAgo > 4) {
-                        html += "<tr><td class='detail' colspan='2'>" + minutesAgo + " <fmt:message key="main.minutesago"/></td></tr>";
-                    }
+                if (minutesAgo > 4) {
+                    html += "<tr><td class='detail' colspan='2'>" + minutesAgo + " <fmt:message key="main.minutesago"/></td></tr>";
                 }
             }
             html += "</table>";
