@@ -24,6 +24,7 @@ Add Cancel button to all settings pages.
 
 DONE IN 3.6
 -------------
+Create subsonic.bat
 Fix Javascript errors in IE.
 Changed license to GPL.
 Update to 3.6.beta1 in pom.xml
@@ -57,7 +58,6 @@ User/music folder authorization.
 Show percent complete for translations.  In web page at least.
 Improve getting started.
 Make Now Playing show for some minimum amount of time.
-Create subsonic.bat
 Look at maven release plugin.
 Include getting started (html) in installer.  And add it to start menu. Also create link to subsonic home page in Start menu.
 last.fm problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1278
