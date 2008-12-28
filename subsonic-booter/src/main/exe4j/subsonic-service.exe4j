@@ -6,7 +6,7 @@
       <principalLanguage id="en" customLocalizationFile="" />
     </languages>
   </application>
-  <executable name="subsonic-service" type="1" iconSet="true" iconFile="../resources/images/subsonic-16.ico" executableDir="" redirectStderr="true" stderrFile="log/subsonic-service.log" redirectStdout="false" stdoutFile="output.log" failOnStderrOutput="true" executableMode="3" changeWorkingDirectory="true" workingDirectory="." singleInstance="true" serviceStartType="1" serviceDependencies="" serviceDescription="Subsonic Music Streamer (http://subsonic.sourceforge.net)" jreLocation="" executionLevel="asInvoker" amd64="false">
+  <executable name="subsonic-service" type="1" iconSet="true" iconFile="../resources/images/subsonic-16.ico" executableDir="" redirectStderr="true" stderrFile="log/subsonic-service.log" redirectStdout="false" stdoutFile="output.log" failOnStderrOutput="true" executableMode="3" changeWorkingDirectory="true" workingDirectory="." singleInstance="true" serviceStartType="2" serviceDependencies="" serviceDescription="Subsonic Music Streamer (http://subsonic.sourceforge.net)" jreLocation="" executionLevel="asInvoker" amd64="false">
     <messageSet>
       <message id="NoJvmFound" text="Java was not found on your system. Please download Java from www.java.com." />
     </messageSet>

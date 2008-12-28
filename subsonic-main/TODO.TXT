@@ -9,6 +9,8 @@ Make it work if same song is more than once in playlist.
 
 TODO IN 3.6
 -----------
+Avoid IE line wrap in playlist menu.
+Include a ffmpeg binary in the transcoding pack. It can transcode most video formats to flv on the fly
 Show active users.  Improve Now playing (e.g., show how long since it happened). http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1387
 Remove old stream statuses (more than 60 minutes) from status.jsp?
 Playlist drag'n drop
