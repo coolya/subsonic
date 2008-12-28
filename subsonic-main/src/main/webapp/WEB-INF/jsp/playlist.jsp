@@ -392,7 +392,7 @@
 
 <h2>
     <table style="white-space:nowrap;">
-        <tr>
+        <tr style="white-space:nowrap;">
             <td><select name="player" onchange="location='playlist.view?player=' + options[selectedIndex].value;">
                 <c:forEach items="${model.players}" var="player">
                     <option ${player.id eq model.player.id ? "selected" : ""} value="${player.id}">${player}</option>
@@ -404,22 +404,22 @@
             </c:if>
 
             <c:if test="${model.user.streamRole and not model.player.web}">
-                <td id="stop"><b><a href="javascript:noop()" onclick="onStop()"><fmt:message key="playlist.stop"/></a></b> | </td>
-                <td id="start"><b><a href="javascript:noop()" onclick="onStart()"><fmt:message key="playlist.start"/></a></b> | </td>
+                <td style="white-space:nowrap;" id="stop"><b><a href="javascript:noop()" onclick="onStop()"><fmt:message key="playlist.stop"/></a></b> | </td>
+                <td style="white-space:nowrap;" id="start"><b><a href="javascript:noop()" onclick="onStart()"><fmt:message key="playlist.start"/></a></b> | </td>
             </c:if>
 
-            <td><a href="javascript:noop()" onclick="onClear()"><fmt:message key="playlist.clear"/></a> |</td>
-            <td><a href="javascript:noop()" onclick="onShuffle()"><fmt:message key="playlist.shuffle"/></a> |</td>
+            <td style="white-space:nowrap;"><a href="javascript:noop()" onclick="onClear()"><fmt:message key="playlist.clear"/></a> |</td>
+            <td style="white-space:nowrap;"><a href="javascript:noop()" onclick="onShuffle()"><fmt:message key="playlist.shuffle"/></a> |</td>
 
             <c:if test="${model.player.jukebox or model.player.external}">
-                <td><a href="javascript:noop()" onclick="onToggleRepeat()"><span id="toggleRepeat"><fmt:message key="playlist.repeat_on"/></span></a> |</td>
+                <td style="white-space:nowrap;"><a href="javascript:noop()" onclick="onToggleRepeat()"><span id="toggleRepeat"><fmt:message key="playlist.repeat_on"/></span></a> |</td>
             </c:if>
 
-            <td><a href="javascript:noop()" onclick="onUndo()"><fmt:message key="playlist.undo"/></a> |</td>
+            <td style="white-space:nowrap;"><a href="javascript:noop()" onclick="onUndo()"><fmt:message key="playlist.undo"/></a> |</td>
 
-            <td><a href="playerSettings.view?id=${model.player.id}" target="main"><fmt:message key="playlist.settings"/></a> |</td>
+            <td style="white-space:nowrap;"><a href="playerSettings.view?id=${model.player.id}" target="main"><fmt:message key="playlist.settings"/></a> |</td>
 
-            <td><select id="moreActions" onchange="actionSelected(this.options[selectedIndex].id)">
+            <td style="white-space:nowrap;"><select id="moreActions" onchange="actionSelected(this.options[selectedIndex].id)">
                 <option id="top" selected="selected"><fmt:message key="playlist.more"/></option>
                 <option disabled="disabled"><fmt:message key="playlist.more.playlist"/></option>
                 <option id="loadPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.load"/></option>

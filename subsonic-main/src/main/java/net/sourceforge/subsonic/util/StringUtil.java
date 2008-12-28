@@ -71,6 +71,7 @@ public final class StringUtil {
             {"gif", "image/gif"},
             {"jpg", "image/jpeg"},
             {"jpeg", "image/jpeg"},
+            {"flv", "video/x-flv"},
             {"png", "image/png"},
             {"bmp", "image/bmp"},
     };
