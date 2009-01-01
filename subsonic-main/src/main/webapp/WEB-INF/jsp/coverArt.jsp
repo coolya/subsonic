@@ -11,6 +11,7 @@ PARAMETERS
   showZoom: Whether to display a link for zooming the cover art.
   showChange: Whether to display a link for changing the cover art.
   showCaption: Whether to display the album name as a caption below the image.
+  appearAfter: Fade in after this many milliseconds, or nil if no fading in should happen.
 --%>
 <c:choose>
     <c:when test="${empty param.coverArtSize}">
@@ -20,6 +21,8 @@ PARAMETERS
         <c:set var="size" value="${param.coverArtSize + 8}px"/>
     </c:otherwise>
 </c:choose>
+
+<c:set var="opacity" value="${empty param.appearAfter ? 1 : 0}"/>
 
 <div style="width:${size}; max-width:${size}; height:${size}; max-height:${size}" title="${param.albumName}">
     <sub:url value="main.view" var="mainUrl">
@@ -40,8 +43,8 @@ PARAMETERS
         </c:if>
     </sub:url>
 
-
-    <div class="outerpair1">
+    <str:randomString count="5" type="alphanumeric" var="divId"/>
+    <div class="outerpair1" id="${divId}" style="opacity:${opacity}">
         <div class="outerpair2">
             <div class="shadowbox">
                 <div class="innerbox">
@@ -55,6 +58,13 @@ PARAMETERS
             </div>
         </div>
     </div>
+    <c:if test="${not empty param.appearAfter}">
+        <script type="text/javascript">
+            window.addEventListener('load', function() {
+                setTimeout("new Effect.Opacity('${divId}', { from: 0.0, to: 1.0, duration: 0.5 })", ${param.appearAfter});
+            }, false);
+        </script>
+    </c:if>
 </div>
 
 <div style="text-align:right; padding-right: 8px;">

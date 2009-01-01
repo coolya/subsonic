@@ -3,94 +3,51 @@
 <html>
 <head>
     <%@ include file="head.jsp" %>
-    <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/dwr/interface/playlistService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/script/swfobject.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/scriptaculous.js?load=effects"/>"></script>
 </head>
 
-<body class="bgcolor2" onload="onload()">
+<body class="bgcolor2">
 
 
 <script type="text/javascript">
+
+    window.addEventListener('load', function() {
+        alert("h");
+        setTimeout("$('image1').appear()", 1000);
+    }, false);
+
 
     var player = null;
     var songs;
 
     function onload() {
-        dwr.engine.setErrorHandler(null);
-        createPlayer();
+//        new Effect.Opacity('image1', { from: 0.0, to: 1.0, duration: 2.5 });
+//        new Effect.Opacity('image2', { from: 0.0, to: 1.0, duration: 2.5 });
+//        new Effect.Opacity('image3', { from: 0.0, to: 1.0, duration: 2.5 });
+
+//        setTimeout("$('image1').appear()", 1000);
+//        $('image1').appear();
+
+//        setTimeout("$('image1').appear()", 0);
+//        setTimeout("$('image2').appear()", 250);
+//        setTimeout("$('image3').appear()", 500);
+
+//        $('image2').appear();
+//        $('image3').appear();
     }
 
-    function createPlayer() {
-        var flashvars = {
-//            file:"video.flv",
-//            autostart:"true"
-        }
-        var params = {
-            allowfullscreen:"true",
-            allowscriptaccess:"always"
-        }
-        var attributes = {
-            id:"player",
-            name:"player"
-        }
-        swfobject.embedSWF("<c:url value="/flash/player.swf"/>", "placeholder", "340", "20", "9.0.115", false, flashvars, params, attributes);
-    }
-
-    function playerReady(thePlayer) {
-        player = $(thePlayer.id);
-        player.addModelListener("STATE", "stateListener");
-        getPlaylist();
-    }
-
-    function stateListener(obj) { // IDLE, BUFFERING, PLAYING, PAUSED, COMPLETED
-        var currentState = obj.newstate;
-        var previousState = obj.oldstate;
-
-        dwr.util.setValue("state", previousState + " >  " + currentState);
-    }
-
-    function mute() {
-        player.sendEvent("MUTE");
-    }
-
-    function getPlaylist() {
-        playlistService.getPlaylist(playlistCallback);
-    }
-
-    function playlistCallback(playlist) {
-        songs = playlist.entries;
-        var list = new Array();
-        for (var i = 0; i < songs.length; i++) {
-            var song = songs[i];
-            list[i] = {
-                //                author:"Author",
-                //                description:"Description",
-                duration:song.duration,
-                file:song.streamUrl,
-                //            link:currentPlaylist[i].link,
-                //            image:currentPlaylist[i].image,
-                //            start:currentPlaylist[i].start,
-                title:song.title,
-                type:song.contentType
-            };
-        }
-        player.sendEvent('LOAD', list);
-    }
 
 </script>
 
-<div style="width:340px; height:20px;">
-    <div id="placeholder"> </div>
+<%--<div id="foo" style="opacity:0.1; width:80px; height:80px; background:#c2defb; border:1px solid #333;"></div>--%>
+<div id="image1" style="opacity:0.1;">
+    <img  src="/icons/gpl.png" alt="" width="88" height="31"/>
 </div>
-
-<div id="state">Unknown</div>
-
-<a href="javascript:noop()" onclick="mute()">Mute</a>
+<img id="image2" src="/icons/gpl.png" alt="" width="88" height="31" style="opacity:0.1;"/>
+<img id="image3" src="/icons/gpl.png" alt="" width="88" height="31" style="opacity:0.1;"/>
 
 </body>
 </html>

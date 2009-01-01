@@ -33,17 +33,13 @@
             <rtexprvalue>false</rtexprvalue>
         </attribute>
         <attribute>
-            <description>
-                URL to be processed.
-            </description>
+            <description>URL to be processed.</description>
             <name>value</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>
-                The encoding to use. Default is ISO-8859-1.
-            </description>
+            <description>The encoding to use. Default is ISO-8859-1.</description>
             <name>encoding</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
@@ -51,24 +47,18 @@
     </tag>
 
     <tag>
-        <description>
-            Adds a parameter to a containing 'url' tag.
-        </description>
+        <description>Adds a parameter to a containing 'url' tag.</description>
         <name>param</name>
         <tag-class>net.sourceforge.subsonic.taglib.ParamTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
-            <description>
-                Name of the query string parameter.
-            </description>
+            <description>Name of the query string parameter.</description>
             <name>name</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>
-                Value of the parameter.
-            </description>
+            <description>Value of the parameter.</description>
             <name>value</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
@@ -84,9 +74,7 @@
         <tag-class>net.sourceforge.subsonic.taglib.FormatBytesTag</tag-class>
         <body-content>JSP</body-content>
         <attribute>
-            <description>
-                The byte count.
-            </description>
+            <description>The byte count.</description>
             <name>bytes</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
@@ -101,9 +89,7 @@
         <tag-class>net.sourceforge.subsonic.taglib.WikiTag</tag-class>
         <body-content>JSP</body-content>
         <attribute>
-            <description>
-                The Wiki markup text.
-            </description>
+            <description>The Wiki markup text.</description>
             <name>text</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
@@ -118,9 +104,7 @@
         <tag-class>net.sourceforge.subsonic.taglib.EscapeJavaScriptTag</tag-class>
         <body-content>JSP</body-content>
         <attribute>
-            <description>
-                The string to escape.
-            </description>
+            <description>The string to escape.</description>
             <name>string</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>

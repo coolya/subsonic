@@ -9,6 +9,7 @@
     <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/scriptaculous.js?load=effects"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoom.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoomHTML.js"/>"></script>
@@ -339,7 +340,7 @@
     </td>
 
     <td style="vertical-align:top;width:100%">
-        <c:forEach items="${model.coverArts}" var="coverArt">
+        <c:forEach items="${model.coverArts}" var="coverArt" varStatus="loopStatus">
             <div style="float:left; padding:5px">
                 <c:import url="coverArt.jsp">
                     <c:param name="albumPath" value="${coverArt.parentFile.path}"/>
@@ -350,6 +351,7 @@
                     <c:param name="showZoom" value="${coverArt.parentFile.path eq model.dir.path}"/>
                     <c:param name="showChange" value="${(coverArt.parentFile.path eq model.dir.path) and model.user.coverArtRole}"/>
                     <c:param name="showCaption" value="true"/>
+                    <c:param name="appearAfter" value="${loopStatus.count * 30}"/>
                 </c:import>
             </div>
         </c:forEach>
@@ -362,6 +364,7 @@
                     <c:param name="showLink" value="false"/>
                     <c:param name="showZoom" value="false"/>
                     <c:param name="showChange" value="${model.user.coverArtRole}"/>
+                    <c:param name="appearAfter" value="0"/>
                 </c:import>
             </div>
         </c:if>
