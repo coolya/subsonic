@@ -9,7 +9,8 @@ Make it work if same song is more than once in playlist.
 
 TODO IN 3.6
 -----------
-Fix javascript errors in IE.
+Fix layout in player settings.
+Add Cancel button to all settings pages.
 Support FLV.
 Support AVI etc?
 Add Show/Hide Video?
@@ -18,14 +19,12 @@ Include a ffmpeg binary in the transcoding pack. It can transcode most video for
 Show active users.  Improve Now playing (e.g., show how long since it happened). http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1387
 Remove old stream statuses (more than 60 minutes) from status.jsp?
 Playlist drag'n drop
-Verify that subsonic.sh still works.
 Add default welcome message.
 Error with new LAME version?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3339
 Demo mode.
 Sort albums by year. (And show year). getCoverArt() should be made non-recursive. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
 Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305
 Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
-Add Cancel button to all settings pages.
 
 DONE IN 3.6
 -------------

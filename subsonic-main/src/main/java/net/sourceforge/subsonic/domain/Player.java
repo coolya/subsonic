@@ -96,7 +96,9 @@ public class Player {
     }
 
     public boolean isJukebox() {
-        return technology == PlayerTechnology.JUKEBOX;
+        // TODO
+        return false;
+//        return technology == PlayerTechnology.JUKEBOX;
     }
 
     public boolean isExternal() {
