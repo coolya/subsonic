@@ -31,7 +31,6 @@ DONE IN 3.6
 -------------
 Fade-in cover art images.
 Create subsonic.bat
-Fix Javascript errors in IE.
 Changed license to GPL.
 Update to 3.6.beta1 in pom.xml
 Don't use arrays in DAOs.

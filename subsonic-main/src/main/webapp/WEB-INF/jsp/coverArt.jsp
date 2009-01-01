@@ -60,9 +60,11 @@ PARAMETERS
     </div>
     <c:if test="${not empty param.appearAfter}">
         <script type="text/javascript">
-            window.addEventListener('load', function() {
-                setTimeout("new Effect.Opacity('${divId}', { from: 0.0, to: 1.0, duration: 0.5 })", ${param.appearAfter});
-            }, false);
+            if (window.addEventListener) {
+                window.addEventListener('load', function() {
+                    setTimeout("new Effect.Opacity('${divId}', { from: 0.0, to: 1.0, duration: 0.5 })", ${param.appearAfter});
+                }, false);
+            }
         </script>
     </c:if>
 </div>
