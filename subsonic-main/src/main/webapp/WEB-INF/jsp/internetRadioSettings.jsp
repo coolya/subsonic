@@ -42,8 +42,10 @@
     </tr>
 
     <tr>
-        <td style="padding-top:2em" colspan="3" align="center"><input type="submit" value="<fmt:message key="common.save"/>"/></td>
-        <td colspan="2"/>
+        <td style="padding-top:1.5em" colspan="5">
+            <input type="submit" value="<fmt:message key="common.save"/>" style="margin-right:0.3em">
+            <input type="button" value="<fmt:message key="common.cancel"/>" onclick="location.href='nowPlaying.view'">
+        </td>
     </tr>
 </table>
 </form>

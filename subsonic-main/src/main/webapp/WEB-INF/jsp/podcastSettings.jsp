@@ -75,8 +75,9 @@
     </tr>
 
     <tr>
-        <td colspan="2">
-            <input type="submit" value="<fmt:message key="common.save"/>"/>
+        <td style="padding-top:1.5em" colspan="2">
+            <input type="submit" value="<fmt:message key="common.save"/>" style="margin-right:0.3em">
+            <input type="button" value="<fmt:message key="common.cancel"/>" onclick="location.href='nowPlaying.view'">
         </td>
     </tr>
 

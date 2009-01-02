@@ -41,7 +41,7 @@
             </td>
         </tr>
 
-        <tr><td colspan="3">&nbsp;</td></tr>
+        <tr><td colspan="2">&nbsp;</td></tr>
 
         <tr>
             <td><fmt:message key="generalsettings.index"/></td>
@@ -67,7 +67,7 @@
             </td>
         </tr>
 
-        <tr><td colspan="3">&nbsp;</td></tr>
+        <tr><td colspan="2">&nbsp;</td></tr>
 
         <tr>
             <td><fmt:message key="generalsettings.language"/></td>
@@ -93,7 +93,7 @@
             </td>
         </tr>
 
-        <tr><td colspan="3">&nbsp;</td></tr>
+        <tr><td colspan="2">&nbsp;</td></tr>
 
         <tr>
             <td><fmt:message key="generalsettings.welcometitle"/></td>
@@ -118,9 +118,13 @@
             </td>
         </tr>
 
-        <tr><td colspan="3">&nbsp;</td></tr>
+        <tr>
+            <td colspan="2" style="padding-top:1.5em">
+                <input type="submit" value="<fmt:message key="common.save"/>" style="margin-right:0.3em">
+                <input type="button" value="<fmt:message key="common.cancel"/>" onclick="location.href='nowPlaying.view'">
+            </td>
+        </tr>
 
-        <tr><td align="center" colspan="2"><input type="submit" value="<fmt:message key="common.save"/>"></td></tr>
     </table>
 </form:form>
 

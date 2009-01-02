@@ -83,45 +83,53 @@
             </td>
         </tr>
 
-        <table class="indent" id="ldapTable" style="padding-left:2em">
-            <tr>
-                <td><fmt:message key="advancedsettings.ldapurl"/></td>
-                <td colspan="3">
-                    <form:input path="ldapUrl" size="70"/>
-                    <a href="helpPopup.view?topic=ldapUrl" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
-                </td>
-            </tr>
+        <tr><td colspan="2">
+            <table class="indent" id="ldapTable" style="padding-left:2em">
+                <tr>
+                    <td><fmt:message key="advancedsettings.ldapurl"/></td>
+                    <td colspan="3">
+                        <form:input path="ldapUrl" size="70"/>
+                        <a href="helpPopup.view?topic=ldapUrl" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                    </td>
+                </tr>
 
-            <tr>
-                <td><fmt:message key="advancedsettings.ldapsearchfilter"/></td>
-                <td colspan="3">
-                    <form:input path="ldapSearchFilter" size="70"/>
-                    <a href="helpPopup.view?topic=ldapSearchFilter" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
-                </td>
-            </tr>
+                <tr>
+                    <td><fmt:message key="advancedsettings.ldapsearchfilter"/></td>
+                    <td colspan="3">
+                        <form:input path="ldapSearchFilter" size="70"/>
+                        <a href="helpPopup.view?topic=ldapSearchFilter" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                    </td>
+                </tr>
 
-            <tr>
-                <td><fmt:message key="advancedsettings.ldapmanagerdn"/></td>
-                <td>
-                    <form:input path="ldapManagerDn" size="20"/>
-                </td>
-                <td><fmt:message key="advancedsettings.ldapmanagerpassword"/></td>
-                <td>
-                    <form:password path="ldapManagerPassword" size="20"/>
-                    <a href="helpPopup.view?topic=ldapManagerDn" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
-                </td>
-            </tr>
+                <tr>
+                    <td><fmt:message key="advancedsettings.ldapmanagerdn"/></td>
+                    <td>
+                        <form:input path="ldapManagerDn" size="20"/>
+                    </td>
+                    <td><fmt:message key="advancedsettings.ldapmanagerpassword"/></td>
+                    <td>
+                        <form:password path="ldapManagerPassword" size="20"/>
+                        <a href="helpPopup.view?topic=ldapManagerDn" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                    </td>
+                </tr>
 
-            <tr>
-                <td colspan="5">
-                    <form:checkbox path="ldapAutoShadowing" id="ldapAutoShadowing" cssClass="checkbox"/>
-                    <label for="ldapAutoShadowing"><fmt:message key="advancedsettings.ldapautoshadowing"><fmt:param value="${command.brand}"/></fmt:message></label>
-                    <a href="helpPopup.view?topic=ldapAutoShadowing" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
-                </td>
-            </tr>
-        </table>
+                <tr>
+                    <td colspan="5">
+                        <form:checkbox path="ldapAutoShadowing" id="ldapAutoShadowing" cssClass="checkbox"/>
+                        <label for="ldapAutoShadowing"><fmt:message key="advancedsettings.ldapautoshadowing"><fmt:param value="${command.brand}"/></fmt:message></label>
+                        <a href="helpPopup.view?topic=ldapAutoShadowing" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                    </td>
+                </tr>
+            </table>
+        </td></tr>
 
-        <tr><td colspan="2"><input type="submit" value="<fmt:message key="common.save"/>"></td></tr>
+        <tr>
+            <td colspan="2" style="padding-top:1.5em">
+                <input type="submit" value="<fmt:message key="common.save"/>" style="margin-right:0.3em">
+                <input type="button" value="<fmt:message key="common.cancel"/>" onclick="location.href='nowPlaying.view'">
+            </td>
+        </tr>
+
     </table>
 </form:form>
 

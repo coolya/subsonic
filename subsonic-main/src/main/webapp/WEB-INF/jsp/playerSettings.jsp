@@ -167,7 +167,8 @@
         </table>
     </c:if>
 
-    <input type="submit" value="<fmt:message key="playersettings.ok"/>" style="margin-top:1em">
+    <input type="submit" value="<fmt:message key="common.save"/>" style="margin-top:1em;margin-right:0.3em">
+    <input type="button" value="<fmt:message key="common.cancel"/>" style="margin-top:1em" onclick="location.href='nowPlaying.view'">
 </form:form>
 
 </c:otherwise>

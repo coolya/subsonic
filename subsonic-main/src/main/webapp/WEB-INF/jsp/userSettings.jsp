@@ -173,8 +173,8 @@
         </c:otherwise>
     </c:choose>
 
-    <p/>
-    <input type="submit" value="<fmt:message key="common.save"/>">
+    <input type="submit" value="<fmt:message key="common.save"/>" style="margin-top:1.5em;margin-right:0.3em">
+    <input type="button" value="<fmt:message key="common.cancel"/>" onclick="location.href='nowPlaying.view'" style="margin-top:1.5em">
 </form:form>
 
 </body></html>

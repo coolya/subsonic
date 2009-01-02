@@ -10,7 +10,6 @@ Make it work if same song is more than once in playlist.
 TODO IN 3.6
 -----------
 Fix layout in player settings.
-Add Cancel button to all settings pages.
 Support FLV.
 Support AVI etc?
 Add Show/Hide Video?
@@ -28,6 +27,7 @@ Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?
 
 DONE IN 3.6
 -------------
+Add Cancel button to all settings pages.
 Fade-in cover art images.
 Create subsonic.bat
 Changed license to GPL.

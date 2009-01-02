@@ -37,18 +37,21 @@
                 </c:forEach>
             </form:select>
         </td>
-
-        <td>
-            <input type="submit" value="<fmt:message key="common.save"/>"/>
-        </td>
-
     </tr>
 
     <tr>
-        <td colspan="4">
+        <td colspan="3">
             <div class="forward"><a href="searchSettings.view?update"><fmt:message key="searchsettings.manual"/></a></div>
         </td>
     </tr>
+
+    <tr>
+        <td colspan="3" style="padding-top:1.5em">
+            <input type="submit" value="<fmt:message key="common.save"/>" style="margin-right:0.3em">
+            <input type="button" value="<fmt:message key="common.cancel"/>" onclick="location.href='nowPlaying.view'">
+        </td>
+    </tr>
+
 </table>
 </form:form>
 
