@@ -13,10 +13,10 @@
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoom.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoomHTML.js"/>"></script>
-</head><body class="mainframe" onload="onload()">
+</head><body class="mainframe" onload="init()">
 
 <script type="text/javascript" language="javascript">
-    function onload() {
+    function init() {
         setupZoom('<c:url value="/"/>');
     }
 </script>

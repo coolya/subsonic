@@ -5,6 +5,8 @@
     <link rel="stylesheet" type="text/css" href="inc/css/style.css"/>
     <link rel="shortcut icon" href="favicon.ico"/>
 
+    <script type="text/javascript" language="javascript" src="inc/js/prototype.js"></script>
+    <script type="text/javascript" language="javascript" src="inc/js/scriptaculous.js?load=effects"></script>
     <script type="text/javascript" language="javascript" src="inc/js/FancyZoom.js"></script>
     <script type="text/javascript" language="javascript" src="inc/js/FancyZoomHTML.js"></script>
     <script type="text/javascript" language="javascript" src="http://www.google-analytics.com/urchin.js"></script>

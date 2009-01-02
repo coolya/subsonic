@@ -11,7 +11,7 @@
     <script type="text/javascript" src="<c:url value="/script/swfobject.js"/>"></script>
 </head>
 
-<body class="bgcolor2" onload="onLoad()">
+<body class="bgcolor2" onload="init()">
 
 <script type="text/javascript" language="javascript">
     var currentFile = null;
@@ -20,7 +20,7 @@
     var currentStreamUrl = null;
     var startPlayer = false;
 
-    function onLoad() {
+    function init() {
         dwr.engine.setErrorHandler(null);
     <c:if test="${model.player.external}">
         startTimer();

@@ -83,9 +83,8 @@
 </div>
 
 <div id="side-col">
-    <!--<?php include("ad.php"); ?>-->
     <?php include("download-subsonic.php"); ?>
-    <!--<?php include("ripserver.php"); ?>-->
+    <?php include("quotes.php"); ?>
     <?php include("about.php"); ?>
     <?php include("donate.php"); ?>
     <div class="bottomspace">
