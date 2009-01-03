@@ -107,7 +107,14 @@ public class SettingsService {
     private static final int DEFAULT_COVER_ART_LIMIT = 30;
     private static final String DEFAULT_WELCOME_TITLE = Util.isRipserver() ? "Welcome to Ripsonic!" : "Welcome to Subsonic!";
     private static final String DEFAULT_WELCOME_SUBTITLE = null;
-    private static final String DEFAULT_WELCOME_MESSAGE = null;
+    private static final String DEFAULT_WELCOME_MESSAGE = "__Welcome to Subsonic!__\n" +
+                                                          "\\\\ \\\\\n" +
+                                                          "Subsonic is a free, web-based media streamer, providing ubiquitous access to your music. \n" +
+                                                          "\\\\ \\\\\n" +
+                                                          "Use it to share your music with friends, or to listen to your own music while at work. You can stream to multiple " +
+                                                          "players simultaneously, for instance to one player in your kitchen and another in your living room.\n" +
+                                                          "\\\\ \\\\\n" +
+                                                          "To change or remove this message, log in with administrator rights and go to {link:Settings|generalSettings.view}.";
     private static final String DEFAULT_LOCALE_LANGUAGE = "en";
     private static final String DEFAULT_LOCALE_COUNTRY = "";
     private static final String DEFAULT_LOCALE_VARIANT = "";
