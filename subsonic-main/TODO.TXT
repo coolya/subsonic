@@ -16,7 +16,6 @@ Add Show/Hide Video?
 Turn on certain transcoders if Windows Installer.
 Include a ffmpeg binary in the transcoding pack. It can transcode most video formats to flv on the fly
 Show active users.  Improve Now playing (e.g., show how long since it happened). http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1387
-Remove old stream statuses (more than 60 minutes) from status.jsp?
 Playlist drag'n drop
 Add default welcome message.
 Error with new LAME version?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3339

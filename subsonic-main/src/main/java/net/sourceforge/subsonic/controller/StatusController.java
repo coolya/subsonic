@@ -50,7 +50,10 @@ public class StatusController extends ParameterizableViewController {
         List<TransferStatusHolder> transferStatuses = new ArrayList<TransferStatusHolder>();
 
         for (int i = 0; i < streamStatuses.size(); i++) {
-            transferStatuses.add(new TransferStatusHolder(streamStatuses.get(i), true, false, false, i, locale));
+            long minutesAgo = streamStatuses.get(i).getMillisSinceLastUpdate() / 1000L / 60L;
+            if (minutesAgo < 60L) {
+                transferStatuses.add(new TransferStatusHolder(streamStatuses.get(i), true, false, false, i, locale));
+            }
         }
         for (int i = 0; i < downloadStatuses.size(); i++) {
             transferStatuses.add(new TransferStatusHolder(downloadStatuses.get(i), false, true, false, i, locale));

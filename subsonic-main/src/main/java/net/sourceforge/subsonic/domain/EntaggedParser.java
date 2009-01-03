@@ -229,9 +229,10 @@ public class EntaggedParser extends MetaDataParser {
         }
     }
 
-    @SuppressWarnings({"unchecked"})
     private ApicId3Frame getAPICFrame(MusicFile file) throws Exception {
         AudioFile audioFile = AudioFileIO.read(file.getFile());
+
+        @SuppressWarnings({"unchecked"})
         List<TagField> list = audioFile.getTag().get("APIC");
 
         if (list.isEmpty()) {
