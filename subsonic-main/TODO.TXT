@@ -1,8 +1,6 @@
 TODO IN 3.6
 -----------
-Make it work if same song is more than once in playlist.
 Fix layout in player settings.
-Error with new LAME version?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3339
 Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305
 Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
 
@@ -28,6 +26,7 @@ Random play on artist/album level. http://www.activeobjects.no/subsonic/forum/vi
 
 BACKLOG
 ==========================
+Error with new LAME version?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3339
 Demo mode.
 Sort albums by year. (And show year). getCoverArt() should be made non-recursive. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
 Support FLV.
