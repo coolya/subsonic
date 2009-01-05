@@ -17,9 +17,29 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="3.6.beta1"><h2 class="div">Subsonic 3.6.beta1 - Jan 05, 2009</h2></a>
+<ul>
+    <li><span class="bugid">New:</span>Much improved embedded Flash player.</li>
+    <li><span class="bugid">New:</span>Playlist is now Ajax-enabled, for a smoother user experience.</li>
+    <li><span class="bugid">New:</span>Configurable Welcome title, subtitle and message in home page. Uses wiki notation.</li>
+    <li><span class="bugid">New:</span>Fade-in effect for cover art images.</li>
+    <li><span class="bugid">New:</span>Option to append selected tracks to previously saved playlist.</li>
+    <li><span class="bugid">New:</span>Random play on artist/album level.</li>
+    <li><span class="bugid">New:</span>New agent/service architecture. Tray icon should now (finally) work on Vista.</li>
+    <li><span class="bugid">New:</span>From the Subsonic Control Panel you can now see the Windows service status, and start/stop the Subsonic service.</li>
+    <li><span class="bugid">New:</span>Display "Now playing" for up to an hour, including idle time.</li>
+    <li><span class="bugid">New:</span>Enable transcoders on first-time Windows install (since they are now bundled).</li>
+    <li><span class="bugid">New:</span>Added Cancel buttons to all settings pages.</li>
+    <li><span class="bugid">New:</span>Created subsonic.bat</li>
+    <li><span class="bugid">New:</span>Changed license to GPLv3.</li>
+    <li><span class="bugid">New:</span>Hide music library statistics if unavailable.</li>
+    <li><span class="bugid">Bugfix:</span>Fixed broken lyrics lookup (again).</li>
+    <li><span class="bugid">Bugfix:</span>Avoid ugly line breaks in IE.</li>
+</ul>
+
 <a name="3.5"><h2 class="div">Subsonic 3.5 - Nov 09, 2008</h2></a>
 <ul>
-    <li><span class="bugid">New:</span> New Subsonic logo (thanks to <a href="http://www.conceptualintegration.com/">Concept211</a>).
+    <li><span class="bugid">New:</span> New Subsonic logo (thanks to <a href="http://www.conceptualintegration.com/">Concept211</a>).</li>
     <li><span class="bugid">New:</span> Added Italian translation (thanks to Michele Petrecca).
     <li><span class="bugid">New:</span> Smooth scrolling in jump list.</li>
     <li><span class="bugid">New:</span> Updated AAC decoder (faad.exe) in transcoder pack.</li>
@@ -495,6 +515,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#3.6.beta1">Subsonic 3.6.beta1</a></li>
             <li><a href="#3.5">Subsonic 3.5</a></li>
             <li><a href="#3.5.beta2">Subsonic 3.5.beta2</a></li>
             <li><a href="#3.5.beta1">Subsonic 3.5.beta1</a></li>

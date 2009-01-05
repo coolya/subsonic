@@ -1,31 +1,8 @@
-TODO IN 3.6
------------
+BACKLOG
+==========================
 Fix layout in player settings.
 Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305
 Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
-
-DONE IN 3.6
--------------
-Enable transcoders if Windows install.
-Add Cancel button to all settings pages.
-Fade-in cover art images.
-Create subsonic.bat
-Changed license to GPL.
-Update to 3.6.beta1 in pom.xml
-Don't use arrays in DAOs.
-Display "Now playing" for up to an hour, including idle time.
-Replace Flash player.
-Bugfix: Avoid ugly line breaks in IE.
-New agent/service architecture.
-Fixed broken lyrics (again).
-Append selected tracks to previously saved playlist (bring up dialog for selecting).
-Hide music library statistics if unavailable.
-Configurable Welcome title, subtitle and message in home page. Use wiki notation.
-Source release.
-Random play on artist/album level. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1304
-
-BACKLOG
-==========================
 Error with new LAME version?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3339
 Demo mode.
 Sort albums by year. (And show year). getCoverArt() should be made non-recursive. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075

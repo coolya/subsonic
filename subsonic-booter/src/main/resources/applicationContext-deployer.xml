@@ -6,10 +6,10 @@
 
     <bean id="service" class="net.sourceforge.subsonic.booter.deployer.SubsonicDeployer"/>
 
-<bean class="org.springframework.remoting.rmi.RmiServiceExporter">
-    <property name="serviceName" value="SubsonicDeployerService"/>
-    <property name="service" ref="service"/>
-    <property name="serviceInterface" value="net.sourceforge.subsonic.booter.deployer.SubsonicDeployerService"/>
-    <property name="registryPort" value="9412"/>
-</bean>
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName" value="SubsonicDeployerService"/>
+        <property name="service" ref="service"/>
+        <property name="serviceInterface" value="net.sourceforge.subsonic.booter.deployer.SubsonicDeployerService"/>
+        <property name="registryPort" value="9412"/>
+    </bean>
 </beans>

@@ -169,7 +169,7 @@
 </c:choose>
         </td>
             <c:if test="${not empty model.welcomeMessage}">
-                <td style="vertical-align:top;max-width:250px">
+                <td style="vertical-align:top;max-width:150px">
                     <div style="padding:0 1em 0 1em;border-left:1px solid #<spring:theme code="detailColor"/>">
                         <sub:wiki text="${model.welcomeMessage}"/>
                     </div>

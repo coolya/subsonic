@@ -35,6 +35,7 @@
             <outputDirectory/>
             <includes>
                 <include>subsonic.sh</include>
+                <include>subsonic.bat</include>
             </includes>
             <fileMode>0777</fileMode>
         </fileSet>
