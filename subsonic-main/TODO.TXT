@@ -1,8 +1,6 @@
 TODO IN 3.6
 ------------
 Set multiple icons when using Java 6(?)
-Edit settings as non-admin throws NPE.
-Welcome message too wide on IE.
 
 DONE IN 3.6
 ------------
@@ -10,6 +8,7 @@ Updated French translation (Thanks to sheridan).
 Embedded player now requires Flash plugin 9.0.0 or later, not 9.0.115 or later.
 Show proper error message if user is not authorized to perform an operation.
 Bugfix: Removing welcome title/subtitle/message doesn't work.
+Bugfix: Welcome message too wide in IE.
 
 BACKLOG
 ==========================
