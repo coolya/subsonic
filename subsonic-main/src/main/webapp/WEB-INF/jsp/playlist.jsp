@@ -57,7 +57,7 @@
             id:"player1",
             name:"player1"
         }
-        swfobject.embedSWF("<c:url value="/flash/player.swf"/>", "placeholder", "340", "20", "9.0.115", false, flashvars, params, attributes);
+        swfobject.embedSWF("<c:url value="/flash/player.swf"/>", "placeholder", "340", "20", "9.0.0", false, flashvars, params, attributes);
     }
 
     function playerReady(thePlayer) {
