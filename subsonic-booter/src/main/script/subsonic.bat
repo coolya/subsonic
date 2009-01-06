@@ -1,7 +1,7 @@
 @echo off
 
 REM  The directory where Subsonic will create files. Make sure it is writable.
-set SUBSONIC_HOME=/var/subsonic
+set SUBSONIC_HOME=c:\subsonic
 
 REM  The port on which Subsonic will listen for incoming HTTP traffic.
 set SUBSONIC_PORT=8080

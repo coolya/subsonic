@@ -35,6 +35,7 @@
     <li><span class="bugid">New:</span>Hide music library statistics if unavailable.</li>
     <li><span class="bugid">Bugfix:</span>Fixed broken lyrics lookup (again).</li>
     <li><span class="bugid">Bugfix:</span>Avoid ugly line breaks in IE.</li>
+    <li><span class="bugid">Tech:</span>Java 6 or later is now required for Windows installer version.</li>
 </ul>
 
 <a name="3.5"><h2 class="div">Subsonic 3.5 - Nov 09, 2008</h2></a>
