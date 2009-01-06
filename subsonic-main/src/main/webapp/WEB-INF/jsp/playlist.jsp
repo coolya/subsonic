@@ -400,7 +400,9 @@
             </select></td>
 
             <c:if test="${model.player.web}">
-                <td style="width:340px; height:20px;padding-left:10px;padding-right:10px"><div id="placeholder"> </div></td>
+                <td style="width:340px; height:20px;padding-left:10px;padding-right:10px"><div id="placeholder">
+                    <a href="http://www.adobe.com/go/getflashplayer" target="_blank"><fmt:message key="playlist.getflash"/></a>
+                </div></td>
             </c:if>
 
             <c:if test="${model.user.streamRole and not model.player.web}">

@@ -4,7 +4,6 @@ Set multiple icons when using Java 6(?)
 Removing welcome message doesn't work.
 Edit settings as non-admin throws NPE.
 JW player doesn't work on FF or IE (Sofia),  Shockwave Flash 9.0 r28
-Show "Player loading..." and "Flash plugin required".
 Welcome message too wide on IE.
 
 DONE IN 3.6
