@@ -4,13 +4,13 @@ NullPointerException when non admins click "To change or remove this message, lo
 Set multiple icons when using Java 6(?)
 Removing welcome message doesn't work.
 Edit settings as non-admin throws NPE.
-JW player doesn't work on FF or IE (Sofia),  Shockwave Flash 9.0 r28
 Welcome message too wide on IE.
 
 DONE IN 3.6
 ------------
 Updated French translation (Thanks to sheridan).
 Embedded player now requires Flash plugin 9.0.0 or later, not 9.0.115 or later.
+Show proper error message if user is not authorized to perform an operation.
 
 BACKLOG
 ==========================

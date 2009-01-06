@@ -66,6 +66,10 @@ public class MultiController extends MultiActionController {
         return new ModelAndView("login", "model", map);
     }
 
+    public ModelAndView accessDenied(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("accessDenied");
+    }
+
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("brand", settingsService.getBrand());
