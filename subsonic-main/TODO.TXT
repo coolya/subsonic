@@ -1,8 +1,6 @@
 TODO IN 3.6
 ------------
-NullPointerException when non admins click "To change or remove this message, log in with administrator rights and go to Settings."
 Set multiple icons when using Java 6(?)
-Removing welcome message doesn't work.
 Edit settings as non-admin throws NPE.
 Welcome message too wide on IE.
 
@@ -11,6 +9,7 @@ DONE IN 3.6
 Updated French translation (Thanks to sheridan).
 Embedded player now requires Flash plugin 9.0.0 or later, not 9.0.115 or later.
 Show proper error message if user is not authorized to perform an operation.
+Bugfix: Removing welcome title/subtitle/message doesn't work.
 
 BACKLOG
 ==========================

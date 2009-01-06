@@ -345,27 +345,27 @@ public class SettingsService {
     }
 
     public String getWelcomeTitle() {
-        return properties.getProperty(KEY_WELCOME_TITLE, DEFAULT_WELCOME_TITLE);
+        return StringUtils.trimToNull(properties.getProperty(KEY_WELCOME_TITLE, DEFAULT_WELCOME_TITLE));
     }
 
     public void setWelcomeTitle(String title) {
-        setProperty(KEY_WELCOME_TITLE, StringUtils.trimToNull(title));
+        setProperty(KEY_WELCOME_TITLE, title);
     }
 
     public String getWelcomeSubtitle() {
-        return properties.getProperty(KEY_WELCOME_SUBTITLE, DEFAULT_WELCOME_SUBTITLE);
+        return StringUtils.trimToNull(properties.getProperty(KEY_WELCOME_SUBTITLE, DEFAULT_WELCOME_SUBTITLE));
     }
 
     public void setWelcomeSubtitle(String subtitle) {
-        setProperty(KEY_WELCOME_SUBTITLE, StringUtils.trimToNull(subtitle));
+        setProperty(KEY_WELCOME_SUBTITLE, subtitle);
     }
 
     public String getWelcomeMessage() {
-        return properties.getProperty(KEY_WELCOME_MESSAGE, DEFAULT_WELCOME_MESSAGE);
+        return StringUtils.trimToNull(properties.getProperty(KEY_WELCOME_MESSAGE, DEFAULT_WELCOME_MESSAGE));
     }
 
     public void setWelcomeMessage(String message) {
-        setProperty(KEY_WELCOME_MESSAGE, StringUtils.trimToNull(message));
+        setProperty(KEY_WELCOME_MESSAGE, message);
     }
 
     /**
