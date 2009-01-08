@@ -1,6 +1,8 @@
 TODO IN 3.6
 ------------
 Set multiple icons when using Java 6(?)
+Stream killing vs persistent stream status (Even's lunch case)
+
 'player' is not necessarily instantiated in skip().
 
 Error: TypeError, Statement on line 250: Cannot convert undefined or null to Object
