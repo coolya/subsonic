@@ -25,10 +25,15 @@
     <c:if test="${model.player.external}">
         startTimer();
     </c:if>
-        getPlaylist();
-    <c:if test="${model.player.web}">
+
+    <c:choose>
+    <c:when test="${model.player.web}">
         createPlayer();
-    </c:if>
+    </c:when>
+    <c:otherwise>
+        getPlaylist();
+    </c:otherwise>
+    </c:choose>
     }
 
     function startTimer() {

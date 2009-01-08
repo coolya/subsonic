@@ -1,6 +1,27 @@
 TODO IN 3.6
 ------------
 Set multiple icons when using Java 6(?)
+'player' is not necessarily instantiated in skip().
+
+Error: TypeError, Statement on line 250: Cannot convert undefined or null to Object
+Backtrace:
+  Line 250 of inline#1 script in http://osl-smehus/playlist.view?: In function skip
+            player.sendEvent("LOAD", list);
+  Line 228 of inline#1 script in http://osl-smehus/playlist.view?: In function triggerPlayer
+                    skip(0);
+  Line 220 of inline#1 script in http://osl-smehus/playlist.view?: In function playlistCallback
+            triggerPlayer();
+  Line 905 of linked script http://osl-smehus/dwr/engine.js
+        else if (typeof handlers.callback == "function") handlers.callback(reply);
+  Line 17 of eval script
+    dwr.engine._remoteHandleCallback('0','0',{entries:s0,index:0,repeatEnabled:false,sendM3U:false,stopEnabled:true});
+  Line 970 of linked script http://osl-smehus/dwr/engine.js
+      return eval(script);
+  Line 859 of linked script http://osl-smehus/dwr/engine.js
+      dwr.engine._eval(toEval);
+  Line 642 of linked script http://osl-smehus/dwr/engine.js
+            if (typeof dwr != 'undefined') dwr.engine._stateChange(batch);
+
 
 DONE IN 3.6
 ------------
@@ -9,6 +30,7 @@ Embedded player now requires Flash plugin 9.0.0 or later, not 9.0.115 or later.
 Show proper error message if user is not authorized to perform an operation.
 Bugfix: Removing welcome title/subtitle/message doesn't work.
 Bugfix: Welcome message too wide in IE.
+Bugfix: Don't call getPlaylist() before player is created.
 
 BACKLOG
 ==========================
