@@ -20,7 +20,6 @@ Bugfix: Don't call getPlaylist() before player is created.
 
 BACKLOG
 ==========================
-Consolidate "switch to currently playing album".
 Create Linux package installer.
 Support for FreeNAS, see http://www.herger.net/slim/detail.php?nr=1026
 Fix layout in player settings.
