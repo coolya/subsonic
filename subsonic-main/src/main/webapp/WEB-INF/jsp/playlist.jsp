@@ -52,7 +52,8 @@
     function createPlayer() {
         var flashvars = {
             backcolor:"<spring:theme code="backgroundColor"/>",
-            frontcolor:"<spring:theme code="textColor"/>"
+            frontcolor:"<spring:theme code="textColor"/>",
+            id:"player1"
         }
         var params = {
             allowfullscreen:"true",
