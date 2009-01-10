@@ -13,6 +13,14 @@ SUBSONIC_CONTEXT_PATH=/
 MAX_MEMORY=64
 
 
-$JAVA_HOME/bin/java -Xmx${MAX_MEMORY}m  -Dsubsonic.home=${SUBSONIC_HOME} -Dsubsonic.port=${SUBSONIC_PORT} \
--Dsubsonic.contextPath=${SUBSONIC_CONTEXT_PATH} -jar subsonic-booter-jar-with-dependencies.jar
+echo Starting Subsonic...
+cd `dirname $0`
 
+mkdir -p ${SUBSONIC_HOME}
+LOG=${SUBSONIC_HOME}/subsonic_sh.log
+rm -f ${LOG}
+
+java -Xmx${MAX_MEMORY}m  -Dsubsonic.home=${SUBSONIC_HOME} -Dsubsonic.port=${SUBSONIC_PORT} \
+-Dsubsonic.contextPath=${SUBSONIC_CONTEXT_PATH} -jar subsonic-booter-jar-with-dependencies.jar > ${LOG} 2>&1 &
+
+echo Started Subsonic. See log file ${LOG}
