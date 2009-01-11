@@ -8,6 +8,7 @@ Stream killing vs persistent stream status (Even's lunch case) - TransferStatus.
 
 DONE IN 3.6
 ------------
+Bugfix: Fixed bug introduced in 3.6.beta1 causing streams to be killed repeatedly.
 Hopefully fixed Flash player bug in Linux.
 Improved subsonic.sh.
 Change to xxx-standalone.tar.gz in web pages.

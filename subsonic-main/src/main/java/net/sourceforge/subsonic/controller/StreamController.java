@@ -139,9 +139,10 @@ public class StreamController implements Controller {
 
             // Terminate any other streams to this player.
             if (isMobile || (!isPodcast && !isSingleFile)) {
-                TransferStatus streamStatus = statusService.getStreamStatusForPlayer(player);
-                if (streamStatus != null && streamStatus.isActive()) {
-                    streamStatus.terminate();
+                for (TransferStatus streamStatus : statusService.getStreamStatusesForPlayer(player)) {
+                    if (streamStatus.isActive()) {
+                        streamStatus.terminate();
+                    }
                 }
             }
 
