@@ -14,6 +14,7 @@ Bugfix: Show proper error message if user is not authorized to perform an operat
 Bugfix: Removing welcome title/subtitle/message doesn't work.
 Bugfix: Welcome message too wide in IE.
 Bugfix: Flash player doesn't work with Italian.
+Bugfix: Disable "Play more random songs when end of playlist is reached" if Flash player. 
 
 BACKLOG
 ==========================

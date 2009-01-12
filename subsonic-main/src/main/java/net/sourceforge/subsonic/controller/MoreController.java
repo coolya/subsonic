@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
 import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
@@ -56,13 +57,14 @@ public class MoreController extends ParameterizableViewController {
             uploadDirectory = new File(musicFolders.get(0).getPath(), "Incoming").getPath();
         }
 
+        Player player = playerService.getPlayer(request, response);
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         map.put("user", securityService.getCurrentUser(request));
         map.put("uploadDirectory", uploadDirectory);
         map.put("genres", searchService.getGenres());
         map.put("musicFolders", settingsService.getAllMusicFolders());
-        map.put("clientSidePlaylist", playerService.getPlayer(request, response).isExternalWithPlaylist());
+        map.put("clientSidePlaylist", player.isExternalWithPlaylist() || player.isWeb());
         map.put("brand", settingsService.getBrand());
         return result;
     }
