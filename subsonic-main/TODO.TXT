@@ -1,26 +1,26 @@
 TODO IN 3.6
+--------------
+Now playing icon disappears on playlist rearrange.
+
+DONE IN 3.6
 ------------
+Change to xxx-standalone.tar.gz in web pages.
+New: Updated French translation (Thanks to sheridan).
+New: Improved subsonic.sh startup script.
+Bugfix: Fixed bug introduced in 3.6.beta1 causing streams to be killed repeatedly.
+Bugfix: New Flash player now works in Linux browsers.
+Tech: Embedded player now requires Flash plugin 9.0.0 or later, not 9.0.115 or later.
+Bugfix: Show proper error message if user is not authorized to perform an operation.
+Bugfix: Removing welcome title/subtitle/message doesn't work.
+Bugfix: Welcome message too wide in IE.
+Bugfix: Flash player doesn't work with Italian.
+
+BACKLOG
+==========================
 Show name of currently playing song in Flash player.
 Upgrade to latest JW player?
 Auto-switching to current playing album doesn't work.
 Wrong duration in transcoded wma. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1461&start=15
-Stream killing vs persistent stream status (Even's lunch case) - TransferStatus.isTerminated()
-
-DONE IN 3.6
-------------
-Bugfix: Fixed bug introduced in 3.6.beta1 causing streams to be killed repeatedly.
-Hopefully fixed Flash player bug in Linux.
-Improved subsonic.sh.
-Change to xxx-standalone.tar.gz in web pages.
-Updated French translation (Thanks to sheridan).
-Embedded player now requires Flash plugin 9.0.0 or later, not 9.0.115 or later.
-Show proper error message if user is not authorized to perform an operation.
-Bugfix: Removing welcome title/subtitle/message doesn't work.
-Bugfix: Welcome message too wide in IE.
-Bugfix: Don't call getPlaylist() before player is created.
-
-BACKLOG
-==========================
 Create Linux package installer.
 Support for FreeNAS, see http://www.herger.net/slim/detail.php?nr=1026
 Fix layout in player settings.
@@ -281,41 +281,27 @@ Get hardware
 
 FreeNAS
 ------
-Installing 'full' version
+Sys req: Pentium III 750MHz, 180MB RAM
 
-Installing on Samsung (ad1)
-OS partition: 4096 MB
+Installing 'full' version.
+Make sure to allocate enough disk space on OS partition. (Java + Subsonic requires at least 150MB).
+Download JDK or JRE from http://www.freebsdfoundation.org/downloads/java.shtml
+Install dependent packages first.
+pkg_add -v -r xtrans
+pkg_add -v -r xproto
+pkg_add -v -r xextproto
+pkg_add -v -r javawmwrapper
 
-To use the DATA partitiion:
-1. add the disk ad1 on the Disks:Mgmgt page
-2. Add the mount point on the Disks:Mount point page, using these params:
-   Disk ad1, Partition 2, Filsystem UFS.
-Do NOT format ad1.
+Install JRE
+pkg_add -v diablo-jre-freebsd6.i386.1.6.0.07.02.tbz
 
-
-Java
-----
-
-Installing Diablo Caffe JDK 1.6.0-7	FreeBSD 6.x/i386 from
-http://www.freebsdfoundation.org/downloads/java.shtml
-
-freenas:~/sindre# pkg_add -n diablo-jdk-freebsd6.i386.1.6.0.07.02.tbz
-Package dependency xtrans-1.0.4 for /root/sindre/diablo-jdk-freebsd6.i386.1.6.0.07.02.tbz not found!
-Package dependency xproto-7.0.10_1 for /root/sindre/diablo-jdk-freebsd6.i386.1.6.0.07.02.tbz not found!
-Package dependency xextproto-7.0.2 for /root/sindre/diablo-jdk-freebsd6.i386.1.6.0.07.02.tbz not found!
-Package dependency javavmwrapper-2.3.2 for /root/sindre/diablo-jdk-freebsd6.i386.1.6.0.07.02.tbz not found!
-
-Find ports at http://www.freebsd.org/ports/
-
-
-pkg_add -v -r ftp://ftp.freebsd.org/pub/FreeBSD/ports/i386/packages-stable/All/javavmwrapper-2.3.2.tbz
-pkg_add -v -r ftp://ftp.freebsd.org/pub/FreeBSD/ports/i386/packages-stable/All/xproto-7.0.10_1.tbz
-pkg_add -v -r ftp://ftp.freebsd.org/pub/FreeBSD/ports/i386/packages-stable/All/xextproto-7.0.2.tbz
-pkg_add -v -r ftp://ftp.freebsd.org/pub/FreeBSD/ports/i386/packages-stable/All/xtrans-1.0.4.tbz
-pkg_add -v diablo-jdk-freebsd6.i386.1.6.0.07.02.tbz
+Install Subsonic stand-alone
 
 System > Advanced > Command script
-Add: /usr/local/lib/subsonic/subsonic.sh PostInit
+Add: /var/subsonic/standalone/subsonic.sh PostInit
+
+Reboot
+Visit http://foo:8080
 
 TODO
 ----
