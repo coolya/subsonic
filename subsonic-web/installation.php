@@ -65,15 +65,15 @@
     <div class="heading">Stand-alone installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
     <div class="content">
         <div class="wide-content">
-            <p><b>Requirements: </b>Java 5 or later (<a href="http://www.java.com">Download</a>)</p>
+            <p><b>Requirements: </b>Sun Java 5 or later (<a href="http://www.java.com">Download</a>)</p>
             <p>
                 This is Subsonic with an embedded Jetty server. Recommended for most Linux and Mac users.
             </p>
             <ul>
-                <li>Unpack the zip-file <code>subsonic-x.x-standalone.zip</code> to <code>SUBSONIC_HOME/standalone</code>.
+                <li>Unpack <code>subsonic-x.x-standalone.tar.gz</code> to <code>SUBSONIC_HOME/standalone</code>.
                     <code>SUBSONIC_HOME</code> is typically <code>c:\subsonic</code> on Windows, and <code>/var/subsonic</code> on Unix-based operating systems.</li>
                 <li>Optionally configure the startup script <code>SUBSONIC_HOME/standalone/subsonic.sh</code></li>
-                <li>Execute the startup script.</li>
+                <li>Execute the startup script. (Typically you will configure your operating system to execute the script automatically at start-up.)</li>
                 <li>Open the Subsonic web page. The default address is <a href="http://localhost:8080">http://localhost:8080</a>.</li>
             </ul>
         </div>

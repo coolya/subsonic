@@ -1,20 +1,6 @@
 TODO IN 3.6
 --------------
-
-
-DONE IN 3.6
-------------
 Change to xxx-standalone.tar.gz in web pages.
-New: Updated French translation (Thanks to sheridan).
-New: Improved subsonic.sh startup script.
-Bugfix: Fixed bug introduced in 3.6.beta1 causing streams to be killed repeatedly.
-Bugfix: New Flash player now works in Linux browsers.
-Tech: Embedded player now requires Flash plugin 9.0.0 or later, not 9.0.115 or later.
-Bugfix: Show proper error message if user is not authorized to perform an operation.
-Bugfix: Removing welcome title/subtitle/message doesn't work.
-Bugfix: Welcome message too wide in IE.
-Bugfix: Flash player doesn't work with Italian.
-Bugfix: Disable "Play more random songs when end of playlist is reached" if Flash player. 
 
 BACKLOG
 ==========================
@@ -268,6 +254,7 @@ http://www.nero.com/eng/nero-aac-codec.html
 
 GUEST USER / DEMO MODE
 ----------------------
+Install Subsonic on Ubuntu.
 New authorization role "User is allowed to change settings and password".
 Should not be able to change player settings, nor select other players in combobox.
 Must gather free music collection + podcasts + internet radio

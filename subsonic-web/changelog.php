@@ -17,25 +17,39 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="3.6.beta2"><h2 class="div">Subsonic 3.6.beta2 - Jan 13, 2009</h2></a>
+<ul>
+    <li><span class="bugid">New:</span> Updated French translation. (Thanks to sheridan).</li>
+    <li><span class="bugid">New:</span> Improved subsonic.sh startup script.</li>
+    <li><span class="bugid">Bugfix:</span> New Flash player now works in Linux browsers. (Thanks to zeekay).</li>
+    <li><span class="bugid">Bugfix:</span> Fixed bug introduced in 3.6.beta1 causing streams to be killed repeatedly.</li>
+    <li><span class="bugid">Bugfix:</span> Show proper error message if user is not authorized to perform an operation.</li>
+    <li><span class="bugid">Bugfix:</span> Removing welcome title/subtitle/message doesn't work.</li>
+    <li><span class="bugid">Bugfix:</span> Welcome message too wide in IE.</li>
+    <li><span class="bugid">Bugfix:</span> Flash player doesn't work with Italian locale.</li>
+    <li><span class="bugid">Bugfix:</span> Disable "Play more random songs when end of playlist is reached" if Flash player.</li>
+    <li><span class="bugid">Tech:</span> Embedded player now requires Flash plugin 9.0.0 or later, not 9.0.115 or later.</li>
+</ul>
+
 <a name="3.6.beta1"><h2 class="div">Subsonic 3.6.beta1 - Jan 05, 2009</h2></a>
 <ul>
-    <li><span class="bugid">New:</span>Much improved embedded Flash player.</li>
-    <li><span class="bugid">New:</span>Playlist is now Ajax-enabled, for a smoother user experience.</li>
-    <li><span class="bugid">New:</span>Configurable Welcome title, subtitle and message in home page. Uses wiki notation.</li>
-    <li><span class="bugid">New:</span>Fade-in effect for cover art images.</li>
-    <li><span class="bugid">New:</span>Option to append selected tracks to previously saved playlist.</li>
-    <li><span class="bugid">New:</span>Random play on artist/album level.</li>
-    <li><span class="bugid">New:</span>New agent/service architecture. Tray icon should now (finally) work on Vista.</li>
-    <li><span class="bugid">New:</span>From the Subsonic Control Panel you can now see the Windows service status, and start/stop the Subsonic service.</li>
-    <li><span class="bugid">New:</span>Display "Now playing" for up to an hour, including idle time.</li>
-    <li><span class="bugid">New:</span>Enable transcoders on first-time Windows install (since they are now bundled).</li>
-    <li><span class="bugid">New:</span>Added Cancel buttons to all settings pages.</li>
-    <li><span class="bugid">New:</span>Created subsonic.bat</li>
-    <li><span class="bugid">New:</span>Changed license to GPLv3.</li>
-    <li><span class="bugid">New:</span>Hide music library statistics if unavailable.</li>
-    <li><span class="bugid">Bugfix:</span>Fixed broken lyrics lookup (again).</li>
-    <li><span class="bugid">Bugfix:</span>Avoid ugly line breaks in IE.</li>
-    <li><span class="bugid">Tech:</span>Java 6 or later is now required for Windows installer version.</li>
+    <li><span class="bugid">New:</span> Much improved embedded Flash player.</li>
+    <li><span class="bugid">New:</span> Playlist is now Ajax-enabled, for a smoother user experience.</li>
+    <li><span class="bugid">New:</span> Configurable Welcome title, subtitle and message in home page. Uses wiki notation.</li>
+    <li><span class="bugid">New:</span> Fade-in effect for cover art images.</li>
+    <li><span class="bugid">New:</span> Option to append selected tracks to previously saved playlist.</li>
+    <li><span class="bugid">New:</span> Random play on artist/album level.</li>
+    <li><span class="bugid">New:</span> New agent/service architecture. Tray icon should now (finally) work on Vista.</li>
+    <li><span class="bugid">New:</span> From the Subsonic Control Panel you can now see the Windows service status, and start/stop the Subsonic service.</li>
+    <li><span class="bugid">New:</span> Display "Now playing" for up to an hour, including idle time.</li>
+    <li><span class="bugid">New:</span> Enable transcoders on first-time Windows install (since they are now bundled).</li>
+    <li><span class="bugid">New:</span> Added Cancel buttons to all settings pages.</li>
+    <li><span class="bugid">New:</span> Created subsonic.bat</li>
+    <li><span class="bugid">New:</span> Changed license to GPLv3.</li>
+    <li><span class="bugid">New:</span> Hide music library statistics if unavailable.</li>
+    <li><span class="bugid">Bugfix:</span> Fixed broken lyrics lookup (again).</li>
+    <li><span class="bugid">Bugfix:</span> Avoid ugly line breaks in IE.</li>
+    <li><span class="bugid">Tech:</span> Java 6 or later is now required for Windows installer version.</li>
 </ul>
 
 <a name="3.5"><h2 class="div">Subsonic 3.5 - Nov 09, 2008</h2></a>
@@ -516,6 +530,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#3.6.beta2">Subsonic 3.6.beta2</a></li>
             <li><a href="#3.6.beta1">Subsonic 3.6.beta1</a></li>
             <li><a href="#3.5">Subsonic 3.5</a></li>
             <li><a href="#3.5.beta2">Subsonic 3.5.beta2</a></li>
