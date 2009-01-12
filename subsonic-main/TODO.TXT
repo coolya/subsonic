@@ -1,6 +1,6 @@
 TODO IN 3.6
 --------------
-Now playing icon disappears on playlist rearrange.
+
 
 DONE IN 3.6
 ------------

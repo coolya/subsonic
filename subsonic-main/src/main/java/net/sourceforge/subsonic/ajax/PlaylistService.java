@@ -202,14 +202,12 @@ public class PlaylistService {
         }
         List<PlaylistInfo.Entry> entries = new ArrayList<PlaylistInfo.Entry>();
         Playlist playlist = player.getPlaylist();
-        int index = 0;  // Used only to create unique stream URLs (in case same song occurrs multiple times in playlist).
         for (MusicFile file : playlist.getFiles()) {
             MusicFile.MetaData metaData = file.getMetaData();
             String albumUrl = url.replaceFirst("/dwr/.*", "/main.view?pathUtf8Hex=" +
                     StringUtil.utf8HexEncode(file.getParent().getPath()));
             String streamUrl = url.replaceFirst("/dwr/.*", "/stream?player=" + player.getId() + "&pathUtf8Hex=" +
-                                                           StringUtil.utf8HexEncode(file.getPath()) + "&index=" + index);
-            index++;
+                                                           StringUtil.utf8HexEncode(file.getPath()));
             entries.add(new PlaylistInfo.Entry(metaData.getTrackNumber(), metaData.getTitle(), metaData.getArtist(),
                     metaData.getAlbum(), metaData.getGenre(), metaData.getYear(), formatBitRate(metaData),
                     metaData.getDuration(), metaData.getDurationAsString(), formatFormat(metaData.getFormat()),
