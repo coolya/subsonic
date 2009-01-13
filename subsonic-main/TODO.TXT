@@ -1,6 +1,10 @@
 TODO IN 3.6
 --------------
 Change to xxx-standalone.tar.gz in web pages.
+NoCache for login.view?
+"Play more random songs when end of playlist is reached." should be disabled for Flash player.
+More > Random playlist doesn't autostart in Flash player.
+Precompile JSPs in Jetty mode. http://www.j2eegeek.com/blog/2004/05/03/a-different-twist-on-pre-compiling-jsps/
 
 BACKLOG
 ==========================
