@@ -48,7 +48,7 @@
             </p>
             <p>
                 It also creates links in the Start Menu: <code>Start &gt; All Programs &gt; Subsonic</code>. From this menu you can start/stop the Subsonic service, open the Subsonic web page, or
-                change basic settings such as which port number Subsonic should use.
+                change basic settings such as which port number Subsonic should use. You can also click on the little yellow submarine tray icon. 
             </p>
             <p>
                 If you're upgrading an existing Subsonic installation, you don't have to uninstall the old version first. In any case, the existing Subsonic settings are preserved.
@@ -138,9 +138,9 @@
 
 <div id="side-col">
 
+    <?php include("tutorial.php"); ?>
     <?php include("donate.php"); ?>
     <?php include("translate-subsonic.php"); ?>
-    <?php include("merchandise.php"); ?>
 
 </div>
 

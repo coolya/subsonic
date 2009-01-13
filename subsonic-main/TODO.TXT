@@ -1,13 +1,10 @@
-TODO IN 3.6
---------------
-Change to xxx-standalone.tar.gz in web pages.
-NoCache for login.view?
-"Play more random songs when end of playlist is reached." should be disabled for Flash player.
-More > Random playlist doesn't autostart in Flash player.
-Precompile JSPs in Jetty mode. http://www.j2eegeek.com/blog/2004/05/03/a-different-twist-on-pre-compiling-jsps/
-
 BACKLOG
 ==========================
+Post message on FreeNAS forum once 3.6 is ready.
+NoCache for login.view?
+More > Random playlist doesn't autostart in Flash player.
+Precompile JSPs in Jetty mode. http://www.j2eegeek.com/blog/2004/05/03/a-different-twist-on-pre-compiling-jsps/
+Selected podcasts not cleared when deleting.
 Show name of currently playing song in Flash player.
 Upgrade to latest JW player?
 Auto-switching to current playing album doesn't work.
@@ -266,41 +263,4 @@ http://en.wikipedia.org/wiki/Free_music
 http://ugress.com/media_music_eps.asp
 http://ugress.com/media_music_cowboy.asp
 http://www.johndoe.no/media.php
-Write forum tutorial of how to set it up, including auto-login.
 Get broadband subscription (due March-April 2009)
-Get hardware
-
-
-FreeNAS
-------
-Sys req: Pentium III 750MHz, 180MB RAM
-
-Installing 'full' version.
-Make sure to allocate enough disk space on OS partition. (Java + Subsonic requires at least 150MB).
-Download JDK or JRE from http://www.freebsdfoundation.org/downloads/java.shtml
-Install dependent packages first.
-pkg_add -v -r xtrans
-pkg_add -v -r xproto
-pkg_add -v -r xextproto
-pkg_add -v -r javawmwrapper
-
-Install JRE
-pkg_add -v diablo-jre-freebsd6.i386.1.6.0.07.02.tbz
-
-Install Subsonic stand-alone
-
-System > Advanced > Command script
-Add: /var/subsonic/standalone/subsonic.sh PostInit
-
-Reboot
-Visit http://foo:8080
-
-TODO
-----
-Write tutorial web page, and link from Subsonic forum and FreeNAS forum.
-Only install JRE.
-It's not necessary to specify URL, just do: "pkg_add -r xtrans" etc
-Can do all pkg_add's in one command line.  Can dependencies be automatically fetched?
-Create BSD package for Subsonic:  /usr/local/lib/subsonic /var/subsonic
-Create BSD package for Subsonic FreeNAS extension.
-Create start/stop subsonic script.  Remember pid.

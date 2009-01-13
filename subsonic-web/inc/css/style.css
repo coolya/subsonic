@@ -66,7 +66,7 @@ html>body #content ul.list {
 }
 #content ul.list li {
 	padding: 4px 0 4px 0;
-	margin: 0 0 0 1em;
+	margin: 0 0 0 0.25em;
 }
 #content ul.list li:before {	/* Show right angle quotes to cool browsers */
 	content: "\00BB \0020";
