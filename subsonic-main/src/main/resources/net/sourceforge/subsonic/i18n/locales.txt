@@ -4,6 +4,12 @@
 # English
 en
 
+# English (United Kingdom)
+en_GB
+
+# English (United States)
+en_US
+
 # French
 fr
 

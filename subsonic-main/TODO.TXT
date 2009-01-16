@@ -1,5 +1,11 @@
+DONE IN 3.6
+-----------
+Added two new languages, "English (United States)" and "English (United Kingdom)". The only difference currently is the date format.
+
+
 BACKLOG
 ==========================
+http://mojo.codehaus.org/jspc/jspc-maven-plugin/usage.html
 Post message on FreeNAS forum once 3.6 is ready.
 NoCache for login.view?
 More > Random playlist doesn't autostart in Flash player.
