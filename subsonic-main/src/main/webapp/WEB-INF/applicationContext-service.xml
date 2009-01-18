@@ -145,6 +145,7 @@
         <property name="musicFileService" ref="musicFileService"/>
         <property name="jukeboxService" ref="jukeboxService"/>
         <property name="transcodingService" ref="transcodingService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
 
     <bean id="ajaxLyricsService" class="net.sourceforge.subsonic.ajax.LyricsService"/>

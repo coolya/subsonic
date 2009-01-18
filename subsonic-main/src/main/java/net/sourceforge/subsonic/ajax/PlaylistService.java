@@ -38,6 +38,7 @@ import net.sourceforge.subsonic.service.JukeboxService;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.TranscodingService;
+import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.util.StringUtil;
 
 /**
@@ -52,6 +53,7 @@ public class PlaylistService {
     private MusicFileService musicFileService;
     private JukeboxService jukeboxService;
     private TranscodingService transcodingService;
+    private SettingsService settingsService;
 
     /**
      * Returns the playlist for the player of the current user.
@@ -208,6 +210,14 @@ public class PlaylistService {
                     StringUtil.utf8HexEncode(file.getParent().getPath()));
             String streamUrl = url.replaceFirst("/dwr/.*", "/stream?player=" + player.getId() + "&pathUtf8Hex=" +
                                                            StringUtil.utf8HexEncode(file.getPath()));
+
+            // Rewrite URLs in case we're behind a proxy.
+            if (settingsService.isRewriteUrlEnabled()) {
+                String referer = request.getHeader("referer");
+                albumUrl = StringUtil.rewriteUrl(albumUrl, referer);
+                streamUrl = StringUtil.rewriteUrl(streamUrl, referer);
+            }
+
             entries.add(new PlaylistInfo.Entry(metaData.getTrackNumber(), metaData.getTitle(), metaData.getArtist(),
                     metaData.getAlbum(), metaData.getGenre(), metaData.getYear(), formatBitRate(metaData),
                     metaData.getDuration(), metaData.getDurationAsString(), formatFormat(metaData.getFormat()),
@@ -266,5 +276,9 @@ public class PlaylistService {
 
     public void setTranscodingService(TranscodingService transcodingService) {
         this.transcodingService = transcodingService;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
     }
 }

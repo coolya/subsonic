@@ -52,7 +52,7 @@
                 row.hide();
             }
         }
-        for (var i = 0; i < channelCount; i++) {
+        for (i = 0; i < channelCount; i++) {
             $("channelExpanded" + i).checked = visible ? "checked" : "";
         }
     }

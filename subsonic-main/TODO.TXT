@@ -1,19 +1,27 @@
+TODO IN 3.6
+------------
+"External player" problem described by ghjames in http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3866
+top.view cached erronously
+Fix security issue with transcoding.
+Auto-switching to current playing album doesn't work.
+Selected podcasts not cleared when deleting.
+Add link to subsonic.sf.net in welcome message.
+
 DONE IN 3.6
 -----------
 Added two new languages, "English (United States)" and "English (United Kingdom)". The only difference currently is the date format.
-
+Bugfix: Make new Flash player work if Subsonic is behind proxy.
 
 BACKLOG
 ==========================
+Introduce "Default transcoding bitrate" instead of hardcoding it to 128 kbps.
 http://mojo.codehaus.org/jspc/jspc-maven-plugin/usage.html
 Post message on FreeNAS forum once 3.6 is ready.
 NoCache for login.view?
 More > Random playlist doesn't autostart in Flash player.
 Precompile JSPs in Jetty mode. http://www.j2eegeek.com/blog/2004/05/03/a-different-twist-on-pre-compiling-jsps/
-Selected podcasts not cleared when deleting.
 Show name of currently playing song in Flash player.
 Upgrade to latest JW player?
-Auto-switching to current playing album doesn't work.
 Wrong duration in transcoded wma. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1461&start=15
 Create Linux package installer.
 Support for FreeNAS, see http://www.herger.net/slim/detail.php?nr=1026
@@ -47,7 +55,6 @@ Podcast duplicate files. nrk_verdt_aa_vite_2008-0820-1203_24459.mp3 + nrk_verdt_
 User/music folder authorization.
 Show percent complete for translations.  In web page at least.
 Improve getting started.
-Make Now Playing show for some minimum amount of time.
 Look at maven release plugin.
 Include getting started (html) in installer.  And add it to start menu. Also create link to subsonic home page in Start menu.
 last.fm problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1278
@@ -261,12 +268,23 @@ http://www.nero.com/eng/nero-aac-codec.html
 
 GUEST USER / DEMO MODE
 ----------------------
-Install Subsonic on Ubuntu.
 New authorization role "User is allowed to change settings and password".
 Should not be able to change player settings, nor select other players in combobox.
 Must gather free music collection + podcasts + internet radio
 http://en.wikipedia.org/wiki/Free_music
-http://ugress.com/media_music_eps.asp
-http://ugress.com/media_music_cowboy.asp
-http://www.johndoe.no/media.php
+http://www.jamendo.com/
 Get broadband subscription (due March-April 2009)
+Add music courtesies.
+Remove ads.
+
+
+"Videreutvikling og kommersialisering av Subsonic Media Streamer"
+Etablererstipend. start max 100.000, vekst max 200.000
+RipNAS, http://www.ripnas.com/
+QNAP
+Netgear ReadyNAS, http://www.readynas.com/
+http://www.synology.com/enu/support/3rd-party_application_integration.php
+SqueezeCenter can run on a number of NAS devices, such as QNAP TS-101, Synology Diskstation,
+NETGEAR ReadyNAS, Buffalo Linkstation, Linksys NSLU2 and any device running FreeNAS software.
+
+rsync -avP -e ssh music.demo/ sindre@ubuntu:music.demo
