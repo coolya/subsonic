@@ -106,6 +106,7 @@
                 /advancedSettings.view=ROLE_ADMIN
                 /userSettings.view=ROLE_ADMIN
                 /musicFolderSettings.view=ROLE_ADMIN
+                /transcodingSettings.view=ROLE_ADMIN
                 /internetRadioSettings.view=ROLE_ADMIN
                 /searchSettings.view=ROLE_ADMIN
                 /podcastSettings.view=ROLE_ADMIN
