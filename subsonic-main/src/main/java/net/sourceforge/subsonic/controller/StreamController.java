@@ -38,6 +38,8 @@ import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.util.StringUtil;
+import net.sourceforge.subsonic.util.Util;
+
 import org.apache.commons.lang.math.LongRange;
 import org.apache.commons.io.IOUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -93,7 +95,7 @@ public class StreamController implements Controller {
                 Playlist playlist = new Playlist();
                 playlistService.loadPlaylist(playlist, playlistName);
                 player.setPlaylist(playlist);
-                response.setContentLength((int) playlist.length());
+                Util.setContentLength(response, playlist.length());
                 LOG.info("Incoming Podcast request for playlist " + playlistName);
             }
 
@@ -120,10 +122,10 @@ public class StreamController implements Controller {
 
                 if (range != null) {
                     response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
-                    response.setContentLength((int) (file.length() - range.getMinimumLong()));
+                    Util.setContentLength(response, file.length() - range.getMinimumLong());
                     LOG.info("Got range: " + range);
                 } else {
-                    response.setContentLength((int) file.length());
+                    Util.setContentLength(response, file.length());
                 }
             }
 

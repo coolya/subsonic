@@ -1,5 +1,6 @@
 TODO IN 3.6
 ------------
+"Remember me" broken with LDAP auth?
 "External player" problem described by ghjames in http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3866
 top.view cached erronously
 Fix security issue with transcoding.
@@ -11,6 +12,7 @@ DONE IN 3.6
 -----------
 Added two new languages, "English (United States)" and "English (United Kingdom)". The only difference currently is the date format.
 Bugfix: Make new Flash player work if Subsonic is behind proxy.
+Bugfix: Support download and streaming of files larger than 2 GB.
 
 BACKLOG
 ==========================

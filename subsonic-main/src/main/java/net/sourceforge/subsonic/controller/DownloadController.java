@@ -32,6 +32,8 @@ import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.util.FileUtil;
 import net.sourceforge.subsonic.util.StringUtil;
+import net.sourceforge.subsonic.util.Util;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.LongRange;
@@ -156,7 +158,7 @@ public class DownloadController implements Controller {
         response.setContentType("application/x-download");
         response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + '\"');
         if (range == null) {
-            response.setContentLength((int) file.length());
+            Util.setContentLength(response, file.length());
         }
 
         copyFileToStream(file, RangeOutputStream.wrap(response.getOutputStream(), range), status, range);
