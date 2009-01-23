@@ -1,16 +1,19 @@
 TODO IN 3.6
 ------------
 "Remember me" broken with LDAP auth?
+Add Swedish translation.
 "External player" problem described by ghjames in http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3866
 top.view cached erronously
 Fix security issue with transcoding.
 Auto-switching to current playing album doesn't work.
 Selected podcasts not cleared when deleting.
 Add link to subsonic.sf.net in welcome message.
+Support big files. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1512
 
 DONE IN 3.6
 -----------
 Added two new languages, "English (United States)" and "English (United Kingdom)". The only difference currently is the date format.
+Added Swedish translation by Jörgen Sjöberg
 Bugfix: Make new Flash player work if Subsonic is behind proxy.
 Bugfix: Support download and streaming of files larger than 2 GB.
 

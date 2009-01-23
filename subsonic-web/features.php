@@ -89,6 +89,7 @@
                         <tr><td>&#149; Russian </td><td>(by Iaroslav Andrusiak)</td></tr>
                         <tr><td>&#149; Dutch </td><td>(by Ronald Knot)</td></tr>
                         <tr><td>&#149; Norwegian </td><td>(by Sindre Mehus and jigsaw)</td></tr>
+                        <tr><td>&#149; Swedish </td><td>(by J&ouml;rgen Sj&ouml;berg)</td></tr>
                         <tr><td>&#149; Macedonian </td><td>(by Stefan Ivanovski)</td></tr>
                     </table>
                 </li>

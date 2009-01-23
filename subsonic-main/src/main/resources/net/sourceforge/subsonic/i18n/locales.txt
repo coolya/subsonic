@@ -34,6 +34,9 @@ nl
 # Norwegian
 no
 
+# Swedish
+sv
+
 # Macedonian
 mk
 
