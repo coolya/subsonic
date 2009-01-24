@@ -1,18 +1,33 @@
+09-01-24 09:08:41,599] INFO StreamController - Starting stream admin@127.0.0.1:3463 (WinampMPEG/5.50)
+[2009-01-24 09:08:41,599] INFO PlaylistInputStream - Opening new song c:\music\Arve Tellefsen\Intermezzo\01 - Pietro Mascagni _ Intermezzo fra Cavalleria Rusticana.mp3
+[2009-01-24 09:09:16,864] INFO StreamController - Stopping stream admin@127.0.0.1:3463 (WinampMPEG/5.50)
+[2009-01-24 09:09:16,974] INFO StreamController - Starting stream admin@127.0.0.1:3484 (WinampMPEG/5.50)
+[2009-01-24 09:09:16,974] INFO PlaylistInputStream - Opening new song c:\music\Barnemusikk\Folk og røvere i Kardemommeby\ 01 - Overtyre.wma
+[2009-01-24 09:09:26,239] INFO PlaylistInputStream - Opening new song c:\music\Arve Tellefsen\Intermezzo\01 - Pietro Mascagni _ Intermezzo fra Cavalleria Rusticana.mp3
+[2009-01-24 09:09:26,411] INFO StreamController - Stopping stream admin@127.0.0.1:3484 (WinampMPEG/5.50)
+[2009-01-24 09:09:26,521] INFO StreamController - Starting stream admin@127.0.0.1:3490 (WinampMPEG/5.50)
+[2009-01-24 09:09:26,521] INFO PlaylistInputStream - Opening new song c:\music\Arve Tellefsen\Intermezzo\01 - Pietro Mascagni _ Intermezzo fra Cavalleria Rusticana.mp3
+[2009-01-24 09:09:33,677] INFO StreamController - Stopping stream admin@127.0.0.1:3490 (WinampMPEG/5.50)
+[2009-01-24 09:09:33,786] INFO StreamController - Starting stream admin@127.0.0.1:3493 (WinampMPEG/5.50)
+[2009-01-24 09:09:33,786] INFO PlaylistInputStream - Opening new song c:\music\Barnemusikk\Folk og røvere i Kardemommeby\ 01 - Overtyre.wma
+[2009-01-24 09:09:54,833] INFO StreamController - Starting stream admin@127.0.0.1:3505 (WinampMPEG/5.50)
+[2009-01-24 09:09:54,833] INFO StreamController - Killing stream admin@127.0.0.1:3505 (WinampMPEG/5.50)
+[2009-01-24 09:09:54,833] INFO StreamController - Stopping stream admin@127.0.0.1:3505 (WinampMPEG/5.50)
+[2009-01-24 09:09:55,021] INFO StreamController - Killing stream admin@127.0.0.1:3493 (WinampMPEG/5.50)
+[2009-01-24 09:09:55,021] INFO StreamController - Stopping stream admin@127.0.0.1:3493 (WinampMPEG/5.50)
+
 TODO IN 3.6
 ------------
-"Remember me" broken with LDAP auth?
-Add Swedish translation.
+Get "Killing stream" problem when streaming WMA without transcoding.
+WMA transcoding isn't activated.
 "External player" problem described by ghjames in http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3866
-top.view cached erronously
-Fix security issue with transcoding.
 Auto-switching to current playing album doesn't work.
-Selected podcasts not cleared when deleting.
 Add link to subsonic.sf.net in welcome message.
-Support big files. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1512
 
 DONE IN 3.6
 -----------
-Added two new languages, "English (United States)" and "English (United Kingdom)". The only difference currently is the date format.
+Security: For improved security, only transcoders installed in SUBSONIC_HOME/transcode are allowed to be executed. This includes LAME downsampling.
+Added two new locales, "English (United States)" and "English (United Kingdom)". The only difference currently is the date format.
 Added Swedish translation by Jörgen Sjöberg
 Bugfix: Make new Flash player work if Subsonic is behind proxy.
 Bugfix: Support download and streaming of files larger than 2 GB.
@@ -29,6 +44,9 @@ Show name of currently playing song in Flash player.
 Upgrade to latest JW player?
 Wrong duration in transcoded wma. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1461&start=15
 Create Linux package installer.
+"Remember me" broken with LDAP auth?
+Selected podcasts not cleared when deleting.
+top.view cached erronously?
 Support for FreeNAS, see http://www.herger.net/slim/detail.php?nr=1026
 Fix layout in player settings.
 Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305

@@ -22,8 +22,8 @@
             </p>
 
             <p>
-                The actual transcoding is done by third-party command line programs which must be installed in <code>c:\subsonic\transcode</code> (on Windows),
-                <code>/var/subsonic/transcode</code> (other operating systems), or in a directory present in the PATH environment variable.
+                The actual transcoding is done by third-party command line programs which must be installed in <code>c:\subsonic\transcode</code> (on Windows), or
+                <code>/var/subsonic/transcode</code> (other operating systems).
             </p>
 
             <p>

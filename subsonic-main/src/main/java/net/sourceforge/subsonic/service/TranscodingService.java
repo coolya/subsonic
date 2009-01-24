@@ -18,16 +18,6 @@
  */
 package net.sourceforge.subsonic.service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.io.filefilter.PrefixFileFilter;
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.TranscodingDao;
 import net.sourceforge.subsonic.domain.MusicFile;
@@ -35,9 +25,17 @@ import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.TranscodeScheme;
 import net.sourceforge.subsonic.domain.Transcoding;
 import net.sourceforge.subsonic.domain.UserSettings;
-import net.sourceforge.subsonic.io.InputStreamReaderThread;
 import net.sourceforge.subsonic.io.TranscodeInputStream;
 import net.sourceforge.subsonic.util.StringUtil;
+import org.apache.commons.io.filefilter.PrefixFileFilter;
+import org.apache.commons.lang.StringUtils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides services for transcoding media. Transcoding is the process of
@@ -191,9 +189,10 @@ public class TranscodingService {
 
             TranscodeScheme transcodeScheme = getTranscodeScheme(player);
             boolean downsample = transcodeScheme != TranscodeScheme.OFF;
+            boolean supported = isDownsamplingSupported();
             Integer bitRate = musicFile.getMetaData().getBitRate();
 
-            if (downsample && bitRate != null && bitRate > transcodeScheme.getMaxBitRate()) {
+            if (downsample && supported && bitRate != null && bitRate > transcodeScheme.getMaxBitRate()) {
                 return getDownsampledInputStream(musicFile, transcodeScheme);
             }
         } catch (Exception x) {
@@ -266,10 +265,7 @@ public class TranscodingService {
         command = command.replace("%b", String.valueOf(transcodeScheme.getMaxBitRate()));
 
         String[] result = StringUtil.split(command);
-
-        if (isTranscoderInstalled(result[0])) {
-            result[0] = getTranscodeDirectory().getPath() + File.separatorChar + result[0];
-        }
+        result[0] = getTranscodeDirectory().getPath() + File.separatorChar + result[0];
 
         return result;
     }
@@ -278,10 +274,12 @@ public class TranscodingService {
      * Returns an applicable transcoding for the given file and player, or <code>null</code> if no
      * transcoding should be done.
      */
-    public Transcoding getTranscoding(MusicFile musicFile, Player player) {
+    private Transcoding getTranscoding(MusicFile musicFile, Player player) {
         for (Transcoding transcoding : getTranscodingsForPlayer(player)) {
             if (transcoding.getSourceFormat().equalsIgnoreCase(musicFile.getSuffix())) {
-                return transcoding;
+                if (isTranscodingInstalled(transcoding)) {
+                    return transcoding;
+                }
             }
         }
         return null;
@@ -306,34 +304,21 @@ public class TranscodingService {
      */
     public boolean isDownsamplingSupported() {
         String commandLine = settingsService.getDownsamplingCommand();
-        String firstWord = StringUtils.substringBefore(commandLine, " ");
-        if (StringUtils.isEmpty(firstWord)) {
-            firstWord = commandLine;
-        }
-
-        String[] command = createCommand(firstWord, null, null);
-
-        try {
-            Process process = Runtime.getRuntime().exec(command);
-
-            // Must read stdout and stderr from the process, otherwise it may block.
-            new InputStreamReaderThread(process.getInputStream(), "lame stdout", false).start();
-            new InputStreamReaderThread(process.getErrorStream(), "lame stderr", false).start();
-
-            return true;
-
-        } catch (IOException e) {
-            return false;
-        }
+        return isTranscodingStepInstalled(commandLine);
     }
 
-    /**
-     * Returns whether the given transcoder is installed in SUBSONIC_HOME/transcode.
-     *
-     * @return Whether the transcoder is installed.
-     */
-    private boolean isTranscoderInstalled(String transcoder) {
-        PrefixFileFilter filter = new PrefixFileFilter(transcoder);
+    private boolean isTranscodingInstalled(Transcoding transcoding) {
+        return isTranscodingStepInstalled(transcoding.getStep1()) &&
+               isTranscodingStepInstalled(transcoding.getStep2()) &&
+               isTranscodingStepInstalled(transcoding.getStep3());
+    }
+
+    private boolean isTranscodingStepInstalled(String step) {
+        if (StringUtils.isEmpty(step)) {
+            return true;
+        }
+        String executable = StringUtil.split(step)[0];
+        PrefixFileFilter filter = new PrefixFileFilter(executable);
         String[] matches = getTranscodeDirectory().list(filter);
         return matches != null && matches.length > 0;
     }
