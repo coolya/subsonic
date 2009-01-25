@@ -49,6 +49,8 @@ public class M3UController implements Controller {
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("audio/x-mpegurl");
+        response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
+        
         Player player = playerService.getPlayer(request, response);
 
         String url = request.getRequestURL().toString();

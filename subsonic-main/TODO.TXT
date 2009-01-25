@@ -19,6 +19,7 @@
 TODO IN 3.6
 ------------
 Get "Killing stream" problem when streaming WMA without transcoding.
+M3UController encoding bug. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1518
 WMA transcoding isn't activated.
 "External player" problem described by ghjames in http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3866
 Auto-switching to current playing album doesn't work.
@@ -31,6 +32,7 @@ Added two new locales, "English (United States)" and "English (United Kingdom)".
 Added Swedish translation by Jörgen Sjöberg
 Bugfix: Make new Flash player work if Subsonic is behind proxy.
 Bugfix: Support download and streaming of files larger than 2 GB.
+Bugfix: Use UTF-8 when generating m3u playlist.
 
 BACKLOG
 ==========================
