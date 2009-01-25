@@ -176,7 +176,7 @@ public class StreamController implements Controller {
             while (true) {
 
                 // Check if stream has been terminated.
-                if (status.isTerminated()) {
+                if (status.terminated()) {
                     LOG.info("Killing stream " + streamEndpoint);
                     return null;
                 }

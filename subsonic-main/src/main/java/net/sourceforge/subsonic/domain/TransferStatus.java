@@ -38,9 +38,8 @@ public class TransferStatus {
     private long bytesSkipped;
     private long bytesTotal;
     private SampleHistory history = new SampleHistory();
-    private boolean isTerminated;
+    private boolean terminated;
     private boolean active = true;
-
 
     /**
      * Return the number of bytes transferred.
@@ -206,16 +205,19 @@ public class TransferStatus {
      * Indicate that the stream should be terminated.
      */
     public void terminate() {
-        isTerminated = true;
+        terminated = true;
     }
 
     /**
      * Returns whether this stream has been terminated.
+     * Not that the <em>terminated status</em> is cleared by this method.
      *
      * @return Whether this stream has been terminated.
      */
-    public boolean isTerminated() {
-        return isTerminated;
+    public boolean terminated() {
+        boolean result = terminated;
+        terminated = false;
+        return result;
     }
 
     /**
@@ -271,6 +273,14 @@ public class TransferStatus {
         public long getTimestamp() {
             return timestamp;
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("TransferStatus-").append(hashCode()).append(" [player: ").append(player.getId()).append(", file: ");
+        builder.append(file).append(", terminated: ").append(terminated).append(", active: ").append(active).append("]");
+        return builder.toString();
     }
 
     /**
