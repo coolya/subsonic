@@ -18,16 +18,6 @@
  */
 package net.sourceforge.subsonic.ajax;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
-import org.directwebremoting.WebContext;
-import org.directwebremoting.WebContextFactory;
-
 import net.sourceforge.subsonic.domain.AvatarScheme;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
@@ -38,6 +28,14 @@ import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides AJAX-enabled services for retrieving the currently playing file and directory.
@@ -97,18 +95,20 @@ public class NowPlayingService {
 
                 String artist = musicFile.getMetaData().getArtist();
                 String title = musicFile.getMetaData().getTitle();
+                String streamUrl = url.replaceFirst("/dwr/.*", "/stream?player=" + player.getId() + "&pathUtf8Hex=" +
+                                                               StringUtil.utf8HexEncode(file.getPath()));
                 String albumUrl = url.replaceFirst("/dwr/.*", "/main.view?pathUtf8Hex=" +
-                        StringUtil.utf8HexEncode(musicFile.getParent().getPath()));
+                                                              StringUtil.utf8HexEncode(musicFile.getParent().getPath()));
                 String lyricsUrl = url.replaceFirst("/dwr/.*", "/lyrics.view?artistUtf8Hex=" +
-                        StringUtil.utf8HexEncode(musicFile.getMetaData().getArtist()) +
-                        "&songUtf8Hex=" +
-                        StringUtil.utf8HexEncode(musicFile.getMetaData().getTitle()));
+                                                               StringUtil.utf8HexEncode(musicFile.getMetaData().getArtist()) +
+                                                               "&songUtf8Hex=" +
+                                                               StringUtil.utf8HexEncode(musicFile.getMetaData().getTitle()));
                 String coverArtUrl = coverArts.isEmpty() ? null :
-                        url.replaceFirst("/dwr/.*", "/coverArt.view?size=48&pathUtf8Hex=" +
-                                StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
+                                     url.replaceFirst("/dwr/.*", "/coverArt.view?size=48&pathUtf8Hex=" +
+                                                                 StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
                 String coverArtZoomUrl = coverArts.isEmpty() ? null :
-                        url.replaceFirst("/dwr/.*", "/coverArt.view?pathUtf8Hex=" +
-                                StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
+                                         url.replaceFirst("/dwr/.*", "/coverArt.view?pathUtf8Hex=" +
+                                                                     StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
 
                 String avatarUrl = null;
                 if (userSettings.getAvatarScheme() == AvatarScheme.SYSTEM) {
@@ -121,6 +121,7 @@ public class NowPlayingService {
                 // Rewrite URLs in case we're behind a proxy.
                 if (settingsService.isRewriteUrlEnabled()) {
                     String referer = request.getHeader("referer");
+                    streamUrl = StringUtil.rewriteUrl(streamUrl, referer);
                     albumUrl = StringUtil.rewriteUrl(albumUrl, referer);
                     lyricsUrl = StringUtil.rewriteUrl(lyricsUrl, referer);
                     coverArtUrl = StringUtil.rewriteUrl(coverArtUrl, referer);
@@ -139,7 +140,8 @@ public class NowPlayingService {
 
                 long minutesAgo = status.getMillisSinceLastUpdate() / 1000L / 60L;
                 if (minutesAgo < 60) {
-                    result.add(new NowPlayingInfo(username, artist, title, tooltip, albumUrl, lyricsUrl, coverArtUrl, coverArtZoomUrl, avatarUrl, (int) minutesAgo));
+                    result.add(new NowPlayingInfo(username, artist, title, tooltip, streamUrl, albumUrl, lyricsUrl,
+                                                  coverArtUrl, coverArtZoomUrl, avatarUrl, (int) minutesAgo));
                 }
             }
         }

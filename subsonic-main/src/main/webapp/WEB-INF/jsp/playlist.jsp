@@ -16,7 +16,6 @@
 <script type="text/javascript" language="javascript">
     var player = null;
     var songs = null;
-    var currentTitle = null;
     var currentAlbumUrl = null;
     var currentStreamUrl = null;
     var startPlayer = false;
@@ -42,15 +41,17 @@
     }
 
     function nowPlayingCallback(nowPlayingInfo) {
-        // TODO: Use something else than title.
-        if (nowPlayingInfo != null && nowPlayingInfo.title != currentTitle) {
+        if (nowPlayingInfo != null && nowPlayingInfo.streamUrl != currentStreamUrl) {
             getPlaylist();
             if (currentAlbumUrl != nowPlayingInfo.albumUrl && top.main.updateNowPlaying) {
                 top.main.location.replace("nowPlaying.view?");
                 currentAlbumUrl = nowPlayingInfo.albumUrl;
             }
+        <c:if test="${not model.player.web}">
+            currentStreamUrl = nowPlayingInfo.streamUrl;
+            updateCurrentImage();
+        </c:if>
         }
-        currentTitle = nowPlayingInfo.title;
     }
 
     function createPlayer() {
@@ -110,6 +111,7 @@
         skip(index);
     </c:when>
     <c:otherwise>
+        currentStreamUrl = songs[index].streamUrl;
         playlistService.skip(index, playlistCallback);
     </c:otherwise>
     </c:choose>
@@ -203,11 +205,9 @@
                 dwr.util.setValue("trackNumber" + id, song.trackNumber);
             }
 
-        <c:if test="${not model.player.web}">
-            if ($("currentImage" + id) && i == playlist.index) {
+            if ($("currentImage" + id) && song.streamUrl == currentStreamUrl) {
                 $("currentImage" + id).show();
             }
-        </c:if>
             if ($("title" + id)) {
                 dwr.util.setValue("title" + id, truncate(song.title));
                 $("title" + id).title = song.title;
@@ -482,12 +482,12 @@
             </c:if>
 
             <td style="padding-right:1.25em">
+                <img id="currentImage" src="<spring:theme code="currentImage"/>" alt="" style="display:none"/>
                 <c:choose>
                     <c:when test="${model.player.externalWithPlaylist}">
                         <span id="title">Title</span>
                     </c:when>
                     <c:otherwise>
-                        <img id="currentImage" src="<spring:theme code="currentImage"/>" alt="" style="display:none"/>
                         <a id="titleUrl" href="javascript:noop()">Title</a>
                     </c:otherwise>
                 </c:choose>
