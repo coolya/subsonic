@@ -23,24 +23,9 @@
 
 <c:if test="${model.updateNowPlaying}">
 
-    <!-- This script uses AJAX to periodically check if the current song has changed. -->
     <script type="text/javascript" language="javascript">
-
-        var currentDir = null;
-        dwr.engine.setErrorHandler(null);
-        startGetDirectoryTimer();
-
-        function startGetDirectoryTimer() {
-            nowPlayingService.getDirectory(getDirectoryCallback);
-            setTimeout("startGetDirectoryTimer()", 10000);
-        }
-
-        function getDirectoryCallback(dir) {
-            if (currentDir != null && currentDir != dir) {
-                location.replace("nowPlaying.view?");
-            }
-            currentDir = dir;
-        }
+        // Variable used by javascript in playlist.jsp
+        var updateNowPlaying = true;
     </script>
 </c:if>
 

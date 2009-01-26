@@ -18,25 +18,26 @@
  */
 package net.sourceforge.subsonic.ajax;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
+
+import net.sourceforge.subsonic.domain.AvatarScheme;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.TransferStatus;
 import net.sourceforge.subsonic.domain.UserSettings;
-import net.sourceforge.subsonic.domain.AvatarScheme;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.util.StringUtil;
-import org.apache.commons.lang.StringUtils;
-import org.directwebremoting.WebContext;
-import org.directwebremoting.WebContextFactory;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Provides AJAX-enabled services for retrieving the currently playing file and directory.
@@ -52,23 +53,17 @@ public class NowPlayingService {
     private SettingsService settingsService;
 
     /**
-     * Returns the path of the currently playing file (for the current user).
+     * Returns details about what the current player is playing.
      *
-     * @return The path of the currently playing file, or the string <code>"nil"</code> if no file is playing.
+     * @return Details about what the current player is playing, or <code>null</code> if not playing anything.
      */
-    public String getFile() {
-        MusicFile current = getCurrentMusicFile();
-        return current == null ? "nil" : current.getPath();
-    }
+    public NowPlayingInfo getNowPlayingForCurrentPlayer() throws Exception {
+        WebContext webContext = WebContextFactory.get();
+        Player player = playerService.getPlayer(webContext.getHttpServletRequest(), webContext.getHttpServletResponse());
+        List<TransferStatus> statuses = statusService.getStreamStatusesForPlayer(player);
+        List<NowPlayingInfo> result = convert(statuses);
 
-    /**
-     * Returns the path of the directory of the currently playing file (for the current user).
-     *
-     * @return The path of the directory of the currently playing file, or the string <code>"nil"</code> if no file is playing.
-     */
-    public String getDirectory() throws IOException {
-        MusicFile current = getCurrentMusicFile();
-        return current == null || current.getParent() == null ? "nil" : current.getParent().getPath();
+        return result.isEmpty() ? null : result.get(0);
     }
 
     /**
@@ -76,13 +71,15 @@ public class NowPlayingService {
      *
      * @return Details about what all users are currently playing.
      */
-    public NowPlayingInfo[] getNowPlaying() throws Exception {
+    public List<NowPlayingInfo> getNowPlaying() throws Exception {
+        return convert(statusService.getAllStreamStatuses());
+    }
 
+    private List<NowPlayingInfo> convert(List<TransferStatus> statuses) throws Exception {
         HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
         String url = request.getRequestURL().toString();
-
         List<NowPlayingInfo> result = new ArrayList<NowPlayingInfo>();
-        for (TransferStatus status : statusService.getAllStreamStatuses()) {
+        for (TransferStatus status : statuses) {
 
             Player player = status.getPlayer();
             File file = status.getFile();
@@ -101,22 +98,23 @@ public class NowPlayingService {
                 String artist = musicFile.getMetaData().getArtist();
                 String title = musicFile.getMetaData().getTitle();
                 String albumUrl = url.replaceFirst("/dwr/.*", "/main.view?pathUtf8Hex=" +
-                                                              StringUtil.utf8HexEncode(musicFile.getParent().getPath()));
+                        StringUtil.utf8HexEncode(musicFile.getParent().getPath()));
                 String lyricsUrl = url.replaceFirst("/dwr/.*", "/lyrics.view?artistUtf8Hex=" +
-                                                               StringUtil.utf8HexEncode(musicFile.getMetaData().getArtist()) +
-                                                               "&songUtf8Hex=" +
-                                                               StringUtil.utf8HexEncode(musicFile.getMetaData().getTitle()));
+                        StringUtil.utf8HexEncode(musicFile.getMetaData().getArtist()) +
+                        "&songUtf8Hex=" +
+                        StringUtil.utf8HexEncode(musicFile.getMetaData().getTitle()));
                 String coverArtUrl = coverArts.isEmpty() ? null :
-                                     url.replaceFirst("/dwr/.*", "/coverArt.view?size=48&pathUtf8Hex=" +
-                                                                 StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
+                        url.replaceFirst("/dwr/.*", "/coverArt.view?size=48&pathUtf8Hex=" +
+                                StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
                 String coverArtZoomUrl = coverArts.isEmpty() ? null :
-                                         url.replaceFirst("/dwr/.*", "/coverArt.view?pathUtf8Hex=" +
-                                                                     StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
+                        url.replaceFirst("/dwr/.*", "/coverArt.view?pathUtf8Hex=" +
+                                StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
 
                 String avatarUrl = null;
                 if (userSettings.getAvatarScheme() == AvatarScheme.SYSTEM) {
                     avatarUrl = url.replaceFirst("/dwr/.*", "/avatar.view?id=" + userSettings.getSystemAvatarId());
-                } else if (userSettings.getAvatarScheme() == AvatarScheme.CUSTOM && settingsService.getCustomAvatar(username) != null) {
+                } else
+                if (userSettings.getAvatarScheme() == AvatarScheme.CUSTOM && settingsService.getCustomAvatar(username) != null) {
                     avatarUrl = url.replaceFirst("/dwr/.*", "/avatar.view?username=" + username);
                 }
 
@@ -130,7 +128,7 @@ public class NowPlayingService {
                     avatarUrl = StringUtil.rewriteUrl(avatarUrl, referer);
                 }
 
-                String tooltip = StringUtil.toHtml(artist)+ " &ndash; " + StringUtil.toHtml(title);
+                String tooltip = StringUtil.toHtml(artist) + " &ndash; " + StringUtil.toHtml(title);
 
                 if (StringUtils.isNotBlank(player.getName())) {
                     username += "@" + player.getName();
@@ -146,13 +144,8 @@ public class NowPlayingService {
             }
         }
 
-        return result.toArray(new NowPlayingInfo[result.size()]);
-    }
+        return result;
 
-    private MusicFile getCurrentMusicFile() {
-        WebContext webContext = WebContextFactory.get();
-        Player player = playerService.getPlayer(webContext.getHttpServletRequest(), webContext.getHttpServletResponse());
-        return player.getPlaylist().getCurrentFile();
     }
 
     public void setPlayerService(PlayerService playerService) {

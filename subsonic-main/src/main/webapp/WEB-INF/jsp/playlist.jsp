@@ -14,17 +14,16 @@
 <body class="bgcolor2" onload="init()">
 
 <script type="text/javascript" language="javascript">
-    var currentFile = null;
     var player = null;
     var songs = null;
+    var currentTitle = null;
+    var currentAlbumUrl = null;
     var currentStreamUrl = null;
     var startPlayer = false;
 
     function init() {
         dwr.engine.setErrorHandler(null);
-    <c:if test="${model.player.external}">
         startTimer();
-    </c:if>
 
     <c:choose>
     <c:when test="${model.player.web}">
@@ -38,15 +37,20 @@
 
     function startTimer() {
         <!-- Periodically check if the current song has changed. -->
-        nowPlayingService.getFile(nowPlayingCallback);
+        nowPlayingService.getNowPlayingForCurrentPlayer(nowPlayingCallback);
         setTimeout("startTimer()", 10000);
     }
 
-    function nowPlayingCallback(file) {
-        if (currentFile != null && currentFile != file) {
+    function nowPlayingCallback(nowPlayingInfo) {
+        // TODO: Use something else than title.
+        if (nowPlayingInfo != null && nowPlayingInfo.title != currentTitle) {
             getPlaylist();
+            if (currentAlbumUrl != nowPlayingInfo.albumUrl && top.main.updateNowPlaying) {
+                top.main.location.replace("nowPlaying.view?");
+                currentAlbumUrl = nowPlayingInfo.albumUrl;
+            }
         }
-        currentFile = file;
+        currentTitle = nowPlayingInfo.title;
     }
 
     function createPlayer() {

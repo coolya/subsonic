@@ -127,6 +127,8 @@
     </bean>
     <bean id="nowPlayingController" class="net.sourceforge.subsonic.controller.NowPlayingController">
         <property name="playerService" ref="playerService"/>
+        <property name="statusService" ref="statusService"/>
+        <property name="musicFileService" ref="musicFileService"/>
     </bean>
     <bean id="searchController" class="net.sourceforge.subsonic.controller.SearchController">
         <property name="commandClass" value="net.sourceforge.subsonic.command.SearchCommand"/>
