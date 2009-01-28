@@ -15,6 +15,7 @@ Bugfix: Support download and streaming of files larger than 2 GB.
 Bugfix: Use UTF-8 when generating m3u playlist.
 Bugfix: Main frame now correctly switches to the currently playing album.
 Show currently playing icon for all player types.
+Change tray icon if Subsonic server isn't running.
 
 
 BACKLOG

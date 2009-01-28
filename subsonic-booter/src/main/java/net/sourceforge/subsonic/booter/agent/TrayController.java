@@ -20,6 +20,8 @@ public class TrayController implements SubsonicListener {
     private Action openAction;
     private Action controlPanelAction;
     private Action hideAction;
+    private Image startedImage;
+    private Image stoppedImage;
 
     public TrayController(SubsonicAgent subsonicAgent) {
         this.subsonicAgent = subsonicAgent;
@@ -56,8 +58,8 @@ public class TrayController implements SubsonicListener {
     }
 
     private void createComponents() {
-        URL url = getClass().getResource("/images/subsonic-16.png");
-        Image image = Toolkit.getDefaultToolkit().createImage(url);
+        startedImage = createImage("/images/subsonic-16.png");
+        stoppedImage = createImage("/images/subsonic-stopped-16.png");
 
         PopupMenu menu = new PopupMenu();
         menu.add(createMenuItem(openAction));
@@ -65,7 +67,12 @@ public class TrayController implements SubsonicListener {
         menu.addSeparator();
         menu.add(createMenuItem(hideAction));
 
-        trayIcon = new TrayIcon(image, "Subsonic Music Streamer", menu);
+        trayIcon = new TrayIcon(stoppedImage, "Subsonic Music Streamer", menu);
+    }
+
+    private Image createImage(String resourceName) {
+        URL url = getClass().getResource(resourceName);
+        return Toolkit.getDefaultToolkit().createImage(url);
     }
 
     private MenuItem createMenuItem(Action action) {
@@ -92,8 +99,14 @@ public class TrayController implements SubsonicListener {
         }
     }
 
+    private void setTrayImage(Image image) {
+        if (trayIcon.getImage() != image) {
+            trayIcon.setImage(image);
+        }
+    }
+
     public void notifyDeploymentStatus(DeploymentStatus deploymentStatus) {
-        // Nothing here, but could potentially change tray icon and menu.
+        setTrayImage(deploymentStatus == null ? stoppedImage : startedImage);
     }
 
     public void notifyServiceStatus(String serviceStatus) {

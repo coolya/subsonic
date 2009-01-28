@@ -14,7 +14,7 @@ public interface SubsonicListener {
      * Invoked when new information about the Subsonic deployment is available.
      *
      * @param deploymentStatus The new deployment status, or <code>null</code> if an
-     *                       error occured while retrieving the status.
+     *                       error occurred while retrieving the status.
      */
     void notifyDeploymentStatus(DeploymentStatus deploymentStatus);
 
@@ -22,7 +22,7 @@ public interface SubsonicListener {
      * Invoked when new information about the Subsonic Windows service is available.
      *
      * @param serviceStatus The new service status, or <code>null</code> if an
-     *                       error occured while retrieving the status.
+     *                       error occurred while retrieving the status.
      */
     void notifyServiceStatus(String serviceStatus);
 }
