@@ -1,25 +1,7 @@
-TODO IN 3.6
-------------
-"External player" problem described by ghjames in http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3866
-Add link to subsonic.sf.net in welcome message.
-Test with symlinks, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=110&start=15
-
-DONE IN 3.6
------------
-Security: For improved security, only transcoders installed in SUBSONIC_HOME/transcode are allowed to be executed. This includes LAME downsampling.
-Added two new locales, "English (United States)" and "English (United Kingdom)". The only difference currently is the date format.
-Added Swedish translation by Jörgen Sjöberg
-Bugfix: Make new Flash player work if Subsonic is behind proxy.
-Bugfix: Fixed problem where server in some cases came to a state where streaming is refused.
-Bugfix: Support download and streaming of files larger than 2 GB.
-Bugfix: Use UTF-8 when generating m3u playlist.
-Bugfix: Main frame now correctly switches to the currently playing album.
-Show currently playing icon for all player types.
-Change tray icon if Subsonic server isn't running.
-
-
 BACKLOG
 ==========================
+"External player" problem described by ghjames in http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3866
+"Sign up" feature.
 Introduce "Default transcoding bitrate" instead of hardcoding it to 128 kbps.
 http://mojo.codehaus.org/jspc/jspc-maven-plugin/usage.html
 Post message on FreeNAS forum once 3.6 is ready.
@@ -56,6 +38,7 @@ Set multiple icons when using Java 6(?)
 Show who played a track last. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1404
 Backlink to Ripserver home page, when using the Ripserver theme.
 Permalink support?
+Support "play more random songs" if web player.
 After logon, go to originally requested page.
 Fix broken SSL, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301
 Simplify URL rewriting. Always use relative links if that works.

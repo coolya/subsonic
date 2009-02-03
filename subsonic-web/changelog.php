@@ -17,6 +17,20 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="3.6"><h2 class="div">Subsonic 3.6 - Feb 01, 2009</h2></a>
+<ul>
+<li><span class="bugid">Security:</span> For improved security, only transcoders installed in SUBSONIC_HOME/transcode are allowed to be executed. This includes LAME downsampling.</li>
+<li><span class="bugid">New:</span> Added Swedish translation by J&ouml;rgen Sj&ouml;berg.</li>
+<li><span class="bugid">New:</span> Added two new locales, "English (United States)" and "English (United Kingdom)". The only difference currently is the date format.</li>
+<li><span class="bugid">New:</span> Change tray icon if Subsonic server isn't running.</li>
+<li><span class="bugid">Bugfix:</span> Make new Flash player work if Subsonic is behind proxy.</li>
+<li><span class="bugid">Bugfix:</span> Fixed problem where server in some cases came to a state where streaming is refused.</li>
+<li><span class="bugid">Bugfix:</span> Support download and streaming of files larger than 2 GB.</li>
+<li><span class="bugid">Bugfix:</span> Use UTF-8 when generating m3u playlist.</li>
+<li><span class="bugid">Bugfix:</span> Main frame now correctly switches to the currently playing album.</li>
+<li><span class="bugid">Bugfix:</span> Show currently playing icon for all player types.</li>
+</ul>
+
 <a name="3.6.beta2"><h2 class="div">Subsonic 3.6.beta2 - Jan 13, 2009</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Updated French translation. (Thanks to sheridan).</li>
@@ -530,6 +544,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#3.6.beta2">Subsonic 3.6</a></li>
             <li><a href="#3.6.beta2">Subsonic 3.6.beta2</a></li>
             <li><a href="#3.6.beta1">Subsonic 3.6.beta1</a></li>
             <li><a href="#3.5">Subsonic 3.5</a></li>
