@@ -53,6 +53,7 @@ public class UserSettingsController extends SimpleFormController {
         } else {
             command.setNew(true);
             command.setStreamRole(true);
+            command.setSettingsRole(true);
         }
 
         command.setUsers(securityService.getAllUsers());
@@ -111,6 +112,7 @@ public class UserSettingsController extends SimpleFormController {
         user.setCommentRole(command.isCommentRole());
         user.setPodcastRole(command.isPodcastRole());
         user.setStreamRole(command.isStreamRole());
+        user.setSettingsRole(command.isSettingsRole());
 
         if (command.isPasswordChange()) {
             user.setPassword(command.getPassword());
@@ -130,6 +132,7 @@ public class UserSettingsController extends SimpleFormController {
         command.setPasswordChange(false);
         command.setNew(true);
         command.setStreamRole(true);
+        command.setSettingsRole(true);
         command.setPassword(null);
         command.setConfirmPassword(null);
         command.setTranscodeSchemeName(null);

@@ -1,10 +1,19 @@
+
+Wrong player/username, "The Doctor", http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1538
+   1. create admin player, 2. login with guest, 3. doesn't create new player for guest.
+Trim email/license key.
+
+DONE IN 3.7
+-----------
+Added new authorization role "User is allowed to change settings and password" in support for guest users.
+
+
 BACKLOG
 ==========================
 "External player" problem described by ghjames in http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3866
 "Sign up" feature.
 Introduce "Default transcoding bitrate" instead of hardcoding it to 128 kbps.
 http://mojo.codehaus.org/jspc/jspc-maven-plugin/usage.html
-Post message on FreeNAS forum once 3.6 is ready.
 NoCache for login.view?
 More > Random playlist doesn't autostart in Flash player.
 Precompile JSPs in Jetty mode. http://www.j2eegeek.com/blog/2004/05/03/a-different-twist-on-pre-compiling-jsps/
@@ -268,7 +277,7 @@ http://www.jamendo.com/
 Get broadband subscription (due March-April 2009)
 Add music courtesies.
 Remove ads.
-
+Write tutorial (incl auto-login).
 
 "Videreutvikling og kommersialisering av Subsonic Media Streamer"
 Etablererstipend. start max 100.000, vekst max 200.000

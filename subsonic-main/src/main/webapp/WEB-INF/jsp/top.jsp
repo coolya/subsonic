@@ -29,7 +29,9 @@
             <td style="width:4em;padding-right:1.5em"><a href="home.view?" target="main"><img src="<spring:theme code="homeImage"/>" title="${home}" alt="${home}"/><br/>${home}</a></td>
             <td style="width:4em;padding-right:1.5em"><a href="nowPlaying.view?" target="main"><img src="<spring:theme code="nowPlayingImage"/>" title="${nowPlaying}" alt="${nowPlaying}"/><br/>${nowPlaying}</a></td>
             <td style="width:4em;padding-right:1.5em"><a href="podcastReceiver.view?" target="main"><img src="<spring:theme code="podcastLargeImage"/>" title="${podcast}" alt="${podcast}"/><br/>${podcast}</a></td>
-            <td style="width:40pt;padding-right:10pt"><a href="settings.view?" target="main"><img src="<spring:theme code="settingsImage"/>" title="${settings}" alt="${settings}"/><br/>${settings}</a></td>
+            <c:if test="${model.user.settingsRole}">
+                <td style="width:40pt;padding-right:10pt"><a href="settings.view?" target="main"><img src="<spring:theme code="settingsImage"/>" title="${settings}" alt="${settings}"/><br/>${settings}</a></td>
+            </c:if>
             <td style="width:4em;padding-right:1.5em"><a href="status.view?" target="main"><img src="<spring:theme code="statusImage"/>" title="${status}" alt="${status}"/><br/>${status}</a></td>
             <td style="width:4em;padding-right:1.5em"><a href="more.view?" target="main"><img src="<spring:theme code="moreImage"/>" title="${more}" alt="${more}"/><br/>${more}</a></td>
             <td style="width:4em;padding-right:1.5em"><a href="help.view?" target="main"><img src="<spring:theme code="helpImage"/>" title="${help}" alt="${help}"/><br/>${help}</a></td>

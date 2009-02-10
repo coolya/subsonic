@@ -35,6 +35,7 @@ public class User {
     private long bytesUploaded;
 
     private boolean isAdminRole;
+    private boolean isSettingsRole;
     private boolean isDownloadRole;
     private boolean isUploadRole;
     private boolean isPlaylistRole;
@@ -109,6 +110,14 @@ public class User {
         this.isAdminRole = isAdminRole;
     }
 
+    public boolean isSettingsRole() {
+        return isSettingsRole;
+    }
+
+    public void setSettingsRole(boolean isSettingsRole) {
+        this.isSettingsRole = isSettingsRole;
+    }
+
     public boolean isCommentRole() {
         return isCommentRole;
     }
@@ -171,6 +180,9 @@ public class User {
 
         if (isAdminRole) {
             result.append(" [admin]");
+        }
+        if (isSettingsRole) {
+            result.append(" [settings]");
         }
         if (isDownloadRole) {
             result.append(" [download]");

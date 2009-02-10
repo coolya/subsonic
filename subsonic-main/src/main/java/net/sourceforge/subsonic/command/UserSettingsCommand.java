@@ -38,6 +38,7 @@ public class UserSettingsCommand {
     private boolean isCommentRole;
     private boolean isPodcastRole;
     private boolean isStreamRole;
+    private boolean isSettingsRole;
 
     private List<User> users;
     private boolean isAdmin;
@@ -124,6 +125,14 @@ public class UserSettingsCommand {
 
     public void setStreamRole(boolean streamRole) {
         isStreamRole = streamRole;
+    }
+
+    public boolean isSettingsRole() {
+        return isSettingsRole;
+    }
+
+    public void setSettingsRole(boolean settingsRole) {
+        isSettingsRole = settingsRole;
     }
 
     public List<User> getUsers() {
@@ -244,6 +253,7 @@ public class UserSettingsCommand {
         isCommentRole = user != null && user.isCommentRole();
         isPodcastRole = user != null && user.isPodcastRole();
         isStreamRole = user != null && user.isStreamRole();
+        isSettingsRole = user != null && user.isSettingsRole();
         isLdapAuthenticated = user != null && user.isLdapAuthenticated();
     }
 }

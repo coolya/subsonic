@@ -33,6 +33,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         user.setUploadRole(false);
         user.setPodcastRole(true);
         user.setStreamRole(true);
+        user.setSettingsRole(true);
         userDao.createUser(user);
 
         User newUser = userDao.getAllUsers().get(0);
@@ -49,6 +50,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         user.setUploadRole(false);
         user.setPodcastRole(true);
         user.setStreamRole(true);
+        user.setSettingsRole(true);
         userDao.createUser(user);
 
         user.setPassword("foo");
@@ -64,6 +66,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         user.setUploadRole(true);
         user.setPodcastRole(false);
         user.setStreamRole(false);
+        user.setSettingsRole(false);
         userDao.updateUser(user);
 
         User newUser = userDao.getAllUsers().get(0);
@@ -110,14 +113,16 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         user.setCommentRole(true);
         user.setPodcastRole(true);
         user.setStreamRole(true);
+        user.setSettingsRole(true);
         userDao.createUser(user);
 
         String[] roles = userDao.getRolesForUser("sindre");
-        assertEquals("Wrong number of roles.", 4, roles.length);
+        assertEquals("Wrong number of roles.", 5, roles.length);
         assertEquals("Wrong role.", "admin", roles[0]);
         assertEquals("Wrong role.", "comment", roles[1]);
         assertEquals("Wrong role.", "podcast", roles[2]);
         assertEquals("Wrong role.", "stream", roles[3]);
+        assertEquals("Wrong role.", "settings", roles[4]);
     }
 
     public void testUserSettings() {
@@ -210,5 +215,6 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong upload role.", expected.isUploadRole(), actual.isUploadRole());
         assertEquals("Wrong upload role.", expected.isUploadRole(), actual.isUploadRole());
         assertEquals("Wrong stream role.", expected.isStreamRole(), actual.isStreamRole());
+        assertEquals("Wrong settings role.", expected.isSettingsRole(), actual.isSettingsRole());
     }
 }

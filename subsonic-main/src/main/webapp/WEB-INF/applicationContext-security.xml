@@ -102,6 +102,10 @@
                 /wap/playerJad.view=IS_AUTHENTICATED_ANONYMOUSLY
                 /wap/playerJar.view=IS_AUTHENTICATED_ANONYMOUSLY
 
+                /personalSettings.view=ROLE_SETTINGS
+                /passwordSettings.view=ROLE_SETTINGS
+                /playerSettings.view=ROLE_SETTINGS
+
                 /generalSettings.view=ROLE_ADMIN
                 /advancedSettings.view=ROLE_ADMIN
                 /userSettings.view=ROLE_ADMIN

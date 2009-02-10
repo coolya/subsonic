@@ -60,6 +60,10 @@
                 <td><label for="admin"><fmt:message key="usersettings.admin"/></label></td>
             </tr>
             <tr>
+                <td><form:checkbox path="settingsRole" id="settings" cssClass="checkbox"/></td>
+                <td><label for="settings"><fmt:message key="usersettings.settings"/></label></td>
+            </tr>
+            <tr>
                 <td><form:checkbox path="streamRole" id="stream" cssClass="checkbox"/></td>
                 <td><label for="stream"><fmt:message key="usersettings.stream"/></label></td>
             </tr>

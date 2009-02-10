@@ -403,12 +403,13 @@
 <h2>
     <table style="white-space:nowrap;">
         <tr style="white-space:nowrap;">
-            <td><select name="player" onchange="location='playlist.view?player=' + options[selectedIndex].value;">
-                <c:forEach items="${model.players}" var="player">
-                    <option ${player.id eq model.player.id ? "selected" : ""} value="${player.id}">${player}</option>
-                </c:forEach>
-            </select></td>
-
+            <c:if test="${model.user.settingsRole}">
+                <td><select name="player" onchange="location='playlist.view?player=' + options[selectedIndex].value;">
+                    <c:forEach items="${model.players}" var="player">
+                        <option ${player.id eq model.player.id ? "selected" : ""} value="${player.id}">${player}</option>
+                    </c:forEach>
+                </select></td>
+            </c:if>
             <c:if test="${model.player.web}">
                 <td style="width:340px; height:20px;padding-left:10px;padding-right:10px"><div id="placeholder">
                     <a href="http://www.adobe.com/go/getflashplayer" target="_blank"><fmt:message key="playlist.getflash"/></a>
@@ -429,7 +430,9 @@
 
             <td style="white-space:nowrap;"><a href="javascript:noop()" onclick="onUndo()"><fmt:message key="playlist.undo"/></a> |</td>
 
-            <td style="white-space:nowrap;"><a href="playerSettings.view?id=${model.player.id}" target="main"><fmt:message key="playlist.settings"/></a> |</td>
+            <c:if test="${model.user.settingsRole}">
+                <td style="white-space:nowrap;"><a href="playerSettings.view?id=${model.player.id}" target="main"><fmt:message key="playlist.settings"/></a> |</td>
+            </c:if>
 
             <td style="white-space:nowrap;"><select id="moreActions" onchange="actionSelected(this.options[selectedIndex].id)">
                 <option id="top" selected="selected"><fmt:message key="playlist.more"/></option>
