@@ -1,12 +1,10 @@
-
-Wrong player/username, "The Doctor", http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1538
-   1. create admin player, 2. login with guest, 3. doesn't create new player for guest.
-Trim email/license key.
+Wrong track duration reported by JW player. (Wrong content-length set in StreamController when transcoding).
 
 DONE IN 3.7
 -----------
 Added new authorization role "User is allowed to change settings and password" in support for guest users.
 Bugfix: Wrong player selected if different users access Subsonic from the same browser instance.
+New: Automatically trim text fields when entering email address and license key.
 
 BACKLOG
 ==========================

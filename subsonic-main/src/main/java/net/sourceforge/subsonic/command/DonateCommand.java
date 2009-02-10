@@ -22,6 +22,8 @@ import net.sourceforge.subsonic.controller.DonateController;
 
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * Command used in {@link DonateController}.
  *
@@ -49,7 +51,7 @@ public class DonateCommand {
     }
 
     public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+        this.emailAddress = StringUtils.trim(emailAddress);
     }
 
     public String getLicense() {
@@ -57,7 +59,7 @@ public class DonateCommand {
     }
 
     public void setLicense(String license) {
-        this.license = license;
+        this.license = StringUtils.trim(license);
     }
 
     public Date getLicenseDate() {
