@@ -80,14 +80,14 @@ public class PlayerService {
         }
 
         // Find by cookie.
+        String username = securityService.getCurrentUsername(request);
         if (player == null && remoteControlEnabled) {
-            player = getPlayerById(getPlayerIdFromCookie(request));
+            player = getPlayerById(getPlayerIdFromCookie(request, username));
         }
 
         // Look for player with same IP address and user name.
-        String remoteUser = securityService.getCurrentUsername(request);
         if (player == null) {
-            player = getPlayerByIpAddressAndUsername(request.getRemoteAddr(), remoteUser);
+            player = getPlayerByIpAddressAndUsername(request.getRemoteAddr(), username);
         }
 
         // If no player was found, create it.
@@ -95,14 +95,14 @@ public class PlayerService {
             player = new Player();
             createPlayer(player);
             LOG.debug("Created player " + player.getId() + " (remoteControlEnabled: " + remoteControlEnabled +
-                    ", isStreamRequest: " + isStreamRequest + ", remoteUser: " + remoteUser +
+                    ", isStreamRequest: " + isStreamRequest + ", username: " + username +
                     ", ip: " + request.getRemoteAddr() + ").");
         }
 
         // Update player data.
         boolean isUpdate = false;
-        if (remoteUser != null && player.getUsername() == null) {
-            player.setUsername(remoteUser);
+        if (username != null && player.getUsername() == null) {
+            player.setUsername(username);
             isUpdate = true;
         }
         if (player.getIpAddress() == null || isStreamRequest ||
@@ -123,7 +123,8 @@ public class PlayerService {
 
         // Set cookie in response.
         if (response != null) {
-            Cookie cookie = new Cookie(COOKIE_NAME, player.getId());
+            String cookieName = COOKIE_NAME + "-" + username;
+            Cookie cookie = new Cookie(cookieName, player.getId());
             cookie.setMaxAge(COOKIE_EXPIRY);
             String path = request.getContextPath();
             if (StringUtils.isEmpty(path)) {
@@ -208,16 +209,18 @@ public class PlayerService {
     /**
      * Reads the player ID from the cookie in the HTTP request.
      *
-     * @param request The IP HTTP request.
+     * @param request The HTTP request.
+     * @param username The name of the current user.
      * @return The player ID embedded in the cookie, or <code>null</code> if cookie is not present.
      */
-    private String getPlayerIdFromCookie(HttpServletRequest request) {
+    private String getPlayerIdFromCookie(HttpServletRequest request, String username) {
         Cookie[] cookies = request.getCookies();
         if (cookies == null) {
             return null;
         }
+        String cookieName = COOKIE_NAME + "-" + username;
         for (Cookie cookie : cookies) {
-            if (COOKIE_NAME.equals(cookie.getName())) {
+            if (cookieName.equals(cookie.getName())) {
                 return cookie.getValue();
             }
         }

@@ -6,7 +6,7 @@ Trim email/license key.
 DONE IN 3.7
 -----------
 Added new authorization role "User is allowed to change settings and password" in support for guest users.
-
+Bugfix: Wrong player selected if different users access Subsonic from the same browser instance.
 
 BACKLOG
 ==========================
