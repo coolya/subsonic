@@ -62,7 +62,7 @@ public final class StringUtil {
             {"mp3", "audio/mpeg"},
             {"mpg", "video/mpeg"},
             {"mpeg", "video/mpeg"},
-            {"mp4", "audio/mp4"},
+            {"mp4", "video/mp4"},
             {"m4a", "audio/mp4"},
             {"mpg4", "audio/mp4"},
             {"ogg", "application/ogg"},
@@ -72,6 +72,7 @@ public final class StringUtil {
             {"jpg", "image/jpeg"},
             {"jpeg", "image/jpeg"},
             {"flv", "video/x-flv"},
+            {"avi", "video/avi"},
             {"png", "image/png"},
             {"bmp", "image/bmp"},
     };
