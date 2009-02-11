@@ -1,23 +1,22 @@
 package net.sourceforge.subsonic;
 
-import java.io.FileReader;
 import java.io.IOException;
 
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.DateTools;
-import org.apache.lucene.search.Searcher;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.Searcher;
+import org.apache.lucene.search.TopDocs;
 
 public class LuceneTest {
+    
     private static final String INDEX_DIR = "c:/tmp/lucene";
 
     public static void main(String[] args) throws Exception {
@@ -27,7 +26,19 @@ public class LuceneTest {
 
     public LuceneTest() throws Exception {
 //        createIndex();
-        search("joe");
+        readIndex();
+//        search("joe");
+    }
+
+    private void readIndex() throws Exception {
+        IndexReader reader = IndexReader.open(INDEX_DIR);
+
+        for (int i = 0; i < reader.numDocs(); i++) {
+            Document doc = reader.document(i);
+            printDocument(doc);
+        }
+
+        reader.close();
     }
 
     private void search(String queryString) throws Exception {
@@ -45,11 +56,17 @@ public class LuceneTest {
         System.out.println("Hits: " + docs.totalHits);
         for (ScoreDoc scoreDoc : docs.scoreDocs) {
             Document doc = searcher.doc(scoreDoc.doc);
-            System.out.println("Artist: " + doc.get("artist"));
-            System.out.println("Album: " + doc.get("album"));
-            System.out.println("Title: " + doc.get("title"));
-            System.out.println("Path: " + doc.get("path"));
+            printDocument(doc);
         }
+        searcher.close();
+        reader.close();
+    }
+
+    private void printDocument(Document doc) {
+        System.out.println("Artist: " + doc.get("artist"));
+        System.out.println("Album: " + doc.get("album"));
+        System.out.println("Title: " + doc.get("title"));
+        System.out.println("Path: " + doc.get("path"));
     }
 
     private void createIndex() throws IOException {
