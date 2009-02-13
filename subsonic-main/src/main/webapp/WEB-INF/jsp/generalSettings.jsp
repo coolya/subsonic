@@ -6,6 +6,9 @@
 </head>
 
 <body class="mainframe">
+<script type="text/javascript" src="<c:url value="/script/wz_tooltip.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/script/tip_balloon.js"/>"></script>
+
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="general"/>
@@ -13,6 +16,13 @@
 
 <fmt:message key="common.help" var="help"/>
 <spring:theme code="helpPopupImage" var="helpUrl"/>
+
+<!--TODO: REMOVE-->
+<div>
+<img src="${helpUrl}" onmouseover="TagToTip('tip1', BALLOON, true, ABOVE, true, OFFSETX, -17, PADDING, 8, WIDTH, -240, CLICKSTICKY, true, CLICKCLOSE, true)" onmouseout="UnTip()"/>
+</div>
+
+<div id="tip1"><fmt:message key="helppopup.ldapsearchfilter.text"/></div>
 
 <form:form method="post" action="generalSettings.view" commandName="command">
 

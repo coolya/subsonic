@@ -1,3 +1,14 @@
+TODO IN 3.7
+--------------
+Improve help popup.
+  o Create taglib?
+  o http://www.walterzorn.com/tooltip/
+  o http://home.comcast.net/~jscheuer1/side/mybox/
+  o http://www.nickstakenburg.com/projects/prototip2/
+Artist-level comments (see forum)
+Jukebox support
+
+
 Refactor SearchService.getRandomSongs()?
 Search result paging.
 Improved search result, http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=4154#4154
@@ -30,6 +41,7 @@ BACKLOG
 Introduce "Default transcoding bitrate" instead of hardcoding it to 128 kbps.
 http://mojo.codehaus.org/jspc/jspc-maven-plugin/usage.html
 NoCache for login.view?
+Remove RipServer support.
 More > Random playlist doesn't autostart in Flash player.
 Precompile JSPs in Jetty mode. http://www.j2eegeek.com/blog/2004/05/03/a-different-twist-on-pre-compiling-jsps/
 Show name of currently playing song in Flash player.
@@ -60,7 +72,6 @@ Avoid logging of DWR stuff. Add logging from Subsonic service.
 Create tutorial of how to build from source.
 Set multiple icons when using Java 6(?)
 Show who played a track last. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1404
-Backlink to Ripserver home page, when using the Ripserver theme.
 Permalink support?
 Support "play more random songs" if web player.
 After logon, go to originally requested page.
@@ -72,15 +83,9 @@ User/music folder authorization.
 Show percent complete for translations.  In web page at least.
 Improve getting started.
 Look at maven release plugin.
-Include getting started (html) in installer.  And add it to start menu. Also create link to subsonic home page in Start menu.
 last.fm problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1278
 Show total playlist duration.
 Remove player dynamic ip property?
-Improve help popup.
-  o Create taglib?
-  o http://home.comcast.net/~jscheuer1/side/mybox/
-  o http://www.nickstakenburg.com/projects/prototip2/
-Artist-level comments (see forum)
 GUI for toggling jukebox mode.
 Make contiuous random mode work in jukebox mode.
 Make repeat work in jukebox mode.
