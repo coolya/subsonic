@@ -29,38 +29,47 @@ import java.util.*;
  * @author Sindre Mehus
  */
 public class SearchCommand {
-    private String query;
-    private boolean isTitleIncluded = true;
-    private boolean isArtistAndAlbumIncluded = true;
+
+    private String title;
+    private String album;
+    private String artist;
     private String time = "0";
+
+    private int offset;
+    private int count;
+
+    private int firstHit;
+    private int lastHit;
+    private int totalHits;
+    private int hitsPerPage;
+
     private List<Match> matches;
     private boolean isIndexBeingCreated;
-    private int maxHits;
     private User user;
     private boolean partyModeEnabled;
 
-    public String getQuery() {
-        return query;
+    public String getTitle() {
+        return title;
     }
 
-    public void setQuery(String query) {
-        this.query = query;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public boolean isTitleIncluded() {
-        return isTitleIncluded;
+    public String getAlbum() {
+        return album;
     }
 
-    public void setTitleIncluded(boolean titleIncluded) {
-        isTitleIncluded = titleIncluded;
+    public void setAlbum(String album) {
+        this.album = album;
     }
 
-    public boolean isArtistAndAlbumIncluded() {
-        return isArtistAndAlbumIncluded;
+    public String getArtist() {
+        return artist;
     }
 
-    public void setArtistAndAlbumIncluded(boolean artistAndAlbumIncluded) {
-        isArtistAndAlbumIncluded = artistAndAlbumIncluded;
+    public void setArtist(String artist) {
+        this.artist = artist;
     }
 
     public String getTime() {
@@ -79,20 +88,60 @@ public class SearchCommand {
         isIndexBeingCreated = indexBeingCreated;
     }
 
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getFirstHit() {
+        return firstHit;
+    }
+
+    public void setFirstHit(int firstHit) {
+        this.firstHit = firstHit;
+    }
+
+    public int getLastHit() {
+        return lastHit;
+    }
+
+    public void setLastHit(int lastHit) {
+        this.lastHit = lastHit;
+    }
+
+    public int getTotalHits() {
+        return totalHits;
+    }
+
+    public void setTotalHits(int totalHits) {
+        this.totalHits = totalHits;
+    }
+
+    public int getHitsPerPage() {
+        return hitsPerPage;
+    }
+
+    public void setHitsPerPage(int hitsPerPage) {
+        this.hitsPerPage = hitsPerPage;
+    }
+
     public List<Match> getMatches() {
         return matches;
     }
 
     public void setMatches(List<Match> matches) {
         this.matches = matches;
-    }
-
-    public void setMaxHits(int maxHits) {
-        this.maxHits = maxHits;
-    }
-
-    public int getMaxHits() {
-        return maxHits;
     }
 
     public User getUser() {
@@ -114,12 +163,14 @@ public class SearchCommand {
     public static class Match {
         private MusicFile musicFile;
         private String title;
-        private String artistAlbumYear;
+        private String album;
+        private String artist;
 
-        public Match(MusicFile musicFile, String title, String artistAlbumYear) {
+        public Match(MusicFile musicFile, String title, String album, String artist) {
             this.musicFile = musicFile;
             this.title = title;
-            this.artistAlbumYear = artistAlbumYear;
+            this.album = album;
+            this.artist = artist;
         }
 
         public MusicFile getMusicFile() {
@@ -130,8 +181,12 @@ public class SearchCommand {
             return title;
         }
 
-        public String getArtistAlbumYear() {
-            return artistAlbumYear;
+        public String getAlbum() {
+            return album;
+        }
+
+        public String getArtist() {
+            return artist;
         }
     }
 }

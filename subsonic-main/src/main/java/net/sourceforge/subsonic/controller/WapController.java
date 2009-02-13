@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.controller;
 
 import java.io.InputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -41,6 +42,8 @@ import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.domain.RandomSearchCriteria;
 import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.SearchCriteria;
+import net.sourceforge.subsonic.domain.SearchResult;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicIndexService;
 import net.sourceforge.subsonic.service.PlayerService;
@@ -181,7 +184,7 @@ public class WapController extends MultiActionController {
         map.put("creatingIndex", creatingIndex);
 
         if (!creatingIndex) {
-            map.put("hits", searchService.heuristicSearch(query, 50, false, false, true, null));
+            map.put("hits", search(query));
         }
 
         return new ModelAndView("wap/searchResult", "model", map);
@@ -235,6 +238,16 @@ public class WapController extends MultiActionController {
             IOUtils.closeQuietly(in);
         }
         return null;
+    }
+
+    private List<MusicFile> search(String query) throws IOException {
+        SearchCriteria criteria = new SearchCriteria();
+        criteria.setTitle(query);
+        criteria.setOffset(0);
+        criteria.setCount(50);
+
+        SearchResult result = searchService.search(criteria);
+        return result.getMusicFiles();
     }
 
     private int getJarSize() throws Exception {

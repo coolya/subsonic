@@ -18,26 +18,31 @@
  */
 package net.sourceforge.subsonic.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.validation.BindException;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.SimpleFormController;
+
+import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.command.SearchCommand;
 import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.SearchCriteria;
+import net.sourceforge.subsonic.domain.SearchResult;
 import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.util.StringUtil;
-import org.springframework.validation.BindException;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
-import org.apache.commons.lang.StringUtils;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Controller for the search page.
@@ -47,7 +52,8 @@ import java.util.regex.Pattern;
 public class SearchController extends SimpleFormController {
 
     private static final long MILLIS_IN_DAY = 24 * 3600 * 1000;
-    private static final int MAX_HITS = 100;
+    private static final int HITS_PER_PAGE = 25;
+    private static final Logger LOG = Logger.getLogger(SearchService.class);
 
     private SearchService searchService;
     private SecurityService securityService;
@@ -55,102 +61,74 @@ public class SearchController extends SimpleFormController {
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
-        return new SearchCommand();
+        SearchCommand command = new SearchCommand();
+        command.setOffset(0);
+        command.setCount(HITS_PER_PAGE);
+        return command;
     }
 
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object com, BindException errors)
             throws Exception {
         SearchCommand command = (SearchCommand) com;
-        command.setMaxHits(MAX_HITS);
 
         User user = securityService.getCurrentUser(request);
         UserSettings userSettings = settingsService.getUserSettings(user.getUsername());
         command.setUser(user);
         command.setPartyModeEnabled(userSettings.isPartyModeEnabled());
 
-        String query = StringUtils.trimToNull(command.getQuery());
+        String title = StringUtils.trimToNull(command.getTitle());
+        String album = StringUtils.trimToNull(command.getAlbum());
+        String artist = StringUtils.trimToNull(command.getArtist());
         long millis = getNewerThanMillis(command);
 
-        if (query != null || millis != 0) {
+        if (title != null || album != null || artist != null || millis != 0) {
 
             if (searchService.isIndexBeingCreated()) {
                 command.setIndexBeingCreated(true);
             } else {
-                List<MusicFile> result = searchService.heuristicSearch(query, MAX_HITS, command.isArtistAndAlbumIncluded(),
-                                                                       command.isArtistAndAlbumIncluded(), command.isTitleIncluded(),
-                                                                       new Date(millis));
-                String[] criteria = StringUtil.split(query);
-                command.setMatches(createMatches(result, criteria));
+
+                SearchCriteria criteria = new SearchCriteria();
+                criteria.setOffset(command.getOffset());
+                criteria.setCount(HITS_PER_PAGE);
+                criteria.setTitle(title);
+                criteria.setAlbum(album);
+                criteria.setArtist(artist);
+                criteria.setNewerThan(new Date(millis));
+
+                SearchResult result = searchService.search(criteria);
+                command.setMatches(createMatches(criteria, result));
+                command.setHitsPerPage(HITS_PER_PAGE);
+                command.setFirstHit(criteria.getOffset() + 1);
+                command.setLastHit(Math.min(criteria.getOffset() + HITS_PER_PAGE, result.getTotalHits()));
+                command.setTotalHits(result.getTotalHits());
             }
         }
 
         return new ModelAndView(getSuccessView(), errors.getModel());
     }
 
-    private List<SearchCommand.Match> createMatches(List<MusicFile> result, String[] criteria) {
+    private List<SearchCommand.Match> createMatches(SearchCriteria criteria, SearchResult result) {
         List<SearchCommand.Match> matches = new ArrayList<SearchCommand.Match>();
-        for (MusicFile musicFile : result) {
-            String title = adorn(musicFile.getTitle(), criteria);
-            String artistAlbumYear = getArtistAlbumYear(musicFile.getMetaData(), criteria);
-            matches.add(new SearchCommand.Match(musicFile, title, artistAlbumYear));
+        for (MusicFile musicFile : result.getMusicFiles()) {
+            String title = adorn(musicFile.getTitle(), criteria.getTitle());
+            String album = adorn(musicFile.getMetaData().getAlbum(), criteria.getAlbum());
+            String artist = adorn(musicFile.getMetaData().getArtist(), criteria.getArtist());
+            matches.add(new SearchCommand.Match(musicFile, title, album, artist));
         }
         return matches;
     }
 
-    private String getArtistAlbumYear(MusicFile.MetaData metaData, String[] criteria) {
-
-        String artist = metaData.getArtist();
-        String album = metaData.getAlbum();
-        String year = metaData.getYear();
-
-        if ("".equals(artist)) {
-            artist = null;
-        }
-        if ("".equals(album)) {
-            album = null;
-        }
-        if ("".equals(year)) {
-            year = null;
-        }
-
-        StringBuffer buf = new StringBuffer();
-
-        if (artist != null) {
-            buf.append("<em>").append(adorn(artist, criteria)).append("</em>");
-        }
-
-        if (artist != null && album != null) {
-            buf.append(" - ");
-        }
-
-        if (album != null) {
-            buf.append(adorn(album, criteria));
-        }
-
-        if (year != null) {
-            buf.append(" (").append(StringUtil.toHtml(year)).append(')');
-        }
-
-        return buf.toString();
-    }
-
-    private String adorn(String text, String[] criteria) {
+    private String adorn(String text, String term) {
+        term = StringUtils.trimToNull(term);
         text = StringUtil.toHtml(text);
-        if (criteria.length == 0) {
+        if (term == null) {
             return text;
         }
 
-        StringBuffer regexp = new StringBuffer();
-        for (int i = 0; i < criteria.length; i++) {
-            regexp.append(StringUtil.toHtml(criteria[i]));
-            if (i < criteria.length - 1) {
-                regexp.append('|');
-            }
-        }
 
         try {
-            Pattern pattern = Pattern.compile(regexp.toString(), Pattern.CASE_INSENSITIVE);
+            Pattern pattern = Pattern.compile(term, Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(text);
 
             StringBuffer buf = new StringBuffer();
@@ -161,6 +139,7 @@ public class SearchController extends SimpleFormController {
 
             return buf.toString();
         } catch (Exception x) {
+            LOG.warn("Failed to adorn text '" + text + "' with term '" + term + "'.");
             return text;
         }
     }

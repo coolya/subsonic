@@ -49,7 +49,8 @@ import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicFileInfo;
 import net.sourceforge.subsonic.domain.MusicFolder;
 import net.sourceforge.subsonic.domain.RandomSearchCriteria;
-import net.sourceforge.subsonic.util.StringUtil;
+import net.sourceforge.subsonic.domain.SearchCriteria;
+import net.sourceforge.subsonic.domain.SearchResult;
 
 /**
  * Provides services for searching for music.
@@ -188,7 +189,7 @@ public class SearchService {
                     LOG.debug("Logically deleting info for album " + info.getPath() + ". Not found on disk.");
                 }
 
-                // Enable row if album has reoccured on disk.
+                // Enable row if album has reoccurred on disk.
                 else if (!info.isEnabled() && albums.contains(info.getPath())) {
                     info.setEnabled(true);
                     musicInfoService.updateMusicFileInfo(info);
@@ -247,103 +248,57 @@ public class SearchService {
     }
 
     /**
-     * Similar to {@link #search}, but uses a simple heuristic approach to get the most relevant matches first.
-     *
-     * @param query         Text to match.
-     * @param maxHits       The maximum number of hits to return.
-     * @param includeArtist Whether to include artist name in search.
-     * @param includeAlbum  Whether to include album name in search.
-     * @param includeTitle  Whether to include song title in search.
-     * @param newerThan     Only return music files newer than this date. If <code>null</code>, this parameter has no effect.
-     * @return A list of music files fulfilling the search criteria.
-     * @throws IOException If an I/O error occurs.
-     */
-    public synchronized List<MusicFile> heuristicSearch(String query, int maxHits, boolean includeArtist, boolean includeAlbum,
-            boolean includeTitle, Date newerThan) throws IOException {
-        if (query == null) {
-            query = "";
-        }
-
-        // Step one: search for exact match.
-        List<MusicFile> resultOne = search(new String[]{query}, maxHits, includeArtist, includeAlbum, includeTitle, newerThan);
-
-        // If a substantial amount of hits were found, return it.
-        if (resultOne.size() > maxHits / 10) {
-            return resultOne;
-        }
-
-        // Step two: split query and re-run search.
-        List<MusicFile> resultTwo = search(StringUtil.split(query), maxHits - resultOne.size(), includeArtist, includeAlbum, includeTitle, newerThan);
-
-        // Step three: compute the union
-        for (MusicFile file : resultTwo) {
-            if (!resultOne.contains(file)) {
-                resultOne.add(file);
-            }
-        }
-
-        return resultOne;
-    }
-
-    /**
      * Search for music files fulfilling the given search criteria. Only songs (files, not directories)
      * are returned.
      *
-     * @param query         Array of strings to match. All of the strings must match.
-     * @param maxHits       The maximum number of hits to return.
-     * @param includeArtist Whether to include artist name in search.
-     * @param includeAlbum  Whether to include album name in search.
-     * @param includeTitle  Whether to include song title in search.
-     * @param newerThan     Only return music files newer than this date. If <code>null</code>, this parameter has no effect.
-     * @return A list of music files fulfilling the search criteria.
+     * @param searchCriteria The search criteria.
+     * @return The search result.
      * @throws IOException If an I/O error occurs.
      */
-    public synchronized List<MusicFile> search(String[] query, int maxHits, boolean includeArtist, boolean includeAlbum,
-            boolean includeTitle, Date newerThan) throws IOException {
-        List<MusicFile> result = new ArrayList<MusicFile>();
+    public synchronized SearchResult search(SearchCriteria searchCriteria) throws IOException {
+
+        List<MusicFile> musicFiles = new ArrayList<MusicFile>();
+        SearchResult result = new SearchResult();
+        int offset = searchCriteria.getOffset();
+        int count = searchCriteria.getCount();
+        result.setOffset(offset);
+        result.setMusicFiles(musicFiles);
+
         if (!isIndexCreated() || isIndexBeingCreated()) {
             return result;
         }
 
-        if (query.length == 0) {
-            query = new String[]{""};
-        }
-
         // Convert query to upper case for slightly better performance.
-        for (int i = 0; i < query.length; i++) {
-            query[i] = query[i].toUpperCase();
-        }
+        String title = StringUtils.upperCase(searchCriteria.getTitle());
+        String album = StringUtils.upperCase(searchCriteria.getAlbum());
+        String artist = StringUtils.upperCase(searchCriteria.getArtist());
 
-        long newerThanTime = newerThan == null ? 0 : newerThan.getTime();
+        long newerThanTime = searchCriteria.getNewerThan() == null ? 0 : searchCriteria.getNewerThan().getTime();
 
         Map<File, Line> index = getIndex();
 
+        int hits = 0;
         for (Line line : index.values()) {
             try {
 
                 if (!line.isFile || line.lastModified < newerThanTime) {
                     continue;
                 }
-
-                boolean isMatch = false;
-                for (String criteria : query) {
-                    boolean isArtistMatch = includeArtist && StringUtils.contains(line.artist, criteria);
-                    boolean isAlbumMatch = includeAlbum && StringUtils.contains(line.album, criteria);
-                    boolean isTitleMatch = includeTitle && StringUtils.contains(line.title, criteria);
-                    isMatch = isArtistMatch || isAlbumMatch || isTitleMatch;
-                    if (!isMatch) {
-                        break;
-                    }
+                if (title != null && !StringUtils.contains(line.title, title)) {
+                    continue;
                 }
-
-                if (!isMatch) {
+                if (album != null && !StringUtils.contains(line.album, album)) {
+                    continue;
+                }
+                if (artist != null && !StringUtils.contains(line.artist, artist)) {
                     continue;
                 }
 
-                if (line.file.exists()) {
-                    result.add(musicFileService.getMusicFile(line.file));
-                    if (result.size() >= maxHits) {
-                        return result;
+                hits++;
+                if (hits > offset && hits <= offset + count) {
+                    MusicFile musicFile = getMusicFileForLine(line);
+                    if (musicFile != null) {
+                        musicFiles.add(musicFile);
                     }
                 }
 
@@ -351,11 +306,24 @@ public class SearchService {
                 LOG.error("An error occurred while searching '" + line + "'.", x);
             }
         }
+
+        result.setTotalHits(hits);
         return result;
     }
 
+    private MusicFile getMusicFileForLine(Line line) {
+        if (!line.file.exists()) {
+            return null;
+        }
+        try {
+            return musicFileService.getMusicFile(line.file);
+        } catch (SecurityException x) {
+            return null;
+        }
+    }
+
     /**
-     * Returns media libaray statistics, including the number of artists, albums and songs.
+     * Returns media library statistics, including the number of artists, albums and songs.
      *
      * @return Media library statistics.
      * @throws IOException If an I/O error occurs.
@@ -694,7 +662,7 @@ public class SearchService {
         private boolean isAlbum;
         private boolean isDirectory;
         private long lastModified;
-        private File file;
+        private File file;  // TODO Use String path instead?
         private long length;
         private String artist;
         private String album;

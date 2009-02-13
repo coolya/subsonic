@@ -39,11 +39,8 @@
             <td style="padding-left:2em">
                 <table><tr>
                     <form method="post" action="search.view" target="main" name="searchForm">
-                        <td><input type="text" name="query" id="query" size="14" value="${search}" onclick="javascript:document.searchForm.query.select();"/></td>
-
+                        <td><input type="text" name="title" id="title" size="14" value="${search}" onclick="javascript:document.searchForm.title.select();"/></td>
                         <td><a href="javascript:document.searchForm.submit()"><img src="<spring:theme code="searchImage"/>" alt="${search}" title="${search}"/></a></td>
-                        <input type="hidden" name="includeTitle" value="on"/>
-                        <input type="hidden" name="includeArtistAndAlbum" value="on"/>
                     </form>
                 </tr></table>
             </td>

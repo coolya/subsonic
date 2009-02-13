@@ -1,4 +1,4 @@
-Lucene
+Refactor SearchService.getRandomSongs()?
 Search result paging.
 Improved search result, http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=4154#4154
 Video support.  FLV, MP4
@@ -21,6 +21,7 @@ DONE IN 3.7
 Added new authorization role "User is allowed to change settings and password" in support for guest users.
 Bugfix: Wrong player selected if different users access Subsonic from the same browser instance.
 New: Automatically trim text fields when entering email address and license key.
+New: Improved search feature. (Paging, album/artist fields)
 
 BACKLOG
 ==========================

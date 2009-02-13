@@ -1,8 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
+<%--@elvariable id="command" type="net.sourceforge.subsonic.command.SearchCommand"--%>
 
 <html><head>
     <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
+
+    <script type="text/javascript">
+        function search(offset) {
+            dwr.util.setValue("offset", offset);
+            document.searchForm.submit();
+        }
+        function previous() {
+            search(parseInt(dwr.util.getValue("offset")) - parseInt(dwr.util.getValue("count")));
+        }
+        function next() {
+            search(parseInt(dwr.util.getValue("offset")) + parseInt(dwr.util.getValue("count")));
+        }
+    </script>
+
 </head>
 <body class="mainframe">
 
@@ -11,36 +27,51 @@
     <fmt:message key="search.title"/>
 </h1>
 
-<form:form commandName="command" method="post" action="search.view">
-    <p>
-        <form:input path="query" size="55"/>
-        <input type="submit" value="<fmt:message key="search.search"/>"/>
-    </p>
-    <form:checkbox path="titleIncluded" id="titleIncluded" cssClass="checkbox"/>
-    <label for="titleIncluded"><fmt:message key="search.include.title"/></label> |
+<form:form commandName="command" method="post" action="search.view" name="searchForm">
+    <form:hidden path="offset" id="offset"/>
+    <form:hidden path="count" id="count"/>
+    <table>
+        <tr>
+            <td><fmt:message key="search.query.title"/></td>
+            <td><form:input path="title" size="35"/></td>
+            <td style="padding-left:0.25em"><input type="submit" onclick="search(0)" value="<fmt:message key="search.search"/>"/></td>
+        </tr>
+        <tr>
+            <td style="padding-top:1.0em"><fmt:message key="search.query.album"/></td>
+            <td style="padding-top:1.0em"><form:input path="album" size="35"/></td>
+            <td/>
+        </tr>
+        <tr>
+            <td><fmt:message key="search.query.artist"/></td>
+            <td><form:input path="artist" size="35"/></td>
+            <td/>
+        </tr>
+        <tr>
+            <td><fmt:message key="search.newer"/></td>
+            <td>
+                <form:select path="time" cssStyle="vertical-align:middle" id="time">
+                    <fmt:message key="search.select" var="select"/>
+                    <fmt:message key="search.day" var="day"/>
+                    <fmt:message key="search.week" var="week"/>
+                    <fmt:message key="search.weeks" var="weeks"/>
+                    <fmt:message key="search.month" var="month"/>
+                    <fmt:message key="search.months" var="months"/>
+                    <fmt:message key="search.year" var="year"/>
 
-    <form:checkbox path="artistAndAlbumIncluded" id="artistAndAlbumIncluded" cssClass="checkbox"/>
-    <label for="artistAndAlbumIncluded"><fmt:message key="search.include.artistandalbum"/></label> |
+                    <form:option value="0" label="${select}"/>
+                    <form:option value="1d" label="1 ${day}"/>
+                    <form:option value="1w" label="1 ${week}"/>
+                    <form:option value="2w" label="2 ${weeks}"/>
+                    <form:option value="1m" label="1 ${month}"/>
+                    <form:option value="3m" label="3 ${months}"/>
+                    <form:option value="6m" label="6 ${months}"/>
+                    <form:option value="1y" label="1 ${year}"/>
+                </form:select>
+            </td>
+            <td/>
+        </tr>
+    </table>
 
-    <label for="time"><fmt:message key="search.newer"/></label>
-    <form:select path="time" cssStyle="vertical-align:middle" id="time">
-        <fmt:message key="search.select" var="select"/>
-        <fmt:message key="search.day" var="day"/>
-        <fmt:message key="search.week" var="week"/>
-        <fmt:message key="search.weeks" var="weeks"/>
-        <fmt:message key="search.month" var="month"/>
-        <fmt:message key="search.months" var="months"/>
-        <fmt:message key="search.year" var="year"/>
-
-        <form:option value="0" label="${select}"/>
-        <form:option value="1d" label="1 ${day}"/>
-        <form:option value="1w" label="1 ${week}"/>
-        <form:option value="2w" label="2 ${weeks}"/>
-        <form:option value="1m" label="1 ${month}"/>
-        <form:option value="3m" label="3 ${months}"/>
-        <form:option value="6m" label="6 ${months}"/>
-        <form:option value="1y" label="1 ${year}"/>
-    </form:select>
 </form:form>
 
 <c:if test="${command.indexBeingCreated}">
@@ -48,22 +79,31 @@
 </c:if>
 
 <c:if test="${command.matches != null}">
-    <p>
+
+    <table class="indent"><tr>
         <c:choose>
-            <c:when test="${fn:length(command.matches) == command.maxHits}">
-                <fmt:message key="search.hits.max"><fmt:param value="${command.maxHits}"/></fmt:message>
-            </c:when>
-            <c:when test="${fn:length(command.matches) == 0}">
-                <fmt:message key="search.hits.none"/>
-            </c:when>
-            <c:when test="${fn:length(command.matches) == 1}">
-                <fmt:message key="search.hits.one"/>
+            <c:when test="${command.totalHits eq 0}">
+                <th><fmt:message key="search.hits.none"/></th>
             </c:when>
             <c:otherwise>
-                <fmt:message key="search.hits.many"><fmt:param value="${fn:length(command.matches)}"/></fmt:message>
+                <th style="padding-right:2em">
+                    <fmt:message key="search.hits">
+                        <fmt:param value="${command.firstHit}"/>
+                        <fmt:param value="${command.lastHit}"/>
+                        <fmt:param value="${command.totalHits}"/>
+                    </fmt:message>
+                </th>
+
+                <c:if test="${command.firstHit > 1}">
+                    <th><div class="back" style="padding-right:1em"><a href="javascript:noop()" onclick="previous()"><fmt:message key="search.hits.previous"/></a></div></th>
+                </c:if>
+
+                <c:if test="${command.lastHit < command.totalHits}">
+                    <th><div class="forward"><a href="javascript:noop()" onclick="next()"><fmt:message key="search.hits.next"/></a></div></th>
+                </c:if>
             </c:otherwise>
         </c:choose>
-    </p>
+    </tr></table>
 </c:if>
 
 <table style="border-collapse:collapse">
@@ -82,11 +122,16 @@
                 <c:param name="asTable" value="true"/>
             </c:import>
 
-            <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-left:0.25em;padding-right:2em">
+            <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-left:0.25em;padding-right:1.25em">
                 ${match.title}
             </td>
+
+            <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-right:1.25em">
+                <a href="${mainUrl}"><span class="detail">${match.album}</span></a>
+            </td>
+
             <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-right:0.25em">
-                <a target="main" href="${mainUrl}">${match.artistAlbumYear}</a>
+                <span class="detail">${match.artist}</span>
             </td>
         </tr>
     </c:forEach>
