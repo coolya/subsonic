@@ -9,20 +9,9 @@
 <script type="text/javascript" src="<c:url value="/script/wz_tooltip.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/script/tip_balloon.js"/>"></script>
 
-
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="general"/>
 </c:import>
-
-<fmt:message key="common.help" var="help"/>
-<spring:theme code="helpPopupImage" var="helpUrl"/>
-
-<!--TODO: REMOVE-->
-<div>
-<img src="${helpUrl}" onmouseover="TagToTip('tip1', BALLOON, true, ABOVE, true, OFFSETX, -17, PADDING, 8, WIDTH, -240, CLICKSTICKY, true, CLICKCLOSE, true)" onmouseout="UnTip()"/>
-</div>
-
-<div id="tip1"><fmt:message key="helppopup.ldapsearchfilter.text"/></div>
 
 <form:form method="post" action="generalSettings.view" commandName="command">
 
@@ -31,7 +20,7 @@
             <td><fmt:message key="generalsettings.playlistfolder"/></td>
             <td>
                 <form:input path="playlistFolder" size="70"/>
-                <a href="helpPopup.view?topic=playlistFolder" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="playlistfolder"/></c:import>
             </td>
         </tr>
 
@@ -39,7 +28,7 @@
             <td><fmt:message key="generalsettings.musicmask"/></td>
             <td>
                 <form:input path="musicMask" size="70"/>
-                <a href="helpPopup.view?topic=musicMask" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="musicmask"/></c:import>
             </td>
         </tr>
 
@@ -47,7 +36,7 @@
             <td><fmt:message key="generalsettings.coverartmask"/></td>
             <td>
                 <form:input path="coverArtMask" size="70"/>
-                <a href="helpPopup.view?topic=coverArtMask" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="coverartmask"/></c:import>
             </td>
         </tr>
 
@@ -57,7 +46,7 @@
             <td><fmt:message key="generalsettings.index"/></td>
             <td>
                 <form:input path="index" size="70"/>
-                <a href="helpPopup.view?topic=index" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="index"/></c:import>
             </td>
         </tr>
 
@@ -65,7 +54,7 @@
             <td><fmt:message key="generalsettings.ignoredarticles"/></td>
             <td>
                 <form:input path="ignoredArticles" size="70"/>
-                <a href="helpPopup.view?topic=ignoredArticles" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="ignoredarticles"/></c:import>
             </td>
         </tr>
 
@@ -73,7 +62,7 @@
             <td><fmt:message key="generalsettings.shortcuts"/></td>
             <td>
                 <form:input path="shortcuts" size="70"/>
-                <a href="helpPopup.view?topic=shortcuts" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="shortcuts"/></c:import>
             </td>
         </tr>
 
@@ -87,7 +76,7 @@
                         <form:option value="${loopStatus.count - 1}" label="${locale}"/>
                     </c:forEach>
                 </form:select>
-                <a href="helpPopup.view?topic=language" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="language"/></c:import>
             </td>
         </tr>
 
@@ -99,7 +88,7 @@
                         <form:option value="${loopStatus.count - 1}" label="${theme.name}"/>
                     </c:forEach>
                 </form:select>
-                <a href="helpPopup.view?topic=theme" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="theme"/></c:import>
             </td>
         </tr>
 
@@ -109,21 +98,21 @@
             <td><fmt:message key="generalsettings.welcometitle"/></td>
             <td>
                 <form:input path="welcomeTitle" size="70"/>
-                <a href="helpPopup.view?topic=welcomeMessage" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="welcomemessage"/></c:import>
             </td>
         </tr>
         <tr>
             <td><fmt:message key="generalsettings.welcomesubtitle"/></td>
             <td>
                 <form:input path="welcomeSubtitle" size="70"/>
-                <a href="helpPopup.view?topic=welcomeMessage" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="welcomemessage"/></c:import>
             </td>
         </tr>
         <tr>
             <td style="vertical-align:top;"><fmt:message key="generalsettings.welcomemessage"/></td>
             <td>
                 <form:textarea path="welcomeMessage" rows="6" cols="70"/>
-                <a href="helpPopup.view?topic=welcomeMessage" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="welcomemessage"/></c:import>
                 <fmt:message key="main.wiki"/>
             </td>
         </tr>

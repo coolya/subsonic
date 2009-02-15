@@ -19,13 +19,12 @@
 </head>
 
 <body class="mainframe" onload="enableLdapFields()">
+<script type="text/javascript" src="<c:url value="/script/wz_tooltip.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/script/tip_balloon.js"/>"></script>
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="advanced"/>
 </c:import>
-
-<fmt:message key="common.help" var="help"/>
-<spring:theme code="helpPopupImage" var="helpUrl"/>
 
 <form:form method="post" action="advancedSettings.view" commandName="command">
 
@@ -35,7 +34,7 @@
             <td><fmt:message key="advancedsettings.downsamplecommand"/></td>
             <td>
                 <form:input path="downsampleCommand" size="70"/>
-                <a href="helpPopup.view?topic=downsampleCommand" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="downsamplecommand"/></c:import>
             </td>
         </tr>
 
@@ -45,7 +44,7 @@
             <td><fmt:message key="advancedsettings.coverartlimit"/></td>
             <td>
                 <form:input path="coverArtLimit" size="8"/>
-                <a href="helpPopup.view?topic=coverArtLimit" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="coverartlimit"/></c:import>
             </td>
         </tr>
 
@@ -53,7 +52,7 @@
             <td><fmt:message key="advancedsettings.downloadlimit"/></td>
             <td>
                 <form:input path="downloadLimit" size="8"/>
-                <a href="helpPopup.view?topic=downloadLimit" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="downloadlimit"/></c:import>
             </td>
         </tr>
 
@@ -61,7 +60,7 @@
             <td><fmt:message key="advancedsettings.uploadlimit"/></td>
             <td>
                 <form:input path="uploadLimit" size="8"/>
-                <a href="helpPopup.view?topic=uploadLimit" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="uploadlimit"/></c:import>
             </td>
         </tr>
 
@@ -69,7 +68,7 @@
             <td><fmt:message key="advancedsettings.streamport"/></td>
             <td>
                 <form:input path="streamPort" size="8"/>
-                <a href="helpPopup.view?topic=streamPort" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="streamport"/></c:import>
             </td>
         </tr>
 
@@ -79,7 +78,7 @@
             <td colspan="2">
                 <form:checkbox path="ldapEnabled" id="ldap" cssClass="checkbox" onclick="javascript:enableLdapFields()"/>
                 <label for="ldap"><fmt:message key="advancedsettings.ldapenabled"/></label>
-                <a href="helpPopup.view?topic=ldap" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="ldap"/></c:import>
             </td>
         </tr>
 
@@ -89,7 +88,7 @@
                     <td><fmt:message key="advancedsettings.ldapurl"/></td>
                     <td colspan="3">
                         <form:input path="ldapUrl" size="70"/>
-                        <a href="helpPopup.view?topic=ldapUrl" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                        <c:import url="helpToolTip.jsp"><c:param name="topic" value="ldapurl"/></c:import>
                     </td>
                 </tr>
 
@@ -97,7 +96,7 @@
                     <td><fmt:message key="advancedsettings.ldapsearchfilter"/></td>
                     <td colspan="3">
                         <form:input path="ldapSearchFilter" size="70"/>
-                        <a href="helpPopup.view?topic=ldapSearchFilter" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                        <c:import url="helpToolTip.jsp"><c:param name="topic" value="ldapsearchfilter"/></c:import>
                     </td>
                 </tr>
 
@@ -109,7 +108,7 @@
                     <td><fmt:message key="advancedsettings.ldapmanagerpassword"/></td>
                     <td>
                         <form:password path="ldapManagerPassword" size="20"/>
-                        <a href="helpPopup.view?topic=ldapManagerDn" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                        <c:import url="helpToolTip.jsp"><c:param name="topic" value="ldapmanagerdn"/></c:import>
                     </td>
                 </tr>
 
@@ -117,7 +116,7 @@
                     <td colspan="5">
                         <form:checkbox path="ldapAutoShadowing" id="ldapAutoShadowing" cssClass="checkbox"/>
                         <label for="ldapAutoShadowing"><fmt:message key="advancedsettings.ldapautoshadowing"><fmt:param value="${command.brand}"/></fmt:message></label>
-                        <a href="helpPopup.view?topic=ldapAutoShadowing" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                        <c:import url="helpToolTip.jsp"><c:param name="topic" value="ldapautoshadowing"/></c:import>
                     </td>
                 </tr>
             </table>

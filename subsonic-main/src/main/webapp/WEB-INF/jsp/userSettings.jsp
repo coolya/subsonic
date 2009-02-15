@@ -7,6 +7,8 @@
 </head>
 
 <body class="mainframe" onload="enablePasswordChangeFields()">
+<script type="text/javascript" src="<c:url value="/script/wz_tooltip.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/script/tip_balloon.js"/>"></script>
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="user"/>
@@ -104,9 +106,7 @@
                     </c:forEach>
                 </form:select>
             </td>
-            <td><a href="helpPopup.view?topic=transcode" onclick="return popup(this, 'help')">
-                <fmt:message key="common.help" var="help"/>
-                <img src="<spring:theme code="helpPopupImage"/>" alt="" title="${help}"></a></td>
+            <td><c:import url="helpToolTip.jsp"><c:param name="topic" value="transcode"/></c:import></td>
             <c:if test="${not command.transcodingSupported}">
                 <td class="warning"><fmt:message key="playersettings.nolame"/></td>
             </c:if>
@@ -127,7 +127,7 @@
             <tr>
                 <td><form:checkbox path="ldapAuthenticated" id="ldapAuthenticated" cssClass="checkbox" onclick="javascript:enablePasswordChangeFields()"/></td>
                 <td><label for="ldapAuthenticated"><fmt:message key="usersettings.ldap"/></label></td>
-                <td><a href="helpPopup.view?topic=ldap" onclick="return popup(this, 'help')"><img src="<spring:theme code="helpPopupImage"/>" alt="${help}" title="${help}"></a></td>
+                <td><c:import url="helpToolTip.jsp"><c:param name="topic" value="ldap"/></c:import></td>
             </tr>
         </table>
     </c:if>

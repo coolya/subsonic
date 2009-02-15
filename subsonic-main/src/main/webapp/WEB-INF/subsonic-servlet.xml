@@ -50,10 +50,6 @@
         <property name="playerService" ref="playerService"/>
         <property name="settingsService" ref="settingsService"/>
     </bean>
-    <bean id="helpPopupController" class="net.sourceforge.subsonic.controller.HelpPopupController">
-        <property name="viewName" value="helpPopup"/>
-        <property name="settingsService" ref="settingsService"/>
-    </bean>
     <bean id="lyricsController" class="net.sourceforge.subsonic.controller.LyricsController">
         <property name="viewName" value="lyrics"/>
     </bean>
@@ -329,7 +325,6 @@
             <props>
                 <prop key="/main.view">mainController</prop>
                 <prop key="/help.view">helpController</prop>
-                <prop key="/helpPopup.view">helpPopupController</prop>
                 <prop key="/lyrics.view">lyricsController</prop>
                 <prop key="/left.view">leftController</prop>
                 <prop key="/status.view">statusController</prop>

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1" %>
+<%--@elvariable id="command" type="net.sourceforge.subsonic.command.PersonalSettingsCommand"--%>
 
 <html><head>
     <%@ include file="head.jsp" %>
@@ -20,6 +21,8 @@
 </head>
 
 <body class="mainframe" onload="enableLastFmFields()">
+<script type="text/javascript" src="<c:url value="/script/wz_tooltip.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/script/tip_balloon.js"/>"></script>
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="personal"/>
@@ -28,10 +31,7 @@
 
 <h2><fmt:message key="personalsettings.title"><fmt:param>${command.user.username}</fmt:param></fmt:message></h2>
 
-<fmt:message key="common.help" var="help"/>
 <fmt:message key="common.default" var="default"/>
-<spring:theme code="helpPopupImage" var="helpUrl"/>
-
 <form:form method="post" action="personalSettings.view" commandName="command">
 
     <table style="white-space:nowrap" class="indent">
@@ -45,7 +45,7 @@
                         <form:option value="${loopStatus.count - 1}" label="${locale}"/>
                     </c:forEach>
                 </form:select>
-                <a href="helpPopup.view?topic=language" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="language"/></c:import>
             </td>
         </tr>
 
@@ -58,7 +58,7 @@
                         <form:option value="${loopStatus.count - 1}" label="${theme.name}"/>
                     </c:forEach>
                 </form:select>
-                <a href="helpPopup.view?topic=theme" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="theme"/></c:import>
             </td>
         </tr>
     </table>
@@ -69,7 +69,7 @@
             <th style="padding:0 0.5em 0.5em 0.5em;text-align:center;"><fmt:message key="personalsettings.browse"/></th>
             <th style="padding:0 0 0.5em 0.5em;text-align:center;"><fmt:message key="personalsettings.playlist"/></th>
             <th style="padding:0 0 0.5em 0.5em">
-                <a href="helpPopup.view?topic=visibility" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="visibility"/></c:import>
             </th>
         </tr>
         <tr>
@@ -130,7 +130,8 @@
             <td><label for="nowPlaying"><fmt:message key="personalsettings.shownowplaying"/></label></td>
             <td style="padding-left:2em"><form:checkbox path="partyModeEnabled" id="partyModeEnabled" cssClass="checkbox"/></td>
             <td><label for="partyModeEnabled"><fmt:message key="personalsettings.partymode"/></label>
-                <a href="helpPopup.view?topic=partymode" onclick="return popup(this, 'help')"><img src="${helpUrl}" alt="${help}" title="${help}"></a></td>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="partymode"/></c:import>
+            </td>
         </tr>
         <tr>
             <td><form:checkbox path="nowPlayingAllowed" id="nowPlayingAllowed" cssClass="checkbox"/></td>

@@ -1,5 +1,9 @@
 TODO IN 3.7
 --------------
+Make "Clear" remove current track from jw player also.
+Podcast broken? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=120
+Bug when adding new tracks to playlist,  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1543
+
 Improve help popup.
   o Create taglib?
   o http://www.walterzorn.com/tooltip/
@@ -16,6 +20,7 @@ Video support.  FLV, MP4
 Wrong track duration reported by JW player. (Wrong content-length set in StreamController when transcoding).
 Problem when streaming 2gb+ files, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1538
 Change default cover image.
+Read .txt and .nfo for artist/album reviews. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1587
 
 VIDEO
 -----
@@ -33,6 +38,7 @@ Added new authorization role "User is allowed to change settings and password" i
 Bugfix: Wrong player selected if different users access Subsonic from the same browser instance.
 New: Automatically trim text fields when entering email address and license key.
 New: Improved search feature. (Paging, album/artist fields)
+New: Show online help as balloon tooltip.
 
 BACKLOG
 ==========================
@@ -40,6 +46,7 @@ BACKLOG
 "Sign up" feature.
 Introduce "Default transcoding bitrate" instead of hardcoding it to 128 kbps.
 http://mojo.codehaus.org/jspc/jspc-maven-plugin/usage.html
+Post message on FreeNAS forum once 3.6 is ready.
 NoCache for login.view?
 Remove RipServer support.
 More > Random playlist doesn't autostart in Flash player.
@@ -56,7 +63,6 @@ Fix layout in player settings.
 Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305
 Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
 Error with new LAME version?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3339
-Demo mode.
 Sort albums by year. (And show year). getCoverArt() should be made non-recursive. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1075
 Support FLV.
 Support AVI etc?

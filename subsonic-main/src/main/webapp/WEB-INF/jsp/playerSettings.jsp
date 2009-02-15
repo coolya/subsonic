@@ -6,15 +6,15 @@
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
 </head>
 <body class="mainframe">
+<script type="text/javascript" src="<c:url value="/script/wz_tooltip.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/script/tip_balloon.js"/>"></script>
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="player"/>
     <c:param name="restricted" value="${not command.admin}"/>
 </c:import>
 
-<fmt:message key="common.help" var="help"/>
 <fmt:message key="common.unknown" var="unknown"/>
-<spring:theme code="helpPopupImage" var="helpUrl"/>
 
 <c:choose>
 <c:when test="${empty command.players}">
@@ -91,8 +91,7 @@
     <tr>
         <td><fmt:message key="playersettings.name"/></td>
         <td><form:input path="name" size="16"/></td>
-        <td colspan="2"><a href="helpPopup.view?topic=playerName" onclick="return popup(this, 'help')">
-            <img src="${helpUrl}" alt="${help}" title="${help}"></a></td>
+        <td colspan="2"><c:import url="helpToolTip.jsp"><c:param name="topic" value="playername"/></c:import></td>
     </tr>
 
     <tr>
@@ -107,8 +106,7 @@
                 </c:forEach>
             </form:select>
         </td>
-        <td colspan="2"><a href="helpPopup.view?topic=cover" onclick="return popup(this, 'help')">
-            <img src="${helpUrl}" alt="${help}" title="${help}"></a></td>
+        <td colspan="2"><c:import url="helpToolTip.jsp"><c:param name="topic" value="cover"/></c:import></td>
     </tr>
 
     <tr>
@@ -120,8 +118,8 @@
                 </c:forEach>
             </form:select>
         </td>
-        <td><a href="helpPopup.view?topic=transcode" onclick="return popup(this, 'help')">
-            <img src="${helpUrl}" alt="${help}" title="${help}"></a>
+        <td>
+            <c:import url="helpToolTip.jsp"><c:param name="topic" value="transcode"/></c:import>
         </td>
         <td class="warning">
             <c:if test="${not command.transcodingSupported}">
@@ -139,8 +137,7 @@
             <form:checkbox path="dynamicIp" id="dynamicIp" cssClass="checkbox"/>
             <label for="dynamicIp"><fmt:message key="playersettings.dynamicip"/></label>
         </td>
-        <td><a href="helpPopup.view?topic=dynamicIp" onclick="return popup(this, 'help')">
-            <img src="${helpUrl}" alt="${help}" title="${help}"></a></td>
+        <td><c:import url="helpToolTip.jsp"><c:param name="topic" value="dynamicip"/></c:import></td>
     </tr>
 
     <tr>
@@ -148,8 +145,7 @@
             <form:checkbox path="autoControlEnabled" id="autoControlEnabled" cssClass="checkbox"/>
             <label for="autoControlEnabled"><fmt:message key="playersettings.autocontrol"/></label>
         </td>
-        <td><a href="helpPopup.view?topic=autoControl" onclick="return popup(this, 'help')">
-            <img src="${helpUrl}" alt="${help}" title="${help}"></a></td>
+        <td><c:import url="helpToolTip.jsp"><c:param name="topic" value="autocontrol"/></c:import></td>
     </tr>
 </table>
 
