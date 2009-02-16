@@ -11,8 +11,8 @@ PARAMETERS
 <spring:theme code="helpPopupImage" var="imageUrl"/>
 <fmt:message key="common.help" var="help"/>
 
-<div id="placeholder-${param.topic}" style="display:none;">
-    <b><fmt:message key="helppopup.${param.topic}.title"><fmt:param value="Subsonic"/></fmt:message></b><br/>
-    <fmt:message key="helppopup.${param.topic}.text"><fmt:param value="Subsonic"/></fmt:message>
+<div id="placeholder-${param.topic}" style="display:none">
+    <div style="font-weight:bold;"><fmt:message key="helppopup.${param.topic}.title"><fmt:param value="Subsonic"/></fmt:message></div>
+    <div><fmt:message key="helppopup.${param.topic}.text"><fmt:param value="Subsonic"/></fmt:message></div>
 </div>
 <img src="${imageUrl}" alt="${help}" title="${help}" onmouseover="TagToTip('placeholder-${param.topic}', BALLOON, true, ABOVE, true, OFFSETX, -17, PADDING, 8, WIDTH, -240, CLICKSTICKY, true, CLICKCLOSE, true)" onmouseout="UnTip()"/>
