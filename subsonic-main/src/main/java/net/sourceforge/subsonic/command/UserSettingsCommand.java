@@ -38,6 +38,7 @@ public class UserSettingsCommand {
     private boolean isCommentRole;
     private boolean isPodcastRole;
     private boolean isStreamRole;
+    private boolean isJukeboxRole;
     private boolean isSettingsRole;
 
     private List<User> users;
@@ -125,6 +126,14 @@ public class UserSettingsCommand {
 
     public void setStreamRole(boolean streamRole) {
         isStreamRole = streamRole;
+    }
+
+    public boolean isJukeboxRole() {
+        return isJukeboxRole;
+    }
+
+    public void setJukeboxRole(boolean jukeboxRole) {
+        isJukeboxRole = jukeboxRole;
     }
 
     public boolean isSettingsRole() {
@@ -253,6 +262,7 @@ public class UserSettingsCommand {
         isCommentRole = user != null && user.isCommentRole();
         isPodcastRole = user != null && user.isPodcastRole();
         isStreamRole = user != null && user.isStreamRole();
+        isJukeboxRole = user != null && user.isJukeboxRole();
         isSettingsRole = user != null && user.isSettingsRole();
         isLdapAuthenticated = user != null && user.isLdapAuthenticated();
     }

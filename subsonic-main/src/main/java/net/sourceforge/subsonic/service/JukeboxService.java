@@ -49,6 +49,12 @@ public class JukeboxService {
      * @param player The player in question.
      */
     public synchronized void play(Player player) {
+        User user = securityService.getUserByName(player.getUsername());
+        if (!user.isJukeboxRole()) {
+            LOG.warn(user.getUsername() + " is not authorized for jukebox playback.");
+            return;
+        }
+
         stop();
         if (player.getPlaylist().getStatus() == Playlist.Status.PLAYING) {
             thread = new JuxeboxThread(player);
@@ -111,12 +117,12 @@ public class JukeboxService {
         @Override
         public void run() {
             try {
-                LOG.info("Starting jukebox player.");
+                LOG.info("Starting jukebox player on behalf of " + subsonicPlayer.getUsername());
                 jlPlayer.play();
             } catch (Throwable x) {
-                LOG.error("Failed to start jukebox player.", x);
+                LOG.error("An error occurred in the jukebox player.", x);
             } finally {
-                LOG.info("Stopping jukebox player.");
+                LOG.info("Stopping jukebox player on behalf of " + subsonicPlayer.getUsername());
                 statusService.removeStreamStatus(status);
                 User user = securityService.getUserByName(subsonicPlayer.getUsername());
                 securityService.updateUserByteCounts(user, status.getBytesTransfered(), 0L, 0L);

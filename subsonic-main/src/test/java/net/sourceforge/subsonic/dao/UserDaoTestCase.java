@@ -33,6 +33,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         user.setUploadRole(false);
         user.setPodcastRole(true);
         user.setStreamRole(true);
+        user.setJukeboxRole(true);
         user.setSettingsRole(true);
         userDao.createUser(user);
 
@@ -50,6 +51,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         user.setUploadRole(false);
         user.setPodcastRole(true);
         user.setStreamRole(true);
+        user.setJukeboxRole(true);
         user.setSettingsRole(true);
         userDao.createUser(user);
 
@@ -66,6 +68,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         user.setUploadRole(true);
         user.setPodcastRole(false);
         user.setStreamRole(false);
+        user.setJukeboxRole(false);
         user.setSettingsRole(false);
         userDao.updateUser(user);
 
@@ -215,6 +218,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong upload role.", expected.isUploadRole(), actual.isUploadRole());
         assertEquals("Wrong upload role.", expected.isUploadRole(), actual.isUploadRole());
         assertEquals("Wrong stream role.", expected.isStreamRole(), actual.isStreamRole());
+        assertEquals("Wrong jukebox role.", expected.isJukeboxRole(), actual.isJukeboxRole());
         assertEquals("Wrong settings role.", expected.isSettingsRole(), actual.isSettingsRole());
     }
 }

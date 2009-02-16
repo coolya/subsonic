@@ -45,5 +45,14 @@ public class Schema37 extends Schema {
             template.execute("insert into user_role select distinct u.username, 9 from user u");
             LOG.info("Role 'settings' was created successfully.");
         }
+
+        if (template.queryForInt("select count(*) from role where id = 10") == 0) {
+            LOG.info("Role 'jukebox' not found in database. Creating it.");
+            template.execute("insert into role values (10, 'jukebox')");
+            template.execute("insert into user_role " +
+                             "select distinct u.username, 10 from user u, user_role ur " +
+                             "where u.username = ur.username and ur.role_id = 1");
+            LOG.info("Role 'jukebox' was created successfully.");
+        }
     }
 }

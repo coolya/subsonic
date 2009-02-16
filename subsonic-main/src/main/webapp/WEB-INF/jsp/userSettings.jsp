@@ -66,20 +66,24 @@
                 <td><label for="settings"><fmt:message key="usersettings.settings"/></label></td>
             </tr>
             <tr>
-                <td><form:checkbox path="streamRole" id="stream" cssClass="checkbox"/></td>
-                <td><label for="stream"><fmt:message key="usersettings.stream"/></label></td>
+                <td style="padding-top:1em"><form:checkbox path="streamRole" id="stream" cssClass="checkbox"/></td>
+                <td style="padding-top:1em"><label for="stream"><fmt:message key="usersettings.stream"/></label></td>
             </tr>
             <tr>
-                <td><form:checkbox path="downloadRole" id="download" cssClass="checkbox"/></td>
-                <td><label for="download"><fmt:message key="usersettings.download"/></label></td>
+                <td><form:checkbox path="jukeboxRole" id="jukebox" cssClass="checkbox"/></td>
+                <td><label for="jukebox"><fmt:message key="usersettings.jukebox"/></label></td>
+            </tr>
+            <tr>
+            <td><form:checkbox path="downloadRole" id="download" cssClass="checkbox"/></td>
+            <td><label for="download"><fmt:message key="usersettings.download"/></label></td>
             </tr>
             <tr>
                 <td><form:checkbox path="uploadRole" id="upload" cssClass="checkbox"/></td>
                 <td><label for="upload"><fmt:message key="usersettings.upload"/></label></td>
             </tr>
             <tr>
-                <td><form:checkbox path="playlistRole" id="playlist" cssClass="checkbox"/></td>
-                <td><label for="playlist"><fmt:message key="usersettings.playlist"/></label></td>
+                <td style="padding-top:1em"><form:checkbox path="playlistRole" id="playlist" cssClass="checkbox"/></td>
+                <td style="padding-top:1em"><label for="playlist"><fmt:message key="usersettings.playlist"/></label></td>
             </tr>
             <tr>
                 <td><form:checkbox path="coverArtRole" id="coverArt" cssClass="checkbox"/></td>
