@@ -192,16 +192,14 @@ public class PlaylistService {
         HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
         String url = request.getRequestURL().toString();
 
+        if (sendM3U && player.isJukebox()) {
+            jukeboxService.play(player);
+        }
         boolean isCurrentPlayer = player.getIpAddress() != null && player.getIpAddress().equals(request.getRemoteAddr());
 
-        boolean jukebox = player.isJukebox();
         boolean m3uSupported = player.isExternal() || player.isExternalWithPlaylist();
         sendM3U = player.isAutoControlEnabled() && m3uSupported && isCurrentPlayer && sendM3U;
 
-        // TODO
-        if (sendM3U && jukebox) {
-            jukeboxService.play(player);
-        }
         List<PlaylistInfo.Entry> entries = new ArrayList<PlaylistInfo.Entry>();
         Playlist playlist = player.getPlaylist();
         for (MusicFile file : playlist.getFiles()) {

@@ -4,7 +4,8 @@ Make "Clear" remove current track from jw player also.
 Podcast broken? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=120
 Bug when adding new tracks to playlist,  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1543
 Jukebox support
-
+Somehow indicate player type in playlist.
+Remove username and/or IP address from playlist?
 Refactor SearchService.getRandomSongs()?
 Improved search result, http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=4154#4154
 Video support.  FLV, MP4
@@ -12,6 +13,16 @@ Wrong track duration reported by JW player. (Wrong content-length set in StreamC
 Problem when streaming 2gb+ files, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1538
 Change default cover image.
 Read .txt and .nfo for artist/album reviews. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1587
+
+JUKEBOX
+-------
+Authorization
+Make contiuous random mode work in jukebox mode.
+Make repeat work in jukebox mode.
+Make xxx work in jukebox mode.
+Should everybody be allowed to enable jukebox mode?
+Proper jukebox support. Check out jlayer. and see how jinzora does it. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1188
+Add volume control to jukebox player.
 
 VIDEO
 -----
@@ -84,13 +95,7 @@ Look at maven release plugin.
 last.fm problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1278
 Show total playlist duration.
 Remove player dynamic ip property?
-GUI for toggling jukebox mode.
-Make contiuous random mode work in jukebox mode.
-Make repeat work in jukebox mode.
-Make xxx work in jukebox mode.
-Should everybody be allowed to enable jukebox mode?
 Upgrade to Spring Security.
-Proper jukebox support. Check out jlayer. and see how jinzora does it. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1188
 iPod/iPhone support.
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1200
    http://www.alloysoft.com/
@@ -102,7 +107,6 @@ Uninstaller should optionally delete c:\subsonic
 Nicer popup for lyrics and online help.
 Add option for one player per user http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1255
 Add volume control to jme player.
-Add volume control to jukebox player.
 Verify that LastModified works for avatars.
 Create per-channel podcast settings. At least enable/disable.
 Should make it possible to retrieve avatars without reading the binary column.

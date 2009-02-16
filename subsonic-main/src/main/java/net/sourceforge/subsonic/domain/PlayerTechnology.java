@@ -39,11 +39,11 @@ public enum PlayerTechnology {
      * Same as above, but the playlist is managed by the player, rather than the Subsonic server.
      * In this mode, skipping within songs is possible.
      */
-    EXTERNAL_WITH_PLAYLIST
+    EXTERNAL_WITH_PLAYLIST,
 
     /**
      * Plays music directly on the audio device of the Subsonic server.
      */
-//    JUKEBOX
+    JUKEBOX
 
 }
