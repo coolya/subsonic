@@ -146,10 +146,11 @@
             <c:set var="needSep" value="true"/>
         </c:if>
 
-        <c:if test="${model.user.commentRole}">
-            <c:if test="${needSep}">|</c:if>
-            <a href="javascript:toggleComment()"><fmt:message key="main.comment"/></a>
-        </c:if>
+    </c:if>
+
+    <c:if test="${model.user.commentRole}">
+        <c:if test="${needSep}">|</c:if>
+        <a href="javascript:toggleComment()"><fmt:message key="main.comment"/></a>
     </c:if>
 </h2>
 </c:if>
@@ -195,27 +196,27 @@
             <a target="_blank" href="${lastFmUrl}">Last.fm</a>
         </c:if>
     </span>
+</c:if>
 
-    <div id="comment" class="albumComment"><sub:wiki text="${model.comment}"/></div>
+<div id="comment" class="albumComment"><sub:wiki text="${model.comment}"/></div>
 
-    <div id="commentForm" style="display:none">
+<div id="commentForm" style="display:none">
     <form method="post" action="setMusicFileInfo.view">
         <input type="hidden" name="action" value="comment"/>
         <input type="hidden" name="path" value="${model.dir.path}"/>
         <textarea name="comment" rows="6" cols="70">${model.comment}</textarea>
         <input type="submit" value="<fmt:message key="common.save"/>"/>
     </form>
-        <fmt:message key="main.wiki"/>
-    </div>
+    <fmt:message key="main.wiki"/>
+</div>
 
-    <script type='text/javascript'>
-        function toggleComment() {
-            $("commentForm").toggle();
-            $("comment").toggle();
-        }
-    </script>
+<script type='text/javascript'>
+    function toggleComment() {
+        $("commentForm").toggle();
+        $("comment").toggle();
+    }
+</script>
 
-</c:if>
 
 <table cellpadding="10" style="width:100%">
 <tr style="vertical-align:top;">
