@@ -4,6 +4,9 @@
 # The original Subsonic theme.
 default "Subsonic Default"
 
+# Midnight fun theme, courtesy of Don Pearson http://www.midnightfun.co.uk/
+midnightfun "Midnight Fun"
+
 # Theme with dark colors.
 midnight "2 Minutes To Midnight"
 
