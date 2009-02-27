@@ -170,7 +170,7 @@ body.page-features #main-col {
 #nav li a span {
 	display: block;
 	float: left;
-	padding: 12px 20px 12px 20px;
+	padding: 12px 19px 12px 19px;
 	background: url('../img/topnav-div.gif') right 1px no-repeat;
 }
 #nav li a:hover, #nav li a.active {

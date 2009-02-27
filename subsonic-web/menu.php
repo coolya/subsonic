@@ -18,6 +18,7 @@
         <li id="menu-home"><a href="index.php" class="<?php if ($current == 'home') echo('open');?>"><span>Home</span></a></li>
         <li id="menu-features"><a href="features.php" class="<?php if ($current == 'features') echo('open');?>"><span>Features</span></a></li>
         <li id="menu-screenshots"><a href="screenshots.php" class="<?php if ($current == 'screenshots') echo('open');?>"><span>Screenshots</span></a></li>
+        <li id="menu-demo"><a href="demo.php" class="<?php if ($current == 'demo') echo('open');?>"><span>Demo</span></a></li>
         <li id="menu-download"><a href="download.php" class="<?php if ($current == 'download') echo('open');?>"><span>Download</span></a></li>
         <li id="menu-installation"><a href="installation.php" class="<?php if ($current == 'installation') echo('open');?>"><span>Installation</span></a></li>
         <li id="menu-transcoding"><a href="transcoding.php" class="<?php if ($current == 'transcoding') echo('open');?>"><span>Transcoding</span></a></li>
