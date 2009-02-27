@@ -8,8 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.net.URL;
 
 /**
@@ -70,19 +68,15 @@ public class SubsonicFrame extends JFrame {
     private void addBehaviour() {
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onClose();
-            }
-        });
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                onClose();
+                setVisible(false);
             }
         });
     }
 
-    private void onClose() {
-        setVisible(false);
+    @Override
+    public void setVisible(boolean b) {
+        super.setVisible(b);
+        subsonicAgent.setServiceStatusPollingEnabled(b);
     }
 
     public void showControlPanel() {

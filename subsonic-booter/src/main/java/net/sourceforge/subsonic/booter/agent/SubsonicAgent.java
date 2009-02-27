@@ -29,6 +29,7 @@ public class SubsonicAgent {
     private static final int POLL_INTERVAL_DEPLOYMENT_INFO_SECONDS = 5;
     private static final int POLL_INTERVAL_SERVICE_STATUS_SECONDS = 5;
     private String url;
+    private boolean serviceStatusPollingEnabled;
 
     public SubsonicAgent(SubsonicDeployerService service) {
         setLookAndFeel();
@@ -62,10 +63,12 @@ public class SubsonicAgent {
 
         runnable = new Runnable() {
             public void run() {
-                try {
-                    notifyServiceStatus(getServiceStatus());
-                } catch (Throwable x) {
-                    notifyServiceStatus(null);
+                if (serviceStatusPollingEnabled) {
+                    try {
+                        notifyServiceStatus(getServiceStatus());
+                    } catch (Throwable x) {
+                        notifyServiceStatus(null);
+                    }
                 }
             }
         };
@@ -75,7 +78,10 @@ public class SubsonicAgent {
     private String getServiceStatus() throws Exception {
         Process process = Runtime.getRuntime().exec("subsonic-service.exe -status");
         return IOUtils.toString(process.getInputStream());
-//        process.waitFor();
+    }
+
+    public void setServiceStatusPollingEnabled(boolean enabled) {
+        serviceStatusPollingEnabled = enabled;
     }
 
     public void startOrStopService(boolean start) {
