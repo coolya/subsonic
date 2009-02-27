@@ -181,7 +181,7 @@
         }
 
         if ($("toggleRepeat")) {
-            var text = playlist.repeatEnabled ? "<fmt:message key="playlist.repeat_off"/>" : "<fmt:message key="playlist.repeat_on"/>";
+            var text = playlist.repeatEnabled ? "<fmt:message key="playlist.repeat_on"/>" : "<fmt:message key="playlist.repeat_off"/>";
             dwr.util.setValue("toggleRepeat", text);
         }
 
