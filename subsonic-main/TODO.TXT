@@ -19,14 +19,10 @@ Add Save, Cancel buttons to passwordSettings.jsp
 
 JUKEBOX
 -------
-Authorization
 Somehow indicate player type in playlist.
 Make contiuous random mode work in jukebox mode.
-Make repeat work in jukebox mode.
-Make xxx work in jukebox mode.
-Should everybody be allowed to enable jukebox mode?
-Proper jukebox support. Check out jlayer. and see how jinzora does it. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1188
 Add volume control to jukebox player.
+Handle exceptions when playing.
 
 VIDEO
 -----
@@ -49,6 +45,8 @@ New: Automatically trim text fields when entering email address and license key.
 New: Improved search feature. (Paging, album/artist search fields)
 New: Show online help as balloon tooltip.
 New: Artist-level comments.
+New: Added theme "Cool and Clean", courtesy of Dan Eriksen
+
 
 BACKLOG
 ==========================
