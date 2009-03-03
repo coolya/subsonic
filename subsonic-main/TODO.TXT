@@ -46,6 +46,7 @@ New: Improved search feature. (Paging, album/artist search fields)
 New: Show online help as balloon tooltip.
 New: Artist-level comments.
 New: Added theme "Cool and Clean", courtesy of Dan Eriksen
+New: Added theme "Midnight Fun", courtesy of Don Pearson
 
 
 BACKLOG
