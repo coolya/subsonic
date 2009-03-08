@@ -1,5 +1,7 @@
 TODO IN 3.7
 --------------
+kdid caching problem, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1558
+Show cover art for all music folders (same artist) http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1626
 Give feedback on midnightfun theme.
 Add buttons for next/prev track.
 Make "Clear" remove current track from jw player also.
@@ -50,16 +52,25 @@ New: Show online help as balloon tooltip.
 New: Artist-level comments.
 New: Added theme "Cool and Clean", courtesy of Dan Eriksen
 New: Added theme "Midnight Fun", courtesy of Don Pearson
-New: Added Slovenian translation, courtesy of Andrej Žižmond 
+New: Added Slovenian translation, courtesy of Andrej Žižmond
 
 BACKLOG
 ==========================
+iPod/iPhone support.
+   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1200
+   http://www.alloysoft.com/
+   http://developer.apple.com/webapps
+   http://developer.apple.com/internet/webcontent/bestwebdev.html
+Artist/Album level comments, ability to read from txt file, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1587
+Include a ffmpeg binary in the transcoding pack. It can transcode most video formats to flv on the fly
 "External player" problem described by ghjames in http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3866
 "Sign up" feature.
 Introduce "Default transcoding bitrate" instead of hardcoding it to 128 kbps.
 Message system (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=24)
 http://mojo.codehaus.org/jspc/jspc-maven-plugin/usage.html
 NoCache for login.view?
+Optionally hide media library statistics.
+Remember number of albums to show in home.jsp.  Either persistent or per session.
 Remove RipServer support.
 More > Random playlist doesn't autostart in Flash player.
 Log when people log in.
@@ -81,10 +92,10 @@ Sort albums by year. (And show year). getCoverArt() should be made non-recursive
 Support FLV.
 Support AVI etc?
 Add Show/Hide Video?
-Include a ffmpeg binary in the transcoding pack. It can transcode most video formats to flv on the fly
 Minimize/maximize playlist frame.
 Create support for default player type per user.
 Show active users. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1387
+Option to specify extensions not to be included when downloading directories.
 Playlist drag'n drop
 "Featured" albums. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1388
 http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1407
@@ -107,11 +118,6 @@ last.fm problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1278
 Show total playlist duration.
 Remove player dynamic ip property?
 Upgrade to Spring Security.
-iPod/iPhone support.
-   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1200
-   http://www.alloysoft.com/
-   http://developer.apple.com/webapps
-   http://developer.apple.com/internet/webcontent/bestwebdev.html
 Remove Mock/Debug options from JME player.
 Bundle with open-source UPnP app?
 Uninstaller should optionally delete c:\subsonic
