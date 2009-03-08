@@ -25,6 +25,9 @@ it
 # Russian
 ru
 
+# Slovenian
+sl
+
 # Simplified Chinese
 zh_CN
 
