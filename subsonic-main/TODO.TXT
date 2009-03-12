@@ -1,5 +1,6 @@
 TODO IN 3.7
 --------------
+"Now playing" broken. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=4477
 kdid caching problem, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1558
 Show cover art for all music folders (same artist) http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1626
 Give feedback on midnightfun theme.
@@ -21,6 +22,8 @@ Add Save, Cancel buttons to passwordSettings.jsp
 Broken HTTPS/SSL browsing, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1538&start=15  and http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301
 Jukebox player stops between "Overdue" and "Invincible".
 "grep -v" in subsonic.sh
+Updates to subsonic.sh  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1634
+Make lower-left abc work in IE.
 
 JUKEBOX
 -------
@@ -305,6 +308,7 @@ MISCELLANEOUS
 openclipart.org
 tango.freedesktop.org
 http://www.nero.com/eng/nero-aac-codec.html
+http://kickyoutube.com/
 
 GUEST USER / DEMO MODE
 ----------------------
