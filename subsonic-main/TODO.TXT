@@ -1,5 +1,6 @@
 TODO IN 3.7
 --------------
+Don't show player username or IP.
 "Now playing" broken. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=4477
 kdid caching problem, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1558
 Show cover art for all music folders (same artist) http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1626
