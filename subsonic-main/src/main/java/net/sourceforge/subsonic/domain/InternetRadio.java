@@ -18,6 +18,8 @@
  */
 package net.sourceforge.subsonic.domain;
 
+import java.util.Date;
+
 /**
  * Represents an internet radio station.
  *
@@ -31,39 +33,43 @@ public class InternetRadio {
     private String streamUrl;
     private String homepageUrl;
     private boolean isEnabled;
+    private Date changed;
 
     /**
      * Creates a new internet radio station.
-     * @param id The system-generated ID.
-     * @param name The user-defined name.
-     * @param streamUrl The stream URL for the station.
+     *
+     * @param id          The system-generated ID.
+     * @param name        The user-defined name.
+     * @param streamUrl   The stream URL for the station.
      * @param homepageUrl The home page URL for the station.
-     * @param isEnabled Whether the station is enabled.
+     * @param isEnabled   Whether the station is enabled.
+     * @param changed     When the corresponding database entry was last changed.
      */
-    public InternetRadio(Integer id, String name, String streamUrl, String homepageUrl, boolean isEnabled) {
+    public InternetRadio(Integer id, String name, String streamUrl, String homepageUrl, boolean isEnabled, Date changed) {
         this.id = id;
         this.name = name;
         this.streamUrl = streamUrl;
         this.homepageUrl = homepageUrl;
         this.isEnabled = isEnabled;
+        this.changed = changed;
     }
 
     /**
      * Creates a new internet radio station.
-     * @param name The user-defined name.
-     * @param streamUrl The URL for the station.
+     *
+     * @param name        The user-defined name.
+     * @param streamUrl   The URL for the station.
      * @param homepageUrl The home page URL for the station.
-     * @param isEnabled Whether the station is enabled.
+     * @param isEnabled   Whether the station is enabled.
+     * @param changed     When the corresponding database entry was last changed.
      */
-    public InternetRadio(String name, String streamUrl, String homepageUrl, boolean isEnabled) {
-        this.name = name;
-        this.streamUrl = streamUrl;
-        this.homepageUrl = homepageUrl;
-        this.isEnabled = isEnabled;
+    public InternetRadio(String name, String streamUrl, String homepageUrl, boolean isEnabled, Date changed) {
+        this(null, name, streamUrl, homepageUrl, isEnabled, changed);
     }
 
     /**
      * Returns the system-generated ID.
+     *
      * @return The system-generated ID.
      */
     public Integer getId() {
@@ -72,6 +78,7 @@ public class InternetRadio {
 
     /**
      * Returns the user-defined name.
+     *
      * @return The user-defined name.
      */
     public String getName() {
@@ -80,6 +87,7 @@ public class InternetRadio {
 
     /**
      * Sets the user-defined name.
+     *
      * @param name The user-defined name.
      */
     public void setName(String name) {
@@ -88,6 +96,7 @@ public class InternetRadio {
 
     /**
      * Returns the stream URL of the radio station.
+     *
      * @return The stream URL of the radio station.
      */
     public String getStreamUrl() {
@@ -96,14 +105,16 @@ public class InternetRadio {
 
     /**
      * Sets the stream URL of the radio station.
-     * @param url The stream URL of the radio station.
+     *
+     * @param streamUrl The stream URL of the radio station.
      */
-    public void setStreamUrl(String url) {
-        this.streamUrl = url;
+    public void setStreamUrl(String streamUrl) {
+        this.streamUrl = streamUrl;
     }
 
     /**
      * Returns the homepage URL of the radio station.
+     *
      * @return The homepage URL of the radio station.
      */
     public String getHomepageUrl() {
@@ -112,6 +123,7 @@ public class InternetRadio {
 
     /**
      * Sets the home page URL of the radio station.
+     *
      * @param homepageUrl The home page URL of the radio station.
      */
     public void setHomepageUrl(String homepageUrl) {
@@ -120,6 +132,7 @@ public class InternetRadio {
 
     /**
      * Returns whether the radio station is enabled.
+     *
      * @return Whether the radio station is enabled.
      */
     public boolean isEnabled() {
@@ -128,10 +141,28 @@ public class InternetRadio {
 
     /**
      * Sets whether the radio station is enabled.
+     *
      * @param enabled Whether the radio station is enabled.
      */
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
     }
 
+    /**
+     * Returns when the corresponding database entry was last changed.
+     *
+     * @return When the corresponding database entry was last changed.
+     */
+    public Date getChanged() {
+        return changed;
+    }
+
+    /**
+     * Sets when the corresponding database entry was last changed.
+     *
+     * @param changed When the corresponding database entry was last changed.
+     */
+    public void setChanged(Date changed) {
+        this.changed = changed;
+    }
 }

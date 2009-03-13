@@ -28,6 +28,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,6 +43,7 @@ import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicFolder;
 import net.sourceforge.subsonic.domain.MusicIndex;
 import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.domain.InternetRadio;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicIndexService;
 import net.sourceforge.subsonic.service.SearchService;
@@ -67,13 +69,36 @@ public class LeftController extends ParameterizableViewController implements Las
      */
     public long getLastModified(HttpServletRequest request) {
         saveSelectedMusicFolder(request);
-        List<MusicFolder> musicFolders = settingsService.getAllMusicFolders();
 
-        long lastModified = settingsService.getSettingsLastChanged();
-        for (MusicFolder musicFolder : musicFolders) {
-            File file = musicFolder.getPath();
+        // When was settings last changed?
+        long lastModified = settingsService.getSettingsChanged();
+
+        // When was music folder(s) on disk last changed?
+        List<MusicFolder> allMusicFolders = settingsService.getAllMusicFolders();
+        MusicFolder selectedMusicFolder = getSelectedMusicFolder(request);
+        if (selectedMusicFolder != null) {
+            File file = selectedMusicFolder.getPath();
             lastModified = Math.max(lastModified, file.lastModified());
+        } else {
+            for (MusicFolder musicFolder : allMusicFolders) {
+                File file = musicFolder.getPath();
+                lastModified = Math.max(lastModified, file.lastModified());
+            }
         }
+
+        // When was music folder table last changed?
+        for (MusicFolder musicFolder : allMusicFolders) {
+            lastModified = Math.max(lastModified, musicFolder.getChanged().getTime());
+        }
+
+        // When was internet radio table last changed?
+        for (InternetRadio internetRadio : settingsService.getAllInternetRadios()) {
+            lastModified = Math.max(lastModified, internetRadio.getChanged().getTime());
+        }
+
+        // When was user settings last changed?
+        UserSettings userSettings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
+        lastModified = Math.max(lastModified, userSettings.getChanged().getTime());
 
         return lastModified;
     }
@@ -128,6 +153,8 @@ public class LeftController extends ParameterizableViewController implements Las
         }
         int musicFolderId = Integer.parseInt(request.getParameter("musicFolderId"));
 
+        // Note: UserSettings.setChanged() is intentionally not called. This would break browser caching
+        // of the left frame.
         UserSettings settings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
         settings.setSelectedMusicFolderId(musicFolderId);
         settingsService.updateUserSettings(settings);

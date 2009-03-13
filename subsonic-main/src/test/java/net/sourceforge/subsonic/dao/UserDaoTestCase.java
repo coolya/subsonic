@@ -1,13 +1,15 @@
 package net.sourceforge.subsonic.dao;
 
-import net.sourceforge.subsonic.domain.TranscodeScheme;
-import net.sourceforge.subsonic.domain.User;
-import net.sourceforge.subsonic.domain.UserSettings;
-import net.sourceforge.subsonic.domain.AvatarScheme;
+import java.util.Date;
+import java.util.Locale;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.Locale;
+import net.sourceforge.subsonic.domain.AvatarScheme;
+import net.sourceforge.subsonic.domain.TranscodeScheme;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.UserSettings;
 
 /**
  * Unit test of {@link UserDao}.
@@ -176,6 +178,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         settings.setNowPlayingAllowed(true);
         settings.setAvatarScheme(AvatarScheme.SYSTEM);
         settings.setSystemAvatarId(1);
+        settings.setChanged(new Date(9412L));
 
         userDao.updateUserSettings(settings);
         userSettings = userDao.getUserSettings("sindre");
@@ -198,6 +201,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         assertTrue("Error in getUserSettings().", userSettings.isNowPlayingAllowed());
         assertSame("Error in getUserSettings().", AvatarScheme.SYSTEM, userSettings.getAvatarScheme());
         assertEquals("Error in getUserSettings().", 1, userSettings.getSystemAvatarId().intValue());
+        assertEquals("Error in getUserSettings().", new Date(9412L), userSettings.getChanged());
 
         userDao.deleteUser("sindre");
         assertNull("Error in cascading delete.", userDao.getUserSettings("sindre"));

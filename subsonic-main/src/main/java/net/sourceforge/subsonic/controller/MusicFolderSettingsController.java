@@ -88,6 +88,7 @@ public class MusicFolderSettingsController extends ParameterizableViewController
                 musicFolder.setName(name);
                 musicFolder.setPath(file);
                 musicFolder.setEnabled(enabled);
+                musicFolder.setChanged(new Date());
                 settingsService.updateMusicFolder(musicFolder);
             }
         }
@@ -104,7 +105,7 @@ public class MusicFolderSettingsController extends ParameterizableViewController
             if (name == null) {
                 name = file.getName();
             }
-            settingsService.createMusicFolder(new MusicFolder(file, name, enabled));
+            settingsService.createMusicFolder(new MusicFolder(file, name, enabled, new Date()));
         }
 
         return null;

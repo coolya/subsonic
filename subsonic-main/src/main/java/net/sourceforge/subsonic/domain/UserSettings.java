@@ -44,6 +44,7 @@ public class UserSettings {
     private boolean nowPlayingAllowed;
     private AvatarScheme avatarScheme = AvatarScheme.NONE;
     private Integer systemAvatarId;
+    private Date changed = new Date();
 
     public UserSettings(String username) {
         this.username = username;
@@ -183,6 +184,24 @@ public class UserSettings {
 
     public void setSystemAvatarId(Integer systemAvatarId) {
         this.systemAvatarId = systemAvatarId;
+    }
+
+    /**
+     * Returns when the corresponding database entry was last changed.
+     *
+     * @return When the corresponding database entry was last changed.
+     */
+    public Date getChanged() {
+        return changed;
+    }
+
+    /**
+     * Sets when the corresponding database entry was last changed.
+     *
+     * @param changed When the corresponding database entry was last changed.
+     */
+    public void setChanged(Date changed) {
+        this.changed = changed;
     }
 
     /**

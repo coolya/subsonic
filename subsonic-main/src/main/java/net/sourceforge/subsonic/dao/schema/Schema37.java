@@ -23,7 +23,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * Used for creating and evolving the database schema.
- * This class implementes the database schema for Subsonic version 3.7.
+ * This class implements the database schema for Subsonic version 3.7.
  *
  * @author Sindre Mehus
  */
@@ -54,5 +54,24 @@ public class Schema37 extends Schema {
                              "where u.username = ur.username and ur.role_id = 1");
             LOG.info("Role 'jukebox' was created successfully.");
         }
+
+        if (!columnExists(template, "changed", "music_folder")) {
+            LOG.info("Database column 'music_folder.changed' not found.  Creating it.");
+            template.execute("alter table music_folder add changed datetime default 0 not null");
+            LOG.info("Database column 'music_folder.changed' was added successfully.");
+        }
+
+        if (!columnExists(template, "changed", "internet_radio")) {
+            LOG.info("Database column 'internet_radio.changed' not found.  Creating it.");
+            template.execute("alter table internet_radio add changed datetime default 0 not null");
+            LOG.info("Database column 'internet_radio.changed' was added successfully.");
+        }
+
+        if (!columnExists(template, "changed", "user_settings")) {
+            LOG.info("Database column 'user_settings.changed' not found.  Creating it.");
+            template.execute("alter table user_settings add changed datetime default 0 not null");
+            LOG.info("Database column 'user_settings.changed' was added successfully.");
+        }
+
     }
 }

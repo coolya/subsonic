@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 
 /**
  * Controller for the page used to administrate the set of internet radio/tv stations.
@@ -88,7 +89,7 @@ public class InternetRadioSettingsController extends ParameterizableViewControll
                 if (streamUrl == null) {
                     return "internetradiosettings.nourl";
                 }
-                settingsService.updateInternetRadio(new InternetRadio(id, name, streamUrl, homepageUrl, enabled));
+                settingsService.updateInternetRadio(new InternetRadio(id, name, streamUrl, homepageUrl, enabled, new Date()));
             }
         }
 
@@ -98,7 +99,7 @@ public class InternetRadioSettingsController extends ParameterizableViewControll
         boolean enabled = StringUtils.trimToNull(request.getParameter("enabled")) != null;
 
         if (name != null && streamUrl != null) {
-            settingsService.createInternetRadio(new InternetRadio(name, streamUrl, homepageUrl, enabled));
+            settingsService.createInternetRadio(new InternetRadio(name, streamUrl, homepageUrl, enabled, new Date()));
         }
 
         return null;

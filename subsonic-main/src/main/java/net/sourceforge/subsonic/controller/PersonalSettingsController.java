@@ -122,6 +122,7 @@ public class PersonalSettingsController extends SimpleFormController {
             settings.setLastFmPassword(command.getLastFmPassword());
         }
 
+        settings.setChanged(new Date());
         settingsService.updateUserSettings(settings);
 
         command.setReloadNeeded(true);

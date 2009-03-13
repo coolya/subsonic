@@ -95,7 +95,7 @@ public class SubsonicLdapBindAuthenticator implements LdapAuthenticator {
     private synchronized void createDelegate() {
 
         // Only create it if necessary.
-        if (delegateAuthenticator == null || authenticatorTimestamp < settingsService.getSettingsLastChanged()) {
+        if (delegateAuthenticator == null || authenticatorTimestamp < settingsService.getSettingsChanged()) {
 
             DefaultInitialDirContextFactory contextFactory = new DefaultInitialDirContextFactory(settingsService.getLdapUrl());
 
@@ -117,7 +117,7 @@ public class SubsonicLdapBindAuthenticator implements LdapAuthenticator {
             delegateAuthenticator = new BindAuthenticator(contextFactory);
             delegateAuthenticator.setUserSearch(userSearch);
 
-            authenticatorTimestamp = settingsService.getSettingsLastChanged();
+            authenticatorTimestamp = settingsService.getSettingsChanged();
         }
     }
 

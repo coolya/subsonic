@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.controller;
 
 import java.util.List;
+import java.util.Date;
 
 import net.sourceforge.subsonic.service.*;
 import net.sourceforge.subsonic.domain.*;
@@ -123,6 +124,7 @@ public class UserSettingsController extends SimpleFormController {
 
         UserSettings userSettings = settingsService.getUserSettings(command.getUsername());
         userSettings.setTranscodeScheme(TranscodeScheme.valueOf(command.getTranscodeSchemeName()));
+        userSettings.setChanged(new Date());
         settingsService.updateUserSettings(userSettings);
     }
 
