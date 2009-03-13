@@ -57,6 +57,7 @@ New: Artist-level comments.
 New: Added theme "Cool and Clean", courtesy of Dan Eriksen
 New: Added theme "Midnight Fun", courtesy of Don Pearson
 New: Added Slovenian translation, courtesy of Andrej Žižmond
+New: Added Danish translation, courtesy of Morten Hartvich
 
 BACKLOG
 ==========================

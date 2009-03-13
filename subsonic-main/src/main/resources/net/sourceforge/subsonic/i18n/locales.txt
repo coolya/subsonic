@@ -28,6 +28,9 @@ ru
 # Slovenian
 sl
 
+# Macedonian
+mk
+
 # Simplified Chinese
 zh_CN
 
@@ -40,6 +43,7 @@ no
 # Swedish
 sv
 
-# Macedonian
-mk
+# Danish
+da
+
 
