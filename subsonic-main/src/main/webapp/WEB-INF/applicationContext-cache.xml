@@ -28,4 +28,9 @@
         <property name="cacheName" value="coverArtCache"/>
     </bean>
 
+    <bean id="musicFolderCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="cacheName" value="musicFolderCache"/>
+    </bean>
+
 </beans>

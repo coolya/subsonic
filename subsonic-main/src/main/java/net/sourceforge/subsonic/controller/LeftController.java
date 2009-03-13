@@ -20,6 +20,7 @@ package net.sourceforge.subsonic.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,7 +29,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,18 +38,21 @@ import org.springframework.web.servlet.mvc.LastModified;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
+import net.sourceforge.subsonic.domain.InternetRadio;
 import net.sourceforge.subsonic.domain.MediaLibraryStatistics;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicFolder;
 import net.sourceforge.subsonic.domain.MusicIndex;
 import net.sourceforge.subsonic.domain.UserSettings;
-import net.sourceforge.subsonic.domain.InternetRadio;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicIndexService;
 import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.util.StringUtil;
+import net.sourceforge.subsonic.Logger;
 
 /**
  * Controller for the left index frame.
@@ -58,11 +61,14 @@ import net.sourceforge.subsonic.util.StringUtil;
  */
 public class LeftController extends ParameterizableViewController implements LastModified {
 
+    private static final Logger LOG = Logger.getLogger(MusicFile.class);
+
     private SearchService searchService;
     private SettingsService settingsService;
     private SecurityService securityService;
     private MusicFileService musicFileService;
     private MusicIndexService musicIndexService;
+    private Ehcache musicFolderCache;
 
     /**
      * {@inheritDoc}
@@ -118,9 +124,9 @@ public class LeftController extends ParameterizableViewController implements Las
         MusicFolder selectedMusicFolder = getSelectedMusicFolder(request);
         List<MusicFolder> musicFoldersToUse = selectedMusicFolder == null ? allMusicFolders : Arrays.asList(selectedMusicFolder);
         String[] shortcuts = settingsService.getShortcutsAsArray();
-        SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists = musicIndexService.getIndexedArtists(musicFoldersToUse);
-        List<MusicFile> singleSongs = getSingleSongs(musicFoldersToUse);
         UserSettings userSettings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
+
+        MusicFolderCacheEntry cacheEntry = getCacheEntry(musicFoldersToUse, getLastModified(request));
 
         map.put("musicFolders", allMusicFolders);
         map.put("selectedMusicFolder", selectedMusicFolder);
@@ -137,9 +143,9 @@ public class LeftController extends ParameterizableViewController implements Las
             map.put("bytes", StringUtil.formatBytes(bytes, locale));
         }
 
-        map.put("indexedArtists", indexedArtists);
-        map.put("singleSongs", singleSongs);
-        map.put("indexes", indexedArtists.keySet());
+        map.put("indexedArtists", cacheEntry.indexedArtists);
+        map.put("singleSongs", cacheEntry.singleSongs);
+        map.put("indexes", cacheEntry.indexedArtists.keySet());
         map.put("user", securityService.getCurrentUser(request));
 
         ModelAndView result = super.handleRequestInternal(request, response);
@@ -194,6 +200,30 @@ public class LeftController extends ParameterizableViewController implements Las
         return result;
     }
 
+    private MusicFolderCacheEntry getCacheEntry(List<MusicFolder> musicFoldersToUse, long lastModified) throws Exception {
+        List<Integer> musicFolderIds = new ArrayList<Integer>();
+        for (MusicFolder musicFolder : musicFoldersToUse) {
+            musicFolderIds.add(musicFolder.getId());
+        }
+
+        Element element = musicFolderCache.get(musicFolderIds);
+        MusicFolderCacheEntry entry = null;
+        if (element != null) {
+            entry = (MusicFolderCacheEntry) element.getValue();
+            LOG.debug("Cache hit for music folder(s): " + musicFolderIds + ". Up-to-date: " + (entry.lastModified >= lastModified));
+        }
+
+        if (entry == null || entry.lastModified < lastModified) {
+            SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists = musicIndexService.getIndexedArtists(musicFoldersToUse);
+            List<MusicFile> singleSongs = getSingleSongs(musicFoldersToUse);
+            entry = new MusicFolderCacheEntry(indexedArtists, singleSongs, lastModified);
+            musicFolderCache.put(new Element(musicFolderIds, entry));
+            LOG.debug("Updated cache for music folder(s): " + musicFolderIds);
+        }
+
+        return entry;
+    }
+
     public void setSearchService(SearchService searchService) {
         this.searchService = searchService;
     }
@@ -212,5 +242,23 @@ public class LeftController extends ParameterizableViewController implements Las
 
     public void setMusicIndexService(MusicIndexService musicIndexService) {
         this.musicIndexService = musicIndexService;
+    }
+
+    public void setMusicFolderCache(Ehcache musicFolderCache) {
+        this.musicFolderCache = musicFolderCache;
+    }
+
+    private static class MusicFolderCacheEntry implements Serializable {
+
+        private final SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists;
+        private final List<MusicFile> singleSongs;
+        private final long lastModified;
+
+        public MusicFolderCacheEntry(SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists,
+                List<MusicFile> singleSongs, long lastModified) {
+            this.indexedArtists = indexedArtists;
+            this.singleSongs = singleSongs;
+            this.lastModified = lastModified;
+        }
     }
 }

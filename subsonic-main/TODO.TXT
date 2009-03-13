@@ -2,7 +2,6 @@ TODO IN 3.7
 --------------
 Don't show player username or IP.
 "Now playing" broken. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=4477
-kdid caching problem, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1558
 Show cover art for all music folders (same artist) http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1626
 Give feedback on midnightfun theme.
 Add buttons for next/prev track.
@@ -45,7 +44,9 @@ By default, create music folder for video.
 
 DONE IN 3.7
 -----------
-Performance: Improve browser caching of artist list. 
+kdid caching problem,
+
+Performance: Improved browser and server caching of artist list. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1558
 Tech: Only poll for service status if Subsonic Control Panel is opened. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1612
 New: Added new authorization role "User is allowed to change settings and password" in support for guest users.
 Bugfix: Wrong player selected if different users access Subsonic from the same browser instance.

@@ -20,6 +20,7 @@ package net.sourceforge.subsonic.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
 /**
  * A music index is a mapping from an index string to a list of prefixes.  A complete index consists of a list of
@@ -34,7 +35,7 @@ import java.util.List;
  *
  * @author Sindre Mehus
  */
-public class MusicIndex {
+public class MusicIndex implements Serializable {
 
     public static final MusicIndex OTHER = new MusicIndex("#");
 
@@ -115,7 +116,7 @@ public class MusicIndex {
     /**
      * An artist in an index.
      */
-    public static class Artist implements Comparable<Artist> {
+    public static class Artist implements Comparable<Artist>, Serializable {
 
         private final String name;
         private final String sortableName;

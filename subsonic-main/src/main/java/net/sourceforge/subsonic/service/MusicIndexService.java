@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.service;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -59,28 +60,7 @@ public class MusicIndexService {
         String[] shortcuts = settingsService.getShortcutsAsArray();
         final List<MusicIndex> indexes = createIndexesFromExpression(settingsService.getIndexString());
 
-        Comparator<MusicIndex> indexComparator = new Comparator<MusicIndex>() {
-            public int compare(MusicIndex a, MusicIndex b) {
-                int indexA = indexes.indexOf(a);
-                int indexB = indexes.indexOf(b);
-
-                if (indexA == -1) {
-                    indexA = Integer.MAX_VALUE;
-                }
-                if (indexB == -1) {
-                    indexB = Integer.MAX_VALUE;
-                }
-
-                if (indexA < indexB) {
-                    return -1;
-                }
-                if (indexA > indexB) {
-                    return 1;
-                }
-                return 0;
-            }
-        };
-
+        Comparator<MusicIndex> indexComparator = new MusicIndexComparator(indexes);
         SortedSet<Artist> artists = createArtists(folders, ignoredArticles, shortcuts);
         SortedMap<MusicIndex, SortedSet<Artist>> result = new TreeMap<MusicIndex, SortedSet<Artist>>(indexComparator);
 
@@ -207,5 +187,34 @@ public class MusicIndexService {
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
+    }
+
+    private static class MusicIndexComparator implements Comparator<MusicIndex>, Serializable {
+
+        private List<MusicIndex> indexes;
+
+        public MusicIndexComparator(List<MusicIndex> indexes) {
+            this.indexes = indexes;
+        }
+
+        public int compare(MusicIndex a, MusicIndex b) {
+            int indexA = indexes.indexOf(a);
+            int indexB = indexes.indexOf(b);
+
+            if (indexA == -1) {
+                indexA = Integer.MAX_VALUE;
+            }
+            if (indexB == -1) {
+                indexB = Integer.MAX_VALUE;
+            }
+
+            if (indexA < indexB) {
+                return -1;
+            }
+            if (indexA > indexB) {
+                return 1;
+            }
+            return 0;
+        }
     }
 }

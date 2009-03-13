@@ -21,6 +21,7 @@ package net.sourceforge.subsonic.domain;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -43,7 +44,7 @@ import net.sourceforge.subsonic.util.StringUtil;
  *
  * @author Sindre Mehus
  */
-public class MusicFile {
+public class MusicFile implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(MusicFile.class);
 
@@ -442,7 +443,7 @@ public class MusicFile {
     /**
      * Contains meta-data (song title, artist, album etc) for a music file.
      */
-    public static class MetaData {
+    public static class MetaData implements Serializable {
 
         private Integer trackNumber;
         private String title;

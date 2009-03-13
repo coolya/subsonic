@@ -140,7 +140,7 @@ public class SettingsService {
     private static final String DEFAULT_LDAP_MANAGER_PASSWORD = null;
     private static final String DEFAULT_LDAP_SEARCH_FILTER = "(sAMAccountName={0})";
     private static final boolean DEFAULT_LDAP_AUTO_SHADOWING = false;
-    private static final long DEFAULT_SETTINGS_CHANGED = System.currentTimeMillis();
+    private static final long DEFAULT_SETTINGS_CHANGED = 0L;
 
     // Array of all keys.  Used to clean property file.
     private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_SHORTCUTS, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,

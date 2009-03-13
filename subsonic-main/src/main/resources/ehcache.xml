@@ -1,4 +1,5 @@
-<ehcache>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.sourceforge.net/ehcache.xsd">
     <!--
     DiskStore configuration
 
@@ -14,10 +15,12 @@
 
     Subdirectories can be specified below the property e.g. java.io.tmpdir/one
     -->
-    <diskStore path="java.io.tmpdir"/>
+    <diskStore path="java.io.tmpdir/subsonic/ehcache"/>
 
 
-    <!-- Cache configuration.
+    <!--
+    Cache configuration
+    ===================
 
     The following attributes are required.
 
@@ -36,10 +39,10 @@
     element is never expired.
 
     overflowToDisk:
-    Sets whether elements can overflow to disk when the in-memory cache
+    Sets whether elements can overflow to disk when the memory store
     has reached the maxInMemory limit.
 
-    The following attributes are optional.
+    The following attributes and elements are optional.
 
     timeToIdleSeconds:
     Sets the time to idle for an element before it expires.
@@ -63,12 +66,53 @@
     The number of seconds between runs of the disk expiry thread. The default value
     is 120 seconds.
 
+    diskSpoolBufferSizeMB:
+    This is the size to allocate the DiskStore for a spool buffer. Writes are made
+    to this area and then asynchronously written to disk. The default size is 30MB.
+    Each spool buffer is used only by its cache. If you get OutOfMemory errors consider
+    lowering this value. To improve DiskStore performance consider increasing it. Trace level
+    logging in the DiskStore will show if put back ups are occurring.
+
     memoryStoreEvictionPolicy:
     Policy would be enforced upon reaching the maxElementsInMemory limit. Default
     policy is Least Recently Used (specified as LRU). Other policies available -
     First In First Out (specified as FIFO) and Less Frequently Used
     (specified as LFU)
+
+    Cache elements can also contain sub elements which take the same format of a factory class
+    and properties. Defined sub-elements are:
+
+    * cacheEventListenerFactory - Enables registration of listeners for cache events, such as
+      put, remove, update, and expire.
+
+    * bootstrapCacheLoaderFactory - Specifies a BootstrapCacheLoader, which is called by a
+      cache on initialisation to prepopulate itself.
+
+    * cacheExtensionFactory - Specifies a CacheExtension, a generic mechansim to tie a class
+      which holds a reference to a cache to the cache lifecycle.
+
+    * cacheExceptionHandlerFactory - Specifies a CacheExceptionHandler, which is called when
+      cache exceptions occur.
+
+    * cacheLoaderFactory - Specifies a CacheLoader, which can be used both asynchronously and
+      synchronously to load objects into a cache. More than one cacheLoaderFactory element
+      can be added, in which case the loaders form a chain which are executed in order. If a
+      loader returns null, the next in chain is called.
     -->
+
+    <!--
+    Mandatory Default Cache configuration. These settings will be applied to caches
+    created programatically using CacheManager.add(String cacheName)
+    -->
+    <defaultCache maxElementsInMemory="10000"
+                  eternal="false"
+                  timeToIdleSeconds="120"
+                  timeToLiveSeconds="120"
+                  overflowToDisk="true"
+                  maxElementsOnDisk="10000000"
+                  diskPersistent="false"
+                  diskExpiryThreadIntervalSeconds="120"
+                  memoryStoreEvictionPolicy="LRU"/>
 
     <cache name="musicFileCache"
            maxElementsInMemory="1000"
@@ -98,18 +142,11 @@
            timeToLiveSeconds="172800"
            overflowToDisk="false"/>
 
-    <!--
-    Mandatory Default Cache configuration. These settings will be applied to caches
-    created programmtically using CacheManager.add(String cacheName)
-    -->
-    <defaultCache maxElementsInMemory="10000"
-                  eternal="false"
-                  timeToIdleSeconds="120"
-                  timeToLiveSeconds="120"
-                  overflowToDisk="true"
-                  maxElementsOnDisk="10000000"
-                  diskPersistent="false"
-                  diskExpiryThreadIntervalSeconds="120"
-                  memoryStoreEvictionPolicy="LRU"/>
+    <cache name="musicFolderCache"
+           maxElementsInMemory="0"
+           eternal="true"
+           diskPersistent="true"
+           overflowToDisk="true"/>
+
 
 </ehcache>

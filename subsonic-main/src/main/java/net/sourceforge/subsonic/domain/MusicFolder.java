@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.domain;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -27,7 +28,7 @@ import java.util.Date;
  * @author Sindre Mehus
  * @version $Revision: 1.1 $ $Date: 2005/11/27 14:32:05 $
  */
-public class MusicFolder {
+public class MusicFolder implements Serializable {
 
     private Integer id;
     private File path;

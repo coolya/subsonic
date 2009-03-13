@@ -42,6 +42,10 @@ public class SubsonicDeployer implements SubsonicDeployerService {
     private final Date startTime;
 
     public SubsonicDeployer() {
+
+        // Enable shutdown hook for Ehcache.
+        System.setProperty("net.sf.ehcache.enableShutdownHook", "true");
+
         startTime = new Date();
         createLinkFile();
         deployWebApp();
