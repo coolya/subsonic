@@ -1,7 +1,6 @@
 TODO IN 3.7
 --------------
-Add buttons for next/prev track + repeat.
-Make "Clear" remove current track from jw player also.
+Support repeat in web player.
 Broken lyrics? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1640
 "Now playing" broken. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=4477
 Show cover art for all music folders (same artist) http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1626
@@ -50,6 +49,7 @@ Bugfix: Now works behind SSL proxy. http://www.activeobjects.no/subsonic/forum/v
 Bugfix: Wrong player selected if different users access Subsonic from the same browser instance.
 Bugfix: Wrong repeat state displayed in playlist.
 Bugfix: Stop web player when playlist is cleared.
+New: Added buttons for next/previous track in web player. 
 New: Automatically trim text fields when entering email address and license key.
 New: Improved search feature. (Paging, album/artist search fields)
 New: Show online help as balloon tooltip.

@@ -79,7 +79,7 @@
 
     function stateListener(obj) { // IDLE, BUFFERING, PLAYING, PAUSED, COMPLETED
         if (obj.newstate == "COMPLETED" && obj.oldstate == "PLAYING") {
-            skip(parseInt(getCurrentSongIndex()) + 1);
+            onNext();
         }
     }
 
@@ -112,6 +112,12 @@
         playlistService.skip(index, playlistCallback);
     </c:otherwise>
     </c:choose>
+    }
+    function onNext() {
+        skip(parseInt(getCurrentSongIndex()) + 1);
+    }
+    function onPrevious() {
+        skip(parseInt(getCurrentSongIndex()) - 1);
     }
     function onPlay(path) {
         startPlayer = true;
@@ -270,7 +276,7 @@
     }
 
     function skip(index) {
-        if (index >= songs.length) {
+        if (index < 0 || index >= songs.length) {
             return;
         }
 
@@ -420,6 +426,11 @@
             <c:if test="${model.user.streamRole and not model.player.web}">
                 <td style="white-space:nowrap;" id="stop"><b><a href="javascript:noop()" onclick="onStop()"><fmt:message key="playlist.stop"/></a></b> | </td>
                 <td style="white-space:nowrap;" id="start"><b><a href="javascript:noop()" onclick="onStart()"><fmt:message key="playlist.start"/></a></b> | </td>
+            </c:if>
+
+            <c:if test="${model.player.web}">
+                <td style="white-space:nowrap;"><a href="javascript:noop()" onclick="onPrevious()"><b>&laquo;</b></a></td>
+                <td style="white-space:nowrap;"><a href="javascript:noop()" onclick="onNext()"><b>&raquo;</b></a> |</td>
             </c:if>
 
             <td style="white-space:nowrap;"><a href="javascript:noop()" onclick="onClear()"><fmt:message key="playlist.clear"/></a> |</td>
