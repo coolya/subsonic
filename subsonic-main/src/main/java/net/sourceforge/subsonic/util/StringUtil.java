@@ -391,20 +391,20 @@ public final class StringUtil {
     }
 
     /**
-     * Rewrites the URL by changing the host and port.
+     * Rewrites the URL by changing the protocol, host and port.
      *
      * @param urlToRewrite       The URL to rewrite.
-     * @param urlWithHostAndPort Use host and port from this URL.
+     * @param urlWithProtocolHostAndPort Use protocol, host and port from this URL.
      * @return The rewritten URL, or an unchanged URL if either argument is not a proper URL.
      */
-    public static String rewriteUrl(String urlToRewrite, String urlWithHostAndPort) {
+    public static String rewriteUrl(String urlToRewrite, String urlWithProtocolHostAndPort) {
         if (urlToRewrite == null) {
             return null;
         }
 
         try {
             URL urlA = new URL(urlToRewrite);
-            URL urlB = new URL(urlWithHostAndPort);
+            URL urlB = new URL(urlWithProtocolHostAndPort);
 
             URL result = new URL(urlB.getProtocol(), urlB.getHost(), urlB.getPort(), urlA.getFile());
             return result.toExternalForm();

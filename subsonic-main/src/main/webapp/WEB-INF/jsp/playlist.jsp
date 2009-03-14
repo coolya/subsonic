@@ -88,16 +88,13 @@
     }
 
     function onClear() {
-    <c:choose>
-    <c:when test="${model.partyMode}">
-        if (confirm("<fmt:message key="playlist.confirmclear"/>")) {
+        var ok = true;
+    <c:if test="${model.partyMode}">
+        ok = confirm("<fmt:message key="playlist.confirmclear"/>");
+    </c:if>
+        if (ok) {
             playlistService.clear(playlistCallback);
         }
-    </c:when>
-    <c:otherwise>
-        playlistService.clear(playlistCallback);
-    </c:otherwise>
-    </c:choose>
     }
     function onStart() {
         playlistService.start(playlistCallback);
@@ -266,6 +263,10 @@
             }
         }
         updateCurrentImage();
+        if (songs.length == 0) {
+            player.sendEvent("LOAD", new Array());
+            player.sendEvent("STOP");
+        }
     }
 
     function skip(index) {
