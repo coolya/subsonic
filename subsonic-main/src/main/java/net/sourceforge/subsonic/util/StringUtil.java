@@ -406,7 +406,7 @@ public final class StringUtil {
             URL urlA = new URL(urlToRewrite);
             URL urlB = new URL(urlWithHostAndPort);
 
-            URL result = new URL(urlA.getProtocol(), urlB.getHost(), urlB.getPort(), urlA.getFile());
+            URL result = new URL(urlB.getProtocol(), urlB.getHost(), urlB.getPort(), urlA.getFile());
             return result.toExternalForm();
         } catch (MalformedURLException x) {
             return urlToRewrite;

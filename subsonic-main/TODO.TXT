@@ -44,11 +44,10 @@ By default, create music folder for video.
 
 DONE IN 3.7
 -----------
-kdid caching problem,
-
 Performance: Improved browser and server caching of artist list. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1558
 Tech: Only poll for service status if Subsonic Control Panel is opened. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1612
 New: Added new authorization role "User is allowed to change settings and password" in support for guest users.
+Bugfix: Now works behind SSL proxy. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301
 Bugfix: Wrong player selected if different users access Subsonic from the same browser instance.
 Bugfix: Wrong repeat state displayed in playlist.
 New: Automatically trim text fields when entering email address and license key.
