@@ -18,6 +18,8 @@
  */
 package net.sourceforge.subsonic.domain;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.Date;
 
 /**
@@ -274,20 +276,32 @@ public class Player {
     }
 
     /**
-     * Returns a string representation of the player.
+     * Returns a long description of the player, e.g., <code>Player 3 [admin@192.168.2.1]</code>
      *
-     * @return A string representation of the player.
+     * @return A long description of the player.
      */
     public String getDescription() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder builder = new StringBuilder();
         if (name != null) {
-            buf.append(name);
+            builder.append(name);
         } else {
-            buf.append("Player ").append(id);
+            builder.append("Player ").append(id);
         }
 
-        buf.append(" [").append(username).append('@').append(ipAddress).append(']');
-        return buf.toString();
+        builder.append(" [").append(username).append('@').append(ipAddress).append(']');
+        return builder.toString();
+    }
+
+    /**
+     * Returns a short description of the player, e.g., <code>Player 3</code>
+     *
+     * @return A short description of the player.
+     */
+    public String getShortDescription() {
+        if (StringUtils.isNotBlank(name)) {
+            return name;
+        }
+        return "Player " + id;
     }
 
     /**
