@@ -50,9 +50,10 @@ table {
 /* Main frame image & colour */
 .mainframe {
     background-image:url( "../icons/coolandclean/background_main.png" );
-    background-repeat:repeat;
+    background-repeat:no-repeat;
     background-attachment:fixed;
     background-color: #D1D9E1;
+    background-position:right;
 }
 
 /* Back image */
