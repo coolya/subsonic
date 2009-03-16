@@ -60,19 +60,11 @@ table {
 /* Back image */
 .back {
     background-image:url("../icons/midnightfun/midnightfun_back.png");
-    background-position: 0 0 0 0;
-    background-repeat:no-repeat;
-    padding-left: 22px;
-    line-height: 16px
 }
 
 /* Forward image */
 .forward {
     background-image:url("../icons/midnightfun/midnightfun_forward.png");
-    background-position: 0 0 0 0;
-    background-repeat:no-repeat;
-    padding-left: 22px;
-    line-height: 16px
 }
 
 /* Link colour */

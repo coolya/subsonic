@@ -41,7 +41,7 @@ h1, h2, b, tr, .detail, .albumComment {
 /* Table sizing */
 table {
     font-size: 100%;
-    line-height: 120%;
+    line-height: 130%;
     padding: 0;
     border: 0;
     margin: 0 0 0 0;
@@ -59,19 +59,13 @@ table {
 /* Back image */
 .back {
     background-image:url( "../icons/coolandclean/back.png" );
-    background-position: 0 0 0 0;
-    background-repeat:no-repeat;
-    padding-left: 22px;
-    line-height: 20px
+    padding-left:22px;
 }
 
 /* Forward image */
 .forward {
     background-image:url( "../icons/coolandclean/forward.png" );
-    background-position: 0 0 0 0;
-    background-repeat:no-repeat;
-    padding-left: 22px;
-    line-height: 20px
+    padding-left:22px;
 }
 
 /* Link colour */

@@ -1,9 +1,12 @@
 TODO IN 3.7
 --------------
-Support repeat in web player.
+"grep -v" in subsonic.sh
+Updates to subsonic.sh  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1634
 Broken lyrics? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1640
-"Now playing" broken. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=4477
 Show cover art for all music folders (same artist) http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1626
+Support repeat in web player.
+Add volume control to jukebox player.
+"Now playing" broken. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=4477
 Give feedback on midnightfun theme.
 Podcast broken? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=120
 Bug when adding new tracks to playlist,  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1543
@@ -18,16 +21,34 @@ Change default cover image.
 Read .txt and .nfo for artist/album reviews. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1587
 Change LAME download url.
 Add Save, Cancel buttons to passwordSettings.jsp
-"grep -v" in subsonic.sh
-Updates to subsonic.sh  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1634
 Make lower-left abc work in IE.
+
+
+DONE IN 3.7
+-----------
+Performance: Improved browser and server caching of artist list. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1558
+Tech: Only poll for service status if Subsonic Control Panel is opened. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1612
+New: Added new authorization role "User is allowed to change settings and password" in support for guest users.
+Bugfix: Now works behind SSL proxy. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301
+Bugfix: Wrong player selected if different users access Subsonic from the same browser instance.
+Bugfix: Wrong repeat state displayed in playlist.
+Bugfix: Stop web player when playlist is cleared.
+New: Added buttons for next/previous track in web player.
+New: Automatically trim text fields when entering email address and license key.
+New: Improved search feature. (Paging, album/artist search fields)
+New: Show online help as balloon tooltip.
+New: Artist-level comments.
+New: Added theme "Cool and Clean", courtesy of Dan Eriksen
+New: Added theme "Midnight Fun", courtesy of Don Pearson
+New: Added Slovenian translation, courtesy of Andrej Žižmond
+New: Added Danish translation, courtesy of Morten Hartvich
+New: Don't show player username or IP address in playlist.
+
 
 JUKEBOX
 -------
 Somehow indicate player type in playlist.
 Make contiuous random mode work in jukebox mode.
-Add volume control to jukebox player.
-Handle exceptions when playing.
 
 VIDEO
 -----
@@ -39,26 +60,6 @@ Thumbnail support, for instance by using file name conventions.
 Show one thumbnail for each video file, using a generic if not found.
 Use ffmpeg to generate tags and cover art.
 By default, create music folder for video.
-
-DONE IN 3.7
------------
-Performance: Improved browser and server caching of artist list. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1558
-Tech: Only poll for service status if Subsonic Control Panel is opened. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1612
-New: Added new authorization role "User is allowed to change settings and password" in support for guest users.
-Bugfix: Now works behind SSL proxy. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301
-Bugfix: Wrong player selected if different users access Subsonic from the same browser instance.
-Bugfix: Wrong repeat state displayed in playlist.
-Bugfix: Stop web player when playlist is cleared.
-New: Added buttons for next/previous track in web player. 
-New: Automatically trim text fields when entering email address and license key.
-New: Improved search feature. (Paging, album/artist search fields)
-New: Show online help as balloon tooltip.
-New: Artist-level comments.
-New: Added theme "Cool and Clean", courtesy of Dan Eriksen
-New: Added theme "Midnight Fun", courtesy of Don Pearson
-New: Added Slovenian translation, courtesy of Andrej Žižmond
-New: Added Danish translation, courtesy of Morten Hartvich
-New: Don't show player username or IP address in playlist.
 
 BACKLOG
 ==========================
@@ -312,18 +313,6 @@ openclipart.org
 tango.freedesktop.org
 http://www.nero.com/eng/nero-aac-codec.html
 http://kickyoutube.com/
-
-GUEST USER / DEMO MODE
-----------------------
-New authorization role "User is allowed to change settings and password".
-Should not be able to change player settings, nor select other players in combobox.
-Must gather free music collection + podcasts + internet radio
-http://en.wikipedia.org/wiki/Free_music
-http://www.jamendo.com/
-Get broadband subscription (due March-April 2009)
-Add music courtesies.
-Remove ads.
-Write tutorial (incl auto-login).
 
 "Videreutvikling og kommersialisering av Subsonic Media Streamer"
 Etablererstipend. start max 100.000, vekst max 200.000

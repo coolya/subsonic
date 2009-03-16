@@ -55,7 +55,7 @@
                 html += "<tr><td class='detail' style='padding-right:1em'>" +
                         "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'><em>" +
                         nowPlaying[i].artist + "</em><br/>" + nowPlaying[i].title + "</a><br/>" +
-                        "<span class='forward' style='background-position: 0px 2px'><a href='" + nowPlaying[i].lyricsUrl + "' onclick=\"return popupSize(this, 'help', 430, 550)\">" +
+                        "<span class='forward'><a href='" + nowPlaying[i].lyricsUrl + "' onclick=\"return popupSize(this, 'help', 430, 550)\">" +
                         "<fmt:message key="main.lyrics"/>" + "</a></span></td><td style='padding-top:1em'>";
 
                 if (nowPlaying[i].coverArtUrl != null) {
@@ -389,7 +389,8 @@
         <sub:url value="main.view" var="nextUrl">
             <sub:param name="path" value="${model.nextAlbum.path}"/>
         </sub:url>
-        <td><div class="forward"><a href="${nextUrl}" title="${model.nextAlbum.name}">
+        <td><div class="forward"
+                ><a href="${nextUrl}" title="${model.nextAlbum.name}">
             <str:truncateNicely upper="30">${fn:escapeXml(model.nextAlbum.name)}</str:truncateNicely>
         </a></div></td>
     </c:if>

@@ -191,12 +191,19 @@ img {
     font-size: 16pt;
 }
 
+.back, .forward {
+    background-position:center left;
+    background-repeat:no-repeat;
+    padding-left: 16px;
+    line-height: 16px;
+}
+
 .back {
-    background-image:url("../icons/back.gif");background-position: 0px 3px; background-repeat:no-repeat; padding-left: 16px; line-height: 16px;
+    background-image:url("../icons/back.gif");
 }
 
 .forward {
-    background-image:url("../icons/forward.gif");background-position: 0px 3px; background-repeat:no-repeat; padding-left: 16px; line-height: 16px;
+    background-image:url("../icons/forward.gif");
 }
 
 .albumComment {
