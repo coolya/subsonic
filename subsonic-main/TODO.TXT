@@ -23,6 +23,7 @@ Change LAME download url.
 Add Save, Cancel buttons to passwordSettings.jsp
 Make lower-left abc work in IE.
 Add OGG etc support to BasicPlayer.
+Compile Tritonus with JDK 5.
 
 DONE IN 3.7
 -----------

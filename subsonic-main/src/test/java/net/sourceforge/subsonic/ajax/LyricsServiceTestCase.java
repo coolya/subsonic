@@ -48,37 +48,10 @@ public class LyricsServiceTestCase extends TestCase {
             String html = IOUtils.toString(in);
             String lyrics = lyricsService.getLyrics(html);
             assertNotNull("Error in getLyrics().", lyrics);
-            assertTrue("Error in getLyrics().", lyrics.startsWith("And all the masks I carry on my face<br />"));
-            assertTrue("Error in getLyrics().", lyrics.endsWith("This is a song<br />"));
+            assertTrue("Error in getLyrics().", lyrics.startsWith("&#65;&#110;&#100;"));
+            assertTrue("Error in getLyrics().", lyrics.endsWith("&#110;&#103;<br /><br />"));
             assertFalse("Error in getLyrics().", lyrics.contains("<class id=\"NoSteal\">"));
             assertFalse("Error in getLyrics().", lyrics.contains("http://www.metrolyrics.com"));
-        } finally {
-            IOUtils.closeQuietly(in);
-        }
-    }
-
-    public void testGetLyrics2() throws IOException {
-        InputStream in = getClass().getResourceAsStream("metrolyrics_lyrics_2.html");
-        try {
-            String html = IOUtils.toString(in);
-            String lyrics = lyricsService.getLyrics(html);
-            assertNotNull("Error in getLyrics().", lyrics);
-            assertTrue("Error in getLyrics().", lyrics.startsWith("Imperial bodybags, coming home in dribs and drabs<br />"));
-            assertTrue("Error in getLyrics().", lyrics.endsWith("Children wrapped in homemade flags"));
-            assertFalse("Error in getLyrics().", lyrics.contains("<class id=\"NoSteal\">"));
-            assertFalse("Error in getLyrics().", lyrics.contains("http://www.metrolyrics.com"));
-        } finally {
-            IOUtils.closeQuietly(in);
-        }
-    }
-
-    public void testGetLyrics3() throws IOException {
-        InputStream in = getClass().getResourceAsStream("metrolyrics_lyrics_3.html");
-        try {
-            String html = IOUtils.toString(in);
-            String lyrics = lyricsService.getLyrics(html);
-            assertNotNull("Error in getLyrics().", lyrics);
-            assertTrue("Error in getLyrics().", lyrics.startsWith("&#73;&#32;&#97;"));
         } finally {
             IOUtils.closeQuietly(in);
         }
@@ -89,18 +62,7 @@ public class LyricsServiceTestCase extends TestCase {
         try {
             String html = IOUtils.toString(in);
             String header = lyricsService.getHeader(html);
-            assertEquals("Error in getHeader().", "Manic Street Preachers - A Song For Departure", header);
-        } finally {
-            IOUtils.closeQuietly(in);
-        }
-    }
-
-    public void testGetHeader2() throws IOException {
-        InputStream in = getClass().getResourceAsStream("metrolyrics_lyrics_2.html");
-        try {
-            String html = IOUtils.toString(in);
-            String header = lyricsService.getHeader(html);
-            assertEquals("Error in getHeader().", "Manic Street Preachers - Imperial Bodybags", header);
+            assertEquals("Error in getHeader().", "A Song For Departure", header);
         } finally {
             IOUtils.closeQuietly(in);
         }

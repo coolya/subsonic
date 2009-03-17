@@ -96,7 +96,6 @@ public class BasicPlayerTest implements BasicPlayerListener {
      * @param stream     could be File, URL or InputStream
      * @param properties audio stream properties.
      */
-    @Override
     public void opened(Object stream, Map properties) {
         // Pay attention to properties. It's useful to get duration,
         // bitrate, channels, even tag such as ID3v2.
@@ -115,7 +114,6 @@ public class BasicPlayerTest implements BasicPlayerListener {
      * @param pcmdata      PCM samples.
      * @param properties   audio stream parameters.
      */
-    @Override
     public void progress(int bytesread, long microseconds, byte[] pcmdata, Map properties) {
         // Pay attention to properties. It depends on underlying JavaSound SPI
         // MP3SPI provides mp3.equalizer.
@@ -127,7 +125,6 @@ public class BasicPlayerTest implements BasicPlayerListener {
      *
      * @param event
      */
-    @Override
     public void stateUpdated(BasicPlayerEvent event) {
         // Notification of BasicPlayer states (opened, playing, end of media, ...)
         display("stateUpdated : " + event.toString());
@@ -142,7 +139,6 @@ public class BasicPlayerTest implements BasicPlayerListener {
      *
      * @param controller : a handle to the player
      */
-    @Override
     public void setController(BasicController controller) {
         display("setController : "+controller);
 	}

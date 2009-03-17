@@ -121,7 +121,7 @@ public class LyricsService {
     protected String getHeader(String html) {
 
         // Grep for the following pattern:
-        // 	<h3>Manic Street Preachers - A Song For Departure Lyrics</h3>
+        // 	<h3>A Song For Departure Lyrics</h3>
 
         Pattern pattern = Pattern.compile("<h3>(.*) Lyrics</h3>");
         Matcher matcher = pattern.matcher(html);
