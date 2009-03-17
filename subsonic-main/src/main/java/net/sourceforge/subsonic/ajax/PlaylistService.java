@@ -179,6 +179,11 @@ public class PlaylistService {
         return convert(player, false);
     }
 
+    public PlaylistInfo setGain(float gain) throws Exception {
+        jukeboxService.setGain(gain);
+        return convert(getCurrentPlayer(), false);
+    }
+
     private List<MusicFile> getRandomChildren(MusicFile file, int count) throws IOException {
         List<MusicFile> children = file.getDescendants(false, false);
         if (children.isEmpty()) {
@@ -222,7 +227,8 @@ public class PlaylistService {
                     formatContentType(player, file), formatFileSize(metaData.getFileSize()), albumUrl, streamUrl));
         }
         boolean isStopEnabled = playlist.getStatus() == Playlist.Status.PLAYING && !player.isExternalWithPlaylist();
-        return new PlaylistInfo(entries, playlist.getIndex(), isStopEnabled, playlist.isRepeatEnabled(), sendM3U);
+        float gain = jukeboxService.getGain();
+        return new PlaylistInfo(entries, playlist.getIndex(), isStopEnabled, playlist.isRepeatEnabled(), sendM3U, gain);
     }
 
     private String formatFileSize(Long fileSize) {

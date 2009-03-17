@@ -22,7 +22,7 @@ Read .txt and .nfo for artist/album reviews. http://www.activeobjects.no/subsoni
 Change LAME download url.
 Add Save, Cancel buttons to passwordSettings.jsp
 Make lower-left abc work in IE.
-
+Add OGG etc support to BasicPlayer.
 
 DONE IN 3.7
 -----------
@@ -310,6 +310,7 @@ Create transcode_windows.zip and release it in SourceForge FRS.
 
 MISCELLANEOUS
 =============
+http://www.famfamfam.com/lab/icons/silk/previews/index_abc.png
 openclipart.org
 tango.freedesktop.org
 http://www.nero.com/eng/nero-aac-codec.html

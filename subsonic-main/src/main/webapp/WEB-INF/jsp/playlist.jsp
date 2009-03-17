@@ -102,6 +102,9 @@
     function onStop() {
         playlistService.stop(playlistCallback);
     }
+    function onGain(gain) {
+        playlistService.setGain(gain, playlistCallback);
+    }
     function onSkip(index) {
     <c:choose>
     <c:when test="${model.player.web}">
@@ -426,6 +429,16 @@
             <c:if test="${model.user.streamRole and not model.player.web}">
                 <td style="white-space:nowrap;" id="stop"><b><a href="javascript:noop()" onclick="onStop()"><fmt:message key="playlist.stop"/></a></b> | </td>
                 <td style="white-space:nowrap;" id="start"><b><a href="javascript:noop()" onclick="onStart()"><fmt:message key="playlist.start"/></a></b> | </td>
+            </c:if>
+
+            <c:if test="${model.player.jukebox}">
+                <td style="white-space:nowrap;">
+                    <a href="javascript:noop()" onclick="onGain(0.00)">0</a>
+                    <a href="javascript:noop()" onclick="onGain(0.25)">1</a>
+                    <a href="javascript:noop()" onclick="onGain(0.50)">2</a>
+                    <a href="javascript:noop()" onclick="onGain(0.75)">3</a>
+                    <a href="javascript:noop()" onclick="onGain(1.00)">4</a>
+                |</td>
             </c:if>
 
             <c:if test="${model.player.web}">

@@ -18,14 +18,23 @@
  */
 package net.sourceforge.subsonic.service;
 
+import java.util.Map;
+import java.io.InputStream;
+
+import org.apache.commons.io.IOUtils;
+
+import javazoom.jlgui.basicplayer.BasicController;
+import javazoom.jlgui.basicplayer.BasicPlayer;
+import javazoom.jlgui.basicplayer.BasicPlayerEvent;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
+import javazoom.jlgui.basicplayer.BasicPlayerException;
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.domain.TransferStatus;
 import net.sourceforge.subsonic.domain.User;
-import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.io.PlaylistInputStream;
-import org.apache.commons.io.IOUtils;
 
 /**
  * Plays music on the local audio device.
@@ -37,6 +46,9 @@ public class JukeboxService {
     private static final Logger LOG = Logger.getLogger(JukeboxService.class);
 
     private JuxeboxThread thread;
+    private JuxeboxPlayer jukeboxPlayer;
+    private float gain = 0.85F; // Between 0.0 and 1.0
+
     private SecurityService securityService;
     private StatusService statusService;
     private TranscodingService transcodingService;
@@ -62,8 +74,8 @@ public class JukeboxService {
         stop();
         if (player.getPlaylist().getStatus() == Playlist.Status.PLAYING) {
             LOG.info("Starting jukebox player on behalf of " + player.getUsername());
-            thread = new JuxeboxThread(player);
-            thread.start();
+            jukeboxPlayer = new JuxeboxPlayer(player);
+            jukeboxPlayer.play();
         }
     }
 
@@ -71,15 +83,26 @@ public class JukeboxService {
      * Stop playing audio on the local device.
      */
     public synchronized void stop() {
-        if (thread != null) {
-            thread.cancel();
-            thread = null;
+        if (jukeboxPlayer != null) {
+            jukeboxPlayer.stop();
+            jukeboxPlayer = null;
+        }
+    }
+
+    public synchronized float getGain() {
+        return gain;
+    }
+
+    public synchronized void setGain(float gain) {
+        this.gain = gain;
+        if (jukeboxPlayer != null) {
+            jukeboxPlayer.setGain(gain);
         }
     }
 
     /**
-     * Invoked from JukeboxThread if an exception occurs during playback.
-     */
+    * Invoked from JukeboxThread if an exception occurs during playback.
+    */
     private synchronized void onError(Player player, Throwable error) {
         LOG.warn("An error occurred in the jukebox player.", error);
 
@@ -117,6 +140,7 @@ public class JukeboxService {
         this.audioScrobblerService = audioScrobblerService;
     }
 
+    @Deprecated
     private class JuxeboxThread extends Thread {
         private javazoom.jl.player.Player jlPlayer;
         private final Player subsonicPlayer;
@@ -160,5 +184,76 @@ public class JukeboxService {
             }
         }
 
+    }
+
+
+    private class JuxeboxPlayer implements BasicPlayerListener {
+
+        private final BasicPlayer basicPlayer;
+        private final Player subsonicPlayer;
+        private final TransferStatus status;
+        private final InputStream in;
+
+        public JuxeboxPlayer(Player subsonicPlayer) {
+            this.subsonicPlayer = subsonicPlayer;
+            status = statusService.createStreamStatus(subsonicPlayer);
+            in = new PlaylistInputStream(subsonicPlayer, status, transcodingService, musicInfoService, audioScrobblerService, searchService);
+            basicPlayer = new BasicPlayer();
+            basicPlayer.addBasicPlayerListener(this);
+        }
+
+        public void play() {
+            try {
+                basicPlayer.open(in);
+                basicPlayer.play();
+                basicPlayer.setGain(gain);
+            } catch (Throwable x) {
+                LOG.warn("Error in BasicPlayer.play()", x);
+                close();
+            }
+        }
+
+        public void stop() {
+            try {
+                basicPlayer.stop();
+            } catch (Throwable x) {
+                LOG.warn("Error in BasicPlayer.stop()", x);
+            } finally {
+                close();
+            }
+        }
+
+        public void setGain(float gain) {
+            try {
+                basicPlayer.setGain(gain);
+            } catch (BasicPlayerException x) {
+                LOG.error("Error in BasicPlayer.setGain()", x);
+            }
+        }
+
+        private void close() {
+            statusService.removeStreamStatus(status);
+            User user = securityService.getUserByName(subsonicPlayer.getUsername());
+            securityService.updateUserByteCounts(user, status.getBytesTransfered(), 0L, 0L);
+            IOUtils.closeQuietly(in);
+        }
+
+        public void stateUpdated(BasicPlayerEvent event) {
+            LOG.debug("stateUpdated : " + event.toString());
+            if (event.getCode() == BasicPlayerEvent.STOPPED) {
+                close();
+            }
+        }
+
+        public void opened(Object stream, Map properties) {
+            LOG.debug("opened : " + properties);
+        }
+
+        public void progress(int bytesread, long microseconds, byte[] pcmdata, Map properties) {
+//            LOG.debug("progress : " + properties.toString());
+        }
+
+        public void setController(BasicController controller) {
+        }
     }
 }

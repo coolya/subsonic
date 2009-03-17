@@ -32,13 +32,15 @@ public class PlaylistInfo {
     private final boolean stopEnabled;
     private final boolean repeatEnabled;
     private final boolean sendM3U;
+    private final float gain;
 
-    public PlaylistInfo(List<Entry> entries, int index, boolean stopEnabled, boolean repeatEnabled, boolean sendM3U) {
+    public PlaylistInfo(List<Entry> entries, int index, boolean stopEnabled, boolean repeatEnabled, boolean sendM3U, float gain) {
         this.entries = entries;
         this.index = index;
         this.stopEnabled = stopEnabled;
         this.repeatEnabled = repeatEnabled;
         this.sendM3U = sendM3U;
+        this.gain = gain;
     }
 
     public List<Entry> getEntries() {
@@ -59,6 +61,10 @@ public class PlaylistInfo {
 
     public boolean isRepeatEnabled() {
         return repeatEnabled;
+    }
+
+    public float getGain() {
+        return gain;
     }
 
     public static class Entry {
