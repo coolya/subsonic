@@ -33,6 +33,7 @@ Bugfix: Now works behind SSL proxy. http://www.activeobjects.no/subsonic/forum/v
 Bugfix: Wrong player selected if different users access Subsonic from the same browser instance.
 Bugfix: Wrong repeat state displayed in playlist.
 Bugfix: Stop web player when playlist is cleared.
+Bugfix: Lyrics lookup working again.
 New: Added buttons for next/previous track in web player.
 New: Automatically trim text fields when entering email address and license key.
 New: Improved search feature. (Paging, album/artist search fields)

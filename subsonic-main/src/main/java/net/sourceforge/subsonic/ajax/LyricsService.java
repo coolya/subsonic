@@ -18,21 +18,21 @@
  */
 package net.sourceforge.subsonic.ajax;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.util.StringUtil;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.lang.StringUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.util.StringUtil;
 
 /**
  * Provides AJAX-enabled services for retrieving song lyrics, by screen-scraping http://www.lyrc.com.ar.
@@ -44,7 +44,6 @@ import java.util.regex.Pattern;
 public class LyricsService {
 
     private static final Logger LOG = Logger.getLogger(LyricsService.class);
-
 
     /**
      * Returns lyrics for the given song and artist.
@@ -101,50 +100,16 @@ public class LyricsService {
      */
     protected String getLyrics(String html) {
 
-        // Remove all occurrences of:   <class id="NoSteal">[xxxx lyrics on http://www.metrolyrics.com]</class>
-        html = html.replaceAll("<class id=\"NoSteal\".*</class>", "");
+        String startPattern = "<span id=\"lyrics\">";
+        String stopPattern = "</span>";
 
-        // Find first occurrence of: <div id="LyricBody">
-        int index = html.indexOf("<div id=\"LyricBody\">");
-
-        // If not found, find first occurrence of:  <div id="SongText">
-        if (index == -1) {
-            index = html.indexOf("<div id=\"SongText\">");
-        }
-
-        if (index == -1) {
+        int startIndex = html.indexOf(startPattern);
+        if (startIndex == -1) {
             return null;
         }
 
-        // Open a reader from this point.
-        BufferedReader reader = new BufferedReader(new StringReader(html.substring(index)));
-
-        // Read line by line, appending only the relevant lines to the lyrics.
-        StringBuffer lyrics = new StringBuffer();
-        try {
-            int divCount = 0;
-            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
-
-                if (line.contains("<div")) {
-                    divCount++;
-                } else if (line.contains("</div>")) {
-                    divCount--;
-                } else if (line.contains("<span id=\"lyrics\">") ||
-                           line.contains("</span>")||
-                           line.contains("<noscript")) {
-                    continue;
-                } else if (divCount == 1) {
-                    lyrics.append(line);
-                }
-                if (divCount == 0) {
-                    break;
-                }
-            }
-        } catch (IOException x) {
-            return null;
-        }
-
-        return lyrics.length() == 0 ? null : lyrics.toString().trim();
+        int stopIndex = StringUtils.indexOf(html, stopPattern, startIndex);
+        return StringUtils.trimToNull(html.substring(startIndex + startPattern.length(), stopIndex));
     }
 
     /**
