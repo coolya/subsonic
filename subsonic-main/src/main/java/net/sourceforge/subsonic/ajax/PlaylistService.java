@@ -179,9 +179,8 @@ public class PlaylistService {
         return convert(player, false);
     }
 
-    public PlaylistInfo setGain(float gain) throws Exception {
+    public void setGain(float gain) {
         jukeboxService.setGain(gain);
-        return convert(getCurrentPlayer(), false);
     }
 
     private List<MusicFile> getRandomChildren(MusicFile file, int count) throws IOException {

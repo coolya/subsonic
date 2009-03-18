@@ -9,6 +9,10 @@
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/swfobject.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/webfx/range.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/webfx/timer.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/webfx/slider.js"/>"></script>
+    <link type="text/css" rel="stylesheet" href="<c:url value="/script/webfx/luna.css"/>"/></head>
 </head>
 
 <body class="bgcolor2" onload="init()">
@@ -103,7 +107,7 @@
         playlistService.stop(playlistCallback);
     }
     function onGain(gain) {
-        playlistService.setGain(gain, playlistCallback);
+        playlistService.setGain(gain);
     }
     function onSkip(index) {
     <c:choose>
@@ -257,6 +261,10 @@
 
         if (playlist.sendM3U) {
             parent.frames.main.location.href="play.m3u?";
+        }
+
+        if (slider) {
+            slider.setValue(playlist.gain * 100);
         }
 
     <c:if test="${model.player.web}">
@@ -433,12 +441,24 @@
 
             <c:if test="${model.player.jukebox}">
                 <td style="white-space:nowrap;">
-                    <a href="javascript:noop()" onclick="onGain(0.00)">0</a>
-                    <a href="javascript:noop()" onclick="onGain(0.25)">1</a>
-                    <a href="javascript:noop()" onclick="onGain(0.50)">2</a>
-                    <a href="javascript:noop()" onclick="onGain(0.75)">3</a>
-                    <a href="javascript:noop()" onclick="onGain(1.00)">4</a>
-                |</td>
+                    <div class="slider bgcolor2" id="slider-1" style="width:90px">
+                        <input class="slider-input" id="slider-input-1" name="slider-input-1"/>
+                    </div>
+                    <script type="text/javascript">
+
+                        var updateGainTimeoutId = 0;
+                        var slider = new Slider(document.getElementById("slider-1"), document.getElementById("slider-input-1"));
+                        slider.onchange = function () {
+                            clearTimeout(updateGainTimeoutId);
+                            updateGainTimeoutId = setTimeout("updateGain()", 250);
+                        };
+
+                        function updateGain() {
+                            var gain = slider.getValue() / 100.0;
+                            onGain(gain);
+                        }
+                    </script>
+                </td>
             </c:if>
 
             <c:if test="${model.player.web}">
