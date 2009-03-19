@@ -24,6 +24,7 @@ Add Save, Cancel buttons to passwordSettings.jsp
 Make lower-left abc work in IE.
 Add OGG etc support to BasicPlayer.
 Compile Tritonus with JDK 5.
+Should really be only one juxebox player instance.
 
 DONE IN 3.7
 -----------
@@ -44,6 +45,7 @@ New: Added theme "Cool and Clean", courtesy of Dan Eriksen
 New: Added theme "Midnight Fun", courtesy of Don Pearson
 New: Added Slovenian translation, courtesy of Andrej Žižmond
 New: Added Danish translation, courtesy of Morten Hartvich
+New: Updated Norwegian translation, courtesy of jigsaw.
 New: Don't show player username or IP address in playlist.
 
 
