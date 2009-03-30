@@ -11,7 +11,7 @@
 </c:import>
 
 <c:choose>
-    
+
     <c:when test="${command.ldapAuthenticated}">
         <p><fmt:message key="usersettings.passwordnotsupportedforldap"/></p>
     </c:when>
@@ -31,8 +31,12 @@
                     <td/>
                 </tr>
                 <tr>
-                    <td colspan="3" align="center"><input type="submit" value="<fmt:message key="common.ok"/>"/></td>
+                    <td colspan="3" style="padding-top:1.5em">
+                        <input type="submit" value="<fmt:message key="common.save"/>" style="margin-right:0.3em">
+                        <input type="button" value="<fmt:message key="common.cancel"/>" onclick="location.href='nowPlaying.view'">
+                    </td>
                 </tr>
+
             </table>
         </form:form>
     </c:otherwise>
