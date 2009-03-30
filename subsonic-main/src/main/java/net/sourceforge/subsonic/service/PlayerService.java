@@ -157,16 +157,8 @@ public class PlayerService {
      * @param id The unique player ID.
      * @return The player with the given ID, or <code>null</code> if no such player exists.
      */
-    public Player getPlayerById(final String id) {
-        if (id == null) {
-            return null;
-        }
-        for (Player player : getAllPlayers()) {
-            if (id.equals(player.getId())) {
-                return player;
-            }
-        }
-        return null;
+    public Player getPlayerById(String id) {
+        return playerDao.getPlayerById(id);
     }
 
     /**

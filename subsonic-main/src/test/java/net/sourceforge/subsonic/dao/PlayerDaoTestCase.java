@@ -36,6 +36,9 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         playerDao.createPlayer(player);
         Player newPlayer = playerDao.getAllPlayers().get(0);
         assertPlayerEquals(player, newPlayer);
+
+        Player newPlayer2 = playerDao.getPlayerById(newPlayer.getId());
+        assertPlayerEquals(player, newPlayer2);
     }
 
     public void testDefaultValues() {

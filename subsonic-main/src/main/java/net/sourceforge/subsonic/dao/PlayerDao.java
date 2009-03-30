@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 import net.sourceforge.subsonic.Logger;
@@ -42,10 +41,21 @@ public class PlayerDao extends AbstractDao {
     }
 
     /**
-     * Creates a new player.
+     * Returns the player with the given ID.
      *
-     * @param player The player to create.
+     * @param id The unique player ID.
+     * @return The player with the given ID, or <code>null</code> if no such player exists.
      */
+    public Player getPlayerById(String id) {
+        String sql = "select " + COLUMNS + " from player where id=?";
+        return queryOne(sql, rowMapper, id);
+    }
+
+    /**
+    * Creates a new player.
+    *
+    * @param player The player to create.
+    */
     public synchronized void createPlayer(Player player) {
         int id = getJdbcTemplate().queryForInt("select max(id) from player") + 1;
         player.setId(String.valueOf(id));

@@ -1,12 +1,10 @@
 TODO IN 3.7
 --------------
-Optimize PlayerService.getPlayerById()
 "grep -v" in subsonic.sh
 Updates to subsonic.sh  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1634
 Broken lyrics? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1640
 Show cover art for all music folders (same artist) http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1626
 Support repeat in web player.
-Add volume control to jukebox player.
 "Now playing" broken. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=4477
 Give feedback on midnightfun theme.
 Podcast broken? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=120
@@ -49,6 +47,16 @@ New: Added Danish translation, courtesy of Morten Hartvich
 New: Updated Norwegian translation, courtesy of jigsaw.
 New: Don't show player username or IP address in playlist.
 
+MIDNIGHT FUN THEME
+------------------
+o Increase line height in tables.  It's now 90%, making the text hard to read.  Should be around 130-140%.
+o Improve contrast for title of currently selected tab in home page. (Random, Newest, Highest rated etc). Either by changing
+background image or text color.
+o Same as above, but for Settings pages.
+o Improve contrast for links in the Help page.
+o Use the Subsonic logo and name in the upper left corner.
+o More consistent icons for play, add and download buttons.  Now they have different designs, colors and sizes.
+o Make the down button similar to the up button.  It's currently two-three pixels taller.
 
 JUKEBOX
 -------
