@@ -12,7 +12,7 @@
     <script type="text/javascript" src="<c:url value="/script/webfx/range.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/webfx/timer.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/webfx/slider.js"/>"></script>
-    <link type="text/css" rel="stylesheet" href="<c:url value="/script/webfx/luna.css"/>"/></head>
+    <link type="text/css" rel="stylesheet" href="<c:url value="/script/webfx/luna.css"/>"/>
 </head>
 
 <body class="bgcolor2" onload="init()">
@@ -440,6 +440,9 @@
             </c:if>
 
             <c:if test="${model.player.jukebox}">
+                <td style="white-space:nowrap;">
+                    <img src="<spring:theme code="volumeImage"/>" alt=""/>
+                </td>
                 <td style="white-space:nowrap;">
                     <div class="slider bgcolor2" id="slider-1" style="width:90px">
                         <input class="slider-input" id="slider-input-1" name="slider-input-1"/>

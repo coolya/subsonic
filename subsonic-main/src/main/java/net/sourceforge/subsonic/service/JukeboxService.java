@@ -18,23 +18,21 @@
  */
 package net.sourceforge.subsonic.service;
 
-import java.util.Map;
-import java.io.InputStream;
-
-import org.apache.commons.io.IOUtils;
-
 import javazoom.jlgui.basicplayer.BasicController;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerEvent;
-import javazoom.jlgui.basicplayer.BasicPlayerListener;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
 import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.domain.TransferStatus;
 import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.io.PlaylistInputStream;
+import org.apache.commons.io.IOUtils;
+
+import java.io.InputStream;
+import java.util.Map;
 
 /**
  * Plays music on the local audio device.
@@ -45,7 +43,6 @@ public class JukeboxService {
 
     private static final Logger LOG = Logger.getLogger(JukeboxService.class);
 
-    private JuxeboxThread thread;
     private JuxeboxPlayer jukeboxPlayer;
     private float gain = 0.85F; // Between 0.0 and 1.0
 
@@ -56,13 +53,11 @@ public class JukeboxService {
     private SearchService searchService;
     private AudioScrobblerService audioScrobblerService;
 
-    private MusicFile lastMusicFileWithError;
-
     /**
-    * Start playing the playlist of the given player on the local audio device.
-    *
-    * @param player The player in question.
-    */
+     * Start playing the playlist of the given player on the local audio device.
+     *
+     * @param player The player in question.
+     */
     public synchronized void play(Player player) {
         User user = securityService.getUserByName(player.getUsername());
         if (!user.isJukeboxRole()) {
@@ -70,7 +65,6 @@ public class JukeboxService {
             return;
         }
 
-        lastMusicFileWithError = null;
         stop();
         if (player.getPlaylist().getStatus() == Playlist.Status.PLAYING) {
             LOG.info("Starting jukebox player on behalf of " + player.getUsername());
@@ -100,22 +94,6 @@ public class JukeboxService {
         }
     }
 
-    /**
-    * Invoked from JukeboxThread if an exception occurs during playback.
-    */
-    private synchronized void onError(Player player, Throwable error) {
-        LOG.warn("An error occurred in the jukebox player.", error);
-
-        // Restart song, but only once (to avoid endless loops).
-        MusicFile currentFile = player.getPlaylist().getCurrentFile();
-        if (currentFile != null && lastMusicFileWithError != currentFile) {
-            LOG.info("Restarting jukebox with song " + currentFile);
-            lastMusicFileWithError = currentFile;
-            thread = new JuxeboxThread(player);
-            thread.start();
-        }
-    }
-
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
     }
@@ -138,52 +116,6 @@ public class JukeboxService {
 
     public void setAudioScrobblerService(AudioScrobblerService audioScrobblerService) {
         this.audioScrobblerService = audioScrobblerService;
-    }
-
-    @Deprecated
-    private class JuxeboxThread extends Thread {
-        private javazoom.jl.player.Player jlPlayer;
-        private final Player subsonicPlayer;
-        private final TransferStatus status;
-        private final PlaylistInputStream in;
-
-        public JuxeboxThread(Player subsonicPlayer) {
-            this.subsonicPlayer = subsonicPlayer;
-            status = statusService.createStreamStatus(subsonicPlayer);
-            in = new PlaylistInputStream(subsonicPlayer, status, transcodingService, musicInfoService, audioScrobblerService, searchService);
-            try {
-                jlPlayer = new javazoom.jl.player.Player(in);
-            } catch (Throwable x) {
-                statusService.removeStreamStatus(status);
-                LOG.error("Failed to create jukebox player.", x);
-            }
-        }
-
-        @Override
-        public void run() {
-            Throwable error = null;
-            try {
-                jlPlayer.play();
-            } catch (Throwable x) {
-                error = x;
-            }
-
-            statusService.removeStreamStatus(status);
-            User user = securityService.getUserByName(subsonicPlayer.getUsername());
-            securityService.updateUserByteCounts(user, status.getBytesTransfered(), 0L, 0L);
-            IOUtils.closeQuietly(in);
-
-            if (error != null) {
-                onError(subsonicPlayer, error);
-            }
-        }
-
-        public void cancel() {
-            if (jlPlayer != null) {
-                jlPlayer.close();
-            }
-        }
-
     }
 
 
