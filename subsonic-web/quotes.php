@@ -11,6 +11,7 @@
     quotes[6] = "I just installed Subsonic and immediately forgot about all previous php-based jukeboxes (including my own...)";
     quotes[7] = "Subsonic is beautiful in simplicity of the end user interface. I had no issues setting it up and the guide was brilliant.";
     quotes[8] = "One word describes Subsonic: AWESOME!";
+    quotes[9] = "Every release is consistently better and I love the way you take feedback on board and act on it. Long live Subsonic!";
 
     var authors = new Array();
     authors[0] = "cup0spam";
@@ -22,6 +23,7 @@
     authors[6] = "cellulit";
     authors[7] = "labrat-radio";
     authors[8] = "Ghostrider";
+    authors[9] = "Chug";
 
     function hideQuote() {
         new Effect.Opacity("quote", { from: 1.0, to: 0.0, duration: 1.5 });

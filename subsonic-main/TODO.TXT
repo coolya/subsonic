@@ -1,5 +1,6 @@
 TODO IN 3.7
 --------------
+Optimize PlayerService.getPlayerById()
 "grep -v" in subsonic.sh
 Updates to subsonic.sh  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1634
 Broken lyrics? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1640
@@ -67,6 +68,7 @@ By default, create music folder for video.
 
 BACKLOG
 ==========================
+Podcast : Playing Direct from URL, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1667
 iPod/iPhone support.
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1200
    http://www.alloysoft.com/
