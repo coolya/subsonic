@@ -356,7 +356,7 @@ Slider.eventHandlers = {
 
 
 
-Slider.prototype.classNameTag = "dynamic-slider-control",
+Slider.prototype.classNameTag = "dynamic-slider-control";
 
 Slider.prototype.setValue = function (v) {
 	this._range.setValue(v);

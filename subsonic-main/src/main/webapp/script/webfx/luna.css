@@ -1,6 +1,6 @@
 .dynamic-slider-control {
 	position:			relative;
-	background-color:	ThreeDFace;
+	/*background-color:	ThreeDFace;*/ 
 	-moz-user-focus:	normal;
 	-moz-user-select:	none;
 	cursor:				default;
