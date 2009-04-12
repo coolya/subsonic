@@ -61,7 +61,7 @@ import net.sourceforge.subsonic.Logger;
  */
 public class LeftController extends ParameterizableViewController implements LastModified {
 
-    private static final Logger LOG = Logger.getLogger(MusicFile.class);
+    private static final Logger LOG = Logger.getLogger(LeftController.class);
 
     private SearchService searchService;
     private SettingsService settingsService;
@@ -210,7 +210,6 @@ public class LeftController extends ParameterizableViewController implements Las
         MusicFolderCacheEntry entry = null;
         if (element != null) {
             entry = (MusicFolderCacheEntry) element.getValue();
-            LOG.debug("Cache hit for music folder(s): " + musicFolderIds + ". Up-to-date: " + (entry.lastModified >= lastModified));
         }
 
         if (entry == null || entry.lastModified < lastModified) {
@@ -218,7 +217,6 @@ public class LeftController extends ParameterizableViewController implements Las
             List<MusicFile> singleSongs = getSingleSongs(musicFoldersToUse);
             entry = new MusicFolderCacheEntry(indexedArtists, singleSongs, lastModified);
             musicFolderCache.put(new Element(musicFolderIds, entry));
-            LOG.debug("Updated cache for music folder(s): " + musicFolderIds);
         }
 
         return entry;
