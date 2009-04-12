@@ -72,7 +72,7 @@
             id:"player1",
             name:"player1"
         }
-        swfobject.embedSWF("<c:url value="/flash/player.swf"/>", "placeholder", "340", "20", "9.0.0", false, flashvars, params, attributes);
+        swfobject.embedSWF("<c:url value="/flash/jw-player-4.4.swf"/>", "placeholder", "340", "20", "9.0.0", false, flashvars, params, attributes);
     }
 
     function playerReady(thePlayer) {
@@ -292,6 +292,7 @@
         }
 
         var song = songs[index];
+        alert(song.suffix)
         currentStreamUrl = song.streamUrl;
         updateCurrentImage();
         var list = new Array();
@@ -299,7 +300,7 @@
             duration:song.duration,
             file:song.streamUrl,
             title:song.title,
-            type:song.contentType
+            type:"sound"
         };
 
         player.sendEvent("LOAD", list);
