@@ -35,6 +35,8 @@ import java.io.StringReader;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -46,6 +48,7 @@ public class DiscogsSearchService {
 
     private static final Logger LOG = Logger.getLogger(DiscogsSearchService.class);
     private static final String DISCOGS_API_KEY = "53ee0045b6";
+    private static final Pattern RELEASE_URL_PATTERN = Pattern.compile("http://www.discogs.com/(.*)/release/(\\d+)");
 
     /**
      * Returns a list of URLs of cover art images from Discogs for the given artist and album.
@@ -77,7 +80,7 @@ public class DiscogsSearchService {
     }
 
     private List<String> getImagesForRelease(int releaseId) throws Exception {
-        String url = "http://www.discogs.com/release/" + releaseId + "?f=xml&api_key" + DISCOGS_API_KEY;
+        String url = "http://www.discogs.com/release/" + releaseId + "?f=xml&api_key=" + DISCOGS_API_KEY;
         String searchResult = executeRequest(url);
 
         SAXBuilder builder = new SAXBuilder();
@@ -115,9 +118,15 @@ public class DiscogsSearchService {
         for (Object obj : results) {
             Element result = (Element) obj;
             String uri = result.getChildText("uri");
-            if (uri != null && uri.startsWith("http://www.discogs.com/release/")) {
-                String relaseId = uri.replaceFirst("http://www.discogs.com/release/", "");
-                releaseIds.add(new Integer(relaseId));
+
+            // Grep release ID from url of the following form:
+            //  <uri>http://www.discogs.com/U2-No-Line-On-The-Horizon/release/1670031</uri>
+            if (uri != null) {
+                Matcher matcher = RELEASE_URL_PATTERN.matcher(uri);
+                if (matcher.matches()) {
+                    String relaseId = matcher.group(2);
+                    releaseIds.add(new Integer(relaseId));
+                }
             }
         }
 

@@ -1,6 +1,5 @@
 TODO IN 3.7
 --------------
-Discogs broken, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1551
 Now playing broken?
 "grep -v" in subsonic.sh
 Updates to subsonic.sh  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1634
@@ -25,6 +24,7 @@ Performance: Improved browser and server caching of artist list. http://www.acti
 Tech: Only poll for service status if Subsonic Control Panel is opened. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1612
 New: Added new authorization role "User is allowed to change settings and password" in support for guest users.
 Bugfix: Web player now displays correct duration for transcoded tracks.
+Bugfix: Discogs image retrieval now works again.
 Bugfix: Now works behind SSL proxy. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301
 Bugfix: Wrong player selected if different users access Subsonic from the same browser instance.
 Bugfix: Wrong repeat state displayed in playlist.
