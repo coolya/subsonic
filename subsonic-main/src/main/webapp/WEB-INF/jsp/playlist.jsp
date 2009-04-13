@@ -292,7 +292,6 @@
         }
 
         var song = songs[index];
-        alert(song.suffix)
         currentStreamUrl = song.streamUrl;
         updateCurrentImage();
         var list = new Array();

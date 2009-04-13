@@ -127,11 +127,7 @@ public class MainController extends ParameterizableViewController {
 
         CoverArtScheme scheme = player.getCoverArtScheme();
         if (scheme != CoverArtScheme.OFF) {
-            int limit = settingsService.getCoverArtLimit();
-            if (limit == 0) {
-                limit = Integer.MAX_VALUE;
-            }
-            List<File> coverArts = musicFileService.getCoverArt(dir, limit);
+            List<File> coverArts = getCoverArt(paths);
             int size = coverArts.size() > 1 ? scheme.getSize() : scheme.getSize() * 2;
             map.put("coverArts", coverArts);
             map.put("coverArtSize", size);
@@ -145,6 +141,23 @@ public class MainController extends ParameterizableViewController {
 
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
+        return result;
+    }
+
+    private List<File> getCoverArt(String[] paths) throws IOException {
+        int limit = settingsService.getCoverArtLimit();
+        if (limit == 0) {
+            limit = Integer.MAX_VALUE;
+        }
+
+        List<File> result = new ArrayList<File>();
+        for (String path : paths) {
+            MusicFile dir = musicFileService.getMusicFile(path);
+            if (dir.isFile()) {
+                dir = dir.getParent();
+            }
+            result.addAll(musicFileService.getCoverArt(dir, limit - result.size()));
+        }
         return result;
     }
 

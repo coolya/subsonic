@@ -1,9 +1,9 @@
 TODO IN 3.7
 --------------
+Selected music folder not remembered.
 Now playing broken?
 "grep -v" in subsonic.sh
 Updates to subsonic.sh  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1634
-Show cover art for all music folders (same artist) http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1626
 Support repeat in web player.
 Podcast broken? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=120
 Bug when adding new tracks to playlist,  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1543
@@ -26,6 +26,7 @@ New: Added new authorization role "User is allowed to change settings and passwo
 Bugfix: Web player now displays correct duration for transcoded tracks.
 Bugfix: Discogs image retrieval now works again.
 Bugfix: Now works behind SSL proxy. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301
+Bugfix: Missing album art for artists in multiple folders. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1626
 Bugfix: Wrong player selected if different users access Subsonic from the same browser instance.
 Bugfix: Wrong repeat state displayed in playlist.
 Bugfix: Stop web player when playlist is cleared.
