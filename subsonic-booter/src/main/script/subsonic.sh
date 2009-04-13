@@ -1,29 +1,59 @@
 #!/bin/sh
 
 ###################################################################################
-#
 # Shell script for starting Subsonic.  See http://subsonic.sourceforge.net.
 #
-# Normally, you only need to modify the following four variables.
-#
+# Author: Sindre Mehus
 ###################################################################################
 
-# The directory where Subsonic will create files. Make sure it is writable.
 SUBSONIC_HOME=/var/subsonic
-
-# The port on which Subsonic will listen for incoming HTTP traffic.
 SUBSONIC_PORT=8080
-
-# The context path (i.e., the last part of the Subsonic URL).  Typically "/" or "/subsonic".
 SUBSONIC_CONTEXT_PATH=/
+SUBSONIC_MAX_MEMORY=64
+SUBSONIC_PIDFILE=
 
-# The memory limit (max Java heap size) in megabytes.
-MAX_MEMORY=64
+usage() {
+    echo "Usage: subsonic.sh [options]"
+    echo "  --help               This small usage guide."
+    echo "  --home=DIR           The directory where Subsonic will create files."
+    echo "                       Make sure it is writable. Default: /var/subsonic"
+    echo "  --port=PORT          The port on which Subsonic will listen for"
+    echo "                       incoming HTTP traffic. Default: 8080"
+    echo "  --context-path=PATH  The context path, i.e., the last part of the Subsonic"
+    echo "                       URL. Typically '/' or '/subsonic'. Default '/'"
+    echo "  --max-memory=MB      The memory limit (max Java heap size) in megabytes."
+    echo "                       Default: 64"
+    echo "  --pidfile=PIDFILE    Write PID to this file. Default not created."
+    exit 1
+}
 
-###################################################################################
-
-
-echo Starting Subsonic...
+# Parse arguments.
+while [ $# -ge 1 ]; do
+    case $1 in
+        --help)
+            usage
+            ;;
+        --home=?*)
+            SUBSONIC_HOME=${1#--home=}
+            ;;
+        --port=?*)
+            SUBSONIC_PORT=${1#--port=}
+            ;;
+        --context-path=?*)
+            SUBSONIC_CONTEXT_PATH=${1#--context-path=}
+            ;;
+        --max-memory=?*)
+            SUBSONIC_MAX_MEMORY=${1#--max-memory=}
+            ;;
+        --pidfile=?*)
+            SUBSONIC_PIDFILE=${1#--pidfile=}
+            ;;
+        *)
+            usage
+            ;;
+    esac
+    shift
+done
 
 # Use JAVA_HOME if set, otherwise assume java is in the path.
 JAVA=java
@@ -39,8 +69,11 @@ rm -f ${LOG}
 
 cd `dirname $0`
 
-
-${JAVA} -Xmx${MAX_MEMORY}m  -Dsubsonic.home=${SUBSONIC_HOME} -Dsubsonic.port=${SUBSONIC_PORT} \
+${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m  -Dsubsonic.home=${SUBSONIC_HOME} -Dsubsonic.port=${SUBSONIC_PORT} \
 -Dsubsonic.contextPath=${SUBSONIC_CONTEXT_PATH} -jar subsonic-booter-jar-with-dependencies.jar > ${LOG} 2>&1 &
 
-echo Started Subsonic. See log file ${LOG}
+# Write pid to pidfile if it is defined.
+if [ $SUBSONIC_PIDFILE ]; then
+    echo $! > ${SUBSONIC_PIDFILE}
+fi
+
