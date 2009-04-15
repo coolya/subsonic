@@ -34,6 +34,9 @@ mk
 # Simplified Chinese
 zh_CN
 
+# Japanese
+ja_JP
+
 # Dutch
 nl
 

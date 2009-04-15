@@ -1,5 +1,6 @@
 TODO IN 3.7
 --------------
+Profile for bottlenecks
 Add shoutbox as right-hand side frame.
 Create Ubuntu etc package using maven-unix-plugin (and appassembler?)
 Don't use absolute paths in status.view and help.view (but rather artist + title).
@@ -45,6 +46,7 @@ New: Added theme "Cool and Clean", courtesy of Dan Eriksen
 New: Added theme "Midnight Fun", courtesy of Don Pearson
 New: Added Slovenian translation, courtesy of Andrej Žižmond
 New: Added Danish translation, courtesy of Morten Hartvich
+New: Added Japanese translation, courtesy of Takahiro Suzuki 
 New: Updated Norwegian translation, courtesy of jigsaw.
 New: Updated Swedish translation, courtesy of Fredrik Leufkens.
 New: Don't show player username or IP address in playlist.
