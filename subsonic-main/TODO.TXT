@@ -1,5 +1,6 @@
 TODO IN 3.7
 --------------
+
 Profile for bottlenecks
 Add shoutbox as right-hand side frame.
 Create Ubuntu etc package using maven-unix-plugin (and appassembler?)
@@ -35,6 +36,7 @@ Bugfix: Wrong player selected if different users access Subsonic from the same b
 Bugfix: Wrong repeat state displayed in playlist.
 Bugfix: Stop web player when playlist is cleared.
 Bugfix: Lyrics lookup working again.
+Bugfix: Support quotes in Podcast names. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1734
 New: Jukebox support.
 New: Added buttons for next/previous track in web player.
 New: Automatically trim text fields when entering email address and license key.
@@ -46,7 +48,7 @@ New: Added theme "Cool and Clean", courtesy of Dan Eriksen
 New: Added theme "Midnight Fun", courtesy of Don Pearson
 New: Added Slovenian translation, courtesy of Andrej Žižmond
 New: Added Danish translation, courtesy of Morten Hartvich
-New: Added Japanese translation, courtesy of Takahiro Suzuki 
+New: Added Japanese translation, courtesy of Takahiro Suzuki
 New: Updated Norwegian translation, courtesy of jigsaw.
 New: Updated Swedish translation, courtesy of Fredrik Leufkens.
 New: Don't show player username or IP address in playlist.
