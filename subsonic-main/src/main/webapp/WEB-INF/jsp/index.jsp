@@ -8,7 +8,7 @@
     <title>${model.brand}</title>
 </head>
 
-<frameset rows="70,*,0" border="1" framespacing="1" frameborder="1">
+<frameset rows="70,*,0" border="0" framespacing="0" frameborder="0">
     <frame name="upper" src="top.view?">
     <frameset cols="15%,85%">
         <frame name="left" src="left.view?" marginwidth="10" marginheight="10">

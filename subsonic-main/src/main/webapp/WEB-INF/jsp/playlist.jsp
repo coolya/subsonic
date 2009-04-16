@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html><head>
     <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
@@ -418,7 +418,8 @@
 
 </script>
 
-<h2>
+<div class="bgcolor2" style="position:fixed; top:0; width:100%">
+<h2 style="font-weight:normal;">
     <table style="white-space:nowrap;">
         <tr style="white-space:nowrap;">
             <c:if test="${model.user.settingsRole}">
@@ -508,7 +509,11 @@
             </select>
             </td>
 
-        </tr></table></h2>
+        </tr></table>
+    </h2>
+</div>
+
+<div style="height:3em">&nbsp;</div>
 
 <p id="empty"><em><fmt:message key="playlist.empty"/></em></p>
 
