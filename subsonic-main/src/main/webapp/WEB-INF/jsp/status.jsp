@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html><head>
     <%@ include file="head.jsp" %>
@@ -8,7 +9,7 @@
 <body class="mainframe">
 
 <h1>
-    <img src="<spring:theme code="statusImage"/>" alt=""/>
+    <img src="<spring:theme code="statusImage"/>" alt="">
     <fmt:message key="status.title"/>
 </h1>
 
@@ -63,26 +64,26 @@
             </c:otherwise>
         </c:choose>
 
-        <c:url value="/statusChart.view" var="chartUrl">
+        <sub:url value="/statusChart.view" var="chartUrl">
             <c:if test="${status.stream}">
-                <c:param name="type" value="stream"/>
+                <sub:param name="type" value="stream"/>
             </c:if>
             <c:if test="${status.download}">
-                <c:param name="type" value="download"/>
+                <sub:param name="type" value="download"/>
             </c:if>
             <c:if test="${status.upload}">
-                <c:param name="type" value="upload"/>
+                <sub:param name="type" value="upload"/>
             </c:if>
-            <c:param name="index" value="${status.index}"/>
-        </c:url>
+            <sub:param name="index" value="${status.index}"/>
+        </sub:url>
 
         <tr>
             <td class="ruleTableCell">${transferType}</td>
-            <td class="ruleTableCell">${status.player}<br/>${type}</td>
+            <td class="ruleTableCell">${status.player}<br>${type}</td>
             <td class="ruleTableCell">${user}</td>
             <td class="ruleTableCell">${current}</td>
             <td class="ruleTableCell">${status.bytes}</td>
-            <td class="ruleTableCell" width="${model.chartWidth}"><img width="${model.chartWidth}" height="${model.chartHeight}" src="${chartUrl}" alt=""/></td>
+            <td class="ruleTableCell" width="${model.chartWidth}"><img width="${model.chartWidth}" height="${model.chartHeight}" src="${chartUrl}" alt=""></td>
         </tr>
     </c:forEach>
 </table>
