@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head>
     <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
@@ -7,7 +7,7 @@
 </head>
 
 <body class="bgcolor2">
-<a name="top"/>
+<a name="top"></a>
 
 <div style="padding-bottom:0.5em">
     <c:forEach items="${model.indexes}" var="index">
@@ -55,7 +55,7 @@
     <c:forEach items="${model.radios}" var="radio">
         <p class="dense">
             <a target="hidden" href="${radio.streamUrl}">
-                <img src="<spring:theme code="playImage"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"/></a>
+                <img src="<spring:theme code="playImage"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"></a>
             <c:choose>
                 <c:when test="${empty radio.homepageUrl}">
                     ${radio.name}
@@ -71,11 +71,11 @@
 <c:forEach items="${model.indexedArtists}" var="entry">
     <table class="bgcolor1" style="width:100%;padding:0;margin:1em 0 0 0;border:0">
         <tr style="padding:0;margin:0;border:0">
-            <th style="text-align:left;padding:0;margin:0;border:0"><a name="${entry.key.index}"/>
-                <h2 style="padding:0;margin:0;border:0">${entry.key.index}
+            <th style="text-align:left;padding:0;margin:0;border:0"><a name="${entry.key.index}"></a>
+                <h2 style="padding:0;margin:0;border:0">${entry.key.index}</h2>
             </th>
             <th style="text-align:right;">
-                <a href="#top"><img src="<spring:theme code="upImage"/>"/></a>
+                <a href="#top"><img src="<spring:theme code="upImage"/>" alt=""></a>
             </th>
         </tr>
     </table>
@@ -94,7 +94,7 @@
     </c:forEach>
 </c:forEach>
 
-<div style="padding-top:1em"/>
+<div style="padding-top:1em"></div>
 
 <c:forEach items="${model.singleSongs}" var="song">
     <p class="dense" style="padding-left:0.5em">
@@ -110,7 +110,7 @@
     </p>
 </c:forEach>
 
-<div style="height:5em"/>
+<div style="height:5em"></div>
 
 <div class="bgcolor2" style="opacity: 1.0; clear: both; position: fixed; bottom: 0; right: 0; left: 0;
       padding: 0.25em 0.75em 0.25em 0.75em; border-top:1px solid black; max-width: 850px;">

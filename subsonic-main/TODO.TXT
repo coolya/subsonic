@@ -1,6 +1,7 @@
 TODO IN 3.7
 --------------
-
+Reduce jukebox logging.
+Validate transitional dtd.
 Profile for bottlenecks
 Add shoutbox as right-hand side frame.
 Create Ubuntu etc package using maven-unix-plugin (and appassembler?)

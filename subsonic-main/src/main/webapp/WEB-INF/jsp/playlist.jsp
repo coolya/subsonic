@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head>
     <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
@@ -513,7 +513,7 @@
     </h2>
 </div>
 
-<div style="height:3em">&nbsp;</div>
+<div style="height:3.9em"></div>
 
 <p id="empty"><em><fmt:message key="playlist.empty"/></em></p>
 

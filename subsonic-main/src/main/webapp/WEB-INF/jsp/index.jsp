@@ -5,7 +5,6 @@
 <html><head>
     <%@ include file="head.jsp" %>
     <link rel="alternate" type="application/rss+xml" title="Subsonic Podcast" href="podcast.view?suffix=.rss"/>
-    <title>${model.brand}</title>
 </head>
 
 <frameset rows="70,*,0" border="0" framespacing="0" frameborder="0">
