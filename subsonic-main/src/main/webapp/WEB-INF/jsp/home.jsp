@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html><head>
     <%@ include file="head.jsp" %>
@@ -11,7 +12,7 @@
 </head>
 <body class="mainframe">
 <h1>
-    <img src="<spring:theme code="homeImage"/>" alt=""/>
+    <img src="<spring:theme code="homeImage"/>" alt="">
     ${model.welcomeTitle}
 </h1>
 
@@ -22,10 +23,10 @@
 <h2>
     <c:forTokens items="random newest highest frequent recent users" delims=" " var="cat" varStatus="loopStatus">
         <c:if test="${loopStatus.count > 1}">&nbsp;|&nbsp;</c:if>
-        <c:url var="url" value="home.view">
-            <c:param name="listSize" value="${model.listSize}"/>
-            <c:param name="listType" value="${cat}"/>
-        </c:url>
+        <sub:url var="url" value="home.view">
+            <sub:param name="listSize" value="${model.listSize}"/>
+            <sub:param name="listType" value="${cat}"/>
+        </sub:url>
 
         <c:choose>
             <c:when test="${model.listType eq cat}">
@@ -56,16 +57,16 @@
             <th><fmt:message key="home.chart.stream"/></th>
         </tr>
         <tr>
-            <td><img src="<c:url value="/userChart.view"><c:param name="type" value="total"/></c:url>" alt=""/></td>
-            <td><img src="<c:url value="/userChart.view"><c:param name="type" value="stream"/></c:url>" alt=""/></td>
+            <td><img src="<c:url value="/userChart.view"><c:param name="type" value="total"/></c:url>" alt=""></td>
+            <td><img src="<c:url value="/userChart.view"><c:param name="type" value="stream"/></c:url>" alt=""></td>
         </tr>
         <tr>
             <th><fmt:message key="home.chart.download"/></th>
             <th><fmt:message key="home.chart.upload"/></th>
         </tr>
         <tr>
-            <td><img src="<c:url value="/userChart.view"><c:param name="type" value="download"/></c:url>" alt=""/></td>
-            <td><img src="<c:url value="/userChart.view"><c:param name="type" value="upload"/></c:url>" alt=""/></td>
+            <td><img src="<c:url value="/userChart.view"><c:param name="type" value="download"/></c:url>" alt=""></td>
+            <td><img src="<c:url value="/userChart.view"><c:param name="type" value="upload"/></c:url>" alt=""></td>
         </tr>
 </table>
 
@@ -134,7 +135,7 @@
 <table>
     <tr>
         <td style="padding-right:1.5em">
-            <select name="listSize" onchange="location='home.view?listType=${model.listType}&listOffset=${model.listOffset}&listSize=' + options[selectedIndex].value;">
+            <select name="listSize" onchange="location='home.view?listType=${model.listType}&amp;listOffset=${model.listOffset}&amp;listSize=' + options[selectedIndex].value;">
                 <c:forTokens items="5 10 15 20 30 40 50" delims=" " var="size">
                     <option ${size eq model.listSize ? "selected" : ""} value="${size}"><fmt:message key="home.listsize"><fmt:param value="${size}"/></fmt:message></option>
                 </c:forTokens>
@@ -143,20 +144,20 @@
 
             <c:choose>
                 <c:when test="${model.listType eq 'random'}">
-                    <td><div class="forward"><a href="home.view?listType=random&listSize=${model.listSize}"><fmt:message key="common.more"/></a></div></td>
+                    <td><div class="forward"><a href="home.view?listType=random&amp;listSize=${model.listSize}"><fmt:message key="common.more"/></a></div></td>
                 </c:when>
 
                 <c:otherwise>
-                    <c:url value="home.view" var="previousUrl">
-                        <c:param name="listType" value="${model.listType}"/>
-                        <c:param name="listOffset" value="${model.listOffset - model.listSize}"/>
-                        <c:param name="listSize" value="${model.listSize}"/>
-                    </c:url>
-                    <c:url value="home.view" var="nextUrl">
-                        <c:param name="listType" value="${model.listType}"/>
-                        <c:param name="listOffset" value="${model.listOffset + model.listSize}"/>
-                        <c:param name="listSize" value="${model.listSize}"/>
-                    </c:url>
+                    <sub:url value="home.view" var="previousUrl">
+                        <sub:param name="listType" value="${model.listType}"/>
+                        <sub:param name="listOffset" value="${model.listOffset - model.listSize}"/>
+                        <sub:param name="listSize" value="${model.listSize}"/>
+                    </sub:url>
+                    <sub:url value="home.view" var="nextUrl">
+                        <sub:param name="listType" value="${model.listType}"/>
+                        <sub:param name="listOffset" value="${model.listOffset + model.listSize}"/>
+                        <sub:param name="listSize" value="${model.listSize}"/>
+                    </sub:url>
 
                     <td style="padding-right:1.5em"><fmt:message key="home.albums"><fmt:param value="${model.listOffset + 1}"/><fmt:param value="${model.listOffset + model.listSize}"/></fmt:message></td>
                     <td style="padding-right:1.5em"><div class="back"><a href="${previousUrl}"><fmt:message key="common.previous"/></a></div></td>

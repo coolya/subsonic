@@ -43,7 +43,7 @@ PARAMETERS
         </c:if>
     </sub:url>
 
-    <str:randomString count="5" type="alphanumeric" var="divId"/>
+    <str:randomString count="5" type="alphabet" var="divId"/>
     <div class="outerpair1" id="${divId}" style="opacity:${opacity}">
         <div class="outerpair2">
             <div class="shadowbox">
