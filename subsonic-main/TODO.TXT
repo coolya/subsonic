@@ -14,15 +14,14 @@ Support repeat in web player.
 Podcast broken? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=120
 Bug when adding new tracks to playlist,  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1543
 Refactor SearchService.getRandomSongs()?
-Wrong track duration reported by JW player. (Wrong content-length set in StreamController when transcoding).
 Problem when streaming 2gb+ files, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1538
 Change default cover image.
 Read .txt and .nfo for artist/album reviews. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1587
 Change LAME download url.
-Make lower-left abc work in IE.
 Add OGG etc support to BasicPlayer.
 Should really be only one juxebox player instance.
 Upgrade Maven
+Remove "Mock" and "Debug" options from JME app.
 
 DONE IN 3.7
 -----------
@@ -31,8 +30,9 @@ Tech: Only poll for service status if Subsonic Control Panel is opened. http://w
 New: Added new authorization role "User is allowed to change settings and password" in support for guest users.
 New: Player is always visible in playlist, even when scrolling.
 New: Removed frame borders.
-Bugfix: Sticky artist index now works in IE.
+New: Added advanced option to bind Subsonic to a particular IP address. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1740
 Bugfix: Web player now displays correct duration for transcoded tracks.
+Bugfix: Sticky artist index now works in IE.
 Bugfix: Discogs image retrieval now works again.
 Bugfix: Now works behind SSL proxy. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301
 Bugfix: Missing album art for artists in multiple folders. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1626

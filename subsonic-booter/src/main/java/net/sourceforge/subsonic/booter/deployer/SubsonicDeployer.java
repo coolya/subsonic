@@ -27,6 +27,7 @@ import java.util.Date;
  */
 public class SubsonicDeployer implements SubsonicDeployerService {
 
+    public static final String DEFAULT_HOST = "0.0.0.0";
     public static final int DEFAULT_PORT = 80;
     public static final int DEFAULT_MEMORY_LIMIT = 64;
     public static final String DEFAULT_CONTEXT_PATH = "/";
@@ -80,6 +81,7 @@ public class SubsonicDeployer implements SubsonicDeployerService {
             Server server = new Server();
             SelectChannelConnector connector = new SelectChannelConnector();
             connector.setMaxIdleTime(MAX_IDLE_TIME_MILLIS);
+            connector.setHost(getHost());
             connector.setPort(getPort());
             server.addConnector(connector);
 
@@ -99,11 +101,7 @@ public class SubsonicDeployer implements SubsonicDeployerService {
     }
 
     private String getContextPath() {
-        String contextPath = System.getProperty("subsonic.contextPath");
-        if (contextPath == null) {
-            contextPath = DEFAULT_CONTEXT_PATH;
-        }
-        return contextPath;
+        return System.getProperty("subsonic.contextPath", DEFAULT_CONTEXT_PATH);
     }
 
 
@@ -121,6 +119,10 @@ public class SubsonicDeployer implements SubsonicDeployerService {
         }
 
         return war;
+    }
+
+    private String getHost() {
+        return System.getProperty("subsonic.host", DEFAULT_HOST);
     }
 
     private int getPort() {
@@ -156,7 +158,9 @@ public class SubsonicDeployer implements SubsonicDeployerService {
     }
 
     private String getURL() {
-        StringBuffer url = new StringBuffer("http://localhost");
+
+        String host = DEFAULT_HOST.equals(getHost()) ? "localhost" : getHost();
+        StringBuffer url = new StringBuffer("http://").append(host);
         if (getPort() != 80) {
             url.append(":").append(getPort());
         }

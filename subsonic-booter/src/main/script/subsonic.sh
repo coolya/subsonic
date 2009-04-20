@@ -7,6 +7,7 @@
 ###################################################################################
 
 SUBSONIC_HOME=/var/subsonic
+SUBSONIC_HOST=0.0.0.0
 SUBSONIC_PORT=8080
 SUBSONIC_CONTEXT_PATH=/
 SUBSONIC_MAX_MEMORY=64
@@ -17,6 +18,10 @@ usage() {
     echo "  --help               This small usage guide."
     echo "  --home=DIR           The directory where Subsonic will create files."
     echo "                       Make sure it is writable. Default: /var/subsonic"
+    echo "  --host=HOST          The host name or IP address on which to bind Subsonic."
+    echo "                       Only relevant if you have multiple network interfaces and want"
+    echo "                       to make Subsonic available on only one of them. The default value"
+    echo "                       will bind Subsonic to all available network interfaces. Default: 0.0.0.0"
     echo "  --port=PORT          The port on which Subsonic will listen for"
     echo "                       incoming HTTP traffic. Default: 8080"
     echo "  --context-path=PATH  The context path, i.e., the last part of the Subsonic"
@@ -35,6 +40,9 @@ while [ $# -ge 1 ]; do
             ;;
         --home=?*)
             SUBSONIC_HOME=${1#--home=}
+            ;;
+        --host=?*)
+            SUBSONIC_HOST=${1#--host=}
             ;;
         --port=?*)
             SUBSONIC_PORT=${1#--port=}
@@ -69,7 +77,7 @@ rm -f ${LOG}
 
 cd `dirname $0`
 
-${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m  -Dsubsonic.home=${SUBSONIC_HOME} -Dsubsonic.port=${SUBSONIC_PORT} \
+${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m -Dsubsonic.home=${SUBSONIC_HOME} -Dsubsonic.host=${SUBSONIC_HOST} -Dsubsonic.port=${SUBSONIC_PORT} \
 -Dsubsonic.contextPath=${SUBSONIC_CONTEXT_PATH} -jar subsonic-booter-jar-with-dependencies.jar > ${LOG} 2>&1 &
 
 # Write pid to pidfile if it is defined.
