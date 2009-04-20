@@ -22,6 +22,7 @@ Add OGG etc support to BasicPlayer.
 Should really be only one juxebox player instance.
 Upgrade Maven
 Remove "Mock" and "Debug" options from JME app.
+Ignore files/directories by name (e.g., ".svn"), FilenameUtils.wildcardMatch(), http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=831
 
 DONE IN 3.7
 -----------
