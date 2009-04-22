@@ -12,7 +12,7 @@
     <script type="text/javascript" src="<c:url value="/script/webfx/range.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/webfx/timer.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/webfx/slider.js"/>"></script>
-    <link type="text/css" rel="stylesheet" href="<c:url value="/script/webfx/luna.css"/>"/>
+    <link type="text/css" rel="stylesheet" href="<c:url value="/script/webfx/luna.css"/>">
 </head>
 
 <body class="bgcolor2" onload="init()">
@@ -418,8 +418,7 @@
 
 </script>
 
-<div class="bgcolor2" style="position:fixed; top:0; width:100%">
-<h2 style="font-weight:normal;">
+<div class="bgcolor2" style="position:fixed; top:0; width:100%;margin:1em 0 0.2em 0;">
     <table style="white-space:nowrap;">
         <tr style="white-space:nowrap;">
             <c:if test="${model.user.settingsRole}">
@@ -442,11 +441,11 @@
 
             <c:if test="${model.player.jukebox}">
                 <td style="white-space:nowrap;">
-                    <img src="<spring:theme code="volumeImage"/>" alt=""/>
+                    <img src="<spring:theme code="volumeImage"/>" alt="">
                 </td>
                 <td style="white-space:nowrap;">
                     <div class="slider bgcolor2" id="slider-1" style="width:90px">
-                        <input class="slider-input" id="slider-input-1" name="slider-input-1"/>
+                        <input class="slider-input" id="slider-input-1" name="slider-input-1">
                     </div>
                     <script type="text/javascript">
 
@@ -510,7 +509,6 @@
             </td>
 
         </tr></table>
-    </h2>
 </div>
 
 <div style="height:3.9em"></div>
@@ -522,23 +520,23 @@
         <tr id="pattern" style="display:none;margin:0;padding:0;border:0">
             <td class="bgcolor2"><a href="javascript:noop()">
                 <img id="removeSong" onclick="onRemove(this.id.substring(10) - 1)" src="<spring:theme code="removeImage"/>"
-                     alt="<fmt:message key="playlist.remove"/>" title="<fmt:message key="playlist.remove"/>"/></a></td>
+                     alt="<fmt:message key="playlist.remove"/>" title="<fmt:message key="playlist.remove"/>"></a></td>
             <td class="bgcolor2"><a href="javascript:noop()">
                 <img id="up" onclick="onUp(this.id.substring(2) - 1)" src="<spring:theme code="upImage"/>"
-                     alt="<fmt:message key="playlist.up"/>" title="<fmt:message key="playlist.up"/>"/></a></td>
+                     alt="<fmt:message key="playlist.up"/>" title="<fmt:message key="playlist.up"/>"></a></td>
             <td class="bgcolor2"><a href="javascript:noop()">
                 <img id="down" onclick="onDown(this.id.substring(4) - 1)" src="<spring:theme code="downImage"/>"
-                     alt="<fmt:message key="playlist.down"/>" title="<fmt:message key="playlist.down"/>"/></a></td>
+                     alt="<fmt:message key="playlist.down"/>" title="<fmt:message key="playlist.down"/>"></a></td>
 
-            <td class="bgcolor2" style="padding-left: 0.1em"><input type="checkbox" class="checkbox" id="songIndex" onchange="onSelectionChange()"/></td>
-            <td style="padding-right:0.25em"/>
+            <td class="bgcolor2" style="padding-left: 0.1em"><input type="checkbox" class="checkbox" id="songIndex" onchange="onSelectionChange()"></td>
+            <td style="padding-right:0.25em"></td>
 
             <c:if test="${model.visibility.trackNumberVisible}">
                 <td style="padding-right:0.5em;text-align:right"><span class="detail" id="trackNumber">1</span></td>
             </c:if>
 
             <td style="padding-right:1.25em">
-                <img id="currentImage" src="<spring:theme code="currentImage"/>" alt="" style="display:none"/>
+                <img id="currentImage" src="<spring:theme code="currentImage"/>" alt="" style="display:none">
                 <c:choose>
                     <c:when test="${model.player.externalWithPlaylist}">
                         <span id="title">Title</span>
