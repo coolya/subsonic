@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html><head>
     <%@ include file="head.jsp" %>
@@ -48,7 +49,7 @@
                 html += "<tr><td colspan='2' class='detail' style='padding-top:1em;white-space:nowrap'>";
 
                 if (nowPlaying[i].avatarUrl != null) {
-                    html += "<img src='" + nowPlaying[i].avatarUrl + "' style='padding-right:5pt'/>";
+                    html += "<img src='" + nowPlaying[i].avatarUrl + "' style='padding-right:5pt'>";
                 }
                 html += "<b>" + nowPlaying[i].username + "</b></td></tr>"
 
@@ -60,7 +61,7 @@
 
                 if (nowPlaying[i].coverArtUrl != null) {
                     html += "<a title='" + nowPlaying[i].tooltip + "' rel='zoom' href='" + nowPlaying[i].coverArtZoomUrl + "'>" +
-                            "<img src='" + nowPlaying[i].coverArtUrl + "' width='48' height='48'/></a>";
+                            "<img src='" + nowPlaying[i].coverArtUrl + "' width='48' height='48'></a>";
                 }
                 html += "</td></tr>";
 
@@ -77,7 +78,7 @@
 </c:if>
 
 <h1>
-    <img src="<spring:theme code="nowPlayingImage"/>" alt=""/>
+    <img src="<spring:theme code="nowPlayingImage"/>" alt="">
 
     <c:forEach items="${model.ancestors}" var="ancestor">
         <sub:url value="main.view" var="ancestorUrl">
@@ -202,10 +203,10 @@
 
 <div id="commentForm" style="display:none">
     <form method="post" action="setMusicFileInfo.view">
-        <input type="hidden" name="action" value="comment"/>
-        <input type="hidden" name="path" value="${model.dir.path}"/>
+        <input type="hidden" name="action" value="comment">
+        <input type="hidden" name="path" value="${model.dir.path}">
         <textarea name="comment" rows="6" cols="70">${model.comment}</textarea>
-        <input type="submit" value="<fmt:message key="common.save"/>"/>
+        <input type="submit" value="<fmt:message key="common.save"/>">
     </form>
     <fmt:message key="main.wiki"/>
 </div>
@@ -253,7 +254,7 @@
                         </c:when>
 
                         <c:otherwise>
-                            <td ${class} style="padding-left:0.25em"/>
+                            <td ${class} style="padding-left:0.25em"></td>
 
                             <c:if test="${model.visibility.trackNumberVisible}">
                                 <td ${class} style="padding-right:0.5em;text-align:right">

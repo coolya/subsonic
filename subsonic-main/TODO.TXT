@@ -4,9 +4,6 @@ Mail from Dan Eriksen.
 Reduce jukebox logging.
 Validate transitional dtd.
 Profile for bottlenecks
-Add shoutbox as right-hand side frame.
-Create Ubuntu etc package using maven-unix-plugin (and appassembler?)
-Don't use absolute paths in status.view and help.view (but rather artist + title).
 Selected music folder not remembered.
 Now playing broken?
 "grep -v" in subsonic.sh
@@ -92,7 +89,11 @@ By default, create music folder for video.
 BACKLOG
 ==========================
 Coverflow, http://imageflow.finnrudolph.de/, http://sockso.pu-gh.com
-Shoutbox
+Add shoutbox as right-hand side frame.  http://today.java.net/pub/a/today/2007/03/22/developing-applications-using-reverse-ajax.html
+Use reverse ajax for Now Playing?
+Jetty download performance, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1712
+Create Ubuntu etc package using maven-unix-plugin (and appassembler?)
+Don't use absolute paths in status.view and help.view (but rather artist + title).
 Add to Ubuntu repo.
 Podcast : Playing Direct from URL, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1667
 iPod/iPhone support.

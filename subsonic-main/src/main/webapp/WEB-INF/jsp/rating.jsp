@@ -31,10 +31,10 @@ PARAMETERS
 
     <c:choose>
         <c:when test="${param.readonly}">
-            <img src="${imageUrl}" style="margin-right:-3px" alt="" title="<fmt:message key="rating.rating"/> ${param.rating/10}"/>
+            <img src="${imageUrl}" style="margin-right:-3px" alt="" title="<fmt:message key="rating.rating"/> ${param.rating/10}">
         </c:when>
         <c:otherwise>
-            <a href="${ratingUrl}"><img src="${imageUrl}" style="margin-right:-3px" alt="" title="<fmt:message key="rating.rating"/> ${i}"/></a>
+            <a href="${ratingUrl}"><img src="${imageUrl}" style="margin-right:-3px" alt="" title="<fmt:message key="rating.rating"/> ${i}"></a>
         </c:otherwise>
     </c:choose>
 
@@ -47,5 +47,5 @@ PARAMETERS
 </sub:url>
 
 <c:if test="${not param.readonly}">
-    | <a href="${clearRatingUrl}"><img src="<spring:theme code="clearRatingImage"/>" alt="" title="<fmt:message key="rating.clearrating"/>" style="margin-left:-3px; margin-right:5px"/></a>
+    | <a href="${clearRatingUrl}"><img src="<spring:theme code="clearRatingImage"/>" alt="" title="<fmt:message key="rating.clearrating"/>" style="margin-left:-3px; margin-right:5px"></a>
 </c:if>
