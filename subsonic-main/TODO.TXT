@@ -1,5 +1,6 @@
 TODO IN 3.7
 --------------
+Mail from Dan Eriksen.
 Reduce jukebox logging.
 Validate transitional dtd.
 Profile for bottlenecks
@@ -23,6 +24,7 @@ Should really be only one juxebox player instance.
 Upgrade Maven
 Remove "Mock" and "Debug" options from JME app.
 Ignore files/directories by name (e.g., ".svn"), FilenameUtils.wildcardMatch(), http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=831
+Bug with repeat in jukebox.
 
 DONE IN 3.7
 -----------
@@ -42,6 +44,7 @@ Bugfix: Wrong repeat state displayed in playlist.
 Bugfix: Stop web player when playlist is cleared.
 Bugfix: Lyrics lookup working again.
 Bugfix: Support quotes in Podcast names. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1734
+Bugfix: Fixed layout problem in top frame (IE only).
 New: Jukebox support.
 New: Added buttons for next/previous track in web player.
 New: Automatically trim text fields when entering email address and license key.
