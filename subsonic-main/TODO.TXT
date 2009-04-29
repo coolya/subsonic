@@ -91,6 +91,7 @@ By default, create music folder for video.
 
 BACKLOG
 ==========================
+Coverflow, http://imageflow.finnrudolph.de/, http://sockso.pu-gh.com
 Shoutbox
 Add to Ubuntu repo.
 Podcast : Playing Direct from URL, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1667

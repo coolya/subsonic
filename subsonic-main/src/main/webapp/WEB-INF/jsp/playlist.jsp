@@ -418,7 +418,7 @@
 
 </script>
 
-<div class="bgcolor2" style="position:fixed; top:0; width:100%;margin:1em 0 0.2em 0;">
+<div class="bgcolor2" style="position:fixed; top:0; width:100%">
     <table style="white-space:nowrap;">
         <tr style="white-space:nowrap;">
             <c:if test="${model.user.settingsRole}">
@@ -511,7 +511,7 @@
         </tr></table>
 </div>
 
-<div style="height:3.9em"></div>
+<div style="height:2.7em"></div>
 
 <p id="empty"><em><fmt:message key="playlist.empty"/></em></p>
 
