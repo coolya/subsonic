@@ -59,13 +59,13 @@ table {
 /* Back image */
 .back {
     background-image:url( "../icons/coolandclean/back.png" );
-    padding-left:22px;
+    /*padding-left:22px;*/
 }
 
 /* Forward image */
 .forward {
     background-image:url( "../icons/coolandclean/forward.png" );
-    padding-left:22px;
+    /*padding-left:22px;*/
 }
 
 /* Link colour */

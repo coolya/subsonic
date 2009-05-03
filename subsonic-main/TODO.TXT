@@ -1,5 +1,6 @@
 TODO IN 3.7
 --------------
+Make sure that .vmoptions support subsonic-host
 Mail from Dan Eriksen.
 Reduce jukebox logging.
 Validate transitional dtd.
@@ -17,11 +18,10 @@ Change default cover image.
 Read .txt and .nfo for artist/album reviews. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1587
 Change LAME download url.
 Add OGG etc support to BasicPlayer.
-Should really be only one juxebox player instance.
-Upgrade Maven
+Should really be only one juxebox player instance?
 Remove "Mock" and "Debug" options from JME app.
-Ignore files/directories by name (e.g., ".svn"), FilenameUtils.wildcardMatch(), http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=831
 Bug with repeat in jukebox.
+Improve Midnight Fun theme.
 
 DONE IN 3.7
 -----------
@@ -88,9 +88,12 @@ By default, create music folder for video.
 
 BACKLOG
 ==========================
+Create Jing screencast.
 Coverflow, http://imageflow.finnrudolph.de/, http://sockso.pu-gh.com
 Add shoutbox as right-hand side frame.  http://today.java.net/pub/a/today/2007/03/22/developing-applications-using-reverse-ajax.html
 Use reverse ajax for Now Playing?
+Upgrade last.fm audioscrobbling protocol http://www.last.fm/api/submissions
+Ignore files/directories by name (e.g., ".svn"), FilenameUtils.wildcardMatch(), http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=831
 Jetty download performance, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1712
 Create Ubuntu etc package using maven-unix-plugin (and appassembler?)
 Don't use absolute paths in status.view and help.view (but rather artist + title).
@@ -335,6 +338,7 @@ Register at freshmeat.
 Post message on forum.
 Update version number in pom.xml etc.
 Take backup of forum.
+Upgrade gosubsonic.com
 
 HOW TO RELEASE TRANSCODING PACK
 ===============================
