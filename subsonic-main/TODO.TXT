@@ -2,6 +2,7 @@ TODO IN 3.7
 --------------
 Make sure that .vmoptions support subsonic-host
 Mail from Dan Eriksen.
+Enable auto-random mode for jukebox.
 Reduce jukebox logging.
 Validate transitional dtd.
 Profile for bottlenecks
@@ -25,6 +26,7 @@ Improve Midnight Fun theme.
 
 DONE IN 3.7
 -----------
+New: Automatically add Windows Firewall exceptions during install.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=5188#5188
 Performance: Improved browser and server caching of artist list. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1558
 Tech: Only poll for service status if Subsonic Control Panel is opened. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1612
 New: Added new authorization role "User is allowed to change settings and password" in support for guest users.

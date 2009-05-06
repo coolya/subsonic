@@ -84,6 +84,12 @@ Section "Subsonic"
   SetOutPath "c:\subsonic\transcode"
   File ..\..\..\..\subsonic-transcode\windows\*.*
 
+  # Add Windows Firewall exception.
+  # (Requires NSIS plugin found on http://nsis.sourceforge.net/NSIS_Simple_Firewall_Plugin to be installed
+  # as NSIS_HOME/Plugins/SimpleFC.dll)
+  SimpleFC::AddApplication "Subsonic Service" "$INSTDIR\subsonic-service.exe" 0 2 "" 1
+  SimpleFC::AddApplication "Subsonic Agent" "$INSTDIR\subsonic-agent.exe" 0 2 "" 1
+
   # Install and start service.
   ExecWait '"$INSTDIR\subsonic-service.exe" -install'
   ExecWait '"$INSTDIR\subsonic-service.exe" -start'
@@ -133,6 +139,12 @@ Section "Uninstall"
   Delete "$SMSTARTUP\Subsonic.lnk"
   RMDir /r "$SMPROGRAMS\Subsonic"
   RMDir /r "$INSTDIR"
+
+  # Remove Windows Firewall exception.
+  # (Requires NSIS plugin found on http://nsis.sourceforge.net/NSIS_Simple_Firewall_Plugin to be installed
+  # as NSIS_HOME/Plugins/SimpleFC.dll)
+  SimpleFC::RemoveApplication "$INSTDIR\subsonic-service.exe"
+  SimpleFC::RemoveApplication "$INSTDIR\subsonic-agent.exe"
 
 SectionEnd
 
