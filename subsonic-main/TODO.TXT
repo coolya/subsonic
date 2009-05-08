@@ -1,5 +1,6 @@
 TODO IN 3.7
 --------------
+Add padding above player toolbar.
 Make sure that .vmoptions support subsonic-host
 Mail from Dan Eriksen.
 Enable auto-random mode for jukebox.
@@ -26,39 +27,7 @@ Improve Midnight Fun theme.
 
 DONE IN 3.7
 -----------
-New: Automatically add Windows Firewall exceptions during install.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=5188#5188
-Performance: Improved browser and server caching of artist list. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1558
-Tech: Only poll for service status if Subsonic Control Panel is opened. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1612
-New: Added new authorization role "User is allowed to change settings and password" in support for guest users.
-New: Player is always visible in playlist, even when scrolling.
-New: Removed frame borders.
-New: Added advanced option to bind Subsonic to a particular IP address. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1740
-Bugfix: Web player now displays correct duration for transcoded tracks.
-Bugfix: Sticky artist index now works in IE.
-Bugfix: Discogs image retrieval now works again.
-Bugfix: Now works behind SSL proxy. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301
-Bugfix: Missing album art for artists in multiple folders. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1626
-Bugfix: Wrong player selected if different users access Subsonic from the same browser instance.
-Bugfix: Wrong repeat state displayed in playlist.
-Bugfix: Stop web player when playlist is cleared.
-Bugfix: Lyrics lookup working again.
-Bugfix: Support quotes in Podcast names. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1734
-Bugfix: Fixed layout problem in top frame (IE only).
-New: Jukebox support.
-New: Added buttons for next/previous track in web player.
-New: Automatically trim text fields when entering email address and license key.
-New: Improved search feature. (Paging, album/artist search fields)
-New: Show online help as balloon tooltip.
-New: Improved subsonic.sh startup script.
-New: Artist-level comments.
-New: Added theme "Cool and Clean", courtesy of Dan Eriksen
-New: Added theme "Midnight Fun", courtesy of Don Pearson
-New: Added Slovenian translation, courtesy of Andrej Žižmond
-New: Added Danish translation, courtesy of Morten Hartvich
-New: Added Japanese translation, courtesy of Takahiro Suzuki
-New: Updated Norwegian translation, courtesy of jigsaw.
-New: Updated Swedish translation, courtesy of Fredrik Leufkens.
-New: Don't show player username or IP address in playlist.
+
 
 MIDNIGHT FUN THEME
 ------------------
@@ -323,6 +292,7 @@ HOW TO RELEASE
 ===============================
 Set JAVA_HOME to 1.6.
 Update version number in pom.xml etc.
+Update changelog.php, download.php and version.html
 mvn clean install -P full
 cd subsonic-assembly
 mvn assembly:assembly
@@ -330,7 +300,7 @@ Deploy
 Check that correct local version is displayed.
 Commit
 Upload files to SourceForge (in separate shell).
-  rsync -avP -e ssh subsonic-assembly/target/* subsonic-installer/target/*  sindre_mehus@frs.sourceforge.net:uploads/
+  rsync -avP -e ssh subsonic-assembly/target/subsonic* subsonic-installer/target/subsonic*  sindre_mehus@frs.sourceforge.net:uploads/
 Create file release at SourceForge.
 Upload site:
   rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/

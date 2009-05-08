@@ -85,15 +85,18 @@
                         <tr><td>&#149; Spanish </td><td>(by Jorge Bueno Magdalena)</td></tr>
                         <tr><td>&#149; German </td><td>(by Harald Weiss and J&ouml;rg Frommann)</td></tr>
                         <tr><td>&#149; Italian </td><td>(by Michele Petrecca)</td></tr>
-                        <tr><td>&#149; Chinese </td><td>(by Neil Gao)</td></tr>
                         <tr><td>&#149; Russian </td><td>(by Iaroslav Andrusiak)</td></tr>
+                        <tr><td>&#149; Slovenian </td><td>(by Andrej &#381;i&#382;mond)</td></tr>
+                        <tr><td>&#149; Macedonian </td><td>(by Stefan Ivanovski)</td></tr>
+                        <tr><td>&#149; Chinese </td><td>(by Neil Gao)</td></tr>
+                        <tr><td>&#149; Japanese </td><td>(by Takahiro Suzuki)</td></tr>
                         <tr><td>&#149; Dutch </td><td>(by Ronald Knot)</td></tr>
                         <tr><td>&#149; Norwegian </td><td>(by Sindre Mehus and jigsaw)</td></tr>
                         <tr><td>&#149; Swedish </td><td>(by J&ouml;rgen Sj&ouml;berg)</td></tr>
-                        <tr><td>&#149; Macedonian </td><td>(by Stefan Ivanovski)</td></tr>
+                        <tr><td>&#149; Danish </td><td>(by Morten Hartvich)</td></tr>
                     </table>
                 </li>
-                <li>Select from eight different themes, including some that are optimized for HD screens.</li>
+                <li>Select from eleven different themes, including some that are optimized for HD screens.</li>
                 <li>Highly configurable user interface.</li>
             </ul>
         </div>
@@ -174,6 +177,7 @@
             <ul class="list">
                 <li>Download Podcasts with the integrated Podcast receiver.</li>
                 <li>Manage your internet TV and radio stations.</li>
+                <li>Play music directly on the server's audio hardware using the <b>jukebox</b> mode.</li>
                 <li>Stream directly to your mobile phone, using the <a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1288"><b>Subsonic Mobile Player</b></a>.</li>
             </ul>
         </div>
@@ -198,7 +202,6 @@
     </div>
 
     <?php include("download-subsonic.php"); ?>
-    <!--<?php include("ripserver.php"); ?>-->
     <?php include("translate-subsonic.php"); ?>
 </div>
 
