@@ -1,9 +1,8 @@
 TODO IN 3.7
 --------------
+Improve year range in random playlist generator.  Maybe provide to and from fields.
 Update Norwegian translation.
-Add padding above player toolbar.
 Make sure that .vmoptions support subsonic-host
-Mail from Dan Eriksen.
 Enable auto-random mode for jukebox.
 Reduce jukebox logging.
 Validate transitional dtd.
@@ -30,6 +29,7 @@ DONE IN 3.7.beta2
 ------------------
 Bugfix: Fixed broken WAR version.
 Bugfix: Fixed broken tag editor.
+Bugfix: Added some padding above player toolbar.
 
 
 MIDNIGHT FUN THEME
