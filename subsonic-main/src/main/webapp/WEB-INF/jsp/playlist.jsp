@@ -23,6 +23,7 @@
     var currentAlbumUrl = null;
     var currentStreamUrl = null;
     var startPlayer = false;
+    var slider = null;
 
     function init() {
         dwr.engine.setErrorHandler(null);
@@ -450,7 +451,7 @@
                     <script type="text/javascript">
 
                         var updateGainTimeoutId = 0;
-                        var slider = new Slider(document.getElementById("slider-1"), document.getElementById("slider-input-1"));
+                        slider = new Slider(document.getElementById("slider-1"), document.getElementById("slider-input-1"));
                         slider.onchange = function () {
                             clearTimeout(updateGainTimeoutId);
                             updateGainTimeoutId = setTimeout("updateGain()", 250);

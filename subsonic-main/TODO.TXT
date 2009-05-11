@@ -29,6 +29,7 @@ DONE IN 3.7.beta2
 ------------------
 Bugfix: Fixed broken WAR version.
 Bugfix: Fixed broken tag editor.
+Bugfix: Automatically start web player when clicking play on artist, album or song.
 Bugfix: Added some padding above player toolbar.
 
 
