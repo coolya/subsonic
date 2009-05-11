@@ -1,6 +1,5 @@
 TODO IN 3.7
 --------------
-Tag editing broken.
 Update Norwegian translation.
 Add padding above player toolbar.
 Make sure that .vmoptions support subsonic-host
@@ -30,6 +29,7 @@ Improve Midnight Fun theme.
 DONE IN 3.7.beta2
 ------------------
 Bugfix: Fixed broken WAR version.
+Bugfix: Fixed broken tag editor.
 
 
 MIDNIGHT FUN THEME

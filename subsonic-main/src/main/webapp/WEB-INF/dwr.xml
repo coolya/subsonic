@@ -23,11 +23,11 @@
         </create>
 
         <create creator="spring" javascript="tagService">
-            <param name="beanName" value="ajaxTagServiceSecure"/>
+            <param name="beanName" value="ajaxTagService"/>
         </create>
 
         <create creator="spring" javascript="transferService">
-            <param name="beanName" value="ajaxTransferServiceSecure"/>
+            <param name="beanName" value="ajaxTransferService"/>
         </create>
 
         <convert converter="bean" match="net.sourceforge.subsonic.ajax.NowPlayingInfo"/>
