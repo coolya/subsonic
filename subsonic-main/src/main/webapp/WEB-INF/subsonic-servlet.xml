@@ -13,6 +13,9 @@
         <property name="musicIndexService" ref="musicIndexService"/>
         <property name="musicFolderCache" ref="musicFolderCache"/>
     </bean>
+    <bean id="rightController" class="net.sourceforge.subsonic.controller.RightController">
+        <property name="viewName" value="right"/>
+    </bean>
     <bean id="statusController" class="net.sourceforge.subsonic.controller.StatusController">
         <property name="viewName" value="status"/>
         <property name="statusService" ref="statusService"/>
@@ -328,6 +331,7 @@
                 <prop key="/help.view">helpController</prop>
                 <prop key="/lyrics.view">lyricsController</prop>
                 <prop key="/left.view">leftController</prop>
+                <prop key="/right.view">rightController</prop>
                 <prop key="/status.view">statusController</prop>
                 <prop key="/more.view">moreController</prop>
                 <prop key="/upload.view">uploadController</prop>

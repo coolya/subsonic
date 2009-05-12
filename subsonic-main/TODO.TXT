@@ -1,5 +1,6 @@
 TODO IN 3.7
 --------------
+Customizable music and podcast folder. http://www.amahi.org/
 Improve year range in random playlist generator.  Maybe provide to and from fields.
 Update Norwegian translation.
 Make sure that .vmoptions support subsonic-host
@@ -63,6 +64,8 @@ By default, create music folder for video.
 
 BACKLOG
 ==========================
+Put now playing and shoutbox in right.jsp.
+Pre-login message. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1831
 Create Jing screencast.
 Coverflow, http://imageflow.finnrudolph.de/, http://sockso.pu-gh.com
 Add shoutbox as right-hand side frame.  http://today.java.net/pub/a/today/2007/03/22/developing-applications-using-reverse-ajax.html
