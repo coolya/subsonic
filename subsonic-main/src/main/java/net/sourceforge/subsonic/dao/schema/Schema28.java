@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.dao.schema;
 
 import net.sourceforge.subsonic.*;
+import net.sourceforge.subsonic.util.Util;
 import org.springframework.jdbc.core.*;
 
 /**
@@ -82,7 +83,7 @@ public class Schema28 extends Schema {
                              "step3 varchar," +
                              "enabled boolean not null)");
 
-            boolean enabled = isWindowsInstall();
+            boolean enabled = Util.isWindowsInstall();
             template.execute("insert into transcoding values(null,'wav > mp3','wav','mp3','lame -b %b -S %s -',null,null," + enabled + ")");
             template.execute("insert into transcoding values(null,'flac > mp3','flac','mp3','flac -c -s -d %s','lame -b %b - -',null," + enabled + ")");
             template.execute("insert into transcoding values(null,'ogg > mp3','ogg','mp3','oggdec %s -o','lame -b %b - -',null," + enabled + ")");
@@ -107,10 +108,5 @@ public class Schema28 extends Schema {
                              "foreign key (transcoding_id) references transcoding(id) on delete cascade)");
             LOG.info("Database table 'player_transcoding' was created successfully.");
         }
-    }
-
-
-    public boolean isWindowsInstall() {
-        return "true".equals(System.getProperty("subsonic.windowsInstall"));
     }
 }

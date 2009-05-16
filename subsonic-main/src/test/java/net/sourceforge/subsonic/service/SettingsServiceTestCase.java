@@ -49,7 +49,7 @@ public class SettingsServiceTestCase extends TestCase {
         assertEquals("Wrong default cover art limit.", 30, settingsService.getCoverArtLimit());
         assertEquals("Wrong default index creation interval.", 1, settingsService.getIndexCreationInterval());
         assertEquals("Wrong default index creation hour.", 3, settingsService.getIndexCreationHour());
-        assertEquals("Wrong default playlist folder.", "c:/playlists", settingsService.getPlaylistFolder());
+        assertEquals("Wrong default playlist folder.", "c:\\playlists", settingsService.getPlaylistFolder());
         assertEquals("Wrong default theme.", "default", settingsService.getThemeId());
         assertEquals("Wrong default stream port.", 0, settingsService.getStreamPort());
         assertNull("Wrong default license email.", settingsService.getLicenseEmail());
@@ -57,7 +57,7 @@ public class SettingsServiceTestCase extends TestCase {
         assertNull("Wrong default license date.", settingsService.getLicenseDate());
         assertEquals("Wrong default Podcast episode retention count.", 10, settingsService.getPodcastEpisodeRetentionCount());
         assertEquals("Wrong default Podcast episode download count.", 1, settingsService.getPodcastEpisodeDownloadCount());
-        assertEquals("Wrong default Podcast folder.", "c:/music/Podcast", settingsService.getPodcastFolder());
+        assertEquals("Wrong default Podcast folder.", "c:\\music\\Podcast", settingsService.getPodcastFolder());
         assertEquals("Wrong default Podcast update interval.", 24, settingsService.getPodcastUpdateInterval());
         assertEquals("Wrong default rewrite URL enabled.", true, settingsService.isRewriteUrlEnabled());
         assertEquals("Wrong default LDAP enabled.", false, settingsService.isLdapEnabled());

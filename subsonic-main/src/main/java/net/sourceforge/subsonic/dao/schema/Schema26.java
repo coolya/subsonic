@@ -45,7 +45,7 @@ public class Schema26 extends Schema{
                              "path varchar not null," +
                              "name varchar not null," +
                              "enabled boolean not null)");
-            template.execute("insert into music_folder values (null, '" + getDefaultMusicFolder() + "', 'Music', true)");
+            template.execute("insert into music_folder values (null, '" + Util.getDefaultMusicFolder() + "', 'Music', true)");
             LOG.info("Database table 'music_folder' was created successfully.");
         }
 
@@ -107,7 +107,4 @@ public class Schema26 extends Schema{
         }
     }
 
-    private String getDefaultMusicFolder() {
-        return Util.isRipserver() ? "/media/Music" : "c:\\music";
-    }
 }

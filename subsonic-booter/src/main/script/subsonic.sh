@@ -12,6 +12,9 @@ SUBSONIC_PORT=8080
 SUBSONIC_CONTEXT_PATH=/
 SUBSONIC_MAX_MEMORY=64
 SUBSONIC_PIDFILE=
+SUBSONIC_DEFAULT_MUSIC_FOLDER=/var/music
+SUBSONIC_DEFAULT_PODCAST_FOLDER=/var/music/Podcast
+SUBSONIC_DEFAULT_PLAYLIST_FOLDER=/var/playlists
 
 usage() {
     echo "Usage: subsonic.sh [options]"
@@ -29,6 +32,12 @@ usage() {
     echo "  --max-memory=MB      The memory limit (max Java heap size) in megabytes."
     echo "                       Default: 64"
     echo "  --pidfile=PIDFILE    Write PID to this file. Default not created."
+    echo "  --default-music-folder=DIR    Configure Subsonic to use this folder for music.  This option "
+    echo "                                only has effect the first time Subsonic is started. Default '/var/music'"
+    echo "  --default-podcast-folder=DIR  Configure Subsonic to use this folder for Podcasts.  This option "
+    echo "                                only has effect the first time Subsonic is started. Default '/var/music/Podcast'"
+    echo "  --default-playlist-folder=DIR Configure Subsonic to use this folder for playlists.  This option "
+    echo "                                only has effect the first time Subsonic is started. Default '/var/playlists'"
     exit 1
 }
 
@@ -56,6 +65,15 @@ while [ $# -ge 1 ]; do
         --pidfile=?*)
             SUBSONIC_PIDFILE=${1#--pidfile=}
             ;;
+        --default-music-folder=?*)
+            SUBSONIC_DEFAULT_MUSIC_FOLDER=${1#--default-music-folder=}
+            ;;
+        --default-podcast-folder=?*)
+            SUBSONIC_DEFAULT_PODCAST_FOLDER=${1#--default-podcast-folder=}
+            ;;
+        --default-playlist-folder=?*)
+            SUBSONIC_DEFAULT_PLAYLIST_FOLDER=${1#--default-playlist-folder=}
+            ;;
         *)
             usage
             ;;
@@ -77,11 +95,19 @@ rm -f ${LOG}
 
 cd `dirname $0`
 
-${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m -Dsubsonic.home=${SUBSONIC_HOME} -Dsubsonic.host=${SUBSONIC_HOST} -Dsubsonic.port=${SUBSONIC_PORT} \
--Dsubsonic.contextPath=${SUBSONIC_CONTEXT_PATH} -jar subsonic-booter-jar-with-dependencies.jar > ${LOG} 2>&1 &
+${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m \
+  -Dsubsonic.home=${SUBSONIC_HOME} \
+  -Dsubsonic.host=${SUBSONIC_HOST} \
+  -Dsubsonic.port=${SUBSONIC_PORT} \
+  -Dsubsonic.contextPath=${SUBSONIC_CONTEXT_PATH} \
+  -Dsubsonic.defaultMusicFolder=${SUBSONIC_DEFAULT_MUSIC_FOLDER} \
+  -Dsubsonic.defaultPodcastFolder=${SUBSONIC_DEFAULT_PODCAST_FOLDER} \
+  -Dsubsonic.defaultPlaylistFolder=${SUBSONIC_DEFAULT_PLAYLIST_FOLDER} \
+  -jar subsonic-booter-jar-with-dependencies.jar > ${LOG} 2>&1 &
 
 # Write pid to pidfile if it is defined.
 if [ $SUBSONIC_PIDFILE ]; then
     echo $! > ${SUBSONIC_PIDFILE}
 fi
 
+echo Started Subsonic [PID $!]

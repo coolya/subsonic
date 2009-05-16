@@ -34,17 +34,27 @@ public final class Util {
     private Util() {
     }
 
+    public static String getDefaultMusicFolder() {
+        String def = isWindows() ? "c:\\music" : "/var/music";
+        return System.getProperty("subsonic.defaultMusicFolder", def);
+    }
 
-    /**
-     * Returns whether this is a Ripserver installation of Subsonic.
-     * See http://www.ripfactory.com/ripserver.html
-     *
-     * @return Whether this is a Ripserver installation, as determined
-     *         by the presence of a system property "subsonic.ripserver" set to
-     *         the value "true".
-     */
-    public static boolean isRipserver() {
-        return "true".equals(System.getProperty("subsonic.ripserver"));
+    public static String getDefaultPodcastFolder() {
+        String def = isWindows() ? "c:\\music\\Podcast" : "/var/music/Podcast";
+        return System.getProperty("subsonic.defaultPodcastFolder", def);
+    }
+
+    public static String getDefaultPlaylistFolder() {
+        String def = isWindows() ? "c:\\playlists" : "/var/playlists";
+        return System.getProperty("subsonic.defaultPlaylistFolder", def);
+    }
+
+    public static boolean isWindows() {
+        return System.getProperty("os.name", "Windows").toLowerCase().startsWith("windows");
+    }
+
+    public static boolean isWindowsInstall() {
+        return "true".equals(System.getProperty("subsonic.windowsInstall"));
     }
 
     /**

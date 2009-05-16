@@ -1,6 +1,5 @@
 TODO IN 3.7
 --------------
-Customizable music and podcast folder. http://www.amahi.org/
 Improve year range in random playlist generator.  Maybe provide to and from fields.
 Update Norwegian translation.
 Make sure that .vmoptions support subsonic-host
@@ -28,6 +27,7 @@ Improve Midnight Fun theme.
 
 DONE IN 3.7.beta2
 ------------------
+New: Customizable default music, playlist and podcast folders in support of Amahi Home Server.
 Bugfix: Fixed broken WAR version.
 Bugfix: Fixed broken tag editor.
 Bugfix: Automatically start web player when clicking play on artist, album or song.
@@ -69,7 +69,11 @@ Pre-login message. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=18
 Create Jing screencast.
 Coverflow, http://imageflow.finnrudolph.de/, http://sockso.pu-gh.com
 Add shoutbox as right-hand side frame.  http://today.java.net/pub/a/today/2007/03/22/developing-applications-using-reverse-ajax.html
+Use SoundManager 2 to implement inline song preview.
+Further search improvements, e.g., "search all". http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1839
 Use reverse ajax for Now Playing?
+Recover/reset forgotten password. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1654
+Add info about how to disable Windows Firewall. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1805
 Upgrade last.fm audioscrobbling protocol http://www.last.fm/api/submissions
 Ignore files/directories by name (e.g., ".svn"), FilenameUtils.wildcardMatch(), http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=831
 Jetty download performance, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1712
@@ -330,6 +334,15 @@ openclipart.org
 tango.freedesktop.org
 http://www.nero.com/eng/nero-aac-codec.html
 http://kickyoutube.com/
+http://www.schillmania.com/projects/soundmanager2/
+http://code.google.com/p/mobbler/
+
+DnB NOR
+0021 OSLO
+Norway
+
+IBAN-nummer:	NO4697104607601
+SWIFT/BIC-kode:	DNBANOKK
 
 "Videreutvikling og kommersialisering av Subsonic Media Streamer"
 Etablererstipend. start max 100.000, vekst max 200.000
@@ -341,3 +354,5 @@ SqueezeCenter can run on a number of NAS devices, such as QNAP TS-101, Synology 
 NETGEAR ReadyNAS, Buffalo Linkstation, Linksys NSLU2 and any device running FreeNAS software.
 
 rsync -avP -e ssh music.demo/ sindremehus@www.gosubsonic.com:music
+
+

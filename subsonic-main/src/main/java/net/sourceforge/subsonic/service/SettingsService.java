@@ -102,11 +102,11 @@ public class SettingsService {
     private static final String DEFAULT_INDEX_STRING = "A B C D E F G H I J K L M N O P Q R S T U V W X-Z(XYZ)";
     private static final String DEFAULT_IGNORED_ARTICLES = "The El La Los Las Le Les";
     private static final String DEFAULT_SHORTCUTS = "New Incoming Podcast";
-    private static final String DEFAULT_PLAYLIST_FOLDER = Util.isRipserver() ? "/media/Playlists" : "c:/playlists";
+    private static final String DEFAULT_PLAYLIST_FOLDER = Util.getDefaultPlaylistFolder();
     private static final String DEFAULT_MUSIC_MASK = ".mp3 .ogg .aac .flac .m4a .wav .wma";
     private static final String DEFAULT_COVER_ART_MASK = "folder.jpg cover.jpg .jpg .jpeg .gif .png";
     private static final int DEFAULT_COVER_ART_LIMIT = 30;
-    private static final String DEFAULT_WELCOME_TITLE = Util.isRipserver() ? "Welcome to Ripsonic!" : "Welcome to Subsonic!";
+    private static final String DEFAULT_WELCOME_TITLE = "Welcome to Subsonic!";
     private static final String DEFAULT_WELCOME_SUBTITLE = null;
     private static final String DEFAULT_WELCOME_MESSAGE = "__Welcome to Subsonic!__\n" +
                                                           "\\\\ \\\\\n" +
@@ -119,19 +119,19 @@ public class SettingsService {
     private static final String DEFAULT_LOCALE_LANGUAGE = "en";
     private static final String DEFAULT_LOCALE_COUNTRY = "";
     private static final String DEFAULT_LOCALE_VARIANT = "";
-    private static final String DEFAULT_THEME_ID = Util.isRipserver() ? "ripserver" : "default";
+    private static final String DEFAULT_THEME_ID = "default";
     private static final int DEFAULT_INDEX_CREATION_INTERVAL = 1;
     private static final int DEFAULT_INDEX_CREATION_HOUR = 3;
     private static final int DEFAULT_PODCAST_UPDATE_INTERVAL = 24;
-    private static final String DEFAULT_PODCAST_FOLDER = Util.isRipserver() ? "/media/Music/Podcast" : "c:/music/Podcast";
+    private static final String DEFAULT_PODCAST_FOLDER = Util.getDefaultPodcastFolder();
     private static final int DEFAULT_PODCAST_EPISODE_RETENTION_COUNT = 10;
     private static final int DEFAULT_PODCAST_EPISODE_DOWNLOAD_COUNT = 1;
     private static final long DEFAULT_DOWNLOAD_BITRATE_LIMIT = 0;
     private static final long DEFAULT_UPLOAD_BITRATE_LIMIT = 0;
     private static final long DEFAULT_STREAM_PORT = 0;
-    private static final String DEFAULT_LICENSE_EMAIL = Util.isRipserver() ? "Ripserver End User" : null;
-    private static final String DEFAULT_LICENSE_CODE = Util.isRipserver() ? "7ff4a6e00112a3757438278dcfae13c4" : null;
-    private static final String DEFAULT_LICENSE_DATE = Util.isRipserver() ? "1220546796952" : null;
+    private static final String DEFAULT_LICENSE_EMAIL = null;
+    private static final String DEFAULT_LICENSE_CODE = null;
+    private static final String DEFAULT_LICENSE_DATE = null;
     private static final String DEFAULT_DOWNSAMPLING_COMMAND = "lame -S -h -b %b %s -";
     private static final boolean DEFAULT_REWRITE_URL = true;
     private static final boolean DEFAULT_LDAP_ENABLED = false;
@@ -734,7 +734,7 @@ public class SettingsService {
      * @return The brand name.
      */
     public String getBrand() {
-        return Util.isRipserver() ? "Ripsonic" : "Subsonic";
+        return "Subsonic";
     }
 
     /**
