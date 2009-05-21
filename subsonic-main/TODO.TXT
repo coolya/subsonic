@@ -2,7 +2,6 @@ TODO IN 3.7
 --------------
 Improve year range in random playlist generator.  Maybe provide to and from fields.
 Update Norwegian translation.
-Make sure that .vmoptions support subsonic-host
 Enable auto-random mode for jukebox.
 Reduce jukebox logging.
 Validate transitional dtd.
