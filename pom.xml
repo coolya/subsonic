@@ -13,6 +13,10 @@
     </organization>
     <inceptionYear>2004</inceptionYear>
 
+    <properties>
+        <failOnDependencyWarning>true</failOnDependencyWarning>
+    </properties>
+    
     <repositories>
         <repository>
             <id>local1</id>
@@ -102,7 +106,7 @@
                             <goal>analyze-only</goal>
                         </goals>
                         <configuration>
-                            <failOnWarning>true</failOnWarning>
+                            <failOnWarning>${failOnDependencyWarning}</failOnWarning>
                             <ignoreNonCompile>true</ignoreNonCompile>
                         </configuration>
                     </execution>
