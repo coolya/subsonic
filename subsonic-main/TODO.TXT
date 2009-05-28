@@ -1,7 +1,7 @@
 TODO IN 3.7
 --------------
+IE 8 error. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1869
 Improve year range in random playlist generator.  Maybe provide to and from fields.
-Update Norwegian translation.
 Enable auto-random mode for jukebox.
 Reduce jukebox logging.
 Validate transitional dtd.
