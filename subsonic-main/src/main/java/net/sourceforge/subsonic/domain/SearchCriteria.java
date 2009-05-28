@@ -30,13 +30,22 @@ import net.sourceforge.subsonic.service.SearchService;
  */
 public class SearchCriteria {
 
+    private String any;
     private String title;
     private String album;
     private String artist;
-    private Date newerThan;
 
+    private Date newerThan;
     private int offset;
     private int count;
+
+    public void setAny(String any) {
+        this.any = any;
+    }
+
+    public String getAny() {
+        return any;
+    }
 
     public String getTitle() {
         return title;

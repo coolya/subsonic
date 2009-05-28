@@ -269,6 +269,7 @@ public class SearchService {
         }
 
         // Convert query to upper case for slightly better performance.
+        String any = StringUtils.upperCase(searchCriteria.getAny());
         String title = StringUtils.upperCase(searchCriteria.getTitle());
         String album = StringUtils.upperCase(searchCriteria.getAlbum());
         String artist = StringUtils.upperCase(searchCriteria.getArtist());
@@ -291,6 +292,12 @@ public class SearchService {
                     continue;
                 }
                 if (artist != null && !StringUtils.contains(line.artist, artist)) {
+                    continue;
+                }
+                if (any != null &&
+                    !StringUtils.contains(line.title, any) &&
+                    !StringUtils.contains(line.album, any) &&
+                    !StringUtils.contains(line.artist, any)) {
                     continue;
                 }
 

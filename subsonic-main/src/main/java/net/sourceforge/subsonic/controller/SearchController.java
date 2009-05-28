@@ -77,12 +77,13 @@ public class SearchController extends SimpleFormController {
         command.setUser(user);
         command.setPartyModeEnabled(userSettings.isPartyModeEnabled());
 
+        String any = StringUtils.trimToNull(command.getAny());
         String title = StringUtils.trimToNull(command.getTitle());
         String album = StringUtils.trimToNull(command.getAlbum());
         String artist = StringUtils.trimToNull(command.getArtist());
         long millis = getNewerThanMillis(command);
 
-        if (title != null || album != null || artist != null || millis != 0) {
+        if (any != null || title != null || album != null || artist != null || millis != 0) {
 
             if (searchService.isIndexBeingCreated()) {
                 command.setIndexBeingCreated(true);
@@ -91,6 +92,7 @@ public class SearchController extends SimpleFormController {
                 SearchCriteria criteria = new SearchCriteria();
                 criteria.setOffset(command.getOffset());
                 criteria.setCount(HITS_PER_PAGE);
+                criteria.setAny(any);
                 criteria.setTitle(title);
                 criteria.setAlbum(album);
                 criteria.setArtist(artist);
@@ -111,24 +113,36 @@ public class SearchController extends SimpleFormController {
     private List<SearchCommand.Match> createMatches(SearchCriteria criteria, SearchResult result) {
         List<SearchCommand.Match> matches = new ArrayList<SearchCommand.Match>();
         for (MusicFile musicFile : result.getMusicFiles()) {
-            String title = adorn(musicFile.getTitle(), criteria.getTitle());
-            String album = adorn(musicFile.getMetaData().getAlbum(), criteria.getAlbum());
-            String artist = adorn(musicFile.getMetaData().getArtist(), criteria.getArtist());
+
+            String title = adorn(musicFile.getTitle(), criteria.getTitle(), criteria.getAny());
+            String album = adorn(musicFile.getMetaData().getAlbum(), criteria.getAlbum(), criteria.getAny());
+            String artist = adorn(musicFile.getMetaData().getArtist(), criteria.getArtist(), criteria.getAny());
+
             matches.add(new SearchCommand.Match(musicFile, title, album, artist));
         }
         return matches;
     }
 
-    private String adorn(String text, String term) {
-        term = StringUtils.trimToNull(term);
+    private String adorn(String text, String... terms) {
+
+        StringBuilder regexp = new StringBuilder();
+        for (String term : terms) {
+            term = StringUtils.trimToNull(term);
+            if (term != null) {
+                if (regexp.length() > 0) {
+                    regexp.append("|");
+                }
+                regexp.append(term);
+            }
+        }
+
         text = StringUtil.toHtml(text);
-        if (term == null) {
+        if (regexp.length() == 0) {
             return text;
         }
 
-
         try {
-            Pattern pattern = Pattern.compile(term, Pattern.CASE_INSENSITIVE);
+            Pattern pattern = Pattern.compile(regexp.toString(), Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(text);
 
             StringBuffer buf = new StringBuffer();
@@ -139,7 +153,7 @@ public class SearchController extends SimpleFormController {
 
             return buf.toString();
         } catch (Exception x) {
-            LOG.warn("Failed to adorn text '" + text + "' with term '" + term + "'.");
+            LOG.warn("Failed to adorn text '" + text + "' with term '" + regexp + "'.");
             return text;
         }
     }
