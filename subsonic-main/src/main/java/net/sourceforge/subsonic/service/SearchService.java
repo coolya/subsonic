@@ -276,6 +276,7 @@ public class SearchService {
 
         long newerThanTime = searchCriteria.getNewerThan() == null ? 0 : searchCriteria.getNewerThan().getTime();
 
+        // TODO: Iterate over cachedSongs instead.
         Map<File, Line> index = getIndex();
 
         int hits = 0;
