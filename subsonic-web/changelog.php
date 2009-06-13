@@ -17,6 +17,16 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="3.7"><h2 class="div">Subsonic 3.7 - Jun 22, 2009</h2></a>
+<ul>
+<li><span class="bugid">New:</span> Default search option is now to search both title, album and artist.</li>
+<li><span class="bugid">New:</span> Customizable default music, playlist and podcast folders in support of Amahi Home Server.</li>
+<li><span class="bugid">Bugfix:</span> Fixed broken WAR version.</li>
+<li><span class="bugid">Bugfix:</span> Fixed broken tag editor.</li>
+<li><span class="bugid">Bugfix:</span> Automatically start web player when clicking play on artist, album or song.</li>
+<li><span class="bugid">Bugfix:</span> Added some padding above player toolbar.</li>
+</ul>
+
 <a name="3.7.beta1"><h2 class="div">Subsonic 3.7.beta1 - May 08, 2009</h2></a>
 <ul>
 <li><span class="bugid">New:</span> Jukebox support. Plays music directly on the server's audio hardware.</li>
@@ -581,6 +591,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#3.7">Subsonic 3.7</a></li>
             <li><a href="#3.7.beta1">Subsonic 3.7.beta1</a></li>
             <li><a href="#3.6">Subsonic 3.6</a></li>
             <li><a href="#3.6.beta2">Subsonic 3.6.beta2</a></li>
