@@ -72,6 +72,7 @@ public class SettingsService {
     private static final String KEY_WELCOME_TITLE = "WelcomeTitle";
     private static final String KEY_WELCOME_SUBTITLE = "WelcomeSubtitle";
     private static final String KEY_WELCOME_MESSAGE = "WelcomeMessage2";
+    private static final String KEY_LOGIN_MESSAGE = "LoginMessage";
     private static final String KEY_LOCALE_LANGUAGE = "LocaleLanguage";
     private static final String KEY_LOCALE_COUNTRY = "LocaleCountry";
     private static final String KEY_LOCALE_VARIANT = "LocaleVariant";
@@ -116,6 +117,7 @@ public class SettingsService {
                                                           "players simultaneously, for instance to one player in your kitchen and another in your living room.\n" +
                                                           "\\\\ \\\\\n" +
                                                           "To change or remove this message, log in with administrator rights and go to {link:Settings > General|generalSettings.view}.";
+    private static final String DEFAULT_LOGIN_MESSAGE = null;
     private static final String DEFAULT_LOCALE_LANGUAGE = "en";
     private static final String DEFAULT_LOCALE_COUNTRY = "";
     private static final String DEFAULT_LOCALE_VARIANT = "";
@@ -144,7 +146,7 @@ public class SettingsService {
 
     // Array of all keys.  Used to clean property file.
     private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_SHORTCUTS, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
-                                          KEY_COVER_ART_MASK, KEY_COVER_ART_LIMIT, KEY_WELCOME_TITLE, KEY_WELCOME_SUBTITLE, KEY_WELCOME_MESSAGE, KEY_LOCALE_LANGUAGE,
+                                          KEY_COVER_ART_MASK, KEY_COVER_ART_LIMIT, KEY_WELCOME_TITLE, KEY_WELCOME_SUBTITLE, KEY_WELCOME_MESSAGE, KEY_LOGIN_MESSAGE, KEY_LOCALE_LANGUAGE,
                                           KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_THEME_ID, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
                                           KEY_PODCAST_UPDATE_INTERVAL, KEY_PODCAST_FOLDER, KEY_PODCAST_EPISODE_RETENTION_COUNT,
                                           KEY_PODCAST_EPISODE_DOWNLOAD_COUNT, KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT,
@@ -372,6 +374,14 @@ public class SettingsService {
 
     public void setWelcomeMessage(String message) {
         setProperty(KEY_WELCOME_MESSAGE, message);
+    }
+
+    public String getLoginMessage() {
+        return StringUtils.trimToNull(properties.getProperty(KEY_LOGIN_MESSAGE, DEFAULT_LOGIN_MESSAGE));
+    }
+
+    public void setLoginMessage(String message) {
+        setProperty(KEY_LOGIN_MESSAGE, message);
     }
 
     /**

@@ -77,6 +77,7 @@ public class SettingsServiceTestCase extends TestCase {
         settingsService.setCoverArtMask(".jpeg .gif  .png");
         settingsService.setCoverArtLimit(99);
         settingsService.setWelcomeMessage("welcomeMessage");
+        settingsService.setLoginMessage("loginMessage");
         settingsService.setLocale(Locale.CANADA_FRENCH);
         settingsService.setThemeId("dark");
         settingsService.setIndexCreationInterval(4);
@@ -118,6 +119,7 @@ public class SettingsServiceTestCase extends TestCase {
         assertTrue("Wrong cover art mask array.", Arrays.equals(new String[] {".jpeg", ".gif", ".png"}, ss.getCoverArtMaskAsArray()));
         assertEquals("Wrong cover art limit.", 99, ss.getCoverArtLimit());
         assertEquals("Wrong welcome message.", "welcomeMessage", ss.getWelcomeMessage());
+        assertEquals("Wrong login message.", "loginMessage", ss.getLoginMessage());
         assertEquals("Wrong locale.", Locale.CANADA_FRENCH, ss.getLocale());
         assertEquals("Wrong theme.", "dark", ss.getThemeId());
         assertEquals("Wrong index creation interval.", 4, ss.getIndexCreationInterval());

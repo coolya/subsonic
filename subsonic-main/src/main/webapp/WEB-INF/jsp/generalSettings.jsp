@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1" %>
+<%--@elvariable id="command" type="net.sourceforge.subsonic.command.GeneralSettingsCommand"--%>
 
 <html><head>
     <%@ include file="head.jsp" %>
@@ -111,8 +112,15 @@
         <tr>
             <td style="vertical-align:top;"><fmt:message key="generalsettings.welcomemessage"/></td>
             <td>
-                <form:textarea path="welcomeMessage" rows="6" cols="70"/>
+                <form:textarea path="welcomeMessage" rows="5" cols="70"/>
                 <c:import url="helpToolTip.jsp"><c:param name="topic" value="welcomemessage"/></c:import>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;"><fmt:message key="generalsettings.loginmessage"/></td>
+            <td>
+                <form:textarea path="loginMessage" rows="5" cols="70"/>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="loginmessage"/></c:import>
                 <fmt:message key="main.wiki"/>
             </td>
         </tr>

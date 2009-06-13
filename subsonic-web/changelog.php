@@ -21,6 +21,7 @@
 <ul>
 <li><span class="bugid">New:</span> Default search option is now to search both title, album and artist.</li>
 <li><span class="bugid">New:</span> Customizable default music, playlist and podcast folders in support of Amahi Home Server.</li>
+<li><span class="bugid">New:</span> Added configurable message in login page.</li>
 <li><span class="bugid">Bugfix:</span> Fixed broken WAR version.</li>
 <li><span class="bugid">Bugfix:</span> Fixed broken tag editor.</li>
 <li><span class="bugid">Bugfix:</span> Automatically start web player when clicking play on artist, album or song.</li>

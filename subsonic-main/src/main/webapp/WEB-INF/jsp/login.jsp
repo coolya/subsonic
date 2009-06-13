@@ -16,13 +16,15 @@
 
 <form action="<c:url value="/j_acegi_security_check"/>" method="POST">
     <div class="bgcolor2" align="center" style="border:1px solid black; padding:20px 50px 20px 50px; margin-top:100px">
+
+        <div style="margin-bottom:1em;max-width:50em;text-align:left;"><sub:wiki text="${model.loginMessage}"/></div>
+
         <table>
         <tr>
             <td colspan="2" align="left" style="padding-bottom:10px">
                 <img src="<spring:theme code="logoImage"/>" alt="">
             </td>
         </tr>
-
         <tr>
             <td align="left" style="padding-right:10px"><fmt:message key="login.username"/></td>
             <td align="left"><input type="text" id="j_username" name="j_username" style="width:12em" tabindex="1"></td>

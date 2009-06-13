@@ -57,6 +57,7 @@ public class MultiController extends MultiActionController {
         map.put("logout", request.getParameter("logout") != null);
         map.put("error", request.getParameter("error") != null);
         map.put("brand", settingsService.getBrand());
+        map.put("loginMessage", settingsService.getLoginMessage());
 
         User admin = securityService.getUserByName(User.USERNAME_ADMIN);
         if (User.USERNAME_ADMIN.equals(admin.getPassword())) {
