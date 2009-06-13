@@ -53,7 +53,7 @@ public class SearchController extends SimpleFormController {
 
     private static final long MILLIS_IN_DAY = 24 * 3600 * 1000;
     private static final int HITS_PER_PAGE = 25;
-    private static final Logger LOG = Logger.getLogger(SearchService.class);
+    private static final Logger LOG = Logger.getLogger(SearchController.class);
 
     private SearchService searchService;
     private SecurityService securityService;

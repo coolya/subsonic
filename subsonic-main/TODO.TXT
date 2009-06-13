@@ -1,5 +1,7 @@
 TODO IN 3.7
 --------------
+Playlist combobox disabling broken in IE8. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=5760#5760
+Fix upload progress bar. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1926
 Slow download speed. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1712
 Further search improvements, e.g., "search all". http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1839
 Improve year range in random playlist generator.  Maybe provide to and from fields.
@@ -49,6 +51,7 @@ Improve year range in random playlist generator.  Maybe provide to and from fiel
 Improve Midnight Fun theme.
 Pre-login message. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1831
 Create Jing screencast.
+Specify upload directory per user. Option to delete files?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1710
 Coverflow, http://imageflow.finnrudolph.de/, http://sockso.pu-gh.com
 Problems with player resolution for guest users when behind proxy. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1815&postdays=0&postorder=asc&start=0
 Lucene
@@ -77,6 +80,7 @@ Read .txt and .nfo for artist/album reviews. http://www.activeobjects.no/subsoni
 Change LAME download url.
 Add OGG etc support to BasicPlayer.
 Remove "Mock" and "Debug" options from JME app.
+PHPBB authentication. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1857
 Bug with repeat in jukebox.
 Upgrade last.fm audioscrobbling protocol http://www.last.fm/api/submissions
 Ignore files/directories by name (e.g., ".svn"), FilenameUtils.wildcardMatch(), http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=831
@@ -257,7 +261,6 @@ Make it work on Java Application Server 8.1.  (web.xml element order)
 Make it work on Geronimo.
 Drop ResourceBundle_en.
 Upload quota per user.
-Specify upload directory per user. Option to delete files?
 Support reverse proxies.  Send url as parameter. (<a href="javascript:document.location.href='foo.jsp?referrer=' + document.location.href">Trykk her</a>)
 Support forward proxies.
 Hvis spilleren har "Auto-control enabled" skrudd av, så vises det en ny knapp "Stream" i playlista som kan brukes for å få m3u-en.
