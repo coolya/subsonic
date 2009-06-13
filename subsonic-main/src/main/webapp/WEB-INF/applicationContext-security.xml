@@ -125,6 +125,7 @@
 
                 /changeCoverArt.view=ROLE_COVERART
                 /editTags.view=ROLE_COVERART
+                /rename.view=ROLE_COVERART
 
                 /setMusicFileInfo.view=ROLE_COMMENT
 
@@ -199,6 +200,7 @@
         <property name="objectDefinitionSource">
             <value>
                 net.sourceforge.subsonic.ajax.TagService.setTags=ROLE_COVERART
+                net.sourceforge.subsonic.ajax.RenameService.renameMusicFile=ROLE_COVERART
                 net.sourceforge.subsonic.ajax.TransferService.getUploadInfo=ROLE_UPLOAD
             </value>
         </property>
@@ -206,6 +208,15 @@
 
     <bean id="ajaxTagServiceSecure" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target" ref="ajaxTagService"/>
+        <property name="interceptorNames">
+            <list>
+                <idref local="ajaxServiceInterceptor"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="ajaxRenameServiceSecure" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="ajaxRenameService"/>
         <property name="interceptorNames">
             <list>
                 <idref local="ajaxServiceInterceptor"/>

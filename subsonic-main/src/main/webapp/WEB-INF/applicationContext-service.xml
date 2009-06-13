@@ -160,6 +160,11 @@
     <bean id="ajaxTagService" class="net.sourceforge.subsonic.ajax.TagService">
         <property name="musicFileService" ref="musicFileService"/>
     </bean>
+    
+    <bean id="ajaxRenameService" class="net.sourceforge.subsonic.ajax.RenameService">
+      <property name="musicFileService" ref="musicFileService"/>
+      <property name="musicFileCache" ref="musicFileCache"/>
+    </bean>
 
     <bean id="ajaxTransferService" class="net.sourceforge.subsonic.ajax.TransferService"/>
 

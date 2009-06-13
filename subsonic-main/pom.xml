@@ -258,6 +258,12 @@
             <version>4.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+        	<groupId>junit.extensions</groupId>
+        	<artifactId>privilegedAccessor</artifactId>
+        	<version>5.0_1.0.2</version>
+        	<scope>test</scope>
+        </dependency>
 
     </dependencies>
 

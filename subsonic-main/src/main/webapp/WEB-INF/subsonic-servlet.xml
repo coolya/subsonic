@@ -230,6 +230,11 @@
         <property name="viewName" value="editTags"/>
         <property name="musicFileService" ref="musicFileService"/>
     </bean>
+    <bean id="renameController" class="net.sourceforge.subsonic.controller.RenameController">
+        <property name="viewName" value="rename"/>
+        <property name="musicFileService" ref="musicFileService"/>
+        <property name="settingsService" ref="settingsService"/>
+    </bean>
     <bean id="playlistController" class="net.sourceforge.subsonic.controller.PlaylistController">
         <property name="viewName" value="playlist"/>
         <property name="playerService" ref="playerService"/>
@@ -368,6 +373,7 @@
                 <prop key="/albumInfo.view">albumInfoController</prop>
                 <prop key="/home.view">homeController</prop>
                 <prop key="/editTags.view">editTagsController</prop>
+                <prop key="/rename.view">renameController</prop>
                 <prop key="/playlist.view">playlistController</prop>
                 <prop key="/xspfPlaylist.view">xspfPlaylistController</prop>
                 <prop key="/coverArt.view">coverArtController</prop>

@@ -25,6 +25,10 @@
         <create creator="spring" javascript="tagService">
             <param name="beanName" value="ajaxTagService"/>
         </create>
+        
+        <create creator="spring" javascript="renameService">
+          <param name="beanName" value="ajaxRenameService"/>
+        </create>
 
         <create creator="spring" javascript="transferService">
             <param name="beanName" value="ajaxTransferService"/>

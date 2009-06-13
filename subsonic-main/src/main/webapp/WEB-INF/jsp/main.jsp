@@ -144,6 +144,11 @@
             </sub:url>
             <c:if test="${needSep}">|</c:if>
             <a href="${editTagsUrl}"><fmt:message key="main.tags"/></a>
+            <sub:url value="rename.view" var="renameUrl">
+              <sub:param name="path" value="${model.dir.path}"/>
+            </sub:url>
+            |
+            <a href="${renameUrl}"><fmt:message key="main.rename"/></a>
             <c:set var="needSep" value="true"/>
         </c:if>
 
