@@ -6,11 +6,13 @@ Improve year range in random playlist generator.  Maybe provide to and from fiel
 Improve Midnight Fun theme.
 "Random" page initially empty.
 Don't use absolute paths in status.view and help.view (but rather artist + title).
+Document that all transcoders must be installed in SUBSONIC_HOME/transcode. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1915
+Prepare for SF CCA campaign.
 
 DONE IN 3.7.beta2
 ------------------
-New: Customizable default music, playlist and podcast folders in support of Amahi Home Server.
 New: Default search option is now to search both title, album and artist.
+New: Customizable default music, playlist and podcast folders in support of Amahi Home Server.
 Bugfix: Fixed broken WAR version.
 Bugfix: Fixed broken tag editor.
 Bugfix: Automatically start web player when clicking play on artist, album or song.
@@ -49,6 +51,9 @@ BACKLOG
 ==========================
 Add user ID.  Avoid cookie problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=5604#5604
 Put now playing and shoutbox in right.jsp.
+Improve Next/Previous in search.
+Improve year range in random playlist generator.  Maybe provide to and from fields.
+Improve Midnight Fun theme.
 Pre-login message. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1831
 Create Jing screencast.
 Coverflow, http://imageflow.finnrudolph.de/, http://sockso.pu-gh.com
@@ -113,8 +118,8 @@ Create Linux package installer.
 "Remember me" broken with LDAP auth?
 Selected podcasts not cleared when deleting.
 top.view cached erronously?
-Support for FreeNAS, see http://www.herger.net/slim/detail.php?nr=1026
 Fix layout in player settings.
+Implement Slim protocol.
 Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305
 Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
 Error with new LAME version?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3339
@@ -349,8 +354,6 @@ Norway
 IBAN-nummer:	NO4697104607601
 SWIFT/BIC-kode:	DNBANOKK
 
-"Videreutvikling og kommersialisering av Subsonic Media Streamer"
-Etablererstipend. start max 100.000, vekst max 200.000
 RipNAS, http://www.ripnas.com/
 QNAP
 Netgear ReadyNAS, http://www.readynas.com/

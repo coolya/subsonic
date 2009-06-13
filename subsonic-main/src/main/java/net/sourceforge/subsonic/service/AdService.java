@@ -18,12 +18,32 @@
  */
 package net.sourceforge.subsonic.service;
 
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+
 /**
  * Provides services for generating ads.
  *
  * @author Sindre Mehus
  */
 public class AdService {
+
+
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private static final Date SFCC_CAMPAIGN_START;
+    private static final Date SFCC_CAMPAIGN_END;
+    private static final String SFCC_AD = "<iframe src='http://subsonic.sourceforge.net/vote.php' width='180' height='400' scrolling='no' border='0' marginwidth='0' style='border:none;' frameborder='0'></iframe>";
+
+    static {
+        try {
+            SFCC_CAMPAIGN_START = DATE_FORMAT.parse("2009-06-22");
+            SFCC_CAMPAIGN_END = DATE_FORMAT.parse("2009-07-21");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private final String[] ads = {
             "<iframe src='http://rcm.amazon.com/e/cm?t=subsonic-20&o=1&p=40&l=ur1&category=mp3&banner=0TBQHNYNA4B47J02NFG2&f=ifr' width='120' height='60' scrolling='no' border='0' marginwidth='0' style='border:none;' frameborder='0'></iframe>",
@@ -37,17 +57,29 @@ public class AdService {
     private int adInterval;
     private int pageCount;
     private int adIndex;
+
     /**
      * Returns an ad or <code>null</code> if no ad should be displayed.
      */
     public String getAd() {
         if (pageCount++ % adInterval == 0) {
+
+            if (isSourceForgeCommunityChoiceCampaign()) {
+                return SFCC_AD;
+            }
+
             adIndex = (adIndex + 1) % ads.length;
             return ads[adIndex];
         }
 
         return null;
     }
+
+    private boolean isSourceForgeCommunityChoiceCampaign() {
+        Date now = new Date();
+        return now.after(SFCC_CAMPAIGN_START) && now.before(SFCC_CAMPAIGN_END);
+    }
+
 
     /**
      * Set by Spring.
