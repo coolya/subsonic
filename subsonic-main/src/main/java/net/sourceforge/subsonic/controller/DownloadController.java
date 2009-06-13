@@ -152,7 +152,7 @@ public class DownloadController implements Controller {
      * @throws IOException If an I/O error occurs.
      */
     private void downloadFile(HttpServletResponse response, TransferStatus status, File file, LongRange range) throws IOException {
-        LOG.info("Starting to download '" + file + "' to " + status.getPlayer());
+        LOG.info("Starting to download '" + FileUtil.getShortPath(file) + "' to " + status.getPlayer());
         status.setFile(file);
 
         response.setContentType("application/x-download");
@@ -162,7 +162,7 @@ public class DownloadController implements Controller {
         }
 
         copyFileToStream(file, RangeOutputStream.wrap(response.getOutputStream(), range), status, range);
-        LOG.info("Downloaded '" + file + "' to " + status.getPlayer());
+        LOG.info("Downloaded '" + FileUtil.getShortPath(file) + "' to " + status.getPlayer());
     }
 
     /**
@@ -243,7 +243,7 @@ public class DownloadController implements Controller {
      * @throws IOException If an I/O error occurs.
      */
     private void copyFileToStream(File file, OutputStream out, TransferStatus status, LongRange range) throws IOException {
-        LOG.info("Downloading " + file + " to " + status.getPlayer());
+        LOG.info("Downloading '" + FileUtil.getShortPath(file) + "' to " + status.getPlayer());
 
         final int bufferSize = 16 * 1024; // 16 Kbit
         InputStream in = new BufferedInputStream(new FileInputStream(file), bufferSize);

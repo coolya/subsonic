@@ -26,6 +26,7 @@
 <li><span class="bugid">Bugfix:</span> Automatically start web player when clicking play on artist, album or song.</li>
 <li><span class="bugid">Bugfix:</span> Fixed problem with "Random album" page being initially empty.</li>
 <li><span class="bugid">Bugfix:</span> Added some padding above player toolbar.</li>
+<li><span class="bugid">Security:</span> Don't show full file paths in "Status" and "Help" pages.</li>
 </ul>
 
 <a name="3.7.beta1"><h2 class="div">Subsonic 3.7.beta1 - May 08, 2009</h2></a>
