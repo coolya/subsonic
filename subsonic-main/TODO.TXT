@@ -4,7 +4,6 @@ Slow download speed. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=
 Further search improvements, e.g., "search all". http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1839
 Improve year range in random playlist generator.  Maybe provide to and from fields.
 Improve Midnight Fun theme.
-"Random" page initially empty.
 Don't use absolute paths in status.view and help.view (but rather artist + title).
 Document that all transcoders must be installed in SUBSONIC_HOME/transcode. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1915
 Prepare for SF CCA campaign.

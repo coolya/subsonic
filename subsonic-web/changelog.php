@@ -24,6 +24,7 @@
 <li><span class="bugid">Bugfix:</span> Fixed broken WAR version.</li>
 <li><span class="bugid">Bugfix:</span> Fixed broken tag editor.</li>
 <li><span class="bugid">Bugfix:</span> Automatically start web player when clicking play on artist, album or song.</li>
+<li><span class="bugid">Bugfix:</span> Fixed problem with "Random album" page being initially empty.</li>
 <li><span class="bugid">Bugfix:</span> Added some padding above player toolbar.</li>
 </ul>
 
