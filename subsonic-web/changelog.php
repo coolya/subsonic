@@ -24,9 +24,11 @@
 <li><span class="bugid">New:</span> Added configurable message in login page.</li>
 <li><span class="bugid">Bugfix:</span> Fixed broken WAR version.</li>
 <li><span class="bugid">Bugfix:</span> Fixed broken tag editor.</li>
+<li><span class="bugid">Bugfix:</span> Fixed broken upload progress bar.</li>
 <li><span class="bugid">Bugfix:</span> Automatically start web player when clicking play on artist, album or song.</li>
 <li><span class="bugid">Bugfix:</span> Fixed problem with "Random album" page being initially empty.</li>
 <li><span class="bugid">Bugfix:</span> Added some padding above player toolbar.</li>
+<li><span class="bugid">Bugfix:</span> Playlist combobox option disabling broken in IE8.</li>
 <li><span class="bugid">Security:</span> Don't show full file paths in "Status" and "Help" pages.</li>
 </ul>
 

@@ -1,12 +1,9 @@
 TODO IN 3.7
 --------------
-Playlist combobox disabling broken in IE8. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=5760#5760
-Fix upload progress bar. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1926
 Slow download speed. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1712
 Further search improvements, e.g., "search all". http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1839
 Improve year range in random playlist generator.  Maybe provide to and from fields.
 Improve Midnight Fun theme.
-Document that all transcoders must be installed in SUBSONIC_HOME/transcode. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1915
 Prepare for SF CCA campaign.
 Random playlist from specified music folder broken?
 

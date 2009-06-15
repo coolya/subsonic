@@ -359,10 +359,8 @@
             onSortByAlbum();
         } else if (id == "selectAll") {
             selectAll(true);
-            onSelectionChange();
         } else if (id == "selectNone") {
             selectAll(false);
-            onSelectionChange();
         } else if (id == "removeSelected") {
             onRemoveSelected();
         } else if (id == "download") {
@@ -386,34 +384,6 @@
     function selectAll(b) {
         for (var i = 0; i < songs.length; i++) {
             $("songIndex" + (i + 1)).checked = b;
-        }
-    }
-
-    function isSelectionEmpty() {
-        for (var i = 0; i < songs.length; i++) {
-            if ($("songIndex" + (i + 1)).checked) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    function onSelectionChange() {
-        var selectionEmpty = isSelectionEmpty();
-
-        var remove = $("moreActions").options["removeSelected"];
-        if (remove) {
-            remove.disabled = selectionEmpty ? "disabled" : "";
-        }
-
-        var download = $("moreActions").options["download"];
-        if (download) {
-            download.disabled = selectionEmpty ? "disabled" : "";
-        }
-
-        var appendPlaylist = $("moreActions").options["appendPlaylist"];
-        if (appendPlaylist) {
-            appendPlaylist.disabled = selectionEmpty ? "disabled" : "";
         }
     }
 
@@ -485,7 +455,7 @@
 
             <td style="white-space:nowrap;"><select id="moreActions" onchange="actionSelected(this.options[selectedIndex].id)">
                 <option id="top" selected="selected"><fmt:message key="playlist.more"/></option>
-                <option disabled="disabled"><fmt:message key="playlist.more.playlist"/></option>
+                <option style="color:blue;"><fmt:message key="playlist.more.playlist"/></option>
                 <option id="loadPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.load"/></option>
                 <c:if test="${model.user.playlistRole}">
                     <option id="savePlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.save"/></option>
@@ -496,15 +466,15 @@
                 <option id="sortByTrack">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.sortbytrack"/></option>
                 <option id="sortByAlbum">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.sortbyalbum"/></option>
                 <option id="sortByArtist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.sortbyartist"/></option>
-                <option disabled="disabled"><fmt:message key="playlist.more.selection"/></option>
+                <option style="color:blue;"><fmt:message key="playlist.more.selection"/></option>
                 <option id="selectAll">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.selectall"/></option>
                 <option id="selectNone">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.selectnone"/></option>
-                <option id="removeSelected" disabled="disabled">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.remove"/></option>
+                <option id="removeSelected">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.remove"/></option>
                 <c:if test="${model.user.downloadRole}">
-                    <option id="download" disabled="disabled">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
+                    <option id="download">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
                 </c:if>
                 <c:if test="${model.user.playlistRole}">
-                    <option id="appendPlaylist" disabled="disabled">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.append"/></option>
+                    <option id="appendPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.append"/></option>
                 </c:if>
             </select>
             </td>
@@ -529,7 +499,7 @@
                 <img id="down" onclick="onDown(this.id.substring(4) - 1)" src="<spring:theme code="downImage"/>"
                      alt="<fmt:message key="playlist.down"/>" title="<fmt:message key="playlist.down"/>"></a></td>
 
-            <td class="bgcolor2" style="padding-left: 0.1em"><input type="checkbox" class="checkbox" id="songIndex" onchange="onSelectionChange()"></td>
+            <td class="bgcolor2" style="padding-left: 0.1em"><input type="checkbox" class="checkbox" id="songIndex"></td>
             <td style="padding-right:0.25em"></td>
 
             <c:if test="${model.visibility.trackNumberVisible}">
