@@ -163,6 +163,8 @@
 
     <bean id="ajaxTransferService" class="net.sourceforge.subsonic.ajax.TransferService"/>
 
-    <bean id="ajaxChatService" class="net.sourceforge.subsonic.ajax.ChatService"/>
+    <bean id="ajaxChatService" class="net.sourceforge.subsonic.ajax.ChatService">
+        <property name="securityService" ref="securityService"/>
+    </bean>
 
 </beans>

@@ -18,13 +18,19 @@
  */
 package net.sourceforge.subsonic.ajax;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.util.BoundedList;
+import org.apache.commons.lang.StringUtils;
+import org.directwebremoting.ScriptBuffer;
+import org.directwebremoting.ScriptSession;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
-import org.directwebremoting.proxy.dwr.Util;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Provides AJAX-enabled services for the chatting.
@@ -34,22 +40,55 @@ import org.directwebremoting.proxy.dwr.Util;
  */
 public class ChatService {
 
-    private final List<String> messages = new ArrayList<String>();
+    private final LinkedList<Message> messages = new BoundedList<Message>(10);
+    private SecurityService securityService;
 
-    public void shout(String message) {
-        messages.add(message);
-
+    public synchronized void shout(String message) {
         WebContext webContext = WebContextFactory.get();
+        message = StringUtils.trimToNull(message);
+        String user = securityService.getCurrentUsername(webContext.getHttpServletRequest());
+        if (message != null && user != null) {
+            messages.add(new Message(message, user, new Date()));
+        }
+
+        ScriptBuffer script = new ScriptBuffer();
+        script.appendScript("receiveMessages(").appendData(messages).appendScript(");");
+
+        // Find all the browsers showing the chat page. Invoke javascript for populating the chat log.
         String chatPage = webContext.getCurrentPage();
-
-        // Find all the browser on window open on the chat page:
-        Collection<?> sessions = webContext.getScriptSessionsByPage(chatPage);
-
-        // Use the Javascript Proxy API to empty the chatlog <ul> element
-        // and re-fill it with new messages
-        Util util = new Util(sessions);
-        util.removeAllOptions("chatlog");
-        util.addOptions("chatlog", messages.toArray(new String[0]));
+        Collection<ScriptSession> sessions = (Collection<ScriptSession>) webContext.getScriptSessionsByPage(chatPage);
+        for (ScriptSession session : sessions) {
+            session.addScript(script);
+        }
     }
 
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
+    }
+
+    public static class Message {
+
+        private final String content;
+        private final String username;
+        private final Date date;
+
+        public Message(String content, String username, Date date) {
+            this.content = content;
+            this.username = username;
+            this.date = date;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public Date getDate() {
+            return date;
+        }
+
+    }
 }
