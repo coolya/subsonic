@@ -27,6 +27,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
+import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.dao.UserDao;
+import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.SecurityService;
+
 /**
  * Controller for the right frame.
  *
@@ -34,13 +39,26 @@ import org.springframework.web.servlet.mvc.ParameterizableViewController;
  */
 public class RightController extends ParameterizableViewController {
 
+    private SettingsService settingsService;
+    private SecurityService securityService;
+
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
-
         ModelAndView result = super.handleRequestInternal(request, response);
+
+        UserSettings userSettings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
+        map.put("showNowPlaying", userSettings.isShowNowPlayingEnabled());
+
         result.addObject("model", map);
         return result;
     }
 
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
+    }
 }

@@ -148,5 +148,10 @@
            diskPersistent="true"
            overflowToDisk="true"/>
 
+    <cache name="chatCache"
+           maxElementsInMemory="0"
+           eternal="true"
+           diskPersistent="true"
+           overflowToDisk="true"/>
 
 </ehcache>

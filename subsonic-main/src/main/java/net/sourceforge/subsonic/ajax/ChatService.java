@@ -18,19 +18,23 @@
  */
 package net.sourceforge.subsonic.ajax;
 
-import net.sourceforge.subsonic.service.SecurityService;
-import net.sourceforge.subsonic.util.BoundedList;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Date;
+import java.util.LinkedList;
+
 import org.apache.commons.lang.StringUtils;
 import org.directwebremoting.ScriptBuffer;
 import org.directwebremoting.ScriptSession;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
+import net.sf.ehcache.CacheException;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.util.BoundedList;
+import net.sourceforge.subsonic.Logger;
 
 /**
  * Provides AJAX-enabled services for the chatting.
@@ -40,15 +44,38 @@ import java.util.List;
  */
 public class ChatService {
 
-    private final LinkedList<Message> messages = new BoundedList<Message>(10);
-    private SecurityService securityService;
+    private static final Logger LOG = Logger.getLogger(ChatService.class);
+    private static final Object CACHE_KEY = 1;
+    private static final int MAX_MESSAGES = 10;
 
-    public synchronized void shout(String message) {
+    private LinkedList<Message> messages;
+    private SecurityService securityService;
+    private Ehcache chatCache;
+
+    /**
+     * Invoked by Spring.
+     */
+    public void init() {
+        try {
+            Element element = chatCache.get(CACHE_KEY);
+            if (element != null && element.getValue() != null) {
+                messages = (LinkedList<Message>) element.getValue();
+            } else {
+                messages = new BoundedList<Message>(MAX_MESSAGES);
+            }
+        } catch (Exception x) {
+            LOG.warn("Failed to re-create chat messages.", x);
+            messages = new BoundedList<Message>(MAX_MESSAGES);
+        }
+    }
+
+    public synchronized void addMessage(String message) {
         WebContext webContext = WebContextFactory.get();
         message = StringUtils.trimToNull(message);
         String user = securityService.getCurrentUsername(webContext.getHttpServletRequest());
         if (message != null && user != null) {
             messages.add(new Message(message, user, new Date()));
+            chatCache.put(new Element(CACHE_KEY, messages));
         }
 
         ScriptBuffer script = new ScriptBuffer();
@@ -66,7 +93,11 @@ public class ChatService {
         this.securityService = securityService;
     }
 
-    public static class Message {
+    public void setChatCache(Ehcache chatCache) {
+        this.chatCache = chatCache;
+    }
+
+    public static class Message implements Serializable {
 
         private final String content;
         private final String username;

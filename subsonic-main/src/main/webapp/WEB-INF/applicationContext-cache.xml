@@ -33,4 +33,9 @@
         <property name="cacheName" value="musicFolderCache"/>
     </bean>
 
+    <bean id="chatCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="cacheName" value="chatCache"/>
+    </bean>
+
 </beans>

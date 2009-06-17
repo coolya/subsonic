@@ -7,7 +7,6 @@
     <c:if test="${not model.updateNowPlaying}">
         <meta http-equiv="refresh" content="180;URL=nowPlaying.view?">
     </c:if>
-    <script type="text/javascript" src="<c:url value="/dwr/interface/nowPlayingService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/scriptaculous.js?load=effects"/>"></script>
@@ -27,53 +26,6 @@
     <script type="text/javascript" language="javascript">
         // Variable used by javascript in playlist.jsp
         var updateNowPlaying = true;
-    </script>
-</c:if>
-
-<c:if test="${model.showNowPlaying}">
-
-    <!-- This script uses AJAX to periodically retrieve what all users are playing. -->
-    <script type="text/javascript" language="javascript">
-
-        dwr.engine.setErrorHandler(null);
-        startGetNowPlayingTimer();
-
-        function startGetNowPlayingTimer() {
-            nowPlayingService.getNowPlaying(getNowPlayingCallback);
-            setTimeout("startGetNowPlayingTimer()", 10000);
-        }
-
-        function getNowPlayingCallback(nowPlaying) {
-            var html = nowPlaying.length == 0 ? "" : "<h2><fmt:message key="main.nowplaying"/></h2><table>";
-            for (var i = 0; i < nowPlaying.length; i++) {
-                html += "<tr><td colspan='2' class='detail' style='padding-top:1em;white-space:nowrap'>";
-
-                if (nowPlaying[i].avatarUrl != null) {
-                    html += "<img src='" + nowPlaying[i].avatarUrl + "' style='padding-right:5pt'>";
-                }
-                html += "<b>" + nowPlaying[i].username + "</b></td></tr>"
-
-                html += "<tr><td class='detail' style='padding-right:1em'>" +
-                        "<a title='" + nowPlaying[i].tooltip + "' href='" + nowPlaying[i].albumUrl + "'><em>" +
-                        nowPlaying[i].artist + "</em><br/>" + nowPlaying[i].title + "</a><br/>" +
-                        "<span class='forward'><a href='" + nowPlaying[i].lyricsUrl + "' onclick=\"return popupSize(this, 'help', 430, 550)\">" +
-                        "<fmt:message key="main.lyrics"/>" + "</a></span></td><td style='padding-top:1em'>";
-
-                if (nowPlaying[i].coverArtUrl != null) {
-                    html += "<a title='" + nowPlaying[i].tooltip + "' rel='zoom' href='" + nowPlaying[i].coverArtZoomUrl + "'>" +
-                            "<img src='" + nowPlaying[i].coverArtUrl + "' width='48' height='48'></a>";
-                }
-                html += "</td></tr>";
-
-                var minutesAgo = nowPlaying[i].minutesAgo;
-                if (minutesAgo > 4) {
-                    html += "<tr><td class='detail' colspan='2'>" + minutesAgo + " <fmt:message key="main.minutesago"/></td></tr>";
-                }
-            }
-            html += "</table>";
-            $('nowPlaying').innerHTML = html;
-            prepZooms();
-        }
     </script>
 </c:if>
 
@@ -358,7 +310,7 @@
     </td>
 
     <td style="vertical-align:top;">
-        <div style="padding:0 1em 0 1em;border-left:1px solid #<spring:theme code="detailColor"/>">
+        <div style="padding:0 1em 0 1em;">
             <c:if test="${not empty model.ad}">
                 <div class="detail" style="text-align:center">
                         ${model.ad}
@@ -370,8 +322,6 @@
                     <fmt:message key="main.donate"><fmt:param value="${donateUrl}"/><fmt:param value="${model.brand}"/></fmt:message>
                 </div>
             </c:if>
-            <div id="nowPlaying">
-            </div>
         </div>
     </td>
 </tr>

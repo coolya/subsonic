@@ -12,7 +12,7 @@
         <frame name="left" src="left.view?" marginwidth="10" marginheight="10">
 
         <frameset rows="70%,30%">
-            <frameset cols="*,200">
+            <frameset cols="*,250">
                 <frame name="main" src="nowPlaying.view?" marginwidth="10" marginheight="10">
                 <frame name="right" src="right.view?">
             </frameset>

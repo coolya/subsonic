@@ -5,11 +5,16 @@ Further search improvements, e.g., "search all". http://www.activeobjects.no/sub
 Improve year range in random playlist generator.  Maybe provide to and from fields.
 Improve Midnight Fun theme.
 Prepare for SF CCA campaign.
-Random playlist from specified music folder broken?
+Use signed requests against Amazon.
 
-DONE IN 3.7.beta2
-------------------
 
+SHOUTBOX
+--------
+     i18n
+     make it work with cool'n'clean
+ok - date format
+ok - max length
+ok - persistence
 
 MIDNIGHT FUN THEME
 ------------------
@@ -325,6 +330,7 @@ Post message on forum.
 Update version number in pom.xml etc.
 Take backup of forum.
 Upgrade gosubsonic.com
+  scp subsonic-assembly/target/subsonic-*-standalone.tar.gz sindremehus@gosubsonic.com:subsonic/standalone
 
 HOW TO RELEASE TRANSCODING PACK
 ===============================
