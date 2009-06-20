@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -316,13 +317,17 @@ public final class StringUtil {
      *
      * @param s The string to encode.
      * @return The encoded string.
-     * @throws Exception If an error occurs.
      */
-    public static String utf8HexEncode(String s) throws Exception {
+    public static String utf8HexEncode(String s) {
         if (s == null) {
             return null;
         }
-        byte[] utf8 = s.getBytes(ENCODING_UTF8);
+        byte[] utf8;
+        try {
+            utf8 = s.getBytes(ENCODING_UTF8);
+        } catch (UnsupportedEncodingException x) {
+            throw new RuntimeException(x);
+        }
         return String.valueOf(Hex.encodeHex(utf8));
     }
 

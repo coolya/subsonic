@@ -13,6 +13,7 @@ Put now playing and shoutbox in right.jsp.
 DONE IN 3.8
 ------------
 Added chat.
+Bugfix: Usernames can now contain white spaces and international characters.
 
 CHAT
 --------

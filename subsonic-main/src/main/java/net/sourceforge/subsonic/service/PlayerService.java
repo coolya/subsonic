@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.dao.PlayerDao;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Transcoding;
@@ -123,7 +124,7 @@ public class PlayerService {
 
         // Set cookie in response.
         if (response != null) {
-            String cookieName = COOKIE_NAME + "-" + username;
+            String cookieName = COOKIE_NAME + "-" + StringUtil.utf8HexEncode(username);
             Cookie cookie = new Cookie(cookieName, player.getId());
             cookie.setMaxAge(COOKIE_EXPIRY);
             String path = request.getContextPath();
@@ -210,7 +211,7 @@ public class PlayerService {
         if (cookies == null) {
             return null;
         }
-        String cookieName = COOKIE_NAME + "-" + username;
+        String cookieName = COOKIE_NAME + "-" + StringUtil.utf8HexEncode(username);
         for (Cookie cookie : cookies) {
             if (cookieName.equals(cookie.getName())) {
                 return cookie.getValue();
