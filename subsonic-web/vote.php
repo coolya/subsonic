@@ -25,10 +25,10 @@
             Subsonic is a finalist in the <b>SourceForge Community Choice Awards 2009</b>.
         </p>
         <p>
-            Show your love by giving Subsonic <b><a href="xxx" target="_blank">your vote</a></b> before July 20!
+            Show your love by giving Subsonic <b><a href="http://sourceforge.net/cca" target="_blank">your vote</a></b> before July 20!
         </p>
         <p>
-            <a href="xxx" target="_blank"><img src="https://sourceforge.net/community/communityhub/uploads/2009/03/cca_guy.png" alt="Vote" class="img-center"/></a>
+            <a href="http://sourceforge.net/cca" target="_blank"><img src="https://sourceforge.net/community/communityhub/uploads/2009/03/cca_guy.png" alt="Vote" class="img-center"/></a>
         </p>
         <p>
             Thanks for your support :-)

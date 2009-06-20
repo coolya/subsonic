@@ -115,7 +115,7 @@ public class StreamController implements Controller {
                 boolean transcodingRequired = transcodingService.isTranscodingRequired(file, player);
 
                 if (!transcodingRequired) {
-                    response.setHeader("ETag", path);
+                    response.setHeader("ETag", StringUtil.utf8HexEncode(path));
                     response.setHeader("Accept-Ranges", "bytes");
                     range = StringUtil.parseRange(request.getHeader("Range"));
                 }

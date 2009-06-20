@@ -84,7 +84,7 @@ public class DownloadController implements Controller {
             String playerId = request.getParameter("player");
             String indexes = request.getParameter("indexes");
 
-            response.setHeader("ETag", path);
+            response.setHeader("ETag", StringUtil.utf8HexEncode(path));
             response.setHeader("Accept-Ranges", "bytes");
             LongRange range = StringUtil.parseRange(request.getHeader("Range"));
             if (range != null) {
