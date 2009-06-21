@@ -6,7 +6,7 @@ Improve year range in random playlist generator.  Maybe provide to and from fiel
 Improve Midnight Fun theme.
 Prepare for SF CCA campaign.
 Use signed requests against Amazon.
-Chat
+Fixex broken Discogs image search.
 
 DONE IN 3.8
 ------------

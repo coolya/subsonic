@@ -62,7 +62,7 @@ public class DiscogsSearchService {
         long t0 = System.currentTimeMillis();
 
         String query = URLEncoder.encode(artist + " " + album, StringUtil.ENCODING_UTF8);
-        String url = "http://www.discogs.com/search?type=release&q=" + query + "&f=xml&api_key=" + DISCOGS_API_KEY;
+        String url = "http://www.discogs.com/search?type=all&q=" + query + "&f=xml&api_key=" + DISCOGS_API_KEY;
         String searchResult = executeRequest(url);
 
         List<String> result = new ArrayList<String>();
