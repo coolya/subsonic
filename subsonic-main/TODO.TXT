@@ -7,8 +7,6 @@ Improve Midnight Fun theme.
 Prepare for SF CCA campaign.
 Use signed requests against Amazon.
 Chat
-Add user ID.  Avoid cookie problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=5604#5604
-Put now playing and shoutbox in right.jsp.
 
 DONE IN 3.8
 ------------
@@ -54,12 +52,6 @@ By default, create music folder for video.
 
 BACKLOG
 ==========================
-Add user ID.  Avoid cookie problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=5604#5604
-Put now playing and shoutbox in right.jsp.
-Improve Next/Previous in search.
-Improve year range in random playlist generator.  Maybe provide to and from fields.
-Improve Midnight Fun theme.
-Pre-login message. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1831
 Create Jing screencast.
 Specify upload directory per user. Option to delete files?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1710
 Coverflow, http://imageflow.finnrudolph.de/, http://sockso.pu-gh.com
