@@ -12,6 +12,7 @@ DONE IN 3.8
 ------------
 Added chat.
 Bugfix: Usernames can now contain white spaces and international characters.
+New: Improved Dutch translation, courtesy of Sander van der Grind.
 
 CHAT
 --------
