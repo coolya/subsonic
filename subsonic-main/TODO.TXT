@@ -13,6 +13,7 @@ DONE IN 3.8
 ------------
 Added chat.
 Bugfix: Usernames can now contain white spaces and international characters.
+Bugfix: Allow alternate date format in Podcast episodes.
 New: Improved Dutch translation, courtesy of Sander van der Grind.
 
 CHAT

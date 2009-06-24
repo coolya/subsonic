@@ -63,9 +63,11 @@ import net.sourceforge.subsonic.util.StringUtil;
 public class PodcastService {
 
     private static final Logger LOG = Logger.getLogger(PodcastService.class);
-    private static final DateFormat RSS_DATE_FORMAT = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+    private static final DateFormat[] RSS_DATE_FORMATS = {new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US),
+                                                          new SimpleDateFormat("dd MMM yyyy HH:mm:ss Z", Locale.US)};
+
     private static final Namespace[] ITUNES_NAMESPACES = {Namespace.getNamespace("http://www.itunes.com/DTDs/Podcast-1.0.dtd"),
-            Namespace.getNamespace("http://www.itunes.com/dtds/podcast-1.0.dtd")};
+                                                          Namespace.getNamespace("http://www.itunes.com/dtds/podcast-1.0.dtd")};
 
     private final ExecutorService refreshExecutor;
     private final ExecutorService downloadExecutor;
@@ -304,12 +306,7 @@ public class PodcastService {
                     LOG.warn("Failed to parse enclosure length.", x);
                 }
 
-                Date date = null;
-                try {
-                    date = RSS_DATE_FORMAT.parse(episodeElement.getChildTextTrim("pubDate"));
-                } catch (Exception x) {
-                    LOG.warn("Failed to parse publish date.", x);
-                }
+                Date date = parseDate(episodeElement.getChildTextTrim("pubDate"));
                 PodcastEpisode episode = new PodcastEpisode(null, channel.getId(), url, null, title, description, date,
                         duration, length, 0L, PodcastStatus.NEW, null);
                 episodes.add(episode);
@@ -346,6 +343,18 @@ public class PodcastService {
             }
             podcastDao.createEpisode(episode);
         }
+    }
+
+    private Date parseDate(String s) {
+        for (DateFormat dateFormat : RSS_DATE_FORMATS) {
+            try {
+                return dateFormat.parse(s);
+            } catch (Exception x) {
+                // Ignored.
+            }
+        }
+        LOG.warn("Failed to parse publish date: '" + s + "'.");
+        return null;
     }
 
     private String getITunesElement(Element element, String childName) {
