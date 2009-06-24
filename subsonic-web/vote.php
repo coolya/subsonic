@@ -13,7 +13,7 @@
 </head>
 <body>
 <div id="side-col"
-     style="background-color: #e6e7ee;
+     style="background-color: white;
      margin: 0;
 	width: 178px;
 	height: 398px;
@@ -25,10 +25,13 @@
             Subsonic is a finalist in the <b>SourceForge Community Choice Awards 2009</b>.
         </p>
         <p>
-            Show your love by giving Subsonic <b><a href="http://sourceforge.net/cca" target="_blank">your vote</a></b> before July 20!
+            Please <b><a href="http://sf.net/community/cca09/vote/?f=463" target="_blank">vote for Subsonic now</a></b> to win the "Best Project for Multimedia" category!
         </p>
         <p>
-            <a href="http://sourceforge.net/cca" target="_blank"><img src="https://sourceforge.net/community/communityhub/uploads/2009/03/cca_guy.png" alt="Vote" class="img-center"/></a>
+            Voting ends on July 20.
+        </p>
+        <p>
+            <a href="http://sf.net/community/cca09/vote/?f=463" target="_blank"><img src="http://c.fsdn.com/sf/images/cca/cca_120x60_2009_finalist.png" alt="Vote" class="img-center"/></a>
         </p>
         <p>
             Thanks for your support :-)
