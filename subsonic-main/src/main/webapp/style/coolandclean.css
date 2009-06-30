@@ -11,17 +11,14 @@
 @import "default.css";
 
 /* The primary background colour, light gray. Images used to force background on left frame headings and playlist. */
-.bgcolor1, body {
+.bgcolor1 {
     background-image:url( "../icons/coolandclean/list_heading.png" );
     background-repeat:repeat;
     background-color: #F7F7F7;
 }
 
-/* The secondary background colour, light blue, primary theme colour. Images used to force bgcolor1 on left frame headings and playlist. */
+/* The secondary background colour, light blue, primary theme colour. */
 .bgcolor2, .ruleTableHeader, .log {
-    background-image:url( "../icons/coolandclean/background.png" );
-    background-repeat:repeat;
-    background-attachment:fixed;
     background-color: #D1D9E1;
 }
 
@@ -56,16 +53,20 @@ table {
     background-position:right;
 }
 
+/* Right frame background. */
+.rightframe {
+    background-color: #D1D9E1;
+    background-image:none;
+}
+
 /* Back image */
 .back {
     background-image:url( "../icons/coolandclean/back.png" );
-    /*padding-left:22px;*/
 }
 
 /* Forward image */
 .forward {
     background-image:url( "../icons/coolandclean/forward.png" );
-    /*padding-left:22px;*/
 }
 
 /* Link colour */

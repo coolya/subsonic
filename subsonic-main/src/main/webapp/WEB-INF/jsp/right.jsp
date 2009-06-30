@@ -12,7 +12,7 @@
         <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoom.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoomHTML.js"/>"></script>
 
-<body class="bgcolor1" style="padding-top:2em" onload="init()">
+<body class="bgcolor1 rightframe" style="padding-top:2em" onload="init()">
 
 <script type="text/javascript">
 
@@ -113,7 +113,7 @@
     </div>
 
     <p style="padding-top:1.0em">
-        <input id="message" value=" Write a message" style="width:100%" onclick="dwr.util.setValue('message', null);" onkeypress="dwr.util.onReturn(event, addMessage)"/>
+        <input id="message" value=" <fmt:message key="main.message"/>" style="width:100%" onclick="dwr.util.setValue('message', null);" onkeypress="dwr.util.onReturn(event, addMessage)"/>
     </p>
 </div>
 

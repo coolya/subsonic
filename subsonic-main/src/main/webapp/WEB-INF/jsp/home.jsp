@@ -10,7 +10,7 @@
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/scriptaculous.js?load=effects"/>"></script>
 </head>
-<body class="mainframe">
+<body class="mainframe bgcolor1">
 <h1>
     <img src="<spring:theme code="homeImage"/>" alt="">
     ${model.welcomeTitle}

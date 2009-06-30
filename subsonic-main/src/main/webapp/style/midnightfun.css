@@ -7,7 +7,7 @@
 @import "default.css";
 
 /* The primary background colour. */
-.bgcolor1, body {
+.bgcolor1 {
     background-image:url('../icons/midnightfun/midnightfun_text_back.jpg');
     background-repeat:repeat;
     background-color: #AAAAAA;
@@ -42,15 +42,11 @@ h2, b, tr {
 
 /* Table sizing */
 table {
-    font-size: 100%;
-    line-height: 90%;
-    padding: 0;
-    border: 0;
     margin: 0 0 0 0;
 }
 
 /* Main frame image & colour */
-.mainframe {
+.mainframe, .rightframe {
     background-image:url('../icons/midnightfun/midnightfun_background.gif');
     background-repeat:repeat;
     background-attachment:fixed;

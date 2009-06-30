@@ -5,7 +5,7 @@
     <%@ include file="head.jsp" %>
 </head>
 
-<body class="bgcolor2" style="margin:0.4em 1em 0.4em 1em">
+<body class="bgcolor2 topframe" style="margin:0.4em 1em 0.4em 1em">
 
 <fmt:message key="top.home" var="home"/>
 <fmt:message key="top.now_playing" var="nowPlaying"/>

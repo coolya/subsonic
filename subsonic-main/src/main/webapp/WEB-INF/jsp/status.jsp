@@ -6,7 +6,7 @@
     <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
     <meta http-equiv="REFRESH" content="20;URL=status.view">
 </head>
-<body class="mainframe">
+<body class="mainframe bgcolor1">
 
 <h1>
     <img src="<spring:theme code="statusImage"/>" alt="">

@@ -3,7 +3,7 @@
 <html><head>
     <%@ include file="head.jsp" %>
 </head>
-<body class="mainframe">
+<body class="mainframe bgcolor1">
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="podcast"/>

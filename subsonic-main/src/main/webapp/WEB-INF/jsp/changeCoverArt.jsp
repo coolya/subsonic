@@ -61,7 +61,7 @@
         }
     </script>
 </head>
-<body class="mainframe">
+<body class="mainframe bgcolor1">
 <h1><fmt:message key="changecoverart.title"/></h1>
 <table class="indent"><tr>
     <td><fmt:message key="changecoverart.artist"/></td>

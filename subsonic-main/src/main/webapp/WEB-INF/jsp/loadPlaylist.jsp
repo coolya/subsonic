@@ -12,7 +12,7 @@
         }
     </script>
 </head>
-<body class="mainframe">
+<body class="mainframe bgcolor1">
 
 <h1>
     <c:choose>

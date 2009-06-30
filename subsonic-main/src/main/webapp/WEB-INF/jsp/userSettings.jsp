@@ -6,7 +6,7 @@
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
 </head>
 
-<body class="mainframe" onload="enablePasswordChangeFields()">
+<body class="mainframe bgcolor1" onload="enablePasswordChangeFields()">
 <script type="text/javascript" src="<c:url value="/script/wz_tooltip.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/script/tip_balloon.js"/>"></script>
 

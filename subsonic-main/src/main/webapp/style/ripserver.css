@@ -7,7 +7,7 @@
 @import "default.css";
 
 /* The primary background color (light blue). */
-.bgcolor1, body {
+.bgcolor1 {
     background-color: #FFFFFF;
 }
 

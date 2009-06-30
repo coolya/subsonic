@@ -20,7 +20,7 @@
     </script>
 </head>
 
-<body class="mainframe" onload="enableLastFmFields()">
+<body class="mainframe bgcolor1" onload="enableLastFmFields()">
 <script type="text/javascript" src="<c:url value="/script/wz_tooltip.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/script/tip_balloon.js"/>"></script>
 
@@ -222,6 +222,7 @@
 <c:if test="${command.reloadNeeded}">
     <script language="javascript" type="text/javascript">
         parent.frames.left.location.href="left.view?";
+        parent.frames.right.location.href="right.view?";
         parent.frames.upper.location.href="top.view?";
         parent.frames.playlist.location.href="playlist.view?";
     </script>

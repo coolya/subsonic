@@ -5,25 +5,14 @@ User registration.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1
 Further search improvements, e.g., "search all". http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1839
 Improve year range in random playlist generator.  Maybe provide to and from fields.
 Improve Midnight Fun theme.
-Prepare for SF CCA campaign.
 Use signed requests against Amazon.
-Fixex broken Discogs image search.
 
 DONE IN 3.8
 ------------
-Added chat.
+New: Added chat.
 Bugfix: Usernames can now contain white spaces and international characters.
 Bugfix: Allow alternate date format in Podcast episodes.
 New: Improved Dutch translation, courtesy of Sander van der Grind.
-
-CHAT
---------
-     i18n
-     make it work with cool'n'clean
-     img zoom in parent frame
-ok - date format
-ok - max length
-ok - persistence
 
 MIDNIGHT FUN THEME
 ------------------

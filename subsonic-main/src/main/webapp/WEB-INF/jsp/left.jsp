@@ -6,7 +6,7 @@
     <script type="text/javascript" src="<c:url value="/script/smooth-scroll.js"/>"></script>
 </head>
 
-<body class="bgcolor2">
+<body class="bgcolor2 leftframe">
 <a name="top"></a>
 
 <div style="padding-bottom:0.5em">

@@ -5,7 +5,7 @@
     <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
 </head>
-<body class="mainframe">
+<body class="mainframe bgcolor1">
 
 <c:choose>
     <c:when test="${empty model.buildDate}">

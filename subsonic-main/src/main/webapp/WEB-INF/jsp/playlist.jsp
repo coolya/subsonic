@@ -15,7 +15,7 @@
     <link type="text/css" rel="stylesheet" href="<c:url value="/script/webfx/luna.css"/>">
 </head>
 
-<body class="bgcolor2" onload="init()">
+<body class="bgcolor2 playlistframe" onload="init()">
 
 <script type="text/javascript" language="javascript">
     var player = null;

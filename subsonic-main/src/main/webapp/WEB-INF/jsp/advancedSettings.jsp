@@ -18,7 +18,7 @@
     </script>
 </head>
 
-<body class="mainframe" onload="enableLdapFields()">
+<body class="mainframe bgcolor1" onload="enableLdapFields()">
 <script type="text/javascript" src="<c:url value="/script/wz_tooltip.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/script/tip_balloon.js"/>"></script>
 

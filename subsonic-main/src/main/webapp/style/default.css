@@ -8,7 +8,7 @@
  */
 
 /* The primary background color (light blue). */
-.bgcolor1, body {
+.bgcolor1 {
     background-color: #EFEFEF;
 }
 
@@ -17,8 +17,16 @@
     background-color: #DEE3E7
 }
 
-/* Put stuff here if you need to customize the body of the main frame. */
+/* Put stuff here if you need to customize any of the frames. */
 .mainframe {
+}
+.topframe {
+}
+.leftframe {
+}
+.rightframe {
+}
+.playlistframe {
 }
 
 /* Background color for selected header. */

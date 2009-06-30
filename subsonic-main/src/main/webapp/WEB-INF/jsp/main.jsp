@@ -13,7 +13,7 @@
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoom.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoomHTML.js"/>"></script>
-</head><body class="mainframe" onload="init()">
+</head><body class="mainframe bgcolor1" onload="init()">
 
 <script type="text/javascript" language="javascript">
     function init() {

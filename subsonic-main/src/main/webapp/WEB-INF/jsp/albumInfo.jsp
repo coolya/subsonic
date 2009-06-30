@@ -4,7 +4,7 @@
     <%@ include file="head.jsp" %>
 </head>
 
-<body class="mainframe" onload="javascript:populate(0)">
+<body class="mainframe bgcolor1" onload="javascript:populate(0)">
 <h1><fmt:message key="albuminfo.title"/></h1>
 <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${command.path}"/></sub:url>
 <div class="back"><a href="${backUrl}"><fmt:message key="common.back"/></a></div>

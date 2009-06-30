@@ -20,7 +20,7 @@
     </script>
 
 </head>
-<body class="mainframe">
+<body class="mainframe bgcolor1">
 
 <h1>
     <img src="<spring:theme code="searchImage"/>" alt=""/>
