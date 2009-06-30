@@ -3,13 +3,18 @@ package net.sourceforge.subsonic.booter.deployer;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
+import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.BindException;
 import java.util.Date;
+import java.util.zip.ZipEntry;
+import java.util.jar.JarFile;
 
 /**
  * Responsible for deploying the Subsonic web app in
@@ -86,7 +91,7 @@ public class SubsonicDeployer implements SubsonicDeployerService {
             server.addConnector(connector);
 
             WebAppContext context = new WebAppContext();
-            context.setTempDirectory(new File(getSubsonicHome(), "jetty"));
+            context.setTempDirectory(getJettyDirectory());
             context.setContextPath(getContextPath());
             context.setWar(getWar());
 
@@ -97,6 +102,41 @@ public class SubsonicDeployer implements SubsonicDeployerService {
         } catch (Throwable x) {
             x.printStackTrace();
             exception = x;
+        }
+    }
+
+    private File getJettyDirectory() {
+        File dir = new File(getSubsonicHome(), "jetty");
+        String buildNumber = getSubsonicBuildNumber();
+        if (buildNumber != null) {
+            dir = new File(dir, buildNumber);
+        }
+        System.err.println("Extracting webapp to " + dir);
+        return dir;
+    }
+
+    private String getSubsonicBuildNumber() {
+        File war = new File(getWar());
+        InputStream in = null;
+        try {
+            if (war.isFile()) {
+                JarFile jar = new JarFile(war);
+                ZipEntry entry = jar.getEntry("WEB-INF\\classes\\build_number.txt");
+                if (entry == null) {
+                    entry = jar.getEntry("WEB-INF/classes/build_number.txt");
+                }
+                in = jar.getInputStream(entry);
+            } else {
+                in = new FileInputStream(war.getPath() + "/WEB-INF/classes/build_number.txt");
+            }
+            return IOUtils.toString(in);
+
+        } catch (Exception x) {
+            System.err.println("Failed to resolve build number from WAR: " + war);
+            x.printStackTrace();
+            return null;
+        } finally {
+            IOUtils.closeQuietly(in);
         }
     }
 
