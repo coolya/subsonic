@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.io;
 
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.util.FileUtil;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Playlist;
@@ -116,7 +117,7 @@ public class PlaylistInputStream extends InputStream {
             close();
         } else if (!file.equals(currentFile)) {
             close();
-            LOG.info("Opening new song " + file);
+            LOG.info("Opening new song " + FileUtil.getShortPath(file.getFile()));
             updateStatistics(file);
 
             currentInputStream = transcodingService.getTranscodedInputStream(file, player);

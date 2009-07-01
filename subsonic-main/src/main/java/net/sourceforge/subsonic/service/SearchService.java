@@ -269,12 +269,14 @@ public class SearchService {
         }
 
         // Convert query to upper case for slightly better performance.
+        String any = StringUtils.upperCase(searchCriteria.getAny());
         String title = StringUtils.upperCase(searchCriteria.getTitle());
         String album = StringUtils.upperCase(searchCriteria.getAlbum());
         String artist = StringUtils.upperCase(searchCriteria.getArtist());
 
         long newerThanTime = searchCriteria.getNewerThan() == null ? 0 : searchCriteria.getNewerThan().getTime();
 
+        // TODO: Iterate over cachedSongs instead.
         Map<File, Line> index = getIndex();
 
         int hits = 0;
@@ -291,6 +293,12 @@ public class SearchService {
                     continue;
                 }
                 if (artist != null && !StringUtils.contains(line.artist, artist)) {
+                    continue;
+                }
+                if (any != null &&
+                    !StringUtils.contains(line.title, any) &&
+                    !StringUtils.contains(line.album, any) &&
+                    !StringUtils.contains(line.artist, any)) {
                     continue;
                 }
 
@@ -349,12 +357,16 @@ public class SearchService {
         int count = criteria.getCount();
         List<MusicFile> result = new ArrayList<MusicFile>(count);
 
-        if (!isIndexCreated() || isIndexBeingCreated() || cachedSongs == null || cachedSongs.isEmpty()) {
+        if (!isIndexCreated() || isIndexBeingCreated()) {
             return result;
         }
 
         // Ensure that index is read to memory.
         getIndex();
+
+        if (cachedSongs == null || cachedSongs.isEmpty()) {
+            return result;
+        }
 
         String genre = criteria.getGenre();
         Integer fromYear = criteria.getFromYear();
@@ -458,12 +470,16 @@ public class SearchService {
     public List<MusicFile> getRandomAlbums(int count) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>(count);
 
-        if (!isIndexCreated() || isIndexBeingCreated() || cachedSongs == null || cachedSongs.isEmpty()) {
+        if (!isIndexCreated() || isIndexBeingCreated()) {
             return result;
         }
 
         // Ensure that index is read to memory.
         getIndex();
+
+        if (cachedSongs == null || cachedSongs.isEmpty()) {
+            return result;
+        }
 
         // Note: To avoid duplicates, we iterate over more than the requested number of items.
         for (int i = 0; i < count * 20; i++) {

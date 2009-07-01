@@ -1,5 +1,7 @@
 TODO IN 3.7
 --------------
+Slow download speed. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1712
+Further search improvements, e.g., "search all". http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1839
 Improve year range in random playlist generator.  Maybe provide to and from fields.
 Update Norwegian translation.
 Enable auto-random mode for jukebox.
@@ -23,14 +25,11 @@ Should really be only one juxebox player instance?
 Remove "Mock" and "Debug" options from JME app.
 Bug with repeat in jukebox.
 Improve Midnight Fun theme.
+Prepare for SF CCA campaign.
+Random playlist from specified music folder broken?
 
 DONE IN 3.7.beta2
 ------------------
-New: Customizable default music, playlist and podcast folders in support of Amahi Home Server.
-Bugfix: Fixed broken WAR version.
-Bugfix: Fixed broken tag editor.
-Bugfix: Automatically start web player when clicking play on artist, album or song.
-Bugfix: Added some padding above player toolbar.
 
 
 MIDNIGHT FUN THEME
@@ -63,21 +62,48 @@ By default, create music folder for video.
 
 BACKLOG
 ==========================
+Add user ID.  Avoid cookie problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=5604#5604
 Put now playing and shoutbox in right.jsp.
+Improve Next/Previous in search.
+Improve year range in random playlist generator.  Maybe provide to and from fields.
+Improve Midnight Fun theme.
 Pre-login message. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1831
 Create Jing screencast.
+Specify upload directory per user. Option to delete files?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1710
 Coverflow, http://imageflow.finnrudolph.de/, http://sockso.pu-gh.com
+Problems with player resolution for guest users when behind proxy. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1815&postdays=0&postorder=asc&start=0
+Lucene
+Playlist summary. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1833
 Add shoutbox as right-hand side frame.  http://today.java.net/pub/a/today/2007/03/22/developing-applications-using-reverse-ajax.html
 Use SoundManager 2 to implement inline song preview.
-Further search improvements, e.g., "search all". http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1839
 Use reverse ajax for Now Playing?
 Recover/reset forgotten password. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1654
 Add info about how to disable Windows Firewall. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1805
+IE 8 error. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1869
+Enable auto-random mode for jukebox.
+Reduce jukebox logging.
+Validate transitional dtd.
+Profile for bottlenecks
+Selected music folder not remembered.
+Now playing broken?
+"grep -v" in subsonic.sh
+Updates to subsonic.sh  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1634
+Support repeat in web player.
+Podcast broken? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=120
+Bug when adding new tracks to playlist,  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1543
+Refactor SearchService.getRandomSongs()?
+Problem when streaming 2gb+ files, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1538
+Change default cover image.
+Read .txt and .nfo for artist/album reviews. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1587
+Change LAME download url.
+Add OGG etc support to BasicPlayer.
+Remove "Mock" and "Debug" options from JME app.
+PHPBB authentication. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1857
+Bug with repeat in jukebox.
 Upgrade last.fm audioscrobbling protocol http://www.last.fm/api/submissions
 Ignore files/directories by name (e.g., ".svn"), FilenameUtils.wildcardMatch(), http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=831
 Jetty download performance, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1712
 Create Ubuntu etc package using maven-unix-plugin (and appassembler?)
-Don't use absolute paths in status.view and help.view (but rather artist + title).
 Add to Ubuntu repo.
 Podcast : Playing Direct from URL, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1667
 iPod/iPhone support.
@@ -107,8 +133,8 @@ Create Linux package installer.
 "Remember me" broken with LDAP auth?
 Selected podcasts not cleared when deleting.
 top.view cached erronously?
-Support for FreeNAS, see http://www.herger.net/slim/detail.php?nr=1026
 Fix layout in player settings.
+Implement Slim protocol.
 Tag editing breaks embedded cover art. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1305
 Double-write tag info? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2245
 Error with new LAME version?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3339
@@ -253,7 +279,6 @@ Make it work on Java Application Server 8.1.  (web.xml element order)
 Make it work on Geronimo.
 Drop ResourceBundle_en.
 Upload quota per user.
-Specify upload directory per user. Option to delete files?
 Support reverse proxies.  Send url as parameter. (<a href="javascript:document.location.href='foo.jsp?referrer=' + document.location.href">Trykk her</a>)
 Support forward proxies.
 Hvis spilleren har "Auto-control enabled" skrudd av, så vises det en ny knapp "Stream" i playlista som kan brukes for å få m3u-en.
@@ -343,8 +368,6 @@ Norway
 IBAN-nummer:	NO4697104607601
 SWIFT/BIC-kode:	DNBANOKK
 
-"Videreutvikling og kommersialisering av Subsonic Media Streamer"
-Etablererstipend. start max 100.000, vekst max 200.000
 RipNAS, http://www.ripnas.com/
 QNAP
 Netgear ReadyNAS, http://www.readynas.com/

@@ -30,6 +30,7 @@ import java.util.*;
  */
 public class SearchCommand {
 
+    private String any;
     private String title;
     private String album;
     private String artist;
@@ -47,6 +48,14 @@ public class SearchCommand {
     private boolean isIndexBeingCreated;
     private User user;
     private boolean partyModeEnabled;
+
+    public String getAny() {
+        return any;
+    }
+
+    public void setAny(String any) {
+        this.any = any;
+    }
 
     public String getTitle() {
         return title;

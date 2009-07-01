@@ -18,16 +18,22 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
-import net.sourceforge.subsonic.util.*;
-import org.springframework.web.servlet.*;
-import org.springframework.web.servlet.mvc.*;
-import org.springframework.web.servlet.support.*;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.TransferStatus;
+import net.sourceforge.subsonic.service.StatusService;
+import net.sourceforge.subsonic.util.FileUtil;
+import net.sourceforge.subsonic.util.StringUtil;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
-import javax.servlet.http.*;
-import java.io.*;
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Controller for the status page.
@@ -124,8 +130,7 @@ public class StatusController extends ParameterizableViewController {
         }
 
         public String getPath() {
-            File file = transferStatus.getFile();
-            return file == null ? null : file.getPath();
+            return FileUtil.getShortPath(transferStatus.getFile());
         }
 
         public String getBytes() {

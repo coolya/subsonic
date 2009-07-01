@@ -40,7 +40,7 @@
             <td style="padding-left:2em">
                 <form method="post" action="search.view" target="main" name="searchForm">
                     <table><tr>
-                        <td><input type="text" name="title" id="title" size="14" value="${search}" onclick="javascript:document.searchForm.title.select();"></td>
+                        <td><input type="text" name="any" id="any" size="14" value="${search}" onclick="javascript:document.searchForm.any.select();"></td>
                         <td><a href="javascript:document.searchForm.submit()"><img src="<spring:theme code="searchImage"/>" alt="${search}" title="${search}"></a></td>
                     </tr></table>
                 </form>

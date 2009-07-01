@@ -77,4 +77,19 @@ public final class FileUtil {
         }
         return files;
     }
+
+    /**
+     * Returns a short path for the given file.  The path consists of the name
+     * of the parent directory and the given file.
+     */
+    public static String getShortPath(File file) {
+        if (file == null) {
+            return null;
+        }
+        File parent = file.getParentFile();
+        if (parent == null) {
+            return file.getName();
+        }
+        return parent.getName() + File.separator + file.getName();
+    }
 }

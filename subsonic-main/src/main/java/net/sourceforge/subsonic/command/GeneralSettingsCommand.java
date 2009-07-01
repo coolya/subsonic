@@ -36,6 +36,7 @@ public class GeneralSettingsCommand {
     private String welcomeTitle;
     private String welcomeSubtitle;
     private String welcomeMessage;
+    private String loginMessage;
     private String localeIndex;
     private String[] locales;
     private String themeIndex;
@@ -112,6 +113,14 @@ public class GeneralSettingsCommand {
 
     public void setWelcomeMessage(String welcomeMessage) {
         this.welcomeMessage = welcomeMessage;
+    }
+
+    public String getLoginMessage() {
+        return loginMessage;
+    }
+
+    public void setLoginMessage(String loginMessage) {
+        this.loginMessage = loginMessage;
     }
 
     public String getLocaleIndex() {

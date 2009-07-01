@@ -32,13 +32,18 @@
     <form:hidden path="count" id="count"/>
     <table>
         <tr>
-            <td><fmt:message key="search.query.title"/></td>
-            <td><form:input path="title" size="35"/></td>
+            <td><fmt:message key="search.query.any"/></td>
+            <td><form:input path="any" size="35"/></td>
             <td style="padding-left:0.25em"><input type="submit" onclick="search(0)" value="<fmt:message key="search.search"/>"/></td>
         </tr>
         <tr>
-            <td style="padding-top:1.0em"><fmt:message key="search.query.album"/></td>
-            <td style="padding-top:1.0em"><form:input path="album" size="35"/></td>
+            <td style="padding-top:1.0em"><fmt:message key="search.query.title"/></td>
+            <td style="padding-top:1.0em"><form:input path="title" size="35"/></td>
+            <td/>
+        </tr>
+        <tr>
+            <td><fmt:message key="search.query.album"/></td>
+            <td><form:input path="album" size="35"/></td>
             <td/>
         </tr>
         <tr>
@@ -47,8 +52,8 @@
             <td/>
         </tr>
         <tr>
-            <td><fmt:message key="search.newer"/></td>
-            <td>
+            <td style="padding-top:1.0em"><fmt:message key="search.newer"/></td>
+            <td style="padding-top:1.0em">
                 <form:select path="time" cssStyle="vertical-align:middle" id="time">
                     <fmt:message key="search.select" var="select"/>
                     <fmt:message key="search.day" var="day"/>
