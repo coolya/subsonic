@@ -110,4 +110,4 @@ if [ $SUBSONIC_PIDFILE ]; then
     echo $! > ${SUBSONIC_PIDFILE}
 fi
 
-echo Started Subsonic [PID $!]
+echo Started Subsonic [PID $!, ${LOG}] 
