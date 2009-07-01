@@ -2,13 +2,21 @@ TODO IN 3.8
 --------------
 Upgrade to Spring 3.0.  Use REST stuff.
 Contact Amahi
+Run agent as admin in Windows 7. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1479
+Does subsonic_exclude.txt work for indexing? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1965
+Message from zeekay.
+Support repeat in web player.
+Dynamic playlists.
+Android
+Add "Add random" to main.view and "Add to playlist" in more.view
 Lucene
 User registration.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1931
 Further search improvements, e.g., "search all". http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1839
 Improve year range in random playlist generator.  Maybe provide to and from fields.
 Improve Midnight Fun theme.
 Use signed requests against Amazon.
-Extract to /var/subsonic/jetty/<build number>.  Test that it works with real war, and on windows.
+Google Image Search or Yahoo search
+Automatically enable/disable "Notify me about new versions" option when new users are created.
 
 
 DONE IN 3.8
@@ -16,8 +24,24 @@ DONE IN 3.8
 New: Added chat.
 Bugfix: Usernames can now contain white spaces and international characters.
 Bugfix: Allow alternate date format in Podcast episodes.
+Bugfix: Fixed broken Discogs image search.
 New: Improved Dutch translation, courtesy of Sander van der Grind.
 New: Avoid upgrade issues in stand-alone version.
+New: Improved German translation, courtesy of 3R3.
+
+
+LUCENE
+------
+isIndexBeingCreated
+createIndex
+schedule
+cleanMusicFileInfo  (look up album by path)
+search(SearchCriteria)
+getRandomSongs(RandomSearchCriteria)
+getRandomAlbums
+getNewestAlbums
+getStatistics
+getGenres
 
 MIDNIGHT FUN THEME
 ------------------
@@ -68,7 +92,6 @@ Selected music folder not remembered.
 Now playing broken?
 "grep -v" in subsonic.sh
 Updates to subsonic.sh  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1634
-Support repeat in web player.
 Podcast broken? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=120
 Bug when adding new tracks to playlist,  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1543
 Refactor SearchService.getRandomSongs()?
@@ -357,4 +380,4 @@ NETGEAR ReadyNAS, Buffalo Linkstation, Linksys NSLU2 and any device running Free
 
 rsync -avP -e ssh music.demo/ sindremehus@www.gosubsonic.com:music
 
-
+-Dsubsonic.war=out\exploded\subsonic-mainWeb -Dsubsonic.createLinkFile=true -Dsubsonic.windowsInstall=true -Dsubsonic.port=8080 -Dsubsonic.contextPath=/
