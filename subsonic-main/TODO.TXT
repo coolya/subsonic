@@ -1,12 +1,12 @@
 TODO IN 3.8
 --------------
+"removeAllRows() can only be used with table, tbody, thead and tfoot elements. Attempt to use: HTMLDivElement"
 Upgrade to Spring 3.0.  Use REST stuff.
 Mention Amahi in web pages.
 Contact Amahi
 Run agent as admin in Windows 7. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1479
 Does subsonic_exclude.txt work for indexing? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1965
 Message from zeekay.
-Support repeat in web player.
 Dynamic playlists.
 Android
 Add "Add random" to main.view and "Add to playlist" in more.view
@@ -23,6 +23,7 @@ Automatically enable/disable "Notify me about new versions" option when new user
 DONE IN 3.8
 ------------
 New: Added chat.
+New: Support playlist repeat in web player.
 Bugfix: Usernames can now contain white spaces and international characters.
 Bugfix: Allow alternate date format in Podcast episodes.
 Bugfix: Fixed broken Discogs image search.

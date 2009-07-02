@@ -23,6 +23,7 @@
     var currentAlbumUrl = null;
     var currentStreamUrl = null;
     var startPlayer = false;
+    var repeatEnabled = false;
     var slider = null;
 
     function init() {
@@ -84,7 +85,7 @@
 
     function stateListener(obj) { // IDLE, BUFFERING, PLAYING, PAUSED, COMPLETED
         if (obj.newstate == "COMPLETED" && obj.oldstate == "PLAYING") {
-            onNext();
+            onNext(repeatEnabled);
         }
     }
 
@@ -121,8 +122,12 @@
     </c:otherwise>
     </c:choose>
     }
-    function onNext() {
-        skip(parseInt(getCurrentSongIndex()) + 1);
+    function onNext(wrap) {
+        var index = parseInt(getCurrentSongIndex()) + 1;
+        if (wrap) {
+            index = index % songs.length;
+        }
+        skip(index);
     }
     function onPrevious() {
         skip(parseInt(getCurrentSongIndex()) - 1);
@@ -181,6 +186,7 @@
 
     function playlistCallback(playlist) {
         songs = playlist.entries;
+        repeatEnabled = playlist.repeatEnabled;
         if ($("start")) {
             if (playlist.stopEnabled) {
                 $("start").hide();
@@ -192,7 +198,7 @@
         }
 
         if ($("toggleRepeat")) {
-            var text = playlist.repeatEnabled ? "<fmt:message key="playlist.repeat_on"/>" : "<fmt:message key="playlist.repeat_off"/>";
+            var text = repeatEnabled ? "<fmt:message key="playlist.repeat_on"/>" : "<fmt:message key="playlist.repeat_off"/>";
             dwr.util.setValue("toggleRepeat", text);
         }
 
@@ -437,13 +443,13 @@
 
             <c:if test="${model.player.web}">
                 <td style="white-space:nowrap;"><a href="javascript:noop()" onclick="onPrevious()"><b>&laquo;</b></a></td>
-                <td style="white-space:nowrap;"><a href="javascript:noop()" onclick="onNext()"><b>&raquo;</b></a> |</td>
+                <td style="white-space:nowrap;"><a href="javascript:noop()" onclick="onNext(false)"><b>&raquo;</b></a> |</td>
             </c:if>
 
             <td style="white-space:nowrap;"><a href="javascript:noop()" onclick="onClear()"><fmt:message key="playlist.clear"/></a> |</td>
             <td style="white-space:nowrap;"><a href="javascript:noop()" onclick="onShuffle()"><fmt:message key="playlist.shuffle"/></a> |</td>
 
-            <c:if test="${model.player.jukebox or model.player.external}">
+            <c:if test="${model.player.web or model.player.jukebox or model.player.external}">
                 <td style="white-space:nowrap;"><a href="javascript:noop()" onclick="onToggleRepeat()"><span id="toggleRepeat"><fmt:message key="playlist.repeat_on"/></span></a> |</td>
             </c:if>
 
