@@ -1,20 +1,20 @@
 package net.sourceforge.subsonic.booter.deployer;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Writer;
+import java.net.BindException;
+import java.util.Date;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
+
+import org.apache.commons.io.IOUtils;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
-import org.apache.commons.io.IOUtils;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.BindException;
-import java.util.Date;
-import java.util.zip.ZipEntry;
-import java.util.jar.JarFile;
 
 /**
  * Responsible for deploying the Subsonic web app in
@@ -112,6 +112,11 @@ public class SubsonicDeployer implements SubsonicDeployerService {
             dir = new File(dir, buildNumber);
         }
         System.err.println("Extracting webapp to " + dir);
+
+        if (!dir.exists() && !dir.mkdirs()) {
+            System.err.println("Failed to create directory " + dir);
+        }
+
         return dir;
     }
 
@@ -237,8 +242,8 @@ public class SubsonicDeployer implements SubsonicDeployerService {
                 subsonicHome = home;
             } else {
                 String message = "The directory " + home + " does not exist. Please create it and make it writable. " +
-                                 "(You can override the directory location by specifying -Dsubsonic.home=... when " +
-                                 "starting the servlet container.)";
+                        "(You can override the directory location by specifying -Dsubsonic.home=... when " +
+                        "starting the servlet container.)";
                 System.err.println("ERROR: " + message);
             }
         } else {

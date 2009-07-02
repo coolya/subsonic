@@ -1,6 +1,7 @@
 TODO IN 3.8
 --------------
 Upgrade to Spring 3.0.  Use REST stuff.
+Mention Amahi in web pages.
 Contact Amahi
 Run agent as admin in Windows 7. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1479
 Does subsonic_exclude.txt work for indexing? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1965
@@ -26,7 +27,7 @@ Bugfix: Usernames can now contain white spaces and international characters.
 Bugfix: Allow alternate date format in Podcast episodes.
 Bugfix: Fixed broken Discogs image search.
 New: Improved Dutch translation, courtesy of Sander van der Grind.
-New: Avoid upgrade issues in stand-alone version.
+New: Avoid problems when upgrading stand-alone version.
 New: Improved German translation, courtesy of 3R3.
 
 
