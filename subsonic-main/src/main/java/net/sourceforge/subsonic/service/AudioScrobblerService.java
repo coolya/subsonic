@@ -60,10 +60,11 @@ public class AudioScrobblerService {
      * Registers the given music file at www.last.fm. This method returns immediately, the actual registration is done
      * by a separate thread.
      *
-     * @param musicFile The music file to register.
-     * @param username  The user which played the music file.
+     * @param musicFile  The music file to register.
+     * @param username   The user which played the music file.
+     * @param submission Whether this is a submission or a now playing notification.
      */
-    public synchronized void register(MusicFile musicFile, String username) {
+    public synchronized void register(MusicFile musicFile, String username, boolean submission) {
 
         if (thread == null) {
             thread = new RegistrationThread();
@@ -75,7 +76,7 @@ public class AudioScrobblerService {
             return;
         }
 
-        RegistrationData registrationData = createRegistrationData(musicFile, username);
+        RegistrationData registrationData = createRegistrationData(musicFile, username, submission);
         if (registrationData == null) {
             return;
         }
@@ -90,7 +91,11 @@ public class AudioScrobblerService {
     /**
      * Returns registration details, or <code>null</code> if not eligible for registration.
      */
-    private RegistrationData createRegistrationData(MusicFile musicFile, String username) {
+    private RegistrationData createRegistrationData(MusicFile musicFile, String username, boolean submission) {
+
+        if (musicFile == null) {
+            return null;
+        }
 
         MusicFile.MetaData metaData = musicFile.getMetaData();
         if (metaData == null) {
@@ -102,13 +107,16 @@ public class AudioScrobblerService {
             return null;
         }
 
-        // Don't register more often than every 30 seconds.
-        Long lastRegistrationTime = lastRegistrationTimes.get(username);
         long now = System.currentTimeMillis();
-        if (lastRegistrationTime != null && now - lastRegistrationTime < MIN_REGISTRATION_INTERVAL) {
-            return null;
+
+        // Don't register submissions more often than every 30 seconds.
+        if (submission) {
+            Long lastRegistrationTime = lastRegistrationTimes.get(username);
+            if (lastRegistrationTime != null && now - lastRegistrationTime < MIN_REGISTRATION_INTERVAL) {
+                return null;
+            }
+            lastRegistrationTimes.put(username, now);
         }
-        lastRegistrationTimes.put(username, now);
 
         RegistrationData reg = new RegistrationData();
         reg.username = userSettings.getLastFmUsername();
@@ -118,6 +126,7 @@ public class AudioScrobblerService {
         reg.title = metaData.getTitle();
         reg.duration = metaData.getDuration() == null ? 0 : metaData.getDuration();
         reg.time = new Date(now);
+        reg.submission = submission;
 
         return reg;
     }
@@ -132,35 +141,8 @@ public class AudioScrobblerService {
             return;
         }
 
-        String clientId = "sub";
-        String clientVersion = "0.1";
-        long timestamp = System.currentTimeMillis() / 1000L;
-        String authToken = calculateAuthenticationToken(registrationData.password, timestamp);
-        String[] lines = executeGetRequest("http://post.audioscrobbler.com/?hs=true&p=1.2.1&c=" + clientId + "&v=" +
-                clientVersion + "&u=" + registrationData.username + "&t=" + timestamp + "&a=" + authToken);
-
-        if (lines[0].startsWith("BANNED")) {
-            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm. Client version is banned.");
-            return;
-        }
-
-        if (lines[0].startsWith("BADAUTH")) {
-            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm. Wrong username or password.");
-            return;
-        }
-
-        if (lines[0].startsWith("BADTIME")) {
-            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm. Bad timestamp, please check local clock.");
-            return;
-        }
-
-        if (lines[0].startsWith("FAILED")) {
-            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm: " + lines[0]);
-            return;
-        }
-
-        if (!lines[0].startsWith("OK")) {
-            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm.  Unknown response: " + lines[0]);
+        String[] lines = authenticate(registrationData);
+        if (lines == null) {
             return;
         }
 
@@ -168,6 +150,68 @@ public class AudioScrobblerService {
         String nowPlayingUrl = lines[2];
         String submissionUrl = lines[3];
 
+        if (registrationData.submission) {
+            lines = registerSubmission(registrationData, sessionId, submissionUrl);
+        } else {
+            lines = registerNowPlaying(registrationData, sessionId, nowPlayingUrl);
+        }
+
+        if (lines[0].startsWith("FAILED")) {
+            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm: " + lines[0]);
+        } else if (lines[0].startsWith("BADSESSION")) {
+            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm.  Invalid session.");
+        } else if (lines[0].startsWith("OK")) {
+            LOG.debug("Successfully scrobbled song '" + registrationData.title + "' for user " + registrationData.username + " at Last.fm.");
+        }
+    }
+
+    /**
+     * Returns the following lines if authentication succeeds:
+     *
+     * Line 0: Always "OK"
+     * Line 1: Session ID, e.g., "17E61E13454CDD8B68E8D7DEEEDF6170"
+     * Line 2: URL to use for now playing, e.g., "http://post.audioscrobbler.com:80/np_1.2"
+     * Line 3: URL to use for submissions, e.g., "http://post2.audioscrobbler.com:80/protocol_1.2"
+     *
+     * If authentication fails, <code>null</code> is returned.
+     */
+    private String[] authenticate(RegistrationData registrationData) throws Exception {
+        String clientId = "sub";
+        String clientVersion = "0.1";
+        long timestamp = System.currentTimeMillis() / 1000L;
+        String authToken = calculateAuthenticationToken(registrationData.password, timestamp);
+        String[] lines = executeGetRequest("http://post.audioscrobbler.com/?hs=true&p=1.2.1&c=" + clientId + "&v=" +
+                                           clientVersion + "&u=" + registrationData.username + "&t=" + timestamp + "&a=" + authToken);
+
+        if (lines[0].startsWith("BANNED")) {
+            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm. Client version is banned.");
+            return null;
+        }
+
+        if (lines[0].startsWith("BADAUTH")) {
+            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm. Wrong username or password.");
+            return null;
+        }
+
+        if (lines[0].startsWith("BADTIME")) {
+            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm. Bad timestamp, please check local clock.");
+            return null;
+        }
+
+        if (lines[0].startsWith("FAILED")) {
+            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm: " + lines[0]);
+            return null;
+        }
+
+        if (!lines[0].startsWith("OK")) {
+            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm.  Unknown response: " + lines[0]);
+            return null;
+        }
+
+        return lines;
+    }
+
+    private String[] registerSubmission(RegistrationData registrationData, String sessionId, String url) throws IOException {
         Map<String, String> params = new HashMap<String, String>();
         params.put("s", sessionId);
         params.put("a[0]", registrationData.artist);
@@ -179,16 +223,19 @@ public class AudioScrobblerService {
         params.put("b[0]", registrationData.album);
         params.put("n[0]", "");
         params.put("m[0]", "");
+        return executePostRequest(url, params);
+    }
 
-        lines = executePostRequest(submissionUrl, params);
-
-        if (lines[0].startsWith("FAILED")) {
-            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm: " + lines[0]);
-        } else if (lines[0].startsWith("BADSESSION")) {
-            LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm.  Invalid session.");
-        } else if (lines[0].startsWith("OK")) {
-            LOG.debug("Successfully scrobbled song '" + registrationData.title + "' for user " + registrationData.username + " at Last.fm.");
-        }
+    private String[] registerNowPlaying(RegistrationData registrationData, String sessionId, String url) throws IOException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("s", sessionId);
+        params.put("a", registrationData.artist);
+        params.put("t", registrationData.title);
+        params.put("b", registrationData.album);
+        params.put("l", String.valueOf(registrationData.duration));
+        params.put("n", "");
+        params.put("m", "");
+        return executePostRequest(url, params);
     }
 
     private String calculateAuthenticationToken(String password, long timestamp) {
@@ -256,7 +303,7 @@ public class AudioScrobblerService {
             try {
                 queue.put(registrationData);
                 LOG.info("Last.fm registration for " + registrationData.title +
-                        " encountered network error.  Will try again later. In queue: " + queue.size(), x);
+                         " encountered network error.  Will try again later. In queue: " + queue.size(), x);
             } catch (InterruptedException e) {
                 LOG.error("Failed to reschedule Last.fm registration for " + registrationData.title, e);
             }
@@ -276,22 +323,7 @@ public class AudioScrobblerService {
         private String title;
         private int duration;
         private Date time;
-    }
-
-    // TODO: REMOVE
-    public static void main(String[] args) throws Exception {
-        AudioScrobblerService service = new AudioScrobblerService();
-
-        RegistrationData regData = new RegistrationData();
-        regData.username = "sindre_mehus";
-        regData.password = "harmo9sk";
-        regData.artist = "Sex Pistols";
-        regData.album = "Never Mind The Bollocks";
-        regData.title = "Problems";
-        regData.duration = 179;
-        regData.time = new Date();
-
-        service.scrobble(regData);
+        public boolean submission;
     }
 
 }

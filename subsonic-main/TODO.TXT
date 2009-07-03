@@ -1,5 +1,8 @@
 TODO IN 3.8
 --------------
+Upgrade last.fm audioscrobbling protocol http://www.last.fm/api/submissions
+Write installation note on how to setup internet access.
+next/prev buttons in jukebox.
 "removeAllRows() can only be used with table, tbody, thead and tfoot elements. Attempt to use: HTMLDivElement"
 Upgrade to Spring 3.0.  Use REST stuff.
 Mention Amahi in web pages.
@@ -31,7 +34,7 @@ Bugfix: Fixed broken Discogs image search.
 New: Improved Dutch translation, courtesy of Sander van der Grind.
 New: Avoid problems when upgrading stand-alone version.
 New: Improved German translation, courtesy of 3R3.
-
+New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now playing".
 
 LUCENE
 ------
@@ -81,11 +84,9 @@ Specify upload directory per user. Option to delete files?  http://www.activeobj
 Coverflow, http://imageflow.finnrudolph.de/, http://sockso.pu-gh.com
 Problems with player resolution for guest users when behind proxy. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1815&postdays=0&postorder=asc&start=0
 Playlist summary. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1833
-Add shoutbox as right-hand side frame.  http://today.java.net/pub/a/today/2007/03/22/developing-applications-using-reverse-ajax.html
 Use SoundManager 2 to implement inline song preview.
 Use reverse ajax for Now Playing?
 Recover/reset forgotten password. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1654
-Add info about how to disable Windows Firewall. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1805
 IE 8 error. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1869
 Enable auto-random mode for jukebox.
 Reduce jukebox logging.
@@ -106,7 +107,6 @@ Add OGG etc support to BasicPlayer.
 Remove "Mock" and "Debug" options from JME app.
 PHPBB authentication. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1857
 Bug with repeat in jukebox.
-Upgrade last.fm audioscrobbling protocol http://www.last.fm/api/submissions
 Ignore files/directories by name (e.g., ".svn"), FilenameUtils.wildcardMatch(), http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=831
 Jetty download performance, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1712
 Create Ubuntu etc package using maven-unix-plugin (and appassembler?)

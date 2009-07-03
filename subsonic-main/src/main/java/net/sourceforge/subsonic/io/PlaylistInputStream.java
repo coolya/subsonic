@@ -119,6 +119,7 @@ public class PlaylistInputStream extends InputStream {
             close();
             LOG.info("Opening new song " + FileUtil.getShortPath(file.getFile()));
             updateStatistics(file);
+            audioScrobblerService.register(file, player.getUsername(), false);
 
             currentInputStream = transcodingService.getTranscodedInputStream(file, player);
             currentFile = file;
@@ -139,7 +140,6 @@ public class PlaylistInputStream extends InputStream {
             if (!folder.isRoot()) {
                 musicInfoService.incrementPlayCount(folder);
             }
-            audioScrobblerService.register(file, player.getUsername());
         } catch (Exception x) {
             LOG.warn("Failed to update statistics for " + file, x);
         }
@@ -155,6 +155,7 @@ public class PlaylistInputStream extends InputStream {
                 currentInputStream.close();
             }
         } finally {
+            audioScrobblerService.register(currentFile, player.getUsername(), true);
             currentInputStream = null;
             currentFile = null;
         }
