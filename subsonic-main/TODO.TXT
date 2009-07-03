@@ -18,6 +18,7 @@ Improve Midnight Fun theme.
 Use signed requests against Amazon.
 Google Image Search or Yahoo search
 Automatically enable/disable "Notify me about new versions" option when new users are created.
+Create Facebook group.
 
 
 DONE IN 3.8
