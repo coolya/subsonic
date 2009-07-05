@@ -87,7 +87,7 @@ public class PlaylistInputStream extends InputStream {
     @Override
     public int read(byte[] b, int off, int len) throws IOException {
         prepare();
-        if (currentInputStream == null) {
+        if (currentInputStream == null || player.getPlaylist().getStatus() == Playlist.Status.STOPPED) {
             return -1;
         }
 
