@@ -161,7 +161,8 @@ public class AudioScrobblerService {
         } else if (lines[0].startsWith("BADSESSION")) {
             LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm.  Invalid session.");
         } else if (lines[0].startsWith("OK")) {
-            LOG.debug("Successfully scrobbled song '" + registrationData.title + "' for user " + registrationData.username + " at Last.fm.");
+            LOG.debug("Successfully registered " + (registrationData.submission ? "submission" : "now playing") +
+                      " for song '" + registrationData.title + "' for user " + registrationData.username + " at Last.fm.");
         }
     }
 

@@ -31,7 +31,11 @@ import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.io.PlaylistInputStream;
 import org.apache.commons.io.IOUtils;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.AudioSystem;
 import java.io.InputStream;
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -129,8 +133,18 @@ public class JukeboxService {
         public JuxeboxPlayer(Player subsonicPlayer) {
             this.subsonicPlayer = subsonicPlayer;
             status = statusService.createStreamStatus(subsonicPlayer);
-            in = new PlaylistInputStream(subsonicPlayer, status, transcodingService, musicInfoService, audioScrobblerService, searchService);
-            basicPlayer = new BasicPlayer();
+            in = new BufferedInputStream(new PlaylistInputStream(subsonicPlayer, status, transcodingService, musicInfoService, audioScrobblerService, searchService));
+
+            basicPlayer = new BasicPlayer() {
+                /**
+                 * Work-around for a bug occuring when playing WAV.
+                 */
+                @Override
+                protected void initAudioInputStream(InputStream inputStream) throws UnsupportedAudioFileException, IOException {
+                    m_audioFileFormat = AudioSystem.getAudioFileFormat(inputStream);
+                    m_audioInputStream = AudioSystem.getAudioInputStream(inputStream);
+                }
+            };
             basicPlayer.addBasicPlayerListener(this);
         }
 

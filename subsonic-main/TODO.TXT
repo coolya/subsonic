@@ -1,9 +1,9 @@
 TODO IN 3.8
 --------------
-Upgrade last.fm audioscrobbling protocol http://www.last.fm/api/submissions
+Add FLAC>WAV transcoding
+"removeAllRows() can only be used with table, tbody, thead and tfoot elements. Attempt to use: HTMLDivElement"
 Write installation note on how to setup internet access.
 next/prev buttons in jukebox.
-"removeAllRows() can only be used with table, tbody, thead and tfoot elements. Attempt to use: HTMLDivElement"
 Upgrade to Spring 3.0.  Use REST stuff.
 Mention Amahi in web pages.
 Contact Amahi
@@ -28,6 +28,8 @@ DONE IN 3.8
 ------------
 New: Added chat.
 New: Support playlist repeat in web player.
+New: Jukebox now support WAV format (including FLAC > WAV transcoding).
+Bugfix: Repeat now works properly in jukebox mode.
 Bugfix: Usernames can now contain white spaces and international characters.
 Bugfix: Allow alternate date format in Podcast episodes.
 Bugfix: Fixed broken Discogs image search.
@@ -103,10 +105,8 @@ Problem when streaming 2gb+ files, http://www.activeobjects.no/subsonic/forum/vi
 Change default cover image.
 Read .txt and .nfo for artist/album reviews. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1587
 Change LAME download url.
-Add OGG etc support to BasicPlayer.
 Remove "Mock" and "Debug" options from JME app.
 PHPBB authentication. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1857
-Bug with repeat in jukebox.
 Ignore files/directories by name (e.g., ".svn"), FilenameUtils.wildcardMatch(), http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=831
 Jetty download performance, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1712
 Create Ubuntu etc package using maven-unix-plugin (and appassembler?)
