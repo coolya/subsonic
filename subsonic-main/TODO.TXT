@@ -2,17 +2,16 @@ TODO IN 3.8
 --------------
 Add FLAC>WAV transcoding
 "removeAllRows() can only be used with table, tbody, thead and tfoot elements. Attempt to use: HTMLDivElement"
-Write installation note on how to setup internet access.
 next/prev buttons in jukebox.
+Add "Add random" to main.view and "Add to playlist" in more.view
+Write installation note on how to setup internet access.
 Upgrade to Spring 3.0.  Use REST stuff.
 Mention Amahi in web pages.
 Contact Amahi
 Run agent as admin in Windows 7. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1479
 Does subsonic_exclude.txt work for indexing? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1965
-Message from zeekay.
-Dynamic playlists.
+Dynamic playlists,  Message from zeekay.
 Android
-Add "Add random" to main.view and "Add to playlist" in more.view
 Lucene
 User registration.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1931
 Further search improvements, e.g., "search all". http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1839
@@ -21,7 +20,7 @@ Improve Midnight Fun theme.
 Use signed requests against Amazon.
 Google Image Search or Yahoo search
 Automatically enable/disable "Notify me about new versions" option when new users are created.
-Create Facebook group.
+Facebook group.
 
 
 DONE IN 3.8
