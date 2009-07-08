@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.provider.Contacts;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.MediaController;
+import android.widget.VideoView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,6 +39,7 @@ public class SubsonicActivity extends Activity {
         saveAudio();
         saveVideo();
 //        streamAudio();
+        streamVideo();
         saveAudioToFile();
     }
 
@@ -97,6 +100,11 @@ public class SubsonicActivity extends Activity {
 
             Log.i(TAG, "Creating player.");
             MediaPlayer player = new MediaPlayer();
+
+//            MediaController controller = new MediaController(this);
+//            controller.setMediaPlayer(new VideoView(this));
+//            controller.show();
+//            controller.setAnchorView(get);
             player.setDataSource(url);
 
             Log.i(TAG, "Preparing player.");
@@ -108,6 +116,23 @@ public class SubsonicActivity extends Activity {
             Log.i(TAG, "Started player.");
         } catch (Exception e) {
             Log.e(TAG, "Failed to stream audio.", e);
+        }
+    }
+
+    private void streamVideo() {
+
+        try {
+            String url = "http://192.168.0.7/subsonic/stream?player=18&pathUtf8Hex=433a5c6d757369635c414344435c4c657420746865726520626520726f636b5c4c657420546865726520426520526f636b5f41432044432e6d7033&suffix=.mp3";
+            VideoView videoView = new VideoView(this);
+            videoView.setVideoPath(url);
+            MediaController controller = new MediaController(this);
+            controller.setMediaPlayer(videoView);
+            setContentView(videoView);
+            Log.i(TAG, "Starting video.");
+            videoView.start();
+
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to stream video.", e);
         }
     }
 
