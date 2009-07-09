@@ -1,5 +1,11 @@
 TODO IN 3.8
 --------------
+Bad performance, low bandwidth.
+http://lyricsfly.com/
+Test with Chrome (2.0.172.33)
+Frame borders in Chrome.
+Avoid underlined image links in menu bar (FF, Chrome)
+Nightly build.
 Add FLAC>WAV transcoding
 "removeAllRows() can only be used with table, tbody, thead and tfoot elements. Attempt to use: HTMLDivElement"
 next/prev buttons in jukebox.
@@ -36,6 +42,15 @@ New: Improved Dutch translation, courtesy of Sander van der Grind.
 New: Avoid problems when upgrading stand-alone version.
 New: Improved German translation, courtesy of 3R3.
 New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now playing".
+
+ANDROID FEASABILITY
+-------------------
+1. Download and save song from URL.
+2. Play song from URL.
+3. Control music service.
+
+http://blog.pocketjourney.com/2008/04/04/tutorial-custom-media-streaming-for-androids-mediaplayer/
+
 
 LUCENE
 ------
