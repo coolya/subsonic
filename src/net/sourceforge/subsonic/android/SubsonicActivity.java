@@ -1,8 +1,16 @@
 package net.sourceforge.subsonic.android;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -13,14 +21,10 @@ import android.util.Log;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-
 public class SubsonicActivity extends Activity {
 
     private static final String TAG = "Subsonic";
+    private static final String URL_MP3 = "http://gosubsonic.com/stream?player=1&pathUtf8Hex=2f686f6d652f73696e6472656d656875732f6d757369632e64656d6f2f4a6f686e646f652f5079726f6d616e74696b6b2f5079726f6d616e74696b6b2e6d7033&suffix=.mp3";
 
 
     /**
@@ -31,28 +35,59 @@ public class SubsonicActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        Log.i(TAG, "Test of logging.");
-        queryContentProviders();
-        saveContact();
-        saveImage();
+        playbackStarter();
+        streamStarter();
+//        queryContentProviders();
+//        saveContact();
+//        saveImage();
 //        saveArtist();
-        saveAudio();
-        saveVideo();
+//        saveAudioToFile();
+//        saveAudio();
+//        saveVideo();
 //        streamAudio();
-        streamVideo();
-        saveAudioToFile();
+//        streamVideo();
+    }
+
+    private void playbackStarter() {
+        try {
+            File file = new File("/data/data/net.sourceforge.subsonic.android/files/download.mp3");
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri data = Uri.fromFile(file);
+            String type = "audio/mp3";
+            intent.setDataAndType(data, type);
+            startActivity(intent);
+
+            Log.i(TAG, "Intent: " + intent);
+            startActivity(intent);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to start playback activity.", e);
+        }
+    }
+
+    private void streamStarter() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri data = Uri.parse(URL_MP3);
+            String type = "audio/mp3";
+            intent.setDataAndType(data, type);
+            startActivity(intent);
+            Log.i(TAG, "Intent: " + intent);
+            startActivity(intent);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to start stream activity.", e);
+        }
     }
 
     private void saveAudioToFile() {
-        String url = "http://192.168.0.7/subsonic/stream?player=18&pathUtf8Hex=433a5c6d757369635c414344435c4c657420746865726520626520726f636b5c4c657420546865726520426520526f636b5f41432044432e6d7033&suffix=.mp3";
 
         InputStream in = null;
-        OutputStream out = null;
+        FileOutputStream out = null;
         try {
-            in = new URL(url).openStream();
-            out = openFileOutput("download", 0);
+            in = new URL(URL_MP3).openStream();
+            out = openFileOutput("download.mp3", MODE_WORLD_WRITEABLE | MODE_WORLD_READABLE);
+            Log.i(TAG, "FD: " + out.getFD());
             long n = copy(in, out);
-            Log.i(TAG, "Downloaded " + n + " bytes.");
+            Log.i(TAG, "Downloaded " + n + " bytes to " + out);
         } catch (Exception e) {
             Log.e(TAG, "Failed to save audio stream.", e);
         } finally {
@@ -214,46 +249,64 @@ public class SubsonicActivity extends Activity {
     }
 
     private void saveAudio() {
-        ContentValues values = new ContentValues();
-//        values.put(MediaStore.MediaColumns.DISPLAY_NAME, "foo");
-//        values.put(MediaStore.MediaColumns.TITLE, "My title");
-//        values.put(MediaStore.MediaColumns.MIME_TYPE, "audio/mpeg");
+        try {
+
+//        File file = getFileStreamPath("download.mp3");
+            File dir = new File("/sdcard/music");
+            if (!dir.exists() && !dir.mkdirs()) {
+                Log.e(TAG, "Failed to create " + dir);
+            }
+
+            File file = new File(dir, "foo.mp3");
+            if (!file.exists() && !file.createNewFile()) {
+                Log.e(TAG, "Failed to create " + file);
+            }
+
+            Log.i(TAG, "Trying to save: " + file.getAbsolutePath());
+            Log.i(TAG, "File exists: " + file.exists());
+
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.MediaColumns.DISPLAY_NAME, "foo");
+            values.put(MediaStore.MediaColumns.TITLE, "Pyromantikk 4");
+            values.put(MediaStore.Audio.AudioColumns.ARTIST, "John Doe");
+            values.put(MediaStore.Audio.AudioColumns.ALBUM, "Pyromantikk");
+            values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());
+            values.put(MediaStore.MediaColumns.MIME_TYPE, "audio/mpeg");
 //        values.put(MediaStore.Audio.AudioColumns.ARTIST, "Sindre");
 //        values.put(MediaStore.Audio.AudioColumns.ALBUM, "Pick");
 //        values.put(MediaStore.Audio.AudioColumns.DURATION, 15000L);
 //        values.put(MediaStore.Audio.AudioColumns.DATE_ADDED, System.currentTimeMillis() / 1000L);
 //        values.put(MediaStore.Audio.AudioColumns.IS_ALARM, 0);
-//        values.put(MediaStore.Audio.AudioColumns.IS_MUSIC, 1);
+            values.put(MediaStore.Audio.AudioColumns.IS_MUSIC, 1);
 //        values.put(MediaStore.Audio.AudioColumns.IS_NOTIFICATION, 0);
 //        values.put(MediaStore.Audio.AudioColumns.IS_RINGTONE, 0);
 
-        // Add a new record without the bitmap, but with the values just set.
-        // insert() returns the URI of the new record.
-        Uri uri = getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
+            // Add a new record without the bitmap, but with the values just set.
+            // insert() returns the URI of the new record.
+            Uri uri = getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
 
-        if (uri == null) {
-            Log.e(TAG, "Failed to create audio.");
-            return;
-        }
-        Log.i(TAG, "Saved audio: " + uri);
-
-        // Now get a handle to the file for that record, and save the data into it.
-        // Here, sourceBitmap is a Bitmap object representing the file to save to the database.
-        try {
-            OutputStream out = getContentResolver().openOutputStream(uri);
-            for (int i = 0; i < 256; i++) {
-                out.write(i);
+            if (uri == null) {
+                Log.e(TAG, "Failed to create audio.");
+                return;
             }
-            out.close();
-            Log.i(TAG, "Successfully saved audio to MediaStore: " + uri);
+            Log.i(TAG, "Saved audio: " + uri);
+
+//            // Now get a handle to the file for that record, and save the data into it.
+//            OutputStream out = getContentResolver().openOutputStream(uri);
+//            for (int i = 0; i < 256; i++) {
+//                out.write(i);
+//            }
+//            out.close();
+
+            // TODO: Investigate
+            // Notify those applications such as Music listening to the
+            // scanner events that a recorded audio file just created.
+//         sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, result));
+
         } catch (Exception e) {
             Log.e(TAG, "exception while writing audio", e);
         }
 
-        // TODO: Investigate
-        // Notify those applications such as Music listening to the
-        // scanner events that a recorded audio file just created.
-//         sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, result));
     }
 
     private void queryContentProviders() {
