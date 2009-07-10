@@ -5,9 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.net.URL;
+import java.util.List;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -20,12 +23,18 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.MediaController;
 import android.widget.VideoView;
+import android.widget.ListView;
+import android.widget.ArrayAdapter;
+import net.sourceforge.subsonic.android.service.MockMusicServiceDataSource;
+import net.sourceforge.subsonic.android.service.ArtistParser;
+import net.sourceforge.subsonic.android.service.MusicServiceFactory;
+import net.sourceforge.subsonic.android.service.MusicService;
+import net.sourceforge.subsonic.android.domain.Artist;
 
-public class SubsonicActivity extends Activity {
+public class SubsonicActivity extends ListActivity {
 
-    private static final String TAG = "Subsonic";
+    private static final String TAG = SubsonicActivity.class.getSimpleName();
     private static final String URL_MP3 = "http://gosubsonic.com/stream?player=1&pathUtf8Hex=2f686f6d652f73696e6472656d656875732f6d757369632e64656d6f2f4a6f686e646f652f5079726f6d616e74696b6b2f5079726f6d616e74696b6b2e6d7033&suffix=.mp3";
-
 
     /**
      * Called when the activity is first created.
@@ -33,10 +42,13 @@ public class SubsonicActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
 
-        playbackStarter();
-        streamStarter();
+
+//        setContentView(R.layout.main);
+
+        parse();
+//        playbackStarter();
+//        streamStarter();
 //        queryContentProviders();
 //        saveContact();
 //        saveImage();
@@ -46,6 +58,23 @@ public class SubsonicActivity extends Activity {
 //        saveVideo();
 //        streamAudio();
 //        streamVideo();
+    }
+
+    private void parse() {
+        try {
+            MusicService musicService = MusicServiceFactory.getMusicService();
+            List<Artist> artists = musicService.getArtists();
+            Log.i(TAG, "Found " + artists.size() + " artists.");
+            for (Artist artist : artists) {
+                Log.i(TAG, artist.getName() + " - " + artist.getPath());
+            }
+
+            setListAdapter(new ArrayAdapter<Artist>(this, android.R.layout.simple_list_item_1, artists));
+            getListView().setTextFilterEnabled(true);
+
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to parse artists.", e);
+        }
     }
 
     private void playbackStarter() {
