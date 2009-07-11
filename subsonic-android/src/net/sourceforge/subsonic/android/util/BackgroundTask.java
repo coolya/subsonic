@@ -22,9 +22,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Handler;
 import android.widget.TextView;
-import android.widget.Button;
-import android.view.View;
-import net.sourceforge.subsonic.android.R;
+import android.content.DialogInterface;
 
 
 /**
@@ -42,22 +40,20 @@ public abstract class BackgroundTask<T> implements ProgressListener {
         handler = new Handler();
         progressDialog = new ProgressDialog(activity);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Loading...");
+        progressDialog.setMessage("Loading. Please wait..");
         progressDialog.setCancelable(true);
+        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                cancelled = true;
+                cancel();
+            }
+        });
     }
 
     public void execute() {
         cancelled = false;
-//        activity.setContentView(R.layout.progress);
         progressDialog.show();
-//        Button cancelButton = (Button) activity.findViewById(R.id.progress_cancel);
-//        cancelButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                cancelled = true;
-//                cancel();
-//            }
-//        });
 
         new Thread() {
             @Override
@@ -65,13 +61,14 @@ public abstract class BackgroundTask<T> implements ProgressListener {
                 try {
                     final T result = doInBackground();
                     if (cancelled) {
+                        progressDialog.dismiss();
                         return;
                     }
 
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            progressDialog.hide();
+                            progressDialog.dismiss();
                             done(result);
                         }
                     });
@@ -82,7 +79,7 @@ public abstract class BackgroundTask<T> implements ProgressListener {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            progressDialog.hide();
+                            progressDialog.dismiss();
                             error(t);
                         }
                     });

@@ -45,12 +45,14 @@ New: Avoid problems when upgrading stand-alone version.
 New: Improved German translation, courtesy of 3R3.
 New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now playing".
 
-ANDROID FEASABILITY
--------------------
-1. Download and save song from URL.
-2. Play song from URL.
-3. Control music service.
-
+ANDROID
+-------
+ListView with two rows and icon.
+DownloadService. Show toast + notification
+Avoid DownloadService to be stopped.
+Clean up thread in DownloadService.
+Show album art.
+Settings.
 http://blog.pocketjourney.com/2008/04/04/tutorial-custom-media-streaming-for-androids-mediaplayer/
 
 
