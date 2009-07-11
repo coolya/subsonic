@@ -1,5 +1,8 @@
 TODO IN 3.8
 --------------
+Add REST method to create/update users.
+Nightly build.
+Add links to Facebook group from home page and Help page.
 Bad performance, low bandwidth.
 http://lyricsfly.com/
 Test with Chrome (2.0.172.33)
@@ -26,7 +29,6 @@ Improve Midnight Fun theme.
 Use signed requests against Amazon.
 Google Image Search or Yahoo search
 Automatically enable/disable "Notify me about new versions" option when new users are created.
-Facebook group.
 
 
 DONE IN 3.8
@@ -344,6 +346,7 @@ Vis "lignende" album.
 
 HOW TO RELEASE
 ===============================
+Ask Jeremy Terpstra to update Dutch translation.
 Set JAVA_HOME to 1.6.
 Update version number in pom.xml etc.
 Update changelog.php, download.php and version.html

@@ -25,6 +25,7 @@ import java.util.List;
 
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.domain.Artist;
+import net.sourceforge.subsonic.android.util.ProgressListener;
 
 /**
  * @author Sindre Mehus
@@ -42,21 +43,21 @@ public class XMLMusicService implements MusicService {
         musicDirectoryParser = new MusicDirectoryParser();
     }
 
-    public List<Artist> getArtists() throws Exception {
-        Reader reader = dataSource.getArtistsReader();
+    public List<Artist> getArtists(ProgressListener progressListener) throws Exception {
+        Reader reader = dataSource.getArtistsReader(progressListener);
         addReader(reader);
         try {
-            return artistParser.parse(reader);
+            return artistParser.parse(reader, progressListener);
         } finally {
             closeReader(reader);
         }
     }
 
-    public MusicDirectory getMusicDirectory(String path) throws Exception {
-        Reader reader = dataSource.getMusicDirectoryReader(path);
+    public MusicDirectory getMusicDirectory(String path, ProgressListener progressListener) throws Exception {
+        Reader reader = dataSource.getMusicDirectoryReader(path, progressListener);
         addReader(reader);
         try {
-            return musicDirectoryParser.parse(reader);
+            return musicDirectoryParser.parse(reader, progressListener);
         } finally {
             closeReader(reader);
         }
@@ -75,7 +76,7 @@ public class XMLMusicService implements MusicService {
         readers.remove(reader);
     }
 
-    public synchronized void interrupt() {
+    public synchronized void cancel(ProgressListener progressListener) {
         while (!readers.isEmpty()) {
             Reader reader = readers.get(readers.size() - 1);
             closeReader(reader);

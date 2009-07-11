@@ -18,12 +18,14 @@
  */
 package net.sourceforge.subsonic.android.service;
 
+import net.sourceforge.subsonic.android.util.ProgressListener;
+
 import java.io.Reader;
 
 /**
  * @author Sindre Mehus
  */
 public interface MusicServiceDataSource {
-    Reader getArtistsReader() throws Exception;
-    Reader getMusicDirectoryReader(String path) throws Exception;
+    Reader getArtistsReader(ProgressListener progressListener) throws Exception;
+    Reader getMusicDirectoryReader(String path, ProgressListener progressListener) throws Exception;
 }

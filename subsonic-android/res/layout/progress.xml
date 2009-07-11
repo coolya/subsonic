@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+              a:orientation="vertical"
+              a:layout_width="fill_parent"
+              a:layout_height="fill_parent">
+
+    <TextView
+            a:id="@+id/progress_text"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:text="Please wait..."/>
+
+    <ProgressBar
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:indeterminate="true"/>
+
+    <Button
+            a:id="@+id/progress_cancel"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:text="Cancel"/>
+
+</LinearLayout>
+

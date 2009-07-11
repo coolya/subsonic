@@ -18,6 +18,8 @@
  */
 package net.sourceforge.subsonic.android.service;
 
+import net.sourceforge.subsonic.android.util.ProgressListener;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -34,21 +36,32 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
         this.settingsService = settingsService;
     }
 
-    public Reader getArtistsReader() throws Exception {
-        String url = getBaseUrl() + "getIndexes.view?u=" + settingsService.getUsername() + "&p=" + settingsService.getPassword();
-        InputStream in = new URL(url).openStream();
+    public Reader getArtistsReader(ProgressListener progressListener) throws Exception {
+        String urlString = getBaseUrl() + "getIndexes.view?u=" + settingsService.getUsername() + "&p=" + settingsService.getPassword();
+
+        URL url = new URL(urlString);
+        if (progressListener != null) {
+            progressListener.updateProgress("Contacting server " + url.getAuthority());
+        }
+
+        InputStream in = url.openStream();
         return new InputStreamReader(in);
     }
 
-    public Reader getMusicDirectoryReader(String path) throws Exception {
-        String url = getBaseUrl() + "getMusicDirectory.view?pathUtf8Hex=" + path + "&u=" + settingsService.getUsername() + "&p=" + settingsService.getPassword();
+    public Reader getMusicDirectoryReader(String path, ProgressListener progressListener) throws Exception {
+        String urlString = getBaseUrl() + "getMusicDirectory.view?pathUtf8Hex=" + path + "&u=" + settingsService.getUsername() + "&p=" + settingsService.getPassword();
 
         int player = settingsService.getPlayer();
         if (player > 0) {
-            url += "&player=" + player;
+            urlString += "&player=" + player;
         }
 
-        InputStream in = new URL(url).openStream();
+        URL url = new URL(urlString);
+        if (progressListener != null) {
+            progressListener.updateProgress("Contacting server " + url.getAuthority());
+        }
+
+        InputStream in = url.openStream();
         return new InputStreamReader(in);
     }
 
