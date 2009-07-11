@@ -1,15 +1,5 @@
 package net.sourceforge.subsonic.android;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.net.URL;
-import java.util.List;
-
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -21,15 +11,20 @@ import android.os.Bundle;
 import android.provider.Contacts;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.MediaController;
 import android.widget.VideoView;
-import android.widget.ListView;
-import android.widget.ArrayAdapter;
-import net.sourceforge.subsonic.android.service.MockMusicServiceDataSource;
-import net.sourceforge.subsonic.android.service.ArtistParser;
-import net.sourceforge.subsonic.android.service.MusicServiceFactory;
-import net.sourceforge.subsonic.android.service.MusicService;
 import net.sourceforge.subsonic.android.domain.Artist;
+import net.sourceforge.subsonic.android.service.MusicService;
+import net.sourceforge.subsonic.android.service.MusicServiceFactory;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.util.List;
 
 public class SubsonicActivity extends ListActivity {
 
@@ -63,7 +58,7 @@ public class SubsonicActivity extends ListActivity {
     private void parse() {
         try {
             MusicService musicService = MusicServiceFactory.getMusicService();
-            List<Artist> artists = musicService.getArtists();
+            List<Artist> artists = musicService.getArtists(null);
             Log.i(TAG, "Found " + artists.size() + " artists.");
             for (Artist artist : artists) {
                 Log.i(TAG, artist.getName() + " - " + artist.getPath());

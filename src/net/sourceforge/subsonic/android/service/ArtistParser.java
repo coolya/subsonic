@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import org.xmlpull.v1.XmlPullParser;
 
 import net.sourceforge.subsonic.android.domain.Artist;
+import net.sourceforge.subsonic.android.util.ProgressListener;
 import android.util.Xml;
 import android.util.Log;
 
@@ -34,7 +35,11 @@ import android.util.Log;
 public class ArtistParser extends AbstractParser {
     private static final String TAG = ArtistParser.class.getSimpleName();
 
-    public List<Artist> parse(Reader reader) throws Exception {
+    public List<Artist> parse(Reader reader, ProgressListener progressListener) throws Exception {
+        if (progressListener != null) {
+            progressListener.updateProgress("Reading from server.");
+        }
+
         long t0 = System.currentTimeMillis();
         XmlPullParser parser = Xml.newPullParser();
         parser.setInput(reader);
@@ -49,12 +54,20 @@ public class ArtistParser extends AbstractParser {
                     artist.setName(parser.getAttributeValue(null, "name"));
                     artist.setPath(parser.getAttributeValue(null, "path"));
                     artists.add(artist);
+
+                    if (progressListener != null && artists.size() % 10 == 0) {
+                        progressListener.updateProgress("Got " + artists.size() + " artists.");
+                    }
                 }
             }
         } while (eventType != XmlPullParser.END_DOCUMENT);
 
         long t1 = System.currentTimeMillis();
         Log.d(TAG, "Got " + artists.size() + " artist(s) in " + (t1 - t0) + "ms.");
+
+        if (progressListener != null) {
+            progressListener.updateProgress("Got " + artists.size() + " artists.");
+        }
 
         return artists;
     }

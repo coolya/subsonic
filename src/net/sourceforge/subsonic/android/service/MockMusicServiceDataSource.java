@@ -18,6 +18,8 @@
  */
 package net.sourceforge.subsonic.android.service;
 
+import net.sourceforge.subsonic.android.util.ProgressListener;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -60,13 +62,13 @@ public class MockMusicServiceDataSource implements MusicServiceDataSource {
                                                         "</directory>";
 
 
-    public Reader getArtistsReader() throws Exception {
+    public Reader getArtistsReader(ProgressListener progressListener) throws Exception {
         Thread.sleep(500L);
         return createReader(INDEX_XML);
     }
 
-    public Reader getMusicDirectoryReader(String path) throws Exception {
-        Thread.sleep(250L);
+    public Reader getMusicDirectoryReader(String path, ProgressListener progressListener) throws Exception {
+        Thread.sleep(3000L);
 
         if (path.equals("c:/music/abba")) {
             return createReader(MUSIC_DIRECTORY_XML_1);

@@ -13,7 +13,6 @@ package net.sourceforge.subsonic.android;
 public final class Constants {
 
     // Intent names.
-    public static final String NAME_ARTIST = "subsonic.artist";
     public static final String NAME_PATH = "subsonic.path";
 
     private Constants() {
