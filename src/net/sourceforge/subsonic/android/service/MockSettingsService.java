@@ -13,11 +13,11 @@ package net.sourceforge.subsonic.android.service;
 public class MockSettingsService implements SettingsService {
 
     public String getUsername() {
-        return "guest1";
+        return "sindre";
     }
 
     public String getPassword() {
-        return "guest";
+        return "koko";
     }
 
     public int getPlayer() {
@@ -25,6 +25,6 @@ public class MockSettingsService implements SettingsService {
     }
 
     public String getBaseUrl() {
-        return "http://gosubsonic.com";
+        return "http://192.168.0.7/subsonic";
     }
 }
