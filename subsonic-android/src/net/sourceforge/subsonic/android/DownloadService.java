@@ -25,10 +25,11 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
-import android.*;
 import net.sourceforge.subsonic.android.util.Util;
+import net.sourceforge.subsonic.android.domain.MusicDirectory;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -44,25 +45,23 @@ public class DownloadService extends Service {
 
     private static final String TAG = DownloadService.class.getSimpleName();
     private final IBinder binder = new DownloadBinder();
-
-    private final BlockingQueue<String> queue = new ArrayBlockingQueue<String>(10);
+    private final Handler handler = new Handler();
+    private final BlockingQueue<MusicDirectory.Entry> queue = new ArrayBlockingQueue<MusicDirectory.Entry>(10);
 
     public DownloadService() {
         Log.i(TAG, "Constructor");
         new DownloadThread().start();
     }
 
-    public void download(String url) {
-        showNotification();
-        Toast.makeText(this, "Added " + url + " to download queue.", Toast.LENGTH_SHORT).show();
-
-        queue.add(url);
-        Log.i(TAG, "Download queue size: " + queue.size());
+    public void download(MusicDirectory.Entry song) {
+        showNotification(queue.size() + 1);
+        Toast.makeText(this, "Added " + song.getName() + " to download queue.", Toast.LENGTH_SHORT).show();
+        queue.add(song);
     }
 
-    private void showNotification() {
+    private void showNotification(int queueSize) {
         // In this sample, we'll use the same text for the ticker and the expanded notification
-        String text = "Download queue: " + (queue.size() + 1);
+        String text = "Download queue: " + queueSize;
 
         // Set the icon, scrolling text and timestamp
         Notification notification = new Notification(android.R.drawable.ic_media_play, text,
@@ -83,7 +82,6 @@ public class DownloadService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        Log.i(TAG, "onBind: " + intent);
         return binder;
     }
 
@@ -103,29 +101,33 @@ public class DownloadService extends Service {
         @Override
         public void run() {
             while (true) {
-                String url = null;
+                MusicDirectory.Entry song = null;
                 try {
-                    url = queue.take();
-                    downloadToFile(url);
+                    song = queue.take();
+                    downloadToFile(song);
                 } catch (Exception e) {
-                    Log.e(TAG, "Failed to download " + url);
+                    Log.e(TAG, "Failed to download " + song);
                 }
             }
         }
 
-        private void downloadToFile(String url) throws Exception {
-            Log.i(TAG, "Starting to download " + url);
+        private void downloadToFile(final MusicDirectory.Entry song) throws Exception {
+            Log.i(TAG, "Starting to download " + song);
             File file = File.createTempFile("subsonic", null);
             InputStream in = null;
             FileOutputStream out = null;
             try {
-                in = new URL(url).openStream();
+                in = new URL(song.getUrl()).openStream();
                 out = new FileOutputStream(file);
                 long n = Util.copy(in, out);
                 Log.i(TAG, "Downloaded " + n + " bytes to " + file);
-
-                // TODO: Allowed in this thread?
-                Toast.makeText(DownloadService.this, "Finished downloading " + url + ".", Toast.LENGTH_SHORT).show();
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        showNotification(queue.size());
+                        Toast.makeText(DownloadService.this, "Finished downloading " + song.getName() + ".", Toast.LENGTH_SHORT).show();
+                    }
+                });
             } catch (Exception e) {
                 Log.e(TAG, "Failed to download stream.", e);
             } finally {

@@ -80,7 +80,7 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
     private void download(MusicDirectory.Entry entry) {
         try {
             if (downloadService != null) {
-                downloadService.download(entry.getUrl());
+                downloadService.download(entry);
             } else {
                 Log.e(TAG, "Not connected to Download Service.");
             }
