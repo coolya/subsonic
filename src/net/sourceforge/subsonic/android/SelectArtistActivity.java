@@ -35,6 +35,7 @@ public class SelectArtistActivity extends Activity implements AdapterView.OnItem
 
             @Override
             protected void done(List<Artist> result) {
+                // TODO: Use xml file
                 ListView listView = new ListView(SelectArtistActivity.this);
                 listView.setAdapter(new ArrayAdapter<Artist>(SelectArtistActivity.this, android.R.layout.simple_list_item_1, result));
                 listView.setTextFilterEnabled(true);

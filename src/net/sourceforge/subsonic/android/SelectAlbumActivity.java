@@ -12,12 +12,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Button;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.service.MusicService;
 import net.sourceforge.subsonic.android.service.MusicServiceFactory;
 import net.sourceforge.subsonic.android.util.BackgroundTask;
 
-public class SelectAlbumActivity extends Activity implements AdapterView.OnItemClickListener {
+import java.util.List;
+
+public class SelectAlbumActivity extends Activity implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
@@ -29,6 +32,13 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.select_album);
+        final ListView albumList = (ListView) findViewById(R.id.select_album_albums);
+        final ListView songList = (ListView) findViewById(R.id.select_album_songs);
+        albumList.setOnItemClickListener(SelectAlbumActivity.this);
+        songList.setOnItemSelectedListener(SelectAlbumActivity.this);
+        songList.setItemsCanFocus(false);
+
         bindService(new Intent(this, DownloadService.class),
                     downloadServiceConnection, Context.BIND_AUTO_CREATE);
         BackgroundTask<MusicDirectory> task = new BackgroundTask<MusicDirectory>(this) {
@@ -41,11 +51,10 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
 
             @Override
             protected void done(MusicDirectory result) {
-                ListView listView = new ListView(SelectAlbumActivity.this);
-                listView.setAdapter(new ArrayAdapter<MusicDirectory.Entry>(SelectAlbumActivity.this, android.R.layout.simple_list_item_1, result.getChildren()));
-                listView.setTextFilterEnabled(true);
-                listView.setOnItemClickListener(SelectAlbumActivity.this);
-                setContentView(listView);
+                List<MusicDirectory.Entry> albums = result.getChildren(true, false);
+                List<MusicDirectory.Entry> songs = result.getChildren(false, true);
+                albumList.setAdapter(new ArrayAdapter<MusicDirectory.Entry>(SelectAlbumActivity.this, android.R.layout.simple_list_item_1, albums));
+                songList.setAdapter(new ArrayAdapter<MusicDirectory.Entry>(SelectAlbumActivity.this, android.R.layout.simple_list_item_multiple_choice, songs));
             }
 
             @Override
@@ -63,6 +72,7 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
         unbindService(downloadServiceConnection);
     }
 
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (position >= 0) {
             MusicDirectory.Entry entry = (MusicDirectory.Entry) parent.getItemAtPosition(position);
@@ -77,6 +87,21 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
         }
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+        setDownloadButtonEnabled(true);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        setDownloadButtonEnabled(false);
+    }
+
+    private void setDownloadButtonEnabled(boolean enabled) {
+        Button button = (Button) findViewById(R.id.select_album_download);
+        button.setEnabled(enabled);
+    }
+
     private void download(MusicDirectory.Entry entry) {
         try {
             if (downloadService != null) {
@@ -89,6 +114,7 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
             Log.e(TAG, "Failed to contact Download Service.");
         }
     }
+
 
     private class DownloadServiceConnection implements ServiceConnection {
 
