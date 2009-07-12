@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+              a:orientation="vertical"
+              a:layout_width="fill_parent"
+              a:layout_height="fill_parent">
+
+    <ListView
+            a:id="@+id/select_album_albums"
+            a:textFilterEnabled="true"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"/>
+
+    <ListView
+            a:id="@+id/select_album_songs"
+            a:textFilterEnabled="true"
+            a:choiceMode="multipleChoice"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"/>
+
+    <Button
+            a:id="@+id/select_album_download"
+            a:text="Download"
+            a:enabled="false"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"/>
+
+</LinearLayout>
+

@@ -69,17 +69,17 @@ public class MusicDirectory {
     }
 
     public List<Entry> getChildren() {
-        return getChildren(true);
+        return getChildren(true, true);
     }
 
-    public List<Entry> getChildren(boolean includeDirs) {
-        if (includeDirs) {
+    public List<Entry> getChildren(boolean includeDirs, boolean includeFiles) {
+        if (includeDirs && includeFiles) {
             return children;
         }
 
         List<Entry> result = new ArrayList<Entry>(children.size());
         for (Entry child : children) {
-            if (!child.isDirectory()) {
+            if (child.isDirectory() && includeDirs || !child.isDirectory() && includeFiles) {
                 result.add(child);
             }
         }
