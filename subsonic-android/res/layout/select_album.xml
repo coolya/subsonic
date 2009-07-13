@@ -4,25 +4,39 @@
               a:layout_width="fill_parent"
               a:layout_height="fill_parent">
 
-    <ListView
-            a:id="@+id/select_album_albums"
-            a:textFilterEnabled="true"
-            a:layout_width="fill_parent"
-            a:layout_height="wrap_content"/>
+    <LinearLayout a:orientation="horizontal"
+                  a:layout_width="fill_parent"
+                  a:layout_height="wrap_content">
 
-    <ListView
-            a:id="@+id/select_album_songs"
-            a:textFilterEnabled="true"
-            a:choiceMode="multipleChoice"
-            a:layout_width="fill_parent"
-            a:layout_height="wrap_content"/>
+        <Button a:id="@+id/select_album_selectall"
+                a:text="Select all"
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"/>
 
-    <Button
-            a:id="@+id/select_album_download"
-            a:text="Download"
-            a:enabled="false"
-            a:layout_width="fill_parent"
-            a:layout_height="wrap_content"/>
+        <Button a:id="@+id/select_album_selectnone"
+                a:text="Select none"
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"/>
+
+        <Button a:id="@+id/select_album_download"
+                a:text="Download"
+                a:enabled="false"
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"/>
+
+
+    </LinearLayout>
+
+    <ListView a:id="@+id/select_album_albums"
+              a:textFilterEnabled="true"
+              a:layout_width="fill_parent"
+              a:layout_height="wrap_content"/>
+
+    <ListView a:id="@+id/select_album_songs"
+              a:textFilterEnabled="true"
+              a:choiceMode="multipleChoice"
+              a:layout_width="fill_parent"
+              a:layout_height="wrap_content"/>
 
 </LinearLayout>
 

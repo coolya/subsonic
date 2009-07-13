@@ -68,7 +68,7 @@ public class MockMusicServiceDataSource implements MusicServiceDataSource {
     }
 
     public Reader getMusicDirectoryReader(String path, ProgressListener progressListener) throws Exception {
-        Thread.sleep(3000L);
+        Thread.sleep(300L);
 
         if (path.equals("c:/music/abba")) {
             return createReader(MUSIC_DIRECTORY_XML_1);

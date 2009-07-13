@@ -1,5 +1,7 @@
 TODO IN 3.8
 --------------
+Hide IPs from Subsonic Demo.
+Exclusion filter (*.svn, *.log, *.pun)
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
 Select music folder / playlist folder in Windows installer.
 Add REST method to create/update users.
@@ -31,6 +33,7 @@ Improve Midnight Fun theme.
 Use signed requests against Amazon.
 Google Image Search or Yahoo search
 Automatically enable/disable "Notify me about new versions" option when new users are created.
+Permanent ad campaign on subsonic.sf.net
 
 
 DONE IN 3.8
@@ -51,6 +54,11 @@ New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now
 
 ANDROID
 -------
+Insert in media store.
+Write to /sdcard/subsonic
+Use id instead of path in xmls.
+Hide buttons when not applicable.
+Download git.
 ListView with two rows and icon.
 ListView with checkboxes.
 DownloadService. Show toast + notification
@@ -60,6 +68,7 @@ Settings.
 http://blog.pocketjourney.com/2008/04/04/tutorial-custom-media-streaming-for-androids-mediaplayer/
 Run DownloadService in separate process?
 Handle IO errors in DownloadService.
+Custom progress dialog.
 
 LUCENE
 ------
