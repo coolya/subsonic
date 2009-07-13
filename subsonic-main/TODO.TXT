@@ -1,5 +1,7 @@
 TODO IN 3.8
 --------------
+Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
+Select music folder / playlist folder in Windows installer.
 Add REST method to create/update users.
 Nightly build.
 Add links to Facebook group from home page and Help page.
@@ -43,6 +45,7 @@ Bugfix: Fixed broken Discogs image search.
 New: Improved Dutch translation, courtesy of Sander van der Grind.
 New: Avoid problems when upgrading stand-alone version.
 New: Improved German translation, courtesy of 3R3.
+New: Updated Slovenian translation, courtesy of Andrej Žižmond
 New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now playing".
 
 
