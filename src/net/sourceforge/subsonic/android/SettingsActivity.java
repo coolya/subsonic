@@ -1,48 +1,43 @@
 package net.sourceforge.subsonic.android;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.preference.CheckBoxPreference;
-import android.preference.PreferenceActivity;
-import android.preference.ListPreference;
 import android.preference.EditTextPreference;
-import net.sourceforge.subsonic.android.domain.Artist;
-import net.sourceforge.subsonic.android.service.MusicService;
-import net.sourceforge.subsonic.android.service.MusicServiceFactory;
-import net.sourceforge.subsonic.android.util.BackgroundTask;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
 
-import java.util.List;
-
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
 
-    /**
-     * Called when the activity is first created.
-     */
+    private static final String KEY_SERVER_URL = "serverUrl";
+    private static final String KEY_USERNAME = "username";
+
+    private EditTextPreference serverUrl;
+    private EditTextPreference username;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.settings);
-        SharedPreferences.Editor editor = getPreferenceScreen().getSharedPreferences().edit();
-        editor.putString("serverUrl", "http://gosubsonic.com");
-        editor.commit();
+        serverUrl = (EditTextPreference) findPreference(KEY_SERVER_URL);
+        username = (EditTextPreference) findPreference(KEY_USERNAME);
 
-        EditTextPreference serverUrl = (EditTextPreference) findPreference("serverUrl");
         serverUrl.setSummary(serverUrl.getText());
+        username.setSummary(username.getText());
 
-//        setContentView(R.layout.settings);
-//
-//        ListView settingsList = (ListView) findViewById(R.id.settings);
-//        settingsList.
-//        settingsList.setAdapter(new ArrayAdapter<Artist>(SelectArtistActivity.this, android.R.layout.simple_list_item_1, result));
+        serverUrl.setOnPreferenceChangeListener(this);
+        username.setOnPreferenceChangeListener(this);
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        String key = preference.getKey();
+        if (KEY_SERVER_URL.equals(key)) {
+            serverUrl.setSummary((CharSequence) newValue);
+        } else if (KEY_USERNAME.equals(key)) {
+            username.setSummary((CharSequence) newValue);
+        }
+        return true;
     }
 }
