@@ -28,6 +28,14 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(MainActivity.this, SelectArtistActivity.class));
             }
         });
+
+        Button settingsButton = (Button) findViewById(R.id.main_settings);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            }
+        });
     }
 
     @Override

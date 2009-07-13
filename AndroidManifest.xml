@@ -22,6 +22,9 @@
         <activity android:name="SelectAlbumActivity"
                   android:label="@string/select_album"/>
 
+        <activity android:name="SettingsActivity"
+                  android:label="Settings"/>
+
         <service android:name="DownloadService"
                  android:label="Download"/>
     </application>
