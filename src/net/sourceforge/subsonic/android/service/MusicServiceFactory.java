@@ -13,7 +13,7 @@ package net.sourceforge.subsonic.android.service;
 public class MusicServiceFactory {
 
 //    public static final MusicService MUSIC_SERVICE = new XMLMusicService(new MockMusicServiceDataSource());
-    public static final MusicService MUSIC_SERVICE = new CachedMusicService(new XMLMusicService(new HTTPMusicServiceDataSource(new MockSettingsService())));
+    public static final MusicService MUSIC_SERVICE = new CachedMusicService(new XMLMusicService(new HTTPMusicServiceDataSource()));
 //    public static final MusicService MUSIC_SERVICE = new XMLMusicService(new HTTPMusicServiceDataSource(new MockSettingsService()));
 
     public static MusicService getMusicService() {

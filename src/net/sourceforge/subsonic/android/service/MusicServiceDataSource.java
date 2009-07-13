@@ -22,10 +22,12 @@ import net.sourceforge.subsonic.android.util.ProgressListener;
 
 import java.io.Reader;
 
+import android.content.Context;
+
 /**
  * @author Sindre Mehus
  */
 public interface MusicServiceDataSource {
-    Reader getArtistsReader(ProgressListener progressListener) throws Exception;
-    Reader getMusicDirectoryReader(String path, ProgressListener progressListener) throws Exception;
+    Reader getArtistsReader(Context context, ProgressListener progressListener) throws Exception;
+    Reader getMusicDirectoryReader(String path, Context context, ProgressListener progressListener) throws Exception;
 }

@@ -30,7 +30,7 @@ public class SelectArtistActivity extends Activity implements AdapterView.OnItem
             @Override
             protected List<Artist> doInBackground() throws Throwable {
                 MusicService musicService = MusicServiceFactory.getMusicService();
-                return musicService.getArtists(this);
+                return musicService.getArtists(SelectArtistActivity.this, this);
             }
 
             @Override
@@ -45,7 +45,7 @@ public class SelectArtistActivity extends Activity implements AdapterView.OnItem
 
             @Override
             protected void cancel() {
-                MusicServiceFactory.getMusicService().cancel(this);
+                MusicServiceFactory.getMusicService().cancel(SelectArtistActivity.this, this);
                 finish();
             }
         };

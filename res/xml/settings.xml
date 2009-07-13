@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:a="http://schemas.android.com/apk/res/android"
-                  a:title="Subsonic settings">
+                  a:title="Subsonic settings" a:name="sdf">
 
     <EditTextPreference
             a:key="serverUrl"

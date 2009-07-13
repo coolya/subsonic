@@ -25,6 +25,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
+import android.content.Context;
+
 /**
  * @author Sindre Mehus
  */
@@ -62,12 +64,12 @@ public class MockMusicServiceDataSource implements MusicServiceDataSource {
                                                         "</directory>";
 
 
-    public Reader getArtistsReader(ProgressListener progressListener) throws Exception {
+    public Reader getArtistsReader(Context context, ProgressListener progressListener) throws Exception {
         Thread.sleep(500L);
         return createReader(INDEX_XML);
     }
 
-    public Reader getMusicDirectoryReader(String path, ProgressListener progressListener) throws Exception {
+    public Reader getMusicDirectoryReader(String path, Context context, ProgressListener progressListener) throws Exception {
         Thread.sleep(300L);
 
         if (path.equals("c:/music/abba")) {
