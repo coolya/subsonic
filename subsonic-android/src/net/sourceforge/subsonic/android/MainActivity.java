@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 
 public class MainActivity extends Activity {
 
@@ -17,6 +19,8 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 
         startService(new Intent(this, DownloadService.class));
         setContentView(R.layout.main);

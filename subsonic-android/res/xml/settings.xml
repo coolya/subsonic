@@ -6,18 +6,22 @@
     <EditTextPreference
             a:key="serverUrl"
             a:title="Server address"
-            a:summary="http://foo.bar.com"/>
+            a:defaultValue="http://gosubsonic.com"
+            />
 
     <EditTextPreference
             a:key="username"
             a:title="Username"
-            a:summary="looser"/>
+            a:defaultValue="android-guest"
+            />
 
     <EditTextPreference
             a:key="password"
-            a:password="true"
             a:title="Password"
-            a:summary="*****"/>
+            a:password="true"
+            a:defaultValue="guest"
+            a:summary="****"
+            />
 
     <!--<CheckBoxPreference-->
             <!--android:key="auto_time"-->
