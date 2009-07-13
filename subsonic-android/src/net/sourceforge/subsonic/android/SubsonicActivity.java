@@ -58,7 +58,7 @@ public class SubsonicActivity extends ListActivity {
     private void parse() {
         try {
             MusicService musicService = MusicServiceFactory.getMusicService();
-            List<Artist> artists = musicService.getArtists(null);
+            List<Artist> artists = musicService.getArtists(this, null);
             Log.i(TAG, "Found " + artists.size() + " artists.");
             for (Artist artist : artists) {
                 Log.i(TAG, artist.getName() + " - " + artist.getPath());

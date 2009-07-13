@@ -54,6 +54,8 @@ New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now
 
 ANDROID
 -------
+Use settings.
+Make MusicService a real service?
 Make download method take list of Entries.
 Create button bar near bottom, light background and icons.
 Insert in media store.

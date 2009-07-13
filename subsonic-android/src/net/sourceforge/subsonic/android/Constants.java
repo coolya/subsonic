@@ -18,6 +18,11 @@ public final class Constants {
     // Notification IDs.
     public static final int NOTIFICATION_ID_DOWNLOAD_QUEUE = 1;
 
+    // Settings keys.
+    public static final String SETTINGS_KEY_SERVER_URL = "serverUrl";
+    public static final String SETTINGS_KEY_USERNAME = "username";
+    public static final String SETTINGS_KEY_PASSWORD = "password";
+
     private Constants() {
     }
 }

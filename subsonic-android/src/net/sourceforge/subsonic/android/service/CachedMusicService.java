@@ -23,6 +23,7 @@ import java.util.List;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.domain.Artist;
 import net.sourceforge.subsonic.android.util.ProgressListener;
+import android.content.Context;
 
 /**
  * @author Sindre Mehus
@@ -40,23 +41,23 @@ public class CachedMusicService implements MusicService {
         cachedMusicDirectories = new LRUCache(CACHE_SIZE);
     }
 
-    public List<Artist> getArtists(ProgressListener progressListener) throws Exception {
+    public List<Artist> getArtists(Context context, ProgressListener progressListener) throws Exception {
         if (cachedArtists == null) {
-            cachedArtists = musicService.getArtists(progressListener);
+            cachedArtists = musicService.getArtists(context, progressListener);
         }
         return cachedArtists;
     }
 
-    public MusicDirectory getMusicDirectory(String path, ProgressListener progressListener) throws Exception {
+    public MusicDirectory getMusicDirectory(String path, Context context, ProgressListener progressListener) throws Exception {
         MusicDirectory dir = (MusicDirectory) cachedMusicDirectories.get(path);
         if (dir == null) {
-            dir = musicService.getMusicDirectory(path, progressListener);
+            dir = musicService.getMusicDirectory(path, context, progressListener);
             cachedMusicDirectories.put(path, dir);
         }
         return dir;
     }
 
-    public void cancel(ProgressListener progressListener) {
-        musicService.cancel(progressListener);
+    public void cancel(Context context, ProgressListener progressListener) {
+        musicService.cancel(context, progressListener);
     }
 }

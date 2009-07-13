@@ -23,15 +23,16 @@ import java.util.List;
 import net.sourceforge.subsonic.android.domain.Artist;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.util.ProgressListener;
+import android.content.Context;
 
 /**
  * @author Sindre Mehus
  */
 public interface MusicService {
 
-    List<Artist> getArtists(ProgressListener progressListener) throws Exception;
+    List<Artist> getArtists(Context context, ProgressListener progressListener) throws Exception;
 
-    MusicDirectory getMusicDirectory(String path, ProgressListener progressListener) throws Exception;
+    MusicDirectory getMusicDirectory(String path, Context context, ProgressListener progressListener) throws Exception;
 
-    void cancel(ProgressListener progressListener);
+    void cancel(Context context, ProgressListener progressListener);
 }

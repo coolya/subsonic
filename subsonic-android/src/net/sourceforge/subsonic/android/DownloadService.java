@@ -51,7 +51,6 @@ public class DownloadService extends Service {
     private final BlockingQueue<MusicDirectory.Entry> queue = new ArrayBlockingQueue<MusicDirectory.Entry>(10);
 
     public DownloadService() {
-        Log.i(TAG, "Constructor");
         new DownloadThread().start();
     }
 

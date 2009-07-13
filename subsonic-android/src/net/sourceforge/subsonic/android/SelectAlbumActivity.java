@@ -1,7 +1,5 @@
 package net.sourceforge.subsonic.android;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -19,6 +17,8 @@ import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.service.MusicService;
 import net.sourceforge.subsonic.android.service.MusicServiceFactory;
 import net.sourceforge.subsonic.android.util.BackgroundTask;
+
+import java.util.List;
 
 public class SelectAlbumActivity extends Activity implements AdapterView.OnItemClickListener {
 
@@ -71,14 +71,13 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
             }
         });
 
-        bindService(new Intent(this, DownloadService.class),
-                downloadServiceConnection, Context.BIND_AUTO_CREATE);
+        bindService(new Intent(this, DownloadService.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         BackgroundTask<MusicDirectory> task = new BackgroundTask<MusicDirectory>(this) {
             @Override
             protected MusicDirectory doInBackground() throws Throwable {
                 MusicService musicService = MusicServiceFactory.getMusicService();
                 String path = getIntent().getStringExtra(Constants.NAME_PATH);
-                return musicService.getMusicDirectory(path, this);
+                return musicService.getMusicDirectory(path, SelectAlbumActivity.this, this);
             }
 
             @Override
@@ -91,7 +90,7 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
 
             @Override
             protected void cancel() {
-                MusicServiceFactory.getMusicService().cancel(this);
+                MusicServiceFactory.getMusicService().cancel(SelectAlbumActivity.this, this);
                 finish();
             }
         };

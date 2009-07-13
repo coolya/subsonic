@@ -23,6 +23,7 @@ import android.app.ProgressDialog;
 import android.os.Handler;
 import android.widget.TextView;
 import android.content.DialogInterface;
+import android.util.Log;
 
 
 /**
@@ -30,6 +31,8 @@ import android.content.DialogInterface;
  */
 public abstract class BackgroundTask<T> implements ProgressListener {
 
+    private static final String TAG = BackgroundTask.class.getSimpleName();
+    
     private final Activity activity;
     private final Handler handler;
     private boolean cancelled;
@@ -101,6 +104,7 @@ public abstract class BackgroundTask<T> implements ProgressListener {
         TextView textView = new TextView(activity);
         textView.setText("An error occurred.\n" + error);
         activity.setContentView(textView);
+        Log.w(TAG, "An error occurred.", error);
     }
 
     @Override

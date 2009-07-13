@@ -9,9 +9,6 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
 
-    private static final String KEY_SERVER_URL = "serverUrl";
-    private static final String KEY_USERNAME = "username";
-
     private EditTextPreference serverUrl;
     private EditTextPreference username;
 
@@ -20,8 +17,8 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.settings);
-        serverUrl = (EditTextPreference) findPreference(KEY_SERVER_URL);
-        username = (EditTextPreference) findPreference(KEY_USERNAME);
+        serverUrl = (EditTextPreference) findPreference(Constants.SETTINGS_KEY_SERVER_URL);
+        username = (EditTextPreference) findPreference(Constants.SETTINGS_KEY_USERNAME);
 
         serverUrl.setSummary(serverUrl.getText());
         username.setSummary(username.getText());
@@ -33,9 +30,9 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         String key = preference.getKey();
-        if (KEY_SERVER_URL.equals(key)) {
+        if (Constants.SETTINGS_KEY_SERVER_URL.equals(key)) {
             serverUrl.setSummary((CharSequence) newValue);
-        } else if (KEY_USERNAME.equals(key)) {
+        } else if (Constants.SETTINGS_KEY_USERNAME.equals(key)) {
             username.setSummary((CharSequence) newValue);
         }
         return true;
