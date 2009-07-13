@@ -1,5 +1,7 @@
 package net.sourceforge.subsonic.android;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,20 +13,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Button;
+import android.widget.ListView;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.service.MusicService;
 import net.sourceforge.subsonic.android.service.MusicServiceFactory;
 import net.sourceforge.subsonic.android.util.BackgroundTask;
 
-import java.util.List;
-
-public class SelectAlbumActivity extends Activity implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
+public class SelectAlbumActivity extends Activity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private DownloadService downloadService;
+    private ListView albumList;
+    private ListView songList;
+    private Button downloadButton;
+    private Button selectAllButton;
+    private Button selectNoneButton;
 
     /**
      * Called when the activity is first created.
@@ -33,14 +38,41 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_album);
-        final ListView albumList = (ListView) findViewById(R.id.select_album_albums);
-        final ListView songList = (ListView) findViewById(R.id.select_album_songs);
-        albumList.setOnItemClickListener(SelectAlbumActivity.this);
-        songList.setOnItemSelectedListener(SelectAlbumActivity.this);
+
+        downloadButton = (Button) findViewById(R.id.select_album_download);
+        selectAllButton = (Button) findViewById(R.id.select_album_selectall);
+        selectNoneButton = (Button) findViewById(R.id.select_album_selectnone);
+        albumList = (ListView) findViewById(R.id.select_album_albums);
+        songList = (ListView) findViewById(R.id.select_album_songs);
+
+        albumList.setOnItemClickListener(this);
         songList.setItemsCanFocus(false);
+        songList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);// TODO:Specify in XML.
+        songList.setOnItemClickListener(this);
+
+        selectAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectAll(true);
+            }
+        });
+
+        selectNoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectAll(false);
+            }
+        });
+
+        downloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                download();
+            }
+        });
 
         bindService(new Intent(this, DownloadService.class),
-                    downloadServiceConnection, Context.BIND_AUTO_CREATE);
+                downloadServiceConnection, Context.BIND_AUTO_CREATE);
         BackgroundTask<MusicDirectory> task = new BackgroundTask<MusicDirectory>(this) {
             @Override
             protected MusicDirectory doInBackground() throws Throwable {
@@ -66,6 +98,13 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
         task.execute();
     }
 
+    private void selectAll(boolean selected) {
+        int count = songList.getCount();
+        for (int i = 0; i < count; i++) {
+            songList.setItemChecked(i, selected);
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -77,35 +116,35 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
         if (position >= 0) {
             MusicDirectory.Entry entry = (MusicDirectory.Entry) parent.getItemAtPosition(position);
             Log.d(TAG, entry + " clicked.");
+            // TODO: Use (view == albumList) instead?
             if (entry.isDirectory()) {
                 Intent intent = new Intent(this, SelectAlbumActivity.class);
                 intent.putExtra(Constants.NAME_PATH, entry.getPath());
                 startActivity(intent);
             } else {
-                download(entry);
+                int count = songList.getCount();
+                boolean checked = false;
+                for (int i = 0; i < count; i++) {
+                    if (songList.isItemChecked(i)) {
+                        checked = true;
+                        break;
+                    }
+                }
+                downloadButton.setEnabled(checked);
             }
         }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-        setDownloadButtonEnabled(true);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-        setDownloadButtonEnabled(false);
-    }
-
-    private void setDownloadButtonEnabled(boolean enabled) {
-        Button button = (Button) findViewById(R.id.select_album_download);
-        button.setEnabled(enabled);
-    }
-
-    private void download(MusicDirectory.Entry entry) {
+    private void download() {
         try {
             if (downloadService != null) {
-                downloadService.download(entry);
+                int count = songList.getCount();
+                for (int i = 0; i < count; i++) {
+                    if (songList.isItemChecked(i)) {
+                        MusicDirectory.Entry entry = (MusicDirectory.Entry) songList.getItemAtPosition(i);
+                        downloadService.download(entry);
+                    }
+                }
             } else {
                 Log.e(TAG, "Not connected to Download Service.");
             }
