@@ -46,13 +46,18 @@ public class ArtistParser extends AbstractParser {
 
         List<Artist> artists = new ArrayList<Artist>();
         int eventType;
+        String index = "#";
         do {
             eventType = parser.next();
             if (eventType == XmlPullParser.START_TAG) {
-                if ("artist".equals(parser.getName())) {
+                String name = parser.getName();
+                if ("index".equals(name)) {
+                    index = parser.getAttributeValue(null, "name");
+                } else if ("artist".equals(name)) {
                     Artist artist = new Artist();
                     artist.setName(parser.getAttributeValue(null, "name"));
                     artist.setPath(parser.getAttributeValue(null, "path"));
+                    artist.setIndex(index);
                     artists.add(artist);
 
                     if (progressListener != null && artists.size() % 10 == 0) {
