@@ -50,6 +50,7 @@ New: Improved Dutch translation, courtesy of Sander van der Grind.
 New: Avoid problems when upgrading stand-alone version.
 New: Improved German translation, courtesy of 3R3.
 New: Updated Slovenian translation, courtesy of Andrej éiûmond
+New: Added Finnish translation, courtesy of Reijo J‰‰rni
 New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now playing".
 
 
