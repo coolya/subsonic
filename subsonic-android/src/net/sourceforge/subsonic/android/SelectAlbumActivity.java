@@ -19,6 +19,7 @@ import net.sourceforge.subsonic.android.service.MusicServiceFactory;
 import net.sourceforge.subsonic.android.util.BackgroundTask;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class SelectAlbumActivity extends Activity implements AdapterView.OnItemClickListener {
 
@@ -118,7 +119,7 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
             // TODO: Use (view == albumList) instead?
             if (entry.isDirectory()) {
                 Intent intent = new Intent(this, SelectAlbumActivity.class);
-                intent.putExtra(Constants.NAME_PATH, entry.getPath());
+                intent.putExtra(Constants.NAME_PATH, entry.getId());
                 startActivity(intent);
             } else {
                 int count = songList.getCount();
@@ -137,13 +138,14 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
     private void download() {
         try {
             if (downloadService != null) {
+                List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>(10);
                 int count = songList.getCount();
                 for (int i = 0; i < count; i++) {
                     if (songList.isItemChecked(i)) {
-                        MusicDirectory.Entry entry = (MusicDirectory.Entry) songList.getItemAtPosition(i);
-                        downloadService.download(entry);
+                        songs.add((MusicDirectory.Entry) songList.getItemAtPosition(i));
                     }
                 }
+                downloadService.download(songs);
             } else {
                 Log.e(TAG, "Not connected to Download Service.");
             }

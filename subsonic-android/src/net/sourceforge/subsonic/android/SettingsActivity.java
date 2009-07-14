@@ -17,8 +17,8 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.settings);
-        serverUrl = (EditTextPreference) findPreference(Constants.SETTINGS_KEY_SERVER_URL);
-        username = (EditTextPreference) findPreference(Constants.SETTINGS_KEY_USERNAME);
+        serverUrl = (EditTextPreference) findPreference(Constants.PREFERENCES_KEY_SERVER_URL);
+        username = (EditTextPreference) findPreference(Constants.PREFERENCES_KEY_USERNAME);
 
         serverUrl.setSummary(serverUrl.getText());
         username.setSummary(username.getText());
@@ -30,9 +30,9 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         String key = preference.getKey();
-        if (Constants.SETTINGS_KEY_SERVER_URL.equals(key)) {
+        if (Constants.PREFERENCES_KEY_SERVER_URL.equals(key)) {
             serverUrl.setSummary((CharSequence) newValue);
-        } else if (Constants.SETTINGS_KEY_USERNAME.equals(key)) {
+        } else if (Constants.PREFERENCES_KEY_USERNAME.equals(key)) {
             username.setSummary((CharSequence) newValue);
         }
         return true;

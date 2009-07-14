@@ -1,5 +1,6 @@
 TODO IN 3.8
 --------------
+Show cover art in music player.
 Hide IPs from Subsonic Demo.
 Exclusion filter (*.svn, *.log, *.pun)
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
@@ -55,11 +56,13 @@ New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now
 ANDROID
 -------
 Use settings.
+Clear cache when server url changes.
+Show download queue and progress.
 Make MusicService a real service?
 Make download method take list of Entries.
 Create button bar near bottom, light background and icons.
 Insert in media store.
-Write to /sdcard/subsonic
+Write to /sdcard/subsonic.  Make configurable?
 Use id instead of path in xmls.
 Add icons to buttons.
 Hide buttons when not applicable.

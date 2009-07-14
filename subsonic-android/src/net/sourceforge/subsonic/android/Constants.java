@@ -17,11 +17,15 @@ public final class Constants {
 
     // Notification IDs.
     public static final int NOTIFICATION_ID_DOWNLOAD_QUEUE = 1;
+    public static final int NOTIFICATION_ID_DOWNLOAD_ERROR = 2;
 
-    // Settings keys.
-    public static final String SETTINGS_KEY_SERVER_URL = "serverUrl";
-    public static final String SETTINGS_KEY_USERNAME = "username";
-    public static final String SETTINGS_KEY_PASSWORD = "password";
+    // Preferences keys.
+    public static final String PREFERENCES_KEY_SERVER_URL = "serverUrl";
+    public static final String PREFERENCES_KEY_USERNAME = "username";
+    public static final String PREFERENCES_KEY_PASSWORD = "password";
+
+    // Name of the preferences file.
+    public static final String PREFERENCES_FILE_NAME = "net.sourceforge.subsonic.android_preferences";
 
     private Constants() {
     }

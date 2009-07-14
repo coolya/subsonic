@@ -28,8 +28,6 @@ public class MusicDirectory {
 
     private String name;
     private String longName;
-    private String path;
-    private String parentPath;
     private final List<Entry> children = new ArrayList<Entry>();
 
     public String getName() {
@@ -46,22 +44,6 @@ public class MusicDirectory {
 
     public void setLongName(String longName) {
         this.longName = longName;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getParentPath() {
-        return parentPath;
-    }
-
-    public void setParentPath(String parentPath) {
-        this.parentPath = parentPath;
     }
 
     public void addChild(Entry child) {
@@ -88,7 +70,7 @@ public class MusicDirectory {
 
     public static class Entry {
         private String name;
-        private String path;
+        private String id;
         private boolean directory;
         private String url;
         private String contentType;
@@ -102,12 +84,12 @@ public class MusicDirectory {
             this.name = name;
         }
 
-        public String getPath() {
-            return path;
+        public String getId() {
+            return id;
         }
 
-        public void setPath(String path) {
-            this.path = path;
+        public void setId(String id) {
+            this.id = id;
         }
 
         public boolean isDirectory() {

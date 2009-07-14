@@ -33,8 +33,8 @@ import android.content.SharedPreferences;
  * @author Sindre Mehus
  */
 public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
-    private static final String PREFERENCES_FILE_NAME = "net.sourceforge.subsonic.android_preferences";
 
+    @Override
     public Reader getArtistsReader(Context context, ProgressListener progressListener) throws Exception {
         String urlString = getBaseUrl(context) + "getIndexes.view?u=" + getUsername(context) + "&p=" + getPassword(context);
 
@@ -47,6 +47,7 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
         return new InputStreamReader(in);
     }
 
+    @Override
     public Reader getMusicDirectoryReader(String path, Context context, ProgressListener progressListener) throws Exception {
         String urlString = getBaseUrl(context) + "getMusicDirectory.view?pathUtf8Hex=" + path + "&u=" + getUsername(context) + "&p=" + getPassword(context);
 
@@ -65,19 +66,19 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
     }
 
     private String getUsername(Context context) {
-        return getSharedPreferences(context).getString(Constants.SETTINGS_KEY_USERNAME, null);
+        return getSharedPreferences(context).getString(Constants.PREFERENCES_KEY_USERNAME, null);
     }
 
     private String getPassword(Context context) {
-        return getSharedPreferences(context).getString(Constants.SETTINGS_KEY_PASSWORD, null);
+        return getSharedPreferences(context).getString(Constants.PREFERENCES_KEY_PASSWORD, null);
     }
 
     private SharedPreferences getSharedPreferences(Context context) {
-        return context.getSharedPreferences(PREFERENCES_FILE_NAME, 0);
+        return context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
     }
 
     private String getBaseUrl(Context context) {
-        String baseUrl = getSharedPreferences(context).getString(Constants.SETTINGS_KEY_SERVER_URL, null);
+        String baseUrl = getSharedPreferences(context).getString(Constants.PREFERENCES_KEY_SERVER_URL, null);
         if (!baseUrl.endsWith("/")) {
             baseUrl += "/";
         }
