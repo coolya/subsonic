@@ -25,6 +25,7 @@ public class Artist {
 
     private String name;
     private String path;
+    private String index;
 
     public String getName() {
         return name;
@@ -40,6 +41,14 @@ public class Artist {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 
     @Override
