@@ -40,6 +40,7 @@ public class SelectArtistActivity extends Activity implements AdapterView.OnItem
                 listView.setAdapter(new ArrayAdapter<Artist>(SelectArtistActivity.this, android.R.layout.simple_list_item_1, result));
                 listView.setTextFilterEnabled(true);
                 listView.setOnItemClickListener(SelectArtistActivity.this);
+                listView.setFastScrollEnabled(true);
                 setContentView(listView);
             }
 
