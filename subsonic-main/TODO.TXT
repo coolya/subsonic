@@ -55,7 +55,8 @@ New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now
 
 ANDROID
 -------
-Use settings.
+Fancy scroller, like in Music app.
+Add menu. (Go home, exit)
 Clear cache when server url changes.
 Show download queue and progress.
 Make MusicService a real service?

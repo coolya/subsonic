@@ -85,8 +85,7 @@ public class DownloadService extends Service {
             String title = "Download queue: " + pendingDownloadCount;
 
             // Set the icon, scrolling text and timestamp
-            // TODO: Change icon.
-            final Notification notification = new Notification(android.R.drawable.ic_media_play, title, System.currentTimeMillis());
+            final Notification notification = new Notification(android.R.drawable.stat_sys_download, title, System.currentTimeMillis());
 
             // The PendingIntent to launch our activity if the user selects this notification
             // TODO
@@ -123,8 +122,7 @@ public class DownloadService extends Service {
 
 
         // Set the icon, scrolling text and timestamp
-        // TODO: Change icon.
-        final Notification notification = new Notification(android.R.drawable.ic_media_play, title, System.currentTimeMillis());
+        final Notification notification = new Notification(android.R.drawable.stat_sys_warning, title, System.currentTimeMillis());
 
         // The PendingIntent to launch our activity if the user selects this notification
         // TODO
@@ -135,6 +133,7 @@ public class DownloadService extends Service {
         handler.post(new Runnable() {
             @Override
             public void run() {
+                // TODO: Use unique ID?
                 notificationManager.notify(Constants.NOTIFICATION_ID_DOWNLOAD_ERROR, notification);
             }
         });
