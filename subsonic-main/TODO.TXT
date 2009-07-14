@@ -53,13 +53,15 @@ New: Updated Slovenian translation, courtesy of Andrej éiûmond
 New: Added Finnish translation, courtesy of Reijo J‰‰rni
 New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now playing".
 
-
 ANDROID
 -------
 Add menu. (Go home, exit)
+Create utility class for generating urls.
+Create REST method for cover art (and streaming).
 Clear cache when server url changes.
 Show download queue and progress.
 Make MusicService a real service?
+Add streaming button.
 Make download method take list of Entries.
 Create button bar near bottom, light background and icons.
 Insert in media store.
@@ -121,6 +123,7 @@ By default, create music folder for video.
 
 BACKLOG
 ==========================
+Simplify Media.  How does it avoid opening ports in router?
 Create Jing screencast.
 Specify upload directory per user. Option to delete files?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1710
 Coverflow, http://imageflow.finnrudolph.de/, http://sockso.pu-gh.com

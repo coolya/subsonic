@@ -40,6 +40,7 @@ import android.os.IBinder;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
+import android.net.Uri;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.util.Util;
 
@@ -155,16 +156,24 @@ public class DownloadService extends Service {
         if (!url.endsWith("/")) {
             url += "/";
         }
-        return url + "stream?pathUtf8Hex=" + song.getId();
+        return url + "coverArtView?pathUtf8Hex=" + song.getId();
+    }
+
+    private String getAlbumArtURL(MusicDirectory.Entry song) {
+// TODO
+        return "http://www.android.com/images/lil-developers.gif";
     }
 
     public class DownloadBinder extends Binder {
+
         public DownloadService getService() {
             return DownloadService.this;
         }
+
     }
 
     private class DownloadThread extends Thread {
+
         @Override
         public void run() {
             while (!isInterrupted()) {
@@ -189,12 +198,14 @@ public class DownloadService extends Service {
                 in = new URL(getDownloadURL(song)).openStream();
                 out = new FileOutputStream(file);
                 long n = Util.copy(in, out);
+                Log.i(TAG, "Downloaded " + n + " bytes to " + file);
 
                 out.flush();
                 out.close();
-                saveInMediaStore(song, file);
 
-                Log.i(TAG, "Downloaded " + n + " bytes to " + file);
+                File albumArtFile = downloadAlbumArt(song);
+                saveInMediaStore(song, file, albumArtFile);
+
                 Util.toast(DownloadService.this, handler, "Finished downloading \"" + song.getName() + "\".");
 
             } catch (Exception e) {
@@ -210,14 +221,36 @@ public class DownloadService extends Service {
             }
         }
 
-        private void saveInMediaStore(MusicDirectory.Entry song, File file) {
+        private File downloadAlbumArt(MusicDirectory.Entry song) {
+            InputStream in = null;
+            FileOutputStream out = null;
+            File file = null;
+            try {
+                file = File.createTempFile("subsonic", null);
+                in = new URL(getAlbumArtURL(song)).openStream();
+                out = new FileOutputStream(file);
+                Util.copy(in, out);
+            } catch (Exception e) {
+                Log.e(TAG, "Failed to download album art.", e);
+            } finally {
+                Util.close(in);
+                Util.close(out);
+            }
+            return file;
+        }
+
+        private void saveInMediaStore(MusicDirectory.Entry song, File songFile, File albumArtFile) {
             ContentValues values = new ContentValues();
 //                values.put(MediaStore.MediaColumns.DISPLAY_NAME, "foo");
             values.put(MediaStore.MediaColumns.TITLE, song.getName());
 //                values.put(MediaStore.Audio.AudioColumns.ARTIST, "John Doe");
 //                values.put(MediaStore.Audio.AudioColumns.ALBUM, "Pyromantikk");
-            values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());
+            values.put(MediaStore.MediaColumns.DATA, songFile.getAbsolutePath());
             values.put(MediaStore.MediaColumns.MIME_TYPE, song.getContentType());
+            if (albumArtFile != null && albumArtFile.exists()) {
+                values.put(MediaStore.Audio.AlbumColumns.ALBUM_ART, Uri.fromFile(albumArtFile).toString());
+            }
+
 //        values.put(MediaStore.Audio.AudioColumns.ARTIST, "Sindre");
 //        values.put(MediaStore.Audio.AudioColumns.ALBUM, "Pick");
 //        values.put(MediaStore.Audio.AudioColumns.DURATION, 15000L);
@@ -231,5 +264,6 @@ public class DownloadService extends Service {
             // insert() returns the URI of the new record.
             getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
         }
+
     }
 }
