@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import android.os.Handler;
+import android.widget.Toast;
+import android.content.Context;
+
 /**
  * @author Sindre Mehus
  * @version $Id$
@@ -51,4 +55,12 @@ public final class Util {
         }
     }
 
+    public static void toast(final Context context, Handler handler, final String message) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

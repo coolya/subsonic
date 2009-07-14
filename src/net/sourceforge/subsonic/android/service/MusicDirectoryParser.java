@@ -50,7 +50,7 @@ public class MusicDirectoryParser extends AbstractParser {
                 if ("child".equals(parser.getName())) {
                     MusicDirectory.Entry entry = new MusicDirectory.Entry();
                     entry.setName(parser.getAttributeValue(null, "name"));
-                    entry.setPath(parser.getAttributeValue(null, "path"));
+                    entry.setId(parser.getAttributeValue(null, "path"));
                     entry.setDirectory("true".equals(parser.getAttributeValue(null, "isDir")));
                     entry.setContentType(parser.getAttributeValue(null, "contentType"));
                     entry.setUrl(parser.getAttributeValue(null, "url"));
@@ -58,8 +58,6 @@ public class MusicDirectoryParser extends AbstractParser {
                 } else if ("directory".equals(parser.getName())) {
                     dir.setName(parser.getAttributeValue(null, "name"));
                     dir.setLongName(parser.getAttributeValue(null, "longName"));
-                    dir.setPath(parser.getAttributeValue(null, "path"));
-                    dir.setParentPath(parser.getAttributeValue(null, "parent"));
                 }
             }
         } while (eventType != XmlPullParser.END_DOCUMENT);
