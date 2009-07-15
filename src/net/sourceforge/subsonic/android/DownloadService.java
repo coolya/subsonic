@@ -32,15 +32,17 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
-import android.net.Uri;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.util.Util;
 
@@ -50,6 +52,8 @@ import net.sourceforge.subsonic.android.util.Util;
 public class DownloadService extends Service {
 
     private static final String TAG = DownloadService.class.getSimpleName();
+    private static final Uri ALBUM_ART_URI = Uri.parse("content://media/external/audio/albumart");
+
     private final IBinder binder = new DownloadBinder();
     private final Handler handler = new Handler();
     private final BlockingQueue<MusicDirectory.Entry> queue = new ArrayBlockingQueue<MusicDirectory.Entry>(10);
@@ -156,7 +160,7 @@ public class DownloadService extends Service {
         if (!url.endsWith("/")) {
             url += "/";
         }
-        return url + "coverArtView?pathUtf8Hex=" + song.getId();
+        return url + "stream?pathUtf8Hex=" + song.getId();
     }
 
     private String getAlbumArtURL(MusicDirectory.Entry song) {
@@ -203,9 +207,7 @@ public class DownloadService extends Service {
                 out.flush();
                 out.close();
 
-                File albumArtFile = downloadAlbumArt(song);
-                saveInMediaStore(song, file, albumArtFile);
-
+                saveInMediaStore(song, file);
                 Util.toast(DownloadService.this, handler, "Finished downloading \"" + song.getName() + "\".");
 
             } catch (Exception e) {
@@ -239,31 +241,46 @@ public class DownloadService extends Service {
             return file;
         }
 
-        private void saveInMediaStore(MusicDirectory.Entry song, File songFile, File albumArtFile) {
+        private void saveInMediaStore(MusicDirectory.Entry song, File songFile) {
             ContentValues values = new ContentValues();
-//                values.put(MediaStore.MediaColumns.DISPLAY_NAME, "foo");
             values.put(MediaStore.MediaColumns.TITLE, song.getName());
-//                values.put(MediaStore.Audio.AudioColumns.ARTIST, "John Doe");
-//                values.put(MediaStore.Audio.AudioColumns.ALBUM, "Pyromantikk");
+            values.put(MediaStore.Audio.AudioColumns.ARTIST, song.getName());
+            values.put(MediaStore.Audio.AudioColumns.ALBUM, song.getName());
             values.put(MediaStore.MediaColumns.DATA, songFile.getAbsolutePath());
             values.put(MediaStore.MediaColumns.MIME_TYPE, song.getContentType());
-            if (albumArtFile != null && albumArtFile.exists()) {
-                values.put(MediaStore.Audio.AlbumColumns.ALBUM_ART, Uri.fromFile(albumArtFile).toString());
-            }
-
-//        values.put(MediaStore.Audio.AudioColumns.ARTIST, "Sindre");
-//        values.put(MediaStore.Audio.AudioColumns.ALBUM, "Pick");
-//        values.put(MediaStore.Audio.AudioColumns.DURATION, 15000L);
-//        values.put(MediaStore.Audio.AudioColumns.DATE_ADDED, System.currentTimeMillis() / 1000L);
-//        values.put(MediaStore.Audio.AudioColumns.IS_ALARM, 0);
             values.put(MediaStore.Audio.AudioColumns.IS_MUSIC, 1);
-//        values.put(MediaStore.Audio.AudioColumns.IS_NOTIFICATION, 0);
-//        values.put(MediaStore.Audio.AudioColumns.IS_RINGTONE, 0);
 
-            // Add a new record without the bitmap, but with the values just set.
-            // insert() returns the URI of the new record.
-            getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
+            ContentResolver contentResolver = getContentResolver();
+            Uri uri = contentResolver.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
+
+            // Look up album, and add cover art if found.
+            Cursor cursor = contentResolver.query(uri, new String[]{MediaStore.Audio.AudioColumns.ALBUM_ID}, null, null, null);
+            if (cursor.moveToFirst()) {
+                int albumId = cursor.getInt(0);
+                insertAlbumArt(albumId, song);
+            }
+            cursor.close();
         }
 
+        private void insertAlbumArt(int albumId, MusicDirectory.Entry song) {
+            ContentResolver contentResolver = getContentResolver();
+
+            Cursor cursor = contentResolver.query(Uri.withAppendedPath(ALBUM_ART_URI, String.valueOf(albumId)), null, null, null, null);
+            if (!cursor.moveToFirst()) {
+
+                // No album art found, add it.
+                File albumArtFile = downloadAlbumArt(song);
+                if (albumArtFile == null) {
+                    return;
+                }
+
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Audio.AlbumColumns.ALBUM_ID, albumId);
+                values.put(MediaStore.MediaColumns.DATA, albumArtFile.getPath());
+                contentResolver.insert(ALBUM_ART_URI, values);
+                Log.i(TAG, "Added album art: " + albumArtFile);
+            }
+            cursor.close();
+        }
     }
 }
