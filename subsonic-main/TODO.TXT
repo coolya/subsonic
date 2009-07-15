@@ -1,6 +1,6 @@
 TODO IN 3.8
 --------------
-Show cover art in music player.
+Use jFLAC to parse FLAC tags.
 Hide IPs from Subsonic Demo.
 Exclusion filter (*.svn, *.log, *.pun)
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
@@ -55,17 +55,15 @@ New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now
 
 ANDROID
 -------
+Show temporary download complete status notification.
 Add menu. (Go home, exit)
 Create utility class for generating urls.
-Create REST method for cover art (and streaming).
+Create REST method for cover art (and streaming?).
 Clear cache when server url changes.
 Show download queue and progress.
 Make MusicService a real service?
 Add streaming button.
-Make download method take list of Entries.
 Create button bar near bottom, light background and icons.
-Insert in media store.
-Write to /sdcard/subsonic.  Make configurable?
 Use id instead of path in xmls.
 Add icons to buttons.
 Hide buttons when not applicable.
@@ -74,7 +72,6 @@ ListView with two rows and icon.
 ListView with checkboxes.
 DownloadService. Show toast + notification
 Clean up thread in DownloadService.onDestroy().
-Show album art.
 http://blog.pocketjourney.com/2008/04/04/tutorial-custom-media-streaming-for-androids-mediaplayer/
 Run DownloadService in separate process?
 Handle IO errors in DownloadService.

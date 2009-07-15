@@ -40,6 +40,7 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
@@ -60,9 +61,23 @@ public class DownloadService extends Service {
 
     private final AtomicInteger pendingDownloadCount = new AtomicInteger();
     private final AtomicReference<MusicDirectory.Entry> currentDownload = new AtomicReference<MusicDirectory.Entry>();
+    private final File musicDir;
+    private final File albumArtDir;
 
     public DownloadService() {
         new DownloadThread().start();
+
+        File subsonicDir = new File(Environment.getExternalStorageDirectory(), "subsonic");
+        musicDir = new File(subsonicDir, "music");
+        albumArtDir = new File(subsonicDir, "albumart");
+
+        if (!musicDir.exists() && !musicDir.mkdirs()) {
+            Log.e(TAG, "Failed to create " + musicDir);
+        }
+        if (!albumArtDir.exists() && !albumArtDir.mkdirs()) {
+            Log.e(TAG, "Failed to create " + albumArtDir);
+        }
+
     }
 
     public void download(List<MusicDirectory.Entry> songs) {
@@ -198,7 +213,7 @@ public class DownloadService extends Service {
             InputStream in = null;
             FileOutputStream out = null;
             try {
-                File file = File.createTempFile("subsonic", "." + song.getSuffix());
+                File file = new File(musicDir, song.getId() + "." + song.getSuffix());
                 in = new URL(getDownloadURL(song)).openStream();
                 out = new FileOutputStream(file);
                 long n = Util.copy(in, out);
@@ -228,7 +243,7 @@ public class DownloadService extends Service {
             FileOutputStream out = null;
             File file = null;
             try {
-                file = File.createTempFile("subsonic", null);
+                file = new File(albumArtDir, song.getId());
                 in = new URL(getAlbumArtURL(song)).openStream();
                 out = new FileOutputStream(file);
                 Util.copy(in, out);

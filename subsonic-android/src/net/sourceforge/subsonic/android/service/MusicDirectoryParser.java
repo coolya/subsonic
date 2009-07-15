@@ -53,7 +53,6 @@ public class MusicDirectoryParser extends AbstractParser {
                     entry.setId(parser.getAttributeValue(null, "path"));
                     entry.setDirectory("true".equals(parser.getAttributeValue(null, "isDir")));
                     entry.setContentType(parser.getAttributeValue(null, "contentType"));
-                    entry.setUrl(parser.getAttributeValue(null, "url"));
                     dir.addChild(entry);
                 } else if ("directory".equals(parser.getName())) {
                     dir.setName(parser.getAttributeValue(null, "name"));
