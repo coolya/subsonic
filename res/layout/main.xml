@@ -12,7 +12,7 @@
             a:drawableLeft="@android:drawable/ic_menu_view"
             a:drawablePadding="20dp"
             a:gravity="left|center_vertical"
-            a:textSize="20dp"
+            a:textAppearance="?android:attr/textAppearanceLarge"
             a:text="Browse music"/>
 
     <Button
@@ -22,7 +22,7 @@
             a:drawableLeft="@android:drawable/ic_menu_preferences"
             a:drawablePadding="20dp"
             a:gravity="left|center_vertical"
-            a:textSize="20dp"
+            a:textAppearance="?android:attr/textAppearanceLarge"
             a:text="Settings"/>
 
 </LinearLayout>
