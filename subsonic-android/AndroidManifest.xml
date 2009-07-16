@@ -6,7 +6,7 @@
 
     <uses-permission a:name="android.permission.INTERNET"/>
 
-    <application a:label="Subsonic" a:icon="@drawable/subsonic_48">
+    <application a:label="Subsonic" a:icon="@drawable/launch">
 
         <activity a:name="MainActivity"
                   a:label="Subsonic">
