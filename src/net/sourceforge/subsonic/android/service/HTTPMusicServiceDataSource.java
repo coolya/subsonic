@@ -44,7 +44,7 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
         }
 
         InputStream in = url.openStream();
-        return new InputStreamReader(in);
+        return new InputStreamReader(in, "UTF-8");
     }
 
     @Override
@@ -62,7 +62,7 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
         }
 
         InputStream in = url.openStream();
-        return new InputStreamReader(in);
+        return new InputStreamReader(in, "UTF-8");
     }
 
     private String getUsername(Context context) {

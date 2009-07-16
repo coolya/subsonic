@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
               a:orientation="vertical"
+              a:gravity="center_vertical"
               a:layout_width="fill_parent"
               a:layout_height="fill_parent">
 
@@ -8,12 +9,20 @@
             a:id="@+id/main_browse"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
+            a:drawableLeft="@android:drawable/ic_menu_view"
+            a:drawablePadding="20dp"
+            a:gravity="left|center_vertical"
+            a:textSize="20dp"
             a:text="Browse music"/>
 
     <Button
             a:id="@+id/main_settings"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
+            a:drawableLeft="@android:drawable/ic_menu_preferences"
+            a:drawablePadding="20dp"
+            a:gravity="left|center_vertical"
+            a:textSize="20dp"
             a:text="Settings"/>
 
 </LinearLayout>

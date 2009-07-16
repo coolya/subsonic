@@ -180,7 +180,7 @@ public class DownloadService extends Service {
 
     private String getAlbumArtURL(MusicDirectory.Entry song) {
 // TODO
-        return "http://www.android.com/images/lil-developers.gif";
+        return "http://upload.wikimedia.org/wikipedia/en/7/7b/Journal_for_Plague_Lovers_album_cover.jpg";
     }
 
     public class DownloadBinder extends Binder {
@@ -259,8 +259,8 @@ public class DownloadService extends Service {
         private void saveInMediaStore(MusicDirectory.Entry song, File songFile) {
             ContentValues values = new ContentValues();
             values.put(MediaStore.MediaColumns.TITLE, song.getName());
-            values.put(MediaStore.Audio.AudioColumns.ARTIST, song.getName());
-            values.put(MediaStore.Audio.AudioColumns.ALBUM, song.getName());
+            values.put(MediaStore.Audio.AudioColumns.ARTIST, "Manic Street Preachers");
+            values.put(MediaStore.Audio.AudioColumns.ALBUM, "Journal For Plague Lovers");
             values.put(MediaStore.MediaColumns.DATA, songFile.getAbsolutePath());
             values.put(MediaStore.MediaColumns.MIME_TYPE, song.getContentType());
             values.put(MediaStore.Audio.AudioColumns.IS_MUSIC, 1);
