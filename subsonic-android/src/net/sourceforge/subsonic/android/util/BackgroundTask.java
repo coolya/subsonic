@@ -20,10 +20,13 @@ package net.sourceforge.subsonic.android.util;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.app.Dialog;
 import android.os.Handler;
 import android.widget.TextView;
+import android.widget.ImageView;
 import android.content.DialogInterface;
 import android.util.Log;
+import net.sourceforge.subsonic.android.R;
 
 
 /**
@@ -32,18 +35,20 @@ import android.util.Log;
 public abstract class BackgroundTask<T> implements ProgressListener {
 
     private static final String TAG = BackgroundTask.class.getSimpleName();
-    
+
     private final Activity activity;
     private final Handler handler;
+    private final Dialog progressDialog;
     private boolean cancelled;
-    private ProgressDialog progressDialog;
 
     public BackgroundTask(Activity activity) {
         this.activity = activity;
         handler = new Handler();
-        progressDialog = new ProgressDialog(activity);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Loading. Please wait..");
+        progressDialog = new Dialog(activity);
+
+        progressDialog.setContentView(R.layout.progress);
+        progressDialog.setTitle("Please wait...");
+        progressDialog.setOwnerActivity(activity);
         progressDialog.setCancelable(true);
         progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
@@ -112,9 +117,8 @@ public abstract class BackgroundTask<T> implements ProgressListener {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                progressDialog.setMessage(message);
-//                TextView textView = (TextView) activity.findViewById(R.id.progress_text);
-//                textView.setText(message);
+                TextView text = (TextView) progressDialog.findViewById(R.id.progress_message);
+                text.setText(message);
             }
         });
     }
