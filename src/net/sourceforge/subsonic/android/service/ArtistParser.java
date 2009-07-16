@@ -62,10 +62,6 @@ public class ArtistParser extends AbstractParser {
 
                     if (progressListener != null && artists.size() % 10 == 0) {
                         progressListener.updateProgress("Got " + artists.size() + " artists.");
-
-                        // TODO: REMOVE!!
-                        Log.i(TAG, "****************************** SLEEPING");
-                        Thread.sleep(300);
                     }
                 }
             }

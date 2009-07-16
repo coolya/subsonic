@@ -14,6 +14,7 @@ public final class Constants {
 
     // Intent names.
     public static final String NAME_PATH = "subsonic.path";
+    public static final String NAME_NAME = "subsonic.name";
 
     // Notification IDs.
     public static final int NOTIFICATION_ID_DOWNLOAD_QUEUE = 1;
