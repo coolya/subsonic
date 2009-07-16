@@ -64,6 +64,7 @@ public class SelectArtistActivity extends Activity implements AdapterView.OnItem
             Log.d(TAG, artist + " clicked.");
             Intent intent = new Intent(this, SelectAlbumActivity.class);
             intent.putExtra(Constants.NAME_PATH, artist.getPath());
+            intent.putExtra(Constants.NAME_NAME, artist.getName());
             startActivity(intent);
         }
     }

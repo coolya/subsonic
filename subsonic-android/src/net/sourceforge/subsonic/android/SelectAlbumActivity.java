@@ -39,6 +39,7 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_album);
+        setTitle(getIntent().getStringExtra(Constants.NAME_NAME));
 
         downloadButton = (Button) findViewById(R.id.select_album_download);
         selectAllButton = (Button) findViewById(R.id.select_album_selectall);
@@ -120,6 +121,7 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
             if (entry.isDirectory()) {
                 Intent intent = new Intent(this, SelectAlbumActivity.class);
                 intent.putExtra(Constants.NAME_PATH, entry.getId());
+                intent.putExtra(Constants.NAME_NAME, entry.getName());
                 startActivity(intent);
             } else {
                 int count = songList.getCount();
