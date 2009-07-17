@@ -1,6 +1,6 @@
 TODO IN 3.8
 --------------
-Use jFLAC to parse FLAC tags.
+http://www.jthink.net/jaudiotagger/index.jsp
 Hide IPs from Subsonic Demo.
 Exclusion filter (*.svn, *.log, *.pun)
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
@@ -56,7 +56,8 @@ New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now
 ANDROID
 -------
 Define schema.
-Show parent name in browse music title.
+Use preferences layout in SelectAlbumActivity.
+http://jsharkey.org/blog/2008/08/18/separating-lists-with-headers-in-android-09/
 Show temporary download complete status notification.
 Add menu. (Go home, exit)
 Create utility class for generating urls.
@@ -122,6 +123,7 @@ By default, create music folder for video.
 BACKLOG
 ==========================
 Simplify Media.  How does it avoid opening ports in router?
+Integration with Spotify/Despotify/Jotify.
 Create Jing screencast.
 Specify upload directory per user. Option to delete files?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1710
 Coverflow, http://imageflow.finnrudolph.de/, http://sockso.pu-gh.com

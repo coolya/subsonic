@@ -5,16 +5,8 @@
               a:layout_height="fill_parent">
 
 
-    <ListView a:id="@+id/select_album_albums"
+    <ListView a:id="@+id/select_album_entries"
               a:textFilterEnabled="true"
-              a:layout_width="fill_parent"
-              a:layout_height="0dip"
-              a:layout_weight="1.0"
-            />
-
-    <ListView a:id="@+id/select_album_songs"
-              a:textFilterEnabled="true"
-              a:choiceMode="multipleChoice"
               a:layout_width="fill_parent"
               a:layout_height="0dip"
               a:layout_weight="1.0"
@@ -26,7 +18,7 @@
                   a:layout_height="wrap_content"
                   a:gravity="center_horizontal"
                   a:paddingTop="10dip"
-                  >
+            >
 
         <Button a:id="@+id/select_album_selectall"
                 a:text="Select all"
