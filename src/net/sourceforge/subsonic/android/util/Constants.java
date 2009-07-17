@@ -12,9 +12,12 @@ package net.sourceforge.subsonic.android.util;
  */
 public final class Constants {
 
-    // Intent names.
-    public static final String NAME_PATH = "subsonic.path";
-    public static final String NAME_NAME = "subsonic.name";
+    // Intent actions.
+    public static final String INTENT_ACTION_DOWNLOAD_QUEUE = "net.sourceforge.subsonic.android.DOWNLOAD_QUEUE";
+
+    // Names for intent extras.
+    public static final String INTENT_EXTRA_NAME_PATH = "subsonic.path";
+    public static final String INTENT_EXTRA_NAME_NAME = "subsonic.name";
 
     // Notification IDs.
     public static final int NOTIFICATION_ID_DOWNLOAD_QUEUE = 1;

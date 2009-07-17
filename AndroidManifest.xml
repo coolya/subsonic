@@ -22,8 +22,13 @@
         <activity a:name=".activity.SelectAlbumActivity"
                   a:label="Browse music"/>
 
+        <activity a:name=".activity.DownloadQueueActivity"
+                  a:label="Download queue"
+                  a:launchMode="singleTask"/>
+
         <activity a:name=".activity.SettingsActivity"
-                  a:label="Settings"/>
+                  a:label="Settings"
+                  a:launchMode="singleTask"/>
 
         <service a:name=".service.DownloadService"
                  a:label="Download"/>
