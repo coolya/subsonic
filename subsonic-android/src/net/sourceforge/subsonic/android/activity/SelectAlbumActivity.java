@@ -20,13 +20,13 @@ import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
+import net.sourceforge.subsonic.android.R;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
+import net.sourceforge.subsonic.android.service.DownloadService;
 import net.sourceforge.subsonic.android.service.MusicService;
 import net.sourceforge.subsonic.android.service.MusicServiceFactory;
-import net.sourceforge.subsonic.android.service.DownloadService;
 import net.sourceforge.subsonic.android.util.BackgroundTask;
 import net.sourceforge.subsonic.android.util.Constants;
-import net.sourceforge.subsonic.android.R;
 
 public class SelectAlbumActivity extends Activity implements AdapterView.OnItemClickListener {
 
@@ -45,7 +45,7 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_album);
-        setTitle(getIntent().getStringExtra(Constants.NAME_NAME));
+        setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
 
         downloadButton = (Button) findViewById(R.id.select_album_download);
         selectAllButton = (Button) findViewById(R.id.select_album_selectall);
@@ -77,11 +77,15 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
         });
 
         bindService(new Intent(this, DownloadService.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
-        BackgroundTask<MusicDirectory> task = new BackgroundTask<MusicDirectory>(this) {
+        load();
+    }
+
+    private void load() {
+        new BackgroundTask<MusicDirectory>(SelectAlbumActivity.this) {
             @Override
             protected MusicDirectory doInBackground() throws Throwable {
                 MusicService musicService = MusicServiceFactory.getMusicService();
-                String path = getIntent().getStringExtra(Constants.NAME_PATH);
+                String path = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PATH);
                 return musicService.getMusicDirectory(path, SelectAlbumActivity.this, this);
             }
 
@@ -96,8 +100,7 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
                 MusicServiceFactory.getMusicService().cancel(SelectAlbumActivity.this, this);
                 finish();
             }
-        };
-        task.execute();
+        }.execute();
     }
 
     private void selectAll(boolean selected) {
@@ -120,8 +123,8 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
             Log.d(TAG, entry + " clicked.");
             if (entry.isDirectory()) {
                 Intent intent = new Intent(this, SelectAlbumActivity.class);
-                intent.putExtra(Constants.NAME_PATH, entry.getId());
-                intent.putExtra(Constants.NAME_NAME, entry.getName());
+                intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, entry.getId());
+                intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getName());
                 startActivity(intent);
             } else {
                 int count = entryList.getCount();
@@ -187,20 +190,16 @@ public class SelectAlbumActivity extends Activity implements AdapterView.OnItemC
             if (entry.isDirectory()) {
                 if (convertView != null && convertView instanceof TextView && !(convertView instanceof CheckedTextView)) {
                     view = (TextView) convertView;
-                    Log.i(TAG, "Reusing album view.");
                 } else {
                     view = (TextView) LayoutInflater.from(SelectAlbumActivity.this).inflate(
                             android.R.layout.simple_list_item_1, parent, false);
-                    Log.i(TAG, "Creating new album view.");
                 }
             } else {
                 if (convertView != null && convertView instanceof CheckedTextView) {
                     view = (TextView) convertView;
-                    Log.i(TAG, "Reusing song view.");
                 } else {
                     view = (TextView) LayoutInflater.from(SelectAlbumActivity.this).inflate(
                             android.R.layout.simple_list_item_multiple_choice, parent, false);
-                    Log.i(TAG, "Creating new song view.");
                 }
             }
 

@@ -47,6 +47,7 @@ import android.widget.Toast;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.util.Util;
 import net.sourceforge.subsonic.android.util.Constants;
+import net.sourceforge.subsonic.android.activity.DownloadQueueActivity;
 
 /**
  * @author Sindre Mehus
@@ -88,6 +89,12 @@ public class DownloadService extends Service {
         updateNotification();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         queue.addAll(songs);
+        broadcastChange();
+    }
+
+    private void broadcastChange() {
+        sendBroadcast(new Intent(Constants.INTENT_ACTION_DOWNLOAD_QUEUE));
+
     }
 
     private void updateNotification() {
@@ -110,7 +117,7 @@ public class DownloadService extends Service {
 
             // The PendingIntent to launch our activity if the user selects this notification
             // TODO
-            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, DownloadService.class), 0);
+            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, DownloadQueueActivity.class), 0);
 
             // Set the info for the views that show in the notification panel.
             MusicDirectory.Entry song = currentDownload.get();
@@ -147,7 +154,7 @@ public class DownloadService extends Service {
 
         // The PendingIntent to launch our activity if the user selects this notification
         // TODO
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, DownloadService.class), 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, DownloadQueueActivity.class), 0);
         notification.setLatestEventInfo(this, title, text, contentIntent);
 
         // Send the notification.
@@ -210,6 +217,7 @@ public class DownloadService extends Service {
             Log.i(TAG, "Starting to download " + song);
             currentDownload.set(song);
             updateNotification();
+            broadcastChange();
 
             InputStream in = null;
             FileOutputStream out = null;
