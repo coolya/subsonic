@@ -1,9 +1,11 @@
-package net.sourceforge.subsonic.android;
+package net.sourceforge.subsonic.android.activity;
 
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import net.sourceforge.subsonic.android.util.Constants;
+import net.sourceforge.subsonic.android.R;
 
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 

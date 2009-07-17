@@ -63,7 +63,7 @@ Add menu. (Go home, exit)
 Create utility class for generating urls.
 Create REST method for cover art (and streaming?).
 Clear cache when server url changes.
-Show download queue and progress.
+Show download queue and progress. Use broadcast notification?
 Make MusicService a real service?
 Add streaming button.
 Create button bar near bottom, light background and icons.
