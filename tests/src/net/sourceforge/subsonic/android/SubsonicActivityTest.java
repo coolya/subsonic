@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.android;
 
 import android.test.ActivityInstrumentationTestCase;
+import net.sourceforge.subsonic.android.activity.SubsonicActivity;
 
 /**
  * This is a simple framework for a test of an Application.  See

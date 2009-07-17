@@ -8,7 +8,7 @@
 
     <application a:label="Subsonic" a:icon="@drawable/launch">
 
-        <activity a:name="MainActivity"
+        <activity a:name=".activity.MainActivity"
                   a:label="Subsonic">
             <intent-filter>
                 <action a:name="android.intent.action.MAIN"/>
@@ -16,16 +16,16 @@
             </intent-filter>
         </activity>
 
-        <activity a:name="SelectArtistActivity"
+        <activity a:name=".activity.SelectArtistActivity"
                   a:label="Browse music"/>
 
-        <activity a:name="SelectAlbumActivity"
+        <activity a:name=".activity.SelectAlbumActivity"
                   a:label="Browse music"/>
 
-        <activity a:name="SettingsActivity"
+        <activity a:name=".activity.SettingsActivity"
                   a:label="Settings"/>
 
-        <service a:name="DownloadService"
+        <service a:name=".service.DownloadService"
                  a:label="Download"/>
 
     </application>

@@ -1,4 +1,4 @@
-package net.sourceforge.subsonic.android;
+package net.sourceforge.subsonic.android.activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,10 @@ import android.widget.TextView;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.service.MusicService;
 import net.sourceforge.subsonic.android.service.MusicServiceFactory;
+import net.sourceforge.subsonic.android.service.DownloadService;
 import net.sourceforge.subsonic.android.util.BackgroundTask;
+import net.sourceforge.subsonic.android.util.Constants;
+import net.sourceforge.subsonic.android.R;
 
 public class SelectAlbumActivity extends Activity implements AdapterView.OnItemClickListener {
 

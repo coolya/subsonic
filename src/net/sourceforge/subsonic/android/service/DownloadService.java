@@ -16,7 +16,7 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.android;
+package net.sourceforge.subsonic.android.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -46,6 +46,7 @@ import android.util.Log;
 import android.widget.Toast;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.util.Util;
+import net.sourceforge.subsonic.android.util.Constants;
 
 /**
  * @author Sindre Mehus

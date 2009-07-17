@@ -1,4 +1,4 @@
-package net.sourceforge.subsonic.android;
+package net.sourceforge.subsonic.android.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,8 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import net.sourceforge.subsonic.android.service.DownloadService;
+import net.sourceforge.subsonic.android.R;
 
 public class MainActivity extends Activity {
 

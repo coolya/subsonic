@@ -1,4 +1,4 @@
-package net.sourceforge.subsonic.android;
+package net.sourceforge.subsonic.android.activity;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -18,6 +18,7 @@ import net.sourceforge.subsonic.android.domain.Artist;
 import net.sourceforge.subsonic.android.service.MusicService;
 import net.sourceforge.subsonic.android.service.MusicServiceFactory;
 import net.sourceforge.subsonic.android.util.BackgroundTask;
+import net.sourceforge.subsonic.android.util.Constants;
 
 public class SelectArtistActivity extends Activity implements AdapterView.OnItemClickListener {
 

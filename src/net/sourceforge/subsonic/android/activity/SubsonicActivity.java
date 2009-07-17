@@ -1,4 +1,4 @@
-package net.sourceforge.subsonic.android;
+package net.sourceforge.subsonic.android.activity;
 
 import android.app.ListActivity;
 import android.content.ContentResolver;

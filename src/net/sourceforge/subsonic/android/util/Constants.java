@@ -4,7 +4,7 @@
  * the trade property of WesternGeco. Do not use, disclose, or reproduce
  * without the prior written permission of the owner.
  */
-package net.sourceforge.subsonic.android;
+package net.sourceforge.subsonic.android.util;
 
 /**
  * @author Sindre Mehus

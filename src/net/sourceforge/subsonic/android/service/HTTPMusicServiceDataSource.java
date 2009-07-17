@@ -19,7 +19,7 @@
 package net.sourceforge.subsonic.android.service;
 
 import net.sourceforge.subsonic.android.util.ProgressListener;
-import net.sourceforge.subsonic.android.Constants;
+import net.sourceforge.subsonic.android.util.Constants;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
