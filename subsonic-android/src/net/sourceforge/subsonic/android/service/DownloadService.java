@@ -102,6 +102,21 @@ public class DownloadService extends Service {
         return new ArrayList<MusicDirectory.Entry>(queue);
     }
 
+    public void remove(MusicDirectory.Entry song) {
+        if (queue.remove(song)) {
+            broadcastChange(true);
+        }
+        // TODO: Update pendingDownloadCount etc.
+        // TODO: Handle removal of current.
+    }
+
+    public void clear() {
+        queue.clear();
+        // TODO: Update pendingDownloadCount etc.
+        broadcastChange(true);
+        // TODO: Handle removal of current.
+    }
+
     /**
      * The pair of longs contains (number of bytes downloaded, number of bytes total).  The latter
      * may be null if unknown.
