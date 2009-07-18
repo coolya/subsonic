@@ -20,7 +20,7 @@ import net.sourceforge.subsonic.android.service.MusicServiceFactory;
 import net.sourceforge.subsonic.android.util.BackgroundTask;
 import net.sourceforge.subsonic.android.util.Constants;
 
-public class SelectArtistActivity extends Activity implements AdapterView.OnItemClickListener {
+public class SelectArtistActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = SelectArtistActivity.class.getSimpleName();
 
