@@ -93,6 +93,17 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             protected void done(MusicDirectory result) {
                 List<MusicDirectory.Entry> entries = result.getChildren();
                 entryList.setAdapter(new EntryAdapter(entries));
+
+                int visibility = View.GONE;
+                for (MusicDirectory.Entry entry : entries) {
+                    if (!entry.isDirectory()) {
+                        visibility = View.VISIBLE;
+                        break;
+                    }
+                }
+                downloadButton.setVisibility(visibility);
+                selectAllButton.setVisibility(visibility);
+                selectNoneButton.setVisibility(visibility);
             }
 
             @Override

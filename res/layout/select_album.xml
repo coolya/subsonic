@@ -22,16 +22,19 @@
 
         <Button a:id="@+id/select_album_selectall"
                 a:text="Select all"
+                a:visibility="gone"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
 
         <Button a:id="@+id/select_album_selectnone"
                 a:text="Select none"
+                a:visibility="gone"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
 
         <Button a:id="@+id/select_album_download"
                 a:text="Download"
+                a:visibility="gone"
                 a:enabled="false"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
