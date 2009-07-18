@@ -117,9 +117,12 @@ public class DownloadService extends Service {
         return new Pair<MusicDirectory.Entry, Pair<Long, Long>>(current, progress);
     }
 
-    private void broadcastChange(boolean progressChange) {
-        sendBroadcast(new Intent(progressChange ? Constants.INTENT_ACTION_DOWNLOAD_PROGRESS :
-                                 Constants.INTENT_ACTION_DOWNLOAD_QUEUE));
+    private void broadcastChange(boolean queueChange) {
+        if (queueChange) {
+            sendBroadcast(new Intent(Constants.INTENT_ACTION_DOWNLOAD_QUEUE));
+        }
+
+        sendBroadcast(new Intent(Constants.INTENT_ACTION_DOWNLOAD_PROGRESS));
     }
 
     private void updateNotification() {
@@ -242,7 +245,7 @@ public class DownloadService extends Service {
             Log.i(TAG, "Starting to download " + song);
             currentDownload.set(song);
             updateNotification();
-            broadcastChange(false);
+            broadcastChange(true);
 
             InputStream in = null;
             FileOutputStream out = null;
@@ -269,6 +272,8 @@ public class DownloadService extends Service {
                 Util.close(out);
                 pendingDownloadCount.decrementAndGet();
                 updateNotification();
+                currentDownload.set(null);
+                broadcastChange(true);
             }
         }
 
@@ -303,12 +308,12 @@ public class DownloadService extends Service {
                 currentProgress.addAndGet(n);
 
                 long now = System.currentTimeMillis();
-                if (now - lastBroadcast > 500L) {  // Only twice per second.
-                    broadcastChange(true);
+                if (now - lastBroadcast > 250L) {  // Only every so often.
+                    broadcastChange(false);
                     lastBroadcast = now;
                 }
             }
-            broadcastChange(true);
+            broadcastChange(false);
             return count;
         }
 

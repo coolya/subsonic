@@ -24,7 +24,7 @@ import java.util.Locale;
 public final class Util {
 
     private static final DecimalFormat GIGA_BYTE_FORMAT = new DecimalFormat("0.00 GB");
-    private static final DecimalFormat MEGA_BYTE_FORMAT = new DecimalFormat("0.0 MB");
+    private static final DecimalFormat MEGA_BYTE_FORMAT = new DecimalFormat("0.00 MB");
     private static final DecimalFormat KILO_BYTE_FORMAT = new DecimalFormat("0 KB");
 
     private Util() {
