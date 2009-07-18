@@ -15,15 +15,22 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ArrayAdapter;
 import net.sourceforge.subsonic.android.service.DownloadService;
 import net.sourceforge.subsonic.android.util.Constants;
+import net.sourceforge.subsonic.android.util.Pair;
+import net.sourceforge.subsonic.android.util.Util;
+import net.sourceforge.subsonic.android.domain.MusicDirectory;
+import net.sourceforge.subsonic.android.R;
+
+import java.util.List;
 
 public class DownloadQueueActivity extends Activity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = DownloadQueueActivity.class.getSimpleName();
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private DownloadService downloadService;
-    private ListView entryList;
+    private ListView listView;
     private Button downloadButton;
     private Button selectAllButton;
     private Button selectNoneButton;
@@ -36,19 +43,18 @@ public class DownloadQueueActivity extends Activity implements AdapterView.OnIte
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        textView = new TextView(this);
-        textView.setText("Halloen. ");
-        setContentView(textView);
-//        setContentView(R.layout.select_album);
+        setContentView(R.layout.download_queue);
+        textView = (TextView) findViewById(R.id.download_queue_text);
+
 //        setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
 
 //        downloadButton = (Button) findViewById(R.id.select_album_download);
 //        selectAllButton = (Button) findViewById(R.id.select_album_selectall);
 //        selectNoneButton = (Button) findViewById(R.id.select_album_selectnone);
-//        entryList = (ListView) findViewById(R.id.select_album_entries);
+        listView = (ListView) findViewById(R.id.download_queue_list);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-//        entryList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);// TODO:Specify in XML.
-//        entryList.setOnItemClickListener(this);
+//        listView.setOnItemClickListener(this);
 
 //        selectAllButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -66,10 +72,17 @@ public class DownloadQueueActivity extends Activity implements AdapterView.OnIte
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                downloadQueueChanged();
+                Log.i(TAG, "GOT BROADCAST " + intent);
+                boolean progressChanged = Constants.INTENT_ACTION_DOWNLOAD_PROGRESS.equals(intent.getAction());
+                if (progressChanged) {
+                    downloadProgressChanged();
+                } else {
+                    downloadQueueChanged();
+                }
             }
         };
         registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_DOWNLOAD_QUEUE));
+        registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_DOWNLOAD_PROGRESS));
     }
 
     @Override
@@ -79,8 +92,23 @@ public class DownloadQueueActivity extends Activity implements AdapterView.OnIte
     }
 
     private void downloadQueueChanged() {
-        Log.i(TAG, "GOT BROADCAST. " + System.identityHashCode(this));
-        textView.setText(textView.getText() + "BC ");
+        if (downloadService == null) {
+            return;
+        }
+
+        List<MusicDirectory.Entry> queue = downloadService.getQueue();
+        listView.setAdapter(new ArrayAdapter<MusicDirectory.Entry>(this, android.R.layout.simple_list_item_multiple_choice, queue));
+    }
+
+    private void downloadProgressChanged() {
+        if (downloadService == null) {
+            return;
+        }
+        Pair<MusicDirectory.Entry, Pair<Long,Long>> current = downloadService.getCurrent();
+        if (current != null) {
+            Long bytesDownloaded = current.getSecond().getFirst();
+            textView.setText(current.getFirst().getName() + " - " + Util.formatBytes(bytesDownloaded));
+        }
     }
 
     @Override
@@ -140,6 +168,8 @@ public class DownloadQueueActivity extends Activity implements AdapterView.OnIte
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             downloadService = ((DownloadService.DownloadBinder) service).getService();
             Log.i(TAG, "Connected to Download Service");
+            downloadQueueChanged();
+            downloadProgressChanged();
         }
 
         @Override

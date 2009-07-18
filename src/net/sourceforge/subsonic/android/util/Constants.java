@@ -6,6 +6,8 @@
  */
 package net.sourceforge.subsonic.android.util;
 
+import android.content.Intent;
+
 /**
  * @author Sindre Mehus
  * @version $Id$
@@ -14,6 +16,7 @@ public final class Constants {
 
     // Intent actions.
     public static final String INTENT_ACTION_DOWNLOAD_QUEUE = "net.sourceforge.subsonic.android.DOWNLOAD_QUEUE";
+    public static final String INTENT_ACTION_DOWNLOAD_PROGRESS = "net.sourceforge.subsonic.android.DOWNLOAD_PROGRESS";
 
     // Names for intent extras.
     public static final String INTENT_EXTRA_NAME_PATH = "subsonic.path";

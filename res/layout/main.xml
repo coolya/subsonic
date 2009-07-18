@@ -25,5 +25,15 @@
             a:textAppearance="?android:attr/textAppearanceLarge"
             a:text="Settings"/>
 
+    <Button
+            a:id="@+id/main_queue"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:drawableLeft="@android:drawable/ic_menu_gallery"
+            a:drawablePadding="20dp"
+            a:gravity="left|center_vertical"
+            a:textAppearance="?android:attr/textAppearanceLarge"
+            a:text="Download queue"/>
+
 </LinearLayout>
 
