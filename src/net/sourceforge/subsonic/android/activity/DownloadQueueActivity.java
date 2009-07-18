@@ -11,15 +11,19 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ArrayAdapter;
+import android.widget.TwoLineListItem;
+import android.widget.ProgressBar;
 import net.sourceforge.subsonic.android.service.DownloadService;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.Pair;
 import net.sourceforge.subsonic.android.util.Util;
+import net.sourceforge.subsonic.android.util.TwoLineListAdapter;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.R;
 
@@ -35,7 +39,8 @@ public class DownloadQueueActivity extends Activity implements AdapterView.OnIte
     private Button selectAllButton;
     private Button selectNoneButton;
     private BroadcastReceiver broadcastReceiver;
-    private TextView textView;
+    private TextView progressTextView;
+    private ProgressBar progressBar;
 
     /**
      * Called when the activity is first created.
@@ -44,15 +49,13 @@ public class DownloadQueueActivity extends Activity implements AdapterView.OnIte
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.download_queue);
-        textView = (TextView) findViewById(R.id.download_queue_text);
-
-//        setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
+        progressTextView = (TextView) findViewById(R.id.download_queue_progress_text);
+        progressBar = (ProgressBar) findViewById(R.id.download_queue_progress_bar);
 
 //        downloadButton = (Button) findViewById(R.id.select_album_download);
 //        selectAllButton = (Button) findViewById(R.id.select_album_selectall);
 //        selectNoneButton = (Button) findViewById(R.id.select_album_selectnone);
         listView = (ListView) findViewById(R.id.download_queue_list);
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
 //        listView.setOnItemClickListener(this);
 
@@ -97,7 +100,33 @@ public class DownloadQueueActivity extends Activity implements AdapterView.OnIte
         }
 
         List<MusicDirectory.Entry> queue = downloadService.getQueue();
-        listView.setAdapter(new ArrayAdapter<MusicDirectory.Entry>(this, android.R.layout.simple_list_item_multiple_choice, queue));
+        Pair<MusicDirectory.Entry, Pair<Long, Long>> current = downloadService.getCurrent();
+
+        if (current != null) {
+            queue.add(0, current.getFirst());
+
+            Long bytesTotal = current.getSecond().getSecond();
+            progressBar.setIndeterminate(bytesTotal != null);
+            if (bytesTotal != null) {
+                progressBar.setMax(bytesTotal.intValue());
+            }
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressTextView.setText("Download queue is empty");
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+
+        listView.setAdapter(new TwoLineListAdapter<MusicDirectory.Entry>(this, queue) {
+            @Override
+            protected String getFirstLine(MusicDirectory.Entry item) {
+                return item.getName();
+            }
+
+            @Override
+            protected String getSecondLine(MusicDirectory.Entry item) {
+                return "Send Away The Tigers - Manic Street Foo Bar Preachers\n4.55 MB"; //TODO
+            }
+        });
     }
 
     private void downloadProgressChanged() {
@@ -107,7 +136,11 @@ public class DownloadQueueActivity extends Activity implements AdapterView.OnIte
         Pair<MusicDirectory.Entry, Pair<Long,Long>> current = downloadService.getCurrent();
         if (current != null) {
             Long bytesDownloaded = current.getSecond().getFirst();
-            textView.setText(current.getFirst().getName() + " - " + Util.formatBytes(bytesDownloaded));
+            progressTextView.setText(current.getFirst().getName() + "\n" + "Downloaded " + Util.formatBytes(bytesDownloaded));
+
+            if (!progressBar.isIndeterminate()) {
+                progressBar.setProgress(bytesDownloaded.intValue());
+            }
         }
     }
 
@@ -178,4 +211,5 @@ public class DownloadQueueActivity extends Activity implements AdapterView.OnIte
             Log.i(TAG, "Disconnected from Download Service");
         }
     }
+
 }

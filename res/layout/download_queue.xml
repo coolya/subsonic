@@ -4,17 +4,24 @@
               a:layout_width="fill_parent"
               a:layout_height="fill_parent">
 
-    <TextView
-            a:id="@+id/download_queue_text"
-            a:layout_width="fill_parent"
-            a:layout_height="wrap_content"
-            />
+    <LinearLayout a:orientation="horizontal"
+                  a:layout_width="fill_parent"
+                  a:layout_height="wrap_content">
 
-    <ProgressBar
-            a:id="@+id/download_queue_progress"
-            a:layout_width="fill_parent"
-            a:layout_height="wrap_content"
-            />
+        <ProgressBar
+                a:id="@+id/download_queue_progress_bar"
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"
+                a:layout_gravity="center_vertical"
+                />
+        <TextView
+                a:id="@+id/download_queue_progress_text"
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"
+                a:gravity="center_vertical"
+                a:paddingLeft="10dip"
+                />
+    </LinearLayout>
 
     <ListView
             a:id="@+id/download_queue_list"
