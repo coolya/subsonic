@@ -41,6 +41,14 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             }
         });
+
+        Button queueButton = (Button) findViewById(R.id.main_queue);
+        queueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, DownloadQueueActivity.class));
+            }
+        });
     }
 
     @Override

@@ -21,12 +21,16 @@ package net.sourceforge.subsonic.android.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicLong;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -47,6 +51,7 @@ import android.widget.Toast;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.util.Util;
 import net.sourceforge.subsonic.android.util.Constants;
+import net.sourceforge.subsonic.android.util.Pair;
 import net.sourceforge.subsonic.android.activity.DownloadQueueActivity;
 
 /**
@@ -63,6 +68,7 @@ public class DownloadService extends Service {
 
     private final AtomicInteger pendingDownloadCount = new AtomicInteger();
     private final AtomicReference<MusicDirectory.Entry> currentDownload = new AtomicReference<MusicDirectory.Entry>();
+    private final AtomicLong currentProgress = new AtomicLong();
     private final File musicDir;
     private final File albumArtDir;
 
@@ -89,12 +95,31 @@ public class DownloadService extends Service {
         updateNotification();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         queue.addAll(songs);
-        broadcastChange();
+        broadcastChange(false);
     }
 
-    private void broadcastChange() {
-        sendBroadcast(new Intent(Constants.INTENT_ACTION_DOWNLOAD_QUEUE));
+    public List<MusicDirectory.Entry> getQueue() {
+        return new ArrayList<MusicDirectory.Entry>(queue);
+    }
 
+    /**
+     * The pair of longs contains (number of bytes downloaded, number of bytes total).  The latter
+     * may be null if unknown.
+     */
+    public Pair<MusicDirectory.Entry, Pair<Long,Long>> getCurrent() {
+        MusicDirectory.Entry current = this.currentDownload.get();
+        if (current == null) {
+            return null;
+        }
+
+        // TODO: Set total size.
+        Pair<Long, Long> progress = new Pair<Long, Long>(currentProgress.get(), null);
+        return new Pair<MusicDirectory.Entry, Pair<Long, Long>>(current, progress);
+    }
+
+    private void broadcastChange(boolean progressChange) {
+        sendBroadcast(new Intent(progressChange ? Constants.INTENT_ACTION_DOWNLOAD_PROGRESS :
+                                 Constants.INTENT_ACTION_DOWNLOAD_QUEUE));
     }
 
     private void updateNotification() {
@@ -217,7 +242,7 @@ public class DownloadService extends Service {
             Log.i(TAG, "Starting to download " + song);
             currentDownload.set(song);
             updateNotification();
-            broadcastChange();
+            broadcastChange(false);
 
             InputStream in = null;
             FileOutputStream out = null;
@@ -225,7 +250,7 @@ public class DownloadService extends Service {
                 File file = new File(musicDir, song.getId() + "." + song.getSuffix());
                 in = new URL(getDownloadURL(song)).openStream();
                 out = new FileOutputStream(file);
-                long n = Util.copy(in, out);
+                long n = copy(in, out);
                 Log.i(TAG, "Downloaded " + n + " bytes to " + file);
 
                 out.flush();
@@ -263,6 +288,28 @@ public class DownloadService extends Service {
                 Util.close(out);
             }
             return file;
+        }
+
+        public long copy(InputStream in, OutputStream out) throws IOException {
+            byte[] buffer = new byte[1024 * 16];
+            currentProgress.set(0L);
+            long count = 0;
+            int n;
+            long lastBroadcast = System.currentTimeMillis();
+
+            while ((n = in.read(buffer)) != -1) {
+                out.write(buffer, 0, n);
+                count += n;
+                currentProgress.addAndGet(n);
+
+                long now = System.currentTimeMillis();
+                if (now - lastBroadcast > 500L) {  // Only twice per second.
+                    broadcastChange(true);
+                    lastBroadcast = now;
+                }
+            }
+            broadcastChange(true);
+            return count;
         }
 
         private void saveInMediaStore(MusicDirectory.Entry song, File songFile) {

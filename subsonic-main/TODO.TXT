@@ -55,6 +55,8 @@ New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now
 
 ANDROID
 -------
+Change download notification to be similar to now playing. (Title, Album, Artist)
+In download queue activity: Show list with two lines, when clicking an item, show menu: "Remove this, Remove all".
 Define schema.
 Use preferences layout in SelectAlbumActivity.
 http://jsharkey.org/blog/2008/08/18/separating-lists-with-headers-in-android-09/
