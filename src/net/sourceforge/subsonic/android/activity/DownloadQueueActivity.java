@@ -1,9 +1,10 @@
 package net.sourceforge.subsonic.android.activity;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -11,21 +12,17 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.ArrayAdapter;
-import android.widget.TwoLineListItem;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import net.sourceforge.subsonic.android.R;
+import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.service.DownloadService;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.Pair;
-import net.sourceforge.subsonic.android.util.Util;
 import net.sourceforge.subsonic.android.util.TwoLineListAdapter;
-import net.sourceforge.subsonic.android.domain.MusicDirectory;
-import net.sourceforge.subsonic.android.R;
+import net.sourceforge.subsonic.android.util.Util;
 
 import java.util.List;
 
@@ -117,7 +114,7 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
         if (downloadService == null) {
             return;
         }
-        Pair<MusicDirectory.Entry, Pair<Long,Long>> current = downloadService.getCurrent();
+        Pair<MusicDirectory.Entry, Pair<Long, Long>> current = downloadService.getCurrent();
         if (current != null) {
             Long bytesDownloaded = current.getSecond().getFirst();
             progressTextView.setText(current.getFirst().getName() + "\n" + "Downloaded " + Util.formatBytes(bytesDownloaded));
@@ -137,32 +134,30 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (position >= 0) {
-            MusicDirectory.Entry entry = (MusicDirectory.Entry) parent.getItemAtPosition(position);
-            Log.d(TAG, entry + " clicked.");
+            final MusicDirectory.Entry song = (MusicDirectory.Entry) parent.getItemAtPosition(position);
+            Log.d(TAG, song + " clicked.");
 
+            final CharSequence[] items = {"Remove this song", "Remove all songs"};
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(song.getName());
+            builder.setItems(items, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    switch (item) {
+                        case 0:
+                            downloadService.remove(song);
+                            break;
+                        case 1:
+                            downloadService.clear();
+                            break;
+                        default:
+                            break;
+                    }
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
         }
     }
-
-    private void download() {
-//        try {
-//            if (downloadService != null) {
-//                List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>(10);
-//                int count = entryList.getCount();
-//                for (int i = 0; i < count; i++) {
-//                    if (entryList.isItemChecked(i)) {
-//                        songs.add((MusicDirectory.Entry) entryList.getItemAtPosition(i));
-//                    }
-//                }
-//                downloadService.download(songs);
-//            } else {
-//                Log.e(TAG, "Not connected to Download Service.");
-//            }
-//
-//        } catch (Exception e) {
-//            Log.e(TAG, "Failed to contact Download Service.");
-//        }
-    }
-
 
     private class DownloadServiceConnection implements ServiceConnection {
 
