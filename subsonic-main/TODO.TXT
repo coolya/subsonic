@@ -55,31 +55,20 @@ New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now
 
 ANDROID
 -------
-Simplify logic in DownloadService. Don't remove from queue until finished.
+Simplify logic in DownloadService. Don't remove from queue until finished. Remove pendingDownloadCount and currentDownload.
 Change download notification to be similar to now playing. (Title, Album, Artist)
-In download queue activity: Show list with two lines, when clicking an item, show menu: "Remove this, Remove all".
 Define schema.
-Use preferences layout in SelectAlbumActivity.
-http://jsharkey.org/blog/2008/08/18/separating-lists-with-headers-in-android-09/
 Show temporary download complete status notification.
-Add menu. (Go home, exit)
 Create utility class for generating urls.
 Create REST method for cover art (and streaming?).
 Clear cache when server url changes.
-Show download queue and progress. Use broadcast notification?
 Make MusicService a real service?
 Add streaming button.
-Create button bar near bottom, light background and icons.
 Use id instead of path in xmls.
 Add icons to buttons.
-Hide buttons when not applicable.
 Download git.
-ListView with two rows and icon.
-ListView with checkboxes.
-DownloadService. Show toast + notification
 Clean up thread in DownloadService.onDestroy().
 http://blog.pocketjourney.com/2008/04/04/tutorial-custom-media-streaming-for-androids-mediaplayer/
-Run DownloadService in separate process?
 Handle IO errors in DownloadService.
 
 LUCENE
