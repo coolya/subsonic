@@ -29,15 +29,12 @@ import net.sourceforge.subsonic.android.R;
 
 import java.util.List;
 
-public class DownloadQueueActivity extends Activity implements AdapterView.OnItemClickListener {
+public class DownloadQueueActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = DownloadQueueActivity.class.getSimpleName();
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private DownloadService downloadService;
     private ListView listView;
-    private Button downloadButton;
-    private Button selectAllButton;
-    private Button selectNoneButton;
     private BroadcastReceiver broadcastReceiver;
     private TextView progressTextView;
     private ProgressBar progressBar;
@@ -51,21 +48,9 @@ public class DownloadQueueActivity extends Activity implements AdapterView.OnIte
         setContentView(R.layout.download_queue);
         progressTextView = (TextView) findViewById(R.id.download_queue_progress_text);
         progressBar = (ProgressBar) findViewById(R.id.download_queue_progress_bar);
-
-//        downloadButton = (Button) findViewById(R.id.select_album_download);
-//        selectAllButton = (Button) findViewById(R.id.select_album_selectall);
-//        selectNoneButton = (Button) findViewById(R.id.select_album_selectnone);
         listView = (ListView) findViewById(R.id.download_queue_list);
 
-//        listView.setOnItemClickListener(this);
-
-//        selectAllButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                selectAll(true);
-//            }
-//        });
-
+        listView.setOnItemClickListener(this);
         bindService(new Intent(this, DownloadService.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
@@ -75,7 +60,6 @@ public class DownloadQueueActivity extends Activity implements AdapterView.OnIte
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.i(TAG, "GOT BROADCAST " + intent);
                 boolean progressChanged = Constants.INTENT_ACTION_DOWNLOAD_PROGRESS.equals(intent.getAction());
                 if (progressChanged) {
                     downloadProgressChanged();
@@ -124,7 +108,7 @@ public class DownloadQueueActivity extends Activity implements AdapterView.OnIte
 
             @Override
             protected String getSecondLine(MusicDirectory.Entry item) {
-                return "Send Away The Tigers - Manic Street Foo Bar Preachers\n4.55 MB"; //TODO
+                return "Send Away The Tigers - Manic Street Foo Bar Preachers (4.55 MB)"; //TODO
             }
         });
     }
@@ -152,26 +136,11 @@ public class DownloadQueueActivity extends Activity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        if (position >= 0) {
-//            MusicDirectory.Entry entry = (MusicDirectory.Entry) parent.getItemAtPosition(position);
-//            Log.d(TAG, entry + " clicked.");
-//            if (entry.isDirectory()) {
-//                Intent intent = new Intent(this, DownloadQueueActivity.class);
-//                intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, entry.getId());
-//                intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getName());
-//                startActivity(intent);
-//            } else {
-//                int count = entryList.getCount();
-//                boolean checked = false;
-//                for (int i = 0; i < count; i++) {
-//                    if (entryList.isItemChecked(i)) {
-//                        checked = true;
-//                        break;
-//                    }
-//                }
-//                downloadButton.setEnabled(checked);
-//            }
-//        }
+        if (position >= 0) {
+            MusicDirectory.Entry entry = (MusicDirectory.Entry) parent.getItemAtPosition(position);
+            Log.d(TAG, entry + " clicked.");
+
+        }
     }
 
     private void download() {

@@ -9,7 +9,8 @@
     <application a:label="Subsonic" a:icon="@drawable/launch">
 
         <activity a:name=".activity.MainActivity"
-                  a:label="Subsonic">
+                  a:label="Subsonic"
+                  a:launchMode="singleTask">
             <intent-filter>
                 <action a:name="android.intent.action.MAIN"/>
                 <category a:name="android.intent.category.LAUNCHER"/>

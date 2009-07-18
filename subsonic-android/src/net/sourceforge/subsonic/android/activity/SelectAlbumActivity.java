@@ -28,7 +28,7 @@ import net.sourceforge.subsonic.android.service.MusicServiceFactory;
 import net.sourceforge.subsonic.android.util.BackgroundTask;
 import net.sourceforge.subsonic.android.util.Constants;
 
-public class SelectAlbumActivity extends Activity implements AdapterView.OnItemClickListener {
+public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();

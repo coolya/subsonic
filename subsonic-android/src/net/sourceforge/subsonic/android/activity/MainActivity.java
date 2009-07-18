@@ -10,7 +10,7 @@ import android.preference.PreferenceManager;
 import net.sourceforge.subsonic.android.service.DownloadService;
 import net.sourceforge.subsonic.android.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends OptionsMenuActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
