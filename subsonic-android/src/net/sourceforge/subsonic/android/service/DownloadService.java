@@ -71,9 +71,11 @@ public class DownloadService extends Service {
     private final AtomicLong currentProgress = new AtomicLong();
     private final File musicDir;
     private final File albumArtDir;
+    private final DownloadService.DownloadThread downloadThread;
 
     public DownloadService() {
-        new DownloadThread().start();
+        downloadThread = new DownloadThread();
+        downloadThread.start();
 
         File subsonicDir = new File(Environment.getExternalStorageDirectory(), "subsonic");
         musicDir = new File(subsonicDir, "music");
@@ -152,22 +154,23 @@ public class DownloadService extends Service {
             });
         } else {
 
+            MusicDirectory.Entry song = currentDownload.get();
+            if (song == null) {
+                return;
+            }
+
             // Use the same text for the ticker and the expanded notification
-            String title = "Download queue: " + pendingDownloadCount;
+            String title = song.getName();
 
             // Set the icon, scrolling text and timestamp
             final Notification notification = new Notification(android.R.drawable.stat_sys_download, title, System.currentTimeMillis());
+            notification.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
 
             // The PendingIntent to launch our activity if the user selects this notification
-            // TODO
             PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, DownloadQueueActivity.class), 0);
 
-            // Set the info for the views that show in the notification panel.
-            MusicDirectory.Entry song = currentDownload.get();
-            String text = "Downloading";
-            if (song != null) {
-                text = "Downloading \"" + song.getName() + "\"";
-            }
+            // TODO: Use proper album/artist
+            String text = "Artist";
             notification.setLatestEventInfo(this, title, text, contentIntent);
 
             // Send the notification.

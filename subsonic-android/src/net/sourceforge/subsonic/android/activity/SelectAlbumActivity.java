@@ -119,6 +119,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         for (int i = 0; i < count; i++) {
             entryList.setItemChecked(i, selected);
         }
+        enableDownloadButton();
     }
 
     @Override
@@ -138,17 +139,21 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getName());
                 startActivity(intent);
             } else {
-                int count = entryList.getCount();
-                boolean checked = false;
-                for (int i = 0; i < count; i++) {
-                    if (entryList.isItemChecked(i)) {
-                        checked = true;
-                        break;
-                    }
-                }
-                downloadButton.setEnabled(checked);
+                enableDownloadButton();
             }
         }
+    }
+
+    private void enableDownloadButton() {
+        int count = entryList.getCount();
+        boolean checked = false;
+        for (int i = 0; i < count; i++) {
+            if (entryList.isItemChecked(i)) {
+                checked = true;
+                break;
+            }
+        }
+        downloadButton.setEnabled(checked);
     }
 
     private void download() {
