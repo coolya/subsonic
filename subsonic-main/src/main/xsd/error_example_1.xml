@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<subsonic-response xmlns="http://subsonic.sourceforge.net/restapi"
+                   status="failed">
+
+    <error code="10" message="Wrong username or password"/>
+
+</subsonic-response>

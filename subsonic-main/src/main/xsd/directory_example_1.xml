@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<subsonic-response xmlns="http://subsonic.sourceforge.net/restapi"
+                   status="ok">
+
+    <directory id="1" name="ABBA">
+        <child id="11" title="Arrival" isDir="true"/>
+        <child id="12" title="Super Trouper" isDir="true"/>
+    </directory>
+
+</subsonic-response>

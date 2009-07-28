@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<subsonic-response xmlns="http://subsonic.sourceforge.net/restapi"
+                   status="ok">
+
+    <indexes lastModified="237462836472342">
+        <index name="A">
+            <artist id="1" name="ABBA"/>
+            <artist id="2" name="Alanis Morisette"/>
+            <artist id="3" name="Alphaville"/>
+        </index>
+        <index name="B">
+            <artist name="Bob Dylan" id="4"/>
+        </index>
+    </indexes>
+
+</subsonic-response>
