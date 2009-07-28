@@ -18,20 +18,6 @@
  */
 package net.sourceforge.subsonic.android.service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.concurrent.atomic.AtomicLong;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -42,17 +28,29 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
+import net.sourceforge.subsonic.android.activity.DownloadQueueActivity;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
-import net.sourceforge.subsonic.android.util.Util;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.Pair;
-import net.sourceforge.subsonic.android.activity.DownloadQueueActivity;
+import net.sourceforge.subsonic.android.util.Util;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author Sindre Mehus
@@ -64,9 +62,8 @@ public class DownloadService extends Service {
 
     private final IBinder binder = new DownloadBinder();
     private final Handler handler = new Handler();
-    private final BlockingQueue<MusicDirectory.Entry> queue = new ArrayBlockingQueue<MusicDirectory.Entry>(10);
+    private final LinkedBlockingQueue<MusicDirectory.Entry> queue = new LinkedBlockingQueue<MusicDirectory.Entry>();
 
-    private final AtomicInteger pendingDownloadCount = new AtomicInteger();
     private final AtomicReference<MusicDirectory.Entry> currentDownload = new AtomicReference<MusicDirectory.Entry>();
     private final AtomicLong currentProgress = new AtomicLong();
     private final File musicDir;
@@ -92,8 +89,7 @@ public class DownloadService extends Service {
 
     public void download(List<MusicDirectory.Entry> songs) {
         String message = songs.size() == 1 ? "Added \"" + songs.get(0).getName() + "\" to download queue." :
-                "Added " + songs.size() + " songs to download queue.";
-        pendingDownloadCount.addAndGet(songs.size());
+                         "Added " + songs.size() + " songs to download queue.";
         updateNotification();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         queue.addAll(songs);
@@ -105,25 +101,24 @@ public class DownloadService extends Service {
     }
 
     public void remove(MusicDirectory.Entry song) {
-        if (queue.remove(song)) {
+        if (currentDownload.get() == song) {
+            downloadThread.interrupt();
+        } else if (queue.remove(song)) {
             broadcastChange(true);
         }
-        // TODO: Update pendingDownloadCount etc.
-        // TODO: Handle removal of current.
     }
 
     public void clear() {
         queue.clear();
-        // TODO: Update pendingDownloadCount etc.
+        downloadThread.interrupt();
         broadcastChange(true);
-        // TODO: Handle removal of current.
     }
 
     /**
      * The pair of longs contains (number of bytes downloaded, number of bytes total).  The latter
      * may be null if unknown.
      */
-    public Pair<MusicDirectory.Entry, Pair<Long,Long>> getCurrent() {
+    public Pair<MusicDirectory.Entry, Pair<Long, Long>> getCurrent() {
         MusicDirectory.Entry current = this.currentDownload.get();
         if (current == null) {
             return null;
@@ -145,7 +140,8 @@ public class DownloadService extends Service {
     private void updateNotification() {
         final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        if (pendingDownloadCount.get() == 0) {
+        MusicDirectory.Entry song = currentDownload.get();
+        if (song == null && queue.isEmpty()) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -154,7 +150,6 @@ public class DownloadService extends Service {
             });
         } else {
 
-            MusicDirectory.Entry song = currentDownload.get();
             if (song == null) {
                 return;
             }
@@ -249,26 +244,28 @@ public class DownloadService extends Service {
 
         @Override
         public void run() {
-            while (!isInterrupted()) {
+            while (true) {
                 try {
                     downloadToFile(queue.take());
                 } catch (InterruptedException x) {
-                    Log.i(TAG, "Download thread interrupted. Stopping.");
-                    return;
+                    Log.i(TAG, "Download thread interrupted. Continuing.");
                 }
             }
+//            Log.i(TAG, "Download thread exiting.");
         }
 
-        private void downloadToFile(final MusicDirectory.Entry song) {
+        private void downloadToFile(final MusicDirectory.Entry song) throws InterruptedException {
             Log.i(TAG, "Starting to download " + song);
+            currentProgress.set(0L);
             currentDownload.set(song);
             updateNotification();
             broadcastChange(true);
 
             InputStream in = null;
             FileOutputStream out = null;
+            File file = null;
             try {
-                File file = new File(musicDir, song.getId() + "." + song.getSuffix());
+                file = new File(musicDir, song.getId() + "." + song.getSuffix());
                 in = new URL(getDownloadURL(song)).openStream();
                 out = new FileOutputStream(file);
                 long n = copy(in, out);
@@ -281,16 +278,22 @@ public class DownloadService extends Service {
                 Util.toast(DownloadService.this, handler, "Finished downloading \"" + song.getName() + "\".");
 
             } catch (Exception e) {
+                Util.close(out);
+                if (file != null) {
+                    file.delete();
+                }
+                if (e instanceof InterruptedException) {
+                    throw (InterruptedException) e;
+                }
+
                 Log.e(TAG, "Failed to download stream.", e);
                 addErrorNotification(song, e);
                 Util.toast(DownloadService.this, handler, "Failed to download \"" + song.getName() + "\".");
-                // TODO: Show notification/toast.
             } finally {
                 Util.close(in);
                 Util.close(out);
-                pendingDownloadCount.decrementAndGet();
-                updateNotification();
                 currentDownload.set(null);
+                updateNotification();
                 broadcastChange(true);
             }
         }
@@ -313,14 +316,17 @@ public class DownloadService extends Service {
             return file;
         }
 
-        public long copy(InputStream in, OutputStream out) throws IOException {
+        private long copy(InputStream in, OutputStream out) throws IOException, InterruptedException {
             byte[] buffer = new byte[1024 * 16];
-            currentProgress.set(0L);
             long count = 0;
             int n;
             long lastBroadcast = System.currentTimeMillis();
 
             while ((n = in.read(buffer)) != -1) {
+                if (Thread.interrupted()) {
+                    throw new InterruptedException("Interrupted while downloading");
+                }
+
                 out.write(buffer, 0, n);
                 count += n;
                 currentProgress.addAndGet(n);
