@@ -46,7 +46,7 @@ Bugfix: Repeat now works properly in jukebox mode.
 Bugfix: Usernames can now contain white spaces and international characters.
 Bugfix: Allow alternate date format in Podcast episodes.
 Bugfix: Fixed broken Discogs image search.
-New: Improved Dutch translation, courtesy of Sander van der Grind.
+New: Updated Dutch translation, courtesy of Sander van der Grind and Jeremy Terpstra.
 New: Avoid problems when upgrading stand-alone version.
 New: Improved German translation, courtesy of 3R3.
 New: Updated Slovenian translation, courtesy of Andrej Žižmond
