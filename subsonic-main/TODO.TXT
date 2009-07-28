@@ -57,6 +57,7 @@ ANDROID
 -------
 Simplify logic in DownloadService. Don't remove from queue until finished. Remove pendingDownloadCount and currentDownload.
 Change download notification to be similar to now playing. (Title, Album, Artist)
+Proper display of download errors.
 Define schema.
 Show temporary download complete status notification.
 Create utility class for generating urls.
