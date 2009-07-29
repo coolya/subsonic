@@ -27,7 +27,6 @@ import java.util.List;
 public class MusicDirectory {
 
     private String name;
-    private String longName;
     private final List<Entry> children = new ArrayList<Entry>();
 
     public String getName() {
@@ -36,14 +35,6 @@ public class MusicDirectory {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLongName() {
-        return longName;
-    }
-
-    public void setLongName(String longName) {
-        this.longName = longName;
     }
 
     public void addChild(Entry child) {
@@ -69,20 +60,16 @@ public class MusicDirectory {
     }
 
     public static class Entry {
-        private String name;
         private String id;
         private boolean directory;
-        private String url;
+        private String title;
+        private String album;
+        private String artist;
         private String contentType;
         private String suffix;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
+        private String transcodedContentType;
+        private String transcodedSuffix;
+        private Long size;
 
         public String getId() {
             return id;
@@ -98,6 +85,30 @@ public class MusicDirectory {
 
         public void setDirectory(boolean directory) {
             this.directory = directory;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getAlbum() {
+            return album;
+        }
+
+        public void setAlbum(String album) {
+            this.album = album;
+        }
+
+        public String getArtist() {
+            return artist;
+        }
+
+        public void setArtist(String artist) {
+            this.artist = artist;
         }
 
         public String getContentType() {
@@ -116,9 +127,33 @@ public class MusicDirectory {
             this.suffix = suffix;
         }
 
+        public String getTranscodedContentType() {
+            return transcodedContentType;
+        }
+
+        public void setTranscodedContentType(String transcodedContentType) {
+            this.transcodedContentType = transcodedContentType;
+        }
+
+        public String getTranscodedSuffix() {
+            return transcodedSuffix;
+        }
+
+        public void setTranscodedSuffix(String transcodedSuffix) {
+            this.transcodedSuffix = transcodedSuffix;
+        }
+
+        public Long getSize() {
+            return size;
+        }
+
+        public void setSize(Long size) {
+            this.size = size;
+        }
+
         @Override
         public String toString() {
-            return name;
+            return title;
         }
     }
 }

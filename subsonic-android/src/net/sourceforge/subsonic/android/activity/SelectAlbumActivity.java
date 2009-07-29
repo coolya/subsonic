@@ -3,7 +3,6 @@ package net.sourceforge.subsonic.android.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -136,7 +135,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             if (entry.isDirectory()) {
                 Intent intent = new Intent(this, SelectAlbumActivity.class);
                 intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, entry.getId());
-                intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getName());
+                intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getTitle());
                 startActivity(intent);
             } else {
                 enableDownloadButton();
@@ -219,7 +218,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 }
             }
 
-            view.setText(entry.getName());
+            view.setText(entry.getTitle());
 
             return view;
         }

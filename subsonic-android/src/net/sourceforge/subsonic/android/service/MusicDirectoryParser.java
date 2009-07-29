@@ -49,14 +49,26 @@ public class MusicDirectoryParser extends AbstractParser {
             if (eventType == XmlPullParser.START_TAG) {
                 if ("child".equals(parser.getName())) {
                     MusicDirectory.Entry entry = new MusicDirectory.Entry();
-                    entry.setName(parser.getAttributeValue(null, "name"));
-                    entry.setId(parser.getAttributeValue(null, "path"));
+                    entry.setId(parser.getAttributeValue(null, "id"));
+                    entry.setTitle(parser.getAttributeValue(null, "title"));
                     entry.setDirectory("true".equals(parser.getAttributeValue(null, "isDir")));
-                    entry.setContentType(parser.getAttributeValue(null, "contentType"));
+
+                    if (!entry.isDirectory()) {
+                        entry.setAlbum(parser.getAttributeValue(null, "album"));
+                        entry.setArtist(parser.getAttributeValue(null, "artist"));
+                        entry.setContentType(parser.getAttributeValue(null, "contentType"));
+                        entry.setSuffix(parser.getAttributeValue(null, "suffix"));
+                        entry.setTranscodedContentType(parser.getAttributeValue(null, "transcodedContentType"));
+                        entry.setTranscodedSuffix(parser.getAttributeValue(null, "transcodedSuffix"));
+                        String size = parser.getAttributeValue(null, "size");
+                        if (size != null) {
+                            entry.setSize(Long.valueOf(size));
+                        }
+                    }
+
                     dir.addChild(entry);
                 } else if ("directory".equals(parser.getName())) {
                     dir.setName(parser.getAttributeValue(null, "name"));
-                    dir.setLongName(parser.getAttributeValue(null, "longName"));
                 }
             }
         } while (eventType != XmlPullParser.END_DOCUMENT);

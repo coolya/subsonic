@@ -88,7 +88,7 @@ public class DownloadService extends Service {
     }
 
     public void download(List<MusicDirectory.Entry> songs) {
-        String message = songs.size() == 1 ? "Added \"" + songs.get(0).getName() + "\" to download queue." :
+        String message = songs.size() == 1 ? "Added \"" + songs.get(0).getTitle() + "\" to download queue." :
                          "Added " + songs.size() + " songs to download queue.";
         updateNotification();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -155,7 +155,7 @@ public class DownloadService extends Service {
             }
 
             // Use the same text for the ticker and the expanded notification
-            String title = song.getName();
+            String title = song.getTitle();
 
             // Set the icon, scrolling text and timestamp
             final Notification notification = new Notification(android.R.drawable.stat_sys_download, title, System.currentTimeMillis());
@@ -182,7 +182,7 @@ public class DownloadService extends Service {
         final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         // Use the same text for the ticker and the expanded notification
-        String title = "Failed to download \"" + song.getName() + "\"";
+        String title = "Failed to download \"" + song.getTitle() + "\"";
 
         String text = error.getMessage();
         if (text == null) {
@@ -275,7 +275,7 @@ public class DownloadService extends Service {
                 out.close();
 
                 saveInMediaStore(song, file);
-                Util.toast(DownloadService.this, handler, "Finished downloading \"" + song.getName() + "\".");
+                Util.toast(DownloadService.this, handler, "Finished downloading \"" + song.getTitle() + "\".");
 
             } catch (Exception e) {
                 Util.close(out);
@@ -288,7 +288,7 @@ public class DownloadService extends Service {
 
                 Log.e(TAG, "Failed to download stream.", e);
                 addErrorNotification(song, e);
-                Util.toast(DownloadService.this, handler, "Failed to download \"" + song.getName() + "\".");
+                Util.toast(DownloadService.this, handler, "Failed to download \"" + song.getTitle() + "\".");
             } finally {
                 Util.close(in);
                 Util.close(out);
@@ -343,7 +343,7 @@ public class DownloadService extends Service {
 
         private void saveInMediaStore(MusicDirectory.Entry song, File songFile) {
             ContentValues values = new ContentValues();
-            values.put(MediaStore.MediaColumns.TITLE, song.getName());
+            values.put(MediaStore.MediaColumns.TITLE, song.getTitle());
             values.put(MediaStore.Audio.AudioColumns.ARTIST, "Manic Street Preachers");
             values.put(MediaStore.Audio.AudioColumns.ALBUM, "Journal For Plague Lovers");
             values.put(MediaStore.MediaColumns.DATA, songFile.getAbsolutePath());

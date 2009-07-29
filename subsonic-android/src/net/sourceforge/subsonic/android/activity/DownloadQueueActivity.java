@@ -100,7 +100,7 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
         listView.setAdapter(new TwoLineListAdapter<MusicDirectory.Entry>(this, queue) {
             @Override
             protected String getFirstLine(MusicDirectory.Entry item) {
-                return item.getName();
+                return item.getTitle();
             }
 
             @Override
@@ -117,7 +117,7 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
         Pair<MusicDirectory.Entry, Pair<Long, Long>> current = downloadService.getCurrent();
         if (current != null) {
             Long bytesDownloaded = current.getSecond().getFirst();
-            progressTextView.setText(current.getFirst().getName() + "\n" + "Downloaded " + Util.formatBytes(bytesDownloaded));
+            progressTextView.setText(current.getFirst().getTitle() + "\n" + "Downloaded " + Util.formatBytes(bytesDownloaded));
 
             if (!progressBar.isIndeterminate()) {
                 progressBar.setProgress(bytesDownloaded.intValue());
@@ -139,7 +139,7 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
 
             final CharSequence[] items = {"Remove this song", "Remove all songs"};
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(song.getName());
+            builder.setTitle(song.getTitle());
             builder.setItems(items, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int item) {
                     switch (item) {
