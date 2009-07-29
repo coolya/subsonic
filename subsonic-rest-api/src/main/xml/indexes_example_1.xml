@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <subsonic-response xmlns="http://subsonic.sourceforge.net/restapi"
-                   status="ok">
+                   status="ok" version="1.0.0">
 
     <indexes lastModified="237462836472342">
         <index name="A">

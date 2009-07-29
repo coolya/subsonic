@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<subsonic-response xmlns="http://subsonic.sourceforge.net/restapi"
+                   status="ok" version="1.0.0">
+
+    <directory id="11" name="Arrival">
+        <child id="111" title="Dancing Queen" isDir="false"
+               album="Arrival" artist="ABBA"
+               size="8421341" contentType="audio/mpeg" suffix="mp3"/>
+
+        <child id="112" title="Money, Money, Money" isDir="false"
+               album="Arrival" artist="ABBA"
+               size="4910028" contentType="audio/flac" suffix="flac"
+               transcodedContentType="audio/mpeg" transcodedSuffix="mp3"/>
+    </directory>
+
+</subsonic-response>
+

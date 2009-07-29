@@ -3,23 +3,31 @@
            xmlns:sub="http://subsonic.sourceforge.net/restapi"
            targetNamespace="http://subsonic.sourceforge.net/restapi"
            attributeFormDefault="unqualified"
-           elementFormDefault="qualified">
+           elementFormDefault="qualified"
+           version="1.0.0">
 
     <xs:element name="subsonic-response" type="sub:Response"/>
 
     <xs:complexType name="Response">
-        <xs:choice minOccurs="1" maxOccurs="1">
+        <xs:choice minOccurs="0" maxOccurs="1">
             <xs:element name="indexes" type="sub:Indexes" minOccurs="1" maxOccurs="1"/>
             <xs:element name="directory" type="sub:Directory" minOccurs="1" maxOccurs="1"/>
             <xs:element name="error" type="sub:Error" minOccurs="1" maxOccurs="1"/>
         </xs:choice>
         <xs:attribute name="status" type="sub:ResponseStatus" use="required"/>
+        <xs:attribute name="version" type="sub:Version" use="required"/>
     </xs:complexType>
 
     <xs:simpleType name="ResponseStatus">
         <xs:restriction base="xs:string">
             <xs:enumeration value="ok"/>
             <xs:enumeration value="failed"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Version">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d+\.\d+\.\d+"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -47,7 +55,6 @@
             <xs:element name="child" type="sub:Child" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:string" use="required"/>
-        <xs:attribute name="parentId" type="xs:string" use="optional"/>
         <xs:attribute name="name" type="xs:string" use="required"/>
     </xs:complexType>
 
@@ -57,9 +64,11 @@
         <xs:attribute name="title" type="xs:string" use="required"/>
         <xs:attribute name="album" type="xs:string" use="optional"/>
         <xs:attribute name="artist" type="xs:string" use="optional"/>
+        <xs:attribute name="size" type="xs:long" use="optional"/>
         <xs:attribute name="contentType" type="xs:string" use="optional"/>
         <xs:attribute name="suffix" type="xs:string" use="optional"/>
-        <xs:attribute name="size" type="xs:long" use="optional"/>
+        <xs:attribute name="transcodedContentType" type="xs:string" use="optional"/>
+        <xs:attribute name="transcodedSuffix" type="xs:string" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="Error">
