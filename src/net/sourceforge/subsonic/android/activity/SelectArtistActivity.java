@@ -5,7 +5,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,7 +63,7 @@ public class SelectArtistActivity extends OptionsMenuActivity implements Adapter
             Artist artist = (Artist) parent.getItemAtPosition(position);
             Log.d(TAG, artist + " clicked.");
             Intent intent = new Intent(this, SelectAlbumActivity.class);
-            intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, artist.getPath());
+            intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, artist.getId());
             intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, artist.getName());
             startActivity(intent);
         }

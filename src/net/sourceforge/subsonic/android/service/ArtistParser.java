@@ -55,8 +55,8 @@ public class ArtistParser extends AbstractParser {
                     index = parser.getAttributeValue(null, "name");
                 } else if ("artist".equals(name)) {
                     Artist artist = new Artist();
+                    artist.setId(parser.getAttributeValue(null, "id"));
                     artist.setName(parser.getAttributeValue(null, "name"));
-                    artist.setPath(parser.getAttributeValue(null, "path"));
                     artist.setIndex(index);
                     artists.add(artist);
 

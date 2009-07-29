@@ -61,7 +61,7 @@ public class SubsonicActivity extends ListActivity {
             List<Artist> artists = musicService.getArtists(this, null);
             Log.i(TAG, "Found " + artists.size() + " artists.");
             for (Artist artist : artists) {
-                Log.i(TAG, artist.getName() + " - " + artist.getPath());
+                Log.i(TAG, artist.getName() + " - " + artist.getId());
             }
 
             setListAdapter(new ArrayAdapter<Artist>(this, android.R.layout.simple_list_item_1, artists));
