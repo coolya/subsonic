@@ -34,7 +34,6 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
@@ -55,27 +54,24 @@ public class MobileController extends MultiActionController {
     public ModelAndView getIndexes(HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("text/xml");
         response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
-        PrintWriter out = response.getWriter();
         SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists = musicIndexService.getIndexedArtists(settingsService.getAllMusicFolders());
 
-        XMLBuilder builder = new XMLBuilder();
-        builder.preamble("UTF-8");
-        builder.add("indexes");
+        XMLBuilder builder = new XMLBuilder(response.getWriter());
+        builder.preamble(StringUtil.ENCODING_UTF8);
+        builder.add("indexes", false);
 
         for (Map.Entry<MusicIndex, SortedSet<MusicIndex.Artist>> entry : indexedArtists.entrySet()) {
-            builder.add("index", "name", entry.getKey().getIndex());
+            builder.add("index", "name", entry.getKey().getIndex(), false);
             for (MusicIndex.Artist artist : entry.getValue()) {
                 for (MusicFile musicFile : artist.getMusicFiles()) {
                     if (musicFile.isDirectory()) {
-                        builder.add("artist", new Attribute("name", artist.getName()), new Attribute("path", StringUtil.utf8HexEncode(musicFile.getPath())));
-                        builder.end();
+                        builder.add("artist", true, new Attribute("name", artist.getName()), new Attribute("path", StringUtil.utf8HexEncode(musicFile.getPath())));
                     }
                 }
             }
             builder.end();
         }
         builder.end();
-        out.print(builder);
 
         return null;
     }
@@ -90,11 +86,10 @@ public class MobileController extends MultiActionController {
         // TODO: Make it work with SSL.
         response.setContentType("text/xml");
         response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
-        PrintWriter out = response.getWriter();
 
-        XMLBuilder builder = new XMLBuilder();
+        XMLBuilder builder = new XMLBuilder(response.getWriter());
         builder.preamble("UTF-8");
-        builder.add("directory", new Attribute("name", musicFile.getName()), new Attribute("path", StringUtil.utf8HexEncode(musicFile.getPath())));
+        builder.add("directory", false, new Attribute("name", musicFile.getName()), new Attribute("path", StringUtil.utf8HexEncode(musicFile.getPath())));
 
         // TODO: Do not include contentType and URL if directory.
         for (MusicFile child : musicFile.getChildren(true, true)) {
@@ -103,14 +98,12 @@ public class MobileController extends MultiActionController {
             String url = baseUrl + "stream?pathUtf8Hex=" + StringUtil.utf8HexEncode(child.getPath()) + "&mobile";
             String path = StringUtil.utf8HexEncode(child.getPath());
 
-            builder.add("child", new Attribute("name", child.getTitle()),
+            builder.add("child", true, new Attribute("name", child.getTitle()),
                         new Attribute("path", path), new Attribute("isDir", child.isDirectory()),
                         new Attribute("contentType", contentType), new Attribute("suffix", suffix), new Attribute("url", url));
-            builder.end();
         }
 
         builder.end();
-        out.print(builder);
 
         return null;
     }

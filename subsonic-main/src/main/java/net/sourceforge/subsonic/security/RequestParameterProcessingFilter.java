@@ -91,12 +91,10 @@ public class RequestParameterProcessingFilter implements Filter {
     }
 
     private void sendErrorXml(HttpServletResponse httpResponse) throws IOException {
-        XMLBuilder builder = new XMLBuilder();
+        XMLBuilder builder = new XMLBuilder(httpResponse.getWriter());
 
         builder.preamble("UTF-8");
-        builder.addClosed("error", "Wrong username/password.");
-
-        httpResponse.getWriter().write(builder.toString());
+        builder.add("error", "message", "Wrong username/password.", true);
     }
 
     /**

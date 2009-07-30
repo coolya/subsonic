@@ -20,6 +20,10 @@ package net.sourceforge.subsonic.util;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Stack;
 
 
@@ -52,8 +56,17 @@ public class XMLBuilder {
     private static final String INDENTATION = "  ";
     private static final String NEWLINE = "\n";
 
-    private final StringBuilder buf = new StringBuilder();
+    private final Writer writer;
     private final Stack<String> elementStack = new Stack<String>();
+
+    /**
+     * Creates a new builder which writes to the given writer.
+     *
+     * @param writer The writer.
+     */
+    public XMLBuilder(Writer writer) {
+        this.writer = writer;
+    }
 
     /**
      * Adds an XML preamble, with the given encoding. The preamble will typically
@@ -64,35 +77,10 @@ public class XMLBuilder {
      * @param encoding The encoding to put in the preamble.
      * @return A reference to this object.
      */
-    public XMLBuilder preamble(String encoding) {
-        buf.append("<?xml version=\"1.0\" encoding=\"").append(encoding).append("\"?>");
-        newline();
-        return this;
-    }
-
-    /**
-     * Adds an element with the given name and attributes.
-     *
-     * @param element    The element name.
-     * @param attributes The element attributes.
-     * @return A reference to this object.
-     */
-    public XMLBuilder add(String element, Attribute... attributes) {
-        indent();
-        elementStack.push(element);
-        buf.append('<').append(element);
-
-        if (attributes.length > 0) {
-            buf.append(' ');
-        }
-        for (int i = 0; i < attributes.length; i++) {
-            attributes[i].append(buf);
-            if (i < attributes.length - 1) {
-                buf.append(' ');
-            }
-        }
-
-        buf.append('>');
+    public XMLBuilder preamble(String encoding) throws IOException {
+        writer.write("<?xml version=\"1.0\" encoding=\"");
+        writer.write(encoding);
+        writer.write("\"?>");
         newline();
         return this;
     }
@@ -103,27 +91,59 @@ public class XMLBuilder {
      * @param element        The element name.
      * @param attributeKey   The attributes key.
      * @param attributeValue The attributes value.
+     * @param close          Whether to close the element.
      * @return A reference to this object.
      */
-    public XMLBuilder add(String element, String attributeKey, Object attributeValue) {
-        return add(element, new Attribute(attributeKey, attributeValue));
+    public XMLBuilder add(String element, String attributeKey, Object attributeValue, boolean close) throws IOException {
+        return add(element, close, new Attribute(attributeKey, attributeValue));
     }
 
     /**
-     * Adds the element with the given name and value. The element is also closed, so
-     * there is no need to call {@link #end()}.
+     * Adds an element with the given name and attributes.
      *
-     * @param element The element name.
-     * @param value   The element value. If <code>null</code>, the element will be empty.
+     * @param element    The element name.
+     * @param close      Whether to close the element.
+     * @param attributes The element attributes.
      * @return A reference to this object.
      */
-    public XMLBuilder addClosed(String element, Object value) {
+    public XMLBuilder add(String element, boolean close, Attribute... attributes) throws IOException {
+        return add(element, Arrays.asList(attributes), close);
+    }
+
+    /**
+     * Adds an element with the given name and attributes.
+     *
+     * @param element    The element name.
+     * @param attributes The element attributes.
+     * @param close      Whether to close the element.
+     * @return A reference to this object.
+     */
+    public XMLBuilder add(String element, Iterable<Attribute> attributes, boolean close) throws IOException {
         indent();
-        buf.append('<').append(element).append('>');
-        if (value != null) {
-            buf.append(StringEscapeUtils.escapeXml(value.toString()));
+        elementStack.push(element);
+        writer.write('<');
+        writer.write(element);
+
+        Iterator<Attribute> iterator = attributes.iterator();
+
+        if (iterator.hasNext()) {
+            writer.write(' ');
         }
-        buf.append("</").append(element).append('>');
+        while (iterator.hasNext()) {
+            Attribute attribute = iterator.next();
+            attribute.append(writer);
+            if (iterator.hasNext()) {
+                writer.write(' ');
+            }
+        }
+
+        if (close) {
+            elementStack.pop();
+            writer.write("/>");
+        } else {
+            writer.write('>');
+        }
+
         newline();
         return this;
     }
@@ -134,14 +154,16 @@ public class XMLBuilder {
      * @return A reference to this object.
      * @throws IllegalStateException If there are no unclosed elements.
      */
-    public XMLBuilder end() throws IllegalStateException {
+    public XMLBuilder end() throws IllegalStateException, IOException {
         if (elementStack.isEmpty()) {
             throw new IllegalStateException("There are no unclosed elements.");
         }
 
         String element = elementStack.pop();
         indent();
-        buf.append("</").append(element).append('>');
+        writer.write("</");
+        writer.write(element);
+        writer.write('>');
         newline();
         return this;
     }
@@ -151,36 +173,22 @@ public class XMLBuilder {
      *
      * @return A reference to this object.
      */
-    public XMLBuilder endAll() {
+    public XMLBuilder endAll() throws IOException {
         while (!elementStack.isEmpty()) {
             end();
         }
         return this;
     }
 
-    private void indent() {
+    private void indent() throws IOException {
         int depth = elementStack.size();
         for (int i = 0; i < depth; i++) {
-            buf.append(INDENTATION);
+            writer.write(INDENTATION);
         }
     }
 
-    private void newline() {
-        buf.append(NEWLINE);
-    }
-
-    /**
-     * Returns the XML document.
-     *
-     * @return The XML document.
-     * @throws IllegalStateException If there are unclosed elements.
-     */
-    public String toString() throws IllegalStateException {
-        if (!elementStack.isEmpty()) {
-            throw new IllegalStateException("There are unclosed elements.");
-        }
-
-        return buf.toString();
+    private void newline() throws IOException {
+        writer.write(NEWLINE);
     }
 
     /**
@@ -196,9 +204,12 @@ public class XMLBuilder {
             this.value = value;
         }
 
-        private void append(StringBuilder buf) {
-            if (key != null && value!= null) {
-                buf.append(key).append("=\"").append(StringEscapeUtils.escapeXml(value.toString())).append("\"");
+        private void append(Writer writer) throws IOException {
+            if (key != null && value != null) {
+                writer.write(key);
+                writer.write("=\"");
+                writer.write(StringEscapeUtils.escapeXml(value.toString()));
+                writer.write("\"");
             }
         }
     }

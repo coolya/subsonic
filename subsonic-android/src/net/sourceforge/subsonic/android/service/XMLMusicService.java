@@ -54,8 +54,8 @@ public class XMLMusicService implements MusicService {
         }
     }
 
-    public MusicDirectory getMusicDirectory(String path, Context context, ProgressListener progressListener) throws Exception {
-        Reader reader = dataSource.getMusicDirectoryReader(path, context, progressListener);
+    public MusicDirectory getMusicDirectory(String id, Context context, ProgressListener progressListener) throws Exception {
+        Reader reader = dataSource.getMusicDirectoryReader(id, context, progressListener);
         addReader(reader);
         try {
             return musicDirectoryParser.parse(reader, progressListener);

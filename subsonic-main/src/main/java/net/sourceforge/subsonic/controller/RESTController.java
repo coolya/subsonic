@@ -18,32 +18,26 @@
  */
 package net.sourceforge.subsonic.controller;
 
+import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicIndex;
 import net.sourceforge.subsonic.domain.Player;
-import net.sourceforge.subsonic.restapi.Artist;
-import net.sourceforge.subsonic.restapi.Child;
-import net.sourceforge.subsonic.restapi.Directory;
-import net.sourceforge.subsonic.restapi.Index;
-import net.sourceforge.subsonic.restapi.Indexes;
-import net.sourceforge.subsonic.restapi.Response;
-import net.sourceforge.subsonic.restapi.ResponseStatus;
-import net.sourceforge.subsonic.restapi.ObjectFactory;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicIndexService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.util.StringUtil;
-import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.util.XMLBuilder;
+import static net.sourceforge.subsonic.util.XMLBuilder.Attribute;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
@@ -62,102 +56,91 @@ public class RESTController extends MultiActionController {
     private MusicFileService musicFileService;
     private MusicIndexService musicIndexService;
     private TranscodingService transcodingService;
-    private JAXBContext jaxbContext;
     private final String schemaVersion;
 
     public RESTController() {
-        try {
-            jaxbContext = JAXBContext.newInstance("net.sourceforge.subsonic.restapi");
-        } catch (JAXBException x) {
-            LOG.warn("Failed to initalize JAXB context.", x);
-        }
         schemaVersion = "1.0.0"; // TODO: Read directly from xsd
     }
 
-    public ModelAndView getIndexes(HttpServletRequest request, HttpServletResponse servletResponse) throws Exception {
+    public ModelAndView getIndexes(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        Indexes indexes = new Indexes();
-//            indexes.setLastModified(); TODO
+        XMLBuilder builder = createXMLBuilder(response);
+
+        long lastModified = 0L; // TODO
+        builder.add("indexes", "lastModified", lastModified, false);
+
         SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists = musicIndexService.getIndexedArtists(settingsService.getAllMusicFolders());
 
         for (Map.Entry<MusicIndex, SortedSet<MusicIndex.Artist>> entry : indexedArtists.entrySet()) {
-            Index index = new Index();
-            index.setName(entry.getKey().getIndex());
-            indexes.getIndex().add(index);
+            builder.add("index", "name", entry.getKey().getIndex(), false);
+
             for (MusicIndex.Artist artist : entry.getValue()) {
                 for (MusicFile musicFile : artist.getMusicFiles()) {
                     if (musicFile.isDirectory()) {
-                        Artist a = new Artist();
-                        a.setId(StringUtil.utf8HexEncode(musicFile.getPath()));
-                        a.setName(artist.getName());
-                        index.getArtist().add(a);
+                        builder.add("artist", true,
+                                    new Attribute("name", artist.getName()),
+                                    new Attribute("id", StringUtil.utf8HexEncode(musicFile.getPath())));
                     }
                 }
             }
+            builder.end();
         }
-
-        Response response = new Response();
-        response.setIndexes(indexes);
-        response.setStatus(ResponseStatus.OK);
-        marshal(servletResponse, response);
+        builder.endAll();
 
         return null;
     }
 
-    public ModelAndView getMusicDirectory(HttpServletRequest request, HttpServletResponse servletResponse) throws Exception {
-        Player player = playerService.getPlayer(request, servletResponse);
+    public ModelAndView getMusicDirectory(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        XMLBuilder builder = createXMLBuilder(response);
+        Player player = playerService.getPlayer(request, response);
 
         String path = StringUtil.utf8HexDecode(request.getParameter("id"));
         MusicFile dir = musicFileService.getMusicFile(path);
         // TODO: Handle non-existing dir.
 
-        Directory directory = new Directory();
-        directory.setId(StringUtil.utf8HexEncode(dir.getPath()));
-        directory.setName(dir.getName());
+        builder.add("directory", false,
+                    new Attribute("id", StringUtil.utf8HexEncode(dir.getPath())),
+                    new Attribute("name", dir.getName()));
 
         for (MusicFile musicFile : dir.getChildren(true, true)) {
 
-            Child child = new Child();
-            directory.getChild().add(child);
-
-            child.setId(StringUtil.utf8HexEncode(musicFile.getPath()));
-            child.setTitle(musicFile.getTitle());
-            child.setIsDir(musicFile.isDirectory());
+            List<Attribute> attributes = new ArrayList<Attribute>();
+            attributes.add(new Attribute("id", StringUtil.utf8HexEncode(musicFile.getPath())));
+            attributes.add(new Attribute("title", musicFile.getTitle()));
+            attributes.add(new Attribute("isDir", musicFile.isDirectory()));
 
             if (musicFile.isFile()) {
-                child.setAlbum(musicFile.getMetaData().getAlbum());
-                child.setArtist(musicFile.getMetaData().getArtist());
-                child.setSize(musicFile.length());
+                attributes.add(new Attribute("album", musicFile.getMetaData().getAlbum()));
+                attributes.add(new Attribute("artist", musicFile.getMetaData().getArtist()));
+                attributes.add(new Attribute("size", musicFile.length()));
                 String suffix = musicFile.getSuffix();
-                child.setSuffix(suffix);
-                child.setContentType(StringUtil.getMimeType(suffix));
+                attributes.add(new Attribute("suffix", suffix));
+                attributes.add(new Attribute("contentType", StringUtil.getMimeType(suffix)));
 
                 if (transcodingService.isTranscodingRequired(musicFile, player)) {
                     String transcodedSuffix = transcodingService.getSuffix(player, musicFile);
-                    child.setTranscodedSuffix(transcodedSuffix);
-                    child.setTranscodedContentType(StringUtil.getMimeType(transcodedSuffix));
+                    attributes.add(new Attribute("transcodedSuffix", transcodedSuffix));
+                    attributes.add(new Attribute("transcodedContentType", StringUtil.getMimeType(transcodedSuffix)));
                 }
             }
+            builder.add("child", attributes, true);
         }
-
-        Response response = new Response();
-        response.setDirectory(directory);
-        response.setStatus(ResponseStatus.OK);
-        marshal(servletResponse, response);
+        builder.endAll();
 
         return null;
     }
 
-    private void marshal(HttpServletResponse servletResponse, Response response) throws Exception {
-        servletResponse.setContentType("text/xml");
-        servletResponse.setCharacterEncoding(StringUtil.ENCODING_UTF8);
+    private XMLBuilder createXMLBuilder(HttpServletResponse response) throws IOException {
+        response.setContentType("text/xml");
+        response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
 
-        response.setVersion(schemaVersion);
-        Marshaller marshaller = jaxbContext.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_ENCODING, StringUtil.ENCODING_UTF8);
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.marshal(new ObjectFactory().createSubsonicResponse(response), servletResponse.getOutputStream());
-
+        XMLBuilder builder = new XMLBuilder(response.getWriter());
+        builder.preamble(StringUtil.ENCODING_UTF8);
+        builder.add("subsonic-response", false,
+                    new Attribute("xlmns", "http://subsonic.sourceforge.net/restapi"),
+                    new Attribute("status", "ok"),
+                    new Attribute("version", schemaVersion));
+        return builder;
     }
 
     public void setSettingsService(SettingsService settingsService) {
