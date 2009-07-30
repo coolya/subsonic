@@ -48,8 +48,8 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
     }
 
     @Override
-    public Reader getMusicDirectoryReader(String path, Context context, ProgressListener progressListener) throws Exception {
-        String urlString = getBaseUrl(context) + "getMusicDirectory.view?pathUtf8Hex=" + path + "&u=" + getUsername(context) + "&p=" + getPassword(context);
+    public Reader getMusicDirectoryReader(String id, Context context, ProgressListener progressListener) throws Exception {
+        String urlString = getBaseUrl(context) + "getMusicDirectory.view?id=" + id + "&u=" + getUsername(context) + "&p=" + getPassword(context);
 
 //        int player = settingsService.getPlayer();
 //        if (player > 0) {
@@ -58,7 +58,7 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
 
         URL url = new URL(urlString);
         if (progressListener != null) {
-            progressListener.updateProgress("Contacting server " + url.getAuthority());
+            progressListener.updateProgress("Contacting server " + url.getHost());
         }
 
         InputStream in = url.openStream();
@@ -82,6 +82,6 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
         if (!baseUrl.endsWith("/")) {
             baseUrl += "/";
         }
-        return baseUrl + "mobile/";
+        return baseUrl + "rest/";
     }
 }

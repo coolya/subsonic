@@ -29,5 +29,5 @@ import android.content.Context;
  */
 public interface MusicServiceDataSource {
     Reader getArtistsReader(Context context, ProgressListener progressListener) throws Exception;
-    Reader getMusicDirectoryReader(String path, Context context, ProgressListener progressListener) throws Exception;
+    Reader getMusicDirectoryReader(String id, Context context, ProgressListener progressListener) throws Exception;
 }

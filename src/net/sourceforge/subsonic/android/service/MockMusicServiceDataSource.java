@@ -69,17 +69,17 @@ public class MockMusicServiceDataSource implements MusicServiceDataSource {
         return createReader(INDEX_XML);
     }
 
-    public Reader getMusicDirectoryReader(String path, Context context, ProgressListener progressListener) throws Exception {
+    public Reader getMusicDirectoryReader(String id, Context context, ProgressListener progressListener) throws Exception {
         Thread.sleep(300L);
 
-        if (path.equals("c:/music/abba")) {
+        if (id.equals("c:/music/abba")) {
             return createReader(MUSIC_DIRECTORY_XML_1);
-        } else if (path.equals("c:/music/Alanis Morisette")) {
+        } else if (id.equals("c:/music/Alanis Morisette")) {
             return createReader(MUSIC_DIRECTORY_XML_3);
-        } else if (path.equals("c:/music/abba/gold")) {
+        } else if (id.equals("c:/music/abba/gold")) {
             return createReader(MUSIC_DIRECTORY_XML_2);
         } else {
-            throw new RuntimeException("Invalid path: " + path);
+            throw new RuntimeException("Invalid path: " + id);
         }
     }
 
