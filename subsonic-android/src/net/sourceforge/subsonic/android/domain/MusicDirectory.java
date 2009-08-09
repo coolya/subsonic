@@ -69,6 +69,7 @@ public class MusicDirectory {
         private String suffix;
         private String transcodedContentType;
         private String transcodedSuffix;
+        private String coverArt;
         private Long size;
 
         public String getId() {
@@ -149,6 +150,14 @@ public class MusicDirectory {
 
         public void setSize(Long size) {
             this.size = size;
+        }
+
+        public String getCoverArt() {
+            return coverArt;
+        }
+
+        public void setCoverArt(String coverArt) {
+            this.coverArt = coverArt;
         }
 
         @Override

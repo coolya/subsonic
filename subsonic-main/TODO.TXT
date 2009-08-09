@@ -1,5 +1,7 @@
 TODO IN 3.8
 --------------
+http://upnp-portmapper.sourceforge.net/
+Fix problem with "Cannot find the declaration of element 'beans'."
 http://www.jthink.net/jaudiotagger/index.jsp
 Hide IPs from Subsonic Demo.
 Exclusion filter (*.svn, *.log, *.pun)
@@ -55,19 +57,13 @@ New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now
 
 ANDROID
 -------
-Test REST with Java 5.
+Bug: Only works with one cover art image.
 Merge artists in REST method.  Make it possible to specify music folder.
-Simplify logic in DownloadService. Don't remove from queue until finished. Remove pendingDownloadCount and currentDownload.
-Change download notification to be similar to now playing. (Title, Album, Artist)
 Proper display of download errors.
-Define schema.
 Show temporary download complete status notification.
-Create utility class for generating urls.
-Create REST method for cover art (and streaming?).
 Clear cache when server url changes.
 Make MusicService a real service?
 Add streaming button.
-Use id instead of path in xmls.
 Add icons to buttons.
 Download git.
 Clean up thread in DownloadService.onDestroy().
@@ -117,6 +113,7 @@ By default, create music folder for video.
 
 BACKLOG
 ==========================
+Error when path contains "&amp;" http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1921
 Simplify Media.  How does it avoid opening ports in router?
 Integration with Spotify/Despotify/Jotify.
 Create Jing screencast.

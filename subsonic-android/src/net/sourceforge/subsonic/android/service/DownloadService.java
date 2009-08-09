@@ -124,8 +124,7 @@ public class DownloadService extends Service {
             return null;
         }
 
-        // TODO: Set total size.
-        Pair<Long, Long> progress = new Pair<Long, Long>(currentProgress.get(), null);
+        Pair<Long, Long> progress = new Pair<Long, Long>(currentProgress.get(), current.getSize());
         return new Pair<MusicDirectory.Entry, Pair<Long, Long>>(current, progress);
     }
 
@@ -164,8 +163,7 @@ public class DownloadService extends Service {
             // The PendingIntent to launch our activity if the user selects this notification
             PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, DownloadQueueActivity.class), 0);
 
-            // TODO: Use proper album/artist
-            String text = "Artist";
+            String text = song.getArtist();
             notification.setLatestEventInfo(this, title, text, contentIntent);
 
             // Send the notification.
@@ -220,16 +218,11 @@ public class DownloadService extends Service {
     }
 
     private String getDownloadURL(MusicDirectory.Entry song) {
-        String url = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0).getString(Constants.PREFERENCES_KEY_SERVER_URL, null);
-        if (!url.endsWith("/")) {
-            url += "/";
-        }
-        return url + "stream?pathUtf8Hex=" + song.getId();
+        return Util.getRestUrl(this, "download") + "&id=" + song.getId();
     }
 
     private String getAlbumArtURL(MusicDirectory.Entry song) {
-// TODO
-        return "http://upload.wikimedia.org/wikipedia/en/7/7b/Journal_for_Plague_Lovers_album_cover.jpg";
+        return Util.getRestUrl(this, "getCoverArt") + "&id=" + song.getCoverArt();
     }
 
     public class DownloadBinder extends Binder {
@@ -251,7 +244,6 @@ public class DownloadService extends Service {
                     Log.i(TAG, "Download thread interrupted. Continuing.");
                 }
             }
-//            Log.i(TAG, "Download thread exiting.");
         }
 
         private void downloadToFile(final MusicDirectory.Entry song) throws InterruptedException {
@@ -299,6 +291,10 @@ public class DownloadService extends Service {
         }
 
         private File downloadAlbumArt(MusicDirectory.Entry song) {
+            if (song.getCoverArt() == null) {
+                return null;
+            }
+
             InputStream in = null;
             FileOutputStream out = null;
             File file = null;
@@ -344,8 +340,8 @@ public class DownloadService extends Service {
         private void saveInMediaStore(MusicDirectory.Entry song, File songFile) {
             ContentValues values = new ContentValues();
             values.put(MediaStore.MediaColumns.TITLE, song.getTitle());
-            values.put(MediaStore.Audio.AudioColumns.ARTIST, "Manic Street Preachers");
-            values.put(MediaStore.Audio.AudioColumns.ALBUM, "Journal For Plague Lovers");
+            values.put(MediaStore.Audio.AudioColumns.ARTIST, song.getArtist());
+            values.put(MediaStore.Audio.AudioColumns.ALBUM, song.getAlbum());
             values.put(MediaStore.MediaColumns.DATA, songFile.getAbsolutePath());
             values.put(MediaStore.MediaColumns.MIME_TYPE, song.getContentType());
             values.put(MediaStore.Audio.AudioColumns.IS_MUSIC, 1);

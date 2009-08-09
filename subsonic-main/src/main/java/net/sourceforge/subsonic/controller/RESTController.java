@@ -35,6 +35,8 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequestWrapper;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,12 +58,21 @@ public class RESTController extends MultiActionController {
     private MusicFileService musicFileService;
     private MusicIndexService musicIndexService;
     private TranscodingService transcodingService;
+    private DownloadController downloadController;
     private final String schemaVersion;
+    private CoverArtController coverArtController;
 
     public RESTController() {
         schemaVersion = "1.0.0"; // TODO: Read directly from xsd
     }
 
+    /**
+     * Request parameters:
+     * None
+     * <p/>
+     * Returns:
+     * XML document with "indexes" element.
+     */
     public ModelAndView getIndexes(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         XMLBuilder builder = createXMLBuilder(response);
@@ -90,6 +101,13 @@ public class RESTController extends MultiActionController {
         return null;
     }
 
+    /**
+     * Request parameters:
+     * id - Identifies the music directory.
+     * <p/>
+     * Returns:
+     * XML document with "directory" element.
+     */
     public ModelAndView getMusicDirectory(HttpServletRequest request, HttpServletResponse response) throws Exception {
         XMLBuilder builder = createXMLBuilder(response);
         Player player = playerService.getPlayer(request, response);
@@ -117,6 +135,11 @@ public class RESTController extends MultiActionController {
                 attributes.add(new Attribute("suffix", suffix));
                 attributes.add(new Attribute("contentType", StringUtil.getMimeType(suffix)));
 
+                List<File> coverArt = musicFileService.getCoverArt(dir, 1);
+                if (!coverArt.isEmpty()) {
+                    attributes.add(new Attribute("coverArt", StringUtil.utf8HexEncode(coverArt.get(0).getPath())));
+                }
+
                 if (transcodingService.isTranscodingRequired(musicFile, player)) {
                     String transcodedSuffix = transcodingService.getSuffix(player, musicFile);
                     attributes.add(new Attribute("transcodedSuffix", transcodedSuffix));
@@ -128,6 +151,47 @@ public class RESTController extends MultiActionController {
         builder.endAll();
 
         return null;
+    }
+
+    /**
+     * Request parameters:
+     * id - Identifies the file to download.
+     * <p/>
+     * Returns:
+     * Binary data.
+     */
+    public ModelAndView download(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return downloadController.handleRequest(wrapRequest(request), response);
+    }
+
+    /**
+     * Request parameters:
+     * id - Identifies the cover art file to retrieve.
+     * <p/>
+     * Returns:
+     * Binary data.
+     */
+    public ModelAndView getCoverArt(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return coverArtController.handleRequest(wrapRequest(request), response);
+    }
+
+    /**
+     * Renames "id" request parameter to "path".
+     */
+    private HttpServletRequest wrapRequest(final HttpServletRequest request) {
+        return new HttpServletRequestWrapper(request) {
+            @Override
+            public String getParameter(String name) {
+                if ("path".equals(name)) {
+                    try {
+                        return StringUtil.utf8HexDecode(request.getParameter("id"));
+                    } catch (Exception e) {
+                        return null;
+                    }
+                }
+                return super.getParameter(name);
+            }
+        };
     }
 
     private XMLBuilder createXMLBuilder(HttpServletResponse response) throws IOException {
@@ -161,5 +225,13 @@ public class RESTController extends MultiActionController {
 
     public void setTranscodingService(TranscodingService transcodingService) {
         this.transcodingService = transcodingService;
+    }
+
+    public void setDownloadController(DownloadController downloadController) {
+        this.downloadController = downloadController;
+    }
+
+    public void setCoverArtController(CoverArtController coverArtController) {
+        this.coverArtController = coverArtController;
     }
 }

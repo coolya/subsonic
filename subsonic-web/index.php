@@ -17,32 +17,6 @@
 <div id="main-col">
     <h1>Welcome to Subsonic!</h1>
 
-    <div class="featureitem">
-        <div class="content" style="background-color:white; border-top:1px solid #CBCEDC">
-            <div class="wide-content">
-
-                <a href="http://sf.net/community/cca09/vote/?f=463" target="_blank"><img src="http://c.fsdn.com/sf/images/cca/cca_120x60_2009_finalist.png" alt="Vote"
-                                                                                            class="img-right" style="padding-bottom:10px; padding-right:10px"/></a>
-                <p>
-                    Subsonic is a finalist in the <b>SourceForge Community Choice Awards 2009</b>.
-                </p>
-                <p>
-                    Please <b><a href="http://sf.net/community/cca09/vote/?f=463" target="_blank">vote for Subsonic now</a></b> to win the "Best Project for Multimedia" category!
-                    Voting ends on July 20.
-                </p>
-                <p>
-                </p>
-                <p>
-                    Thanks for your support :-)
-                    <br/>
-                    Sindre, Subsonic Developer
-                </p>
-
-
-            </div>
-        </div>
-    </div>
-
     <div class="floatcontainer margin10-t margin10-b">
         <ul class="stars column-left">
             <li>Listen to your music wherever you are. Share your collection with family and friends.</li>

@@ -315,6 +315,8 @@
         <property name="musicFileService" ref="musicFileService"/>
         <property name="musicIndexService" ref="musicIndexService"/>
         <property name="transcodingService" ref="transcodingService"/>
+        <property name="downloadController" ref="downloadController"/>
+        <property name="coverArtController" ref="coverArtController"/>
     </bean>
     <bean id="dbController" class="net.sourceforge.subsonic.controller.DBController">
         <property name="viewName" value="db"/>
