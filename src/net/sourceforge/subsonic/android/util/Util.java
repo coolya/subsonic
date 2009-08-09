@@ -7,6 +7,7 @@
 package net.sourceforge.subsonic.android.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.widget.Toast;
 
@@ -15,7 +16,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Locale;
 
 /**
  * @author Sindre Mehus
@@ -28,6 +28,25 @@ public final class Util {
     private static final DecimalFormat KILO_BYTE_FORMAT = new DecimalFormat("0 KB");
 
     private Util() {
+    }
+
+    public static String getRestUrl(Context context, String method) {
+        StringBuilder builder = new StringBuilder();
+
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        String serverUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_URL, null);
+        String username = prefs.getString(Constants.PREFERENCES_KEY_USERNAME, null);
+        String password = prefs.getString(Constants.PREFERENCES_KEY_PASSWORD, null);
+
+        builder.append(serverUrl);
+        if (builder.charAt(builder.length() - 1) != '/') {
+            builder.append("/");
+        }
+        builder.append("rest/").append(method).append(".view");
+        builder.append("?u=").append(username);
+        builder.append("&p=").append(password);
+
+        return builder.toString();
     }
 
     public static long copy(InputStream input, OutputStream output)

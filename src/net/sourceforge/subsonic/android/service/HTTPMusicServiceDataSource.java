@@ -18,70 +18,52 @@
  */
 package net.sourceforge.subsonic.android.service;
 
+import android.content.Context;
 import net.sourceforge.subsonic.android.util.ProgressListener;
-import net.sourceforge.subsonic.android.util.Constants;
+import net.sourceforge.subsonic.android.util.Util;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
-
-import android.content.Context;
-import android.content.SharedPreferences;
+import java.net.URLConnection;
 
 /**
  * @author Sindre Mehus
  */
 public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
 
+    private static final int CONNECT_TIMEOUT = 10000;
+
     @Override
     public Reader getArtistsReader(Context context, ProgressListener progressListener) throws Exception {
-        String urlString = getBaseUrl(context) + "getIndexes.view?u=" + getUsername(context) + "&p=" + getPassword(context);
-
-        URL url = new URL(urlString);
-        if (progressListener != null) {
-            progressListener.updateProgress("Contacting server " + url.getAuthority());
-        }
-
-        InputStream in = url.openStream();
-        return new InputStreamReader(in, "UTF-8");
-    }
-
-    @Override
-    public Reader getMusicDirectoryReader(String id, Context context, ProgressListener progressListener) throws Exception {
-        String urlString = getBaseUrl(context) + "getMusicDirectory.view?id=" + id + "&u=" + getUsername(context) + "&p=" + getPassword(context);
-
-//        int player = settingsService.getPlayer();
-//        if (player > 0) {
-//            urlString += "&player=" + player;
-//        }
+        String urlString = Util.getRestUrl(context, "getIndexes");
 
         URL url = new URL(urlString);
         if (progressListener != null) {
             progressListener.updateProgress("Contacting server " + url.getHost());
         }
 
-        InputStream in = url.openStream();
-        return new InputStreamReader(in, "UTF-8");
+        return openURL(url);
     }
 
-    private String getUsername(Context context) {
-        return getSharedPreferences(context).getString(Constants.PREFERENCES_KEY_USERNAME, null);
-    }
+    @Override
+    public Reader getMusicDirectoryReader(String id, Context context, ProgressListener progressListener) throws Exception {
+        String urlString = Util.getRestUrl(context, "getMusicDirectory") + "&id=" + id;
 
-    private String getPassword(Context context) {
-        return getSharedPreferences(context).getString(Constants.PREFERENCES_KEY_PASSWORD, null);
-    }
-
-    private SharedPreferences getSharedPreferences(Context context) {
-        return context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
-    }
-
-    private String getBaseUrl(Context context) {
-        String baseUrl = getSharedPreferences(context).getString(Constants.PREFERENCES_KEY_SERVER_URL, null);
-        if (!baseUrl.endsWith("/")) {
-            baseUrl += "/";
+        URL url = new URL(urlString);
+        if (progressListener != null) {
+            progressListener.updateProgress("Contacting server " + url.getHost());
         }
-        return baseUrl + "rest/";
+
+        return openURL(url);
+    }
+
+    private Reader openURL(URL url) throws IOException {
+        URLConnection connection = url.openConnection();
+        connection.setConnectTimeout(CONNECT_TIMEOUT);
+        InputStream in = connection.getInputStream();
+        return new InputStreamReader(in, "UTF-8");
     }
 }

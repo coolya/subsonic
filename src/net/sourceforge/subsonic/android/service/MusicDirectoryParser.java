@@ -60,6 +60,7 @@ public class MusicDirectoryParser extends AbstractParser {
                         entry.setSuffix(parser.getAttributeValue(null, "suffix"));
                         entry.setTranscodedContentType(parser.getAttributeValue(null, "transcodedContentType"));
                         entry.setTranscodedSuffix(parser.getAttributeValue(null, "transcodedSuffix"));
+                        entry.setCoverArt(parser.getAttributeValue(null, "coverArt"));
                         String size = parser.getAttributeValue(null, "size");
                         if (size != null) {
                             entry.setSize(Long.valueOf(size));

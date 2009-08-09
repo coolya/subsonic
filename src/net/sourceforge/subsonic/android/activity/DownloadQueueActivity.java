@@ -99,13 +99,18 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
 
         listView.setAdapter(new TwoLineListAdapter<MusicDirectory.Entry>(this, queue) {
             @Override
-            protected String getFirstLine(MusicDirectory.Entry item) {
-                return item.getTitle();
+            protected String getFirstLine(MusicDirectory.Entry song) {
+                return song.getTitle();
             }
 
             @Override
-            protected String getSecondLine(MusicDirectory.Entry item) {
-                return "Send Away The Tigers - Manic Street Foo Bar Preachers (4.55 MB)"; //TODO
+            protected String getSecondLine(MusicDirectory.Entry song) {
+                StringBuilder builder = new StringBuilder();
+                builder.append(song.getAlbum()).append(" - ").append(song.getArtist());
+                if (song.getSize() != null) {
+                    builder.append(" (").append(Util.formatBytes(song.getSize())).append(")");
+                }
+                return builder.toString();
             }
         });
     }
