@@ -63,6 +63,8 @@ public class ArtistParser extends AbstractParser {
                     if (progressListener != null && artists.size() % 10 == 0) {
                         progressListener.updateProgress("Got " + artists.size() + " artists.");
                     }
+                } else if ("error".equals(name)) {
+                    handleError(parser);
                 }
             }
         } while (eventType != XmlPullParser.END_DOCUMENT);

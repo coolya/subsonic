@@ -57,7 +57,9 @@ New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now
 
 ANDROID
 -------
-Bug: Only works with one cover art image.
+Set read/write timeout on sockets.
+Handle receiving error xml when downloading files.
+Bug: Only works with one cover art image? Refresh android media db.
 Merge artists in REST method.  Make it possible to specify music folder.
 Proper display of download errors.
 Show temporary download complete status notification.

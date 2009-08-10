@@ -22,11 +22,13 @@ import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicIndex;
 import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicIndexService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.TranscodingService;
+import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.util.XMLBuilder;
 import static net.sourceforge.subsonic.util.XMLBuilder.Attribute;
@@ -54,17 +56,13 @@ public class RESTController extends MultiActionController {
     private static final Logger LOG = Logger.getLogger(RESTController.class);
 
     private SettingsService settingsService;
+    private SecurityService securityService;
     private PlayerService playerService;
     private MusicFileService musicFileService;
     private MusicIndexService musicIndexService;
     private TranscodingService transcodingService;
     private DownloadController downloadController;
-    private final String schemaVersion;
     private CoverArtController coverArtController;
-
-    public RESTController() {
-        schemaVersion = "1.0.0"; // TODO: Read directly from xsd
-    }
 
     /**
      * Request parameters:
@@ -75,7 +73,7 @@ public class RESTController extends MultiActionController {
      */
     public ModelAndView getIndexes(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        XMLBuilder builder = createXMLBuilder(response);
+        XMLBuilder builder = createXMLBuilder(response, true);
 
         long lastModified = 0L; // TODO
         builder.add("indexes", "lastModified", lastModified, false);
@@ -109,7 +107,7 @@ public class RESTController extends MultiActionController {
      * XML document with "directory" element.
      */
     public ModelAndView getMusicDirectory(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        XMLBuilder builder = createXMLBuilder(response);
+        XMLBuilder builder = createXMLBuilder(response, true);
         Player player = playerService.getPlayer(request, response);
 
         String path = StringUtil.utf8HexDecode(request.getParameter("id"));
@@ -161,6 +159,12 @@ public class RESTController extends MultiActionController {
      * Binary data.
      */
     public ModelAndView download(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        User user = securityService.getCurrentUser(request);
+        if (!user.isDownloadRole()) {
+            error(response, ErrorCode.NOT_AUTHORIZED, "User " + user.getUsername() + " is not authorized to download files.");
+            return null;
+        }
+
         return downloadController.handleRequest(wrapRequest(request), response);
     }
 
@@ -194,7 +198,16 @@ public class RESTController extends MultiActionController {
         };
     }
 
-    private XMLBuilder createXMLBuilder(HttpServletResponse response) throws IOException {
+    private void error(HttpServletResponse response, ErrorCode code, String message) throws IOException {
+        XMLBuilder builder = createXMLBuilder(response, false);
+        builder.add("error", true,
+                    new XMLBuilder.Attribute("code", code.getCode()),
+                    new XMLBuilder.Attribute("message", message));
+        builder.end();
+        response.sendError(HttpServletResponse.SC_FORBIDDEN);
+    }
+
+    private XMLBuilder createXMLBuilder(HttpServletResponse response, boolean ok) throws IOException {
         response.setContentType("text/xml");
         response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
 
@@ -202,13 +215,17 @@ public class RESTController extends MultiActionController {
         builder.preamble(StringUtil.ENCODING_UTF8);
         builder.add("subsonic-response", false,
                     new Attribute("xlmns", "http://subsonic.sourceforge.net/restapi"),
-                    new Attribute("status", "ok"),
-                    new Attribute("version", schemaVersion));
+                    new Attribute("status", ok ? "ok" : "failed"),
+                    new Attribute("version", StringUtil.getRESTProtocolVersion()));
         return builder;
     }
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 
     public void setPlayerService(PlayerService playerService) {
@@ -233,5 +250,21 @@ public class RESTController extends MultiActionController {
 
     public void setCoverArtController(CoverArtController coverArtController) {
         this.coverArtController = coverArtController;
+    }
+
+    public static enum ErrorCode {
+
+        NOT_AUTHENTICATED(10),
+        NOT_AUTHORIZED(11);
+
+        private final int code;
+
+        ErrorCode(int code) {
+            this.code = code;
+        }
+
+        public int getCode() {
+            return code;
+        }
     }
 }

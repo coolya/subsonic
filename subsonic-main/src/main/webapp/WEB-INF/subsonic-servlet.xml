@@ -311,6 +311,7 @@
     </bean>
     <bean id="restController" class="net.sourceforge.subsonic.controller.RESTController">
         <property name="settingsService" ref="settingsService"/>
+        <property name="securityService" ref="securityService"/>
         <property name="playerService" ref="playerService"/>
         <property name="musicFileService" ref="musicFileService"/>
         <property name="musicIndexService" ref="musicIndexService"/>

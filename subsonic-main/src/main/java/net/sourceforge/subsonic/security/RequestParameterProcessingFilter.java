@@ -19,7 +19,9 @@
 package net.sourceforge.subsonic.security;
 
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.controller.RESTController;
 import net.sourceforge.subsonic.util.XMLBuilder;
+import net.sourceforge.subsonic.util.StringUtil;
 import org.acegisecurity.Authentication;
 import org.acegisecurity.AuthenticationException;
 import org.acegisecurity.BadCredentialsException;
@@ -90,11 +92,21 @@ public class RequestParameterProcessingFilter implements Filter {
         chain.doFilter(request, response);
     }
 
-    private void sendErrorXml(HttpServletResponse httpResponse) throws IOException {
-        XMLBuilder builder = new XMLBuilder(httpResponse.getWriter());
+    private void sendErrorXml(HttpServletResponse response) throws IOException {
+        response.setContentType("text/xml");
+        response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
 
-        builder.preamble("UTF-8");
-        builder.add("error", "message", "Wrong username/password.", true);
+        XMLBuilder builder = new XMLBuilder(response.getWriter());
+        builder.preamble(StringUtil.ENCODING_UTF8);
+        builder.add("subsonic-response", false,
+                    new XMLBuilder.Attribute("xlmns", "http://subsonic.sourceforge.net/restapi"),
+                    new XMLBuilder.Attribute("status", "failed"),
+                    new XMLBuilder.Attribute("version", StringUtil.getRESTProtocolVersion()));
+
+        builder.add("error", true,
+                    new XMLBuilder.Attribute("code", RESTController.ErrorCode.NOT_AUTHENTICATED.getCode()),
+                    new XMLBuilder.Attribute("message", "Wrong username or password."));
+        builder.end();
     }
 
     /**
