@@ -6,13 +6,14 @@
  */
 package net.sourceforge.subsonic.android.util;
 
-import android.content.Intent;
-
 /**
  * @author Sindre Mehus
  * @version $Id$
  */
 public final class Constants {
+
+    // REST protocol version.
+    public static final String PROTOCOL_VERSION = "1.0.0";
 
     // Intent actions.
     public static final String INTENT_ACTION_DOWNLOAD_QUEUE = "net.sourceforge.subsonic.android.DOWNLOAD_QUEUE";

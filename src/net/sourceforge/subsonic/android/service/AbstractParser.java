@@ -18,9 +18,15 @@
  */
 package net.sourceforge.subsonic.android.service;
 
+import org.xmlpull.v1.XmlPullParser;
+
 /**
  * @author Sindre Mehus
  */
 public abstract class AbstractParser {
 
+    protected void handleError(XmlPullParser parser) throws Exception {
+        String message = parser.getAttributeValue(null, "message");
+        throw new Exception(message);
+    }
 }
