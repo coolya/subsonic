@@ -48,6 +48,7 @@ Bugfix: Repeat now works properly in jukebox mode.
 Bugfix: Usernames can now contain white spaces and international characters.
 Bugfix: Allow alternate date format in Podcast episodes.
 Bugfix: Fixed broken Discogs image search.
+Bugfix: Subsonic server doesn't require an internet connection during startup.
 New: Updated Dutch translation, courtesy of Sander van der Grind and Jeremy Terpstra.
 New: Avoid problems when upgrading stand-alone version.
 New: Improved German translation, courtesy of 3R3.
@@ -57,8 +58,7 @@ New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now
 
 ANDROID
 -------
-Set read/write timeout on sockets.
-Handle receiving error xml when downloading files.
+Verify that server address always is a valid url.
 Bug: Only works with one cover art image? Refresh android media db.
 Merge artists in REST method.  Make it possible to specify music folder.
 Proper display of download errors.
@@ -71,6 +71,7 @@ Download git.
 Clean up thread in DownloadService.onDestroy().
 http://blog.pocketjourney.com/2008/04/04/tutorial-custom-media-streaming-for-androids-mediaplayer/
 Handle IO errors in DownloadService.
+Show info if connected to demo server.
 
 LUCENE
 ------

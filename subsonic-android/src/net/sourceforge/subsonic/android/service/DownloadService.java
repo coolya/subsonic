@@ -44,14 +44,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author Sindre Mehus
@@ -259,7 +260,7 @@ public class DownloadService extends Service {
             File file = null;
             try {
                 file = new File(musicDir, song.getId() + "." + song.getSuffix());
-                in = new URL(getDownloadURL(song)).openStream();
+                in = connect(getDownloadURL(song));
                 out = new FileOutputStream(file);
                 long n = copy(in, out);
                 Log.i(TAG, "Downloaded " + n + " bytes to " + file);
@@ -291,6 +292,26 @@ public class DownloadService extends Service {
             }
         }
 
+        private InputStream connect(String url) throws Exception {
+            URLConnection connection = new URL(url).openConnection();
+            connection.setConnectTimeout(Constants.SOCKET_TIMEOUT);
+            connection.setReadTimeout(Constants.SOCKET_TIMEOUT);
+            connection.connect();
+            InputStream in = connection.getInputStream();
+
+            // If content type is XML, an error occured.  Get it.
+            String contentType = connection.getContentType();
+            if (contentType != null && contentType.startsWith("text/xml")) {
+                try {
+                    new ErrorParser().parse(new InputStreamReader(in, "UTF-8"));
+                } finally {
+                    Util.close(in);
+                }
+            }
+
+            return in;
+        }
+
         private File downloadAlbumArt(MusicDirectory.Entry song) {
             if (song.getCoverArt() == null) {
                 return null;
@@ -301,7 +322,7 @@ public class DownloadService extends Service {
             File file = null;
             try {
                 file = new File(albumArtDir, song.getId());
-                in = new URL(getAlbumArtURL(song)).openStream();
+                in = connect(getAlbumArtURL(song));
                 out = new FileOutputStream(file);
                 Util.copy(in, out);
             } catch (Exception e) {

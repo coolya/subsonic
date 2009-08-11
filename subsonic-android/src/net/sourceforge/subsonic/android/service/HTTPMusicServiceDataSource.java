@@ -21,6 +21,7 @@ package net.sourceforge.subsonic.android.service;
 import android.content.Context;
 import net.sourceforge.subsonic.android.util.ProgressListener;
 import net.sourceforge.subsonic.android.util.Util;
+import net.sourceforge.subsonic.android.util.Constants;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,8 +34,6 @@ import java.net.URLConnection;
  * @author Sindre Mehus
  */
 public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
-
-    private static final int CONNECT_TIMEOUT = 10000;
 
     @Override
     public Reader getArtistsReader(Context context, ProgressListener progressListener) throws Exception {
@@ -62,7 +61,8 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
 
     private Reader openURL(URL url) throws IOException {
         URLConnection connection = url.openConnection();
-        connection.setConnectTimeout(CONNECT_TIMEOUT);
+        connection.setConnectTimeout(Constants.SOCKET_TIMEOUT);
+        connection.setReadTimeout(Constants.SOCKET_TIMEOUT);
         InputStream in = connection.getInputStream();
         return new InputStreamReader(in, "UTF-8");
     }

@@ -161,7 +161,7 @@ public class RESTController extends MultiActionController {
     public ModelAndView download(HttpServletRequest request, HttpServletResponse response) throws Exception {
         User user = securityService.getCurrentUser(request);
         if (!user.isDownloadRole()) {
-            error(response, ErrorCode.NOT_AUTHORIZED, "User " + user.getUsername() + " is not authorized to download files.");
+            error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to download files.");
             return null;
         }
 
@@ -204,7 +204,6 @@ public class RESTController extends MultiActionController {
                     new XMLBuilder.Attribute("code", code.getCode()),
                     new XMLBuilder.Attribute("message", message));
         builder.end();
-        response.sendError(HttpServletResponse.SC_FORBIDDEN);
     }
 
     private XMLBuilder createXMLBuilder(HttpServletResponse response, boolean ok) throws IOException {
