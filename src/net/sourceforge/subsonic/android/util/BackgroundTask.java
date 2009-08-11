@@ -34,8 +34,6 @@ import net.sourceforge.subsonic.android.R;
  */
 public abstract class BackgroundTask<T> implements ProgressListener {
 
-    private static final String TAG = BackgroundTask.class.getSimpleName();
-
     private final Activity activity;
     private final Handler handler;
     private final Dialog progressDialog;
@@ -105,11 +103,30 @@ public abstract class BackgroundTask<T> implements ProgressListener {
     }
 
     protected void error(Throwable error) {
-        // TODO
-        TextView textView = new TextView(activity);
-        textView.setText("An error occurred.\n" + error);
-        activity.setContentView(textView);
-        Log.w(TAG, "An error occurred.", error);
+        Dialog errorDialog = new Dialog(activity);
+
+        errorDialog.setContentView(R.layout.error);
+        errorDialog.setTitle("An error occurred");
+        errorDialog.setOwnerActivity(activity);
+        errorDialog.setCancelable(true);
+        errorDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                activity.finish();
+            }
+        });
+        TextView text = (TextView) errorDialog.findViewById(R.id.error_message);
+        text.setText(getErrorMessage(error));
+
+        errorDialog.show();
+    }
+
+    protected String getErrorMessage(Throwable error) {
+        String message = error.getMessage();
+        if (message != null) {
+            return message;
+        }
+        return error.getClass().getSimpleName();
     }
 
     @Override
