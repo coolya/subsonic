@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+              a:orientation="horizontal"
+              a:layout_width="1000dp"
+              a:layout_height="fill_parent"
+              a:padding="10dp">
+
+    <TextView
+            a:id="@+id/error_message"
+            a:layout_width="wrap_content"
+            a:layout_height="fill_parent"
+            a:textColor="#FFF"
+            a:drawableLeft="@android:drawable/ic_dialog_alert"
+            a:drawablePadding="20dp"
+            />
+
+</LinearLayout>
+
