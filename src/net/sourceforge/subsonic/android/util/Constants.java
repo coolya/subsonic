@@ -34,6 +34,7 @@ public final class Constants {
 
     // Name of the preferences file.
     public static final String PREFERENCES_FILE_NAME = "net.sourceforge.subsonic.android_preferences";
+    public static final int SOCKET_TIMEOUT = 10000;
 
     private Constants() {
     }
