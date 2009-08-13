@@ -22,6 +22,7 @@ public final class Constants {
     // Names for intent extras.
     public static final String INTENT_EXTRA_NAME_PATH = "subsonic.path";
     public static final String INTENT_EXTRA_NAME_NAME = "subsonic.name";
+    public static final String INTENT_EXTRA_NAME_ERROR = "subsonic.error";
 
     // Notification IDs.
     public static final int NOTIFICATION_ID_DOWNLOAD_QUEUE = 1;
