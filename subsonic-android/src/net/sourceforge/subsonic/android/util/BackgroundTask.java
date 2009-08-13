@@ -103,22 +103,7 @@ public abstract class BackgroundTask<T> implements ProgressListener {
     }
 
     protected void error(Throwable error) {
-        Dialog errorDialog = new Dialog(activity);
-
-        errorDialog.setContentView(R.layout.error);
-        errorDialog.setTitle("An error occurred");
-        errorDialog.setOwnerActivity(activity);
-        errorDialog.setCancelable(true);
-        errorDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialogInterface) {
-                activity.finish();
-            }
-        });
-        TextView text = (TextView) errorDialog.findViewById(R.id.error_message);
-        text.setText(getErrorMessage(error));
-
-        errorDialog.show();
+        new ErrorDialog(activity, getErrorMessage(error)).show();
     }
 
     protected String getErrorMessage(Throwable error) {

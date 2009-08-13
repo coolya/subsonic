@@ -35,6 +35,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 import net.sourceforge.subsonic.android.activity.DownloadQueueActivity;
+import net.sourceforge.subsonic.android.activity.ErrorActivity;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.Pair;
@@ -195,7 +196,9 @@ public class DownloadService extends Service {
 
         // The PendingIntent to launch our activity if the user selects this notification
         // TODO
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, DownloadQueueActivity.class), 0);
+        Intent intent = new Intent(this, ErrorActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_ERROR, title + ".\n\n" + text);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
         notification.setLatestEventInfo(this, title, text, contentIntent);
 
         // Send the notification.
