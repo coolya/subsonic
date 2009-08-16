@@ -58,6 +58,17 @@ New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now
 
 ANDROID
 -------
+Revert RequestParameterProcessingFilter to use in mobile app.
+Hide title in error activity? http://www.androidsnippets.org/snippets/27/
+Use MD5 password.
+Password auth should check protocol major version.
+Save files using artist/album/song path?
+Add OK button to error dialog.
+ErrorActivity doesn't refresh the text.
+Add track number, genre and year.
+DownloadService stops when all other activites are ended(?)
+Space between buttons in main menu.
+Show album art when browsing music.
 Verify that server address always is a valid url.
 Bug: Only works with one cover art image? Refresh android media db.
 Merge artists in REST method.  Make it possible to specify music folder.

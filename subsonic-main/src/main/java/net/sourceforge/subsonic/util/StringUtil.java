@@ -41,6 +41,8 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.subsonic.domain.Version;
+
 /**
  * Miscellaneous string utility methods.
  *
@@ -471,5 +473,17 @@ public final class StringUtil {
     public static String getRESTProtocolVersion() {
         // TODO: Read from xsd.
         return "1.0.0";
+    }
+
+
+    public static boolean isRESTProtocolCompatible(String version) {
+        if (StringUtils.trimToNull(version) == null) {
+            return false;
+        }
+
+        Version theirVersion = new Version(version);
+        Version myVersion = new Version(getRESTProtocolVersion());
+
+        return theirVersion.getMajor() == myVersion.getMajor();
     }
 }

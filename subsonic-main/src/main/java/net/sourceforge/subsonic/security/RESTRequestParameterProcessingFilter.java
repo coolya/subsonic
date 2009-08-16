@@ -20,11 +20,10 @@ package net.sourceforge.subsonic.security;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.controller.RESTController;
-import net.sourceforge.subsonic.util.XMLBuilder;
 import net.sourceforge.subsonic.util.StringUtil;
+import net.sourceforge.subsonic.util.XMLBuilder;
 import org.acegisecurity.Authentication;
 import org.acegisecurity.AuthenticationException;
-import org.acegisecurity.BadCredentialsException;
 import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.providers.ProviderManager;
 import org.acegisecurity.providers.UsernamePasswordAuthenticationToken;
@@ -43,12 +42,13 @@ import java.io.IOException;
  * Performs authentication based on credentials being present in the HTTP request parameters.
  * <p/>
  * The username should be set in parameter "u", and the password should be set in parameter "p".
+ * The REST protocol version should be set in parameter "v".
  *
  * @author Sindre Mehus
  */
-public class RequestParameterProcessingFilter implements Filter {
+public class RESTRequestParameterProcessingFilter implements Filter {
 
-    private static final Logger LOG = Logger.getLogger(RequestParameterProcessingFilter.class);
+    private static final Logger LOG = Logger.getLogger(RESTRequestParameterProcessingFilter.class);
 
     private ProviderManager authenticationManager;
 
@@ -68,31 +68,38 @@ public class RequestParameterProcessingFilter implements Filter {
 
         String username = httpRequest.getParameter("u");
         String password = httpRequest.getParameter("p");
+        String version = httpRequest.getParameter("v");
 
-        try {
-            if (username == null || password == null) {
-                throw new BadCredentialsException("Missing username and/or password");
+        RESTController.ErrorCode errorCode = null;
+
+        if (!StringUtil.isRESTProtocolCompatible(version)) {
+            errorCode = RESTController.ErrorCode.PROTOCOL_MISMATCH;
+        } else if (username == null || password == null) {
+            errorCode = RESTController.ErrorCode.NOT_AUTHENTICATED;
+        } else {
+            try {
+                UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
+                Authentication authResult = authenticationManager.authenticate(authRequest);
+                SecurityContextHolder.getContext().setAuthentication(authResult);
+                LOG.debug("Successfully authenticated user " + username);
+            } catch (AuthenticationException x) {
+                errorCode = RESTController.ErrorCode.NOT_AUTHENTICATED;
             }
-            UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
-            Authentication authResult = authenticationManager.authenticate(authRequest);
-            SecurityContextHolder.getContext().setAuthentication(authResult);
-            LOG.debug("Successfully authenticated user " + username);
+        }
 
-        } catch (AuthenticationException failed) {
-
+        if (errorCode != null) {
             // Authentication failed
             LOG.info("Authentication failed for user " + username);
 
             SecurityContextHolder.getContext().setAuthentication(null);
-            sendErrorXml(httpResponse);
-
-            return;
+            sendErrorXml(httpResponse, errorCode);
+        } else {
+            chain.doFilter(request, response);
         }
-
-        chain.doFilter(request, response);
     }
 
-    private void sendErrorXml(HttpServletResponse response) throws IOException {
+
+    private void sendErrorXml(HttpServletResponse response, RESTController.ErrorCode errorCode) throws IOException {
         response.setContentType("text/xml");
         response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
 
@@ -104,8 +111,8 @@ public class RequestParameterProcessingFilter implements Filter {
                     new XMLBuilder.Attribute("version", StringUtil.getRESTProtocolVersion()));
 
         builder.add("error", true,
-                    new XMLBuilder.Attribute("code", RESTController.ErrorCode.NOT_AUTHENTICATED.getCode()),
-                    new XMLBuilder.Attribute("message", "Wrong username or password."));
+                    new XMLBuilder.Attribute("code", errorCode.getCode()),
+                    new XMLBuilder.Attribute("message", errorCode.getMessage()));
         builder.end();
     }
 

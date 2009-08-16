@@ -11,8 +11,8 @@
                 /wap**=httpSessionContextIntegrationFilter,logoutFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,basicExceptionTranslationFilter,filterInvocationInterceptor
                 /podcastReceiver**=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
                 /podcast**=httpSessionContextIntegrationFilter,logoutFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,basicExceptionTranslationFilter,filterInvocationInterceptor
-                /mobile/**=httpSessionContextIntegrationFilter,logoutFilter,requestParameterProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,basicExceptionTranslationFilter,filterInvocationInterceptor
-                /rest/**=httpSessionContextIntegrationFilter,logoutFilter,requestParameterProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,basicExceptionTranslationFilter,filterInvocationInterceptor
+                /mobile/**=httpSessionContextIntegrationFilter,logoutFilter,mobileRequestParameterProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,basicExceptionTranslationFilter,filterInvocationInterceptor
+                /rest/**=httpSessionContextIntegrationFilter,logoutFilter,restRequestParameterProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,basicExceptionTranslationFilter,filterInvocationInterceptor
                 /**=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
             </value>
         </property>
@@ -45,7 +45,11 @@
         <property name="authenticationEntryPoint" ref="basicProcessingFilterEntryPoint"/>
     </bean>
 
-    <bean id="requestParameterProcessingFilter" class="net.sourceforge.subsonic.security.RequestParameterProcessingFilter">
+    <bean id="mobileRequestParameterProcessingFilter" class="net.sourceforge.subsonic.security.MobileRequestParameterProcessingFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+    </bean>
+
+    <bean id="restRequestParameterProcessingFilter" class="net.sourceforge.subsonic.security.RESTRequestParameterProcessingFilter">
         <property name="authenticationManager" ref="authenticationManager"/>
     </bean>
 

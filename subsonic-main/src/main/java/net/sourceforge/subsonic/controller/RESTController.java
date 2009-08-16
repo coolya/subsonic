@@ -253,17 +253,24 @@ public class RESTController extends MultiActionController {
 
     public static enum ErrorCode {
 
-        NOT_AUTHENTICATED(10),
-        NOT_AUTHORIZED(11);
+        PROTOCOL_MISMATCH(10, "Wrong Subsonic REST protocol version"),
+        NOT_AUTHENTICATED(11, "Wrong username or password"),
+        NOT_AUTHORIZED(12, "User is not authorized for the given operation");
 
         private final int code;
+        private final String message;
 
-        ErrorCode(int code) {
+        ErrorCode(int code, String message) {
             this.code = code;
+            this.message = message;
         }
 
         public int getCode() {
             return code;
+        }
+
+        public String getMessage() {
+            return message;
         }
     }
 }
