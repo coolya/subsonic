@@ -195,17 +195,19 @@ public class DownloadService extends Service {
         final Notification notification = new Notification(android.R.drawable.stat_sys_warning, title, System.currentTimeMillis());
 
         // The PendingIntent to launch our activity if the user selects this notification
-        // TODO
         Intent intent = new Intent(this, ErrorActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(Constants.INTENT_EXTRA_NAME_ERROR, title + ".\n\n" + text);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         notification.setLatestEventInfo(this, title, text, contentIntent);
+
+        Log.i(TAG, "Sending error message: " + intent.getStringExtra(Constants.INTENT_EXTRA_NAME_ERROR));
 
         // Send the notification.
         handler.post(new Runnable() {
             @Override
             public void run() {
-                // TODO: Use unique ID?
+                notificationManager.cancel(Constants.NOTIFICATION_ID_DOWNLOAD_ERROR);
                 notificationManager.notify(Constants.NOTIFICATION_ID_DOWNLOAD_ERROR, notification);
             }
         });
@@ -276,9 +278,7 @@ public class DownloadService extends Service {
 
             } catch (Exception e) {
                 Util.close(out);
-                if (file != null) {
-                    file.delete();
-                }
+                Util.delete(file);
                 if (e instanceof InterruptedException) {
                     throw (InterruptedException) e;
                 }
@@ -329,6 +329,7 @@ public class DownloadService extends Service {
                 out = new FileOutputStream(file);
                 Util.copy(in, out);
             } catch (Exception e) {
+                Util.delete(file);
                 Log.e(TAG, "Failed to download album art.", e);
             } finally {
                 Util.close(in);

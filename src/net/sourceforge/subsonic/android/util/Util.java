@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -69,6 +70,12 @@ public final class Util {
             }
         } catch (IOException ioe) {
             // ignore
+        }
+    }
+
+    public static void delete(File file) {
+        if (file != null && file.exists()) {
+            file.delete();
         }
     }
 

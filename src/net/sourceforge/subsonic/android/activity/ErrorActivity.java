@@ -22,6 +22,7 @@ public class ErrorActivity extends Activity {
 
         String errorMessage = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ERROR);
 
+        Log.i(TAG, "ErrorActivity got message: " + errorMessage + ", " + System.identityHashCode(this));
         new ErrorDialog(this, errorMessage);
     }
 }
