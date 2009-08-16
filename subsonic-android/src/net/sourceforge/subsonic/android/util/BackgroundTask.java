@@ -19,14 +19,9 @@
 package net.sourceforge.subsonic.android.util;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.app.Dialog;
-import android.os.Handler;
-import android.widget.TextView;
-import android.widget.ImageView;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.util.Log;
-import net.sourceforge.subsonic.android.R;
+import android.os.Handler;
 
 
 /**
@@ -36,25 +31,37 @@ public abstract class BackgroundTask<T> implements ProgressListener {
 
     private final Activity activity;
     private final Handler handler;
-    private final Dialog progressDialog;
+    private final AlertDialog progressDialog;
     private boolean cancelled;
 
     public BackgroundTask(Activity activity) {
         this.activity = activity;
         handler = new Handler();
-        progressDialog = new Dialog(activity);
 
-        progressDialog.setContentView(R.layout.progress);
-        progressDialog.setTitle("Please wait...");
-        progressDialog.setOwnerActivity(activity);
-        progressDialog.setCancelable(true);
-        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+        progressDialog = createProgressDialog();
+    }
+
+    private AlertDialog createProgressDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Please wait...");
+        builder.setMessage("Loading.");
+        builder.setCancelable(true);
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
                 cancelled = true;
                 cancel();
             }
         });
+        builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                cancelled = true;
+                cancel();
+            }
+        });
+
+        return builder.create();
     }
 
     public void execute() {
@@ -119,8 +126,7 @@ public abstract class BackgroundTask<T> implements ProgressListener {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                TextView text = (TextView) progressDialog.findViewById(R.id.progress_message);
-                text.setText(message);
+                progressDialog.setMessage(message);
             }
         });
     }
