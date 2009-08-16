@@ -103,7 +103,7 @@ public abstract class BackgroundTask<T> implements ProgressListener {
     }
 
     protected void error(Throwable error) {
-        new ErrorDialog(activity, getErrorMessage(error)).show();
+        new ErrorDialog(activity, getErrorMessage(error));
     }
 
     protected String getErrorMessage(Throwable error) {

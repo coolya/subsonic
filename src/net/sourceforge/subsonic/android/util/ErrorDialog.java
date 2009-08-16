@@ -18,31 +18,35 @@
  */
 package net.sourceforge.subsonic.android.util;
 
-import android.app.Dialog;
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.widget.TextView;
-import net.sourceforge.subsonic.android.R;
 
 /**
  * @author Sindre Mehus
  */
-public class ErrorDialog extends Dialog {
+public class ErrorDialog {
 
     public ErrorDialog(final Activity activity, String errorMessage) {
-        super(activity);
-        setContentView(R.layout.error);
-        setTitle("An error occurred");
-        setOwnerActivity(activity);
-        setCancelable(true);
-        setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setTitle("Error");
+        builder.setMessage(errorMessage);
+        builder.setCancelable(true);
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
                 activity.finish();
             }
         });
-        TextView text = (TextView) findViewById(R.id.error_message);
-        text.setText(errorMessage);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                activity.finish();
+            }
+        });
+
+        builder.create().show();
     }
 }
