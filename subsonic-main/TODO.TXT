@@ -61,7 +61,7 @@ ANDROID
 Progress bar in notification.
 Hide title in error activity? http://www.androidsnippets.org/snippets/27/
 Save files using artist/album/song path?
-ErrorActivity doesn't refresh the text.
+User should be able to select music folder.
 Add track number, genre and year.
 DownloadService stops when all other activites are ended(?)
 Space between buttons in main menu.
