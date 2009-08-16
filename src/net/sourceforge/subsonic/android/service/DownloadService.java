@@ -368,6 +368,8 @@ public class DownloadService extends Service {
             values.put(MediaStore.MediaColumns.TITLE, song.getTitle());
             values.put(MediaStore.Audio.AudioColumns.ARTIST, song.getArtist());
             values.put(MediaStore.Audio.AudioColumns.ALBUM, song.getAlbum());
+            values.put(MediaStore.Audio.AudioColumns.TRACK, song.getTrack());
+            values.put(MediaStore.Audio.AudioColumns.YEAR, song.getYear());
             values.put(MediaStore.MediaColumns.DATA, songFile.getAbsolutePath());
             values.put(MediaStore.MediaColumns.MIME_TYPE, song.getContentType());
             values.put(MediaStore.Audio.AudioColumns.IS_MUSIC, 1);

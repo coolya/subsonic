@@ -65,6 +65,9 @@ public class MusicDirectory {
         private String title;
         private String album;
         private String artist;
+        private Integer track;
+        private Integer year;
+        private String genre;
         private String contentType;
         private String suffix;
         private String transcodedContentType;
@@ -110,6 +113,30 @@ public class MusicDirectory {
 
         public void setArtist(String artist) {
             this.artist = artist;
+        }
+
+        public Integer getTrack() {
+            return track;
+        }
+
+        public void setTrack(Integer track) {
+            this.track = track;
+        }
+
+        public Integer getYear() {
+            return year;
+        }
+
+        public void setYear(Integer year) {
+            this.year = year;
+        }
+
+        public String getGenre() {
+            return genre;
+        }
+
+        public void setGenre(String genre) {
+            this.genre = genre;
         }
 
         public String getContentType() {
