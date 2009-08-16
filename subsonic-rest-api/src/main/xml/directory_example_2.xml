@@ -5,11 +5,11 @@
 
     <directory id="11" name="Arrival">
         <child id="111" title="Dancing Queen" isDir="false"
-               album="Arrival" artist="ABBA" coverArt="24"
+               album="Arrival" artist="ABBA" track="7" year="1978" genre="Pop" coverArt="24"
                size="8421341" contentType="audio/mpeg" suffix="mp3"/>
 
         <child id="112" title="Money, Money, Money" isDir="false"
-               album="Arrival" artist="ABBA" coverArt="25"
+               album="Arrival" artist="ABBA" track="7" year="1978" genre="Pop" coverArt="25"
                size="4910028" contentType="audio/flac" suffix="flac"
                transcodedContentType="audio/mpeg" transcodedSuffix="mp3"/>
     </directory>

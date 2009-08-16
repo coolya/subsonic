@@ -26,7 +26,24 @@ import org.xmlpull.v1.XmlPullParser;
 public abstract class AbstractParser {
 
     protected void handleError(XmlPullParser parser) throws Exception {
-        String message = parser.getAttributeValue(null, "message");
-        throw new Exception(message);
+        throw new Exception(get(parser, "message"));
+    }
+
+    protected String get(XmlPullParser parser, String name) {
+        return parser.getAttributeValue(null, name);
+    }
+
+    protected boolean getBoolean(XmlPullParser parser, String name) {
+        return "true".equals(get(parser, name));
+    }
+
+    protected Integer getInteger(XmlPullParser parser, String name) {
+        String s = get(parser, name);
+        return s == null ? null : Integer.valueOf(s);
+    }
+
+    protected Long getLong(XmlPullParser parser, String name) {
+        String s = get(parser, name);
+        return s == null ? null : Long.valueOf(s);
     }
 }

@@ -126,8 +126,29 @@ public class RESTController extends MultiActionController {
             attributes.add(new Attribute("isDir", musicFile.isDirectory()));
 
             if (musicFile.isFile()) {
-                attributes.add(new Attribute("album", musicFile.getMetaData().getAlbum()));
-                attributes.add(new Attribute("artist", musicFile.getMetaData().getArtist()));
+                MusicFile.MetaData metaData = musicFile.getMetaData();
+                attributes.add(new Attribute("album", metaData.getAlbum()));
+                attributes.add(new Attribute("artist", metaData.getArtist()));
+
+                Integer track = metaData.getTrackNumber();
+                if (track != null) {
+                    attributes.add(new Attribute("track", track));
+                }
+
+                String year = metaData.getYear();
+                if (year != null) {
+                    try {
+                        attributes.add(new Attribute("year", Integer.valueOf(year)));
+                    } catch (NumberFormatException x) {
+                        LOG.warn("Invalid year: " + year, x);
+                    }
+                }
+
+                String genre = metaData.getGenre();
+                if (genre != null) {
+                    attributes.add(new Attribute("genre", genre));
+                }
+
                 attributes.add(new Attribute("size", musicFile.length()));
                 String suffix = musicFile.getSuffix();
                 attributes.add(new Attribute("suffix", suffix));

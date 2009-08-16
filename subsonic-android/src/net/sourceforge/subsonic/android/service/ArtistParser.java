@@ -52,11 +52,11 @@ public class ArtistParser extends AbstractParser {
             if (eventType == XmlPullParser.START_TAG) {
                 String name = parser.getName();
                 if ("index".equals(name)) {
-                    index = parser.getAttributeValue(null, "name");
+                    index = get(parser, "name");
                 } else if ("artist".equals(name)) {
                     Artist artist = new Artist();
-                    artist.setId(parser.getAttributeValue(null, "id"));
-                    artist.setName(parser.getAttributeValue(null, "name"));
+                    artist.setId(get(parser, "id"));
+                    artist.setName(get(parser, "name"));
                     artist.setIndex(index);
                     artists.add(artist);
 

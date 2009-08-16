@@ -50,27 +50,28 @@ public class MusicDirectoryParser extends AbstractParser {
                 String name = parser.getName();
                 if ("child".equals(name)) {
                     MusicDirectory.Entry entry = new MusicDirectory.Entry();
-                    entry.setId(parser.getAttributeValue(null, "id"));
-                    entry.setTitle(parser.getAttributeValue(null, "title"));
-                    entry.setDirectory("true".equals(parser.getAttributeValue(null, "isDir")));
+                    entry.setId(get(parser, "id"));
+                    entry.setTitle(get(parser, "title"));
+                    entry.setDirectory(getBoolean(parser, "isDir"));
 
                     if (!entry.isDirectory()) {
-                        entry.setAlbum(parser.getAttributeValue(null, "album"));
-                        entry.setArtist(parser.getAttributeValue(null, "artist"));
-                        entry.setContentType(parser.getAttributeValue(null, "contentType"));
-                        entry.setSuffix(parser.getAttributeValue(null, "suffix"));
-                        entry.setTranscodedContentType(parser.getAttributeValue(null, "transcodedContentType"));
-                        entry.setTranscodedSuffix(parser.getAttributeValue(null, "transcodedSuffix"));
-                        entry.setCoverArt(parser.getAttributeValue(null, "coverArt"));
-                        String size = parser.getAttributeValue(null, "size");
-                        if (size != null) {
-                            entry.setSize(Long.valueOf(size));
-                        }
+                        entry.setAlbum(get(parser, "album"));
+                        entry.setArtist(get(parser, "artist"));
+                        entry.setTrack(getInteger(parser, "track"));
+                        entry.setYear(getInteger(parser, "year"));
+                        entry.setGenre(get(parser, "genre"));
+                        entry.setArtist(get(parser, "artist"));
+                        entry.setContentType(get(parser, "contentType"));
+                        entry.setSuffix(get(parser, "suffix"));
+                        entry.setTranscodedContentType(get(parser, "transcodedContentType"));
+                        entry.setTranscodedSuffix(get(parser, "transcodedSuffix"));
+                        entry.setCoverArt(get(parser, "coverArt"));
+                        entry.setSize(getLong(parser, "size"));
                     }
 
                     dir.addChild(entry);
                 } else if ("directory".equals(name)) {
-                    dir.setName(parser.getAttributeValue(null, "name"));
+                    dir.setName(get(parser, "name"));
                 } else if ("error".equals(name)) {
                     handleError(parser);
                 }

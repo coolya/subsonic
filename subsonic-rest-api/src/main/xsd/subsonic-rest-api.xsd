@@ -64,6 +64,9 @@
         <xs:attribute name="title" type="xs:string" use="required"/>
         <xs:attribute name="album" type="xs:string" use="optional"/>
         <xs:attribute name="artist" type="xs:string" use="optional"/>
+        <xs:attribute name="track" type="xs:int" use="optional"/>
+        <xs:attribute name="year" type="xs:int" use="optional"/>
+        <xs:attribute name="genre" type="xs:string" use="optional"/>
         <xs:attribute name="coverArt" type="xs:string" use="optional"/>
         <xs:attribute name="size" type="xs:long" use="optional"/>
         <xs:attribute name="contentType" type="xs:string" use="optional"/>
