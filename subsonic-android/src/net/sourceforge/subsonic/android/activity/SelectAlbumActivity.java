@@ -26,11 +26,13 @@ import net.sourceforge.subsonic.android.service.MusicService;
 import net.sourceforge.subsonic.android.service.MusicServiceFactory;
 import net.sourceforge.subsonic.android.util.BackgroundTask;
 import net.sourceforge.subsonic.android.util.Constants;
+import net.sourceforge.subsonic.android.util.ImageLoader;
 
 public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
+    private ImageLoader imageLoader;
     private DownloadService downloadService;
     private ListView entryList;
     private Button downloadButton;
@@ -46,6 +48,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         setContentView(R.layout.select_album);
         setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
 
+        imageLoader = new ImageLoader();
         downloadButton = (Button) findViewById(R.id.select_album_download);
         selectAllButton = (Button) findViewById(R.id.select_album_selectall);
         selectNoneButton = (Button) findViewById(R.id.select_album_selectnone);
@@ -125,6 +128,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     protected void onDestroy() {
         super.onDestroy();
         unbindService(downloadServiceConnection);
+        imageLoader.cancel();
     }
 
     @Override
@@ -203,12 +207,16 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             TextView view;
 
             if (entry.isDirectory()) {
-                if (convertView != null && convertView instanceof TextView && !(convertView instanceof CheckedTextView)) {
-                    view = (TextView) convertView;
-                } else {
-                    view = (TextView) LayoutInflater.from(SelectAlbumActivity.this).inflate(
-                            android.R.layout.simple_list_item_1, parent, false);
+                view = (TextView) LayoutInflater.from(SelectAlbumActivity.this).inflate(
+                        android.R.layout.simple_list_item_1, parent, false);
+
+                view.setCompoundDrawablePadding(10);
+                view.setCompoundDrawablesWithIntrinsicBounds(R.drawable.unknown_album, 0, 0, 0);
+
+                if (entry.getCoverArt() != null) {
+                    imageLoader.loadImage(view, entry);
                 }
+
             } else {
                 if (convertView != null && convertView instanceof CheckedTextView) {
                     view = (TextView) convertView;

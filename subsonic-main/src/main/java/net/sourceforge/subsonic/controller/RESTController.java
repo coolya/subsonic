@@ -118,6 +118,8 @@ public class RESTController extends MultiActionController {
                     new Attribute("id", StringUtil.utf8HexEncode(dir.getPath())),
                     new Attribute("name", dir.getName()));
 
+        List<File> coverArt = musicFileService.getCoverArt(dir, 1);
+
         for (MusicFile musicFile : dir.getChildren(true, true)) {
 
             List<Attribute> attributes = new ArrayList<Attribute>();
@@ -154,7 +156,6 @@ public class RESTController extends MultiActionController {
                 attributes.add(new Attribute("suffix", suffix));
                 attributes.add(new Attribute("contentType", StringUtil.getMimeType(suffix)));
 
-                List<File> coverArt = musicFileService.getCoverArt(dir, 1);
                 if (!coverArt.isEmpty()) {
                     attributes.add(new Attribute("coverArt", StringUtil.utf8HexEncode(coverArt.get(0).getPath())));
                 }
@@ -164,7 +165,14 @@ public class RESTController extends MultiActionController {
                     attributes.add(new Attribute("transcodedSuffix", transcodedSuffix));
                     attributes.add(new Attribute("transcodedContentType", StringUtil.getMimeType(transcodedSuffix)));
                 }
+            } else {
+
+                List<File> childCoverArt = musicFileService.getCoverArt(musicFile, 1);
+                if (!childCoverArt.isEmpty()) {
+                    attributes.add(new Attribute("coverArt", StringUtil.utf8HexEncode(childCoverArt.get(0).getPath())));
+                }
             }
+
             builder.add("child", attributes, true);
         }
         builder.endAll();

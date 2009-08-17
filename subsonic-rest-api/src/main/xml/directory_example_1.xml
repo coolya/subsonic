@@ -4,8 +4,8 @@
                    status="ok" version="1.0.0">
 
     <directory id="1" name="ABBA">
-        <child id="11" title="Arrival" isDir="true"/>
-        <child id="12" title="Super Trouper" isDir="true"/>
+        <child id="11" title="Arrival" isDir="true" coverArt="22"/>
+        <child id="12" title="Super Trouper" isDir="true" coverArt="23"/>
     </directory>
 
 </subsonic-response>
