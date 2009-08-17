@@ -53,6 +53,7 @@ public class MusicDirectoryParser extends AbstractParser {
                     entry.setId(get(parser, "id"));
                     entry.setTitle(get(parser, "title"));
                     entry.setDirectory(getBoolean(parser, "isDir"));
+                    entry.setCoverArt(get(parser, "coverArt"));
 
                     if (!entry.isDirectory()) {
                         entry.setAlbum(get(parser, "album"));
@@ -65,7 +66,6 @@ public class MusicDirectoryParser extends AbstractParser {
                         entry.setSuffix(get(parser, "suffix"));
                         entry.setTranscodedContentType(get(parser, "transcodedContentType"));
                         entry.setTranscodedSuffix(get(parser, "transcodedSuffix"));
-                        entry.setCoverArt(get(parser, "coverArt"));
                         entry.setSize(getLong(parser, "size"));
                     }
 

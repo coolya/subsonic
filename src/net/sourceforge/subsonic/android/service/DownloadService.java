@@ -229,7 +229,7 @@ public class DownloadService extends Service {
     }
 
     private String getAlbumArtURL(MusicDirectory.Entry song) {
-        return Util.getRestUrl(this, "getCoverArt") + "&id=" + song.getCoverArt();
+        return Util.getRestUrl(this, "getCoverArt") + "&id=" + song.getCoverArt() + "&size=200";
     }
 
     public class DownloadBinder extends Binder {
