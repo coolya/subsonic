@@ -58,7 +58,6 @@ New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now
 
 ANDROID
 -------
-Cache drawables in ImageLoader.
 Progress bar in notification.
 Hide title in error activity? http://www.androidsnippets.org/snippets/27/
 Save files using artist/album/song path?
@@ -67,7 +66,6 @@ Better error message on socketexception.
 Merge artists in REST method.  Make it possible to specify music folder.
 DownloadService stops when all other activites are ended(?)
 Space between buttons in main menu.
-Show album art when browsing music.
 Verify that server address always is a valid url.
 Clear cache when server url changes.
 Make MusicService a real service?
