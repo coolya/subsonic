@@ -66,7 +66,6 @@ Better error message on socketexception.
 Merge artists in REST method.  Make it possible to specify music folder.
 DownloadService stops when all other activites are ended(?)
 Space between buttons in main menu.
-Verify that server address always is a valid url.
 Clear cache when server url changes.
 Make MusicService a real service?
 Add streaming button.

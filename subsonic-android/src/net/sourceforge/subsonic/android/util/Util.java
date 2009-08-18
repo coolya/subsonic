@@ -11,10 +11,10 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -93,9 +93,13 @@ public final class Util {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                toast(context, message);
             }
         });
+    }
+
+    public static void toast(final Context context, final String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
     /**

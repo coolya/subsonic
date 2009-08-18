@@ -27,7 +27,7 @@ import android.content.DialogInterface;
  */
 public class ErrorDialog {
 
-    public ErrorDialog(final Activity activity, String errorMessage) {
+    public ErrorDialog(final Activity activity, String errorMessage, final boolean finishActivityOnCancel) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
@@ -37,13 +37,17 @@ public class ErrorDialog {
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
-                activity.finish();
+                if (finishActivityOnCancel) {
+                    activity.finish();
+                }
             }
         });
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                activity.finish();
+                if (finishActivityOnCancel) {
+                    activity.finish();
+                }
             }
         });
 

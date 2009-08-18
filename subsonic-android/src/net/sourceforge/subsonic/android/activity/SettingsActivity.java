@@ -5,7 +5,10 @@ import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import net.sourceforge.subsonic.android.util.Constants;
+import net.sourceforge.subsonic.android.util.ErrorDialog;
 import net.sourceforge.subsonic.android.R;
+
+import java.net.URL;
 
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
@@ -32,10 +35,17 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         String key = preference.getKey();
+        String value = (String) newValue;
         if (Constants.PREFERENCES_KEY_SERVER_URL.equals(key)) {
-            serverUrl.setSummary((CharSequence) newValue);
+            try {
+                new URL(value);
+            } catch (Exception x) {
+                new ErrorDialog(this, "Please specify a valid URL.", false);
+                return false;
+            }
+            serverUrl.setSummary(value);
         } else if (Constants.PREFERENCES_KEY_USERNAME.equals(key)) {
-            username.setSummary((CharSequence) newValue);
+            username.setSummary(value);
         }
         return true;
     }
