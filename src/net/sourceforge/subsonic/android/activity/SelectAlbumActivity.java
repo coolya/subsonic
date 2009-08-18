@@ -211,11 +211,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                         android.R.layout.simple_list_item_1, parent, false);
 
                 view.setCompoundDrawablePadding(10);
-                view.setCompoundDrawablesWithIntrinsicBounds(R.drawable.unknown_album, 0, 0, 0);
-
-                if (entry.getCoverArt() != null) {
-                    imageLoader.loadImage(view, entry);
-                }
+                imageLoader.loadImage(view, entry);
 
             } else {
                 if (convertView != null && convertView instanceof CheckedTextView) {

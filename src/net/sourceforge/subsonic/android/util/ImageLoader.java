@@ -23,20 +23,27 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
+import net.sourceforge.subsonic.android.R;
 
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.BlockingQueue;
+import java.util.Map;
 
 /**
+ * Intended for short-lived usage, typically one activity's onCreate() - onDestroy() lifecycle.
+ *
  * @author Sindre Mehus
  */
 public class ImageLoader implements Runnable {
 
     private static final String TAG = ImageLoader.class.getSimpleName();
 
-    private final LinkedBlockingQueue<Task> queue;
+    private final BlockingQueue<Task> queue;
+    private final Map<String, Drawable> cache = new ConcurrentHashMap<String, Drawable>();
     private final Thread thread;
 
     public ImageLoader() {
@@ -46,7 +53,27 @@ public class ImageLoader implements Runnable {
     }
 
     public void loadImage(TextView view, MusicDirectory.Entry entry) {
+        if (entry.getCoverArt() == null) {
+            setUnknownImage(view);
+            return;
+        }
+
+        Drawable drawable = cache.get(entry.getCoverArt());
+        if (drawable != null) {
+            setImage(view, drawable);
+            return;
+        }
+
+        setUnknownImage(view);
         queue.offer(new Task(view, entry));
+    }
+
+    private void setImage(TextView view, Drawable drawable) {
+        view.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+    }
+
+    private void setUnknownImage(TextView view) {
+        view.setCompoundDrawablesWithIntrinsicBounds(R.drawable.unknown_album, 0, 0, 0);
     }
 
     public void cancel() {
@@ -67,7 +94,7 @@ public class ImageLoader implements Runnable {
         }
     }
 
-    private static class Task {
+    private class Task {
         private final TextView view;
         private final MusicDirectory.Entry entry;
         private final Handler handler;
@@ -88,11 +115,12 @@ public class ImageLoader implements Runnable {
                 connection.connect();
                 in = connection.getInputStream();
                 final Drawable drawable = Drawable.createFromStream(in, "src");
+                cache.put(entry.getCoverArt(), drawable);
 
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        view.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+                        setImage(view, drawable);
                     }
                 });
             } catch (Exception x) {
