@@ -20,14 +20,8 @@
                   a:paddingTop="10dip"
             >
 
-        <Button a:id="@+id/select_album_selectall"
-                a:text="Select all"
-                a:visibility="gone"
-                a:layout_width="wrap_content"
-                a:layout_height="fill_parent"/>
-
-        <Button a:id="@+id/select_album_selectnone"
-                a:text="Select none"
+        <Button a:id="@+id/select_album_selectallornone"
+                a:text="Select all/none"
                 a:visibility="gone"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
