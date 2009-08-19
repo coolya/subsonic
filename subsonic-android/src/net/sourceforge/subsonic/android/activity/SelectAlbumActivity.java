@@ -36,8 +36,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     private DownloadService downloadService;
     private ListView entryList;
     private Button downloadButton;
-    private Button selectAllButton;
-    private Button selectNoneButton;
+    private Button selectAllOrNoneButton;
 
     /**
      * Called when the activity is first created.
@@ -50,24 +49,16 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
 
         imageLoader = new ImageLoader();
         downloadButton = (Button) findViewById(R.id.select_album_download);
-        selectAllButton = (Button) findViewById(R.id.select_album_selectall);
-        selectNoneButton = (Button) findViewById(R.id.select_album_selectnone);
+        selectAllOrNoneButton = (Button) findViewById(R.id.select_album_selectallornone);
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
         entryList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);// TODO:Specify in XML.
         entryList.setOnItemClickListener(this);
 
-        selectAllButton.setOnClickListener(new View.OnClickListener() {
+        selectAllOrNoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectAll(true);
-            }
-        });
-
-        selectNoneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectAll(false);
+                selectAllOrNone();
             }
         });
 
@@ -104,8 +95,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                     }
                 }
                 downloadButton.setVisibility(visibility);
-                selectAllButton.setVisibility(visibility);
-                selectNoneButton.setVisibility(visibility);
+                selectAllOrNoneButton.setVisibility(visibility);
             }
 
             @Override
@@ -114,6 +104,18 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 finish();
             }
         }.execute();
+    }
+
+    private void selectAllOrNone() {
+        boolean someUnselected = false;
+        int count = entryList.getCount();
+        for (int i = 0; i < count; i++) {
+            if (!entryList.isItemChecked(i)) {
+                someUnselected = true;
+                break;
+            }
+        }
+        selectAll(someUnselected);
     }
 
     private void selectAll(boolean selected) {

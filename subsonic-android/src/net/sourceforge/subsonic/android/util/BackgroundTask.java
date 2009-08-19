@@ -43,6 +43,7 @@ public abstract class BackgroundTask<T> implements ProgressListener {
 
     private AlertDialog createProgressDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
         builder.setTitle("Please wait...");
         builder.setMessage("Loading.");
         builder.setCancelable(true);

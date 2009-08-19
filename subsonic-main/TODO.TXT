@@ -69,7 +69,6 @@ Space between buttons in main menu.
 Clear cache when server url changes.
 Make MusicService a real service?
 Add streaming button.
-Combine select all/none buttons.
 Add icons to buttons.
 Download git.
 Clean up thread in DownloadService.onDestroy().
