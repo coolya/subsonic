@@ -23,4 +23,9 @@
             a:summary="****"
             />
 
+    <Preference
+            a:key="test_connection"
+            a:title="Test connection"
+            a:persistent="false" />
+
 </PreferenceScreen>

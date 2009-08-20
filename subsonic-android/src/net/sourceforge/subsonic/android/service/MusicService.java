@@ -30,6 +30,8 @@ import android.content.Context;
  */
 public interface MusicService {
 
+    void ping(Context context, ProgressListener progressListener) throws Exception;
+
     List<Artist> getArtists(Context context, ProgressListener progressListener) throws Exception;
 
     MusicDirectory getMusicDirectory(String path, Context context, ProgressListener progressListener) throws Exception;

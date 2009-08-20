@@ -62,8 +62,10 @@ Progress bar in notification.
 Hide title in error activity? http://www.androidsnippets.org/snippets/27/
 Save files using artist/album/song path?
 User should be able to select music folder.
-Better error message on socketexception.
+Better error message on socketexception. IOException
+Let BackgroundTask support retry. (like android market app)
 Merge artists in REST method.  Make it possible to specify music folder.
+Support downloading same file multiple times.
 DownloadService stops when all other activites are ended(?)
 Space between buttons in main menu.
 Make MusicService a real service?

@@ -69,6 +69,18 @@ public class RESTController extends MultiActionController {
      * None
      * <p/>
      * Returns:
+     * XML document with no elements.
+     */
+    public ModelAndView ping(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        createXMLBuilder(response, true).endAll();
+        return null;
+    }
+
+    /**
+     * Request parameters:
+     * None
+     * <p/>
+     * Returns:
      * XML document with "indexes" element.
      */
     public ModelAndView getIndexes(HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -54,8 +54,9 @@ public class MainActivity extends OptionsMenuActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "Stopping service.");
 
+        // TODO: Stop service or leave it running? Must avoid thread leakage in DownloadService.
+        Log.i(TAG, "Stopping service.");
         stopService(new Intent(this, DownloadService.class));
     }
 }
