@@ -58,6 +58,10 @@ public class LRUCache {
         map.put(key, new TimestampedValue(value));
     }
 
+    public void clear() {
+        map.clear();
+    }
+
     private void removeOldest() {
         Object oldestKey = null;
         long oldestTimestamp = Long.MAX_VALUE;

@@ -18,10 +18,12 @@ import net.sourceforge.subsonic.android.service.MusicService;
 import net.sourceforge.subsonic.android.service.MusicServiceFactory;
 import net.sourceforge.subsonic.android.util.BackgroundTask;
 import net.sourceforge.subsonic.android.util.Constants;
+import net.sourceforge.subsonic.android.R;
 
 public class SelectArtistActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = SelectArtistActivity.class.getSimpleName();
+    private ListView artistList;
 
     /**
      * Called when the activity is first created.
@@ -29,7 +31,15 @@ public class SelectArtistActivity extends OptionsMenuActivity implements Adapter
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.select_artist);
 
+        artistList = (ListView) findViewById(R.id.select_artist_list);
+        artistList.setOnItemClickListener(this);
+
+        load();
+    }
+
+    private void load() {
         BackgroundTask<List<Artist>> task = new BackgroundTask<List<Artist>>(this) {
             @Override
             protected List<Artist> doInBackground() throws Throwable {
@@ -39,13 +49,7 @@ public class SelectArtistActivity extends OptionsMenuActivity implements Adapter
 
             @Override
             protected void done(List<Artist> result) {
-                // TODO: Use xml file
-                ListView listView = new ListView(SelectArtistActivity.this);
-                listView.setAdapter(new ArtistAdapter(result));
-                listView.setTextFilterEnabled(true);
-                listView.setOnItemClickListener(SelectArtistActivity.this);
-                listView.setFastScrollEnabled(true);
-                setContentView(listView);
+                artistList.setAdapter(new ArtistAdapter(result));
             }
 
             @Override

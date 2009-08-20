@@ -18,6 +18,23 @@
  */
 package net.sourceforge.subsonic.android.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -41,20 +58,6 @@ import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.Pair;
 import net.sourceforge.subsonic.android.util.Util;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.atomic.AtomicReference;
-
 /**
  * @author Sindre Mehus
  */
@@ -62,37 +65,90 @@ public class DownloadService extends Service {
 
     private static final String TAG = DownloadService.class.getSimpleName();
     private static final Uri ALBUM_ART_URI = Uri.parse("content://media/external/audio/albumart");
+    private static final MusicDirectory.Entry DIE = new MusicDirectory.Entry();
 
     private final IBinder binder = new DownloadBinder();
     private final Handler handler = new Handler();
-    private final LinkedBlockingQueue<MusicDirectory.Entry> queue = new LinkedBlockingQueue<MusicDirectory.Entry>();
 
+    private final LinkedBlockingQueue<MusicDirectory.Entry> queue = new LinkedBlockingQueue<MusicDirectory.Entry>();
     private final AtomicReference<MusicDirectory.Entry> currentDownload = new AtomicReference<MusicDirectory.Entry>();
     private final AtomicLong currentProgress = new AtomicLong();
-    private final File musicDir;
-    private final File albumArtDir;
-    private final DownloadService.DownloadThread downloadThread;
+    private File musicDir;
+    private File albumArtDir;
+    private File stateDir;
+    private DownloadService.DownloadThread downloadThread;
 
-    public DownloadService() {
+    @Override
+    public void onCreate() {
+        musicDir = createDirectory("music");
+        albumArtDir = createDirectory("albumart");
+        stateDir = createDirectory("state");
+
+        loadQueue();
         downloadThread = new DownloadThread();
         downloadThread.start();
+    }
 
+    @Override
+    public void onDestroy() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancel(Constants.NOTIFICATION_ID_DOWNLOAD_QUEUE);
+
+        saveQueue();
+        clear();
+        queue.offer(DIE);
+    }
+
+    private void loadQueue() {
+        File file = new File(stateDir, "queue.dat");
+        if (!file.exists()) {
+            return;
+        }
+
+        ObjectInputStream in = null;
+        try {
+            in = new ObjectInputStream(new FileInputStream(file));
+            List<MusicDirectory.Entry> q = (List<MusicDirectory.Entry>) in.readObject();
+            queue.addAll(q);
+            Log.i(TAG, "Loaded download queue from disk: " + q.size());
+        } catch (Exception x) {
+            Util.close(in);
+            Log.w(TAG, "Failed to load download queue.", x);
+        }
+    }
+
+    private void saveQueue() {
+        ObjectOutputStream out = null;
+        try {
+            out = new ObjectOutputStream(new FileOutputStream(new File(stateDir, "queue.dat")));
+
+            List<MusicDirectory.Entry> q = getQueue();
+            MusicDirectory.Entry current = currentDownload.get();
+            if (current != null && !q.contains(current)) {
+                q.add(0, current);
+            }
+
+            out.writeObject(q);
+            out.flush();
+            Log.i(TAG, "Saved download queue to disk: " + q.size());
+        } catch (Exception x) {
+            Util.close(out);
+            Log.w(TAG, "Failed to save download queue.", x);
+        }
+    }
+
+    private File createDirectory(String name) {
         File subsonicDir = new File(Environment.getExternalStorageDirectory(), "subsonic");
-        musicDir = new File(subsonicDir, "music");
-        albumArtDir = new File(subsonicDir, "albumart");
-
-        if (!musicDir.exists() && !musicDir.mkdirs()) {
-            Log.e(TAG, "Failed to create " + musicDir);
+        File dir = new File(subsonicDir, name);
+        if (!dir.exists() && !dir.mkdirs()) {
+            Log.e(TAG, "Failed to create " + name);
         }
-        if (!albumArtDir.exists() && !albumArtDir.mkdirs()) {
-            Log.e(TAG, "Failed to create " + albumArtDir);
-        }
-
+        return dir;
     }
 
     public void download(List<MusicDirectory.Entry> songs) {
         String message = songs.size() == 1 ? "Added \"" + songs.get(0).getTitle() + "\" to download queue." :
-                         "Added " + songs.size() + " songs to download queue.";
+                "Added " + songs.size() + " songs to download queue.";
         updateNotification();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         queue.addAll(songs);
@@ -218,12 +274,6 @@ public class DownloadService extends Service {
         return binder;
     }
 
-    @Override
-    public void onDestroy() {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(Constants.NOTIFICATION_ID_DOWNLOAD_QUEUE);
-    }
-
     private String getDownloadURL(MusicDirectory.Entry song) {
         return Util.getRestUrl(this, "download") + "&id=" + song.getId();
     }
@@ -246,7 +296,12 @@ public class DownloadService extends Service {
         public void run() {
             while (true) {
                 try {
-                    downloadToFile(queue.take());
+                    MusicDirectory.Entry song = queue.take();
+                    if (song == DIE) {
+                        return;
+                    }
+
+                    downloadToFile(song);
                 } catch (InterruptedException x) {
                     Log.i(TAG, "Download thread interrupted. Continuing.");
                 }

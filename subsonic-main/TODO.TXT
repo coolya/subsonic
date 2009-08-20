@@ -66,12 +66,10 @@ Better error message on socketexception.
 Merge artists in REST method.  Make it possible to specify music folder.
 DownloadService stops when all other activites are ended(?)
 Space between buttons in main menu.
-Clear cache when server url changes.
 Make MusicService a real service?
 Add streaming button.
 Add icons to buttons.
 Download git.
-Clean up thread in DownloadService.onDestroy().
 http://blog.pocketjourney.com/2008/04/04/tutorial-custom-media-streaming-for-androids-mediaplayer/
 Handle IO errors in DownloadService.
 Show info if connected to demo server.
