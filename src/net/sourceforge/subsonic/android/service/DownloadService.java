@@ -114,7 +114,10 @@ public class DownloadService extends Service {
         } catch (Exception x) {
             Util.close(in);
             Log.w(TAG, "Failed to load download queue.", x);
+        } finally {
+            file.delete();
         }
+
     }
 
     private void saveQueue() {

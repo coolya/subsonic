@@ -28,6 +28,7 @@ import android.content.Context;
  * @author Sindre Mehus
  */
 public interface MusicServiceDataSource {
+    Reader getPingReader(Context context, ProgressListener progressListener) throws Exception;
     Reader getArtistsReader(Context context, ProgressListener progressListener) throws Exception;
     Reader getMusicDirectoryReader(String id, Context context, ProgressListener progressListener) throws Exception;
 }

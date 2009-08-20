@@ -20,6 +20,7 @@ package net.sourceforge.subsonic.android.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
 /**
  * @author Sindre Mehus
@@ -59,7 +60,7 @@ public class MusicDirectory {
         return result;
     }
 
-    public static class Entry {
+    public static class Entry implements Serializable {
         private String id;
         private boolean directory;
         private String title;

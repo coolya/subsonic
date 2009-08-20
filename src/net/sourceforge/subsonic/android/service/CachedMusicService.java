@@ -43,6 +43,11 @@ public class CachedMusicService implements MusicService {
         cachedMusicDirectories = new LRUCache(CACHE_SIZE);
     }
 
+    @Override
+    public void ping(Context context, ProgressListener progressListener) throws Exception {
+        musicService.ping(context, progressListener);
+    }
+
     public List<Artist> getArtists(Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
         if (cachedArtists == null) {

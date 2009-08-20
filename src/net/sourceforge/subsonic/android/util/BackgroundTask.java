@@ -22,12 +22,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Handler;
+import android.util.Log;
 
 
 /**
  * @author Sindre Mehus
  */
 public abstract class BackgroundTask<T> implements ProgressListener {
+
+    private static final String TAG = BackgroundTask.class.getSimpleName();
 
     private final Activity activity;
     private final Handler handler;
@@ -111,6 +114,7 @@ public abstract class BackgroundTask<T> implements ProgressListener {
     }
 
     protected void error(Throwable error) {
+        Log.w(TAG, "Got exception: " + error, error);
         new ErrorDialog(activity, getErrorMessage(error), true);
     }
 

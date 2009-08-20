@@ -19,9 +19,9 @@
 package net.sourceforge.subsonic.android.service;
 
 import android.content.Context;
+import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.ProgressListener;
 import net.sourceforge.subsonic.android.util.Util;
-import net.sourceforge.subsonic.android.util.Constants;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,6 +29,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
+import java.util.Arrays;
 
 /**
  * @author Sindre Mehus
@@ -36,22 +38,35 @@ import java.net.URLConnection;
 public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
 
     @Override
+    public Reader getPingReader(Context context, ProgressListener progressListener) throws Exception {
+        return getReader(context, progressListener, "ping", null, null);
+    }
+
+    @Override
     public Reader getArtistsReader(Context context, ProgressListener progressListener) throws Exception {
-        String urlString = Util.getRestUrl(context, "getIndexes");
-
-        URL url = new URL(urlString);
-        if (progressListener != null) {
-            progressListener.updateProgress("Contacting server " + url.getHost());
-        }
-
-        return openURL(url);
+        return getReader(context, progressListener, "getIndexes", null, null);
     }
 
     @Override
     public Reader getMusicDirectoryReader(String id, Context context, ProgressListener progressListener) throws Exception {
-        String urlString = Util.getRestUrl(context, "getMusicDirectory") + "&id=" + id;
+        return getReader(context, progressListener, "getMusicDirectory", Arrays.asList("id"), Arrays.<Object>asList(id));
+    }
 
-        URL url = new URL(urlString);
+    public Reader getReader(Context context, ProgressListener progressListener, String method,
+                            List<String> parameterNames, List<Object> parameterValues) throws Exception {
+
+        StringBuilder urlString = new StringBuilder();
+        urlString.append(Util.getRestUrl(context, method));
+
+        if (parameterNames != null) {
+            for (int i = 0; i < parameterNames.size(); i++) {
+                urlString.append("&");
+                urlString.append(parameterNames.get(i)).append("=");
+                urlString.append(parameterValues.get(i));
+            }
+        }
+
+        URL url = new URL(urlString.toString());
         if (progressListener != null) {
             progressListener.updateProgress("Contacting server " + url.getHost());
         }

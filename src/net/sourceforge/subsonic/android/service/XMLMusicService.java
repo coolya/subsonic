@@ -36,12 +36,25 @@ public class XMLMusicService implements MusicService {
     private final MusicServiceDataSource dataSource;
     private final ArtistParser artistParser;
     private final MusicDirectoryParser musicDirectoryParser;
+    private final ErrorParser errorParser;
     private final List<Reader> readers = new ArrayList<Reader>(10);
 
     public XMLMusicService(MusicServiceDataSource dataSource) {
         this.dataSource = dataSource;
         artistParser = new ArtistParser();
         musicDirectoryParser = new MusicDirectoryParser();
+        errorParser = new ErrorParser();
+    }
+
+    @Override
+    public void ping(Context context, ProgressListener progressListener) throws Exception {
+        Reader reader = dataSource.getPingReader(context, progressListener);
+        addReader(reader);
+        try {
+            errorParser.parse(reader);
+        } finally {
+            closeReader(reader);
+        }
     }
 
     public List<Artist> getArtists(Context context, ProgressListener progressListener) throws Exception {
