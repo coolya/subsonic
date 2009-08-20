@@ -23,6 +23,7 @@ import java.util.List;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.domain.Artist;
 import net.sourceforge.subsonic.android.util.ProgressListener;
+import net.sourceforge.subsonic.android.util.Util;
 import android.content.Context;
 
 /**
@@ -35,6 +36,7 @@ public class CachedMusicService implements MusicService {
     private final MusicService musicService;
     private final LRUCache cachedMusicDirectories;
     private List<Artist> cachedArtists;
+    private String restUrl;
 
     public CachedMusicService(MusicService musicService) {
         this.musicService = musicService;
@@ -42,6 +44,7 @@ public class CachedMusicService implements MusicService {
     }
 
     public List<Artist> getArtists(Context context, ProgressListener progressListener) throws Exception {
+        checkSettingsChanged(context);
         if (cachedArtists == null) {
             cachedArtists = musicService.getArtists(context, progressListener);
         }
@@ -49,6 +52,7 @@ public class CachedMusicService implements MusicService {
     }
 
     public MusicDirectory getMusicDirectory(String path, Context context, ProgressListener progressListener) throws Exception {
+        checkSettingsChanged(context);
         MusicDirectory dir = (MusicDirectory) cachedMusicDirectories.get(path);
         if (dir == null) {
             dir = musicService.getMusicDirectory(path, context, progressListener);
@@ -59,5 +63,14 @@ public class CachedMusicService implements MusicService {
 
     public void cancel(Context context, ProgressListener progressListener) {
         musicService.cancel(context, progressListener);
+    }
+
+    private void checkSettingsChanged(Context context) {
+        String newUrl = Util.getRestUrl(context, null);
+        if (!Util.equals(newUrl, restUrl)) {
+            cachedMusicDirectories.clear();
+            cachedArtists = null;
+            restUrl = newUrl;
+        }
     }
 }
