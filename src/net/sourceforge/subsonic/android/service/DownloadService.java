@@ -364,7 +364,7 @@ public class DownloadService extends Service {
             String contentType = connection.getContentType();
             if (contentType != null && contentType.startsWith("text/xml")) {
                 try {
-                    new ErrorParser().parse(new InputStreamReader(in, "UTF-8"));
+                    new ErrorParser().parse(new InputStreamReader(in, Constants.UTF_8));
                 } finally {
                     Util.close(in);
                 }

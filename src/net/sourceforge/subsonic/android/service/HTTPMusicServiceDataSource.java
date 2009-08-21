@@ -79,6 +79,6 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
         connection.setConnectTimeout(Constants.SOCKET_TIMEOUT);
         connection.setReadTimeout(Constants.SOCKET_TIMEOUT);
         InputStream in = connection.getInputStream();
-        return new InputStreamReader(in, "UTF-8");
+        return new InputStreamReader(in, Constants.UTF_8);
     }
 }

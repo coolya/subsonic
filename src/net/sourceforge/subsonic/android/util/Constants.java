@@ -12,6 +12,9 @@ package net.sourceforge.subsonic.android.util;
  */
 public final class Constants {
 
+    // Character encoding used throughout.
+    public static final String UTF_8 = "UTF-8";
+
     // REST protocol version.
     public static final String PROTOCOL_VERSION = "1.0.0";
 
