@@ -88,6 +88,7 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
 
             Long bytesTotal = current.getSecond().getSecond();
             progressBar.setIndeterminate(bytesTotal == null);
+
             if (bytesTotal != null) {
                 progressBar.setMax(bytesTotal.intValue());
             }
