@@ -21,8 +21,8 @@ package net.sourceforge.subsonic.android.activity;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.R;
 import android.content.Intent;
+import net.sourceforge.subsonic.android.R;
 
 /**
  * @author Sindre Mehus
@@ -34,9 +34,9 @@ public class OptionsMenuActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, MENU_HOME, 0, "Home").setIcon(R.drawable.ic_menu_mylocation);
-        menu.add(0, MENU_QUEUE, 0, "Download queue").setIcon(R.drawable.ic_menu_directions);
-        menu.add(0, MENU_SETTINGS, 0, "Settings").setIcon(R.drawable.ic_menu_preferences);
+        menu.add(0, MENU_HOME, 0, "Home").setIcon(R.drawable.menu_home);
+        menu.add(0, MENU_QUEUE, 0, "Download queue").setIcon(android.R.drawable.ic_menu_save);
+        menu.add(0, MENU_SETTINGS, 0, "Settings").setIcon(android.R.drawable.ic_menu_preferences);
         return true;
     }
 
