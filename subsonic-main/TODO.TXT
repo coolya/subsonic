@@ -1,14 +1,17 @@
 TODO IN 3.8
 --------------
-http://upnp-portmapper.sourceforge.net/
-Fix problem with "Cannot find the declaration of element 'beans'."
-http://www.jthink.net/jaudiotagger/index.jsp
-Hide IPs from Subsonic Demo.
-Exclusion filter (*.svn, *.log, *.pun)
-Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
-Select music folder / playlist folder in Windows installer.
 Add REST method to create/update users.
-Nightly build.
+Document REST API.
+Hide IPs from Subsonic Demo.
+Add FLAC>WAV transcoding
+Add "Add random" to main.view and "Add to playlist" in more.view
+Permanent ad campaign on subsonic.sf.net
+
+Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
+http://upnp-portmapper.sourceforge.net/
+http://www.jthink.net/jaudiotagger/index.jsp
+Exclusion filter (*.svn, *.log, *.pun)
+Select music folder / playlist folder in Windows installer.
 Add links to Facebook group from home page and Help page.
 Bad performance, low bandwidth.
 http://lyricsfly.com/
@@ -16,18 +19,14 @@ Test with Chrome (2.0.172.33)
 Frame borders in Chrome.
 Avoid underlined image links in menu bar (FF, Chrome)
 Nightly build.
-Add FLAC>WAV transcoding
 "removeAllRows() can only be used with table, tbody, thead and tfoot elements. Attempt to use: HTMLDivElement"
 next/prev buttons in jukebox.
-Add "Add random" to main.view and "Add to playlist" in more.view
 Write installation note on how to setup internet access.
-Upgrade to Spring 3.0.  Use REST stuff.
 Mention Amahi in web pages.
 Contact Amahi
 Run agent as admin in Windows 7. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1479
 Does subsonic_exclude.txt work for indexing? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1965
 Dynamic playlists,  Message from zeekay.
-Android
 Lucene
 User registration.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1931
 Further search improvements, e.g., "search all". http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1839
@@ -36,28 +35,27 @@ Improve Midnight Fun theme.
 Use signed requests against Amazon.
 Google Image Search or Yahoo search
 Automatically enable/disable "Notify me about new versions" option when new users are created.
-Permanent ad campaign on subsonic.sf.net
-
 
 DONE IN 3.8
 ------------
 New: Added chat.
 New: Support playlist repeat in web player.
 New: Jukebox now support WAV format (including FLAC > WAV transcoding).
+New: Avoid problems when upgrading stand-alone version.
+New: Updated Dutch translation, courtesy of Sander van der Grind and Jeremy Terpstra.
+New: Improved German translation, courtesy of 3R3.
+New: Updated Slovenian translation, courtesy of Andrej éiûmond
+New: Added Finnish translation, courtesy of Reijo J‰‰rni
+New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now playing".
 Bugfix: Repeat now works properly in jukebox mode.
 Bugfix: Usernames can now contain white spaces and international characters.
 Bugfix: Allow alternate date format in Podcast episodes.
 Bugfix: Fixed broken Discogs image search.
 Bugfix: Subsonic server doesn't require an internet connection during startup.
-New: Updated Dutch translation, courtesy of Sander van der Grind and Jeremy Terpstra.
-New: Avoid problems when upgrading stand-alone version.
-New: Improved German translation, courtesy of 3R3.
-New: Updated Slovenian translation, courtesy of Andrej éiûmond
-New: Added Finnish translation, courtesy of Reijo J‰‰rni
-New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now playing".
 
 ANDROID
 -------
+Add icons to buttons.
 Progress bar in notification.
 Hide title in error activity? http://www.androidsnippets.org/snippets/27/
 Save files using artist/album/song path?
@@ -70,11 +68,10 @@ DownloadService stops when all other activites are ended(?)
 Space between buttons in main menu.
 Make MusicService a real service?
 Add streaming button.
-Add icons to buttons.
 Download git.
 http://blog.pocketjourney.com/2008/04/04/tutorial-custom-media-streaming-for-androids-mediaplayer/
-Handle IO errors in DownloadService.
 Show info if connected to demo server.
+Allow only 100 downloads for non-licensed servers.
 
 LUCENE
 ------
