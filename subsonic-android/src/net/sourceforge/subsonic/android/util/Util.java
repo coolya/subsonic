@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -28,6 +29,9 @@ public final class Util {
     private static final DecimalFormat MEGA_BYTE_FORMAT = new DecimalFormat("0.00 MB");
     private static final DecimalFormat KILO_BYTE_FORMAT = new DecimalFormat("0 KB");
 
+    // Used by hexEncode()
+    private static final char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
     private Util() {
     }
 
@@ -38,6 +42,9 @@ public final class Util {
         String serverUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_URL, null);
         String username = prefs.getString(Constants.PREFERENCES_KEY_USERNAME, null);
         String password = prefs.getString(Constants.PREFERENCES_KEY_PASSWORD, null);
+
+        // Slightly obfuscate password
+        password = "enc:" + Util.utf8HexEncode(password);
 
         builder.append(serverUrl);
         if (builder.charAt(builder.length() - 1) != '/') {
@@ -148,4 +155,43 @@ public final class Util {
         return object1.equals(object2);
 
     }
+
+    /**
+     * Encodes the given string by using the hexadecimal representation of its UTF-8 bytes.
+     *
+     * @param s The string to encode.
+     * @return The encoded string.
+     */
+    public static String utf8HexEncode(String s) {
+        if (s == null) {
+            return null;
+        }
+        byte[] utf8;
+        try {
+            utf8 = s.getBytes(Constants.UTF_8);
+        } catch (UnsupportedEncodingException x) {
+            throw new RuntimeException(x);
+        }
+        return hexEncode(utf8);
+    }
+
+    /**
+     * Converts an array of bytes into an array of characters representing the hexadecimal values of each byte in order.
+     * The returned array will be double the length of the passed array, as it takes two characters to represent any
+     * given byte.
+     *
+     * @param data Bytes to convert to hexadecimal characters.
+     * @return A string containing hexadecimal characters.
+     */
+    public static String hexEncode(byte[] data) {
+        int length = data.length;
+        char[] out = new char[length << 1];
+        // two characters form the hex value.
+        for (int i = 0, j = 0; i < length; i++) {
+            out[j++] = HEX_DIGITS[(0xF0 & data[i]) >>> 4];
+            out[j++] = HEX_DIGITS[0x0F & data[i]];
+        }
+        return new String(out);
+    }
+
 }

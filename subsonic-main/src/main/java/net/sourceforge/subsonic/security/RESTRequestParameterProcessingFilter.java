@@ -44,6 +44,8 @@ import java.io.IOException;
  * The username should be set in parameter "u", and the password should be set in parameter "p".
  * The REST protocol version should be set in parameter "v".
  *
+ * The password can either be in plain text or be UTF-8 hexencoded preceded by "enc:".
+ *
  * @author Sindre Mehus
  */
 public class RESTRequestParameterProcessingFilter implements Filter {
@@ -67,7 +69,7 @@ public class RESTRequestParameterProcessingFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         String username = httpRequest.getParameter("u");
-        String password = httpRequest.getParameter("p");
+        String password = decrypt(httpRequest.getParameter("p"));
         String version = httpRequest.getParameter("v");
 
         RESTController.ErrorCode errorCode = null;
@@ -98,6 +100,19 @@ public class RESTRequestParameterProcessingFilter implements Filter {
         }
     }
 
+    private String decrypt(String s) {
+        if (s == null) {
+            return null;
+        }
+        if (!s.startsWith("enc:")) {
+            return s;
+        }
+        try {
+            return StringUtil.utf8HexDecode(s.substring(4));
+        } catch (Exception e) {
+            return s;
+        }
+    }
 
     private void sendErrorXml(HttpServletResponse response, RESTController.ErrorCode errorCode) throws IOException {
         response.setContentType("text/xml");

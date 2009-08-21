@@ -55,23 +55,20 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
-Encode password.
+Better error message on socketexception. IOException
+User should be able to select music folder. (Let REST method support it at least).
+Support downloading same file multiple times.
+Show info if connected to demo server.
+Allow only 100 downloads for non-licensed servers.
+Make schema available thru http.  Put it in webapp.
+
 Progress bar in notification.
 Hide title in error activity? http://www.androidsnippets.org/snippets/27/
 Save files using artist/album/song path?
-User should be able to select music folder.
-Better error message on socketexception. IOException
 Let BackgroundTask support retry. (like android market app)
 Merge artists in REST method.  Make it possible to specify music folder.
-Support downloading same file multiple times.
-DownloadService stops when all other activites are ended(?)
-Space between buttons in main menu.
-Make MusicService a real service?
 Add streaming button.
-Download git.
 http://blog.pocketjourney.com/2008/04/04/tutorial-custom-media-streaming-for-androids-mediaplayer/
-Show info if connected to demo server.
-Allow only 100 downloads for non-licensed servers.
 
 LUCENE
 ------
