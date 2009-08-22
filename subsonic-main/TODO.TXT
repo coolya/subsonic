@@ -1,7 +1,7 @@
 TODO IN 3.8
 --------------
-Add REST method to create/update users.
 Document REST API.
+Use signed requests against Amazon.
 Hide IPs from Subsonic Demo.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
@@ -32,7 +32,6 @@ User registration.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1
 Further search improvements, e.g., "search all". http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1839
 Improve year range in random playlist generator.  Maybe provide to and from fields.
 Improve Midnight Fun theme.
-Use signed requests against Amazon.
 Google Image Search or Yahoo search
 Automatically enable/disable "Notify me about new versions" option when new users are created.
 
@@ -58,10 +57,11 @@ ANDROID
 Better error message on socketexception. IOException
 User should be able to select music folder. (Let REST method support it at least).
 Support downloading same file multiple times.
+
 Show info if connected to demo server.
 Allow only 100 downloads for non-licensed servers.
 Make schema available thru http.  Put it in webapp.
-
+Reuse cache logic in LeftController.
 Progress bar in notification.
 Hide title in error activity? http://www.androidsnippets.org/snippets/27/
 Save files using artist/album/song path?

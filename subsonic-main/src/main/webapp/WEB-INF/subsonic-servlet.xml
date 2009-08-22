@@ -318,6 +318,7 @@
         <property name="transcodingService" ref="transcodingService"/>
         <property name="downloadController" ref="downloadController"/>
         <property name="coverArtController" ref="coverArtController"/>
+        <property name="userSettingsController" ref="userSettingsController"/>
     </bean>
     <bean id="dbController" class="net.sourceforge.subsonic.controller.DBController">
         <property name="viewName" value="db"/>

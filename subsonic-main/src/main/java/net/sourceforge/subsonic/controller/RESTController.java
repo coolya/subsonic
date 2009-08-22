@@ -19,10 +19,12 @@
 package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.command.UserSettingsCommand;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicIndex;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.TranscodeScheme;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicIndexService;
 import net.sourceforge.subsonic.service.PlayerService;
@@ -34,6 +36,7 @@ import net.sourceforge.subsonic.util.XMLBuilder;
 import static net.sourceforge.subsonic.util.XMLBuilder.Attribute;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+import org.springframework.web.bind.ServletRequestUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,6 +66,7 @@ public class RESTController extends MultiActionController {
     private TranscodingService transcodingService;
     private DownloadController downloadController;
     private CoverArtController coverArtController;
+    private UserSettingsController userSettingsController;
 
     /**
      * Request parameters:
@@ -221,6 +225,60 @@ public class RESTController extends MultiActionController {
     }
 
     /**
+     * Request parameters:
+     * username - Username of the new user.
+     * password - Password of the new user.
+     * ldapAuthenticated - optional, default false.
+     * adminRole - optional, default false.
+     * commentRole - optional, default false.
+     * coverArtRole - optional, default false.
+     * streamRole - optional, default true.
+     * downloadRole - optional, default false.
+     * uploadRole - optional, default false.
+     * jukeboxRole - optional, default false.
+     * playlistRole - optional, default false.
+     * podcastRole - optional, default false.
+     * settingsRole - optional, default true.
+     * transcodeScheme - OFF, MAX_32, MAX_40, MAX_48 etc. optional, default OFF.
+     * <p/>
+     * Returns:
+     * Success or failure status.
+     */
+    public ModelAndView createUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        User user = securityService.getCurrentUser(request);
+        if (!user.isAdminRole()) {
+            error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to create new users.");
+            return null;
+        }
+
+        try {
+            UserSettingsCommand command = new UserSettingsCommand();
+            command.setUsername(ServletRequestUtils.getRequiredStringParameter(request, "username"));
+            command.setPassword(ServletRequestUtils.getRequiredStringParameter(request, "password"));
+            command.setLdapAuthenticated(ServletRequestUtils.getBooleanParameter(request, "ldapAuthenticated", false));
+            command.setAdminRole(ServletRequestUtils.getBooleanParameter(request, "adminRole", false));
+            command.setCommentRole(ServletRequestUtils.getBooleanParameter(request, "commentRole", false));
+            command.setCoverArtRole(ServletRequestUtils.getBooleanParameter(request, "coverArtRole", false));
+            command.setDownloadRole(ServletRequestUtils.getBooleanParameter(request, "downloadRole", false));
+            command.setStreamRole(ServletRequestUtils.getBooleanParameter(request, "streamRole", true));
+            command.setUploadRole(ServletRequestUtils.getBooleanParameter(request, "uploadRole", false));
+            command.setJukeboxRole(ServletRequestUtils.getBooleanParameter(request, "jukeboxRole", false));
+            command.setPlaylistRole(ServletRequestUtils.getBooleanParameter(request, "playlistRole", false));
+            command.setPodcastRole(ServletRequestUtils.getBooleanParameter(request, "podcastRole", false));
+            command.setSettingsRole(ServletRequestUtils.getBooleanParameter(request, "settingsRole", true));
+            command.setTranscodeSchemeName(ServletRequestUtils.getStringParameter(request, "transcodeScheme", TranscodeScheme.OFF.name()));
+
+            userSettingsController.createUser(command);
+            createXMLBuilder(response, true).endAll();
+
+        } catch (Exception x) {
+            error(response, ErrorCode.GENERIC, x.getMessage());
+        }
+
+        return null;
+    }
+
+    /**
      * Renames "id" request parameter to "path".
      */
     private HttpServletRequest wrapRequest(final HttpServletRequest request) {
@@ -292,8 +350,13 @@ public class RESTController extends MultiActionController {
         this.coverArtController = coverArtController;
     }
 
+    public void setUserSettingsController(UserSettingsController userSettingsController) {
+        this.userSettingsController = userSettingsController;
+    }
+
     public static enum ErrorCode {
 
+        GENERIC(0, "A generic error"),
         PROTOCOL_MISMATCH(10, "Wrong Subsonic REST protocol version"),
         NOT_AUTHENTICATED(11, "Wrong username or password"),
         NOT_AUTHORIZED(12, "User is not authorized for the given operation");
