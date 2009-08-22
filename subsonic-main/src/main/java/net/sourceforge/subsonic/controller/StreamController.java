@@ -76,7 +76,6 @@ public class StreamController implements Controller {
 
         TransferStatus status = null;
         PlaylistInputStream in = null;
-        String streamEndpoint = null;
         Player player = playerService.getPlayer(request, response, false, true);
         User user = securityService.getUserByName(player.getUsername());
 
@@ -131,12 +130,6 @@ public class StreamController implements Controller {
 
             Playlist playlist = player.getPlaylist();
 
-            String userAgent = request.getHeader("user-agent");
-            if (userAgent == null) {
-                userAgent = "unknown user-agent";
-            }
-            streamEndpoint = player.getUsername() + '@' + request.getRemoteHost() + ':' + request.getRemotePort() + " (" + userAgent + ')';
-
             boolean isMobile = request.getParameter("mobile") != null;
 
             // Terminate any other streams to this player.
@@ -147,8 +140,6 @@ public class StreamController implements Controller {
                     }
                 }
             }
-
-            LOG.info("Starting stream " + streamEndpoint);
 
             status = statusService.createStreamStatus(player);
 
@@ -177,7 +168,6 @@ public class StreamController implements Controller {
 
                 // Check if stream has been terminated.
                 if (status.terminated()) {
-                    LOG.info("Killing stream " + streamEndpoint);
                     return null;
                 }
 
@@ -205,7 +195,6 @@ public class StreamController implements Controller {
                 securityService.updateUserByteCounts(user, status.getBytesTransfered(), 0L, 0L);
             }
             IOUtils.closeQuietly(in);
-            LOG.info("Stopping stream " + streamEndpoint);
         }
         return null;
     }

@@ -114,7 +114,6 @@ public class MusicFileInfoDao extends AbstractDao {
     public void createMusicFileInfo(MusicFileInfo info) {
         String sql = "insert into music_file_info (" + COLUMNS + ") values (null, ?, ?, ?, ?, ?)";
         update(sql, info.getPath(), info.getComment(), info.getPlayCount(), info.getLastPlayed(), info.isEnabled());
-        LOG.info("Created music file info for " + info.getPath());
     }
 
     /**

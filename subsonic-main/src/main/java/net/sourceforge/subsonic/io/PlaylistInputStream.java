@@ -117,7 +117,7 @@ public class PlaylistInputStream extends InputStream {
             close();
         } else if (!file.equals(currentFile)) {
             close();
-            LOG.info("Opening new song " + FileUtil.getShortPath(file.getFile()));
+            LOG.info(player.getUsername() + " listening to \"" + FileUtil.getShortPath(file.getFile()) + "\"");
             updateStatistics(file);
             audioScrobblerService.register(file, player.getUsername(), false);
 

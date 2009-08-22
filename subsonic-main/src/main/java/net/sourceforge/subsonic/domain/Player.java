@@ -276,7 +276,7 @@ public class Player {
     }
 
     /**
-     * Returns a long description of the player, e.g., <code>Player 3 [admin@192.168.2.1]</code>
+     * Returns a long description of the player, e.g., <code>Player 3 [admin]</code>
      *
      * @return A long description of the player.
      */
@@ -288,7 +288,7 @@ public class Player {
             builder.append("Player ").append(id);
         }
 
-        builder.append(" [").append(username).append('@').append(ipAddress).append(']');
+        builder.append(" [").append(username).append(']');
         return builder.toString();
     }
 

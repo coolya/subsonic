@@ -37,6 +37,7 @@ import static net.sourceforge.subsonic.util.XMLBuilder.Attribute;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.ServletRequestBindingException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -126,9 +127,14 @@ public class RESTController extends MultiActionController {
         XMLBuilder builder = createXMLBuilder(response, true);
         Player player = playerService.getPlayer(request, response);
 
-        String path = StringUtil.utf8HexDecode(request.getParameter("id"));
-        MusicFile dir = musicFileService.getMusicFile(path);
-        // TODO: Handle non-existing dir.
+        MusicFile dir = null;
+        try {
+            String path = StringUtil.utf8HexDecode(ServletRequestUtils.getRequiredStringParameter(request, "id"));
+            dir = musicFileService.getMusicFile(path);
+        } catch (Exception x) {
+            error(response, ErrorCode.GENERIC, x.getMessage());
+            return null;
+        }
 
         builder.add("directory", false,
                     new Attribute("id", StringUtil.utf8HexEncode(dir.getPath())),
@@ -271,6 +277,8 @@ public class RESTController extends MultiActionController {
             userSettingsController.createUser(command);
             createXMLBuilder(response, true).endAll();
 
+        } catch (ServletRequestBindingException x) {
+            error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
         } catch (Exception x) {
             error(response, ErrorCode.GENERIC, x.getMessage());
         }
@@ -357,6 +365,7 @@ public class RESTController extends MultiActionController {
     public static enum ErrorCode {
 
         GENERIC(0, "A generic error"),
+        MISSING_PARAMETER(1, "Required parameter is missing"),
         PROTOCOL_MISMATCH(10, "Wrong Subsonic REST protocol version"),
         NOT_AUTHENTICATED(11, "Wrong username or password"),
         NOT_AUTHORIZED(12, "User is not authorized for the given operation");
