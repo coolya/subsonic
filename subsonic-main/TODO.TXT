@@ -1,10 +1,10 @@
 TODO IN 3.8
 --------------
+In licence email, explain how to install it.
 Document REST API.
 Use signed requests against Amazon.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
-Permanent ad campaign on subsonic.sf.net
 
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
 http://upnp-portmapper.sourceforge.net/

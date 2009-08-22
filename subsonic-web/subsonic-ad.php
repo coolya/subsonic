@@ -19,24 +19,25 @@
 	height: 398px;
 	border: 1px solid gray;
 	">
-    <div style="margin:6px">
-        <h2>Vote Subsonic!</h2>
+    <div style="margin:6px;padding-top:1em">
         <p>
-            Subsonic is a finalist in the <b>SourceForge Community Choice Awards 2009</b>.
+            <img src="inc/img/donate.png" alt="Subsonic" class="img-center"/>
+        </p>
+        <h2>Love Subsonic?</h2>
+        <p>
+            Please support continued development and maintenance by giving a donation.
         </p>
         <p>
-            Please <b><a href="http://sf.net/community/cca09/vote/?f=463" target="_blank">vote for Subsonic now</a></b> to win the "Best Project for Multimedia" category!
+            As a donor you will receive a license key which disables ads in the Subsonic web interface.
         </p>
         <p>
-            Voting ends on July 20.
+            The suggested donation amount is $20, but you can give any amount you like.
         </p>
         <p>
-            <a href="http://sf.net/community/cca09/vote/?f=463" target="_blank"><img src="http://c.fsdn.com/sf/images/cca/cca_120x60_2009_finalist.png" alt="Vote" class="img-center"/></a>
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&no_shipping=1&currency_code=USD&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt="Donate" class="img-center"/></a>
         </p>
         <p>
-            Thanks for your support :-)
-            <br/>
-            Sindre, Subsonic Developer
+            Thanks ;-)
         </p>
     </div>
 </div>
