@@ -51,6 +51,7 @@
       <entry name="?*.wav" />
       <entry name="?*.jts" />
       <entry name="?*.mid" />
+      <entry name="?*.mp3" />
     </wildcardResourcePatterns>
   </component>
   <component name="DependenciesAnalyzeManager">

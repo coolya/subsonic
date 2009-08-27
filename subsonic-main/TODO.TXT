@@ -5,8 +5,8 @@ Make REST API handle player ID.
 Use signed requests against Amazon.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
-
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
+
 http://upnp-portmapper.sourceforge.net/
 http://www.jthink.net/jaudiotagger/index.jsp
 Exclusion filter (*.svn, *.log, *.pun)
@@ -54,7 +54,6 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
-Better error message on socketexception. IOException
 User should be able to select music folder. (Let REST method support it at least).
 Support downloading same file multiple times.
 
