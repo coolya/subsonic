@@ -170,7 +170,7 @@ body.page-features #main-col {
 #nav li a span {
 	display: block;
 	float: left;
-	padding: 12px 19px 12px 19px;
+	padding: 12px 17px 12px 17px;
 	background: url('../img/topnav-div.gif') right 1px no-repeat;
 }
 #nav li a:hover, #nav li a.active {
@@ -262,6 +262,11 @@ th.transcoding-heading {
 }
 td.transcoding {
     white-space:nowrap;
+}
+
+/* ---------- API Parameter Table ----------- */
+th.param-heading {
+    font-size:11px;
 }
 
 /* ---------- Feature Detail ----------- */

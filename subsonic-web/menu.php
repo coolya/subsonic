@@ -24,6 +24,7 @@
         <li id="menu-transcoding"><a href="transcoding.php" class="<?php if ($current == 'transcoding') echo('open');?>"><span>Transcoding</span></a></li>
         <li id="menu-changelog"><a href="changelog.php" class="<?php if ($current == 'changelog') echo('open');?>"><span>Change Log</span></a></li>
         <li id="menu-forum"><a href="forum.php" class="<?php if ($current == 'forum') echo('open');?>"><span>Forum</span></a></li>
+        <li id="menu-api"><a href="api.php" class="<?php if ($current == 'api') echo('open');?>"><span>API</span></a></li>
     </ul>
 </div>
 <hr/>

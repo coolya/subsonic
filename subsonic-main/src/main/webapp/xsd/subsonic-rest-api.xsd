@@ -10,6 +10,7 @@
 
     <xs:complexType name="Response">
         <xs:choice minOccurs="0" maxOccurs="1">
+            <xs:element name="musicFolders" type="sub:MusicFolders" minOccurs="1" maxOccurs="1"/>
             <xs:element name="indexes" type="sub:Indexes" minOccurs="1" maxOccurs="1"/>
             <xs:element name="directory" type="sub:Directory" minOccurs="1" maxOccurs="1"/>
             <xs:element name="error" type="sub:Error" minOccurs="1" maxOccurs="1"/>
@@ -30,6 +31,17 @@
             <xs:pattern value="\d+\.\d+\.\d+"/>
         </xs:restriction>
     </xs:simpleType>
+
+    <xs:complexType name="MusicFolders">
+        <xs:sequence>
+            <xs:element name="musicFolder" type="sub:MusicFolder" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MusicFolder">
+            <xs:attribute name="id" type="xs:int" use="required"/>
+            <xs:attribute name="name" type="xs:string" use="optional"/>
+    </xs:complexType>
 
     <xs:complexType name="Indexes">
         <xs:sequence>

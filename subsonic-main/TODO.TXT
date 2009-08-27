@@ -1,7 +1,7 @@
 TODO IN 3.8
 --------------
 In licence email, explain how to install it.
-Document REST API.
+Make REST API handle player ID.
 Use signed requests against Amazon.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view

@@ -25,6 +25,7 @@ import net.sourceforge.subsonic.domain.MusicIndex;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.domain.TranscodeScheme;
+import net.sourceforge.subsonic.domain.MusicFolder;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicIndexService;
 import net.sourceforge.subsonic.service.PlayerService;
@@ -49,9 +50,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
+import java.util.Arrays;
 
 /**
  * Multi-controller used for the REST API.
+ *
+ * For documentation, please refer to api.php.
  *
  * @author Sindre Mehus
  */
@@ -69,25 +73,28 @@ public class RESTController extends MultiActionController {
     private CoverArtController coverArtController;
     private UserSettingsController userSettingsController;
 
-    /**
-     * Request parameters:
-     * None
-     * <p/>
-     * Returns:
-     * XML document with no elements.
-     */
     public ModelAndView ping(HttpServletRequest request, HttpServletResponse response) throws Exception {
         createXMLBuilder(response, true).endAll();
         return null;
     }
 
-    /**
-     * Request parameters:
-     * None
-     * <p/>
-     * Returns:
-     * XML document with "indexes" element.
-     */
+    public ModelAndView getMusicFolders(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        XMLBuilder builder = createXMLBuilder(response, true);
+        builder.add("musicFolders", false);
+
+        for (MusicFolder musicFolder : settingsService.getAllMusicFolders()) {
+            List<Attribute> attributes = new ArrayList<Attribute>();
+            attributes.add(new Attribute("id", musicFolder.getId()));
+            if (musicFolder.getName() != null) {
+                attributes.add(new Attribute("name", musicFolder.getName()));
+            }
+            builder.add("musicFolder", attributes, true);
+        }
+        builder.endAll();
+
+        return null;
+    }
+
     public ModelAndView getIndexes(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         XMLBuilder builder = createXMLBuilder(response, true);
@@ -95,7 +102,18 @@ public class RESTController extends MultiActionController {
         long lastModified = 0L; // TODO
         builder.add("indexes", "lastModified", lastModified, false);
 
-        SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists = musicIndexService.getIndexedArtists(settingsService.getAllMusicFolders());
+        List<MusicFolder> musicFolders = settingsService.getAllMusicFolders();
+        Integer musicFolderId = ServletRequestUtils.getIntParameter(request, "musicFolderId");
+        if (musicFolderId != null) {
+            for (MusicFolder musicFolder : musicFolders) {
+                if (musicFolderId.equals(musicFolder.getId())) {
+                    musicFolders = Arrays.asList(musicFolder);
+                    break;
+                }
+            }
+        }
+
+        SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists = musicIndexService.getIndexedArtists(musicFolders);
 
         for (Map.Entry<MusicIndex, SortedSet<MusicIndex.Artist>> entry : indexedArtists.entrySet()) {
             builder.add("index", "name", entry.getKey().getIndex(), false);
@@ -116,13 +134,6 @@ public class RESTController extends MultiActionController {
         return null;
     }
 
-    /**
-     * Request parameters:
-     * id - Identifies the music directory.
-     * <p/>
-     * Returns:
-     * XML document with "directory" element.
-     */
     public ModelAndView getMusicDirectory(HttpServletRequest request, HttpServletResponse response) throws Exception {
         XMLBuilder builder = createXMLBuilder(response, true);
         Player player = playerService.getPlayer(request, response);
@@ -202,13 +213,6 @@ public class RESTController extends MultiActionController {
         return null;
     }
 
-    /**
-     * Request parameters:
-     * id - Identifies the file to download.
-     * <p/>
-     * Returns:
-     * Binary data.
-     */
     public ModelAndView download(HttpServletRequest request, HttpServletResponse response) throws Exception {
         User user = securityService.getCurrentUser(request);
         if (!user.isDownloadRole()) {
@@ -219,37 +223,10 @@ public class RESTController extends MultiActionController {
         return downloadController.handleRequest(wrapRequest(request), response);
     }
 
-    /**
-     * Request parameters:
-     * id - Identifies the cover art file to retrieve.
-     * <p/>
-     * Returns:
-     * Binary data.
-     */
     public ModelAndView getCoverArt(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return coverArtController.handleRequest(wrapRequest(request), response);
     }
 
-    /**
-     * Request parameters:
-     * username - Username of the new user.
-     * password - Password of the new user.
-     * ldapAuthenticated - optional, default false.
-     * adminRole - optional, default false.
-     * commentRole - optional, default false.
-     * coverArtRole - optional, default false.
-     * streamRole - optional, default true.
-     * downloadRole - optional, default false.
-     * uploadRole - optional, default false.
-     * jukeboxRole - optional, default false.
-     * playlistRole - optional, default false.
-     * podcastRole - optional, default false.
-     * settingsRole - optional, default true.
-     * transcodeScheme - OFF, MAX_32, MAX_40, MAX_48 etc. optional, default OFF.
-     * <p/>
-     * Returns:
-     * Success or failure status.
-     */
     public ModelAndView createUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
         User user = securityService.getCurrentUser(request);
         if (!user.isAdminRole()) {
