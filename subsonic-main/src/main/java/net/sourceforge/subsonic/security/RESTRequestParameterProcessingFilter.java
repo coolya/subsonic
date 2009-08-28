@@ -71,6 +71,7 @@ public class RESTRequestParameterProcessingFilter implements Filter {
         String username = httpRequest.getParameter("u");
         String password = decrypt(httpRequest.getParameter("p"));
         String version = httpRequest.getParameter("v");
+        String client = httpRequest.getParameter("c");
 
         RESTController.ErrorCode errorCode = null;
 
@@ -78,7 +79,11 @@ public class RESTRequestParameterProcessingFilter implements Filter {
             errorCode = RESTController.ErrorCode.PROTOCOL_MISMATCH;
         } else if (username == null || password == null) {
             errorCode = RESTController.ErrorCode.NOT_AUTHENTICATED;
-        } else {
+        } else if (client == null) {
+            errorCode = RESTController.ErrorCode.MISSING_PARAMETER;
+        }
+
+        else {
             try {
                 UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
                 Authentication authResult = authenticationManager.authenticate(authRequest);

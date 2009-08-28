@@ -1,7 +1,10 @@
 TODO IN 3.8
 --------------
 In licence email, explain how to install it.
-Make REST API handle player ID.
+Does REST API also work with POST?
+Make REST API handle player ID. At least create method to return all players.
+Create one player instance per user called "Phone".
+Remove Amazon integration.
 Use signed requests against Amazon.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
@@ -387,6 +390,14 @@ Update version number in pom.xml etc.
 Take backup of forum.
 Upgrade gosubsonic.com
   scp subsonic-assembly/target/subsonic-*-standalone.tar.gz sindremehus@gosubsonic.com:subsonic/standalone
+
+HOW TO RELEASE TO ANDROID MARKET
+================================
+cd subsonic-android
+ant release
+keytool -genkey -v -keystore subsonic.keystore -alias subsonic -keyalg RSA -validity 100000 -dname "CN=Sindre Mehus, O=Active Objects"
+jarsigner -verbose -keystore subsonic.keystore -signedjar bin/SubsonicActivity-signed.apk bin/SubsonicActivity-unsigned.apk subsonic
+
 
 HOW TO RELEASE TRANSCODING PACK
 ===============================

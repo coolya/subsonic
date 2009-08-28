@@ -28,20 +28,49 @@
                 Individual methods are detailed below.
             </p>
             <p>
-                Please note that all methods require the following parameters for authentication and protocol verification:
+                Please note that all methods take the following parameters:
             </p>
-            <p>
-                <code>u</code> - The username.<br/>
-                <code>p</code> - The password, either in clear text or hex-encoded with a "enc:" prefix.<br/>
-                <code>v</code> - The protocol version implemented by the client, i.e., the version of the
-                <code>subsonic-rest-api.xsd</code> schema used (see below).
-            </p>
+
+            <table width="100%" class="bottomspace">
+                <tr>
+                    <th class="param-heading">Parameter</th>
+                    <th class="param-heading">Required</th>
+                    <th class="param-heading">Default</th>
+                    <th class="param-heading">Comment</th>
+                </tr>
+                <tr class="table-altrow">
+                    <td><code>u</code></td>
+                    <td>Yes</td>
+                    <td></td>
+                    <td>The username.</td>
+                </tr>
+                <tr>
+                    <td><code>p</code></td>
+                    <td>Yes</td>
+                    <td></td>
+                    <td>The password, either in clear text or hex-encoded with a "enc:" prefix.</td>
+                </tr>
+                <tr class="table-altrow">
+                    <td><code>v</code></td>
+                    <td>Yes</td>
+                    <td></td>
+                    <td>The protocol version implemented by the client, i.e., the version of the
+                        <code>subsonic-rest-api.xsd</code> schema used (see below).</td>
+                </tr>
+                <tr>
+                    <td><code>c</code></td>
+                    <td>Yes</td>
+                    <td></td>
+                    <td>A unique string identifying the client application.</td>
+                </tr>
+            </table>
+
             <p>
                 For example:
             </p>
             <p>
-                <code>http://your-server/rest/getIndexes.view?u=joe&p=sesame&v=1.0.0</code>, or<br/>
-                <code>http://your-server/rest/getIndexes.view?u=joe&p=enc:736573616d65&v=1.0.0</code>
+                <code>http://your-server/rest/getIndexes.view?u=joe&amp;p=sesame&amp;v=1.0.0&amp;c=myapp</code>, or<br/>
+                <code>http://your-server/rest/getIndexes.view?u=joe&amp;p=enc:736573616d65&amp;v=1.0.0&amp;c=myapp</code>
             </p>
             <p>
                 Also note that UTF-8 should be used when sending parameters to API methods. The XML returned

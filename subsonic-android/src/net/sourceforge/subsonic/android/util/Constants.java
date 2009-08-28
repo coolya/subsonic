@@ -15,8 +15,9 @@ public final class Constants {
     // Character encoding used throughout.
     public static final String UTF_8 = "UTF-8";
 
-    // REST protocol version.
-    public static final String PROTOCOL_VERSION = "1.0.0";
+    // REST protocol version and client ID.
+    public static final String REST_PROTOCOL_VERSION = "1.0.0";
+    public static final String REST_CLIENT_ID = "android";
 
     // Intent actions.
     public static final String INTENT_ACTION_DOWNLOAD_QUEUE = "net.sourceforge.subsonic.android.DOWNLOAD_QUEUE";

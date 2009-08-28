@@ -79,6 +79,7 @@ public class RESTController extends MultiActionController {
     }
 
     public ModelAndView getMusicFolders(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
         XMLBuilder builder = createXMLBuilder(response, true);
         builder.add("musicFolders", false);
 
@@ -96,6 +97,7 @@ public class RESTController extends MultiActionController {
     }
 
     public ModelAndView getIndexes(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
 
         XMLBuilder builder = createXMLBuilder(response, true);
 
@@ -135,6 +137,7 @@ public class RESTController extends MultiActionController {
     }
 
     public ModelAndView getMusicDirectory(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
         XMLBuilder builder = createXMLBuilder(response, true);
         Player player = playerService.getPlayer(request, response);
 
@@ -214,20 +217,23 @@ public class RESTController extends MultiActionController {
     }
 
     public ModelAndView download(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
         User user = securityService.getCurrentUser(request);
         if (!user.isDownloadRole()) {
             error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to download files.");
             return null;
         }
 
-        return downloadController.handleRequest(wrapRequest(request), response);
+        return downloadController.handleRequest(request, response);
     }
 
     public ModelAndView getCoverArt(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return coverArtController.handleRequest(wrapRequest(request), response);
+        request = wrapRequest(request);
+        return coverArtController.handleRequest(request, response);
     }
 
     public ModelAndView createUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
         User user = securityService.getCurrentUser(request);
         if (!user.isAdminRole()) {
             error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to create new users.");

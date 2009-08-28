@@ -53,7 +53,8 @@ public final class Util {
         builder.append("rest/").append(method).append(".view");
         builder.append("?u=").append(username);
         builder.append("&p=").append(password);
-        builder.append("&v=").append(Constants.PROTOCOL_VERSION);
+        builder.append("&v=").append(Constants.REST_PROTOCOL_VERSION);
+        builder.append("&c=").append(Constants.REST_CLIENT_ID);
 
         return builder.toString();
     }
