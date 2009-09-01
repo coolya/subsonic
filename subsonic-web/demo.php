@@ -30,7 +30,7 @@
                 </li>
             </ul>
 
-            <p style="text-align:center;font-size:1.3em"><b><a href="http://gosubsonic.com/login.view?user=guest<?php echo(rand(1, 5));?>&password=guest" target="_blank">Start demo</a></b></p>
+            <p style="text-align:center;font-size:1.3em"><b><a href="http://gosubsonic.com/demo/login.view?user=guest<?php echo(rand(1, 5));?>&password=guest" target="_blank">Start demo</a></b></p>
         </div>
 
         <div id="side-col">
