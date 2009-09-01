@@ -63,7 +63,6 @@ Support downloading same file multiple times.
 Show info if connected to demo server.
 Allow only 100 downloads for non-licensed servers.
 Make schema available thru http.  Put it in webapp.
-Reuse cache logic in LeftController.
 Progress bar in notification.
 Hide title in error activity? http://www.androidsnippets.org/snippets/27/
 Save files using artist/album/song path?

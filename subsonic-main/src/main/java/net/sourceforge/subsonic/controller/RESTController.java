@@ -18,43 +18,44 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.command.UserSettingsCommand;
-import net.sourceforge.subsonic.domain.MusicFile;
-import net.sourceforge.subsonic.domain.MusicIndex;
-import net.sourceforge.subsonic.domain.Player;
-import net.sourceforge.subsonic.domain.User;
-import net.sourceforge.subsonic.domain.TranscodeScheme;
-import net.sourceforge.subsonic.domain.MusicFolder;
-import net.sourceforge.subsonic.service.MusicFileService;
-import net.sourceforge.subsonic.service.MusicIndexService;
-import net.sourceforge.subsonic.service.PlayerService;
-import net.sourceforge.subsonic.service.SettingsService;
-import net.sourceforge.subsonic.service.TranscodingService;
-import net.sourceforge.subsonic.service.SecurityService;
-import net.sourceforge.subsonic.util.StringUtil;
-import net.sourceforge.subsonic.util.XMLBuilder;
-import static net.sourceforge.subsonic.util.XMLBuilder.Attribute;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
-import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.bind.ServletRequestBindingException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
-import java.util.Arrays;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.bind.ServletRequestBindingException;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.command.UserSettingsCommand;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.domain.MusicIndex;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.TranscodeScheme;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.TranscodingService;
+import net.sourceforge.subsonic.util.StringUtil;
+import net.sourceforge.subsonic.util.XMLBuilder;
+import static net.sourceforge.subsonic.util.XMLBuilder.Attribute;
 
 /**
  * Multi-controller used for the REST API.
- *
+ * <p/>
  * For documentation, please refer to api.php.
  *
  * @author Sindre Mehus
@@ -67,11 +68,11 @@ public class RESTController extends MultiActionController {
     private SecurityService securityService;
     private PlayerService playerService;
     private MusicFileService musicFileService;
-    private MusicIndexService musicIndexService;
     private TranscodingService transcodingService;
     private DownloadController downloadController;
     private CoverArtController coverArtController;
     private UserSettingsController userSettingsController;
+    private LeftController leftController;
 
     public ModelAndView ping(HttpServletRequest request, HttpServletResponse response) throws Exception {
         createXMLBuilder(response, true).endAll();
@@ -101,7 +102,7 @@ public class RESTController extends MultiActionController {
 
         XMLBuilder builder = createXMLBuilder(response, true);
 
-        long lastModified = 0L; // TODO
+        long lastModified = leftController.getLastModified(request);
         builder.add("indexes", "lastModified", lastModified, false);
 
         List<MusicFolder> musicFolders = settingsService.getAllMusicFolders();
@@ -115,7 +116,7 @@ public class RESTController extends MultiActionController {
             }
         }
 
-        SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists = musicIndexService.getIndexedArtists(musicFolders);
+        SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists = leftController.getCacheEntry(musicFolders, lastModified).getIndexedArtists();
 
         for (Map.Entry<MusicIndex, SortedSet<MusicIndex.Artist>> entry : indexedArtists.entrySet()) {
             builder.add("index", "name", entry.getKey().getIndex(), false);
@@ -124,8 +125,8 @@ public class RESTController extends MultiActionController {
                 for (MusicFile musicFile : artist.getMusicFiles()) {
                     if (musicFile.isDirectory()) {
                         builder.add("artist", true,
-                                    new Attribute("name", artist.getName()),
-                                    new Attribute("id", StringUtil.utf8HexEncode(musicFile.getPath())));
+                                new Attribute("name", artist.getName()),
+                                new Attribute("id", StringUtil.utf8HexEncode(musicFile.getPath())));
                     }
                 }
             }
@@ -141,7 +142,7 @@ public class RESTController extends MultiActionController {
         XMLBuilder builder = createXMLBuilder(response, true);
         Player player = playerService.getPlayer(request, response);
 
-        MusicFile dir = null;
+        MusicFile dir;
         try {
             String path = StringUtil.utf8HexDecode(ServletRequestUtils.getRequiredStringParameter(request, "id"));
             dir = musicFileService.getMusicFile(path);
@@ -151,8 +152,8 @@ public class RESTController extends MultiActionController {
         }
 
         builder.add("directory", false,
-                    new Attribute("id", StringUtil.utf8HexEncode(dir.getPath())),
-                    new Attribute("name", dir.getName()));
+                new Attribute("id", StringUtil.utf8HexEncode(dir.getPath())),
+                new Attribute("name", dir.getName()));
 
         List<File> coverArt = musicFileService.getCoverArt(dir, 1);
 
@@ -291,8 +292,8 @@ public class RESTController extends MultiActionController {
     private void error(HttpServletResponse response, ErrorCode code, String message) throws IOException {
         XMLBuilder builder = createXMLBuilder(response, false);
         builder.add("error", true,
-                    new XMLBuilder.Attribute("code", code.getCode()),
-                    new XMLBuilder.Attribute("message", message));
+                new XMLBuilder.Attribute("code", code.getCode()),
+                new XMLBuilder.Attribute("message", message));
         builder.end();
     }
 
@@ -303,9 +304,9 @@ public class RESTController extends MultiActionController {
         XMLBuilder builder = new XMLBuilder(response.getWriter());
         builder.preamble(StringUtil.ENCODING_UTF8);
         builder.add("subsonic-response", false,
-                    new Attribute("xlmns", "http://subsonic.sourceforge.net/restapi"),
-                    new Attribute("status", ok ? "ok" : "failed"),
-                    new Attribute("version", StringUtil.getRESTProtocolVersion()));
+                new Attribute("xlmns", "http://subsonic.sourceforge.net/restapi"),
+                new Attribute("status", ok ? "ok" : "failed"),
+                new Attribute("version", StringUtil.getRESTProtocolVersion()));
         return builder;
     }
 
@@ -325,10 +326,6 @@ public class RESTController extends MultiActionController {
         this.musicFileService = musicFileService;
     }
 
-    public void setMusicIndexService(MusicIndexService musicIndexService) {
-        this.musicIndexService = musicIndexService;
-    }
-
     public void setTranscodingService(TranscodingService transcodingService) {
         this.transcodingService = transcodingService;
     }
@@ -343,6 +340,10 @@ public class RESTController extends MultiActionController {
 
     public void setUserSettingsController(UserSettingsController userSettingsController) {
         this.userSettingsController = userSettingsController;
+    }
+
+    public void setLeftController(LeftController leftController) {
+        this.leftController = leftController;
     }
 
     public static enum ErrorCode {

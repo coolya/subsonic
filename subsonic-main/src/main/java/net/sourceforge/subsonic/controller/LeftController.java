@@ -200,7 +200,7 @@ public class LeftController extends ParameterizableViewController implements Las
         return result;
     }
 
-    private MusicFolderCacheEntry getCacheEntry(List<MusicFolder> musicFoldersToUse, long lastModified) throws Exception {
+    public MusicFolderCacheEntry getCacheEntry(List<MusicFolder> musicFoldersToUse, long lastModified) throws Exception {
         List<Integer> musicFolderIds = new ArrayList<Integer>();
         for (MusicFolder musicFolder : musicFoldersToUse) {
             musicFolderIds.add(musicFolder.getId());
@@ -246,7 +246,7 @@ public class LeftController extends ParameterizableViewController implements Las
         this.musicFolderCache = musicFolderCache;
     }
 
-    private static class MusicFolderCacheEntry implements Serializable {
+    public static class MusicFolderCacheEntry implements Serializable {
 
         private final SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists;
         private final List<MusicFile> singleSongs;
@@ -257,6 +257,18 @@ public class LeftController extends ParameterizableViewController implements Las
             this.indexedArtists = indexedArtists;
             this.singleSongs = singleSongs;
             this.lastModified = lastModified;
+        }
+
+        public SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> getIndexedArtists() {
+            return indexedArtists;
+        }
+
+        public List<MusicFile> getSingleSongs() {
+            return singleSongs;
+        }
+
+        public long getLastModified() {
+            return lastModified;
         }
     }
 }
