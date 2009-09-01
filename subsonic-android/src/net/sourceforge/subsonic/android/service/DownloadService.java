@@ -422,16 +422,13 @@ public class DownloadService extends Service {
         }
 
         private void saveInMediaStore(MusicDirectory.Entry song, File songFile) {
-
             ContentResolver contentResolver = getContentResolver();
 
-            // Delete existing row.
+            // Delete existing row in case the song has been downloaded before.
             int n = contentResolver.delete(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                    MediaStore.Audio.AudioColumns.ARTIST + "=? AND " +
-                            MediaStore.Audio.AudioColumns.ALBUM + "=? AND " +
-                            MediaStore.MediaColumns.TITLE + "=? AND " +
+                            MediaStore.Audio.AudioColumns.TITLE_KEY + "=? AND " +
                             MediaStore.MediaColumns.DATA + "=?",
-                    new String[] {song.getArtist(), song.getAlbum(), song.getTitle(), songFile.getAbsolutePath()});
+                    new String[] {MediaStore.Audio.keyFor(song.getTitle()), songFile.getAbsolutePath()});
             if (n > 0) {
                 Log.i(TAG, "Overwriting media store row for " + song);
             }

@@ -58,7 +58,6 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 ANDROID
 -------
 User should be able to select music folder. (Let REST method support it at least).
-TEST: Support downloading same file multiple times.
 
 Show info if connected to demo server.
 Allow only 100 downloads for non-licensed servers.
