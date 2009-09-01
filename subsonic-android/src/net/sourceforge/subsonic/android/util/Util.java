@@ -39,9 +39,11 @@ public final class Util {
         StringBuilder builder = new StringBuilder();
 
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
-        String serverUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_URL, null);
-        String username = prefs.getString(Constants.PREFERENCES_KEY_USERNAME, null);
-        String password = prefs.getString(Constants.PREFERENCES_KEY_PASSWORD, null);
+
+        String instance = prefs.getString(Constants.PREFERENCES_KEY_SERVER_INSTANCE, "1");
+        String serverUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_URL + instance, null);
+        String username = prefs.getString(Constants.PREFERENCES_KEY_USERNAME + instance, null);
+        String password = prefs.getString(Constants.PREFERENCES_KEY_PASSWORD + instance, null);
 
         // Slightly obfuscate password
         password = "enc:" + Util.utf8HexEncode(password);

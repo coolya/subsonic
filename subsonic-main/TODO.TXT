@@ -1,5 +1,6 @@
 TODO IN 3.8
 --------------
+Move Subsonic demo to gosubsonic.com/demo
 In licence email, explain how to install it.
 Does REST API also work with POST?
 Make REST API handle player ID. At least create method to return all players.
@@ -61,7 +62,6 @@ User should be able to select music folder. (Let REST method support it at least
 
 Show info if connected to demo server.
 Allow only 100 downloads for non-licensed servers.
-Make schema available thru http.  Put it in webapp.
 Progress bar in notification.
 Hide title in error activity? http://www.androidsnippets.org/snippets/27/
 Save files using artist/album/song path?
