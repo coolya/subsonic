@@ -315,6 +315,7 @@
         <property name="playerService" ref="playerService"/>
         <property name="musicFileService" ref="musicFileService"/>
         <property name="transcodingService" ref="transcodingService"/>
+        <property name="statusService" ref="statusService"/>
         <property name="downloadController" ref="downloadController"/>
         <property name="coverArtController" ref="coverArtController"/>
         <property name="userSettingsController" ref="userSettingsController"/>

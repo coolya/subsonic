@@ -13,6 +13,7 @@
             <xs:element name="musicFolders" type="sub:MusicFolders" minOccurs="1" maxOccurs="1"/>
             <xs:element name="indexes" type="sub:Indexes" minOccurs="1" maxOccurs="1"/>
             <xs:element name="directory" type="sub:Directory" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="nowPlaying" type="sub:NowPlaying" minOccurs="1" maxOccurs="1"/>
             <xs:element name="error" type="sub:Error" minOccurs="1" maxOccurs="1"/>
         </xs:choice>
         <xs:attribute name="status" type="sub:ResponseStatus" use="required"/>
@@ -85,6 +86,22 @@
         <xs:attribute name="suffix" type="xs:string" use="optional"/>
         <xs:attribute name="transcodedContentType" type="xs:string" use="optional"/>
         <xs:attribute name="transcodedSuffix" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="NowPlaying">
+        <xs:sequence>
+            <xs:element name="entry" type="sub:NowPlayingEntry" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NowPlayingEntry">
+        <xs:complexContent>
+            <xs:extension base="sub:Child">
+                <xs:attribute name="username" type="xs:string" use="required"/>
+                <xs:attribute name="minutesAgo" type="xs:int" use="required"/>
+                <xs:attribute name="playerName" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
     <xs:complexType name="Error">

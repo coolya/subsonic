@@ -1,6 +1,5 @@
 TODO IN 3.8
 --------------
-Move Subsonic demo to gosubsonic.com/demo
 In licence email, explain how to install it.
 Does REST API also work with POST?
 Make REST API handle player ID. At least create method to return all players.

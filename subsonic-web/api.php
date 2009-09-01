@@ -122,6 +122,18 @@
                 element on success.
             </p>
 
+            <h2 class="div">getNowPlaying</h2>
+            <p>
+                <code>http://your-server/rest/getNowPlaying.view</code>
+            </p>
+            <p>
+                Returns what is currently being played by all users. Takes no extra parameters.
+            </p>
+            <p>
+                Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;nowPlaying&gt;</code>
+                element on success.
+            </p>
+
             <h2 class="div">getIndexes</h2>
             <p>
                 <code>http://your-server/rest/getIndexes.view</code>
