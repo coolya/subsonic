@@ -3,29 +3,98 @@
 <PreferenceScreen xmlns:a="http://schemas.android.com/apk/res/android"
                   a:title="Subsonic settings">
 
-    <EditTextPreference
-            a:key="serverUrl"
-            a:title="Server address"
-            a:defaultValue="http://gosubsonic.com"
-            />
-
-    <EditTextPreference
-            a:key="username"
-            a:title="Username"
-            a:defaultValue="android-guest"
-            />
-
-    <EditTextPreference
-            a:key="password"
-            a:title="Password"
-            a:password="true"
-            a:defaultValue="guest"
-            a:summary="****"
-            />
+    <ListPreference
+            a:key="serverInstance"
+            a:title="Active server"
+            a:defaultValue="1"
+            a:entryValues="@array/active_server_values"/>
 
     <Preference
-            a:key="test_connection"
+            a:key="testConnection"
             a:title="Test connection"
-            a:persistent="false" />
+            a:persistent="false"/>
+
+
+    <PreferenceCategory
+            a:title="Servers">
+
+        <PreferenceScreen
+                a:key="server1">
+
+            <EditTextPreference
+                    a:key="serverName1"
+                    a:title="Name"
+                    a:defaultValue="Subsonic demo"/>
+
+            <EditTextPreference
+                    a:key="serverUrl1"
+                    a:title="Server address"
+                    a:defaultValue="http://gosubsonic.com/demo"/>
+
+            <EditTextPreference
+                    a:key="username1"
+                    a:title="Username"
+                    a:defaultValue="android-guest"/>
+
+            <EditTextPreference
+                    a:key="password1"
+                    a:title="Password"
+                    a:password="true"
+                    a:defaultValue="guest"
+                    a:summary="****"/>
+
+        </PreferenceScreen>
+
+        <PreferenceScreen
+                a:key="server2">
+
+            <EditTextPreference
+                    a:key="serverName2"
+                    a:title="Name"
+                    a:defaultValue="Unused"/>
+
+            <EditTextPreference
+                    a:key="serverUrl2"
+                    a:title="Server address"
+                    a:defaultValue="http://yourhost"/>
+
+            <EditTextPreference
+                    a:key="username2"
+                    a:title="Username"/>
+
+            <EditTextPreference
+                    a:key="password2"
+                    a:title="Password"
+                    a:password="true"
+                    a:summary="****"/>
+
+        </PreferenceScreen>
+
+        <PreferenceScreen
+                a:key="server3">
+
+            <EditTextPreference
+                    a:key="serverName3"
+                    a:title="Name"
+                    a:defaultValue="Unused"/>
+
+            <EditTextPreference
+                    a:key="serverUrl3"
+                    a:title="Server address"
+                    a:defaultValue="http://yourhost"/>
+
+            <EditTextPreference
+                    a:key="username3"
+                    a:title="Username"/>
+
+            <EditTextPreference
+                    a:key="password3"
+                    a:title="Password"
+                    a:password="true"
+                    a:summary="****"/>
+
+        </PreferenceScreen>
+
+    </PreferenceCategory>
 
 </PreferenceScreen>
