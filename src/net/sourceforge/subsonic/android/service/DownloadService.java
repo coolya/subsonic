@@ -422,6 +422,20 @@ public class DownloadService extends Service {
         }
 
         private void saveInMediaStore(MusicDirectory.Entry song, File songFile) {
+
+            ContentResolver contentResolver = getContentResolver();
+
+            // Delete existing row.
+            int n = contentResolver.delete(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                    MediaStore.Audio.AudioColumns.ARTIST + "=? AND " +
+                            MediaStore.Audio.AudioColumns.ALBUM + "=? AND " +
+                            MediaStore.MediaColumns.TITLE + "=? AND " +
+                            MediaStore.MediaColumns.DATA + "=?",
+                    new String[] {song.getArtist(), song.getAlbum(), song.getTitle(), songFile.getAbsolutePath()});
+            if (n > 0) {
+                Log.i(TAG, "Overwriting media store row for " + song);
+            }
+
             ContentValues values = new ContentValues();
             values.put(MediaStore.MediaColumns.TITLE, song.getTitle());
             values.put(MediaStore.Audio.AudioColumns.ARTIST, song.getArtist());
@@ -432,7 +446,6 @@ public class DownloadService extends Service {
             values.put(MediaStore.MediaColumns.MIME_TYPE, song.getContentType());
             values.put(MediaStore.Audio.AudioColumns.IS_MUSIC, 1);
 
-            ContentResolver contentResolver = getContentResolver();
             Uri uri = contentResolver.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
 
             // Look up album, and add cover art if found.
