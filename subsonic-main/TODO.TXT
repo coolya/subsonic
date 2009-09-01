@@ -17,8 +17,6 @@ Select music folder / playlist folder in Windows installer.
 Add links to Facebook group from home page and Help page.
 Bad performance, low bandwidth.
 http://lyricsfly.com/
-Test with Chrome (2.0.172.33)
-Frame borders in Chrome.
 Avoid underlined image links in menu bar (FF, Chrome)
 Nightly build.
 "removeAllRows() can only be used with table, tbody, thead and tfoot elements. Attempt to use: HTMLDivElement"
@@ -39,6 +37,7 @@ Automatically enable/disable "Notify me about new versions" option when new user
 
 DONE IN 3.8
 ------------
+New: Added Android client.
 New: Added chat.
 New: Support playlist repeat in web player.
 New: Jukebox now support WAV format (including FLAC > WAV transcoding).
@@ -50,6 +49,7 @@ New: Added Finnish translation, courtesy of Reijo J‰‰rni
 New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now playing".
 Security: IP addresses are no longer displayed in the log or the status view.
 Bugfix: Repeat now works properly in jukebox mode.
+Bugfix: Looks nicer in Chrome.
 Bugfix: Usernames can now contain white spaces and international characters.
 Bugfix: Allow alternate date format in Podcast episodes.
 Bugfix: Fixed broken Discogs image search.

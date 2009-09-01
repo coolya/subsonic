@@ -8,12 +8,12 @@
 
 <frameset rows="70,*,0" border="0" framespacing="0" frameborder="0">
     <frame name="upper" src="top.view?">
-    <frameset cols="15%,85%">
-        <frame name="left" src="left.view?" marginwidth="10" marginheight="10">
+    <frameset cols="15%,85%" border="0" framespacing="0" frameborder="0">
+        <frame name="left" src="left.view?" marginwidth="0" marginheight="0">
 
-        <frameset rows="70%,30%">
-            <frameset cols="*,250">
-                <frame name="main" src="nowPlaying.view?" marginwidth="10" marginheight="10">
+        <frameset rows="70%,30%" border="0" framespacing="0" frameborder="0">
+            <frameset cols="*,250" border="0" framespacing="0" frameborder="0">
+                <frame name="main" src="nowPlaying.view?" marginwidth="0" marginheight="0">
                 <frame name="right" src="right.view?">
             </frameset>
             <frame name="playlist" src="playlist.view?">
