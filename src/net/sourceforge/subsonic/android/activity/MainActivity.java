@@ -49,14 +49,13 @@ public class MainActivity extends OptionsMenuActivity {
                 startActivity(new Intent(MainActivity.this, DownloadQueueActivity.class));
             }
         });
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        // TODO: Stop service or leave it running? Must avoid thread leakage in DownloadService.
-        Log.i(TAG, "Stopping service.");
-        stopService(new Intent(this, DownloadService.class));
+        Button helpButton = (Button) findViewById(R.id.main_help);
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, HelpActivity.class));
+            }
+        });
     }
 }

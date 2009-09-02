@@ -35,6 +35,10 @@
                   a:label="Error"
                   a:launchMode="singleTask"/>
 
+        <activity a:name=".activity.HelpActivity"
+                  a:label="Help"
+                  a:launchMode="singleTask"/>
+
         <service a:name=".service.DownloadService"
                  a:label="Download"/>
 
