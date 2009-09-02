@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+              a:orientation="vertical"
+              a:layout_width="fill_parent"
+              a:layout_height="fill_parent">
+
+    <TextView
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:drawableLeft="@drawable/launch"
+            a:drawablePadding="10dip"
+            a:gravity="left|center_vertical"
+            a:textAppearance="?android:attr/textAppearanceLarge"
+            a:text="Welcome to Subsonic!"/>
+
+    <TextView
+            a:id="@+id/help_text"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:padding="6dip"
+            />
+
+    <LinearLayout a:orientation="horizontal"
+                  a:layout_width="fill_parent"
+                  a:layout_height="wrap_content"
+                  a:gravity="center_horizontal"
+                  a:paddingTop="10dip">
+
+        <Button a:id="@+id/help_close"
+                a:text="Close"
+                a:layout_width="fill_parent"
+                a:layout_height="fill_parent"/>
+
+    </LinearLayout>
+</LinearLayout>

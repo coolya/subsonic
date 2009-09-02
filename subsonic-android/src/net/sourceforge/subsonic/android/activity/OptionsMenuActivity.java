@@ -31,12 +31,14 @@ public class OptionsMenuActivity extends Activity {
     private static final int MENU_HOME = 1;
     private static final int MENU_QUEUE = 2;
     private static final int MENU_SETTINGS = 3;
+    private static final int MENU_HELP = 4;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, MENU_HOME, 0, "Home").setIcon(R.drawable.menu_home);
         menu.add(0, MENU_QUEUE, 0, "Download queue").setIcon(android.R.drawable.ic_menu_save);
         menu.add(0, MENU_SETTINGS, 0, "Settings").setIcon(android.R.drawable.ic_menu_preferences);
+        menu.add(0, MENU_HELP, 0, "Help").setIcon(android.R.drawable.ic_menu_help);
         return true;
     }
 
@@ -52,6 +54,9 @@ public class OptionsMenuActivity extends Activity {
                 return true;
             case MENU_SETTINGS:
                 startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            case MENU_HELP:
+                startActivity(new Intent(this, HelpActivity.class));
                 return true;
         }
         return false;

@@ -99,6 +99,7 @@
             <xs:extension base="sub:Child">
                 <xs:attribute name="username" type="xs:string" use="required"/>
                 <xs:attribute name="minutesAgo" type="xs:int" use="required"/>
+                <xs:attribute name="playerId" type="xs:int" use="required"/>
                 <xs:attribute name="playerName" type="xs:string" use="optional"/>
             </xs:extension>
         </xs:complexContent>

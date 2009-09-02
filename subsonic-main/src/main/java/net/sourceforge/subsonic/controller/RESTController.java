@@ -194,6 +194,7 @@ public class RESTController extends MultiActionController {
                 if (minutesAgo < 60) {
                     List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
                     attributes.add(new Attribute("username", username));
+                    attributes.add(new Attribute("playerId", player.getId()));
                     if (player.getName() != null) {
                         attributes.add(new Attribute("playerName", player.getName()));
                     }

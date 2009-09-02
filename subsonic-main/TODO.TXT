@@ -59,7 +59,6 @@ ANDROID
 -------
 User should be able to select music folder. (Let REST method support it at least).
 
-Show info if connected to demo server.
 Allow only 100 downloads for non-licensed servers.
 Progress bar in notification.
 Hide title in error activity? http://www.androidsnippets.org/snippets/27/
