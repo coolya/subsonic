@@ -18,17 +18,21 @@
  */
 package net.sourceforge.subsonic.android.service;
 
-import net.sourceforge.subsonic.android.util.ProgressListener;
-
 import java.io.Reader;
 
 import android.content.Context;
+import net.sourceforge.subsonic.android.util.ProgressListener;
 
 /**
  * @author Sindre Mehus
  */
 public interface MusicServiceDataSource {
+
     Reader getPingReader(Context context, ProgressListener progressListener) throws Exception;
+
+    Reader getLicenseReader(Context context, ProgressListener progressListener) throws Exception;
+
     Reader getArtistsReader(Context context, ProgressListener progressListener) throws Exception;
+
     Reader getMusicDirectoryReader(String id, Context context, ProgressListener progressListener) throws Exception;
 }

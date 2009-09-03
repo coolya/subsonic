@@ -37,6 +37,7 @@ public class CachedMusicService implements MusicService {
     private final LRUCache cachedMusicDirectories;
     private List<Artist> cachedArtists;
     private String restUrl;
+    private Boolean cachedLicenseValid;
 
     public CachedMusicService(MusicService musicService) {
         this.musicService = musicService;
@@ -48,6 +49,16 @@ public class CachedMusicService implements MusicService {
         musicService.ping(context, progressListener);
     }
 
+    @Override
+    public boolean isLicenseValid(Context context, ProgressListener progressListener) throws Exception {
+        checkSettingsChanged(context);
+        if (cachedLicenseValid == null) {
+            cachedLicenseValid = musicService.isLicenseValid(context, progressListener);
+        }
+        return cachedLicenseValid;
+    }
+
+    @Override
     public List<Artist> getArtists(Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
         if (cachedArtists == null) {
@@ -56,6 +67,7 @@ public class CachedMusicService implements MusicService {
         return cachedArtists;
     }
 
+    @Override
     public MusicDirectory getMusicDirectory(String path, Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
         MusicDirectory dir = (MusicDirectory) cachedMusicDirectories.get(path);
@@ -66,6 +78,7 @@ public class CachedMusicService implements MusicService {
         return dir;
     }
 
+    @Override
     public void cancel(Context context, ProgressListener progressListener) {
         musicService.cancel(context, progressListener);
     }
@@ -75,6 +88,7 @@ public class CachedMusicService implements MusicService {
         if (!Util.equals(newUrl, restUrl)) {
             cachedMusicDirectories.clear();
             cachedArtists = null;
+            cachedLicenseValid = null;
             restUrl = newUrl;
         }
     }

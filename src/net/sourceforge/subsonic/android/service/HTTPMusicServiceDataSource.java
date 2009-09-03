@@ -43,6 +43,11 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
     }
 
     @Override
+    public Reader getLicenseReader(Context context, ProgressListener progressListener) throws Exception {
+        return getReader(context, progressListener, "getLicense", null, null);
+    }
+
+    @Override
     public Reader getArtistsReader(Context context, ProgressListener progressListener) throws Exception {
         return getReader(context, progressListener, "getIndexes", null, null);
     }
