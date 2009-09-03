@@ -58,6 +58,7 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 ANDROID
 -------
 User should be able to select music folder. (Let REST method support it at least).
+Bug: Download queue isn't updated when going back to existing DownloadQueueActivity.
 
 Allow only 100 downloads for non-licensed servers.
 Progress bar in notification.

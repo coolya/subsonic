@@ -77,6 +77,7 @@ public class RESTController extends MultiActionController {
     private UserSettingsController userSettingsController;
     private LeftController leftController;
     private StatusService statusService;
+    private StreamController streamController;
 
     public ModelAndView ping(HttpServletRequest request, HttpServletResponse response) throws Exception {
         createXMLBuilder(response, true).endAll();
@@ -273,6 +274,17 @@ public class RESTController extends MultiActionController {
         return downloadController.handleRequest(request, response);
     }
 
+    public ModelAndView stream(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        User user = securityService.getCurrentUser(request);
+        if (!user.isStreamRole()) {
+            error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to play files.");
+            return null;
+        }
+
+        return streamController.handleRequest(request, response);
+    }
+
     public ModelAndView getCoverArt(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         return coverArtController.handleRequest(request, response);
@@ -393,6 +405,10 @@ public class RESTController extends MultiActionController {
 
     public void setStatusService(StatusService statusService) {
         this.statusService = statusService;
+    }
+
+    public void setStreamController(StreamController streamController) {
+        this.streamController = streamController;
     }
 
     public static enum ErrorCode {

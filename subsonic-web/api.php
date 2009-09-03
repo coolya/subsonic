@@ -212,6 +212,31 @@
                 Returns binary data on success.
             </p>
 
+            <h2 class="div">stream</h2>
+            <p>
+                <code>http://your-server/rest/stream.view</code>
+            </p>
+            <p>
+                Streams a given music file.
+            </p>
+            <table width="100%" class="bottomspace">
+                <tr>
+                    <th class="param-heading">Parameter</th>
+                    <th class="param-heading">Required</th>
+                    <th class="param-heading">Default</th>
+                    <th class="param-heading">Comment</th>
+                </tr>
+                <tr class="table-altrow">
+                    <td><code>id</code></td>
+                    <td>Yes</td>
+                    <td></td>
+                    <td>A string which uniquely identifies the file to stream. Obtained by calls to getMusicDirectory.</td>
+                </tr>
+            </table>
+            <p>
+                Returns binary data on success.
+            </p>
+
             <h2 class="div">getCoverArt</h2>
             <p>
                 <code>http://your-server/rest/getCoverArt.view</code>
