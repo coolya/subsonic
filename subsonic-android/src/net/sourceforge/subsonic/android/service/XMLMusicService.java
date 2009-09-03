@@ -34,16 +34,14 @@ import android.content.Context;
 public class XMLMusicService implements MusicService {
 
     private final MusicServiceDataSource dataSource;
-    private final ArtistParser artistParser;
-    private final MusicDirectoryParser musicDirectoryParser;
-    private final ErrorParser errorParser;
+    private final ArtistParser artistParser = new ArtistParser();
+    private final MusicDirectoryParser musicDirectoryParser = new MusicDirectoryParser();
+    private final LicenseParser licenseParser = new LicenseParser();
+    private final ErrorParser errorParser = new ErrorParser();
     private final List<Reader> readers = new ArrayList<Reader>(10);
 
     public XMLMusicService(MusicServiceDataSource dataSource) {
         this.dataSource = dataSource;
-        artistParser = new ArtistParser();
-        musicDirectoryParser = new MusicDirectoryParser();
-        errorParser = new ErrorParser();
     }
 
     @Override
@@ -52,6 +50,17 @@ public class XMLMusicService implements MusicService {
         addReader(reader);
         try {
             errorParser.parse(reader);
+        } finally {
+            closeReader(reader);
+        }
+    }
+
+    @Override
+    public boolean isLicenseValid(Context context, ProgressListener progressListener) throws Exception {
+        Reader reader = dataSource.getLicenseReader(context, progressListener);
+        addReader(reader);
+        try {
+            return licenseParser.parse(reader, progressListener);
         } finally {
             closeReader(reader);
         }
