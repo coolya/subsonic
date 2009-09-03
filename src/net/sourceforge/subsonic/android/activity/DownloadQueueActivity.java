@@ -54,6 +54,10 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
     @Override
     protected void onResume() {
         super.onResume();
+
+        downloadQueueChanged();
+        downloadProgressChanged();
+
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -65,6 +69,7 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
                 }
             }
         };
+
         registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_DOWNLOAD_QUEUE));
         registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_DOWNLOAD_PROGRESS));
     }
