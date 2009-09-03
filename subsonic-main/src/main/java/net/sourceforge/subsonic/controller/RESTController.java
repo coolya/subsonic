@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -81,6 +82,28 @@ public class RESTController extends MultiActionController {
 
     public ModelAndView ping(HttpServletRequest request, HttpServletResponse response) throws Exception {
         createXMLBuilder(response, true).endAll();
+        return null;
+    }
+
+    public ModelAndView getLicense(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        XMLBuilder builder = createXMLBuilder(response, true);
+
+        String email = settingsService.getLicenseEmail();
+        String key = settingsService.getLicenseCode();
+        Date date = settingsService.getLicenseDate();
+        boolean valid = settingsService.isLicenseValid(email, key);
+
+        List<Attribute> attributes = new ArrayList<Attribute>();
+        attributes.add(new Attribute("valid", valid));
+        if (valid) {
+            attributes.add(new Attribute("email", email));
+            attributes.add(new Attribute("key", key));
+            attributes.add(new Attribute("date", StringUtil.toISO8601(date)));
+        }
+
+        builder.add("license", attributes, true);
+        builder.endAll();
         return null;
     }
 

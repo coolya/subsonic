@@ -18,11 +18,6 @@
  */
 package net.sourceforge.subsonic.util;
 
-import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.LongRange;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -32,14 +27,22 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.LongRange;
 
 import net.sourceforge.subsonic.domain.Version;
 
@@ -52,6 +55,7 @@ public final class StringUtil {
 
     public static final String ENCODING_LATIN = "ISO-8859-1";
     public static final String ENCODING_UTF8 = "UTF-8";
+    private static final DateFormat ISO_8601_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     private static final String[][] HTML_SUBSTITUTIONS = {
             {"&", "&amp;"},
@@ -107,6 +111,25 @@ public final class StringUtil {
             }
         }
         return s;
+    }
+
+
+    /**
+     * Formats the given date to a ISO-8601 date/time format, and UTC timezone.
+     * <p/>
+     * The returned date uses the following format: 2007-12-17T14:57:17
+     *
+     * @param date The date to format
+     * @return The corresponding ISO-8601 formatted string.
+     */
+    public static String toISO8601(Date date) {
+        if (date == null) {
+            return null;
+        }
+
+        synchronized (ISO_8601_DATE_FORMAT) {
+            return ISO_8601_DATE_FORMAT.format(date);
+        }
     }
 
     /**
@@ -400,7 +423,7 @@ public final class StringUtil {
     /**
      * Rewrites the URL by changing the protocol, host and port.
      *
-     * @param urlToRewrite       The URL to rewrite.
+     * @param urlToRewrite               The URL to rewrite.
      * @param urlWithProtocolHostAndPort Use protocol, host and port from this URL.
      * @return The rewritten URL, or an unchanged URL if either argument is not a proper URL.
      */
@@ -443,8 +466,8 @@ public final class StringUtil {
      *
      * @param range The range from the HTTP header, for instance "bytes=0-499" or "bytes=500-"
      * @return A range object (using inclusive values). If the last-byte-pos is not given, the end of
-     * the returned range is {@link Long#MAX_VALUE}. The method returns <code>null</code> if the syntax
-     * of the given range is not supported.
+     *         the returned range is {@link Long#MAX_VALUE}. The method returns <code>null</code> if the syntax
+     *         of the given range is not supported.
      */
     public static LongRange parseRange(String range) {
         if (range == null) {

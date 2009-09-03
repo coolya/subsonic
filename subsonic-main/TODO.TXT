@@ -4,12 +4,11 @@ In licence email, explain how to install it.
 Does REST API also work with POST?
 Make REST API handle player ID. At least create method to return all players.
 Create one player instance per user called "Phone".
-Remove Amazon integration.
-Use signed requests against Amazon.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
 
+Use signed requests against Amazon.
 http://upnp-portmapper.sourceforge.net/
 http://www.jthink.net/jaudiotagger/index.jsp
 Exclusion filter (*.svn, *.log, *.pun)
@@ -58,6 +57,7 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 ANDROID
 -------
 User should be able to select music folder. (Let REST method support it at least).
+Show nag message after xx downloads/streams if not licensed. (Integrate with progress dialog).
 
 Allow only 100 downloads for non-licensed servers.
 Progress bar in notification.

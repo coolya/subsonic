@@ -110,6 +110,18 @@
                 Returns an empty <code>&lt;subsonic-response&gt;</code> element on success.
             </p>
 
+            <h2 class="div">getLicense</h2>
+            <p>
+                <code>http://your-server/rest/getLicense.view</code>
+            </p>
+            <p>
+                Get details about the software license.  Takes no extra parameters.
+            </p>
+            <p>
+                Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;license&gt;</code>
+                element on success.
+            </p>
+
             <h2 class="div">getMusicFolders</h2>
             <p>
                 <code>http://your-server/rest/getMusicFolders.view</code>
