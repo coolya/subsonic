@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.media.MediaPlayer;
+import android.media.AudioManager;
 import net.sourceforge.subsonic.android.R;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.service.DownloadService;
@@ -27,6 +29,7 @@ import net.sourceforge.subsonic.android.service.MusicServiceFactory;
 import net.sourceforge.subsonic.android.util.BackgroundTask;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.ImageLoader;
+import net.sourceforge.subsonic.android.util.Util;
 
 public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
@@ -36,6 +39,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     private DownloadService downloadService;
     private ListView entryList;
     private Button downloadButton;
+    private Button playButton;
     private Button selectAllOrNoneButton;
 
     /**
@@ -49,6 +53,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
 
         imageLoader = new ImageLoader();
         downloadButton = (Button) findViewById(R.id.select_album_download);
+        playButton = (Button) findViewById(R.id.select_album_play);
         selectAllOrNoneButton = (Button) findViewById(R.id.select_album_selectallornone);
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
@@ -66,6 +71,13 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             @Override
             public void onClick(View view) {
                 download();
+            }
+        });
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                play();
             }
         });
 
@@ -95,6 +107,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                     }
                 }
                 downloadButton.setVisibility(visibility);
+                playButton.setVisibility(visibility);
                 selectAllOrNoneButton.setVisibility(visibility);
             }
 
@@ -159,19 +172,13 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             }
         }
         downloadButton.setEnabled(checked);
+        playButton.setEnabled(checked);
     }
 
     private void download() {
         try {
             if (downloadService != null) {
-                List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>(10);
-                int count = entryList.getCount();
-                for (int i = 0; i < count; i++) {
-                    if (entryList.isItemChecked(i)) {
-                        songs.add((MusicDirectory.Entry) entryList.getItemAtPosition(i));
-                    }
-                }
-                downloadService.download(songs);
+                downloadService.download(getSelectedSongs());
             } else {
                 Log.e(TAG, "Not connected to Download Service.");
             }
@@ -179,6 +186,35 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         } catch (Exception e) {
             Log.e(TAG, "Failed to contact Download Service.");
         }
+    }
+
+    private void play() {
+        try {
+            MusicDirectory.Entry song = getSelectedSongs().get(0);
+            MediaPlayer player = new MediaPlayer();
+            String url = Util.getRestUrl(this, "stream") + "&id=" + song.getId();
+            Log.i(TAG, url);
+            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            player.setDataSource(url);
+            Log.e(TAG, "setDataSource done");
+            player.prepare();
+            Log.e(TAG, "prepare done");
+            player.start();
+            Log.e(TAG, "start done");
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to stream.", e);
+        }
+    }
+
+    private List<MusicDirectory.Entry> getSelectedSongs() {
+        List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>(10);
+        int count = entryList.getCount();
+        for (int i = 0; i < count; i++) {
+            if (entryList.isItemChecked(i)) {
+                songs.add((MusicDirectory.Entry) entryList.getItemAtPosition(i));
+            }
+        }
+        return songs;
     }
 
 
