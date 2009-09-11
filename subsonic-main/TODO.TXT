@@ -2,8 +2,6 @@ TODO IN 3.8
 --------------
 In licence email, explain how to install it.
 Does REST API also work with POST?
-Make REST API handle player ID. At least create method to return all players.
-Create one player instance per user called "Phone".
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
@@ -57,6 +55,9 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 ANDROID
 -------
 User should be able to select music folder. (Let REST method support it at least).
+Use alertdialog for help message + formatted text.
+REST method for getting lyrics.
+Make player similar to imeem.
 Show nag message after xx downloads/streams if not licensed. (Integrate with progress dialog).
 
 Allow only 100 downloads for non-licensed servers.

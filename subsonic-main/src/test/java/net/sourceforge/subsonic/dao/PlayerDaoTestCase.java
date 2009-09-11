@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import net.sourceforge.subsonic.domain.CoverArtScheme;
 import net.sourceforge.subsonic.domain.Player;
@@ -29,6 +30,7 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         player.setDynamicIp(false);
         player.setAutoControlEnabled(false);
         player.setTechnology(PlayerTechnology.EXTERNAL_WITH_PLAYLIST);
+        player.setClientId("android");
         player.setLastSeen(new Date());
         player.setCoverArtScheme(CoverArtScheme.LARGE);
         player.setTranscodeScheme(TranscodeScheme.MAX_160);
@@ -47,6 +49,7 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
 
         assertTrue("Player should have dynamic IP by default.", player.isDynamicIp());
         assertTrue("Player should be auto-controlled by default.", player.isAutoControlEnabled());
+        assertNull("Player client ID should be null by default.", player.getClientId());
     }
 
     public void testIdentity() {
@@ -86,6 +89,27 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         assertNotSame("Wrong playlist.", playlist, player.getPlaylist());
     }
 
+    public void testGetPlayersForUserAndClientId() {
+        Player player = new Player();
+        player.setUsername("sindre");
+        playerDao.createPlayer(player);
+        player = playerDao.getAllPlayers().get(0);
+
+        List<Player> players = playerDao.getPlayersForUserAndClientId("sindre", null);
+        assertFalse("Error in getPlayersForUserAndClientId().", players.isEmpty());
+        assertPlayerEquals(player, players.get(0));
+        assertTrue("Error in getPlayersForUserAndClientId().", playerDao.getPlayersForUserAndClientId("sindre", "foo").isEmpty());
+
+        player.setClientId("foo");
+        playerDao.updatePlayer(player);
+
+        players = playerDao.getPlayersForUserAndClientId("sindre", null);
+        assertTrue("Error in getPlayersForUserAndClientId().", players.isEmpty());
+        players = playerDao.getPlayersForUserAndClientId("sindre", "foo");
+        assertFalse("Error in getPlayersForUserAndClientId().", players.isEmpty());
+        assertPlayerEquals(player, players.get(0));
+    }
+
     public void testUpdatePlayer() {
         Player player = new Player();
         playerDao.createPlayer(player);
@@ -94,6 +118,7 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         player.setName("name");
         player.setType("Winamp");
         player.setTechnology(PlayerTechnology.WEB);
+        player.setClientId("foo");
         player.setUsername("username");
         player.setIpAddress("ipaddress");
         player.setDynamicIp(true);
@@ -127,6 +152,7 @@ public class PlayerDaoTestCase extends DaoTestCaseBase {
         assertEquals("Wrong ID.", expected.getId(), actual.getId());
         assertEquals("Wrong name.", expected.getName(), actual.getName());
         assertEquals("Wrong technology.", expected.getTechnology(), actual.getTechnology());
+        assertEquals("Wrong client ID.", expected.getClientId(), actual.getClientId());
         assertEquals("Wrong type.", expected.getType(), actual.getType());
         assertEquals("Wrong username.", expected.getUsername(), actual.getUsername());
         assertEquals("Wrong IP address.", expected.getIpAddress(), actual.getIpAddress());

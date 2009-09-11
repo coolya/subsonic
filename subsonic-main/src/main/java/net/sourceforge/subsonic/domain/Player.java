@@ -33,6 +33,7 @@ public class Player {
     private String id;
     private String name;
     private PlayerTechnology technology = PlayerTechnology.WEB;
+    private String clientId;
     private String type;
     private String username;
     private String ipAddress;
@@ -86,6 +87,26 @@ public class Player {
      */
     public PlayerTechnology getTechnology() {
         return technology;
+    }
+
+    /**
+     * Returns the third-party client ID (used if this player is managed over the
+     * Subsonic REST API).
+     *
+     * @return The client ID.
+     */
+    public String getClientId() {
+        return clientId;
+    }
+
+    /**
+     * Sets the third-party client ID (used if this player is managed over the
+     * Subsonic REST API).
+     *
+     * @param clientId The client ID.
+     */
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
     /**

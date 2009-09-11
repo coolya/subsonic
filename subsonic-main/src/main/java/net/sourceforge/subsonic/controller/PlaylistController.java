@@ -18,9 +18,7 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,23 +55,11 @@ public class PlaylistController extends ParameterizableViewController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("user", user);
         map.put("player", player);
-        map.put("players", getPlayers(user));
+        map.put("players", playerService.getPlayersForUserAndClientId(user.getUsername(), null));
         map.put("visibility", userSettings.getPlaylistVisibility());
         map.put("partyMode", userSettings.isPartyModeEnabled());
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
-        return result;
-    }
-
-    private List<Player> getPlayers(User user) {
-        List<Player> result = new ArrayList<Player>();
-        for (Player player : playerService.getAllPlayers()) {
-
-            // Only display authorized players.
-            if (user.isAdminRole() || user.getUsername().equals(player.getUsername())) {
-                result.add(player);
-            }
-        }
         return result;
     }
 

@@ -19,12 +19,12 @@ public class HelpActivity extends OptionsMenuActivity {
 
         helpTextView.setText(
                 "With Subsonic you can easily download music from your home computer to your Android phone. Once you've " +
-                "downloaded your favorite tracks, they will be available from any music player - also when you're offline.\n" +
+                "downloaded your favorite tracks, they are available from any music player - also when you're offline.\n" +
                 "\n" +
-                "To install the Subsonic server on your computer, please visit http://subsonic.sf.net. It's available for " +
+                "To install the Subsonic server software on your computer, please visit http://subsonic.sf.net. It's available for " +
                 "Windows, Mac,Linux and Unix.\n" +
                 "\n" +
-                "By default, the Subsonic Android app is configured to use a Subsonic demo server. Once you've set up your own " +
+                "By default, the Subsonic Android app is configured to use the Subsonic demo server. Once you've set up your own " +
                 "server, please go to Settings and change the configuration so that it connects to your own computer.");
 
         // TODO: Mention 100 song limit.

@@ -47,6 +47,7 @@ import net.sourceforge.subsonic.domain.TranscodeScheme;
 import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.domain.TransferStatus;
 import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.domain.PlayerTechnology;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SecurityService;
@@ -109,6 +110,7 @@ public class RESTController extends MultiActionController {
 
     public ModelAndView getMusicFolders(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
+        createPlayerIfNecessary(request);
         XMLBuilder builder = createXMLBuilder(response, true);
         builder.add("musicFolders", false);
 
@@ -127,7 +129,7 @@ public class RESTController extends MultiActionController {
 
     public ModelAndView getIndexes(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-
+        createPlayerIfNecessary(request);
         XMLBuilder builder = createXMLBuilder(response, true);
 
         long lastModified = leftController.getLastModified(request);
@@ -167,6 +169,7 @@ public class RESTController extends MultiActionController {
 
     public ModelAndView getMusicDirectory(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
+        createPlayerIfNecessary(request);
         XMLBuilder builder = createXMLBuilder(response, true);
         Player player = playerService.getPlayer(request, response);
 
@@ -196,6 +199,7 @@ public class RESTController extends MultiActionController {
 
     public ModelAndView getNowPlaying(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
+        createPlayerIfNecessary(request);
         XMLBuilder builder = createXMLBuilder(response, true);
         builder.add("nowPlaying", false);
 
@@ -288,6 +292,7 @@ public class RESTController extends MultiActionController {
 
     public ModelAndView download(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
+        createPlayerIfNecessary(request);
         User user = securityService.getCurrentUser(request);
         if (!user.isDownloadRole()) {
             error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to download files.");
@@ -299,6 +304,7 @@ public class RESTController extends MultiActionController {
 
     public ModelAndView stream(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
+        createPlayerIfNecessary(request);
         User user = securityService.getCurrentUser(request);
         if (!user.isStreamRole()) {
             error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to play files.");
@@ -310,6 +316,7 @@ public class RESTController extends MultiActionController {
 
     public ModelAndView getCoverArt(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
+        createPlayerIfNecessary(request);
         return coverArtController.handleRequest(request, response);
     }
 
@@ -388,6 +395,26 @@ public class RESTController extends MultiActionController {
                 new Attribute("status", ok ? "ok" : "failed"),
                 new Attribute("version", StringUtil.getRESTProtocolVersion()));
         return builder;
+    }
+
+    private void createPlayerIfNecessary(HttpServletRequest request) {
+        String username = request.getParameter("u");
+        String clientId = request.getParameter("c");
+        List<Player> players = playerService.getPlayersForUserAndClientId(username, clientId);
+        if (players.isEmpty()) {
+            Player player = new Player();
+            player.setUsername(username);
+            player.setClientId(clientId);
+            player.setName(clientId);
+            player.setTechnology(PlayerTechnology.EXTERNAL_WITH_PLAYLIST);
+            playerService.createPlayer(player);
+        }
+
+        // Save player in session context.
+        players = playerService.getPlayersForUserAndClientId(username, clientId);
+        if (!players.isEmpty()) {
+            request.getSession().setAttribute("player", players.get(0).getId());
+        }
     }
 
     public void setSettingsService(SettingsService settingsService) {

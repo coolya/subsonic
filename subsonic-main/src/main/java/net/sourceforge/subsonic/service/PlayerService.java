@@ -18,22 +18,20 @@
  */
 package net.sourceforge.subsonic.service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.dao.PlayerDao;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Transcoding;
 import net.sourceforge.subsonic.domain.TransferStatus;
+import net.sourceforge.subsonic.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Provides services for maintaining the set of players.
@@ -70,7 +68,7 @@ public class PlayerService {
      * @return The player associated with the given HTTP request.
      */
     public synchronized Player getPlayer(HttpServletRequest request, HttpServletResponse response,
-            boolean remoteControlEnabled, boolean isStreamRequest) {
+                                         boolean remoteControlEnabled, boolean isStreamRequest) {
 
         // Find by 'player' request parameter.
         Player player = getPlayerById(request.getParameter("player"));
@@ -96,8 +94,8 @@ public class PlayerService {
             player = new Player();
             createPlayer(player);
             LOG.debug("Created player " + player.getId() + " (remoteControlEnabled: " + remoteControlEnabled +
-                    ", isStreamRequest: " + isStreamRequest + ", username: " + username +
-                    ", ip: " + request.getRemoteAddr() + ").");
+                      ", isStreamRequest: " + isStreamRequest + ", username: " + username +
+                      ", ip: " + request.getRemoteAddr() + ").");
         }
 
         // Update player data.
@@ -107,7 +105,7 @@ public class PlayerService {
             isUpdate = true;
         }
         if (player.getIpAddress() == null || isStreamRequest ||
-                (!isPlayerConnected(player) && player.isDynamicIp() && !request.getRemoteAddr().equals(player.getIpAddress()))) {
+            (!isPlayerConnected(player) && player.isDynamicIp() && !request.getRemoteAddr().equals(player.getIpAddress()))) {
             player.setIpAddress(request.getRemoteAddr());
             isUpdate = true;
         }
@@ -202,7 +200,7 @@ public class PlayerService {
     /**
      * Reads the player ID from the cookie in the HTTP request.
      *
-     * @param request The HTTP request.
+     * @param request  The HTTP request.
      * @param username The name of the current user.
      * @return The player ID embedded in the cookie, or <code>null</code> if cookie is not present.
      */
@@ -218,6 +216,18 @@ public class PlayerService {
             }
         }
         return null;
+    }
+
+    /**
+     * Returns all players owned by the given username and client ID.
+     *
+     * @param username The name of the user.
+     * @param clientId The third-party client ID (used if this player is managed over the
+     *                 Subsonic REST API). May be <code>null</code>.
+     * @return All relevant players.
+     */
+    public List<Player> getPlayersForUserAndClientId(String username, String clientId) {
+        return playerDao.getPlayersForUserAndClientId(username, clientId);
     }
 
     /**
@@ -260,7 +270,7 @@ public class PlayerService {
      *
      * @param player The player to create.
      */
-    private void createPlayer(Player player) {
+    public void createPlayer(Player player) {
         playerDao.createPlayer(player);
 
         List<Transcoding> transcodings = transcodingService.getAllTranscodings();
