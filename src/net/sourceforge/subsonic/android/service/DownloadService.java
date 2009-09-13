@@ -57,6 +57,7 @@ import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.Pair;
 import net.sourceforge.subsonic.android.util.Util;
+import net.sourceforge.subsonic.android.util.SimpleServiceBinder;
 
 /**
  * @author Sindre Mehus
@@ -65,9 +66,9 @@ public class DownloadService extends Service {
 
     private static final String TAG = DownloadService.class.getSimpleName();
     private static final Uri ALBUM_ART_URI = Uri.parse("content://media/external/audio/albumart");
-    private static final MusicDirectory.Entry DIE = new MusicDirectory.Entry();
+    private static final MusicDirectory.Entry POISON = new MusicDirectory.Entry();
 
-    private final IBinder binder = new DownloadBinder();
+    private final IBinder binder = new SimpleServiceBinder<DownloadService>(this);
     private final Handler handler = new Handler();
 
     private final LinkedBlockingQueue<MusicDirectory.Entry> queue = new LinkedBlockingQueue<MusicDirectory.Entry>();
@@ -96,7 +97,7 @@ public class DownloadService extends Service {
 
         saveQueue();
         clear();
-        queue.offer(DIE);
+        queue.offer(POISON);
     }
 
     private void loadQueue() {
@@ -285,14 +286,6 @@ public class DownloadService extends Service {
         return Util.getRestUrl(this, "getCoverArt") + "&id=" + song.getCoverArt() + "&size=200";
     }
 
-    public class DownloadBinder extends Binder {
-
-        public DownloadService getService() {
-            return DownloadService.this;
-        }
-
-    }
-
     private class DownloadThread extends Thread {
 
         @Override
@@ -300,7 +293,7 @@ public class DownloadService extends Service {
             while (true) {
                 try {
                     MusicDirectory.Entry song = queue.take();
-                    if (song == DIE) {
+                    if (song == POISON) {
                         return;
                     }
 

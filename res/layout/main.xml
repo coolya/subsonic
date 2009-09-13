@@ -16,7 +16,7 @@
             a:text="Browse music"/>
 
     <Button
-            a:id="@+id/main_queue"
+            a:id="@+id/main_download_queue"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:drawableLeft="@android:drawable/ic_menu_save"
@@ -24,6 +24,16 @@
             a:gravity="left|center_vertical"
             a:textAppearance="?android:attr/textAppearanceLarge"
             a:text="Download queue"/>
+
+    <Button
+            a:id="@+id/main_stream_queue"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:drawableLeft="@android:drawable/ic_menu_recent_history"
+            a:drawablePadding="20dp"
+            a:gravity="left|center_vertical"
+            a:textAppearance="?android:attr/textAppearanceLarge"
+            a:text="Playlist"/>
 
     <Button
             a:id="@+id/main_settings"

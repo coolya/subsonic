@@ -27,6 +27,10 @@
                   a:label="Download queue"
                   a:launchMode="singleTask"/>
 
+        <activity a:name=".activity.StreamQueueActivity"
+                  a:label="Playlist"
+                  a:launchMode="singleTask"/>
+
         <activity a:name=".activity.SettingsActivity"
                   a:label="Settings"
                   a:launchMode="singleTask"/>
@@ -41,6 +45,9 @@
 
         <service a:name=".service.DownloadService"
                  a:label="Download"/>
+
+        <service a:name=".service.StreamService"
+                 a:label="Stream"/>
 
     </application>
 

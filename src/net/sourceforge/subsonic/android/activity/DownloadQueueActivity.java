@@ -23,10 +23,11 @@ import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.Pair;
 import net.sourceforge.subsonic.android.util.TwoLineListAdapter;
 import net.sourceforge.subsonic.android.util.Util;
+import net.sourceforge.subsonic.android.util.SimpleServiceBinder;
 
 import java.util.List;
 
-public class DownloadQueueActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
+public class DownloadQueueActivity extends OptionsMenuActivity implements AdapterView.OnItemLongClickListener {
 
     private static final String TAG = DownloadQueueActivity.class.getSimpleName();
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
@@ -46,8 +47,8 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
         progressTextView = (TextView) findViewById(R.id.download_queue_progress_text);
         progressBar = (ProgressBar) findViewById(R.id.download_queue_progress_bar);
         listView = (ListView) findViewById(R.id.download_queue_list);
+        listView.setOnItemLongClickListener(this);
 
-        listView.setOnItemClickListener(this);
         bindService(new Intent(this, DownloadService.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
@@ -143,7 +144,7 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         if (position >= 0) {
             final MusicDirectory.Entry song = (MusicDirectory.Entry) parent.getItemAtPosition(position);
             Log.d(TAG, song + " clicked.");
@@ -168,13 +169,14 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
             });
             builder.show();
         }
+        return false;
     }
 
     private class DownloadServiceConnection implements ServiceConnection {
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
-            downloadService = ((DownloadService.DownloadBinder) service).getService();
+            downloadService = ((SimpleServiceBinder<DownloadService>) service).getService();
             Log.i(TAG, "Connected to Download Service");
             downloadQueueChanged();
             downloadProgressChanged();

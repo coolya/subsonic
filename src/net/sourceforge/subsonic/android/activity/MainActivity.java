@@ -1,18 +1,15 @@
 package net.sourceforge.subsonic.android.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
-import android.preference.PreferenceManager;
-import net.sourceforge.subsonic.android.service.DownloadService;
 import net.sourceforge.subsonic.android.R;
+import net.sourceforge.subsonic.android.service.DownloadService;
+import net.sourceforge.subsonic.android.service.StreamService;
 
 public class MainActivity extends OptionsMenuActivity {
-
-    private static final String TAG = MainActivity.class.getSimpleName();
 
     /**
      * Called when the activity is first created.
@@ -24,6 +21,7 @@ public class MainActivity extends OptionsMenuActivity {
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 
         startService(new Intent(this, DownloadService.class));
+        startService(new Intent(this, StreamService.class));
         setContentView(R.layout.main);
 
         Button browseButton = (Button) findViewById(R.id.main_browse);
@@ -42,11 +40,19 @@ public class MainActivity extends OptionsMenuActivity {
             }
         });
 
-        Button queueButton = (Button) findViewById(R.id.main_queue);
-        queueButton.setOnClickListener(new View.OnClickListener() {
+        Button downloadQueueButton = (Button) findViewById(R.id.main_download_queue);
+        downloadQueueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, DownloadQueueActivity.class));
+            }
+        });
+
+        Button streamQueueButton = (Button) findViewById(R.id.main_stream_queue);
+        streamQueueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, StreamQueueActivity.class));
             }
         });
 
