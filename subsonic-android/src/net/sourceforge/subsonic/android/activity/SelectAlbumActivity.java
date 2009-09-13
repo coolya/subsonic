@@ -26,17 +26,21 @@ import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.service.DownloadService;
 import net.sourceforge.subsonic.android.service.MusicService;
 import net.sourceforge.subsonic.android.service.MusicServiceFactory;
+import net.sourceforge.subsonic.android.service.StreamService;
 import net.sourceforge.subsonic.android.util.BackgroundTask;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.ImageLoader;
 import net.sourceforge.subsonic.android.util.Util;
+import net.sourceforge.subsonic.android.util.SimpleServiceBinder;
 
 public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
+    private final StreamServiceConnection streamServiceConnection = new StreamServiceConnection();
     private ImageLoader imageLoader;
     private DownloadService downloadService;
+    private StreamService streamService;
     private ListView entryList;
     private Button downloadButton;
     private Button playButton;
@@ -82,6 +86,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         });
 
         bindService(new Intent(this, DownloadService.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
+        bindService(new Intent(this, StreamService.class), streamServiceConnection, Context.BIND_AUTO_CREATE);
         load();
     }
 
@@ -143,6 +148,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     protected void onDestroy() {
         super.onDestroy();
         unbindService(downloadServiceConnection);
+        unbindService(streamServiceConnection);
         imageLoader.cancel();
     }
 
@@ -190,19 +196,14 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
 
     private void play() {
         try {
-            MusicDirectory.Entry song = getSelectedSongs().get(0);
-            MediaPlayer player = new MediaPlayer();
-            String url = Util.getRestUrl(this, "stream") + "&id=" + song.getId();
-            Log.i(TAG, url);
-            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            player.setDataSource(url);
-            Log.e(TAG, "setDataSource done");
-            player.prepare();
-            Log.e(TAG, "prepare done");
-            player.start();
-            Log.e(TAG, "start done");
+            if (streamService != null) {
+                streamService.add(getSelectedSongs(), false);
+            } else {
+                Log.e(TAG, "Not connected to Stream Service.");
+            }
+
         } catch (Exception e) {
-            Log.e(TAG, "Failed to stream.", e);
+            Log.e(TAG, "Failed to contact Stream Service.");
         }
     }
 
@@ -222,7 +223,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
-            downloadService = ((DownloadService.DownloadBinder) service).getService();
+            downloadService = ((SimpleServiceBinder<DownloadService>) service).getService();
             Log.i(TAG, "Connected to Download Service");
         }
 
@@ -230,6 +231,22 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         public void onServiceDisconnected(ComponentName componentName) {
             downloadService = null;
             Log.i(TAG, "Disconnected from Download Service");
+        }
+    }
+
+
+    private class StreamServiceConnection implements ServiceConnection {
+
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder service) {
+            streamService = ((SimpleServiceBinder<StreamService>) service).getService();
+            Log.i(TAG, "Connected to Stream Service");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            streamService = null;
+            Log.i(TAG, "Disconnected from Stream Service");
         }
     }
 

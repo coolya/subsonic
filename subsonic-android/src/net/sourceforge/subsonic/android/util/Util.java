@@ -148,6 +148,19 @@ public final class Util {
         return byteCount + " B";
     }
 
+    public static String formatDuration(int seconds) {
+        int minutes = seconds / 60;
+        int secs = seconds % 60;
+
+        StringBuilder builder = new StringBuilder(6);
+        builder.append(minutes).append(":");
+        if (secs < 10) {
+            builder.append("0");
+        }
+        builder.append(secs);
+        return builder.toString();
+    }
+
     public static boolean equals(Object object1, Object object2) {
         if (object1 == object2) {
             return true;
@@ -196,5 +209,4 @@ public final class Util {
         }
         return new String(out);
     }
-
 }

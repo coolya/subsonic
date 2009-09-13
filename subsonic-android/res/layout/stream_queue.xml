@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+              a:orientation="vertical"
+              a:layout_width="fill_parent"
+              a:layout_height="fill_parent">
+
+    <TextView
+            a:id="@+id/stream_queue_progress_text"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:paddingTop="10dp"
+            />
+
+    <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            a:id="@+id/stream_queue_progress_bar"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:padding="10dp"
+            />
+
+    <ListView
+            a:id="@+id/stream_queue_list"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            />
+
+</LinearLayout>
+

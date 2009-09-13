@@ -54,6 +54,11 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
+Add duration to rest api.
+Don't send structural change event when switching songs, only when modifying playlist.
+Show buffer percentage in gui.
+Add prev, pause, resume, next buttons.
+Indicate songs that are already downloaded.
 User should be able to select music folder. (Let REST method support it at least).
 Use alertdialog for help message + formatted text.
 REST method for getting lyrics.
