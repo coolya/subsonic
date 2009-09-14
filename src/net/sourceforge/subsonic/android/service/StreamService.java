@@ -145,7 +145,7 @@ public class StreamService extends Service {
     }
 
     public void play(int index) {
-        if (index >= playlist.size()) {
+        if (index < 0 || index >= playlist.size()) {
             return;
         }
         duration = 0;
@@ -165,6 +165,26 @@ public class StreamService extends Service {
         } catch (Exception e) {
             Log.e(TAG, "Failed to start MediaPlayer.", e);
             addErrorNotification(song, e);
+        }
+    }
+
+    public void previous() {
+        play(current.get() - 1);
+    }
+
+    public void next() {
+        play(current.get() + 1);
+    }
+
+    public void stop() {
+        player.reset();
+    }
+
+    public void togglePause() {
+        if (player.isPlaying()) {
+            player.pause();
+        } else {
+            player.start();
         }
     }
 
@@ -288,50 +308,4 @@ public class StreamService extends Service {
     public IBinder onBind(Intent intent) {
         return binder;
     }
-
-//    private class StreamThread extends Thread {
-//
-//        @Override
-//        public void run() {
-//            while (true) {
-//                try {
-//                    MusicDirectory.Entry song = queue.take();
-//                    if (song == POISON) {
-//                        return;
-//                    }
-//
-//                    play(song);
-//                } catch (InterruptedException x) {
-//                    Log.i(TAG, "Stream thread interrupted. Continuing.");
-//                }
-//            }
-//        }
-//
-//        private void play(final MusicDirectory.Entry song) throws InterruptedException {
-//            Log.i(TAG, "Starting to stream " + song);
-//            currentProgress.set(0L);
-//            current.set(song);
-//            updateNotification();
-//            broadcastChange(true);
-//
-//            try {
-//                player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//                String url = Util.getRestUrl(StreamService.this, "stream") + "&id=" + song.getId();
-//                Log.i(TAG, url);
-//                player.setDataSource(url);
-//                Log.e(TAG, "setDataSource done");
-//                player.prepare();
-//                Log.e(TAG, "prepare done");
-//                player.start();
-//                Log.e(TAG, "start done");
-//
-//            } catch (Exception e) {
-//            } finally {
-//                current.set(null);
-//                updateNotification();
-//                broadcastChange(true);
-//            }
-//        }
-//
-//    }
 }

@@ -4,12 +4,32 @@
               a:layout_width="fill_parent"
               a:layout_height="fill_parent">
 
-    <TextView
-            a:id="@+id/stream_queue_progress_text"
+    <ListView
+            a:id="@+id/stream_queue_current"
             a:layout_width="fill_parent"
-            a:layout_height="wrap_content"
-            a:paddingTop="10dp"
-            />
+            a:layout_height="wrap_content"/>
+
+    <!--<TwoLineListItem-->
+            <!--a:id="@+id/stream_queue_current"-->
+            <!--a:layout_width="fill_parent"-->
+            <!--a:layout_height="wrap_content"/>-->
+
+    <!--<TextView-->
+            <!--a:id="@+id/stream_queue_current1"-->
+            <!--a:layout_width="fill_parent"-->
+            <!--a:layout_height="wrap_content"-->
+            <!--a:layout_marginLeft="6dip"-->
+            <!--a:layout_marginTop="6dip"-->
+            <!--a:textAppearance="?android:attr/textAppearanceLarge"/>-->
+
+    <!--<TextView-->
+            <!--a:id="@+id/stream_queue_current2"-->
+            <!--a:layout_width="fill_parent"-->
+            <!--a:layout_height="wrap_content"-->
+            <!--a:layout_below="@android:id/text1"-->
+            <!--a:layout_alignLeft="@android:id/text1"-->
+            <!--a:textAppearance="?android:attr/textAppearanceSmall"-->
+            <!--/>-->
 
     <ListView
             a:id="@+id/stream_queue_list"
@@ -23,23 +43,54 @@
                   a:layout_height="wrap_content"
                   a:gravity="center_horizontal">
         <Button
+                a:id="@+id/stream_queue_previous"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"
-                a:text="&lt;&lt;"
-                />
+                a:text="&lt;&lt;"/>
         <Button
+                a:id="@+id/stream_queue_stop"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"
-                a:text="P"/>
+                a:text="Stop"/>
         <Button
+                a:id="@+id/stream_queue_pause_resume"
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"
+                a:text="Pause/Res"/>
+        <Button
+                a:id="@+id/stream_queue_next"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"
                 a:text="&gt;&gt;"/>
     </LinearLayout>
 
+    <LinearLayout a:orientation="horizontal"
+                  a:layout_width="fill_parent"
+                  a:layout_height="wrap_content"
+                  a:paddingLeft="10dp"
+                  a:paddingRight="10dp">
+        <TextView
+                a:id="@+id/stream_queue_position"
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"
+                a:gravity="left"
+                a:text="0:00"/>
+        <TextView
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"
+                a:layout_weight="1"/>
+        <TextView
+                a:id="@+id/stream_queue_duration"
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"
+                a:gravity="right"
+                a:text="0:00"/>
+    </LinearLayout>
+
     <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
             a:id="@+id/stream_queue_progress_bar"
+            a:indeterminate="false"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:padding="10dp"/>
