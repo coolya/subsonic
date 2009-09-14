@@ -17,8 +17,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.CheckedTextView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import net.sourceforge.subsonic.android.R;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.service.StreamService;
@@ -45,11 +45,13 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
     private BroadcastReceiver broadcastReceiver;
     private TextView positionTextView;
     private TextView durationTextView;
+    private TextView bufferTextView;
     private ProgressBar progressBar;
-    private Button previousButton;
-    private Button nextButton;
-    private Button stopButton;
-    private Button pauseResumeButton;
+    private ImageButton previousButton;
+    private ImageButton nextButton;
+    private ImageButton stopButton;
+    private ImageButton pauseButton;
+    private ImageButton resumeButton;
 
     /**
      * Called when the activity is first created.
@@ -62,12 +64,14 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         currentView = (ListView) findViewById(R.id.stream_queue_current);
         positionTextView = (TextView) findViewById(R.id.stream_queue_position);
         durationTextView = (TextView) findViewById(R.id.stream_queue_duration);
+        bufferTextView = (TextView) findViewById(R.id.stream_queue_buffer);
         progressBar = (ProgressBar) findViewById(R.id.stream_queue_progress_bar);
         playlistView = (ListView) findViewById(R.id.stream_queue_list);
-        previousButton = (Button) findViewById(R.id.stream_queue_previous);
-        nextButton = (Button) findViewById(R.id.stream_queue_next);
-        stopButton = (Button) findViewById(R.id.stream_queue_stop);
-        pauseResumeButton = (Button) findViewById(R.id.stream_queue_pause_resume);
+        previousButton = (ImageButton) findViewById(R.id.stream_queue_previous);
+        nextButton = (ImageButton) findViewById(R.id.stream_queue_next);
+        stopButton = (ImageButton) findViewById(R.id.stream_queue_stop);
+        pauseButton = (ImageButton) findViewById(R.id.stream_queue_pause);
+        resumeButton = (ImageButton) findViewById(R.id.stream_queue_resume);
 
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +94,14 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
             }
         });
 
-        pauseResumeButton.setOnClickListener(new View.OnClickListener() {
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                streamService.togglePause();
+            }
+        });
+
+        resumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 streamService.togglePause();
@@ -106,23 +117,25 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
     protected void onResume() {
         super.onResume();
 
-        streamQueueChanged();
-        streamProgressChanged();
+        onPlaylistChanged();
+        onProgressChanged();
 
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                boolean progressChanged = Constants.INTENT_ACTION_STREAM_PROGRESS.equals(intent.getAction());
-                if (progressChanged) {
-                    streamProgressChanged();
-                } else {
-                    streamQueueChanged();
+                if (Constants.INTENT_ACTION_STREAM_PROGRESS.equals(intent.getAction())) {
+                    onProgressChanged();
+                } else if (Constants.INTENT_ACTION_STREAM_PLAYLIST.equals(intent.getAction())) {
+                    onPlaylistChanged();
+                } else if (Constants.INTENT_ACTION_STREAM_CURRENT.equals(intent.getAction())) {
+                    onCurrentChanged();
                 }
             }
         };
 
-        registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_QUEUE));
         registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_PROGRESS));
+        registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_PLAYLIST));
+        registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_CURRENT));
     }
 
     @Override
@@ -131,41 +144,48 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         unregisterReceiver(broadcastReceiver);
     }
 
-    private void streamQueueChanged() {
+    private void onPlaylistChanged() {
         if (streamService == null) {
             return;
         }
 
-        final List<MusicDirectory.Entry> queue = streamService.getQueue();
-        Pair<MusicDirectory.Entry, Pair<Long, Long>> current = streamService.getCurrent();
-
-        if (current != null) {
-            Long millisTotal = current.getSecond().getSecond();
-            progressBar.setMax(millisTotal.intValue());
-        } else {
+        List<MusicDirectory.Entry> queue = streamService.getPlaylist();
+        playlistView.setAdapter(new SongListAdapter(queue));
+        if (queue.isEmpty()) {
             currentView.setAdapter(new EmptySongListAdapter());
         }
-        playlistView.setAdapter(new SongListAdapter(queue));
     }
 
-    private void streamProgressChanged() {
+    private void onCurrentChanged() {
+        if (streamService == null) {
+            return;
+        }
+        MusicDirectory.Entry current = streamService.getCurrentSong();
+        if (current != null) {
+            currentView.setAdapter(new SingleSongListAdapter(current));
+        }
+    }
+
+    private void onProgressChanged() {
         if (streamService == null) {
             return;
         }
         Pair<MusicDirectory.Entry, Pair<Long, Long>> current = streamService.getCurrent();
         if (current != null) {
 
-            // TODO: Handle that total time is unknown?
             int millisPlayed = current.getSecond().getFirst().intValue();
             int millisTotal = current.getSecond().getSecond().intValue();
 
-            // TODO: Optimize
-            currentView.setAdapter(new SingleSongListAdapter(current.getFirst()));
-
             positionTextView.setText(Util.formatDuration(millisPlayed / 1000));
             durationTextView.setText(Util.formatDuration(millisTotal / 1000));
-
             progressBar.setProgress(millisPlayed);
+            progressBar.setMax(millisTotal);
+
+            if (millisTotal == 0) {
+                bufferTextView.setText("Buffering " + streamService.getBuffer() + "%");
+            } else {
+                bufferTextView.setText(null);
+            }
         }
     }
 
@@ -187,8 +207,9 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             streamService = ((SimpleServiceBinder<StreamService>) service).getService();
             Log.i(TAG, "Connected to Stream Service");
-            streamQueueChanged();
-            streamProgressChanged();
+            onPlaylistChanged();
+            onCurrentChanged();
+            onProgressChanged();
         }
 
         @Override
