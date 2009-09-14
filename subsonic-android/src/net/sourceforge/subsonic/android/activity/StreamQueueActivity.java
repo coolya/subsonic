@@ -95,10 +95,8 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
             if (millisTotal != null) {
                 progressBar.setMax(millisTotal.intValue());
             }
-            progressBar.setVisibility(View.VISIBLE);
         } else {
             progressTextView.setText("Playlist is empty");
-            progressBar.setVisibility(View.INVISIBLE);
         }
 
         listView.setAdapter(new TwoLineListAdapter<MusicDirectory.Entry>(this, queue) {

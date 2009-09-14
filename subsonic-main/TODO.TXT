@@ -54,6 +54,7 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
+Improve main menu.
 Add duration to rest api.
 Don't send structural change event when switching songs, only when modifying playlist.
 Show buffer percentage in gui.

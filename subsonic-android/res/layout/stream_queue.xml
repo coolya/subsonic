@@ -11,19 +11,38 @@
             a:paddingTop="10dp"
             />
 
+    <ListView
+            a:id="@+id/stream_queue_list"
+            a:layout_width="fill_parent"
+            a:layout_height="fill_parent"
+            a:layout_weight="1"
+            />
+
+    <LinearLayout a:orientation="horizontal"
+                  a:layout_width="fill_parent"
+                  a:layout_height="wrap_content"
+                  a:gravity="center_horizontal">
+        <Button
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"
+                a:text="&lt;&lt;"
+                />
+        <Button
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"
+                a:text="P"/>
+        <Button
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"
+                a:text="&gt;&gt;"/>
+    </LinearLayout>
+
     <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
             a:id="@+id/stream_queue_progress_bar"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
-            a:padding="10dp"
-            />
-
-    <ListView
-            a:id="@+id/stream_queue_list"
-            a:layout_width="fill_parent"
-            a:layout_height="wrap_content"
-            />
+            a:padding="10dp"/>
 
 </LinearLayout>
 
