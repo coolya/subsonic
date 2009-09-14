@@ -41,7 +41,7 @@ import java.util.Map;
 public class ImageLoader implements Runnable {
 
     private static final String TAG = ImageLoader.class.getSimpleName();
-    private final Task DIE = new Task(null, null);
+    private final Task POISON = new Task(null, null);
     private final BlockingQueue<Task> queue;
     private final Map<String, Drawable> cache = new ConcurrentHashMap<String, Drawable>();
     private final Thread thread;
@@ -79,7 +79,7 @@ public class ImageLoader implements Runnable {
 
     public void cancel() {
         queue.clear();
-        queue.offer(DIE);
+        queue.offer(POISON);
         thread.interrupt();
     }
 
@@ -90,7 +90,7 @@ public class ImageLoader implements Runnable {
         while (!Thread.interrupted()) {
             try {
                 Task task = queue.take();
-                if (task == DIE) {
+                if (task == POISON) {
                     break;
                 }
 
