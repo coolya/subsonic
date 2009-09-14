@@ -40,7 +40,6 @@ import net.sourceforge.subsonic.android.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -52,7 +51,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class StreamService extends Service {
 
     private static final String TAG = StreamService.class.getSimpleName();
-//    private static final MusicDirectory.Entry POISON = new MusicDirectory.Entry();
 
     private final MediaPlayer player = new MediaPlayer();
     private final IBinder binder = new SimpleServiceBinder<StreamService>(this);
@@ -62,6 +60,7 @@ public class StreamService extends Service {
     private final List<MusicDirectory.Entry> playlist = new CopyOnWriteArrayList<MusicDirectory.Entry>();
     private int duration;
     private final ScheduledExecutorService progressNotifier = Executors.newSingleThreadScheduledExecutor();
+    private int buffer;
 
     @Override
     public void onCreate() {
@@ -71,7 +70,7 @@ public class StreamService extends Service {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
                 duration = player.getDuration();
-                broadcastChange(false);
+                notifyProgressChanged();
                 player.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 player.start();
                 Log.i(TAG, "start() done");
@@ -80,6 +79,7 @@ public class StreamService extends Service {
         player.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
             @Override
             public void onBufferingUpdate(MediaPlayer mediaPlayer, int percent) {
+                buffer = percent;
                 Log.i(TAG, "Buffer: " + percent + " %");
             }
         });
@@ -105,7 +105,7 @@ public class StreamService extends Service {
                 int newPosition = player.getCurrentPosition();
                 if (newPosition != position) {
                     position = newPosition;
-                    broadcastChange(false);
+                    notifyProgressChanged();
                 }
             }
         };
@@ -120,9 +120,6 @@ public class StreamService extends Service {
 
         player.reset();
         progressNotifier.shutdown();
-
-//        clear();
-//        queue.offer(POISON);
     }
 
     public void add(List<MusicDirectory.Entry> songs, boolean append) {
@@ -137,7 +134,7 @@ public class StreamService extends Service {
         }
 
         playlist.addAll(songs);
-        broadcastChange(false);
+        notifyPlaylistChanged();
 
         if (shouldStart) {
             play(0);
@@ -149,11 +146,12 @@ public class StreamService extends Service {
             return;
         }
         duration = 0;
+        buffer = 0;
         current.set(index);
         MusicDirectory.Entry song = playlist.get(index);
         String url = Util.getRestUrl(StreamService.this, "stream") + "&id=" + song.getId();
 
-        broadcastChange(true);
+        notifyCurrentChanged();
 
         try {
             player.reset();
@@ -184,27 +182,21 @@ public class StreamService extends Service {
         if (player.isPlaying()) {
             player.pause();
         } else {
+            // TODO: Not allowed in all states.
             player.start();
         }
     }
 
-    public List<MusicDirectory.Entry> getQueue() {
+    public List<MusicDirectory.Entry> getPlaylist() {
         return new ArrayList<MusicDirectory.Entry>(playlist);
     }
 
-//    public void remove(MusicDirectory.Entry song) {
-//        if (current.get() == song) {
-//            streamThread.interrupt();
-//        } else if (playlist.remove(song)) {
-//            broadcastChange(true);
-//        }
-//    }
-
-//    public void clear() {
-//        playlist.clear();
-//        streamThread.interrupt();
-//        broadcastChange(true);
-//    }
+    /**
+     * @return  The percentage (0-100) of the buffer that has been filled thus far.
+     */
+    public int getBuffer() {
+        return buffer;
+    }
 
     /**
      * The pair of longs contains (number of millis played, number of millis total).
@@ -219,7 +211,7 @@ public class StreamService extends Service {
         return new Pair<MusicDirectory.Entry, Pair<Long, Long>>(current, progress);
     }
 
-    private MusicDirectory.Entry getCurrentSong() {
+    public MusicDirectory.Entry getCurrentSong() {
         try {
             return playlist.get(current.get());
         } catch (IndexOutOfBoundsException e) {
@@ -227,11 +219,16 @@ public class StreamService extends Service {
         }
     }
 
-    private void broadcastChange(boolean queueChange) {
-        if (queueChange) {
-            sendBroadcast(new Intent(Constants.INTENT_ACTION_STREAM_QUEUE));
-        }
+    private void notifyPlaylistChanged() {
+        sendBroadcast(new Intent(Constants.INTENT_ACTION_STREAM_PLAYLIST));
+    }
 
+    private void notifyCurrentChanged() {
+        Log.i(TAG, "NOTIFY CURRENT: " + getCurrentSong());
+        sendBroadcast(new Intent(Constants.INTENT_ACTION_STREAM_CURRENT));
+    }
+
+    private void notifyProgressChanged() {
         sendBroadcast(new Intent(Constants.INTENT_ACTION_STREAM_PROGRESS));
     }
 
@@ -308,4 +305,5 @@ public class StreamService extends Service {
     public IBinder onBind(Intent intent) {
         return binder;
     }
+
 }

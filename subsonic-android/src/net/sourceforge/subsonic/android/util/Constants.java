@@ -22,7 +22,8 @@ public final class Constants {
     // Intent actions.
     public static final String INTENT_ACTION_DOWNLOAD_QUEUE = "net.sourceforge.subsonic.android.DOWNLOAD_QUEUE";
     public static final String INTENT_ACTION_DOWNLOAD_PROGRESS = "net.sourceforge.subsonic.android.DOWNLOAD_PROGRESS";
-    public static final String INTENT_ACTION_STREAM_QUEUE = "net.sourceforge.subsonic.android.STREAM_QUEUE";
+    public static final String INTENT_ACTION_STREAM_PLAYLIST = "net.sourceforge.subsonic.android.STREAM_PLAYLIST";
+    public static final String INTENT_ACTION_STREAM_CURRENT = "net.sourceforge.subsonic.android.STREAM_CURRENT";
     public static final String INTENT_ACTION_STREAM_PROGRESS = "net.sourceforge.subsonic.android.STREAM_PROGRESS";
 
     // Names for intent extras.

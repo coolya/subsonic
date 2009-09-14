@@ -9,28 +9,6 @@
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"/>
 
-    <!--<TwoLineListItem-->
-            <!--a:id="@+id/stream_queue_current"-->
-            <!--a:layout_width="fill_parent"-->
-            <!--a:layout_height="wrap_content"/>-->
-
-    <!--<TextView-->
-            <!--a:id="@+id/stream_queue_current1"-->
-            <!--a:layout_width="fill_parent"-->
-            <!--a:layout_height="wrap_content"-->
-            <!--a:layout_marginLeft="6dip"-->
-            <!--a:layout_marginTop="6dip"-->
-            <!--a:textAppearance="?android:attr/textAppearanceLarge"/>-->
-
-    <!--<TextView-->
-            <!--a:id="@+id/stream_queue_current2"-->
-            <!--a:layout_width="fill_parent"-->
-            <!--a:layout_height="wrap_content"-->
-            <!--a:layout_below="@android:id/text1"-->
-            <!--a:layout_alignLeft="@android:id/text1"-->
-            <!--a:textAppearance="?android:attr/textAppearanceSmall"-->
-            <!--/>-->
-
     <ListView
             a:id="@+id/stream_queue_list"
             a:layout_width="fill_parent"
@@ -42,26 +20,31 @@
                   a:layout_width="fill_parent"
                   a:layout_height="wrap_content"
                   a:gravity="center_horizontal">
-        <Button
+        <ImageButton
                 a:id="@+id/stream_queue_previous"
+                a:src="@drawable/media_skip_backward"
                 a:layout_width="wrap_content"
-                a:layout_height="fill_parent"
-                a:text="&lt;&lt;"/>
-        <Button
+                a:layout_height="fill_parent"/>
+        <ImageButton
                 a:id="@+id/stream_queue_stop"
+                a:src="@drawable/media_playback_stop"
                 a:layout_width="wrap_content"
-                a:layout_height="fill_parent"
-                a:text="Stop"/>
-        <Button
-                a:id="@+id/stream_queue_pause_resume"
+                a:layout_height="fill_parent"/>
+        <ImageButton
+                a:id="@+id/stream_queue_pause"
+                a:src="@drawable/media_playback_pause"
                 a:layout_width="wrap_content"
-                a:layout_height="fill_parent"
-                a:text="Pause/Res"/>
-        <Button
+                a:layout_height="fill_parent"/>
+        <ImageButton
+                a:id="@+id/stream_queue_resume"
+                a:src="@drawable/media_playback_start"
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"/>
+        <ImageButton
                 a:id="@+id/stream_queue_next"
+                a:src="@drawable/media_skip_forward"
                 a:layout_width="wrap_content"
-                a:layout_height="fill_parent"
-                a:text="&gt;&gt;"/>
+                a:layout_height="fill_parent"/>
     </LinearLayout>
 
     <LinearLayout a:orientation="horizontal"
@@ -76,8 +59,10 @@
                 a:gravity="left"
                 a:text="0:00"/>
         <TextView
+                a:id="@+id/stream_queue_buffer"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"
+                a:gravity="center_horizontal"
                 a:layout_weight="1"/>
         <TextView
                 a:id="@+id/stream_queue_duration"
