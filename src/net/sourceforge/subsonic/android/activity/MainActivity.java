@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import net.sourceforge.subsonic.android.R;
 import net.sourceforge.subsonic.android.service.DownloadService;
 import net.sourceforge.subsonic.android.service.StreamService;
@@ -32,14 +33,6 @@ public class MainActivity extends OptionsMenuActivity {
             }
         });
 
-        Button settingsButton = (Button) findViewById(R.id.main_settings);
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-            }
-        });
-
         Button downloadQueueButton = (Button) findViewById(R.id.main_download_queue);
         downloadQueueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +49,15 @@ public class MainActivity extends OptionsMenuActivity {
             }
         });
 
-        Button helpButton = (Button) findViewById(R.id.main_help);
+        ImageButton settingsButton = (ImageButton) findViewById(R.id.main_settings);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            }
+        });
+
+        ImageButton helpButton = (ImageButton) findViewById(R.id.main_help);
         helpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
