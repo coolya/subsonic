@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -45,13 +44,13 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
     private BroadcastReceiver broadcastReceiver;
     private TextView positionTextView;
     private TextView durationTextView;
-    private TextView bufferTextView;
+    private TextView statusTextView;
     private ProgressBar progressBar;
     private ImageView previousButton;
     private ImageView nextButton;
     private ImageView stopButton;
     private ImageView pauseButton;
-    private ImageView resumeButton;
+    private ImageView startButton;
 
     /**
      * Called when the activity is first created.
@@ -64,14 +63,14 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         currentView = (ListView) findViewById(R.id.stream_queue_current);
         positionTextView = (TextView) findViewById(R.id.stream_queue_position);
         durationTextView = (TextView) findViewById(R.id.stream_queue_duration);
-        bufferTextView = (TextView) findViewById(R.id.stream_queue_buffer);
+        statusTextView = (TextView) findViewById(R.id.stream_queue_status);
         progressBar = (ProgressBar) findViewById(R.id.stream_queue_progress_bar);
         playlistView = (ListView) findViewById(R.id.stream_queue_list);
         previousButton = (ImageView) findViewById(R.id.stream_queue_previous);
         nextButton = (ImageView) findViewById(R.id.stream_queue_next);
         stopButton = (ImageView) findViewById(R.id.stream_queue_stop);
         pauseButton = (ImageView) findViewById(R.id.stream_queue_pause);
-        resumeButton = (ImageView) findViewById(R.id.stream_queue_resume);
+        startButton = (ImageView) findViewById(R.id.stream_queue_start);
 
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,25 +89,26 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                streamService.stop();
+                streamService.reset();
             }
         });
 
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                streamService.togglePause();
+                streamService.pause();
             }
         });
 
-        resumeButton.setOnClickListener(new View.OnClickListener() {
+        startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                streamService.togglePause();
+                streamService.start();
             }
         });
 
         playlistView.setOnItemClickListener(this);
+
         bindService(new Intent(this, StreamService.class), streamServiceConnection, Context.BIND_AUTO_CREATE);
         imageLoader = new ImageLoader();
     }
@@ -182,9 +182,9 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
             progressBar.setMax(millisTotal);
 
             if (millisTotal == 0) {
-                bufferTextView.setText("Buffering " + streamService.getBuffer() + "%");
+                statusTextView.setText(streamService.getPlayerState().toString());
             } else {
-                bufferTextView.setText(null);
+                statusTextView.setText(null);
             }
         }
     }
