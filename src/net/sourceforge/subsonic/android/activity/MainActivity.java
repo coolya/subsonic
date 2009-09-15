@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import net.sourceforge.subsonic.android.R;
 import net.sourceforge.subsonic.android.service.DownloadService;
 import net.sourceforge.subsonic.android.service.StreamService;
@@ -49,7 +50,7 @@ public class MainActivity extends OptionsMenuActivity {
             }
         });
 
-        ImageButton settingsButton = (ImageButton) findViewById(R.id.main_settings);
+        ImageView settingsButton = (ImageView) findViewById(R.id.main_settings);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +58,7 @@ public class MainActivity extends OptionsMenuActivity {
             }
         });
 
-        ImageButton helpButton = (ImageButton) findViewById(R.id.main_help);
+        ImageView helpButton = (ImageView) findViewById(R.id.main_help);
         helpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
