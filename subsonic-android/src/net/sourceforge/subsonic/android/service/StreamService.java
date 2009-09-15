@@ -62,6 +62,8 @@ public class StreamService extends Service {
     private int duration;
     private int buffer;
 
+    private PlayerState playerState = PlayerState.IDLE;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -70,10 +72,10 @@ public class StreamService extends Service {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
                 duration = player.getDuration();
+                setPlayerState(PlayerState.PREPARED);
                 notifyProgressChanged();
                 player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                player.start();
-                Log.i(TAG, "start() done");
+                start();
             }
         });
         player.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
@@ -87,12 +89,15 @@ public class StreamService extends Service {
             @Override
             public boolean onError(MediaPlayer mediaPlayer, int what, int more) {
                 Log.i(TAG, "MediaPlayer error: " + what + " (" + more + ")");
+                setPlayerState(PlayerState.ERROR);
+                reset();
                 return false;
             }
         });
         player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
+                setPlayerState(PlayerState.COMPLETED);
                 Log.i(TAG, "End of media.");
                 play(current.get() + 1);
             }
@@ -118,7 +123,7 @@ public class StreamService extends Service {
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancel(Constants.NOTIFICATION_ID_STREAM_QUEUE);
 
-        player.reset();
+        reset();
         progressNotifier.shutdown();
     }
 
@@ -154,14 +159,20 @@ public class StreamService extends Service {
         notifyCurrentChanged();
 
         try {
-            player.reset();
+            reset();
             Log.i(TAG, "reset() done");
+
             player.setDataSource(url);
+            setPlayerState(PlayerState.INITIALIZED);
             Log.i(TAG, "setDataSource() done");
+
             player.prepareAsync();
+            setPlayerState(PlayerState.PREPARING);
             Log.i(TAG, "prepareAsync() done");
+
         } catch (Exception e) {
             Log.e(TAG, "Failed to start MediaPlayer.", e);
+            setPlayerState(PlayerState.ERROR);
             addErrorNotification(song, e);
         }
     }
@@ -174,17 +185,21 @@ public class StreamService extends Service {
         play(current.get() + 1);
     }
 
-    public void stop() {
-        player.reset();
+    public void pause() {
+        player.pause();
+        setPlayerState(PlayerState.PAUSED);
     }
 
-    public void togglePause() {
-        if (player.isPlaying()) {
-            player.pause();
-        } else {
-            // TODO: Not allowed in all states.
-            player.start();
-        }
+    public void reset() {
+        player.reset();
+        setPlayerState(PlayerState.IDLE);
+    }
+
+    public void start() {
+
+        // TODO: Handle IllegalStateExcpetion, here and elsewhere.
+        player.start();
+        setPlayerState(PlayerState.STARTED);
     }
 
     public List<MusicDirectory.Entry> getPlaylist() {
@@ -224,7 +239,6 @@ public class StreamService extends Service {
     }
 
     private void notifyCurrentChanged() {
-        Log.i(TAG, "NOTIFY CURRENT: " + getCurrentSong());
         sendBroadcast(new Intent(Constants.INTENT_ACTION_STREAM_CURRENT));
     }
 
@@ -304,6 +318,27 @@ public class StreamService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return binder;
+    }
+
+    private void setPlayerState(PlayerState state) {
+        this.playerState = state;
+        notifyProgressChanged();
+    }
+
+    public PlayerState getPlayerState() {
+        return playerState;
+    }
+
+    public static enum PlayerState {
+        IDLE,
+        INITIALIZED,
+        PREPARING,
+        PREPARED,
+        STARTED,
+        STOPPED,
+        PAUSED,
+        COMPLETED,
+        ERROR
     }
 
 }

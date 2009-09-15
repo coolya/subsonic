@@ -20,6 +20,7 @@
     <LinearLayout a:orientation="horizontal"
                   a:layout_width="fill_parent"
                   a:layout_height="wrap_content"
+                  a:layout_marginTop="5dp"
                   a:gravity="center_horizontal">
         <ImageView
                 a:id="@+id/stream_queue_previous"
@@ -43,7 +44,7 @@
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
         <ImageView
-                a:id="@+id/stream_queue_resume"
+                a:id="@+id/stream_queue_start"
                 a:src="@drawable/media_start_selector"
                 a:focusable="true"
                 a:paddingRight="20dp"
@@ -69,7 +70,7 @@
                 a:gravity="left"
                 a:text="0:00"/>
         <TextView
-                a:id="@+id/stream_queue_buffer"
+                a:id="@+id/stream_queue_status"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"
                 a:gravity="center_horizontal"
