@@ -20,29 +20,38 @@
                   a:layout_width="fill_parent"
                   a:layout_height="wrap_content"
                   a:gravity="center_horizontal">
-        <ImageButton
+        <ImageView
                 a:id="@+id/stream_queue_previous"
-                a:src="@drawable/media_skip_backward"
+                a:src="@drawable/media_backward_selector"
+                a:focusable="true"
+                a:paddingRight="20dp"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
-        <ImageButton
+        <ImageView
                 a:id="@+id/stream_queue_stop"
-                a:src="@drawable/media_playback_stop"
+                a:src="@drawable/media_stop_selector"
+                a:focusable="true"
+                a:paddingRight="20dp"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
-        <ImageButton
+        <ImageView
                 a:id="@+id/stream_queue_pause"
-                a:src="@drawable/media_playback_pause"
+                a:src="@drawable/media_pause_selector"
+                a:focusable="true"
+                a:paddingRight="20dp"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
-        <ImageButton
+        <ImageView
                 a:id="@+id/stream_queue_resume"
-                a:src="@drawable/media_playback_start"
+                a:src="@drawable/media_start_selector"
+                a:focusable="true"
+                a:paddingRight="20dp"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
-        <ImageButton
+        <ImageView
                 a:id="@+id/stream_queue_next"
-                a:src="@drawable/media_skip_forward"
+                a:src="@drawable/media_forward_selector"
+                a:focusable="true"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
     </LinearLayout>

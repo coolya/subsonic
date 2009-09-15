@@ -18,7 +18,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import net.sourceforge.subsonic.android.R;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.service.StreamService;
@@ -47,11 +47,11 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
     private TextView durationTextView;
     private TextView bufferTextView;
     private ProgressBar progressBar;
-    private ImageButton previousButton;
-    private ImageButton nextButton;
-    private ImageButton stopButton;
-    private ImageButton pauseButton;
-    private ImageButton resumeButton;
+    private ImageView previousButton;
+    private ImageView nextButton;
+    private ImageView stopButton;
+    private ImageView pauseButton;
+    private ImageView resumeButton;
 
     /**
      * Called when the activity is first created.
@@ -67,11 +67,11 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         bufferTextView = (TextView) findViewById(R.id.stream_queue_buffer);
         progressBar = (ProgressBar) findViewById(R.id.stream_queue_progress_bar);
         playlistView = (ListView) findViewById(R.id.stream_queue_list);
-        previousButton = (ImageButton) findViewById(R.id.stream_queue_previous);
-        nextButton = (ImageButton) findViewById(R.id.stream_queue_next);
-        stopButton = (ImageButton) findViewById(R.id.stream_queue_stop);
-        pauseButton = (ImageButton) findViewById(R.id.stream_queue_pause);
-        resumeButton = (ImageButton) findViewById(R.id.stream_queue_resume);
+        previousButton = (ImageView) findViewById(R.id.stream_queue_previous);
+        nextButton = (ImageView) findViewById(R.id.stream_queue_next);
+        stopButton = (ImageView) findViewById(R.id.stream_queue_stop);
+        pauseButton = (ImageView) findViewById(R.id.stream_queue_pause);
+        resumeButton = (ImageView) findViewById(R.id.stream_queue_resume);
 
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override

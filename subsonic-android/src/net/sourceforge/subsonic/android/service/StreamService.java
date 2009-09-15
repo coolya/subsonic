@@ -58,8 +58,8 @@ public class StreamService extends Service {
 
     private final AtomicInteger current = new AtomicInteger(-1);
     private final List<MusicDirectory.Entry> playlist = new CopyOnWriteArrayList<MusicDirectory.Entry>();
-    private int duration;
     private final ScheduledExecutorService progressNotifier = Executors.newSingleThreadScheduledExecutor();
+    private int duration;
     private int buffer;
 
     @Override
@@ -150,7 +150,7 @@ public class StreamService extends Service {
         current.set(index);
         MusicDirectory.Entry song = playlist.get(index);
         String url = Util.getRestUrl(StreamService.this, "stream") + "&id=" + song.getId();
-
+        Log.i(TAG, "Streaming URL: " + url);
         notifyCurrentChanged();
 
         try {
