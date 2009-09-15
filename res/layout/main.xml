@@ -31,7 +31,7 @@
                 a:id="@+id/main_stream_queue"
                 a:layout_width="fill_parent"
                 a:layout_height="wrap_content"
-                a:drawableLeft="@android:drawable/ic_menu_recent_history"
+                a:drawableLeft="@drawable/playlist"
                 a:drawablePadding="20dp"
                 a:gravity="left|center_vertical"
                 a:textAppearance="?android:attr/textAppearanceLarge"
