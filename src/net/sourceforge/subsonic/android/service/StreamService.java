@@ -18,6 +18,16 @@
  */
 package net.sourceforge.subsonic.android.service;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -29,21 +39,13 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
-import net.sourceforge.subsonic.android.activity.StreamQueueActivity;
 import net.sourceforge.subsonic.android.activity.ErrorActivity;
+import net.sourceforge.subsonic.android.activity.StreamQueueActivity;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.util.Constants;
+import net.sourceforge.subsonic.android.util.Pair;
 import net.sourceforge.subsonic.android.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.android.util.Util;
-import net.sourceforge.subsonic.android.util.Pair;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Sindre Mehus
@@ -105,6 +107,7 @@ public class StreamService extends Service {
 
         Runnable runnable = new Runnable() {
             private int position = 0;
+
             @Override
             public void run() {
                 int newPosition = player.getCurrentPosition();
@@ -131,7 +134,7 @@ public class StreamService extends Service {
         boolean shouldStart = playlist.isEmpty() || !append;
 
         String message = songs.size() == 1 ? "Added \"" + songs.get(0).getTitle() + "\" to playlist." :
-                         "Added " + songs.size() + " songs to playlist.";
+                "Added " + songs.size() + " songs to playlist.";
         updateNotification();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         if (!append) {
@@ -154,7 +157,7 @@ public class StreamService extends Service {
         buffer = 0;
         current.set(index);
         MusicDirectory.Entry song = playlist.get(index);
-        String url = Util.getRestUrl(StreamService.this, "stream") + "&id=" + song.getId();
+        URL url = getStreamUrl(song);
         Log.i(TAG, "Streaming URL: " + url);
         notifyCurrentChanged();
 
@@ -162,7 +165,7 @@ public class StreamService extends Service {
             reset();
             Log.i(TAG, "reset() done");
 
-            player.setDataSource(url);
+            player.setDataSource(url.toExternalForm());
             setPlayerState(PlayerState.INITIALIZED);
             Log.i(TAG, "setDataSource() done");
 
@@ -174,6 +177,27 @@ public class StreamService extends Service {
             Log.e(TAG, "Failed to start MediaPlayer.", e);
             setPlayerState(PlayerState.ERROR);
             addErrorNotification(song, e);
+        }
+    }
+
+    private URL getStreamUrl(MusicDirectory.Entry song) {
+        try {
+            URL url = new URL(Util.getRestUrl(StreamService.this, "stream") + "&id=" + song.getId());
+
+            // Ensure that port is set, otherwise the MediaPlayer complains.
+            if (url.getPort() == -1) {
+                int port = -1;
+                if ("http".equals(url.getProtocol())) {
+                    port = 80;
+                } else if ("https".equals(url.getProtocol())) {
+                    port = 443;
+                }
+                url = new URL(url.getProtocol(), url.getHost(), port, url.getFile());
+            }
+            return url;
+        } catch (MalformedURLException e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -207,7 +231,7 @@ public class StreamService extends Service {
     }
 
     /**
-     * @return  The percentage (0-100) of the buffer that has been filled thus far.
+     * @return The percentage (0-100) of the buffer that has been filled thus far.
      */
     public int getBuffer() {
         return buffer;
