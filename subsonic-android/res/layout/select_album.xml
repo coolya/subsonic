@@ -18,12 +18,18 @@
 
         <ImageButton a:id="@+id/select_album_selectallornone"
                      a:src="@drawable/playlist_select"
+                     a:paddingLeft="15dp"
+                     a:paddingRight="15dp"
+                     a:layout_marginRight="10dp"
                      a:visibility="gone"
                      a:layout_width="wrap_content"
                      a:layout_height="fill_parent"/>
 
         <ImageButton a:id="@+id/select_album_play"
                      a:src="@drawable/playlist_play"
+                     a:paddingLeft="15dp"
+                     a:paddingRight="15dp"
+                     a:layout_marginRight="10dp"
                      a:visibility="gone"
                      a:enabled="false"
                      a:layout_width="wrap_content"
@@ -31,6 +37,9 @@
 
         <ImageButton a:id="@+id/select_album_add"
                      a:src="@drawable/playlist_add"
+                     a:paddingLeft="15dp"
+                     a:paddingRight="15dp"
+                     a:layout_marginRight="10dp"
                      a:visibility="gone"
                      a:enabled="false"
                      a:layout_width="wrap_content"
@@ -38,6 +47,8 @@
 
         <ImageButton a:id="@+id/select_album_download"
                      a:src="@drawable/download"
+                     a:paddingLeft="15dp"
+                     a:paddingRight="15dp"
                      a:visibility="gone"
                      a:enabled="false"
                      a:layout_width="wrap_content"

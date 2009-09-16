@@ -54,8 +54,7 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
-Improve "Select all/none, Play, Add" toolbar.
-Provide "Add to playlist"
+Progress bar shows 100% when revisiting playlist.
 Different color on currently downloading/playing item.
 List background image in download queue.
 Show tray notification only when something is playing.

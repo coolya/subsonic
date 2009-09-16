@@ -74,6 +74,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             @Override
             public void onClick(View view) {
                 download();
+                selectAll(false);
             }
         });
 
@@ -81,6 +82,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             @Override
             public void onClick(View view) {
                 addToPlaylist(false);
+                selectAll(false);
             }
         });
 
@@ -88,11 +90,14 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             @Override
             public void onClick(View view) {
                 addToPlaylist(true);
+                selectAll(false);
             }
         });
 
         bindService(new Intent(this, DownloadService.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         bindService(new Intent(this, StreamService.class), streamServiceConnection, Context.BIND_AUTO_CREATE);
+
+        enableButtons();
         load();
     }
 
@@ -148,7 +153,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         for (int i = 0; i < count; i++) {
             entryList.setItemChecked(i, selected);
         }
-        enableDownloadButton();
+        enableButtons();
     }
 
     @Override
@@ -170,12 +175,12 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getTitle());
                 startActivity(intent);
             } else {
-                enableDownloadButton();
+                enableButtons();
             }
         }
     }
 
-    private void enableDownloadButton() {
+    private void enableButtons() {
         int count = entryList.getCount();
         boolean checked = false;
         for (int i = 0; i < count; i++) {
