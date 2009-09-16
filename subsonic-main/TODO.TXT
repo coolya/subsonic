@@ -56,7 +56,6 @@ ANDROID
 -------
 Improve "Select all/none, Play, Add" toolbar.
 Provide "Add to playlist"
-After adding stuff to download queue or playlist, go to it.
 Different color on currently downloading/playing item.
 List background image in download queue.
 Show tray notification only when something is playing.
