@@ -54,7 +54,6 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
-Progress bar shows 100% when revisiting playlist.
 List background image in download queue.
 Pre-prepare next song.
 Show currently playing song in playlist.
@@ -62,23 +61,17 @@ Support max bitrate in settings. ("Preferred bitrate")
 Must resolve content type in StreamController, even if "suffix" is not given.
 SelectAlbumActivity doesn't work with recursive directories.
 Add duration to rest api.
-Show buffer percentage in gui.
-Add prev, pause, resume, next buttons.
 Indicate songs that are already downloaded.
+Support very long filenames.
 User should be able to select music folder. (Let REST method support it at least).
 Use alertdialog for help message + formatted text.
 REST method for getting lyrics.
-Make player similar to imeem.
 Show nag message after xx downloads/streams if not licensed. (Integrate with progress dialog).
-
 Allow only 100 downloads for non-licensed servers.
 Progress bar in notification.
 Hide title in error activity? http://www.androidsnippets.org/snippets/27/
 Save files using artist/album/song path?
-Let BackgroundTask support retry. (like android market app)
 Merge artists in REST method.  Make it possible to specify music folder.
-Add streaming button.
-http://blog.pocketjourney.com/2008/04/04/tutorial-custom-media-streaming-for-androids-mediaplayer/
 
 LUCENE
 ------

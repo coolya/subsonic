@@ -177,8 +177,8 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
 
             positionTextView.setText(Util.formatDuration(millisPlayed / 1000));
             durationTextView.setText(Util.formatDuration(millisTotal / 1000));
-            progressBar.setProgress(millisPlayed);
             progressBar.setMax(millisTotal);
+            progressBar.setProgress(millisPlayed);
         }
 
         StreamService.PlayerState playerState = streamService.getPlayerState();
