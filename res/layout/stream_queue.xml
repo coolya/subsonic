@@ -4,10 +4,15 @@
               a:layout_width="fill_parent"
               a:layout_height="fill_parent">
 
-    <ListView
+    <TextView
             a:id="@+id/stream_queue_current"
+            a:drawableLeft="@drawable/unknown_album"
+            a:drawablePadding="10dp"
+            a:textAppearance="?android:attr/textAppearanceLarge"
+            a:gravity="left|center_vertical"
             a:layout_width="fill_parent"
-            a:layout_height="wrap_content"/>
+            a:layout_height="wrap_content"
+            a:layout_margin="5dp"/>
 
     <ListView
             a:id="@+id/stream_queue_list"

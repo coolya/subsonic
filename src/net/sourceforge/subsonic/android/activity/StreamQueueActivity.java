@@ -42,7 +42,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
     private ImageLoader imageLoader;
     private StreamService streamService;
 
-    private ListView currentView;
+    private TextView currentView;
     private ListView playlistView;
     private BroadcastReceiver broadcastReceiver;
     private TextView positionTextView;
@@ -62,7 +62,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stream_queue);
 
-        currentView = (ListView) findViewById(R.id.stream_queue_current);
+        currentView = (TextView) findViewById(R.id.stream_queue_current);
         positionTextView = (TextView) findViewById(R.id.stream_queue_position);
         durationTextView = (TextView) findViewById(R.id.stream_queue_duration);
         statusTextView = (TextView) findViewById(R.id.stream_queue_status);
@@ -151,7 +151,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
 
         playlistView.setAdapter(new SongListAdapter(queue));
         if (queue.isEmpty()) {
-            currentView.setAdapter(new EmptySongListAdapter());
+            currentView.setText("Playlist is empty");
         }
     }
 
@@ -161,7 +161,8 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         }
         MusicDirectory.Entry current = streamService.getCurrentSong();
         if (current != null) {
-            currentView.setAdapter(new SingleSongListAdapter(current));
+            currentView.setText(current.getTitle());
+            imageLoader.loadImage(currentView, current);
         }
     }
 
@@ -241,46 +242,6 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
             StringBuilder builder = new StringBuilder();
             builder.append(song.getAlbum()).append(" - ").append(song.getArtist());
             return builder.toString();
-        }
-    }
-
-    private class EmptySongListAdapter extends TwoLineListAdapter<MusicDirectory.Entry> {
-
-        public EmptySongListAdapter() {
-            super(StreamQueueActivity.this, Arrays.asList(new MusicDirectory.Entry()));
-        }
-
-        @Override
-        protected String getFirstLine(MusicDirectory.Entry song) {
-            return "Playlist is empty";
-        }
-
-        @Override
-        protected String getSecondLine(MusicDirectory.Entry song) {
-            return null;
-        }
-    }
-
-    private class SingleSongListAdapter extends ArrayAdapter<MusicDirectory.Entry> {
-        public SingleSongListAdapter(MusicDirectory.Entry song) {
-            super(StreamQueueActivity.this, android.R.layout.simple_list_item_1, Arrays.asList(song));
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            MusicDirectory.Entry song = getItem(position);
-            TextView view;
-            if (convertView != null) {
-                view = (TextView) convertView;
-            } else {
-                view = (TextView) LayoutInflater.from(StreamQueueActivity.this).inflate(
-                        android.R.layout.simple_list_item_1, parent, false);
-                view.setCompoundDrawablePadding(10);
-            }
-            view.setText(song.getTitle());
-            imageLoader.loadImage(view, song);
-
-            return view;
         }
     }
 }
