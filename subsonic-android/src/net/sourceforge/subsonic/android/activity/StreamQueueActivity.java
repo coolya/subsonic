@@ -1,7 +1,6 @@
 package net.sourceforge.subsonic.android.activity;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import android.content.BroadcastReceiver;
@@ -118,10 +117,6 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
     protected void onResume() {
         super.onResume();
 
-        onPlaylistChanged();
-        onCurrentChanged();
-        onProgressChanged();
-
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -152,6 +147,8 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         }
 
         List<MusicDirectory.Entry> queue = streamService.getPlaylist();
+        Log.i(TAG, "QUEUE: " + queue.size());
+
         playlistView.setAdapter(new SongListAdapter(queue));
         if (queue.isEmpty()) {
             currentView.setAdapter(new EmptySongListAdapter());
@@ -177,21 +174,22 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
 
             int millisPlayed = current.getSecond().getFirst().intValue();
             int millisTotal = current.getSecond().getSecond().intValue();
-            StreamService.PlayerState playerState = streamService.getPlayerState();
 
             positionTextView.setText(Util.formatDuration(millisPlayed / 1000));
             durationTextView.setText(Util.formatDuration(millisTotal / 1000));
             progressBar.setProgress(millisPlayed);
             progressBar.setMax(millisTotal);
-            statusTextView.setText(playerState.toString());
+        }
 
-            if (playerState == STARTED) {
-                pauseButton.setVisibility(View.VISIBLE);
-                startButton.setVisibility(View.GONE);
-            } else {
-                pauseButton.setVisibility(View.GONE);
-                startButton.setVisibility(View.VISIBLE);
-            }
+        StreamService.PlayerState playerState = streamService.getPlayerState();
+        statusTextView.setText(playerState.toString());
+
+        if (playerState == STARTED) {
+            pauseButton.setVisibility(View.VISIBLE);
+            startButton.setVisibility(View.GONE);
+        } else {
+            pauseButton.setVisibility(View.GONE);
+            startButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -249,7 +247,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
     private class EmptySongListAdapter extends TwoLineListAdapter<MusicDirectory.Entry> {
 
         public EmptySongListAdapter() {
-            super(StreamQueueActivity.this, Collections.<MusicDirectory.Entry>emptyList());
+            super(StreamQueueActivity.this, Arrays.asList(new MusicDirectory.Entry()));
         }
 
         @Override

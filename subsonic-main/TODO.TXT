@@ -54,14 +54,18 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
-Must include port number when streaming.
+Improve "Select all/none, Play, Add" toolbar.
+Provide "Add to playlist"
+After adding stuff to download queue or playlist, go to it.
+Different color on currently downloading/playing item.
+List background image in download queue.
+Show tray notification only when something is playing.
+Pre-prepare next song.
+Show currently playing song in playlist.
+Support max bitrate in settings. ("Preferred bitrate")
 Must resolve content type in StreamController, even if "suffix" is not given.
 SelectAlbumActivity doesn't work with recursive directories.
-Replace media controller icons with Android ones.
-Create visual feedback when clicking "Help" or "Settings."
-Improve main menu.
 Add duration to rest api.
-Don't send structural change event when switching songs, only when modifying playlist.
 Show buffer percentage in gui.
 Add prev, pause, resume, next buttons.
 Indicate songs that are already downloaded.
