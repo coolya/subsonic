@@ -54,7 +54,11 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
+Must include port number when streaming.
+Must resolve content type in StreamController, even if "suffix" is not given.
 SelectAlbumActivity doesn't work with recursive directories.
+Replace media controller icons with Android ones.
+Create visual feedback when clicking "Help" or "Settings."
 Improve main menu.
 Add duration to rest api.
 Don't send structural change event when switching songs, only when modifying playlist.
