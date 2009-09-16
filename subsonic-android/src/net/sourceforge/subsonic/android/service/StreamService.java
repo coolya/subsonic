@@ -18,16 +18,6 @@
  */
 package net.sourceforge.subsonic.android.service;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -42,18 +32,22 @@ import android.widget.Toast;
 import net.sourceforge.subsonic.android.activity.ErrorActivity;
 import net.sourceforge.subsonic.android.activity.StreamQueueActivity;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
-import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.COMPLETED;
-import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.ERROR;
-import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.IDLE;
-import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.INITIALIZED;
-import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.PAUSED;
-import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.PREPARED;
-import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.PREPARING;
-import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.STARTED;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.*;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.Pair;
 import net.sourceforge.subsonic.android.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.android.util.Util;
+import net.sourceforge.subsonic.android.R;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Sindre Mehus
@@ -70,7 +64,6 @@ public class StreamService extends Service {
     private final List<MusicDirectory.Entry> playlist = new CopyOnWriteArrayList<MusicDirectory.Entry>();
     private final ScheduledExecutorService progressNotifier = Executors.newSingleThreadScheduledExecutor();
     private int duration;
-
     private PlayerState playerState = IDLE;
 
     @Override
@@ -129,19 +122,16 @@ public class StreamService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(Constants.NOTIFICATION_ID_STREAM_QUEUE);
-
         reset();
         progressNotifier.shutdown();
+        hideNotification();
     }
 
     public void add(List<MusicDirectory.Entry> songs, boolean append) {
         boolean shouldStart = playlist.isEmpty() || !append;
 
         String message = songs.size() == 1 ? "Added \"" + songs.get(0).getTitle() + "\" to playlist." :
-                "Added " + songs.size() + " songs to playlist.";
-        updateNotification();
+                         "Added " + songs.size() + " songs to playlist.";
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         if (!append) {
             playlist.clear();
@@ -270,40 +260,40 @@ public class StreamService extends Service {
         sendBroadcast(new Intent(Constants.INTENT_ACTION_STREAM_PROGRESS));
     }
 
-    private void updateNotification() {
-        final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    private void showNotification() {
 
+        // Use the same text for the ticker and the expanded notification
         MusicDirectory.Entry song = getCurrentSong();
-        if (song == null) {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    notificationManager.cancel(Constants.NOTIFICATION_ID_STREAM_QUEUE);
-                }
-            });
-        } else {
+        String title = song.getTitle();
 
-            // Use the same text for the ticker and the expanded notification
-            String title = song.getTitle();
+        // Set the icon, scrolling text and timestamp
+        final Notification notification = new Notification(R.drawable.stat_sys_playing, title, System.currentTimeMillis());
+        notification.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
 
-            // Set the icon, scrolling text and timestamp
-            final Notification notification = new Notification(android.R.drawable.stat_sys_speakerphone, title, System.currentTimeMillis());
-            notification.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
+        // The PendingIntent to launch our activity if the user selects this notification
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, StreamQueueActivity.class), 0);
 
-            // The PendingIntent to launch our activity if the user selects this notification
-            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, StreamQueueActivity.class), 0);
+        String text = song.getArtist();
+        notification.setLatestEventInfo(this, title, text, contentIntent);
 
-            String text = song.getArtist();
-            notification.setLatestEventInfo(this, title, text, contentIntent);
+        // Send the notification.
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.notify(Constants.NOTIFICATION_ID_STREAM_QUEUE, notification);
+            }
+        });
+    }
 
-            // Send the notification.
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    notificationManager.notify(Constants.NOTIFICATION_ID_STREAM_QUEUE, notification);
-                }
-            });
-        }
+    private void hideNotification() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.cancel(Constants.NOTIFICATION_ID_STREAM_QUEUE);
+            }
+        });
     }
 
     private void addErrorNotification(MusicDirectory.Entry song, Exception error) {
@@ -347,6 +337,11 @@ public class StreamService extends Service {
     private void setPlayerState(PlayerState state) {
         this.playerState = state;
         notifyProgressChanged();
+        if (state == STARTED) {
+            showNotification();
+        } else {
+            hideNotification();
+        }
     }
 
     public PlayerState getPlayerState() {

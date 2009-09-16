@@ -147,7 +147,6 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         }
 
         List<MusicDirectory.Entry> queue = streamService.getPlaylist();
-        Log.i(TAG, "QUEUE: " + queue.size());
 
         playlistView.setAdapter(new SongListAdapter(queue));
         if (queue.isEmpty()) {

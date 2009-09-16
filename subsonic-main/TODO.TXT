@@ -56,7 +56,6 @@ ANDROID
 -------
 Progress bar shows 100% when revisiting playlist.
 List background image in download queue.
-Show tray notification only when something is playing.
 Pre-prepare next song.
 Show currently playing song in playlist.
 Support max bitrate in settings. ("Preferred bitrate")
