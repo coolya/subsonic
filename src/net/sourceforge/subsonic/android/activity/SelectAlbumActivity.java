@@ -1,8 +1,5 @@
 package net.sourceforge.subsonic.android.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -15,12 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckedTextView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.media.MediaPlayer;
-import android.media.AudioManager;
 import net.sourceforge.subsonic.android.R;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.service.DownloadService;
@@ -30,8 +25,10 @@ import net.sourceforge.subsonic.android.service.StreamService;
 import net.sourceforge.subsonic.android.util.BackgroundTask;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.ImageLoader;
-import net.sourceforge.subsonic.android.util.Util;
 import net.sourceforge.subsonic.android.util.SimpleServiceBinder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
@@ -42,9 +39,10 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     private DownloadService downloadService;
     private StreamService streamService;
     private ListView entryList;
-    private Button downloadButton;
-    private Button playButton;
-    private Button selectAllOrNoneButton;
+    private ImageButton selectAllOrNoneButton;
+    private ImageButton playButton;
+    private ImageButton addButton;
+    private ImageButton downloadButton;
 
     /**
      * Called when the activity is first created.
@@ -56,9 +54,10 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
 
         imageLoader = new ImageLoader();
-        downloadButton = (Button) findViewById(R.id.select_album_download);
-        playButton = (Button) findViewById(R.id.select_album_play);
-        selectAllOrNoneButton = (Button) findViewById(R.id.select_album_selectallornone);
+        downloadButton = (ImageButton) findViewById(R.id.select_album_download);
+        playButton = (ImageButton) findViewById(R.id.select_album_play);
+        addButton = (ImageButton) findViewById(R.id.select_album_add);
+        selectAllOrNoneButton = (ImageButton) findViewById(R.id.select_album_selectallornone);
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
         entryList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);// TODO:Specify in XML.
@@ -81,7 +80,14 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                play();
+                addToPlaylist(false);
+            }
+        });
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addToPlaylist(true);
             }
         });
 
@@ -113,6 +119,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 }
                 downloadButton.setVisibility(visibility);
                 playButton.setVisibility(visibility);
+                addButton.setVisibility(visibility);
                 selectAllOrNoneButton.setVisibility(visibility);
             }
 
@@ -179,6 +186,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         }
         downloadButton.setEnabled(checked);
         playButton.setEnabled(checked);
+        addButton.setEnabled(checked);
     }
 
     private void download() {
@@ -195,10 +203,10 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         }
     }
 
-    private void play() {
+    private void addToPlaylist(boolean append) {
         try {
             if (streamService != null) {
-                streamService.add(getSelectedSongs(), false);
+                streamService.add(getSelectedSongs(), append);
                 startActivity(new Intent(this, StreamQueueActivity.class));
             } else {
                 Log.e(TAG, "Not connected to Stream Service.");

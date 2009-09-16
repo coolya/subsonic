@@ -4,41 +4,44 @@
               a:layout_width="fill_parent"
               a:layout_height="fill_parent">
 
-
     <ListView a:id="@+id/select_album_entries"
               a:textFilterEnabled="true"
               a:layout_width="fill_parent"
               a:layout_height="0dip"
-              a:layout_weight="1.0"
-            />
-
+              a:layout_weight="1.0"/>
 
     <LinearLayout a:orientation="horizontal"
                   a:layout_width="fill_parent"
                   a:layout_height="wrap_content"
                   a:gravity="center_horizontal"
-                  a:paddingTop="10dip"
-            >
+                  a:paddingTop="10dip">
 
-        <Button a:id="@+id/select_album_selectallornone"
-                a:text="Select all/none"
-                a:visibility="gone"
-                a:layout_width="wrap_content"
-                a:layout_height="fill_parent"/>
+        <ImageButton a:id="@+id/select_album_selectallornone"
+                     a:src="@drawable/playlist_select"
+                     a:visibility="gone"
+                     a:layout_width="wrap_content"
+                     a:layout_height="fill_parent"/>
 
-        <Button a:id="@+id/select_album_play"
-                a:text="Play"
-                a:visibility="gone"
-                a:enabled="false"
-                a:layout_width="wrap_content"
-                a:layout_height="fill_parent"/>
+        <ImageButton a:id="@+id/select_album_play"
+                     a:src="@drawable/playlist_play"
+                     a:visibility="gone"
+                     a:enabled="false"
+                     a:layout_width="wrap_content"
+                     a:layout_height="fill_parent"/>
 
-        <Button a:id="@+id/select_album_download"
-                a:text="Download"
-                a:visibility="gone"
-                a:enabled="false"
-                a:layout_width="wrap_content"
-                a:layout_height="fill_parent"/>
+        <ImageButton a:id="@+id/select_album_add"
+                     a:src="@drawable/playlist_add"
+                     a:visibility="gone"
+                     a:enabled="false"
+                     a:layout_width="wrap_content"
+                     a:layout_height="fill_parent"/>
+
+        <ImageButton a:id="@+id/select_album_download"
+                     a:src="@drawable/download"
+                     a:visibility="gone"
+                     a:enabled="false"
+                     a:layout_width="wrap_content"
+                     a:layout_height="fill_parent"/>
 
     </LinearLayout>
 
