@@ -50,7 +50,6 @@ import static net.sourceforge.subsonic.android.service.StreamService.PlayerState
 import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.PREPARED;
 import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.PREPARING;
 import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.STARTED;
-import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.STOPPED;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.Pair;
 import net.sourceforge.subsonic.android.util.SimpleServiceBinder;
@@ -71,7 +70,6 @@ public class StreamService extends Service {
     private final List<MusicDirectory.Entry> playlist = new CopyOnWriteArrayList<MusicDirectory.Entry>();
     private final ScheduledExecutorService progressNotifier = Executors.newSingleThreadScheduledExecutor();
     private int duration;
-    private int buffer;
 
     private PlayerState playerState = IDLE;
 
@@ -92,7 +90,6 @@ public class StreamService extends Service {
         player.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
             @Override
             public void onBufferingUpdate(MediaPlayer mediaPlayer, int percent) {
-                buffer = percent;
                 Log.i(TAG, "Buffer: " + percent + " %");
             }
         });
@@ -163,7 +160,6 @@ public class StreamService extends Service {
             return;
         }
         duration = 0;
-        buffer = 0;
         current.set(index);
         MusicDirectory.Entry song = playlist.get(index);
         URL url = getStreamUrl(song);
@@ -237,20 +233,13 @@ public class StreamService extends Service {
         return new ArrayList<MusicDirectory.Entry>(playlist);
     }
 
-    /**
-     * @return The percentage (0-100) of the buffer that has been filled thus far.
-     */
-    public int getBuffer() {
-        return buffer;
-    }
-
     public int getCurrentIndex() {
         return current.intValue();
     }
 
     /**
-    * The pair of longs contains (number of millis played, number of millis total).
-    */
+     * The pair of longs contains (number of millis played, number of millis total).
+     */
     public Pair<MusicDirectory.Entry, Pair<Long, Long>> getCurrent() {
         MusicDirectory.Entry current = getCurrentSong();
         if (current == null) {
@@ -365,15 +354,26 @@ public class StreamService extends Service {
     }
 
     public static enum PlayerState {
-        IDLE,
-        INITIALIZED,
-        PREPARING,
-        PREPARED,
-        STARTED,
-        STOPPED,
-        PAUSED,
-        COMPLETED,
-        ERROR
+        IDLE(""),
+        INITIALIZED(""),
+        PREPARING("Buffering"),
+        PREPARED(""),
+        STARTED("Playing"),
+        STOPPED(""),
+        PAUSED("Paused"),
+        COMPLETED(""),
+        ERROR("Error");
+
+        private final String description;
+
+        PlayerState(String description) {
+            this.description = description;
+        }
+
+        @Override
+        public String toString() {
+            return description;
+        }
     }
 
 }
