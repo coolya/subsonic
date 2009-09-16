@@ -26,28 +26,21 @@
                 a:id="@+id/stream_queue_previous"
                 a:src="@drawable/media_backward_selector"
                 a:focusable="true"
-                a:paddingRight="20dp"
-                a:layout_width="wrap_content"
-                a:layout_height="fill_parent"/>
-        <ImageView
-                a:id="@+id/stream_queue_stop"
-                a:src="@drawable/media_stop_selector"
-                a:focusable="true"
-                a:paddingRight="20dp"
+                a:paddingRight="30dp"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
         <ImageView
                 a:id="@+id/stream_queue_pause"
                 a:src="@drawable/media_pause_selector"
                 a:focusable="true"
-                a:paddingRight="20dp"
+                a:paddingRight="30dp"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
         <ImageView
                 a:id="@+id/stream_queue_start"
                 a:src="@drawable/media_start_selector"
                 a:focusable="true"
-                a:paddingRight="20dp"
+                a:paddingRight="30dp"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
         <ImageView

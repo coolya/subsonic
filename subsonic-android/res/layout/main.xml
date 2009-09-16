@@ -59,7 +59,8 @@
                 a:id="@+id/main_settings"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
-                a:src="@android:drawable/ic_menu_preferences"
+                a:src="@drawable/settings_selector"
+                a:focusable="true"
                 a:gravity="left"/>
 
         <TextView
@@ -71,7 +72,8 @@
                 a:id="@+id/main_help"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
-                a:src="@android:drawable/ic_menu_help"
+                a:src="@drawable/help_selector"
+                a:focusable="true"
                 a:gravity="right"/>
     </LinearLayout>
 </LinearLayout>

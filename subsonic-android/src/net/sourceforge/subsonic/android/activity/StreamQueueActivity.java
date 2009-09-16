@@ -26,9 +26,9 @@ import net.sourceforge.subsonic.android.R;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.service.StreamService;
 import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.COMPLETED;
-import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.STOPPED;
 import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.PAUSED;
 import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.STARTED;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.STOPPED;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.ImageLoader;
 import net.sourceforge.subsonic.android.util.Pair;
@@ -52,7 +52,6 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
     private ProgressBar progressBar;
     private ImageView previousButton;
     private ImageView nextButton;
-    private ImageView stopButton;
     private ImageView pauseButton;
     private ImageView startButton;
 
@@ -72,7 +71,6 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         playlistView = (ListView) findViewById(R.id.stream_queue_list);
         previousButton = (ImageView) findViewById(R.id.stream_queue_previous);
         nextButton = (ImageView) findViewById(R.id.stream_queue_next);
-        stopButton = (ImageView) findViewById(R.id.stream_queue_stop);
         pauseButton = (ImageView) findViewById(R.id.stream_queue_pause);
         startButton = (ImageView) findViewById(R.id.stream_queue_start);
 
@@ -87,13 +85,6 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
             @Override
             public void onClick(View view) {
                 streamService.next();
-            }
-        });
-
-        stopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                streamService.stop();
             }
         });
 

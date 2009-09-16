@@ -228,11 +228,6 @@ public class StreamService extends Service {
         setPlayerState(IDLE);
     }
 
-    public void stop() {
-        player.stop();
-        setPlayerState(STOPPED);
-    }
-
     public void start() {
         player.start();
         setPlayerState(STARTED);
