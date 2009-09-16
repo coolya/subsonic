@@ -42,6 +42,15 @@ import android.widget.Toast;
 import net.sourceforge.subsonic.android.activity.ErrorActivity;
 import net.sourceforge.subsonic.android.activity.StreamQueueActivity;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.COMPLETED;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.ERROR;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.IDLE;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.INITIALIZED;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.PAUSED;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.PREPARED;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.PREPARING;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.STARTED;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.STOPPED;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.Pair;
 import net.sourceforge.subsonic.android.util.SimpleServiceBinder;
@@ -64,7 +73,7 @@ public class StreamService extends Service {
     private int duration;
     private int buffer;
 
-    private PlayerState playerState = PlayerState.IDLE;
+    private PlayerState playerState = IDLE;
 
     @Override
     public void onCreate() {
@@ -74,7 +83,7 @@ public class StreamService extends Service {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
                 duration = player.getDuration();
-                setPlayerState(PlayerState.PREPARED);
+                setPlayerState(PREPARED);
                 notifyProgressChanged();
                 player.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 start();
@@ -91,7 +100,7 @@ public class StreamService extends Service {
             @Override
             public boolean onError(MediaPlayer mediaPlayer, int what, int more) {
                 Log.i(TAG, "MediaPlayer error: " + what + " (" + more + ")");
-                setPlayerState(PlayerState.ERROR);
+                setPlayerState(ERROR);
                 reset();
                 return false;
             }
@@ -99,7 +108,7 @@ public class StreamService extends Service {
         player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                setPlayerState(PlayerState.COMPLETED);
+                setPlayerState(COMPLETED);
                 Log.i(TAG, "End of media.");
                 play(current.get() + 1);
             }
@@ -166,16 +175,16 @@ public class StreamService extends Service {
             Log.i(TAG, "reset() done");
 
             player.setDataSource(url.toExternalForm());
-            setPlayerState(PlayerState.INITIALIZED);
+            setPlayerState(INITIALIZED);
             Log.i(TAG, "setDataSource() done");
 
             player.prepareAsync();
-            setPlayerState(PlayerState.PREPARING);
+            setPlayerState(PREPARING);
             Log.i(TAG, "prepareAsync() done");
 
         } catch (Exception e) {
             Log.e(TAG, "Failed to start MediaPlayer.", e);
-            setPlayerState(PlayerState.ERROR);
+            setPlayerState(ERROR);
             addErrorNotification(song, e);
         }
     }
@@ -211,19 +220,22 @@ public class StreamService extends Service {
 
     public void pause() {
         player.pause();
-        setPlayerState(PlayerState.PAUSED);
+        setPlayerState(PAUSED);
     }
 
     public void reset() {
         player.reset();
-        setPlayerState(PlayerState.IDLE);
+        setPlayerState(IDLE);
+    }
+
+    public void stop() {
+        player.stop();
+        setPlayerState(STOPPED);
     }
 
     public void start() {
-
-        // TODO: Handle IllegalStateExcpetion, here and elsewhere.
         player.start();
-        setPlayerState(PlayerState.STARTED);
+        setPlayerState(STARTED);
     }
 
     public List<MusicDirectory.Entry> getPlaylist() {
@@ -237,9 +249,13 @@ public class StreamService extends Service {
         return buffer;
     }
 
+    public int getCurrentIndex() {
+        return current.intValue();
+    }
+
     /**
-     * The pair of longs contains (number of millis played, number of millis total).
-     */
+    * The pair of longs contains (number of millis played, number of millis total).
+    */
     public Pair<MusicDirectory.Entry, Pair<Long, Long>> getCurrent() {
         MusicDirectory.Entry current = getCurrentSong();
         if (current == null) {

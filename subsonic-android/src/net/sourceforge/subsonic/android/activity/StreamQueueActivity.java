@@ -1,5 +1,9 @@
 package net.sourceforge.subsonic.android.activity;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -9,28 +13,28 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.LayoutInflater;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import net.sourceforge.subsonic.android.R;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.service.StreamService;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.COMPLETED;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.STOPPED;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.PAUSED;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.STARTED;
 import net.sourceforge.subsonic.android.util.Constants;
+import net.sourceforge.subsonic.android.util.ImageLoader;
 import net.sourceforge.subsonic.android.util.Pair;
 import net.sourceforge.subsonic.android.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.android.util.TwoLineListAdapter;
 import net.sourceforge.subsonic.android.util.Util;
-import net.sourceforge.subsonic.android.util.ImageLoader;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Collections;
 
 public class StreamQueueActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
@@ -89,7 +93,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                streamService.reset();
+                streamService.stop();
             }
         });
 
@@ -103,7 +107,13 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                streamService.start();
+                StreamService.PlayerState state = streamService.getPlayerState();
+                if (state == PAUSED || state == COMPLETED) {
+                    streamService.start();
+                } else if (state == STOPPED) {
+                    streamService.play(streamService.getCurrentIndex());
+                }
+
             }
         });
 
@@ -118,6 +128,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         super.onResume();
 
         onPlaylistChanged();
+        onCurrentChanged();
         onProgressChanged();
 
         broadcastReceiver = new BroadcastReceiver() {
@@ -175,16 +186,20 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
 
             int millisPlayed = current.getSecond().getFirst().intValue();
             int millisTotal = current.getSecond().getSecond().intValue();
+            StreamService.PlayerState playerState = streamService.getPlayerState();
 
             positionTextView.setText(Util.formatDuration(millisPlayed / 1000));
             durationTextView.setText(Util.formatDuration(millisTotal / 1000));
             progressBar.setProgress(millisPlayed);
             progressBar.setMax(millisTotal);
+            statusTextView.setText(playerState.toString());
 
-            if (millisTotal == 0) {
-                statusTextView.setText(streamService.getPlayerState().toString());
+            if (playerState == STARTED) {
+                pauseButton.setVisibility(View.VISIBLE);
+                startButton.setVisibility(View.GONE);
             } else {
-                statusTextView.setText(null);
+                pauseButton.setVisibility(View.GONE);
+                startButton.setVisibility(View.VISIBLE);
             }
         }
     }
