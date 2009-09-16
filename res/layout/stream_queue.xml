@@ -9,6 +9,7 @@
             a:drawableLeft="@drawable/unknown_album"
             a:drawablePadding="10dp"
             a:textAppearance="?android:attr/textAppearanceLarge"
+            a:textColor="@color/secondaryForeground"
             a:gravity="left|center_vertical"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
@@ -69,6 +70,7 @@
                 a:text="0:00"/>
         <TextView
                 a:id="@+id/stream_queue_status"
+                a:textColor="@color/secondaryForeground"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"
                 a:gravity="center_horizontal"
