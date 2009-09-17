@@ -476,12 +476,11 @@ public class StreamService extends Service {
 
             if (active) {
                 notifyProgressChanged();
-            }
-
-            if (playerState == STARTED) {
-                showNotification();
-            } else {
-                hideNotification();
+                if (playerState == STARTED) {
+                    showNotification();
+                } else {
+                    hideNotification();
+                }
             }
         }
 
