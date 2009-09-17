@@ -18,6 +18,17 @@
  */
 package net.sourceforge.subsonic.android.service;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -29,26 +40,22 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
+import net.sourceforge.subsonic.android.R;
 import net.sourceforge.subsonic.android.activity.ErrorActivity;
 import net.sourceforge.subsonic.android.activity.StreamQueueActivity;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
-import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.*;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.COMPLETED;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.ERROR;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.IDLE;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.INITIALIZED;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.PAUSED;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.PREPARED;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.PREPARING;
+import static net.sourceforge.subsonic.android.service.StreamService.PlayerState.STARTED;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.Pair;
 import net.sourceforge.subsonic.android.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.android.util.Util;
-import net.sourceforge.subsonic.android.R;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Sindre Mehus
@@ -70,10 +77,13 @@ public class StreamService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        Player p = new Player("A");
-        p.setActive(true);
-        players.add(p);
-        player.set(p);
+        Player playerA = new Player("A");
+        Player playerB = new Player("B");
+        playerA.setActive(true);
+
+        players.add(playerA);
+        players.add(playerB);
+        player.set(playerA);
     }
 
     @Override
@@ -92,7 +102,7 @@ public class StreamService extends Service {
         boolean shouldStart = playlist.isEmpty() || !append;
 
         String message = songs.size() == 1 ? "Added \"" + songs.get(0).getTitle() + "\" to playlist." :
-                         "Added " + songs.size() + " songs to playlist.";
+                "Added " + songs.size() + " songs to playlist.";
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         if (!append) {
             playlist.clear();
@@ -112,8 +122,38 @@ public class StreamService extends Service {
         }
         current.set(index);
         MusicDirectory.Entry song = playlist.get(index);
+
+        player.get().reset();
+        selectPlayerForSong(song);
         player.get().play(song);
     }
+
+    private void selectPlayerForSong(MusicDirectory.Entry song) {
+        for (Player p : players) {
+            if (song == p.getSong()) {
+                player.get().setActive(false);
+                p.setActive(true);
+                player.set(p);
+                return;
+            }
+        }
+    }
+
+    private void prepareNextPlayer(Player player) {
+        if (players.size() < 2 || playlist.size() < 2) {
+            return;
+        }
+
+        int playerIndex = (players.indexOf(player) + 1) % players.size();
+        Player nextPlayer = players.get(playerIndex);
+
+        int songIndex = (playlist.indexOf(player.getSong()) + 1) % playlist.size();
+        MusicDirectory.Entry nextSong = playlist.get(songIndex);
+
+        nextPlayer.reset();
+        nextPlayer.play(nextSong);
+    }
+
 
     public void previous() {
         play(current.get() - 1);
@@ -304,6 +344,7 @@ public class StreamService extends Service {
         private PlayerState playerState = IDLE;
         private int duration;
         private final String tag;
+        private MusicDirectory.Entry song;
 
         public Player(String name) {
             tag = TAG + " (Player " + name + ")";
@@ -315,6 +356,9 @@ public class StreamService extends Service {
                     mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                     if (active) {
                         start();
+
+                        // Start preparing the other player.
+                        prepareNextPlayer(Player.this);
                     }
                 }
             });
@@ -361,10 +405,31 @@ public class StreamService extends Service {
         }
 
         public void play(MusicDirectory.Entry song) {
+            this.song = song;
             URL url = getStreamUrl(song);
             Log.i(tag, "Streaming URL: " + url);
-            notifyCurrentChanged();
 
+            if (active) {
+                notifyCurrentChanged();
+            }
+
+            // If currently preparing, no need to do anything.  Playback will start
+            // automatically when entering PREPARED state.
+            if (playerState == PREPARING) {
+                return;
+            }
+
+            // If already prepared, just start playing.
+            if (playerState == PlayerState.PREPARED) {
+                start();
+
+                // Start preparing the other player.
+                prepareNextPlayer(Player.this);
+
+                return;
+            }
+
+            // Otherwise, start preparing asynchronously.
             try {
                 reset();
                 mediaPlayer.setDataSource(url.toExternalForm());
@@ -400,6 +465,7 @@ public class StreamService extends Service {
         }
 
         private void setPlayerState(PlayerState playerState) {
+            Log.i(tag, this.playerState.name() + " -> " + playerState.name() + "  [" + song + "]");
             this.playerState = playerState;
 
             if (playerState == PREPARED) {
@@ -417,6 +483,10 @@ public class StreamService extends Service {
             } else {
                 hideNotification();
             }
+        }
+
+        public MusicDirectory.Entry getSong() {
+            return song;
         }
 
         public int getDuration() {
