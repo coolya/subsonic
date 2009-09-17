@@ -54,6 +54,9 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
+Improve "Playlist is empty" and "Download queue is empty".
+What happens on incoming phone call?
+Make DL queue and playlist more similar.
 List background image in download queue.
 Pre-prepare next song.
 Show currently playing song in playlist.

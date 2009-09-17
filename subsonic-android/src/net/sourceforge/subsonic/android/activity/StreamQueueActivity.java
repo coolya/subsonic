@@ -1,6 +1,6 @@
 package net.sourceforge.subsonic.android.activity;
 
-import java.util.Arrays;
+
 import java.util.List;
 
 import android.content.BroadcastReceiver;
@@ -12,11 +12,8 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -177,7 +174,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
 
             positionTextView.setText(Util.formatDuration(millisPlayed / 1000));
             durationTextView.setText(Util.formatDuration(millisTotal / 1000));
-            progressBar.setMax(millisTotal);
+            progressBar.setMax(millisTotal == 0 ? 100 : millisTotal); // Work-around for apparent bug.
             progressBar.setProgress(millisPlayed);
         }
 
