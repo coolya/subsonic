@@ -61,6 +61,20 @@ public final class Util {
         return builder.toString();
     }
 
+    public static int getCredits(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        return prefs.getInt(Constants.PREFERENCES_KEY_CREDITS, 100);
+    }
+
+    public static void decrementCredits(Context context, int value) {
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        int credits = Math.max(0, getCredits(context) - value);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(Constants.PREFERENCES_KEY_CREDITS, credits);
+        editor.commit();
+    }
+
     public static long copy(InputStream input, OutputStream output)
             throws IOException {
         byte[] buffer = new byte[1024 * 4];
