@@ -195,31 +195,21 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     }
 
     private void download() {
-        try {
-            if (downloadService != null) {
-                downloadService.download(getSelectedSongs());
-                startActivity(new Intent(this, DownloadQueueActivity.class));
-            } else {
-                Log.e(TAG, "Not connected to Download Service.");
-            }
-
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to contact Download Service.");
+        if (downloadService == null) {
+            return;
         }
+
+        downloadService.download(getSelectedSongs());
+        startActivity(new Intent(this, DownloadQueueActivity.class));
     }
 
     private void addToPlaylist(boolean append) {
-        try {
-            if (streamService != null) {
-                streamService.add(getSelectedSongs(), append);
-                startActivity(new Intent(this, StreamQueueActivity.class));
-            } else {
-                Log.e(TAG, "Not connected to Stream Service.");
-            }
-
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to contact Stream Service.");
+        if (streamService == null) {
+            return;
         }
+        
+        streamService.add(getSelectedSongs(), append);
+        startActivity(new Intent(this, StreamQueueActivity.class));
     }
 
     private List<MusicDirectory.Entry> getSelectedSongs() {
