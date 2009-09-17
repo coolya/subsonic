@@ -1,9 +1,12 @@
 package net.sourceforge.subsonic.android.activity;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -25,7 +28,9 @@ import net.sourceforge.subsonic.android.service.StreamService;
 import net.sourceforge.subsonic.android.util.BackgroundTask;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.ImageLoader;
+import net.sourceforge.subsonic.android.util.Pair;
 import net.sourceforge.subsonic.android.util.SimpleServiceBinder;
+import net.sourceforge.subsonic.android.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +48,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     private ImageButton playButton;
     private ImageButton addButton;
     private ImageButton downloadButton;
+    private boolean licenseValid;
 
     /**
      * Called when the activity is first created.
@@ -102,17 +108,19 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     }
 
     private void load() {
-        new BackgroundTask<MusicDirectory>(SelectAlbumActivity.this) {
+        new BackgroundTask<Pair<MusicDirectory, Boolean>>(SelectAlbumActivity.this) {
             @Override
-            protected MusicDirectory doInBackground() throws Throwable {
+            protected Pair<MusicDirectory, Boolean> doInBackground() throws Throwable {
                 MusicService musicService = MusicServiceFactory.getMusicService();
                 String path = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PATH);
-                return musicService.getMusicDirectory(path, SelectAlbumActivity.this, this);
+                MusicDirectory dir = musicService.getMusicDirectory(path, SelectAlbumActivity.this, this);
+                boolean valid = musicService.isLicenseValid(SelectAlbumActivity.this, this);
+                return new Pair<MusicDirectory, Boolean>(dir, valid);
             }
 
             @Override
-            protected void done(MusicDirectory result) {
-                List<MusicDirectory.Entry> entries = result.getChildren();
+            protected void done(Pair<MusicDirectory, Boolean> result) {
+                List<MusicDirectory.Entry> entries = result.getFirst().getChildren();
                 entryList.setAdapter(new EntryAdapter(entries));
 
                 int visibility = View.GONE;
@@ -122,6 +130,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                         break;
                     }
                 }
+                licenseValid = result.getSecond();
                 downloadButton.setVisibility(visibility);
                 playButton.setVisibility(visibility);
                 addButton.setVisibility(visibility);
@@ -199,17 +208,60 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             return;
         }
 
-        downloadService.download(getSelectedSongs());
-        startActivity(new Intent(this, DownloadQueueActivity.class));
+        List<MusicDirectory.Entry> songs = getSelectedSongs();
+        if (isLicenseValidOrHasCredits(songs.size())) {
+            downloadService.download(songs);
+            startActivity(new Intent(this, DownloadQueueActivity.class));
+        }
     }
 
     private void addToPlaylist(boolean append) {
         if (streamService == null) {
             return;
         }
-        
-        streamService.add(getSelectedSongs(), append);
-        startActivity(new Intent(this, StreamQueueActivity.class));
+
+        List<MusicDirectory.Entry> songs = getSelectedSongs();
+        if (isLicenseValidOrHasCredits(songs.size())) {
+            streamService.add(songs, append);
+            startActivity(new Intent(this, StreamQueueActivity.class));
+        }
+    }
+
+    private boolean isLicenseValidOrHasCredits(int creditsRequired) {
+        Util.decrementCredits(this, creditsRequired);
+
+        if (!licenseValid) {
+            if (Util.getCredits(this) == 0) {
+                showDonationDialog();
+                return false;
+            } else {
+                Util.toast(this, "Server not licensed. " + Util.getCredits(this) + " credits left.");
+            }
+        }
+        return true;
+    }
+
+    private void showDonationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setTitle("No credits left");
+        builder.setMessage("Get unlimited downloads by donating to Subsonic. You decide the amount!");
+
+        builder.setPositiveButton("Now", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://subsonic.sf.net/donate.php")));
+            }
+        });
+
+        builder.setNegativeButton("Later", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        builder.create().show();
     }
 
     private List<MusicDirectory.Entry> getSelectedSongs() {
