@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
+import android.view.KeyEvent;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -94,13 +95,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StreamService.PlayerState state = streamService.getPlayerState();
-                if (state == PAUSED || state == COMPLETED) {
-                    streamService.start();
-                } else if (state == STOPPED) {
-                    streamService.play(streamService.getCurrentIndex());
-                }
-
+                start();
             }
         });
 
@@ -108,6 +103,15 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
 
         bindService(new Intent(this, StreamService.class), streamServiceConnection, Context.BIND_AUTO_CREATE);
         imageLoader = new ImageLoader();
+    }
+
+    private void start() {
+        StreamService.PlayerState state = streamService.getPlayerState();
+        if (state == PAUSED || state == COMPLETED) {
+            streamService.start();
+        } else if (state == STOPPED) {
+            streamService.play(streamService.getCurrentIndex());
+        }
     }
 
     @Override
@@ -123,6 +127,11 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
                     onPlaylistChanged();
                 } else if (Constants.INTENT_ACTION_STREAM_CURRENT.equals(intent.getAction())) {
                     onCurrentChanged();
+                } else if (Intent.ACTION_HEADSET_PLUG.equals(intent.getAction())) {
+                    Log.i(TAG, "Headset event for: " + intent.getExtras().get("name"));
+                    if ("0".equals(String.valueOf(intent.getExtras().get("state")))) {
+                        onHeadsetUnplugged();
+                    }
                 }
             }
         };
@@ -130,12 +139,37 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_PROGRESS));
         registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_PLAYLIST));
         registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_CURRENT));
+        registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         unregisterReceiver(broadcastReceiver);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
+                Log.i(TAG, "Got MEDIA_PLAY_PAUSE key event.");
+                if (streamService.getPlayerState() == STARTED) {
+                    streamService.pause();
+                } else {
+                    start();
+                }
+                return true;
+            case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
+                Log.i(TAG, "Got MEDIA_PREVIOUS key event.");
+                streamService.previous();
+                return true;
+            case KeyEvent.KEYCODE_MEDIA_NEXT:
+                Log.i(TAG, "Got MEDIA_NEXT key event.");
+                streamService.next();
+                return true;
+            default:
+                return false;
+        }
     }
 
     private void onPlaylistChanged() {
@@ -187,6 +221,12 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         } else {
             pauseButton.setVisibility(View.GONE);
             startButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void onHeadsetUnplugged() {
+        if (streamService.getPlayerState() == STARTED) {
+            streamService.pause();
         }
     }
 
