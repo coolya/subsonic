@@ -152,18 +152,18 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
                 } else {
                     start();
                 }
-                return true;
+                break;
             case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
                 Log.i(TAG, "Got MEDIA_PREVIOUS key event.");
                 streamService.previous();
-                return true;
+                break;
             case KeyEvent.KEYCODE_MEDIA_NEXT:
                 Log.i(TAG, "Got MEDIA_NEXT key event.");
                 streamService.next();
-                return true;
+                break;
             default:
-                return false;
         }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void onPlaylistChanged() {
