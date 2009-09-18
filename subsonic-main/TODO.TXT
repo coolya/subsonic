@@ -53,14 +53,16 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
-If not licensed, pop up dialog every time.
+If not licensed, pop up dialog every time?
 Mention 200 song limit in help.
-Use music index last modified.
+Use music index last modified + invalidate cache after a while.
 Create separate URL for donations from Android.
 Improve "Playlist is empty" and "Download queue is empty".
-Make DL queue and playlist more similar.
 SelectAlbumActivity doesn't work with recursive directories.
+Create service method for getting cover art, with cache.
+Make sure proper error message if versions mismatch.
 
+Change main menu to 1) My music 2) My playlists 3) Search.  + Now playing & Now downloading (smaller)
 When clicking on now playing item, show full screen cover art.
 Indicate songs that are already downloaded.
 Change colors of selected songs.
