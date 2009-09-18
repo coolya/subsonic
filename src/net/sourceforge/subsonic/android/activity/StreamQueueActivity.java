@@ -127,11 +127,6 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
                     onPlaylistChanged();
                 } else if (Constants.INTENT_ACTION_STREAM_CURRENT.equals(intent.getAction())) {
                     onCurrentChanged();
-                } else if (Intent.ACTION_HEADSET_PLUG.equals(intent.getAction())) {
-                    Log.i(TAG, "Headset event for: " + intent.getExtras().get("name"));
-                    if ("0".equals(String.valueOf(intent.getExtras().get("state")))) {
-                        onHeadsetUnplugged();
-                    }
                 }
             }
         };
@@ -139,7 +134,6 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_PROGRESS));
         registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_PLAYLIST));
         registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_CURRENT));
-        registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
     }
 
     @Override
@@ -221,12 +215,6 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         } else {
             pauseButton.setVisibility(View.GONE);
             startButton.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void onHeadsetUnplugged() {
-        if (streamService.getPlayerState() == STARTED) {
-            streamService.pause();
         }
     }
 
