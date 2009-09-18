@@ -33,14 +33,16 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Intent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.IBinder;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 import net.sourceforge.subsonic.android.R;
@@ -76,6 +78,7 @@ public class StreamService extends Service {
     private final AtomicReference<Player> player = new AtomicReference<Player>();
     private final List<Player> players = new ArrayList<Player>();
     private BroadcastReceiver headsetEventReceiver;
+    private PhoneStateListener phoneStateListener;
 
     @Override
     public void onCreate() {
@@ -99,7 +102,13 @@ public class StreamService extends Service {
             }
         };
 
+        // Pause when headset is unplugged.
         registerReceiver(headsetEventReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
+
+        // Pause temporarily on incoming phone calls.
+        phoneStateListener = new MyPhoneStateListener();
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
 
     @Override
@@ -107,6 +116,9 @@ public class StreamService extends Service {
         super.onDestroy();
 
         unregisterReceiver(headsetEventReceiver);
+
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
 
         for (Player p : players) {
             p.release();
@@ -329,6 +341,44 @@ public class StreamService extends Service {
 
     public PlayerState getPlayerState() {
         return player.get().getPlayerState();
+    }
+
+    /**
+     * Logic taken from packages/apps/Music.  Will pause when an incoming
+     * call rings (volume > 0), or if a call (incoming or outgoing) is connected.
+     */
+    private class MyPhoneStateListener extends PhoneStateListener {
+        private boolean resumeAfterCall;
+
+        @Override
+        public void onCallStateChanged(int state, String incomingNumber) {
+            switch (state) {
+                case TelephonyManager.CALL_STATE_RINGING:
+                    AudioManager am = (AudioManager) getSystemService(AUDIO_SERVICE);
+
+                    // Don't pause if the ringer isn't making any noise.
+                    int ringvol = am.getStreamVolume(AudioManager.STREAM_RING);
+                    if (ringvol <= 0) {
+                        break;
+                    }
+
+                    // Fall through...
+                case TelephonyManager.CALL_STATE_OFFHOOK:
+                    if (getPlayerState() == STARTED) {
+                        resumeAfterCall = true;
+                        pause();
+                    }
+                    break;
+                case TelephonyManager.CALL_STATE_IDLE:
+                    if (resumeAfterCall) {
+                        resumeAfterCall = false;
+                        start();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     public static enum PlayerState {
