@@ -5,17 +5,15 @@
               a:layout_height="fill_parent">
 
     <TextView
-            a:id="@+id/download_queue_progress_text"
+            a:id="@+id/download_queue_current"
+            a:drawableLeft="@drawable/unknown_album"
+            a:drawablePadding="10dp"
+            a:textAppearance="?android:attr/textAppearanceLarge"
+            a:textColor="@color/secondaryForeground"
+            a:gravity="left|center_vertical"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
-            a:paddingTop="10dp"/>
-
-    <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
-            a:id="@+id/download_queue_progress_bar"
-            a:layout_width="fill_parent"
-            a:layout_height="wrap_content"
-            a:padding="10dp"/>
+            a:layout_margin="5dp"/>
 
     <ListView
             a:id="@+id/download_queue_list"
@@ -24,6 +22,43 @@
             a:layout_weight="1"
             a:background="@drawable/repeat_background"
             a:cacheColorHint="#00000000"/>
+
+    <LinearLayout a:orientation="horizontal"
+                  a:layout_width="fill_parent"
+                  a:layout_height="wrap_content"
+                  a:paddingTop="10dp"
+                  a:paddingLeft="10dp"
+                  a:paddingRight="10dp">
+        <TextView
+                a:id="@+id/download_queue_progress"
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"
+                a:gravity="left"
+                a:text="0.0 MB"/>
+        <TextView
+                a:id="@+id/download_queue_percentage"
+                a:textColor="@color/secondaryForeground"
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"
+                a:layout_weight="1"
+                a:gravity="center_horizontal"
+                a:text="0 %"/>
+
+        <TextView
+                a:id="@+id/download_queue_total"
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"
+                a:gravity="right"
+                a:text="0.0 MB"/>
+    </LinearLayout>
+
+    <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            a:id="@+id/download_queue_progress_bar"
+            a:indeterminate="false"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:padding="10dp"/>
 
 </LinearLayout>
 

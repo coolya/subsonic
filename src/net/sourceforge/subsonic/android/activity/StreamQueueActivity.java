@@ -40,7 +40,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
     private ImageLoader imageLoader;
     private StreamService streamService;
 
-    private TextView currentView;
+    private TextView currentTextView;
     private ListView playlistView;
     private BroadcastReceiver broadcastReceiver;
     private TextView positionTextView;
@@ -60,7 +60,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stream_queue);
 
-        currentView = (TextView) findViewById(R.id.stream_queue_current);
+        currentTextView = (TextView) findViewById(R.id.stream_queue_current);
         positionTextView = (TextView) findViewById(R.id.stream_queue_position);
         durationTextView = (TextView) findViewById(R.id.stream_queue_duration);
         statusTextView = (TextView) findViewById(R.id.stream_queue_status);
@@ -175,7 +175,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
 
         playlistView.setAdapter(new SongListAdapter(queue));
         if (queue.isEmpty()) {
-            currentView.setText("Playlist is empty");
+            currentTextView.setText("Playlist is empty");
         }
     }
 
@@ -185,8 +185,8 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         }
         MusicDirectory.Entry current = streamService.getCurrentSong();
         if (current != null) {
-            currentView.setText(current.getTitle());
-            imageLoader.loadImage(currentView, current);
+            currentTextView.setText(current.getTitle());
+            imageLoader.loadImage(currentTextView, current);
         }
     }
 

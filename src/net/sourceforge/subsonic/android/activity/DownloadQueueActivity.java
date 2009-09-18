@@ -24,6 +24,7 @@ import net.sourceforge.subsonic.android.util.Pair;
 import net.sourceforge.subsonic.android.util.TwoLineListAdapter;
 import net.sourceforge.subsonic.android.util.Util;
 import net.sourceforge.subsonic.android.util.SimpleServiceBinder;
+import net.sourceforge.subsonic.android.util.ImageLoader;
 
 import java.util.List;
 
@@ -31,10 +32,14 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
 
     private static final String TAG = DownloadQueueActivity.class.getSimpleName();
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
+    private ImageLoader imageLoader;
     private DownloadService downloadService;
     private ListView listView;
     private BroadcastReceiver broadcastReceiver;
+    private TextView currentTextView;
     private TextView progressTextView;
+    private TextView percentageTextView;
+    private TextView totalTextView;
     private ProgressBar progressBar;
 
     /**
@@ -44,29 +49,33 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.download_queue);
-        progressTextView = (TextView) findViewById(R.id.download_queue_progress_text);
+        currentTextView = (TextView) findViewById(R.id.download_queue_current);
+        progressTextView = (TextView) findViewById(R.id.download_queue_progress);
+        percentageTextView = (TextView) findViewById(R.id.download_queue_percentage);
+        totalTextView = (TextView) findViewById(R.id.download_queue_total);
         progressBar = (ProgressBar) findViewById(R.id.download_queue_progress_bar);
         listView = (ListView) findViewById(R.id.download_queue_list);
         listView.setOnItemLongClickListener(this);
 
         bindService(new Intent(this, DownloadService.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
+        imageLoader = new ImageLoader();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        downloadQueueChanged();
-        downloadProgressChanged();
+        onDownloadQueueChanged();
+        onDownloadProgressChanged();
 
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 boolean progressChanged = Constants.INTENT_ACTION_DOWNLOAD_PROGRESS.equals(intent.getAction());
                 if (progressChanged) {
-                    downloadProgressChanged();
+                    onDownloadProgressChanged();
                 } else {
-                    downloadQueueChanged();
+                    onDownloadQueueChanged();
                 }
             }
         };
@@ -81,7 +90,7 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
         unregisterReceiver(broadcastReceiver);
     }
 
-    private void downloadQueueChanged() {
+    private void onDownloadQueueChanged() {
         if (downloadService == null) {
             return;
         }
@@ -90,49 +99,38 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
         Pair<MusicDirectory.Entry, Pair<Long, Long>> current = downloadService.getCurrent();
 
         if (current != null) {
-            queue.add(0, current.getFirst());
+            currentTextView.setText(current.getFirst().getTitle());
+            imageLoader.loadImage(currentTextView, current.getFirst());
 
             Long bytesTotal = current.getSecond().getSecond();
-            progressBar.setIndeterminate(bytesTotal == null);
-
             if (bytesTotal != null) {
                 progressBar.setMax(bytesTotal.intValue());
             }
-            progressBar.setVisibility(View.VISIBLE);
-        } else {
-            progressTextView.setText("Download queue is empty");
-            progressBar.setVisibility(View.INVISIBLE);
+        } else if (queue.isEmpty()) {
+            currentTextView.setText("Download queue is empty");
         }
 
-        listView.setAdapter(new TwoLineListAdapter<MusicDirectory.Entry>(this, queue) {
-            @Override
-            protected String getFirstLine(MusicDirectory.Entry song) {
-                return song.getTitle();
-            }
-
-            @Override
-            protected String getSecondLine(MusicDirectory.Entry song) {
-                StringBuilder builder = new StringBuilder();
-                builder.append(song.getAlbum()).append(" - ").append(song.getArtist());
-                if (song.getSize() != null) {
-                    builder.append(" (").append(Util.formatBytes(song.getSize())).append(")");
-                }
-                return builder.toString();
-            }
-        });
+        listView.setAdapter(new SongListAdapter(queue));
     }
 
-    private void downloadProgressChanged() {
+    private void onDownloadProgressChanged() {
         if (downloadService == null) {
             return;
         }
         Pair<MusicDirectory.Entry, Pair<Long, Long>> current = downloadService.getCurrent();
         if (current != null) {
             Long bytesDownloaded = current.getSecond().getFirst();
-            progressTextView.setText(current.getFirst().getTitle() + "\n" + "Downloaded " + Util.formatBytes(bytesDownloaded));
+            progressTextView.setText(Util.formatBytes(bytesDownloaded));
 
-            if (!progressBar.isIndeterminate()) {
+            Long bytesTotal = current.getSecond().getSecond();
+            if (bytesTotal != null) {
+                long percentage = Math.round(100.0 * bytesDownloaded / bytesTotal);
+                totalTextView.setText(Util.formatBytes(bytesTotal));
+                percentageTextView.setText(percentage + " %");
                 progressBar.setProgress(bytesDownloaded.intValue());
+            } else {
+                totalTextView.setText(null);
+                percentageTextView.setText(null);
             }
         }
     }
@@ -141,6 +139,7 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
     protected void onDestroy() {
         super.onDestroy();
         unbindService(downloadServiceConnection);
+        imageLoader.cancel();
     }
 
     @Override
@@ -178,8 +177,8 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             downloadService = ((SimpleServiceBinder<DownloadService>) service).getService();
             Log.i(TAG, "Connected to Download Service");
-            downloadQueueChanged();
-            downloadProgressChanged();
+            onDownloadQueueChanged();
+            onDownloadProgressChanged();
         }
 
         @Override
@@ -189,4 +188,24 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
         }
     }
 
+    private class SongListAdapter extends TwoLineListAdapter<MusicDirectory.Entry> {
+        public SongListAdapter(List<MusicDirectory.Entry> queue) {
+            super(DownloadQueueActivity.this, queue);
+        }
+
+        @Override
+            protected String getFirstLine(MusicDirectory.Entry song) {
+            return song.getTitle();
+        }
+
+        @Override
+            protected String getSecondLine(MusicDirectory.Entry song) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(song.getAlbum()).append(" - ").append(song.getArtist());
+            if (song.getSize() != null) {
+                builder.append(" (").append(Util.formatBytes(song.getSize())).append(")");
+            }
+            return builder.toString();
+        }
+    }
 }
