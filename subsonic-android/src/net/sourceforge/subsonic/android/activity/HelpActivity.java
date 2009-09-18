@@ -33,7 +33,7 @@ public class HelpActivity extends OptionsMenuActivity {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HelpActivity.this.finish();
+                finish();
             }
         });
 

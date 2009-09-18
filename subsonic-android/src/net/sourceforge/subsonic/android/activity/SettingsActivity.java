@@ -75,18 +75,22 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     }
 
     private void testConnection() {
-        BackgroundTask<Object> task = new BackgroundTask<Object>(this) {
+        BackgroundTask<Boolean> task = new BackgroundTask<Boolean>(this) {
             @Override
-            protected Object doInBackground() throws Throwable {
+            protected Boolean doInBackground() throws Throwable {
                 updateProgress("Testing connection...");
                 MusicService musicService = MusicServiceFactory.getMusicService();
                 musicService.ping(SettingsActivity.this, this);
-                return null;
+                return musicService.isLicenseValid(SettingsActivity.this, null);
             }
 
             @Override
-            protected void done(Object result) {
-                Util.toast(SettingsActivity.this, "Connection is OK");
+            protected void done(Boolean licenseValid) {
+                if (licenseValid) {
+                    Util.toast(SettingsActivity.this, "Connection is OK");
+                } else {
+                    Util.toast(SettingsActivity.this, "Connection is OK. Server unlicensed.");
+                }
             }
 
             @Override
