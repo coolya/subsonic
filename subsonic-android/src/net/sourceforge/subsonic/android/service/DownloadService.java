@@ -19,14 +19,14 @@
 package net.sourceforge.subsonic.android.service;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
-import java.io.FileInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -44,7 +44,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Binder;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
@@ -56,8 +55,8 @@ import net.sourceforge.subsonic.android.activity.ErrorActivity;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.Pair;
-import net.sourceforge.subsonic.android.util.Util;
 import net.sourceforge.subsonic.android.util.SimpleServiceBinder;
+import net.sourceforge.subsonic.android.util.Util;
 
 /**
  * @author Sindre Mehus
@@ -75,14 +74,12 @@ public class DownloadService extends Service {
     private final AtomicReference<MusicDirectory.Entry> currentDownload = new AtomicReference<MusicDirectory.Entry>();
     private final AtomicLong currentProgress = new AtomicLong();
     private File musicDir;
-    private File albumArtDir;
     private File stateDir;
     private DownloadService.DownloadThread downloadThread;
 
     @Override
     public void onCreate() {
         musicDir = createDirectory("music");
-        albumArtDir = createDirectory("albumart");
         stateDir = createDirectory("state");
 
         loadQueue();
@@ -315,7 +312,7 @@ public class DownloadService extends Service {
             FileOutputStream out = null;
             File file = null;
             try {
-                file = new File(musicDir, song.getId() + "." + song.getSuffix());
+                file = createSongFile(song);
                 in = connect(getDownloadURL(song));
                 out = new FileOutputStream(file);
                 long n = copy(in, out);
@@ -344,6 +341,29 @@ public class DownloadService extends Service {
                 updateNotification();
                 broadcastChange(true);
             }
+        }
+
+        private File createSongFile(MusicDirectory.Entry song) {
+            File dir = getAlbumDirectory(song);
+
+            String title = Util.fileSystemSafe(song.getTitle());
+            return new File(dir, title + "." + song.getSuffix());
+        }
+
+        private File createAlbumArtFile(MusicDirectory.Entry song) {
+            File dir = getAlbumDirectory(song);
+            return new File(dir, "folder.jpeg");
+        }
+
+        private File getAlbumDirectory(MusicDirectory.Entry song) {
+            String artist = Util.fileSystemSafe(song.getArtist());
+            String album = Util.fileSystemSafe(song.getAlbum());
+
+            File dir = new File(musicDir.getPath() + "/" + artist + "/" + album);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            return dir;
         }
 
         private InputStream connect(String url) throws Exception {
@@ -375,7 +395,7 @@ public class DownloadService extends Service {
             FileOutputStream out = null;
             File file = null;
             try {
-                file = new File(albumArtDir, song.getId());
+                file = createAlbumArtFile(song);
                 in = connect(getAlbumArtURL(song));
                 out = new FileOutputStream(file);
                 Util.copy(in, out);
@@ -419,9 +439,9 @@ public class DownloadService extends Service {
 
             // Delete existing row in case the song has been downloaded before.
             int n = contentResolver.delete(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                            MediaStore.Audio.AudioColumns.TITLE_KEY + "=? AND " +
+                    MediaStore.Audio.AudioColumns.TITLE_KEY + "=? AND " +
                             MediaStore.MediaColumns.DATA + "=?",
-                    new String[] {MediaStore.Audio.keyFor(song.getTitle()), songFile.getAbsolutePath()});
+                    new String[]{MediaStore.Audio.keyFor(song.getTitle()), songFile.getAbsolutePath()});
             if (n > 0) {
                 Log.i(TAG, "Overwriting media store row for " + song);
             }

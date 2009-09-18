@@ -49,6 +49,10 @@ public final class Constants {
     public static final String PREFERENCES_FILE_NAME = "net.sourceforge.subsonic.android_preferences";
     public static final int SOCKET_TIMEOUT = 10000;
 
+    // Free download credits for non-licensed servers.
+    public static final int FREE_CREDITS = 200;
+
+
     private Constants() {
     }
 }
