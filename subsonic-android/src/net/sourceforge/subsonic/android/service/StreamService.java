@@ -34,6 +34,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
@@ -72,6 +75,7 @@ public class StreamService extends Service {
     private final ScheduledExecutorService progressNotifier = Executors.newSingleThreadScheduledExecutor();
     private final AtomicReference<Player> player = new AtomicReference<Player>();
     private final List<Player> players = new ArrayList<Player>();
+    private BroadcastReceiver headsetEventReceiver;
 
     @Override
     public void onCreate() {
@@ -84,11 +88,25 @@ public class StreamService extends Service {
         players.add(playerA);
         players.add(playerB);
         player.set(playerA);
+
+        headsetEventReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.i(TAG, "Headset event for: " + intent.getExtras().get("name"));
+                if (intent.getExtras().getInt("state") == 0 && getPlayerState() == STARTED) {
+                    pause();
+                }
+            }
+        };
+
+        registerReceiver(headsetEventReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        unregisterReceiver(headsetEventReceiver);
 
         for (Player p : players) {
             p.release();
