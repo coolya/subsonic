@@ -55,7 +55,7 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 ANDROID
 -------
 Mention 100 song limit in help.
-Invalidate license valid cache after some time.
+Use music index last modified.
 Create separate URL for donations from Android.
 Improve "Playlist is empty" and "Download queue is empty".
 Change colors of selected songs.

@@ -24,6 +24,7 @@ import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.domain.Artist;
 import net.sourceforge.subsonic.android.util.ProgressListener;
 import net.sourceforge.subsonic.android.util.Util;
+import net.sourceforge.subsonic.android.util.TimeLimitedCache;
 import android.content.Context;
 
 /**
@@ -31,17 +32,17 @@ import android.content.Context;
  */
 public class CachedMusicService implements MusicService {
 
-    private static final int CACHE_SIZE = 20;
+    private static final int MUSIC_DIR_CACHE_SIZE = 20;
 
     private final MusicService musicService;
     private final LRUCache cachedMusicDirectories;
     private List<Artist> cachedArtists;
     private String restUrl;
-    private Boolean cachedLicenseValid;
+    private TimeLimitedCache<Boolean> cachedLicenseValid = null;
 
     public CachedMusicService(MusicService musicService) {
         this.musicService = musicService;
-        cachedMusicDirectories = new LRUCache(CACHE_SIZE);
+        cachedMusicDirectories = new LRUCache(MUSIC_DIR_CACHE_SIZE);
     }
 
     @Override
@@ -52,10 +53,10 @@ public class CachedMusicService implements MusicService {
     @Override
     public boolean isLicenseValid(Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
-        if (cachedLicenseValid == null) {
-            cachedLicenseValid = musicService.isLicenseValid(context, progressListener);
+        if (cachedLicenseValid == null || cachedLicenseValid.get() == null) {
+            cachedLicenseValid = new TimeLimitedCache<Boolean>(musicService.isLicenseValid(context, progressListener), 120);
         }
-        return cachedLicenseValid;
+        return cachedLicenseValid.get();
     }
 
     @Override
