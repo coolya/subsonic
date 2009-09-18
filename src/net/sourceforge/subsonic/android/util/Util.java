@@ -6,11 +6,6 @@
  */
 package net.sourceforge.subsonic.android.util;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Handler;
-import android.widget.Toast;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +13,11 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Handler;
+import android.widget.Toast;
 
 /**
  * @author Sindre Mehus
@@ -29,8 +29,12 @@ public final class Util {
     private static final DecimalFormat MEGA_BYTE_FORMAT = new DecimalFormat("0.00 MB");
     private static final DecimalFormat KILO_BYTE_FORMAT = new DecimalFormat("0 KB");
 
+
     // Used by hexEncode()
     private static final char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
+    // Used by fileSystemSafe()
+    private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", "..", ":", "\""};
 
     private Util() {
     }
@@ -63,7 +67,7 @@ public final class Util {
 
     public static int getCredits(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
-        return prefs.getInt(Constants.PREFERENCES_KEY_CREDITS, 100);
+        return prefs.getInt(Constants.PREFERENCES_KEY_CREDITS, Constants.FREE_CREDITS);
     }
 
     public static void decrementCredits(Context context, int value) {
@@ -173,6 +177,24 @@ public final class Util {
         }
         builder.append(secs);
         return builder.toString();
+    }
+
+    /**
+     * Makes a given filename safe by replacing special characters like slashes ("/" and "\")
+     * with dashes ("-").
+     *
+     * @param filename The filename in question.
+     * @return The filename with special characters replaced by underscores.
+     */
+    public static String fileSystemSafe(String filename) {
+        if (filename == null || filename.trim().length() == 0) {
+            return "unnamed";
+        }
+
+        for (String s : FILE_SYSTEM_UNSAFE) {
+            filename = filename.replace(s, "-");
+        }
+        return filename;
     }
 
     public static boolean equals(Object object1, Object object2) {
