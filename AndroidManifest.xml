@@ -5,6 +5,7 @@
           a:versionName="1.0">
 
     <uses-permission a:name="android.permission.INTERNET"/>
+    <uses-permission a:name="android.permission.READ_PHONE_STATE"/>
 
     <application a:label="Subsonic" a:icon="@drawable/launch">
 
