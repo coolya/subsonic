@@ -57,7 +57,6 @@ If not licensed, pop up dialog every time?
 Mention 200 song limit in help.
 Use music index last modified + invalidate cache after a while.
 Create separate URL for donations from Android.
-Improve "Playlist is empty" and "Download queue is empty".
 SelectAlbumActivity doesn't work with recursive directories.
 Create service method for getting cover art, with cache.
 Make sure proper error message if versions mismatch.

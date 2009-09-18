@@ -176,6 +176,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         playlistView.setAdapter(new SongListAdapter(queue));
         if (queue.isEmpty()) {
             currentTextView.setText("Playlist is empty");
+            currentTextView.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_dialog_info, 0, 0, 0);
         }
     }
 

@@ -108,6 +108,7 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
             }
         } else if (queue.isEmpty()) {
             currentTextView.setText("Download queue is empty");
+            currentTextView.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_dialog_info, 0, 0, 0);
         }
 
         listView.setAdapter(new SongListAdapter(queue));
