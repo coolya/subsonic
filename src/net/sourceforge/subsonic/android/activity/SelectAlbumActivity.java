@@ -250,7 +250,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         builder.setPositiveButton("Now", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://subsonic.sf.net/donate.php")));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://subsonic.sf.net/android-donation.php")));
             }
         });
 
