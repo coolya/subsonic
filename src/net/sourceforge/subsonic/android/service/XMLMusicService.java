@@ -20,12 +20,18 @@ package net.sourceforge.subsonic.android.service;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.net.URLConnection;
+import java.net.URL;
 
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.domain.Artist;
 import net.sourceforge.subsonic.android.util.ProgressListener;
+import net.sourceforge.subsonic.android.util.Constants;
+import net.sourceforge.subsonic.android.util.Util;
 import android.content.Context;
 
 /**
@@ -83,6 +89,28 @@ public class XMLMusicService implements MusicService {
             return musicDirectoryParser.parse(reader, progressListener);
         } finally {
             closeReader(reader);
+        }
+    }
+
+    public byte[] getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
+        String url = Util.getRestUrl(context, "getCoverArt") + "&id=" + id + "&size=" + size;
+        URLConnection connection = new URL(url).openConnection();
+        connection.setConnectTimeout(Constants.SOCKET_TIMEOUT);
+        connection.setReadTimeout(Constants.SOCKET_TIMEOUT);
+        connection.connect();
+        InputStream in = connection.getInputStream();
+
+        try {
+            // If content type is XML, an error occured.  Get it.
+            String contentType = connection.getContentType();
+            if (contentType != null && contentType.startsWith("text/xml")) {
+                new ErrorParser().parse(new InputStreamReader(in, Constants.UTF_8));
+                return null; // Never reached.
+            }
+
+            return Util.toByteArray(in);
+        } finally {
+            Util.close(in);
         }
     }
 

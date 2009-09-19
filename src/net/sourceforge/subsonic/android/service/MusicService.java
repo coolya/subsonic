@@ -24,6 +24,7 @@ import net.sourceforge.subsonic.android.domain.Artist;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.util.ProgressListener;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 
 /**
  * @author Sindre Mehus
@@ -36,7 +37,9 @@ public interface MusicService {
 
     List<Artist> getArtists(Context context, ProgressListener progressListener) throws Exception;
 
-    MusicDirectory getMusicDirectory(String path, Context context, ProgressListener progressListener) throws Exception;
+    MusicDirectory getMusicDirectory(String id, Context context, ProgressListener progressListener) throws Exception;
+
+    byte[] getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception;
 
     void cancel(Context context, ProgressListener progressListener);
 }
