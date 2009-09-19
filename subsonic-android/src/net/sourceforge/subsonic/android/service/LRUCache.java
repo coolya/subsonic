@@ -26,19 +26,19 @@ import android.util.Log;
 /**
  * @author Sindre Mehus
  */
-public class LRUCache {
+public class LRUCache<K,V>{
 
     private static final String TAG = LRUCache.class.getSimpleName();
 
     private final int capacity;
-    private final Map<Object, TimestampedValue> map;
+    private final Map<K, TimestampedValue> map;
 
     public LRUCache(int capacity) {
-        map = new HashMap<Object, TimestampedValue>(capacity);
+        map = new HashMap<K, TimestampedValue>(capacity);
         this.capacity = capacity;
     }
 
-    public synchronized Object get(Object key) {
+    public synchronized V get(K key) {
         TimestampedValue value = map.get(key);
         if (Log.isLoggable(TAG, Log.DEBUG)) {
             Log.d(TAG, "Cache " + (value == null ? "miss" : "hit") + " for " + key + ". Size is " + map.size());
@@ -51,7 +51,7 @@ public class LRUCache {
         return null;
     }
 
-    public synchronized void put(Object key, Object value) {
+    public synchronized void put(K key, V value) {
         if (map.size() >= capacity) {
             removeOldest();
         }
@@ -63,11 +63,11 @@ public class LRUCache {
     }
 
     private void removeOldest() {
-        Object oldestKey = null;
+        K oldestKey = null;
         long oldestTimestamp = Long.MAX_VALUE;
 
-        for (Map.Entry<Object, TimestampedValue> entry : map.entrySet()) {
-            Object key = entry.getKey();
+        for (Map.Entry<K, TimestampedValue> entry : map.entrySet()) {
+            K key = entry.getKey();
             TimestampedValue value = entry.getValue();
             if (value.getTimestamp() < oldestTimestamp) {
                 oldestTimestamp = value.getTimestamp();
@@ -82,15 +82,15 @@ public class LRUCache {
 
     private final class TimestampedValue {
 
-        private final Object value;
+        private final V value;
         private long timestamp;
 
-        public TimestampedValue(Object value) {
+        public TimestampedValue(V value) {
             this.value = value;
             updateTimestamp();
         }
 
-        public Object getValue() {
+        public V getValue() {
             return value;
         }
 

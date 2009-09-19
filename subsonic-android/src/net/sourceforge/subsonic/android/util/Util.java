@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.io.ByteArrayOutputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -77,6 +78,23 @@ public final class Util {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt(Constants.PREFERENCES_KEY_CREDITS, credits);
         editor.commit();
+    }
+
+    /**
+     * Get the contents of an <code>InputStream</code> as a <code>byte[]</code>.
+     * <p>
+     * This method buffers the input internally, so there is no need to use a
+     * <code>BufferedInputStream</code>.
+     *
+     * @param input  the <code>InputStream</code> to read from
+     * @return the requested byte array
+     * @throws NullPointerException if the input is null
+     * @throws IOException if an I/O error occurs
+     */
+    public static byte[] toByteArray(InputStream input) throws IOException {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        copy(input, output);
+        return output.toByteArray();
     }
 
     public static long copy(InputStream input, OutputStream output)

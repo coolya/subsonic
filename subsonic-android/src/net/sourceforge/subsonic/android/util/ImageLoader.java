@@ -22,16 +22,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
-import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.R;
+import net.sourceforge.subsonic.android.domain.MusicDirectory;
+import net.sourceforge.subsonic.android.service.MusicService;
+import net.sourceforge.subsonic.android.service.MusicServiceFactory;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.BlockingQueue;
+import java.io.ByteArrayInputStream;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Intended for short-lived usage, typically one activity's onCreate() - onDestroy() lifecycle.
@@ -115,15 +115,10 @@ public class ImageLoader implements Runnable {
         }
 
         public void execute() {
-            String url = Util.getRestUrl(view.getContext(), "getCoverArt") + "&id=" + entry.getCoverArt() + "&size=48";
-            InputStream in = null;
+            MusicService musicService = MusicServiceFactory.getMusicService();
             try {
-                URLConnection connection = new URL(url).openConnection();
-                connection.setConnectTimeout(Constants.SOCKET_TIMEOUT);
-                connection.setReadTimeout(Constants.SOCKET_TIMEOUT);
-                connection.connect();
-                in = connection.getInputStream();
-                final Drawable drawable = Drawable.createFromStream(in, "src");
+                byte[] bytes = musicService.getCoverArt(view.getContext(), entry.getCoverArt(), 48, null);
+                final Drawable drawable = Drawable.createFromStream(new ByteArrayInputStream(bytes), "src");
                 cache.put(entry.getCoverArt(), drawable);
 
                 handler.post(new Runnable() {
@@ -134,8 +129,6 @@ public class ImageLoader implements Runnable {
                 });
             } catch (Exception x) {
                 Log.e(TAG, "Failed to download album art.", x);
-            } finally {
-                Util.close(in);
             }
         }
     }

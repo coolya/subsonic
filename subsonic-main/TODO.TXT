@@ -57,7 +57,6 @@ If not licensed, pop up dialog every time?
 Mention 200 song limit in help.
 Use music index last modified + invalidate cache after a while.
 SelectAlbumActivity doesn't work with recursive directories.
-Create service method for getting cover art, with cache.
 Make sure proper error message if versions mismatch.
 
 Change main menu to 1) My music 2) My playlists 3) Search.  + Now playing & Now downloading (smaller)

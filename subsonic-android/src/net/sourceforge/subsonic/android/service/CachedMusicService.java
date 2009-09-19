@@ -33,16 +33,19 @@ import android.content.Context;
 public class CachedMusicService implements MusicService {
 
     private static final int MUSIC_DIR_CACHE_SIZE = 20;
+    private static final int COVER_ART_CACHE_SIZE = 10;
 
     private final MusicService musicService;
-    private final LRUCache cachedMusicDirectories;
+    private final LRUCache<String,MusicDirectory> cachedMusicDirectories;
+    private final LRUCache<String, byte[]> cachedCoverArts;
     private List<Artist> cachedArtists;
     private String restUrl;
     private TimeLimitedCache<Boolean> cachedLicenseValid = null;
 
     public CachedMusicService(MusicService musicService) {
         this.musicService = musicService;
-        cachedMusicDirectories = new LRUCache(MUSIC_DIR_CACHE_SIZE);
+        cachedMusicDirectories = new LRUCache<String, MusicDirectory>(MUSIC_DIR_CACHE_SIZE);
+        cachedCoverArts = new LRUCache<String, byte[]>(COVER_ART_CACHE_SIZE);
     }
 
     @Override
@@ -69,14 +72,26 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
-    public MusicDirectory getMusicDirectory(String path, Context context, ProgressListener progressListener) throws Exception {
+    public MusicDirectory getMusicDirectory(String id, Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
-        MusicDirectory dir = (MusicDirectory) cachedMusicDirectories.get(path);
+        MusicDirectory dir = cachedMusicDirectories.get(id);
         if (dir == null) {
-            dir = musicService.getMusicDirectory(path, context, progressListener);
-            cachedMusicDirectories.put(path, dir);
+            dir = musicService.getMusicDirectory(id, context, progressListener);
+            cachedMusicDirectories.put(id, dir);
         }
         return dir;
+    }
+
+    @Override
+    public byte[] getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
+        checkSettingsChanged(context);
+        String key = id + size;
+        byte[] bytes = cachedCoverArts.get(key);
+        if (bytes == null) {
+            bytes = musicService.getCoverArt(context, id, size, progressListener);
+            cachedCoverArts.put(key, bytes);
+        }
+        return bytes;
     }
 
     @Override
@@ -88,6 +103,7 @@ public class CachedMusicService implements MusicService {
         String newUrl = Util.getRestUrl(context, null);
         if (!Util.equals(newUrl, restUrl)) {
             cachedMusicDirectories.clear();
+            cachedCoverArts.clear();
             cachedArtists = null;
             cachedLicenseValid = null;
             restUrl = newUrl;

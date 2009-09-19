@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -279,10 +280,6 @@ public class DownloadService extends Service {
         return Util.getRestUrl(this, "download") + "&id=" + song.getId();
     }
 
-    private String getAlbumArtURL(MusicDirectory.Entry song) {
-        return Util.getRestUrl(this, "getCoverArt") + "&id=" + song.getCoverArt() + "&size=200";
-    }
-
     private class DownloadThread extends Thread {
 
         @Override
@@ -396,7 +393,10 @@ public class DownloadService extends Service {
             File file = null;
             try {
                 file = createAlbumArtFile(song);
-                in = connect(getAlbumArtURL(song));
+
+                MusicService musicService = MusicServiceFactory.getMusicService();
+                byte[] bytes = musicService.getCoverArt(DownloadService.this, song.getCoverArt(), 200, null);
+                in = new ByteArrayInputStream(bytes);
                 out = new FileOutputStream(file);
                 Util.copy(in, out);
             } catch (Exception e) {
