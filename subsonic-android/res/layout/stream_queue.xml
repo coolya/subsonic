@@ -25,7 +25,6 @@
                     a:layout_width="fill_parent"
                     a:layout_height="wrap_content"
                     a:gravity="center_horizontal"
-                    a:ellipsize="marquee"
                     a:textColor="@color/secondaryForeground"/>
         </LinearLayout>
 

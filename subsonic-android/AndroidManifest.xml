@@ -11,6 +11,7 @@
 
         <activity a:name=".activity.MainActivity"
                   a:label="Subsonic"
+                  a:screenOrientation="portrait"
                   a:launchMode="singleTask">
             <intent-filter>
                 <action a:name="android.intent.action.MAIN"/>
@@ -19,30 +20,37 @@
         </activity>
 
         <activity a:name=".activity.SelectArtistActivity"
-                  a:label="Browse music"/>
+                  a:label="Browse music"
+                  a:screenOrientation="portrait"/>
 
         <activity a:name=".activity.SelectAlbumActivity"
-                  a:label="Browse music"/>
+                  a:label="Browse music"
+                  a:screenOrientation="portrait"/>
 
         <activity a:name=".activity.DownloadQueueActivity"
                   a:label="Download queue"
+                  a:screenOrientation="portrait"
                   a:launchMode="singleTask"/>
 
         <activity a:name=".activity.StreamQueueActivity"
                   a:label="Playlist"
-                  a:launchMode="singleTask"/>
+                  a:launchMode="singleTask"
+                  a:screenOrientation="portrait"/>
 
         <activity a:name=".activity.SettingsActivity"
                   a:label="Settings"
-                  a:launchMode="singleTask"/>
+                  a:launchMode="singleTask"
+                  a:screenOrientation="portrait"/>
 
         <activity a:name=".activity.ErrorActivity"
                   a:label="Error"
-                  a:launchMode="singleTask"/>
+                  a:launchMode="singleTask"
+                  a:screenOrientation="portrait"/>
 
         <activity a:name=".activity.HelpActivity"
                   a:label="Help"
-                  a:launchMode="singleTask"/>
+                  a:launchMode="singleTask"
+                  a:screenOrientation="portrait"/>
 
         <service a:name=".service.DownloadService"
                  a:label="Download"/>
