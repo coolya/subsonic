@@ -53,12 +53,15 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
+Make playlist bg b/w.
 If not licensed, pop up dialog every time?
 Mention 200 song limit in help.
 Use music index last modified + invalidate cache after a while.
 SelectAlbumActivity doesn't work with recursive directories.
 Make sure proper error message if versions mismatch.
-When clicking on now playing item, show full screen cover art.
+Use  android:ellipsize="marquee"
+Avoid orientation flipping
+Use weak references in image cache.
 
 Change main menu to 1) My music 2) My playlists 3) Search.  + Now playing & Now downloading (smaller)
 Indicate songs that are already downloaded.
@@ -405,7 +408,10 @@ Create transcode_windows.zip and release it in SourceForge FRS.
 MISCELLANEOUS
 =============
 http://www.famfamfam.com/lab/icons/silk/previews/index_abc.png
+http://iconfactory.com/freeware
 openclipart.org
+http://pixelresort.com
+http://lbaumann.com/
 tango.freedesktop.org
 http://www.nero.com/eng/nero-aac-codec.html
 http://kickyoutube.com/

@@ -4,29 +4,62 @@
               a:layout_width="fill_parent"
               a:layout_height="fill_parent">
 
-    <TextView
-            a:id="@+id/stream_queue_current"
-            a:drawableLeft="@drawable/unknown_album"
-            a:drawablePadding="10dp"
-            a:textAppearance="?android:attr/textAppearanceLarge"
-            a:textColor="@color/secondaryForeground"
-            a:gravity="left|center_vertical"
-            a:layout_width="fill_parent"
-            a:layout_height="wrap_content"
-            a:layout_margin="5dp"/>
+    <ViewFlipper a:id="@+id/stream_queue_flipper"
+                 a:layout_width="fill_parent"
+                 a:layout_height="fill_parent"
+                 a:layout_weight="1">
 
-    <ListView
-            a:id="@+id/stream_queue_list"
-            a:layout_width="fill_parent"
-            a:layout_height="fill_parent"
-            a:layout_weight="1"
-            a:background="@drawable/repeat_background"
-            a:cacheColorHint="#00000000"/>
+        <LinearLayout a:orientation="vertical"
+                      a:layout_width="fill_parent"
+                      a:layout_height="fill_parent"
+                      a:layout_weight="1">
+            <ImageView
+                    a:id="@+id/stream_queue_album_art_image"
+                    a:layout_width="fill_parent"
+                    a:layout_height="fill_parent"
+                    a:layout_weight="1"
+                    a:scaleType="centerCrop"/>
+
+            <TextView
+                    a:id="@+id/stream_queue_album_art_text"
+                    a:layout_width="fill_parent"
+                    a:layout_height="wrap_content"
+                    a:gravity="center_horizontal"
+                    a:ellipsize="marquee"
+                    a:textColor="@color/secondaryForeground"/>
+        </LinearLayout>
+
+        <LinearLayout a:orientation="vertical"
+                      a:layout_width="fill_parent"
+                      a:layout_height="fill_parent"
+                      a:layout_weight="1">
+
+            <TextView
+                    a:id="@+id/stream_queue_current"
+                    a:drawableLeft="@drawable/unknown_album"
+                    a:drawablePadding="10dp"
+                    a:textAppearance="?android:attr/textAppearanceLarge"
+                    a:textColor="@color/secondaryForeground"
+                    a:gravity="left|center_vertical"
+                    a:layout_width="fill_parent"
+                    a:layout_height="wrap_content"
+                    a:layout_margin="5dp"/>
+
+            <ListView
+                    a:id="@+id/stream_queue_list"
+                    a:layout_width="fill_parent"
+                    a:layout_height="fill_parent"
+                    a:layout_weight="1"
+                    a:background="@drawable/repeat_background"
+                    a:cacheColorHint="#00000000"/>
+        </LinearLayout>
+
+    </ViewFlipper>
 
     <LinearLayout a:orientation="horizontal"
                   a:layout_width="fill_parent"
                   a:layout_height="wrap_content"
-                  a:layout_marginTop="5dp"
+                  a:layout_marginTop="0dip"
                   a:gravity="center_horizontal">
         <ImageView
                 a:id="@+id/stream_queue_previous"
@@ -60,8 +93,8 @@
     <LinearLayout a:orientation="horizontal"
                   a:layout_width="fill_parent"
                   a:layout_height="wrap_content"
-                  a:paddingLeft="10dp"
-                  a:paddingRight="10dp">
+                  a:paddingLeft="5dip"
+                  a:paddingRight="5dip">
         <TextView
                 a:id="@+id/stream_queue_position"
                 a:layout_width="wrap_content"
@@ -89,7 +122,7 @@
             a:indeterminate="false"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
-            a:padding="10dp"/>
+            a:padding="5dip"/>
 
 </LinearLayout>
 

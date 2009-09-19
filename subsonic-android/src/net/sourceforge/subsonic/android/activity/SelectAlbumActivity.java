@@ -323,7 +323,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                         android.R.layout.simple_list_item_1, parent, false);
 
                 view.setCompoundDrawablePadding(10);
-                imageLoader.loadImage(view, entry);
+                imageLoader.loadImage(view, entry, 48);
 
             } else {
                 if (convertView != null && convertView instanceof CheckedTextView) {

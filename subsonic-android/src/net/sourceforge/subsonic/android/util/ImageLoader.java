@@ -22,6 +22,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.ImageView;
+import android.view.View;
 import net.sourceforge.subsonic.android.R;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.service.MusicService;
@@ -41,7 +43,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ImageLoader implements Runnable {
 
     private static final String TAG = ImageLoader.class.getSimpleName();
-    private final Task POISON = new Task(null, null);
+    private final Task POISON = new Task(null, null, 0);
     private final BlockingQueue<Task> queue;
     private final Map<String, Drawable> cache = new ConcurrentHashMap<String, Drawable>();
     private final Thread thread;
@@ -53,28 +55,57 @@ public class ImageLoader implements Runnable {
         thread.start();
     }
 
-    public void loadImage(TextView view, MusicDirectory.Entry entry) {
+    public void loadImage(ImageView view, MusicDirectory.Entry entry, int size) {
+        doLoadImage(view, entry, size);
+    }
+
+    public void loadImage(TextView view, MusicDirectory.Entry entry, int size) {
+        doLoadImage(view, entry, size);
+    }
+
+    private void doLoadImage(View view, MusicDirectory.Entry entry, int size) {
         if (entry.getCoverArt() == null) {
-            setUnknownImage(view);
+            setUnknownImage(view, size);
             return;
         }
 
-        Drawable drawable = cache.get(entry.getCoverArt());
+        String key = entry.getCoverArt() + size;
+        Drawable drawable = cache.get(key);
         if (drawable != null) {
             setImage(view, drawable);
             return;
         }
 
-        setUnknownImage(view);
-        queue.offer(new Task(view, entry));
+        setUnknownImage(view, size);
+        queue.offer(new Task(view, entry, size));
     }
 
-    private void setImage(TextView view, Drawable drawable) {
-        view.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+    private void setImage(View view, Drawable drawable) {
+        if (view instanceof TextView) {
+            ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+        } else if (view instanceof ImageView) {
+            ((ImageView) view).setImageDrawable(drawable);
+        }
     }
 
-    private void setUnknownImage(TextView view) {
-        view.setCompoundDrawablesWithIntrinsicBounds(R.drawable.unknown_album, 0, 0, 0);
+    private void setUnknownImage(View view, int size) {
+        int imageResource = 0;
+        switch (size) {
+            case 48:
+                imageResource = R.drawable.unknown_album_48;
+                break;
+            case 320:
+                imageResource = R.drawable.unknown_album_320;
+                break;
+            default:
+                imageResource = R.drawable.unknown_album;
+                break;
+        }
+        if (view instanceof TextView) {
+            ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(imageResource, 0, 0, 0);
+        } else if (view instanceof ImageView) {
+            ((ImageView) view).setImageResource(imageResource);
+        }
     }
 
     public void cancel() {
@@ -104,22 +135,25 @@ public class ImageLoader implements Runnable {
     }
 
     private class Task {
-        private final TextView view;
+        private final View view;
         private final MusicDirectory.Entry entry;
         private final Handler handler;
+        private int size;
 
-        public Task(TextView view, MusicDirectory.Entry entry) {
+        public Task(View view, MusicDirectory.Entry entry, int size) {
             this.view = view;
             this.entry = entry;
+            this.size = size;
             this.handler = new Handler();
         }
 
         public void execute() {
             MusicService musicService = MusicServiceFactory.getMusicService();
             try {
-                byte[] bytes = musicService.getCoverArt(view.getContext(), entry.getCoverArt(), 48, null);
+                byte[] bytes = musicService.getCoverArt(view.getContext(), entry.getCoverArt(), size, null);
                 final Drawable drawable = Drawable.createFromStream(new ByteArrayInputStream(bytes), "src");
-                cache.put(entry.getCoverArt(), drawable);
+                String key = entry.getCoverArt() + size;
+                cache.put(key, drawable);
 
                 handler.post(new Runnable() {
                     @Override

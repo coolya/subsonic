@@ -14,11 +14,13 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.view.KeyEvent;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 import net.sourceforge.subsonic.android.R;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
 import net.sourceforge.subsonic.android.service.StreamService;
@@ -40,7 +42,10 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
     private ImageLoader imageLoader;
     private StreamService streamService;
 
+    private ViewFlipper flipper;
     private TextView currentTextView;
+    private TextView albumArtTextView;
+    private ImageView albumArtImageView;
     private ListView playlistView;
     private BroadcastReceiver broadcastReceiver;
     private TextView positionTextView;
@@ -60,7 +65,10 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stream_queue);
 
+        flipper = (ViewFlipper) findViewById(R.id.stream_queue_flipper);
         currentTextView = (TextView) findViewById(R.id.stream_queue_current);
+        albumArtTextView = (TextView) findViewById(R.id.stream_queue_album_art_text);
+        albumArtImageView = (ImageView) findViewById(R.id.stream_queue_album_art_image);
         positionTextView = (TextView) findViewById(R.id.stream_queue_position);
         durationTextView = (TextView) findViewById(R.id.stream_queue_duration);
         statusTextView = (TextView) findViewById(R.id.stream_queue_status);
@@ -70,6 +78,23 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         nextButton = (ImageView) findViewById(R.id.stream_queue_next);
         pauseButton = (ImageView) findViewById(R.id.stream_queue_pause);
         startButton = (ImageView) findViewById(R.id.stream_queue_start);
+
+        flipper.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
+        flipper.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+
+        currentTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                flipper.showNext();
+            }
+        });
+
+        albumArtImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                flipper.showNext();
+            }
+        });
 
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,8 +200,8 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
 
         playlistView.setAdapter(new SongListAdapter(queue));
         if (queue.isEmpty()) {
-            currentTextView.setText("Playlist is empty");
-            currentTextView.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_dialog_info, 0, 0, 0);
+            currentTextView.setText(null);
+            currentTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
     }
 
@@ -187,7 +212,9 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         MusicDirectory.Entry current = streamService.getCurrentSong();
         if (current != null) {
             currentTextView.setText(current.getTitle());
-            imageLoader.loadImage(currentTextView, current);
+            albumArtTextView.setText(current.getTitle() + " - " + current.getArtist());
+            imageLoader.loadImage(currentTextView, current, 48);
+            imageLoader.loadImage(albumArtImageView, current, 320); //TODO
         }
     }
 

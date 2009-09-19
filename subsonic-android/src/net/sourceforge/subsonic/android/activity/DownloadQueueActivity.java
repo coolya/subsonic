@@ -100,7 +100,7 @@ public class DownloadQueueActivity extends OptionsMenuActivity implements Adapte
 
         if (current != null) {
             currentTextView.setText(current.getFirst().getTitle());
-            imageLoader.loadImage(currentTextView, current.getFirst());
+            imageLoader.loadImage(currentTextView, current.getFirst(), 48);
 
             Long bytesTotal = current.getSecond().getSecond();
             if (bytesTotal != null) {
