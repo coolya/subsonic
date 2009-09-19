@@ -58,9 +58,9 @@ Mention 200 song limit in help.
 Use music index last modified + invalidate cache after a while.
 SelectAlbumActivity doesn't work with recursive directories.
 Make sure proper error message if versions mismatch.
+When clicking on now playing item, show full screen cover art.
 
 Change main menu to 1) My music 2) My playlists 3) Search.  + Now playing & Now downloading (smaller)
-When clicking on now playing item, show full screen cover art.
 Indicate songs that are already downloaded.
 Change colors of selected songs.
 Show currently playing song in playlist.

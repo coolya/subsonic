@@ -81,8 +81,8 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
 
     private Reader openURL(URL url) throws IOException {
         URLConnection connection = url.openConnection();
-        connection.setConnectTimeout(Constants.SOCKET_TIMEOUT);
-        connection.setReadTimeout(Constants.SOCKET_TIMEOUT);
+        connection.setConnectTimeout(Constants.SOCKET_CONNECT_TIMEOUT);
+        connection.setReadTimeout(Constants.SOCKET_READ_TIMEOUT);
         InputStream in = connection.getInputStream();
         return new InputStreamReader(in, Constants.UTF_8);
     }

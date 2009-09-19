@@ -95,8 +95,8 @@ public class XMLMusicService implements MusicService {
     public byte[] getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
         String url = Util.getRestUrl(context, "getCoverArt") + "&id=" + id + "&size=" + size;
         URLConnection connection = new URL(url).openConnection();
-        connection.setConnectTimeout(Constants.SOCKET_TIMEOUT);
-        connection.setReadTimeout(Constants.SOCKET_TIMEOUT);
+        connection.setConnectTimeout(Constants.SOCKET_CONNECT_TIMEOUT);
+        connection.setReadTimeout(Constants.SOCKET_READ_TIMEOUT);
         connection.connect();
         InputStream in = connection.getInputStream();
 

@@ -365,8 +365,8 @@ public class DownloadService extends Service {
 
         private InputStream connect(String url) throws Exception {
             URLConnection connection = new URL(url).openConnection();
-            connection.setConnectTimeout(Constants.SOCKET_TIMEOUT);
-            connection.setReadTimeout(Constants.SOCKET_TIMEOUT);
+            connection.setConnectTimeout(Constants.SOCKET_CONNECT_TIMEOUT);
+            connection.setReadTimeout(Constants.SOCKET_READ_TIMEOUT);
             connection.connect();
             InputStream in = connection.getInputStream();
 
