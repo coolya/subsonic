@@ -430,12 +430,6 @@ public class StreamService extends Service {
                     }
                 }
             });
-//            mediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
-//                @Override
-//                public void onBufferingUpdate(MediaPlayer mediaPlayer, int percent) {
-//                    Log.i(tag, "Buffer: " + percent + " %");
-//                }
-//            });
             mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
                 @Override
                 public boolean onError(MediaPlayer mediaPlayer, int what, int more) {

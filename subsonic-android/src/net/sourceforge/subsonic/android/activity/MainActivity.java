@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import net.sourceforge.subsonic.android.R;
 import net.sourceforge.subsonic.android.service.DownloadService;
@@ -19,6 +19,7 @@ public class MainActivity extends OptionsMenuActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 

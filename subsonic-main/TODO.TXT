@@ -54,9 +54,7 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 ANDROID
 -------
 Make playlist bg b/w.
-Hide title from playlist.
 If not licensed, pop up dialog if less than 100 credits left.
-Animate main menu.
 Mention 200 song limit in help.
 Use music index last modified + invalidate cache after a while.
 SelectAlbumActivity doesn't work with recursive directories.

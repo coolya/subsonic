@@ -14,6 +14,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.view.KeyEvent;
+import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -63,6 +64,8 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.stream_queue);
 
         flipper = (ViewFlipper) findViewById(R.id.stream_queue_flipper);
@@ -85,14 +88,14 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         currentTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                flipper.showNext();
+                showFullscreenAlbumArt(true);
             }
         });
 
         albumArtImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                flipper.showNext();
+                showFullscreenAlbumArt(false);
             }
         });
 
@@ -128,6 +131,15 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
 
         bindService(new Intent(this, StreamService.class), streamServiceConnection, Context.BIND_AUTO_CREATE);
         imageLoader = new ImageLoader();
+    }
+
+    private void showFullscreenAlbumArt(boolean fullscreen) {
+        boolean empty = streamService == null || streamService.getCurrent() == null;
+        int newDisplayedChild = fullscreen && !empty ? 0 : 1;
+
+        if (flipper.getDisplayedChild() != newDisplayedChild) {
+            flipper.setDisplayedChild(newDisplayedChild);
+        }
     }
 
     private void start() {
@@ -267,6 +279,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
             onPlaylistChanged();
             onCurrentChanged();
             onProgressChanged();
+            showFullscreenAlbumArt(true);
         }
 
         @Override
