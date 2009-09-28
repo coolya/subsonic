@@ -28,7 +28,7 @@ import java.net.URLConnection;
 import java.net.URL;
 
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
-import net.sourceforge.subsonic.android.domain.Artist;
+import net.sourceforge.subsonic.android.domain.Indexes;
 import net.sourceforge.subsonic.android.util.ProgressListener;
 import net.sourceforge.subsonic.android.util.Constants;
 import net.sourceforge.subsonic.android.util.Util;
@@ -40,7 +40,7 @@ import android.content.Context;
 public class XMLMusicService implements MusicService {
 
     private final MusicServiceDataSource dataSource;
-    private final ArtistParser artistParser = new ArtistParser();
+    private final IndexesParser indexesParser = new IndexesParser();
     private final MusicDirectoryParser musicDirectoryParser = new MusicDirectoryParser();
     private final LicenseParser licenseParser = new LicenseParser();
     private final ErrorParser errorParser = new ErrorParser();
@@ -72,11 +72,11 @@ public class XMLMusicService implements MusicService {
         }
     }
 
-    public List<Artist> getArtists(Context context, ProgressListener progressListener) throws Exception {
-        Reader reader = dataSource.getArtistsReader(context, progressListener);
+    public Indexes getIndexes(Context context, ProgressListener progressListener) throws Exception {
+        Reader reader = dataSource.getIndexesReader(context, progressListener);
         addReader(reader);
         try {
-            return artistParser.parse(reader, progressListener);
+            return indexesParser.parse(reader, progressListener);
         } finally {
             closeReader(reader);
         }

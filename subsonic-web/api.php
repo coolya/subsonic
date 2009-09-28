@@ -166,6 +166,12 @@
                     <td></td>
                     <td>If specified, only return artists in the music folder with the given ID.</td>
                 </tr>
+                <tr>
+                    <td><code>ifModifiedSince</code></td>
+                    <td>No</td>
+                    <td></td>
+                    <td>If specified, only return a result if the artist collection has changed since the given time.</td>
+                </tr>
             </table>
             <p>
                 Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;indexes&gt;</code>

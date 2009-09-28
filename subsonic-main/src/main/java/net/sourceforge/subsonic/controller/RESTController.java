@@ -132,7 +132,14 @@ public class RESTController extends MultiActionController {
         createPlayerIfNecessary(request);
         XMLBuilder builder = createXMLBuilder(response, true);
 
+        long ifModifiedSince = ServletRequestUtils.getLongParameter(request, "ifModifiedSince", 0L);
         long lastModified = leftController.getLastModified(request);
+
+        if (lastModified <= ifModifiedSince) {
+            builder.endAll();
+            return null;
+        }
+
         builder.add("indexes", "lastModified", lastModified, false);
 
         List<MusicFolder> musicFolders = settingsService.getAllMusicFolders();

@@ -44,7 +44,7 @@ public class SelectArtistActivity extends OptionsMenuActivity implements Adapter
             @Override
             protected List<Artist> doInBackground() throws Throwable {
                 MusicService musicService = MusicServiceFactory.getMusicService();
-                return musicService.getArtists(SelectArtistActivity.this, this);
+                return musicService.getIndexes(SelectArtistActivity.this, this).getArtists();
             }
 
             @Override

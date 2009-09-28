@@ -18,14 +18,14 @@
  */
 package net.sourceforge.subsonic.android.service;
 
-import java.util.List;
-
-import net.sourceforge.subsonic.android.domain.MusicDirectory;
-import net.sourceforge.subsonic.android.domain.Artist;
-import net.sourceforge.subsonic.android.util.ProgressListener;
-import net.sourceforge.subsonic.android.util.Util;
-import net.sourceforge.subsonic.android.util.TimeLimitedCache;
 import android.content.Context;
+import net.sourceforge.subsonic.android.domain.Indexes;
+import net.sourceforge.subsonic.android.domain.MusicDirectory;
+import net.sourceforge.subsonic.android.util.ProgressListener;
+import net.sourceforge.subsonic.android.util.TimeLimitedCache;
+import net.sourceforge.subsonic.android.util.Util;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Sindre Mehus
@@ -36,11 +36,11 @@ public class CachedMusicService implements MusicService {
     private static final int COVER_ART_CACHE_SIZE = 10;
 
     private final MusicService musicService;
-    private final LRUCache<String,MusicDirectory> cachedMusicDirectories;
+    private final LRUCache<String, MusicDirectory> cachedMusicDirectories;
     private final LRUCache<String, byte[]> cachedCoverArts;
-    private List<Artist> cachedArtists;
+    private final TimeLimitedCache<Boolean> cachedLicenseValid = new TimeLimitedCache<Boolean>(120, TimeUnit.SECONDS);
+    private final TimeLimitedCache<Indexes> cachedIndexes = new TimeLimitedCache<Indexes>(60 * 60, TimeUnit.SECONDS);
     private String restUrl;
-    private TimeLimitedCache<Boolean> cachedLicenseValid = null;
 
     public CachedMusicService(MusicService musicService) {
         this.musicService = musicService;
@@ -56,19 +56,19 @@ public class CachedMusicService implements MusicService {
     @Override
     public boolean isLicenseValid(Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
-        if (cachedLicenseValid == null || cachedLicenseValid.get() == null) {
-            cachedLicenseValid = new TimeLimitedCache<Boolean>(musicService.isLicenseValid(context, progressListener), 120);
+        if (cachedLicenseValid.get() == null) {
+            cachedLicenseValid.set(musicService.isLicenseValid(context, progressListener));
         }
         return cachedLicenseValid.get();
     }
 
     @Override
-    public List<Artist> getArtists(Context context, ProgressListener progressListener) throws Exception {
+    public Indexes getIndexes(Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
-        if (cachedArtists == null) {
-            cachedArtists = musicService.getArtists(context, progressListener);
+        if (cachedIndexes.get() == null) {
+            cachedIndexes.set(musicService.getIndexes(context, progressListener));
         }
-        return cachedArtists;
+        return cachedIndexes.get();
     }
 
     @Override
@@ -104,8 +104,8 @@ public class CachedMusicService implements MusicService {
         if (!Util.equals(newUrl, restUrl)) {
             cachedMusicDirectories.clear();
             cachedCoverArts.clear();
-            cachedArtists = null;
-            cachedLicenseValid = null;
+            cachedLicenseValid.clear();
+            cachedIndexes.clear();
             restUrl = newUrl;
         }
     }
