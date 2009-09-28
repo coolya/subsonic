@@ -18,24 +18,26 @@
  */
 package net.sourceforge.subsonic.android.domain;
 
+import java.util.List;
+
 /**
  * @author Sindre Mehus
  */
-public class Index {
+public class Indexes {
 
-    private final String name;
-    private final Artist[] artists;
+    private final long lastModified;
+    private final List<Artist> artists;
 
-    public Index(String name, Artist[] artists) {
-        this.name = name;
+    public Indexes(long lastModified, List<Artist> artists) {
+        this.lastModified = lastModified;
         this.artists = artists;
     }
 
-    public String getName() {
-        return name;
+    public long getLastModified() {
+        return lastModified;
     }
 
-    public Artist[] getArtists() {
+    public List<Artist> getArtists() {
         return artists;
     }
 }

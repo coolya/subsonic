@@ -32,7 +32,7 @@ public interface MusicServiceDataSource {
 
     Reader getLicenseReader(Context context, ProgressListener progressListener) throws Exception;
 
-    Reader getArtistsReader(Context context, ProgressListener progressListener) throws Exception;
+    Reader getIndexesReader(Context context, ProgressListener progressListener) throws Exception;
 
     Reader getMusicDirectoryReader(String id, Context context, ProgressListener progressListener) throws Exception;
 }

@@ -48,7 +48,7 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
     }
 
     @Override
-    public Reader getArtistsReader(Context context, ProgressListener progressListener) throws Exception {
+    public Reader getIndexesReader(Context context, ProgressListener progressListener) throws Exception {
         return getReader(context, progressListener, "getIndexes", null, null);
     }
 

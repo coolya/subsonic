@@ -22,6 +22,7 @@ import java.util.List;
 
 import net.sourceforge.subsonic.android.domain.Artist;
 import net.sourceforge.subsonic.android.domain.MusicDirectory;
+import net.sourceforge.subsonic.android.domain.Indexes;
 import net.sourceforge.subsonic.android.util.ProgressListener;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -35,7 +36,7 @@ public interface MusicService {
 
     boolean isLicenseValid(Context context, ProgressListener progressListener) throws Exception;
 
-    List<Artist> getArtists(Context context, ProgressListener progressListener) throws Exception;
+    Indexes getIndexes(Context context, ProgressListener progressListener) throws Exception;
 
     MusicDirectory getMusicDirectory(String id, Context context, ProgressListener progressListener) throws Exception;
 

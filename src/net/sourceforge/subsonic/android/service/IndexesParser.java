@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import org.xmlpull.v1.XmlPullParser;
 
 import net.sourceforge.subsonic.android.domain.Artist;
+import net.sourceforge.subsonic.android.domain.Indexes;
 import net.sourceforge.subsonic.android.util.ProgressListener;
 import android.util.Xml;
 import android.util.Log;
@@ -32,10 +33,10 @@ import android.util.Log;
 /**
  * @author Sindre Mehus
  */
-public class ArtistParser extends AbstractParser {
-    private static final String TAG = ArtistParser.class.getSimpleName();
+public class IndexesParser extends AbstractParser {
+    private static final String TAG = IndexesParser.class.getSimpleName();
 
-    public List<Artist> parse(Reader reader, ProgressListener progressListener) throws Exception {
+    public Indexes parse(Reader reader, ProgressListener progressListener) throws Exception {
         if (progressListener != null) {
             progressListener.updateProgress("Reading from server.");
         }
@@ -45,14 +46,18 @@ public class ArtistParser extends AbstractParser {
         parser.setInput(reader);
 
         List<Artist> artists = new ArrayList<Artist>();
+        Long lastModified = null;
         int eventType;
         String index = "#";
         do {
             eventType = parser.next();
             if (eventType == XmlPullParser.START_TAG) {
                 String name = parser.getName();
-                if ("index".equals(name)) {
+                if ("indexes".equals(name)) {
+                    lastModified = getLong(parser, "lastModified");
+                } else if ("index".equals(name)) {
                     index = get(parser, "name");
+
                 } else if ("artist".equals(name)) {
                     Artist artist = new Artist();
                     artist.setId(get(parser, "id"));
@@ -76,6 +81,6 @@ public class ArtistParser extends AbstractParser {
             progressListener.updateProgress("Got " + artists.size() + " artists.");
         }
 
-        return artists;
+        return new Indexes(lastModified == null ? 0L : lastModified, artists);
     }
 }

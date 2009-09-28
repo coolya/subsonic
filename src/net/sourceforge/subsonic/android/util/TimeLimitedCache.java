@@ -6,21 +6,33 @@
  */
 package net.sourceforge.subsonic.android.util;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author Sindre Mehus
  * @version $Id$
  */
 public class TimeLimitedCache<T> {
 
-    private final T value;
-    private final long expires;
+    private T value;
+    private final long ttlMillis;
+    private long expires;
 
-    public TimeLimitedCache(T value, int ttlSeconds) {
-        this.value = value;
-        expires = System.currentTimeMillis() + ttlSeconds * 1000L;
+    public TimeLimitedCache(int ttl, TimeUnit timeUnit) {
+        this.ttlMillis = TimeUnit.MILLISECONDS.convert(ttl, timeUnit);
     }
 
     public T get() {
         return System.currentTimeMillis() < expires ? value : null;
+    }
+
+    public void set(T value) {
+        this.value = value;
+        expires = System.currentTimeMillis() + ttlMillis;
+    }
+
+    public void clear() {
+        expires = 0L;
+        value = null;
     }
 }
