@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layoutAnimation xmlns:a="http://schemas.android.com/apk/res/android"
+        a:delay="80%"
+        a:animationOrder="normal"
+        a:animation="@anim/slide_right"/>

@@ -4,18 +4,25 @@
               a:layout_width="fill_parent"
               a:layout_height="fill_parent">
 
-    <ImageView
+    <LinearLayout
+            a:orientation="vertical"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
-            a:src="@drawable/subsonic_white"
-            a:layout_marginTop="20dip"/>
+            a:layoutAnimation="@anim/layout_slide_down">
+        <ImageView
+                a:layout_width="fill_parent"
+                a:layout_height="wrap_content"
+                a:src="@drawable/subsonic_white"
+                a:layout_marginTop="20dip"/>
+    </LinearLayout>
 
-    <LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
-                  a:orientation="vertical"
-                  a:gravity="center_vertical"
-                  a:layout_width="fill_parent"
-                  a:layout_height="fill_parent"
-                  a:layout_weight="1">
+    <LinearLayout
+            a:orientation="vertical"
+            a:gravity="center_vertical"
+            a:layout_width="fill_parent"
+            a:layout_height="fill_parent"
+            a:layout_weight="1"
+            a:layoutAnimation="@anim/layout_slide_right">
 
         <Button
                 a:id="@+id/main_browse"
