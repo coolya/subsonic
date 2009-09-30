@@ -56,7 +56,6 @@ ANDROID
 If not licensed, pop up dialog if less than 100 credits left.
 Mention 200 song limit and streaming in help.
 Use music index last modified + invalidate cache after a while.
-Use large album art when downloading.
 Cooler transition animation when switching to and from fullscren mode.
 SelectAlbumActivity doesn't work with recursive directories.
 Make sure proper error message if versions mismatch.
