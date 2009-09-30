@@ -208,44 +208,61 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             return;
         }
 
-        List<MusicDirectory.Entry> songs = getSelectedSongs();
-        if (isLicenseValidOrHasCredits(songs.size())) {
-            downloadService.download(songs);
-            startActivity(new Intent(this, DownloadQueueActivity.class));
-        }
+        final List<MusicDirectory.Entry> songs = getSelectedSongs();
+        Runnable onValid = new Runnable() {
+            @Override
+            public void run() {
+                downloadService.download(songs);
+                startActivity(new Intent(SelectAlbumActivity.this, DownloadQueueActivity.class));
+            }
+        };
+
+        checkLicenseAndCredits(onValid);
     }
 
-    private void addToPlaylist(boolean append) {
+    private void addToPlaylist(final boolean append) {
         if (streamService == null) {
             return;
         }
 
-        List<MusicDirectory.Entry> songs = getSelectedSongs();
-        if (isLicenseValidOrHasCredits(songs.size())) {
-            streamService.add(songs, append);
-            startActivity(new Intent(this, StreamQueueActivity.class));
-        }
-    }
-
-    private boolean isLicenseValidOrHasCredits(int creditsRequired) {
-        Util.decrementCredits(this, creditsRequired);
-
-        if (!licenseValid) {
-            if (Util.getCredits(this) == 0) {
-                showDonationDialog();
-                return false;
-            } else {
-                Util.toast(this, "Server not licensed. " + Util.getCredits(this) + " credits left.");
+        final List<MusicDirectory.Entry> songs = getSelectedSongs();
+        Runnable onValid = new Runnable() {
+            @Override
+            public void run() {
+                streamService.add(songs, append);
+                startActivity(new Intent(SelectAlbumActivity.this, StreamQueueActivity.class));
             }
-        }
-        return true;
+        };
+
+        checkLicenseAndCredits(onValid);
     }
 
-    private void showDonationDialog() {
+    private void checkLicenseAndCredits(Runnable onValid) {
+        List<MusicDirectory.Entry> songs = getSelectedSongs();
+        Util.decrementCredits(this, songs.size());
+
+        if (licenseValid) {
+            onValid.run();
+            return;
+        }
+
+        int credits = Util.getCredits(this);
+        if (credits == 0) {
+            showDonationDialog(credits, null);
+        } else if (credits < Constants.FREE_CREDITS / 2) {
+            showDonationDialog(credits, onValid);
+        } else {
+            Util.toast(this, "Server not licensed. " + credits + " credits left.");
+            onValid.run();
+        }
+    }
+
+    private void showDonationDialog(int credits, final Runnable onValid) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(android.R.drawable.ic_dialog_info);
-        builder.setTitle("No credits left");
-        builder.setMessage("Get unlimited downloads by donating to Subsonic. You decide the amount!");
+
+        builder.setTitle(credits == 0 ? "No credits left" : (credits + " credits left"));
+        builder.setMessage("Get unlimited downloads by donating to Subsonic.");
 
         builder.setPositiveButton("Now", new DialogInterface.OnClickListener() {
             @Override
@@ -258,6 +275,10 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
+                if (onValid != null) {
+                    onValid.run();
+                }
+
             }
         });
 
