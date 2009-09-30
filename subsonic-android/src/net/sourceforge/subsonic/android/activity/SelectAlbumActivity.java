@@ -160,7 +160,10 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     private void selectAll(boolean selected) {
         int count = entryList.getCount();
         for (int i = 0; i < count; i++) {
-            entryList.setItemChecked(i, selected);
+            MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(i);
+            if (!entry.isDirectory()) {
+                entryList.setItemChecked(i, selected);
+            }
         }
         enableButtons();
     }

@@ -55,14 +55,13 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
-SelectAlbumActivity doesn't work with recursive directories.
 Mention 200 song limit and streaming in help.
 Make sure proper error message if versions mismatch.
 Consolidate download queue and playlist.
+Cooler transition animation when switching to and from fullscren mode.
 
 Use logical server name rather than IP.
 Use music index last modified + invalidate cache after a while.
-Cooler transition animation when switching to and from fullscren mode.
 Use weak references in image cache?
 Use android:ellipsize="marquee"
 Make playlist bg b/w?
