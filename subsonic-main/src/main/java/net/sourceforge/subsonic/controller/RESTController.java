@@ -408,19 +408,16 @@ public class RESTController extends MultiActionController {
         String username = request.getParameter("u");
         String clientId = request.getParameter("c");
         List<Player> players = playerService.getPlayersForUserAndClientId(username, clientId);
+
+        // If not found, create it.
         if (players.isEmpty()) {
             Player player = new Player();
+            player.setIpAddress(request.getRemoteAddr());
             player.setUsername(username);
             player.setClientId(clientId);
             player.setName(clientId);
             player.setTechnology(PlayerTechnology.EXTERNAL_WITH_PLAYLIST);
             playerService.createPlayer(player);
-        }
-
-        // Save player in session context.
-        players = playerService.getPlayersForUserAndClientId(username, clientId);
-        if (!players.isEmpty()) {
-            request.getSession().setAttribute("player", players.get(0).getId());
         }
     }
 

@@ -84,6 +84,15 @@ public class PlayerService {
             player = getPlayerById(getPlayerIdFromCookie(request, username));
         }
 
+        // Find by REST client ID.
+        String clientId = request.getParameter("c");
+        if (clientId != null) {
+            List<Player> players = getPlayersForUserAndClientId(username, clientId);
+            if (!players.isEmpty()) {
+                player = players.get(0);
+            }
+        }
+
         // Look for player with same IP address and user name.
         if (player == null) {
             player = getPlayerByIpAddressAndUsername(request.getRemoteAddr(), username);
