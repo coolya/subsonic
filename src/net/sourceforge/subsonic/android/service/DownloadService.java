@@ -395,7 +395,7 @@ public class DownloadService extends Service {
                 file = createAlbumArtFile(song);
 
                 MusicService musicService = MusicServiceFactory.getMusicService();
-                byte[] bytes = musicService.getCoverArt(DownloadService.this, song.getCoverArt(), 200, null);
+                byte[] bytes = musicService.getCoverArt(DownloadService.this, song.getCoverArt(), 320, null);
                 in = new ByteArrayInputStream(bytes);
                 out = new FileOutputStream(file);
                 Util.copy(in, out);
