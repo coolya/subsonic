@@ -2,6 +2,7 @@ TODO IN 3.8
 --------------
 In licence email, explain how to install it.
 
+Add button for donating.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
@@ -54,14 +55,14 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
-If not licensed, pop up dialog if less than 100 credits left.
-Mention 200 song limit and streaming in help.
-Use music index last modified + invalidate cache after a while.
-Cooler transition animation when switching to and from fullscren mode.
 SelectAlbumActivity doesn't work with recursive directories.
+Mention 200 song limit and streaming in help.
 Make sure proper error message if versions mismatch.
 Consolidate download queue and playlist.
 
+Use logical server name rather than IP.
+Use music index last modified + invalidate cache after a while.
+Cooler transition animation when switching to and from fullscren mode.
 Use weak references in image cache?
 Use android:ellipsize="marquee"
 Make playlist bg b/w?
