@@ -53,16 +53,16 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
-Make playlist bg b/w.
 If not licensed, pop up dialog if less than 100 credits left.
-Mention 200 song limit in help.
+Mention 200 song limit and streaming in help.
+Use music index last modified + invalidate cache after a while.
 SelectAlbumActivity doesn't work with recursive directories.
 Make sure proper error message if versions mismatch.
-Use android:ellipsize="marquee"
-Use weak references in image cache.
 Consolidate download queue and playlist.
 
-Use music index last modified + invalidate cache after a while. Cache to disk?
+Use weak references in image cache?
+Use android:ellipsize="marquee"
+Make playlist bg b/w?
 Change main menu to 1) My music 2) My playlists 3) Search.  + Now playing & Now downloading (smaller)
 Indicate songs that are already downloaded.
 Change colors of selected songs.

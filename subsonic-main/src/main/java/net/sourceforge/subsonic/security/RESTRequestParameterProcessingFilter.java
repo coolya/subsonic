@@ -88,7 +88,6 @@ public class RESTRequestParameterProcessingFilter implements Filter {
                 UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
                 Authentication authResult = authenticationManager.authenticate(authRequest);
                 SecurityContextHolder.getContext().setAuthentication(authResult);
-                LOG.debug("Successfully authenticated user " + username);
             } catch (AuthenticationException x) {
                 errorCode = RESTController.ErrorCode.NOT_AUTHENTICATED;
             }
