@@ -40,6 +40,7 @@ New: Jukebox now support WAV format (including FLAC > WAV transcoding).
 New: Avoid problems when upgrading stand-alone version.
 New: Updated Dutch translation, courtesy of Sander van der Grind and Jeremy Terpstra.
 New: Improved German translation, courtesy of 3R3.
+New: Improved French translation, courtesy of Raphaël Boulcourt.
 New: Updated Slovenian translation, courtesy of Andrej Žižmond
 New: Added Finnish translation, courtesy of Reijo Jäärni
 New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now playing".
