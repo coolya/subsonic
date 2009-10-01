@@ -43,13 +43,13 @@ public final class Constants {
     public static final String PREFERENCES_KEY_SERVER_URL = "serverUrl";
     public static final String PREFERENCES_KEY_USERNAME = "username";
     public static final String PREFERENCES_KEY_PASSWORD = "password";
-    public static final String PREFERENCES_KEY_CREDITS = "credits";
+    public static final String PREFERENCES_KEY_INSTALL_TIME = "installTime";
 
     // Name of the preferences file.
     public static final String PREFERENCES_FILE_NAME = "net.sourceforge.subsonic.android_preferences";
 
-    // Free download credits for non-licensed servers.
-    public static final int FREE_CREDITS = 200;
+    // Number of free trial days for non-licensed servers.
+    public static final int FREE_TRIAL_DAYS = 30;
 
     // Socket timeouts
     public static final int SOCKET_CONNECT_TIMEOUT = 10000;

@@ -50,6 +50,7 @@ public class CachedMusicService implements MusicService {
 
     @Override
     public void ping(Context context, ProgressListener progressListener) throws Exception {
+        checkSettingsChanged(context);
         musicService.ping(context, progressListener);
     }
 

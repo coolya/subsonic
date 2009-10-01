@@ -60,6 +60,7 @@ Make sure proper error message if versions mismatch.
 Consolidate download queue and playlist.
 Cooler transition animation when switching to and from fullscren mode.
 
+Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
 Use logical server name rather than IP.
 Use music index last modified + invalidate cache after a while.
 Use weak references in image cache?
