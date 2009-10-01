@@ -66,18 +66,21 @@ public final class Util {
         return builder.toString();
     }
 
-    public static int getCredits(Context context) {
+    public static int getRemainingTrialDays(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
-        return prefs.getInt(Constants.PREFERENCES_KEY_CREDITS, Constants.FREE_CREDITS);
-    }
+        long installTime = prefs.getLong(Constants.PREFERENCES_KEY_INSTALL_TIME, 0L);
 
-    public static void decrementCredits(Context context, int value) {
-        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
-        int credits = Math.max(0, getCredits(context) - value);
+        if (installTime == 0L) {
+            installTime = System.currentTimeMillis();
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putLong(Constants.PREFERENCES_KEY_INSTALL_TIME, installTime);
+            editor.commit();
+        }
 
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(Constants.PREFERENCES_KEY_CREDITS, credits);
-        editor.commit();
+        long now = System.currentTimeMillis();
+        long millisPerDay = 24L * 60L * 60L * 1000L;
+        int daysSinceInstall = (int) ((now - installTime) / millisPerDay);
+        return Math.max(0, Constants.FREE_TRIAL_DAYS - daysSinceInstall);
     }
 
     /**

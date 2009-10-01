@@ -220,7 +220,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             }
         };
 
-        checkLicenseAndCredits(onValid);
+        checkLicenseAndTrialPeriod(onValid);
     }
 
     private void addToPlaylist(final boolean append) {
@@ -237,34 +237,39 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             }
         };
 
-        checkLicenseAndCredits(onValid);
+        checkLicenseAndTrialPeriod(onValid);
     }
 
-    private void checkLicenseAndCredits(Runnable onValid) {
-        List<MusicDirectory.Entry> songs = getSelectedSongs();
-        Util.decrementCredits(this, songs.size());
-
+    private void checkLicenseAndTrialPeriod(Runnable onValid) {
         if (licenseValid) {
             onValid.run();
             return;
         }
 
-        int credits = Util.getCredits(this);
-        if (credits == 0) {
-            showDonationDialog(credits, null);
-        } else if (credits < Constants.FREE_CREDITS / 2) {
-            showDonationDialog(credits, onValid);
+        int trialDaysLeft = Util.getRemainingTrialDays(this);
+        Log.i(TAG, trialDaysLeft + " trial days left.");
+
+        if (trialDaysLeft == 0) {
+            showDonationDialog(trialDaysLeft, null);
+        } else if (trialDaysLeft < Constants.FREE_TRIAL_DAYS / 2) {
+            showDonationDialog(trialDaysLeft, onValid);
         } else {
-            Util.toast(this, "Server not licensed. " + credits + " credits left.");
+            Util.toast(this, "Server not licensed. " + trialDaysLeft + " trial days left.");
             onValid.run();
         }
     }
 
-    private void showDonationDialog(int credits, final Runnable onValid) {
+    private void showDonationDialog(int trialDaysLeft, final Runnable onValid) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(android.R.drawable.ic_dialog_info);
 
-        builder.setTitle(credits == 0 ? "No credits left" : (credits + " credits left"));
+        if (trialDaysLeft == 0) {
+            builder.setTitle("Trial period is over");
+        } else if (trialDaysLeft == 1) {
+            builder.setTitle("One day left of trial period");
+        } else {
+            builder.setTitle((trialDaysLeft + " days left of trial period"));
+        }
         builder.setMessage("Get unlimited downloads by donating to Subsonic.");
 
         builder.setPositiveButton("Now", new DialogInterface.OnClickListener() {
@@ -281,7 +286,6 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 if (onValid != null) {
                     onValid.run();
                 }
-
             }
         });
 
