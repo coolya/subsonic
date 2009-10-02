@@ -55,11 +55,11 @@ Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
-Mention 200 song limit and streaming in help.
 Make sure proper error message if versions mismatch.
 Consolidate download queue and playlist.
 Cooler transition animation when switching to and from fullscren mode.
 
+Use euros rather than dollars.
 Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
 Use logical server name rather than IP.
 Use music index last modified + invalidate cache after a while.

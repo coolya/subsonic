@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
-              a:orientation="vertical"
-              a:layout_width="fill_parent"
-              a:layout_height="fill_parent">
+<RelativeLayout xmlns:a="http://schemas.android.com/apk/res/android"
+                a:layout_width="fill_parent"
+                a:layout_height="fill_parent">
 
     <TextView
+            a:id="@+id/help_logo"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:drawableLeft="@drawable/launch"
@@ -13,23 +13,28 @@
             a:textAppearance="?android:attr/textAppearanceLarge"
             a:text="Welcome to Subsonic!"/>
 
-    <TextView
-            a:id="@+id/help_text"
+    <Button a:id="@+id/help_close"
+            a:text="Close"
+            a:layout_width="wrap_content"
+            a:layout_height="wrap_content"
+            a:layout_centerHorizontal="true"
+            a:layout_alignParentBottom="true"
+            a:paddingLeft="30dip"
+            a:paddingRight="30dip"/>
+
+    <ScrollView
+            a:id="@+id/help_text_scroll"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
-            a:padding="6dip"
-            />
+            a:layout_below="@id/help_logo"
+            a:layout_above="@id/help_close"
+            >
 
-    <LinearLayout a:orientation="horizontal"
-                  a:layout_width="fill_parent"
-                  a:layout_height="wrap_content"
-                  a:gravity="center_horizontal"
-                  a:paddingTop="10dip">
-
-        <Button a:id="@+id/help_close"
-                a:text="Close"
+        <TextView
+                a:id="@+id/help_text"
                 a:layout_width="fill_parent"
-                a:layout_height="fill_parent"/>
+                a:layout_height="wrap_content"
+                a:padding="6dip"/>
+    </ScrollView>
 
-    </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
