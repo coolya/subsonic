@@ -17,70 +17,93 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="3.8.beta1"><h2 class="div">Subsonic 3.8.beta1 - Oct 02, 2009</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>Implemented Subsonic client for Android phones.</li>
+    <li><span class="bugid">New: </span>Added chat.</li>
+    <li><span class="bugid">New: </span>Added REST API for third party applications.</li>
+    <li><span class="bugid">New: </span>Support playlist repeat in web player.</li>
+    <li><span class="bugid">New: </span>Jukebox now support WAV format (including FLAC > WAV transcoding).</li>
+    <li><span class="bugid">New: </span>Updated to Last.fm submission protocol version 1.2.1, with support for "Now playing".</li>
+    <li><span class="bugid">New: </span>Updated Dutch translation, courtesy of Sander van der Grind and Jeremy Terpstra.</li>
+    <li><span class="bugid">New: </span>Updated Slovenian translation, courtesy of Andrej &#381;i&#382;mond</li>
+    <li><span class="bugid">New: </span>Improved French translation, courtesy of Rapha&euml;l Boulcourt.</li>
+    <li><span class="bugid">New: </span>Improved German translation, courtesy of 3R3.</li>
+    <li><span class="bugid">New: </span>Added Finnish translation, courtesy of Reijo J&auml;&auml;rni</li>
+    <li><span class="bugid">Bugfix: </span>Subsonic server doesn't require an internet connection during startup.</li>
+    <li><span class="bugid">Bugfix: </span>Avoid problems when upgrading stand-alone version.</li>
+    <li><span class="bugid">Bugfix: </span>Repeat now works properly in jukebox mode.</li>
+    <li><span class="bugid">Bugfix: </span>Looks nicer in Chrome.</li>
+    <li><span class="bugid">Bugfix: </span>Usernames can now contain white spaces and international characters.</li>
+    <li><span class="bugid">Bugfix: </span>Allow alternate date format in Podcast episodes.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed broken Discogs image search.</li>
+    <li><span class="bugid">Security: </span>IP addresses are no longer displayed in the log or the status view.</li>
+</ul>
+
 <a name="3.7"><h2 class="div">Subsonic 3.7 - Jun 22, 2009</h2></a>
 <ul>
-<li><span class="bugid">New:</span> Default search option is now to search both title, album and artist.</li>
-<li><span class="bugid">New:</span> Customizable default music, playlist and podcast folders in support of Amahi Home Server.</li>
-<li><span class="bugid">New:</span> Added configurable message in login page.</li>
-<li><span class="bugid">Bugfix:</span> Fixed broken WAR version.</li>
-<li><span class="bugid">Bugfix:</span> Fixed broken tag editor.</li>
-<li><span class="bugid">Bugfix:</span> Fixed broken upload progress bar.</li>
-<li><span class="bugid">Bugfix:</span> Automatically start web player when clicking play on artist, album or song.</li>
-<li><span class="bugid">Bugfix:</span> Fixed problem with "Random album" page being initially empty.</li>
-<li><span class="bugid">Bugfix:</span> Added some padding above player toolbar.</li>
-<li><span class="bugid">Bugfix:</span> Playlist combobox option disabling broken in IE8.</li>
-<li><span class="bugid">Security:</span> Don't show full file paths in "Status" and "Help" pages.</li>
+    <li><span class="bugid">New:</span> Default search option is now to search both title, album and artist.</li>
+    <li><span class="bugid">New:</span> Customizable default music, playlist and podcast folders in support of Amahi Home Server.</li>
+    <li><span class="bugid">New:</span> Added configurable message in login page.</li>
+    <li><span class="bugid">Bugfix:</span> Fixed broken WAR version.</li>
+    <li><span class="bugid">Bugfix:</span> Fixed broken tag editor.</li>
+    <li><span class="bugid">Bugfix:</span> Fixed broken upload progress bar.</li>
+    <li><span class="bugid">Bugfix:</span> Automatically start web player when clicking play on artist, album or song.</li>
+    <li><span class="bugid">Bugfix:</span> Fixed problem with "Random album" page being initially empty.</li>
+    <li><span class="bugid">Bugfix:</span> Added some padding above player toolbar.</li>
+    <li><span class="bugid">Bugfix:</span> Playlist combobox option disabling broken in IE8.</li>
+    <li><span class="bugid">Security:</span> Don't show full file paths in "Status" and "Help" pages.</li>
 </ul>
 
 <a name="3.7.beta1"><h2 class="div">Subsonic 3.7.beta1 - May 08, 2009</h2></a>
 <ul>
-<li><span class="bugid">New:</span> Jukebox support. Plays music directly on the server's audio hardware.</li>
-<li><span class="bugid">New:</span> Improved search feature. (Paging, album/artist search fields.)</li>
-<li><span class="bugid">New:</span> Added buttons for next/previous track in web player.</li>
-<li><span class="bugid">New:</span> Support for artist-level comments.</li>
-<li><span class="bugid">New:</span> Added new authorization role "User is allowed to change settings and password" in support for guest users.</li>
-<li><span class="bugid">New:</span> Added theme "Cool and Clean", courtesy of Dan Eriksen.</li>
-<li><span class="bugid">New:</span> Added theme "Midnight Fun", courtesy of Don Pearson.</li>
-<li><span class="bugid">New:</span> Added Slovenian translation, courtesy of Andrej &#381;i&#382;mond.</li>
-<li><span class="bugid">New:</span> Added Danish translation, courtesy of Morten Hartvich</li>
-<li><span class="bugid">New:</span> Added Japanese translation, courtesy of Takahiro Suzuki.</li>
-<li><span class="bugid">New:</span> Updated Norwegian translation, courtesy of jigsaw.</li>
-<li><span class="bugid">New:</span> Updated Swedish translation, courtesy of Fredrik Leufkens.</li>
-<li><span class="bugid">New:</span> Show online help as balloon tooltip.</li>
-<li><span class="bugid">New:</span> Player is always visible in playlist, even when scrolling.</li>
-<li><span class="bugid">New:</span> Removed frame borders.</li>
-<li><span class="bugid">New:</span> Don't show player username or IP address in playlist.</li>
-<li><span class="bugid">New:</span> Automatically trim text fields when entering email address and license key.</li>
-<li><span class="bugid">New:</span> Added advanced option to bind Subsonic to a particular IP address. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1740 ">More</a>)</li>
-<li><span class="bugid">New:</span> Improved subsonic.sh startup script.</li>
-<li><span class="bugid">New:</span> Automatically add Windows Firewall exceptions during install. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=5188">More</a>)</li>
-<li><span class="bugid">Performance:</span> Improved browser and server caching of artist list. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1558">More</a>)</li>
-<li><span class="bugid">Performance:</span> Only poll for service status if Subsonic Control Panel is opened. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1612">More</a>)</li>
-<li><span class="bugid">Bugfix:</span> Web player now displays correct duration for transcoded tracks.</li>
-<li><span class="bugid">Bugfix:</span> Sticky artist index now works in IE.</li>
-<li><span class="bugid">Bugfix:</span> Discogs image retrieval now works again.</li>
-<li><span class="bugid">Bugfix:</span> Now works behind SSL proxy. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301">More</a>)</li>
-<li><span class="bugid">Bugfix:</span> Missing album art for artists in multiple folders. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1626">More</a>)</li>
-<li><span class="bugid">Bugfix:</span> Wrong player selected if different users access Subsonic from the same browser instance.</li>
-<li><span class="bugid">Bugfix:</span> Wrong repeat state displayed in playlist.</li>
-<li><span class="bugid">Bugfix:</span> Stop web player when playlist is cleared.</li>
-<li><span class="bugid">Bugfix:</span> Lyrics lookup working again.</li>
-<li><span class="bugid">Bugfix:</span> Support quotes in Podcast names. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1734">More</a>)</li>
-<li><span class="bugid">Bugfix:</span> Fixed IE layout problem in top frame.</li>
+    <li><span class="bugid">New:</span> Jukebox support. Plays music directly on the server's audio hardware.</li>
+    <li><span class="bugid">New:</span> Improved search feature. (Paging, album/artist search fields.)</li>
+    <li><span class="bugid">New:</span> Added buttons for next/previous track in web player.</li>
+    <li><span class="bugid">New:</span> Support for artist-level comments.</li>
+    <li><span class="bugid">New:</span> Added new authorization role "User is allowed to change settings and password" in support for guest users.</li>
+    <li><span class="bugid">New:</span> Added theme "Cool and Clean", courtesy of Dan Eriksen.</li>
+    <li><span class="bugid">New:</span> Added theme "Midnight Fun", courtesy of Don Pearson.</li>
+    <li><span class="bugid">New:</span> Added Slovenian translation, courtesy of Andrej &#381;i&#382;mond.</li>
+    <li><span class="bugid">New:</span> Added Danish translation, courtesy of Morten Hartvich</li>
+    <li><span class="bugid">New:</span> Added Japanese translation, courtesy of Takahiro Suzuki.</li>
+    <li><span class="bugid">New:</span> Updated Norwegian translation, courtesy of jigsaw.</li>
+    <li><span class="bugid">New:</span> Updated Swedish translation, courtesy of Fredrik Leufkens.</li>
+    <li><span class="bugid">New:</span> Show online help as balloon tooltip.</li>
+    <li><span class="bugid">New:</span> Player is always visible in playlist, even when scrolling.</li>
+    <li><span class="bugid">New:</span> Removed frame borders.</li>
+    <li><span class="bugid">New:</span> Don't show player username or IP address in playlist.</li>
+    <li><span class="bugid">New:</span> Automatically trim text fields when entering email address and license key.</li>
+    <li><span class="bugid">New:</span> Added advanced option to bind Subsonic to a particular IP address. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1740 ">More</a>)</li>
+    <li><span class="bugid">New:</span> Improved subsonic.sh startup script.</li>
+    <li><span class="bugid">New:</span> Automatically add Windows Firewall exceptions during install. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=5188">More</a>)</li>
+    <li><span class="bugid">Performance:</span> Improved browser and server caching of artist list. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1558">More</a>)</li>
+    <li><span class="bugid">Performance:</span> Only poll for service status if Subsonic Control Panel is opened. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1612">More</a>)</li>
+    <li><span class="bugid">Bugfix:</span> Web player now displays correct duration for transcoded tracks.</li>
+    <li><span class="bugid">Bugfix:</span> Sticky artist index now works in IE.</li>
+    <li><span class="bugid">Bugfix:</span> Discogs image retrieval now works again.</li>
+    <li><span class="bugid">Bugfix:</span> Now works behind SSL proxy. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301">More</a>)</li>
+    <li><span class="bugid">Bugfix:</span> Missing album art for artists in multiple folders. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1626">More</a>)</li>
+    <li><span class="bugid">Bugfix:</span> Wrong player selected if different users access Subsonic from the same browser instance.</li>
+    <li><span class="bugid">Bugfix:</span> Wrong repeat state displayed in playlist.</li>
+    <li><span class="bugid">Bugfix:</span> Stop web player when playlist is cleared.</li>
+    <li><span class="bugid">Bugfix:</span> Lyrics lookup working again.</li>
+    <li><span class="bugid">Bugfix:</span> Support quotes in Podcast names. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1734">More</a>)</li>
+    <li><span class="bugid">Bugfix:</span> Fixed IE layout problem in top frame.</li>
 </ul>
 
 <a name="3.6"><h2 class="div">Subsonic 3.6 - Feb 01, 2009</h2></a>
 <ul>
-<li><span class="bugid">Security:</span> For improved security, only transcoders installed in SUBSONIC_HOME/transcode are allowed to be executed. This includes LAME downsampling.</li>
-<li><span class="bugid">New:</span> Added Swedish translation by J&ouml;rgen Sj&ouml;berg.</li>
-<li><span class="bugid">New:</span> Added two new locales, "English (United States)" and "English (United Kingdom)". The only difference currently is the date format.</li>
-<li><span class="bugid">New:</span> Change tray icon if Subsonic server isn't running.</li>
-<li><span class="bugid">Bugfix:</span> Make new Flash player work if Subsonic is behind proxy.</li>
-<li><span class="bugid">Bugfix:</span> Fixed problem where server in some cases came to a state where streaming is refused.</li>
-<li><span class="bugid">Bugfix:</span> Support download and streaming of files larger than 2 GB.</li>
-<li><span class="bugid">Bugfix:</span> Use UTF-8 when generating m3u playlist.</li>
-<li><span class="bugid">Bugfix:</span> Main frame now correctly switches to the currently playing album.</li>
-<li><span class="bugid">Bugfix:</span> Show currently playing icon for all player types.</li>
+    <li><span class="bugid">Security:</span> For improved security, only transcoders installed in SUBSONIC_HOME/transcode are allowed to be executed. This includes LAME downsampling.</li>
+    <li><span class="bugid">New:</span> Added Swedish translation by J&ouml;rgen Sj&ouml;berg.</li>
+    <li><span class="bugid">New:</span> Added two new locales, "English (United States)" and "English (United Kingdom)". The only difference currently is the date format.</li>
+    <li><span class="bugid">New:</span> Change tray icon if Subsonic server isn't running.</li>
+    <li><span class="bugid">Bugfix:</span> Make new Flash player work if Subsonic is behind proxy.</li>
+    <li><span class="bugid">Bugfix:</span> Fixed problem where server in some cases came to a state where streaming is refused.</li>
+    <li><span class="bugid">Bugfix:</span> Support download and streaming of files larger than 2 GB.</li>
+    <li><span class="bugid">Bugfix:</span> Use UTF-8 when generating m3u playlist.</li>
+    <li><span class="bugid">Bugfix:</span> Main frame now correctly switches to the currently playing album.</li>
+    <li><span class="bugid">Bugfix:</span> Show currently playing icon for all player types.</li>
 </ul>
 
 <a name="3.6.beta2"><h2 class="div">Subsonic 3.6.beta2 - Jan 13, 2009</h2></a>
@@ -596,6 +619,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#3.8.beta1">Subsonic 3.8.beta1</a></li>
             <li><a href="#3.7">Subsonic 3.7</a></li>
             <li><a href="#3.7.beta1">Subsonic 3.7.beta1</a></li>
             <li><a href="#3.6">Subsonic 3.6</a></li>

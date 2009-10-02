@@ -34,24 +34,6 @@ Automatically enable/disable "Notify me about new versions" option when new user
 
 DONE IN 3.8
 ------------
-New: Added Android client.
-New: Added chat.
-New: Support playlist repeat in web player.
-New: Jukebox now support WAV format (including FLAC > WAV transcoding).
-New: Avoid problems when upgrading stand-alone version.
-New: Updated Dutch translation, courtesy of Sander van der Grind and Jeremy Terpstra.
-New: Improved German translation, courtesy of 3R3.
-New: Improved French translation, courtesy of Raphaël Boulcourt.
-New: Updated Slovenian translation, courtesy of Andrej Žižmond
-New: Added Finnish translation, courtesy of Reijo Jäärni
-New: Updated to Last.fm submission protocol version 1.2.1, with support for "Now playing".
-Security: IP addresses are no longer displayed in the log or the status view.
-Bugfix: Repeat now works properly in jukebox mode.
-Bugfix: Looks nicer in Chrome.
-Bugfix: Usernames can now contain white spaces and international characters.
-Bugfix: Allow alternate date format in Podcast episodes.
-Bugfix: Fixed broken Discogs image search.
-Bugfix: Subsonic server doesn't require an internet connection during startup.
 
 ANDROID
 -------
