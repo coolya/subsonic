@@ -73,7 +73,7 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
 
         URL url = new URL(urlString.toString());
         if (progressListener != null) {
-            progressListener.updateProgress("Contacting server " + url.getHost());
+            progressListener.updateProgress("Contacting server.");
         }
 
         return openURL(url);
