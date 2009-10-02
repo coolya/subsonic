@@ -82,9 +82,6 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         pauseButton = (ImageView) findViewById(R.id.stream_queue_pause);
         startButton = (ImageView) findViewById(R.id.stream_queue_start);
 
-        flipper.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
-        flipper.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-
         currentTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,6 +135,15 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         int newDisplayedChild = fullscreen && !empty ? 0 : 1;
 
         if (flipper.getDisplayedChild() != newDisplayedChild) {
+
+            if (newDisplayedChild == 0) {
+                flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_in));
+                flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_out));
+            } else {
+                flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_up_in));
+                flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_up_out));
+            }
+
             flipper.setDisplayedChild(newDisplayedChild);
         }
     }
