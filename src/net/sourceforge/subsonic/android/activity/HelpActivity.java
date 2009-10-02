@@ -1,10 +1,9 @@
 package net.sourceforge.subsonic.android.activity;
 
 import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Button;
 import android.view.View;
-import android.text.util.Linkify;
+import android.widget.Button;
+import android.widget.TextView;
 import net.sourceforge.subsonic.android.R;
 
 public class HelpActivity extends OptionsMenuActivity {
@@ -17,10 +16,10 @@ public class HelpActivity extends OptionsMenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.help);
         TextView helpTextView = (TextView) findViewById(R.id.help_text);
-        helpTextView.setAutoLinkMask(Linkify.WEB_URLS);
+//        helpTextView.setAutoLinkMask(Linkify.WEB_URLS);
 
-        helpTextView.setText(
-                "With Subsonic you can easily stream or download music from your home computer to your Android phone.\n" +
+        helpTextView.setText("With Subsonic you can easily stream or download music from your home computer to your Android phone " +
+                "(and do lots of other cool stuff too).\n" +
                 "\n" +
                 "To install the Subsonic server software on your computer, please visit http://subsonic.sf.net. It's available for " +
                 "Windows, Mac,Linux and Unix.\n" +
