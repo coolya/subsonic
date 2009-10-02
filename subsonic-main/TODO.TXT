@@ -364,9 +364,12 @@ mvn assembly:assembly
 Deploy
 Check that correct local version is displayed.
 Commit
-Upload files to SourceForge (in separate shell).
-  rsync -avP -e ssh subsonic-assembly/target/subsonic* subsonic-installer/target/subsonic*  sindre_mehus@frs.sourceforge.net:uploads/
-Create file release at SourceForge.
+Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
+  rsync -avP -e ssh subsonic-assembly/target/subsonic* subsonic-installer/target/subsonic*  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/3.8.beta1/
+
+Modify FRS properties
+  https://sourceforge.net/project/admin/explorer.php?group_id=126265
+
 Upload site:
   rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
 
@@ -376,7 +379,12 @@ Post message on forum.
 Update version number in pom.xml etc.
 Take backup of forum.
 Upgrade gosubsonic.com
-  scp subsonic-assembly/target/subsonic-*-standalone.tar.gz sindremehus@gosubsonic.com:subsonic/standalone
+  Stop Tomcat: https://gosubsonic.com:9999/tomcat/config.do
+  rm -rf /usr/java/tomcat-5.5/webapps/demo.war
+  rm -rf /usr/java/tomcat-5.5/webapps/demo
+  rm -rf /usr/java/tomcat-5.5/work
+  scp subsonic-main/target/subsonic.war sindremehus@gosubsonic.com:/usr/java/tomcat-5.5/webapps/demo.war
+  Start Tomcat: https://gosubsonic.com:9999/tomcat/config.do
 
 HOW TO RELEASE TO ANDROID MARKET
 ================================
