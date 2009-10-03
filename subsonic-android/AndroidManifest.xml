@@ -2,10 +2,12 @@
 <manifest xmlns:a="http://schemas.android.com/apk/res/android"
           package="net.sourceforge.subsonic.android"
           a:versionCode="1"
-          a:versionName="1.0">
+          a:versionName="1.0.beta1">
 
     <uses-permission a:name="android.permission.INTERNET"/>
     <uses-permission a:name="android.permission.READ_PHONE_STATE"/>
+
+    <uses-sdk a:minSdkVersion="3"/>
 
     <application a:label="Subsonic" a:icon="@drawable/launch">
 

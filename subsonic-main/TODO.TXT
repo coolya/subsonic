@@ -37,10 +37,18 @@ DONE IN 3.8
 
 ANDROID
 -------
-Make sure proper error message if versions mismatch.
-Consolidate download queue and playlist.
-
+Update web pages and publish.
+Make video.
+Post on forum, freshmeat, facebook.
+Use two different error codes on version mismatch.
 Use euros rather than dollars.
+Change description in Market.
+Downsample demo music to 128 kbit
+Document error codes.
+Append zero to all error codes.
+Make sure proper error message if versions mismatch.
+
+Show version number.
 Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
 Use logical server name rather than IP.
 Use music index last modified + invalidate cache after a while.
@@ -388,9 +396,10 @@ Upgrade gosubsonic.com
 
 HOW TO RELEASE TO ANDROID MARKET
 ================================
+Update versionCode and versionName in AndroidManifest.xml
 cd subsonic-android
 ant release
-keytool -genkey -v -keystore subsonic.keystore -alias subsonic -keyalg RSA -validity 100000 -dname "CN=Sindre Mehus, O=Active Objects"
+### keytool -genkey -v -keystore subsonic.keystore -alias subsonic -keyalg RSA -validity 100000 -dname "CN=Active Objects"
 jarsigner -verbose -keystore subsonic.keystore -signedjar bin/SubsonicActivity-signed.apk bin/SubsonicActivity-unsigned.apk subsonic
 
 
