@@ -437,3 +437,7 @@ NETGEAR ReadyNAS, Buffalo Linkstation, Linksys NSLU2 and any device running Free
 rsync -avP -e ssh music.demo/ sindremehus@www.gosubsonic.com:music
 
 -Dsubsonic.war=out\exploded\subsonic-mainWeb -Dsubsonic.createLinkFile=true -Dsubsonic.windowsInstall=true -Dsubsonic.port=8080 -Dsubsonic.contextPath=/
+
+Stream or download music from your home computer to your Android phone.
+
+This is a beta version.

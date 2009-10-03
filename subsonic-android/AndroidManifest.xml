@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:a="http://schemas.android.com/apk/res/android"
-          package="net.sourceforge.subsonic.android"
+          package="net.sourceforge.subsonic.androidapp"
           a:versionCode="1"
           a:versionName="1.0.beta1">
 
