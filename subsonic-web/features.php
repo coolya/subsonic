@@ -110,10 +110,11 @@
             src="inc/img/top.gif" alt="Back To Top" height="16" width="16"/></a></div>
     <div class="content">
         <div class="screenshot">
-            <a href="inc/img/features/wap.png"><img src="inc/img/features/wap-small.png" alt="" style="padding-right:30px"/></a>
+            <a href="inc/img/screenshots/screen13.png"><img src="inc/img/screenshots/thumb13.png" alt="" style="padding-left:10px"/></a>
         </div>
         <div class="description">
             <ul class="list">
+                <li>Stream or download music directly to your Android mobile phone, using the <b>Subsonic Android application</b>.</li>
                 <li>Control Subsonic from any mobile phone or PDA, using the WAP interface.</li>
                 <li>Supports multiple simultaneous players. Manage any player from any location.</li>
                 <li>Upload and download files to/from Subsonic, with automatic zipping and unzipping.</li>
@@ -178,7 +179,6 @@
                 <li>Download Podcasts with the integrated Podcast receiver.</li>
                 <li>Manage your internet TV and radio stations.</li>
                 <li>Play music directly on the server's audio hardware using the <b>jukebox</b> mode.</li>
-                <li>Stream directly to your mobile phone, using the <a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1288"><b>Subsonic Mobile Player</b></a>.</li>
             </ul>
         </div>
     </div>

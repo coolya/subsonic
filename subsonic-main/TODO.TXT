@@ -1,6 +1,7 @@
 TODO IN 3.8
 --------------
 In licence email, explain how to install it.
+Check out www.element5.com for payment.  SWReg
 
 Add button for donating.
 Add FLAC>WAV transcoding
@@ -42,7 +43,6 @@ Make video.
 Post on forum, freshmeat, facebook.
 Use two different error codes on version mismatch.
 Use euros rather than dollars.
-Change description in Market.
 Downsample demo music to 128 kbit
 Document error codes.
 Append zero to all error codes.
@@ -438,6 +438,3 @@ rsync -avP -e ssh music.demo/ sindremehus@www.gosubsonic.com:music
 
 -Dsubsonic.war=out\exploded\subsonic-mainWeb -Dsubsonic.createLinkFile=true -Dsubsonic.windowsInstall=true -Dsubsonic.port=8080 -Dsubsonic.contextPath=/
 
-Stream or download music from your home computer to your Android phone.
-
-This is a beta version.

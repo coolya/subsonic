@@ -21,7 +21,7 @@
         <ul class="stars column-left">
             <li>Listen to your music wherever you are. Share your collection with family and friends.</li>
             <li>Browse and manage your music collection with the user-friendly web interface.</li>
-            <li>Stream music to your mobile phone, using the included <a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1288">Subsonic Mobile Player</a>.</li>
+            <li>Stream music to your Android phone, using the Subsonic Android application.</li>
             <li>Convert and stream lossless music on the fly.</li>
         </ul>
         <ul class="stars column-right">
@@ -80,12 +80,28 @@
         </div>
     </div>
 
+    <div class="featureitem">
+        <div class="heading">About</div>
+        <div class="content">
+            <div class="wide-content">
+                <p>
+                    <img src="inc/img/sindre.jpeg" alt="Sindre Mehus" hspace="10" vspace="10" style="float:right"/>
+                    Subsonic is developed by <a href="mailto:sindre@activeobjects.no">Sindre Mehus</a>.
+                    I live in Oslo, Norway and work as a Java software consultant.
+                </p>
+                <p>
+                    If you have any questions, comments or suggestions for improvements, please visit the <a href="forum.php">Subsonic Forum</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div id="side-col">
     <?php include("download-subsonic.php"); ?>
+    <?php include("android.php"); ?>
     <?php include("quotes.php"); ?>
-    <?php include("about.php"); ?>
     <?php include("donate.php"); ?>
     <div class="bottomspace">
         <a href="http://sourceforge.net/projects/subsonic/"><img src="http://sourceforge.net/sflogo.php?group_id=126265&type=4" alt="SourceForge.net" class="img-center"/></a>
