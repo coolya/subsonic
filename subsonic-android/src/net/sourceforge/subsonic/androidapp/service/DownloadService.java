@@ -18,34 +18,14 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.ByteArrayInputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.atomic.AtomicReference;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.provider.MediaStore;
@@ -59,10 +39,28 @@ import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
+
 /**
  * @author Sindre Mehus
  */
-public class DownloadService extends Service {
+public class DownloadService extends ServiceBase {
 
     private static final String TAG = DownloadService.class.getSimpleName();
     private static final Uri ALBUM_ART_URI = Uri.parse("content://media/external/audio/albumart");
@@ -74,13 +72,12 @@ public class DownloadService extends Service {
     private final LinkedBlockingQueue<MusicDirectory.Entry> queue = new LinkedBlockingQueue<MusicDirectory.Entry>();
     private final AtomicReference<MusicDirectory.Entry> currentDownload = new AtomicReference<MusicDirectory.Entry>();
     private final AtomicLong currentProgress = new AtomicLong();
-    private File musicDir;
     private File stateDir;
     private DownloadService.DownloadThread downloadThread;
 
     @Override
     public void onCreate() {
-        musicDir = createDirectory("music");
+        super.onCreate();
         stateDir = createDirectory("state");
 
         loadQueue();
@@ -139,18 +136,9 @@ public class DownloadService extends Service {
         }
     }
 
-    private File createDirectory(String name) {
-        File subsonicDir = new File(Environment.getExternalStorageDirectory(), "subsonic");
-        File dir = new File(subsonicDir, name);
-        if (!dir.exists() && !dir.mkdirs()) {
-            Log.e(TAG, "Failed to create " + name);
-        }
-        return dir;
-    }
-
     public void download(List<MusicDirectory.Entry> songs) {
         String message = songs.size() == 1 ? "Added \"" + songs.get(0).getTitle() + "\" to download queue." :
-                "Added " + songs.size() + " songs to download queue.";
+                         "Added " + songs.size() + " songs to download queue.";
         updateNotification();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         queue.addAll(songs);
@@ -280,27 +268,9 @@ public class DownloadService extends Service {
         return Util.getRestUrl(this, "download") + "&id=" + song.getId();
     }
 
-    public File getSongFile(MusicDirectory.Entry song, boolean createDir) {
-        File dir = getAlbumDirectory(song, createDir);
-
-        String title = Util.fileSystemSafe(song.getTitle());
-        return new File(dir, title + "." + song.getSuffix());
-    }
-
     private File getAlbumArtFile(MusicDirectory.Entry song) {
         File dir = getAlbumDirectory(song, true);
         return new File(dir, "folder.jpeg");
-    }
-
-    private File getAlbumDirectory(MusicDirectory.Entry song, boolean create) {
-        String artist = Util.fileSystemSafe(song.getArtist());
-        String album = Util.fileSystemSafe(song.getAlbum());
-
-        File dir = new File(musicDir.getPath() + "/" + artist + "/" + album);
-        if (create && !dir.exists()) {
-            dir.mkdirs();
-        }
-        return dir;
     }
 
     private class DownloadThread extends Thread {
@@ -446,9 +416,9 @@ public class DownloadService extends Service {
 
             // Delete existing row in case the song has been downloaded before.
             int n = contentResolver.delete(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                    MediaStore.Audio.AudioColumns.TITLE_KEY + "=? AND " +
-                            MediaStore.MediaColumns.DATA + "=?",
-                    new String[]{MediaStore.Audio.keyFor(song.getTitle()), songFile.getAbsolutePath()});
+                                           MediaStore.Audio.AudioColumns.TITLE_KEY + "=? AND " +
+                                           MediaStore.MediaColumns.DATA + "=?",
+                                           new String[]{MediaStore.Audio.keyFor(song.getTitle()), songFile.getAbsolutePath()});
             if (n > 0) {
                 Log.i(TAG, "Overwriting media store row for " + song);
             }

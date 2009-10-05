@@ -34,7 +34,9 @@ Automatically enable/disable "Notify me about new versions" option when new user
 
 DONE IN 3.8
 ------------
-Songs that are already downloaded are now indicated with an asterix.
+(Android) Songs that are already downloaded are now indicated with an asterix.
+(Android) Songs that are already downloaded are now played as local files, rather than streamed.
+
 
 ANDROID
 -------
@@ -49,8 +51,6 @@ Make sure proper error message if versions mismatch.
 
 Add option to download, then play.
 Fix encoding problems in Subsonic Demo files.
-Indicate songs that are already downloaded.
-Songs that are already downloaded should be played as local files, rather than streamed.
 Handle XML exception better.
 Show version number.
 Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
