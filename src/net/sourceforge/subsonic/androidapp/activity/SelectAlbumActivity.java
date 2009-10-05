@@ -34,6 +34,7 @@ import net.sourceforge.subsonic.androidapp.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.File;
 
 public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
@@ -358,8 +359,14 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                     view = (TextView) convertView;
                 } else {
                     view = (TextView) LayoutInflater.from(SelectAlbumActivity.this).inflate(
-                            android.R.layout.simple_list_item_multiple_choice, parent, false);
+                            android.R.layout.simple_list_item_checked, parent, false);
                 }
+                File file = downloadService.getSongFile(entry, false);
+                if (file.exists()) {
+                    view.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.downloaded, 0);
+                } else {
+                    view.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                } 
             }
 
             view.setText(entry.getTitle());
