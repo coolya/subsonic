@@ -18,21 +18,9 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -49,23 +37,28 @@ import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.activity.ErrorActivity;
 import net.sourceforge.subsonic.androidapp.activity.StreamQueueActivity;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import static net.sourceforge.subsonic.androidapp.service.StreamService.PlayerState.COMPLETED;
-import static net.sourceforge.subsonic.androidapp.service.StreamService.PlayerState.ERROR;
-import static net.sourceforge.subsonic.androidapp.service.StreamService.PlayerState.IDLE;
-import static net.sourceforge.subsonic.androidapp.service.StreamService.PlayerState.INITIALIZED;
-import static net.sourceforge.subsonic.androidapp.service.StreamService.PlayerState.PAUSED;
-import static net.sourceforge.subsonic.androidapp.service.StreamService.PlayerState.PREPARED;
-import static net.sourceforge.subsonic.androidapp.service.StreamService.PlayerState.PREPARING;
-import static net.sourceforge.subsonic.androidapp.service.StreamService.PlayerState.STARTED;
+import static net.sourceforge.subsonic.androidapp.service.StreamService.PlayerState.*;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+
 /**
  * @author Sindre Mehus
  */
-public class StreamService extends Service {
+public class StreamService extends ServiceBase {
 
     private static final String TAG = StreamService.class.getSimpleName();
 
@@ -132,7 +125,7 @@ public class StreamService extends Service {
         boolean shouldStart = playlist.isEmpty() || !append;
 
         String message = songs.size() == 1 ? "Added \"" + songs.get(0).getTitle() + "\" to playlist." :
-                "Added " + songs.size() + " songs to playlist.";
+                         "Added " + songs.size() + " songs to playlist.";
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         if (!append) {
             playlist.clear();
@@ -232,7 +225,14 @@ public class StreamService extends Service {
         }
     }
 
-    private URL getStreamUrl(MusicDirectory.Entry song) {
+    private String getStreamUrl(MusicDirectory.Entry song) {
+
+        // First check if song exists locally.
+        File file = getSongFile(song, false);
+        if (file.exists()) {
+            return file.getPath();
+        }
+
         try {
             URL url = new URL(Util.getRestUrl(StreamService.this, "stream") + "&id=" + song.getId());
 
@@ -246,7 +246,7 @@ public class StreamService extends Service {
                 }
                 url = new URL(url.getProtocol(), url.getHost(), port, url.getFile());
             }
-            return url;
+            return url.toExternalForm();
         } catch (MalformedURLException e) {
             Log.e(TAG, e.getMessage(), e);
             throw new RuntimeException(e);
@@ -468,7 +468,7 @@ public class StreamService extends Service {
 
         public void play(MusicDirectory.Entry song) {
             this.song = song;
-            URL url = getStreamUrl(song);
+            String url = getStreamUrl(song);
             Log.i(tag, "Streaming URL: " + url);
 
             if (active) {
@@ -494,7 +494,7 @@ public class StreamService extends Service {
             // Otherwise, start preparing asynchronously.
             try {
                 reset();
-                mediaPlayer.setDataSource(url.toExternalForm());
+                mediaPlayer.setDataSource(url);
                 setPlayerState(INITIALIZED);
 
                 mediaPlayer.prepareAsync();
