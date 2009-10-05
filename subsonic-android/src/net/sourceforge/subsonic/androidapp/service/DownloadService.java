@@ -280,6 +280,29 @@ public class DownloadService extends Service {
         return Util.getRestUrl(this, "download") + "&id=" + song.getId();
     }
 
+    public File getSongFile(MusicDirectory.Entry song, boolean createDir) {
+        File dir = getAlbumDirectory(song, createDir);
+
+        String title = Util.fileSystemSafe(song.getTitle());
+        return new File(dir, title + "." + song.getSuffix());
+    }
+
+    private File getAlbumArtFile(MusicDirectory.Entry song) {
+        File dir = getAlbumDirectory(song, true);
+        return new File(dir, "folder.jpeg");
+    }
+
+    private File getAlbumDirectory(MusicDirectory.Entry song, boolean create) {
+        String artist = Util.fileSystemSafe(song.getArtist());
+        String album = Util.fileSystemSafe(song.getAlbum());
+
+        File dir = new File(musicDir.getPath() + "/" + artist + "/" + album);
+        if (create && !dir.exists()) {
+            dir.mkdirs();
+        }
+        return dir;
+    }
+
     private class DownloadThread extends Thread {
 
         @Override
@@ -308,15 +331,21 @@ public class DownloadService extends Service {
             InputStream in = null;
             FileOutputStream out = null;
             File file = null;
+            File tmpFile = null;
             try {
-                file = createSongFile(song);
+                file = getSongFile(song, true);
+                tmpFile = new File(file.getPath() + ".tmp");
                 in = connect(getDownloadURL(song));
-                out = new FileOutputStream(file);
+                out = new FileOutputStream(tmpFile);
                 long n = copy(in, out);
-                Log.i(TAG, "Downloaded " + n + " bytes to " + file);
+                Log.i(TAG, "Downloaded " + n + " bytes to " + tmpFile);
 
                 out.flush();
                 out.close();
+
+                if (!tmpFile.renameTo(file)) {
+                    throw new IOException("Failed to rename " + tmpFile + " to " + file);
+                }
 
                 saveInMediaStore(song, file);
                 Util.toast(DownloadService.this, handler, "Finished downloading \"" + song.getTitle() + "\".");
@@ -334,33 +363,11 @@ public class DownloadService extends Service {
             } finally {
                 Util.close(in);
                 Util.close(out);
+                Util.delete(tmpFile);
                 currentDownload.set(null);
                 updateNotification();
                 broadcastChange(true);
             }
-        }
-
-        private File createSongFile(MusicDirectory.Entry song) {
-            File dir = getAlbumDirectory(song);
-
-            String title = Util.fileSystemSafe(song.getTitle());
-            return new File(dir, title + "." + song.getSuffix());
-        }
-
-        private File createAlbumArtFile(MusicDirectory.Entry song) {
-            File dir = getAlbumDirectory(song);
-            return new File(dir, "folder.jpeg");
-        }
-
-        private File getAlbumDirectory(MusicDirectory.Entry song) {
-            String artist = Util.fileSystemSafe(song.getArtist());
-            String album = Util.fileSystemSafe(song.getAlbum());
-
-            File dir = new File(musicDir.getPath() + "/" + artist + "/" + album);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-            return dir;
         }
 
         private InputStream connect(String url) throws Exception {
@@ -392,7 +399,7 @@ public class DownloadService extends Service {
             FileOutputStream out = null;
             File file = null;
             try {
-                file = createAlbumArtFile(song);
+                file = getAlbumArtFile(song);
 
                 MusicService musicService = MusicServiceFactory.getMusicService();
                 byte[] bytes = musicService.getCoverArt(DownloadService.this, song.getCoverArt(), 320, null);

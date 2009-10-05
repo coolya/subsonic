@@ -2,7 +2,6 @@ TODO IN 3.8
 --------------
 In licence email, explain how to install it.
 Check out www.element5.com for payment.  SWReg
-
 Add button for donating.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
@@ -35,19 +34,24 @@ Automatically enable/disable "Notify me about new versions" option when new user
 
 DONE IN 3.8
 ------------
+Songs that are already downloaded are now indicated with an asterix.
 
 ANDROID
 -------
-Update web pages and publish.
+Force repaint of song list.
 Make video.
 Post on forum, freshmeat, facebook.
 Use two different error codes on version mismatch.
 Use euros rather than dollars.
-Downsample demo music to 128 kbit
 Document error codes.
 Append zero to all error codes.
 Make sure proper error message if versions mismatch.
 
+Add option to download, then play.
+Fix encoding problems in Subsonic Demo files.
+Indicate songs that are already downloaded.
+Songs that are already downloaded should be played as local files, rather than streamed.
+Handle XML exception better.
 Show version number.
 Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
 Use logical server name rather than IP.
@@ -56,7 +60,6 @@ Use weak references in image cache?
 Use android:ellipsize="marquee"
 Make playlist bg b/w?
 Change main menu to 1) My music 2) My playlists 3) Search.  + Now playing & Now downloading (smaller)
-Indicate songs that are already downloaded.
 Change colors of selected songs.
 Show currently playing song in playlist.
 Support max bitrate in settings. ("Preferred bitrate")
@@ -110,6 +113,7 @@ By default, create music folder for video.
 
 BACKLOG
 ==========================
+Show who's online.
 Error when path contains "&amp;" http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1921
 Simplify Media.  How does it avoid opening ports in router?
 Integration with Spotify/Despotify/Jotify.
@@ -420,12 +424,19 @@ http://kickyoutube.com/
 http://www.schillmania.com/projects/soundmanager2/
 http://code.google.com/p/mobbler/
 
-DnB NOR
-0021 OSLO
+My address:
+Sindre Mehus
+Ogmunds vei 11
+0488 Oslo
 Norway
 
-IBAN-nummer:	NO4697104607601
-SWIFT/BIC-kode:	DNBANOKK
+Bank address:
+DnB NOR
+0021 Oslo
+Norway
+
+IBAN number: NO4697104607601
+SWIFT/BIC code: DNBANOKK
 
 RipNAS, http://www.ripnas.com/
 QNAP
@@ -434,7 +445,7 @@ http://www.synology.com/enu/support/3rd-party_application_integration.php
 SqueezeCenter can run on a number of NAS devices, such as QNAP TS-101, Synology Diskstation,
 NETGEAR ReadyNAS, Buffalo Linkstation, Linksys NSLU2 and any device running FreeNAS software.
 
-rsync -avP -e ssh music.demo/ sindremehus@www.gosubsonic.com:music
+rsync -avP -e ssh music.demo/ sindremehus@www.gosubsonic.com:music.demo
 
 -Dsubsonic.war=out\exploded\subsonic-mainWeb -Dsubsonic.createLinkFile=true -Dsubsonic.windowsInstall=true -Dsubsonic.port=8080 -Dsubsonic.contextPath=/
 
