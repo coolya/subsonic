@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -50,6 +52,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     private ImageButton addButton;
     private ImageButton downloadButton;
     private boolean licenseValid;
+    private BroadcastReceiver broadcastReceiver;
 
     /**
      * Called when the activity is first created.
@@ -106,6 +109,29 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
 
         enableButtons();
         load();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Repaint list when download completes.
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (Constants.INTENT_ACTION_DOWNLOAD_QUEUE.equals(intent.getAction())) {
+                    EntryAdapter entryAdapter = (EntryAdapter) entryList.getAdapter();
+                    entryAdapter.notifyDataSetChanged();
+                }
+            }};
+
+        registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_DOWNLOAD_QUEUE));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void load() {
@@ -366,7 +392,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                     view.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.downloaded, 0);
                 } else {
                     view.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                } 
+                }
             }
 
             view.setText(entry.getTitle());

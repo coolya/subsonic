@@ -40,7 +40,6 @@ DONE IN 3.8
 
 ANDROID
 -------
-Force repaint of song list.
 Make video.
 Post on forum, freshmeat, facebook.
 Use two different error codes on version mismatch.
@@ -48,8 +47,17 @@ Use euros rather than dollars.
 Document error codes.
 Append zero to all error codes.
 Make sure proper error message if versions mismatch.
-
 Add option to download, then play.
+Add option to delete selected songs.
+Show slider if local file.
+
+[Select] [Play] [Download] [More...]
+More ->
+   Add to playlist
+   Download then play
+   Delete from phone
+
+Show progress for "Download then play"
 Fix encoding problems in Subsonic Demo files.
 Handle XML exception better.
 Show version number.
