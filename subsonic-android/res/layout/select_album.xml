@@ -54,6 +54,15 @@
                      a:layout_width="wrap_content"
                      a:layout_height="fill_parent"/>
 
+        <ImageButton a:id="@+id/select_album_download_and_play"
+                     a:src="@drawable/download"
+                     a:paddingLeft="15dp"
+                     a:paddingRight="15dp"
+                     a:visibility="gone"
+                     a:enabled="false"
+                     a:layout_width="wrap_content"
+                     a:layout_height="fill_parent"/>
+
     </LinearLayout>
 
 </LinearLayout>

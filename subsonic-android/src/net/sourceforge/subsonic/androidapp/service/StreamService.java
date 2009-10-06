@@ -52,6 +52,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -66,8 +67,8 @@ public class StreamService extends ServiceBase {
     private final Handler handler = new Handler();
 
     private final AtomicInteger current = new AtomicInteger(-1);
-    private final List<MusicDirectory.Entry> playlist = new CopyOnWriteArrayList<MusicDirectory.Entry>();
-    private final ScheduledExecutorService progressNotifier = Executors.newSingleThreadScheduledExecutor();
+    private final List<PlaylistEntry> playlist = new CopyOnWriteArrayList<PlaylistEntry>();
+    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private final AtomicReference<Player> player = new AtomicReference<Player>();
     private final List<Player> players = new ArrayList<Player>();
     private BroadcastReceiver headsetEventReceiver;
@@ -117,11 +118,11 @@ public class StreamService extends ServiceBase {
             p.release();
         }
 
-        progressNotifier.shutdown();
+        executorService.shutdown();
         hideNotification();
     }
 
-    public void add(List<MusicDirectory.Entry> songs, boolean append) {
+    public void add(List<MusicDirectory.Entry> songs, boolean append, boolean download) {
         boolean shouldStart = playlist.isEmpty() || !append;
 
         String message = songs.size() == 1 ? "Added \"" + songs.get(0).getTitle() + "\" to playlist." :
@@ -131,7 +132,9 @@ public class StreamService extends ServiceBase {
             playlist.clear();
         }
 
-        playlist.addAll(songs);
+        for (MusicDirectory.Entry song : songs) {
+            playlist.add(new PlaylistEntry(song, download));
+        }
         notifyPlaylistChanged();
 
         if (shouldStart) {
@@ -144,14 +147,14 @@ public class StreamService extends ServiceBase {
             return;
         }
         current.set(index);
-        MusicDirectory.Entry song = playlist.get(index);
+        PlaylistEntry song = playlist.get(index);
 
         player.get().reset();
         selectPlayerForSong(song);
         player.get().play(song);
     }
 
-    private void selectPlayerForSong(MusicDirectory.Entry song) {
+    private void selectPlayerForSong(PlaylistEntry song) {
         for (Player p : players) {
             if (song == p.getSong()) {
                 player.get().setActive(false);
@@ -171,7 +174,7 @@ public class StreamService extends ServiceBase {
         Player nextPlayer = players.get(playerIndex);
 
         int songIndex = (playlist.indexOf(player.getSong()) + 1) % playlist.size();
-        MusicDirectory.Entry nextSong = playlist.get(songIndex);
+        PlaylistEntry nextSong = playlist.get(songIndex);
 
         nextPlayer.reset();
         nextPlayer.play(nextSong);
@@ -195,7 +198,11 @@ public class StreamService extends ServiceBase {
     }
 
     public List<MusicDirectory.Entry> getPlaylist() {
-        return new ArrayList<MusicDirectory.Entry>(playlist);
+        List<MusicDirectory.Entry> result = new ArrayList<MusicDirectory.Entry>(playlist.size());
+        for (PlaylistEntry entry : playlist) {
+            result.add(entry.getSong());
+        }
+        return result;
     }
 
     public int getCurrentIndex() {
@@ -219,22 +226,22 @@ public class StreamService extends ServiceBase {
 
     public MusicDirectory.Entry getCurrentSong() {
         try {
-            return playlist.get(current.get());
+            return playlist.get(current.get()).getSong();
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
     }
 
-    private String getStreamUrl(MusicDirectory.Entry song) {
+    private String getStreamUrl(PlaylistEntry song) {
 
-        // First check if song exists locally.
-        File file = getSongFile(song, false);
-        if (file.exists()) {
+        // First check if song exists locally (or should be downloaded first).
+        File file = getSongFile(song.getSong(), false);
+        if (song.isDownload() || file.exists()) {
             return file.getPath();
         }
 
         try {
-            URL url = new URL(Util.getRestUrl(StreamService.this, "stream") + "&id=" + song.getId());
+            URL url = new URL(Util.getRestUrl(StreamService.this, "stream") + "&id=" + song.getSong().getId());
 
             // Ensure that port is set, otherwise the MediaPlayer complains.
             if (url.getPort() == -1) {
@@ -301,11 +308,11 @@ public class StreamService extends ServiceBase {
         });
     }
 
-    private void addErrorNotification(MusicDirectory.Entry song, Exception error) {
+    private void addErrorNotification(PlaylistEntry song, Exception error) {
         final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         // Use the same text for the ticker and the expanded notification
-        String title = "Failed to play \"" + song.getTitle() + "\"";
+        String title = "Failed to play \"" + song.getSong().getTitle() + "\"";
 
         String text = error.getMessage();
         if (text == null) {
@@ -384,6 +391,7 @@ public class StreamService extends ServiceBase {
     public static enum PlayerState {
         IDLE(""),
         INITIALIZED(""),
+        DOWNLOADING("Downloading"),
         PREPARING("Buffering"),
         PREPARED(""),
         STARTED("Playing"),
@@ -412,7 +420,8 @@ public class StreamService extends ServiceBase {
         private PlayerState playerState = IDLE;
         private int duration;
         private final String tag;
-        private MusicDirectory.Entry song;
+        private PlaylistEntry song;
+        private ScheduledFuture<?> fileCheckerFuture;
 
         public Player(String name) {
             tag = TAG + " (Player " + name + ")";
@@ -462,11 +471,11 @@ public class StreamService extends ServiceBase {
                     }
                 }
             };
-            progressNotifier.scheduleWithFixedDelay(runnable, 500L, 500L, TimeUnit.MILLISECONDS);
+            executorService.scheduleWithFixedDelay(runnable, 500L, 500L, TimeUnit.MILLISECONDS);
 
         }
 
-        public void play(MusicDirectory.Entry song) {
+        public void play(PlaylistEntry song) {
             this.song = song;
             String url = getStreamUrl(song);
             Log.i(tag, "Streaming URL: " + url);
@@ -497,13 +506,34 @@ public class StreamService extends ServiceBase {
                 mediaPlayer.setDataSource(url);
                 setPlayerState(INITIALIZED);
 
-                mediaPlayer.prepareAsync();
-                setPlayerState(PREPARING);
+                prepare(song);
 
             } catch (Exception e) {
                 Log.e(tag, "Failed to start MediaPlayer.", e);
                 setPlayerState(ERROR);
                 addErrorNotification(song, e);
+            }
+        }
+
+        private void prepare(PlaylistEntry song) {
+            if (song.isDownload()) {
+                final File file = getSongFile(song.getSong(), false);
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d(tag, "Checking for existence of file " + file);
+                        if (file.exists()) {
+                            mediaPlayer.prepareAsync();
+                            setPlayerState(PREPARING);
+                        }
+                    }
+                };
+
+                fileCheckerFuture = executorService.scheduleWithFixedDelay(runnable, 500L, 1000L, TimeUnit.MILLISECONDS);
+                setPlayerState(DOWNLOADING);
+            } else {
+                mediaPlayer.prepareAsync();
+                setPlayerState(PREPARING);
             }
         }
 
@@ -530,6 +560,10 @@ public class StreamService extends ServiceBase {
             Log.i(tag, this.playerState.name() + " -> " + playerState.name() + "  [" + song + "]");
             this.playerState = playerState;
 
+            if (playerState != DOWNLOADING && fileCheckerFuture != null) {
+                fileCheckerFuture.cancel(false);
+            }
+
             if (playerState == PREPARED) {
                 duration = mediaPlayer.getDuration();
             } else if (playerState == IDLE) {
@@ -546,7 +580,7 @@ public class StreamService extends ServiceBase {
             }
         }
 
-        public MusicDirectory.Entry getSong() {
+        public PlaylistEntry getSong() {
             return song;
         }
 
@@ -564,6 +598,25 @@ public class StreamService extends ServiceBase {
 
         public void setActive(boolean active) {
             this.active = active;
+        }
+    }
+
+    private static class PlaylistEntry {
+
+        private final MusicDirectory.Entry song;
+        private final boolean download;
+
+        private PlaylistEntry(MusicDirectory.Entry song, boolean download) {
+            this.song = song;
+            this.download = download;
+        }
+
+        public MusicDirectory.Entry getSong() {
+            return song;
+        }
+
+        public boolean isDownload() {
+            return download;
         }
     }
 }

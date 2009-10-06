@@ -36,6 +36,7 @@ DONE IN 3.8
 ------------
 (Android) Songs that are already downloaded are now indicated with an asterix.
 (Android) Songs that are already downloaded are now played as local files, rather than streamed.
+(Android) New option: Download and play.
 
 
 ANDROID
@@ -50,6 +51,8 @@ Make sure proper error message if versions mismatch.
 Add option to download, then play.
 Add option to delete selected songs.
 Show slider if local file.
+Is there a more generic broadcast event to listen to when the media collection changes?
+Don't download if already existing.
 
 [Select] [Play] [Download] [More...]
 More ->

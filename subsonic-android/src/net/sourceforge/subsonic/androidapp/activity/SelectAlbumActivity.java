@@ -51,6 +51,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     private ImageButton playButton;
     private ImageButton addButton;
     private ImageButton downloadButton;
+    private ImageButton downloadAndPlayButton;
     private boolean licenseValid;
     private BroadcastReceiver broadcastReceiver;
 
@@ -64,9 +65,10 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
 
         imageLoader = new ImageLoader();
-        downloadButton = (ImageButton) findViewById(R.id.select_album_download);
         playButton = (ImageButton) findViewById(R.id.select_album_play);
         addButton = (ImageButton) findViewById(R.id.select_album_add);
+        downloadButton = (ImageButton) findViewById(R.id.select_album_download);
+        downloadAndPlayButton = (ImageButton) findViewById(R.id.select_album_download_and_play);
         selectAllOrNoneButton = (ImageButton) findViewById(R.id.select_album_selectallornone);
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
@@ -77,6 +79,14 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             @Override
             public void onClick(View view) {
                 selectAllOrNone();
+            }
+        });
+
+        downloadAndPlayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addToPlaylist(false, true);
+                selectAll(false);
             }
         });
 
@@ -91,7 +101,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addToPlaylist(false);
+                addToPlaylist(false, false);
                 selectAll(false);
             }
         });
@@ -99,7 +109,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addToPlaylist(true);
+                addToPlaylist(true, false);
                 selectAll(false);
             }
         });
@@ -120,12 +130,19 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (Constants.INTENT_ACTION_DOWNLOAD_QUEUE.equals(intent.getAction())) {
-                    EntryAdapter entryAdapter = (EntryAdapter) entryList.getAdapter();
-                    entryAdapter.notifyDataSetChanged();
+                    repaintList();
                 }
             }};
 
         registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_DOWNLOAD_QUEUE));
+        repaintList();
+    }
+
+    private void repaintList() {
+        EntryAdapter entryAdapter = (EntryAdapter) entryList.getAdapter();
+        if (entryAdapter != null) {
+            entryAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -158,10 +175,12 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                     }
                 }
                 licenseValid = result.getSecond();
-                downloadButton.setVisibility(visibility);
+
+                selectAllOrNoneButton.setVisibility(visibility);
                 playButton.setVisibility(visibility);
                 addButton.setVisibility(visibility);
-                selectAllOrNoneButton.setVisibility(visibility);
+                downloadButton.setVisibility(visibility);
+                downloadAndPlayButton.setVisibility(visibility);
             }
 
             @Override
@@ -228,9 +247,10 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 break;
             }
         }
-        downloadButton.setEnabled(checked);
         playButton.setEnabled(checked);
         addButton.setEnabled(checked);
+        downloadButton.setEnabled(checked);
+        downloadAndPlayButton.setEnabled(checked);
     }
 
     private void download() {
@@ -250,7 +270,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         checkLicenseAndTrialPeriod(onValid);
     }
 
-    private void addToPlaylist(final boolean append) {
+    private void addToPlaylist(final boolean append, final boolean download) {
         if (streamService == null) {
             return;
         }
@@ -259,7 +279,10 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         Runnable onValid = new Runnable() {
             @Override
             public void run() {
-                streamService.add(songs, append);
+                if (download) {
+                    downloadService.download(songs);
+                }
+                streamService.add(songs, append, download);
                 startActivity(new Intent(SelectAlbumActivity.this, StreamQueueActivity.class));
             }
         };
