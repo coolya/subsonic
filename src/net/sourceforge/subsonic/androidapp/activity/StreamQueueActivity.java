@@ -25,6 +25,7 @@ import android.widget.ViewFlipper;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.service.StreamService;
+import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import static net.sourceforge.subsonic.androidapp.service.StreamService.PlayerState.COMPLETED;
 import static net.sourceforge.subsonic.androidapp.service.StreamService.PlayerState.PAUSED;
 import static net.sourceforge.subsonic.androidapp.service.StreamService.PlayerState.STARTED;
@@ -40,8 +41,10 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
 
     private static final String TAG = StreamQueueActivity.class.getSimpleName();
     private final StreamServiceConnection streamServiceConnection = new StreamServiceConnection();
+    private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private ImageLoader imageLoader;
     private StreamService streamService;
+    private DownloadService downloadService;
 
     private ViewFlipper flipper;
     private TextView currentTextView;
@@ -127,6 +130,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         playlistView.setOnItemClickListener(this);
 
         bindService(new Intent(this, StreamService.class), streamServiceConnection, Context.BIND_AUTO_CREATE);
+        bindService(new Intent(this, DownloadService.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         imageLoader = new ImageLoader();
     }
 
@@ -165,7 +169,9 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (Constants.INTENT_ACTION_STREAM_PROGRESS.equals(intent.getAction())) {
-                    onProgressChanged();
+                    onStreamProgressChanged();
+                } else if (Constants.INTENT_ACTION_DOWNLOAD_PROGRESS.equals(intent.getAction())) {
+                    onDownloadProgressChanged();
                 } else if (Constants.INTENT_ACTION_STREAM_PLAYLIST.equals(intent.getAction())) {
                     onPlaylistChanged();
                 } else if (Constants.INTENT_ACTION_STREAM_CURRENT.equals(intent.getAction())) {
@@ -175,6 +181,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         };
 
         registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_PROGRESS));
+        registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_DOWNLOAD_PROGRESS));
         registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_PLAYLIST));
         registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_CURRENT));
     }
@@ -236,7 +243,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         }
     }
 
-    private void onProgressChanged() {
+    private void onStreamProgressChanged() {
         if (streamService == null) {
             return;
         }
@@ -264,10 +271,30 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         }
     }
 
+    private void onDownloadProgressChanged() {
+        if (downloadService == null || streamService == null) {
+            return;
+        }
+
+        Pair<MusicDirectory.Entry, Pair<Long, Long>> current = downloadService.getCurrent();
+
+        if (current != null && current.getFirst() == streamService.getCurrentSong() ) {
+            Long bytesDownloaded = current.getSecond().getFirst();
+            Long bytesTotal = current.getSecond().getSecond();
+            if (bytesTotal != null) {
+                positionTextView.setText(Util.formatBytes(bytesDownloaded));
+                durationTextView.setText(Util.formatBytes(bytesTotal));
+                progressBar.setMax(bytesTotal.intValue());
+                progressBar.setProgress(bytesDownloaded.intValue());
+            }
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unbindService(streamServiceConnection);
+        unbindService(downloadServiceConnection);
         imageLoader.cancel();
     }
 
@@ -284,7 +311,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
             Log.i(TAG, "Connected to Stream Service");
             onPlaylistChanged();
             onCurrentChanged();
-            onProgressChanged();
+            onStreamProgressChanged();
             showFullscreenAlbumArt(true);
         }
 
@@ -295,6 +322,20 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         }
     }
 
+    private class DownloadServiceConnection implements ServiceConnection {
+
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder service) {
+            downloadService = ((SimpleServiceBinder<DownloadService>) service).getService();
+            Log.i(TAG, "Connected to Download Service");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            downloadService = null;
+            Log.i(TAG, "Disconnected from Download Service");
+        }
+    }
     private class SongListAdapter extends TwoLineListAdapter<MusicDirectory.Entry> {
         private final List<MusicDirectory.Entry> queue;
 
