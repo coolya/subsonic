@@ -1,24 +1,31 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckedTextView;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
@@ -34,10 +41,6 @@ import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.io.File;
-
 public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
@@ -47,11 +50,9 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     private DownloadService downloadService;
     private StreamService streamService;
     private ListView entryList;
-    private ImageButton selectAllOrNoneButton;
-    private ImageButton playButton;
-    private ImageButton addButton;
-    private ImageButton downloadButton;
-    private ImageButton downloadAndPlayButton;
+    private Button selectButton;
+    private Button playButton;
+    private Button moreButton;
     private boolean licenseValid;
     private BroadcastReceiver broadcastReceiver;
 
@@ -65,36 +66,18 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
 
         imageLoader = new ImageLoader();
-        playButton = (ImageButton) findViewById(R.id.select_album_play);
-        addButton = (ImageButton) findViewById(R.id.select_album_add);
-        downloadButton = (ImageButton) findViewById(R.id.select_album_download);
-        downloadAndPlayButton = (ImageButton) findViewById(R.id.select_album_download_and_play);
-        selectAllOrNoneButton = (ImageButton) findViewById(R.id.select_album_selectallornone);
+        selectButton = (Button) findViewById(R.id.select_album_select);
+        playButton = (Button) findViewById(R.id.select_album_play);
+        moreButton = (Button) findViewById(R.id.select_album_more);
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
-        entryList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);// TODO:Specify in XML.
+        entryList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         entryList.setOnItemClickListener(this);
 
-        selectAllOrNoneButton.setOnClickListener(new View.OnClickListener() {
+        selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectAllOrNone();
-            }
-        });
-
-        downloadAndPlayButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addToPlaylist(false, true);
-                selectAll(false);
-            }
-        });
-
-        downloadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                download();
-                selectAll(false);
             }
         });
 
@@ -106,11 +89,12 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             }
         });
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        registerForContextMenu(moreButton);
+
+        moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addToPlaylist(true, false);
-                selectAll(false);
+                moreButton.showContextMenu();
             }
         });
 
@@ -132,7 +116,8 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 if (Constants.INTENT_ACTION_DOWNLOAD_QUEUE.equals(intent.getAction())) {
                     repaintList();
                 }
-            }};
+            }
+        };
 
         registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_DOWNLOAD_QUEUE));
         repaintList();
@@ -149,6 +134,35 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     protected void onPause() {
         super.onPause();
         unregisterReceiver(broadcastReceiver);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case 1:
+                addToPlaylist(true, false);
+                selectAll(false);
+                break;
+            case 2:
+                download();
+                selectAll(false);
+                break;
+            case 3:
+                addToPlaylist(false, true);
+                selectAll(false);
+                break;
+            default:
+                return super.onContextItemSelected(menuItem);
+        }
+        return true;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+        menu.add(Menu.NONE, 1, 1, "Add to playlist");
+        menu.add(Menu.NONE, 2, 2, "Download");
+        menu.add(Menu.NONE, 3, 3, "Download + Play");
     }
 
     private void load() {
@@ -176,11 +190,9 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 }
                 licenseValid = result.getSecond();
 
-                selectAllOrNoneButton.setVisibility(visibility);
+                selectButton.setVisibility(visibility);
                 playButton.setVisibility(visibility);
-                addButton.setVisibility(visibility);
-                downloadButton.setVisibility(visibility);
-                downloadAndPlayButton.setVisibility(visibility);
+                moreButton.setVisibility(visibility);
             }
 
             @Override
@@ -248,9 +260,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             }
         }
         playButton.setEnabled(checked);
-        addButton.setEnabled(checked);
-        downloadButton.setEnabled(checked);
-        downloadAndPlayButton.setEnabled(checked);
+        moreButton.setEnabled(checked);
     }
 
     private void download() {

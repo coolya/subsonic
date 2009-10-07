@@ -16,51 +16,34 @@
                   a:gravity="center_horizontal"
                   a:paddingTop="10dip">
 
-        <ImageButton a:id="@+id/select_album_selectallornone"
-                     a:src="@drawable/playlist_select"
-                     a:paddingLeft="15dp"
-                     a:paddingRight="15dp"
-                     a:layout_marginRight="10dp"
+        <Button a:id="@+id/select_album_select"
+                     a:text="Select"
+                     a:textAppearance="?android:attr/textAppearanceSmall"
+                     a:layout_marginLeft="6dp"
+                     a:layout_marginRight="3dp"
                      a:visibility="gone"
-                     a:layout_width="wrap_content"
+                     a:layout_weight="1"
+                     a:layout_width="0dp"
                      a:layout_height="fill_parent"/>
 
-        <ImageButton a:id="@+id/select_album_play"
-                     a:src="@drawable/playlist_play"
-                     a:paddingLeft="15dp"
-                     a:paddingRight="15dp"
-                     a:layout_marginRight="10dp"
+        <Button a:id="@+id/select_album_play"
+                     a:text="Play"
+                     a:textAppearance="?android:attr/textAppearanceSmall"
+                     a:layout_marginLeft="3dp"
+                     a:layout_marginRight="3dp"
                      a:visibility="gone"
-                     a:enabled="false"
-                     a:layout_width="wrap_content"
+                     a:layout_weight="1"
+                     a:layout_width="0dp"
                      a:layout_height="fill_parent"/>
 
-        <ImageButton a:id="@+id/select_album_add"
-                     a:src="@drawable/playlist_add"
-                     a:paddingLeft="15dp"
-                     a:paddingRight="15dp"
-                     a:layout_marginRight="10dp"
+        <Button a:id="@+id/select_album_more"
+                     a:text="More..."
+                     a:textAppearance="?android:attr/textAppearanceSmall"
+                     a:layout_marginLeft="3dp"
+                     a:layout_marginRight="6dp"
                      a:visibility="gone"
-                     a:enabled="false"
-                     a:layout_width="wrap_content"
-                     a:layout_height="fill_parent"/>
-
-        <ImageButton a:id="@+id/select_album_download"
-                     a:src="@drawable/download"
-                     a:paddingLeft="15dp"
-                     a:paddingRight="15dp"
-                     a:visibility="gone"
-                     a:enabled="false"
-                     a:layout_width="wrap_content"
-                     a:layout_height="fill_parent"/>
-
-        <ImageButton a:id="@+id/select_album_download_and_play"
-                     a:src="@drawable/download"
-                     a:paddingLeft="15dp"
-                     a:paddingRight="15dp"
-                     a:visibility="gone"
-                     a:enabled="false"
-                     a:layout_width="wrap_content"
+                     a:layout_weight="1"
+                     a:layout_width="0dp"
                      a:layout_height="fill_parent"/>
 
     </LinearLayout>
