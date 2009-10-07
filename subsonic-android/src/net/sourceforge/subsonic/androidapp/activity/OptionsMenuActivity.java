@@ -36,7 +36,7 @@ public class OptionsMenuActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, MENU_HOME, 0, "Home").setIcon(R.drawable.menu_home);
+        menu.add(0, MENU_HOME, 0, "Subsonic Home").setIcon(R.drawable.menu_home);
         menu.add(0, MENU_STREAM_QUEUE, 0, "Playlist").setIcon(R.drawable.playlist);
         menu.add(0, MENU_DOWNLOAD_QUEUE, 0, "Download queue").setIcon(android.R.drawable.ic_menu_save);
         menu.add(0, MENU_SETTINGS, 0, "Settings").setIcon(android.R.drawable.ic_menu_preferences);

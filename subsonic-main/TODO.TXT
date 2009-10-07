@@ -53,13 +53,6 @@ Add option to delete selected songs.
 Show slider if local file.
 Is there a more generic broadcast event to listen to when the media collection changes?
 Don't download if already existing.
-
-[Select] [Play] [Download] [More...]
-More ->
-   Add to playlist
-   Download then play
-   Delete from phone
-
 Show progress for "Download then play"
 Fix encoding problems in Subsonic Demo files.
 Handle XML exception better.
