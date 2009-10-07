@@ -34,7 +34,7 @@ public class HelpActivity extends OptionsMenuActivity {
                 " o No ads in the Subsonic web interface.\n" +
                 " o Free access to new premium features.\n" +
                 "\n" +
-                "The suggested donation amount is $20.");
+                "The suggested donation amount is €20.");
 
         Button okButton = (Button) findViewById(R.id.help_close);
         okButton.setOnClickListener(new View.OnClickListener() {
