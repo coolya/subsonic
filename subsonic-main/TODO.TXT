@@ -48,6 +48,7 @@ Use euros rather than dollars.
 Document error codes.
 Append zero to all error codes.
 Make sure proper error message if versions mismatch.
+Show more info per song (like gmail app)
 Add option to download, then play.
 Add option to delete selected songs.
 Show slider if local file.
@@ -58,7 +59,6 @@ Fix encoding problems in Subsonic Demo files.
 Handle XML exception better.
 Show version number.
 Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
-Use logical server name rather than IP.
 Use music index last modified + invalidate cache after a while.
 Use weak references in image cache?
 Use android:ellipsize="marquee"
