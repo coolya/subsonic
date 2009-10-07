@@ -41,6 +41,8 @@ DONE IN 3.8
 
 ANDROID
 -------
+Show slider if local file.
+Add option to delete selected songs.
 Update subsonic-ad.php
 Make video.
 Post on forum, freshmeat, facebook.
@@ -49,12 +51,8 @@ Document error codes.
 Append zero to all error codes.
 Make sure proper error message if versions mismatch.
 Show more info per song (like gmail app)
-Add option to download, then play.
-Add option to delete selected songs.
-Show slider if local file.
 Is there a more generic broadcast event to listen to when the media collection changes?
 Don't download if already existing.
-Show progress for "Download then play"
 Fix encoding problems in Subsonic Demo files.
 Handle XML exception better.
 Show version number.
@@ -74,47 +72,6 @@ User should be able to select music folder. (Let REST method support it at least
 Merge artists in REST method.  Make it possible to specify music folder.
 REST method for getting lyrics.
 
-LUCENE
-------
-isIndexBeingCreated
-createIndex
-schedule
-cleanMusicFileInfo  (look up album by path)
-search(SearchCriteria)
-getRandomSongs(RandomSearchCriteria)
-getRandomAlbums
-getNewestAlbums
-getStatistics
-getGenres
-
-MIDNIGHT FUN THEME
-------------------
-o Increase line height in tables.  It's now 90%, making the text hard to read.  Should be around 130-140%.
-o Improve contrast for title of currently selected tab in home page. (Random, Newest, Highest rated etc). Either by changing
-background image or text color.
-o Same as above, but for Settings pages.
-o Improve contrast for links in the Help page.
-o Use the Subsonic logo and name in the upper left corner.
-o More consistent icons for play, add and download buttons.  Now they have different designs, colors and sizes.
-o Make the down button similar to the up button.  It's currently two-three pixels taller.
-
-JUKEBOX
--------
-Somehow indicate player type in playlist.
-Make contiuous random mode work in jukebox mode.
-
-VIDEO
------
-Create "Video mask" setting.
-Test with mp4.
-Video support.  FLV, MP4
-If video file, disable "Add" button, and make "Play" button open playlist in video mode.
-If video file, add "Show video" link in playlist which opens video in popup.
-Thumbnail support, for instance by using file name conventions.
-Show one thumbnail for each video file, using a generic if not found.
-Use ffmpeg to generate tags and cover art.
-By default, create music folder for video.
-
 BACKLOG
 ==========================
 Show who's online.
@@ -127,6 +84,8 @@ Coverflow, http://imageflow.finnrudolph.de/, http://sockso.pu-gh.com
 Problems with player resolution for guest users when behind proxy. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1815&postdays=0&postorder=asc&start=0
 Playlist summary. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1833
 Use SoundManager 2 to implement inline song preview.
+Somehow indicate player type in playlist.
+Make contiuous random mode work in jukebox mode.
 Use reverse ajax for Now Playing?
 Recover/reset forgotten password. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1654
 IE 8 error. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1869
@@ -367,6 +326,18 @@ Zip and unzip fails with accented characters.  Use commons vfs, or some other li
 Log when zipping individual files.
 Add online help to search index update.
 Vis "lignende" album.
+
+VIDEO
+-----
+Create "Video mask" setting.
+Test with mp4.
+Video support.  FLV, MP4
+If video file, disable "Add" button, and make "Play" button open playlist in video mode.
+If video file, add "Show video" link in playlist which opens video in popup.
+Thumbnail support, for instance by using file name conventions.
+Show one thumbnail for each video file, using a generic if not found.
+Use ffmpeg to generate tags and cover art.
+By default, create music folder for video.
 
 HOW TO RELEASE
 ===============================
