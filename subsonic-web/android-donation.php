@@ -26,7 +26,7 @@
 </ul>
 
 <p>
-    The suggested donation amount is <b>$20</b>, but you can give any amount you like.
+    The suggested donation amount is <b>&euro;20</b>, but you can give any amount you like.
 </p>
 
 <p>
@@ -39,37 +39,37 @@
         <td style="border:none;">
             <table>
                 <tr>
-                    <td style="border:none;padding:0;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&no_shipping=1&amount=10.00&currency_code=USD&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
+                    <td style="border:none;padding:0;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&no_shipping=1&amount=10.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
                 </tr>
                 <tr>
-                    <td style="text-align:center;border:none;padding:0">$10</td>
-                </tr>
-            </table>
-        </td>
-        <td style="border:none;">
-            <table>
-                <tr>
-                    <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&no_shipping=1&amount=20.00&currency_code=USD&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
-                </tr>
-                <tr>
-                    <td style="text-align:center;border:none;padding:0">$20</td>
+                    <td style="text-align:center;border:none;padding:0">&euro;10</td>
                 </tr>
             </table>
         </td>
         <td style="border:none;">
             <table>
                 <tr>
-                    <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&no_shipping=1&amount=50.00&currency_code=USD&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
+                    <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&no_shipping=1&amount=20.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
                 </tr>
                 <tr>
-                    <td style="text-align:center;border:none;padding:0">$50</td>
+                    <td style="text-align:center;border:none;padding:0">&euro;20</td>
                 </tr>
             </table>
         </td>
         <td style="border:none;">
             <table>
                 <tr>
-                    <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&no_shipping=1&currency_code=USD&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
+                    <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&no_shipping=1&amount=30.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center;border:none;padding:0">&euro;30</td>
+                </tr>
+            </table>
+        </td>
+        <td style="border:none;">
+            <table>
+                <tr>
+                    <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&no_shipping=1&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
                 </tr>
                 <tr>
                     <td style="text-align:center;border:none;padding:0">???</td>

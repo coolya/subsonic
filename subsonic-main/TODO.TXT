@@ -41,10 +41,10 @@ DONE IN 3.8
 
 ANDROID
 -------
+Update subsonic-ad.php
 Make video.
 Post on forum, freshmeat, facebook.
 Use two different error codes on version mismatch.
-Use euros rather than dollars.
 Document error codes.
 Append zero to all error codes.
 Make sure proper error message if versions mismatch.

@@ -26,7 +26,7 @@
     <c:param name="item_name" value="Subsonic Donation"/>
     <c:param name="no_shipping" value="1"/>
     <c:param name="amount" value="10.00"/>
-    <c:param name="currency_code" value="USD"/>
+    <c:param name="currency_code" value="EUR"/>
     <c:param name="tax" value="0"/>
     <c:param name="bn" value="PP-DonationsBF"/>
     <c:param name="charset" value="UTF-8"/>
@@ -37,7 +37,18 @@
     <c:param name="item_name" value="Subsonic Donation"/>
     <c:param name="no_shipping" value="1"/>
     <c:param name="amount" value="20.00"/>
-    <c:param name="currency_code" value="USD"/>
+    <c:param name="currency_code" value="EUR"/>
+    <c:param name="tax" value="0"/>
+    <c:param name="bn" value="PP-DonationsBF"/>
+    <c:param name="charset" value="UTF-8"/>
+</c:url>
+<c:url value="https://www.paypal.com/cgi-bin/webscr" var="donate30Url">
+    <c:param name="cmd" value="_xclick"/>
+    <c:param name="business" value="subsonic_donation@activeobjects.no"/>
+    <c:param name="item_name" value="Subsonic Donation"/>
+    <c:param name="no_shipping" value="1"/>
+    <c:param name="amount" value="30.00"/>
+    <c:param name="currency_code" value="EUR"/>
     <c:param name="tax" value="0"/>
     <c:param name="bn" value="PP-DonationsBF"/>
     <c:param name="charset" value="UTF-8"/>
@@ -48,18 +59,7 @@
     <c:param name="item_name" value="Subsonic Donation"/>
     <c:param name="no_shipping" value="1"/>
     <c:param name="amount" value="50.00"/>
-    <c:param name="currency_code" value="USD"/>
-    <c:param name="tax" value="0"/>
-    <c:param name="bn" value="PP-DonationsBF"/>
-    <c:param name="charset" value="UTF-8"/>
-</c:url>
-<c:url value="https://www.paypal.com/cgi-bin/webscr" var="donate100Url">
-    <c:param name="cmd" value="_xclick"/>
-    <c:param name="business" value="subsonic_donation@activeobjects.no"/>
-    <c:param name="item_name" value="Subsonic Donation"/>
-    <c:param name="no_shipping" value="1"/>
-    <c:param name="amount" value="100.00"/>
-    <c:param name="currency_code" value="USD"/>
+    <c:param name="currency_code" value="EUR"/>
     <c:param name="tax" value="0"/>
     <c:param name="bn" value="PP-DonationsBF"/>
     <c:param name="charset" value="UTF-8"/>
@@ -69,7 +69,7 @@
     <c:param name="business" value="subsonic_donation@activeobjects.no"/>
     <c:param name="item_name" value="Subsonic Donation"/>
     <c:param name="no_shipping" value="1"/>
-    <c:param name="currency_code" value="USD"/>
+    <c:param name="currency_code" value="EUR"/>
     <c:param name="tax" value="0"/>
     <c:param name="bn" value="PP-DonationsBF"/>
     <c:param name="charset" value="UTF-8"/>
@@ -87,7 +87,7 @@
                     <td><a href="${donate10Url}" target="_blank"><img src="<spring:theme code="paypalImage"/>" alt=""/></a> </td>
                 </tr>
                 <tr>
-                    <td class="detail" style="text-align:center;"><fmt:message key="donate.amount"><fmt:param value="$10"/></fmt:message></td>
+                    <td class="detail" style="text-align:center;"><fmt:message key="donate.amount"><fmt:param value="&euro;10"/></fmt:message></td>
                 </tr>
             </table>
         </td>
@@ -97,7 +97,17 @@
                     <td><a href="${donate20Url}" target="_blank"><img src="<spring:theme code="paypalImage"/>" alt=""/></a> </td>
                 </tr>
                 <tr>
-                    <td class="detail" style="text-align:center;"><fmt:message key="donate.amount"><fmt:param value="$20"/></fmt:message></td>
+                    <td class="detail" style="text-align:center;"><fmt:message key="donate.amount"><fmt:param value="&euro;20"/></fmt:message></td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td><a href="${donate30Url}" target="_blank"><img src="<spring:theme code="paypalImage"/>" alt=""/></a> </td>
+                </tr>
+                <tr>
+                    <td class="detail" style="text-align:center;"><fmt:message key="donate.amount"><fmt:param value="&euro;30"/></fmt:message></td>
                 </tr>
             </table>
         </td>
@@ -107,17 +117,7 @@
                     <td><a href="${donate50Url}" target="_blank"><img src="<spring:theme code="paypalImage"/>" alt=""/></a> </td>
                 </tr>
                 <tr>
-                    <td class="detail" style="text-align:center;"><fmt:message key="donate.amount"><fmt:param value="$50"/></fmt:message></td>
-                </tr>
-            </table>
-        </td>
-        <td>
-            <table>
-                <tr>
-                    <td><a href="${donate100Url}" target="_blank"><img src="<spring:theme code="paypalImage"/>" alt=""/></a> </td>
-                </tr>
-                <tr>
-                    <td class="detail" style="text-align:center;"><fmt:message key="donate.amount"><fmt:param value="$100"/></fmt:message></td>
+                    <td class="detail" style="text-align:center;"><fmt:message key="donate.amount"><fmt:param value="&euro;50"/></fmt:message></td>
                 </tr>
             </table>
         </td>
