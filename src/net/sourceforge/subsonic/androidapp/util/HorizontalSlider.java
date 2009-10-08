@@ -45,8 +45,10 @@ public class HorizontalSlider extends ProgressBar {
     }
 
     public void setSlidingEnabled(boolean slidingEnabled) {
-        this.slidingEnabled = slidingEnabled;
-        invalidate();
+        if (this.slidingEnabled != slidingEnabled) {
+            this.slidingEnabled = slidingEnabled;
+            invalidate();
+        }
     }
 
     public boolean isSlidingEnabled() {

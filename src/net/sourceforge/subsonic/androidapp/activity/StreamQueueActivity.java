@@ -247,8 +247,6 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
             albumArtTextView.setText(current.getTitle() + " - " + current.getArtist());
             imageLoader.loadImage(currentTextView, current, 48);
             imageLoader.loadImage(albumArtImageView, current, 320);
-            File file = streamService.getSongFile(current, false);
-            progressBar.setSlidingEnabled(file.exists());
         }
     }
 
@@ -266,6 +264,9 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
             durationTextView.setText(Util.formatDuration(millisTotal / 1000));
             progressBar.setMax(millisTotal == 0 ? 100 : millisTotal); // Work-around for apparent bug.
             progressBar.setProgress(millisPlayed);
+
+            File file = streamService.getSongFile(current.getFirst(), false);
+            progressBar.setSlidingEnabled(file.exists());
         }
 
         StreamService.PlayerState playerState = streamService.getPlayerState();
