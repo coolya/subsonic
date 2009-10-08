@@ -53,7 +53,7 @@ public class HorizontalSlider extends ProgressBar {
         return slidingEnabled;
     }
 
-    public void setOnProgressChangeListener(OnSliderChangeListener listener) {
+    public void setOnSliderChangeListener(OnSliderChangeListener listener) {
         this.listener = listener;
     }
 
