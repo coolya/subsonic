@@ -96,8 +96,23 @@
                       status="failed" version="1.0.0"&gt;
        &lt;error code="11" message="Wrong username or password"/&gt;
    &lt;/subsonic-response&gt;
-
             </pre>
+
+            <p>
+                The following error codes are defined:
+
+            <table width="100%" class="bottomspace">
+                <tr>
+                    <th class="param-heading">Code</th>
+                    <th class="param-heading">Description</th>
+                </tr>
+                <tr class="table-altrow"><td><code>0</code></td><td>A generic error.</td></tr>
+                <tr>                     <td><code>10</code></td><td>Required parameter is missing.</td></tr>
+                <tr class="table-altrow"><td><code>20</code></td><td>Incompatible Subsonic REST protocol version. Client must upgrade.</td></tr>
+                <tr>                     <td><code>30</code></td><td>Incompatible Subsonic REST protocol version. Server must upgrade.</td></tr>
+                <tr class="table-altrow"><td><code>40</code></td><td>Wrong username or password.</td></tr>
+                <tr>                     <td><code>50</code></td><td>User is not authorized for the given operation.</td></tr>
+            </table>
 
             <h2 class="div">ping</h2>
             <p>

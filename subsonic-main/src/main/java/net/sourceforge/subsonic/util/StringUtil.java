@@ -497,16 +497,4 @@ public final class StringUtil {
         // TODO: Read from xsd.
         return "1.0.0";
     }
-
-
-    public static boolean isRESTProtocolCompatible(String version) {
-        if (StringUtils.trimToNull(version) == null) {
-            return false;
-        }
-
-        Version theirVersion = new Version(version);
-        Version myVersion = new Version(getRESTProtocolVersion());
-
-        return theirVersion.getMajor() == myVersion.getMajor();
-    }
 }

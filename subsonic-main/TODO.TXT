@@ -37,7 +37,7 @@ DONE IN 3.8
 (Android) Songs that are already downloaded are now indicated with an asterix.
 (Android) Songs that are already downloaded are now played as local files, rather than streamed.
 (Android) New option: Download and play.
-
+Documented error codes in REST API.
 
 ANDROID
 -------

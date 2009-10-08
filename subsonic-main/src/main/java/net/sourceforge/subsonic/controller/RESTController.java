@@ -468,10 +468,11 @@ public class RESTController extends MultiActionController {
     public static enum ErrorCode {
 
         GENERIC(0, "A generic error"),
-        MISSING_PARAMETER(1, "Required parameter is missing"),
-        PROTOCOL_MISMATCH(10, "Wrong Subsonic REST protocol version"),
-        NOT_AUTHENTICATED(11, "Wrong username or password"),
-        NOT_AUTHORIZED(12, "User is not authorized for the given operation");
+        MISSING_PARAMETER(10, "Required parameter is missing"),
+        PROTOCOL_MISMATCH_CLIENT_TOO_OLD(20, "Incompatible Subsonic REST protocol version. Client must upgrade."),
+        PROTOCOL_MISMATCH_SERVER_TOO_OLD(30, "Incompatible Subsonic REST protocol version. Server must upgrade."),
+        NOT_AUTHENTICATED(40, "Wrong username or password"),
+        NOT_AUTHORIZED(50, "User is not authorized for the given operation");
 
         private final int code;
         private final String message;

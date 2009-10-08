@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.security;
 
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.Version;
 import net.sourceforge.subsonic.controller.RESTController;
 import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.util.XMLBuilder;
@@ -27,6 +28,7 @@ import org.acegisecurity.AuthenticationException;
 import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.providers.ProviderManager;
 import org.acegisecurity.providers.UsernamePasswordAuthenticationToken;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -68,22 +70,29 @@ public class RESTRequestParameterProcessingFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        String username = httpRequest.getParameter("u");
-        String password = decrypt(httpRequest.getParameter("p"));
-        String version = httpRequest.getParameter("v");
-        String client = httpRequest.getParameter("c");
+        String username = StringUtils.trimToNull(httpRequest.getParameter("u"));
+        String password = decrypt(StringUtils.trimToNull(httpRequest.getParameter("p")));
+        String version = StringUtils.trimToNull(httpRequest.getParameter("v"));
+        String client = StringUtils.trimToNull(httpRequest.getParameter("c"));
 
         RESTController.ErrorCode errorCode = null;
 
-        if (!StringUtil.isRESTProtocolCompatible(version)) {
-            errorCode = RESTController.ErrorCode.PROTOCOL_MISMATCH;
-        } else if (username == null || password == null) {
-            errorCode = RESTController.ErrorCode.NOT_AUTHENTICATED;
-        } else if (client == null) {
+        if (username == null || password == null || version == null || client == null) {
             errorCode = RESTController.ErrorCode.MISSING_PARAMETER;
         }
 
-        else {
+        if (errorCode == null) {
+            Version ourVersion = new Version(StringUtil.getRESTProtocolVersion());
+            Version theirVersion = new Version(version);
+
+            if (ourVersion.getMajor() > theirVersion.getMajor()) {
+                errorCode = RESTController.ErrorCode.PROTOCOL_MISMATCH_CLIENT_TOO_OLD;
+            } else if (ourVersion.getMajor() < theirVersion.getMajor()) {
+                errorCode = RESTController.ErrorCode.PROTOCOL_MISMATCH_SERVER_TOO_OLD;
+            }
+        }
+
+        if (errorCode == null) {
             try {
                 UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
                 Authentication authResult = authenticationManager.authenticate(authRequest);
@@ -93,14 +102,13 @@ public class RESTRequestParameterProcessingFilter implements Filter {
             }
         }
 
-        if (errorCode != null) {
-            // Authentication failed
+        if (errorCode == null) {
+            chain.doFilter(request, response);
+        } else {
             LOG.info("Authentication failed for user " + username);
 
             SecurityContextHolder.getContext().setAuthentication(null);
             sendErrorXml(httpResponse, errorCode);
-        } else {
-            chain.doFilter(request, response);
         }
     }
 
