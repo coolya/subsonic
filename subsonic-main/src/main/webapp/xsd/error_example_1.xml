@@ -3,6 +3,6 @@
 <subsonic-response xmlns="http://subsonic.sourceforge.net/restapi"
                    status="failed" version="1.0.0">
 
-    <error code="11" message="Wrong username or password"/>
+    <error code="40" message="Wrong username or password."/>
 
 </subsonic-response>

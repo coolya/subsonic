@@ -46,15 +46,10 @@ Bugfix: Fixed wrong background color in More page.
 
 ANDROID
 -------
-Show slider if local file.
 Add option to delete selected songs.
 Update subsonic-ad.php
 Make video.
 Post on forum, freshmeat, facebook.
-Use two different error codes on version mismatch.
-Document error codes.
-Append zero to all error codes.
-Make sure proper error message if versions mismatch.
 Show more info per song (like gmail app)
 Is there a more generic broadcast event to listen to when the media collection changes?
 Don't download if already existing.

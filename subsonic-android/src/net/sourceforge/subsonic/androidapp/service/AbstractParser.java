@@ -26,7 +26,20 @@ import org.xmlpull.v1.XmlPullParser;
 public abstract class AbstractParser {
 
     protected void handleError(XmlPullParser parser) throws Exception {
-        throw new Exception(get(parser, "message"));
+        int code = getInteger(parser, "code");
+        String message;
+        switch (code) {
+            case 20:
+                message = "Incompatible versions. Please upgrade Subsonic Android application.";
+                break;
+            case 30:
+                message = "Incompatible versions. Please upgrade Subsonic server.";
+                break;
+            default:
+                message = get(parser, "message");
+                break;
+        }
+        throw new Exception(message);
     }
 
     protected String get(XmlPullParser parser, String name) {
