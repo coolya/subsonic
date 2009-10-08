@@ -154,6 +154,10 @@ public class StreamService extends ServiceBase {
         player.get().play(song);
     }
 
+    public void seekTo(int position) {
+        player.get().seekTo(position);
+    }
+
     private void selectPlayerForSong(PlaylistEntry song) {
         for (Player p : players) {
             if (song == p.getSong()) {
@@ -540,6 +544,10 @@ public class StreamService extends ServiceBase {
         public void pause() {
             mediaPlayer.pause();
             setPlayerState(PAUSED);
+        }
+
+        public void seekTo(int position) {
+            mediaPlayer.seekTo(position);
         }
 
         public void reset() {

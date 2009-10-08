@@ -2,6 +2,7 @@ package net.sourceforge.subsonic.androidapp.activity;
 
 
 import java.util.List;
+import java.io.File;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -19,7 +20,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 import net.sourceforge.subsonic.androidapp.R;
@@ -128,6 +128,12 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
             }
         });
 
+        progressBar.setOnSliderChangeListener(new HorizontalSlider.OnSliderChangeListener() {
+            @Override
+            public void onSliderChanged(View view, int position) {
+                streamService.seekTo(position);
+            }
+        });
         playlistView.setOnItemClickListener(this);
 
         bindService(new Intent(this, StreamService.class), streamServiceConnection, Context.BIND_AUTO_CREATE);
@@ -240,7 +246,9 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
             currentTextView.setText(current.getTitle());
             albumArtTextView.setText(current.getTitle() + " - " + current.getArtist());
             imageLoader.loadImage(currentTextView, current, 48);
-            imageLoader.loadImage(albumArtImageView, current, 320); //TODO
+            imageLoader.loadImage(albumArtImageView, current, 320);
+            File file = streamService.getSongFile(current, false);
+            progressBar.setSlidingEnabled(file.exists());
         }
     }
 

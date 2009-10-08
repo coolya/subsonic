@@ -46,6 +46,7 @@ Bugfix: Fixed wrong background color in More page.
 
 ANDROID
 -------
+Make slider work in Download+Play mode.
 Show slider if local file.
 Add option to delete selected songs.
 Update subsonic-ad.php
