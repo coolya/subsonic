@@ -46,16 +46,16 @@ Bugfix: Fixed wrong background color in More page.
 
 ANDROID
 -------
+Find nice slider bullet graphics.
+Show version number.
 Add option to delete selected songs.
 Update subsonic-ad.php
 Make video.
 Post on forum, freshmeat, facebook.
 Show more info per song (like gmail app)
 Is there a more generic broadcast event to listen to when the media collection changes?
-Don't download if already existing.
 Fix encoding problems in Subsonic Demo files.
 Handle XML exception better.
-Show version number.
 Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
 Use music index last modified + invalidate cache after a while.
 Use weak references in image cache?
