@@ -115,7 +115,7 @@
                 a:text="0:00"/>
     </LinearLayout>
 
-    <ProgressBar
+    <net.sourceforge.subsonic.androidapp.util.HorizontalSlider
             style="?android:attr/progressBarStyleHorizontal"
             a:id="@+id/stream_queue_progress_bar"
             a:indeterminate="false"
