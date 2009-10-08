@@ -36,6 +36,7 @@ import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.TwoLineListAdapter;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.HorizontalSlider;
 
 public class StreamQueueActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
@@ -55,7 +56,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
     private TextView positionTextView;
     private TextView durationTextView;
     private TextView statusTextView;
-    private ProgressBar progressBar;
+    private HorizontalSlider progressBar;
     private ImageView previousButton;
     private ImageView nextButton;
     private ImageView pauseButton;
@@ -78,7 +79,7 @@ public class StreamQueueActivity extends OptionsMenuActivity implements AdapterV
         positionTextView = (TextView) findViewById(R.id.stream_queue_position);
         durationTextView = (TextView) findViewById(R.id.stream_queue_duration);
         statusTextView = (TextView) findViewById(R.id.stream_queue_status);
-        progressBar = (ProgressBar) findViewById(R.id.stream_queue_progress_bar);
+        progressBar = (HorizontalSlider) findViewById(R.id.stream_queue_progress_bar);
         playlistView = (ListView) findViewById(R.id.stream_queue_list);
         previousButton = (ImageView) findViewById(R.id.stream_queue_previous);
         nextButton = (ImageView) findViewById(R.id.stream_queue_next);
