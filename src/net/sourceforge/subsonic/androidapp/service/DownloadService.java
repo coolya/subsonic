@@ -137,11 +137,22 @@ public class DownloadService extends ServiceBase {
     }
 
     public void download(List<MusicDirectory.Entry> songs) {
-        String message = songs.size() == 1 ? "Added \"" + songs.get(0).getTitle() + "\" to download queue." :
-                         "Added " + songs.size() + " songs to download queue.";
+        ArrayList<MusicDirectory.Entry> nonExistentSongs = new ArrayList<MusicDirectory.Entry>(songs.size());
+        for (MusicDirectory.Entry song : songs) {
+            File file = getSongFile(song, false);
+            if (!file.exists()) {
+                nonExistentSongs.add(song);
+            }
+        }
+        if (nonExistentSongs.isEmpty()) {
+            return;
+        } 
+
+        String message = nonExistentSongs.size() == 1 ? "Added \"" + nonExistentSongs.get(0).getTitle() + "\" to download queue." :
+                         "Added " + nonExistentSongs.size() + " songs to download queue.";
         updateNotification();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        queue.addAll(songs);
+        queue.addAll(nonExistentSongs);
         broadcastChange(false);
     }
 
