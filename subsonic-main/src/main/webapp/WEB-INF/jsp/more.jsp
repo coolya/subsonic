@@ -39,7 +39,7 @@
     </script>
 
 </head>
-<body class="mainframe" onload="${model.user.uploadRole ? "refreshProgress()" : ""}">
+<body class="mainframe bgcolor1" onload="${model.user.uploadRole ? "refreshProgress()" : ""}">
 
 <h1>
     <img src="<spring:theme code="moreImage"/>" alt=""/>

@@ -1,6 +1,9 @@
 TODO IN 3.8
 --------------
 In licence email, explain how to install it.
+Fix "More" page in some themes. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7212#7212
+
+
 Check out www.element5.com for payment.  SWReg
 Add button for donating.
 Add FLAC>WAV transcoding
@@ -39,6 +42,7 @@ DONE IN 3.8
 (Android) New option: Download and play.
 Documented error codes in REST API.
 Updated Swedish translation, courtesy of Fritte.
+Bugfix: Fixed wrong background color in More page.
 
 ANDROID
 -------
