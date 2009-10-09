@@ -140,13 +140,14 @@ public class DownloadService extends ServiceBase {
         ArrayList<MusicDirectory.Entry> nonExistentSongs = new ArrayList<MusicDirectory.Entry>(songs.size());
         for (MusicDirectory.Entry song : songs) {
             File file = getSongFile(song, false);
-            if (!file.exists()) {
+            File tmpFile = new File(file.getPath() + ".tmp");
+            if (!file.exists() && !tmpFile.exists()) {
                 nonExistentSongs.add(song);
             }
         }
         if (nonExistentSongs.isEmpty()) {
             return;
-        } 
+        }
 
         String message = nonExistentSongs.size() == 1 ? "Added \"" + nonExistentSongs.get(0).getTitle() + "\" to download queue." :
                          "Added " + nonExistentSongs.size() + " songs to download queue.";

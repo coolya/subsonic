@@ -7,13 +7,14 @@
 package net.sourceforge.subsonic.androidapp.util;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
+import net.sourceforge.subsonic.androidapp.R;
 
 /**
  * @author Sindre Mehus
@@ -21,6 +22,7 @@ import android.graphics.Paint;
  */
 public class HorizontalSlider extends ProgressBar {
 
+    private final Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.slider_knob);
     private boolean slidingEnabled;
     private OnSliderChangeListener listener;
     private static final int PADDING = 2;
@@ -68,8 +70,6 @@ public class HorizontalSlider extends ProgressBar {
             return;
         }
 
-        // TODO: Optimize
-
         int paddingLeft = getPaddingLeft();
         int paddingRight = getPaddingRight();
         int paddingTop = getPaddingTop();
@@ -77,18 +77,16 @@ public class HorizontalSlider extends ProgressBar {
 
         int w = getWidth() - paddingLeft - paddingRight;
         int h = getHeight() - paddingTop - paddingBottom;
-
         int position = sliding ? sliderPosition : getProgress();
 
-        float radius = 10.0F;
-        float cx = paddingLeft + w * ((float) position / max);
-        cx = Math.max(paddingLeft + radius, cx);
-        cx = Math.min(paddingLeft + w - radius, cx);
-        float cy = paddingTop + h / 2.0F;
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setColor(Color.WHITE); // TODO: Use icon, or off-white.
-        canvas.drawCircle(cx, cy, radius, paint);
+        int bitmapWidth = bitmap.getWidth();
+        int bitmapHeight = bitmap.getWidth();
+        float x = paddingLeft + w * ((float) position / max) - bitmapWidth / 2.0F;
+        x = Math.max(x, paddingLeft);
+        x = Math.min(x, paddingLeft + w - bitmapWidth);
+        float y = paddingTop + h / 2.0F - bitmapHeight / 2.0F;
+
+        canvas.drawBitmap(bitmap, x, y, null);
     }
 
     @Override
