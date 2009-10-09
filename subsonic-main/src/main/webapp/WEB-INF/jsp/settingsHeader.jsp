@@ -7,20 +7,23 @@
     <fmt:message key="settingsheader.title"/>
 </h1>
 
-<h2>
-    <c:forTokens items="${categories}" delims=" " var="cat" varStatus="loopStatus">
-        <c:if test="${loopStatus.count > 1}">&nbsp;|&nbsp;</c:if>
-        <c:url var="url" value="${cat}Settings.view?"/>
+<c:forTokens items="${categories}" delims=" " var="cat" varStatus="loopStatus">
 
-        <c:choose>
-            <c:when test="${param.cat eq cat}">
-                <span class="headerSelected"><fmt:message key="settingsheader.${cat}"/></span>
-            </c:when>
-            <c:otherwise>
-                <a href="${url}"><fmt:message key="settingsheader.${cat}"/></a>
-            </c:otherwise>
-        </c:choose>
+    <c:if test="${(loopStatus.count - 1) % 5 == 0}"><h2></c:if>
+    <c:if test="${loopStatus.count > 1 and  (loopStatus.count - 1) % 5 != 0}">&nbsp;|&nbsp;</c:if>
+    <c:url var="url" value="${cat}Settings.view?"/>
 
-    </c:forTokens>
-</h2>
+    <c:choose>
+        <c:when test="${param.cat eq cat}">
+            <span class="headerSelected"><fmt:message key="settingsheader.${cat}"/></span>
+        </c:when>
+        <c:otherwise>
+            <a href="${url}"><fmt:message key="settingsheader.${cat}"/></a>
+        </c:otherwise>
+    </c:choose>
+
+    <c:if test="${(loopStatus.count) % 5 == 0}"></h2></c:if>
+
+</c:forTokens>
+
 <p/>
