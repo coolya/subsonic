@@ -50,7 +50,6 @@ Show version number.
 Add option to delete selected songs.
 Update subsonic-ad.php
 Make video.
-Post on forum, freshmeat, facebook.
 Show more info per song (like gmail app)
 Is there a more generic broadcast event to listen to when the media collection changes?
 Fix encoding problems in Subsonic Demo files.
@@ -66,7 +65,6 @@ Show currently playing song in playlist.
 Support max bitrate in settings. ("Preferred bitrate")
 Must resolve content type in StreamController, even if "suffix" is not given.
 Add duration to rest api.
-Eager download of playlist.
 User should be able to select music folder. (Let REST method support it at least).
 Merge artists in REST method.  Make it possible to specify music folder.
 REST method for getting lyrics.

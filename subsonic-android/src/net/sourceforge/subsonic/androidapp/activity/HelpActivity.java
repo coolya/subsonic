@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.content.Intent;
+import android.net.Uri;
 import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.util.Constants;
 
 public class HelpActivity extends OptionsMenuActivity {
 
@@ -16,7 +19,6 @@ public class HelpActivity extends OptionsMenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.help);
         TextView helpTextView = (TextView) findViewById(R.id.help_text);
-//        helpTextView.setAutoLinkMask(Linkify.WEB_URLS);
 
         helpTextView.setText("With Subsonic you can easily stream or download music from your home computer to your Android phone " +
                 "(and do lots of other cool stuff too).\n" +
@@ -44,6 +46,12 @@ public class HelpActivity extends OptionsMenuActivity {
             }
         });
 
-
+        Button donateButton = (Button) findViewById(R.id.help_donate);
+        donateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.DONATION_URL)));
+            }
+        });
     }
 }
