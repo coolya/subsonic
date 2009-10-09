@@ -2,10 +2,9 @@ TODO IN 3.8
 --------------
 In licence email, explain how to install it.
 Fix "More" page in some themes. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7212#7212
-
+Write about Android player in "More".
 
 Check out www.element5.com for payment.  SWReg
-Add button for donating.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
@@ -418,5 +417,5 @@ NETGEAR ReadyNAS, Buffalo Linkstation, Linksys NSLU2 and any device running Free
 
 rsync -avP -e ssh music.demo/ sindremehus@www.gosubsonic.com:music.demo
 
--Dsubsonic.war=out\exploded\subsonic-mainWeb -Dsubsonic.createLinkFile=true -Dsubsonic.windowsInstall=true -Dsubsonic.port=8080 -Dsubsonic.contextPath=/
+-Dsubsonic.war=subsonic-main/target/subsonic -Dsubsonic.createLinkFile=true -Dsubsonic.windowsInstall=true -Dsubsonic.port=8080 -Dsubsonic.contextPath=/
 
