@@ -55,6 +55,8 @@ public final class Constants {
     public static final int SOCKET_CONNECT_TIMEOUT = 10000;
     public static final int SOCKET_READ_TIMEOUT = 20000;
 
+    // URL for project donations.
+    public static final String DONATION_URL = "http://subsonic.sf.net/android-donation.php";
 
     private Constants() {
     }
