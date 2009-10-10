@@ -22,6 +22,10 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Iterator;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
 import org.directwebremoting.ScriptBuffer;
@@ -31,7 +35,6 @@ import org.directwebremoting.WebContextFactory;
 
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
-import net.sf.ehcache.CacheException;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.util.BoundedList;
 import net.sourceforge.subsonic.Logger;
@@ -51,6 +54,7 @@ public class ChatService {
     private LinkedList<Message> messages;
     private SecurityService securityService;
     private Ehcache chatCache;
+    private static final long TTL_MILLIS = TimeUnit.DAYS.toMillis(7);
 
     /**
      * Invoked by Spring.
@@ -66,6 +70,25 @@ public class ChatService {
         } catch (Exception x) {
             LOG.warn("Failed to re-create chat messages.", x);
             messages = new BoundedList<Message>(MAX_MESSAGES);
+        }
+
+        // Delete old messages every hour.
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        Runnable runnable = new Runnable() {
+            public void run() {
+                removeOldMessages();
+            }
+        };
+        executor.scheduleWithFixedDelay(runnable, 0, 1, TimeUnit.HOURS);
+    }
+
+    private synchronized void removeOldMessages() {
+        long now = System.currentTimeMillis();
+        for (Iterator<Message> iterator = messages.iterator(); iterator.hasNext();) {
+            Message message = iterator.next();
+            if (now - message.getDate().getTime() > TTL_MILLIS) {
+                iterator.remove();
+            }
         }
     }
 

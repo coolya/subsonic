@@ -1,6 +1,5 @@
 TODO IN 3.8
 --------------
-Delete old chat entries.
 Add chat title "Message".
 Make right frame smaller.
 In licence email, explain how to install it.
@@ -43,6 +42,7 @@ DONE IN 3.8
 (Android) Songs that are already downloaded are now played as local files, rather than streamed.
 (Android) New option: Download and play.
 Added option to disable chat messages.
+Delete chat entries more than seven days old.
 Documented error codes in REST API.
 Updated Swedish translation, courtesy of Fritte.
 Bugfix: Fixed wrong background color in More page.
