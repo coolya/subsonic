@@ -900,6 +900,7 @@ public class SettingsService {
         settings.setFinalVersionNotificationEnabled(true);
         settings.setBetaVersionNotificationEnabled(false);
         settings.setShowNowPlayingEnabled(true);
+        settings.setShowChatEnabled(true);
         settings.setPartyModeEnabled(false);
         settings.setNowPlayingAllowed(true);
         settings.setLastFmEnabled(false);

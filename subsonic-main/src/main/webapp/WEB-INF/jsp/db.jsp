@@ -2,7 +2,7 @@
 
 <html><head>
     <%@ include file="head.jsp" %>
-</head><body>
+</head><body class="mainframe bgcolor1">
 
 <h1>Database query</h1>
 

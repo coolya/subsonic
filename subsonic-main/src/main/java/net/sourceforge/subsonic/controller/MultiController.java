@@ -29,6 +29,7 @@ import java.net.URLEncoder;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.util.StringUtil;
 
 /**
@@ -72,7 +73,10 @@ public class MultiController extends MultiActionController {
     }
 
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
+        UserSettings userSettings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
+
         Map<String, Object> map = new HashMap<String, Object>();
+        map.put("showRight", userSettings.isShowNowPlayingEnabled() || userSettings.isShowChatEnabled());
         map.put("brand", settingsService.getBrand());
         return new ModelAndView("index", "model", map);
     }

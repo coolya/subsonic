@@ -15,46 +15,13 @@
 <body class="bgcolor1 rightframe" style="padding-top:2em" onload="init()">
 
 <script type="text/javascript">
-
     function init() {
         setupZoom('<c:url value="/"/>');
         dwr.engine.setErrorHandler(null);
+    <c:if test="${model.showChat}">
         dwr.engine.setActiveReverseAjax(true);
         chatService.addMessage(null);
-    }
-    function addMessage() {
-        chatService.addMessage($("message").value);
-        dwr.util.setValue("message", null);
-    }
-    function receiveMessages(messages) {
-
-        // Delete all the rows except for the "pattern" row
-        dwr.util.removeAllRows("chatlog", { filter:function(div) {
-            return (div.id != "pattern");
-        }});
-
-        // Create a new set cloned from the pattern row
-        for (var i = 0; i < messages.length; i++) {
-            var message = messages[i];
-            var id = i + 1;
-            dwr.util.cloneNode("pattern", { idSuffix:id });
-            dwr.util.setValue("user" + id, message.username);
-            dwr.util.setValue("date" + id, " [" + formatDate(message.date) + "]");
-            dwr.util.setValue("content" + id, message.content);
-            $("pattern" + id).show();
-        }
-    }
-    function formatDate(date) {
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-        var result = hours < 10 ? "0" : "";
-        result += hours;
-        result += ":";
-        if (minutes < 10) {
-            result += "0";
-        }
-        result += minutes;
-        return result;
+    </c:if>
     }
 </script>
 
@@ -102,20 +69,70 @@
             prepZooms();
         }
     </script>
-</c:if>
 
-<div id="nowPlaying">
-</div>
-
-<div id="chatlog" style="padding-top:2em">
-    <div id="pattern" style="display:none;margin:0;padding:0 0 0.15em 0;border:0">
-        <span id="user" class="detail" style="font-weight:bold"></span> <span id="date" class="detail"></span> <span id="content"></span>
+    <div id="nowPlaying">
     </div>
 
-    <p style="padding-top:1.0em">
-        <input id="message" value=" <fmt:message key="main.message"/>" style="width:100%" onclick="dwr.util.setValue('message', null);" onkeypress="dwr.util.onReturn(event, addMessage)"/>
-    </p>
-</div>
+</c:if>
+
+<c:if test="${model.showChat}">
+    <script type="text/javascript">
+
+        function init() {
+            setupZoom('<c:url value="/"/>');
+            dwr.engine.setErrorHandler(null);
+        <c:if test="${model.showChat}">
+            dwr.engine.setActiveReverseAjax(true);
+            chatService.addMessage(null);
+        </c:if>
+        }
+        function addMessage() {
+            chatService.addMessage($("message").value);
+            dwr.util.setValue("message", null);
+        }
+        function receiveMessages(messages) {
+
+            // Delete all the rows except for the "pattern" row
+            dwr.util.removeAllRows("chatlog", { filter:function(div) {
+                return (div.id != "pattern");
+            }});
+
+            // Create a new set cloned from the pattern row
+            for (var i = 0; i < messages.length; i++) {
+                var message = messages[i];
+                var id = i + 1;
+                dwr.util.cloneNode("pattern", { idSuffix:id });
+                dwr.util.setValue("user" + id, message.username);
+                dwr.util.setValue("date" + id, " [" + formatDate(message.date) + "]");
+                dwr.util.setValue("content" + id, message.content);
+                $("pattern" + id).show();
+            }
+        }
+        function formatDate(date) {
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var result = hours < 10 ? "0" : "";
+            result += hours;
+            result += ":";
+            if (minutes < 10) {
+                result += "0";
+            }
+            result += minutes;
+            return result;
+        }
+    </script>
+
+    <h2><fmt:message key="main.chat"/></h2>
+    <div id="chatlog">
+        <div id="pattern" style="display:none;margin:0;padding:0 0 0.15em 0;border:0">
+            <span id="user" class="detail" style="font-weight:bold"></span> <span id="date" class="detail"></span> <span id="content"></span>
+        </div>
+
+        <p style="padding-top:1.0em">
+            <input id="message" value=" <fmt:message key="main.message"/>" style="width:100%" onclick="dwr.util.setValue('message', null);" onkeypress="dwr.util.onReturn(event, addMessage)"/>
+        </p>
+    </div>
+</c:if>
 
 </body>
 </html>

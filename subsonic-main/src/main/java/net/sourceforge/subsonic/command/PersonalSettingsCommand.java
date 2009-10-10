@@ -44,6 +44,7 @@ public class PersonalSettingsCommand {
     private UserSettings.Visibility playlistVisibility;
     private boolean partyModeEnabled;
     private boolean showNowPlayingEnabled;
+    private boolean showChatEnabled;
     private boolean nowPlayingAllowed;
     private boolean finalVersionNotificationEnabled;
     private boolean betaVersionNotificationEnabled;
@@ -146,6 +147,14 @@ public class PersonalSettingsCommand {
 
     public void setShowNowPlayingEnabled(boolean showNowPlayingEnabled) {
         this.showNowPlayingEnabled = showNowPlayingEnabled;
+    }
+
+    public boolean isShowChatEnabled() {
+        return showChatEnabled;
+    }
+
+    public void setShowChatEnabled(boolean showChatEnabled) {
+        this.showChatEnabled = showChatEnabled;
     }
 
     public boolean isNowPlayingAllowed() {

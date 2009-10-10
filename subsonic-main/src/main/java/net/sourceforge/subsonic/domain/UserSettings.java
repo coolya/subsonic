@@ -31,6 +31,7 @@ public class UserSettings {
     private Locale locale;
     private String themeId;
     private boolean showNowPlayingEnabled;
+    private boolean showChatEnabled;
     private boolean finalVersionNotificationEnabled;
     private boolean betaVersionNotificationEnabled;
     private Visibility mainVisibility = new Visibility();
@@ -80,6 +81,14 @@ public class UserSettings {
 
     public void setShowNowPlayingEnabled(boolean showNowPlayingEnabled) {
         this.showNowPlayingEnabled = showNowPlayingEnabled;
+    }
+
+    public boolean isShowChatEnabled() {
+        return showChatEnabled;
+    }
+
+    public void setShowChatEnabled(boolean showChatEnabled) {
+        this.showChatEnabled = showChatEnabled;
     }
 
     public boolean isFinalVersionNotificationEnabled() {

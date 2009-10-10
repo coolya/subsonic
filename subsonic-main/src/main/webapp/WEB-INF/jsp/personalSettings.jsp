@@ -128,16 +128,16 @@
         <tr>
             <td><form:checkbox path="showNowPlayingEnabled" id="nowPlaying" cssClass="checkbox"/></td>
             <td><label for="nowPlaying"><fmt:message key="personalsettings.shownowplaying"/></label></td>
-            <td style="padding-left:2em"><form:checkbox path="partyModeEnabled" id="partyModeEnabled" cssClass="checkbox"/></td>
-            <td><label for="partyModeEnabled"><fmt:message key="personalsettings.partymode"/></label>
-                <c:import url="helpToolTip.jsp"><c:param name="topic" value="partymode"/></c:import>
-            </td>
+            <td style="padding-left:2em"><form:checkbox path="showChatEnabled" id="chat" cssClass="checkbox"/></td>
+            <td><label for="chat"><fmt:message key="personalsettings.showchat"/></label></td>
         </tr>
         <tr>
             <td><form:checkbox path="nowPlayingAllowed" id="nowPlayingAllowed" cssClass="checkbox"/></td>
             <td><label for="nowPlayingAllowed"><fmt:message key="personalsettings.nowplayingallowed"/></label></td>
-            <td/>
-            <td/>
+            <td style="padding-left:2em"><form:checkbox path="partyModeEnabled" id="partyModeEnabled" cssClass="checkbox"/></td>
+            <td><label for="partyModeEnabled"><fmt:message key="personalsettings.partymode"/></label>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="partymode"/></c:import>
+            </td>
         </tr>
     </table>
 
@@ -221,10 +221,7 @@
 
 <c:if test="${command.reloadNeeded}">
     <script language="javascript" type="text/javascript">
-        parent.frames.left.location.href="left.view?";
-        parent.frames.right.location.href="right.view?";
-        parent.frames.upper.location.href="top.view?";
-        parent.frames.playlist.location.href="playlist.view?";
+        parent.location.href="index.view?";
     </script>
 </c:if>
 

@@ -1,5 +1,8 @@
 TODO IN 3.8
 --------------
+Delete old chat entries.
+Add chat title "Message".
+Make right frame smaller.
 In licence email, explain how to install it.
 Fix "More" page in some themes. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7212#7212
 Write about Android player in "More".
@@ -39,15 +42,16 @@ DONE IN 3.8
 (Android) Songs that are already downloaded are now indicated with an asterix.
 (Android) Songs that are already downloaded are now played as local files, rather than streamed.
 (Android) New option: Download and play.
+Added option to disable chat messages.
 Documented error codes in REST API.
 Updated Swedish translation, courtesy of Fritte.
 Bugfix: Fixed wrong background color in More page.
 
 ANDROID
 -------
+Show bitrate when downloading.
 Add option to delete selected songs.
 Update subsonic-ad.php
-Make video.
 Show more info per song (like gmail app)
 Is there a more generic broadcast event to listen to when the media collection changes?
 Fix encoding problems in Subsonic Demo files.
