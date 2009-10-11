@@ -15,6 +15,8 @@
             <xs:element name="directory" type="sub:Directory" minOccurs="1" maxOccurs="1"/>
             <xs:element name="nowPlaying" type="sub:NowPlaying" minOccurs="1" maxOccurs="1"/>
             <xs:element name="searchResult" type="sub:SearchResult" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="playlists" type="sub:Playlists" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="playlist" type="sub:Playlist" minOccurs="1" maxOccurs="1"/>
             <xs:element name="license" type="sub:License" minOccurs="1" maxOccurs="1"/>
             <xs:element name="error" type="sub:Error" minOccurs="1" maxOccurs="1"/>
         </xs:choice>
@@ -113,6 +115,27 @@
         </xs:sequence>
         <xs:attribute name="offset" type="xs:int" use="required"/>
         <xs:attribute name="totalHits" type="xs:int" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="Playlists">
+        <xs:sequence>
+            <xs:element name="playlist" type="sub:PlaylistIdAndName" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PlaylistIdAndName">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="Playlist">
+        <xs:complexContent>
+            <xs:extension base="sub:PlaylistIdAndName">
+                <xs:sequence>
+                    <xs:element name="entry" type="sub:Child" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
     <xs:complexType name="License">

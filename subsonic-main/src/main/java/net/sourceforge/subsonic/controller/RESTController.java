@@ -36,6 +36,7 @@ import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+import org.apache.commons.io.FilenameUtils;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.command.UserSettingsCommand;
@@ -50,6 +51,7 @@ import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.domain.PlayerTechnology;
 import net.sourceforge.subsonic.domain.SearchCriteria;
 import net.sourceforge.subsonic.domain.SearchResult;
+import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SecurityService;
@@ -57,6 +59,7 @@ import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.service.SearchService;
+import net.sourceforge.subsonic.service.PlaylistService;
 import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.util.XMLBuilder;
 import static net.sourceforge.subsonic.util.XMLBuilder.Attribute;
@@ -84,6 +87,7 @@ public class RESTController extends MultiActionController {
     private StatusService statusService;
     private StreamController streamController;
     private SearchService searchService;
+    private PlaylistService playlistService;
 
     public ModelAndView ping(HttpServletRequest request, HttpServletResponse response) throws Exception {
         createXMLBuilder(response, true).endAll();
@@ -236,6 +240,54 @@ public class RESTController extends MultiActionController {
             builder.add("entry", attributes, true);
         }
         builder.endAll();
+
+        return null;
+    }
+
+    public ModelAndView getPlaylists(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        XMLBuilder builder = createXMLBuilder(response, true);
+
+        builder.add("playlists", false);
+
+        for (File playlist : playlistService.getSavedPlaylists()) {
+            String name = playlist.getName();
+            String id = FilenameUtils.getBaseName(name);
+            builder.add("playlist", true, new Attribute("id", id), new Attribute("name", name));
+        }
+        builder.endAll();
+
+        return null;
+    }
+
+    public ModelAndView getPlaylist(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        createPlayerIfNecessary(request);
+        Player player = playerService.getPlayer(request, response);
+
+        XMLBuilder builder = createXMLBuilder(response, true);
+        builder.add("playlist", false);
+
+        try {
+            String id = ServletRequestUtils.getRequiredStringParameter(request, "id");
+            File file = playlistService.getSavedPlaylist(id);
+            if (file == null) {
+                throw new Exception("Playlist not found.");
+            }
+            Playlist playlist = new Playlist();
+            playlistService.loadPlaylist(playlist, id);
+
+            for (MusicFile musicFile : playlist.getFiles()) {
+                List<File> coverArt = musicFileService.getCoverArt(musicFile.getParent(), 1);
+                List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
+                builder.add("entry", attributes, true);
+            }
+            builder.endAll();
+        } catch (ServletRequestBindingException x) {
+            error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
+        } catch (Exception x) {
+            error(response, ErrorCode.GENERIC, x.getMessage());
+        }
 
         return null;
     }
@@ -499,6 +551,10 @@ public class RESTController extends MultiActionController {
 
     public void setSearchService(SearchService searchService) {
         this.searchService = searchService;
+    }
+
+    public void setPlaylistService(PlaylistService playlistService) {
+        this.playlistService = playlistService;
     }
 
     public void setStreamController(StreamController streamController) {

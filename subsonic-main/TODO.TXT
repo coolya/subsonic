@@ -4,6 +4,7 @@ TEST: Improve error message when not connected. Use same as weather widget. Must
 In licence email, explain how to install it.
 Write about Android player in "More".
 TEST: REST search. Update schema version.
+REST method for playlist access.
 
 Improve menus in web pages.  Make sub menus.
 Add FLAC>WAV transcoding
