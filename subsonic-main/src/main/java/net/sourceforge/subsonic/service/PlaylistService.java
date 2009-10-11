@@ -120,6 +120,21 @@ public class PlaylistService {
     }
 
     /**
+     * Returns the saved playlist with the given name.
+     *
+     * @param name The name of the playlist.
+     * @return The playlist, or <code>null</code> if not found.
+     */
+    public File getSavedPlaylist(String name) {
+        for (File file : getSavedPlaylists()) {
+            if (name.equals(file.getName())) {
+                return file;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Deletes the named playlist from persistent storage.
      *
      * @param name The name of the playlist to delete.
