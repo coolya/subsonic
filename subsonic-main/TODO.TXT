@@ -2,6 +2,7 @@ TODO IN 3.8
 --------------
 In licence email, explain how to install it.
 Write about Android player in "More".
+REST search
 
 Check out www.element5.com for payment.  SWReg
 Add FLAC>WAV transcoding
