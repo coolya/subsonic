@@ -16,7 +16,7 @@ public final class Constants {
     public static final String UTF_8 = "UTF-8";
 
     // REST protocol version and client ID.
-    public static final String REST_PROTOCOL_VERSION = "1.0.0";
+    public static final String REST_PROTOCOL_VERSION = "1.1.0";
     public static final String REST_CLIENT_ID = "android";
 
     // Intent actions.
