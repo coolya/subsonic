@@ -100,7 +100,6 @@
 
 <div id="side-col">
     <?php include("download-subsonic.php"); ?>
-    <?php include("android.php"); ?>
     <?php include("quotes.php"); ?>
     <?php include("donate.php"); ?>
     <div class="bottomspace">

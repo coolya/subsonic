@@ -3,8 +3,9 @@ TODO IN 3.8
 TEST: Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
 In licence email, explain how to install it.
 Write about Android player in "More".
-REST search
+TEST: REST search. Update schema version.
 
+Improve menus in web pages.  Make sub menus.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225

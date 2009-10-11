@@ -48,12 +48,15 @@ import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.domain.TransferStatus;
 import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.domain.PlayerTechnology;
+import net.sourceforge.subsonic.domain.SearchCriteria;
+import net.sourceforge.subsonic.domain.SearchResult;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.service.StatusService;
+import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.util.XMLBuilder;
 import static net.sourceforge.subsonic.util.XMLBuilder.Attribute;
@@ -80,6 +83,7 @@ public class RESTController extends MultiActionController {
     private LeftController leftController;
     private StatusService statusService;
     private StreamController streamController;
+    private SearchService searchService;
 
     public ModelAndView ping(HttpServletRequest request, HttpServletResponse response) throws Exception {
         createXMLBuilder(response, true).endAll();
@@ -198,6 +202,38 @@ public class RESTController extends MultiActionController {
         for (MusicFile musicFile : dir.getChildren(true, true)) {
             List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
             builder.add("child", attributes, true);
+        }
+        builder.endAll();
+
+        return null;
+    }
+
+    public ModelAndView search(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        XMLBuilder builder = createXMLBuilder(response, true);
+        Player player = playerService.getPlayer(request, response);
+
+        SearchCriteria criteria = new SearchCriteria();
+        criteria.setArtist(request.getParameter("artist"));
+        criteria.setAlbum(request.getParameter("album"));
+        criteria.setTitle(request.getParameter("title"));
+        criteria.setAny(request.getParameter("any"));
+        criteria.setCount(ServletRequestUtils.getIntParameter(request, "count", 20));
+        criteria.setOffset(ServletRequestUtils.getIntParameter(request, "offset", 0));
+        Long newerThan = ServletRequestUtils.getLongParameter(request, "newerThan");
+        if (newerThan != null) {
+            criteria.setNewerThan(new Date(newerThan));
+        }
+
+        SearchResult result = searchService.search(criteria);
+        builder.add("searchResult", false,
+                new Attribute("offset", result.getOffset()),
+                new Attribute("totalHits", result.getTotalHits()));
+
+        for (MusicFile musicFile : result.getMusicFiles()) {
+            List<File> coverArt = musicFileService.getCoverArt(musicFile.getParent(), 1);
+            List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
+            builder.add("entry", attributes, true);
         }
         builder.endAll();
 
@@ -459,6 +495,10 @@ public class RESTController extends MultiActionController {
 
     public void setStatusService(StatusService statusService) {
         this.statusService = statusService;
+    }
+
+    public void setSearchService(SearchService searchService) {
+        this.searchService = searchService;
     }
 
     public void setStreamController(StreamController streamController) {
