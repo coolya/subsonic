@@ -49,9 +49,8 @@ Bugfix: Fixed wrong background color in More page.
 
 ANDROID
 -------
-Show bitrate when downloading.
 Add option to delete selected songs.
-Update subsonic-ad.php
+Update donate.jsp
 Show more info per song (like gmail app)
 Is there a more generic broadcast event to listen to when the media collection changes?
 Fix encoding problems in Subsonic Demo files.
