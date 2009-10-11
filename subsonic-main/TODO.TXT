@@ -1,10 +1,10 @@
 TODO IN 3.8
 --------------
+TEST: Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
 In licence email, explain how to install it.
 Write about Android player in "More".
 REST search
 
-Check out www.element5.com for payment.  SWReg
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
@@ -48,12 +48,10 @@ Bugfix: Fixed wrong background color in More page.
 ANDROID
 -------
 Add option to delete selected songs.
-Update donate.jsp
 Show more info per song (like gmail app)
 Is there a more generic broadcast event to listen to when the media collection changes?
 Fix encoding problems in Subsonic Demo files.
 Handle XML exception better.
-Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
 Use music index last modified + invalidate cache after a while.
 Use weak references in image cache?
 Use android:ellipsize="marquee"

@@ -25,6 +25,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * @author Sindre Mehus
@@ -120,6 +121,11 @@ public abstract class BackgroundTask<T> implements ProgressListener {
     }
 
     protected String getErrorMessage(Throwable error) {
+
+        if (error instanceof IOException && !Util.isNetworkConnected(activity)) {
+            return "This program requires network access. Please turn on Wi-fi or mobile network.";
+        }
+
         if (error instanceof FileNotFoundException) {
             return "Network error";
         }

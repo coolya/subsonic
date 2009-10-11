@@ -19,6 +19,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.widget.Toast;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 /**
  * @author Sindre Mehus
@@ -265,5 +267,11 @@ public final class Util {
             out[j++] = HEX_DIGITS[0x0F & data[i]];
         }
         return new String(out);
+    }
+
+    public static boolean isNetworkConnected(Context context) {
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 }
