@@ -9,7 +9,7 @@ Add "Add random" to main.view and "Add to playlist" in more.view
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
 Use signed requests against Amazon.
 http://upnp-portmapper.sourceforge.net/
-http://www.jthink.net/jaudiotagger/index.jsp
+http://www.jthink.net/jaudiotagger/index.jsp]
 Exclusion filter (*.svn, *.log, *.pun)
 Select music folder / playlist folder in Windows installer.
 Add links to Facebook group from home page and Help page.

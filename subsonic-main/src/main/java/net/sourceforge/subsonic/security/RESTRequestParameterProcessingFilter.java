@@ -82,14 +82,16 @@ public class RESTRequestParameterProcessingFilter implements Filter {
         }
 
         if (errorCode == null) {
-            Version ourVersion = new Version(StringUtil.getRESTProtocolVersion());
-            Version theirVersion = new Version(version);
+            Version serverVersion = new Version(StringUtil.getRESTProtocolVersion());
+            Version clientVersion = new Version(version);
 
-            if (ourVersion.getMajor() > theirVersion.getMajor()) {
+            if (serverVersion.getMajor() > clientVersion.getMajor()) {
                 errorCode = RESTController.ErrorCode.PROTOCOL_MISMATCH_CLIENT_TOO_OLD;
-            } else if (ourVersion.getMajor() < theirVersion.getMajor()) {
+            } else if (serverVersion.getMajor() < clientVersion.getMajor()) {
                 errorCode = RESTController.ErrorCode.PROTOCOL_MISMATCH_SERVER_TOO_OLD;
-            }
+            } else if (serverVersion.getMinor() < clientVersion.getMinor()) {
+                errorCode = RESTController.ErrorCode.PROTOCOL_MISMATCH_SERVER_TOO_OLD;
+            } 
         }
 
         if (errorCode == null) {
