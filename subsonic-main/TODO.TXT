@@ -1,9 +1,6 @@
 TODO IN 3.8
 --------------
-Add chat title "Message".
-Make right frame smaller.
 In licence email, explain how to install it.
-Fix "More" page in some themes. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7212#7212
 Write about Android player in "More".
 
 Check out www.element5.com for payment.  SWReg
