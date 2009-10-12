@@ -237,7 +237,7 @@ public class RESTController extends MultiActionController {
         for (MusicFile musicFile : result.getMusicFiles()) {
             List<File> coverArt = musicFileService.getCoverArt(musicFile.getParent(), 1);
             List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
-            builder.add("entry", attributes, true);
+            builder.add("match", attributes, true);
         }
         builder.endAll();
 

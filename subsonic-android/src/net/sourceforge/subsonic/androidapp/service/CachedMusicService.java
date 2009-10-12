@@ -84,6 +84,11 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
+    public MusicDirectory search(String query, Context context, ProgressListener progressListener) throws Exception {
+        return musicService.search(query, context, progressListener);
+    }
+
+    @Override
     public byte[] getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
         String key = id + size;

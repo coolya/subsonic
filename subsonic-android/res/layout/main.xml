@@ -36,6 +36,17 @@
                 a:text="Browse music"/>
 
         <Button
+                a:id="@+id/main_search"
+                a:layout_width="fill_parent"
+                a:layout_height="wrap_content"
+                a:layout_marginBottom="6dp"
+                a:drawableLeft="@android:drawable/ic_menu_search"
+                a:drawablePadding="20dp"
+                a:gravity="left|center_vertical"
+                a:textAppearance="?android:attr/textAppearanceLarge"
+                a:text="Search"/>
+
+        <Button
                 a:id="@+id/main_stream_queue"
                 a:layout_width="fill_parent"
                 a:layout_height="wrap_content"
