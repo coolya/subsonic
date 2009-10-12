@@ -35,4 +35,6 @@ public interface MusicServiceDataSource {
     Reader getIndexesReader(Context context, ProgressListener progressListener) throws Exception;
 
     Reader getMusicDirectoryReader(String id, Context context, ProgressListener progressListener) throws Exception;
+
+    Reader getSearchResultReader(String query, Context context, ProgressListener progressListener) throws Exception;
 }

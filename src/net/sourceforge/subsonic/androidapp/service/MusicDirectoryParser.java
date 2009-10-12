@@ -49,27 +49,7 @@ public class MusicDirectoryParser extends AbstractParser {
             if (eventType == XmlPullParser.START_TAG) {
                 String name = parser.getName();
                 if ("child".equals(name)) {
-                    MusicDirectory.Entry entry = new MusicDirectory.Entry();
-                    entry.setId(get(parser, "id"));
-                    entry.setTitle(get(parser, "title"));
-                    entry.setDirectory(getBoolean(parser, "isDir"));
-                    entry.setCoverArt(get(parser, "coverArt"));
-
-                    if (!entry.isDirectory()) {
-                        entry.setAlbum(get(parser, "album"));
-                        entry.setArtist(get(parser, "artist"));
-                        entry.setTrack(getInteger(parser, "track"));
-                        entry.setYear(getInteger(parser, "year"));
-                        entry.setGenre(get(parser, "genre"));
-                        entry.setArtist(get(parser, "artist"));
-                        entry.setContentType(get(parser, "contentType"));
-                        entry.setSuffix(get(parser, "suffix"));
-                        entry.setTranscodedContentType(get(parser, "transcodedContentType"));
-                        entry.setTranscodedSuffix(get(parser, "transcodedSuffix"));
-                        entry.setSize(getLong(parser, "size"));
-                    }
-
-                    dir.addChild(entry);
+                    dir.addChild(parseEntry(parser));
                 } else if ("directory".equals(name)) {
                     dir.setName(get(parser, "name"));
                 } else if ("error".equals(name)) {
@@ -85,5 +65,28 @@ public class MusicDirectoryParser extends AbstractParser {
             progressListener.updateProgress("Reading from server. Done!");
         }
         return dir;
+    }
+
+    protected MusicDirectory.Entry parseEntry(XmlPullParser parser) {
+        MusicDirectory.Entry entry = new MusicDirectory.Entry();
+        entry.setId(get(parser, "id"));
+        entry.setTitle(get(parser, "title"));
+        entry.setDirectory(getBoolean(parser, "isDir"));
+        entry.setCoverArt(get(parser, "coverArt"));
+
+        if (!entry.isDirectory()) {
+            entry.setAlbum(get(parser, "album"));
+            entry.setArtist(get(parser, "artist"));
+            entry.setTrack(getInteger(parser, "track"));
+            entry.setYear(getInteger(parser, "year"));
+            entry.setGenre(get(parser, "genre"));
+            entry.setArtist(get(parser, "artist"));
+            entry.setContentType(get(parser, "contentType"));
+            entry.setSuffix(get(parser, "suffix"));
+            entry.setTranscodedContentType(get(parser, "transcodedContentType"));
+            entry.setTranscodedSuffix(get(parser, "transcodedSuffix"));
+            entry.setSize(getLong(parser, "size"));
+        }
+        return entry;
     }
 }

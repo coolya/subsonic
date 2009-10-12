@@ -21,6 +21,7 @@ package net.sourceforge.subsonic.androidapp.service;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
+import net.sourceforge.subsonic.androidapp.activity.SelectAlbumActivity;
 import android.content.Context;
 
 /**
@@ -35,6 +36,8 @@ public interface MusicService {
     Indexes getIndexes(Context context, ProgressListener progressListener) throws Exception;
 
     MusicDirectory getMusicDirectory(String id, Context context, ProgressListener progressListener) throws Exception;
+
+    MusicDirectory search(String query, Context context, ProgressListener progressListener) throws Exception;
 
     byte[] getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception;
 

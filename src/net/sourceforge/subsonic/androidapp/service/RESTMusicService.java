@@ -37,16 +37,17 @@ import android.content.Context;
 /**
  * @author Sindre Mehus
  */
-public class XMLMusicService implements MusicService {
+public class RESTMusicService implements MusicService {
 
     private final MusicServiceDataSource dataSource;
     private final IndexesParser indexesParser = new IndexesParser();
     private final MusicDirectoryParser musicDirectoryParser = new MusicDirectoryParser();
+    private final SearchResultParser searchResultParser = new SearchResultParser();
     private final LicenseParser licenseParser = new LicenseParser();
     private final ErrorParser errorParser = new ErrorParser();
     private final List<Reader> readers = new ArrayList<Reader>(10);
 
-    public XMLMusicService(MusicServiceDataSource dataSource) {
+    public RESTMusicService(MusicServiceDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -87,6 +88,16 @@ public class XMLMusicService implements MusicService {
         addReader(reader);
         try {
             return musicDirectoryParser.parse(reader, progressListener);
+        } finally {
+            closeReader(reader);
+        }
+    }
+
+    public MusicDirectory search(String query, Context context, ProgressListener progressListener) throws Exception {
+        Reader reader = dataSource.getSearchResultReader(query, context, progressListener);
+        addReader(reader);
+        try {
+            return searchResultParser.parse(reader, progressListener);
         } finally {
             closeReader(reader);
         }

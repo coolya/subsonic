@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.androidapp.service;
 
 import android.content.Context;
+import android.util.Log;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import net.sourceforge.subsonic.androidapp.util.Util;
@@ -31,33 +32,50 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author Sindre Mehus
  */
-public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
+public class RESTMusicServiceDataSource implements MusicServiceDataSource {
+
+    private static final String TAG = RESTMusicServiceDataSource.class.getSimpleName();
 
     @Override
     public Reader getPingReader(Context context, ProgressListener progressListener) throws Exception {
-        return getReader(context, progressListener, "ping", null, null);
+        return getReader(context, progressListener, "ping");
     }
 
     @Override
     public Reader getLicenseReader(Context context, ProgressListener progressListener) throws Exception {
-        return getReader(context, progressListener, "getLicense", null, null);
+        return getReader(context, progressListener, "getLicense");
     }
 
     @Override
     public Reader getIndexesReader(Context context, ProgressListener progressListener) throws Exception {
-        return getReader(context, progressListener, "getIndexes", null, null);
+        return getReader(context, progressListener, "getIndexes");
     }
 
     @Override
     public Reader getMusicDirectoryReader(String id, Context context, ProgressListener progressListener) throws Exception {
-        return getReader(context, progressListener, "getMusicDirectory", Arrays.asList("id"), Arrays.<Object>asList(id));
+        return getReader(context, progressListener, "getMusicDirectory", "id", id);
     }
 
-    public Reader getReader(Context context, ProgressListener progressListener, String method,
+    @Override
+    public Reader getSearchResultReader(String query, Context context, ProgressListener progressListener) throws Exception {
+        return getReader(context, progressListener, "search", "any", query);
+    }
+
+    private Reader getReader(Context context, ProgressListener progressListener, String method) throws Exception {
+        return getReader(context, progressListener, method, Collections.<String>emptyList(), Collections.emptyList());
+    }
+
+    private Reader getReader(Context context, ProgressListener progressListener, String method,
+                            String parameterName, Object parameterValue) throws Exception {
+        return getReader(context, progressListener, method, Arrays.asList(parameterName), Arrays.<Object>asList(parameterValue));
+    }
+
+    private Reader getReader(Context context, ProgressListener progressListener, String method,
                             List<String> parameterNames, List<Object> parameterValues) throws Exception {
 
         StringBuilder urlString = new StringBuilder();
@@ -76,6 +94,7 @@ public class HTTPMusicServiceDataSource implements MusicServiceDataSource {
             progressListener.updateProgress("Contacting server.");
         }
 
+        Log.i(TAG, "Using URL " + url.toExternalForm());
         return openURL(url);
     }
 

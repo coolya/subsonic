@@ -6,6 +6,7 @@
 
     <uses-permission a:name="android.permission.INTERNET"/>
     <uses-permission a:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission a:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <uses-sdk a:minSdkVersion="3"/>
 

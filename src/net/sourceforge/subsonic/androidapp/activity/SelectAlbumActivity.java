@@ -63,7 +63,12 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_album);
-        setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
+        String query = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_QUERY);
+        if (query == null) {
+            setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
+        } else {
+            setTitle("Search results");
+        }
 
         imageLoader = new ImageLoader();
         selectButton = (Button) findViewById(R.id.select_album_select);
@@ -102,7 +107,12 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         bindService(new Intent(this, StreamService.class), streamServiceConnection, Context.BIND_AUTO_CREATE);
 
         enableButtons();
-        load();
+
+        if (query != null) {
+            search();
+        } else {
+            getMusicDirectory();
+        }
     }
 
     @Override
@@ -165,40 +175,22 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         menu.add(Menu.NONE, 3, 3, "Download + Play");
     }
 
-    private void load() {
-        new BackgroundTask<Pair<MusicDirectory, Boolean>>(SelectAlbumActivity.this) {
+    private void getMusicDirectory() {
+        new LoadTask() {
             @Override
-            protected Pair<MusicDirectory, Boolean> doInBackground() throws Throwable {
-                MusicService musicService = MusicServiceFactory.getMusicService();
+            protected MusicDirectory load(MusicService service) throws Exception {
                 String path = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PATH);
-                MusicDirectory dir = musicService.getMusicDirectory(path, SelectAlbumActivity.this, this);
-                boolean valid = musicService.isLicenseValid(SelectAlbumActivity.this, this);
-                return new Pair<MusicDirectory, Boolean>(dir, valid);
+                return service.getMusicDirectory(path, SelectAlbumActivity.this, this);
             }
+        }.execute();
+    }
 
+    private void search() {
+        new LoadTask() {
             @Override
-            protected void done(Pair<MusicDirectory, Boolean> result) {
-                List<MusicDirectory.Entry> entries = result.getFirst().getChildren();
-                entryList.setAdapter(new EntryAdapter(entries));
-
-                int visibility = View.GONE;
-                for (MusicDirectory.Entry entry : entries) {
-                    if (!entry.isDirectory()) {
-                        visibility = View.VISIBLE;
-                        break;
-                    }
-                }
-                licenseValid = result.getSecond();
-
-                selectButton.setVisibility(visibility);
-                playButton.setVisibility(visibility);
-                moreButton.setVisibility(visibility);
-            }
-
-            @Override
-            protected void cancel() {
-                MusicServiceFactory.getMusicService().cancel(SelectAlbumActivity.this, this);
-                finish();
+            protected MusicDirectory load(MusicService service) throws Exception {
+                String query = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_QUERY);
+                return service.search(query, SelectAlbumActivity.this, this);
             }
         }.execute();
     }
@@ -431,6 +423,49 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             view.setText(entry.getTitle());
 
             return view;
+        }
+    }
+
+
+    private abstract class LoadTask extends BackgroundTask<Pair<MusicDirectory, Boolean>> {
+
+        public LoadTask() {
+            super(SelectAlbumActivity.this);
+        }
+
+        protected abstract MusicDirectory load(MusicService service) throws Exception;
+
+        @Override
+        protected Pair<MusicDirectory, Boolean> doInBackground() throws Throwable {
+            MusicService musicService = MusicServiceFactory.getMusicService();
+            MusicDirectory dir = load(musicService);
+            boolean valid = musicService.isLicenseValid(SelectAlbumActivity.this, this);
+            return new Pair<MusicDirectory, Boolean>(dir, valid);
+        }
+
+        @Override
+        protected void done(Pair<MusicDirectory, Boolean> result) {
+            List<MusicDirectory.Entry> entries = result.getFirst().getChildren();
+            entryList.setAdapter(new EntryAdapter(entries));
+
+            int visibility = View.GONE;
+            for (MusicDirectory.Entry entry : entries) {
+                if (!entry.isDirectory()) {
+                    visibility = View.VISIBLE;
+                    break;
+                }
+            }
+            licenseValid = result.getSecond();
+
+            selectButton.setVisibility(visibility);
+            playButton.setVisibility(visibility);
+            moreButton.setVisibility(visibility);
+        }
+
+        @Override
+        protected void cancel() {
+            MusicServiceFactory.getMusicService().cancel(SelectAlbumActivity.this, this);
+            finish();
         }
     }
 }
