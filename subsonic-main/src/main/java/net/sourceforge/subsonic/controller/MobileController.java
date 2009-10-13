@@ -56,7 +56,7 @@ public class MobileController extends MultiActionController {
         response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
         SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists = musicIndexService.getIndexedArtists(settingsService.getAllMusicFolders());
 
-        XMLBuilder builder = new XMLBuilder(response.getWriter());
+        XMLBuilder builder = new XMLBuilder();
         builder.preamble(StringUtil.ENCODING_UTF8);
         builder.add("indexes", false);
 
@@ -72,7 +72,7 @@ public class MobileController extends MultiActionController {
             builder.end();
         }
         builder.end();
-
+        response.getWriter().print(builder);
         return null;
     }
 
@@ -87,7 +87,7 @@ public class MobileController extends MultiActionController {
         response.setContentType("text/xml");
         response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
 
-        XMLBuilder builder = new XMLBuilder(response.getWriter());
+        XMLBuilder builder = new XMLBuilder();
         builder.preamble("UTF-8");
         builder.add("directory", false, new Attribute("name", musicFile.getName()), new Attribute("path", StringUtil.utf8HexEncode(musicFile.getPath())));
 
@@ -104,6 +104,8 @@ public class MobileController extends MultiActionController {
         }
 
         builder.end();
+        response.getWriter().print(builder);
+
 
         return null;
     }

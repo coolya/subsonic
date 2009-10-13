@@ -91,7 +91,7 @@ public class RESTRequestParameterProcessingFilter implements Filter {
                 errorCode = RESTController.ErrorCode.PROTOCOL_MISMATCH_SERVER_TOO_OLD;
             } else if (serverVersion.getMinor() < clientVersion.getMinor()) {
                 errorCode = RESTController.ErrorCode.PROTOCOL_MISMATCH_SERVER_TOO_OLD;
-            } 
+            }
         }
 
         if (errorCode == null) {
@@ -132,7 +132,7 @@ public class RESTRequestParameterProcessingFilter implements Filter {
         response.setContentType("text/xml");
         response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
 
-        XMLBuilder builder = new XMLBuilder(response.getWriter());
+        XMLBuilder builder = new XMLBuilder();
         builder.preamble(StringUtil.ENCODING_UTF8);
         builder.add("subsonic-response", false,
                     new XMLBuilder.Attribute("xlmns", "http://subsonic.sourceforge.net/restapi"),
@@ -143,6 +143,7 @@ public class RESTRequestParameterProcessingFilter implements Filter {
                     new XMLBuilder.Attribute("code", errorCode.getCode()),
                     new XMLBuilder.Attribute("message", errorCode.getMessage()));
         builder.end();
+        response.getWriter().print(builder);
     }
 
     /**
