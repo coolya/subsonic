@@ -1,9 +1,5 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -41,6 +37,10 @@ import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
@@ -63,15 +63,6 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_album);
-        String query = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_QUERY);
-        String playlist = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME);
-        if (query != null) {
-            setTitle("Search results");
-        } else if (playlist != null) {
-            setTitle(playlist);
-        } else {
-            setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
-        }
 
         imageLoader = new ImageLoader();
         selectButton = (Button) findViewById(R.id.select_album_select);
@@ -110,6 +101,9 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         bindService(new Intent(this, StreamService.class), streamServiceConnection, Context.BIND_AUTO_CREATE);
 
         enableButtons();
+
+        String query = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_QUERY);
+        String playlist = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME);
 
         if (query != null) {
             search();
@@ -181,6 +175,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     }
 
     private void getMusicDirectory() {
+        setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
         new LoadTask() {
             @Override
             protected MusicDirectory load(MusicService service) throws Exception {
@@ -191,16 +186,25 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     }
 
     private void search() {
+        setTitle("Search results");
         new LoadTask() {
             @Override
             protected MusicDirectory load(MusicService service) throws Exception {
                 String query = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_QUERY);
                 return service.search(query, SelectAlbumActivity.this, this);
             }
+
+            @Override
+            protected void done(Pair<MusicDirectory, Boolean> result) {
+                super.done(result);
+                int n = result.getFirst().getChildren().size();
+                setTitle("Search results - " + n + " match" + (n == 1 ? "" : "es"));
+            }
         }.execute();
     }
 
     private void getPlaylist() {
+        setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME));
         new LoadTask() {
             @Override
             protected MusicDirectory load(MusicService service) throws Exception {

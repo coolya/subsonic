@@ -1,7 +1,5 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -22,6 +20,8 @@ import net.sourceforge.subsonic.androidapp.service.StreamService;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Pair;
+
+import java.util.List;
 
 public class MainActivity extends OptionsMenuActivity {
 
@@ -123,32 +123,36 @@ public class MainActivity extends OptionsMenuActivity {
     }
 
     private void showPlaylistDialog() {
-        new BackgroundTask<List<Pair<String,String>>>(this) {
+        new BackgroundTask<List<Pair<String, String>>>(this) {
             @Override
-            protected List<Pair<String,String>> doInBackground() throws Throwable {
+            protected List<Pair<String, String>> doInBackground() throws Throwable {
                 return MusicServiceFactory.getMusicService().getPlaylists(MainActivity.this, this);
             }
 
             @Override
-            protected void done(final List<Pair<String,String>> result) {
+            protected void done(final List<Pair<String, String>> result) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Select playlist");
                 builder.setCancelable(true);
 
-                final CharSequence[] items = new CharSequence[result.size()];
-                for (int i = 0; i < items.length; i++) {
-                    items[i] = result.get(i).getSecond();
-                }
-                builder.setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int button) {
-                        dialog.dismiss();
-                        Intent intent = new Intent(MainActivity.this, SelectAlbumActivity.class);
-                        intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_ID, result.get(button).getFirst());
-                        intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME, result.get(button).getSecond());
-                        startActivity(intent);
+                if (result.isEmpty()) {
+                    builder.setMessage("No saved playlists on server.");
+                } else {
+                    final CharSequence[] items = new CharSequence[result.size()];
+                    for (int i = 0; i < items.length; i++) {
+                        items[i] = result.get(i).getSecond();
                     }
-                });
+                    builder.setItems(items, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int button) {
+                            dialog.dismiss();
+                            Intent intent = new Intent(MainActivity.this, SelectAlbumActivity.class);
+                            intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_ID, result.get(button).getFirst());
+                            intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME, result.get(button).getSecond());
+                            startActivity(intent);
+                        }
+                    });
+                }
                 builder.show();
             }
         }.execute();
