@@ -18,9 +18,12 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
+import java.util.List;
+
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
+import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.activity.SelectAlbumActivity;
 import android.content.Context;
 
@@ -38,6 +41,10 @@ public interface MusicService {
     MusicDirectory getMusicDirectory(String id, Context context, ProgressListener progressListener) throws Exception;
 
     MusicDirectory search(String query, Context context, ProgressListener progressListener) throws Exception;
+
+    MusicDirectory getPlaylist(String id, Context context, ProgressListener progressListener) throws Exception;
+
+    List<Pair<String,String>> getPlaylists(Context context, ProgressListener progressListener) throws Exception;
 
     byte[] getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception;
 

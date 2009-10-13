@@ -258,8 +258,8 @@ public class RESTController extends MultiActionController {
         builder.add("playlists", false);
 
         for (File playlist : playlistService.getSavedPlaylists()) {
-            String name = playlist.getName();
-            String id = FilenameUtils.getBaseName(name);
+            String id = playlist.getName();
+            String name = FilenameUtils.getBaseName(id);
             builder.add("playlist", true, new Attribute("id", id), new Attribute("name", name));
         }
         builder.endAll();

@@ -127,7 +127,7 @@ public abstract class BackgroundTask<T> implements ProgressListener {
         }
 
         if (error instanceof FileNotFoundException) {
-            return "Network error";
+            return "Resource not found.";
         }
 
         String message = error.getMessage();

@@ -19,41 +19,45 @@
 package net.sourceforge.subsonic.androidapp.service;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.net.URLConnection;
+import java.io.Reader;
 import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.text.MessageFormat;
 
-import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.domain.Indexes;
-import net.sourceforge.subsonic.androidapp.util.ProgressListener;
-import net.sourceforge.subsonic.androidapp.util.Constants;
-import net.sourceforge.subsonic.androidapp.util.Util;
 import android.content.Context;
+import android.util.Log;
+import net.sourceforge.subsonic.androidapp.domain.Indexes;
+import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.ProgressListener;
+import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.Pair;
 
 /**
  * @author Sindre Mehus
  */
 public class RESTMusicService implements MusicService {
 
-    private final MusicServiceDataSource dataSource;
+    private static final String TAG = RESTMusicService.class.getSimpleName();
+
     private final IndexesParser indexesParser = new IndexesParser();
     private final MusicDirectoryParser musicDirectoryParser = new MusicDirectoryParser();
     private final SearchResultParser searchResultParser = new SearchResultParser();
+    private final PlaylistParser playlistParser = new PlaylistParser();
+    private final PlaylistsParser playlistsParser = new PlaylistsParser();
     private final LicenseParser licenseParser = new LicenseParser();
     private final ErrorParser errorParser = new ErrorParser();
     private final List<Reader> readers = new ArrayList<Reader>(10);
 
-    public RESTMusicService(MusicServiceDataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
     @Override
     public void ping(Context context, ProgressListener progressListener) throws Exception {
-        Reader reader = dataSource.getPingReader(context, progressListener);
+        Reader reader = getReader(context, progressListener, "ping");
         addReader(reader);
         try {
             errorParser.parse(reader);
@@ -64,7 +68,7 @@ public class RESTMusicService implements MusicService {
 
     @Override
     public boolean isLicenseValid(Context context, ProgressListener progressListener) throws Exception {
-        Reader reader = dataSource.getLicenseReader(context, progressListener);
+        Reader reader = getReader(context, progressListener, "getLicense");
         addReader(reader);
         try {
             return licenseParser.parse(reader, progressListener);
@@ -74,7 +78,7 @@ public class RESTMusicService implements MusicService {
     }
 
     public Indexes getIndexes(Context context, ProgressListener progressListener) throws Exception {
-        Reader reader = dataSource.getIndexesReader(context, progressListener);
+        Reader reader = getReader(context, progressListener, "getIndexes");
         addReader(reader);
         try {
             return indexesParser.parse(reader, progressListener);
@@ -84,7 +88,7 @@ public class RESTMusicService implements MusicService {
     }
 
     public MusicDirectory getMusicDirectory(String id, Context context, ProgressListener progressListener) throws Exception {
-        Reader reader = dataSource.getMusicDirectoryReader(id, context, progressListener);
+        Reader reader = getReader(context, progressListener, "getMusicDirectory", "id", id);
         addReader(reader);
         try {
             return musicDirectoryParser.parse(reader, progressListener);
@@ -94,10 +98,30 @@ public class RESTMusicService implements MusicService {
     }
 
     public MusicDirectory search(String query, Context context, ProgressListener progressListener) throws Exception {
-        Reader reader = dataSource.getSearchResultReader(query, context, progressListener);
+        Reader reader = getReader(context, progressListener, "search", "any", query);
         addReader(reader);
         try {
             return searchResultParser.parse(reader, progressListener);
+        } finally {
+            closeReader(reader);
+        }
+    }
+
+    public MusicDirectory getPlaylist(String id, Context context, ProgressListener progressListener) throws Exception {
+        Reader reader = getReader(context, progressListener, "getPlaylist", "id", id);
+        addReader(reader);
+        try {
+            return playlistParser.parse(reader, progressListener);
+        } finally {
+            closeReader(reader);
+        }
+    }
+
+    public List<Pair<String,String>> getPlaylists(Context context, ProgressListener progressListener) throws Exception {
+        Reader reader = getReader(context, progressListener, "getPlaylists");
+        addReader(reader);
+        try {
+            return playlistsParser.parse(reader, progressListener);
         } finally {
             closeReader(reader);
         }
@@ -144,4 +168,45 @@ public class RESTMusicService implements MusicService {
             closeReader(reader);
         }
     }
+
+    private Reader getReader(Context context, ProgressListener progressListener, String method) throws Exception {
+        return getReader(context, progressListener, method, Collections.<String>emptyList(), Collections.emptyList());
+    }
+
+    private Reader getReader(Context context, ProgressListener progressListener, String method,
+            String parameterName, Object parameterValue) throws Exception {
+        return getReader(context, progressListener, method, Arrays.asList(parameterName), Arrays.<Object>asList(parameterValue));
+    }
+
+    private Reader getReader(Context context, ProgressListener progressListener, String method,
+            List<String> parameterNames, List<Object> parameterValues) throws Exception {
+
+        StringBuilder urlString = new StringBuilder();
+        urlString.append(Util.getRestUrl(context, method));
+
+        if (parameterNames != null) {
+            for (int i = 0; i < parameterNames.size(); i++) {
+                urlString.append("&");
+                urlString.append(parameterNames.get(i)).append("=");
+                urlString.append(parameterValues.get(i));
+            }
+        }
+
+        URL url = new URL(urlString.toString());
+        if (progressListener != null) {
+            progressListener.updateProgress("Contacting server.");
+        }
+
+        Log.i(TAG, "Using URL " + url.toExternalForm());
+        return openURL(url);
+    }
+
+    private Reader openURL(URL url) throws IOException {
+        URLConnection connection = url.openConnection();
+        connection.setConnectTimeout(Constants.SOCKET_CONNECT_TIMEOUT);
+        connection.setReadTimeout(Constants.SOCKET_READ_TIMEOUT);
+        InputStream in = connection.getInputStream();
+        return new InputStreamReader(in, Constants.UTF_8);
+    }
+
 }
