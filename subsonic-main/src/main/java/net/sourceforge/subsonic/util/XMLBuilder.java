@@ -22,6 +22,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Stack;
@@ -56,17 +57,8 @@ public class XMLBuilder {
     private static final String INDENTATION = "  ";
     private static final String NEWLINE = "\n";
 
-    private final Writer writer;
+    private final Writer writer = new StringWriter();
     private final Stack<String> elementStack = new Stack<String>();
-
-    /**
-     * Creates a new builder which writes to the given writer.
-     *
-     * @param writer The writer.
-     */
-    public XMLBuilder(Writer writer) {
-        this.writer = writer;
-    }
 
     /**
      * Adds an XML preamble, with the given encoding. The preamble will typically
@@ -178,6 +170,14 @@ public class XMLBuilder {
             end();
         }
         return this;
+    }
+
+    /**
+     * Returns the XML document as a string.
+     */
+    @Override
+    public String toString() {
+        return writer.toString();
     }
 
     private void indent() throws IOException {

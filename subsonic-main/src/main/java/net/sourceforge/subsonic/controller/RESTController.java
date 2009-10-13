@@ -90,7 +90,8 @@ public class RESTController extends MultiActionController {
     private PlaylistService playlistService;
 
     public ModelAndView ping(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        createXMLBuilder(response, true).endAll();
+        XMLBuilder builder = createXMLBuilder(response, true).endAll();
+        response.getWriter().print(builder);
         return null;
     }
 
@@ -113,6 +114,7 @@ public class RESTController extends MultiActionController {
 
         builder.add("license", attributes, true);
         builder.endAll();
+        response.getWriter().print(builder);
         return null;
     }
 
@@ -131,6 +133,7 @@ public class RESTController extends MultiActionController {
             builder.add("musicFolder", attributes, true);
         }
         builder.endAll();
+        response.getWriter().print(builder);
 
         return null;
     }
@@ -145,6 +148,7 @@ public class RESTController extends MultiActionController {
 
         if (lastModified <= ifModifiedSince) {
             builder.endAll();
+            response.getWriter().print(builder);
             return null;
         }
 
@@ -178,6 +182,7 @@ public class RESTController extends MultiActionController {
             builder.end();
         }
         builder.endAll();
+        response.getWriter().print(builder);
 
         return null;
     }
@@ -208,6 +213,7 @@ public class RESTController extends MultiActionController {
             builder.add("child", attributes, true);
         }
         builder.endAll();
+        response.getWriter().print(builder);
 
         return null;
     }
@@ -240,6 +246,7 @@ public class RESTController extends MultiActionController {
             builder.add("match", attributes, true);
         }
         builder.endAll();
+        response.getWriter().print(builder);
 
         return null;
     }
@@ -256,6 +263,7 @@ public class RESTController extends MultiActionController {
             builder.add("playlist", true, new Attribute("id", id), new Attribute("name", name));
         }
         builder.endAll();
+        response.getWriter().print(builder);
 
         return null;
     }
@@ -283,6 +291,7 @@ public class RESTController extends MultiActionController {
                 builder.add("entry", attributes, true);
             }
             builder.endAll();
+            response.getWriter().print(builder);
         } catch (ServletRequestBindingException x) {
             error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
         } catch (Exception x) {
@@ -328,6 +337,8 @@ public class RESTController extends MultiActionController {
         }
 
         builder.endAll();
+        response.getWriter().print(builder);
+
         return null;
     }
 
@@ -441,7 +452,8 @@ public class RESTController extends MultiActionController {
             command.setTranscodeSchemeName(ServletRequestUtils.getStringParameter(request, "transcodeScheme", TranscodeScheme.OFF.name()));
 
             userSettingsController.createUser(command);
-            createXMLBuilder(response, true).endAll();
+            XMLBuilder builder = createXMLBuilder(response, true).endAll();
+            response.getWriter().print(builder);
 
         } catch (ServletRequestBindingException x) {
             error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
@@ -477,13 +489,14 @@ public class RESTController extends MultiActionController {
                 new XMLBuilder.Attribute("code", code.getCode()),
                 new XMLBuilder.Attribute("message", message));
         builder.end();
+        response.getWriter().print(builder);
     }
 
     private XMLBuilder createXMLBuilder(HttpServletResponse response, boolean ok) throws IOException {
         response.setContentType("text/xml");
         response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
 
-        XMLBuilder builder = new XMLBuilder(response.getWriter());
+        XMLBuilder builder = new XMLBuilder();
         builder.preamble(StringUtil.ENCODING_UTF8);
         builder.add("subsonic-response", false,
                 new Attribute("xlmns", "http://subsonic.sourceforge.net/restapi"),
