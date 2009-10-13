@@ -1,7 +1,10 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -11,22 +14,22 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ImageButton;
-import android.widget.EditText;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
+import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.service.StreamService;
+import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
+import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.Pair;
 
 public class MainActivity extends OptionsMenuActivity {
 
-    private static final int DIALOG_ID_SEARCH = 1;
-    private AlertDialog searchDialog;
+    private Dialog searchDialog;
 
     /**
-    * Called when the activity is first created.
-    */
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +53,15 @@ public class MainActivity extends OptionsMenuActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog(DIALOG_ID_SEARCH);
+                showSearchDialog();
+            }
+        });
+
+        final Button loadPlaylistButton = (Button) findViewById(R.id.main_load_playlist);
+        loadPlaylistButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPlaylistDialog();
             }
         });
 
@@ -107,17 +118,45 @@ public class MainActivity extends OptionsMenuActivity {
         searchDialog = builder.create();
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        if (id == DIALOG_ID_SEARCH) {
-            return searchDialog;
-        }
-        return null;
+    private void showSearchDialog() {
+        searchDialog.show();
+    }
+
+    private void showPlaylistDialog() {
+        new BackgroundTask<List<Pair<String,String>>>(this) {
+            @Override
+            protected List<Pair<String,String>> doInBackground() throws Throwable {
+                return MusicServiceFactory.getMusicService().getPlaylists(MainActivity.this, this);
+            }
+
+            @Override
+            protected void done(final List<Pair<String,String>> result) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Select playlist");
+                builder.setCancelable(true);
+
+                final CharSequence[] items = new CharSequence[result.size()];
+                for (int i = 0; i < items.length; i++) {
+                    items[i] = result.get(i).getSecond();
+                }
+                builder.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int button) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(MainActivity.this, SelectAlbumActivity.class);
+                        intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_ID, result.get(button).getFirst());
+                        intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME, result.get(button).getSecond());
+                        startActivity(intent);
+                    }
+                });
+                builder.show();
+            }
+        }.execute();
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-            showDialog(DIALOG_ID_SEARCH);
+            showSearchDialog();
         }
         return super.onKeyDown(keyCode, event);
     }

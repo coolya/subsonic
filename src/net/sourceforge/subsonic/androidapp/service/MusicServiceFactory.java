@@ -12,8 +12,7 @@ package net.sourceforge.subsonic.androidapp.service;
  */
 public class MusicServiceFactory {
 
-    public static final MusicService MUSIC_SERVICE = new CachedMusicService(new RESTMusicService(new RESTMusicServiceDataSource()));
-//    public static final MusicService MUSIC_SERVICE = new RESTMusicService(new RESTMusicServiceDataSource());
+    public static final MusicService MUSIC_SERVICE = new CachedMusicService(new RESTMusicService());
 
     public static MusicService getMusicService() {
         return MUSIC_SERVICE;

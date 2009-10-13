@@ -64,10 +64,13 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_album);
         String query = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_QUERY);
-        if (query == null) {
-            setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
-        } else {
+        String playlist = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME);
+        if (query != null) {
             setTitle("Search results");
+        } else if (playlist != null) {
+            setTitle(playlist);
+        } else {
+            setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
         }
 
         imageLoader = new ImageLoader();
@@ -110,6 +113,8 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
 
         if (query != null) {
             search();
+        } else if (playlist != null) {
+            getPlaylist();
         } else {
             getMusicDirectory();
         }
@@ -191,6 +196,16 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             protected MusicDirectory load(MusicService service) throws Exception {
                 String query = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_QUERY);
                 return service.search(query, SelectAlbumActivity.this, this);
+            }
+        }.execute();
+    }
+
+    private void getPlaylist() {
+        new LoadTask() {
+            @Override
+            protected MusicDirectory load(MusicService service) throws Exception {
+                String id = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_ID);
+                return service.getPlaylist(id, SelectAlbumActivity.this, this);
             }
         }.execute();
     }

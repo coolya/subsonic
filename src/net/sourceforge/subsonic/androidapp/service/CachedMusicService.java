@@ -24,8 +24,10 @@ import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import net.sourceforge.subsonic.androidapp.util.TimeLimitedCache;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.Pair;
 
 import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 /**
  * @author Sindre Mehus
@@ -40,6 +42,8 @@ public class CachedMusicService implements MusicService {
     private final LRUCache<String, byte[]> cachedCoverArts;
     private final TimeLimitedCache<Boolean> cachedLicenseValid = new TimeLimitedCache<Boolean>(120, TimeUnit.SECONDS);
     private final TimeLimitedCache<Indexes> cachedIndexes = new TimeLimitedCache<Indexes>(60 * 60, TimeUnit.SECONDS);
+    private final TimeLimitedCache<List<Pair<String,String>>> cachedPlaylists = new TimeLimitedCache<List<Pair<String, String>>>(60 * 60, TimeUnit.SECONDS);
+
     private String restUrl;
 
     public CachedMusicService(MusicService musicService) {
@@ -89,6 +93,20 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
+    public MusicDirectory getPlaylist(String id, Context context, ProgressListener progressListener) throws Exception {
+        return musicService.getPlaylist(id, context, progressListener);
+    }
+
+    @Override
+    public List<Pair<String,String>> getPlaylists(Context context, ProgressListener progressListener) throws Exception {
+        checkSettingsChanged(context);
+        if (cachedPlaylists.get() == null) {
+            cachedPlaylists.set(musicService.getPlaylists(context, progressListener));
+        }
+        return cachedPlaylists.get();
+    }
+
+    @Override
     public byte[] getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
         String key = id + size;
@@ -112,6 +130,7 @@ public class CachedMusicService implements MusicService {
             cachedCoverArts.clear();
             cachedLicenseValid.clear();
             cachedIndexes.clear();
+            cachedPlaylists.clear();
             restUrl = newUrl;
         }
     }
