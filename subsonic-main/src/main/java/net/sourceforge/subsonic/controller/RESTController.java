@@ -258,8 +258,8 @@ public class RESTController extends MultiActionController {
         builder.add("playlists", false);
 
         for (File playlist : playlistService.getSavedPlaylists()) {
-            String id = playlist.getName();
-            String name = FilenameUtils.getBaseName(id);
+            String id = StringUtil.utf8HexEncode(playlist.getName());
+            String name = FilenameUtils.getBaseName(playlist.getName());
             builder.add("playlist", true, new Attribute("id", id), new Attribute("name", name));
         }
         builder.endAll();
@@ -277,7 +277,7 @@ public class RESTController extends MultiActionController {
         builder.add("playlist", false);
 
         try {
-            String id = ServletRequestUtils.getRequiredStringParameter(request, "id");
+            String id = StringUtil.utf8HexDecode(ServletRequestUtils.getRequiredStringParameter(request, "id"));
             File file = playlistService.getSavedPlaylist(id);
             if (file == null) {
                 throw new Exception("Playlist not found.");
