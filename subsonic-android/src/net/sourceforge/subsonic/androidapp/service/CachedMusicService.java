@@ -42,7 +42,7 @@ public class CachedMusicService implements MusicService {
     private final LRUCache<String, byte[]> cachedCoverArts;
     private final TimeLimitedCache<Boolean> cachedLicenseValid = new TimeLimitedCache<Boolean>(120, TimeUnit.SECONDS);
     private final TimeLimitedCache<Indexes> cachedIndexes = new TimeLimitedCache<Indexes>(60 * 60, TimeUnit.SECONDS);
-    private final TimeLimitedCache<List<Pair<String,String>>> cachedPlaylists = new TimeLimitedCache<List<Pair<String, String>>>(60 * 60, TimeUnit.SECONDS);
+    private final TimeLimitedCache<List<Pair<String,String>>> cachedPlaylists = new TimeLimitedCache<List<Pair<String, String>>>(60, TimeUnit.SECONDS);
 
     private String restUrl;
 

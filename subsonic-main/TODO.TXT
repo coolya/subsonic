@@ -1,12 +1,13 @@
 TODO IN 3.8
 --------------
+Android: Show more info per song (like gmail app)
 Bug: Double-scrobbling when transcoding.
 TEST: Bug: Problem with error() and createXMLBuilder() in RESTController.
 TEST: Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
 In licence email, explain how to install it.
 Write about Android player in "More".
 TEST: REST search.
-REST method for playlist access.
+TEST: REST method for playlist access.
 
 Improve menus in web pages.  Make sub menus.
 Add FLAC>WAV transcoding
@@ -52,7 +53,6 @@ Bugfix: Fixed wrong background color in More page.
 ANDROID
 -------
 Add option to delete selected songs.
-Show more info per song (like gmail app)
 Is there a more generic broadcast event to listen to when the media collection changes?
 Fix encoding problems in Subsonic Demo files.
 Handle XML exception better.
