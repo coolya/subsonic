@@ -1,5 +1,6 @@
 TODO IN 3.8
 --------------
+Bug: Problem with error() and createXMLBuilder() in RESTController.
 TEST: Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
 In licence email, explain how to install it.
 Write about Android player in "More".

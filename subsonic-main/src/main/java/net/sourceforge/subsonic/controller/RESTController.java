@@ -185,7 +185,6 @@ public class RESTController extends MultiActionController {
     public ModelAndView getMusicDirectory(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         createPlayerIfNecessary(request);
-        XMLBuilder builder = createXMLBuilder(response, true);
         Player player = playerService.getPlayer(request, response);
 
         MusicFile dir;
@@ -197,6 +196,7 @@ public class RESTController extends MultiActionController {
             return null;
         }
 
+        XMLBuilder builder = createXMLBuilder(response, true);
         builder.add("directory", false,
                 new Attribute("id", StringUtil.utf8HexEncode(dir.getPath())),
                 new Attribute("name", dir.getName()));
