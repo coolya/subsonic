@@ -1,5 +1,6 @@
 TODO IN 3.8
 --------------
+Android messing up player?
 Android: Show more info per song (like gmail app)
 Bug: Double-scrobbling when transcoding.
 TEST: Bug: Problem with error() and createXMLBuilder() in RESTController.
@@ -423,3 +424,11 @@ rsync -avP -e ssh music.demo/ sindremehus@www.gosubsonic.com:music.demo
 
 -Dsubsonic.war=subsonic-main/target/subsonic -Dsubsonic.createLinkFile=true -Dsubsonic.windowsInstall=true -Dsubsonic.port=8080 -Dsubsonic.contextPath=/
 
+GIMP
+----
+Creating xxx_focused.png
+Farger > Farg > Kulør 34, Metning 97, Lysverdi -50
+
+Creating xxx_pressed.png
+Use brush: radius 23, spisser 2, hardhet 0.95, sideforhold 1.0, vinkel 0.0, mellomrom 1.0
+Use color: #ff8200
