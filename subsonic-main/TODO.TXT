@@ -2,13 +2,11 @@ TODO IN 3.8
 --------------
 Android messing up player?
 Android: Show more info per song (like gmail app)
+Android: Make search button work in all views.
 Bug: Double-scrobbling when transcoding.
-TEST: Bug: Problem with error() and createXMLBuilder() in RESTController.
 TEST: Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
 In licence email, explain how to install it.
 Write about Android player in "More".
-TEST: REST search.
-TEST: REST method for playlist access.
 
 Improve menus in web pages.  Make sub menus.
 Add FLAC>WAV transcoding
@@ -45,6 +43,8 @@ DONE IN 3.8
 (Android) Songs that are already downloaded are now indicated with an asterix.
 (Android) Songs that are already downloaded are now played as local files, rather than streamed.
 (Android) New option: Download and play.
+(Android) New option: Search
+(Android) New option: Load playlist
 Added option to disable chat messages.
 Delete chat entries more than seven days old.
 Documented error codes in REST API.
