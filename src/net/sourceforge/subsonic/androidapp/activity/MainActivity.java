@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
@@ -127,6 +126,11 @@ public class MainActivity extends OptionsMenuActivity {
             @Override
             protected List<Pair<String, String>> doInBackground() throws Throwable {
                 return MusicServiceFactory.getMusicService().getPlaylists(MainActivity.this, this);
+            }
+
+            @Override
+            protected void cancel() {
+                // Do nothing.
             }
 
             @Override

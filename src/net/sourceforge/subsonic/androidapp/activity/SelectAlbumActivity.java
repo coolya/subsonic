@@ -36,6 +36,7 @@ import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.SongView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -415,33 +416,29 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             MusicDirectory.Entry entry = getItem(position);
-            TextView view;
 
             if (entry.isDirectory()) {
+                TextView view;
                 view = (TextView) LayoutInflater.from(SelectAlbumActivity.this).inflate(
                         android.R.layout.simple_list_item_1, parent, false);
 
                 view.setCompoundDrawablePadding(10);
                 imageLoader.loadImage(view, entry, 48);
+                view.setText(entry.getTitle());
+
+                return view;
 
             } else {
-                if (convertView != null && convertView instanceof CheckedTextView) {
-                    view = (TextView) convertView;
+                SongView view;
+                if (convertView != null && convertView instanceof SongView) {
+                    view = (SongView) convertView;
                 } else {
-                    view = (TextView) LayoutInflater.from(SelectAlbumActivity.this).inflate(
-                            android.R.layout.simple_list_item_checked, parent, false);
+                    view = new SongView(SelectAlbumActivity.this);
                 }
                 File file = downloadService.getSongFile(entry, false);
-                if (file.exists()) {
-                    view.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.downloaded, 0);
-                } else {
-                    view.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                }
+                view.setSong(entry, file);
+                return view;
             }
-
-            view.setText(entry.getTitle());
-
-            return view;
         }
     }
 
