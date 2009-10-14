@@ -86,6 +86,8 @@ public class MusicDirectoryParser extends AbstractParser {
             entry.setTranscodedContentType(get(parser, "transcodedContentType"));
             entry.setTranscodedSuffix(get(parser, "transcodedSuffix"));
             entry.setSize(getLong(parser, "size"));
+            entry.setDuration(getInteger(parser, "duration"));
+            entry.setBitRate(getInteger(parser, "bitRate"));
         }
         return entry;
     }

@@ -352,6 +352,14 @@ public class RESTController extends MultiActionController {
             MusicFile.MetaData metaData = musicFile.getMetaData();
             attributes.add(new Attribute("album", metaData.getAlbum()));
             attributes.add(new Attribute("artist", metaData.getArtist()));
+            Integer duration = metaData.getDuration();
+            if (duration != null) {
+                attributes.add(new Attribute("duration", duration));
+            }
+            Integer bitRate = metaData.getBitRate();
+            if (bitRate != null) {
+                attributes.add(new Attribute("bitRate", bitRate));
+            }
 
             Integer track = metaData.getTrackNumber();
             if (track != null) {

@@ -19,11 +19,12 @@
 package net.sourceforge.subsonic.androidapp.util;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Checkable;
 import android.widget.CheckedTextView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 
@@ -33,24 +34,41 @@ import java.io.File;
  * @author Sindre Mehus
  */
 public class SongView extends LinearLayout implements Checkable {
-    private static final String TAG = SongView.class.getSimpleName();
     private CheckedTextView checkedTextView;
+    private TextView textView1;
+    private TextView textView2;
+    private TextView textView3;
+    private ImageView imageView;
 
     public SongView(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.song, this, true);
 
-        checkedTextView = (CheckedTextView) findViewById(R.id.song_text);
-        Log.i(TAG, String.valueOf(checkedTextView));
+        checkedTextView = (CheckedTextView) findViewById(R.id.song_check);
+        textView1 = (TextView) findViewById(R.id.song_text1);
+        textView2 = (TextView) findViewById(R.id.song_text2);
+        textView3 = (TextView) findViewById(R.id.song_text3);
+        imageView = (ImageView) findViewById(R.id.song_image);
     }
 
     public void setSong(MusicDirectory.Entry song, File file) {
         if (file.exists()) {
-            checkedTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.downloaded, 0);
+            imageView.setImageResource(R.drawable.downloaded);
         } else {
-            checkedTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            imageView.setImageDrawable(null);
         }
-        checkedTextView.setText(song.getTitle());
+
+        StringBuilder text2 = new StringBuilder(40);
+        text2.append(song.getArtist()).append(" (");
+        if (song.getBitRate() != null) {
+            text2.append(song.getBitRate()).append(" Kbps ");
+        }
+        text2.append(song.getSuffix());
+        text2.append(")");
+
+        textView1.setText(song.getTitle());
+        textView2.setText(text2);
+        textView3.setText(Util.formatDuration(song.getDuration()));
     }
 
     @Override

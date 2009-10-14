@@ -75,6 +75,8 @@ public class MusicDirectory {
         private String transcodedSuffix;
         private String coverArt;
         private Long size;
+        private Integer duration;
+        private Integer bitRate;
 
         public String getId() {
             return id;
@@ -178,6 +180,22 @@ public class MusicDirectory {
 
         public void setSize(Long size) {
             this.size = size;
+        }
+
+        public Integer getDuration() {
+            return duration;
+        }
+
+        public void setDuration(Integer duration) {
+            this.duration = duration;
+        }
+
+        public Integer getBitRate() {
+            return bitRate;
+        }
+
+        public void setBitRate(Integer bitRate) {
+            this.bitRate = bitRate;
         }
 
         public String getCoverArt() {

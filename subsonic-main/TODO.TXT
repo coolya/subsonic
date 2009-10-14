@@ -8,6 +8,19 @@ TEST: Improve error message when not connected. Use same as weather widget. Must
 In licence email, explain how to install it.
 Write about Android player in "More".
 
+E/DownloadService( 1991): Failed to download album art.
+E/DownloadService( 1991): java.io.FileNotFoundException: http://10.0.2.2:8080/rest/getCoverArt.view?u=admin&p=enc:61646d696e&v=1.1.0&c=android&id=2f55736572732f73696e6472652f4d757369632f426c61636b20536162626174682f5b313937305d20426c61636b2053616262617468202d20426c61636b20536162626174682f30302e20426c61636b2053616262617468202d20426c61636b2053616262617468202d204261636b2e6a7067&size=320
+E/DownloadService( 1991): 	at org.apache.harmony.luni.internal.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1064)
+E/DownloadService( 1991): 	at net.sourceforge.subsonic.androidapp.service.RESTMusicService.getCoverArt(RESTMusicService.java:136)
+E/DownloadService( 1991): 	at net.sourceforge.subsonic.androidapp.service.CachedMusicService.getCoverArt(CachedMusicService.java:115)
+E/DownloadService( 1991): 	at net.sourceforge.subsonic.androidapp.service.DownloadService$DownloadThread.downloadAlbumArt(DownloadService.java:387)
+E/DownloadService( 1991): 	at net.sourceforge.subsonic.androidapp.service.DownloadService$DownloadThread.insertAlbumArt(DownloadService.java:466)
+E/DownloadService( 1991): 	at net.sourceforge.subsonic.androidapp.service.DownloadService$DownloadThread.saveInMediaStore(DownloadService.java:454)
+E/DownloadService( 1991): 	at net.sourceforge.subsonic.androidapp.service.DownloadService$DownloadThread.downloadToFile(DownloadService.java:332)
+E/DownloadService( 1991): 	at net.sourceforge.subsonic.androidapp.service.DownloadService$DownloadThread.run(DownloadService.java:299)
+I/DownloadService( 1991): Added album art: /sdcard/subsonic/music/Black Sabbath/Black Sabbath/folder.jpeg
+
+
 Improve menus in web pages.  Make sub menus.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
@@ -45,6 +58,7 @@ DONE IN 3.8
 (Android) New option: Download and play.
 (Android) New option: Search
 (Android) New option: Load playlist
+(Android) Nicer song listing.
 Added option to disable chat messages.
 Delete chat entries more than seven days old.
 Documented error codes in REST API.
