@@ -29,11 +29,22 @@
                 a:layout_width="fill_parent"
                 a:layout_height="wrap_content"
                 a:layout_marginBottom="6dp"
-                a:drawableLeft="@android:drawable/ic_menu_view"
+                a:drawableLeft="@drawable/browse"
                 a:drawablePadding="20dp"
                 a:gravity="left|center_vertical"
                 a:textAppearance="?android:attr/textAppearanceLarge"
-                a:text="Browse music"/>
+                a:text="My music"/>
+
+        <Button
+                a:id="@+id/main_load_playlist"
+                a:layout_width="fill_parent"
+                a:layout_height="wrap_content"
+                a:layout_marginBottom="6dp"
+                a:drawableLeft="@drawable/playlist"
+                a:drawablePadding="20dp"
+                a:gravity="left|center_vertical"
+                a:textAppearance="?android:attr/textAppearanceLarge"
+                a:text="My playlists"/>
 
         <Button
                 a:id="@+id/main_search"
@@ -45,38 +56,6 @@
                 a:gravity="left|center_vertical"
                 a:textAppearance="?android:attr/textAppearanceLarge"
                 a:text="Search"/>
-
-        <Button
-                a:id="@+id/main_load_playlist"
-                a:layout_width="fill_parent"
-                a:layout_height="wrap_content"
-                a:layout_marginBottom="6dp"
-                a:drawableLeft="@android:drawable/ic_menu_search"
-                a:drawablePadding="20dp"
-                a:gravity="left|center_vertical"
-                a:textAppearance="?android:attr/textAppearanceLarge"
-                a:text="Playlists"/>
-
-        <Button
-                a:id="@+id/main_stream_queue"
-                a:layout_width="fill_parent"
-                a:layout_height="wrap_content"
-                a:layout_marginBottom="6dp"
-                a:drawableLeft="@drawable/playlist"
-                a:drawablePadding="20dp"
-                a:gravity="left|center_vertical"
-                a:textAppearance="?android:attr/textAppearanceLarge"
-                a:text="Playlist"/>
-
-        <Button
-                a:id="@+id/main_download_queue"
-                a:layout_width="fill_parent"
-                a:layout_height="wrap_content"
-                a:drawableLeft="@android:drawable/ic_menu_save"
-                a:drawablePadding="20dp"
-                a:gravity="left|center_vertical"
-                a:textAppearance="?android:attr/textAppearanceLarge"
-                a:text="Download queue"/>
 
     </LinearLayout>
 
@@ -91,6 +70,30 @@
                 a:src="@drawable/settings_selector"
                 a:focusable="true"
                 a:gravity="left"/>
+
+        <TextView
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content"
+                a:layout_weight="1"/>
+
+        <ImageView
+                a:id="@+id/main_stream_queue"
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content"
+                a:src="@drawable/stream_queue_selector"
+                a:focusable="true"/>
+
+        <TextView
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content"
+                a:layout_weight="1"/>
+
+        <ImageView
+                a:id="@+id/main_download_queue"
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content"
+                a:src="@drawable/download_queue_selector"
+                a:focusable="true"/>
 
         <TextView
                 a:layout_width="wrap_content"

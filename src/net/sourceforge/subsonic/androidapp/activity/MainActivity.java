@@ -41,7 +41,7 @@ public class MainActivity extends OptionsMenuActivity {
         startService(new Intent(this, StreamService.class));
         setContentView(R.layout.main);
 
-        Button browseButton = (Button) findViewById(R.id.main_browse);
+        View browseButton = findViewById(R.id.main_browse);
         browseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,7 +49,7 @@ public class MainActivity extends OptionsMenuActivity {
             }
         });
 
-        final Button searchButton = (Button) findViewById(R.id.main_search);
+        final View searchButton = findViewById(R.id.main_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +57,7 @@ public class MainActivity extends OptionsMenuActivity {
             }
         });
 
-        final Button loadPlaylistButton = (Button) findViewById(R.id.main_load_playlist);
+        final View loadPlaylistButton = findViewById(R.id.main_load_playlist);
         loadPlaylistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,7 +65,7 @@ public class MainActivity extends OptionsMenuActivity {
             }
         });
 
-        Button downloadQueueButton = (Button) findViewById(R.id.main_download_queue);
+        View downloadQueueButton = findViewById(R.id.main_download_queue);
         downloadQueueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +73,7 @@ public class MainActivity extends OptionsMenuActivity {
             }
         });
 
-        Button streamQueueButton = (Button) findViewById(R.id.main_stream_queue);
+        View streamQueueButton = findViewById(R.id.main_stream_queue);
         streamQueueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +81,7 @@ public class MainActivity extends OptionsMenuActivity {
             }
         });
 
-        ImageView settingsButton = (ImageView) findViewById(R.id.main_settings);
+        View settingsButton = findViewById(R.id.main_settings);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +89,7 @@ public class MainActivity extends OptionsMenuActivity {
             }
         });
 
-        ImageView helpButton = (ImageView) findViewById(R.id.main_help);
+        View helpButton = findViewById(R.id.main_help);
         helpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
