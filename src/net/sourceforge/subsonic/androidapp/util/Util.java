@@ -189,7 +189,11 @@ public final class Util {
         return byteCount + " B";
     }
 
-    public static String formatDuration(int seconds) {
+    public static String formatDuration(Integer seconds) {
+        if (seconds == null) {
+            return null;
+        }
+
         int minutes = seconds / 60;
         int secs = seconds % 60;
 
