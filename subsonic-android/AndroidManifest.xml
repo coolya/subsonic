@@ -23,20 +23,20 @@
         </activity>
 
         <activity a:name=".activity.SelectArtistActivity"
-                  a:label="Browse music"
+                  a:label="My music"
                   a:screenOrientation="portrait"/>
 
         <activity a:name=".activity.SelectAlbumActivity"
-                  a:label="Browse music"
+                  a:label="My music"
                   a:screenOrientation="portrait"/>
 
         <activity a:name=".activity.DownloadQueueActivity"
-                  a:label="Download queue"
+                  a:label="Now downloading"
                   a:screenOrientation="portrait"
                   a:launchMode="singleTask"/>
 
         <activity a:name=".activity.StreamQueueActivity"
-                  a:label="Playlist"
+                  a:label="Now playing"
                   a:launchMode="singleTask"
                   a:screenOrientation="portrait"/>
 
