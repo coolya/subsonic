@@ -1,10 +1,8 @@
 TODO IN 3.8
 --------------
 Android messing up player?
-Android: Show more info per song (like gmail app)
 Android: Make search button work in all views.
 Bug: Double-scrobbling when transcoding.
-TEST: Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
 In licence email, explain how to install it.
 Write about Android player in "More".
 
@@ -58,7 +56,9 @@ DONE IN 3.8
 (Android) New option: Download and play.
 (Android) New option: Search
 (Android) New option: Load playlist
+(Android) New option: Delete from phone
 (Android) Nicer song listing.
+(Android) Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
 Added option to disable chat messages.
 Delete chat entries more than seven days old.
 Documented error codes in REST API.
