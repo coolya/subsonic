@@ -64,7 +64,7 @@ Delete chat entries more than seven days old.
 Documented error codes in REST API.
 Updated Swedish translation, courtesy of Fritte.
 Bugfix: Fixed wrong background color in More page.
-Updated German translation, courtesy of deejay2302.
+Updated German translation, courtesy of deejay2302 and Radon.
 
 ANDROID
 -------
