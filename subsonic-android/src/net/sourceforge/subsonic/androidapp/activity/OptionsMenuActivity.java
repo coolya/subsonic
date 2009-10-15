@@ -19,20 +19,57 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.KeyEvent;
 import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.util.Constants;
 
 /**
  * @author Sindre Mehus
  */
 public class OptionsMenuActivity extends Activity {
+
     private static final int MENU_HOME = 1;
     private static final int MENU_STREAM_QUEUE = 2;
     private static final int MENU_DOWNLOAD_QUEUE = 3;
     private static final int MENU_SETTINGS = 4;
     private static final int MENU_HELP = 5;
+
+    private Dialog searchDialog;
+
+    @Override
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+
+        LayoutInflater factory = LayoutInflater.from(this);
+        View searchView = factory.inflate(R.layout.search, null);
+
+        final Button searchViewButton = (Button) searchView.findViewById(R.id.search_search);
+        final TextView queryTextView = (TextView) searchView.findViewById(R.id.search_query);
+        searchViewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchDialog.dismiss();
+                Intent intent = new Intent(OptionsMenuActivity.this, SelectAlbumActivity.class);
+                intent.putExtra(Constants.INTENT_EXTRA_NAME_QUERY, String.valueOf(queryTextView.getText()));
+                startActivity(intent);
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(searchView);
+        builder.setCancelable(true);
+        searchDialog = builder.create();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,5 +102,17 @@ public class OptionsMenuActivity extends Activity {
                 return true;
         }
         return false;
+    }
+
+    protected void showSearchDialog() {
+        searchDialog.show();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+            showSearchDialog();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

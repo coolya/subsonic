@@ -1,7 +1,6 @@
 TODO IN 3.8
 --------------
 Android messing up player?
-Android: Make search button work in all views.
 Bug: Double-scrobbling when transcoding.
 In licence email, explain how to install it.
 Write about Android player in "More".
