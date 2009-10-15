@@ -35,6 +35,7 @@
             a:gravity="left|top"
             a:textAppearance="?android:attr/textAppearanceLarge"
             a:singleLine="true"
+            a:ellipsize="marquee"
             a:paddingTop="6dip"
             a:paddingRight="6dip"
             />

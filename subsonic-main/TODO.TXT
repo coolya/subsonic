@@ -1,22 +1,24 @@
 TODO IN 3.8
 --------------
+Android: Use android:ellipsize="marquee" 
+Android: Add option to delete selected songs. "Delete from phone"
 Android messing up player?
+Android: Long-click on song list.
 Bug: Double-scrobbling when transcoding.
 In licence email, explain how to install it.
 Write about Android player in "More".
+Android: Don't cache music dirs forever.
+Android: Option to auto-sync certain directories or playlists.
+Android: Option to tag certain directories as favorite.
 
-E/DownloadService( 1991): Failed to download album art.
-E/DownloadService( 1991): java.io.FileNotFoundException: http://10.0.2.2:8080/rest/getCoverArt.view?u=admin&p=enc:61646d696e&v=1.1.0&c=android&id=2f55736572732f73696e6472652f4d757369632f426c61636b20536162626174682f5b313937305d20426c61636b2053616262617468202d20426c61636b20536162626174682f30302e20426c61636b2053616262617468202d20426c61636b2053616262617468202d204261636b2e6a7067&size=320
-E/DownloadService( 1991): 	at org.apache.harmony.luni.internal.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1064)
-E/DownloadService( 1991): 	at net.sourceforge.subsonic.androidapp.service.RESTMusicService.getCoverArt(RESTMusicService.java:136)
-E/DownloadService( 1991): 	at net.sourceforge.subsonic.androidapp.service.CachedMusicService.getCoverArt(CachedMusicService.java:115)
-E/DownloadService( 1991): 	at net.sourceforge.subsonic.androidapp.service.DownloadService$DownloadThread.downloadAlbumArt(DownloadService.java:387)
-E/DownloadService( 1991): 	at net.sourceforge.subsonic.androidapp.service.DownloadService$DownloadThread.insertAlbumArt(DownloadService.java:466)
-E/DownloadService( 1991): 	at net.sourceforge.subsonic.androidapp.service.DownloadService$DownloadThread.saveInMediaStore(DownloadService.java:454)
-E/DownloadService( 1991): 	at net.sourceforge.subsonic.androidapp.service.DownloadService$DownloadThread.downloadToFile(DownloadService.java:332)
-E/DownloadService( 1991): 	at net.sourceforge.subsonic.androidapp.service.DownloadService$DownloadThread.run(DownloadService.java:299)
-I/DownloadService( 1991): Added album art: /sdcard/subsonic/music/Black Sabbath/Black Sabbath/folder.jpeg
-
+E/ImageLoader( 3381): java.io.FileNotFoundException: http://10.0.2.2:8080/rest/getCoverArt.view?u=admin&p=enc:61646d696e&v=1.1.0&c=android&id=2f55736572732f73696e6472652f4d757369632f426c61636b20536162626174682f5b313937305d20506172616e6f69642f30302e20426c61636b2053616262617468202d20506172616e6f6964202d204261636b2e6a7067&size=48
+E/ImageLoader( 3381): 	at org.apache.harmony.luni.internal.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1064)
+E/ImageLoader( 3381): 	at net.sourceforge.subsonic.androidapp.service.RESTMusicService.getCoverArt(RESTMusicService.java:136)
+E/ImageLoader( 3381): 	at net.sourceforge.subsonic.androidapp.service.CachedMusicService.getCoverArt(CachedMusicService.java:115)
+E/ImageLoader( 3381): 	at net.sourceforge.subsonic.androidapp.util.ImageLoader$Task.execute(ImageLoader.java:153)
+E/ImageLoader( 3381): 	at net.sourceforge.subsonic.androidapp.util.ImageLoader.run(ImageLoader.java:128)
+E/ImageLoader( 3381): 	at java.lang.Thread.run(Thread.java:1058)
+D/SelectAlbumActivity( 3381): [1971] Master Of Reality clicked.
 
 Improve menus in web pages.  Make sub menus.
 Add FLAC>WAV transcoding
@@ -67,13 +69,11 @@ Updated German translation, courtesy of deejay2302 and Radon.
 
 ANDROID
 -------
-Add option to delete selected songs.
 Is there a more generic broadcast event to listen to when the media collection changes?
 Fix encoding problems in Subsonic Demo files.
 Handle XML exception better.
 Use music index last modified + invalidate cache after a while.
 Use weak references in image cache?
-Use android:ellipsize="marquee"
 Make playlist bg b/w?
 Change main menu to 1) My music 2) My playlists 3) Search.  + Now playing & Now downloading (smaller)
 Change colors of selected songs.
