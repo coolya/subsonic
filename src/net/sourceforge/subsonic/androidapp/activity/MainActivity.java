@@ -1,17 +1,15 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
+import java.util.List;
+
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
@@ -20,11 +18,7 @@ import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 
-import java.util.List;
-
 public class MainActivity extends OptionsMenuActivity {
-
-    private Dialog searchDialog;
 
     /**
      * Called when the activity is first created.
@@ -95,30 +89,6 @@ public class MainActivity extends OptionsMenuActivity {
                 startActivity(new Intent(MainActivity.this, HelpActivity.class));
             }
         });
-
-        LayoutInflater factory = LayoutInflater.from(this);
-        View searchView = factory.inflate(R.layout.search, null);
-
-        final Button searchViewButton = (Button) searchView.findViewById(R.id.search_search);
-        final TextView queryTextView = (TextView) searchView.findViewById(R.id.search_query);
-        searchViewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                searchDialog.dismiss();
-                Intent intent = new Intent(MainActivity.this, SelectAlbumActivity.class);
-                intent.putExtra(Constants.INTENT_EXTRA_NAME_QUERY, String.valueOf(queryTextView.getText()));
-                startActivity(intent);
-            }
-        });
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(searchView);
-        builder.setCancelable(true);
-        searchDialog = builder.create();
-    }
-
-    private void showSearchDialog() {
-        searchDialog.show();
     }
 
     private void showPlaylistDialog() {
@@ -161,12 +131,4 @@ public class MainActivity extends OptionsMenuActivity {
             }
         }.execute();
     }
-
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-            showSearchDialog();
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
 }
