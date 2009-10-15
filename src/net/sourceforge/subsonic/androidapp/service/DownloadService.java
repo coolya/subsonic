@@ -18,6 +18,24 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -38,24 +56,6 @@ import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Sindre Mehus
@@ -150,7 +150,7 @@ public class DownloadService extends ServiceBase {
         }
 
         String message = nonExistentSongs.size() == 1 ? "Added \"" + nonExistentSongs.get(0).getTitle() + "\" to download queue." :
-                         "Added " + nonExistentSongs.size() + " songs to download queue.";
+                "Added " + nonExistentSongs.size() + " songs to download queue.";
         updateNotification();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         queue.addAll(nonExistentSongs);
@@ -285,6 +285,193 @@ public class DownloadService extends ServiceBase {
         return new File(dir, "folder.jpeg");
     }
 
+    public void delete(List<MusicDirectory.Entry> songs) {
+        for (MusicDirectory.Entry song : songs) {
+            File file = getSongFile(song, false);
+            file.delete();
+            deleteFromMediaStore(song, file);
+        }
+    }
+
+    private void downloadToFile(final MusicDirectory.Entry song) throws InterruptedException {
+        Log.i(TAG, "Starting to download " + song);
+        currentProgress.set(0L);
+        currentDownload.set(song);
+        updateNotification();
+        broadcastChange(true);
+
+        InputStream in = null;
+        FileOutputStream out = null;
+        File file = null;
+        File tmpFile = null;
+        try {
+            file = getSongFile(song, true);
+            tmpFile = new File(file.getPath() + ".tmp");
+            in = connect(getDownloadURL(song));
+            out = new FileOutputStream(tmpFile);
+            long n = copy(in, out);
+            Log.i(TAG, "Downloaded " + n + " bytes to " + tmpFile);
+
+            out.flush();
+            out.close();
+
+            if (!tmpFile.renameTo(file)) {
+                throw new IOException("Failed to rename " + tmpFile + " to " + file);
+            }
+
+            saveInMediaStore(song, file);
+            Util.toast(DownloadService.this, handler, "Finished downloading \"" + song.getTitle() + "\".");
+
+        } catch (Exception e) {
+            Util.close(out);
+            Util.delete(file);
+            if (e instanceof InterruptedException) {
+                throw (InterruptedException) e;
+            }
+
+            Log.e(TAG, "Failed to download stream.", e);
+            addErrorNotification(song, e);
+            Util.toast(DownloadService.this, handler, "Failed to download \"" + song.getTitle() + "\".");
+        } finally {
+            Util.close(in);
+            Util.close(out);
+            Util.delete(tmpFile);
+            currentDownload.set(null);
+            updateNotification();
+            broadcastChange(true);
+        }
+    }
+
+    private InputStream connect(String url) throws Exception {
+        URLConnection connection = new URL(url).openConnection();
+        connection.setConnectTimeout(Constants.SOCKET_CONNECT_TIMEOUT);
+        connection.setReadTimeout(Constants.SOCKET_READ_TIMEOUT);
+        connection.connect();
+        InputStream in = connection.getInputStream();
+
+        // If content type is XML, an error occured.  Get it.
+        String contentType = connection.getContentType();
+        if (contentType != null && contentType.startsWith("text/xml")) {
+            try {
+                new ErrorParser().parse(new InputStreamReader(in, Constants.UTF_8));
+            } finally {
+                Util.close(in);
+            }
+        }
+
+        return in;
+    }
+
+    private File downloadAlbumArt(MusicDirectory.Entry song) {
+        if (song.getCoverArt() == null) {
+            return null;
+        }
+
+        InputStream in = null;
+        FileOutputStream out = null;
+        File file = null;
+        try {
+            file = getAlbumArtFile(song);
+
+            MusicService musicService = MusicServiceFactory.getMusicService();
+            byte[] bytes = musicService.getCoverArt(DownloadService.this, song.getCoverArt(), 320, null);
+            in = new ByteArrayInputStream(bytes);
+            out = new FileOutputStream(file);
+            Util.copy(in, out);
+        } catch (Exception e) {
+            Util.delete(file);
+            Log.e(TAG, "Failed to download album art.", e);
+        } finally {
+            Util.close(in);
+            Util.close(out);
+        }
+        return file;
+    }
+
+    private long copy(InputStream in, OutputStream out) throws IOException, InterruptedException {
+        byte[] buffer = new byte[1024 * 16];
+        long count = 0;
+        int n;
+        long lastBroadcast = System.currentTimeMillis();
+
+        while ((n = in.read(buffer)) != -1) {
+            if (Thread.interrupted()) {
+                throw new InterruptedException("Interrupted while downloading");
+            }
+
+            out.write(buffer, 0, n);
+            count += n;
+            currentProgress.addAndGet(n);
+
+            long now = System.currentTimeMillis();
+            if (now - lastBroadcast > 250L) {  // Only every so often.
+                broadcastChange(false);
+                lastBroadcast = now;
+            }
+        }
+        broadcastChange(false);
+        return count;
+    }
+
+    private void saveInMediaStore(MusicDirectory.Entry song, File songFile) {
+        // Delete existing row in case the song has been downloaded before.
+        deleteFromMediaStore(song, songFile);
+
+        ContentResolver contentResolver = getContentResolver();
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.MediaColumns.TITLE, song.getTitle());
+        values.put(MediaStore.Audio.AudioColumns.ARTIST, song.getArtist());
+        values.put(MediaStore.Audio.AudioColumns.ALBUM, song.getAlbum());
+        values.put(MediaStore.Audio.AudioColumns.TRACK, song.getTrack());
+        values.put(MediaStore.Audio.AudioColumns.YEAR, song.getYear());
+        values.put(MediaStore.MediaColumns.DATA, songFile.getAbsolutePath());
+        values.put(MediaStore.MediaColumns.MIME_TYPE, song.getContentType());
+        values.put(MediaStore.Audio.AudioColumns.IS_MUSIC, 1);
+
+        Uri uri = contentResolver.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
+
+        // Look up album, and add cover art if found.
+        Cursor cursor = contentResolver.query(uri, new String[]{MediaStore.Audio.AudioColumns.ALBUM_ID}, null, null, null);
+        if (cursor.moveToFirst()) {
+            int albumId = cursor.getInt(0);
+            insertAlbumArt(albumId, song);
+        }
+        cursor.close();
+    }
+
+    private void deleteFromMediaStore(MusicDirectory.Entry song, File songFile) {
+        ContentResolver contentResolver = getContentResolver();
+
+        int n = contentResolver.delete(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                MediaStore.Audio.AudioColumns.TITLE_KEY + "=? AND " +
+                        MediaStore.MediaColumns.DATA + "=?",
+                new String[]{MediaStore.Audio.keyFor(song.getTitle()), songFile.getAbsolutePath()});
+        if (n > 0) {
+            Log.i(TAG, "Deleting media store row for " + song);
+        }
+    }
+
+    private void insertAlbumArt(int albumId, MusicDirectory.Entry song) {
+        ContentResolver contentResolver = getContentResolver();
+
+        Cursor cursor = contentResolver.query(Uri.withAppendedPath(ALBUM_ART_URI, String.valueOf(albumId)), null, null, null, null);
+        if (!cursor.moveToFirst()) {
+
+            // No album art found, add it.
+            File albumArtFile = downloadAlbumArt(song);
+            if (albumArtFile == null) {
+                return;
+            }
+
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Audio.AlbumColumns.ALBUM_ID, albumId);
+            values.put(MediaStore.MediaColumns.DATA, albumArtFile.getPath());
+            contentResolver.insert(ALBUM_ART_URI, values);
+            Log.i(TAG, "Added album art: " + albumArtFile);
+        }
+        cursor.close();
+    }
+
     private class DownloadThread extends Thread {
 
         @Override
@@ -301,180 +488,6 @@ public class DownloadService extends ServiceBase {
                     Log.i(TAG, "Download thread interrupted. Continuing.");
                 }
             }
-        }
-
-        private void downloadToFile(final MusicDirectory.Entry song) throws InterruptedException {
-            Log.i(TAG, "Starting to download " + song);
-            currentProgress.set(0L);
-            currentDownload.set(song);
-            updateNotification();
-            broadcastChange(true);
-
-            InputStream in = null;
-            FileOutputStream out = null;
-            File file = null;
-            File tmpFile = null;
-            try {
-                file = getSongFile(song, true);
-                tmpFile = new File(file.getPath() + ".tmp");
-                in = connect(getDownloadURL(song));
-                out = new FileOutputStream(tmpFile);
-                long n = copy(in, out);
-                Log.i(TAG, "Downloaded " + n + " bytes to " + tmpFile);
-
-                out.flush();
-                out.close();
-
-                if (!tmpFile.renameTo(file)) {
-                    throw new IOException("Failed to rename " + tmpFile + " to " + file);
-                }
-
-                saveInMediaStore(song, file);
-                Util.toast(DownloadService.this, handler, "Finished downloading \"" + song.getTitle() + "\".");
-
-            } catch (Exception e) {
-                Util.close(out);
-                Util.delete(file);
-                if (e instanceof InterruptedException) {
-                    throw (InterruptedException) e;
-                }
-
-                Log.e(TAG, "Failed to download stream.", e);
-                addErrorNotification(song, e);
-                Util.toast(DownloadService.this, handler, "Failed to download \"" + song.getTitle() + "\".");
-            } finally {
-                Util.close(in);
-                Util.close(out);
-                Util.delete(tmpFile);
-                currentDownload.set(null);
-                updateNotification();
-                broadcastChange(true);
-            }
-        }
-
-        private InputStream connect(String url) throws Exception {
-            URLConnection connection = new URL(url).openConnection();
-            connection.setConnectTimeout(Constants.SOCKET_CONNECT_TIMEOUT);
-            connection.setReadTimeout(Constants.SOCKET_READ_TIMEOUT);
-            connection.connect();
-            InputStream in = connection.getInputStream();
-
-            // If content type is XML, an error occured.  Get it.
-            String contentType = connection.getContentType();
-            if (contentType != null && contentType.startsWith("text/xml")) {
-                try {
-                    new ErrorParser().parse(new InputStreamReader(in, Constants.UTF_8));
-                } finally {
-                    Util.close(in);
-                }
-            }
-
-            return in;
-        }
-
-        private File downloadAlbumArt(MusicDirectory.Entry song) {
-            if (song.getCoverArt() == null) {
-                return null;
-            }
-
-            InputStream in = null;
-            FileOutputStream out = null;
-            File file = null;
-            try {
-                file = getAlbumArtFile(song);
-
-                MusicService musicService = MusicServiceFactory.getMusicService();
-                byte[] bytes = musicService.getCoverArt(DownloadService.this, song.getCoverArt(), 320, null);
-                in = new ByteArrayInputStream(bytes);
-                out = new FileOutputStream(file);
-                Util.copy(in, out);
-            } catch (Exception e) {
-                Util.delete(file);
-                Log.e(TAG, "Failed to download album art.", e);
-            } finally {
-                Util.close(in);
-                Util.close(out);
-            }
-            return file;
-        }
-
-        private long copy(InputStream in, OutputStream out) throws IOException, InterruptedException {
-            byte[] buffer = new byte[1024 * 16];
-            long count = 0;
-            int n;
-            long lastBroadcast = System.currentTimeMillis();
-
-            while ((n = in.read(buffer)) != -1) {
-                if (Thread.interrupted()) {
-                    throw new InterruptedException("Interrupted while downloading");
-                }
-
-                out.write(buffer, 0, n);
-                count += n;
-                currentProgress.addAndGet(n);
-
-                long now = System.currentTimeMillis();
-                if (now - lastBroadcast > 250L) {  // Only every so often.
-                    broadcastChange(false);
-                    lastBroadcast = now;
-                }
-            }
-            broadcastChange(false);
-            return count;
-        }
-
-        private void saveInMediaStore(MusicDirectory.Entry song, File songFile) {
-            ContentResolver contentResolver = getContentResolver();
-
-            // Delete existing row in case the song has been downloaded before.
-            int n = contentResolver.delete(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                                           MediaStore.Audio.AudioColumns.TITLE_KEY + "=? AND " +
-                                           MediaStore.MediaColumns.DATA + "=?",
-                                           new String[]{MediaStore.Audio.keyFor(song.getTitle()), songFile.getAbsolutePath()});
-            if (n > 0) {
-                Log.i(TAG, "Overwriting media store row for " + song);
-            }
-
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.MediaColumns.TITLE, song.getTitle());
-            values.put(MediaStore.Audio.AudioColumns.ARTIST, song.getArtist());
-            values.put(MediaStore.Audio.AudioColumns.ALBUM, song.getAlbum());
-            values.put(MediaStore.Audio.AudioColumns.TRACK, song.getTrack());
-            values.put(MediaStore.Audio.AudioColumns.YEAR, song.getYear());
-            values.put(MediaStore.MediaColumns.DATA, songFile.getAbsolutePath());
-            values.put(MediaStore.MediaColumns.MIME_TYPE, song.getContentType());
-            values.put(MediaStore.Audio.AudioColumns.IS_MUSIC, 1);
-
-            Uri uri = contentResolver.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
-
-            // Look up album, and add cover art if found.
-            Cursor cursor = contentResolver.query(uri, new String[]{MediaStore.Audio.AudioColumns.ALBUM_ID}, null, null, null);
-            if (cursor.moveToFirst()) {
-                int albumId = cursor.getInt(0);
-                insertAlbumArt(albumId, song);
-            }
-            cursor.close();
-        }
-
-        private void insertAlbumArt(int albumId, MusicDirectory.Entry song) {
-            ContentResolver contentResolver = getContentResolver();
-
-            Cursor cursor = contentResolver.query(Uri.withAppendedPath(ALBUM_ART_URI, String.valueOf(albumId)), null, null, null, null);
-            if (!cursor.moveToFirst()) {
-
-                // No album art found, add it.
-                File albumArtFile = downloadAlbumArt(song);
-                if (albumArtFile == null) {
-                    return;
-                }
-
-                ContentValues values = new ContentValues();
-                values.put(MediaStore.Audio.AlbumColumns.ALBUM_ID, albumId);
-                values.put(MediaStore.MediaColumns.DATA, albumArtFile.getPath());
-                contentResolver.insert(ALBUM_ART_URI, values);
-                Log.i(TAG, "Added album art: " + albumArtFile);
-            }
-            cursor.close();
         }
     }
 }

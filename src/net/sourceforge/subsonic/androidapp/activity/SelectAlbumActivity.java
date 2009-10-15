@@ -1,5 +1,9 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -21,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
@@ -35,12 +38,8 @@ import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
-import net.sourceforge.subsonic.androidapp.util.Util;
 import net.sourceforge.subsonic.androidapp.util.SongView;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import net.sourceforge.subsonic.androidapp.util.Util;
 
 public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
@@ -161,6 +160,10 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 addToPlaylist(false, true);
                 selectAll(false);
                 break;
+            case 4:
+                delete();
+                selectAll(false);
+                break;
             default:
                 return super.onContextItemSelected(menuItem);
         }
@@ -173,6 +176,14 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         menu.add(Menu.NONE, 1, 1, "Add to playlist");
         menu.add(Menu.NONE, 2, 2, "Download");
         menu.add(Menu.NONE, 3, 3, "Download + Play");
+
+        for (MusicDirectory.Entry song : getSelectedSongs()) {
+            File file = downloadService.getSongFile(song, false);
+            if (file.exists()) {
+                menu.add(Menu.NONE, 4, 4, "Delete from phone");
+                break;
+            }
+        }
     }
 
     private void getMusicDirectory() {
@@ -310,6 +321,15 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         };
 
         checkLicenseAndTrialPeriod(onValid);
+    }
+
+    private void delete() {
+        if (downloadService == null) {
+            return;
+        }
+
+        downloadService.delete(getSelectedSongs());
+        repaintList();
     }
 
     private void checkLicenseAndTrialPeriod(Runnable onValid) {
