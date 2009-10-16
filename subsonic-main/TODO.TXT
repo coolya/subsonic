@@ -1,5 +1,6 @@
 TODO IN 3.8
 --------------
+Create some playlists in Subsonic Demo.
 Android: Playlist not updated when switching to new song.
 Android messing up player?
 Android: Long-click on song list.
@@ -8,45 +9,6 @@ In licence email, explain how to install it.
 Android: Don't cache music dirs forever.
 Android: Option to auto-sync certain directories or playlists.
 Android: Option to tag certain directories as favorite.
-
-E/ImageLoader( 3381): java.io.FileNotFoundException: http://10.0.2.2:8080/rest/getCoverArt.view?u=admin&p=enc:61646d696e&v=1.1.0&c=android&id=2f55736572732f73696e6472652f4d757369632f426c61636b20536162626174682f5b313937305d20506172616e6f69642f30302e20426c61636b2053616262617468202d20506172616e6f6964202d204261636b2e6a7067&size=48
-E/ImageLoader( 3381): 	at org.apache.harmony.luni.internal.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1064)
-E/ImageLoader( 3381): 	at net.sourceforge.subsonic.androidapp.service.RESTMusicService.getCoverArt(RESTMusicService.java:136)
-E/ImageLoader( 3381): 	at net.sourceforge.subsonic.androidapp.service.CachedMusicService.getCoverArt(CachedMusicService.java:115)
-E/ImageLoader( 3381): 	at net.sourceforge.subsonic.androidapp.util.ImageLoader$Task.execute(ImageLoader.java:153)
-E/ImageLoader( 3381): 	at net.sourceforge.subsonic.androidapp.util.ImageLoader.run(ImageLoader.java:128)
-E/ImageLoader( 3381): 	at java.lang.Thread.run(Thread.java:1058)
-D/SelectAlbumActivity( 3381): [1971] Master Of Reality clicked.
-
-Improve menus in web pages.  Make sub menus.
-Add FLAC>WAV transcoding
-Add "Add random" to main.view and "Add to playlist" in more.view
-Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
-Use signed requests against Amazon.
-http://upnp-portmapper.sourceforge.net/
-http://www.jthink.net/jaudiotagger/index.jsp]
-Exclusion filter (*.svn, *.log, *.pun)
-Select music folder / playlist folder in Windows installer.
-Add links to Facebook group from home page and Help page.
-Bad performance, low bandwidth.
-http://lyricsfly.com/
-Avoid underlined image links in menu bar (FF, Chrome)
-Nightly build.
-"removeAllRows() can only be used with table, tbody, thead and tfoot elements. Attempt to use: HTMLDivElement"
-next/prev buttons in jukebox.
-Write installation note on how to setup internet access.
-Mention Amahi in web pages.
-Contact Amahi
-Run agent as admin in Windows 7. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1479
-Does subsonic_exclude.txt work for indexing? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1965
-Dynamic playlists,  Message from zeekay.
-Lucene
-User registration.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1931
-Further search improvements, e.g., "search all". http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1839
-Improve year range in random playlist generator.  Maybe provide to and from fields.
-Improve Midnight Fun theme.
-Google Image Search or Yahoo search
-Automatically enable/disable "Notify me about new versions" option when new users are created.
 
 DONE IN 3.8
 ------------
@@ -85,6 +47,35 @@ REST method for getting lyrics.
 
 BACKLOG
 ==========================
+Improve menus in web pages.  Make sub menus.
+Add FLAC>WAV transcoding
+Add "Add random" to main.view and "Add to playlist" in more.view
+Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
+Use signed requests against Amazon.
+http://upnp-portmapper.sourceforge.net/
+http://www.jthink.net/jaudiotagger/index.jsp]
+Exclusion filter (*.svn, *.log, *.pun)
+Select music folder / playlist folder in Windows installer.
+Add links to Facebook group from home page and Help page.
+Bad performance, low bandwidth.
+http://lyricsfly.com/
+Avoid underlined image links in menu bar (FF, Chrome)
+Nightly build.
+"removeAllRows() can only be used with table, tbody, thead and tfoot elements. Attempt to use: HTMLDivElement"
+next/prev buttons in jukebox.
+Write installation note on how to setup internet access.
+Mention Amahi in web pages.
+Contact Amahi
+Run agent as admin in Windows 7. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1479
+Does subsonic_exclude.txt work for indexing? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1965
+Dynamic playlists,  Message from zeekay.
+Lucene
+User registration.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1931
+Further search improvements, e.g., "search all". http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1839
+Improve year range in random playlist generator.  Maybe provide to and from fields.
+Improve Midnight Fun theme.
+Google Image Search or Yahoo search
+Automatically enable/disable "Notify me about new versions" option when new users are created.
 Show who's online.
 Error when path contains "&amp;" http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1921
 Simplify Media.  How does it avoid opening ports in router?
