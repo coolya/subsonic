@@ -17,6 +17,23 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="3.8"><h2 class="div">Subsonic 3.8 - Oct 20, 2009</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>(Android) Songs that are already downloaded are now played as local files, rather than streamed.</li>
+    <li><span class="bugid">New: </span>(Android) New feature: Download + Play.</li>
+    <li><span class="bugid">New: </span>(Android) New feature: Search</li>
+    <li><span class="bugid">New: </span>(Android) New feature: Load playlist</li>
+    <li><span class="bugid">New: </span>(Android) New feature: Delete from phone</li>
+    <li><span class="bugid">New: </span>(Android) Nicer song listing.</li>
+    <li><span class="bugid">New: </span>(Android) More informative error message when not connected.</li>
+    <li><span class="bugid">New: </span>Added option to disable chat messages.</li>
+    <li><span class="bugid">New: </span>Delete chat entries more than seven days old.</li>
+    <li><span class="bugid">New: </span>Documented error codes in REST API.</li>
+    <li><span class="bugid">New: </span>Updated Swedish translation, courtesy of Fritte.</li>
+    <li><span class="bugid">New: </span>Updated German translation, courtesy of deejay2302 and Radon.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed wrong background color in More page.</li>
+</ul>
+
 <a name="3.8.beta1"><h2 class="div">Subsonic 3.8.beta1 - Oct 02, 2009</h2></a>
 <ul>
     <li><span class="bugid">New: </span>Implemented Subsonic client for Android phones.</li>
@@ -619,6 +636,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#3.8">Subsonic 3.8</a></li>
             <li><a href="#3.8.beta1">Subsonic 3.8.beta1</a></li>
             <li><a href="#3.7">Subsonic 3.7</a></li>
             <li><a href="#3.7.beta1">Subsonic 3.7.beta1</a></li>

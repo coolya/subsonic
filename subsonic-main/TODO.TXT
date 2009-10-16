@@ -1,34 +1,19 @@
 TODO IN 3.8
 --------------
-Create some playlists in Subsonic Demo.
-Android: Playlist not updated when switching to new song.
+Android: Playlist not updated when switching to new song?
 Android messing up player?
-Android: Long-click on song list.
 Bug: Double-scrobbling when transcoding.
-In licence email, explain how to install it.
-Android: Don't cache music dirs forever.
-Android: Option to auto-sync certain directories or playlists.
-Android: Option to tag certain directories as favorite.
+Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
 
 DONE IN 3.8
 ------------
-(Android) Songs that are already downloaded are now indicated with an asterix.
-(Android) Songs that are already downloaded are now played as local files, rather than streamed.
-(Android) New option: Download and play.
-(Android) New option: Search
-(Android) New option: Load playlist
-(Android) New option: Delete from phone
-(Android) Nicer song listing.
-(Android) Improve error message when not connected. Use same as weather widget. Must differentiate between server down and no network.
-Added option to disable chat messages.
-Delete chat entries more than seven days old.
-Documented error codes in REST API.
-Updated Swedish translation, courtesy of Fritte.
-Bugfix: Fixed wrong background color in More page.
-Updated German translation, courtesy of deejay2302 and Radon.
 
 ANDROID
 -------
+Android: Long-click on song list.
+Android: Don't cache music dirs forever.
+Android: Option to auto-sync certain directories or playlists.
+Android: Option to tag certain directories as favorite.
 Is there a more generic broadcast event to listen to when the media collection changes?
 Fix encoding problems in Subsonic Demo files.
 Handle XML exception better.
@@ -48,9 +33,9 @@ REST method for getting lyrics.
 BACKLOG
 ==========================
 Improve menus in web pages.  Make sub menus.
+In licence email, explain how to install it.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
-Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
 Use signed requests against Amazon.
 http://upnp-portmapper.sourceforge.net/
 http://www.jthink.net/jaudiotagger/index.jsp]
@@ -354,7 +339,7 @@ Deploy
 Check that correct local version is displayed.
 Commit
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-assembly/target/subsonic* subsonic-installer/target/subsonic*  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/3.8.beta1/
+  rsync -avP -e ssh subsonic-assembly/target/subsonic* subsonic-installer/target/subsonic*  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/3.8/
 
 Modify FRS properties
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
