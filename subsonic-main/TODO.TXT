@@ -1,12 +1,10 @@
 TODO IN 3.8
 --------------
-Android: Use android:ellipsize="marquee" 
-Android: Add option to delete selected songs. "Delete from phone"
+Android: Playlist not updated when switching to new song.
 Android messing up player?
 Android: Long-click on song list.
 Bug: Double-scrobbling when transcoding.
 In licence email, explain how to install it.
-Write about Android player in "More".
 Android: Don't cache music dirs forever.
 Android: Option to auto-sync certain directories or playlists.
 Android: Option to tag certain directories as favorite.
