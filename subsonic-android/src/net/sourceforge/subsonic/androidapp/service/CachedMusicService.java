@@ -21,6 +21,7 @@ package net.sourceforge.subsonic.androidapp.service;
 import android.content.Context;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.domain.Version;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import net.sourceforge.subsonic.androidapp.util.TimeLimitedCache;
 import net.sourceforge.subsonic.androidapp.util.Util;
@@ -121,6 +122,16 @@ public class CachedMusicService implements MusicService {
     @Override
     public void cancel(Context context, ProgressListener progressListener) {
         musicService.cancel(context, progressListener);
+    }
+
+    @Override
+    public Version getLocalVersion(Context context) throws Exception {
+        return musicService.getLocalVersion(context);
+    }
+
+    @Override
+    public Version getLatestVersion(Context context, ProgressListener progressListener) throws Exception {
+        return musicService.getLatestVersion(context, progressListener);
     }
 
     private void checkSettingsChanged(Context context) {

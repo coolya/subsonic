@@ -17,10 +17,12 @@ import java.text.NumberFormat;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.widget.Toast;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.app.AlertDialog;
 
 /**
  * @author Sindre Mehus
@@ -277,5 +279,29 @@ public final class Util {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
+    }
+
+    public static void error(Context context, String message) {
+        showDialog(context, android.R.drawable.ic_dialog_alert, "Error", message);
+    }
+
+    public static void info(Context context, String title, String message) {
+        showDialog(context, android.R.drawable.ic_dialog_info, title, message);
+    }
+
+    private static void showDialog(Context context, int icon, String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setIcon(icon);
+        builder.setTitle(title);
+        builder.setMessage(message);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        builder.show();
     }
 }

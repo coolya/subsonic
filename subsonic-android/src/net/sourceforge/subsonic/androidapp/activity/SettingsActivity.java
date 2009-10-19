@@ -9,12 +9,14 @@ import android.preference.ListPreference;
 import android.content.SharedPreferences;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.domain.Version;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.ErrorDialog;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.Pair;
 
 import java.net.URL;
 import java.util.Map;
@@ -34,11 +36,21 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         addPreferencesFromResource(R.xml.settings);
 
         serverInstance = (ListPreference) findPreference("serverInstance");
+
         Preference testConnection = findPreference("testConnection");
         testConnection.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 testConnection();
+                return false;
+            }
+        });
+
+        Preference checkForUpdates = findPreference("checkForUpdates");
+        checkForUpdates.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                checkForUpdates();
                 return false;
             }
         });
@@ -100,6 +112,39 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             protected void error(Throwable error) {
                 Log.w(TAG, error.toString(), error);
                 new ErrorDialog(SettingsActivity.this, "Connection failure. " + getErrorMessage(error), false);
+            }
+        };
+        task.execute();
+    }
+
+    private void checkForUpdates() {
+        BackgroundTask<Pair<Version,Version>> task = new BackgroundTask<Pair<Version,Version>>(this) {
+            @Override
+            protected Pair<Version,Version> doInBackground() throws Throwable {
+                updateProgress("Checking for updates...");
+                MusicService musicService = MusicServiceFactory.getMusicService();
+                Version localVersion = musicService.getLocalVersion(SettingsActivity.this);
+                Version latestVersion = musicService.getLatestVersion(SettingsActivity.this, this);
+                return new Pair<Version, Version>(localVersion, latestVersion);
+            }
+
+            @Override
+            protected void done(Pair<Version,Version> versions) {
+                Version localVersion = versions.getFirst();
+                Version latestVersion = versions.getSecond();
+                if (localVersion == null) {
+                    Util.error(SettingsActivity.this, "Failed to resolve current version.");
+                } else if (latestVersion == null) {
+                    Util.error(SettingsActivity.this, "Failed to resolve latest version.");
+                } else if (localVersion.compareTo(latestVersion) < 0) {
+                    Util.info(SettingsActivity.this, "Update available", "A newer version is available on Android Market.");
+                } else {
+                    Util.toast(SettingsActivity.this, "You are running the latest version.");
+                }
+            }
+
+            @Override
+            protected void cancel() {
             }
         };
         task.execute();

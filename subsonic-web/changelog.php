@@ -24,6 +24,7 @@
     <li><span class="bugid">New: </span>(Android) New feature: Search</li>
     <li><span class="bugid">New: </span>(Android) New feature: Load playlist</li>
     <li><span class="bugid">New: </span>(Android) New feature: Delete from phone</li>
+    <li><span class="bugid">New: </span>(Android) New feature: Check for software update</li>
     <li><span class="bugid">New: </span>(Android) Nicer song listing.</li>
     <li><span class="bugid">New: </span>(Android) More informative error message when not connected.</li>
     <li><span class="bugid">New: </span>Added option to disable chat messages.</li>
