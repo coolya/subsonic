@@ -14,6 +14,10 @@
             a:title="Test connection"
             a:persistent="false"/>
 
+    <Preference
+            a:key="checkForUpdates"
+            a:title="Check for software update"
+            a:persistent="false"/>
 
     <PreferenceCategory
             a:title="Servers">
