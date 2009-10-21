@@ -26,15 +26,21 @@ import java.util.List;
 public class Indexes {
 
     private final long lastModified;
+    private final List<Artist> shortcuts;
     private final List<Artist> artists;
 
-    public Indexes(long lastModified, List<Artist> artists) {
+    public Indexes(long lastModified, List<Artist> shortcuts, List<Artist> artists) {
         this.lastModified = lastModified;
+        this.shortcuts = shortcuts;
         this.artists = artists;
     }
 
     public long getLastModified() {
         return lastModified;
+    }
+
+    public List<Artist> getShortcuts() {
+        return shortcuts;
     }
 
     public List<Artist> getArtists() {

@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
 import net.sourceforge.subsonic.androidapp.domain.Artist;
+import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
@@ -40,16 +41,19 @@ public class SelectArtistActivity extends OptionsMenuActivity implements Adapter
     }
 
     private void load() {
-        BackgroundTask<List<Artist>> task = new BackgroundTask<List<Artist>>(this) {
+        BackgroundTask<Indexes> task = new BackgroundTask<Indexes>(this) {
             @Override
-            protected List<Artist> doInBackground() throws Throwable {
+            protected Indexes doInBackground() throws Throwable {
                 MusicService musicService = MusicServiceFactory.getMusicService();
-                return musicService.getIndexes(SelectArtistActivity.this, this).getArtists();
+                return musicService.getIndexes(SelectArtistActivity.this, this);
             }
 
             @Override
-            protected void done(List<Artist> result) {
-                artistList.setAdapter(new ArtistAdapter(result));
+            protected void done(Indexes result) {
+                List<Artist> artists = new ArrayList<Artist>(result.getShortcuts().size() + result.getArtists().size());
+                artists.addAll(result.getShortcuts());
+                artists.addAll(result.getArtists());
+                artistList.setAdapter(new ArtistAdapter(artists));
             }
 
             @Override
