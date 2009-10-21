@@ -4,6 +4,8 @@
                    status="ok" version="1.1.0">
 
     <indexes lastModified="237462836472342">
+        <shortcut id="11" name="Audio books"/>
+        <shortcut id="10" name="Podcasts"/>
         <index name="A">
             <artist id="1" name="ABBA"/>
             <artist id="2" name="Alanis Morisette"/>

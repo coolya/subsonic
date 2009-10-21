@@ -27,6 +27,7 @@
     <li><span class="bugid">New: </span>(Android) New feature: Check for software update</li>
     <li><span class="bugid">New: </span>(Android) Nicer song listing.</li>
     <li><span class="bugid">New: </span>(Android) More informative error message when not connected.</li>
+    <li><span class="bugid">New: </span>(Android) Show artist shortcuts.</li>
     <li><span class="bugid">New: </span>Added option to disable chat messages.</li>
     <li><span class="bugid">New: </span>Delete chat entries more than seven days old.</li>
     <li><span class="bugid">New: </span>Documented error codes in REST API.</li>

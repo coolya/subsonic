@@ -50,6 +50,7 @@
 
     <xs:complexType name="Indexes">
         <xs:sequence>
+            <xs:element name="shortcut" type="sub:Artist" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="index" type="sub:Index" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="lastModified" type="xs:long" use="required"/>

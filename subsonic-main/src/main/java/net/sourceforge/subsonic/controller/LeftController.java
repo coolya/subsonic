@@ -185,7 +185,7 @@ public class LeftController extends ParameterizableViewController implements Las
         return result;
     }
 
-    private List<MusicFile> getShortcuts(List<MusicFolder> musicFoldersToUse, String[] shortcuts) {
+    public List<MusicFile> getShortcuts(List<MusicFolder> musicFoldersToUse, String[] shortcuts) {
         List<MusicFile> result = new ArrayList<MusicFile>();
 
         for (String shortcut : shortcuts) {

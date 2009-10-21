@@ -46,6 +46,7 @@ public class IndexesParser extends AbstractParser {
         parser.setInput(reader);
 
         List<Artist> artists = new ArrayList<Artist>();
+        List<Artist> shortcuts = new ArrayList<Artist>();
         Long lastModified = null;
         int eventType;
         String index = "#";
@@ -68,6 +69,12 @@ public class IndexesParser extends AbstractParser {
                     if (progressListener != null && artists.size() % 10 == 0) {
                         progressListener.updateProgress("Got " + artists.size() + " artists.");
                     }
+                } else if ("shortcut".equals(name)) {
+                    Artist shortcut = new Artist();
+                    shortcut.setId(get(parser, "id"));
+                    shortcut.setName(get(parser, "name"));
+                    shortcut.setIndex("*");
+                    shortcuts.add(shortcut);
                 } else if ("error".equals(name)) {
                     handleError(parser);
                 }
@@ -81,6 +88,6 @@ public class IndexesParser extends AbstractParser {
             progressListener.updateProgress("Got " + artists.size() + " artists.");
         }
 
-        return new Indexes(lastModified == null ? 0L : lastModified, artists);
+        return new Indexes(lastModified == null ? 0L : lastModified, shortcuts, artists);
     }
 }

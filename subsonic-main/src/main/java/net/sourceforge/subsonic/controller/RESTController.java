@@ -165,6 +165,13 @@ public class RESTController extends MultiActionController {
             }
         }
 
+        List<MusicFile> shortcuts = leftController.getShortcuts(musicFolders, settingsService.getShortcutsAsArray());
+        for (MusicFile shortcut : shortcuts) {
+            builder.add("shortcut", true,
+                    new Attribute("name", shortcut.getName()),
+                    new Attribute("id", StringUtil.utf8HexEncode(shortcut.getPath())));
+        }
+
         SortedMap<MusicIndex, SortedSet<MusicIndex.Artist>> indexedArtists = leftController.getCacheEntry(musicFolders, lastModified).getIndexedArtists();
 
         for (Map.Entry<MusicIndex, SortedSet<MusicIndex.Artist>> entry : indexedArtists.entrySet()) {
