@@ -54,7 +54,7 @@ public class ChatService {
     private LinkedList<Message> messages;
     private SecurityService securityService;
     private Ehcache chatCache;
-    private static final long TTL_MILLIS = TimeUnit.DAYS.toMillis(7);
+    private static final long TTL_MILLIS = 7L * 24L * 60L* 60L * 1000L; // 7 days.
 
     /**
      * Invoked by Spring.
@@ -79,7 +79,7 @@ public class ChatService {
                 removeOldMessages();
             }
         };
-        executor.scheduleWithFixedDelay(runnable, 0, 1, TimeUnit.HOURS);
+        executor.scheduleWithFixedDelay(runnable, 0L, 3600L, TimeUnit.SECONDS);
     }
 
     private synchronized void removeOldMessages() {
