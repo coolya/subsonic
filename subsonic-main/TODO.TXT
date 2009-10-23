@@ -13,6 +13,7 @@ DONE IN 3.8
 
 ANDROID
 -------
+Android: Use HttpClient
 Android: Long-click on song list.
 Android: Don't cache music dirs forever.
 Android: Option to auto-sync certain directories or playlists.
@@ -23,7 +24,6 @@ Handle XML exception better.
 Use music index last modified + invalidate cache after a while.
 Use weak references in image cache?
 Make playlist bg b/w?
-Change main menu to 1) My music 2) My playlists 3) Search.  + Now playing & Now downloading (smaller)
 Change colors of selected songs.
 Show currently playing song in playlist.
 Support max bitrate in settings. ("Preferred bitrate")
@@ -345,7 +345,7 @@ Commit
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
   rsync -avP -e ssh subsonic-assembly/target/subsonic* subsonic-installer/target/subsonic*  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/3.8/
 
-Modify FRS properties
+Modify FRS properties (use Firefox)
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
 
 Upload site:

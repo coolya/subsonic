@@ -17,14 +17,14 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
-<a name="3.8"><h2 class="div">Subsonic 3.8 - Oct 20, 2009</h2></a>
+<a name="3.8"><h2 class="div">Subsonic 3.8 - Oct 23, 2009</h2></a>
 <ul>
-    <li><span class="bugid">New: </span>(Android) Songs that are already downloaded are now played as local files, rather than streamed.</li>
+    <li><span class="bugid">New: </span>(Android) Downloaded songs can now be played directly from the Subsonic app.</li>
     <li><span class="bugid">New: </span>(Android) New feature: Download + Play.</li>
-    <li><span class="bugid">New: </span>(Android) New feature: Search</li>
-    <li><span class="bugid">New: </span>(Android) New feature: Load playlist</li>
-    <li><span class="bugid">New: </span>(Android) New feature: Delete from phone</li>
-    <li><span class="bugid">New: </span>(Android) New feature: Check for software update</li>
+    <li><span class="bugid">New: </span>(Android) New feature: Search.</li>
+    <li><span class="bugid">New: </span>(Android) New feature: Load playlist.</li>
+    <li><span class="bugid">New: </span>(Android) New feature: Delete from phone.</li>
+    <li><span class="bugid">New: </span>(Android) New feature: Check for software update.</li>
     <li><span class="bugid">New: </span>(Android) Nicer song listing.</li>
     <li><span class="bugid">New: </span>(Android) More informative error message when not connected.</li>
     <li><span class="bugid">New: </span>(Android) Show artist shortcuts.</li>
