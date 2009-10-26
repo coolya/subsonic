@@ -31,6 +31,9 @@ sl
 # Macedonian
 mk
 
+# Polish
+pl
+
 # Simplified Chinese
 zh_CN
 

@@ -7,9 +7,12 @@ Android: Playlist not updated when switching to new song?
 Android messing up player?
 Bug: Double-scrobbling when transcoding.
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
+Improve building of apk. (signing + zipalign)
 
-DONE IN 3.8
+DONE IN 3.9
 ------------
+Added Polish translation, courtesy of Micha? Kotas.
+
 
 ANDROID
 -------
@@ -372,6 +375,8 @@ cd subsonic-android
 ant release
 ### keytool -genkey -v -keystore subsonic.keystore -alias subsonic -keyalg RSA -validity 100000 -dname "CN=Active Objects"
 jarsigner -verbose -keystore subsonic.keystore -signedjar bin/SubsonicActivity-signed.apk bin/SubsonicActivity-unsigned.apk subsonic
+Upload to market (use Firefox)
+http://market.android.com/publish/Home
 Also upload to http://appslib.com/developers/index.html
 
 HOW TO RELEASE TRANSCODING PACK
