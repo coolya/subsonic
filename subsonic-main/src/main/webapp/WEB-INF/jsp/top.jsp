@@ -70,9 +70,11 @@
             <td style="padding-left:15pt;text-align:center;">
                 <p class="detail" style="line-height:1.5">
                     <a href="j_acegi_logout" target="_top"><fmt:message key="top.logout"><fmt:param value="${model.user.username}"/></fmt:message></a>
-                    <br>
-                    <a href="donate.view" target="main"><img src="<spring:theme code="donateSmallImage"/>" alt=""></a>
-                    <a href="donate.view" target="main"><fmt:message key="donate.title"/></a>
+                    <c:if test="${not model.licensed}">
+                        <br>
+                        <a href="donate.view" target="main"><img src="<spring:theme code="donateSmallImage"/>" alt=""></a>
+                        <a href="donate.view" target="main"><fmt:message key="donate.title"/></a>
+                    </c:if>
                 </p>
             </td>
 

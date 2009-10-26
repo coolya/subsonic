@@ -11,8 +11,8 @@ Improve building of apk. (signing + zipalign)
 
 DONE IN 3.9
 ------------
-Added Polish translation, courtesy of Micha? Kotas.
-
+TBT: Added Polish translation, courtesy of Micha? Kotas.
+TBT: Hide donate button if valid license.
 
 ANDROID
 -------

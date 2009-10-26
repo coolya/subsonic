@@ -55,6 +55,7 @@ public class TopController extends ParameterizableViewController {
         map.put("user", user);
         map.put("musicFoldersExist", !allMusicFolders.isEmpty());
         map.put("brand", settingsService.getBrand());
+        map.put("licensed", settingsService.isLicenseValid(settingsService.getLicenseEmail(), settingsService.getLicenseCode()));
 
         UserSettings userSettings = settingsService.getUserSettings(user.getUsername());
         if (userSettings.isFinalVersionNotificationEnabled() && versionService.isNewFinalVersionAvailable()) {
