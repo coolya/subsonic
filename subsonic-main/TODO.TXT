@@ -8,6 +8,7 @@ Android messing up player?
 Bug: Double-scrobbling when transcoding.
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
 Improve building of apk. (signing + zipalign)
+Add new languages to features.php
 
 DONE IN 3.9
 ------------
