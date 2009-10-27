@@ -1,5 +1,8 @@
-TODO IN 3.8
+TODO IN 3.9
 --------------
+i18n
+Improve streaming.  http://github.com/Dawnthorn/nagare/tree/master/src/com/giantrabbit/nagare/
+   Stream to file + Have separate thread monitor if MediaPlayer is catching up, pausing it if necessary.
 Don't set content length on transcoded files (except Android).
      http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2202
      http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1461&start=15
