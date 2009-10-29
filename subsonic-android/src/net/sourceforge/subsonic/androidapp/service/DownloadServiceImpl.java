@@ -192,6 +192,9 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
             bufferTask.cancel();
         }
 
+        // Buffer ten seconds.
+        final int bufferSize = Math.max(100000, downloadFile.getSong().getBitRate() * 1024 / 8 * 10);
+
         bufferTask = new CancellableTask() {
             @Override
             public void execute() {
@@ -212,8 +215,7 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
 
                 Log.d(TAG, "File size: " + file.length());
 
-                // TODO: Do not hardcode buffer size.
-                return downloadFile.isComplete() || file.exists() && file.length() > 100000L;
+                return downloadFile.isComplete() || file.exists() && file.length() > bufferSize;
             }
         };
         bufferTask.start();
@@ -221,7 +223,7 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
 
     private void doPlay(final DownloadFile downloadFile) {
         try {
-            final File file = downloadFile.isComplete() ? downloadFile.getFile() : downloadFile.getTempFile();
+            final File file = downloadFile.getFile().exists() ? downloadFile.getFile() : downloadFile.getTempFile();
             mediaPlayer.setOnCompletionListener(null);
             mediaPlayer.reset();
             setPlayerState(IDLE);
