@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -26,11 +27,13 @@ import android.widget.ViewFlipper;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.DownloadFile;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
+import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.COMPLETED;
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.PAUSED;
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.STARTED;
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.STOPPED;
 import net.sourceforge.subsonic.androidapp.service.DownloadService2;
+import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.util.HorizontalSlider;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
@@ -59,6 +62,7 @@ public class DownloadActivity extends OptionsMenuActivity implements AdapterView
     private ImageView pauseButton;
     private ImageView startButton;
     private ScheduledExecutorService executorService;
+    private DownloadFile currentPlaying;
 
     /**
      * Called when the activity is first created.
@@ -134,51 +138,36 @@ public class DownloadActivity extends OptionsMenuActivity implements AdapterView
         });
         playlistView.setOnItemClickListener(this);
 
-        bindService(new Intent(this, DownloadService2.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
+        bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         imageLoader = new ImageLoader();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        onPlaylistChanged();
+        onDownloadListChanged();
 
+        final Handler handler = new Handler();
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                update();
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        update();
+                    }
+                });
             }
         };
 
         executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.scheduleWithFixedDelay(runnable, 0L, 500L, TimeUnit.MILLISECONDS);
-
-//        broadcastReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                if (Constants.INTENT_ACTION_STREAM_PROGRESS.equals(intent.getAction())) {
-//                    onStreamProgressChanged();
-//                } else if (Constants.INTENT_ACTION_DOWNLOAD_PROGRESS.equals(intent.getAction())) {
-//                    onDownloadProgressChanged();
-//                } else if (Constants.INTENT_ACTION_STREAM_PLAYLIST.equals(intent.getAction())) {
-//                    onPlaylistChanged();
-//                } else if (Constants.INTENT_ACTION_STREAM_CURRENT.equals(intent.getAction())) {
-//                    onCurrentChanged();
-//                }
-//            }
-//        };
-//
-//        registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_PROGRESS));
-//        registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_DOWNLOAD_PROGRESS));
-//        registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_PLAYLIST));
-//        registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_STREAM_CURRENT));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         executorService.shutdown();
-//        unregisterReceiver(broadcastReceiver);
     }
 
     private void update() {
@@ -186,8 +175,11 @@ public class DownloadActivity extends OptionsMenuActivity implements AdapterView
             return;
         }
 
-        // TODO
+        if (currentPlaying != downloadService.getCurrentPlaying()) {
+            onCurrentChanged();
+        }
 
+        onProgressChanged();
     }
 
     private void showFullscreenAlbumArt(boolean fullscreen) {
@@ -241,7 +233,7 @@ public class DownloadActivity extends OptionsMenuActivity implements AdapterView
         return super.onKeyDown(keyCode, event);
     }
 
-    private void onPlaylistChanged() {
+    private void onDownloadListChanged() {
         if (downloadService == null) {
             return;
         }
@@ -259,32 +251,30 @@ public class DownloadActivity extends OptionsMenuActivity implements AdapterView
         if (downloadService == null) {
             return;
         }
-        DownloadFile current = downloadService.getCurrentPlaying();
-        if (current != null) {
-            currentTextView.setText(current.getSong().getTitle());
-            albumArtTextView.setText(current.getSong().getTitle() + " - " + current.getSong().getArtist());
-            imageLoader.loadImage(currentTextView, current.getSong(), 48);
-            imageLoader.loadImage(albumArtImageView, current.getSong(), 320);
+        currentPlaying = downloadService.getCurrentPlaying();
+        if (currentPlaying != null) {
+            MusicDirectory.Entry song = currentPlaying.getSong();
+            currentTextView.setText(song.getTitle());
+            albumArtTextView.setText(song.getTitle() + " - " + song.getArtist());
+            imageLoader.loadImage(currentTextView, song, 48);
+            imageLoader.loadImage(albumArtImageView, song, 320);
         }
     }
 
-    private void onStreamProgressChanged() {
-        // TODO
+    private void onProgressChanged() {
         if (downloadService == null) {
             return;
         }
-        DownloadFile current = downloadService.getCurrentPlaying();
-        if (current != null) {
+        if (currentPlaying != null) {
 
             int millisPlayed = downloadService.getPlayerPosition();
-            int millisTotal = current.getSong().getDuration() * 1000;
+            int millisTotal = currentPlaying.getSong().getDuration() * 1000;
 
             positionTextView.setText(Util.formatDuration(millisPlayed / 1000));
             durationTextView.setText(Util.formatDuration(millisTotal / 1000));
             progressBar.setMax(millisTotal == 0 ? 100 : millisTotal); // Work-around for apparent bug.
             progressBar.setProgress(millisPlayed);
-
-            progressBar.setSlidingEnabled(current.isComplete());
+            progressBar.setSlidingEnabled(currentPlaying.isComplete());
         } else {
             // TODO
         }
@@ -340,7 +330,9 @@ public class DownloadActivity extends OptionsMenuActivity implements AdapterView
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             downloadService = ((SimpleServiceBinder<DownloadService2>) service).getService();
             Log.i(TAG, "Connected to Download Service");
-            onPlaylistChanged();
+            onDownloadListChanged();
+            onCurrentChanged();
+            onProgressChanged();
         }
 
         @Override
