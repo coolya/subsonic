@@ -21,6 +21,7 @@ import android.util.Log;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Util;
 import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.service.ErrorParser;
 
 /**
@@ -35,25 +36,45 @@ public class DownloadFile {
     private final File file;
     private final File tempFile;
     private final AtomicBoolean complete = new AtomicBoolean(false);
+    private CancellableTask downloadTask;
 
     public DownloadFile(Context context, MusicDirectory.Entry song) {
         this.context = context;
         this.song = song;
         file = FileUtil.getSongFile(song, true);
         tempFile = new File(file.getPath() + ".tmp");
+
+        if (file.exists()) {
+            complete.set(true);
+        }
     }
 
-    public void download() {
-        new Thread("Download " + song) {
+    public synchronized void download() {
+        if (complete.get()) {
+            return;
+        }
+
+        downloadTask = new CancellableTask() {
             @Override
-            public void run() {
+            public void execute() {
                 try {
                     doDownload();
                 } catch (InterruptedException x) {
-                    //
+                    // Intentionally ignored.
                 }
             }
-        }.start();
+        };
+        downloadTask.start();
+    }
+
+    public synchronized void cancelDownload() {
+        if (downloadTask != null) {
+            downloadTask.cancel();
+        }
+    }
+
+    public File getFile() {
+        return file;
     }
 
     public File getTempFile() {
