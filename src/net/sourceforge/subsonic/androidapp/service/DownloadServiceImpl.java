@@ -8,6 +8,7 @@ package net.sourceforge.subsonic.androidapp.service;
 
 import java.io.File;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -22,6 +23,8 @@ import android.os.IBinder;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.DownloadFile;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.domain.PlayerState;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
@@ -40,10 +43,10 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
     private DownloadFile currentDownloading;
     private CancellableTask bufferTask;
     private ScheduledExecutorService executorService;
+    private PlayerState playerState = IDLE;
 
 
     // TODO: synchronization
-
 
     @Override
     public void onCreate() {
@@ -64,14 +67,12 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
         notificationManager.cancel(Constants.NOTIFICATION_ID_DOWNLOAD_QUEUE);
         clear();
         executorService.shutdown();
-//        queue.offer(POISON);
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         return binder;
     }
-
 
     @Override
     public synchronized void download(List<MusicDirectory.Entry> songs, boolean save, boolean play) {
@@ -89,6 +90,103 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
         }
     }
 
+    @Override
+    public synchronized void clear() {
+        downloadList.clear();
+        if (bufferTask != null) {
+            bufferTask.cancel();
+        }
+        if (currentDownloading != null) {
+            currentDownloading.cancelDownload();
+        }
+        mediaPlayer.reset();
+        setPlayerState(IDLE);
+    }
+
+    @Override
+    public DownloadFile getCurrentPlaying() {
+        return currentPlaying;
+    }
+
+    @Override
+    public DownloadFile getCurrentDownloading() {
+        return currentDownloading;
+    }
+
+    @Override
+    public synchronized List<DownloadFile> getDownloads() {
+        return new ArrayList<DownloadFile>(downloadList);
+    }
+
+    @Override
+    public synchronized DownloadFile getDownloadAt(int index) {
+        try {
+            return downloadList.get(index);
+        } catch (IndexOutOfBoundsException x) {
+            return null;
+        }
+    }
+
+    @Override
+    public synchronized void play(DownloadFile file) {
+        play(downloadList.indexOf(file));
+    }
+
+    @Override
+    public synchronized void play(int index) {
+        if (index < 0 || index >= downloadList.size()) {
+            return;
+        }
+
+        DownloadFile downloadFile = downloadList.get(index);
+        currentPlaying = downloadFile;
+        checkDownloads();
+        bufferAndPlay(downloadFile);
+    }
+
+
+    @Override
+    public void seekTo(int position) {
+        // TODO: Catch exception on all mediaplayer methods.
+        mediaPlayer.seekTo(position);
+    }
+
+    @Override
+    public void previous() {
+        play(downloadList.indexOf(currentPlaying) - 1);
+    }
+
+    @Override
+    public void next() {
+        play(downloadList.indexOf(currentPlaying) + 1);
+    }
+
+    @Override
+    public void pause() {
+        mediaPlayer.pause();
+        setPlayerState(PAUSED);
+    }
+
+    @Override
+    public void start() {
+        mediaPlayer.start();
+        setPlayerState(STARTED);
+    }
+
+    @Override
+    public PlayerState getPlayerState() {
+        return playerState;
+    }
+
+    @Override
+    public int getPlayerPosition() {
+        return mediaPlayer.getCurrentPosition();
+    }
+
+    private void setPlayerState(PlayerState playerState) {
+        this.playerState = playerState;
+    }
+
     private synchronized void bufferAndPlay(final DownloadFile downloadFile) {
         if (bufferTask != null) {
             bufferTask.cancel();
@@ -97,6 +195,8 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
         bufferTask = new CancellableTask() {
             @Override
             public void execute() {
+                setPlayerState(DOWNLOADING);
+
                 while (!isCancelled() && !bufferComplete()) {
                     try {
                         Thread.sleep(100L);
@@ -104,7 +204,7 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
                         return;
                     }
                 }
-                play(downloadFile);
+                doPlay(downloadFile);
             }
 
             private boolean bufferComplete() {
@@ -119,20 +219,24 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
         bufferTask.start();
     }
 
-    private void play(final DownloadFile downloadFile) {
+    private void doPlay(final DownloadFile downloadFile) {
         try {
             final File file = downloadFile.isComplete() ? downloadFile.getFile() : downloadFile.getTempFile();
             mediaPlayer.setOnCompletionListener(null);
             mediaPlayer.reset();
+            setPlayerState(IDLE);
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setDataSource(file.getPath());
+            setPlayerState(PREPARING);
             mediaPlayer.prepare();
+            setPlayerState(PREPARED);
 
             final AtomicBoolean downloadComplete = new AtomicBoolean(false);
 
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
+                    setPlayerState(COMPLETED);
 
                     if (downloadComplete.get()) {
                         next();
@@ -145,10 +249,14 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
                         Log.i(TAG, "Restarting player from position " + pos);
 
                         mediaPlayer.reset();
+                        setPlayerState(IDLE);
                         mediaPlayer.setDataSource(file.getPath());
+                        setPlayerState(PREPARING);
                         mediaPlayer.prepare();
+                        setPlayerState(PREPARED);
                         mediaPlayer.seekTo(pos);
                         mediaPlayer.start();
+                        setPlayerState(STARTED);
                     } catch (Exception x) {
                         x.printStackTrace();
                         // TODO
@@ -157,6 +265,8 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
             });
 
             mediaPlayer.start();
+            setPlayerState(STARTED);
+
         } catch (Exception x) {
             x.printStackTrace();
             // TODO
@@ -199,64 +309,5 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
         }
     }
 
-    @Override
-    public void clear() {
-    }
-
-    @Override
-    public List<DownloadFile> getDownloads() {
-        return null;
-    }
-
-    @Override
-    public DownloadFile getDownloadAt(int index) {
-        return null;
-    }
-
-    @Override
-    public int getCurrentPlayingIndex() {
-        return 0;
-    }
-
-    @Override
-    public synchronized void play(int index) {
-        if (index < 0 || index >= downloadList.size()) {
-            return;
-        }
-
-        DownloadFile downloadFile = downloadList.get(index);
-        currentPlaying = downloadFile;
-        checkDownloads();
-        bufferAndPlay(downloadFile);
-    }
-
-
-    @Override
-    public void seekTo(int position) {
-    }
-
-    @Override
-    public void previous() {
-        play(downloadList.indexOf(currentPlaying) - 1);
-    }
-
-    @Override
-    public void next() {
-        play(downloadList.indexOf(currentPlaying) + 1);
-    }
-
-    @Override
-    public void pause() {
-        mediaPlayer.pause();
-    }
-
-    @Override
-    public void start() {
-    }
-
-    @Override
-    public StreamService.PlayerState getPlayerState() {
-        return null;
-    }
 
 }
