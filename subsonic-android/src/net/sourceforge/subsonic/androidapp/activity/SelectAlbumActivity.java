@@ -30,9 +30,11 @@ import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
+import net.sourceforge.subsonic.androidapp.service.DownloadService2;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.service.StreamService;
+import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
@@ -45,9 +47,11 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
+    private final DownloadServiceConnection2 downloadServiceConnection2 = new DownloadServiceConnection2();
     private final StreamServiceConnection streamServiceConnection = new StreamServiceConnection();
     private ImageLoader imageLoader;
     private DownloadService downloadService;
+    private DownloadService2 downloadService2;
     private StreamService streamService;
     private ListView entryList;
     private Button selectButton;
@@ -98,6 +102,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         });
 
         bindService(new Intent(this, DownloadService.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
+        bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection2, Context.BIND_AUTO_CREATE);
         bindService(new Intent(this, StreamService.class), streamServiceConnection, Context.BIND_AUTO_CREATE);
 
         enableButtons();
@@ -164,6 +169,10 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 delete();
                 selectAll(false);
                 break;
+            case 5:
+                download2();
+                selectAll(false);
+                break;
             default:
                 return super.onContextItemSelected(menuItem);
         }
@@ -184,6 +193,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 break;
             }
         }
+        menu.add(Menu.NONE, 5, 5, "Play 2");
     }
 
     private void getMusicDirectory() {
@@ -253,6 +263,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     protected void onDestroy() {
         super.onDestroy();
         unbindService(downloadServiceConnection);
+        unbindService(downloadServiceConnection2);
         unbindService(streamServiceConnection);
         imageLoader.cancel();
     }
@@ -300,6 +311,22 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             }
         };
 
+        checkLicenseAndTrialPeriod(onValid);
+    }
+
+    private void download2() {
+        if (downloadService2 == null) {
+            return;
+        }
+
+        final List<MusicDirectory.Entry> songs = getSelectedSongs();
+        Runnable onValid = new Runnable() {
+            @Override
+            public void run() {
+                downloadService2.download(songs, false, true);
+//                startActivity(new Intent(SelectAlbumActivity.this, StreamQueueActivity.class));
+            }
+        };
         checkLicenseAndTrialPeriod(onValid);
     }
 
@@ -407,6 +434,21 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             downloadService = null;
+            Log.i(TAG, "Disconnected from Download Service");
+        }
+    }
+
+    private class DownloadServiceConnection2 implements ServiceConnection {
+
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder service) {
+            downloadService2 = ((SimpleServiceBinder<DownloadService2>) service).getService();
+            Log.i(TAG, "Connected to Download Service");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            downloadService2 = null;
             Log.i(TAG, "Disconnected from Download Service");
         }
     }
