@@ -61,6 +61,9 @@
         <service a:name=".service.StreamService"
                  a:label="Stream"/>
 
+        <service a:name=".service.DownloadServiceImpl"
+                 a:label="Download2"/>
+
     </application>
 
 </manifest>
