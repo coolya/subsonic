@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.DownloadFile;
+import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 
 /**
  * @author Sindre Mehus
@@ -23,9 +24,13 @@ public interface DownloadService2 {
 
     List<DownloadFile> getDownloads();
 
+    DownloadFile getCurrentPlaying();
+
+    DownloadFile getCurrentDownloading();
+
     DownloadFile getDownloadAt(int index);
 
-    int getCurrentPlayingIndex();
+    void play(DownloadFile file);
 
     void play(int index);
 
@@ -39,5 +44,7 @@ public interface DownloadService2 {
 
     void start();
 
-    StreamService.PlayerState getPlayerState();
+    PlayerState getPlayerState();
+
+    int getPlayerPosition();
 }

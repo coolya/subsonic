@@ -323,8 +323,9 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         Runnable onValid = new Runnable() {
             @Override
             public void run() {
+                downloadService2.clear();
                 downloadService2.download(songs, false, true);
-//                startActivity(new Intent(SelectAlbumActivity.this, StreamQueueActivity.class));
+                startActivity(new Intent(SelectAlbumActivity.this, DownloadActivity.class));
             }
         };
         checkLicenseAndTrialPeriod(onValid);

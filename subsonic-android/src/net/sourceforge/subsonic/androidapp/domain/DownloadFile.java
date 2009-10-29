@@ -49,6 +49,10 @@ public class DownloadFile {
         }
     }
 
+    public MusicDirectory.Entry getSong() {
+        return song;
+    }
+
     public synchronized void download() {
         if (complete.get()) {
             return;

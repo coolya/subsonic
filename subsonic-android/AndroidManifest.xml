@@ -40,6 +40,11 @@
                   a:launchMode="singleTask"
                   a:screenOrientation="portrait"/>
 
+        <activity a:name=".activity.DownloadActivity"
+                  a:label="Now playing"
+                  a:launchMode="singleTask"
+                  a:screenOrientation="portrait"/>
+
         <activity a:name=".activity.SettingsActivity"
                   a:label="Settings"
                   a:launchMode="singleTask"
