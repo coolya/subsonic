@@ -223,7 +223,7 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
 
     private void doPlay(final DownloadFile downloadFile) {
         try {
-            final File file = downloadFile.getFile().exists() ? downloadFile.getFile() : downloadFile.getPartialFile();
+            File file = downloadFile.isComplete() ? downloadFile.getCompleteFile() : downloadFile.getPartialFile();
             mediaPlayer.setOnCompletionListener(null);
             mediaPlayer.reset();
             setPlayerState(IDLE);
@@ -252,6 +252,7 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
 
                         mediaPlayer.reset();
                         setPlayerState(IDLE);
+                        File file = downloadFile.isComplete() ? downloadFile.getCompleteFile() : downloadFile.getPartialFile();
                         mediaPlayer.setDataSource(file.getPath());
                         setPlayerState(PREPARING);
                         mediaPlayer.prepare();
