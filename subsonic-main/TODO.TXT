@@ -1,5 +1,7 @@
 TODO IN 3.9
 --------------
+Flip chat log.
+Sort saved playlist.
 i18n
 Hide donate button if already donated.
 Android: Test more with downsampling. Songs cut off?
@@ -435,75 +437,4 @@ Creating xxx_pressed.png
 Use brush: radius 23, spisser 2, hardhet 0.95, sideforhold 1.0, vinkel 0.0, mellomrom 1.0
 Use color: #ff8200
 
-
-Konurrent-analyse
-Jeg vil her kort analysere de viktigste produktene som finnes i samme segment som Subsonic.
-
-Spotify: En ekstremt populær musikk-streaming-tjeneste som er tilgjengelig i seks europeiske land. Har støtte for iPhone- og Android-telefoner. Reklamefinansiert
-(15 sekunder hver halvtime) eller abonnementsordning.
-For å bruke mobil-klienter må man ha premium-abonnementet som koster 100 kroner i måneden. Musikk kan bare spilles av, ikke lastes ned (med mindre man kjøper den).
-Man kan ikke gjøre sin egen musikk tilgjengelig.
-
-Wimp: Er kort fortalt en norsk variant av Spotify og utvikles av bl.a Platekompaniet og Telenor. Wimp er foreløpig bare lansert som beta-versjon.
-
-Opera Unite: Et helt nytt produkt fra Opera som tar sikte på å tilgjengeliggjøre musikk, bilder og filer man har på sin personlige pc. Er foreløpig i beta-versjon
-og har bare basal funksjonalitet. Opera Unite har ikke støtte for streaming til mobiltelefoner. Tjenesten er gratis.
-
-Google Listen: Kanskje ikke helt relevant, men allikevel interessant. Google Listen er en Android-applikasjon for å søke, abonnere, laste ned og streame engelsk-språklige podcaster.
-
-Jinzora: Åpen-kildekode-prosjekt med mange likhetstrekk med Subsonic, men mange brukere sier at Subsonic er enklere å installere og har bedre og mer strømlinjeformet funksjonalitet.
-Har ikke mobiltelefonstøtte per i dag, men det er trolig noe de jobber med.
-
-
-Alt-i-alt mener jeg Subsonic plasserer seg fint inn i sin nisje blant disse andre produktene og tjenestene. Flertallet vil nok foretrekke å slippe
-å administerere sin egen musikksamling og velge en løsning som Spotify og Wimp, men det vil være nok av de som vil ønske tilgang til sin egen musikk fordi:
-1) Betlingstjenestene er dyre. Ett års abonnement med Spotify koster 1200 kroner. 2) Betalingstjenestene har ikke nødvendigvis den musikken du er interessert i.
-
-Subsonic har også en fordel av å ha vært i aktiv utvikling i mange år, og har et stort funksjonalitets-sett i forhold til mange andre tjenester med betraktelig kortere fartstid.
-
-TODO: list unik funksjonalitet.
-
-En annen fordel er at Subsonic har hele verden som marked, mens Spotify og Wimp bare opererer i noen få land. Jeg fikk senest i dag en
-henvendelse fra et stort kinesisk spillselskap, NetDragon Websoft, som ønsker å oversette Subsonic Android-applikasjonen til kinesisk og
-distribuere den på det kinesiske markedet.
-
-Business case
-Ta oktober måned som eksempel.
-                                okt (per 26.)
-# nedlastinger:                 7.037
-# nedlastinger android          1.825
-# donasjoner:                   60
-                                4.933 NOK
-TODO: Oppdater tall.
-Tilsvarer 60.000 NOK per år.
-Audacity: ca 1 mill nedlastninger per mnd. (x142).
-
-Ved å øke oppmerksomheten og bevisstheten rundt Subsonic er det realistisk å ti-doble antall nedlastninger til 70.000 per måned.
-Til sammenligning har den populære åpen-kildekode-programvaren Audacity (lydredigeringsprogram) rundt 1-2 million nedlastninger per måned.
-
-Tilsvarende vil det være plausibelt å øke andelen av betalende brukere med en faktor ti. Dette ved å øke insentivet for å donere ved
-å tilby premium-funksjonalitet bare til betalende.
-
-Basert på disse antakelsen vil business caset ha en verdi på ca 6 millioner kroner i årlig inntjening. Kostnad per solgt enhet
-er neglisjerbar.
-
-Teknologirisiko
-Subsonic benytter seg i stor grad av nye og innovative teknologier (for eksempel J2ME, Android, Flex, REST, AJAX).
-I mange tilfeller utgjør dette en risiko i forhold til gjennomførbarhet, teknologisk modenhet, "obsolesence".
-
-Sysselsettingseffekt
-Jeg har vurdert potensiell sysselsettingseffekt som følger:
-
-1 server-utvikler
-1 Android-utvikler
-1 iPhone-utvikler
-1 grafisk designer / usability-ekspert
-1 markedsfører / selger
-1 administrativ leder / forretningsekspert
-
-Tilsammen seks personer, hvorav fire teknisk ansatte og to administrativt ansatte. Dette behovet vil være tilstede i
-overskuelig framtid. Den teknologiske utviklinga stopper ikke opp og det vil stadig komme nye plattformer som k
-
-nye potensielle
-plattformer
 
