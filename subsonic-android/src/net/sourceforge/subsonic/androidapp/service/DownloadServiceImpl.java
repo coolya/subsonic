@@ -21,7 +21,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.util.Log;
-import net.sourceforge.subsonic.androidapp.domain.DownloadFile;
+import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
@@ -81,7 +81,7 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
         }
 
         for (MusicDirectory.Entry song : songs) {
-            DownloadFile downloadFile = new DownloadFile(this, song);
+            DownloadFile downloadFile = new DownloadFile(this, song, save);
             downloadList.add(downloadFile);
         }
 
@@ -211,7 +211,7 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
             }
 
             private boolean bufferComplete() {
-                File file = downloadFile.getTempFile();
+                File file = downloadFile.getPartialFile();
 
                 Log.d(TAG, "File size: " + file.length());
 
@@ -223,7 +223,7 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
 
     private void doPlay(final DownloadFile downloadFile) {
         try {
-            final File file = downloadFile.getFile().exists() ? downloadFile.getFile() : downloadFile.getTempFile();
+            final File file = downloadFile.getFile().exists() ? downloadFile.getFile() : downloadFile.getPartialFile();
             mediaPlayer.setOnCompletionListener(null);
             mediaPlayer.reset();
             setPlayerState(IDLE);
