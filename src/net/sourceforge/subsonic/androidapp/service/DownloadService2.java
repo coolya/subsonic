@@ -9,7 +9,7 @@ package net.sourceforge.subsonic.androidapp.service;
 import java.util.List;
 
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.domain.DownloadFile;
+import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 
 /**

@@ -12,6 +12,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -23,12 +26,15 @@ import android.widget.Toast;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.app.AlertDialog;
+import android.util.Log;
 
 /**
  * @author Sindre Mehus
  * @version $Id$
  */
 public final class Util {
+
+    private static final String TAG = Util.class.getSimpleName();
 
     private static final DecimalFormat GIGA_BYTE_FORMAT = new DecimalFormat("0.00 GB");
     private static final DecimalFormat MEGA_BYTE_FORMAT = new DecimalFormat("0.00 MB");
@@ -116,6 +122,30 @@ public final class Util {
         return count;
     }
 
+    public static void atomicCopy(File from, File to) throws IOException {
+        InputStream in = null;
+        OutputStream out = null;
+        File tmp = null;
+        try {
+            tmp = new File(to.getPath() + ".tmp");
+            in = new FileInputStream(from);
+            out = new FileOutputStream(tmp);
+            copy(in, out);
+            out.close();
+            if (!tmp.renameTo(to)) {
+                throw new IOException("Failed to rename " + tmp + " to " + to);
+            }
+        } catch (IOException x) {
+            close(out);
+            delete(to);
+            throw x;
+        } finally {
+            close(in);
+            close(out);
+            delete(tmp);
+        }
+    }
+
     public static void close(InputStream in) {
         try {
             if (in != null) {
@@ -128,7 +158,9 @@ public final class Util {
 
     public static void delete(File file) {
         if (file != null && file.exists()) {
-            file.delete();
+            if (!file.delete()) {
+                Log.w(TAG, "Failed to delete file " + file);
+            }
         }
     }
 

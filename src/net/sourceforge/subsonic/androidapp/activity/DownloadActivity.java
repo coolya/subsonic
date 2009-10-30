@@ -25,7 +25,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.domain.DownloadFile;
+import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.COMPLETED;
