@@ -40,7 +40,7 @@ import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.TwoLineListAdapter;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
-public class DownloadActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
+public class DownloadActivity extends OptionsMenuActivity {
 
     private static final String TAG = DownloadActivity.class.getSimpleName();
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
@@ -136,7 +136,12 @@ public class DownloadActivity extends OptionsMenuActivity implements AdapterView
                 downloadService.seekTo(position);
             }
         });
-        playlistView.setOnItemClickListener(this);
+        playlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                downloadService.play(position);
+            }
+        });
 
         bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         imageLoader = new ImageLoader();
@@ -317,11 +322,6 @@ public class DownloadActivity extends OptionsMenuActivity implements AdapterView
         super.onDestroy();
         unbindService(downloadServiceConnection);
         imageLoader.cancel();
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        downloadService.play(position);
     }
 
     private class DownloadServiceConnection implements ServiceConnection {
