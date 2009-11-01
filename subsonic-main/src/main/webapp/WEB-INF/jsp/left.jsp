@@ -11,7 +11,7 @@
 
 <div style="padding-bottom:0.5em">
     <c:forEach items="${model.indexes}" var="index">
-        <a href="#${index.index}">${index.index}</a>
+        <a href="#${index.index}" accesskey="${index.index}">${index.index}</a>
     </c:forEach>
 </div>
 
