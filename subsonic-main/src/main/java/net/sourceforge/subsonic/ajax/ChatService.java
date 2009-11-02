@@ -54,7 +54,7 @@ public class ChatService {
     private LinkedList<Message> messages;
     private SecurityService securityService;
     private Ehcache chatCache;
-    private static final long TTL_MILLIS = 7L * 24L * 60L* 60L * 1000L; // 7 days.
+    private static final long TTL_MILLIS = 3L * 24L * 60L* 60L * 1000L; // 3 days.
 
     /**
      * Invoked by Spring.
@@ -97,7 +97,7 @@ public class ChatService {
         message = StringUtils.trimToNull(message);
         String user = securityService.getCurrentUsername(webContext.getHttpServletRequest());
         if (message != null && user != null) {
-            messages.add(new Message(message, user, new Date()));
+            messages.addFirst(new Message(message, user, new Date()));
             chatCache.put(new Element(CACHE_KEY, messages));
         }
 

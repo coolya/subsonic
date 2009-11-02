@@ -78,14 +78,6 @@
 <c:if test="${model.showChat}">
     <script type="text/javascript">
 
-        function init() {
-            setupZoom('<c:url value="/"/>');
-            dwr.engine.setErrorHandler(null);
-        <c:if test="${model.showChat}">
-            dwr.engine.setActiveReverseAjax(true);
-            chatService.addMessage(null);
-        </c:if>
-        }
         function addMessage() {
             chatService.addMessage($("message").value);
             dwr.util.setValue("message", null);
@@ -124,13 +116,12 @@
 
     <h2><fmt:message key="main.chat"/></h2>
     <div id="chatlog">
+        <div style="padding-top:0.3em;padding-bottom:0.3em">
+            <input id="message" value=" <fmt:message key="main.message"/>" style="width:90%" onclick="dwr.util.setValue('message', null);" onkeypress="dwr.util.onReturn(event, addMessage)"/>
+        </div>
         <div id="pattern" style="display:none;margin:0;padding:0 0 0.15em 0;border:0">
             <span id="user" class="detail" style="font-weight:bold"></span> <span id="date" class="detail"></span> <span id="content"></span>
         </div>
-
-        <p style="padding-top:1.0em">
-            <input id="message" value=" <fmt:message key="main.message"/>" style="width:100%" onclick="dwr.util.setValue('message', null);" onkeypress="dwr.util.onReturn(event, addMessage)"/>
-        </p>
     </div>
 </c:if>
 
