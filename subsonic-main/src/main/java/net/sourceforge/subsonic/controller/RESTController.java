@@ -441,6 +441,34 @@ public class RESTController extends MultiActionController {
         return coverArtController.handleRequest(request, response);
     }
 
+    public ModelAndView changePassword(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        try {
+
+            String username = ServletRequestUtils.getRequiredStringParameter(request, "username");
+            String password = ServletRequestUtils.getRequiredStringParameter(request, "password");
+
+            User authUser = securityService.getCurrentUser(request);
+            if (!authUser.isAdminRole() && !username.equals(authUser.getUsername())) {
+                error(response, ErrorCode.NOT_AUTHORIZED, authUser.getUsername() + " is not authorized to change password for " + username);
+                return null;
+            }
+
+            User user = securityService.getUserByName(username);
+            user.setPassword(password);
+            securityService.updateUser(user);
+
+            XMLBuilder builder = createXMLBuilder(response, true).endAll();
+            response.getWriter().print(builder);
+        } catch (ServletRequestBindingException x) {
+            error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
+        } catch (Exception x) {
+            error(response, ErrorCode.GENERIC, x.getMessage());
+        }
+        return null;
+    }
+
+
     public ModelAndView createUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         User user = securityService.getCurrentUser(request);
