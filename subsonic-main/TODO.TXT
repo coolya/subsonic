@@ -1,5 +1,17 @@
 TODO IN 3.9
 --------------
+Android:
+- Keep DownloadService alive.
+- Use SongView also in playlist + beef it up.
+- Show asterix also when .complete exists. Different colors.
+- When downloading, show KB.
+- Avoid flickering progress bar when downloading.
+- Add error notification and logging.
+- Fix synchro issues in DownloadService.
+- Only support "Play" and "Play + Save".
+- Implement cleanup of partial and completed files.
+
+
 Sort saved playlists.
 Scrobbling broken for transcoded songs? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2316
 Hide donate button if already donated.
