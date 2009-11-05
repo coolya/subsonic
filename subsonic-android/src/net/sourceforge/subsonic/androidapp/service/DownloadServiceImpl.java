@@ -56,6 +56,14 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
             }
         };
         executorService.scheduleWithFixedDelay(runnable, 5000L, 5000L, TimeUnit.MILLISECONDS);
+
+        mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mediaPlayer, int what, int more) {
+                handleError(new Exception("MediaPlayer error: " + what + " (" + more + ")"));
+                return false;
+            }
+        });
     }
 
     @Override
@@ -142,8 +150,11 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
 
     @Override
     public synchronized void seekTo(int position) {
-        // TODO: Catch exception on all mediaplayer methods.
-        mediaPlayer.seekTo(position);
+        try {
+            mediaPlayer.seekTo(position);
+        } catch (Exception x) {
+            handleError(x);
+        }
     }
 
     @Override
@@ -158,14 +169,22 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
 
     @Override
     public synchronized void pause() {
-        mediaPlayer.pause();
-        setPlayerState(PAUSED);
+        try {
+            mediaPlayer.pause();
+            setPlayerState(PAUSED);
+        } catch (Exception x) {
+            handleError(x);
+        }
     }
 
     @Override
     public synchronized void start() {
-        mediaPlayer.start();
-        setPlayerState(STARTED);
+        try {
+            mediaPlayer.start();
+            setPlayerState(STARTED);
+        } catch (Exception x) {
+            handleError(x);
+        }
     }
 
     @Override
@@ -175,7 +194,12 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
 
     @Override
     public synchronized int getPlayerPosition() {
-        return mediaPlayer.getCurrentPosition();
+        try {
+            return mediaPlayer.getCurrentPosition();
+        } catch (Exception x) {
+            handleError(x);
+            return 0;
+        }
     }
 
     private synchronized void setPlayerState(PlayerState playerState) {
@@ -262,8 +286,7 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
                         mediaPlayer.start();
                         setPlayerState(STARTED);
                     } catch (Exception x) {
-                        x.printStackTrace();
-                        // TODO
+                        handleError(x);
                     }
                 }
             });
@@ -272,9 +295,15 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
             setPlayerState(STARTED);
 
         } catch (Exception x) {
-            x.printStackTrace();
-            // TODO
+            handleError(x);
         }
+    }
+
+    private void handleError(Exception x) {
+        String title = "Error playing \"" + currentPlaying.getSong().getTitle() + "\"";
+        Util.showErrorNotification(title, x, this, handler);
+        mediaPlayer.reset();
+        setPlayerState(IDLE);
     }
 
     private synchronized void checkDownloads() {

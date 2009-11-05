@@ -35,6 +35,7 @@ import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.activity.StreamQueueActivity;
 import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
+import net.sourceforge.subsonic.androidapp.activity.ErrorActivity;
 
 /**
  * @author Sindre Mehus
@@ -376,6 +377,34 @@ public final class Util {
             public void run() {
                 NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.cancel(Constants.NOTIFICATION_ID_PLAYING);
+            }
+        });
+    }
+
+    public static void showErrorNotification(String title, Exception error, final Context context, Handler handler) {
+        final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        String text = error.getMessage();
+        if (text == null) {
+            text = error.getClass().getSimpleName();
+        }
+
+        // Set the icon, scrolling text and timestamp
+        final Notification notification = new Notification(android.R.drawable.stat_sys_warning, title, System.currentTimeMillis());
+
+        // The PendingIntent to launch our activity if the user selects this notification
+        Intent intent = new Intent(context, ErrorActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_ERROR, title + ".\n\n" + text);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        notification.setLatestEventInfo(context, title, text, contentIntent);
+
+        // Send the notification.
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                notificationManager.cancel(Constants.NOTIFICATION_ID_ERROR);
+                notificationManager.notify(Constants.NOTIFICATION_ID_ERROR, notification);
             }
         });
     }
