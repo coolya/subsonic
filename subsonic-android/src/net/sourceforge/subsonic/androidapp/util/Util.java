@@ -21,12 +21,20 @@ import java.text.NumberFormat;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Handler;
 import android.widget.Toast;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.app.NotificationManager;
 import android.util.Log;
+import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.activity.StreamQueueActivity;
+import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
 
 /**
  * @author Sindre Mehus
@@ -335,5 +343,40 @@ public final class Util {
         });
 
         builder.show();
+    }
+
+    public static void showPlayingNotification(MusicDirectory.Entry song, final Context context, Handler handler) {
+
+        // Use the same text for the ticker and the expanded notification
+        String title = song.getTitle();
+
+        // Set the icon, scrolling text and timestamp
+        final Notification notification = new Notification(R.drawable.stat_sys_playing, title, System.currentTimeMillis());
+        notification.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
+
+        // The PendingIntent to launch our activity if the user selects this notification
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(context, DownloadActivity.class), 0);
+
+        String text = song.getArtist();
+        notification.setLatestEventInfo(context, title, text, contentIntent);
+
+        // Send the notification.
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(Constants.NOTIFICATION_ID_PLAYING, notification);
+            }
+        });
+    }
+
+    public static void hidePlayingNotification(final Context context, Handler handler) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.cancel(Constants.NOTIFICATION_ID_PLAYING);
+            }
+        });
     }
 }

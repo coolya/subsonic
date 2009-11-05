@@ -15,19 +15,18 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.IBinder;
+import android.os.Handler;
 import android.util.Log;
-import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
-import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
+import net.sourceforge.subsonic.androidapp.util.Util;
 
 /**
  * @author Sindre Mehus
@@ -39,14 +38,12 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
     private final IBinder binder = new SimpleServiceBinder<DownloadService2>(this);
     private final MediaPlayer mediaPlayer = new MediaPlayer();
     private final List<DownloadFile> downloadList = new CopyOnWriteArrayList<DownloadFile>();
+    private final Handler handler = new Handler();
     private DownloadFile currentPlaying;
     private DownloadFile currentDownloading;
     private CancellableTask bufferTask;
     private ScheduledExecutorService executorService;
     private PlayerState playerState = IDLE;
-
-
-    // TODO: synchronization
 
     @Override
     public void onCreate() {
@@ -63,8 +60,6 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
 
     @Override
     public void onDestroy() {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(Constants.NOTIFICATION_ID_DOWNLOAD_QUEUE);
         clear();
         executorService.shutdown();
     }
@@ -146,29 +141,29 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
 
 
     @Override
-    public void seekTo(int position) {
+    public synchronized void seekTo(int position) {
         // TODO: Catch exception on all mediaplayer methods.
         mediaPlayer.seekTo(position);
     }
 
     @Override
-    public void previous() {
+    public synchronized void previous() {
         play(downloadList.indexOf(currentPlaying) - 1);
     }
 
     @Override
-    public void next() {
+    public synchronized void next() {
         play(downloadList.indexOf(currentPlaying) + 1);
     }
 
     @Override
-    public void pause() {
+    public synchronized void pause() {
         mediaPlayer.pause();
         setPlayerState(PAUSED);
     }
 
     @Override
-    public void start() {
+    public synchronized void start() {
         mediaPlayer.start();
         setPlayerState(STARTED);
     }
@@ -179,12 +174,18 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
     }
 
     @Override
-    public int getPlayerPosition() {
+    public synchronized int getPlayerPosition() {
         return mediaPlayer.getCurrentPosition();
     }
 
-    private void setPlayerState(PlayerState playerState) {
+    private synchronized void setPlayerState(PlayerState playerState) {
+        Log.i(TAG, this.playerState.name() + " -> " + playerState.name());
         this.playerState = playerState;
+        if (playerState == STARTED) {
+            Util.showPlayingNotification(currentPlaying.getSong(), this, handler);
+        } else {
+            Util.hidePlayingNotification(this, handler);
+        }
     }
 
     private synchronized void bufferAndPlay(final DownloadFile downloadFile) {
@@ -221,7 +222,7 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
         bufferTask.start();
     }
 
-    private void doPlay(final DownloadFile downloadFile) {
+    private synchronized void doPlay(final DownloadFile downloadFile) {
         try {
             File file = downloadFile.isComplete() ? downloadFile.getCompleteFile() : downloadFile.getPartialFile();
             mediaPlayer.setOnCompletionListener(null);

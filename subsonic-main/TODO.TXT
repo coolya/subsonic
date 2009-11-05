@@ -10,6 +10,9 @@ Android:
 - Fix synchro issues in DownloadService.
 - Only support "Play" and "Play + Save".
 - Implement cleanup of partial and completed files.
+- Integrate with phone service.
+- Integrate with key clicks.
+- Show stop button during download/buffering.
 
 
 Sort saved playlists.
