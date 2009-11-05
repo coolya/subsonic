@@ -81,8 +81,7 @@ public class DownloadFile {
             return completeFile;
         }
 
-        Log.w(TAG, "No complete file exists for " + saveFile);
-        return null;
+        return saveFile;
     }
 
     public File getPartialFile() {

@@ -4,16 +4,32 @@
                 a:layout_width="fill_parent"
                 a:layout_height="?android:attr/listPreferredItemHeight">>
 
-    <CheckedTextView
-            a:id="@+id/song_check"
+    <LinearLayout
+            a:id="@+id/song_left"
+            a:orientation="horizontal"
             a:layout_width="wrap_content"
             a:layout_height="fill_parent"
             a:layout_alignParentLeft="true"
             a:gravity="center_vertical"
             a:checkMark="?android:attr/textCheckMark"
             a:paddingLeft="3dip"
-            a:paddingRight="6dip"
-            />
+            a:paddingRight="6dip">
+
+        <CheckedTextView
+                a:id="@+id/song_check"
+                a:layout_width="fill_parent"
+                a:layout_height="fill_parent"
+                a:gravity="center_vertical"
+                a:checkMark="?android:attr/textCheckMark"/>
+
+        <TextView
+                a:id="@+id/song_track"
+                a:layout_width="fill_parent"
+                a:layout_height="fill_parent"
+                a:visibility="gone"
+                a:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    </LinearLayout>
 
     <ImageView
             a:id="@+id/song_image"
@@ -22,36 +38,33 @@
             a:layout_alignParentRight="true"
             a:gravity="right|top"
             a:paddingTop="6dip"
-            a:paddingRight="9dip"
-            />
+            a:paddingRight="9dip"/>
 
     <TextView
             a:id="@+id/song_text1"
             a:layout_width="wrap_content"
             a:layout_height="wrap_content"
             a:layout_alignParentTop="true"
-            a:layout_toRightOf="@id/song_check"
+            a:layout_toRightOf="@id/song_left"
             a:layout_toLeftOf="@id/song_image"
             a:gravity="left|top"
             a:textAppearance="?android:attr/textAppearanceLarge"
             a:singleLine="true"
             a:ellipsize="marquee"
             a:paddingTop="6dip"
-            a:paddingRight="6dip"
-            />
+            a:paddingRight="6dip"/>
 
     <TextView
             a:id="@+id/song_text2"
             a:layout_width="wrap_content"
             a:layout_height="wrap_content"
             a:layout_alignParentBottom="true"
-            a:layout_toRightOf="@id/song_check"
+            a:layout_toRightOf="@id/song_left"
             a:layout_below="@id/song_text1"
             a:gravity="left|bottom"
             a:textAppearance="?android:attr/textAppearanceSmall"
             a:singleLine="true"
-            a:paddingBottom="6dip"
-            />
+            a:paddingBottom="6dip"/>
 
     <TextView
             a:id="@+id/song_text3"
