@@ -29,14 +29,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadService2;
+import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
-import net.sourceforge.subsonic.androidapp.service.StreamService;
-import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
@@ -47,12 +46,8 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
-    private final DownloadServiceConnection2 downloadServiceConnection2 = new DownloadServiceConnection2();
-    private final StreamServiceConnection streamServiceConnection = new StreamServiceConnection();
     private ImageLoader imageLoader;
-    private DownloadService downloadService;
-    private DownloadService2 downloadService2;
-    private StreamService streamService;
+    private DownloadService2 downloadService;
     private ListView entryList;
     private Button selectButton;
     private Button playButton;
@@ -87,7 +82,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addToPlaylist(false, false);
+                download(false, false);
                 selectAll(false);
             }
         });
@@ -101,10 +96,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             }
         });
 
-        bindService(new Intent(this, DownloadService.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
-        bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection2, Context.BIND_AUTO_CREATE);
-        bindService(new Intent(this, StreamService.class), streamServiceConnection, Context.BIND_AUTO_CREATE);
-
+        bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         enableButtons();
 
         String query = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_QUERY);
@@ -154,23 +146,15 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     public boolean onContextItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case 1:
-                addToPlaylist(true, false);
+                download(false, true);
                 selectAll(false);
                 break;
             case 2:
-                download();
+                download(true, false);
                 selectAll(false);
                 break;
             case 3:
-                addToPlaylist(false, true);
-                selectAll(false);
-                break;
-            case 4:
                 delete();
-                selectAll(false);
-                break;
-            case 5:
-                download2();
                 selectAll(false);
                 break;
             default:
@@ -182,18 +166,17 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
-        menu.add(Menu.NONE, 1, 1, "Add to playlist");
-        menu.add(Menu.NONE, 2, 2, "Download");
-        menu.add(Menu.NONE, 3, 3, "Download + Play");
+        menu.add(Menu.NONE, 1, 1, "Play + Save");
+        menu.add(Menu.NONE, 2, 2, "Add to play queue");
 
         for (MusicDirectory.Entry song : getSelectedSongs()) {
-            File file = downloadService.getSongFile(song, false);
+            // TODO: Check for .complete also.
+            File file = FileUtil.getSongFile(song, false);
             if (file.exists()) {
-                menu.add(Menu.NONE, 4, 4, "Delete from phone");
+                menu.add(Menu.NONE, 3, 3, "Delete from phone");
                 break;
             }
         }
-        menu.add(Menu.NONE, 5, 5, "Play 2");
     }
 
     private void getMusicDirectory() {
@@ -263,8 +246,6 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     protected void onDestroy() {
         super.onDestroy();
         unbindService(downloadServiceConnection);
-        unbindService(downloadServiceConnection2);
-        unbindService(streamServiceConnection);
         imageLoader.cancel();
     }
 
@@ -297,7 +278,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         moreButton.setEnabled(checked);
     }
 
-    private void download() {
+    private void download(final boolean append, final boolean save) {
         if (downloadService == null) {
             return;
         }
@@ -306,45 +287,12 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         Runnable onValid = new Runnable() {
             @Override
             public void run() {
-                downloadService.download(songs);
-                startActivity(new Intent(SelectAlbumActivity.this, DownloadQueueActivity.class));
-            }
-        };
-
-        checkLicenseAndTrialPeriod(onValid);
-    }
-
-    private void download2() {
-        if (downloadService2 == null) {
-            return;
-        }
-
-        final List<MusicDirectory.Entry> songs = getSelectedSongs();
-        Runnable onValid = new Runnable() {
-            @Override
-            public void run() {
-                downloadService2.clear();
-                downloadService2.download(songs, false, true);
-                startActivity(new Intent(SelectAlbumActivity.this, DownloadActivity.class));
-            }
-        };
-        checkLicenseAndTrialPeriod(onValid);
-    }
-
-    private void addToPlaylist(final boolean append, final boolean download) {
-        if (streamService == null) {
-            return;
-        }
-
-        final List<MusicDirectory.Entry> songs = getSelectedSongs();
-        Runnable onValid = new Runnable() {
-            @Override
-            public void run() {
-                if (download) {
-                    downloadService.download(songs);
+                if (!append) {
+                    downloadService.clear();
                 }
-                streamService.add(songs, append, download);
-                startActivity(new Intent(SelectAlbumActivity.this, StreamQueueActivity.class));
+
+                downloadService.download(songs, save, true);
+                startActivity(new Intent(SelectAlbumActivity.this, DownloadActivity.class));
             }
         };
 
@@ -356,7 +304,8 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             return;
         }
 
-        downloadService.delete(getSelectedSongs());
+        // TODO
+//        downloadService.delete(getSelectedSongs());
         repaintList();
     }
 
@@ -423,12 +372,11 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         return songs;
     }
 
-
     private class DownloadServiceConnection implements ServiceConnection {
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
-            downloadService = ((SimpleServiceBinder<DownloadService>) service).getService();
+            downloadService = ((SimpleServiceBinder<DownloadService2>) service).getService();
             Log.i(TAG, "Connected to Download Service");
         }
 
@@ -436,37 +384,6 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         public void onServiceDisconnected(ComponentName componentName) {
             downloadService = null;
             Log.i(TAG, "Disconnected from Download Service");
-        }
-    }
-
-    private class DownloadServiceConnection2 implements ServiceConnection {
-
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder service) {
-            downloadService2 = ((SimpleServiceBinder<DownloadService2>) service).getService();
-            Log.i(TAG, "Connected to Download Service");
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            downloadService2 = null;
-            Log.i(TAG, "Disconnected from Download Service");
-        }
-    }
-
-
-    private class StreamServiceConnection implements ServiceConnection {
-
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder service) {
-            streamService = ((SimpleServiceBinder<StreamService>) service).getService();
-            Log.i(TAG, "Connected to Stream Service");
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            streamService = null;
-            Log.i(TAG, "Disconnected from Stream Service");
         }
     }
 
@@ -498,7 +415,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 } else {
                     view = new SongView(SelectAlbumActivity.this);
                 }
-                File file = downloadService.getSongFile(entry, false);
+                File file = FileUtil.getSongFile(entry, false);
                 view.setSong(entry, file);
                 return view;
             }

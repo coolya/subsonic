@@ -30,16 +30,6 @@
                   a:label="My music"
                   a:screenOrientation="portrait"/>
 
-        <activity a:name=".activity.DownloadQueueActivity"
-                  a:label="Now downloading"
-                  a:screenOrientation="portrait"
-                  a:launchMode="singleTask"/>
-
-        <activity a:name=".activity.StreamQueueActivity"
-                  a:label="Now playing"
-                  a:launchMode="singleTask"
-                  a:screenOrientation="portrait"/>
-
         <activity a:name=".activity.DownloadActivity"
                   a:label="Now playing"
                   a:launchMode="singleTask"
@@ -60,14 +50,8 @@
                   a:launchMode="singleTask"
                   a:screenOrientation="portrait"/>
 
-        <service a:name=".service.DownloadService"
-                 a:label="Download"/>
-
-        <service a:name=".service.StreamService"
-                 a:label="Stream"/>
-
         <service a:name=".service.DownloadServiceImpl"
-                 a:label="Download2"/>
+                 a:label="Download"/>
 
     </application>
 

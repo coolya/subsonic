@@ -33,7 +33,6 @@ import android.app.NotificationManager;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.activity.StreamQueueActivity;
 import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
 import net.sourceforge.subsonic.androidapp.activity.ErrorActivity;
 

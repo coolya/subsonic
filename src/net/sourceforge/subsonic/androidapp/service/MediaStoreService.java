@@ -76,7 +76,7 @@ public class MediaStoreService {
         cursor.close();
     }
 
-    private void deleteFromMediaStore(DownloadFile downloadFile) {
+    public void deleteFromMediaStore(DownloadFile downloadFile) {
         ContentResolver contentResolver = context.getContentResolver();
         MusicDirectory.Entry song = downloadFile.getSong();
         File file = downloadFile.getCompleteFile();
