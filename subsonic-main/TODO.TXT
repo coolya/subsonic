@@ -10,6 +10,8 @@ Android:
 - Implement cleanup of partial and completed files.
 - Show stop button during download/buffering.
 - Don't cache music dirs forever.
+- Remove ServiceBase?
+- Implement file delete.
 
 
 Global option to disable chat.  Admin should be able to remove individual messages.

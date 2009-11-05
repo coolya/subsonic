@@ -10,11 +10,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -38,7 +36,7 @@ import net.sourceforge.subsonic.androidapp.util.Util;
  * @author Sindre Mehus
  * @version $Id$
  */
-public class DownloadServiceImpl extends ServiceBase implements DownloadService2 {
+public class DownloadServiceImpl extends Service implements DownloadService2 {
 
     private static final String TAG = DownloadServiceImpl.class.getSimpleName();
     private final IBinder binder = new SimpleServiceBinder<DownloadService2>(this);
@@ -103,6 +101,12 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
         }
         mediaPlayer.reset();
         setPlayerState(IDLE);
+    }
+
+    public synchronized void delete(List<DownloadFile> downloadFiles) {
+        for (DownloadFile downloadFile : downloadFiles) {
+            downloadFile.delete();
+        }
     }
 
     @Override
@@ -226,7 +230,7 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
 
                 while (!isCancelled() && !bufferComplete()) {
                     try {
-                        Thread.sleep(100L);
+                        Thread.sleep(250L);
                     } catch (InterruptedException x) {
                         return;
                     }
@@ -236,9 +240,6 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
 
             private boolean bufferComplete() {
                 File file = downloadFile.getPartialFile();
-
-                Log.d(TAG, "File size: " + file.length());
-
                 return downloadFile.isComplete() || file.exists() && file.length() > bufferSize;
             }
         };

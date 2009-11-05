@@ -39,10 +39,9 @@ import net.sourceforge.subsonic.androidapp.util.Constants;
 public class OptionsMenuActivity extends Activity {
 
     private static final int MENU_HOME = 1;
-    private static final int MENU_STREAM_QUEUE = 2;
-    private static final int MENU_DOWNLOAD_QUEUE = 3;
-    private static final int MENU_SETTINGS = 4;
-    private static final int MENU_HELP = 5;
+    private static final int MENU_PLAYING = 2;
+    private static final int MENU_SETTINGS = 3;
+    private static final int MENU_HELP = 4;
 
     private Dialog searchDialog;
 
@@ -74,8 +73,7 @@ public class OptionsMenuActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, MENU_HOME, 0, "Subsonic Home").setIcon(R.drawable.menu_home);
-        menu.add(0, MENU_STREAM_QUEUE, 0, "Now playing").setIcon(R.drawable.stream_queue);
-        menu.add(0, MENU_DOWNLOAD_QUEUE, 0, "Now downloading").setIcon(R.drawable.download_queue);
+        menu.add(0, MENU_PLAYING, 0, "Now playing").setIcon(R.drawable.now_playing);
         menu.add(0, MENU_SETTINGS, 0, "Settings").setIcon(R.drawable.settings);
         menu.add(0, MENU_HELP, 0, "Help").setIcon(R.drawable.help);
         return true;
@@ -88,11 +86,8 @@ public class OptionsMenuActivity extends Activity {
                 // TODO: use FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
-            case MENU_DOWNLOAD_QUEUE:
-                startActivity(new Intent(this, DownloadQueueActivity.class));
-                return true;
-            case MENU_STREAM_QUEUE:
-                startActivity(new Intent(this, StreamQueueActivity.class));
+            case MENU_PLAYING:
+                startActivity(new Intent(this, DownloadActivity.class));
                 return true;
             case MENU_SETTINGS:
                 startActivity(new Intent(this, SettingsActivity.class));

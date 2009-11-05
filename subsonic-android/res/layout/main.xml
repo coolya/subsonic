@@ -77,22 +77,10 @@
                 a:layout_weight="1"/>
 
         <ImageView
-                a:id="@+id/main_stream_queue"
+                a:id="@+id/main_now_playing"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
-                a:src="@drawable/stream_queue_selector"
-                a:focusable="true"/>
-
-        <TextView
-                a:layout_width="wrap_content"
-                a:layout_height="wrap_content"
-                a:layout_weight="1"/>
-
-        <ImageView
-                a:id="@+id/main_download_queue"
-                a:layout_width="wrap_content"
-                a:layout_height="wrap_content"
-                a:src="@drawable/download_queue_selector"
+                a:src="@drawable/now_playing_selector"
                 a:focusable="true"/>
 
         <TextView

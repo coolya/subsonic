@@ -117,6 +117,13 @@ public class DownloadFile {
         return saveFile.exists() || completeFile.exists();
     }
 
+    public void delete() {
+        Util.delete(partialFile);
+        Util.delete(completeFile);
+        Util.delete(saveFile);
+        mediaStoreService.deleteFromMediaStore(this);
+    }
+
     private class DownloadTask extends CancellableTask {
 
         @Override

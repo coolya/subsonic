@@ -7,13 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.service.DownloadService;
+import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
-import net.sourceforge.subsonic.androidapp.service.StreamService;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Pair;
@@ -30,8 +28,7 @@ public class MainActivity extends OptionsMenuActivity {
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 
-        startService(new Intent(this, DownloadService.class));
-        startService(new Intent(this, StreamService.class));
+        startService(new Intent(this, DownloadServiceImpl.class));
         setContentView(R.layout.main);
 
         View browseButton = findViewById(R.id.main_browse);
@@ -58,19 +55,11 @@ public class MainActivity extends OptionsMenuActivity {
             }
         });
 
-        View downloadQueueButton = findViewById(R.id.main_download_queue);
-        downloadQueueButton.setOnClickListener(new View.OnClickListener() {
+        View nowPlayingButton = findViewById(R.id.main_now_playing);
+        nowPlayingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, DownloadQueueActivity.class));
-            }
-        });
-
-        View streamQueueButton = findViewById(R.id.main_stream_queue);
-        streamQueueButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, StreamQueueActivity.class));
+                startActivity(new Intent(MainActivity.this, DownloadActivity.class));
             }
         });
 
