@@ -1,18 +1,15 @@
 TODO IN 3.9
 --------------
 Android:
-- Keep DownloadService alive.
 - Use SongView also in playlist + beef it up.
 - Show asterix also when .complete exists. Different colors.
-- When downloading, show KB.
 - Avoid flickering progress bar when downloading.
 - Only support "Play" and "Play + Save".
 - Implement cleanup of partial and completed files.
 - Show stop button during download/buffering.
 - Don't cache music dirs forever.
-- Remove ServiceBase?
 - Implement file delete.
-
+- Improve design of DownloadFile.getCompleteFile() etc.
 
 Global option to disable chat.  Admin should be able to remove individual messages.
 Sort saved playlists.

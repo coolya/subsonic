@@ -20,12 +20,14 @@ package net.sourceforge.subsonic.androidapp.util;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Checkable;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 
 import java.io.File;
@@ -34,7 +36,9 @@ import java.io.File;
  * @author Sindre Mehus
  */
 public class SongView extends LinearLayout implements Checkable {
+
     private CheckedTextView checkedTextView;
+    private TextView trackTextView;
     private TextView textView1;
     private TextView textView2;
     private TextView textView3;
@@ -45,6 +49,7 @@ public class SongView extends LinearLayout implements Checkable {
         LayoutInflater.from(context).inflate(R.layout.song, this, true);
 
         checkedTextView = (CheckedTextView) findViewById(R.id.song_check);
+        trackTextView = (TextView) findViewById(R.id.song_track);
         textView1 = (TextView) findViewById(R.id.song_text1);
         textView2 = (TextView) findViewById(R.id.song_text2);
         textView3 = (TextView) findViewById(R.id.song_text3);
@@ -69,6 +74,13 @@ public class SongView extends LinearLayout implements Checkable {
         textView1.setText(song.getTitle());
         textView2.setText(text2);
         textView3.setText(Util.formatDuration(song.getDuration()));
+    }
+
+    public void setDownloadFile(DownloadFile downloadFile) {
+        setSong(downloadFile.getSong(), downloadFile.getCompleteFile());
+        checkedTextView.setVisibility(View.GONE);
+        trackTextView.setVisibility(View.VISIBLE);
+        trackTextView.setText("3");
     }
 
     @Override

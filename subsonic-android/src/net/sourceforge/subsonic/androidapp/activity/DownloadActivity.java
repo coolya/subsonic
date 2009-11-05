@@ -1,44 +1,45 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
 
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.os.Handler;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.service.DownloadFile;
-import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.COMPLETED;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.PAUSED;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.STARTED;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.STOPPED;
+import net.sourceforge.subsonic.androidapp.domain.PlayerState;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
+import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
+import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.HorizontalSlider;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
-import net.sourceforge.subsonic.androidapp.util.TwoLineListAdapter;
+import net.sourceforge.subsonic.androidapp.util.SongView;
 import net.sourceforge.subsonic.androidapp.util.Util;
+
+import java.io.File;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class DownloadActivity extends OptionsMenuActivity {
 
@@ -328,24 +329,18 @@ public class DownloadActivity extends OptionsMenuActivity {
         }
     }
 
-    private class SongListAdapter extends TwoLineListAdapter<DownloadFile> {
-        private final List<DownloadFile> list;
 
-        public SongListAdapter(List<DownloadFile> list) {
-            super(DownloadActivity.this, list);
-            this.list = list;
+    private class SongListAdapter extends ArrayAdapter<DownloadFile> {
+        public SongListAdapter(List<DownloadFile> entries) {
+            super(DownloadActivity.this, android.R.layout.simple_list_item_1, entries);
         }
 
         @Override
-        protected String getFirstLine(DownloadFile file) {
-            return (list.indexOf(file) + 1) + "  " + file.getSong().getTitle();
-        }
-
-        @Override
-        protected String getSecondLine(DownloadFile file) {
-            StringBuilder builder = new StringBuilder();
-            builder.append(file.getSong().getAlbum()).append(" - ").append(file.getSong().getArtist());
-            return builder.toString();
+        public View getView(int position, View convertView, ViewGroup parent) {
+            DownloadFile downloadFile = getItem(position);
+            SongView view = new SongView(DownloadActivity.this);
+            view.setDownloadFile(downloadFile);
+            return view;
         }
     }
 }
