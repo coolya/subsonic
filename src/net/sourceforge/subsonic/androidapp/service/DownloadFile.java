@@ -8,6 +8,7 @@ package net.sourceforge.subsonic.androidapp.service;
 
 import android.content.Context;
 import android.util.Log;
+import android.os.Handler;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
@@ -31,16 +32,19 @@ public class DownloadFile {
 
     private static final String TAG = DownloadFile.class.getSimpleName();
     private final Context context;
+    private final Handler handler;
     private final MusicDirectory.Entry song;
     private final File partialFile;
     private final File completeFile;
     private final File saveFile;
+
     private final MediaStoreService mediaStoreService;
     private CancellableTask downloadTask;
     private boolean save;
 
-    public DownloadFile(Context context, MusicDirectory.Entry song, boolean save) {
+    public DownloadFile(Context context, Handler handler, MusicDirectory.Entry song, boolean save) {
         this.context = context;
+        this.handler = handler;
         this.song = song;
         this.save = save;
         saveFile = FileUtil.getSongFile(song, true);
@@ -119,7 +123,6 @@ public class DownloadFile {
         public void execute() {
 
             Log.i(TAG, "Starting to download " + song);
-//            updateNotification();
 
             InputStream in = null;
             FileOutputStream out = null;
@@ -140,20 +143,20 @@ public class DownloadFile {
                     throw new Exception("Download of " + song + " was cancelled");
                 }
 
-            } catch (Exception e) {
+            } catch (Exception x) {
                 Util.close(out);
                 Util.delete(partialFile);
                 Util.delete(completeFile);
                 Util.delete(saveFile);
                 if (!isCancelled()) {
-                    Log.e(TAG, "Failed to download stream.", e);
-//                addErrorNotification(song, e);
+                    String msg = "Error downloading \"" + song.getTitle() + "\"";
+                    Util.showErrorNotification(context, handler, msg, x);
+                    Log.e(TAG, msg, x);
                 }
 
             } finally {
                 Util.close(in);
                 Util.close(out);
-//                updateNotification();
             }
         }
 
@@ -161,20 +164,18 @@ public class DownloadFile {
             byte[] buffer = new byte[1024 * 16];
             long count = 0;
             int n;
-            long lastBroadcast = System.currentTimeMillis();
+            long lastLog = System.currentTimeMillis();
 
             while (!isCancelled() && (n = in.read(buffer)) != -1) {
                 out.write(buffer, 0, n);
                 count += n;
-//            currentProgress.addAndGet(n);
 
                 long now = System.currentTimeMillis();
-                if (now - lastBroadcast > 2000L) {  // Only every so often.
-                    Log.i(TAG, "Downloaded " + Util.formatBytes(count));
-                    lastBroadcast = now;
+                if (now - lastLog > 2000L) {  // Only every so often.
+                    Log.i(TAG, "Downloaded " + Util.formatBytes(count) + " of " + song);
+                    lastLog = now;
                 }
             }
-//        broadcastChange(false);
             return count;
         }
     }

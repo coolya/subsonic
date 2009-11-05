@@ -84,7 +84,7 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
         }
 
         for (MusicDirectory.Entry song : songs) {
-            DownloadFile downloadFile = new DownloadFile(this, song, save);
+            DownloadFile downloadFile = new DownloadFile(this, handler, song, save);
             downloadList.add(downloadFile);
         }
 
@@ -206,7 +206,7 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
         Log.i(TAG, this.playerState.name() + " -> " + playerState.name());
         this.playerState = playerState;
         if (playerState == STARTED) {
-            Util.showPlayingNotification(currentPlaying.getSong(), this, handler);
+            Util.showPlayingNotification(this, handler, currentPlaying.getSong());
         } else {
             Util.hidePlayingNotification(this, handler);
         }
@@ -300,8 +300,9 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
     }
 
     private void handleError(Exception x) {
-        String title = "Error playing \"" + currentPlaying.getSong().getTitle() + "\"";
-        Util.showErrorNotification(title, x, this, handler);
+        String msg = "Error playing \"" + currentPlaying.getSong().getTitle() + "\"";
+        Util.showErrorNotification(this, handler, msg, x);
+        Log.e(TAG, msg, x);
         mediaPlayer.reset();
         setPlayerState(IDLE);
     }
