@@ -40,6 +40,7 @@ public final class Constants {
     public static final int NOTIFICATION_ID_STREAM_QUEUE = 3;
     public static final int NOTIFICATION_ID_STREAM_ERROR = 4;
     public static final int NOTIFICATION_ID_PLAYING = 5;
+    public static final int NOTIFICATION_ID_ERROR = 6;
 
     // Preferences keys.
     public static final String PREFERENCES_KEY_SERVER_INSTANCE = "serverInstance";
