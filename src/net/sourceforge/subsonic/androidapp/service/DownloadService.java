@@ -16,7 +16,7 @@ import net.sourceforge.subsonic.androidapp.domain.PlayerState;
  * @author Sindre Mehus
  * @version $Id$
  */
-public interface DownloadService2 {
+public interface DownloadService {
 
     void download(List<MusicDirectory.Entry> songs, boolean save, boolean play);
 

@@ -36,10 +36,10 @@ import net.sourceforge.subsonic.androidapp.util.Util;
  * @author Sindre Mehus
  * @version $Id$
  */
-public class DownloadServiceImpl extends Service implements DownloadService2 {
+public class DownloadServiceImpl extends Service implements DownloadService {
 
     private static final String TAG = DownloadServiceImpl.class.getSimpleName();
-    private final IBinder binder = new SimpleServiceBinder<DownloadService2>(this);
+    private final IBinder binder = new SimpleServiceBinder<DownloadService>(this);
     private final MediaPlayer mediaPlayer = new MediaPlayer();
     private final List<DownloadFile> downloadList = new CopyOnWriteArrayList<DownloadFile>();
     private final Handler handler = new Handler();
@@ -191,11 +191,6 @@ public class DownloadServiceImpl extends Service implements DownloadService2 {
     }
 
     @Override
-    public PlayerState getPlayerState() {
-        return playerState;
-    }
-
-    @Override
     public synchronized int getPlayerPosition() {
         try {
             return mediaPlayer.getCurrentPosition();
@@ -203,6 +198,11 @@ public class DownloadServiceImpl extends Service implements DownloadService2 {
             handleError(x);
             return 0;
         }
+    }
+
+    @Override
+    public PlayerState getPlayerState() {
+        return playerState;
     }
 
     private synchronized void setPlayerState(PlayerState playerState) {
@@ -219,6 +219,9 @@ public class DownloadServiceImpl extends Service implements DownloadService2 {
         if (bufferTask != null) {
             bufferTask.cancel();
         }
+
+        mediaPlayer.reset();
+        setPlayerState(IDLE);
 
         // Buffer ten seconds.
         final int bufferSize = Math.max(100000, downloadFile.getSong().getBitRate() * 1024 / 8 * 10);

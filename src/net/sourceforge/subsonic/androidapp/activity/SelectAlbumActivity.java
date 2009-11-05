@@ -29,7 +29,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.service.DownloadService2;
+import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
@@ -47,7 +47,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private ImageLoader imageLoader;
-    private DownloadService2 downloadService;
+    private DownloadService downloadService;
     private ListView entryList;
     private Button selectButton;
     private Button playButton;
@@ -376,7 +376,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
-            downloadService = ((SimpleServiceBinder<DownloadService2>) service).getService();
+            downloadService = ((SimpleServiceBinder<DownloadService>) service).getService();
             Log.i(TAG, "Connected to Download Service");
         }
 

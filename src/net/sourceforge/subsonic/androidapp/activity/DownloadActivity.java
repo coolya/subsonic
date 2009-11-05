@@ -32,7 +32,7 @@ import static net.sourceforge.subsonic.androidapp.domain.PlayerState.COMPLETED;
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.PAUSED;
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.STARTED;
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.STOPPED;
-import net.sourceforge.subsonic.androidapp.service.DownloadService2;
+import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.util.HorizontalSlider;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
@@ -45,7 +45,7 @@ public class DownloadActivity extends OptionsMenuActivity {
     private static final String TAG = DownloadActivity.class.getSimpleName();
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private ImageLoader imageLoader;
-    private DownloadService2 downloadService;
+    private DownloadService downloadService;
 
     private ViewFlipper flipper;
     private TextView currentTextView;
@@ -286,7 +286,13 @@ public class DownloadActivity extends OptionsMenuActivity {
 
 
         PlayerState playerState = downloadService.getPlayerState();
-        statusTextView.setText(playerState.toString());
+
+        if (playerState == PlayerState.DOWNLOADING) {
+            long bytes = currentPlaying.getPartialFile().length();
+            statusTextView.setText(playerState + " - " + Util.formatBytes(bytes));
+        } else {
+            statusTextView.setText(playerState.toString());
+        }
 
         if (playerState == STARTED) {
             pauseButton.setVisibility(View.VISIBLE);
@@ -295,26 +301,6 @@ public class DownloadActivity extends OptionsMenuActivity {
             pauseButton.setVisibility(View.GONE);
             startButton.setVisibility(View.VISIBLE);
         }
-    }
-
-    private void onDownloadProgressChanged() {
-//        TODO
-//        if (downloadServiceOld == null || downloadService == null) {
-//            return;
-//        }
-//
-//        Pair<MusicDirectory.Entry, Pair<Long, Long>> current = downloadServiceOld.getCurrent();
-//
-//        if (current != null && current.getFirst() == downloadService.getCurrentSong() ) {
-//            Long bytesDownloaded = current.getSecond().getFirst();
-//            Long bytesTotal = current.getSecond().getSecond();
-//            if (bytesTotal != null) {
-//                positionTextView.setText(Util.formatBytes(bytesDownloaded));
-//                durationTextView.setText(Util.formatBytes(bytesTotal));
-//                progressBar.setMax(bytesTotal.intValue());
-//                progressBar.setProgress(bytesDownloaded.intValue());
-//            }
-//        }
     }
 
     @Override
@@ -328,7 +314,7 @@ public class DownloadActivity extends OptionsMenuActivity {
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
-            downloadService = ((SimpleServiceBinder<DownloadService2>) service).getService();
+            downloadService = ((SimpleServiceBinder<DownloadService>) service).getService();
             Log.i(TAG, "Connected to Download Service");
             onDownloadListChanged();
             onCurrentChanged();
