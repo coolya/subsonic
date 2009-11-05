@@ -346,7 +346,7 @@ public final class Util {
         builder.show();
     }
 
-    public static void showPlayingNotification(MusicDirectory.Entry song, final Context context, Handler handler) {
+    public static void showPlayingNotification(final Context context, Handler handler, MusicDirectory.Entry song) {
 
         // Use the same text for the ticker and the expanded notification
         String title = song.getTitle();
@@ -381,7 +381,7 @@ public final class Util {
         });
     }
 
-    public static void showErrorNotification(String title, Exception error, final Context context, Handler handler) {
+    public static void showErrorNotification(final Context context, Handler handler, String title, Exception error) {
         final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         String text = error.getMessage();
