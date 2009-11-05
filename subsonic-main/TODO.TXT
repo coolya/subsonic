@@ -8,9 +8,9 @@ Android:
 - Avoid flickering progress bar when downloading.
 - Only support "Play" and "Play + Save".
 - Implement cleanup of partial and completed files.
-- Integrate with phone service.
-- Integrate with key clicks.
 - Show stop button during download/buffering.
+- Don't cache music dirs forever.
+
 
 Global option to disable chat.  Admin should be able to remove individual messages.
 Sort saved playlists.
@@ -42,7 +42,6 @@ ANDROID
 Android: Offline mode.
 Android: Use HttpClient
 Android: Long-click on song list.
-Android: Don't cache music dirs forever.
 Android: Option to auto-sync certain directories or playlists.
 Android: Option to tag certain directories as favorite.
 Is there a more generic broadcast event to listen to when the media collection changes?

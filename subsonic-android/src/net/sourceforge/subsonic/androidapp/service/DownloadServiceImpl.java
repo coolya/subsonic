@@ -7,8 +7,8 @@
 package net.sourceforge.subsonic.androidapp.service;
 
 import java.io.File;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -18,12 +18,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.IBinder;
 import android.os.Handler;
+import android.os.IBinder;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.COMPLETED;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.DOWNLOADING;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.IDLE;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.PAUSED;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.PREPARED;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.PREPARING;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.STARTED;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
@@ -39,23 +45,16 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
     private final MediaPlayer mediaPlayer = new MediaPlayer();
     private final List<DownloadFile> downloadList = new CopyOnWriteArrayList<DownloadFile>();
     private final Handler handler = new Handler();
+    private final DownloadServiceLifecycleSupport lifecycleSupport = new DownloadServiceLifecycleSupport(this);
     private DownloadFile currentPlaying;
     private DownloadFile currentDownloading;
     private CancellableTask bufferTask;
-    private ScheduledExecutorService executorService;
     private PlayerState playerState = IDLE;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        executorService = Executors.newSingleThreadScheduledExecutor();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                checkDownloads();
-            }
-        };
-        executorService.scheduleWithFixedDelay(runnable, 5000L, 5000L, TimeUnit.MILLISECONDS);
+        lifecycleSupport.onCreate();
 
         mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
@@ -68,8 +67,8 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
 
     @Override
     public void onDestroy() {
-        clear();
-        executorService.shutdown();
+        super.onDestroy();
+        lifecycleSupport.onDestroy();
     }
 
     @Override
@@ -307,7 +306,7 @@ public class DownloadServiceImpl extends ServiceBase implements DownloadService2
         setPlayerState(IDLE);
     }
 
-    private synchronized void checkDownloads() {
+    protected synchronized void checkDownloads() {
 
         // Need to download current playing?
         if (currentPlaying != null && currentPlaying != currentDownloading && !currentPlaying.isComplete()) {
