@@ -397,7 +397,7 @@ Update version.html
 cd subsonic-android
 ant release
 ### keytool -genkey -v -keystore subsonic.keystore -alias subsonic -keyalg RSA -validity 100000 -dname "CN=Active Objects"
-jarsigner -verbose -keystore subsonic.keystore -signedjar bin/SubsonicActivity-signed.apk bin/SubsonicActivity-unsigned.apk subsonic
+jarsigner -verbose -keystore subsonic.keystore -signedjar bin/subsonic.apk bin/SubsonicActivity-unsigned.apk subsonic
 Upload to market (use Firefox)
 http://market.android.com/publish/Home
 Also upload to http://appslib.com/developers/index.html

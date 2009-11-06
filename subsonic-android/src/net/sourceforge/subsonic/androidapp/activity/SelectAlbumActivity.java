@@ -116,6 +116,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         super.onResume();
 
         // Repaint list when download completes.
+        // TODO
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

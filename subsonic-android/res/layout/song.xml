@@ -23,20 +23,20 @@
                 a:checkMark="?android:attr/textCheckMark"/>
 
         <TextView
-                a:id="@+id/song_track"
+                a:id="@+id/song_image1"
                 a:layout_width="fill_parent"
                 a:layout_height="fill_parent"
-                a:visibility="gone"
-                a:textAppearance="?android:attr/textAppearanceLarge"/>
+                a:visibility="gone"/>
 
     </LinearLayout>
 
-    <ImageView
-            a:id="@+id/song_image"
+    <TextView
+            a:id="@+id/song_image2"
             a:layout_width="wrap_content"
             a:layout_height="wrap_content"
             a:layout_alignParentRight="true"
             a:gravity="right|top"
+            a:drawablePadding="6dip"
             a:paddingTop="6dip"
             a:paddingRight="9dip"/>
 
@@ -46,11 +46,12 @@
             a:layout_height="wrap_content"
             a:layout_alignParentTop="true"
             a:layout_toRightOf="@id/song_left"
-            a:layout_toLeftOf="@id/song_image"
+            a:layout_toLeftOf="@id/song_image2"
             a:gravity="left|top"
             a:textAppearance="?android:attr/textAppearanceLarge"
             a:singleLine="true"
             a:ellipsize="marquee"
+            a:drawablePadding="6dip"
             a:paddingTop="6dip"
             a:paddingRight="6dip"/>
 
@@ -73,7 +74,7 @@
             a:layout_alignParentBottom="true"
             a:layout_alignParentRight="true"
             a:layout_toRightOf="@id/song_text2"
-            a:layout_below="@id/song_image"
+            a:layout_below="@id/song_image2"
             a:gravity="right|bottom"
             a:textAppearance="?android:attr/textAppearanceSmall"
             a:singleLine="true"
