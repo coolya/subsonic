@@ -1,11 +1,9 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
-
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.ComponentName;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -28,14 +26,12 @@ import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
-import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.HorizontalSlider;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.SongView;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
-import java.io.File;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -53,7 +49,6 @@ public class DownloadActivity extends OptionsMenuActivity {
     private TextView albumArtTextView;
     private ImageView albumArtImageView;
     private ListView playlistView;
-    private BroadcastReceiver broadcastReceiver;
     private TextView positionTextView;
     private TextView durationTextView;
     private TextView statusTextView;
@@ -186,7 +181,18 @@ public class DownloadActivity extends OptionsMenuActivity {
         }
 
         onProgressChanged();
+
+        // TODO
+        repaintList();
     }
+
+    private void repaintList() {
+        SongListAdapter adapter = (SongListAdapter) playlistView.getAdapter();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
 
     private void showFullscreenAlbumArt(boolean fullscreen) {
         boolean empty = downloadService == null || downloadService.getCurrentPlaying() == null;
@@ -337,9 +343,15 @@ public class DownloadActivity extends OptionsMenuActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            SongView view;
+            if (convertView != null && convertView instanceof SongView) {
+                view = (SongView) convertView;
+            } else {
+                view = new SongView(DownloadActivity.this);
+            }
             DownloadFile downloadFile = getItem(position);
-            SongView view = new SongView(DownloadActivity.this);
-            view.setDownloadFile(downloadFile);
+            boolean playing = downloadFile == downloadService.getCurrentPlaying();
+            view.setDownloadFile(downloadFile, playing);
             return view;
         }
     }

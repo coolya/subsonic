@@ -23,12 +23,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Checkable;
 import android.widget.CheckedTextView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 
 import java.io.File;
 
@@ -38,29 +37,29 @@ import java.io.File;
 public class SongView extends LinearLayout implements Checkable {
 
     private CheckedTextView checkedTextView;
-    private TextView trackTextView;
     private TextView textView1;
     private TextView textView2;
     private TextView textView3;
-    private ImageView imageView;
+    private TextView imageView1; // TODO: Remove
+    private TextView imageView2;
 
     public SongView(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.song, this, true);
 
         checkedTextView = (CheckedTextView) findViewById(R.id.song_check);
-        trackTextView = (TextView) findViewById(R.id.song_track);
         textView1 = (TextView) findViewById(R.id.song_text1);
         textView2 = (TextView) findViewById(R.id.song_text2);
         textView3 = (TextView) findViewById(R.id.song_text3);
-        imageView = (ImageView) findViewById(R.id.song_image);
+        imageView1 = (TextView) findViewById(R.id.song_image1);
+        imageView2 = (TextView) findViewById(R.id.song_image2);
     }
 
     public void setSong(MusicDirectory.Entry song, File file) {
         if (file.exists()) {
-            imageView.setImageResource(R.drawable.downloaded);
+            imageView2.setCompoundDrawablesWithIntrinsicBounds(R.drawable.downloaded, 0, 0, 0);
         } else {
-            imageView.setImageDrawable(null);
+            imageView2.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
 
         StringBuilder text2 = new StringBuilder(40);
@@ -76,11 +75,23 @@ public class SongView extends LinearLayout implements Checkable {
         textView3.setText(Util.formatDuration(song.getDuration()));
     }
 
-    public void setDownloadFile(DownloadFile downloadFile) {
+    public void setDownloadFile(DownloadFile downloadFile, boolean playing) {
         setSong(downloadFile.getSong(), downloadFile.getCompleteFile());
         checkedTextView.setVisibility(View.GONE);
-        trackTextView.setVisibility(View.VISIBLE);
-        trackTextView.setText("3");
+
+        File completeFile = downloadFile.getCompleteFile();
+        File partialFile = downloadFile.getPartialFile();
+        if (partialFile.exists() && !completeFile.exists()) {
+            imageView2.setText(Util.formatBytes(partialFile.length()));
+        } else {
+            imageView2.setText(null);
+        }
+
+        if (playing) {
+            textView1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.stat_sys_playing, 0, 0, 0);
+        } else {
+            textView1.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
     }
 
     @Override
