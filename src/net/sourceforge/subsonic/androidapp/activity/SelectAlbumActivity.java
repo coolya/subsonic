@@ -1,9 +1,5 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -41,6 +37,10 @@ import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.SongView;
 import net.sourceforge.subsonic.androidapp.util.Util;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
@@ -292,7 +292,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                     downloadService.clear();
                 }
 
-                downloadService.download(songs, save, true);
+                downloadService.download(songs, save, !append);
                 startActivity(new Intent(SelectAlbumActivity.this, DownloadActivity.class));
             }
         };
@@ -306,8 +306,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         }
 
         // TODO
-//        downloadService.delete(getSelectedSongs());
-        repaintList();
+        downloadService.delete(getSelectedSongs());
     }
 
     private void checkLicenseAndTrialPeriod(Runnable onValid) {

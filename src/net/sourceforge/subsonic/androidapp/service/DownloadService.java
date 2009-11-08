@@ -6,11 +6,10 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
-import java.util.List;
-
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
+
+import java.util.List;
 
 /**
  * @author Sindre Mehus
@@ -47,4 +46,6 @@ public interface DownloadService {
     PlayerState getPlayerState();
 
     int getPlayerPosition();
+
+    void delete(List<MusicDirectory.Entry> selectedSongs);
 }

@@ -6,12 +6,6 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -21,16 +15,16 @@ import android.os.IBinder;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.COMPLETED;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.DOWNLOADING;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.IDLE;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.PAUSED;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.PREPARED;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.PREPARING;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.STARTED;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Sindre Mehus
@@ -103,11 +97,14 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         setPlayerState(IDLE);
     }
 
-    public synchronized void delete(List<DownloadFile> downloadFiles) {
-        for (DownloadFile downloadFile : downloadFiles) {
-            downloadFile.delete();
-        }
+    @Override
+    public synchronized void delete(List<MusicDirectory.Entry> selectedSongs) {
+        // TODO
+//        for (DownloadFile downloadFile : downloadFiles) {
+//            downloadFile.delete();
+//        }
     }
+
 
     @Override
     public DownloadFile getCurrentPlaying() {
@@ -344,7 +341,15 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                 i = (i + 1) % n;
             } while (i != start);
         }
-    }
 
+        // Delete obsolete .partial files.
+        for (DownloadFile downloadFile : downloadList) {
+            File partialFile = downloadFile.getPartialFile();
+            if (partialFile.exists() && currentDownloading != downloadFile && currentPlaying != downloadFile) {
+                Util.delete(partialFile);
+            }
+        }
+
+    }
 
 }
