@@ -23,20 +23,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
-import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.SongView;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -136,9 +135,8 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         menu.add(Menu.NONE, 2, 2, "Add to play queue");
 
         for (MusicDirectory.Entry song : getSelectedSongs()) {
-            // TODO: Check for .complete also.
-            File file = FileUtil.getSongFile(song, false);
-            if (file.exists()) {
+            DownloadFile downloadFile = downloadService.forSong(song);
+            if (downloadFile.getCompleteFile().exists()) {
                 menu.add(Menu.NONE, 3, 3, "Delete from phone");
                 break;
             }
@@ -270,7 +268,6 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
             return;
         }
 
-        // TODO
         downloadService.delete(getSelectedSongs());
     }
 

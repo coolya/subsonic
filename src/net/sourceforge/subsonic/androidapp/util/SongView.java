@@ -136,7 +136,9 @@ public class SongView extends LinearLayout implements Checkable {
     private static void updateAll() {
         try {
             for (SongView view : INSTANCES.keySet()) {
-                view.update();
+                if (view.isShown()) {
+                    view.update();
+                }
             }
         } catch (Throwable x) {
             Log.w(TAG, "Error when updating song views.", x);
