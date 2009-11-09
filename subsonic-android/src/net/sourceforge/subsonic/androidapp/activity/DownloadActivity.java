@@ -162,7 +162,7 @@ public class DownloadActivity extends OptionsMenuActivity {
         };
 
         executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.scheduleWithFixedDelay(runnable, 0L, 500L, TimeUnit.MILLISECONDS);
+        executorService.scheduleWithFixedDelay(runnable, 0L, 1000L, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -280,7 +280,8 @@ public class DownloadActivity extends OptionsMenuActivity {
         if (currentPlaying != null) {
 
             int millisPlayed = Math.max(0, downloadService.getPlayerPosition());
-            int millisTotal = currentPlaying.getSong().getDuration() * 1000;
+            Integer duration = currentPlaying.getSong().getDuration();
+            int millisTotal = duration == null ? 0 : duration * 1000;
 
             positionTextView.setText(Util.formatDuration(millisPlayed / 1000));
             durationTextView.setText(Util.formatDuration(millisTotal / 1000));
@@ -290,7 +291,6 @@ public class DownloadActivity extends OptionsMenuActivity {
         } else {
             // TODO
         }
-
 
         PlayerState playerState = downloadService.getPlayerState();
 
