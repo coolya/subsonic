@@ -5,7 +5,6 @@ Android:
 - Update list in SelectAlbumActivity.
 - Improve headline in DownloadActivity. Use scrolling marquee.
 - Show asterix also when .complete exists. Different colors.
-- Avoid flickering progress bar when downloading.
 - Implement cleanup of partial and completed files.
 - Show stop button during download/buffering.
 - Don't cache music dirs forever.
