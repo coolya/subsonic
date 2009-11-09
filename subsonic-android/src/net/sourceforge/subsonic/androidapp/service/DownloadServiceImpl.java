@@ -77,7 +77,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     @Override
-    public synchronized void download(List<MusicDirectory.Entry> songs, boolean save, boolean play) {
+    public synchronized void download(List<MusicDirectory.Entry> songs, boolean save, boolean autoplay) {
         if (songs.isEmpty()) {
             return;
         }
@@ -87,9 +87,19 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             downloadList.add(downloadFile);
         }
 
-        if (play) {
+        if (autoplay) {
             play(0);
         }
+    }
+
+    @Override
+    public synchronized DownloadFile forSong(MusicDirectory.Entry song) {
+        for (DownloadFile downloadFile : downloadList) {
+            if (downloadFile.getSong() == song) {
+                return downloadFile;
+            }
+        }
+        return new DownloadFile(this, handler, song, false);
     }
 
     @Override

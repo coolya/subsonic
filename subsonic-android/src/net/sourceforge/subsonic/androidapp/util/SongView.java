@@ -55,7 +55,7 @@ public class SongView extends LinearLayout implements Checkable {
         imageView2 = (TextView) findViewById(R.id.song_image2);
     }
 
-    public void setSong(MusicDirectory.Entry song, File file) {
+    private void setSong(MusicDirectory.Entry song, File file) {
         if (file.exists()) {
             imageView2.setCompoundDrawablesWithIntrinsicBounds(R.drawable.downloaded, 0, 0, 0);
         } else {
@@ -75,9 +75,9 @@ public class SongView extends LinearLayout implements Checkable {
         textView3.setText(Util.formatDuration(song.getDuration()));
     }
 
-    public void setDownloadFile(DownloadFile downloadFile, boolean playing) {
+    public void setDownloadFile(DownloadFile downloadFile, boolean playing, boolean checkable) {
         setSong(downloadFile.getSong(), downloadFile.getCompleteFile());
-        checkedTextView.setVisibility(View.GONE);
+        checkedTextView.setVisibility(checkable ? View.VISIBLE : View.GONE);
 
         File completeFile = downloadFile.getCompleteFile();
         File partialFile = downloadFile.getPartialFile();

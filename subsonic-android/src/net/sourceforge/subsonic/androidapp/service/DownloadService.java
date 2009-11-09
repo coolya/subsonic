@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface DownloadService {
 
-    void download(List<MusicDirectory.Entry> songs, boolean save, boolean play);
+    void download(List<MusicDirectory.Entry> songs, boolean save, boolean autoplay);
 
     void clear();
 
@@ -48,4 +48,6 @@ public interface DownloadService {
     int getPlayerPosition();
 
     void delete(List<MusicDirectory.Entry> selectedSongs);
+
+    DownloadFile forSong(MusicDirectory.Entry song);
 }

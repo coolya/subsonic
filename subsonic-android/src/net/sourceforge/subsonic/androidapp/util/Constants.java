@@ -21,10 +21,6 @@ public final class Constants {
 
     // Intent actions.
     public static final String INTENT_ACTION_DOWNLOAD_QUEUE = "net.sourceforge.subsonic.androidapp.DOWNLOAD_QUEUE";
-    public static final String INTENT_ACTION_DOWNLOAD_PROGRESS = "net.sourceforge.subsonic.androidapp.DOWNLOAD_PROGRESS";
-    public static final String INTENT_ACTION_STREAM_PLAYLIST = "net.sourceforge.subsonic.androidapp.STREAM_PLAYLIST";
-    public static final String INTENT_ACTION_STREAM_CURRENT = "net.sourceforge.subsonic.androidapp.STREAM_CURRENT";
-    public static final String INTENT_ACTION_STREAM_PROGRESS = "net.sourceforge.subsonic.androidapp.STREAM_PROGRESS";
 
     // Names for intent extras.
     public static final String INTENT_EXTRA_NAME_PATH = "subsonic.path";
@@ -35,12 +31,8 @@ public final class Constants {
     public static final String INTENT_EXTRA_NAME_PLAYLIST_NAME = "subsonic.playlist.name";
 
     // Notification IDs.
-    public static final int NOTIFICATION_ID_DOWNLOAD_QUEUE = 1;
-    public static final int NOTIFICATION_ID_DOWNLOAD_ERROR = 2;
-    public static final int NOTIFICATION_ID_STREAM_QUEUE = 3;
-    public static final int NOTIFICATION_ID_STREAM_ERROR = 4;
-    public static final int NOTIFICATION_ID_PLAYING = 5;
-    public static final int NOTIFICATION_ID_ERROR = 6;
+    public static final int NOTIFICATION_ID_PLAYING = 100;
+    public static final int NOTIFICATION_ID_ERROR = 101;
 
     // Preferences keys.
     public static final String PREFERENCES_KEY_SERVER_INSTANCE = "serverInstance";

@@ -415,8 +415,8 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 } else {
                     view = new SongView(SelectAlbumActivity.this);
                 }
-                File file = FileUtil.getSongFile(entry, false);
-                view.setSong(entry, file);
+                view.setDownloadFile(downloadService.forSong(entry), false, true);
+
                 return view;
             }
         }
