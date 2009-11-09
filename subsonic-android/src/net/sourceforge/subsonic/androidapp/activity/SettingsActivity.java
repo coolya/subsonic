@@ -1,12 +1,12 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
-import android.preference.ListPreference;
-import android.content.SharedPreferences;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Version;
@@ -15,14 +15,14 @@ import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.ErrorDialog;
-import net.sourceforge.subsonic.androidapp.util.Util;
 import net.sourceforge.subsonic.androidapp.util.Pair;
+import net.sourceforge.subsonic.androidapp.util.Util;
 
 import java.net.URL;
-import java.util.Map;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -55,6 +55,14 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             }
         });
 
+        Preference emptyCache = findPreference("emptyCache");
+        emptyCache.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                emptyCache();
+                return false;
+            }
+        });
 
         for (int i = 1; i <= 3; i++) {
             String instance = String.valueOf(i);
@@ -117,10 +125,14 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         task.execute();
     }
 
+    private void emptyCache() {
+//        TODO
+    }
+
     private void checkForUpdates() {
-        BackgroundTask<Pair<Version,Version>> task = new BackgroundTask<Pair<Version,Version>>(this) {
+        BackgroundTask<Pair<Version, Version>> task = new BackgroundTask<Pair<Version, Version>>(this) {
             @Override
-            protected Pair<Version,Version> doInBackground() throws Throwable {
+            protected Pair<Version, Version> doInBackground() throws Throwable {
                 updateProgress("Checking for updates...");
                 MusicService musicService = MusicServiceFactory.getMusicService();
                 Version localVersion = musicService.getLocalVersion(SettingsActivity.this);
@@ -129,7 +141,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             }
 
             @Override
-            protected void done(Pair<Version,Version> versions) {
+            protected void done(Pair<Version, Version> versions) {
                 Version localVersion = versions.getFirst();
                 Version latestVersion = versions.getSecond();
                 if (localVersion == null) {
@@ -173,7 +185,8 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
                         return false;
                     }
                     return true;
-                }});
+                }
+            });
         }
 
         public void update() {

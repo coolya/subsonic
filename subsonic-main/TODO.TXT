@@ -4,10 +4,9 @@ Android:
 - Duration is hidden if artist name too long.
 - Improve headline in DownloadActivity. Use scrolling marquee.
 - Show asterix also when .complete exists. Different colors.
-- Implement cleanup of partial and completed files.
+- Implement cleanup of partial and completed files. Also delete empty folders. Settings > Delete cached music files
 - Show stop button during download/buffering.
 - Don't cache music dirs forever.
-- Implement file delete.
 - Improve design of DownloadFile.getCompleteFile() etc.
 - Goes crazy when bandwidth too small.
 
@@ -18,7 +17,7 @@ Hide donate button if already donated.
 Android: i18n
 Android: Test more with downsampling. Songs cut off?
 Android: Look at "five", orb app.
-Don't set content length on transcoded files (except Android).
+Don't set content length on transcoded files (except Android?).
      http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2202
      http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1461&start=15
 Android: Playlist not updated when switching to new song?
