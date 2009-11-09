@@ -89,7 +89,7 @@ public class DownloadFile {
     }
 
     private String getDownloadURL(MusicDirectory.Entry song) {
-        return Util.getRestUrl(context, "download") + "&id=" + song.getId();
+        return Util.getRestUrl(context, "stream") + "&id=" + song.getId();
     }
 
     private InputStream connect(String url) throws Exception {
