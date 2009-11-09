@@ -383,9 +383,13 @@ public final class Util {
     public static void showErrorNotification(final Context context, Handler handler, String title, Exception error) {
         final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        String text = error.getMessage();
-        if (text == null) {
-            text = error.getClass().getSimpleName();
+        StringBuilder text = new StringBuilder();
+        if (error.getMessage() != null) {
+            text.append(error.getMessage()).append(" (");
+        }
+        text.append(error.getClass().getSimpleName());
+        if (error.getMessage() != null) {
+            text.append(")");
         }
 
         // Set the icon, scrolling text and timestamp

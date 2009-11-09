@@ -279,7 +279,7 @@ public class DownloadActivity extends OptionsMenuActivity {
         }
         if (currentPlaying != null) {
 
-            int millisPlayed = downloadService.getPlayerPosition();
+            int millisPlayed = Math.max(0, downloadService.getPlayerPosition());
             int millisTotal = currentPlaying.getSong().getDuration() * 1000;
 
             positionTextView.setText(Util.formatDuration(millisPlayed / 1000));

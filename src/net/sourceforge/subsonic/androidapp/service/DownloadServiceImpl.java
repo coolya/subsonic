@@ -6,6 +6,12 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -15,16 +21,16 @@ import android.os.IBinder;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.COMPLETED;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.DOWNLOADING;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.IDLE;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.PAUSED;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.PREPARED;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.PREPARING;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.STARTED;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Sindre Mehus
@@ -34,7 +40,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     private static final String TAG = DownloadServiceImpl.class.getSimpleName();
     private final IBinder binder = new SimpleServiceBinder<DownloadService>(this);
-    private final MediaPlayer mediaPlayer = new MediaPlayer();
+    private MediaPlayer mediaPlayer;
     private final List<DownloadFile> downloadList = new CopyOnWriteArrayList<DownloadFile>();
     private final Handler handler = new Handler();
     private final DownloadServiceLifecycleSupport lifecycleSupport = new DownloadServiceLifecycleSupport(this);
@@ -48,6 +54,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         super.onCreate();
         lifecycleSupport.onCreate();
 
+        mediaPlayer = new MediaPlayer();
         mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mediaPlayer, int what, int more) {
@@ -61,6 +68,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     public void onDestroy() {
         super.onDestroy();
         lifecycleSupport.onDestroy();
+        mediaPlayer.release();
     }
 
     @Override
@@ -190,6 +198,9 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     @Override
     public synchronized int getPlayerPosition() {
         try {
+            if (playerState == DOWNLOADING) {
+                return 0;
+            }
             return mediaPlayer.getCurrentPosition();
         } catch (Exception x) {
             handleError(x);
