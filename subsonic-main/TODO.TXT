@@ -2,8 +2,6 @@ TODO IN 3.9
 --------------
 Android:
 - Duration is hidden if artist name too long.
-- Show download icon in list.
-- Update list in SelectAlbumActivity.
 - Improve headline in DownloadActivity. Use scrolling marquee.
 - Show asterix also when .complete exists. Different colors.
 - Implement cleanup of partial and completed files.
