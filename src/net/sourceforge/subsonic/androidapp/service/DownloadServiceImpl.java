@@ -232,7 +232,11 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         setPlayerState(IDLE);
 
         // Buffer ten seconds.
-        final int bufferSize = Math.max(100000, downloadFile.getSong().getBitRate() * 1024 / 8 * 10);
+        Integer bitRate = downloadFile.getSong().getBitRate();
+        if (bitRate == null) {
+            bitRate = 160;
+        }
+        final int bufferSize = Math.max(100000, bitRate * 1024 / 8 * 10);
 
         bufferTask = new CancellableTask() {
             @Override
