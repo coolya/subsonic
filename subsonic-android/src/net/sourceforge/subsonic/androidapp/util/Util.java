@@ -13,7 +13,6 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -51,9 +50,6 @@ public final class Util {
 
     // Used by hexEncode()
     private static final char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
-
-    // Used by fileSystemSafe()
-    private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", "..", ":", "\""};
 
     private Util() {
     }
@@ -246,24 +242,6 @@ public final class Util {
         }
         builder.append(secs);
         return builder.toString();
-    }
-
-    /**
-     * Makes a given filename safe by replacing special characters like slashes ("/" and "\")
-     * with dashes ("-").
-     *
-     * @param filename The filename in question.
-     * @return The filename with special characters replaced by underscores.
-     */
-    public static String fileSystemSafe(String filename) {
-        if (filename == null || filename.trim().length() == 0) {
-            return "unnamed";
-        }
-
-        for (String s : FILE_SYSTEM_UNSAFE) {
-            filename = filename.replace(s, "-");
-        }
-        return filename;
     }
 
     public static boolean equals(Object object1, Object object2) {

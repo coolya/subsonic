@@ -44,8 +44,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.LongRange;
 
-import net.sourceforge.subsonic.domain.Version;
-
 /**
  * Miscellaneous string utility methods.
  *
@@ -84,7 +82,7 @@ public final class StringUtil {
             {"bmp", "image/bmp"},
     };
 
-    private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", "..", ":", "\""};
+    private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", "..", ":", "\"", "?", "*"};
 
     /**
      * Disallow external instantiation.

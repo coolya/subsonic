@@ -10,7 +10,6 @@ Android:
 - Don't cache music dirs forever.
 - Implement file delete.
 - Improve design of DownloadFile.getCompleteFile() etc.
-- Support file names with "?"
 
 Global option to disable chat.  Admin should be able to remove individual messages.
 Sort saved playlists.

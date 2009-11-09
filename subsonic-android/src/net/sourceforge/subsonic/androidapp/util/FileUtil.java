@@ -30,18 +30,22 @@ import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 public class FileUtil {
 
     private static final String TAG = FileUtil.class.getSimpleName();
+
+    // Used by fileSystemSafe()
+    private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", "..", ":", "\"", "?", "*"};
+
     private static final File musicDir = createDirectory("music");
 
     public static File getSongFile(MusicDirectory.Entry song, boolean createDir) {
         File dir = getAlbumDirectory(song, createDir);
 
-        String title = Util.fileSystemSafe(song.getTitle());
+        String title = fileSystemSafe(song.getTitle());
         return new File(dir, title + "." + song.getSuffix());
     }
 
     protected static File getAlbumDirectory(MusicDirectory.Entry song, boolean create) {
-        String artist = Util.fileSystemSafe(song.getArtist());
-        String album = Util.fileSystemSafe(song.getAlbum());
+        String artist = fileSystemSafe(song.getArtist());
+        String album = fileSystemSafe(song.getAlbum());
 
         File dir = new File(musicDir.getPath() + "/" + artist + "/" + album);
         if (create && !dir.exists()) {
@@ -57,5 +61,24 @@ public class FileUtil {
             Log.e(TAG, "Failed to create " + name);
         }
         return dir;
+    }
+
+
+    /**
+     * Makes a given filename safe by replacing special characters like slashes ("/" and "\")
+     * with dashes ("-").
+     *
+     * @param filename The filename in question.
+     * @return The filename with special characters replaced by underscores.
+     */
+    private static String fileSystemSafe(String filename) {
+        if (filename == null || filename.trim().length() == 0) {
+            return "unnamed";
+        }
+
+        for (String s : FILE_SYSTEM_UNSAFE) {
+            filename = filename.replace(s, "-");
+        }
+        return filename;
     }
 }
