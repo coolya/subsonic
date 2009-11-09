@@ -1,9 +1,9 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.ComponentName;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -181,18 +181,7 @@ public class DownloadActivity extends OptionsMenuActivity {
         }
 
         onProgressChanged();
-
-        // TODO
-        repaintList();
     }
-
-    private void repaintList() {
-        SongListAdapter adapter = (SongListAdapter) playlistView.getAdapter();
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }
-    }
-
 
     private void showFullscreenAlbumArt(boolean fullscreen) {
         boolean empty = downloadService == null || downloadService.getCurrentPlaying() == null;
@@ -350,8 +339,7 @@ public class DownloadActivity extends OptionsMenuActivity {
                 view = new SongView(DownloadActivity.this);
             }
             DownloadFile downloadFile = getItem(position);
-            boolean playing = downloadFile == downloadService.getCurrentPlaying();
-            view.setDownloadFile(downloadFile, playing, false);
+            view.setDownloadFile(downloadFile, downloadService, false);
             return view;
         }
     }

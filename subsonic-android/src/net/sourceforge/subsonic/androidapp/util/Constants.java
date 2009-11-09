@@ -19,9 +19,6 @@ public final class Constants {
     public static final String REST_PROTOCOL_VERSION = "1.1.0";
     public static final String REST_CLIENT_ID = "android";
 
-    // Intent actions.
-    public static final String INTENT_ACTION_DOWNLOAD_QUEUE = "net.sourceforge.subsonic.androidapp.DOWNLOAD_QUEUE";
-
     // Names for intent extras.
     public static final String INTENT_EXTRA_NAME_PATH = "subsonic.path";
     public static final String INTENT_EXTRA_NAME_NAME = "subsonic.name";

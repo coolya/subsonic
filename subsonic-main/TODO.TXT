@@ -2,7 +2,6 @@ TODO IN 3.9
 --------------
 Android:
 - Duration is hidden if artist name too long.
-- Rework repaint strategy of SongView.  Keep list of weak refs.
 - Show download icon in list.
 - Update list in SelectAlbumActivity.
 - Improve headline in DownloadActivity. Use scrolling marquee.
