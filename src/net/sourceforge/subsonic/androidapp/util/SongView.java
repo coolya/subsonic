@@ -97,17 +97,20 @@ public class SongView extends LinearLayout implements Checkable {
         File completeFile = downloadFile.getCompleteFile();
         File partialFile = downloadFile.getPartialFile();
 
+        int leftImage = 0;
+        int rightImage = 0;
+
         if (completeFile.exists()) {
-            imageView2.setCompoundDrawablesWithIntrinsicBounds(R.drawable.downloaded, 0, 0, 0);
-        } else {
-            imageView2.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            leftImage = R.drawable.downloaded;
         }
 
         if (partialFile.exists() && !completeFile.exists()) {
             imageView2.setText(Util.formatBytes(partialFile.length()));
+            rightImage = R.drawable.downloading;
         } else {
             imageView2.setText(null);
         }
+        imageView2.setCompoundDrawablesWithIntrinsicBounds(leftImage, 0, rightImage, 0);
 
         boolean playing = downloadService.getCurrentPlaying() == downloadFile;
         if (playing) {

@@ -36,9 +36,9 @@
             a:layout_height="wrap_content"
             a:layout_alignParentRight="true"
             a:gravity="right|top"
-            a:drawablePadding="6dip"
+            a:drawablePadding="1dip"
             a:paddingTop="6dip"
-            a:paddingRight="9dip"/>
+            a:paddingRight="6dip"/>
 
     <TextView
             a:id="@+id/song_text1"
