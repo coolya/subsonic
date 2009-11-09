@@ -351,7 +351,7 @@ public class DownloadActivity extends OptionsMenuActivity {
             }
             DownloadFile downloadFile = getItem(position);
             boolean playing = downloadFile == downloadService.getCurrentPlaying();
-            view.setDownloadFile(downloadFile, playing);
+            view.setDownloadFile(downloadFile, playing, false);
             return view;
         }
     }
