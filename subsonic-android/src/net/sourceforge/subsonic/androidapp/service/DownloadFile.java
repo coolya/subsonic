@@ -7,8 +7,8 @@
 package net.sourceforge.subsonic.androidapp.service;
 
 import android.content.Context;
-import android.util.Log;
 import android.os.Handler;
+import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
@@ -117,6 +117,7 @@ public class DownloadFile {
     }
 
     public void delete() {
+        cancelDownload();
         Util.delete(partialFile);
         Util.delete(completeFile);
         Util.delete(saveFile);
