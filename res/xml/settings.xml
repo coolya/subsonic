@@ -19,6 +19,11 @@
             a:title="Check for software update"
             a:persistent="false"/>
 
+    <Preference
+            a:key="emptyCache"
+            a:title="Delete cached music"
+            a:persistent="false"/>
+
     <PreferenceCategory
             a:title="Servers">
 
