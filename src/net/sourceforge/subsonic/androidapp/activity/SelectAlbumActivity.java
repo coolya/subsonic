@@ -1,12 +1,10 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -53,7 +51,6 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     private Button playButton;
     private Button moreButton;
     private boolean licenseValid;
-    private BroadcastReceiver broadcastReceiver;
 
     /**
      * Called when the activity is first created.
@@ -109,38 +106,6 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         } else {
             getMusicDirectory();
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // Repaint list when download completes.
-        // TODO
-        broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (Constants.INTENT_ACTION_DOWNLOAD_QUEUE.equals(intent.getAction())) {
-                    repaintList();
-                }
-            }
-        };
-
-        registerReceiver(broadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_DOWNLOAD_QUEUE));
-        repaintList();
-    }
-
-    private void repaintList() {
-        EntryAdapter entryAdapter = (EntryAdapter) entryList.getAdapter();
-        if (entryAdapter != null) {
-            entryAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unregisterReceiver(broadcastReceiver);
     }
 
     @Override
@@ -415,13 +380,12 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 } else {
                     view = new SongView(SelectAlbumActivity.this);
                 }
-                view.setDownloadFile(downloadService.forSong(entry), false, true);
+                view.setDownloadFile(downloadService.forSong(entry), downloadService, true);
 
                 return view;
             }
         }
     }
-
 
     private abstract class LoadTask extends BackgroundTask<Pair<MusicDirectory, Boolean>> {
 

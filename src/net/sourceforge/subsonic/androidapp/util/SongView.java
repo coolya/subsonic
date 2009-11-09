@@ -19,6 +19,8 @@
 package net.sourceforge.subsonic.androidapp.util;
 
 import android.content.Context;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Checkable;
@@ -28,13 +30,18 @@ import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
+import net.sourceforge.subsonic.androidapp.service.DownloadService;
 
 import java.io.File;
+import java.util.WeakHashMap;
 
 /**
  * @author Sindre Mehus
  */
 public class SongView extends LinearLayout implements Checkable {
+
+    private static final String TAG = SongView.class.getSimpleName();
+    private static final WeakHashMap<SongView, ?> INSTANCES = new WeakHashMap<SongView, Object>();
 
     private CheckedTextView checkedTextView;
     private TextView textView1;
@@ -42,6 +49,9 @@ public class SongView extends LinearLayout implements Checkable {
     private TextView textView3;
     private TextView imageView1; // TODO: Remove
     private TextView imageView2;
+    private DownloadFile downloadFile;
+    private DownloadService downloadService;
+    private static Handler handler;
 
     public SongView(Context context) {
         super(context);
@@ -53,44 +63,83 @@ public class SongView extends LinearLayout implements Checkable {
         textView3 = (TextView) findViewById(R.id.song_text3);
         imageView1 = (TextView) findViewById(R.id.song_image1);
         imageView2 = (TextView) findViewById(R.id.song_image2);
+
+        INSTANCES.put(this, null);
+        int instanceCount = INSTANCES.size();
+        if (instanceCount > 50) {
+            Log.w(TAG, instanceCount + " live SongView instances");
+        }
+        startUpdater();
     }
 
-    private void setSong(MusicDirectory.Entry song, File file) {
-        if (file.exists()) {
+    public void setDownloadFile(DownloadFile downloadFile, DownloadService downloadService, boolean checkable) {
+        this.downloadFile = downloadFile;
+        this.downloadService = downloadService;
+        MusicDirectory.Entry song = downloadFile.getSong();
+
+        StringBuilder text = new StringBuilder(40);
+        text.append(song.getArtist()).append(" (");
+        if (song.getBitRate() != null) {
+            text.append(song.getBitRate()).append(" Kbps ");
+        }
+        text.append(song.getSuffix());
+        text.append(")");
+
+        textView1.setText(song.getTitle());
+        textView2.setText(text);
+        textView3.setText(Util.formatDuration(song.getDuration()));
+        checkedTextView.setVisibility(checkable ? View.VISIBLE : View.GONE);
+
+        update();
+    }
+
+    private void update() {
+        File completeFile = downloadFile.getCompleteFile();
+        File partialFile = downloadFile.getPartialFile();
+
+        if (completeFile.exists()) {
             imageView2.setCompoundDrawablesWithIntrinsicBounds(R.drawable.downloaded, 0, 0, 0);
         } else {
             imageView2.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
 
-        StringBuilder text2 = new StringBuilder(40);
-        text2.append(song.getArtist()).append(" (");
-        if (song.getBitRate() != null) {
-            text2.append(song.getBitRate()).append(" Kbps ");
-        }
-        text2.append(song.getSuffix());
-        text2.append(")");
-
-        textView1.setText(song.getTitle());
-        textView2.setText(text2);
-        textView3.setText(Util.formatDuration(song.getDuration()));
-    }
-
-    public void setDownloadFile(DownloadFile downloadFile, boolean playing, boolean checkable) {
-        setSong(downloadFile.getSong(), downloadFile.getCompleteFile());
-        checkedTextView.setVisibility(checkable ? View.VISIBLE : View.GONE);
-
-        File completeFile = downloadFile.getCompleteFile();
-        File partialFile = downloadFile.getPartialFile();
         if (partialFile.exists() && !completeFile.exists()) {
             imageView2.setText(Util.formatBytes(partialFile.length()));
         } else {
             imageView2.setText(null);
         }
 
+        boolean playing = downloadService.getCurrentPlaying() == downloadFile;
         if (playing) {
             textView1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.stat_sys_playing, 0, 0, 0);
         } else {
             textView1.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
+    }
+
+    private static synchronized void startUpdater() {
+        if (handler != null) {
+            return;
+        }
+
+        handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                updateAll();
+                handler.postDelayed(this, 1000L);
+            }
+        };
+        handler.postDelayed(runnable, 1000L);
+    }
+
+    private static void updateAll() {
+        try {
+            for (SongView view : INSTANCES.keySet()) {
+                view.update();
+            }
+        } catch (Throwable x) {
+            Log.w(TAG, "Error when updating song views.", x);
         }
     }
 
