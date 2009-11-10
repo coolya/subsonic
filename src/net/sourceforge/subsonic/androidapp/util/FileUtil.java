@@ -18,11 +18,11 @@
  */
 package net.sourceforge.subsonic.androidapp.util;
 
-import java.io.File;
-
 import android.os.Environment;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+
+import java.io.File;
 
 /**
  * @author Sindre Mehus
@@ -96,5 +96,17 @@ public class FileUtil {
             return new File[0];
         }
         return files;
+    }
+
+    /**
+     * Returns the suffix (the substring after the last dot) of the given string. The dot
+     * is not included in the returned suffix.
+     *
+     * @param s The string in question.
+     * @return The suffix, or an empty string if no suffix is found.
+     */
+    public static String getSuffix(String s) {
+        int index = s.lastIndexOf('.');
+        return index == -1 ? "" : s.substring(index + 1);
     }
 }
