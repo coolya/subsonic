@@ -37,19 +37,20 @@ public class CachedMusicService implements MusicService {
 
     private static final int MUSIC_DIR_CACHE_SIZE = 20;
     private static final int COVER_ART_CACHE_SIZE = 10;
+    private static final int TTL_MUSIC_DIR = 5 * 60; // Five minutes
 
     private final MusicService musicService;
-    private final LRUCache<String, MusicDirectory> cachedMusicDirectories;
+    private final LRUCache<String, TimeLimitedCache<MusicDirectory>> cachedMusicDirectories;
     private final LRUCache<String, byte[]> cachedCoverArts;
     private final TimeLimitedCache<Boolean> cachedLicenseValid = new TimeLimitedCache<Boolean>(120, TimeUnit.SECONDS);
     private final TimeLimitedCache<Indexes> cachedIndexes = new TimeLimitedCache<Indexes>(60 * 60, TimeUnit.SECONDS);
-    private final TimeLimitedCache<List<Pair<String,String>>> cachedPlaylists = new TimeLimitedCache<List<Pair<String, String>>>(60, TimeUnit.SECONDS);
 
+    private final TimeLimitedCache<List<Pair<String,String>>> cachedPlaylists = new TimeLimitedCache<List<Pair<String, String>>>(60, TimeUnit.SECONDS);
     private String restUrl;
 
     public CachedMusicService(MusicService musicService) {
         this.musicService = musicService;
-        cachedMusicDirectories = new LRUCache<String, MusicDirectory>(MUSIC_DIR_CACHE_SIZE);
+        cachedMusicDirectories = new LRUCache<String, TimeLimitedCache<MusicDirectory>>(MUSIC_DIR_CACHE_SIZE);
         cachedCoverArts = new LRUCache<String, byte[]>(COVER_ART_CACHE_SIZE);
     }
 
@@ -80,10 +81,13 @@ public class CachedMusicService implements MusicService {
     @Override
     public MusicDirectory getMusicDirectory(String id, Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
-        MusicDirectory dir = cachedMusicDirectories.get(id);
+        TimeLimitedCache<MusicDirectory> cache = cachedMusicDirectories.get(id);
+        MusicDirectory dir = cache == null ? null : cache.get();
         if (dir == null) {
             dir = musicService.getMusicDirectory(id, context, progressListener);
-            cachedMusicDirectories.put(id, dir);
+            cache = new TimeLimitedCache<MusicDirectory>(TTL_MUSIC_DIR, TimeUnit.SECONDS);
+            cache.set(dir);
+            cachedMusicDirectories.put(id,cache);
         }
         return dir;
     }
