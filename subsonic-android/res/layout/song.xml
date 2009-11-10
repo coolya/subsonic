@@ -56,29 +56,31 @@
             a:paddingRight="6dip"/>
 
     <TextView
-            a:id="@+id/song_text2"
-            a:layout_width="wrap_content"
-            a:layout_height="wrap_content"
-            a:layout_alignParentBottom="true"
-            a:layout_toRightOf="@id/song_left"
-            a:layout_below="@id/song_text1"
-            a:gravity="left|bottom"
-            a:textAppearance="?android:attr/textAppearanceSmall"
-            a:singleLine="true"
-            a:paddingBottom="6dip"/>
-
-    <TextView
             a:id="@+id/song_text3"
             a:layout_width="wrap_content"
             a:layout_height="wrap_content"
             a:layout_alignParentBottom="true"
             a:layout_alignParentRight="true"
-            a:layout_toRightOf="@id/song_text2"
             a:layout_below="@id/song_image2"
             a:gravity="right|bottom"
             a:textAppearance="?android:attr/textAppearanceSmall"
             a:singleLine="true"
             a:paddingBottom="6dip"
+            a:paddingLeft="3dip"
             a:paddingRight="9dip"/>
+
+    <TextView
+            a:id="@+id/song_text2"
+            a:layout_width="wrap_content"
+            a:layout_height="wrap_content"
+            a:layout_alignParentBottom="true"
+            a:layout_toRightOf="@id/song_left"
+            a:layout_toLeftOf="@id/song_text3"
+            a:layout_below="@id/song_text1"
+            a:gravity="left|bottom"
+            a:textAppearance="?android:attr/textAppearanceSmall"
+            a:singleLine="true"
+            a:ellipsize="middle"
+            a:paddingBottom="6dip"/>
 
 </RelativeLayout>

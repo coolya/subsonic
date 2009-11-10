@@ -1,10 +1,10 @@
 TODO IN 3.9
 --------------
 Android:
+- Offline mode.
 - Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
-- Duration is hidden if artist name too long.
 - Improve headline in DownloadActivity. Use scrolling marquee.
-- Show asterix also when .complete exists. Different colors.
+- Show different colored asterix when .complete exists.
 - Show stop button during download/buffering.
 - Don't cache music dirs forever.
 - Improve design of DownloadFile.getCompleteFile() etc.
@@ -37,7 +37,6 @@ Flipped chat log.
 
 ANDROID
 -------
-Android: Offline mode.
 Android: Use HttpClient
 Android: Long-click on song list.
 Android: Option to auto-sync certain directories or playlists.
