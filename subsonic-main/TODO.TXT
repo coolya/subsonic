@@ -1,6 +1,7 @@
 TODO IN 3.9
 --------------
 Android:
+- Properly delete .complete and .partial when copying files.
 - Offline mode.
 - Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
 - Improve headline in DownloadActivity. Use scrolling marquee.
