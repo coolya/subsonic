@@ -1,5 +1,14 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -19,18 +28,14 @@ import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
+import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.ErrorDialog;
+import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -70,7 +75,13 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         emptyCache.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                emptyCache();
+                Runnable task = new Runnable() {
+                    @Override
+                    public void run() {
+                        emptyCache();
+                    }
+                };
+                Util.confirm(SettingsActivity.this, "Really delete all cached music files?", task);
                 return false;
             }
         });
@@ -137,17 +148,62 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     }
 
     private void emptyCache() {
-//        TODO
         BackgroundTask<?> task = new BackgroundTask<Object>(this) {
+            private int deleteCount;
+            private Set<File> undeletable;
+
             @Override
             protected Object doInBackground() throws Throwable {
                 updateProgress("Deleting cached files...");
-                return null;
 
+                undeletable = new HashSet<File>(4);
+                DownloadFile currentDownload = downloadService.getCurrentDownloading();
+                if (currentDownload != null) {
+                    undeletable.add(currentDownload.getPartialFile());
+                    undeletable.add(currentDownload.getCompleteFile());
+                }
+                DownloadFile currentPlaying = downloadService.getCurrentPlaying();
+                if (currentPlaying != null) {
+                    undeletable.add(currentPlaying.getPartialFile());
+                    undeletable.add(currentPlaying.getCompleteFile());
+                }
+
+                File root = FileUtil.getMusicDirectory();
+                cleanRecursively(root);
+                return null;
+            }
+
+            private void cleanRecursively(File file) {
+                if (file.isFile()) {
+                    String name = file.getName();
+
+                    boolean isCacheFile = name.endsWith(".partial") || name.endsWith(".complete");
+                    if (isCacheFile && !undeletable.contains(file)) {
+                        Util.delete(file);
+                        if (!file.exists()) {
+                            Log.d(TAG, "Deleted " + file.getPath());
+                            deleteCount++;
+                            updateProgress("Deleted " + deleteCount + " file(s).");
+                        }
+                    }
+                    return;
+                }
+
+                for (File child : FileUtil.listFiles(file)) {
+                    cleanRecursively(child);
+                }
+
+                // Delete directory if empty.
+                if (FileUtil.listFiles(file).length == 0) {
+                    Util.delete(file);
+                    if (!file.exists()) {
+                        Log.d(TAG, "Deleted " + file.getPath());
+                    }
+                }
             }
 
             @Override
-            protected void done(Object versions) {
+            protected void done(Object result) {
             }
 
             @Override

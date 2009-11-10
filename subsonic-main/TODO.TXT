@@ -5,7 +5,6 @@ Android:
 - Duration is hidden if artist name too long.
 - Improve headline in DownloadActivity. Use scrolling marquee.
 - Show asterix also when .complete exists. Different colors.
-- Implement cleanup of partial and completed files. Also delete empty folders. Settings > Delete cached music files
 - Show stop button during download/buffering.
 - Don't cache music dirs forever.
 - Improve design of DownloadFile.getCompleteFile() etc.

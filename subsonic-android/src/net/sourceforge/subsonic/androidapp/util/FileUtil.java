@@ -54,7 +54,7 @@ public class FileUtil {
         return dir;
     }
 
-    protected static File createDirectory(String name) {
+    private static File createDirectory(String name) {
         File subsonicDir = new File(Environment.getExternalStorageDirectory(), "subsonic");
         File dir = new File(subsonicDir, name);
         if (!dir.exists() && !dir.mkdirs()) {
@@ -63,6 +63,9 @@ public class FileUtil {
         return dir;
     }
 
+    public static File getMusicDirectory() {
+        return musicDir;
+    }
 
     /**
      * Makes a given filename safe by replacing special characters like slashes ("/" and "\")
@@ -80,5 +83,18 @@ public class FileUtil {
             filename = filename.replace(s, "-");
         }
         return filename;
+    }
+
+    /**
+     * Similar to {@link File#listFiles()}, but never returns null.
+     * Instead a warning is logged, and an empty array is returned.
+     */
+    public static File[] listFiles(File dir) {
+        File[] files = dir.listFiles();
+        if (files == null) {
+            Log.w(TAG, "Failed to list children for " + dir.getPath());
+            return new File[0];
+        }
+        return files;
     }
 }
