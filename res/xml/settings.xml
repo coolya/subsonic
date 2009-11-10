@@ -14,16 +14,6 @@
             a:title="Test connection"
             a:persistent="false"/>
 
-    <Preference
-            a:key="checkForUpdates"
-            a:title="Check for software update"
-            a:persistent="false"/>
-
-    <Preference
-            a:key="emptyCache"
-            a:title="Delete cached music"
-            a:persistent="false"/>
-
     <PreferenceCategory
             a:title="Servers">
 
@@ -103,6 +93,22 @@
                     a:summary="****"/>
 
         </PreferenceScreen>
+
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
+            a:title="Maintenance">
+
+        <Preference
+                a:key="checkForUpdates"
+                a:title="Check for software update"
+                a:persistent="false"/>
+
+        <Preference
+                a:key="emptyCache"
+                a:title="Delete cached music"
+                a:persistent="false"/>
 
     </PreferenceCategory>
 

@@ -6,34 +6,34 @@
  */
 package net.sourceforge.subsonic.androidapp.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Handler;
-import android.widget.Toast;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.app.AlertDialog;
 import android.app.Notification;
-import android.app.PendingIntent;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
 import android.util.Log;
-import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import android.widget.Toast;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
 import net.sourceforge.subsonic.androidapp.activity.ErrorActivity;
+import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 
 /**
  * @author Sindre Mehus
@@ -99,14 +99,14 @@ public final class Util {
 
     /**
      * Get the contents of an <code>InputStream</code> as a <code>byte[]</code>.
-     * <p>
+     * <p/>
      * This method buffers the input internally, so there is no need to use a
      * <code>BufferedInputStream</code>.
      *
-     * @param input  the <code>InputStream</code> to read from
+     * @param input the <code>InputStream</code> to read from
      * @return the requested byte array
      * @throws NullPointerException if the input is null
-     * @throws IOException if an I/O error occurs
+     * @throws IOException          if an I/O error occurs
      */
     public static byte[] toByteArray(InputStream input) throws IOException {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -308,19 +308,37 @@ public final class Util {
     }
 
     private static void showDialog(Context context, int icon, String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setIcon(icon);
-        builder.setTitle(title);
-        builder.setMessage(message);
+        new AlertDialog.Builder(context)
+                .setIcon(icon)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-
-        builder.show();
+    public static void confirm(Context context, String message, final Runnable task) {
+        new AlertDialog.Builder(context)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setTitle(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                        task.run();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     public static void showPlayingNotification(final Context context, Handler handler, MusicDirectory.Entry song) {
