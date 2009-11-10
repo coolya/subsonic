@@ -1,7 +1,12 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -10,12 +15,15 @@ import android.preference.PreferenceScreen;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Version;
+import net.sourceforge.subsonic.androidapp.service.DownloadService;
+import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.ErrorDialog;
 import net.sourceforge.subsonic.androidapp.util.Pair;
+import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
 import java.net.URL;
@@ -29,10 +37,13 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     private static final String TAG = SettingsActivity.class.getSimpleName();
     private final Map<String, ServerSettings> serverSettings = new LinkedHashMap<String, ServerSettings>();
     private ListPreference serverInstance;
+    private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
+    private DownloadService downloadService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         addPreferencesFromResource(R.xml.settings);
 
         serverInstance = (ListPreference) findPreference("serverInstance");
@@ -127,6 +138,23 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
     private void emptyCache() {
 //        TODO
+        BackgroundTask<?> task = new BackgroundTask<Object>(this) {
+            @Override
+            protected Object doInBackground() throws Throwable {
+                updateProgress("Deleting cached files...");
+                return null;
+
+            }
+
+            @Override
+            protected void done(Object versions) {
+            }
+
+            @Override
+            protected void cancel() {
+            }
+        };
+        task.execute();
     }
 
     private void checkForUpdates() {
@@ -199,4 +227,18 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             screen.setTitle(serverName.getText());
         }
     }
+
+    private class DownloadServiceConnection implements ServiceConnection {
+
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder service) {
+            downloadService = ((SimpleServiceBinder<DownloadService>) service).getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            downloadService = null;
+        }
+    }
+
 }
