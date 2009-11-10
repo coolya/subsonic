@@ -1,6 +1,7 @@
 TODO IN 3.9
 --------------
 Android:
+- Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
 - Duration is hidden if artist name too long.
 - Improve headline in DownloadActivity. Use scrolling marquee.
 - Show asterix also when .complete exists. Different colors.
