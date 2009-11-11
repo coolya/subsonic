@@ -23,6 +23,13 @@ import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 
 import java.io.File;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.Comparator;
+import java.util.Arrays;
 
 /**
  * @author Sindre Mehus
@@ -86,16 +93,17 @@ public class FileUtil {
     }
 
     /**
-     * Similar to {@link File#listFiles()}, but never returns null.
-     * Instead a warning is logged, and an empty array is returned.
+     * Similar to {@link File#listFiles()}, but returns a sorted set.
+     * Never returns {@code null}, instead a warning is logged, and an empty set is returned.
      */
-    public static File[] listFiles(File dir) {
+    public static SortedSet<File> listFiles(File dir) {
         File[] files = dir.listFiles();
         if (files == null) {
             Log.w(TAG, "Failed to list children for " + dir.getPath());
-            return new File[0];
+            return new TreeSet<File>();
         }
-        return files;
+
+        return new TreeSet<File>(Arrays.asList(files));
     }
 
     /**

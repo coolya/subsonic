@@ -202,7 +202,7 @@ public class SettingsActivity extends PreferenceActivity {
                 }
 
                 // Delete directory if empty.
-                if (FileUtil.listFiles(file).length == 0) {
+                if (FileUtil.listFiles(file).isEmpty()) {
                     Util.delete(file);
                     if (!file.exists()) {
                         Log.d(TAG, "Deleted " + file.getPath());
