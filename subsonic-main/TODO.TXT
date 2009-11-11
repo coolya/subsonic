@@ -2,9 +2,10 @@ TODO IN 3.9
 --------------
 Android:
 - Properly delete .complete and .partial when copying files.
-- Don't "Play + Save" for files that already exists. 
-- Don't exist after selecting playlist in offline mode.
+- Don't "Play + Save" for files that already exists.
+- Don't exit after selecting playlist in offline mode.
 - Offline mode.
+- Show "Offline" in main view when appropriate.,
 - Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
 - Improve headline in DownloadActivity. Use scrolling marquee.
 - Show different colored asterix when .complete exists.
