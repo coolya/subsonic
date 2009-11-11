@@ -23,7 +23,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -49,7 +51,6 @@ public class OfflineMusicService extends RESTMusicService {
 
     @Override
     public Indexes getIndexes(Context context, ProgressListener progressListener) throws Exception {
-        // TODO: Update progress listener?
         List<Artist> artists = new ArrayList<Artist>();
         File root = FileUtil.getMusicDirectory();
         for (File file : FileUtil.listFiles(root)) {
@@ -70,23 +71,43 @@ public class OfflineMusicService extends RESTMusicService {
         MusicDirectory result = new MusicDirectory();
         result.setName(dir.getName());
 
+        Set<String> names = new HashSet<String>();
+
         for (File file : FileUtil.listFiles(dir)) {
-            if (file.isDirectory() || file.getName().endsWith(".mp3")) { // TODO
-                result.addChild(createEntry(file));
+            String name = getName(file);
+            if (name != null & !names.contains(name)) {
+                names.add(name);
+                result.addChild(createEntry(file, name));
             }
         }
         return result;
     }
 
-    private MusicDirectory.Entry createEntry(File file) {
+    private String getName(File file) {
+        String name = file.getName();
+        if (file.isDirectory()) {
+            return name;
+        }
+
+        if (name.endsWith(".partial") || name.equals(Constants.ALBUM_ART_FILE)) {
+            return null;
+        }
+
+        name = name.replace(".complete", "");
+        return FileUtil.getPrefix(name);
+    }
+
+    private MusicDirectory.Entry createEntry(File file, String name) {
         MusicDirectory.Entry entry = new MusicDirectory.Entry();
         entry.setDirectory(file.isDirectory());
         entry.setId(file.getPath());
         entry.setSize(file.length());
-        entry.setArtist(file.getParentFile().getParentFile().getName());
-        entry.setAlbum(file.getParentFile().getName());
-        entry.setTitle(file.getName().replace(".mp3", "")); //TODO
-        entry.setSuffix(FileUtil.getSuffix(file.getName()));
+        if (file.isFile()) {
+            entry.setArtist(file.getParentFile().getParentFile().getName());
+            entry.setAlbum(file.getParentFile().getName());
+        }
+        entry.setTitle(name);
+        entry.setSuffix(FileUtil.getSuffix(file.getName().replace(".complete", "")));
 
         File albumArt = new File(file.isDirectory() ? file : file.getParentFile(), Constants.ALBUM_ART_FILE);
         if (albumArt.exists()) {

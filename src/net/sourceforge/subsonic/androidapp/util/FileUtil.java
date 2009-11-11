@@ -117,4 +117,9 @@ public class FileUtil {
         int index = s.lastIndexOf('.');
         return index == -1 ? "" : s.substring(index + 1);
     }
+
+    public static String getPrefix(String s) {
+        int index = s.lastIndexOf('.');
+        return index == -1 ? s : s.substring(0, index);
+    }
 }
