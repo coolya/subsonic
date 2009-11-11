@@ -26,6 +26,7 @@ import net.sourceforge.subsonic.androidapp.domain.Version;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import android.content.Context;
+import android.graphics.Bitmap;
 
 /**
  * @author Sindre Mehus
@@ -46,7 +47,7 @@ public interface MusicService {
 
     List<Pair<String,String>> getPlaylists(Context context, ProgressListener progressListener) throws Exception;
 
-    byte[] getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception;
+    Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception;
 
     void cancel(Context context, ProgressListener progressListener);
 

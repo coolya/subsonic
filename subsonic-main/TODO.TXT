@@ -2,6 +2,8 @@ TODO IN 3.9
 --------------
 Android:
 - Properly delete .complete and .partial when copying files.
+- Don't "Play + Save" for files that already exists. 
+- Don't exist after selecting playlist in offline mode.
 - Offline mode.
 - Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
 - Improve headline in DownloadActivity. Use scrolling marquee.

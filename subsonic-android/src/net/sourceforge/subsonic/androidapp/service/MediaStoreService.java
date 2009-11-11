@@ -18,20 +18,20 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Util;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 
 /**
  * @author Sindre Mehus
@@ -82,9 +82,9 @@ public class MediaStoreService {
         File file = downloadFile.getCompleteFile();
 
         int n = contentResolver.delete(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                                       MediaStore.Audio.AudioColumns.TITLE_KEY + "=? AND " +
-                                       MediaStore.MediaColumns.DATA + "=?",
-                                       new String[]{MediaStore.Audio.keyFor(song.getTitle()), file.getAbsolutePath()});
+                MediaStore.Audio.AudioColumns.TITLE_KEY + "=? AND " +
+                        MediaStore.MediaColumns.DATA + "=?",
+                new String[]{MediaStore.Audio.keyFor(song.getTitle()), file.getAbsolutePath()});
         if (n > 0) {
             Log.i(TAG, "Deleting media store row for " + song);
         }
@@ -117,22 +117,20 @@ public class MediaStoreService {
             return null;
         }
 
-        InputStream in = null;
         FileOutputStream out = null;
         File file = null;
         try {
             file = getAlbumArtFile(downloadFile);
-
-            MusicService musicService = MusicServiceFactory.getMusicService(context);
-            byte[] bytes = musicService.getCoverArt(context, song.getCoverArt(), 320, null);
-            in = new ByteArrayInputStream(bytes);
             out = new FileOutputStream(file);
-            Util.copy(in, out);
+            MusicService musicService = MusicServiceFactory.getMusicService(context);
+            Bitmap bitmap = musicService.getCoverArt(context, song.getCoverArt(), 320, null);
+            if (!bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)) {
+                throw new Exception("Failed to save album art as JPEG.");
+            }
         } catch (Exception e) {
             Util.delete(file);
             Log.e(TAG, "Failed to download album art.", e);
         } finally {
-            Util.close(in);
             Util.close(out);
         }
         return file;
@@ -140,6 +138,6 @@ public class MediaStoreService {
 
     private File getAlbumArtFile(DownloadFile downloadFile) {
         File dir = downloadFile.getCompleteFile().getParentFile();
-        return new File(dir, "folder.jpeg");
+        return new File(dir, Constants.ALBUM_ART_FILE);
     }
 }

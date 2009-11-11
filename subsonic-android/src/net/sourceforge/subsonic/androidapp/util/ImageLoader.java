@@ -18,22 +18,23 @@
  */
 package net.sourceforge.subsonic.androidapp.util;
 
-import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.util.Log;
-import android.widget.TextView;
-import android.widget.ImageView;
-import android.view.View;
-import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.service.MusicService;
-import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
-
-import java.io.ByteArrayInputStream;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Bitmap;
+import android.os.Handler;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.service.MusicService;
+import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 
 /**
  * Intended for short-lived usage, typically one activity's onCreate() - onDestroy() lifecycle.
@@ -150,8 +151,8 @@ public class ImageLoader implements Runnable {
         public void execute() {
             MusicService musicService = MusicServiceFactory.getMusicService(view.getContext());
             try {
-                byte[] bytes = musicService.getCoverArt(view.getContext(), entry.getCoverArt(), size, null);
-                final Drawable drawable = Drawable.createFromStream(new ByteArrayInputStream(bytes), "src");
+                Bitmap bitmap = musicService.getCoverArt(view.getContext(), entry.getCoverArt(), size, null);
+                final Drawable drawable = new BitmapDrawable(bitmap);
                 String key = entry.getCoverArt() + size;
                 cache.put(key, drawable);
 
