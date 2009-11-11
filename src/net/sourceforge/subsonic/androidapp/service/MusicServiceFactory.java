@@ -6,16 +6,19 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
+import android.content.Context;
+import net.sourceforge.subsonic.androidapp.util.Util;
+
 /**
  * @author Sindre Mehus
  * @version $Id$
  */
 public class MusicServiceFactory {
 
-    public static final MusicService MUSIC_SERVICE = new CachedMusicService(new RESTMusicService());
-//    public static final MusicService MUSIC_SERVICE = new OfflineMusicService();
+    private static final MusicService REST_MUSIC_SERVICE = new CachedMusicService(new RESTMusicService());
+    private static final MusicService OFFLINE_MUSIC_SERVICE = new OfflineMusicService();
 
-    public static MusicService getMusicService() {
-        return MUSIC_SERVICE;
+    public static MusicService getMusicService(Context context) {
+        return Util.isOffline(context) ? OFFLINE_MUSIC_SERVICE : REST_MUSIC_SERVICE;
     }
 }

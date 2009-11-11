@@ -84,7 +84,7 @@ public class MainActivity extends OptionsMenuActivity {
         new BackgroundTask<List<Pair<String, String>>>(this) {
             @Override
             protected List<Pair<String, String>> doInBackground() throws Throwable {
-                return MusicServiceFactory.getMusicService().getPlaylists(MainActivity.this, this);
+                return MusicServiceFactory.getMusicService(MainActivity.this).getPlaylists(MainActivity.this, this);
             }
 
             @Override

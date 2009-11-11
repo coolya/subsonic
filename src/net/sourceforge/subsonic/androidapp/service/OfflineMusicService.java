@@ -43,7 +43,7 @@ public class OfflineMusicService extends RESTMusicService {
 
     @Override
     public Indexes getIndexes(Context context, ProgressListener progressListener) throws Exception {
-        // TODO: Update progress listener.
+        // TODO: Update progress listener?
         // TODO: Sort artists
         List<Artist> artists = new ArrayList<Artist>();
         File root = FileUtil.getMusicDirectory();

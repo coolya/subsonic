@@ -21,6 +21,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
+import android.preference.CheckBoxPreference;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Version;
@@ -37,11 +38,13 @@ import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
-public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsActivity extends PreferenceActivity {
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
     private final Map<String, ServerSettings> serverSettings = new LinkedHashMap<String, ServerSettings>();
     private ListPreference serverInstance;
+    private Preference testConnection;
+    private CheckBoxPreference offline;
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private DownloadService downloadService;
 
@@ -52,8 +55,9 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         addPreferencesFromResource(R.xml.settings);
 
         serverInstance = (ListPreference) findPreference("serverInstance");
+        offline = (CheckBoxPreference) findPreference("offline");
 
-        Preference testConnection = findPreference("testConnection");
+        testConnection = findPreference("testConnection");
         testConnection.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -92,13 +96,13 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         }
 
         SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
-        prefs.registerOnSharedPreferenceChangeListener(this);
+        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                update();
+            }
+        });
 
-        update();
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         update();
     }
 
@@ -113,6 +117,10 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             entries.add(ss.serverName.getText());
         }
         serverInstance.setEntries(entries.toArray(new CharSequence[entries.size()]));
+
+        boolean online = !offline.isChecked();
+        serverInstance.setEnabled(online);
+        testConnection.setEnabled(online);
     }
 
     private void testConnection() {
@@ -120,7 +128,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             @Override
             protected Boolean doInBackground() throws Throwable {
                 updateProgress("Testing connection...");
-                MusicService musicService = MusicServiceFactory.getMusicService();
+                MusicService musicService = MusicServiceFactory.getMusicService(SettingsActivity.this);
                 musicService.ping(SettingsActivity.this, this);
                 return musicService.isLicenseValid(SettingsActivity.this, null);
             }
@@ -218,7 +226,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             @Override
             protected Pair<Version, Version> doInBackground() throws Throwable {
                 updateProgress("Checking for updates...");
-                MusicService musicService = MusicServiceFactory.getMusicService();
+                MusicService musicService = MusicServiceFactory.getMusicService(SettingsActivity.this);
                 Version localVersion = musicService.getLocalVersion(SettingsActivity.this);
                 Version latestVersion = musicService.getLatestVersion(SettingsActivity.this, this);
                 return new Pair<Version, Version>(localVersion, latestVersion);
