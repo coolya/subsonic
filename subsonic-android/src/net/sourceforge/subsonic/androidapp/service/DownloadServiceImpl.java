@@ -212,6 +212,24 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     @Override
+    public synchronized int getPlayerDuration() {
+        if (currentPlaying != null) {
+            Integer duration = currentPlaying.getSong().getDuration();
+            if (duration != null) {
+                return duration * 1000;
+            }
+        }
+        if (playerState != IDLE) {
+            try {
+                return mediaPlayer.getDuration();
+            } catch (Exception x) {
+                handleError(x);
+            }
+        }
+        return 0;
+    }
+
+    @Override
     public PlayerState getPlayerState() {
         return playerState;
     }

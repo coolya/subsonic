@@ -1,6 +1,7 @@
 TODO IN 3.9
 --------------
 Android:
+- Rammstein wrong
 - Properly delete .complete and .partial when copying files.
 - Don't "Play + Save" for files that already exists.
 - Don't exit after selecting playlist in offline mode.
