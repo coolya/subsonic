@@ -47,6 +47,8 @@ public interface DownloadService {
 
     int getPlayerPosition();
 
+    int getPlayerDuration();
+
     void delete(List<MusicDirectory.Entry> songs);
 
     DownloadFile forSong(MusicDirectory.Entry song);

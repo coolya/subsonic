@@ -269,16 +269,14 @@ public class DownloadActivity extends OptionsMenuActivity {
         if (currentPlaying != null) {
 
             int millisPlayed = Math.max(0, downloadService.getPlayerPosition());
-            Integer duration = currentPlaying.getSong().getDuration();
-            int millisTotal = duration == null ? 0 : duration * 1000;
+            Integer duration = downloadService.getPlayerDuration();
+            int millisTotal = duration == null ? 0 : duration;
 
             positionTextView.setText(Util.formatDuration(millisPlayed / 1000));
             durationTextView.setText(Util.formatDuration(millisTotal / 1000));
             progressBar.setMax(millisTotal == 0 ? 100 : millisTotal); // Work-around for apparent bug.
             progressBar.setProgress(millisPlayed);
             progressBar.setSlidingEnabled(currentPlaying.isComplete());
-        } else {
-            // TODO
         }
 
         PlayerState playerState = downloadService.getPlayerState();
