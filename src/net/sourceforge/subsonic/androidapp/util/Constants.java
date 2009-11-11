@@ -52,6 +52,7 @@ public final class Constants {
 
     // URL for project donations.
     public static final String DONATION_URL = "http://subsonic.sf.net/android-donation.php";
+    public static final String ALBUM_ART_FILE = "folder.jpeg";
 
     private Constants() {
     }

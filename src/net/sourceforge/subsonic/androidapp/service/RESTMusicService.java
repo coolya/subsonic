@@ -21,6 +21,8 @@ package net.sourceforge.subsonic.androidapp.service;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.util.Log;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.Version;
@@ -158,7 +160,7 @@ public class RESTMusicService implements MusicService {
     }
 
     @Override
-    public byte[] getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
+    public Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
         String url = Util.getRestUrl(context, "getCoverArt") + "&id=" + id + "&size=" + size;
         URLConnection connection = new URL(url).openConnection();
         connection.setConnectTimeout(Constants.SOCKET_CONNECT_TIMEOUT);
@@ -174,7 +176,9 @@ public class RESTMusicService implements MusicService {
                 return null; // Never reached.
             }
 
-            return Util.toByteArray(in);
+            byte[] bytes = Util.toByteArray(in);
+            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
         } finally {
             Util.close(in);
         }

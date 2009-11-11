@@ -18,18 +18,24 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
-import android.content.Context;
-import net.sourceforge.subsonic.androidapp.domain.Artist;
-import net.sourceforge.subsonic.androidapp.domain.Indexes;
-import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.util.FileUtil;
-import net.sourceforge.subsonic.androidapp.util.Pair;
-import net.sourceforge.subsonic.androidapp.util.ProgressListener;
-
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import net.sourceforge.subsonic.androidapp.domain.Artist;
+import net.sourceforge.subsonic.androidapp.domain.Indexes;
+import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.FileUtil;
+import net.sourceforge.subsonic.androidapp.util.Pair;
+import net.sourceforge.subsonic.androidapp.util.ProgressListener;
+import net.sourceforge.subsonic.androidapp.util.Util;
 
 /**
  * @author Sindre Mehus
@@ -82,16 +88,24 @@ public class OfflineMusicService extends RESTMusicService {
         entry.setTitle(file.getName().replace(".mp3", "")); //TODO
         entry.setSuffix(FileUtil.getSuffix(file.getName()));
 
-        // TODO: set cover art etc.
+        File albumArt = new File(file.isDirectory() ? file : file.getParentFile(), Constants.ALBUM_ART_FILE);
+        if (albumArt.exists()) {
+            entry.setCoverArt(albumArt.getPath());
+        }
         return entry;
     }
 
     @Override
-    public byte[] getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
-        //  TODO
-        return super.getCoverArt(context, id, size, progressListener);
+    public Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
+        InputStream in = new FileInputStream(id);
+        try {
+            byte[] bytes = Util.toByteArray(in);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            return Bitmap.createScaledBitmap(bitmap, size, size, true);
+        } finally {
+            Util.close(in);
+        }
     }
-
 
     @Override
     public MusicDirectory search(String query, Context context, ProgressListener progressListener) throws Exception {
