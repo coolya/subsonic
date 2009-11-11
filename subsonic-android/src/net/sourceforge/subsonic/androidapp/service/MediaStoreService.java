@@ -123,7 +123,7 @@ public class MediaStoreService {
         try {
             file = getAlbumArtFile(downloadFile);
 
-            MusicService musicService = MusicServiceFactory.getMusicService();
+            MusicService musicService = MusicServiceFactory.getMusicService(context);
             byte[] bytes = musicService.getCoverArt(context, song.getCoverArt(), 320, null);
             in = new ByteArrayInputStream(bytes);
             out = new FileOutputStream(file);

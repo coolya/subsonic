@@ -3,6 +3,11 @@
 <PreferenceScreen xmlns:a="http://schemas.android.com/apk/res/android"
                   a:title="Subsonic settings">
 
+    <CheckBoxPreference
+            a:key="offline"
+            a:title="Use offline"
+            a:summary="Only play music stored on phone"/>
+
     <ListPreference
             a:key="serverInstance"
             a:title="Active server"

@@ -89,7 +89,7 @@ public class ImageLoader implements Runnable {
     }
 
     private void setUnknownImage(View view, int size) {
-        int imageResource = 0;
+        int imageResource;
         switch (size) {
             case 48:
                 imageResource = R.drawable.unknown_album_48;
@@ -144,11 +144,11 @@ public class ImageLoader implements Runnable {
             this.view = view;
             this.entry = entry;
             this.size = size;
-            this.handler = new Handler();
+            handler = new Handler();
         }
 
         public void execute() {
-            MusicService musicService = MusicServiceFactory.getMusicService();
+            MusicService musicService = MusicServiceFactory.getMusicService(view.getContext());
             try {
                 byte[] bytes = musicService.getCoverArt(view.getContext(), entry.getCoverArt(), size, null);
                 final Drawable drawable = Drawable.createFromStream(new ByteArrayInputStream(bytes), "src");

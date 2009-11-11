@@ -394,7 +394,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
 
         @Override
         protected Pair<MusicDirectory, Boolean> doInBackground() throws Throwable {
-            MusicService musicService = MusicServiceFactory.getMusicService();
+            MusicService musicService = MusicServiceFactory.getMusicService(SelectAlbumActivity.this);
             MusicDirectory dir = load(musicService);
             boolean valid = musicService.isLicenseValid(SelectAlbumActivity.this, this);
             return new Pair<MusicDirectory, Boolean>(dir, valid);
@@ -421,7 +421,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
 
         @Override
         protected void cancel() {
-            MusicServiceFactory.getMusicService().cancel(SelectAlbumActivity.this, this);
+            MusicServiceFactory.getMusicService(SelectAlbumActivity.this).cancel(SelectAlbumActivity.this, this);
             finish();
         }
     }

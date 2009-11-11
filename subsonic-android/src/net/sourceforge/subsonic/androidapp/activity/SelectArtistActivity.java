@@ -44,7 +44,7 @@ public class SelectArtistActivity extends OptionsMenuActivity implements Adapter
         BackgroundTask<Indexes> task = new BackgroundTask<Indexes>(this) {
             @Override
             protected Indexes doInBackground() throws Throwable {
-                MusicService musicService = MusicServiceFactory.getMusicService();
+                MusicService musicService = MusicServiceFactory.getMusicService(SelectArtistActivity.this);
                 return musicService.getIndexes(SelectArtistActivity.this, this);
             }
 
@@ -58,7 +58,7 @@ public class SelectArtistActivity extends OptionsMenuActivity implements Adapter
 
             @Override
             protected void cancel() {
-                MusicServiceFactory.getMusicService().cancel(SelectArtistActivity.this, this);
+                MusicServiceFactory.getMusicService(SelectArtistActivity.this).cancel(SelectArtistActivity.this, this);
                 finish();
             }
         };

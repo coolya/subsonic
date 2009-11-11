@@ -54,6 +54,11 @@ public final class Util {
     private Util() {
     }
 
+    public static boolean isOffline(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        return prefs.getBoolean(Constants.PREFERENCES_KEY_OFFLINE, false);
+    }
+
     public static String getRestUrl(Context context, String method) {
         StringBuilder builder = new StringBuilder();
 
