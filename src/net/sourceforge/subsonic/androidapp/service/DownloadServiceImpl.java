@@ -22,6 +22,7 @@ import net.sourceforge.subsonic.androidapp.util.Util;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -38,6 +39,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private final List<DownloadFile> downloadList = new CopyOnWriteArrayList<DownloadFile>();
     private final Handler handler = new Handler();
     private final DownloadServiceLifecycleSupport lifecycleSupport = new DownloadServiceLifecycleSupport(this);
+    private final List<DownloadFile> cleanupCandidates = new ArrayList<DownloadFile>();
     private DownloadFile currentPlaying;
     private DownloadFile currentDownloading;
     private CancellableTask bufferTask;
@@ -367,7 +369,8 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             }
 
             currentDownloading = currentPlaying;
-            currentPlaying.download();
+            currentDownloading.download();
+            cleanupCandidates.add(currentDownloading);
         }
 
         // Find a suitable target for download.
@@ -384,21 +387,28 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                 DownloadFile downloadFile = downloadList.get(i);
                 if (!downloadFile.isComplete()) {
                     currentDownloading = downloadFile;
-                    downloadFile.download();
+                    currentDownloading.download();
+                    cleanupCandidates.add(currentDownloading);
                     break;
                 }
                 i = (i + 1) % n;
             } while (i != start);
         }
 
-        // Delete obsolete .partial files.
-        for (DownloadFile downloadFile : downloadList) {
-            File partialFile = downloadFile.getPartialFile();
-            if (partialFile.exists() && currentDownloading != downloadFile && currentPlaying != downloadFile) {
-                Util.delete(partialFile);
+        // Delete obsolete .partial and .complete files.
+        cleanup();
+    }
+
+    private synchronized void cleanup() {
+        Iterator<DownloadFile> iterator = cleanupCandidates.iterator();
+        while (iterator.hasNext()) {
+            DownloadFile downloadFile = iterator.next();
+            if (downloadFile != currentPlaying && downloadFile != currentDownloading) {
+                if (downloadFile.cleanup()) {
+                    iterator.remove();
+                }
             }
         }
-
     }
 
 }
