@@ -131,7 +131,9 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
-        menu.add(Menu.NONE, 1, 1, "Play + Save");
+        if (!Util.isOffline(this)) {
+            menu.add(Menu.NONE, 1, 1, "Play + Save");
+        }
         menu.add(Menu.NONE, 2, 2, "Add to play queue");
 
         for (MusicDirectory.Entry song : getSelectedSongs()) {
@@ -144,7 +146,11 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     }
 
     private void getMusicDirectory() {
-        setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
+        String title = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME);
+        if (Util.isOffline(this)) {
+            title += " (Offline)";
+        }
+        setTitle(title);
         new LoadTask() {
             @Override
             protected MusicDirectory load(MusicService service) throws Exception {

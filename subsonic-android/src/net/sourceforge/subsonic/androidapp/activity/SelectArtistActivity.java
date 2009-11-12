@@ -19,6 +19,7 @@ import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.Util;
 import net.sourceforge.subsonic.androidapp.R;
 
 public class SelectArtistActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
@@ -37,6 +38,11 @@ public class SelectArtistActivity extends OptionsMenuActivity implements Adapter
         artistList = (ListView) findViewById(R.id.select_artist_list);
         artistList.setOnItemClickListener(this);
 
+        String title = "My music";
+        if (Util.isOffline(this)) {
+            title += " (Offline)";
+        }
+        setTitle(title);
         load();
     }
 

@@ -1,12 +1,10 @@
 TODO IN 3.9
 --------------
 Android:
-- Rammstein wrong
 - Properly delete .complete and .partial when copying files.
 - Don't "Play + Save" for files that already exists.
 - Don't exit after selecting playlist in offline mode.
 - Offline mode.
-- Show "Offline" in main view when appropriate.,
 - Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
 - Improve headline in DownloadActivity. Use scrolling marquee.
 - Show different colored asterix when .complete exists.
@@ -37,6 +35,8 @@ TBT: Added Polish translation, courtesy of Micha? Kotas.
 TBT: Hide donate button if valid license.
 TBT: Added "accesskey" in left frame.
 TBT: Added API method to change password.
+Android: Added offline mode.
+Android: Fixed bugs with streaming.
 Flipped chat log.
 
 ANDROID
