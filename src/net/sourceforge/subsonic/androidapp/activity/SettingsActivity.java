@@ -106,6 +106,12 @@ public class SettingsActivity extends PreferenceActivity {
         update();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(downloadServiceConnection);
+    }
+
     private void update() {
         String instance = serverInstance.getValue();
         ServerSettings serverSetting = serverSettings.get(instance);

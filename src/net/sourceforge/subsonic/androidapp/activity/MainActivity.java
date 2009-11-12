@@ -15,8 +15,12 @@ import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Pair;
+import net.sourceforge.subsonic.androidapp.util.Util;
 
 public class MainActivity extends OptionsMenuActivity {
+
+    private View searchButton;
+    private View loadPlaylistButton;
 
     /**
      * Called when the activity is first created.
@@ -39,7 +43,7 @@ public class MainActivity extends OptionsMenuActivity {
             }
         });
 
-        final View searchButton = findViewById(R.id.main_search);
+        searchButton = findViewById(R.id.main_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,7 +51,7 @@ public class MainActivity extends OptionsMenuActivity {
             }
         });
 
-        final View loadPlaylistButton = findViewById(R.id.main_load_playlist);
+        loadPlaylistButton = findViewById(R.id.main_load_playlist);
         loadPlaylistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +82,15 @@ public class MainActivity extends OptionsMenuActivity {
                 startActivity(new Intent(MainActivity.this, HelpActivity.class));
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        boolean offline = Util.isOffline(this);
+        searchButton.setEnabled(!offline);
+        loadPlaylistButton.setEnabled(!offline);
     }
 
     private void showPlaylistDialog() {
