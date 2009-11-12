@@ -83,7 +83,7 @@ public class SongView extends LinearLayout implements Checkable {
             text.append(song.getBitRate()).append("k ");
         }
         text.append(song.getSuffix());
-        if (song.getTranscodedSuffix() != null) {
+        if (song.getTranscodedSuffix() != null && !song.getTranscodedSuffix().equals(song.getSuffix())) {
             text.append(" > ").append(song.getTranscodedSuffix());
         }
         text.append(")");
