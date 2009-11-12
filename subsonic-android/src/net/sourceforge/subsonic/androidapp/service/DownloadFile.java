@@ -124,6 +124,17 @@ public class DownloadFile {
         mediaStoreService.deleteFromMediaStore(this);
     }
 
+    public boolean cleanup() {
+        boolean ok = true;
+        if (partialFile.exists()) {
+            ok = Util.delete(partialFile);
+        }
+        if (saveFile.exists() && completeFile.exists()) {
+            ok &= Util.delete(completeFile);
+        }
+        return ok;
+    }
+
     private class DownloadTask extends CancellableTask {
 
         @Override
