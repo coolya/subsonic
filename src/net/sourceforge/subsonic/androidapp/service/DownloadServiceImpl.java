@@ -199,9 +199,22 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     @Override
+    public synchronized void reset() {
+        if (bufferTask != null) {
+            bufferTask.cancel();
+        }
+        try {
+            mediaPlayer.reset();
+            setPlayerState(IDLE);
+        } catch (Exception x) {
+            handleError(x);
+        }
+    }
+
+    @Override
     public synchronized int getPlayerPosition() {
         try {
-            if (playerState == DOWNLOADING) {
+            if (playerState == IDLE || playerState == DOWNLOADING || playerState == PREPARING) {
                 return 0;
             }
             return mediaPlayer.getCurrentPosition();
@@ -219,7 +232,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                 return duration * 1000;
             }
         }
-        if (playerState != IDLE) {
+        if (playerState != IDLE && playerState != DOWNLOADING && playerState != PlayerState.PREPARING) {
             try {
                 return mediaPlayer.getDuration();
             } catch (Exception x) {
