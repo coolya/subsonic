@@ -56,6 +56,7 @@ public class DownloadActivity extends OptionsMenuActivity {
     private ImageView previousButton;
     private ImageView nextButton;
     private ImageView pauseButton;
+    private ImageView stopButton;
     private ImageView startButton;
     private ScheduledExecutorService executorService;
     private DownloadFile currentPlaying;
@@ -82,6 +83,7 @@ public class DownloadActivity extends OptionsMenuActivity {
         previousButton = (ImageView) findViewById(R.id.download_previous);
         nextButton = (ImageView) findViewById(R.id.download_next);
         pauseButton = (ImageView) findViewById(R.id.download_pause);
+        stopButton = (ImageView) findViewById(R.id.download_stop);
         startButton = (ImageView) findViewById(R.id.download_start);
 
         currentTextView.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +118,13 @@ public class DownloadActivity extends OptionsMenuActivity {
             @Override
             public void onClick(View view) {
                 downloadService.pause();
+            }
+        });
+
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadService.reset();
             }
         });
 
@@ -205,7 +214,7 @@ public class DownloadActivity extends OptionsMenuActivity {
         PlayerState state = downloadService.getPlayerState();
         if (state == PAUSED || state == COMPLETED) {
             downloadService.start();
-        } else if (state == STOPPED) {
+        } else if (state == STOPPED || state == IDLE) {
             downloadService.play(downloadService.getCurrentPlaying());
         }
     }
@@ -288,12 +297,23 @@ public class DownloadActivity extends OptionsMenuActivity {
             statusTextView.setText(playerState.toString());
         }
 
-        if (playerState == STARTED) {
-            pauseButton.setVisibility(View.VISIBLE);
-            startButton.setVisibility(View.GONE);
-        } else {
-            pauseButton.setVisibility(View.GONE);
-            startButton.setVisibility(View.VISIBLE);
+        switch (playerState) {
+            case STARTED:
+                pauseButton.setVisibility(View.VISIBLE);
+                stopButton.setVisibility(View.GONE);
+                startButton.setVisibility(View.GONE);
+                break;
+            case DOWNLOADING:
+            case PREPARING:
+                pauseButton.setVisibility(View.GONE);
+                stopButton.setVisibility(View.VISIBLE);
+                startButton.setVisibility(View.GONE);
+                break;
+            default:
+                pauseButton.setVisibility(View.GONE);
+                stopButton.setVisibility(View.GONE);
+                startButton.setVisibility(View.VISIBLE);
+                break;
         }
     }
 

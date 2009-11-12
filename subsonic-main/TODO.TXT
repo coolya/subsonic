@@ -3,15 +3,14 @@ TODO IN 3.9
 Android:
 - Properly delete .complete and .partial when copying files.
 - Don't "Play + Save" for files that already exists.
-- Don't exit after selecting playlist in offline mode.
 - Offline mode.
 - Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
 - Improve headline in DownloadActivity. Use scrolling marquee.
 - Show different colored asterix when .complete exists.
-- Show stop button during download/buffering.
 - Improve design of DownloadFile.getCompleteFile() etc.
 - Goes crazy when bandwidth too small.
 
+Use android icons in top.jsp
 Global option to disable chat.  Admin should be able to remove individual messages.
 Sort saved playlists.
 Scrobbling broken for transcoded songs? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2316

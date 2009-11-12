@@ -43,6 +43,8 @@ public interface DownloadService {
 
     void start();
 
+    void reset();
+
     PlayerState getPlayerState();
 
     int getPlayerPosition();
