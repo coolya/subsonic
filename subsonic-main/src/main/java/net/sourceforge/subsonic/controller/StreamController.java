@@ -32,16 +32,15 @@ import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicInfoService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.PlaylistService;
+import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.service.TranscodingService;
-import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.util.Util;
-
-import org.apache.commons.lang.math.LongRange;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.math.LongRange;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -112,16 +111,19 @@ public class StreamController implements Controller {
                 playlist.addFiles(true, file);
                 player.setPlaylist(playlist);
 
-                response.setHeader("ETag", StringUtil.utf8HexEncode(path));
-                response.setHeader("Accept-Ranges", "bytes");
+                boolean transcodingRequired = transcodingService.isTranscodingRequired(file, player);
+                if (!transcodingRequired) {
+                    response.setHeader("ETag", StringUtil.utf8HexEncode(path));
+                    response.setHeader("Accept-Ranges", "bytes");
 
-                range = StringUtil.parseRange(request.getHeader("Range"));
-                if (range != null) {
-                    response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
-                    Util.setContentLength(response, file.length() - range.getMinimumLong());
-                    LOG.info("Got range: " + range);
-                } else {
-                    Util.setContentLength(response, file.length());
+                    range = StringUtil.parseRange(request.getHeader("Range"));
+                    if (range != null) {
+                        response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
+                        Util.setContentLength(response, file.length() - range.getMinimumLong());
+                        LOG.info("Got range: " + range);
+                    } else {
+                        Util.setContentLength(response, file.length());
+                    }
                 }
             }
 

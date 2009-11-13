@@ -37,6 +37,7 @@ TBT: Added API method to change password.
 Android: Added offline mode.
 Android: Fixed bugs with streaming.
 Flipped chat log.
+Bugfix: Avoid setting incorrect content length when transcoding or downsampling.
 
 ANDROID
 -------
