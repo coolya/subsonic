@@ -33,7 +33,7 @@
                 a:drawablePadding="20dp"
                 a:gravity="left|center_vertical"
                 a:textAppearance="?android:attr/textAppearanceLarge"
-                a:text="My music"/>
+                a:text="@string/main.my_music"/>
 
         <Button
                 a:id="@+id/main_load_playlist"
@@ -44,7 +44,7 @@
                 a:drawablePadding="20dp"
                 a:gravity="left|center_vertical"
                 a:textAppearance="?android:attr/textAppearanceLarge"
-                a:text="My playlists"/>
+                a:text="@string/main.my_playlists"/>
 
         <Button
                 a:id="@+id/main_search"
@@ -55,7 +55,7 @@
                 a:drawablePadding="20dp"
                 a:gravity="left|center_vertical"
                 a:textAppearance="?android:attr/textAppearanceLarge"
-                a:text="Search"/>
+                a:text="@string/main.search"/>
 
     </LinearLayout>
 

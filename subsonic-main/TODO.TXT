@@ -394,6 +394,7 @@ HOW TO RELEASE TO ANDROID MARKET
 Update versionCode and versionName in AndroidManifest.xml
 Update version.html
 cd subsonic-android
+rm -rf bin
 ant release
 ### keytool -genkey -v -keystore subsonic.keystore -alias subsonic -keyalg RSA -validity 100000 -dname "CN=Active Objects"
 jarsigner -verbose -keystore subsonic.keystore -signedjar bin/subsonic.apk bin/SubsonicActivity-unsigned.apk subsonic

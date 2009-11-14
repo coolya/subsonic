@@ -17,34 +17,34 @@
                   a:paddingTop="10dip">
 
         <Button a:id="@+id/select_album_select"
-                     a:text="Select"
-                     a:textAppearance="?android:attr/textAppearanceSmall"
-                     a:layout_marginLeft="6dp"
-                     a:layout_marginRight="3dp"
-                     a:visibility="gone"
-                     a:layout_weight="1"
-                     a:layout_width="0dp"
-                     a:layout_height="fill_parent"/>
+                a:text="@string/select_album.select"
+                a:textAppearance="?android:attr/textAppearanceSmall"
+                a:layout_marginLeft="6dp"
+                a:layout_marginRight="3dp"
+                a:visibility="gone"
+                a:layout_weight="1"
+                a:layout_width="0dp"
+                a:layout_height="fill_parent"/>
 
         <Button a:id="@+id/select_album_play"
-                     a:text="Play"
-                     a:textAppearance="?android:attr/textAppearanceSmall"
-                     a:layout_marginLeft="3dp"
-                     a:layout_marginRight="3dp"
-                     a:visibility="gone"
-                     a:layout_weight="1"
-                     a:layout_width="0dp"
-                     a:layout_height="fill_parent"/>
+                a:text="@string/select_album.play"
+                a:textAppearance="?android:attr/textAppearanceSmall"
+                a:layout_marginLeft="3dp"
+                a:layout_marginRight="3dp"
+                a:visibility="gone"
+                a:layout_weight="1"
+                a:layout_width="0dp"
+                a:layout_height="fill_parent"/>
 
         <Button a:id="@+id/select_album_more"
-                     a:text="More..."
-                     a:textAppearance="?android:attr/textAppearanceSmall"
-                     a:layout_marginLeft="3dp"
-                     a:layout_marginRight="6dp"
-                     a:visibility="gone"
-                     a:layout_weight="1"
-                     a:layout_width="0dp"
-                     a:layout_height="fill_parent"/>
+                a:text="@string/select_album.more"
+                a:textAppearance="?android:attr/textAppearanceSmall"
+                a:layout_marginLeft="3dp"
+                a:layout_marginRight="6dp"
+                a:visibility="gone"
+                a:layout_weight="1"
+                a:layout_width="0dp"
+                a:layout_height="fill_parent"/>
 
     </LinearLayout>
 

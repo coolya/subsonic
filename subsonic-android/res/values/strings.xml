@@ -1,3 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="main.my_music">My music</string>
+    <string name="main.my_playlists">My playlists</string>
+    <string name="main.search">Search</string>
+
+    <string name="help.label">Help</string>
+    <string name="help.title">Welcome to Subsonic!</string>
+    <string name="help.close">Close</string>
+    <string name="help.donate">Donate</string>
+    <string name="help.text">TODO</string>
+
+    <string name="progress.wait">Please wait...</string>
+    <string name="search.title">Music search</string>
+
+    <string name="select_album.select">Select</string>
+    <string name="select_album.play">Play</string>
+    <string name="select_album.more">More...</string>
+
+    <string name="error.label">Error</string>
+
 </resources>
