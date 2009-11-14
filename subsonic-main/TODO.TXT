@@ -1,11 +1,8 @@
 TODO IN 3.9
 --------------
 Android:
-- Properly delete .complete and .partial when copying files.
 - Don't "Play + Save" for files that already exists.
-- Offline mode.
 - Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
-- Improve headline in DownloadActivity. Use scrolling marquee.
 - Show different colored asterix when .complete exists.
 - Improve design of DownloadFile.getCompleteFile() etc.
 - Goes crazy when bandwidth too small.
