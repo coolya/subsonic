@@ -11,7 +11,7 @@
             a:layout_weight="1"
             a:layout_gravity="center_vertical"
             a:layout_margin="6dip"
-            a:hint="Music search"
+            a:hint="@string/search.title"
             a:imeOptions="actionSearch"
             a:inputType="text"
             a:singleLine="true"/>

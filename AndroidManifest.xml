@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:a="http://schemas.android.com/apk/res/android"
           package="net.sourceforge.subsonic.androidapp"
-          a:versionCode="2"
-          a:versionName="1.0">
+          a:versionCode="4"
+          a:versionName="1.1">
 
     <uses-permission a:name="android.permission.INTERNET"/>
     <uses-permission a:name="android.permission.READ_PHONE_STATE"/>
@@ -23,35 +23,30 @@
         </activity>
 
         <activity a:name=".activity.SelectArtistActivity"
-                  a:label="My music"
                   a:screenOrientation="portrait"/>
 
         <activity a:name=".activity.SelectAlbumActivity"
-                  a:label="My music"
                   a:screenOrientation="portrait"/>
 
         <activity a:name=".activity.DownloadActivity"
-                  a:label="Now playing"
                   a:launchMode="singleTask"
                   a:screenOrientation="portrait"/>
 
         <activity a:name=".activity.SettingsActivity"
-                  a:label="Settings"
                   a:launchMode="singleTask"
                   a:screenOrientation="portrait"/>
 
         <activity a:name=".activity.ErrorActivity"
-                  a:label="Error"
+                  a:label="@string/error.label"
                   a:launchMode="singleTask"
                   a:screenOrientation="portrait"/>
 
         <activity a:name=".activity.HelpActivity"
-                  a:label="Help"
+                  a:label="@string/help.label"
                   a:launchMode="singleTask"
                   a:screenOrientation="portrait"/>
 
-        <service a:name=".service.DownloadServiceImpl"
-                 a:label="Download"/>
+        <service a:name=".service.DownloadServiceImpl"/>
 
     </application>
 

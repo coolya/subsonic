@@ -27,22 +27,22 @@ public class HelpActivity extends OptionsMenuActivity {
 
         StringBuilder text = new StringBuilder();
         text.append("With Subsonic you can easily stream or download music from your home computer to your Android phone " +
-                "(and do lots of other cool stuff too).\n" +
-                "\n" +
-                "To install the Subsonic server software on your computer, please visit http://subsonic.sf.net. It's available for " +
-                "Windows, Mac,Linux and Unix.\n" +
-                "\n" +
-                "By default, this program is configured to use the Subsonic demo server. Once you've set up your own " +
-                "server, please go to Settings and change the configuration so that it connects to your own computer.\n" +
-                "\n" +
-                "You can use this program freely for 30 days. After that you will have to make a donation to the Subsonic project. " +
-                "As a donor you get the following benefits:\n" +
-                "\n" +
-                " o Unlimited streaming and download to any number of Android phones.\n" +
-                " o No ads in the Subsonic web interface.\n" +
-                " o Free access to new premium features.\n" +
-                "\n" +
-                "The suggested donation amount is \u20ac20.\n\n");
+                    "(and do lots of other cool stuff too).\n" +
+                    "\n" +
+                    "To install the Subsonic server software on your computer, please visit http://subsonic.sf.net. It's available for " +
+                    "Windows, Mac, Linux and Unix.\n" +
+                    "\n" +
+                    "By default, this program is configured to use the Subsonic demo server. Once you've set up your own " +
+                    "server, please go to Settings and change the configuration so that it connects to your own computer.\n" +
+                    "\n" +
+                    "You can use this program freely for 30 days. After that you will have to make a donation to the Subsonic project. " +
+                    "As a donor you get the following benefits:\n" +
+                    "\n" +
+                    " o Unlimited streaming and download to any number of Android phones.\n" +
+                    " o No ads in the Subsonic web interface.\n" +
+                    " o Free access to new premium features.\n" +
+                    "\n" +
+                    "The suggested donation amount is \u20ac20.\n\n");
 
         try {
             PackageInfo packageInfo = getPackageManager().getPackageInfo("net.sourceforge.subsonic.androidapp", 0);

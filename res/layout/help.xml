@@ -11,7 +11,7 @@
             a:drawablePadding="10dip"
             a:gravity="left|center_vertical"
             a:textAppearance="?android:attr/textAppearanceLarge"
-            a:text="Welcome to Subsonic!"/>
+            a:text="@string/help.title"/>
 
     <LinearLayout a:id="@+id/help_buttons"
                   a:layout_width="fill_parent"
@@ -20,7 +20,7 @@
                   a:layout_marginTop="5dip"
                   a:gravity="center_horizontal">
         <Button a:id="@+id/help_close"
-                a:text="Close"
+                a:text="@string/help.close"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"
                 a:layout_marginRight="5dip"
@@ -28,7 +28,7 @@
                 a:paddingRight="30dip"/>
 
         <Button a:id="@+id/help_donate"
-                a:text="Donate"
+                a:text="@string/help.donate"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"
                 a:layout_marginLeft="5dip"
@@ -41,14 +41,14 @@
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:layout_below="@id/help_logo"
-            a:layout_above="@id/help_buttons"
-            >
+            a:layout_above="@id/help_buttons">
 
         <TextView
                 a:id="@+id/help_text"
                 a:layout_width="fill_parent"
                 a:layout_height="wrap_content"
-                a:padding="6dip"/>
+                a:padding="6dip"
+                a:text="@string/help.text"/>
     </ScrollView>
 
 </RelativeLayout>
