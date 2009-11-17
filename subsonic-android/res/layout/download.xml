@@ -42,7 +42,7 @@
                     a:textAppearance="?android:attr/textAppearanceLarge"
                     a:textColor="@color/secondaryForeground"
                     a:singleLine="true"
-                    a:ellipsize="marquee"
+                    a:ellipsize="end"
                     a:gravity="left|center_vertical"
                     a:layout_width="fill_parent"
                     a:layout_height="wrap_content"

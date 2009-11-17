@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:a="http://schemas.android.com/apk/res/android"
-                  a:title="Subsonic settings">
+                  a:title="@string/settings.title">
 
     <CheckBoxPreference
             a:key="offline"
-            a:title="Use offline"
-            a:summary="Only play music stored on phone"/>
+            a:title="@string/settings.offline_title"
+            a:summary="@string/settings.offline_summary"/>
 
     <ListPreference
             a:key="serverInstance"
-            a:title="Active server"
+            a:title="@string/settings.active_server_title"
             a:defaultValue="1"
             a:entryValues="@array/active_server_values"/>
 
     <Preference
             a:key="testConnection"
-            a:title="Test connection"
+            a:title="@string/settings.test_connection_title"
             a:persistent="false"/>
 
     <PreferenceCategory
-            a:title="Servers">
+            a:title="@string/settings.servers_title">
 
         <PreferenceScreen
                 a:key="server1">
 
             <EditTextPreference
                     a:key="serverName1"
-                    a:title="Name"
+                    a:title="@string/settings.server_name"
                     a:defaultValue="Subsonic demo"/>
 
             <EditTextPreference
                     a:key="serverUrl1"
-                    a:title="Server address"
+                    a:title="@string/settings.server_address"
                     a:defaultValue="http://gosubsonic.com/demo"/>
 
             <EditTextPreference
                     a:key="username1"
-                    a:title="Username"
+                    a:title="@string/settings.server_username"
                     a:defaultValue="android-guest"/>
 
             <EditTextPreference
                     a:key="password1"
-                    a:title="Password"
+                    a:title="@string/settings.server_password"
                     a:password="true"
                     a:defaultValue="guest"
                     a:summary="****"/>
@@ -54,21 +54,21 @@
 
             <EditTextPreference
                     a:key="serverName2"
-                    a:title="Name"
-                    a:defaultValue="Unused"/>
+                    a:title="@string/settings.server_name"
+                    a:defaultValue="@string/settings.server_unused2"/>
 
             <EditTextPreference
                     a:key="serverUrl2"
-                    a:title="Server address"
+                    a:title="@string/settings.server_address"
                     a:defaultValue="http://yourhost"/>
 
             <EditTextPreference
                     a:key="username2"
-                    a:title="Username"/>
+                    a:title="@string/settings.server_username"/>
 
             <EditTextPreference
                     a:key="password2"
-                    a:title="Password"
+                    a:title="@string/settings.server_password"
                     a:password="true"
                     a:summary="****"/>
 
@@ -79,21 +79,21 @@
 
             <EditTextPreference
                     a:key="serverName3"
-                    a:title="Name"
-                    a:defaultValue="Unused"/>
+                    a:title="@string/settings.server_name"
+                    a:defaultValue="@string/settings.server_unused1"/>
 
             <EditTextPreference
                     a:key="serverUrl3"
-                    a:title="Server address"
+                    a:title="@string/settings.server_address"
                     a:defaultValue="http://yourhost"/>
 
             <EditTextPreference
                     a:key="username3"
-                    a:title="Username"/>
+                    a:title="@string/settings.server_username"/>
 
             <EditTextPreference
                     a:key="password3"
-                    a:title="Password"
+                    a:title="@string/settings.server_password"
                     a:password="true"
                     a:summary="****"/>
 
@@ -103,16 +103,16 @@
 
 
     <PreferenceCategory
-            a:title="Maintenance">
+            a:title="@string/settings.maintenance_title">
 
         <Preference
                 a:key="checkForUpdates"
-                a:title="Check for software update"
+                a:title="@string/settings.software_update"
                 a:persistent="false"/>
 
         <Preference
                 a:key="emptyCache"
-                a:title="Delete cached music"
+                a:title="@string/settings.empty_cache"
                 a:persistent="false"/>
 
     </PreferenceCategory>

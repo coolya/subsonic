@@ -1,7 +1,5 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +14,8 @@ import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.Util;
+
+import java.util.List;
 
 public class MainActivity extends OptionsMenuActivity {
 
@@ -108,11 +108,11 @@ public class MainActivity extends OptionsMenuActivity {
             @Override
             protected void done(final List<Pair<String, String>> result) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Select playlist");
+                builder.setTitle(R.string.main_select_playlist);
                 builder.setCancelable(true);
 
                 if (result.isEmpty()) {
-                    builder.setMessage("No saved playlists on server.");
+                    builder.setMessage(R.string.main_no_playlists);
                 } else {
                     final CharSequence[] items = new CharSequence[result.size()];
                     for (int i = 0; i < items.length; i++) {

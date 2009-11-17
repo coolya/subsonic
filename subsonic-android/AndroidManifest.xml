@@ -46,7 +46,8 @@
                   a:launchMode="singleTask"
                   a:screenOrientation="portrait"/>
 
-        <service a:name=".service.DownloadServiceImpl"/>
+        <service a:name=".service.DownloadServiceImpl"
+                 a:label="Subsonic Download Service"/>
 
     </application>
 

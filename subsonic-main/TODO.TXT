@@ -392,6 +392,7 @@ jarsigner -verbose -keystore subsonic.keystore -signedjar bin/subsonic.apk bin/S
 Upload to market (use Firefox)
 http://market.android.com/publish/Home
 Also upload to http://appslib.com/developers/index.html
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.1 -m "Tagging Android 1.1."
 
 HOW TO RELEASE TRANSCODING PACK
 ===============================

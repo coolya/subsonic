@@ -19,15 +19,15 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.AlertDialog;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.KeyEvent;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
@@ -72,10 +72,10 @@ public class OptionsMenuActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, MENU_HOME, 0, "Subsonic Home").setIcon(R.drawable.menu_home);
-        menu.add(0, MENU_PLAYING, 0, "Now playing").setIcon(R.drawable.now_playing);
-        menu.add(0, MENU_SETTINGS, 0, "Settings").setIcon(R.drawable.settings);
-        menu.add(0, MENU_HELP, 0, "Help").setIcon(R.drawable.help);
+        menu.add(0, MENU_HOME, 0, R.string.options_home).setIcon(R.drawable.menu_home);
+        menu.add(0, MENU_PLAYING, 0, R.string.options_playing).setIcon(R.drawable.now_playing);
+        menu.add(0, MENU_SETTINGS, 0, R.string.options_settings).setIcon(R.drawable.settings);
+        menu.add(0, MENU_HELP, 0, R.string.options_help).setIcon(R.drawable.help);
         return true;
     }
 
