@@ -3,6 +3,8 @@
     <string name="main.my_music">My music</string>
     <string name="main.my_playlists">My playlists</string>
     <string name="main.search">Search</string>
+    <string name="main.select_playlist">Select playlist</string>
+    <string name="main.no_playlists">No saved playlists on server.</string>
 
     <string name="help.label">Help</string>
     <string name="help.title">Welcome to Subsonic!</string>
@@ -18,5 +20,27 @@
     <string name="select_album.more">More...</string>
 
     <string name="error.label">Error</string>
+
+    <string name="options.home">Subsonic Home</string>
+    <string name="options.playing">Now playing</string>
+    <string name="options.settings">Settings</string>
+    <string name="options.help">Help</string>
+
+    <string name="settings.title">Subsonic settings</string>
+    <string name="settings.offline_title">Use offline</string>
+    <string name="settings.offline_summary">Only play music stored on phone</string>
+    <string name="settings.active_server_title">Active server</string>
+    <string name="settings.test_connection_title">Test connection</string>
+    <string name="settings.servers_title">Servers</string>
+    <string name="settings.server_unused1">Unused 1</string>
+    <string name="settings.server_unused2">Unused 2</string>
+    <string name="settings.server_name">Name</string>
+    <string name="settings.server_address">Server address</string>
+    <string name="settings.server_username">Username</string>
+    <string name="settings.server_password">Password</string>
+    <string name="settings.maintenance_title">Maintenance</string>
+    <string name="settings.software_update">Check for software update</string>
+    <string name="settings.empty_cache">Delete cached music</string>
+    <string name="settings.empty_cache_confirm">Really delete all cached music files?</string>
 
 </resources>
