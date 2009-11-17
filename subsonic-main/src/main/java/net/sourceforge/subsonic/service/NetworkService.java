@@ -16,32 +16,33 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.androidapp.domain;
+package net.sourceforge.subsonic.service;
+
+import net.sourceforge.subsonic.domain.SBBIRouter;
+import net.sourceforge.subsonic.domain.WeUPnPRouter;
+import net.sourceforge.subsonic.domain.Router;
 
 /**
+ * Provides network-related services, including management of port mappings in the LAN router.
+ *
  * @author Sindre Mehus
- * @version $Id$
  */
-public enum PlayerState {
-    IDLE(""),
-    INITIALIZED(""),
-    DOWNLOADING("Downloading"),
-    PREPARING("Buffering"),
-    PREPARED(""),
-    STARTED("Playing"),
-    STOPPED(""),
-    PAUSED("Paused"),
-    COMPLETED(""),
-    ERROR("Error");
+public class NetworkService {
 
-    private final String description;
+    public static void main(String[] args) throws Exception {
+        Router router = WeUPnPRouter.findRouter();
+        System.out.println(router);
 
-    PlayerState(String description) {
-        this.description = description;
+        router = SBBIRouter.findRouter();
+        System.out.println(router);
     }
 
-    @Override
-    public String toString() {
-        return description;
-    }
+
+
 }
+
+
+
+
+
+

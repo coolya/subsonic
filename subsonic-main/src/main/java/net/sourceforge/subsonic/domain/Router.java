@@ -16,32 +16,14 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.androidapp.domain;
+package net.sourceforge.subsonic.domain;
 
 /**
  * @author Sindre Mehus
  * @version $Id$
  */
-public enum PlayerState {
-    IDLE(""),
-    INITIALIZED(""),
-    DOWNLOADING("Downloading"),
-    PREPARING("Buffering"),
-    PREPARED(""),
-    STARTED("Playing"),
-    STOPPED(""),
-    PAUSED("Paused"),
-    COMPLETED(""),
-    ERROR("Error");
+public interface Router {
 
-    private final String description;
-
-    PlayerState(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return description;
-    }
+    void addPortMapping(int externalPort, String internalClient,
+            int internalPort, int leaseDurationSeconds) throws Exception;
 }

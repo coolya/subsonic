@@ -1,29 +1,24 @@
 TODO IN 3.9
 --------------
-Android:
-- Don't "Play + Save" for files that already exists.
-- Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
-- Show different colored asterix when .complete exists.
-- Improve design of DownloadFile.getCompleteFile() etc.
-- Goes crazy when bandwidth too small.
-
 Use android icons in top.jsp
 Global option to disable chat.  Admin should be able to remove individual messages.
 Sort saved playlists.
 Scrobbling broken for transcoded songs? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2316
-Hide donate button if already donated.
-Android: i18n
-Android: Test more with downsampling. Songs cut off?
-Android: Look at "five", orb app.
-Don't set content length on transcoded files (except Android?).
-     http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2202
-     http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1461&start=15
-Android: Playlist not updated when switching to new song?
-Android messing up player?
 Bug: Double-scrobbling when transcoding.
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
-Improve building of apk. (signing + zipalign)
 Add new languages to features.php
+http://upnp-portmapper.sourceforge.net/
+
+TODO IN ANDROID 1.2
+-----------------------
+i18n
+Add "Save" option.
+Don't "Play + Save" for files that already exists.
+Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
+Show different colored asterix when .complete exists.
+Improve design of DownloadFile.getCompleteFile() etc.
+Goes crazy when bandwidth too small.
+Persist playlist
 
 DONE IN 3.9
 ------------
@@ -31,8 +26,6 @@ TBT: Added Polish translation, courtesy of Micha? Kotas.
 TBT: Hide donate button if valid license.
 TBT: Added "accesskey" in left frame.
 TBT: Added API method to change password.
-Android: Added offline mode.
-Android: Fixed bugs with streaming.
 Flipped chat log.
 Bugfix: Avoid setting incorrect content length when transcoding or downsampling.
 
@@ -65,7 +58,6 @@ In licence email, explain how to install it.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
 Use signed requests against Amazon.
-http://upnp-portmapper.sourceforge.net/
 http://www.jthink.net/jaudiotagger/index.jsp]
 Exclusion filter (*.svn, *.log, *.pun)
 Select music folder / playlist folder in Windows installer.
@@ -75,7 +67,6 @@ http://lyricsfly.com/
 Avoid underlined image links in menu bar (FF, Chrome)
 Nightly build.
 "removeAllRows() can only be used with table, tbody, thead and tfoot elements. Attempt to use: HTMLDivElement"
-next/prev buttons in jukebox.
 Write installation note on how to setup internet access.
 Mention Amahi in web pages.
 Contact Amahi
