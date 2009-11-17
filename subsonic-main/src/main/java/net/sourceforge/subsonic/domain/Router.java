@@ -24,6 +24,14 @@ package net.sourceforge.subsonic.domain;
  */
 public interface Router {
 
+    /**
+     * Configures a nat entry on the UPNP device.
+     *
+     * @param internalPort         the internal client port where data should be redirected
+     * @param externalPort         the external port to open on the UPNP device an map on the internal client, 0 for a wildcard value.
+     * @param internalClient       the internal client IP where data should be redirected.
+     * @param leaseDurationSeconds the lease duration in seconds, or 0 for an infinite time.
+     */
     void addPortMapping(int externalPort, String internalClient,
-            int internalPort, int leaseDurationSeconds) throws Exception;
+                        int internalPort, int leaseDurationSeconds) throws Exception;
 }
