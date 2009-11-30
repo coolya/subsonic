@@ -23,6 +23,7 @@ Persist playlist
 DONE IN 3.9
 ------------
 TBT: Added Polish translation, courtesy of Micha? Kotas.
+Updated Finnish translation, courtesy of Reijo J‰‰rni.
 TBT: Hide donate button if valid license.
 TBT: Added "accesskey" in left frame.
 TBT: Added API method to change password.
