@@ -20,6 +20,7 @@ package net.sourceforge.subsonic.service;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.util.StringUtil;
+import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
@@ -34,6 +35,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -65,28 +67,33 @@ public class DiscogsSearchService {
         String url = "http://www.discogs.com/search?type=all&q=" + query + "&f=xml&api_key=" + DISCOGS_API_KEY;
         String searchResult = executeRequest(url);
 
-        List<String> result = new ArrayList<String>();
+        List<DiscogsImage> discogsImages = new ArrayList<DiscogsImage>();
         List<Integer> releaseIds = parseReleaseIds(searchResult);
         for (Integer releaseId : releaseIds) {
-            result.addAll(getImagesForRelease(releaseId));
-            if (result.size() >= 10) {
+            discogsImages.addAll(getImagesForRelease(releaseId));
+            if (discogsImages.size() >= 10) {
                 break;
             }
         }
+        Collections.sort(discogsImages);
+        String[] result = new String[discogsImages.size()];
+        for (int i = 0; i < result.length; ++i){
+            result[i] = discogsImages.get(i).getUrl();
+        }
 
         long t1 = System.currentTimeMillis();
-        LOG.info("Found " + result.size() + " cover image(s) at Discogs.com in " + (t1 - t0) + " ms.");
-        return result.toArray(new String[result.size()]);
+        LOG.info("Found " + result.length + " cover image(s) at Discogs.com in " + (t1 - t0) + " ms.");
+        return result;
     }
 
-    private List<String> getImagesForRelease(int releaseId) throws Exception {
+    private List<DiscogsImage> getImagesForRelease(int releaseId) throws Exception {
         String url = "http://www.discogs.com/release/" + releaseId + "?f=xml&api_key=" + DISCOGS_API_KEY;
         String searchResult = executeRequest(url);
 
         SAXBuilder builder = new SAXBuilder();
         Document document = builder.build(new StringReader(searchResult));
 
-        List<String> imageUrls = new ArrayList<String>();
+        List<DiscogsImage> imageUrls = new ArrayList<DiscogsImage>();
 
         Element root = document.getRootElement();
         Element release = root.getChild("release");
@@ -98,7 +105,7 @@ public class DiscogsSearchService {
                 Element image = (Element) obj;
                 String imageUrl = image.getAttributeValue("uri");
                 if (imageUrl != null) {
-                    imageUrls.add(imageUrl);
+                    imageUrls.add(new DiscogsImage(image));
                 }
             }
         }
@@ -149,7 +156,11 @@ public class DiscogsSearchService {
                 throw new IOException("Method failed: " + method.getStatusLine());
             }
 
-            in = new GZIPInputStream(method.getResponseBodyAsStream());
+            if (isGzipResponse(method)) {
+                in = new GZIPInputStream(method.getResponseBodyAsStream());
+            } else {
+                in = method.getResponseBodyAsStream();
+            }
             result = IOUtils.toString(in);
 
         } finally {
@@ -157,5 +168,75 @@ public class DiscogsSearchService {
             method.releaseConnection();
         }
         return result;
+    }
+
+     private boolean isGzipResponse(HttpMethod httpMethod) {
+         boolean isGzip = false;
+         Header encodingHeader = httpMethod.getResponseHeader("Content-Encoding");
+         if (encodingHeader != null && encodingHeader.getValue() != null) {
+             isGzip = encodingHeader.getValue().toLowerCase().indexOf("gzip") != -1;
+         }
+         return isGzip;
+     }
+
+    private static class DiscogsImage implements Comparable<DiscogsImage> {
+        private String url;
+        private int sortOrder;
+        private static final String TYPE_PRIMARY = "primary";
+        private static final String FORMAT_CD = "CD";
+        private static final String FORMAT_VINYL = "Vinyl";
+
+        private DiscogsImage(Element imageElement) {
+            url = imageElement.getAttributeValue("uri");
+            setSortOrder(imageElement);
+        }
+
+        /**
+         * Set the sort order based on the given image data. Primary images are preferred over secondary. CD and then
+         * Vinyl are preferred over other formats.
+         * @param imageElement image data.
+         */
+        private void setSortOrder(Element imageElement) {
+            String type = imageElement.getAttributeValue("type");
+            String format = null;
+
+            Element releaseElement = (Element) imageElement.getParent().getParent();
+            Element formatsElement = releaseElement.getChild("formats");
+            if (formatsElement != null) {
+                List<?> children = formatsElement.getChildren();
+                if (children.size() > 0) {
+                    Element formatElement = (Element) children.get(0);
+                    format = formatElement.getAttributeValue("name");
+                }
+            }
+
+            if (TYPE_PRIMARY.equalsIgnoreCase(type) && FORMAT_CD.equalsIgnoreCase(format)) {
+                sortOrder = 1;
+            } else if (TYPE_PRIMARY.equalsIgnoreCase(type) && FORMAT_VINYL.equalsIgnoreCase(format)) {
+                sortOrder = 2;
+            } else if (TYPE_PRIMARY.equalsIgnoreCase(type)) {
+                sortOrder = 3;
+            } else if (FORMAT_CD.equalsIgnoreCase(format)) {
+                sortOrder = 4;
+            } else if (FORMAT_VINYL.equalsIgnoreCase(format)) {
+                sortOrder = 5;
+            } else {
+                sortOrder = 6;
+            }
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public int compareTo(DiscogsImage otherImage) {
+            int result = 0;
+            if (sortOrder > otherImage.sortOrder){
+                result = 1;
+            } else if (sortOrder < otherImage.sortOrder){
+                result = -1;
+            }
+            return result;
+        }
     }
 }

@@ -19,9 +19,12 @@ Show different colored asterix when .complete exists.
 Improve design of DownloadFile.getCompleteFile() etc.
 Goes crazy when bandwidth too small.
 Persist playlist
+List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7854
 
 DONE IN 3.9
 ------------
+Bugfix: Fixed "Not in GZIP format" error in Discogs cover image search, courtesy of Christian Nedregård.
+New: Improved relevance for top hits in Discogs cover image search, courtesy of Christian Nedregård.
 TBT: Added Polish translation, courtesy of Micha? Kotas.
 Updated Finnish translation, courtesy of Reijo Jäärni.
 TBT: Hide donate button if valid license.
@@ -32,6 +35,7 @@ Bugfix: Avoid setting incorrect content length when transcoding or downsampling.
 
 ANDROID
 -------
+"Newest" list in Android.
 Android: Use HttpClient
 Android: Long-click on song list.
 Android: Option to auto-sync certain directories or playlists.
