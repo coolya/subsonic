@@ -18,6 +18,8 @@
  */
 package net.sourceforge.subsonic.domain;
 
+import java.net.InetAddress;
+
 import org.wetorrent.upnp.GatewayDevice;
 import org.wetorrent.upnp.GatewayDiscover;
 
@@ -43,8 +45,12 @@ public class WeUPnPRouter implements Router {
         return new WeUPnPRouter(device);
     }
 
-    public void addPortMapping(int externalPort, String internalClient,
-            int internalPort, int leaseDurationSeconds) throws Exception {
-        device.addPortMapping(externalPort, internalPort, internalClient, "TCP", "Subsonic");
+    public void addPortMapping(int externalPort, int internalPort, int leaseDuration) throws Exception {
+        String localIp = InetAddress.getLocalHost().getHostAddress();
+        device.addPortMapping(externalPort, internalPort, localIp, "TCP", "Subsonic");
+    }
+
+    public void deletePortMapping(int externalPort) throws Exception {
+        device.deletePortMapping(externalPort, "TCP");
     }
 }

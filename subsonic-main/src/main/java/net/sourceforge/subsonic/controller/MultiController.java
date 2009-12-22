@@ -73,12 +73,20 @@ public class MultiController extends MultiActionController {
     }
 
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
+        updatePortForwarding(request.getLocalPort());
         UserSettings userSettings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("showRight", userSettings.isShowNowPlayingEnabled() || userSettings.isShowChatEnabled());
         map.put("brand", settingsService.getBrand());
         return new ModelAndView("index", "model", map);
+    }
+
+    private void updatePortForwarding(int localPort) {
+        if (settingsService.getPortForwardingLocalPort() != localPort) {
+            settingsService.setPortForwardingLocalPort(localPort);
+            settingsService.save();
+        }
     }
 
     public ModelAndView test(HttpServletRequest request, HttpServletResponse response) {

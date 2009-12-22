@@ -155,6 +155,13 @@
         <property name="viewName" value="musicFolderSettings"/>
         <property name="settingsService" ref="settingsService"/>
     </bean>
+    <bean id="networkSettingsController" class="net.sourceforge.subsonic.controller.NetworkSettingsController">
+        <property name="commandClass" value="net.sourceforge.subsonic.command.NetworkSettingsCommand"/>
+        <property name="successView" value="networkSettings"/>
+        <property name="formView" value="networkSettings"/>
+        <property name="settingsService" ref="settingsService"/>
+        <property name="networkService" ref="networkService"/>
+    </bean>
     <bean id="transcodingSettingsController" class="net.sourceforge.subsonic.controller.TranscodingSettingsController">
         <property name="viewName" value="transcodingSettings"/>
         <property name="transcodingService" ref="transcodingService"/>
@@ -378,6 +385,7 @@
                 <prop key="/settings.view">settingsController</prop>
                 <prop key="/playerSettings.view">playerSettingsController</prop>
                 <prop key="/musicFolderSettings.view">musicFolderSettingsController</prop>
+                <prop key="/networkSettings.view">networkSettingsController</prop>
                 <prop key="/transcodingSettings.view">transcodingSettingsController</prop>
                 <prop key="/internetRadioSettings.view">internetRadioSettingsController</prop>
                 <prop key="/searchSettings.view">searchSettingsController</prop>

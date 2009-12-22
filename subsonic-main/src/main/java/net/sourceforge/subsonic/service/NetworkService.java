@@ -16,27 +16,23 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.ajax;
+package net.sourceforge.subsonic.service;
+
+import java.net.InetAddress;
 
 import net.sourceforge.subsonic.domain.Router;
 import net.sourceforge.subsonic.domain.WeUPnPRouter;
 
-import java.net.InetAddress;
-
 /**
- * Provides network-related services, including management of port mappings in the LAN router.
+ * Provides network-related services, including port forwarding on UPnP routers.
  *
  * @author Sindre Mehus
  */
 public class NetworkService {
 
+    private SettingsService settingsService;
 
-    public void setPortMappingEnabled(boolean enabled) {
-    }
-
-    public PortMapping getPortMappingStatus() {
-        return new PortMapping();
-    }
+    private int currentPublicPort;
 
     public static void main(String[] args) throws Exception {
 
@@ -52,10 +48,38 @@ public class NetworkService {
 
 
         int myPort = 9413;
-        router.addPortMapping(666, myIpAddress, myPort, 10);
+        router.addPortMapping(666, myPort, 10);
     }
 
 
+    public void initPortForwarding() {
+        Router router = findRouter();
+        if (router == null) {
+            // TODO
+            return;
+        }
+
+        // Delete old NAT entry.
+        if (currentPublicPort != 0 && currentPublicPort != settingsService.getPortForwardingPublicPort()) {
+            try {
+                router.deletePortMapping(currentPublicPort);
+            } catch (Throwable x) {
+                // TODO
+            }
+        }
+
+
+        // TODO: Implement
+        // Remember to remove old nat entry.
+    }
+
+    private Router findRouter() {
+        return null;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
+    }
 }
 
 

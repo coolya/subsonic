@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.domain;
 
 import java.io.IOException;
+import java.net.InetAddress;
 
 import net.sbbi.upnp.impls.InternetGatewayDevice;
 
@@ -27,42 +28,40 @@ import net.sbbi.upnp.impls.InternetGatewayDevice;
  */
 public class SBBIRouter implements Router {
 
-    /**
-	 * The timeout in milliseconds for finding a router device.
-	 */
+    // The timeout in milliseconds for finding a router device.
     private static final int DISCOVERY_TIMEOUT = 5000;
 
-    private final InternetGatewayDevice router;
+    private final InternetGatewayDevice device;
 
-    private SBBIRouter(InternetGatewayDevice router) {
-        this.router = router;
+    private SBBIRouter(InternetGatewayDevice device) {
+        this.device = device;
     }
-
 
     public static SBBIRouter findRouter() throws Exception {
-        InternetGatewayDevice[] routers;
-		try {
-			routers = InternetGatewayDevice.getDevices(DISCOVERY_TIMEOUT);
-		} catch (IOException e) {
-			throw new Exception("Could not find router", e);
-		}
+        InternetGatewayDevice[] devices;
+        try {
+            devices = InternetGatewayDevice.getDevices(DISCOVERY_TIMEOUT);
+        } catch (IOException e) {
+            throw new Exception("Could not find router", e);
+        }
 
-		if (routers == null || routers.length == 0) {
-			throw new Exception("No routers found");
-		}
+        if (devices == null || devices.length == 0) {
+            throw new Exception("No routers found");
+        }
 
-		if (routers.length != 1) {
-            throw new Exception("Found more than one router (" + routers.length + ")");
-		}
+        if (devices.length != 1) {
+            throw new Exception("Found more than one router (" + devices.length + ")");
+        }
 
-        return new SBBIRouter(routers[0]);
+        return new SBBIRouter(devices[0]);
     }
 
+    public void addPortMapping(int externalPort, int internalPort, int leaseDuration) throws Exception {
+        String localIp = InetAddress.getLocalHost().getHostAddress();
+        device.addPortMapping("Subsonic", null, internalPort, externalPort, localIp, leaseDuration, "TCP");
+    }
 
-    public void addPortMapping(int externalPort, String internalClient,
-            int internalPort, int leaseDurationSeconds) throws Exception {
-
-        router.addPortMapping("Subsonic", null, internalPort, externalPort,
-                internalClient, leaseDurationSeconds, "TCP");
+    public void deletePortMapping(int externalPort) throws Exception {
+        device.deletePortMapping(null, externalPort, "TCP");
     }
 }

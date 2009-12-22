@@ -1,8 +1,7 @@
 TODO IN 3.9
 --------------
-Cover batch:
-- Optimize SettingsService.getAllMusicFolders().
-
+In licence email, explain how to install it.
+Optimize SettingsService.getAllMusicFolders()?
 Use android icons in top.jsp
 Global option to disable chat.  Admin should be able to remove individual messages.
 Sort saved playlists.
@@ -11,6 +10,8 @@ Bug: Double-scrobbling when transcoding.
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
 Add new languages to features.php
 http://upnp-portmapper.sourceforge.net/
+Lyrics broken
+Welcome page
 
 TODO IN ANDROID 1.2
 -----------------------
@@ -63,7 +64,6 @@ BACKLOG
 ==========================
 Add "discovery date" to search index. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7369#7369
 Improve menus in web pages.  Make sub menus.
-In licence email, explain how to install it.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
 Use signed requests against Amazon.

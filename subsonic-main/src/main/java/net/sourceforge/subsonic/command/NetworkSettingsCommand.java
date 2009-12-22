@@ -16,27 +16,30 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.domain;
+package net.sourceforge.subsonic.command;
 
 /**
  * @author Sindre Mehus
  * @version $Id$
  */
-public interface Router {
+public class NetworkSettingsCommand {
 
-    /**
-     * Adds a NAT entry on the UPNP device.
-     *
-     * @param internalPort  The internal client port where data should be redirected.
-     * @param externalPort  The external port to open on the UPNP device an map on the internal client.
-     * @param leaseDuration Seconds the lease duration in seconds, or 0 for an infinite time.
-     */
-    void addPortMapping(int externalPort, int internalPort, int leaseDuration) throws Exception;
+    private boolean portForwardingEnabled;
+    private int portForwardingPublicPort;
 
-    /**
-     * Deletes a NAT entry on the UPNP device.
-     *
-     * @param externalPort The external port of the NAT entry to delete.
-     */
-    void deletePortMapping(int externalPort) throws Exception;
+    public void setPortForwardingEnabled(boolean portForwardingEnabled) {
+        this.portForwardingEnabled = portForwardingEnabled;
+    }
+
+    public boolean isPortForwardingEnabled() {
+        return portForwardingEnabled;
+    }
+
+    public void setPortForwardingPublicPort(int portForwardingPublicPort) {
+        this.portForwardingPublicPort = portForwardingPublicPort;
+    }
+
+    public int getPortForwardingPublicPort() {
+        return portForwardingPublicPort;
+    }
 }
