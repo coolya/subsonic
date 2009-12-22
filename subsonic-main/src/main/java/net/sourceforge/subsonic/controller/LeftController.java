@@ -180,7 +180,7 @@ public class LeftController extends ParameterizableViewController implements Las
         List<MusicFile> result = new ArrayList<MusicFile>();
         for (MusicFolder folder : folders) {
             MusicFile parent = musicFileService.getMusicFile(folder.getPath());
-            result.addAll(parent.getChildren(false, true));
+            result.addAll(parent.getChildren(true, false, true));
         }
         return result;
     }

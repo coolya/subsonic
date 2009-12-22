@@ -79,7 +79,7 @@ public class MainController extends ParameterizableViewController {
             return new ModelAndView(new RedirectView("home.view?"));
         }
 
-        List<MusicFile> children = paths.length == 1 ? dir.getChildren(true, true) : getMultiFolderChildren(paths);
+        List<MusicFile> children = paths.length == 1 ? dir.getChildren(true, true, true) : getMultiFolderChildren(paths);
         UserSettings userSettings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
 
         map.put("dir", dir);
@@ -167,7 +167,7 @@ public class MainController extends ParameterizableViewController {
             if (dir.isFile()) {
                 dir = dir.getParent();
             }
-            result.addAll(dir.getChildren(true, true));
+            result.addAll(dir.getChildren(true, true, true));
         }
         return result;
     }
@@ -194,7 +194,7 @@ public class MainController extends ParameterizableViewController {
 
     private void setPreviousAndNextAlbums(MusicFile dir, Map<String, Object> map) throws IOException {
         if (dir.isAlbum() && !dir.getParent().isRoot()) {
-            List<MusicFile> sieblings = dir.getParent().getChildren(true, true);
+            List<MusicFile> sieblings = dir.getParent().getChildren(true, true, true);
             for (Iterator<MusicFile> iterator = sieblings.iterator(); iterator.hasNext();) {
                 MusicFile siebling = iterator.next();
                 if (siebling.isFile()) {

@@ -92,7 +92,7 @@ public class MobileController extends MultiActionController {
         builder.add("directory", false, new Attribute("name", musicFile.getName()), new Attribute("path", StringUtil.utf8HexEncode(musicFile.getPath())));
 
         // TODO: Do not include contentType and URL if directory.
-        for (MusicFile child : musicFile.getChildren(true, true)) {
+        for (MusicFile child : musicFile.getChildren(true, true, true)) {
             String suffix = transcodingService.getSuffix(player, child);
             String contentType = StringUtil.getMimeType(suffix);
             String url = baseUrl + "stream?pathUtf8Hex=" + StringUtil.utf8HexEncode(child.getPath()) + "&mobile";

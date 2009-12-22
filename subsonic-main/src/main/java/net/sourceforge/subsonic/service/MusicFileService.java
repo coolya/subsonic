@@ -135,7 +135,7 @@ public class MusicFileService {
             }
         }
 
-        List<MusicFile> children = parent.getChildren(true, true);
+        List<MusicFile> children = parent.getChildren(false, true, true);
         childDirCache.put(new Element(parent, children));
 
         return children;

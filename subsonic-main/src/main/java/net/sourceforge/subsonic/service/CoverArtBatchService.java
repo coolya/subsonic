@@ -127,7 +127,7 @@ public class CoverArtBatchService {
                         }
                     }
                     // recursion
-                    addAlbums(musicFile.getChildren(true, false), albumsWithCover, albumsWithoutCover);
+                    addAlbums(musicFileService.getChildDirectories(musicFile), albumsWithCover, albumsWithoutCover);
                 } catch (IOException e) {
                     LOG.warn("Failed to process cover art of '" + musicFile.getPath() + "'.", e);
                 }

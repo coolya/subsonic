@@ -135,7 +135,7 @@ public class MusicIndexService {
             MusicFile parent = musicFileService.getMusicFile(folder.getPath());
             List<MusicFile> children = musicFileService.getChildDirectories(parent);
             for (MusicFile child : children) {
-                if (shortcutSet.contains(child.getName()) || !child.isDirectory()) {
+                if (shortcutSet.contains(child.getName())) {
                     continue;
                 }
 

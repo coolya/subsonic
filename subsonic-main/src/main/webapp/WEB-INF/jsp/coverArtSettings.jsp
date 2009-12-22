@@ -55,7 +55,7 @@
                 <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""}>
                     <str:truncateNicely upper="50">${fn:escapeXml(artist)}</str:truncateNicely>
                 </td>
-                <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""}>
+                <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-left:0.25em">
                     <a href="<sub:url value="changeCoverArt.view"><sub:param name="path" value="${musicFile.path}"/></sub:url>">
                         <str:truncateNicely upper="75">${fn:escapeXml(album)}</str:truncateNicely></a>
                 </td>

@@ -111,7 +111,7 @@ public class WapController extends MultiActionController {
         // Create array of file(s) to display.
         List<MusicFile> children;
         if (parent.isDirectory()) {
-            children = parent.getChildren(true, true);
+            children = parent.getChildren(true, true, true);
         } else {
             children = new ArrayList<MusicFile>();
             children.add(parent);

@@ -19,16 +19,21 @@
 package net.sourceforge.subsonic.domain;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.FalseFileFilter;
+import org.apache.commons.io.filefilter.FileFileFilter;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.springframework.util.StringUtils;
 
 import net.sourceforge.subsonic.Logger;
@@ -252,32 +257,39 @@ public class MusicFile implements Serializable {
     /**
      * Returns all music files that are children of this music file.
      *
+     * @param includeFiles       Whether files should be included in the result.
      * @param includeDirectories Whether directories should be included in the result.
-     * @param sort               Whether to sort files in the same directory.
-     * @return All children music files.
+     * @param sort               Whether to sort files in the same directory.   @return All children music files.
      * @throws IOException If an I/O error occurs.
      */
-    public List<MusicFile> getChildren(boolean includeDirectories, boolean sort) throws IOException {
-        List<MusicFile> result = new ArrayList<MusicFile>();
+    public List<MusicFile> getChildren(boolean includeFiles, boolean includeDirectories, boolean sort) throws IOException {
 
-        File[] files = FileUtil.listFiles(file);
-        MusicFile[] musicFiles = new MusicFile[files.length];
-        for (int i = 0; i < files.length; i++) {
-            musicFiles[i] = createMusicFile(files[i]);
+        FileFilter filter;
+        if (includeFiles && includeDirectories) {
+            filter = TrueFileFilter.INSTANCE;
+        } else if (includeFiles) {
+            filter = FileFileFilter.FILE;
+        } else if (includeDirectories) {
+            filter = DirectoryFileFilter.DIRECTORY;
+        } else {
+            filter = FalseFileFilter.INSTANCE;
+        }
+
+        File[] children = FileUtil.listFiles(file, filter);
+        List<MusicFile> result = new ArrayList<MusicFile>(children.length);
+
+        for (File child : children) {
+            try {
+                if (acceptMusic(child)) {
+                    result.add(createMusicFile(child));
+                }
+            } catch (SecurityException x) {
+                LOG.warn("Failed to create MusicFile for " + child, x);
+            }
         }
 
         if (sort) {
-            Arrays.sort(musicFiles, new MusicFileSorter());
-        }
-
-        for (MusicFile musicFile : musicFiles) {
-            if (acceptMusic(musicFile.getFile()) && (musicFile.isFile() || includeDirectories)) {
-                try {
-                    result.add(musicFile);
-                } catch (SecurityException x) {
-                    LOG.warn("Failed to create MusicFile for " + musicFile, x);
-                }
-            }
+            Collections.sort(result, new MusicFileSorter());
         }
 
         return result;
@@ -325,7 +337,7 @@ public class MusicFile implements Serializable {
         }
 
         if (isDirectory()) {
-            List<MusicFile> children = getChildren(true, visitor.sorted());
+            List<MusicFile> children = getChildren(true, true, visitor.sorted());
 
             for (MusicFile child : children) {
                 child.accept(visitor);
