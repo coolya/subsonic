@@ -59,7 +59,9 @@ public class MusicFile implements Serializable {
      * Do not use this method directly. Instead, use {@link MusicFileService#getMusicFile}.
      *
      * @param file A file on the local file system.
+     * @deprecated Use {@link MusicFileService#getMusicFile} instead.
      */
+    @Deprecated
     public MusicFile(File file) {
         this.file = file;
 

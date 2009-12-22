@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1" %>
 <%@ include file="include.jsp" %>
 
-<c:set var="categories" value="${param.restricted ? 'personal password player' : 'musicFolder general advanced personal user player transcoding internetRadio podcast search'}"/>
+<c:set var="categories" value="${param.restricted ? 'personal password player' : 'musicFolder general advanced personal user player transcoding internetRadio podcast search coverArt'}"/>
 <h1>
     <img src="<spring:theme code="settingsImage"/>" alt=""/>
     <fmt:message key="settingsheader.title"/>
@@ -9,8 +9,8 @@
 
 <c:forTokens items="${categories}" delims=" " var="cat" varStatus="loopStatus">
 
-    <c:if test="${(loopStatus.count - 1) % 5 == 0}"><h2></c:if>
-    <c:if test="${loopStatus.count > 1 and  (loopStatus.count - 1) % 5 != 0}">&nbsp;|&nbsp;</c:if>
+    <c:if test="${(loopStatus.count - 1) % 6 == 0}"><h2></c:if>
+    <c:if test="${loopStatus.count > 1 and  (loopStatus.count - 1) % 6 != 0}">&nbsp;|&nbsp;</c:if>
     <c:url var="url" value="${cat}Settings.view?"/>
 
     <c:choose>
@@ -22,8 +22,9 @@
         </c:otherwise>
     </c:choose>
 
-    <c:if test="${(loopStatus.count) % 5 == 0}"></h2></c:if>
+    <c:if test="${(loopStatus.count) % 6 == 0}"></h2></c:if>
 
 </c:forTokens>
+</h2>
 
 <p/>

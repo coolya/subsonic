@@ -51,6 +51,13 @@
         <property name="coverArtCache" ref="coverArtCache"/>
     </bean>
 
+    <bean id="coverArtBatchService" class="net.sourceforge.subsonic.service.CoverArtBatchService">
+        <property name="settingsService" ref="settingsService"/>
+        <property name="musicFileService" ref="musicFileService"/>
+        <property name="coverArtService" ref="ajaxCoverArtService"/>
+        <property name="discogsSearchService" ref="discogsSearchService"/>
+    </bean>
+
     <bean id="securityService" class="net.sourceforge.subsonic.service.SecurityService">
         <property name="settingsService" ref="settingsService"/>
         <property name="userDao" ref="userDao"/>
@@ -69,6 +76,7 @@
         <property name="securityService" ref="securityService"/>
         <property name="musicFileService" ref="musicFileService"/>
         <property name="musicInfoService" ref="musicInfoService"/>
+        <property name="coverArtBatchService" ref="coverArtBatchService"/>
     </bean>
 
     <bean id="playerService" class="net.sourceforge.subsonic.service.PlayerService">

@@ -75,6 +75,7 @@ public class SearchService {
     private SecurityService securityService;
     private MusicFileService musicFileService;
     private MusicInfoService musicInfoService;
+    private CoverArtBatchService coverArtBatchService;
 
     /**
      * Returns whether the search index exists.
@@ -154,6 +155,9 @@ public class SearchService {
 
             LOG.info("Created search index with " + scanner.getCount() + " entries.");
 
+            if (settingsService.isAutoCoverBatch()) {
+               coverArtBatchService.startBatch();
+            }
         } catch (Exception x) {
             LOG.error("Failed to create search index.", x);
         } finally {
@@ -662,6 +666,10 @@ public class SearchService {
 
     public void setMusicInfoService(MusicInfoService musicInfoService) {
         this.musicInfoService = musicInfoService;
+    }
+
+    public void setCoverArtBatchService(CoverArtBatchService coverArtBatchService) {
+        this.coverArtBatchService = coverArtBatchService;
     }
 
     /**

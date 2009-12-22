@@ -1,5 +1,8 @@
 TODO IN 3.9
 --------------
+Cover batch:
+- Optimize SettingsService.getAllMusicFolders().
+
 Use android icons in top.jsp
 Global option to disable chat.  Admin should be able to remove individual messages.
 Sort saved playlists.
@@ -24,6 +27,7 @@ List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/foru
 DONE IN 3.9
 ------------
 Bugfix: Fixed "Not in GZIP format" error in Discogs cover image search, courtesy of Christian Nedregård.
+New: Cover art batch download, courtesy of Christian Nedregård.
 New: Improved relevance for top hits in Discogs cover image search, courtesy of Christian Nedregård.
 TBT: Added Polish translation, courtesy of Micha? Kotas.
 Updated Finnish translation, courtesy of Reijo Jäärni.

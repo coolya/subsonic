@@ -98,6 +98,7 @@ public class SettingsService {
     private static final String KEY_LDAP_SEARCH_FILTER = "LdapSearchFilter";
     private static final String KEY_LDAP_AUTO_SHADOWING = "LdapAutoShadowing";
     private static final String KEY_SETTINGS_CHANGED = "SettingsChanged";
+    private static final String KEY_AUTO_COVER_BATCH = "AutoCoverBatch";
 
     // Default values.
     private static final String DEFAULT_INDEX_STRING = "A B C D E F G H I J K L M N O P Q R S T U V W X-Z(XYZ)";
@@ -142,6 +143,7 @@ public class SettingsService {
     private static final String DEFAULT_LDAP_MANAGER_PASSWORD = null;
     private static final String DEFAULT_LDAP_SEARCH_FILTER = "(sAMAccountName={0})";
     private static final boolean DEFAULT_LDAP_AUTO_SHADOWING = false;
+    private static final boolean DEFAULT_AUTO_COVER_BATCH = false;
     private static final long DEFAULT_SETTINGS_CHANGED = 0L;
 
     // Array of all keys.  Used to clean property file.
@@ -628,6 +630,14 @@ public class SettingsService {
 
     public long getSettingsChanged() {
         return Long.parseLong(properties.getProperty(KEY_SETTINGS_CHANGED, String.valueOf(DEFAULT_SETTINGS_CHANGED)));
+    }
+
+    public boolean isAutoCoverBatch() {
+        return Boolean.valueOf(properties.getProperty(KEY_AUTO_COVER_BATCH, String.valueOf(DEFAULT_AUTO_COVER_BATCH)));
+    }
+
+    public void setAutoCoverBatch(boolean isAutoCoverBatch) {
+        setProperty(KEY_AUTO_COVER_BATCH, String.valueOf(isAutoCoverBatch));
     }
 
     /**

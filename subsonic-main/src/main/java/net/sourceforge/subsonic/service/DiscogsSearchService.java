@@ -37,8 +37,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -47,10 +47,12 @@ import java.util.zip.GZIPInputStream;
  * @author Sindre Mehus
  */
 public class DiscogsSearchService {
-
     private static final Logger LOG = Logger.getLogger(DiscogsSearchService.class);
     private static final String DISCOGS_API_KEY = "53ee0045b6";
     private static final Pattern RELEASE_URL_PATTERN = Pattern.compile("http://www.discogs.com/(.*)/release/(\\d+)");
+    // This pattern will match information appended in parentheses or brackets such as "(disk 1)" and "[disk 1]".
+    // These appendages will typically not give any hits when searching Discogs, and can be removed.
+    private static final Pattern PATTERN_APPENDED_INFO = Pattern.compile("(.*)[\\[\\(].*[\\]\\)]\\s*");
 
     /**
      * Returns a list of URLs of cover art images from Discogs for the given artist and album.
@@ -63,12 +65,16 @@ public class DiscogsSearchService {
     public String[] getCoverArtImages(String artist, String album) throws Exception {
         long t0 = System.currentTimeMillis();
 
-        String query = URLEncoder.encode(artist + " " + album, StringUtil.ENCODING_UTF8);
-        String url = "http://www.discogs.com/search?type=all&q=" + query + "&f=xml&api_key=" + DISCOGS_API_KEY;
-        String searchResult = executeRequest(url);
+        List<Integer> releaseIds = searchForReleases(artist, album);
+        if (releaseIds.size() == 0 && album != null) {
+            Matcher appendedInfoMatcher = PATTERN_APPENDED_INFO.matcher(album);
+            if (appendedInfoMatcher.matches()) {
+                // retry the search with postfixes such as "(disk 1)" removed from the album title
+                releaseIds = searchForReleases(artist, appendedInfoMatcher.group(1));
+            }
+        }
 
         List<DiscogsImage> discogsImages = new ArrayList<DiscogsImage>();
-        List<Integer> releaseIds = parseReleaseIds(searchResult);
         for (Integer releaseId : releaseIds) {
             discogsImages.addAll(getImagesForRelease(releaseId));
             if (discogsImages.size() >= 10) {
@@ -77,13 +83,20 @@ public class DiscogsSearchService {
         }
         Collections.sort(discogsImages);
         String[] result = new String[discogsImages.size()];
-        for (int i = 0; i < result.length; ++i){
+        for (int i = 0; i < result.length; ++i) {
             result[i] = discogsImages.get(i).getUrl();
         }
 
         long t1 = System.currentTimeMillis();
         LOG.info("Found " + result.length + " cover image(s) at Discogs.com in " + (t1 - t0) + " ms.");
         return result;
+    }
+
+    private List<Integer> searchForReleases(String artist, String album) throws Exception {
+        String query = URLEncoder.encode(artist + " " + album, StringUtil.ENCODING_UTF8);
+        String url = "http://www.discogs.com/search?type=all&q=" + query + "&f=xml&api_key=" + DISCOGS_API_KEY;
+        String searchResult = executeRequest(url);
+        return parseReleaseIds(searchResult);
     }
 
     private List<DiscogsImage> getImagesForRelease(int releaseId) throws Exception {
@@ -170,14 +183,14 @@ public class DiscogsSearchService {
         return result;
     }
 
-     private boolean isGzipResponse(HttpMethod httpMethod) {
-         boolean isGzip = false;
-         Header encodingHeader = httpMethod.getResponseHeader("Content-Encoding");
-         if (encodingHeader != null && encodingHeader.getValue() != null) {
-             isGzip = encodingHeader.getValue().toLowerCase().indexOf("gzip") != -1;
-         }
-         return isGzip;
-     }
+    private boolean isGzipResponse(HttpMethod httpMethod) {
+        boolean isGzip = false;
+        Header encodingHeader = httpMethod.getResponseHeader("Content-Encoding");
+        if (encodingHeader != null && encodingHeader.getValue() != null) {
+            isGzip = encodingHeader.getValue().toLowerCase().indexOf("gzip") != -1;
+        }
+        return isGzip;
+    }
 
     private static class DiscogsImage implements Comparable<DiscogsImage> {
         private String url;
@@ -194,6 +207,7 @@ public class DiscogsSearchService {
         /**
          * Set the sort order based on the given image data. Primary images are preferred over secondary. CD and then
          * Vinyl are preferred over other formats.
+         *
          * @param imageElement image data.
          */
         private void setSortOrder(Element imageElement) {
@@ -231,9 +245,9 @@ public class DiscogsSearchService {
 
         public int compareTo(DiscogsImage otherImage) {
             int result = 0;
-            if (sortOrder > otherImage.sortOrder){
+            if (sortOrder > otherImage.sortOrder) {
                 result = 1;
-            } else if (sortOrder < otherImage.sortOrder){
+            } else if (sortOrder < otherImage.sortOrder) {
                 result = -1;
             }
             return result;
