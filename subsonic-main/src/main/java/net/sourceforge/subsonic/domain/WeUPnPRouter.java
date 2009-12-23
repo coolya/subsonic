@@ -18,10 +18,10 @@
  */
 package net.sourceforge.subsonic.domain;
 
-import java.net.InetAddress;
-
 import org.wetorrent.upnp.GatewayDevice;
 import org.wetorrent.upnp.GatewayDiscover;
+
+import java.net.InetAddress;
 
 /**
  * @author Sindre Mehus
@@ -39,7 +39,7 @@ public class WeUPnPRouter implements Router {
         discover.discover();
         GatewayDevice device = discover.getValidGateway();
         if (device == null) {
-            throw new Exception("No router found.");
+            return null;
         }
 
         return new WeUPnPRouter(device);

@@ -80,8 +80,8 @@
     </bean>
 
     <bean id="networkService" class="net.sourceforge.subsonic.service.NetworkService" init-method="initPortForwarding">
-            <property name="settingsService" ref="settingsService"/>
-        </bean>
+        <property name="settingsService" ref="settingsService"/>
+    </bean>
 
     <bean id="playerService" class="net.sourceforge.subsonic.service.PlayerService">
         <property name="playerDao" ref="playerDao"/>

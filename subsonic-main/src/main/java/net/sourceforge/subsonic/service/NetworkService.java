@@ -18,10 +18,12 @@
  */
 package net.sourceforge.subsonic.service;
 
-import java.net.InetAddress;
-
+import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.Router;
+import net.sourceforge.subsonic.domain.SBBIRouter;
 import net.sourceforge.subsonic.domain.WeUPnPRouter;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Provides network-related services, including port forwarding on UPnP routers.
@@ -30,50 +32,89 @@ import net.sourceforge.subsonic.domain.WeUPnPRouter;
  */
 public class NetworkService {
 
+    private static final Logger LOG = Logger.getLogger(NetworkService.class);
+
     private SettingsService settingsService;
-
     private int currentPublicPort;
+    private final AtomicBoolean initRunning = new AtomicBoolean();
 
-    public static void main(String[] args) throws Exception {
+    /**
+     * Configures UPnP port forwarding.
+     */
+    public synchronized void initPortForwarding() {
+        if (initRunning.get()) {
+            return;
+        }
+        initRunning.set(true);
 
-        String myIpAddress = InetAddress.getLocalHost().getHostAddress();
-        System.out.println(myIpAddress);
+        Thread thread = new Thread("UPnP init") {
+            @Override
+            public void run() {
+                try {
+                    doInitPortForwarding();
+                } finally {
+                    initRunning.set(false);
+                }
+            }
+        };
 
-        // No lease support.
-        Router router = WeUPnPRouter.findRouter();
-        System.out.println(router);
-
-//        Router router = SBBIRouter.findRouter();
-//        System.out.println(router);
-
-
-        int myPort = 9413;
-        router.addPortMapping(666, myPort, 10);
+        thread.setPriority(Thread.MIN_PRIORITY);
+        thread.start();
     }
 
+    private void doInitPortForwarding() {
 
-    public void initPortForwarding() {
         Router router = findRouter();
         if (router == null) {
-            // TODO
+            LOG.warn("No UPnP router found.");
             return;
         }
 
         // Delete old NAT entry.
-        if (currentPublicPort != 0 && currentPublicPort != settingsService.getPortForwardingPublicPort()) {
+        boolean enabled = settingsService.isPortForwardingEnabled();
+        if (!enabled ||
+            (currentPublicPort != 0 && currentPublicPort != settingsService.getPortForwardingPublicPort())) {
             try {
                 router.deletePortMapping(currentPublicPort);
+                LOG.info("Deleted port mapping for public port " + currentPublicPort);
             } catch (Throwable x) {
-                // TODO
+                LOG.warn("Failed to delete port mapping for public port " + currentPublicPort, x);
             }
         }
 
-
-        // TODO: Implement
-        // Remember to remove old nat entry.
+        // Create new NAT entry.
+        if (enabled) {
+            currentPublicPort = settingsService.getPortForwardingPublicPort();
+            int localPort = 0;
+            try {
+                localPort = settingsService.getPortForwardingLocalPort();
+                router.addPortMapping(currentPublicPort, localPort, 0);
+                LOG.info("Created port mapping from public port " + currentPublicPort + " to local port " + localPort);
+            } catch (Throwable x) {
+                LOG.warn("Failed to create port mapping from public port " + currentPublicPort + " to local port " + localPort, x);
+            }
+        }
     }
 
     private Router findRouter() {
+        try {
+            Router router = SBBIRouter.findRouter();
+            if (router != null) {
+                return router;
+            }
+        } catch (Throwable x) {
+            LOG.warn("Failed to find UPnP router using SBBI library.", x);
+        }
+
+        try {
+            Router router = WeUPnPRouter.findRouter();
+            if (router != null) {
+                return router;
+            }
+        } catch (Throwable x) {
+            LOG.warn("Failed to find UPnP router using WeUPnP library.", x);
+        }
+
         return null;
     }
 
@@ -81,9 +122,3 @@ public class NetworkService {
         this.settingsService = settingsService;
     }
 }
-
-
-
-
-
-

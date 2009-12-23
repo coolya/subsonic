@@ -18,10 +18,10 @@
  */
 package net.sourceforge.subsonic.domain;
 
+import net.sbbi.upnp.impls.InternetGatewayDevice;
+
 import java.io.IOException;
 import java.net.InetAddress;
-
-import net.sbbi.upnp.impls.InternetGatewayDevice;
 
 /**
  * @author Sindre Mehus
@@ -46,11 +46,7 @@ public class SBBIRouter implements Router {
         }
 
         if (devices == null || devices.length == 0) {
-            throw new Exception("No routers found");
-        }
-
-        if (devices.length != 1) {
-            throw new Exception("Found more than one router (" + devices.length + ")");
+            return null;
         }
 
         return new SBBIRouter(devices[0]);
