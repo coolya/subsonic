@@ -37,8 +37,7 @@
 
     <p>
         <input type="submit" value="<fmt:message key="common.save"/>" style="margin-right:0.3em">
-        <input type="button" value="<fmt:message key="common.cancel"/>"
-               onclick="location.href='nowPlaying.view'">
+        <input type="button" value="<fmt:message key="common.cancel"/>" onclick="location.href='nowPlaying.view'">
     </p>
 
     <p>
@@ -68,7 +67,8 @@
     <c:forEach items="${command.paginationElements}" var="page" varStatus="status">
         <c:choose>
             <c:when test="${page.active}">${page.position}</c:when>
-            <c:otherwise><a href="<c:url value="coverArtSettings.view"><c:param name="pageNumber" value="${page.position}"/></c:url>">${page.position}</a></c:otherwise>
+            <c:otherwise><a
+                    href="<c:url value="coverArtSettings.view"><c:param name="pageNumber" value="${page.position}"/></c:url>">${page.position}</a></c:otherwise>
         </c:choose>
     </c:forEach>
 </p>

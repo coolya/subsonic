@@ -72,8 +72,7 @@ public class NetworkService {
 
         // Delete old NAT entry.
         boolean enabled = settingsService.isPortForwardingEnabled();
-        if (!enabled ||
-            (currentPublicPort != 0 && currentPublicPort != settingsService.getPortForwardingPublicPort())) {
+        if (currentPublicPort != 0 && (!enabled || currentPublicPort != settingsService.getPortForwardingPublicPort())) {
             try {
                 router.deletePortMapping(currentPublicPort);
                 LOG.info("Deleted port mapping for public port " + currentPublicPort);

@@ -31,14 +31,15 @@
 
     <p>
         <fmt:message key="networksettings.portforwardingport"/>
-        <form:input id="portForwardingPublicPort" path="portForwardingPublicPort" size="6" cssStyle="margin-left:0.25em"/>
+        <form:input id="portForwardingPublicPort" path="portForwardingPublicPort" size="6"
+                    cssStyle="margin-left:0.25em"/>
     </p>
+
+    <p>
+        <input type="submit" value="<fmt:message key="common.save"/>" style="margin-right:0.3em">
+        <input type="button" value="<fmt:message key="common.cancel"/>" onclick="location.href='nowPlaying.view'">
+    </p>
+
 </form:form>
-
-<p>
-    <input type="submit" value="<fmt:message key="common.save"/>" style="margin-right:0.3em">
-    <input type="button" value="<fmt:message key="common.cancel"/>" onclick="location.href='nowPlaying.view'">
-</p>
-
 </body>
 </html>
