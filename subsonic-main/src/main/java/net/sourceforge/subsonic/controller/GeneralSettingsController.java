@@ -18,13 +18,13 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import org.springframework.web.servlet.mvc.*;
-import net.sourceforge.subsonic.service.*;
-import net.sourceforge.subsonic.command.*;
-import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.command.GeneralSettingsCommand;
+import net.sourceforge.subsonic.domain.Theme;
+import net.sourceforge.subsonic.service.SettingsService;
+import org.springframework.web.servlet.mvc.SimpleFormController;
 
-import javax.servlet.http.*;
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 /**
  * Controller for the page used to administrate general settings.
@@ -43,6 +43,7 @@ public class GeneralSettingsController extends SimpleFormController {
         command.setIndex(settingsService.getIndexString());
         command.setMusicMask(settingsService.getMusicMask());
         command.setPlaylistFolder(settingsService.getPlaylistFolder());
+        command.setGettingStartedEnabled(settingsService.isGettingStartedEnabled());
         command.setWelcomeTitle(settingsService.getWelcomeTitle());
         command.setWelcomeSubtitle(settingsService.getWelcomeSubtitle());
         command.setWelcomeMessage(settingsService.getWelcomeMessage());
@@ -95,6 +96,7 @@ public class GeneralSettingsController extends SimpleFormController {
         settingsService.setPlaylistFolder(command.getPlaylistFolder());
         settingsService.setMusicMask(command.getMusicMask());
         settingsService.setCoverArtMask(command.getCoverArtMask());
+        settingsService.setGettingStartedEnabled(command.isGettingStartedEnabled());
         settingsService.setWelcomeTitle(command.getWelcomeTitle());
         settingsService.setWelcomeSubtitle(command.getWelcomeSubtitle());
         settingsService.setWelcomeMessage(command.getWelcomeMessage());

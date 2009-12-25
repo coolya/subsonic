@@ -18,19 +18,20 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import org.springframework.web.servlet.*;
-import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.web.servlet.mvc.multiaction.*;
-
-import javax.servlet.http.*;
-import java.util.*;
-import java.net.URLEncoder;
-
-import net.sourceforge.subsonic.service.SecurityService;
-import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.util.StringUtil;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+import org.springframework.web.servlet.view.RedirectView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Multi-controller used for simple pages.
@@ -70,6 +71,19 @@ public class MultiController extends MultiActionController {
 
     public ModelAndView accessDenied(HttpServletRequest request, HttpServletResponse response) {
         return new ModelAndView("accessDenied");
+    }
+
+    public ModelAndView gettingStarted(HttpServletRequest request, HttpServletResponse response) {
+        updatePortForwarding(request.getLocalPort());
+
+        if (request.getParameter("hide") != null) {
+            settingsService.setGettingStartedEnabled(false);
+            settingsService.save();
+            return new ModelAndView(new RedirectView("home.view"));
+        }
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        return new ModelAndView("gettingStarted", "model", map);
     }
 
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {

@@ -18,8 +18,8 @@
  */
 package net.sourceforge.subsonic.command;
 
-import net.sourceforge.subsonic.controller.*;
-import net.sourceforge.subsonic.domain.*;
+import net.sourceforge.subsonic.controller.GeneralSettingsController;
+import net.sourceforge.subsonic.domain.Theme;
 
 /**
  * Command used in {@link GeneralSettingsController}.
@@ -33,6 +33,7 @@ public class GeneralSettingsCommand {
     private String index;
     private String ignoredArticles;
     private String shortcuts;
+    private boolean gettingStartedEnabled;
     private String welcomeTitle;
     private String welcomeSubtitle;
     private String welcomeMessage;
@@ -161,5 +162,13 @@ public class GeneralSettingsCommand {
 
     public void setReloadNeeded(boolean reloadNeeded) {
         isReloadNeeded = reloadNeeded;
+    }
+
+    public boolean isGettingStartedEnabled() {
+        return gettingStartedEnabled;
+    }
+
+    public void setGettingStartedEnabled(boolean gettingStartedEnabled) {
+        this.gettingStartedEnabled = gettingStartedEnabled;
     }
 }

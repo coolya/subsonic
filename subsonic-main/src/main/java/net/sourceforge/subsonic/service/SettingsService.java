@@ -98,6 +98,7 @@ public class SettingsService {
     private static final String KEY_LDAP_SEARCH_FILTER = "LdapSearchFilter";
     private static final String KEY_LDAP_AUTO_SHADOWING = "LdapAutoShadowing";
     private static final String KEY_AUTO_COVER_BATCH = "AutoCoverBatch";
+    private static final String KEY_GETTING_STARTED_ENABLED = "GettingStartedEnabled";
     private static final String KEY_PORT_FORWARDING_ENABLED = "PortForwardingEnabled";
     private static final String KEY_PORT_FORWARDING_PUBLIC_PORT = "PortForwardingPublicPort";
     private static final String KEY_PORT_FORWARDING_LOCAL_PORT = "PortForwardingLocalPort";
@@ -148,6 +149,7 @@ public class SettingsService {
     private static final boolean DEFAULT_LDAP_AUTO_SHADOWING = false;
     private static final boolean DEFAULT_AUTO_COVER_BATCH = false;
     private static final boolean DEFAULT_PORT_FORWARDING_ENABLED = false;
+    private static final boolean DEFAULT_GETTING_STARTED_ENABLED = true;
     private static final int DEFAULT_PORT_FORWARDING_PUBLIC_PORT = 80;
     private static final int DEFAULT_PORT_FORWARDING_LOCAL_PORT = 80;
     private static final long DEFAULT_SETTINGS_CHANGED = 0L;
@@ -160,7 +162,7 @@ public class SettingsService {
                                           KEY_PODCAST_EPISODE_DOWNLOAD_COUNT, KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT,
                                           KEY_LICENSE_EMAIL, KEY_LICENSE_CODE, KEY_LICENSE_DATE, KEY_DOWNSAMPLING_COMMAND, KEY_REWRITE_URL,
                                           KEY_LDAP_ENABLED, KEY_LDAP_URL, KEY_LDAP_MANAGER_DN, KEY_LDAP_MANAGER_PASSWORD, KEY_LDAP_SEARCH_FILTER, KEY_LDAP_AUTO_SHADOWING,
-                                          KEY_AUTO_COVER_BATCH, KEY_PORT_FORWARDING_ENABLED, KEY_PORT_FORWARDING_PUBLIC_PORT, KEY_PORT_FORWARDING_LOCAL_PORT, KEY_SETTINGS_CHANGED};
+                                          KEY_AUTO_COVER_BATCH, KEY_GETTING_STARTED_ENABLED, KEY_PORT_FORWARDING_ENABLED, KEY_PORT_FORWARDING_PUBLIC_PORT, KEY_PORT_FORWARDING_LOCAL_PORT, KEY_SETTINGS_CHANGED};
 
     private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
     private static final String THEMES_FILE = "/net/sourceforge/subsonic/theme/themes.txt";
@@ -648,6 +650,14 @@ public class SettingsService {
 
     public void setPortForwardingEnabled(boolean isPortForwardingEnabled) {
         setProperty(KEY_PORT_FORWARDING_ENABLED, String.valueOf(isPortForwardingEnabled));
+    }
+
+    public boolean isGettingStartedEnabled() {
+        return Boolean.valueOf(properties.getProperty(KEY_GETTING_STARTED_ENABLED, String.valueOf(DEFAULT_GETTING_STARTED_ENABLED)));
+    }
+
+    public void setGettingStartedEnabled(boolean isGettingStartedEnabled) {
+        setProperty(KEY_GETTING_STARTED_ENABLED, String.valueOf(isGettingStartedEnabled));
     }
 
     public int getPortForwardingPublicPort() {

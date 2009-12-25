@@ -18,15 +18,28 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
-import org.springframework.web.servlet.*;
-import org.springframework.web.servlet.mvc.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicFileInfo;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.MusicInfoService;
+import net.sourceforge.subsonic.service.SearchService;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
+import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.*;
-import java.io.*;
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Controller for the home page.
@@ -46,8 +59,14 @@ public class HomeController extends ParameterizableViewController {
     private SearchService searchService;
     private MusicInfoService musicInfoService;
     private MusicFileService musicFileService;
+    private SecurityService securityService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        User user = securityService.getCurrentUser(request);
+        if (user.isAdminRole() && settingsService.isGettingStartedEnabled()) {
+            return new ModelAndView(new RedirectView("gettingStarted.view"));
+        }
 
         int listSize = DEFAULT_LIST_SIZE;
         int listOffset = DEFAULT_LIST_OFFSET;
@@ -218,6 +237,10 @@ public class HomeController extends ParameterizableViewController {
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 
 

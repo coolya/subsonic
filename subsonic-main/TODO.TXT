@@ -1,5 +1,4 @@
-port forwarding:
-- sort of library dependencies.
+Show status in getting started.
 
 TODO IN 3.9
 --------------
