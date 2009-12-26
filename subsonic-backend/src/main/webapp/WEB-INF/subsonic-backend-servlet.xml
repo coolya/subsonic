@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="forwardController" class="net.sourceforge.subsonic.backend.controller.ForwardController">
+         <!--<property name="adService" ref="adService"/>-->
+    </bean>
+
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="alwaysUseFullPath" value="true"/>
+        <property name="mappings">
+            <props>
+                <prop key="/**">forwardController</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">-->
+        <!--<property name="basename" value="net.sourceforge.subsonic.i18n.ResourceBundle"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="themeSource" class="net.sourceforge.subsonic.theme.SubsonicThemeSource">-->
+        <!--<property name="basenamePrefix" value="net.sourceforge.subsonic.theme."/>-->
+        <!--<property name="defaultResourceBundle" value="net.sourceforge.subsonic.theme.default"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="localeResolver"-->
+          <!--class="net.sourceforge.subsonic.i18n.SubsonicLocaleResolver">-->
+        <!--<property name="securityService" ref="securityService"/>-->
+        <!--<property name="settingsService" ref="settingsService"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="themeResolver"-->
+          <!--class="net.sourceforge.subsonic.theme.SubsonicThemeResolver">-->
+        <!--<property name="securityService" ref="securityService"/>-->
+        <!--<property name="settingsService" ref="settingsService"/>-->
+    <!--</bean>-->
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+</beans>

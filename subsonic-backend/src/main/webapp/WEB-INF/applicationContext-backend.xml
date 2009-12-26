@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <!-- DAO's -->
+
+    <!--<bean id="playerDao" class="net.sourceforge.subsonic.dao.PlayerDao">-->
+        <!--<property name="daoHelper" ref="daoHelper"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="daoHelper" class="net.sourceforge.subsonic.dao.DaoHelper"/>-->
+
+
+    <!-- Services -->
+
+    <!--<bean id="musicFileService" class="net.sourceforge.subsonic.service.MusicFileService" init-method="init">-->
+        <!--<property name="securityService" ref="securityService"/>-->
+        <!--<property name="settingsService" ref="settingsService"/>-->
+        <!--<property name="musicFileCache" ref="musicFileCache"/>-->
+        <!--<property name="childDirCache" ref="childDirCache"/>-->
+        <!--<property name="coverArtCache" ref="coverArtCache"/>-->
+    <!--</bean>-->
+
+
+    <!-- AJAX services -->
+
+    <!--<bean id="ajaxNowPlayingService" class="net.sourceforge.subsonic.ajax.NowPlayingService">-->
+        <!--<property name="playerService" ref="playerService"/>-->
+        <!--<property name="statusService" ref="statusService"/>-->
+        <!--<property name="musicFileService" ref="musicFileService"/>-->
+        <!--<property name="settingsService" ref="settingsService"/>-->
+    <!--</bean>-->
+
+</beans>
