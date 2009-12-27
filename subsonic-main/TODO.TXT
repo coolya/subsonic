@@ -1,4 +1,7 @@
+
 Show status in getting started.
+Only allow ascii in vanity url.
+Support <username>.gosubsonic.com
 
 TODO IN 3.9
 --------------

@@ -4,15 +4,21 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-    <bean id="forwardController" class="net.sourceforge.subsonic.backend.controller.ForwardController">
-         <!--<property name="adService" ref="adService"/>-->
+    <bean id="redirectionController" class="net.sourceforge.subsonic.backend.controller.RedirectionController">
+         <property name="redirectionDao" ref="redirectionDao"/>
+    </bean>
+
+    <bean id="redirectionManagementController" class="net.sourceforge.subsonic.backend.controller.RedirectionManagementController">
+         <property name="redirectionDao" ref="redirectionDao"/>
     </bean>
 
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="alwaysUseFullPath" value="true"/>
         <property name="mappings">
             <props>
-                <prop key="/**">forwardController</prop>
+                <prop key="/redirect/register.view">redirectionManagementController</prop>
+                <prop key="/redirect/unregister.view">redirectionManagementController</prop>
+                <prop key="/**">redirectionController</prop>
             </props>
         </property>
     </bean>

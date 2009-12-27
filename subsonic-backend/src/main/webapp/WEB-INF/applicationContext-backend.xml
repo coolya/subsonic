@@ -6,11 +6,11 @@
 
     <!-- DAO's -->
 
-    <!--<bean id="playerDao" class="net.sourceforge.subsonic.dao.PlayerDao">-->
-        <!--<property name="daoHelper" ref="daoHelper"/>-->
-    <!--</bean>-->
+    <bean id="redirectionDao" class="net.sourceforge.subsonic.backend.dao.RedirectionDao">
+        <property name="daoHelper" ref="daoHelper"/>
+    </bean>
 
-    <!--<bean id="daoHelper" class="net.sourceforge.subsonic.dao.DaoHelper"/>-->
+    <bean id="daoHelper" class="net.sourceforge.subsonic.backend.dao.DaoHelper"/>
 
 
     <!-- Services -->
