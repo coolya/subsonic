@@ -30,7 +30,7 @@
     <tr>
         <td style="font-size:26pt;padding:15pt">2</td>
         <td>
-            <div style="font-size:14pt"><a href="musicFolderSettings.view"><fmt:message key="gettingStarted.step2.text"/></a></div>
+            <div style="font-size:14pt"><a href="musicFolderSettings.view"><fmt:message key="gettingStarted.step2.title"/></a></div>
             <div style="padding-top:5pt"><fmt:message key="gettingStarted.step2.text"/></div>
         </td>
     </tr>

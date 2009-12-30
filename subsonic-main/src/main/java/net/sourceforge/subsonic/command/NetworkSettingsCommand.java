@@ -26,6 +26,8 @@ public class NetworkSettingsCommand {
 
     private boolean portForwardingEnabled;
     private int portForwardingPublicPort;
+    private boolean urlRedirectionEnabled;
+    private String urlRedirectFrom;
 
     public void setPortForwardingEnabled(boolean portForwardingEnabled) {
         this.portForwardingEnabled = portForwardingEnabled;
@@ -41,5 +43,21 @@ public class NetworkSettingsCommand {
 
     public int getPortForwardingPublicPort() {
         return portForwardingPublicPort;
+    }
+
+    public boolean isUrlRedirectionEnabled() {
+        return urlRedirectionEnabled;
+    }
+
+    public void setUrlRedirectionEnabled(boolean urlRedirectionEnabled) {
+        this.urlRedirectionEnabled = urlRedirectionEnabled;
+    }
+
+    public String getUrlRedirectFrom() {
+        return urlRedirectFrom;
+    }
+
+    public void setUrlRedirectFrom(String urlRedirectFrom) {
+        this.urlRedirectFrom = urlRedirectFrom;
     }
 }

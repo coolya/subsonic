@@ -79,7 +79,7 @@
         <property name="coverArtBatchService" ref="coverArtBatchService"/>
     </bean>
 
-    <bean id="networkService" class="net.sourceforge.subsonic.service.NetworkService" init-method="initPortForwarding">
+    <bean id="networkService" class="net.sourceforge.subsonic.service.NetworkService" init-method="init">
         <property name="settingsService" ref="settingsService"/>
     </bean>
 
@@ -144,6 +144,10 @@
     </bean>
 
     <!-- AJAX services -->
+
+    <bean id="ajaxMultiService" class="net.sourceforge.subsonic.ajax.MultiService">
+        <property name="networkService" ref="networkService"/>
+    </bean>
 
     <bean id="ajaxNowPlayingService" class="net.sourceforge.subsonic.ajax.NowPlayingService">
         <property name="playerService" ref="playerService"/>

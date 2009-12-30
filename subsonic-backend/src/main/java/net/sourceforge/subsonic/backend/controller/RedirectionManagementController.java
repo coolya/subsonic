@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URL;
 import java.util.Date;
 
 /**
@@ -41,7 +42,8 @@ public class RedirectionManagementController extends MultiActionController {
 
         String redirectFrom = ServletRequestUtils.getRequiredStringParameter(request, "redirectFrom");
         String principal = ServletRequestUtils.getRequiredStringParameter(request, "principal");
-        String redirectTo = "http://www.google.com"; // TODO
+        int port = ServletRequestUtils.getRequiredIntParameter(request, "port");
+        String contextPath = ServletRequestUtils.getRequiredStringParameter(request, "contextPath");
         boolean trial = ServletRequestUtils.getBooleanParameter(request, "trial", false);
         Date lastUpdated = new Date();
         Date trialExpires = null;
@@ -49,6 +51,9 @@ public class RedirectionManagementController extends MultiActionController {
             trialExpires = new Date(ServletRequestUtils.getRequiredLongParameter(request, "trialExpires"));
         }
 
+        String host = request.getRemoteAddr();
+        URL url = new URL("http", host, port, "/" + contextPath);
+        String redirectTo = url.toExternalForm();
         Redirection redirection = redirectionDao.getRedirection(redirectFrom);
 
         // TODO: Check principal, trial expiration etc.

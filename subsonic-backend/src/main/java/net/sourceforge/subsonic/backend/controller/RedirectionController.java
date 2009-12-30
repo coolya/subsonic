@@ -52,7 +52,10 @@ public class RedirectionController implements Controller {
         redirectionDao.updateRedirection(redirection);
 
         // TODO: Handle expired trial.
-        return new ModelAndView(new RedirectView(redirection.getRedirectTo()));
+        String requestUrl = request.getRequestURL().toString();
+        // TODO: care about missing trailing slash?
+        String redirectTo = redirection.getRedirectTo() + "/" + StringUtils.substringAfterLast(requestUrl, "/");
+        return new ModelAndView(new RedirectView(redirectTo));
     }
 
     private String getRedirectFrom(HttpServletRequest request) throws MalformedURLException {

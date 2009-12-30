@@ -102,6 +102,8 @@ public class SettingsService {
     private static final String KEY_PORT_FORWARDING_ENABLED = "PortForwardingEnabled";
     private static final String KEY_PORT_FORWARDING_PUBLIC_PORT = "PortForwardingPublicPort";
     private static final String KEY_PORT_FORWARDING_LOCAL_PORT = "PortForwardingLocalPort";
+    private static final String KEY_URL_REDIRECTION_ENABLED = "UrlRedirectionEnabled";
+    private static final String KEY_URL_REDIRECT_FROM = "UrlRedirectFrom";
     private static final String KEY_SETTINGS_CHANGED = "SettingsChanged";
 
     // Default values.
@@ -152,6 +154,8 @@ public class SettingsService {
     private static final boolean DEFAULT_GETTING_STARTED_ENABLED = true;
     private static final int DEFAULT_PORT_FORWARDING_PUBLIC_PORT = 80;
     private static final int DEFAULT_PORT_FORWARDING_LOCAL_PORT = 80;
+    private static final boolean DEFAULT_URL_REDIRECTION_ENABLED = false;
+    private static final String DEFAULT_URL_REDIRECT_FROM = System.getProperty("user.name", null);
     private static final long DEFAULT_SETTINGS_CHANGED = 0L;
 
     // Array of all keys.  Used to clean property file.
@@ -162,7 +166,8 @@ public class SettingsService {
                                           KEY_PODCAST_EPISODE_DOWNLOAD_COUNT, KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT,
                                           KEY_LICENSE_EMAIL, KEY_LICENSE_CODE, KEY_LICENSE_DATE, KEY_DOWNSAMPLING_COMMAND, KEY_REWRITE_URL,
                                           KEY_LDAP_ENABLED, KEY_LDAP_URL, KEY_LDAP_MANAGER_DN, KEY_LDAP_MANAGER_PASSWORD, KEY_LDAP_SEARCH_FILTER, KEY_LDAP_AUTO_SHADOWING,
-                                          KEY_AUTO_COVER_BATCH, KEY_GETTING_STARTED_ENABLED, KEY_PORT_FORWARDING_ENABLED, KEY_PORT_FORWARDING_PUBLIC_PORT, KEY_PORT_FORWARDING_LOCAL_PORT, KEY_SETTINGS_CHANGED};
+                                          KEY_AUTO_COVER_BATCH, KEY_GETTING_STARTED_ENABLED, KEY_PORT_FORWARDING_ENABLED, KEY_PORT_FORWARDING_PUBLIC_PORT, KEY_PORT_FORWARDING_LOCAL_PORT,
+                                          KEY_URL_REDIRECTION_ENABLED, KEY_URL_REDIRECT_FROM, KEY_SETTINGS_CHANGED};
 
     private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
     private static final String THEMES_FILE = "/net/sourceforge/subsonic/theme/themes.txt";
@@ -644,20 +649,20 @@ public class SettingsService {
         setProperty(KEY_AUTO_COVER_BATCH, String.valueOf(isAutoCoverBatch));
     }
 
-    public boolean isPortForwardingEnabled() {
-        return Boolean.valueOf(properties.getProperty(KEY_PORT_FORWARDING_ENABLED, String.valueOf(DEFAULT_PORT_FORWARDING_ENABLED)));
-    }
-
-    public void setPortForwardingEnabled(boolean isPortForwardingEnabled) {
-        setProperty(KEY_PORT_FORWARDING_ENABLED, String.valueOf(isPortForwardingEnabled));
-    }
-
     public boolean isGettingStartedEnabled() {
         return Boolean.valueOf(properties.getProperty(KEY_GETTING_STARTED_ENABLED, String.valueOf(DEFAULT_GETTING_STARTED_ENABLED)));
     }
 
     public void setGettingStartedEnabled(boolean isGettingStartedEnabled) {
         setProperty(KEY_GETTING_STARTED_ENABLED, String.valueOf(isGettingStartedEnabled));
+    }
+
+    public boolean isPortForwardingEnabled() {
+        return Boolean.valueOf(properties.getProperty(KEY_PORT_FORWARDING_ENABLED, String.valueOf(DEFAULT_PORT_FORWARDING_ENABLED)));
+    }
+
+    public void setPortForwardingEnabled(boolean isPortForwardingEnabled) {
+        setProperty(KEY_PORT_FORWARDING_ENABLED, String.valueOf(isPortForwardingEnabled));
     }
 
     public int getPortForwardingPublicPort() {
@@ -674,6 +679,22 @@ public class SettingsService {
 
     public void setPortForwardingLocalPort(int port) {
         setProperty(KEY_PORT_FORWARDING_LOCAL_PORT, String.valueOf(port));
+    }
+
+    public boolean isUrlRedirectionEnabled() {
+        return Boolean.valueOf(properties.getProperty(KEY_URL_REDIRECTION_ENABLED, String.valueOf(DEFAULT_URL_REDIRECTION_ENABLED)));
+    }
+
+    public void setUrlRedirectionEnabled(boolean isUrlRedirectionEnabled) {
+        setProperty(KEY_URL_REDIRECTION_ENABLED, String.valueOf(isUrlRedirectionEnabled));
+    }
+
+    public String getUrlRedirectFrom() {
+        return properties.getProperty(KEY_URL_REDIRECT_FROM, DEFAULT_URL_REDIRECT_FROM);
+    }
+
+    public void setUrlRedirectFrom(String urlRedirectFrom) {
+        properties.setProperty(KEY_URL_REDIRECT_FROM, urlRedirectFrom);
     }
 
     public long getSettingsChanged() {

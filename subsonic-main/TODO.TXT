@@ -1,7 +1,10 @@
+click 7
+
 
 Show status in getting started.
+Show ajax status in network settings.
 Only allow ascii in vanity url.
-Support <username>.gosubsonic.com
+Addd URL "file" part when forwarding.
 
 TODO IN 3.9
 --------------

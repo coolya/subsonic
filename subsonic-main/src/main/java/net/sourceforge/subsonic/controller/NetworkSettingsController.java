@@ -19,9 +19,9 @@
 package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.command.NetworkSettingsCommand;
-import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.NetworkService;
-
+import net.sourceforge.subsonic.service.SettingsService;
+import org.apache.commons.lang.ObjectUtils;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,16 +41,29 @@ public class NetworkSettingsController extends SimpleFormController {
         NetworkSettingsCommand command = new NetworkSettingsCommand();
         command.setPortForwardingEnabled(settingsService.isPortForwardingEnabled());
         command.setPortForwardingPublicPort(settingsService.getPortForwardingPublicPort());
+        command.setUrlRedirectionEnabled(settingsService.isUrlRedirectionEnabled());
+        command.setUrlRedirectFrom(settingsService.getUrlRedirectFrom());
         return command;
     }
 
     protected void doSubmitAction(Object cmd) throws Exception {
         NetworkSettingsCommand command = (NetworkSettingsCommand) cmd;
-        settingsService.setPortForwardingEnabled(command.isPortForwardingEnabled());
-        settingsService.setPortForwardingPublicPort(command.getPortForwardingPublicPort());
-        settingsService.save();
 
-        networkService.initPortForwarding();
+        if (command.isPortForwardingEnabled() != settingsService.isPortForwardingEnabled() ||
+            command.getPortForwardingPublicPort() != settingsService.getPortForwardingPublicPort()) {
+            settingsService.setPortForwardingEnabled(command.isPortForwardingEnabled());
+            settingsService.setPortForwardingPublicPort(command.getPortForwardingPublicPort());
+            settingsService.save();
+            networkService.initPortForwarding();
+        }
+
+        if (command.isUrlRedirectionEnabled() != settingsService.isUrlRedirectionEnabled() ||
+            !ObjectUtils.equals(command.getUrlRedirectFrom(), settingsService.getUrlRedirectFrom())) {
+            settingsService.setUrlRedirectionEnabled(command.isUrlRedirectionEnabled());
+            settingsService.setUrlRedirectFrom(command.getUrlRedirectFrom());
+            settingsService.save();
+            networkService.initUrlRedirection();
+        }
     }
 
     public void setSettingsService(SettingsService settingsService) {
