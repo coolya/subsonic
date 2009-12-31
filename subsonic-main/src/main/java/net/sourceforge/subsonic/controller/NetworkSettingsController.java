@@ -25,6 +25,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * Controller for the page used to change the network settings.
@@ -32,6 +33,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Sindre Mehus
  */
 public class NetworkSettingsController extends SimpleFormController {
+
+    private static final long TRIAL_DAYS = 30L;
 
     private SettingsService settingsService;
     private NetworkService networkService;
@@ -61,6 +64,12 @@ public class NetworkSettingsController extends SimpleFormController {
             !ObjectUtils.equals(command.getUrlRedirectFrom(), settingsService.getUrlRedirectFrom())) {
             settingsService.setUrlRedirectionEnabled(command.isUrlRedirectionEnabled());
             settingsService.setUrlRedirectFrom(command.getUrlRedirectFrom());
+
+            if (!settingsService.isLicenseValid() && settingsService.getUrlRedirectTrialExpires() == null) {
+                Date expiryDate = new Date(System.currentTimeMillis() + TRIAL_DAYS * 24L * 3600L * 1000L);
+                settingsService.setUrlRedirectTrialExpires(expiryDate);
+            }
+
             settingsService.save();
             networkService.initUrlRedirection();
         }

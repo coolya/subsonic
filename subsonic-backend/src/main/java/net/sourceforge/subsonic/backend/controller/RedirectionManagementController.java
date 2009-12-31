@@ -20,6 +20,7 @@ package net.sourceforge.subsonic.backend.controller;
 
 import net.sourceforge.subsonic.backend.dao.RedirectionDao;
 import net.sourceforge.subsonic.backend.domain.Redirection;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,8 +28,11 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Sindre Mehus
@@ -77,6 +81,30 @@ public class RedirectionManagementController extends MultiActionController {
 
     public ModelAndView unregister(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return null; // TODO
+    }
+
+    public ModelAndView dump(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        File file = File.createTempFile("redirections", ".txt");
+        PrintWriter writer = new PrintWriter(file, "UTF-8");
+        try {
+            int offset = 0;
+            int count = 100;
+            while (true) {
+                List<Redirection> redirections = redirectionDao.getAllRedirections(offset, count);
+                if (redirections.isEmpty()) {
+                    break;
+                }
+                offset += redirections.size();
+                for (Redirection redirection : redirections) {
+                    writer.println(redirection);
+                }
+            }
+            LOG.info("Dumped redirections to " + file.getAbsolutePath());
+        } finally {
+            IOUtils.closeQuietly(writer);
+        }
+        return null;
     }
 
     public void setRedirectionDao(RedirectionDao redirectionDao) {

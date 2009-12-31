@@ -16,8 +16,9 @@
         <property name="alwaysUseFullPath" value="true"/>
         <property name="mappings">
             <props>
-                <prop key="/redirect/register.view">redirectionManagementController</prop>
-                <prop key="/redirect/unregister.view">redirectionManagementController</prop>
+                <prop key="/backend/redirect/register.view">redirectionManagementController</prop>
+                <prop key="/backend/redirect/unregister.view">redirectionManagementController</prop>
+                <prop key="/backend/redirect/dump.view">redirectionManagementController</prop>
                 <prop key="/**">redirectionController</prop>
             </props>
         </property>

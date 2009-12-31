@@ -6,6 +6,7 @@ Addd URL "file" part when forwarding.
 
 TODO IN 3.9
 --------------
+Test lyrics with non-ascii.
 In licence email, explain how to install it.
 Optimize SettingsService.getAllMusicFolders()?
 Use android icons in top.jsp
@@ -16,7 +17,6 @@ Bug: Double-scrobbling when transcoding.
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
 Add new languages to features.php
 http://upnp-portmapper.sourceforge.net/
-Lyrics broken
 Welcome page
 
 TODO IN ANDROID 1.2
@@ -33,6 +33,7 @@ List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/foru
 
 DONE IN 3.9
 ------------
+Bugfix: Fixed lyrics lookup. Now uses lyricsfly.com which provides a stable API.
 Bugfix: Fixed "Not in GZIP format" error in Discogs cover image search, courtesy of Christian Nedregård.
 New: Cover art batch download, courtesy of Christian Nedregård.
 New: Improved relevance for top hits in Discogs cover image search, courtesy of Christian Nedregård.

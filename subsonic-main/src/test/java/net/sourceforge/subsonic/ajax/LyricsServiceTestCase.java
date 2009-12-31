@@ -3,7 +3,6 @@ package net.sourceforge.subsonic.ajax;
 import junit.framework.TestCase;
 import org.apache.commons.io.IOUtils;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -21,48 +20,26 @@ public class LyricsServiceTestCase extends TestCase {
         lyricsService = new LyricsService();
     }
 
-    public void testGetLyricsUrl() throws IOException {
-        InputStream in = getClass().getResourceAsStream("metrolyrics_search_result.html");
+    public void testGetLyrics() throws Exception {
+        InputStream in = getClass().getResourceAsStream("lyricsfly-found.xml");
         try {
-            String html = IOUtils.toString(in);
-            assertEquals("Error in getLyricsUrl().", "http://www.metrolyrics.com/a-song-for-departure-lyrics-manic-street-preachers.html",
-                         lyricsService.getLyricsUrl(html));
+            String xml = IOUtils.toString(in);
+            LyricsInfo lyricsInfo = lyricsService.parse(xml);
+            assertEquals("Wrong lyrics header.", "U2 - Beautiful Day", lyricsInfo.getHeader());
+            assertTrue("Wrong lyrics.", lyricsInfo.getLyrics().startsWith("The heart is a bloom<br>"));
         } finally {
             IOUtils.closeQuietly(in);
         }
     }
 
-    public void testGetLyricsUrl_NotFound() throws IOException {
-        InputStream in = getClass().getResourceAsStream("metrolyrics_search_result_not_found.html");
+    public void testGetLyricsNotFound() throws Exception {
+        InputStream in = getClass().getResourceAsStream("lyricsfly-notfound.xml");
         try {
-            String html = IOUtils.toString(in);
-            assertNull("Error in getLyricsUrl().", lyricsService.getLyricsUrl(html));
-        } finally {
-            IOUtils.closeQuietly(in);
-        }
-    }
-
-    public void testGetLyrics1() throws IOException {
-        InputStream in = getClass().getResourceAsStream("metrolyrics_lyrics_1.html");
-        try {
-            String html = IOUtils.toString(in);
-            String lyrics = lyricsService.getLyrics(html);
-            assertNotNull("Error in getLyrics().", lyrics);
-            assertTrue("Error in getLyrics().", lyrics.startsWith("&#65;&#110;&#100;"));
-            assertTrue("Error in getLyrics().", lyrics.endsWith("&#110;&#103;<br /><br />"));
-            assertFalse("Error in getLyrics().", lyrics.contains("<class id=\"NoSteal\">"));
-            assertFalse("Error in getLyrics().", lyrics.contains("http://www.metrolyrics.com"));
-        } finally {
-            IOUtils.closeQuietly(in);
-        }
-    }
-
-    public void testGetHeader1() throws IOException {
-        InputStream in = getClass().getResourceAsStream("metrolyrics_lyrics_1.html");
-        try {
-            String html = IOUtils.toString(in);
-            String header = lyricsService.getHeader(html);
-            assertEquals("Error in getHeader().", "A Song For Departure", header);
+            String xml = IOUtils.toString(in);
+            lyricsService.parse(xml);
+            fail("Expected exception.");
+        } catch (Exception x) {
+            // Expected
         } finally {
             IOUtils.closeQuietly(in);
         }

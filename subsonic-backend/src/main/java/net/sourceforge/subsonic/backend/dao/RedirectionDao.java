@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides database services for transcoding configurations.
@@ -28,6 +30,23 @@ public class RedirectionDao extends AbstractDao {
     public Redirection getRedirection(String redirectFrom) {
         String sql = "select " + COLUMNS + " from redirection where redirect_from=?";
         return queryOne(sql, rowMapper, redirectFrom);
+    }
+
+    /**
+     * Returns all redirections with respect to the given row offset and count.
+     *
+     * @param offset Number of rows to skip.
+     * @param count  Maximum number of rows to return.
+     * @return Redirections with respect to the given row offset and count.
+     */
+    public List<Redirection> getAllRedirections(int offset, int count) {
+        if (count < 1) {
+            return new ArrayList<Redirection>();
+        }
+        String sql = "select " + COLUMNS + " from redirection " +
+                     "order by id " +
+                     "limit " + count + " offset " + offset;
+        return query(sql, rowMapper);
     }
 
     /**

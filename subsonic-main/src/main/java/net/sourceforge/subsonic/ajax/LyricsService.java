@@ -18,24 +18,26 @@
  */
 package net.sourceforge.subsonic.ajax;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.CharUtils;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.input.SAXBuilder;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.util.StringUtil;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
- * Provides AJAX-enabled services for retrieving song lyrics, by screen-scraping http://www.lyrc.com.ar.
+ * Provides AJAX-enabled services for retrieving song lyrics from lyricsfly.com.
+ * <p/>
+ * See http://lyricsfly.com/api/ for details.
  * <p/>
  * This class is used by the DWR framework (http://getahead.ltd.uk/dwr/).
  *
@@ -44,6 +46,16 @@ import net.sourceforge.subsonic.util.StringUtil;
 public class LyricsService {
 
     private static final Logger LOG = Logger.getLogger(LyricsService.class);
+
+    private static final String KEY_ENC = "35353630393138353835362d737562736f6e69632e736f75726365666f7267652e6e6574";
+
+    // TODO: Remove
+    public static void main(String[] args) {
+        LyricsInfo lyrics = new LyricsService().getLyrics("U2", "Beautiful Day");
+        System.out.println(lyrics.getLyrics());
+        System.out.println();
+        System.out.println(lyrics.getHeader());
+    }
 
     /**
      * Returns lyrics for the given song and artist.
@@ -55,17 +67,13 @@ public class LyricsService {
     public LyricsInfo getLyrics(String artist, String song) {
         try {
 
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("search", artist + " " + song);
-            params.put("category", "artisttitle");
+            artist = encode(artist);
+            song = encode(song);
 
-            String searchResultHtml = executePostRequest("http://www.metrolyrics.com/search.php", params);
-            String lyricsUrl = getLyricsUrl(searchResultHtml);
-            if (lyricsUrl == null) {
-                return new LyricsInfo();
-            }
-            String lyricsHtml = executeGetRequest(lyricsUrl);
-            return new LyricsInfo(getLyrics(lyricsHtml), getHeader(lyricsHtml));
+            String url = "http://api.lyricsfly.com/api/api.php?i=" + StringUtil.utf8HexDecode(KEY_ENC) + "&a=" + artist + "&t=" + song;
+            String xml = executeGetRequest(url);
+            System.out.println(xml);
+            return parse(xml);
 
         } catch (Exception x) {
             LOG.warn("Failed to get lyrics for song '" + song + "'.", x);
@@ -73,81 +81,42 @@ public class LyricsService {
         }
     }
 
-    /**
-     * Extracts the lyrics URL from the given HTML text.
-     *
-     * @param html The HTML containing search results from http://www.metrolyrics.com/search.php
-     * @return The first lyrics URL in the HTML, or <code>null</code> if not found.
-     */
-    protected String getLyricsUrl(String html) {
+    private String encode(String s) throws UnsupportedEncodingException {
+        StringBuilder builder = new StringBuilder(s.length());
 
-        // Grep for the following pattern:
-        // <td class="First"><a href="http://www.metrolyrics.com/a-song-for-departure-lyrics-manic-street-preachers.html">A Song For Departure</a></td>
-
-        Pattern pattern = Pattern.compile("<td class=\"First\"><a href=\"(.*?)\"");
-        Matcher matcher = pattern.matcher(html);
-        if (matcher.find()) {
-            return matcher.group(1);
-        }
-        return null;
-    }
-
-    /**
-     * Extracts the lyrics from the given HTML text.
-     *
-     * @param html The HTML containing the lyrics, e.g., http://www.metrolyrics.com/a-song-for-departure-lyrics-manic-street-preachers.html
-     * @return The extracted lyrics.
-     */
-    protected String getLyrics(String html) {
-
-        String startPattern = "<span id=\"lyrics\">";
-        String stopPattern = "</span>";
-
-        int startIndex = html.indexOf(startPattern);
-        if (startIndex == -1) {
-            return null;
+        // Replace non-alphanumeric characters with "%".
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (CharUtils.isAsciiAlphanumeric(c) || Character.isWhitespace(c)) {
+                builder.append(c);
+            } else {
+                builder.append("%");
+            }
         }
 
-        int stopIndex = StringUtils.indexOf(html, stopPattern, startIndex);
-        return StringUtils.trimToNull(html.substring(startIndex + startPattern.length(), stopIndex));
+        return URLEncoder.encode(s, StringUtil.ENCODING_UTF8);
     }
 
-    /**
-     * Extracts the header (containing the matching artist/song) from the given HTML text.
-     *
-     * @param html The HTML containing the lyrics, e.g., http://www.metrolyrics.com/a-song-for-departure-lyrics-manic-street-preachers.html
-     * @return The extracted header text.
-     */
-    protected String getHeader(String html) {
+    protected LyricsInfo parse(String xml) throws Exception {
+        SAXBuilder builder = new SAXBuilder();
+        Document document = builder.build(new StringReader(xml));
 
-        // Grep for the following pattern:
-        // 	<h3>A Song For Departure Lyrics</h3>
-
-        Pattern pattern = Pattern.compile("<h3>(.*) Lyrics</h3>");
-        Matcher matcher = pattern.matcher(html);
-        if (matcher.find()) {
-            return matcher.group(1);
+        Element root = document.getRootElement();
+        String status = root.getChildText("status");
+        if (!"200".equals(status)) {
+            throw new Exception("lyricsfly.com returned status " + status);
         }
-        return null;
+        Element song = root.getChild("sg");
+        String lyrics = song.getChildText("tx").replace("[br]", "<br>");
+        String header = song.getChildText("ar") + " - " + song.getChildText("tt");
+        return new LyricsInfo(lyrics, header);
     }
+
 
     private String executeGetRequest(String url) throws IOException {
-        return executeRequest(new GetMethod(url));
-    }
-
-    private String executePostRequest(String url, Map<String, String> parameters) throws IOException {
-        PostMethod method = new PostMethod(url);
-
-        for (Map.Entry<String, String> entry : parameters.entrySet()) {
-            method.addParameter(entry.getKey(), entry.getValue());
-        }
-        return executeRequest(method);
-    }
-
-    private String executeRequest(HttpMethod method) throws IOException {
+        HttpMethod method = new GetMethod(url);
         HttpClient client = new HttpClient();
         client.getParams().setContentCharset(StringUtil.ENCODING_UTF8);
-
         try {
             int statusCode = client.executeMethod(method);
 
@@ -162,4 +131,5 @@ public class LyricsService {
         }
 
     }
+
 }

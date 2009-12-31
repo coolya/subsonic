@@ -44,7 +44,7 @@ public class NetworkService {
     private static final Logger LOG = Logger.getLogger(NetworkService.class);
     private static final long PORT_FORWARDING_DELAY = 3600L;
     private static final long URL_REDIRECTION_DELAY = 2 * 3600L;
-    private static final String URL_REDIRECTION_REGISTRATION_URL = "http://localhost:8181/redirect/register.view"; // TODO: change
+    private static final String URL_REDIRECTION_REGISTRATION_URL = "http://localhost:8181/backend/redirect/register.view"; // TODO: change
 
     private SettingsService settingsService;
     private int currentPublicPort;
