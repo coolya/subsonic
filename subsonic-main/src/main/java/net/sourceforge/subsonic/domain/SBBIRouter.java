@@ -29,7 +29,7 @@ import java.net.InetAddress;
 public class SBBIRouter implements Router {
 
     // The timeout in milliseconds for finding a router device.
-    private static final int DISCOVERY_TIMEOUT = 5000;
+    private static final int DISCOVERY_TIMEOUT = 3000;
 
     private final InternetGatewayDevice device;
 

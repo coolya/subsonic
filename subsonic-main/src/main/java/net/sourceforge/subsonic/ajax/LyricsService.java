@@ -46,16 +46,7 @@ import java.net.URLEncoder;
 public class LyricsService {
 
     private static final Logger LOG = Logger.getLogger(LyricsService.class);
-
     private static final String KEY_ENC = "35353630393138353835362d737562736f6e69632e736f75726365666f7267652e6e6574";
-
-    // TODO: Remove
-    public static void main(String[] args) {
-        LyricsInfo lyrics = new LyricsService().getLyrics("U2", "Beautiful Day");
-        System.out.println(lyrics.getLyrics());
-        System.out.println();
-        System.out.println(lyrics.getHeader());
-    }
 
     /**
      * Returns lyrics for the given song and artist.

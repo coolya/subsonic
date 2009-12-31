@@ -105,6 +105,8 @@ public class SettingsService {
     private static final String KEY_URL_REDIRECTION_ENABLED = "UrlRedirectionEnabled";
     private static final String KEY_URL_REDIRECT_FROM = "UrlRedirectFrom";
     private static final String KEY_URL_REDIRECT_TRIAL_EXPIRES = "UrlRedirectTrialExpires";
+    private static final String KEY_URL_REDIRECT_CONTEXT_PATH = "UrlRedirectContextPath";
+    private static final String KEY_SERVER_ID = "ServerId";
     private static final String KEY_SETTINGS_CHANGED = "SettingsChanged";
 
     // Default values.
@@ -158,6 +160,8 @@ public class SettingsService {
     private static final boolean DEFAULT_URL_REDIRECTION_ENABLED = false;
     private static final String DEFAULT_URL_REDIRECT_FROM = System.getProperty("user.name", null);
     private static final String DEFAULT_URL_REDIRECT_TRIAL_EXPIRES = null;
+    private static final String DEFAULT_URL_REDIRECT_CONTEXT_PATH = null;
+    private static final String DEFAULT_SERVER_ID = null;
     private static final long DEFAULT_SETTINGS_CHANGED = 0L;
 
     // Array of all keys.  Used to clean property file.
@@ -169,7 +173,7 @@ public class SettingsService {
                                           KEY_LICENSE_EMAIL, KEY_LICENSE_CODE, KEY_LICENSE_DATE, KEY_DOWNSAMPLING_COMMAND, KEY_REWRITE_URL,
                                           KEY_LDAP_ENABLED, KEY_LDAP_URL, KEY_LDAP_MANAGER_DN, KEY_LDAP_MANAGER_PASSWORD, KEY_LDAP_SEARCH_FILTER, KEY_LDAP_AUTO_SHADOWING,
                                           KEY_AUTO_COVER_BATCH, KEY_GETTING_STARTED_ENABLED, KEY_PORT_FORWARDING_ENABLED, KEY_PORT_FORWARDING_PUBLIC_PORT, KEY_PORT_FORWARDING_LOCAL_PORT,
-                                          KEY_URL_REDIRECTION_ENABLED, KEY_URL_REDIRECT_FROM, KEY_URL_REDIRECT_TRIAL_EXPIRES, KEY_SETTINGS_CHANGED};
+                                          KEY_URL_REDIRECTION_ENABLED, KEY_URL_REDIRECT_FROM, KEY_URL_REDIRECT_TRIAL_EXPIRES, KEY_URL_REDIRECT_CONTEXT_PATH, KEY_SERVER_ID, KEY_SETTINGS_CHANGED};
 
     private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
     private static final String THEMES_FILE = "/net/sourceforge/subsonic/theme/themes.txt";
@@ -711,6 +715,22 @@ public class SettingsService {
     public void setUrlRedirectTrialExpires(Date date) {
         String value = (date == null ? null : String.valueOf(date.getTime()));
         setProperty(KEY_URL_REDIRECT_TRIAL_EXPIRES, value);
+    }
+
+    public String getUrlRedirectContextPath() {
+        return properties.getProperty(KEY_URL_REDIRECT_CONTEXT_PATH, DEFAULT_URL_REDIRECT_CONTEXT_PATH);
+    }
+
+    public void setUrlRedirectContextPath(String contextPath) {
+        properties.setProperty(KEY_URL_REDIRECT_CONTEXT_PATH, contextPath);
+    }
+
+    public String getServerId() {
+        return properties.getProperty(KEY_SERVER_ID, DEFAULT_SERVER_ID);
+    }
+
+    public void setServerId(String serverId) {
+        properties.setProperty(KEY_SERVER_ID, serverId);
     }
 
     public long getSettingsChanged() {

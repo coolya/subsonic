@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * Controller for the page used to change the network settings.
@@ -68,6 +69,11 @@ public class NetworkSettingsController extends SimpleFormController {
             if (!settingsService.isLicenseValid() && settingsService.getUrlRedirectTrialExpires() == null) {
                 Date expiryDate = new Date(System.currentTimeMillis() + TRIAL_DAYS * 24L * 3600L * 1000L);
                 settingsService.setUrlRedirectTrialExpires(expiryDate);
+            }
+
+            if (settingsService.getServerId() == null) {
+                Random rand = new Random(System.currentTimeMillis());
+                settingsService.setServerId(String.valueOf(rand.nextLong()));
             }
 
             settingsService.save();

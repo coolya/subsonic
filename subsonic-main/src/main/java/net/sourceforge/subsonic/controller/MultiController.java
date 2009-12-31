@@ -23,6 +23,7 @@ import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.util.StringUtil;
+import org.apache.commons.lang.ObjectUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import org.springframework.web.servlet.view.RedirectView;
@@ -74,7 +75,7 @@ public class MultiController extends MultiActionController {
     }
 
     public ModelAndView gettingStarted(HttpServletRequest request, HttpServletResponse response) {
-        updatePortForwarding(request.getLocalPort());
+        updatePortAndContextPath(request);
 
         if (request.getParameter("hide") != null) {
             settingsService.setGettingStartedEnabled(false);
@@ -87,7 +88,7 @@ public class MultiController extends MultiActionController {
     }
 
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
-        updatePortForwarding(request.getLocalPort());
+        updatePortAndContextPath(request);
         UserSettings userSettings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
 
         Map<String, Object> map = new HashMap<String, Object>();
@@ -96,9 +97,15 @@ public class MultiController extends MultiActionController {
         return new ModelAndView("index", "model", map);
     }
 
-    private void updatePortForwarding(int localPort) {
+    private void updatePortAndContextPath(HttpServletRequest request) {
+        int localPort = request.getLocalPort();
+        String contextPath = request.getContextPath().replace("/", "");
         if (settingsService.getPortForwardingLocalPort() != localPort) {
             settingsService.setPortForwardingLocalPort(localPort);
+            settingsService.save();
+        }
+        if (!ObjectUtils.equals(settingsService.getUrlRedirectContextPath(), contextPath)) {
+            settingsService.setUrlRedirectContextPath(contextPath);
             settingsService.save();
         }
     }
