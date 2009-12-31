@@ -555,6 +555,10 @@ public class SettingsService {
         setProperty(KEY_LICENSE_DATE, value);
     }
 
+    public boolean isLicenseValid() {
+        return isLicenseValid(getLicenseEmail(), getLicenseCode());
+    }
+    
     public boolean isLicenseValid(String email, String license) {
 
         if (email == null || license == null) {

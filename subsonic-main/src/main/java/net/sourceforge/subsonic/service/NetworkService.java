@@ -179,13 +179,14 @@ public class NetworkService {
             int port = settingsService.isPortForwardingEnabled() ?
                        settingsService.getPortForwardingPublicPort() :
                        settingsService.getPortForwardingLocalPort();
+            boolean trial = !settingsService.isLicenseValid();
 
             // TODO
             method.addParameter("redirectFrom", settingsService.getUrlRedirectFrom());
             method.addParameter("principal", "sindre@activeobjects.no");
             method.addParameter("port", String.valueOf(port));
-//            method.addParameter("contextPath", foo);
-            method.addParameter("trial", "false");
+            method.addParameter("contextPath", "");
+            method.addParameter("trial", String.valueOf(trial));
 //            method.addParameter("trialExpires", bar);
             HttpClient client = new HttpClient();
 

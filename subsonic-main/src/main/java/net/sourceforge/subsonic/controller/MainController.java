@@ -92,7 +92,7 @@ public class MainController extends ParameterizableViewController {
         map.put("updateNowPlaying", request.getParameter("updateNowPlaying") != null);
         map.put("partyMode", userSettings.isPartyModeEnabled());
         map.put("brand", settingsService.getBrand());
-        if (!isLicensed()) {
+        if (!settingsService.isLicenseValid()) {
             map.put("ad", adService.getAd());
         }
 
@@ -170,11 +170,6 @@ public class MainController extends ParameterizableViewController {
             result.addAll(dir.getChildren(true, true, true));
         }
         return result;
-    }
-
-    private boolean isLicensed() {
-        return settingsService.isLicenseValid(settingsService.getLicenseEmail(),
-                                              settingsService.getLicenseCode());
     }
 
     private List<MusicFile> getAncestors(MusicFile dir) throws IOException {

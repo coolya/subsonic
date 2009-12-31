@@ -1,6 +1,4 @@
-click 7
-
-
+Disable ads first 30 days.
 Show status in getting started.
 Show ajax status in network settings.
 Only allow ascii in vanity url.

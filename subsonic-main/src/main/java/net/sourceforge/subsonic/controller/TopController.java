@@ -18,22 +18,20 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.ParameterizableViewController;
-
 import net.sourceforge.subsonic.domain.MusicFolder;
 import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.VersionService;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Controller for the top frame.
@@ -55,7 +53,7 @@ public class TopController extends ParameterizableViewController {
         map.put("user", user);
         map.put("musicFoldersExist", !allMusicFolders.isEmpty());
         map.put("brand", settingsService.getBrand());
-        map.put("licensed", settingsService.isLicenseValid(settingsService.getLicenseEmail(), settingsService.getLicenseCode()));
+        map.put("licensed", settingsService.isLicenseValid());
 
         UserSettings userSettings = settingsService.getUserSettings(user.getUsername());
         if (userSettings.isFinalVersionNotificationEnabled() && versionService.isNewFinalVersionAvailable()) {

@@ -18,51 +18,49 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.SortedSet;
-import java.util.Date;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.bind.ServletRequestBindingException;
-import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
-import org.apache.commons.io.FilenameUtils;
-
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.command.UserSettingsCommand;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicFolder;
 import net.sourceforge.subsonic.domain.MusicIndex;
 import net.sourceforge.subsonic.domain.Player;
-import net.sourceforge.subsonic.domain.TranscodeScheme;
-import net.sourceforge.subsonic.domain.User;
-import net.sourceforge.subsonic.domain.TransferStatus;
-import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.domain.PlayerTechnology;
+import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.domain.SearchCriteria;
 import net.sourceforge.subsonic.domain.SearchResult;
-import net.sourceforge.subsonic.domain.Playlist;
+import net.sourceforge.subsonic.domain.TranscodeScheme;
+import net.sourceforge.subsonic.domain.TransferStatus;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.service.PlaylistService;
+import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
-import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.service.StatusService;
-import net.sourceforge.subsonic.service.SearchService;
-import net.sourceforge.subsonic.service.PlaylistService;
+import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.util.XMLBuilder;
 import static net.sourceforge.subsonic.util.XMLBuilder.Attribute;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.web.bind.ServletRequestBindingException;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.SortedSet;
 
 /**
  * Multi-controller used for the REST API.
@@ -102,7 +100,7 @@ public class RESTController extends MultiActionController {
         String email = settingsService.getLicenseEmail();
         String key = settingsService.getLicenseCode();
         Date date = settingsService.getLicenseDate();
-        boolean valid = settingsService.isLicenseValid(email, key);
+        boolean valid = settingsService.isLicenseValid();
 
         List<Attribute> attributes = new ArrayList<Attribute>();
         attributes.add(new Attribute("valid", valid));
