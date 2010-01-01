@@ -54,8 +54,13 @@ public class RedirectionController implements Controller {
         // TODO: Handle expired trial.
         String requestUrl = request.getRequestURL().toString();
         // TODO: care about missing trailing slash?
-        String redirectTo = redirection.getRedirectTo() + "/" + StringUtils.substringAfterLast(requestUrl, "/");
-        return new ModelAndView(new RedirectView(redirectTo));
+        StringBuilder redirectTo = new StringBuilder(redirection.getRedirectTo());
+        if (redirectTo.charAt(redirectTo.length() - 1) != '/') {
+            redirectTo.append("/");
+        }
+        redirectTo.append(StringUtils.substringAfterLast(requestUrl, "/"));
+
+        return new ModelAndView(new RedirectView(redirectTo.toString()));
     }
 
     private String getRedirectFrom(HttpServletRequest request) throws MalformedURLException {

@@ -37,8 +37,13 @@ public class DaoHelper {
             @Override
             public void run() {
                 System.err.println("Shutting down database.");
-                getJdbcTemplate().execute("shutdown");
-                System.err.println("Done.");
+                try {
+                    getJdbcTemplate().execute("shutdown");
+                    System.err.println("Done.");
+                } catch (Throwable x) {
+                    System.err.println("Failed to shut down database.");
+                    x.printStackTrace();
+                }
             }
         });
     }
