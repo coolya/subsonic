@@ -18,21 +18,28 @@
  */
 package net.sourceforge.subsonic.backend.controller;
 
-import net.sourceforge.subsonic.backend.dao.RedirectionDao;
-import net.sourceforge.subsonic.backend.domain.Redirection;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URL;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.PrintWriter;
-import java.net.URL;
-import java.util.Date;
-import java.util.List;
+import net.sourceforge.subsonic.backend.dao.RedirectionDao;
+import net.sourceforge.subsonic.backend.domain.Redirection;
 
 /**
  * @author Sindre Mehus
@@ -44,8 +51,9 @@ public class RedirectionManagementController extends MultiActionController {
 
     public ModelAndView register(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        String redirectFrom = ServletRequestUtils.getRequiredStringParameter(request, "redirectFrom");
-        String principal = ServletRequestUtils.getRequiredStringParameter(request, "principal");
+        String redirectFrom = StringUtils.lowerCase(ServletRequestUtils.getRequiredStringParameter(request, "redirectFrom"));
+        String licenseHolder = ServletRequestUtils.getStringParameter(request, "licenseHolder");
+        String serverId = ServletRequestUtils.getRequiredStringParameter(request, "serverId");
         int port = ServletRequestUtils.getRequiredIntParameter(request, "port");
         String contextPath = ServletRequestUtils.getRequiredStringParameter(request, "contextPath");
         boolean trial = ServletRequestUtils.getBooleanParameter(request, "trial", false);
@@ -55,32 +63,96 @@ public class RedirectionManagementController extends MultiActionController {
             trialExpires = new Date(ServletRequestUtils.getRequiredLongParameter(request, "trialExpires"));
         }
 
+        if (!redirectFrom.matches("(\\w|\\-)+")) {
+            String message = "Illegal characters present in \"" + redirectFrom + "\". Please select another.";
+            sendError(response, message);
+            return null;
+        }
+
         String host = request.getRemoteAddr();
         URL url = new URL("http", host, port, "/" + contextPath);
         String redirectTo = url.toExternalForm();
+
         Redirection redirection = redirectionDao.getRedirection(redirectFrom);
-
-        // TODO: Check principal, trial expiration etc.
-
         if (redirection == null) {
-            redirection = new Redirection(0, principal, redirectFrom, redirectTo, trial, trialExpires, lastUpdated, null);
+
+            // Delete other redirects for same server ID.
+            redirectionDao.deleteRedirectionsByServerId(serverId);
+
+            redirection = new Redirection(0, licenseHolder, serverId, redirectFrom, redirectTo, trial, trialExpires, lastUpdated, null);
             redirectionDao.createRedirection(redirection);
-            LOG.info("Created " + redirection); // TODO
+            LOG.info("Created " + redirection);
+
         } else {
-            redirection.setRedirectFrom(redirectFrom);
-            redirection.setRedirectTo(redirectTo);
-            redirection.setTrial(trial);
-            redirection.setTrialExpires(trialExpires);
-            redirection.setLastUpdated(lastUpdated);
-            redirectionDao.updateRedirection(redirection);
-            LOG.info("Updated " + redirection); // TODO
+
+            boolean sameServerId = serverId.equals(redirection.getServerId());
+            boolean sameLicenseHolder = licenseHolder != null && licenseHolder.equals(redirection.getLicenseHolder());
+
+            if (sameServerId || sameLicenseHolder) {
+                redirection.setLicenseHolder(licenseHolder);
+                redirection.setServerId(serverId);
+                redirection.setRedirectFrom(redirectFrom);
+                redirection.setRedirectTo(redirectTo);
+                redirection.setTrial(trial);
+                redirection.setTrialExpires(trialExpires);
+                redirection.setLastUpdated(lastUpdated);
+                redirectionDao.updateRedirection(redirection);
+                LOG.info("Updated " + redirection);
+            } else {
+                sendError(response, "The web address \"" + redirectFrom + "\" is already in use. Please select another.");
+                return null;
+            }
         }
 
         return null;
     }
 
     public ModelAndView unregister(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return null; // TODO
+        String serverId = ServletRequestUtils.getRequiredStringParameter(request, "serverId");
+        redirectionDao.deleteRedirectionsByServerId(serverId);
+        return null;
+    }
+
+    public ModelAndView test(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String redirectFrom = StringUtils.lowerCase(ServletRequestUtils.getRequiredStringParameter(request, "redirectFrom"));
+        PrintWriter writer = response.getWriter();
+
+        Redirection redirection = redirectionDao.getRedirection(redirectFrom);
+        String webAddress = redirectFrom + ".gosubsonic.com";
+        if (redirection == null) {
+            writer.print("Web address " + webAddress + " not registered.");
+            return null;
+        }
+
+        if (redirection.getTrialExpires() != null && redirection.getTrialExpires().after(new Date())) {
+            writer.print("Trial period expired. Please donate to activate web address.");
+            return null;
+        }
+
+        String url = redirection.getRedirectTo();
+        HttpClient client = new HttpClient();
+        GetMethod method = new GetMethod(url);
+
+        try {
+            int statusCode = client.executeMethod(method);
+
+            if (statusCode == HttpStatus.SC_OK) {
+                writer.print(webAddress + " responded successfully.");
+            } else {
+                writer.print(webAddress + " returned HTTP error code " + method.getStatusCode() + method.getStatusText());
+            }
+
+        } catch (Throwable x) {
+            writer.print(webAddress + " is registered, but could not connect to it: " + x.getMessage() + " (" + x.getClass().getSimpleName() + ")");
+        } finally {
+            method.releaseConnection();
+        }
+        return null;
+    }
+
+    private void sendError(HttpServletResponse response, String message) throws IOException {
+        response.getWriter().print(message);
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
 
     public ModelAndView dump(HttpServletRequest request, HttpServletResponse response) throws Exception {

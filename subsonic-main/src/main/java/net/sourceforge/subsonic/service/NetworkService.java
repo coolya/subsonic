@@ -18,20 +18,21 @@
  */
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.domain.Router;
-import net.sourceforge.subsonic.domain.SBBIRouter;
-import net.sourceforge.subsonic.domain.WeUPnPRouter;
+import java.io.IOException;
+import java.util.Date;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.PostMethod;
 
-import java.io.IOException;
-import java.util.Date;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.Router;
+import net.sourceforge.subsonic.domain.SBBIRouter;
+import net.sourceforge.subsonic.domain.WeUPnPRouter;
 
 /**
  * Provides network-related services, including port forwarding on UPnP routers and
@@ -44,15 +45,20 @@ public class NetworkService {
     private static final Logger LOG = Logger.getLogger(NetworkService.class);
     private static final long PORT_FORWARDING_DELAY = 3600L;
     private static final long URL_REDIRECTION_DELAY = 2 * 3600L;
-    private static final String URL_REDIRECTION_REGISTRATION_URL = "http://localhost:8181/backend/redirect/register.view"; // TODO: change
+
+    private static final String URL_REDIRECTION_REGISTER_URL = getBackendUrl() + "/backend/redirect/register.view";
+    private static final String URL_REDIRECTION_UNREGISTER_URL = getBackendUrl() + "/backend/redirect/unregister.view";
+    private static final String URL_REDIRECTION_TEST_URL = getBackendUrl() + "/backend/redirect/test.view";
 
     private SettingsService settingsService;
     private int currentPublicPort;
     private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(4);
     private final PortForwardingTask portForwardingTask = new PortForwardingTask();
     private final URLRedirectionTask urlRedirectionTask = new URLRedirectionTask();
-    private ScheduledFuture<?> portForwardingFuture;
-    private ScheduledFuture<?> urlRedirectionFuture;
+    private final TestURLRedirectionTask testUrlRedirectionTask = new TestURLRedirectionTask();
+    private Future<?> portForwardingFuture;
+    private Future<?> urlRedirectionFuture;
+    private Future<?> testUrlRedirectionFuture;
 
     private final Status portForwardingStatus = new Status();
     private final Status urlRedirectionStatus = new Status();
@@ -84,12 +90,24 @@ public class NetworkService {
         urlRedirectionFuture = executor.scheduleWithFixedDelay(urlRedirectionTask, 0L, URL_REDIRECTION_DELAY, TimeUnit.SECONDS);
     }
 
+    public void testUrlRedirection() {
+        urlRedirectionStatus.setText("Idle");
+        if (testUrlRedirectionFuture != null) {
+            testUrlRedirectionFuture.cancel(true);
+        }
+        testUrlRedirectionFuture = executor.submit(testUrlRedirectionTask);
+    }
+
     public Status getPortForwardingStatus() {
         return portForwardingStatus;
     }
 
     public Status getURLRedirecionStatus() {
         return urlRedirectionStatus;
+    }
+
+    public static String getBackendUrl() {
+        return System.getProperty("subsonic.test") == null ? "http://gosubsonic.com" : "http://localhost:8181";
     }
 
     public void setSettingsService(SettingsService settingsService) {
@@ -100,17 +118,17 @@ public class NetworkService {
 
         public void run() {
 
+            boolean enabled = settingsService.isPortForwardingEnabled();
             portForwardingStatus.setText("Looking for router...");
             Router router = findRouter();
             if (router == null) {
                 LOG.warn("No UPnP router found.");
-                portForwardingStatus.setText("No router found.");
+                portForwardingStatus.setText(enabled ? "No router found." : "Port forwarding disabled.");
                 return;
             }
             portForwardingStatus.setText("Router found.");
 
             // Delete old NAT entry.
-            boolean enabled = settingsService.isPortForwardingEnabled();
             if (currentPublicPort != 0 && (!enabled || currentPublicPort != settingsService.getPortForwardingPublicPort())) {
                 try {
                     router.deletePortMapping(currentPublicPort);
@@ -139,6 +157,10 @@ public class NetworkService {
                 portForwardingStatus.setText("Port forwarding disabled.");
             }
 
+            //  Don't do it again if disabled.
+            if (!enabled && portForwardingFuture != null) {
+                portForwardingFuture.cancel(false);
+            }
         }
 
         private Router findRouter() {
@@ -168,47 +190,79 @@ public class NetworkService {
 
         public void run() {
 
-            if (!settingsService.isUrlRedirectionEnabled()) {
-                urlRedirectionStatus.setText("URL redirection disabled.");
-                return;
-                // TODO: Handle unregistration?
-            }
-
-            PostMethod method = new PostMethod(URL_REDIRECTION_REGISTRATION_URL);
+            boolean enable = settingsService.isUrlRedirectionEnabled();
+            PostMethod method = new PostMethod(enable ? URL_REDIRECTION_REGISTER_URL : URL_REDIRECTION_UNREGISTER_URL);
 
             int port = settingsService.isPortForwardingEnabled() ?
-                       settingsService.getPortForwardingPublicPort() :
-                       settingsService.getPortForwardingLocalPort();
+                    settingsService.getPortForwardingPublicPort() :
+                    settingsService.getPortForwardingLocalPort();
             boolean trial = !settingsService.isLicenseValid();
             Date trialExpires = settingsService.getUrlRedirectTrialExpires();
 
-            // TODO
-            String principal = trial ? "xxx" : settingsService.getLicenseEmail();
-
             method.addParameter("serverId", settingsService.getServerId());
             method.addParameter("redirectFrom", settingsService.getUrlRedirectFrom());
-            method.addParameter("principal", principal);
             method.addParameter("port", String.valueOf(port));
             method.addParameter("contextPath", settingsService.getUrlRedirectContextPath());
             method.addParameter("trial", String.valueOf(trial));
             if (trial && trialExpires != null) {
                 method.addParameter("trialExpires", String.valueOf(trialExpires.getTime()));
+            } else {
+                method.addParameter("licenseHolder", settingsService.getLicenseEmail());
             }
 
             HttpClient client = new HttpClient();
 
             try {
-                urlRedirectionStatus.setText("Registering URL redirection...");
+                urlRedirectionStatus.setText(enable ? "Registering web address..." : "Unregistering web address...");
                 int statusCode = client.executeMethod(method);
 
-                if (statusCode != HttpStatus.SC_OK) {
-                    throw new IOException(method.getStatusLine().getReasonPhrase());
+                switch (statusCode) {
+                    case HttpStatus.SC_BAD_REQUEST:
+                        urlRedirectionStatus.setText(method.getResponseBodyAsString());
+                        break;
+                    case HttpStatus.SC_OK:
+                        urlRedirectionStatus.setText(enable ? "Successfully registered web address." : "Web address disabled.");
+                        break;
+                    default:
+                        throw new IOException(method.getStatusCode() + " " + method.getStatusText());
                 }
-                urlRedirectionStatus.setText("Successfully registered redirection URL.");
 
             } catch (Throwable x) {
-                // TODO
-                urlRedirectionStatus.setText(x.getMessage() + " (" + x.getClass().getSimpleName() + ")");
+                LOG.warn(enable ? "Failed to register web address." : "Failed to unregister web address.", x);
+                urlRedirectionStatus.setText(enable ? ("Failed to register web address. " + x.getMessage() +
+                        " (" + x.getClass().getSimpleName() + ")") : "Web address disabled.");
+            } finally {
+                method.releaseConnection();
+            }
+
+            //  Don't do it again if disabled.
+            if (!enable && urlRedirectionFuture != null) {
+                urlRedirectionFuture.cancel(false);
+            }
+        }
+    }
+
+    private class TestURLRedirectionTask implements Runnable {
+
+        public void run() {
+
+            PostMethod method = new PostMethod(URL_REDIRECTION_TEST_URL);
+            method.addParameter("redirectFrom", settingsService.getUrlRedirectFrom());
+            HttpClient client = new HttpClient();
+
+            try {
+                urlRedirectionStatus.setText("Testing web address...");
+                int statusCode = client.executeMethod(method);
+
+                if (statusCode == HttpStatus.SC_OK) {
+                    urlRedirectionStatus.setText(method.getResponseBodyAsString());
+                } else {
+                    throw new IOException(method.getStatusCode() + " " + method.getStatusText());
+                }
+
+            } catch (Throwable x) {
+                LOG.warn("Failed to test web address.", x);
+                urlRedirectionStatus.setText("Failed to test web address. " + x.getMessage() + " (" + x.getClass().getSimpleName() + ")");
             } finally {
                 method.releaseConnection();
             }

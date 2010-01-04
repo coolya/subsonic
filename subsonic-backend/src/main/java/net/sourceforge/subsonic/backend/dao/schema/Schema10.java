@@ -36,7 +36,8 @@ public class Schema10 extends Schema {
         Example row 1:
 
         id: 123
-        principal: sindre@activeobjects.no
+        license_holder: sindre@activeobjects.no
+        server_id: 972342834928656
         redirect_from: sindre
         redirect_to: http://23.45.123.56:8080/subsonic
         trial: false
@@ -45,7 +46,8 @@ public class Schema10 extends Schema {
         Example row 2:
 
         id: 124
-        principal: 29384728372
+        license_holder: null
+        server_id: 72121983567129
         redirect_from: joe
         redirect_to: http://232.21.18.14/subsonic
         trial: true
@@ -56,7 +58,8 @@ public class Schema10 extends Schema {
             LOG.info("Database table 'redirection' not found.  Creating it.");
             template.execute("create cached table redirection (" +
                              "id identity," +
-                             "principal varchar not null," +
+                             "license_holder varchar," +
+                             "server_id varchar not null," +
                              "redirect_from varchar not null," +
                              "redirect_to varchar not null," +
                              "trial boolean not null," +
@@ -64,7 +67,8 @@ public class Schema10 extends Schema {
                              "last_updated datetime," +
                              "last_read datetime," +
                              "unique(redirect_from))");
-            template.execute("create index idx_redirection on redirection(redirect_from)");
+            template.execute("create index idx_redirection_redirect_from on redirection(redirect_from)");
+            template.execute("create index idx_redirection_server_id on redirection(server_id)");
             LOG.info("Database table 'redirection' was created successfully.");
         }
     }

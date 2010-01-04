@@ -158,7 +158,7 @@ public class SettingsService {
     private static final int DEFAULT_PORT_FORWARDING_PUBLIC_PORT = 80;
     private static final int DEFAULT_PORT_FORWARDING_LOCAL_PORT = 80;
     private static final boolean DEFAULT_URL_REDIRECTION_ENABLED = false;
-    private static final String DEFAULT_URL_REDIRECT_FROM = System.getProperty("user.name", null);
+    private static final String DEFAULT_URL_REDIRECT_FROM = StringUtils.lowerCase(System.getProperty("user.name"));
     private static final String DEFAULT_URL_REDIRECT_TRIAL_EXPIRES = null;
     private static final String DEFAULT_URL_REDIRECT_CONTEXT_PATH = null;
     private static final String DEFAULT_SERVER_ID = null;

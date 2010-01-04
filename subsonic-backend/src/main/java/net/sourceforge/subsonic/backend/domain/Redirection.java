@@ -26,7 +26,8 @@ import java.util.Date;
 public class Redirection {
 
     private int id;
-    private String principal;
+    private String licenseHolder;
+    private String serverId;
     private String redirectFrom;
     private String redirectTo;
     private boolean trial;
@@ -34,10 +35,11 @@ public class Redirection {
     private Date lastUpdated;
     private Date lastRead;
 
-    public Redirection(int id, String principal, String redirectFrom, String redirectTo, boolean trial,
-                       Date trialExpires, Date lastUpdated, Date lastRead) {
+    public Redirection(int id, String licenseHolder, String serverId, String redirectFrom, String redirectTo, boolean trial,
+            Date trialExpires, Date lastUpdated, Date lastRead) {
         this.id = id;
-        this.principal = principal;
+        this.licenseHolder = licenseHolder;
+        this.serverId = serverId;
         this.redirectFrom = redirectFrom;
         this.redirectTo = redirectTo;
         this.trial = trial;
@@ -50,12 +52,20 @@ public class Redirection {
         return id;
     }
 
-    public String getPrincipal() {
-        return principal;
+    public String getLicenseHolder() {
+        return licenseHolder;
     }
 
-    public void setPrincipal(String principal) {
-        this.principal = principal;
+    public void setLicenseHolder(String licenseHolder) {
+        this.licenseHolder = licenseHolder;
+    }
+
+    public String getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(String serverId) {
+        this.serverId = serverId;
     }
 
     public String getRedirectFrom() {
@@ -109,14 +119,15 @@ public class Redirection {
     @Override
     public String toString() {
         return "Redirection{" +
-               "id=" + id +
-               ", principal='" + principal + '\'' +
-               ", redirectFrom='" + redirectFrom + '\'' +
-               ", redirectTo='" + redirectTo + '\'' +
-               ", trial=" + trial +
-               ", trialExpires=" + trialExpires +
-               ", lastUpdated=" + lastUpdated +
-               ", lastRead=" + lastRead +
-               '}';
+                "id=" + id +
+                ", licenseHolder='" + licenseHolder + '\'' +
+                ", serverId='" + serverId + '\'' +
+                ", redirectFrom='" + redirectFrom + '\'' +
+                ", redirectTo='" + redirectTo + '\'' +
+                ", trial=" + trial +
+                ", trialExpires=" + trialExpires +
+                ", lastUpdated=" + lastUpdated +
+                ", lastRead=" + lastRead +
+                '}';
     }
 }

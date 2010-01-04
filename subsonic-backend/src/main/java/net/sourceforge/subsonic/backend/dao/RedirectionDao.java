@@ -17,7 +17,7 @@ import java.util.List;
 public class RedirectionDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(RedirectionDao.class);
-    private static final String COLUMNS = "id, principal, redirect_from, redirect_to, trial, trial_expires, last_updated, last_read";
+    private static final String COLUMNS = "id, license_holder, server_id, redirect_from, redirect_to, trial, trial_expires, last_updated, last_read";
 
     private RedirectionRowMapper rowMapper = new RedirectionRowMapper();
 
@@ -55,8 +55,8 @@ public class RedirectionDao extends AbstractDao {
      * @param redirection The redirection to create.
      */
     public void createRedirection(Redirection redirection) {
-        String sql = "insert into redirection (" + COLUMNS + ") values (null, ?, ?, ?, ?, ?, ?, ?)";
-        update(sql, redirection.getPrincipal(), redirection.getRedirectFrom(),
+        String sql = "insert into redirection (" + COLUMNS + ") values (null, ?, ?, ?, ?, ?, ?, ?, ?)";
+        update(sql, redirection.getLicenseHolder(), redirection.getServerId(), redirection.getRedirectFrom(),
                redirection.getRedirectTo(), redirection.isTrial(),
                redirection.getTrialExpires(), redirection.getLastUpdated(),
                redirection.getLastRead());
@@ -69,17 +69,27 @@ public class RedirectionDao extends AbstractDao {
      * @param redirection The redirection to update.
      */
     public void updateRedirection(Redirection redirection) {
-        String sql = "update redirection set principal=?, redirect_from=?, redirect_to=?, " +
+        String sql = "update redirection set license_holder=?, server_id=?, redirect_from=?, redirect_to=?, " +
                      "trial=?, trial_expires=?, last_updated=?, last_read=? where id=?";
-        update(sql, redirection.getPrincipal(), redirection.getRedirectFrom(),
+        update(sql, redirection.getLicenseHolder(), redirection.getServerId(), redirection.getRedirectFrom(),
                redirection.getRedirectTo(), redirection.isTrial(), redirection.getTrialExpires(),
                redirection.getLastUpdated(), redirection.getLastRead(), redirection.getId());
     }
 
+    /**
+     * Deletes all redirections with the given server ID.
+     *
+     * @param serverId The server ID.
+     */
+    public void deleteRedirectionsByServerId(String serverId) {
+        update("delete from redirection where server_id=?", serverId);
+        LOG.info("Deleted redirections for server ID " + serverId);
+    }
+
     private static class RedirectionRowMapper implements ParameterizedRowMapper<Redirection> {
         public Redirection mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new Redirection(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getBoolean(5),
-                                   rs.getTimestamp(6), rs.getTimestamp(7), rs.getTimestamp(8));
+            return new Redirection(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+                    rs.getBoolean(6), rs.getTimestamp(7), rs.getTimestamp(8), rs.getTimestamp(9));
         }
     }
 }

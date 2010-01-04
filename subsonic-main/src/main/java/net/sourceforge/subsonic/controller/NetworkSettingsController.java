@@ -22,6 +22,7 @@ import net.sourceforge.subsonic.command.NetworkSettingsCommand;
 import net.sourceforge.subsonic.service.NetworkService;
 import net.sourceforge.subsonic.service.SettingsService;
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,11 +43,16 @@ public class NetworkSettingsController extends SimpleFormController {
 
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
 
+        if (request.getParameter("test") != null) {
+            networkService.testUrlRedirection();
+        }
+
         NetworkSettingsCommand command = new NetworkSettingsCommand();
         command.setPortForwardingEnabled(settingsService.isPortForwardingEnabled());
         command.setPortForwardingPublicPort(settingsService.getPortForwardingPublicPort());
         command.setUrlRedirectionEnabled(settingsService.isUrlRedirectionEnabled());
         command.setUrlRedirectFrom(settingsService.getUrlRedirectFrom());
+
         return command;
     }
 
@@ -64,7 +70,7 @@ public class NetworkSettingsController extends SimpleFormController {
         if (command.isUrlRedirectionEnabled() != settingsService.isUrlRedirectionEnabled() ||
             !ObjectUtils.equals(command.getUrlRedirectFrom(), settingsService.getUrlRedirectFrom())) {
             settingsService.setUrlRedirectionEnabled(command.isUrlRedirectionEnabled());
-            settingsService.setUrlRedirectFrom(command.getUrlRedirectFrom());
+            settingsService.setUrlRedirectFrom(StringUtils.lowerCase(command.getUrlRedirectFrom()));
 
             if (!settingsService.isLicenseValid() && settingsService.getUrlRedirectTrialExpires() == null) {
                 Date expiryDate = new Date(System.currentTimeMillis() + TRIAL_DAYS * 24L * 3600L * 1000L);
@@ -73,7 +79,7 @@ public class NetworkSettingsController extends SimpleFormController {
 
             if (settingsService.getServerId() == null) {
                 Random rand = new Random(System.currentTimeMillis());
-                settingsService.setServerId(String.valueOf(rand.nextLong()));
+                settingsService.setServerId(String.valueOf(Math.abs(rand.nextLong())));
             }
 
             settingsService.save();
