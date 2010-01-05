@@ -1,4 +1,3 @@
-Remove wildcard donation. Modify text.
 Disable ads first 30 days.
 Show status in getting started.
 Add online help in network settings.
