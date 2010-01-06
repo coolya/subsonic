@@ -28,12 +28,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.HttpStatus;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.params.HttpConnectionParams;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
@@ -124,28 +128,31 @@ public class RedirectionManagementController extends MultiActionController {
             return null;
         }
 
-        if (redirection.getTrialExpires() != null && redirection.getTrialExpires().after(new Date())) {
+        if (redirection.getTrialExpires() != null && redirection.getTrialExpires().before(new Date())) {
             writer.print("Trial period expired. Please donate to activate web address.");
             return null;
         }
 
         String url = redirection.getRedirectTo();
-        HttpClient client = new HttpClient();
-        GetMethod method = new GetMethod(url);
+        HttpClient client = new DefaultHttpClient();
+        HttpConnectionParams.setConnectionTimeout(client.getParams(), 15000);
+        HttpConnectionParams.setSoTimeout(client.getParams(), 15000);
+        HttpGet method = new HttpGet(url);
 
         try {
-            int statusCode = client.executeMethod(method);
+            HttpResponse resp = client.execute(method);
+            StatusLine status = resp.getStatusLine();
 
-            if (statusCode == HttpStatus.SC_OK) {
+            if (status.getStatusCode() == HttpStatus.SC_OK) {
                 writer.print(webAddress + " responded successfully.");
             } else {
-                writer.print(webAddress + " returned HTTP error code " + method.getStatusCode() + method.getStatusText());
+                writer.print(webAddress + " returned HTTP error code " + status.getStatusCode() + status.getReasonPhrase());
             }
 
         } catch (Throwable x) {
-            writer.print(webAddress + " is registered, but could not connect to it: " + x.getMessage() + " (" + x.getClass().getSimpleName() + ")");
+            writer.print(webAddress + " is registered, but could not connect to it. (" + x.getClass().getSimpleName() + ")");
         } finally {
-            method.releaseConnection();
+            client.getConnectionManager().shutdown();
         }
         return null;
     }

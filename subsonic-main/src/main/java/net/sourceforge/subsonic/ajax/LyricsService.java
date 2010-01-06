@@ -20,11 +20,13 @@ package net.sourceforge.subsonic.ajax;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.util.StringUtil;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.lang.CharUtils;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.HttpStatus;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
@@ -105,22 +107,15 @@ public class LyricsService {
 
 
     private String executeGetRequest(String url) throws IOException {
-        HttpMethod method = new GetMethod(url);
-        HttpClient client = new HttpClient();
-        client.getParams().setContentCharset(StringUtil.ENCODING_UTF8);
+        HttpClient client = new DefaultHttpClient();
+        HttpGet method = new HttpGet(url);
         try {
-            int statusCode = client.executeMethod(method);
 
-            if (statusCode != HttpStatus.SC_OK) {
-                throw new IOException("Method failed: " + method.getStatusLine());
-            }
-
-            return method.getResponseBodyAsString();
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            return client.execute(method, responseHandler);
 
         } finally {
-            method.releaseConnection();
+            client.getConnectionManager().shutdown();
         }
-
     }
-
 }
