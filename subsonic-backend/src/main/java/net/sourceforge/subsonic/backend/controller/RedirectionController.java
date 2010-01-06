@@ -48,14 +48,14 @@ public class RedirectionController implements Controller {
         Redirection redirection = redirectFrom == null ? null : redirectionDao.getRedirection(redirectFrom);
 
         if (redirection == null) {
-            return new ModelAndView(new RedirectView("http://gosubsonic.com/web"));
+            return new ModelAndView(new RedirectView("http://gosubsonic.com/pages"));
         }
 
         redirection.setLastRead(new Date());
         redirectionDao.updateRedirection(redirection);
 
         if (redirection.isTrial() && redirection.getTrialExpires() != null && redirection.getTrialExpires().before(new Date())) {
-            return new ModelAndView(new RedirectView("http://gosubsonic.com/web/redirect-expired.jsp?redirectFrom=" + redirectFrom));
+            return new ModelAndView(new RedirectView("http://gosubsonic.com/pages/redirect-expired.jsp?redirectFrom=" + redirectFrom));
         }
         String requestUrl = getFullRequestURL(request);
         // TODO: care about missing trailing slash?
