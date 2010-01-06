@@ -18,18 +18,6 @@
  */
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.util.StringUtil;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.io.IOUtils;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.input.SAXBuilder;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -40,6 +28,20 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.Header;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.input.SAXBuilder;
+
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.util.StringUtil;
 
 /**
  * Provides services for searching for resources at Discogs.
@@ -154,38 +156,41 @@ public class DiscogsSearchService {
     }
 
     private String executeRequest(String url) throws IOException {
-        HttpMethod method = new GetMethod(url);
-        HttpClient client = new HttpClient();
-//        client.getParams().setContentCharset(StringUtil.ENCODING_UTF8);
+        org.apache.http.client.HttpClient client = new DefaultHttpClient();
+        HttpConnectionParams.setConnectionTimeout(client.getParams(), 15000);
+        HttpConnectionParams.setSoTimeout(client.getParams(), 15000);
+        HttpGet method = new HttpGet(url);
 
-        method.addRequestHeader("Accept-Encoding", "gzip");
+        method.addHeader("Accept-Encoding", "gzip");
 
         String result;
         InputStream in = null;
         try {
-            int statusCode = client.executeMethod(method);
+
+            HttpResponse response = client.execute(method);
+            int statusCode = response.getStatusLine().getStatusCode();
 
             if (statusCode != HttpStatus.SC_OK) {
-                throw new IOException("Method failed: " + method.getStatusLine());
+                throw new IOException("Method failed: " + response.getStatusLine());
             }
 
-            if (isGzipResponse(method)) {
-                in = new GZIPInputStream(method.getResponseBodyAsStream());
+            if (isGzipResponse(response)) {
+                in = new GZIPInputStream(response.getEntity().getContent());
             } else {
-                in = method.getResponseBodyAsStream();
+                in = response.getEntity().getContent();
             }
             result = IOUtils.toString(in);
 
         } finally {
             IOUtils.closeQuietly(in);
-            method.releaseConnection();
+            client.getConnectionManager().shutdown();
         }
         return result;
     }
 
-    private boolean isGzipResponse(HttpMethod httpMethod) {
+    private boolean isGzipResponse(HttpResponse response) {
         boolean isGzip = false;
-        Header encodingHeader = httpMethod.getResponseHeader("Content-Encoding");
+        Header encodingHeader = response.getFirstHeader("Content-Encoding");
         if (encodingHeader != null && encodingHeader.getValue() != null) {
             isGzip = encodingHeader.getValue().toLowerCase().indexOf("gzip") != -1;
         }
