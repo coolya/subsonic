@@ -18,18 +18,21 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.io.IOUtils;
-import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
+import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.InputStream;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
 
 /**
  * A proxy for external HTTP requests.
@@ -40,25 +43,26 @@ public class ProxyController implements Controller {
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String url = ServletRequestUtils.getRequiredStringParameter(request, "url");
-        HttpMethod method = new GetMethod(url);
-        HttpClient client = new HttpClient();
+
+        HttpClient client = new DefaultHttpClient();
+        HttpConnectionParams.setConnectionTimeout(client.getParams(), 15000);
+        HttpConnectionParams.setSoTimeout(client.getParams(), 15000);
+        HttpGet method = new HttpGet(url);
 
         InputStream in = null;
         try {
-            int statusCode = client.executeMethod(method);
-
+            HttpResponse resp = client.execute(method);
+            int statusCode = resp.getStatusLine().getStatusCode();
             if (statusCode != HttpStatus.SC_OK) {
                 response.sendError(statusCode);
             } else {
-                in = method.getResponseBodyAsStream();
+                in = resp.getEntity().getContent();
                 IOUtils.copy(in, response.getOutputStream());
             }
-
         } finally {
             IOUtils.closeQuietly(in);
-            method.releaseConnection();
+            client.getConnectionManager().shutdown();
         }
-
         return null;
     }
 }

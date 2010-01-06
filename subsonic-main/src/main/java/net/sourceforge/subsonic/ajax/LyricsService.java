@@ -27,6 +27,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.HttpStatus;
+import org.apache.http.params.HttpConnectionParams;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
@@ -108,6 +109,8 @@ public class LyricsService {
 
     private String executeGetRequest(String url) throws IOException {
         HttpClient client = new DefaultHttpClient();
+        HttpConnectionParams.setConnectionTimeout(client.getParams(), 15000);
+        HttpConnectionParams.setSoTimeout(client.getParams(), 15000);
         HttpGet method = new HttpGet(url);
         try {
 
