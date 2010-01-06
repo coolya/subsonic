@@ -54,3 +54,6 @@ da
 
 # Finnish
 fi
+
+# Icelandic
+is

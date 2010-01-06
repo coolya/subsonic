@@ -2,7 +2,7 @@ Disable ads first 30 days.
 Show status in getting started.
 Add online help in network settings.
 Add link to portforward.com in network settings.
-Addd URL "file" part when forwarding.
+Add URL "file" part when forwarding.
 HttpClient timeout.
 Donation UI in network settings.
 
@@ -40,6 +40,7 @@ Bugfix: Fixed "Not in GZIP format" error in Discogs cover image search, courtesy
 New: Cover art batch download, courtesy of Christian Nedregård.
 New: Improved relevance for top hits in Discogs cover image search, courtesy of Christian Nedregård.
 TBT: Added Polish translation, courtesy of Micha? Kotas.
+TBT: Added Icelandic translation, courtesy of DJ Danni.
 Updated Finnish translation, courtesy of Reijo Jäärni.
 TBT: Hide donate button if valid license.
 TBT: Added "accesskey" in left frame.
