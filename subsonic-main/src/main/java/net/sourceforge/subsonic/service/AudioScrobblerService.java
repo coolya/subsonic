@@ -19,17 +19,25 @@
 package net.sourceforge.subsonic.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpConnectionParams;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.MusicFile;
@@ -162,18 +170,18 @@ public class AudioScrobblerService {
             LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm.  Invalid session.");
         } else if (lines[0].startsWith("OK")) {
             LOG.debug("Successfully registered " + (registrationData.submission ? "submission" : "now playing") +
-                      " for song '" + registrationData.title + "' for user " + registrationData.username + " at Last.fm.");
+                    " for song '" + registrationData.title + "' for user " + registrationData.username + " at Last.fm.");
         }
     }
 
     /**
      * Returns the following lines if authentication succeeds:
-     *
+     * <p/>
      * Line 0: Always "OK"
      * Line 1: Session ID, e.g., "17E61E13454CDD8B68E8D7DEEEDF6170"
      * Line 2: URL to use for now playing, e.g., "http://post.audioscrobbler.com:80/np_1.2"
      * Line 3: URL to use for submissions, e.g., "http://post2.audioscrobbler.com:80/protocol_1.2"
-     *
+     * <p/>
      * If authentication fails, <code>null</code> is returned.
      */
     private String[] authenticate(RegistrationData registrationData) throws Exception {
@@ -182,7 +190,7 @@ public class AudioScrobblerService {
         long timestamp = System.currentTimeMillis() / 1000L;
         String authToken = calculateAuthenticationToken(registrationData.password, timestamp);
         String[] lines = executeGetRequest("http://post.audioscrobbler.com/?hs=true&p=1.2.1&c=" + clientId + "&v=" +
-                                           clientVersion + "&u=" + registrationData.username + "&t=" + timestamp + "&a=" + authToken);
+                clientVersion + "&u=" + registrationData.username + "&t=" + timestamp + "&a=" + authToken);
 
         if (lines[0].startsWith("BANNED")) {
             LOG.warn("Failed to scrobble song '" + registrationData.title + "' at Last.fm. Client version is banned.");
@@ -244,36 +252,35 @@ public class AudioScrobblerService {
     }
 
     private String[] executeGetRequest(String url) throws IOException {
-        return executeRequest(new GetMethod(url));
+        return executeRequest(new HttpGet(url));
     }
 
     private String[] executePostRequest(String url, Map<String, String> parameters) throws IOException {
-        PostMethod method = new PostMethod(url);
-
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
         for (Map.Entry<String, String> entry : parameters.entrySet()) {
-            method.addParameter(entry.getKey(), entry.getValue());
+            params.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
         }
-        return executeRequest(method);
+
+        HttpPost request = new HttpPost(url);
+        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, StringUtil.ENCODING_UTF8);
+        request.setEntity(entity);
+
+        return executeRequest(request);
     }
 
-    private String[] executeRequest(HttpMethod method) throws IOException {
-        HttpClient client = new HttpClient();
-        client.getParams().setContentCharset(StringUtil.ENCODING_UTF8);
+    private String[] executeRequest(HttpUriRequest request) throws IOException {
+        HttpClient client = new DefaultHttpClient();
+        HttpConnectionParams.setConnectionTimeout(client.getParams(), 15000);
+        HttpConnectionParams.setSoTimeout(client.getParams(), 15000);
 
         try {
-            int statusCode = client.executeMethod(method);
-
-            if (statusCode != HttpStatus.SC_OK) {
-                throw new IOException("Method failed: " + method.getStatusLine());
-            }
-
-            String response = method.getResponseBodyAsString();
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            String response = client.execute(request, responseHandler);
             return response.split("\\n");
 
         } finally {
-            method.releaseConnection();
+            client.getConnectionManager().shutdown();
         }
-
     }
 
     public void setSettingsService(SettingsService settingsService) {
@@ -304,7 +311,7 @@ public class AudioScrobblerService {
             try {
                 queue.put(registrationData);
                 LOG.info("Last.fm registration for " + registrationData.title +
-                         " encountered network error.  Will try again later. In queue: " + queue.size(), x);
+                        " encountered network error.  Will try again later. In queue: " + queue.size(), x);
             } catch (InterruptedException e) {
                 LOG.error("Failed to reschedule Last.fm registration for " + registrationData.title, e);
             }
