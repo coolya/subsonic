@@ -75,6 +75,7 @@
                 <module>subsonic-booter</module>
                 <module>subsonic-installer</module>
                 <module>subsonic-backend</module>
+                <module>subsonic-site</module>
                 <module>subsonic-assembly</module>
             </modules>
         </profile>
