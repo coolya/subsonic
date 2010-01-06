@@ -262,8 +262,7 @@ public class AudioScrobblerService {
         }
 
         HttpPost request = new HttpPost(url);
-        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, StringUtil.ENCODING_UTF8);
-        request.setEntity(entity);
+        request.setEntity(new UrlEncodedFormEntity(params, StringUtil.ENCODING_UTF8));
 
         return executeRequest(request);
     }

@@ -19,20 +19,33 @@
 package net.sourceforge.subsonic.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.util.EntityUtils;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.Router;
 import net.sourceforge.subsonic.domain.SBBIRouter;
 import net.sourceforge.subsonic.domain.WeUPnPRouter;
+import net.sourceforge.subsonic.util.StringUtil;
 
 /**
  * Provides network-related services, including port forwarding on UPnP routers and
@@ -191,7 +204,7 @@ public class NetworkService {
         public void run() {
 
             boolean enable = settingsService.isUrlRedirectionEnabled();
-            PostMethod method = new PostMethod(enable ? URL_REDIRECTION_REGISTER_URL : URL_REDIRECTION_UNREGISTER_URL);
+            HttpPost request = new HttpPost(enable ? URL_REDIRECTION_REGISTER_URL : URL_REDIRECTION_UNREGISTER_URL);
 
             int port = settingsService.isPortForwardingEnabled() ?
                     settingsService.getPortForwardingPublicPort() :
@@ -199,32 +212,36 @@ public class NetworkService {
             boolean trial = !settingsService.isLicenseValid();
             Date trialExpires = settingsService.getUrlRedirectTrialExpires();
 
-            method.addParameter("serverId", settingsService.getServerId());
-            method.addParameter("redirectFrom", settingsService.getUrlRedirectFrom());
-            method.addParameter("port", String.valueOf(port));
-            method.addParameter("contextPath", settingsService.getUrlRedirectContextPath());
-            method.addParameter("trial", String.valueOf(trial));
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("serverId", settingsService.getServerId()));
+            params.add(new BasicNameValuePair("redirectFrom", settingsService.getUrlRedirectFrom()));
+            params.add(new BasicNameValuePair("port", String.valueOf(port)));
+            params.add(new BasicNameValuePair("contextPath", settingsService.getUrlRedirectContextPath()));
+            params.add(new BasicNameValuePair("trial", String.valueOf(trial)));
             if (trial && trialExpires != null) {
-                method.addParameter("trialExpires", String.valueOf(trialExpires.getTime()));
+                params.add(new BasicNameValuePair("trialExpires", String.valueOf(trialExpires.getTime())));
             } else {
-                method.addParameter("licenseHolder", settingsService.getLicenseEmail());
+                params.add(new BasicNameValuePair("licenseHolder", settingsService.getLicenseEmail()));
             }
 
-            HttpClient client = new HttpClient();
+            HttpClient client = new DefaultHttpClient();
 
             try {
                 urlRedirectionStatus.setText(enable ? "Registering web address..." : "Unregistering web address...");
-                int statusCode = client.executeMethod(method);
+                request.setEntity(new UrlEncodedFormEntity(params, StringUtil.ENCODING_UTF8));
 
-                switch (statusCode) {
+                HttpResponse response = client.execute(request);
+                StatusLine status = response.getStatusLine();
+
+                switch (status.getStatusCode()) {
                     case HttpStatus.SC_BAD_REQUEST:
-                        urlRedirectionStatus.setText(method.getResponseBodyAsString());
+                        urlRedirectionStatus.setText(EntityUtils.toString(request.getEntity()));
                         break;
                     case HttpStatus.SC_OK:
                         urlRedirectionStatus.setText(enable ? "Successfully registered web address." : "Web address disabled.");
                         break;
                     default:
-                        throw new IOException(method.getStatusCode() + " " + method.getStatusText());
+                        throw new IOException(status.getStatusCode() + " " + status.getReasonPhrase());
                 }
 
             } catch (Throwable x) {
@@ -232,7 +249,7 @@ public class NetworkService {
                 urlRedirectionStatus.setText(enable ? ("Failed to register web address. " + x.getMessage() +
                         " (" + x.getClass().getSimpleName() + ")") : "Web address disabled.");
             } finally {
-                method.releaseConnection();
+                client.getConnectionManager().shutdown();
             }
 
             //  Don't do it again if disabled.
@@ -246,25 +263,21 @@ public class NetworkService {
 
         public void run() {
 
-            PostMethod method = new PostMethod(URL_REDIRECTION_TEST_URL);
-            method.addParameter("redirectFrom", settingsService.getUrlRedirectFrom());
-            HttpClient client = new HttpClient();
+            HttpGet request = new HttpGet(URL_REDIRECTION_TEST_URL + "?redirectFrom=" + settingsService.getUrlRedirectFrom());
+            HttpClient client = new DefaultHttpClient();
+            HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000);
+            HttpConnectionParams.setSoTimeout(client.getParams(), 10000);
 
             try {
                 urlRedirectionStatus.setText("Testing web address...");
-                int statusCode = client.executeMethod(method);
-
-                if (statusCode == HttpStatus.SC_OK) {
-                    urlRedirectionStatus.setText(method.getResponseBodyAsString());
-                } else {
-                    throw new IOException(method.getStatusCode() + " " + method.getStatusText());
-                }
+                String response = client.execute(request, new BasicResponseHandler());
+                urlRedirectionStatus.setText(response);
 
             } catch (Throwable x) {
                 LOG.warn("Failed to test web address.", x);
                 urlRedirectionStatus.setText("Failed to test web address. " + x.getMessage() + " (" + x.getClass().getSimpleName() + ")");
             } finally {
-                method.releaseConnection();
+                client.getConnectionManager().shutdown();
             }
         }
     }
