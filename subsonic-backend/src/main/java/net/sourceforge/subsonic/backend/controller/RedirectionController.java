@@ -33,6 +33,8 @@ import java.net.URL;
 import java.util.Date;
 
 /**
+ * Redirects vanity URLs (such as http://sindre.gosubsonic.com).
+ *
  * @author Sindre Mehus
  */
 public class RedirectionController implements Controller {
@@ -43,16 +45,19 @@ public class RedirectionController implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String redirectFrom = getRedirectFrom(request);
-        // TODO: Handle null.
+        Redirection redirection = redirectFrom == null ? null : redirectionDao.getRedirection(redirectFrom);
 
-        Redirection redirection = redirectionDao.getRedirection(redirectFrom);
-        // TODO: Handle null.
+        if (redirection == null) {
+            return new ModelAndView(new RedirectView("http://gosubsonic.com/web"));
+        }
 
-        redirection.setLastUpdated(new Date());
+        redirection.setLastRead(new Date());
         redirectionDao.updateRedirection(redirection);
 
-        // TODO: Handle expired trial.
-        String requestUrl = request.getRequestURL().toString();
+        if (redirection.isTrial() && redirection.getTrialExpires() != null && redirection.getTrialExpires().before(new Date())) {
+            return new ModelAndView(new RedirectView("http://gosubsonic.com/web/redirect-expired.jsp?redirectFrom=" + redirectFrom));
+        }
+        String requestUrl = getFullRequestURL(request);
         // TODO: care about missing trailing slash?
         StringBuilder redirectTo = new StringBuilder(redirection.getRedirectTo());
         if (redirectTo.charAt(redirectTo.length() - 1) != '/') {
@@ -60,18 +65,32 @@ public class RedirectionController implements Controller {
         }
         redirectTo.append(StringUtils.substringAfterLast(requestUrl, "/"));
 
+        LOG.info("Redirecting from " + requestUrl + " to " + redirectTo);
+
         return new ModelAndView(new RedirectView(redirectTo.toString()));
+    }
+
+    private String getFullRequestURL(HttpServletRequest request) {
+        StringBuilder builder = new StringBuilder(request.getRequestURL());
+        if (request.getQueryString() != null) {
+            builder.append("?").append(request.getQueryString());
+        }
+        return builder.toString();
     }
 
     private String getRedirectFrom(HttpServletRequest request) throws MalformedURLException {
         URL url = new URL(request.getRequestURL().toString());
         String host = url.getHost();
-        if (host.contains(".gosubsonic.com")) {
-            return StringUtils.substringBefore(host, ".gosubsonic.com");
+
+        String redirectFrom;
+        if (host.contains(".")) {
+            redirectFrom = StringUtils.substringBefore(host, ".");
+        } else {
+            // For testing.
+            redirectFrom = request.getParameter("redirectFrom");
         }
 
-        // For testing.
-        return request.getParameter("redirectFrom");
+        return StringUtils.lowerCase(redirectFrom);
     }
 
     public void setRedirectionDao(RedirectionDao redirectionDao) {

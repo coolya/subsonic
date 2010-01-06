@@ -1,13 +1,12 @@
+TODO IN 3.9
+--------------
+Use httpclient in VersionService.
 Disable ads first 30 days.
 Show status in getting started.
 Add online help in network settings.
 Add link to portforward.com in network settings.
-Add URL "file" part when forwarding.
-HttpClient timeout.
 Donation UI in network settings.
-
-TODO IN 3.9
---------------
+Create http://gosubsonic.com/web/redirect-expired.jsp
 Test lyrics with non-ascii.
 In licence email, explain how to install it.
 Optimize SettingsService.getAllMusicFolders()?
