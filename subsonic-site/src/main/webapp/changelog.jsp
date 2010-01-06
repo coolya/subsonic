@@ -1,17 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<?php
-    $current = 'changelog';
-    include("header.php");
-?>
+
+<%! String current = "changelog"; %>
+<%@ include file="header.jsp" %>
 
 <body>
 
 <a name="top"/>
 
 <div id="container">
-<?php include("menu.php");?>
+<%@ include file="menu.jsp" %>
 
 <div id="content">
 <div id="main-col">
@@ -677,7 +676,7 @@
         </ul>
     </div>
 
-    <?php include("donate.php"); ?>
+    <%@ include file="donate.jsp" %>
 
 </div>
 
@@ -685,7 +684,7 @@
 </div>
 </div>
 <hr/>
-<?php include("footer.php"); ?>
+<%@ include file="footer.jsp" %>
 </div>
 
 

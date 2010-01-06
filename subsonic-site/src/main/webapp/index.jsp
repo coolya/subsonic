@@ -1,17 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<?php
-    $current = 'home';
-    include("header.php");
-?>
+
+<%! String current = "home"; %>
+<%@ include file="header.jsp" %>
 
 <body>
 
 <a name="top"/>
 
 <div id="container">
-<?php include("menu.php");?>
+<%@ include file="menu.jsp" %>
 
 <div id="content">
 <div id="main-col">
@@ -28,7 +27,7 @@
             <li>Manage 100,000+ files in your music collection without hazzle.</li>
             <li>Download and listen to Podcasts.</li>
             <li>Get cover art, lyrics, reviews and other album info from Amazon, Discogs, MetroLyrics, allmusic, Wikipedia and Google Music.</li>
-            <li><a href="features.php">Plus much more...</a></li>
+            <li><a href="features.jsp">Plus much more...</a></li>
         </ul>
     </div>
 
@@ -49,7 +48,7 @@
                 <p>
                     Subsonic is designed to handle very large music collections (hundreds of gigabytes).
                     Although optimized for MP3 streaming, it works for any audio or video format that can stream over HTTP,
-                    for instance AAC and OGG. By using <a href="transcoding.php">transcoder plug-ins</a>, Subsonic supports
+                    for instance AAC and OGG. By using <a href="transcoding.jsp">transcoder plug-ins</a>, Subsonic supports
                     on-the-fly conversion and streaming of virtually any audio format, including WMA, FLAC, APE, Musepack,
                     WavPack, Shorten and OptimFROG.
                 </p>
@@ -90,7 +89,7 @@
                     I live in Oslo, Norway and work as a Java software consultant.
                 </p>
                 <p>
-                    If you have any questions, comments or suggestions for improvements, please visit the <a href="forum.php">Subsonic Forum</a>.
+                    If you have any questions, comments or suggestions for improvements, please visit the <a href="forum.jsp">Subsonic Forum</a>.
                 </p>
             </div>
         </div>
@@ -99,9 +98,9 @@
 </div>
 
 <div id="side-col">
-    <?php include("download-subsonic.php"); ?>
-    <?php include("quotes.php"); ?>
-    <?php include("donate.php"); ?>
+    <%@ include file="download-subsonic.jsp" %>
+    <%@ include file="quotes.jsp" %>
+    <%@ include file="donate.jsp" %>
     <div class="bottomspace">
         <a href="http://sourceforge.net/projects/subsonic/"><img src="http://sourceforge.net/sflogo.php?group_id=126265&type=4" alt="SourceForge.net" class="img-center"/></a>
     </div>
@@ -110,7 +109,7 @@
 </div>
 </div>
 <hr/>
-<?php include("footer.php"); ?>
+<%@ include file="footer.jsp" %>
 </div>
 
 

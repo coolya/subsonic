@@ -1,17 +1,17 @@
+<%@ page import="java.util.Random" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<?php
-    $current = 'demo';
-    include("header.php");
-?>
+
+<%! String current = "demo"; %>
+<%@ include file="header.jsp" %>
 
 <body>
 
 <a name="top"/>
 
 <div id="container">
-    <?php include("menu.php");?>
+    <%@ include file="menu.jsp" %>
 
     <div id="content">
         <div id="main-col">
@@ -23,20 +23,24 @@
             <ul class="list">
                 <li>
                     Not all Subsonic's features are available in the demo version. For instance, application settings can not be viewed
-                    or changed. Please refer to the <a href="screenshots.php">screenshots</a> to see what you're missing.
+                    or changed. Please refer to the <a href="screenshots.jsp">screenshots</a> to see what you're missing.
                 </li>
                 <li>
                     All the music in the demo is free, and courtesy of <a href="http://www.jamendo.com/">Jamendo</a> and the respective artists.
                 </li>
             </ul>
 
-            <p style="text-align:center;font-size:1.3em"><b><a href="http://gosubsonic.com/demo/login.view?user=guest<?php echo(rand(1, 5));?>&password=guest" target="_blank">Start demo</a></b></p>
+            <%
+                Random random = new Random(System.currentTimeMillis());
+                int userId = random.nextInt(5) + 1;
+            %>
+            <p style="text-align:center;font-size:1.3em"><b><a href="http://gosubsonic.com/demo/login.view?user=guest<%=userId%>&password=guest" target="_blank">&raquo; Start demo</a></b></p>
         </div>
 
         <div id="side-col">
 
-            <?php include("download-subsonic.php"); ?>
-            <?php include("donate.php"); ?>
+            <%@ include file="download-subsonic.jsp" %>
+            <%@ include file="donate.jsp" %>
 
         </div>
 
@@ -44,7 +48,7 @@
         </div>
     </div>
     <hr/>
-    <?php include("footer.php"); ?>
+    <%@ include file="footer.jsp" %>
 </div>
 
 

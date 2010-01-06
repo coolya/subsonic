@@ -1,4 +1,3 @@
-<?php
-    header('Location:http://www.activeobjects.no/subsonic/forum');
-    die();
-?>
+<%
+    response.sendRedirect("http://www.activeobjects.no/subsonic/forum");
+%>

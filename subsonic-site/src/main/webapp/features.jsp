@@ -1,17 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<?php
-    $current = 'features';
-    include("header.php");
-?>
+
+<%! String current = "features"; %>
+<%@ include file="header.jsp" %>
 
 <body class="page-features">
 
 <a name="top"/>
 
 <div id="container">
-<?php include("menu.php"); ?>
+<%@ include file="menu.jsp" %>
 
 <div id="content">
 <div id="main-col">
@@ -53,7 +52,7 @@
         <div class="description">
             <ul class="list">
                 <li>Supports MP3, OGG, AAC and any other audio or video format that streams over HTTP.</li>
-                <li><a href="transcoding.php"><b>Transcoding engine</b></a> allows for streaming of a variety of lossy and lossless formats by converting to MP3 on-the-fly.</li>
+                <li><a href="transcoding.jsp"><b>Transcoding engine</b></a> allows for streaming of a variety of lossy and lossless formats by converting to MP3 on-the-fly.</li>
                 <li>Works with any network-enabled media player, such as Winamp, iTunes, XMMS, VLC, MusicMatch and Windows Media Player. Also includes an embedded Flash player.</li>
                 <li>Tag parsing and editing of MP3, OGG, FLAC, WMA and APE files.</li>
                 <li>Playlists can be saved and restored. M3U, PLS and XSPF formats are supported. Saved playlists are available as Podcasts.</li>
@@ -201,15 +200,15 @@
         </ul>
     </div>
 
-    <?php include("download-subsonic.php"); ?>
-    <?php include("translate-subsonic.php"); ?>
+    <%@ include file="download-subsonic.jsp" %>
+    <%@ include file="translate-subsonic.jsp" %>
 </div>
 
 <div class="clear">
 </div>
 </div>
 <hr/>
-<?php include("footer.php"); ?>
+<%@ include file="footer.jsp" %>
 </div>
 
 

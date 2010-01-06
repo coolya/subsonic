@@ -3,9 +3,9 @@
 
     <p>Free download available for Windows, Mac, Linux and Unix.</p>
 
-    <p><a href="download.php"><img src="inc/img/button-download.png" alt="Download" class="img-center"/></a></p>
+    <p><a href="download.jsp"><img src="inc/img/button-download.png" alt="Download" class="img-center"/></a></p>
 
-    <p>... or try the <a href="demo.php"><b>demo</b></a> first!</p>
+    <p>... or try the <a href="demo.jsp"><b>demo</b></a> first!</p>
 
     <p><img src="inc/img/android.png" alt="Android" class="img-right"/></p>
 

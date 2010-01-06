@@ -1,17 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<?php
-    $current = 'installation';
-    include("header.php");
-?>
+
+<%! String current = "installation"; %>
+<%@ include file="header.jsp" %>
 
 <body>
 
 <a name="top"></a>
 
 <div id="container">
-<?php include("menu.php");?>
+<%@ include file="menu.jsp" %>
 
 <div id="content">
 <div id="main-col">
@@ -48,7 +47,7 @@
             </p>
             <p>
                 It also creates links in the Start Menu: <code>Start &gt; All Programs &gt; Subsonic</code>. From this menu you can start/stop the Subsonic service, open the Subsonic web page, or
-                change basic settings such as which port number Subsonic should use. You can also click on the little yellow submarine tray icon. 
+                change basic settings such as which port number Subsonic should use. You can also click on the little yellow submarine tray icon.
             </p>
             <p>
                 If you're upgrading an existing Subsonic installation, you don't have to uninstall the old version first. In any case, the existing Subsonic settings are preserved.
@@ -127,7 +126,7 @@
                 <li>Upgrade to the latest Tomcat version (at least if you're using Tomcat 5.0 or earlier).</li>
                 <li>Look for errors in the Subsonic log, <code>c:\subsonic\subsonic.log</code> or <code>/var/subsonic/subsonic.log</code>.</li>
                 <li>Look for errors in the Tomcat logs, <code>TOMCAT_HOME/logs</code>.</li>
-                <li>Post a message to the <a href="forum.php">Subsonic forum</a>. Please let us know what Subsonic version, Tomcat version and
+                <li>Post a message to the <a href="forum.jsp">Subsonic forum</a>. Please let us know what Subsonic version, Tomcat version and
                     operating system you're using. Also, please give a detailed description of the problem. This way, we'll be able to help you faster.</li>
             </ul>
         </div>
@@ -138,9 +137,9 @@
 
 <div id="side-col">
 
-    <?php include("tutorial.php"); ?>
-    <?php include("donate.php"); ?>
-    <?php include("translate-subsonic.php"); ?>
+    <%@ include file="tutorial.jsp" %>
+    <%@ include file="donate.jsp" %>
+    <%@ include file="translate-subsonic.jsp" %>
 
 </div>
 
@@ -148,7 +147,7 @@
 </div>
 </div>
 <hr/>
-<?php include("footer.php"); ?>
+<%@ include file="footer.jsp" %>
 </div>
 
 
