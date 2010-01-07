@@ -54,20 +54,28 @@ public class RedirectionController implements Controller {
         redirection.setLastRead(new Date());
         redirectionDao.updateRedirection(redirection);
 
-        if (redirection.isTrial() && redirection.getTrialExpires() != null && redirection.getTrialExpires().before(new Date())) {
-            return new ModelAndView(new RedirectView("http://gosubsonic.com/pages/redirect-expired.jsp?redirectFrom=" + redirectFrom));
+        // Check for trial expiration (unless called from Android app which manages its own trial expiry).
+        if (isTrialExpired(redirection) && !isAndroid(request)) {
+            LOG.info("Expired redirection: " + redirectFrom);
+            return new ModelAndView(new RedirectView("http://gosubsonic.com/pages/redirect-expired.jsp?redirectFrom=" +
+                    redirectFrom + "&expired=" + redirection.getTrialExpires().getTime()));
         }
-        String requestUrl = getFullRequestURL(request);
-        // TODO: care about missing trailing slash?
-        StringBuilder redirectTo = new StringBuilder(redirection.getRedirectTo());
-        if (redirectTo.charAt(redirectTo.length() - 1) != '/') {
-            redirectTo.append("/");
-        }
-        redirectTo.append(StringUtils.substringAfterLast(requestUrl, "/"));
 
+        // TODO: Handle trailing slashes.
+
+        String requestUrl = getFullRequestURL(request);
+        String redirectTo = requestUrl.replaceFirst("http://" + redirectFrom + "\\.gosubsonic\\.com", redirection.getRedirectTo());
         LOG.info("Redirecting from " + requestUrl + " to " + redirectTo);
 
-        return new ModelAndView(new RedirectView(redirectTo.toString()));
+        return new ModelAndView(new RedirectView(redirectTo));
+    }
+
+    private boolean isTrialExpired(Redirection redirection) {
+        return redirection.isTrial() && redirection.getTrialExpires() != null && redirection.getTrialExpires().before(new Date());
+    }
+
+    private boolean isAndroid(HttpServletRequest request) {
+        return "android".equals(request.getParameter("c"));
     }
 
     private String getFullRequestURL(HttpServletRequest request) {
