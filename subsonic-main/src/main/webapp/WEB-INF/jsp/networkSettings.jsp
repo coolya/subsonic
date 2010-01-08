@@ -89,6 +89,21 @@
         <span id="urlRedirectionTestStatus" style="margin-left:0.25em"></span>
     </p>
 
+    <c:if test="${command.trial}">
+        <fmt:formatDate value="${command.trialExpires}" dateStyle="long" var="expiryDate"/>
+
+        <p class="warning">
+            <c:choose>
+                <c:when test="${command.trialExpired}">
+                    <fmt:message key="networksettings.trialexpired"><fmt:param>${expiryDate}</fmt:param></fmt:message>
+                </c:when>
+                <c:otherwise>
+                    <fmt:message key="networksettings.trialnotexpired"><fmt:param>${expiryDate}</fmt:param></fmt:message>
+                </c:otherwise>
+            </c:choose>
+        </p>
+    </c:if>
+
     <p style="padding-top:1em">
         <input type="submit" value="<fmt:message key="common.save"/>" style="margin-right:0.3em">
         <input type="button" value="<fmt:message key="common.cancel"/>" onclick="location.href='nowPlaying.view'">

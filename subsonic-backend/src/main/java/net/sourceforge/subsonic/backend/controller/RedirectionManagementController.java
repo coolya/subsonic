@@ -153,7 +153,7 @@ public class RedirectionManagementController extends MultiActionController {
             if (status.getStatusCode() == HttpStatus.SC_OK) {
                 writer.print(webAddress + " responded successfully.");
             } else {
-                writer.print(webAddress + " returned HTTP error code " + status.getStatusCode() + status.getReasonPhrase());
+                writer.print(webAddress + " returned HTTP error code " + status.getStatusCode() + " " + status.getReasonPhrase());
             }
 
         } catch (Throwable x) {

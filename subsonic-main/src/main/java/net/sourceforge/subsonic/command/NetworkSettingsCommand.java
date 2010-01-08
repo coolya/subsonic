@@ -18,6 +18,8 @@
  */
 package net.sourceforge.subsonic.command;
 
+import java.util.Date;
+
 /**
  * @author Sindre Mehus
  * @version $Id$
@@ -28,6 +30,9 @@ public class NetworkSettingsCommand {
     private int portForwardingPublicPort;
     private boolean urlRedirectionEnabled;
     private String urlRedirectFrom;
+    private boolean trial;
+    private Date trialExpires;
+    private boolean trialExpired;
 
     public void setPortForwardingEnabled(boolean portForwardingEnabled) {
         this.portForwardingEnabled = portForwardingEnabled;
@@ -59,5 +64,29 @@ public class NetworkSettingsCommand {
 
     public void setUrlRedirectFrom(String urlRedirectFrom) {
         this.urlRedirectFrom = urlRedirectFrom;
+    }
+
+    public void setTrial(boolean trial) {
+        this.trial = trial;
+    }
+
+    public boolean isTrial() {
+        return trial;
+    }
+
+    public void setTrialExpires(Date trialExpires) {
+        this.trialExpires = trialExpires;
+    }
+
+    public Date getTrialExpires() {
+        return trialExpires;
+    }
+
+    public void setTrialExpired(boolean trialExpired) {
+        this.trialExpired = trialExpired;
+    }
+
+    public boolean isTrialExpired() {
+        return trialExpired;
     }
 }

@@ -53,6 +53,11 @@ public class NetworkSettingsController extends SimpleFormController {
         command.setUrlRedirectionEnabled(settingsService.isUrlRedirectionEnabled());
         command.setUrlRedirectFrom(settingsService.getUrlRedirectFrom());
 
+        Date trialExpires = settingsService.getUrlRedirectTrialExpires();
+        command.setTrialExpires(trialExpires);
+        command.setTrialExpired(trialExpires != null && trialExpires.before(new Date()));
+        command.setTrial(trialExpires != null && !settingsService.isLicenseValid());
+
         return command;
     }
 
