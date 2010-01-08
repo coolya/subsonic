@@ -51,21 +51,32 @@
     </script>
 </head>
 <body class="mainframe bgcolor1" onload="init()">
+<script type="text/javascript" src="<c:url value="/script/wz_tooltip.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/script/tip_balloon.js"/>"></script>
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="network"/>
 </c:import>
 
+<p style="padding-top:1em"><fmt:message key="networksettings.text"/></p>
+
 <form:form commandName="command" action="networkSettings.view" method="post">
-    <p style="padding-top:1em"><form:checkbox id="portForwardingEnabled" path="portForwardingEnabled" onclick="enablePortForwardingFields()"/>
-        <label for="portForwardingEnabled"><fmt:message key="networksettings.portforwardingenabled"/></label>
+    <p style="padding-top:1em">
+                    <form:checkbox id="portForwardingEnabled" path="portForwardingEnabled" onclick="enablePortForwardingFields()"/>
+                <label for="portForwardingEnabled"><fmt:message key="networksettings.portforwardingenabled"/></label>
     </p>
 
-    <p>
-        <fmt:message key="networksettings.portforwardingport"/>
-        <form:input id="portForwardingPublicPort" path="portForwardingPublicPort" size="6"
-                    cssStyle="margin-left:0.25em"/>
-    </p>
+    <table>
+        <tr>
+            <td>
+                <fmt:message key="networksettings.portforwardingport"/>
+                <form:input id="portForwardingPublicPort" path="portForwardingPublicPort" size="6" cssStyle="margin-left:0.25em"/>
+            </td>
+            <td style="padding-left:0.5em">
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="portforwarding"/></c:import>
+            </td>
+        </tr>
+    </table>
 
     <p class="detail">
         <fmt:message key="networksettings.status"/>
