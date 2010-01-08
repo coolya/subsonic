@@ -127,9 +127,10 @@ public class NetworkService {
         this.settingsService = settingsService;
     }
 
-    private class PortForwardingTask implements Runnable {
+    private class PortForwardingTask extends Task {
 
-        public void run() {
+        @Override
+        protected void execute() {
 
             boolean enabled = settingsService.isPortForwardingEnabled();
             portForwardingStatus.setText("Looking for router...");
@@ -199,9 +200,10 @@ public class NetworkService {
         }
     }
 
-    private class URLRedirectionTask implements Runnable {
+    private class URLRedirectionTask extends Task{
 
-        public void run() {
+        @Override
+        protected void execute() {
 
             boolean enable = settingsService.isUrlRedirectionEnabled();
             HttpPost request = new HttpPost(enable ? URL_REDIRECTION_REGISTER_URL : URL_REDIRECTION_UNREGISTER_URL);
@@ -259,9 +261,10 @@ public class NetworkService {
         }
     }
 
-    private class TestURLRedirectionTask implements Runnable {
+    private class TestURLRedirectionTask extends Task {
 
-        public void run() {
+        @Override
+        protected void execute() {
 
             HttpGet request = new HttpGet(URL_REDIRECTION_TEST_URL + "?redirectFrom=" + settingsService.getUrlRedirectFrom());
             HttpClient client = new DefaultHttpClient();
@@ -280,6 +283,23 @@ public class NetworkService {
                 client.getConnectionManager().shutdown();
             }
         }
+    }
+
+    private abstract class Task implements Runnable {
+        public void run() {
+            String name = getClass().getSimpleName();
+            LOG.debug("Starting " + name);
+
+            try {
+                execute();
+            } catch (Throwable x) {
+                LOG.error("Error executing " + name + ": " + x.getMessage(), x);
+            } finally {
+                LOG.debug("Completed " + name);
+            }
+        }
+
+        protected abstract void execute();
     }
 
     public static class Status {

@@ -23,6 +23,12 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <servlet>
+        <servlet-name>license-generator</servlet-name>
+        <servlet-class>net.sourceforge.subsonic.backend.servlet.LicenseServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
     <!--<servlet>-->
         <!--<display-name>DWR Servlet</display-name>-->
         <!--<servlet-name>dwr-invoker</servlet-name>-->

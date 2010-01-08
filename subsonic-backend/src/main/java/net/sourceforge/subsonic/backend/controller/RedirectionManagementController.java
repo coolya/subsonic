@@ -24,6 +24,7 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,6 +52,8 @@ import net.sourceforge.subsonic.backend.domain.Redirection;
 public class RedirectionManagementController extends MultiActionController {
 
     private static final Logger LOG = Logger.getLogger(RedirectionManagementController.class);
+    private static final List<String> RESERVED_REDIRECTS = Arrays.asList("www", "web", "demo");
+
     private RedirectionDao redirectionDao;
 
     public ModelAndView register(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -67,9 +70,13 @@ public class RedirectionManagementController extends MultiActionController {
             trialExpires = new Date(ServletRequestUtils.getRequiredLongParameter(request, "trialExpires"));
         }
 
+        if (RESERVED_REDIRECTS.contains(redirectFrom)) {
+            sendError(response, "\"" + redirectFrom + "\" is a reserved address. Please select another.");
+            return null;
+        }
+
         if (!redirectFrom.matches("(\\w|\\-)+")) {
-            String message = "Illegal characters present in \"" + redirectFrom + "\". Please select another.";
-            sendError(response, message);
+            sendError(response, "Illegal characters present in \"" + redirectFrom + "\". Please select another.");
             return null;
         }
 

@@ -1,7 +1,3 @@
-zsvrsn3
-karen1214
-tutubebe99
-
 TODO IN 3.9
 --------------
 Wrong error text in URL redirect.
@@ -403,9 +399,12 @@ Upgrade gosubsonic.com
   Stop Tomcat: https://gosubsonic.com:9999/tomcat/config.do
   rm -rf /usr/java/tomcat-5.5/webapps/demo.war
   rm -rf /usr/java/tomcat-5.5/webapps/demo
+  rm -rf /usr/java/tomcat-5.5/webapps/ROOT.war
+  rm -rf /usr/java/tomcat-5.5/webapps/ROOT
   rm -rf /usr/java/tomcat-5.5/work
   scp subsonic-main/target/subsonic.war sindremehus@gosubsonic.com:/usr/java/tomcat-5.5/webapps/demo.war
-  Start Tomcat: https://gosubsonic.com:9999/tomcat/config.do
+  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@gosubsonic.com:/usr/java/tomcat-5.5/webapps/ROOT.war
+  Start Tomcat: u
 
 HOW TO RELEASE TO ANDROID MARKET
 ================================

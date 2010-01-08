@@ -61,10 +61,9 @@ public class RedirectionController implements Controller {
                     redirectFrom + "&expired=" + redirection.getTrialExpires().getTime()));
         }
 
-        // TODO: Handle trailing slashes.
-
         String requestUrl = getFullRequestURL(request);
-        String redirectTo = requestUrl.replaceFirst("http://" + redirectFrom + "\\.gosubsonic\\.com", redirection.getRedirectTo());
+        String to = StringUtils.removeEnd(redirection.getRedirectTo(), "/");
+        String redirectTo = requestUrl.replaceFirst("http://" + redirectFrom + "\\.gosubsonic\\.com", to);
         LOG.info("Redirecting from " + requestUrl + " to " + redirectTo);
 
         return new ModelAndView(new RedirectView(redirectTo));
