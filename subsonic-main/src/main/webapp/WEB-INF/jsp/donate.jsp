@@ -24,6 +24,7 @@
     <c:param name="cmd" value="_xclick"/>
     <c:param name="business" value="subsonic_donation@activeobjects.no"/>
     <c:param name="item_name" value="Subsonic Donation"/>
+    <c:param name="item_number" value="subsonic10"/>
     <c:param name="no_shipping" value="1"/>
     <c:param name="amount" value="10.00"/>
     <c:param name="currency_code" value="EUR"/>
@@ -35,6 +36,7 @@
     <c:param name="cmd" value="_xclick"/>
     <c:param name="business" value="subsonic_donation@activeobjects.no"/>
     <c:param name="item_name" value="Subsonic Donation"/>
+    <c:param name="item_number" value="subsonic15"/>
     <c:param name="no_shipping" value="1"/>
     <c:param name="amount" value="15.00"/>
     <c:param name="currency_code" value="EUR"/>
@@ -46,6 +48,7 @@
     <c:param name="cmd" value="_xclick"/>
     <c:param name="business" value="subsonic_donation@activeobjects.no"/>
     <c:param name="item_name" value="Subsonic Donation"/>
+    <c:param name="item_number" value="subsonic20"/>
     <c:param name="no_shipping" value="1"/>
     <c:param name="amount" value="20.00"/>
     <c:param name="currency_code" value="EUR"/>
@@ -57,6 +60,7 @@
     <c:param name="cmd" value="_xclick"/>
     <c:param name="business" value="subsonic_donation@activeobjects.no"/>
     <c:param name="item_name" value="Subsonic Donation"/>
+    <c:param name="item_number" value="subsonic25"/>
     <c:param name="no_shipping" value="1"/>
     <c:param name="amount" value="25.00"/>
     <c:param name="currency_code" value="EUR"/>
@@ -68,6 +72,7 @@
     <c:param name="cmd" value="_xclick"/>
     <c:param name="business" value="subsonic_donation@activeobjects.no"/>
     <c:param name="item_name" value="Subsonic Donation"/>
+    <c:param name="item_number" value="subsonic30"/>
     <c:param name="no_shipping" value="1"/>
     <c:param name="amount" value="30.00"/>
     <c:param name="currency_code" value="EUR"/>
@@ -79,6 +84,7 @@
     <c:param name="cmd" value="_xclick"/>
     <c:param name="business" value="subsonic_donation@activeobjects.no"/>
     <c:param name="item_name" value="Subsonic Donation"/>
+    <c:param name="item_number" value="subsonic50"/>
     <c:param name="no_shipping" value="1"/>
     <c:param name="amount" value="50.00"/>
     <c:param name="currency_code" value="EUR"/>
