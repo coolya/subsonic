@@ -18,15 +18,26 @@
  */
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.*;
-import net.sourceforge.subsonic.domain.*;
-import org.apache.commons.io.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.Version;
+import org.apache.commons.io.IOUtils;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
 
-import java.io.*;
-import java.net.*;
-import java.text.*;
-import java.util.*;
-import java.util.regex.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Provides version-related services, including functionality for determining whether a newer
@@ -45,17 +56,24 @@ public class VersionService {
     private Date localBuildDate;
     private String localBuildNumber;
 
-    /** Time when latest version was fetched (in milliseconds). */
+    /**
+     * Time when latest version was fetched (in milliseconds).
+     */
     private long lastVersionFetched;
 
-    /** Only fetch last version this often (in milliseconds.).*/
-    private static final long LAST_VERSION_FETCH_INTERVAL = 7 * 24 * 3600 * 1000; // One week
+    /**
+     * Only fetch last version this often (in milliseconds.).
+     */
+    private static final long LAST_VERSION_FETCH_INTERVAL = 7L * 24L * 3600L * 1000L; // One week
 
-    /** URL from which to fetch latest versions. */
-    private static final String VERSION_URL = "http://subsonic.sourceforge.net/version.html";
+    /**
+     * URL from which to fetch latest versions.
+     */
+    private static final String VERSION_URL = "http://gosubsonic.com/pages/version.jsp";
 
     /**
      * Returns the version number for the locally installed Subsonic version.
+     *
      * @return The version number for the locally installed Subsonic version.
      */
     public synchronized Version getLocalVersion() {
@@ -72,8 +90,9 @@ public class VersionService {
 
     /**
      * Returns the version number for the latest available Subsonic final version.
+     *
      * @return The version number for the latest available Subsonic final version, or <code>null</code>
-     * if the version number can't be resolved.
+     *         if the version number can't be resolved.
      */
     public synchronized Version getLatestFinalVersion() {
         refreshLatestVersion();
@@ -82,8 +101,9 @@ public class VersionService {
 
     /**
      * Returns the version number for the latest available Subsonic beta version.
+     *
      * @return The version number for the latest available Subsonic beta version, or <code>null</code>
-     * if the version number can't be resolved.
+     *         if the version number can't be resolved.
      */
     public synchronized Version getLatestBetaVersion() {
         refreshLatestVersion();
@@ -92,8 +112,9 @@ public class VersionService {
 
     /**
      * Returns the build date for the locally installed Subsonic version.
+     *
      * @return The build date for the locally installed Subsonic version, or <code>null</code>
-     * if the build date can't be resolved.
+     *         if the build date can't be resolved.
      */
     public synchronized Date getLocalBuildDate() {
         if (localBuildDate == null) {
@@ -109,8 +130,9 @@ public class VersionService {
 
     /**
      * Returns the build number for the locally installed Subsonic version.
+     *
      * @return The build number for the locally installed Subsonic version, or <code>null</code>
-     * if the build number can't be resolved.
+     *         if the build number can't be resolved.
      */
     public synchronized String getLocalBuildNumber() {
         if (localBuildNumber == null) {
@@ -125,6 +147,7 @@ public class VersionService {
 
     /**
      * Returns whether a new final version of Subsonic is available.
+     *
      * @return Whether a new final version of Subsonic is available.
      */
     public boolean isNewFinalVersionAvailable() {
@@ -140,6 +163,7 @@ public class VersionService {
 
     /**
      * Returns whether a new beta version of Subsonic is available.
+     *
      * @return Whether a new beta version of Subsonic is available.
      */
     public boolean isNewBetaVersionAvailable() {
@@ -155,6 +179,7 @@ public class VersionService {
 
     /**
      * Reads the first line from the resource with the given name.
+     *
      * @param resourceName The resource name.
      * @return The first line of the resource.
      */
@@ -196,16 +221,30 @@ public class VersionService {
 
     /**
      * Resolves the latest available Subsonic version by screen-scraping a web page.
+     *
      * @throws IOException If an I/O error occurs.
      */
     private void readLatestVersion() throws IOException {
-        URL url = new URL(VERSION_URL);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+
+        HttpClient client = new DefaultHttpClient();
+        HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000);
+        HttpConnectionParams.setSoTimeout(client.getParams(), 10000);
+        HttpGet method = new HttpGet(VERSION_URL);
+        String content;
+        try {
+
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            content = client.execute(method, responseHandler);
+
+        } finally {
+            client.getConnectionManager().shutdown();
+        }
+
+        BufferedReader reader = new BufferedReader(new StringReader(content));
         Pattern finalPattern = Pattern.compile("SUBSONIC_FULL_VERSION_BEGIN(.*)SUBSONIC_FULL_VERSION_END");
         Pattern betaPattern = Pattern.compile("SUBSONIC_BETA_VERSION_BEGIN(.*)SUBSONIC_BETA_VERSION_END");
 
         try {
-
             String line = reader.readLine();
             while (line != null) {
                 Matcher finalMatcher = finalPattern.matcher(line);

@@ -2,7 +2,6 @@ TODO IN 3.9
 --------------
 Make android app work with URL redirect.
 Optionally show list of missing covers in batch cover.
-Use httpclient in VersionService.
 Disable ads first 30 days.
 Show status in getting started.
 Add link to portforward.com in network settings.
