@@ -109,14 +109,7 @@ public class PlaylistService {
      * @return A list of all previously saved playlists.
      */
     public File[] getSavedPlaylists() {
-        File[] result = FileUtil.listFiles(getPlaylistDirectory(), new PlaylistFilenameFilter());
-
-        // Happens if playlist directory is non-existing.
-        if (result == null) {
-            return new File[0];
-        }
-
-        return result;
+        return FileUtil.listFiles(getPlaylistDirectory(), new PlaylistFilenameFilter(), true);
     }
 
     /**
