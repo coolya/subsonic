@@ -12,13 +12,6 @@
     <c:param name="cat" value="coverArt"/>
 </c:import>
 
-<p><b>
-    <fmt:message key="coverartsettings.missing">
-        <fmt:param value="${fn:length(command.coverArtReport.albumsWithoutCover)}"/>
-        <fmt:param value="${command.coverArtReport.totalNumberOfAlbums}"/>
-    </fmt:message>
-</b></p>
-
 <form:form commandName="command" action="coverArtSettings.view" method="post">
 
     <p><form:checkbox id="auto" path="auto"/> <label for="auto"><fmt:message key="coverartsettings.auto"/></label></p>
@@ -39,10 +32,19 @@
         <input type="submit" value="<fmt:message key="common.save"/>" style="margin-right:0.3em">
         <input type="button" value="<fmt:message key="common.cancel"/>" onclick="location.href='nowPlaying.view'">
     </p>
+</form:form>
 
-    <p>
-        <b><fmt:message key="coverartsettings.albumList"/></b>
-    </p>
+<c:if test="${empty command.coverArtReport}">
+    <div class="forward"><a href="coverArtSettings.view?report"><fmt:message key="coverartsettings.albumList"/></a></div>
+</c:if>
+
+<c:if test="${not empty command.coverArtReport}">
+    <p><b>
+        <fmt:message key="coverartsettings.missing">
+            <fmt:param value="${fn:length(command.coverArtReport.albumsWithoutCover)}"/>
+            <fmt:param value="${command.coverArtReport.totalNumberOfAlbums}"/>
+        </fmt:message>
+    </b></p>
 
     <table>
         <c:forEach items="${command.coverArtReport.albumsWithoutCover}" var="musicFile" begin="${command.startIndex}"
@@ -61,16 +63,15 @@
             </tr>
         </c:forEach>
     </table>
-</form:form>
 
-<p>
-    <c:forEach items="${command.paginationElements}" var="page" varStatus="status">
-        <c:choose>
-            <c:when test="${page.active}">${page.position}</c:when>
-            <c:otherwise><a
-                    href="<c:url value="coverArtSettings.view"><c:param name="pageNumber" value="${page.position}"/></c:url>">${page.position}</a></c:otherwise>
-        </c:choose>
-    </c:forEach>
-</p>
+    <p>
+        <c:forEach items="${command.paginationElements}" var="page" varStatus="status">
+            <c:choose>
+                <c:when test="${page.active}">${page.position}</c:when>
+                <c:otherwise><a href="coverArtSettings.view?report&pageNumber=${page.position}">${page.position}</a></c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </p>
+</c:if>
 </body>
 </html>

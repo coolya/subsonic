@@ -1,10 +1,12 @@
 TODO IN 3.9
 --------------
-Make android app work with URL redirect.
+When changing port forward port, url redir should be updated.
+Add "path" to REST api. Suggests where to store the file on the Android client.
+add licenseservlet to svn.
 Optionally show list of missing covers in batch cover.
 Disable ads first 30 days.
+Update ads?
 Show status in getting started.
-Add link to portforward.com in network settings.
 Test lyrics with non-ascii.
 In licence email, explain how to install it.
 Optimize SettingsService.getAllMusicFolders()?
@@ -14,11 +16,10 @@ Scrobbling broken for transcoded songs? http://www.activeobjects.no/subsonic/for
 Bug: Double-scrobbling when transcoding.
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
 Add new languages to features.jsp
-http://upnp-portmapper.sourceforge.net/
-Welcome page
 
 TODO IN ANDROID 1.2
 -----------------------
+Optimize redirects to subsonic.org.
 i18n
 Add "Save" option.
 Don't "Play + Save" for files that already exists.
@@ -31,9 +32,13 @@ List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/foru
 
 DONE IN 3.9
 ------------
+TBT: Make android app work with expired URL redirect.
 Bugfix: Fixed lyrics lookup. Now uses lyricsfly.com which provides a stable API.
 Bugfix: Fixed "Not in GZIP format" error in Discogs cover image search, courtesy of Christian Nedregård.
 Bugfix: Sort list of saved playlists.
+New: UPnP port forwarding
+New: Personal web address
+New: Getting started page
 New: Cover art batch download, courtesy of Christian Nedregård.
 New: Improved relevance for top hits in Discogs cover image search, courtesy of Christian Nedregård.
 New: Added Polish translation, courtesy of Micha? Kotas.

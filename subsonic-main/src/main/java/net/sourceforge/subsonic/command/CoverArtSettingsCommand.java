@@ -29,18 +29,19 @@ import java.util.List;
  * @author Christian Nedregård
  */
 public class CoverArtSettingsCommand {
-    private int PAGINATION_SIZE = 100;
+    private static final int PAGINATION_SIZE = 100;
+
     private CoverArtReport coverArtReport;
     private boolean auto;
     private boolean batchRunning;
     private int pageNumber = 1;
 
-    public CoverArtSettingsCommand(CoverArtReport coverArtReport) {
-        this.coverArtReport = coverArtReport;
-    }
-
     public CoverArtReport getCoverArtReport() {
         return coverArtReport;
+    }
+
+    public void setCoverArtReport(CoverArtReport coverArtReport) {
+        this.coverArtReport = coverArtReport;
     }
 
     public boolean isAuto() {

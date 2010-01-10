@@ -37,8 +37,12 @@ public class CoverArtSettingsController extends SimpleFormController {
     private SettingsService settingsService;
 
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
-        CoverArtReport coverArtReport = coverArtBatchService.getCoverArtReport();
-        CoverArtSettingsCommand command = new CoverArtSettingsCommand(coverArtReport);
+        CoverArtSettingsCommand command = new CoverArtSettingsCommand();
+
+        if (request.getParameter("report") != null) {
+            CoverArtReport coverArtReport = coverArtBatchService.getCoverArtReport();
+            command.setCoverArtReport(coverArtReport);
+        }
 
         if (StringUtils.isNumeric(request.getParameter("pageNumber"))) {
             command.setPageNumber(Integer.parseInt(request.getParameter("pageNumber")));
