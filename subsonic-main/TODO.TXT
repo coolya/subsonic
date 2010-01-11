@@ -2,6 +2,7 @@ TODO IN 3.9
 --------------
 When changing port forward port, url redir should be updated.
 Add "path" to REST api. Suggests where to store the file on the Android client.
+
 add licenseservlet to svn.
 Optionally show list of missing covers in batch cover.
 Disable ads first 30 days.

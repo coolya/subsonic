@@ -43,7 +43,6 @@ public class LicenseServlet extends HttpServlet {
     private static final String POP_MAIL_SERVER = "pop.gmail.com";
     private static final String SMTP_MAIL_SERVER = "smtp.gmail.com";
     private static final String USER = "subsonic@activeobjects.no";
-
     private static final String[] DONATION_SUBJECTS = {
             "Notification of donation received",
             "Payment received",
