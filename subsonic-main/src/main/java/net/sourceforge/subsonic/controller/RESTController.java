@@ -399,6 +399,12 @@ public class RESTController extends MultiActionController {
                 attributes.add(new Attribute("transcodedSuffix", transcodedSuffix));
                 attributes.add(new Attribute("transcodedContentType", StringUtil.getMimeType(transcodedSuffix)));
             }
+
+            String path = getRelativePath(musicFile);
+            if (path != null) {
+                attributes.add(new Attribute("path", path));
+            }
+
         } else {
 
             List<File> childCoverArt = musicFileService.getCoverArt(musicFile, 1);
@@ -407,6 +413,30 @@ public class RESTController extends MultiActionController {
             }
         }
         return attributes;
+    }
+
+    private String getRelativePath(MusicFile musicFile) {
+
+        String filePath = musicFile.getPath();
+
+        // Convert slashes.
+        filePath = filePath.replace('\\', '/');
+
+        String filePathLower = filePath.toLowerCase();
+
+        List<MusicFolder> musicFolders = settingsService.getAllMusicFolders();
+        for (MusicFolder musicFolder : musicFolders) {
+            String folderPath = musicFolder.getPath().getPath();
+            folderPath = folderPath.replace('\\', '/');
+            String folderPathLower = folderPath.toLowerCase();
+
+            if (filePathLower.startsWith(folderPathLower)) {
+                String relativePath = filePath.substring(folderPath.length());
+                return relativePath.startsWith("/") ? relativePath.substring(1) : relativePath;
+            }
+        }
+
+        return null;
     }
 
     public ModelAndView download(HttpServletRequest request, HttpServletResponse response) throws Exception {
