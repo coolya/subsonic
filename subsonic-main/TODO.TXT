@@ -1,12 +1,12 @@
 TODO IN 3.9
 --------------
+Use android icons in top.jsp
 When changing port forward port, url redir should be updated.
 Disable ads first 30 days.
 Update ads?
 Show status in getting started.
 Test lyrics with non-ascii.
 Optimize SettingsService.getAllMusicFolders()?
-Use android icons in top.jsp
 Global option to disable chat.  Admin should be able to remove individual messages.
 Scrobbling broken for transcoded songs? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2316
 Bug: Double-scrobbling when transcoding.
