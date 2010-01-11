@@ -184,6 +184,9 @@ public class LicenseServlet extends HttpServlet {
                 "Email: " + address + "\n" +
                 "License: " + license + " \n" +
                 "\n" +
+                "To install the license, click the \"Donate\" link in the top right corner of the Subsonic " +
+                "web interface.\n" +
+                "\n" +
                 "Thanks again for supporting the project!\n" +
                 "\n" +
                 "Best regards,\n" +
