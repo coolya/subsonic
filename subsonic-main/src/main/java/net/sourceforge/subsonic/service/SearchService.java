@@ -59,7 +59,7 @@ import net.sourceforge.subsonic.domain.SearchResult;
  */
 public class SearchService {
 
-    private static final int INDEX_VERSION = 9;
+    private static final int INDEX_VERSION = 10;
     private static final Random RANDOM = new Random(System.currentTimeMillis());
     private static final Logger LOG = Logger.getLogger(SearchService.class);
 
@@ -287,7 +287,7 @@ public class SearchService {
         for (Line line : index.values()) {
             try {
 
-                if (!line.isFile || line.lastModified < newerThanTime) {
+                if (!line.isFile || line.created < newerThanTime) {
                     continue;
                 }
                 if (title != null && !StringUtils.contains(line.title, title)) {
@@ -567,10 +567,10 @@ public class SearchService {
         cachedGenres = new TreeSet<String>();
         cachedAlbums = new TreeSet<Line>(new Comparator<Line>() {
             public int compare(Line line1, Line line2) {
-                if (line2.lastModified < line1.lastModified) {
+                if (line2.created < line1.created) {
                     return -1;
                 }
-                if (line1.lastModified < line2.lastModified) {
+                if (line1.created < line2.created) {
                     return 1;
                 }
                 return 0;
@@ -685,8 +685,9 @@ public class SearchService {
         private boolean isFile;
         private boolean isAlbum;
         private boolean isDirectory;
+        private long created;
         private long lastModified;
-        private File file;  // TODO Use String path instead?
+        private File file;
         private long length;
         private String artist;
         private String album;
@@ -710,15 +711,16 @@ public class SearchService {
             line.isFile = "F".equals(tokens[0]);
             line.isAlbum = "A".equals(tokens[0]);
             line.isDirectory = "D".equals(tokens[0]);
-            line.lastModified = Long.parseLong(tokens[1]);
-            line.file = new File(tokens[2]);
+            line.created = Long.parseLong(tokens[1]);
+            line.lastModified = Long.parseLong(tokens[2]);
+            line.file = new File(tokens[3]);
             if (line.isFile) {
-                line.length = Long.parseLong(tokens[3]);
-                line.artist = tokens[4].length() == 0 ? null : tokens[4];
-                line.album = tokens[5].length() == 0 ? null : tokens[5];
-                line.title = tokens[6].length() == 0 ? null : tokens[6];
-                line.year = tokens[7].length() == 0 ? null : tokens[7];
-                line.genre = tokens[8].length() == 0 ? null : tokens[8];
+                line.length = Long.parseLong(tokens[4]);
+                line.artist = tokens[5].length() == 0 ? null : tokens[5];
+                line.album = tokens[6].length() == 0 ? null : tokens[6];
+                line.title = tokens[7].length() == 0 ? null : tokens[7];
+                line.year = tokens[8].length() == 0 ? null : tokens[8];
+                line.genre = tokens[9].length() == 0 ? null : tokens[9];
             }
 
             return line;
@@ -755,6 +757,7 @@ public class SearchService {
                 }
             }
             line.lastModified = file.lastModified();
+            line.created = existingLine != null ? existingLine.created : line.lastModified;
             line.file = file.getFile();
             if (line.isFile) {
                 line.length = file.length();
@@ -784,6 +787,7 @@ public class SearchService {
                 buf.append('D').append(SEPARATOR);
             }
 
+            buf.append(created).append(SEPARATOR);
             buf.append(lastModified).append(SEPARATOR);
             buf.append(file.getPath()).append(SEPARATOR);
             buf.append(length).append(SEPARATOR);

@@ -1,11 +1,12 @@
 TODO IN 3.9
 --------------
 Use android icons in top.jsp
-Keep creation date in search index.
-Remove jme app.
+Fix wording in Home > Newest
 When changing port forward port, url redir should be updated.
-Disable ads first 30 days.
+Disable ads first 30 days?
+Update version number.
 Update ads?
+Use subsonic.org when ready
 Show status in getting started.
 Test lyrics with non-ascii.
 Optimize SettingsService.getAllMusicFolders()?
@@ -36,6 +37,7 @@ TBT: Make android app work with expired URL redirect.
 Bugfix: Fixed lyrics lookup. Now uses lyricsfly.com which provides a stable API.
 Bugfix: Fixed "Not in GZIP format" error in Discogs cover image search, courtesy of Christian Nedregård.
 Bugfix: Sort list of saved playlists.
+Bugfix: Home > Newest now sorts by creation date, not modification date.
 New: UPnP port forwarding
 New: Personal web address
 New: Getting started page
