@@ -280,15 +280,6 @@
     <profiles>
         <profile>
             <id>full</id>
-            <dependencies>
-                <dependency>
-                    <groupId>net.sourceforge.subsonic</groupId>
-                    <artifactId>subsonic-jme-player</artifactId>
-                    <version>${project.version}</version>
-                    <scope>runtime</scope>
-                </dependency>
-            </dependencies>
-
             <build>
                 <plugins>
                     <plugin>
@@ -329,10 +320,6 @@
                                 <echo file="${project.build.directory}/classes/build_number.txt">${buildNumber}</echo>
                                 <echo file="${project.build.directory}/classes/build_date.txt">${DSTAMP}</echo>
                                 <echo file="${project.build.directory}/classes/version.txt">${pom.version}</echo>
-                                <!--TODO: Avoid hardcoding of directory-->
-                                <copy file="${basedir}/../subsonic-jme-player/target/subsonic-jme-player-${project.version}-me.jar"
-                                      tofile="${project.build.directory}/classes/net/sourceforge/subsonic/controller/subsonic-jme-player.jar"
-                                      failonerror="false"/>
                             </tasks>
                         </configuration>
                         <goals>

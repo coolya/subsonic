@@ -26,10 +26,6 @@
                     <a href="<c:url value="/wap/settings.view"/>">[<fmt:message key="wap.index.settings"/>]</a>
                 </b>
                 <br/>
-                <b>
-                    <a href="<c:url value="/wap/playerJad.view"/>">[<fmt:message key="wap.index.download"/>]</a>
-                </b>
-                <br/>
             </small>
         </p>
         <p>

@@ -49,14 +49,6 @@
             </exclusions>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>cglib</groupId>-->
-            <!--<artifactId>cglib</artifactId>-->
-            <!--<version>2.1_3</version>-->
-            <!--<scope>runtime</scope>-->
-        <!--</dependency>-->
-
-
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
@@ -100,63 +92,11 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>radeox</groupId>-->
-            <!--<artifactId>radeox</artifactId>-->
-            <!--<version>1.0-b2</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.9</version>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>org.directwebremoting</groupId>-->
-            <!--<artifactId>dwr</artifactId>-->
-            <!--<version>2.0.5</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>ant-zip</groupId>-->
-            <!--<artifactId>ant-zip</artifactId>-->
-            <!--<version>1.6.2</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>entagged-audioformats</groupId>-->
-            <!--<artifactId>entagged-audioformats</artifactId>-->
-            <!--<version>0.15</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>jfree</groupId>-->
-            <!--<artifactId>jfreechart</artifactId>-->
-            <!--<version>1.0.0</version>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>junit</groupId>-->
-                    <!--<artifactId>junit</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<groupId>gnujaxp</groupId>-->
-                    <!--<artifactId>gnujaxp</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>jdom</groupId>-->
-            <!--<artifactId>jdom</artifactId>-->
-            <!--<version>1.0</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>net.sf.ehcache</groupId>-->
-            <!--<artifactId>ehcache</artifactId>-->
-            <!--<version>1.6.0-beta3</version>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -193,45 +133,6 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>net.javazoom</groupId>-->
-            <!--<artifactId>jlayer</artifactId>-->
-            <!--<version>1.0.1</version>-->
-            <!--<scope>runtime</scope>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>net.javazoom</groupId>-->
-            <!--<artifactId>basicplayer</artifactId>-->
-            <!--<version>3.0</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>net.javazoom</groupId>-->
-            <!--<artifactId>mp3spi</artifactId>-->
-            <!--<version>1.9.4</version>-->
-            <!--<scope>runtime</scope>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.tritonus</groupId>-->
-            <!--<artifactId>tritonus_share</artifactId>-->
-            <!--<version>0.3.6</version>-->
-            <!--<scope>runtime</scope>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>net.sbbi</groupId>-->
-            <!--<artifactId>sbbi-upnplib</artifactId>-->
-            <!--<version>1.0.4</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.wetorrent</groupId>-->
-            <!--<artifactId>weupnp</artifactId>-->
-            <!--<version>2009-10-16</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -240,68 +141,4 @@
         </dependency>
 
     </dependencies>
-
-    <!--<profiles>-->
-        <!--<profile>-->
-            <!--<id>full</id>-->
-            <!--<dependencies>-->
-                <!--<dependency>-->
-                    <!--<groupId>net.sourceforge.subsonic</groupId>-->
-                    <!--<artifactId>subsonic-jme-player</artifactId>-->
-                    <!--<version>${project.version}</version>-->
-                    <!--<scope>runtime</scope>-->
-                <!--</dependency>-->
-            <!--</dependencies>-->
-
-            <!--<build>-->
-                <!--<plugins>-->
-                    <!--<plugin>-->
-                        <!--<groupId>org.codehaus.mojo</groupId>-->
-                        <!--<artifactId>buildnumber-maven-plugin</artifactId>-->
-                        <!--<executions>-->
-                            <!--<execution>-->
-                                <!--<phase>validate</phase>-->
-                                <!--<goals>-->
-                                    <!--<goal>create</goal>-->
-                                <!--</goals>-->
-                            <!--</execution>-->
-                        <!--</executions>-->
-                        <!--<configuration>-->
-                            <!--<doCheck>false</doCheck>-->
-                            <!--<doUpdate>false</doUpdate>-->
-                        <!--</configuration>-->
-                    <!--</plugin>-->
-                <!--</plugins>-->
-            <!--</build>-->
-        <!--</profile>-->
-    <!--</profiles>-->
-
-    <!--<build>-->
-        <!--<finalName>subsonic</finalName>-->
-        <!--<plugins>-->
-
-            <!--<plugin>-->
-                <!--<artifactId>maven-antrun-plugin</artifactId>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>generate-resources</phase>-->
-                        <!--<configuration>-->
-                            <!--<tasks>-->
-                                <!--<tstamp/>-->
-                                <!--<copy file="${basedir}/src/main/resources/net/sourceforge/subsonic/i18n/ResourceBundle_en.properties"-->
-                                      <!--tofile="${project.build.directory}/classes/net/sourceforge/subsonic/i18n/ResourceBundle.properties"/>-->
-                                <!--<echo file="${project.build.directory}/classes/build_number.txt">${buildNumber}</echo>-->
-                                <!--<echo file="${project.build.directory}/classes/build_date.txt">${DSTAMP}</echo>-->
-                                <!--<echo file="${project.build.directory}/classes/version.txt">${pom.version}</echo>-->
-                            <!--</tasks>-->
-                        <!--</configuration>-->
-                        <!--<goals>-->
-                            <!--<goal>run</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-
-        <!--</plugins>-->
-    <!--</build>-->
 </project>

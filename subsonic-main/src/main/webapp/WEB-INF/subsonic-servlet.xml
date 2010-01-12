@@ -310,13 +310,6 @@
         <property name="musicIndexService" ref="musicIndexService"/>
         <property name="versionService" ref="versionService"/>
     </bean>
-    <bean id="mobileController" class="net.sourceforge.subsonic.controller.MobileController">
-        <property name="settingsService" ref="settingsService"/>
-        <property name="playerService" ref="playerService"/>
-        <property name="musicFileService" ref="musicFileService"/>
-        <property name="musicIndexService" ref="musicIndexService"/>
-        <property name="transcodingService" ref="transcodingService"/>
-    </bean>
     <bean id="restController" class="net.sourceforge.subsonic.controller.RESTController">
         <property name="settingsService" ref="settingsService"/>
         <property name="securityService" ref="securityService"/>
@@ -412,7 +405,6 @@
                 <prop key="/podcast/**">podcastController</prop>
                 <prop key="/wap/download.view">downloadController</prop>
                 <prop key="/wap/**">wapController</prop>
-                <prop key="/mobile/**">mobileController</prop>
                 <prop key="/rest/**">restController</prop>
                 <prop key="/play.m3u">m3uController</prop>
                 <prop key="/stream/**">streamController</prop>

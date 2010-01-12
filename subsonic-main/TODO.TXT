@@ -49,6 +49,7 @@ TBT: Added "accesskey" in left frame.
 TBT: Added API method to change password.
 Flipped chat log.
 Bugfix: Avoid setting incorrect content length when transcoding or downsampling.
+New: Discontinued Subsonic JME client.
 
 ANDROID
 -------
@@ -132,7 +133,6 @@ Problem when streaming 2gb+ files, http://www.activeobjects.no/subsonic/forum/vi
 Change default cover image.
 Read .txt and .nfo for artist/album reviews. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1587
 Change LAME download url.
-Remove "Mock" and "Debug" options from JME app.
 PHPBB authentication. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1857
 Ignore files/directories by name (e.g., ".svn"), FilenameUtils.wildcardMatch(), http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=831
 Jetty download performance, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1712
@@ -201,12 +201,10 @@ last.fm problem. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1278
 Show total playlist duration.
 Remove player dynamic ip property?
 Upgrade to Spring Security.
-Remove Mock/Debug options from JME player.
 Bundle with open-source UPnP app?
 Uninstaller should optionally delete c:\subsonic
 Nicer popup for lyrics and online help.
 Add option for one player per user http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1255
-Add volume control to jme player.
 Verify that LastModified works for avatars.
 Create per-channel podcast settings. At least enable/disable.
 Should make it possible to retrieve avatars without reading the binary column.

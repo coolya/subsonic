@@ -215,31 +215,6 @@ public class WapController extends MultiActionController {
         return settings(request, response);
     }
 
-    public ModelAndView playerJad(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Map<String, Object> map = new HashMap<String, Object>();
-
-        // Note: The MIDP specification requires that the version is of the form X.Y[.Z], where X, Y, Z are
-        // integers between 0 and 99.
-        String version = versionService.getLocalVersion().toString().replaceAll("\\.beta.*", "");
-
-        map.put("baseUrl", getBaseUrl(request));
-        map.put("jarSize", getJarSize());
-        map.put("version", version);
-        return new ModelAndView("mobile/playerJad", "model", map);
-    }
-
-    public ModelAndView playerJar(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        response.setContentType("application/java-archive");
-        response.setContentLength(getJarSize());
-        InputStream in = getJarInputStream();
-        try {
-            IOUtils.copy(in, response.getOutputStream());
-        } finally {
-            IOUtils.closeQuietly(in);
-        }
-        return null;
-    }
-
     private List<MusicFile> search(String query) throws IOException {
         SearchCriteria criteria = new SearchCriteria();
         criteria.setTitle(query);
@@ -248,15 +223,6 @@ public class WapController extends MultiActionController {
 
         SearchResult result = searchService.search(criteria);
         return result.getMusicFiles();
-    }
-
-    private int getJarSize() throws Exception {
-        InputStream in = getJarInputStream();
-        try {
-            return IOUtils.toByteArray(in).length;
-        } finally {
-            IOUtils.closeQuietly(in);
-        }
     }
 
     private String getBaseUrl(HttpServletRequest request) {
@@ -269,10 +235,6 @@ public class WapController extends MultiActionController {
             baseUrl = StringUtil.rewriteUrl(baseUrl, referer);
         }
         return baseUrl;
-    }
-
-    private InputStream getJarInputStream() {
-        return getClass().getResourceAsStream("subsonic-jme-player.jar");
     }
 
     public void setSettingsService(SettingsService settingsService) {
