@@ -68,7 +68,6 @@
     <td><input id="artist" name="artist" type="text" value="${model.artist}"/></td>
     <td style="padding-left:0.25em"><fmt:message key="changecoverart.album"/></td>
     <td><input id="album" name="album" type="text" value="${model.album}"/></td>
-    <%--<td style="padding-left:0.5em"><input type="submit" value="<fmt:message key="changecoverart.searchamazon"/>" onclick="getImages('amazon')"/></td>--%>
     <td style="padding-left:0.5em"><input type="submit" value="<fmt:message key="changecoverart.searchdiscogs"/>" onclick="getImages('discogs')"/></td>
 </tr></table>
 

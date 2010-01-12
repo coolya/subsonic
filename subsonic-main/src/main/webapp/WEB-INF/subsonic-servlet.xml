@@ -85,13 +85,6 @@
         <property name="musicFileService" ref="musicFileService"/>
         <property name="securityService" ref="securityService"/>
     </bean>
-    <bean id="albumInfoController" class="net.sourceforge.subsonic.controller.AlbumInfoController">
-        <property name="commandClass" value="net.sourceforge.subsonic.command.AlbumInfoCommand"/>
-        <property name="successView" value="albumInfo"/>
-        <property name="formView" value="albumInfo"/>
-        <property name="amazonSearchService" ref="amazonSearchService"/>
-        <property name="musicFileService" ref="musicFileService"/>
-    </bean>
     <bean id="randomPlaylistController" class="net.sourceforge.subsonic.controller.RandomPlaylistController">
         <property name="viewName" value="reload"/>
         <property name="playerService" ref="playerService"/>
@@ -400,7 +393,6 @@
                 <prop key="/userSettings.view">userSettingsController</prop>
                 <prop key="/passwordSettings.view">passwordSettingsController</prop>
                 <prop key="/allmusic.view">allmusicController</prop>
-                <prop key="/albumInfo.view">albumInfoController</prop>
                 <prop key="/home.view">homeController</prop>
                 <prop key="/editTags.view">editTagsController</prop>
                 <prop key="/playlist.view">playlistController</prop>

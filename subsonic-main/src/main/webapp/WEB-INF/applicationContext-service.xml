@@ -110,8 +110,6 @@
         <property name="musicFileService" ref="musicFileService"/>
     </bean>
 
-    <bean id="amazonSearchService" class="net.sourceforge.subsonic.service.AmazonSearchService"/>
-
     <bean id="discogsSearchService" class="net.sourceforge.subsonic.service.DiscogsSearchService"/>
 
     <bean id="audioScrobblerService" class="net.sourceforge.subsonic.service.AudioScrobblerService">
@@ -167,7 +165,6 @@
     <bean id="ajaxLyricsService" class="net.sourceforge.subsonic.ajax.LyricsService"/>
 
     <bean id="ajaxCoverArtService" class="net.sourceforge.subsonic.ajax.CoverArtService">
-        <property name="amazonSearchService" ref="amazonSearchService"/>
         <property name="discogsSearchService" ref="discogsSearchService"/>
         <property name="securityService" ref="securityService"/>
         <property name="musicFileService" ref="musicFileService"/>

@@ -18,16 +18,6 @@
  */
 package net.sourceforge.subsonic.ajax;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.domain.MusicFile;
-import net.sourceforge.subsonic.service.AmazonSearchService;
-import net.sourceforge.subsonic.service.DiscogsSearchService;
-import net.sourceforge.subsonic.service.MusicFileService;
-import net.sourceforge.subsonic.service.SecurityService;
-import net.sourceforge.subsonic.util.StringUtil;
-import org.apache.commons.io.IOUtils;
-
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -36,7 +26,17 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.io.IOUtils;
 import org.directwebremoting.WebContextFactory;
+
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.service.DiscogsSearchService;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.util.StringUtil;
 
 /**
  * Provides AJAX-enabled services for retrieving cover art images.
@@ -49,7 +49,6 @@ public class CoverArtService {
 
     private static final Logger LOG = Logger.getLogger(CoverArtService.class);
 
-    private AmazonSearchService amazonSearchService;
     private DiscogsSearchService discogsSearchService;
     private SecurityService securityService;
     private MusicFileService musicFileService;
@@ -57,15 +56,13 @@ public class CoverArtService {
     /**
      * Returns a list of URLs of cover art images for the given artist and album.
      *
-     * @param service Where to search for images. Supported values are: "amazon" and "discogs".
+     * @param service Where to search for images. Supported values are: "discogs".
      * @param artist  The artist to search for.
      * @param album   The album to search for.
      * @return A possibly empty array of URLs of cover art images.
      */
     public CoverArtInfo[] getCoverArtImages(String service, String artist, String album) {
-        if ("amazon".equals(service)) {
-            return getAmazonCoverArtImages(artist, album);
-        } else if ("discogs".equals(service)) {
+        if ("discogs".equals(service)) {
             return getDiscogsCoverArtImages(artist, album);
         }
 
@@ -85,20 +82,6 @@ public class CoverArtService {
             return result;
         } catch (Exception x) {
             LOG.warn("Failed to search for images at Discogs.", x);
-            return new CoverArtInfo[0];
-        }
-    }
-
-    private CoverArtInfo[] getAmazonCoverArtImages(String artist, String album) {
-        try {
-            String[] urls = amazonSearchService.getCoverArtImages(artist, album);
-            CoverArtInfo[] result = new CoverArtInfo[urls.length];
-            for (int i = 0; i < urls.length; i++) {
-                result[i] = new CoverArtInfo(urls[i], urls[i]);
-            }
-            return result;
-        } catch (Exception x) {
-            LOG.warn("Failed to search for images at Amazon.", x);
             return new CoverArtInfo[0];
         }
     }
@@ -183,10 +166,6 @@ public class CoverArtService {
                 LOG.warn("Failed to create image file backup " + backup);
             }
         }
-    }
-
-    public void setAmazonSearchService(AmazonSearchService amazonSearchService) {
-        this.amazonSearchService = amazonSearchService;
     }
 
     public void setSecurityService(SecurityService securityService) {

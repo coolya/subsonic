@@ -1,6 +1,8 @@
 TODO IN 3.9
 --------------
 Use android icons in top.jsp
+Keep creation date in search index.
+Remove jme app.
 When changing port forward port, url redir should be updated.
 Disable ads first 30 days.
 Update ads?
@@ -16,6 +18,8 @@ Add new languages to features.jsp
 TODO IN ANDROID 1.2
 -----------------------
 Optimize redirects to subsonic.org.
+Landscape mode
+Caching mgmt
 i18n
 Add "Save" option.
 Don't "Play + Save" for files that already exists.

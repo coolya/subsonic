@@ -83,13 +83,6 @@
             <c:set var="needSep" value="true"/>
         </c:if>
 
-        <%--<sub:url value="albumInfo.view" var="albumInfoUrl">--%>
-            <%--<sub:param name="path" value="${model.dir.path}"/>--%>
-        <%--</sub:url>--%>
-        <%--<c:if test="${needSep}">|</c:if>--%>
-        <%--<a href="${albumInfoUrl}"><fmt:message key="main.albuminfo"/></a>--%>
-        <%--<c:set var="needSep" value="true"/>--%>
-
         <c:if test="${model.user.coverArtRole}">
             <sub:url value="editTags.view" var="editTagsUrl">
                 <sub:param name="path" value="${model.dir.path}"/>

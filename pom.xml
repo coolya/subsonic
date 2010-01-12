@@ -64,7 +64,6 @@
 
     <modules>
         <module>subsonic-main</module>
-        <module>subsonic-amazon</module>
     </modules>
 
     <profiles>

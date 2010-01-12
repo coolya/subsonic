@@ -136,7 +136,7 @@
         <div class="description">
             <ul class="list">
                 <li>Automatically register what you're playing on Last.fm, using the built-in Audioscrobbling support.</li>
-                <li>Find cover art, lyrics and album info using web services from Amazon, Discogs and MetroLyrics.</li>
+                <li>Find cover art and lyrics using web services from Discogs and Lyricsfly.</li>
                 <li>Read album reviews and more at Wikipedia, Google Music and allmusic.</li>
             </ul>
         </div>
