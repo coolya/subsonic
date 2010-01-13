@@ -156,7 +156,7 @@ public class SearchService {
             LOG.info("Created search index with " + scanner.getCount() + " entries.");
 
             if (settingsService.isAutoCoverBatch()) {
-               coverArtBatchService.startBatch();
+                coverArtBatchService.startBatch();
             }
         } catch (Exception x) {
             LOG.error("Failed to create search index.", x);
@@ -300,9 +300,9 @@ public class SearchService {
                     continue;
                 }
                 if (any != null &&
-                    !StringUtils.contains(line.title, any) &&
-                    !StringUtils.contains(line.album, any) &&
-                    !StringUtils.contains(line.artist, any)) {
+                        !StringUtils.contains(line.title, any) &&
+                        !StringUtils.contains(line.album, any) &&
+                        !StringUtils.contains(line.artist, any)) {
                     continue;
                 }
 
@@ -538,6 +538,21 @@ public class SearchService {
         }
 
         return result;
+    }
+
+    /**
+     * Returns the creation date for the given file.
+     *
+     * @param musicFile The file in question.
+     * @return The creation date, or {@code null} if not found.
+     */
+    public Date getCreationDate(MusicFile musicFile) throws IOException {
+        if (!isIndexCreated() || isIndexBeingCreated()) {
+            return null;
+        }
+
+        Line line = getIndex().get(musicFile.getFile());
+        return line == null ? null : new Date(line.created);
     }
 
     /**

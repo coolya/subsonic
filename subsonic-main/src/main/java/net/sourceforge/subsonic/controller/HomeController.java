@@ -151,7 +151,11 @@ public class HomeController extends ParameterizableViewController {
         for (MusicFile file : searchService.getNewestAlbums(offset, count)) {
             Album album = createAlbum(file);
             if (album != null) {
-                album.setLastModified(new Date(file.lastModified()));
+                Date created = searchService.getCreationDate(file);
+                if (created == null) {
+                    created = new Date(file.lastModified());
+                }
+                album.setCreated(created);
                 result.add(album);
             }
         }
@@ -252,7 +256,7 @@ public class HomeController extends ParameterizableViewController {
         private String coverArtPath;
         private String artist;
         private String albumTitle;
-        private Date lastModified;
+        private Date created;
         private Date lastPlayed;
         private Integer playCount;
         private Integer rating;
@@ -289,12 +293,12 @@ public class HomeController extends ParameterizableViewController {
             this.albumTitle = albumTitle;
         }
 
-        public Date getLastModified() {
-            return lastModified;
+        public Date getCreated() {
+            return created;
         }
 
-        public void setLastModified(Date lastModified) {
-            this.lastModified = lastModified;
+        public void setCreated(Date created) {
+            this.created = created;
         }
 
         public Date getLastPlayed() {

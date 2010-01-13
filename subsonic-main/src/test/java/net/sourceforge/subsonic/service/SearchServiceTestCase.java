@@ -44,7 +44,7 @@ public class SearchServiceTestCase extends TestCase {
     }
 
     private void doTestLine(final String artist, final String album, final String title, final String year,
-                            final String path, final String genre, final long lastModified, final long length) {
+            final String path, final String genre, final long lastModified, final long length) {
 
         MusicFile file = new MusicFile() {
             public synchronized MetaData getMetaData() {
@@ -76,6 +76,7 @@ public class SearchServiceTestCase extends TestCase {
         SearchService.Line line = SearchService.Line.forFile(file, new HashMap<File,SearchService.Line>());
         String yearString = year == null ? "" : year;
         String expected = 'F' + SearchService.Line.SEPARATOR +
+                          lastModified + SearchService.Line.SEPARATOR +
                           lastModified + SearchService.Line.SEPARATOR +
                           path + SearchService.Line.SEPARATOR +
                           length + SearchService.Line.SEPARATOR +

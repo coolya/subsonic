@@ -101,9 +101,9 @@
                                 <fmt:formatDate value="${album.lastPlayed}" dateStyle="short" var="lastPlayedDate"/>
                                 <fmt:message key="home.lastplayed"><fmt:param value="${lastPlayedDate}"/></fmt:message>
                             </c:if>
-                            <c:if test="${not empty album.lastModified}">
-                                <fmt:formatDate value="${album.lastModified}" dateStyle="short" var="lastModifiedDate"/>
-                                <fmt:message key="home.lastmodified"><fmt:param value="${lastModifiedDate}"/></fmt:message>
+                            <c:if test="${not empty album.created}">
+                                <fmt:formatDate value="${album.created}" dateStyle="short" var="creationDate"/>
+                                <fmt:message key="home.created"><fmt:param value="${creationDate}"/></fmt:message>
                             </c:if>
                             <c:if test="${not empty album.rating}">
                                 <c:import url="rating.jsp">

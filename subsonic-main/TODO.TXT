@@ -1,7 +1,8 @@
 TODO IN 3.9
 --------------
+Rename Help > About.
+Don't use username as default redirectFrom.
 Use android icons in top.jsp
-Fix wording in Home > Newest
 When changing port forward port, url redir should be updated.
 Disable ads first 30 days?
 Update version number.
@@ -15,10 +16,14 @@ Scrobbling broken for transcoded songs? http://www.activeobjects.no/subsonic/for
 Bug: Double-scrobbling when transcoding.
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
 Add new languages to features.jsp
+Make proper services.
 
 TODO IN ANDROID 1.2
 -----------------------
+Make it downloadable from sf.net.
+Make web page for it.
 Optimize redirects to subsonic.org.
+Save using suggested path, but remember to change suffix when transcoding.
 Landscape mode
 Caching mgmt
 i18n
