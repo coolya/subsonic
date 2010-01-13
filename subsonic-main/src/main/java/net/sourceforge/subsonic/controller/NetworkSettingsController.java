@@ -70,6 +70,7 @@ public class NetworkSettingsController extends SimpleFormController {
             settingsService.setPortForwardingPublicPort(command.getPortForwardingPublicPort());
             settingsService.save();
             networkService.initPortForwarding();
+            networkService.initUrlRedirection(); // Necessary to reflect changed port number.
         }
 
         if (command.isUrlRedirectionEnabled() != settingsService.isUrlRedirectionEnabled() ||
