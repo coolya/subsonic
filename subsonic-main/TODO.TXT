@@ -1,8 +1,8 @@
 TODO IN 3.9
 --------------
+Contact lyricsfly
 Fix bug with executor in networkservice.
-Disable ads first 30 days?
-Update version number.
+Update web pages.
 Use subsonic.org when ready
 Make executor tasks work.
 
@@ -38,7 +38,6 @@ List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/foru
 
 DONE IN 3.9
 ------------
-TBT: Make android app work with expired URL redirect.
 Bugfix: Fixed lyrics lookup. Now uses lyricsfly.com which provides a stable API.
 Bugfix: Fixed "Not in GZIP format" error in Discogs cover image search, courtesy of Christian Nedregård.
 Bugfix: Sort list of saved playlists.
