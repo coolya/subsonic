@@ -1,10 +1,11 @@
 TODO IN 3.9
 --------------
+TBT: Added "accesskey" in left frame.
+TBT: Added API method to change password.
 Contact lyricsfly
 Fix bug with executor in networkservice.
 Update web pages.
 Use subsonic.org when ready
-Make executor tasks work.
 
 Disable ads first 30 days?
 Update ads?
@@ -38,24 +39,23 @@ List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/foru
 
 DONE IN 3.9
 ------------
+New: Automatically configure port forwarding for compatible routers.
+New: Access your server using an easy-to-rememeber address: yourname.subsonic.org
+New: Added "Getting started" page for basic setup.
+New: Cover art batch download, courtesy of Christian Nedregård.
+New: Improved relevance for top hits in cover art search, courtesy of Christian Nedregård.
+New: Added Polish translation, courtesy of Micha? Kotas.
+New: Added Icelandic translation, courtesy of DJ Danni.
+New: Updated Finnish translation, courtesy of Reijo Jäärni.
+New: Reversed order of chat log, showing newest messages first.
+New: Added API method to change password.
+New: Discontinued Subsonic JME client.
+Bugfix: Avoid setting incorrect content length when transcoding or downsampling.
 Bugfix: Fixed lyrics lookup. Now uses lyricsfly.com which provides a stable API.
 Bugfix: Fixed "Not in GZIP format" error in Discogs cover image search, courtesy of Christian Nedregård.
 Bugfix: Sort list of saved playlists.
 Bugfix: Home > Newest now sorts by creation date, not modification date.
-New: UPnP port forwarding
-New: Personal web address
-New: Getting started page
-New: Cover art batch download, courtesy of Christian Nedregård.
-New: Improved relevance for top hits in Discogs cover image search, courtesy of Christian Nedregård.
-New: Added Polish translation, courtesy of Micha? Kotas.
-New: Added Icelandic translation, courtesy of DJ Danni.
-Updated Finnish translation, courtesy of Reijo Jäärni.
-TBT: Hide donate button if valid license.
-TBT: Added "accesskey" in left frame.
-TBT: Added API method to change password.
-Flipped chat log.
-Bugfix: Avoid setting incorrect content length when transcoding or downsampling.
-New: Discontinued Subsonic JME client.
+Bugfix: Hide donate button when license is valid.
 
 ANDROID
 -------

@@ -66,7 +66,6 @@ public class LyricsService {
 
             String url = "http://api.lyricsfly.com/api/api.php?i=" + StringUtil.utf8HexDecode(KEY_ENC) + "&a=" + artist + "&t=" + song;
             String xml = executeGetRequest(url);
-            System.out.println(xml);
             return parse(xml);
 
         } catch (Exception x) {
