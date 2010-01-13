@@ -47,6 +47,8 @@ public class FileUtil {
         File dir = getAlbumDirectory(song, createDir);
 
         String title = fileSystemSafe(song.getTitle());
+
+        // TODO: Use transcodedSuffix, if possible.
         return new File(dir, title + "." + song.getSuffix());
     }
 
