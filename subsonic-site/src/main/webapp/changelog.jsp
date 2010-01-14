@@ -16,6 +16,27 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="3.9.beta1"><h2 class="div">Subsonic 3.9.beta1 - Feb 01, 2010</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>Automatically configure port forwarding for compatible routers.</li>
+    <li><span class="bugid">New: </span>Access your server using an easy-to-remember address: yourname.subsonic.org</li>
+    <li><span class="bugid">New: </span>Added "Getting started" page for basic setup.</li>
+    <li><span class="bugid">New: </span>Cover art batch download, courtesy of Christian Nedreg&aring;rd.</li>
+    <li><span class="bugid">New: </span>Improved relevance for top hits in cover art search, courtesy of Christian Nedreg&aring;rd.</li>
+    <li><span class="bugid">New: </span>Added Polish translation, courtesy of Micha&#322; Kotas</li>
+    <li><span class="bugid">New: </span>Added Icelandic translation, courtesy of DJ Danni.</li>
+    <li><span class="bugid">New: </span>Updated Finnish translation, courtesy of Reijo J&auml;&auml;rni.</li>
+    <li><span class="bugid">New: </span>Reversed order of chat log, showing newest messages first.</li>
+    <li><span class="bugid">New: </span>Added API method to change password.</li>
+    <li><span class="bugid">New: </span>Discontinued Subsonic JME client.</li>
+    <li><span class="bugid">Bugfix: </span>Avoid setting incorrect content length when transcoding or downsampling.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed lyrics lookup. Now uses lyricsfly.com which provides a stable API.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed "Not in GZIP format" error in Discogs cover image search, courtesy of Christian Nedreg&aring;rd.</li>
+    <li><span class="bugid">Bugfix: </span>Sort list of saved playlists.</li>
+    <li><span class="bugid">Bugfix: </span>Home &gt; Newest now sorts by creation date, not modification date.</li>
+    <li><span class="bugid">Bugfix: </span>Hide donate button when license is valid.</li>
+</ul>
+
 <a name="3.8"><h2 class="div">Subsonic 3.8 - Oct 23, 2009</h2></a>
 <ul>
     <li><span class="bugid">New: </span>(Android) Downloaded songs can now be played directly from the Subsonic app.</li>
@@ -637,6 +658,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#3.9.beta1">Subsonic 3.9.beta1</a></li>
             <li><a href="#3.8">Subsonic 3.8</a></li>
             <li><a href="#3.8.beta1">Subsonic 3.8.beta1</a></li>
             <li><a href="#3.7">Subsonic 3.7</a></li>

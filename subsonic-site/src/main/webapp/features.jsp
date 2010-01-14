@@ -87,12 +87,15 @@
                         <tr><td>&#149; Russian </td><td>(by Iaroslav Andrusiak)</td></tr>
                         <tr><td>&#149; Slovenian </td><td>(by Andrej &#381;i&#382;mond)</td></tr>
                         <tr><td>&#149; Macedonian </td><td>(by Stefan Ivanovski)</td></tr>
+                        <tr><td>&#149; Polish </td><td>(by Micha&#322; Kotas)</td></tr>
                         <tr><td>&#149; Chinese </td><td>(by Neil Gao)</td></tr>
                         <tr><td>&#149; Japanese </td><td>(by Takahiro Suzuki)</td></tr>
                         <tr><td>&#149; Dutch </td><td>(by Ronald Knot)</td></tr>
                         <tr><td>&#149; Norwegian </td><td>(by Sindre Mehus and jigsaw)</td></tr>
                         <tr><td>&#149; Swedish </td><td>(by J&ouml;rgen Sj&ouml;berg)</td></tr>
                         <tr><td>&#149; Danish </td><td>(by Morten Hartvich)</td></tr>
+                        <tr><td>&#149; Finnish </td><td>(by Reijo J&auml;&auml;rni)</td></tr>
+                        <tr><td>&#149; Icelandic </td><td>(by DJ Danny)</td></tr>
                     </table>
                 </li>
                 <li>Select from eleven different themes, including some that are optimized for HD screens.</li>
