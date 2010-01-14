@@ -6,6 +6,7 @@ Contact lyricsfly
 Fix bug with executor in networkservice.
 Update web pages.
 Use subsonic.org when ready
+Improve error message when testing url redir.
 
 Disable ads first 30 days?
 Update ads?

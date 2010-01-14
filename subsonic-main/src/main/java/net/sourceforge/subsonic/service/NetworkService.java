@@ -269,7 +269,7 @@ public class NetworkService {
             HttpGet request = new HttpGet(URL_REDIRECTION_TEST_URL + "?redirectFrom=" + settingsService.getUrlRedirectFrom());
             HttpClient client = new DefaultHttpClient();
             HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000);
-            HttpConnectionParams.setSoTimeout(client.getParams(), 10000);
+            HttpConnectionParams.setSoTimeout(client.getParams(), 30000);
 
             try {
                 urlRedirectionStatus.setText("Testing web address...");
