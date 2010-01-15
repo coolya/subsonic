@@ -52,7 +52,8 @@ import net.sourceforge.subsonic.backend.domain.Redirection;
 public class RedirectionManagementController extends MultiActionController {
 
     private static final Logger LOG = Logger.getLogger(RedirectionManagementController.class);
-    private static final List<String> RESERVED_REDIRECTS = Arrays.asList("www", "web", "demo");
+    private static final List<String> RESERVED_REDIRECTS = Arrays.asList("www", "web", "demo", "forum", "ftp", "mail",
+            "m", "mobile", "mobil", "phone", "wap", "shop", "test");
 
     private RedirectionDao redirectionDao;
 

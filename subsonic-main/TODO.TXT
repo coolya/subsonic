@@ -8,6 +8,9 @@ Contact lyricsfly
 Fix bug with executor in networkservice.
 Use subsonic.org when ready
 If trial expired and REST call, provide meaningful error message in xml.
+REST access should require license.
+In schema10, insert rows for demo and www.
+
 
 Disable ads first 30 days?
 Update ads?
