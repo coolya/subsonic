@@ -2,6 +2,7 @@ http://nonpixel.com/subair/
 
 TODO IN 3.9
 --------------
+When testing url redirection, retrieve a particular url (something not requiring login).
 TBT: Added "accesskey" in left frame.
 TBT: Added API method to change password.
 Contact lyricsfly
