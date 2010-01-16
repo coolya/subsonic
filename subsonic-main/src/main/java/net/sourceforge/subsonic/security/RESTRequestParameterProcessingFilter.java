@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.security;
 
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.domain.Version;
 import net.sourceforge.subsonic.controller.RESTController;
 import net.sourceforge.subsonic.util.StringUtil;
@@ -39,9 +40,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 /**
- * Performs authentication based on credentials being present in the HTTP request parameters.
+ * Performs authentication based on credentials being present in the HTTP request parameters. Also checks
+ * API versions and license information.
  * <p/>
  * The username should be set in parameter "u", and the password should be set in parameter "p".
  * The REST protocol version should be set in parameter "v".
@@ -53,8 +56,10 @@ import java.io.IOException;
 public class RESTRequestParameterProcessingFilter implements Filter {
 
     private static final Logger LOG = Logger.getLogger(RESTRequestParameterProcessingFilter.class);
+    private static final long TRIAL_DAYS = 35L;
 
     private ProviderManager authenticationManager;
+    private SettingsService settingsService;
 
     /**
      * {@inheritDoc}
@@ -82,26 +87,15 @@ public class RESTRequestParameterProcessingFilter implements Filter {
         }
 
         if (errorCode == null) {
-            Version serverVersion = new Version(StringUtil.getRESTProtocolVersion());
-            Version clientVersion = new Version(version);
-
-            if (serverVersion.getMajor() > clientVersion.getMajor()) {
-                errorCode = RESTController.ErrorCode.PROTOCOL_MISMATCH_CLIENT_TOO_OLD;
-            } else if (serverVersion.getMajor() < clientVersion.getMajor()) {
-                errorCode = RESTController.ErrorCode.PROTOCOL_MISMATCH_SERVER_TOO_OLD;
-            } else if (serverVersion.getMinor() < clientVersion.getMinor()) {
-                errorCode = RESTController.ErrorCode.PROTOCOL_MISMATCH_SERVER_TOO_OLD;
-            }
+            errorCode = checkAPIVersion(version);
         }
 
         if (errorCode == null) {
-            try {
-                UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
-                Authentication authResult = authenticationManager.authenticate(authRequest);
-                SecurityContextHolder.getContext().setAuthentication(authResult);
-            } catch (AuthenticationException x) {
-                errorCode = RESTController.ErrorCode.NOT_AUTHENTICATED;
-            }
+            errorCode = authenticate(username, password);
+        }
+
+        if (errorCode == null) {
+            errorCode = checkLicense(client);
         }
 
         if (errorCode == null) {
@@ -112,6 +106,45 @@ public class RESTRequestParameterProcessingFilter implements Filter {
             SecurityContextHolder.getContext().setAuthentication(null);
             sendErrorXml(httpResponse, errorCode);
         }
+    }
+
+    private RESTController.ErrorCode checkAPIVersion(String version) {
+        Version serverVersion = new Version(StringUtil.getRESTProtocolVersion());
+        Version clientVersion = new Version(version);
+
+        if (serverVersion.getMajor() > clientVersion.getMajor()) {
+            return RESTController.ErrorCode.PROTOCOL_MISMATCH_CLIENT_TOO_OLD;
+        } else if (serverVersion.getMajor() < clientVersion.getMajor()) {
+            return RESTController.ErrorCode.PROTOCOL_MISMATCH_SERVER_TOO_OLD;
+        } else if (serverVersion.getMinor() < clientVersion.getMinor()) {
+            return RESTController.ErrorCode.PROTOCOL_MISMATCH_SERVER_TOO_OLD;
+        }
+        return null;
+    }
+
+    private RESTController.ErrorCode authenticate(String username, String password) {
+        try {
+            UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
+            Authentication authResult = authenticationManager.authenticate(authRequest);
+            SecurityContextHolder.getContext().setAuthentication(authResult);
+        } catch (AuthenticationException x) {
+            return RESTController.ErrorCode.NOT_AUTHENTICATED;
+        }
+        return null;
+    }
+
+    private RESTController.ErrorCode checkLicense(String client) {
+        if (!settingsService.isLicenseValid() && settingsService.getRESTTrialExpires(client) == null) {
+            Date expiryDate = new Date(System.currentTimeMillis() + TRIAL_DAYS * 24L * 3600L * 1000L);
+            settingsService.setRESTTrialExpires(client, expiryDate);
+            settingsService.save();
+            LOG.info("REST access for client '" + client + "' will expire " + expiryDate);
+        } else if (settingsService.getRESTTrialExpires(client).before(new Date())) {
+            LOG.info("REST access for client '" + client + "' has expired.");
+            return RESTController.ErrorCode.NOT_LICENSED;
+        }
+
+        return null;
     }
 
     private String decrypt(String s) {
@@ -160,5 +193,9 @@ public class RESTRequestParameterProcessingFilter implements Filter {
 
     public void setAuthenticationManager(ProviderManager authenticationManager) {
         this.authenticationManager = authenticationManager;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
     }
 }

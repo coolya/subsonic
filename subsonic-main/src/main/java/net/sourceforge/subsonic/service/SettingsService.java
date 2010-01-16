@@ -42,12 +42,10 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 /**
@@ -106,6 +104,7 @@ public class SettingsService {
     private static final String KEY_URL_REDIRECT_FROM = "UrlRedirectFrom";
     private static final String KEY_URL_REDIRECT_TRIAL_EXPIRES = "UrlRedirectTrialExpires";
     private static final String KEY_URL_REDIRECT_CONTEXT_PATH = "UrlRedirectContextPath";
+    private static final String KEY_REST_TRIAL_EXPIRES = "RestTrialExpires-";
     private static final String KEY_SERVER_ID = "ServerId";
     private static final String KEY_SETTINGS_CHANGED = "SettingsChanged";
 
@@ -161,19 +160,12 @@ public class SettingsService {
     private static final String DEFAULT_URL_REDIRECT_FROM = "me";
     private static final String DEFAULT_URL_REDIRECT_TRIAL_EXPIRES = null;
     private static final String DEFAULT_URL_REDIRECT_CONTEXT_PATH = null;
+    private static final String DEFAULT_REST_TRIAL_EXPIRES = null;
     private static final String DEFAULT_SERVER_ID = null;
     private static final long DEFAULT_SETTINGS_CHANGED = 0L;
 
-    // Array of all keys.  Used to clean property file.
-    private static final String[] KEYS = {KEY_INDEX_STRING, KEY_IGNORED_ARTICLES, KEY_SHORTCUTS, KEY_PLAYLIST_FOLDER, KEY_MUSIC_MASK,
-                                          KEY_COVER_ART_MASK, KEY_COVER_ART_LIMIT, KEY_WELCOME_TITLE, KEY_WELCOME_SUBTITLE, KEY_WELCOME_MESSAGE, KEY_LOGIN_MESSAGE, KEY_LOCALE_LANGUAGE,
-                                          KEY_LOCALE_COUNTRY, KEY_LOCALE_VARIANT, KEY_THEME_ID, KEY_INDEX_CREATION_INTERVAL, KEY_INDEX_CREATION_HOUR,
-                                          KEY_PODCAST_UPDATE_INTERVAL, KEY_PODCAST_FOLDER, KEY_PODCAST_EPISODE_RETENTION_COUNT,
-                                          KEY_PODCAST_EPISODE_DOWNLOAD_COUNT, KEY_DOWNLOAD_BITRATE_LIMIT, KEY_UPLOAD_BITRATE_LIMIT, KEY_STREAM_PORT,
-                                          KEY_LICENSE_EMAIL, KEY_LICENSE_CODE, KEY_LICENSE_DATE, KEY_DOWNSAMPLING_COMMAND, KEY_REWRITE_URL,
-                                          KEY_LDAP_ENABLED, KEY_LDAP_URL, KEY_LDAP_MANAGER_DN, KEY_LDAP_MANAGER_PASSWORD, KEY_LDAP_SEARCH_FILTER, KEY_LDAP_AUTO_SHADOWING,
-                                          KEY_AUTO_COVER_BATCH, KEY_GETTING_STARTED_ENABLED, KEY_PORT_FORWARDING_ENABLED, KEY_PORT_FORWARDING_PUBLIC_PORT, KEY_PORT_FORWARDING_LOCAL_PORT,
-                                          KEY_URL_REDIRECTION_ENABLED, KEY_URL_REDIRECT_FROM, KEY_URL_REDIRECT_TRIAL_EXPIRES, KEY_URL_REDIRECT_CONTEXT_PATH, KEY_SERVER_ID, KEY_SETTINGS_CHANGED};
+    // Array of obsolete keys.  Used to clean property file.
+    private static final List<String> OBSOLETE_KEYS = Arrays.asList();
 
     private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
     private static final String THEMES_FILE = "/net/sourceforge/subsonic/theme/themes.txt";
@@ -207,11 +199,9 @@ public class SettingsService {
             }
 
             // Remove obsolete properties.
-            Set<String> allowedKeys = new HashSet<String>(Arrays.asList(KEYS));
-
             for (Iterator<Object> iterator = properties.keySet().iterator(); iterator.hasNext();) {
                 String key = (String) iterator.next();
-                if (!allowedKeys.contains(key)) {
+                if (OBSOLETE_KEYS.contains(key)) {
                     LOG.debug("Removing obsolete property [" + key + ']');
                     iterator.remove();
                 }
@@ -723,6 +713,16 @@ public class SettingsService {
 
     public void setUrlRedirectContextPath(String contextPath) {
         properties.setProperty(KEY_URL_REDIRECT_CONTEXT_PATH, contextPath);
+    }
+
+    public Date getRESTTrialExpires(String client) {
+        String value = properties.getProperty(KEY_REST_TRIAL_EXPIRES + client, DEFAULT_REST_TRIAL_EXPIRES);
+        return value == null ? null : new Date(Long.parseLong(value));
+    }
+
+    public void setRESTTrialExpires(String client, Date date) {
+        String value = (date == null ? null : String.valueOf(date.getTime()));
+        setProperty(KEY_REST_TRIAL_EXPIRES + client, value);
     }
 
     public String getServerId() {

@@ -111,6 +111,7 @@
                 <tr>                     <td><code>30</code></td><td>Incompatible Subsonic REST protocol version. Server must upgrade.</td></tr>
                 <tr class="table-altrow"><td><code>40</code></td><td>Wrong username or password.</td></tr>
                 <tr>                     <td><code>50</code></td><td>User is not authorized for the given operation.</td></tr>
+                <tr class="table-altrow"><td><code>60</code></td><td>The trial period is over. Please donate to get a license key.</td></tr>
             </table>
 
             <h2 class="div">ping</h2>
@@ -129,7 +130,9 @@
                 <code>http://your-server/rest/getLicense.view</code>
             </p>
             <p>
-                Get details about the software license.  Takes no extra parameters.
+                Get details about the software license.  Takes no extra parameters.  Please note that access to the
+                REST API requires that the server has a valid license. To get a license key you can give a donation
+                to the Subsonic project.
             </p>
             <p>
                 Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;license&gt;</code>
