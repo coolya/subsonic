@@ -120,7 +120,7 @@ public class NetworkService {
     }
 
     public static String getBackendUrl() {
-        return System.getProperty("subsonic.test") == null ? "http://gosubsonic.com" : "http://localhost:8181";
+        return "true".equals(System.getProperty("subsonic.test")) ? "http://localhost:8181" : "http://gosubsonic.com";
     }
 
     public void setSettingsService(SettingsService settingsService) {

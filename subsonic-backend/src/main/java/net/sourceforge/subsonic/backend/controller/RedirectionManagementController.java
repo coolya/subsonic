@@ -142,6 +142,11 @@ public class RedirectionManagementController extends MultiActionController {
         }
 
         String url = redirection.getRedirectTo();
+        if (!url.endsWith("/")) {
+            url += "/";
+        }
+        url += "icons/favicon.ico";
+
         HttpClient client = new DefaultHttpClient();
         HttpConnectionParams.setConnectionTimeout(client.getParams(), 15000);
         HttpConnectionParams.setSoTimeout(client.getParams(), 15000);
@@ -152,13 +157,19 @@ public class RedirectionManagementController extends MultiActionController {
             StatusLine status = resp.getStatusLine();
 
             if (status.getStatusCode() == HttpStatus.SC_OK) {
-                writer.print(webAddress + " responded successfully.");
+                String msg = webAddress + " responded successfully.";
+                writer.print(msg);
+                LOG.info(msg);
             } else {
-                writer.print(webAddress + " returned HTTP error code " + status.getStatusCode() + " " + status.getReasonPhrase());
+                String msg = webAddress + " returned HTTP error code " + status.getStatusCode() + " " + status.getReasonPhrase();
+                writer.print(msg);
+                LOG.info(msg);
             }
 
         } catch (Throwable x) {
-            writer.print(webAddress + " is registered, but could not connect to it. (" + x.getClass().getSimpleName() + ")");
+            String msg = webAddress + " is registered, but could not connect to it. (" + x.getClass().getSimpleName() + ")";
+            writer.print(msg);
+            LOG.info(msg);
         } finally {
             client.getConnectionManager().shutdown();
         }

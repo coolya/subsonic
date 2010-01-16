@@ -2,14 +2,13 @@ http://nonpixel.com/subair/
 
 TODO IN 3.9
 --------------
-When testing url redirection, retrieve a particular url (something not requiring login).
+Make contrast color darker in new icons.
 TBT: Added "accesskey" in left frame.
 TBT: Added API method to change password.
 Contact lyricsfly
 Fix bug with executor in networkservice.
 Use subsonic.org when ready
 In schema10, insert rows for demo and www.
-
 
 Disable ads first 30 days?
 Update ads?
