@@ -26,6 +26,7 @@
     <li><span class="bugid">New: </span>Added Polish translation, courtesy of Micha&#322; Kotas</li>
     <li><span class="bugid">New: </span>Added Icelandic translation, courtesy of DJ Danni.</li>
     <li><span class="bugid">New: </span>Updated Finnish translation, courtesy of Reijo J&auml;&auml;rni.</li>
+    <li><span class="bugid">New: </span>Updated Russian translation, courtesy of Anton Khoruzhy.</li>
     <li><span class="bugid">New: </span>Reversed order of chat log, showing newest messages first.</li>
     <li><span class="bugid">New: </span>Added API method to change password.</li>
     <li><span class="bugid">New: </span>Discontinued Subsonic JME client.</li>

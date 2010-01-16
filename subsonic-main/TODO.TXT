@@ -27,15 +27,16 @@ Add new languages to features.jsp
 TODO IN ANDROID 1.2
 -----------------------
 Use httpclient.
+Save using suggested path, but remember to change suffix when transcoding.
+Landscape mode
+Optimize redirects to subsonic.org.
+Add "Save" option.
+
 Make it downloadable from sf.net.
 Make proper services.
 Make web page for it.
-Optimize redirects to subsonic.org.
-Save using suggested path, but remember to change suffix when transcoding.
-Landscape mode
 Caching mgmt
 i18n
-Add "Save" option.
 Don't "Play + Save" for files that already exists.
 Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
 Show different colored asterix when .complete exists.
