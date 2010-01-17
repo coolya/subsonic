@@ -28,7 +28,6 @@ Save using suggested path, but remember to change suffix when transcoding.
 Landscape mode
 Optimize redirects to subsonic.org.
 Add "Save" option.
-
 Make it downloadable from sf.net.
 Make proper services.
 Make web page for it.
@@ -42,8 +41,9 @@ Goes crazy when bandwidth too small.
 Persist playlist
 List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7854
 
-DONE IN 3.9
-------------
+DONE IN ANDROID 1.2
+-------------------
+Support landscape mode.
 
 ANDROID
 -------
