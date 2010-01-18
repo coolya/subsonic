@@ -42,6 +42,11 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.HttpResponse;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
@@ -376,11 +381,19 @@ public class PodcastService {
             return;
         }
 
+        LOG.info("Starting to download Podcast from " + episode.getUrl());
+
+        HttpClient client = new DefaultHttpClient();
         try {
             PodcastChannel channel = getChannel(episode.getChannelId());
 
-            URL url = new URL(episode.getUrl());
-            in = url.openStream();
+            HttpConnectionParams.setConnectionTimeout(client.getParams(), 2 * 60 * 1000); // 2 minutes
+            HttpConnectionParams.setSoTimeout(client.getParams(), 10 * 60 * 1000); // 10 minutes
+            HttpGet method = new HttpGet(episode.getUrl());
+
+            HttpResponse response = client.execute(method);
+            in = response.getEntity().getContent();
+
             File file = getFile(channel, episode);
             out = new FileOutputStream(file);
 
@@ -389,8 +402,6 @@ public class PodcastService {
             episode.setErrorMessage(null);
             episode.setPath(file.getPath());
             podcastDao.updateEpisode(episode);
-
-            LOG.info("Starting to download Podcast from " + episode.getUrl());
 
             byte[] buffer = new byte[4096];
             long bytesDownloaded = 0;
@@ -433,6 +444,7 @@ public class PodcastService {
         } finally {
             IOUtils.closeQuietly(in);
             IOUtils.closeQuietly(out);
+            client.getConnectionManager().shutdown();
         }
     }
 
