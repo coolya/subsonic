@@ -2,6 +2,7 @@ http://nonpixel.com/subair/
 
 TODO IN 3.9
 --------------
+Don't upgrade REST API version.
 Make contrast color darker in new icons.
 TBT: Added "accesskey" in left frame.
 TBT: Added API method to change password.

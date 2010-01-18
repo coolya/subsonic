@@ -52,7 +52,7 @@ public class RESTMusicService implements MusicService {
     /**
      * URL from which to fetch latest versions.
      */
-    private static final String VERSION_URL = "http://subsonic.sourceforge.net/version.html";
+    private static final String VERSION_URL = "http://gosubsonic.com/pages/version.jsp";
 
     private final IndexesParser indexesParser = new IndexesParser();
     private final MusicDirectoryParser musicDirectoryParser = new MusicDirectoryParser();
