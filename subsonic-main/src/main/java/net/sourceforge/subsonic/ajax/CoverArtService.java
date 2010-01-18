@@ -22,13 +22,17 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.HttpResponse;
 import org.directwebremoting.WebContextFactory;
 
 import net.sourceforge.subsonic.Logger;
@@ -112,9 +116,15 @@ public class CoverArtService {
 
     private void saveCoverArt(String path, String url) throws Exception {
         InputStream input = null;
+        HttpClient client = new DefaultHttpClient();
 
         try {
-            input = new URL(url).openStream();
+            HttpConnectionParams.setConnectionTimeout(client.getParams(), 20 * 1000); // 20 seconds
+            HttpConnectionParams.setSoTimeout(client.getParams(), 20 * 1000); // 20 seconds
+            HttpGet method = new HttpGet(url);
+
+            HttpResponse response = client.execute(method);
+            input = response.getEntity().getContent();
 
             // Attempt to resolve proper suffix.
             String suffix = "jpg";
@@ -152,6 +162,7 @@ public class CoverArtService {
 
         } finally {
             IOUtils.closeQuietly(input);
+            client.getConnectionManager().shutdown();
         }
     }
 
