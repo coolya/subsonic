@@ -22,7 +22,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -233,13 +232,20 @@ public class PodcastService {
     @SuppressWarnings({"unchecked"})
     private void doRefreshChannel(PodcastChannel channel, boolean downloadEpisodes) {
         InputStream in = null;
+        HttpClient client = new DefaultHttpClient();
+
         try {
             channel.setStatus(PodcastStatus.DOWNLOADING);
             channel.setErrorMessage(null);
             podcastDao.updateChannel(channel);
 
-            URL url = new URL(channel.getUrl());
-            in = url.openStream();
+            HttpConnectionParams.setConnectionTimeout(client.getParams(), 2 * 60 * 1000); // 2 minutes
+            HttpConnectionParams.setSoTimeout(client.getParams(), 10 * 60 * 1000); // 10 minutes
+            HttpGet method = new HttpGet(channel.getUrl());
+
+            HttpResponse response = client.execute(method);
+            in = response.getEntity().getContent();
+
             Document document = new SAXBuilder().build(in);
             Element channelElement = document.getRootElement().getChild("channel");
 
@@ -258,6 +264,7 @@ public class PodcastService {
             podcastDao.updateChannel(channel);
         } finally {
             IOUtils.closeQuietly(in);
+            client.getConnectionManager().shutdown();
         }
 
         if (downloadEpisodes) {
