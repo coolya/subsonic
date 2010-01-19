@@ -4,6 +4,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
+    <bean id="multiController" class="net.sourceforge.subsonic.backend.controller.MultiController"/>
+
     <bean id="redirectionController" class="net.sourceforge.subsonic.backend.controller.RedirectionController">
          <property name="redirectionDao" ref="redirectionDao"/>
     </bean>
@@ -16,6 +18,7 @@
         <property name="alwaysUseFullPath" value="true"/>
         <property name="mappings">
             <props>
+                <prop key="/backend/version.view">multiController</prop>
                 <prop key="/backend/redirect/register.view">redirectionManagementController</prop>
                 <prop key="/backend/redirect/unregister.view">redirectionManagementController</prop>
                 <prop key="/backend/redirect/test.view">redirectionManagementController</prop>
@@ -24,27 +27,6 @@
             </props>
         </property>
     </bean>
-
-    <!--<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">-->
-        <!--<property name="basename" value="net.sourceforge.subsonic.i18n.ResourceBundle"/>-->
-    <!--</bean>-->
-
-    <!--<bean id="themeSource" class="net.sourceforge.subsonic.theme.SubsonicThemeSource">-->
-        <!--<property name="basenamePrefix" value="net.sourceforge.subsonic.theme."/>-->
-        <!--<property name="defaultResourceBundle" value="net.sourceforge.subsonic.theme.default"/>-->
-    <!--</bean>-->
-
-    <!--<bean id="localeResolver"-->
-          <!--class="net.sourceforge.subsonic.i18n.SubsonicLocaleResolver">-->
-        <!--<property name="securityService" ref="securityService"/>-->
-        <!--<property name="settingsService" ref="settingsService"/>-->
-    <!--</bean>-->
-
-    <!--<bean id="themeResolver"-->
-          <!--class="net.sourceforge.subsonic.theme.SubsonicThemeResolver">-->
-        <!--<property name="securityService" ref="securityService"/>-->
-        <!--<property name="settingsService" ref="settingsService"/>-->
-    <!--</bean>-->
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>

@@ -69,7 +69,7 @@ public class VersionService {
     /**
      * URL from which to fetch latest versions.
      */
-    private static final String VERSION_URL = "http://gosubsonic.com/pages/version.jsp";
+    private static final String VERSION_URL = "http://gosubsonic.com/backend/version.view";
 
     /**
      * Returns the version number for the locally installed Subsonic version.
@@ -229,7 +229,7 @@ public class VersionService {
         HttpClient client = new DefaultHttpClient();
         HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000);
         HttpConnectionParams.setSoTimeout(client.getParams(), 10000);
-        HttpGet method = new HttpGet(VERSION_URL);
+        HttpGet method = new HttpGet(VERSION_URL + "?v=" + getLocalVersion());
         String content;
         try {
 
