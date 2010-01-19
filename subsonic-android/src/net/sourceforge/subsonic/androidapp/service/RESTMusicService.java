@@ -42,6 +42,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.HttpClient;
+import org.apache.http.HttpResponse;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 /**
  * @author Sindre Mehus
  */
@@ -63,6 +69,7 @@ public class RESTMusicService implements MusicService {
     private final VersionParser versionParser = new VersionParser();
     private final ErrorParser errorParser = new ErrorParser();
     private final List<Reader> readers = new ArrayList<Reader>(10);
+    private final HttpClient httpClient = new DefaultHttpClient();
 
     @Override
     public void ping(Context context, ProgressListener progressListener) throws Exception {
@@ -149,8 +156,7 @@ public class RESTMusicService implements MusicService {
 
     @Override
     public Version getLatestVersion(Context context, ProgressListener progressListener) throws Exception {
-        URL url = new URL(VERSION_URL);
-        Reader reader = openURL(url);
+        Reader reader = openURL(VERSION_URL);
         addReader(reader);
         try {
             return versionParser.parse(reader, progressListener);
@@ -217,31 +223,33 @@ public class RESTMusicService implements MusicService {
     private Reader getReader(Context context, ProgressListener progressListener, String method,
                              List<String> parameterNames, List<Object> parameterValues) throws Exception {
 
-        StringBuilder urlString = new StringBuilder();
-        urlString.append(Util.getRestUrl(context, method));
+        StringBuilder url = new StringBuilder();
+        url.append(Util.getRestUrl(context, method));
 
         if (parameterNames != null) {
             for (int i = 0; i < parameterNames.size(); i++) {
-                urlString.append("&");
-                urlString.append(parameterNames.get(i)).append("=");
-                urlString.append(parameterValues.get(i));
+                url.append("&");
+                url.append(parameterNames.get(i)).append("=");
+                url.append(parameterValues.get(i));
             }
         }
 
-        URL url = new URL(urlString.toString());
         if (progressListener != null) {
             progressListener.updateProgress("Contacting server.");
         }
 
-        Log.i(TAG, "Using URL " + url.toExternalForm());
-        return openURL(url);
+        Log.i(TAG, "Using URL " + url);
+        return openURL(url.toString());
     }
 
-    private Reader openURL(URL url) throws IOException {
-        URLConnection connection = url.openConnection();
-        connection.setConnectTimeout(Constants.SOCKET_CONNECT_TIMEOUT);
-        connection.setReadTimeout(Constants.SOCKET_READ_TIMEOUT);
-        InputStream in = connection.getInputStream();
+    private Reader openURL(String url) throws IOException {
+        HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), Constants.SOCKET_CONNECT_TIMEOUT);
+        HttpConnectionParams.setSoTimeout(httpClient.getParams(), Constants.SOCKET_READ_TIMEOUT);
+        HttpGet method = new HttpGet(url);
+
+        HttpResponse response = httpClient.execute(method);
+        InputStream in = response.getEntity().getContent();
+
         return new InputStreamReader(in, Constants.UTF_8);
     }
 

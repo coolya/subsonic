@@ -33,8 +33,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
+
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.HttpClient;
+import org.apache.http.HttpResponse;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  * @author Sindre Mehus
@@ -105,14 +109,17 @@ public class DownloadFile {
     }
 
     private InputStream connect(String url) throws Exception {
-        URLConnection connection = new URL(url).openConnection();
-        connection.setConnectTimeout(Constants.SOCKET_CONNECT_TIMEOUT);
-        connection.setReadTimeout(Constants.SOCKET_READ_TIMEOUT);
-        connection.connect();
-        InputStream in = connection.getInputStream();
+
+        HttpClient client = new DefaultHttpClient();
+        HttpConnectionParams.setConnectionTimeout(client.getParams(), Constants.SOCKET_CONNECT_TIMEOUT); // TODO: Increase
+        HttpConnectionParams.setSoTimeout(client.getParams(), Constants.SOCKET_READ_TIMEOUT); // TODO: Increase
+        HttpGet method = new HttpGet(url);
+
+        HttpResponse response = client.execute(method);
+        InputStream in = response.getEntity().getContent();
 
         // If content type is XML, an error occured.  Get it.
-        String contentType = connection.getContentType();
+        String contentType = response.getEntity().getContentType().getValue();
         if (contentType != null && contentType.startsWith("text/xml")) {
             try {
                 new ErrorParser().parse(new InputStreamReader(in, Constants.UTF_8));
