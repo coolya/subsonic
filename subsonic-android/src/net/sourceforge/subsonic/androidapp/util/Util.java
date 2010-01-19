@@ -47,6 +47,8 @@ import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import org.apache.http.HttpResponse;
+
 /**
  * @author Sindre Mehus
  * @version $Id$
@@ -95,6 +97,13 @@ public final class Util {
         builder.append("&c=").append(Constants.REST_CLIENT_ID);
 
         return builder.toString();
+    }
+
+    public static String getContentType(HttpResponse response) {
+        if (response == null || response.getEntity() == null || response.getEntity().getContentType() == null) {
+            return null;
+        }
+        return response.getEntity().getContentType().getValue();
     }
 
     public static int getRemainingTrialDays(Context context) {

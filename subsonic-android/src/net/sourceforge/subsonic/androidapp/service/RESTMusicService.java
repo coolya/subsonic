@@ -35,8 +35,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -70,6 +68,11 @@ public class RESTMusicService implements MusicService {
     private final ErrorParser errorParser = new ErrorParser();
     private final List<Reader> readers = new ArrayList<Reader>(10);
     private final HttpClient httpClient = new DefaultHttpClient();
+
+    public RESTMusicService() {
+        HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), Constants.SOCKET_CONNECT_TIMEOUT);
+        HttpConnectionParams.setSoTimeout(httpClient.getParams(), Constants.SOCKET_READ_TIMEOUT);
+    }
 
     @Override
     public void ping(Context context, ProgressListener progressListener) throws Exception {
@@ -168,15 +171,14 @@ public class RESTMusicService implements MusicService {
     @Override
     public Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
         String url = Util.getRestUrl(context, "getCoverArt") + "&id=" + id + "&size=" + size;
-        URLConnection connection = new URL(url).openConnection();
-        connection.setConnectTimeout(Constants.SOCKET_CONNECT_TIMEOUT);
-        connection.setReadTimeout(Constants.SOCKET_READ_TIMEOUT);
-        connection.connect();
-        InputStream in = connection.getInputStream();
+
+        HttpGet method = new HttpGet(url);
+        HttpResponse response = httpClient.execute(method);
+        InputStream in = response.getEntity().getContent();
 
         try {
             // If content type is XML, an error occured.  Get it.
-            String contentType = connection.getContentType();
+            String contentType = Util.getContentType(response);
             if (contentType != null && contentType.startsWith("text/xml")) {
                 new ErrorParser().parse(new InputStreamReader(in, Constants.UTF_8));
                 return null; // Never reached.
@@ -243,8 +245,6 @@ public class RESTMusicService implements MusicService {
     }
 
     private Reader openURL(String url) throws IOException {
-        HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), Constants.SOCKET_CONNECT_TIMEOUT);
-        HttpConnectionParams.setSoTimeout(httpClient.getParams(), Constants.SOCKET_READ_TIMEOUT);
         HttpGet method = new HttpGet(url);
 
         HttpResponse response = httpClient.execute(method);

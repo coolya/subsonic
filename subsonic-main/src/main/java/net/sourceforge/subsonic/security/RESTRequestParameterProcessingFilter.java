@@ -134,7 +134,11 @@ public class RESTRequestParameterProcessingFilter implements Filter {
     }
 
     private RESTController.ErrorCode checkLicense(String client) {
-        if (!settingsService.isLicenseValid() && settingsService.getRESTTrialExpires(client) == null) {
+        if (settingsService.isLicenseValid()) {
+            return null;
+        }
+
+        if (settingsService.getRESTTrialExpires(client) == null) {
             Date expiryDate = new Date(System.currentTimeMillis() + TRIAL_DAYS * 24L * 3600L * 1000L);
             settingsService.setRESTTrialExpires(client, expiryDate);
             settingsService.save();

@@ -2,7 +2,6 @@ http://nonpixel.com/subair/
 
 TODO IN 3.9
 --------------
-Error popup in right.jsp
 Lyrics. Use backend?
 Upgrade JWPlayer
 Make contrast color darker in new icons.
@@ -25,10 +24,10 @@ Add new languages to features.jsp
 
 TODO IN ANDROID 1.2
 -----------------------
-Test httpclient in DownloadFile.
-Use httpclient.
-Save using suggested path, but remember to change suffix when transcoding.
+Increase timeouts in DownloadFile.
+Save using suggested path, but remember to change suffix when transcoding. And add track number as prefix.
 Landscape mode
+"Offline music"
 Optimize redirects to subsonic.org.
 Add "Save" option.
 Make it downloadable from sf.net.
@@ -47,11 +46,11 @@ List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/foru
 DONE IN ANDROID 1.2
 -------------------
 Support landscape mode.
+Use HttpClient
 
 ANDROID
 -------
 "Newest" list in Android.
-Android: Use HttpClient
 Android: Long-click on song list.
 Android: Option to auto-sync certain directories or playlists.
 Android: Option to tag certain directories as favorite.

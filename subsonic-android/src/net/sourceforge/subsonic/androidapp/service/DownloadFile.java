@@ -119,7 +119,7 @@ public class DownloadFile {
         InputStream in = response.getEntity().getContent();
 
         // If content type is XML, an error occured.  Get it.
-        String contentType = response.getEntity().getContentType().getValue();
+        String contentType = Util.getContentType(response);
         if (contentType != null && contentType.startsWith("text/xml")) {
             try {
                 new ErrorParser().parse(new InputStreamReader(in, Constants.UTF_8));
