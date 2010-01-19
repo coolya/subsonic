@@ -88,6 +88,7 @@ public class MusicDirectoryParser extends AbstractParser {
             entry.setSize(getLong(parser, "size"));
             entry.setDuration(getInteger(parser, "duration"));
             entry.setBitRate(getInteger(parser, "bitRate"));
+            entry.setPath(get(parser, "path"));
         }
         return entry;
     }

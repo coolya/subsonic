@@ -77,6 +77,7 @@ public class MusicDirectory {
         private Long size;
         private Integer duration;
         private Integer bitRate;
+        private String path;
 
         public String getId() {
             return id;
@@ -204,6 +205,14 @@ public class MusicDirectory {
 
         public void setCoverArt(String coverArt) {
             this.coverArt = coverArt;
+        }
+
+        public String getPath() {
+            return path;
+        }
+
+        public void setPath(String path) {
+            this.path = path;
         }
 
         @Override
