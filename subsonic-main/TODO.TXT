@@ -27,7 +27,6 @@ TODO IN ANDROID 1.2
 Persist artist list to disk.
 Increase timeouts in DownloadFile.
 Save using suggested path, but remember to change suffix when transcoding. And add track number as prefix.
-Landscape mode
 "Offline music"
 Optimize redirects to subsonic.org.
 Add "Save" option.
