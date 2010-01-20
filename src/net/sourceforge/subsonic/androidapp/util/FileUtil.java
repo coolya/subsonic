@@ -52,7 +52,7 @@ public class FileUtil {
         return new File(dir, title + "." + song.getSuffix());
     }
 
-    protected static File getAlbumDirectory(MusicDirectory.Entry song, boolean create) {
+    private static File getAlbumDirectory(MusicDirectory.Entry song, boolean create) {
         String artist = fileSystemSafe(song.getArtist());
         String album = fileSystemSafe(song.getAlbum());
 
