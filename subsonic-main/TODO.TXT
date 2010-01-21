@@ -24,9 +24,11 @@ Add new languages to features.jsp
 
 TODO IN ANDROID 1.2
 -----------------------
+Crashes when changing orientation.
+Cache cleaning shouldn't delete 'music' directory.
+In offline mode, sort files.
 add layout-land/main_buttons.xml
 Increase timeouts in DownloadFile.
-Save using suggested path, but remember to change suffix when transcoding. And add track number as prefix.
 Optimize redirects to subsonic.org.
 List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7854
 Add "Save" option.
@@ -48,6 +50,7 @@ Support landscape mode.
 Use HttpClient
 New main menu item: "Offline music"
 Improved caching of artist list.
+Save using suggested path, but remember to change suffix when transcoding. And add track number as prefix.
 
 ANDROID
 -------

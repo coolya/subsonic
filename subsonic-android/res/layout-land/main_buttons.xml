@@ -35,6 +35,18 @@
 
     <TableRow>
         <Button
+                a:id="@+id/main_browse_offline"
+                a:layout_width="fill_parent"
+                a:layout_height="wrap_content"
+                a:layout_marginBottom="6dp"
+                a:layout_marginRight="3dp"
+                a:drawableLeft="@drawable/browse_offline"
+                a:drawablePadding="20dp"
+                a:gravity="left|center_vertical"
+                a:textAppearance="?android:attr/textAppearanceLarge"
+                a:text="@string/main.offline_music"/>
+
+        <Button
                 a:id="@+id/main_search"
                 a:layout_width="fill_parent"
                 a:layout_height="wrap_content"
