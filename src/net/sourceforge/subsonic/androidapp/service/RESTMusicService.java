@@ -30,11 +30,17 @@ import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.FileUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
+import java.io.ObjectOutputStream;
+import java.io.FileOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -69,6 +75,8 @@ public class RESTMusicService implements MusicService {
     private final List<Reader> readers = new ArrayList<Reader>(10);
     private final HttpClient httpClient = new DefaultHttpClient();
 
+    private Pair<String,Indexes> cachedIndexesPair;
+
     public RESTMusicService() {
         HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), Constants.SOCKET_CONNECT_TIMEOUT);
         HttpConnectionParams.setSoTimeout(httpClient.getParams(), Constants.SOCKET_READ_TIMEOUT);
@@ -98,13 +106,63 @@ public class RESTMusicService implements MusicService {
 
     @Override
     public Indexes getIndexes(Context context, ProgressListener progressListener) throws Exception {
-        Reader reader = getReader(context, progressListener, "getIndexes");
+        Indexes cachedIndexes = readCachedIndexes(context);
+        long lastModified = cachedIndexes == null ? 0L : cachedIndexes.getLastModified();
+
+        Reader reader = getReader(context, progressListener, "getIndexes", "ifModifiedSince", lastModified);
         addReader(reader);
         try {
-            return indexesParser.parse(reader, progressListener);
+            Indexes indexes = indexesParser.parse(reader, progressListener);
+            if (indexes != null) {
+                writeCachedIndexes(context, indexes);
+                return indexes;
+            }
+            return cachedIndexes;
         } finally {
             closeReader(reader);
         }
+    }
+
+    private Indexes readCachedIndexes(Context context) {
+        String key = Util.getRestUrl(context, null);
+
+        File file = getCachedIndexesFile();
+        if (cachedIndexesPair == null && file != null) {
+            ObjectInputStream in = null;
+            try {
+                in = new ObjectInputStream(new FileInputStream(file));
+                cachedIndexesPair = (Pair<String, Indexes>) in.readObject();
+            } catch (Throwable x) {
+                Log.w(TAG, "Failed to deserialize indexes.", x);
+            } finally {
+                Util.close(in);
+            }
+        }
+
+        if (cachedIndexesPair != null && key.equals(cachedIndexesPair.getFirst())) {
+            return cachedIndexesPair.getSecond();
+        }
+
+        return null;
+    }
+
+    private void writeCachedIndexes(Context context, Indexes indexes) {
+        String key = Util.getRestUrl(context, null);
+        cachedIndexesPair = new Pair<String, Indexes>(key, indexes);
+
+        ObjectOutputStream out = null;
+        try {
+            out = new ObjectOutputStream(new FileOutputStream(getCachedIndexesFile()));
+            out.writeObject(cachedIndexesPair);
+        } catch (Throwable x) {
+            Log.w(TAG, "Failed to serialize indexes.", x);
+        } finally {
+            Util.close(out);
+        }
+    }
+
+    private File getCachedIndexesFile() {
+        return new File(FileUtil.getVarDirectory(), "indexes.dat");
     }
 
     @Override

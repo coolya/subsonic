@@ -18,10 +18,12 @@
  */
 package net.sourceforge.subsonic.androidapp.domain;
 
+import java.io.Serializable;
+
 /**
  * @author Sindre Mehus
  */
-public class Artist {
+public class Artist implements Serializable {
 
     private String id;
     private String name;

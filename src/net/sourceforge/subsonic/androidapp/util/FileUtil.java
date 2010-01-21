@@ -42,6 +42,7 @@ public class FileUtil {
     private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", "..", ":", "\"", "?", "*"};
 
     private static final File musicDir = createDirectory("music");
+    private static final File varDir = createDirectory("var");
 
     public static File getSongFile(MusicDirectory.Entry song, boolean createDir) {
         File dir = getAlbumDirectory(song, createDir);
@@ -74,6 +75,10 @@ public class FileUtil {
 
     public static File getMusicDirectory() {
         return musicDir;
+    }
+
+    public static File getVarDirectory() {
+        return varDir;
     }
 
     /**

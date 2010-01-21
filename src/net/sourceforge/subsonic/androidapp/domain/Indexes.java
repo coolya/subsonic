@@ -19,11 +19,12 @@
 package net.sourceforge.subsonic.androidapp.domain;
 
 import java.util.List;
+import java.io.Serializable;
 
 /**
  * @author Sindre Mehus
  */
-public class Indexes {
+public class Indexes implements Serializable {
 
     private final long lastModified;
     private final List<Artist> shortcuts;
