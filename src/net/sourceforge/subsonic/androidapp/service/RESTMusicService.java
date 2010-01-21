@@ -126,8 +126,8 @@ public class RESTMusicService implements MusicService {
     private Indexes readCachedIndexes(Context context) {
         String key = Util.getRestUrl(context, null);
 
-        File file = getCachedIndexesFile();
-        if (cachedIndexesPair == null && file != null) {
+        File file = getCachedIndexesFile(context);
+        if (cachedIndexesPair == null && file.exists()) {
             ObjectInputStream in = null;
             try {
                 in = new ObjectInputStream(new FileInputStream(file));
@@ -152,8 +152,10 @@ public class RESTMusicService implements MusicService {
 
         ObjectOutputStream out = null;
         try {
-            out = new ObjectOutputStream(new FileOutputStream(getCachedIndexesFile()));
+            File file = getCachedIndexesFile(context);
+            out = new ObjectOutputStream(new FileOutputStream(file));
             out.writeObject(cachedIndexesPair);
+            Log.i(TAG, "Caching indexes in " + file);
         } catch (Throwable x) {
             Log.w(TAG, "Failed to serialize indexes.", x);
         } finally {
@@ -161,8 +163,8 @@ public class RESTMusicService implements MusicService {
         }
     }
 
-    private File getCachedIndexesFile() {
-        return new File(FileUtil.getVarDirectory(), "indexes.dat");
+    private File getCachedIndexesFile(Context context) {
+        return new File(context.getCacheDir(), "indexes.dat");
     }
 
     @Override
