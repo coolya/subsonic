@@ -25,7 +25,6 @@ Add new languages to features.jsp
 TODO IN ANDROID 1.2
 -----------------------
 Long-click
-Use Context.getCacheDirectory()
 Crashes when changing orientation.
 In offline mode, sort files.
 add layout-land/main_buttons.xml
