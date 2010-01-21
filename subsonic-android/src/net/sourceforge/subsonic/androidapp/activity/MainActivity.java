@@ -19,9 +19,6 @@ import java.util.List;
 
 public class MainActivity extends OptionsMenuActivity {
 
-    private View searchButton;
-    private View loadPlaylistButton;
-
     /**
      * Called when the activity is first created.
      */
@@ -39,22 +36,34 @@ public class MainActivity extends OptionsMenuActivity {
         browseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Util.setOffline(MainActivity.this, false);
                 startActivity(new Intent(MainActivity.this, SelectArtistActivity.class));
             }
         });
 
-        searchButton = findViewById(R.id.main_search);
+        View browseOfflineButton = findViewById(R.id.main_browse_offline);
+        browseOfflineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Util.setOffline(MainActivity.this, true);
+                startActivity(new Intent(MainActivity.this, SelectArtistActivity.class));
+            }
+        });
+
+        View searchButton = findViewById(R.id.main_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Util.setOffline(MainActivity.this, false);
                 showSearchDialog();
             }
         });
 
-        loadPlaylistButton = findViewById(R.id.main_load_playlist);
+        View loadPlaylistButton = findViewById(R.id.main_load_playlist);
         loadPlaylistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Util.setOffline(MainActivity.this, false);
                 showPlaylistDialog();
             }
         });
@@ -82,15 +91,6 @@ public class MainActivity extends OptionsMenuActivity {
                 startActivity(new Intent(MainActivity.this, HelpActivity.class));
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        boolean offline = Util.isOffline(this);
-        searchButton.setEnabled(!offline);
-        loadPlaylistButton.setEnabled(!offline);
     }
 
     private void showPlaylistDialog() {

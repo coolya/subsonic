@@ -24,10 +24,10 @@ Add new languages to features.jsp
 
 TODO IN ANDROID 1.2
 -----------------------
+add layout-land/main_buttons.xml
 Persist artist list to disk.
 Increase timeouts in DownloadFile.
 Save using suggested path, but remember to change suffix when transcoding. And add track number as prefix.
-"Offline music"
 Optimize redirects to subsonic.org.
 Add "Save" option.
 Make it downloadable from sf.net.
@@ -47,6 +47,7 @@ DONE IN ANDROID 1.2
 -------------------
 Support landscape mode.
 Use HttpClient
+New main menu item: "Offline music"
 
 ANDROID
 -------

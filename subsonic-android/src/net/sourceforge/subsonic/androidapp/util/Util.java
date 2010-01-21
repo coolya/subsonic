@@ -61,7 +61,6 @@ public final class Util {
     private static final DecimalFormat MEGA_BYTE_FORMAT = new DecimalFormat("0.00 MB");
     private static final DecimalFormat KILO_BYTE_FORMAT = new DecimalFormat("0 KB");
 
-
     // Used by hexEncode()
     private static final char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
@@ -71,6 +70,13 @@ public final class Util {
     public static boolean isOffline(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
         return prefs.getBoolean(Constants.PREFERENCES_KEY_OFFLINE, false);
+    }
+
+    public static void setOffline(Context context, boolean offline) {
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(Constants.PREFERENCES_KEY_OFFLINE, offline);
+        editor.commit();
     }
 
     public static String getRestUrl(Context context, String method) {
