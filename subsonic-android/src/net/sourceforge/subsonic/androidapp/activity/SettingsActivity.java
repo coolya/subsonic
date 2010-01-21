@@ -162,7 +162,7 @@ public class SettingsActivity extends PreferenceActivity {
             protected Object doInBackground() throws Throwable {
                 updateProgress("Deleting cached files...");
 
-                undeletable = new HashSet<File>(4);
+                undeletable = new HashSet<File>(5);
                 DownloadFile currentDownload = downloadService.getCurrentDownloading();
                 if (currentDownload != null) {
                     undeletable.add(currentDownload.getPartialFile());
@@ -175,6 +175,7 @@ public class SettingsActivity extends PreferenceActivity {
                 }
 
                 File root = FileUtil.getMusicDirectory();
+                undeletable.add(root);
                 cleanRecursively(root);
                 return null;
             }
@@ -200,7 +201,7 @@ public class SettingsActivity extends PreferenceActivity {
                 }
 
                 // Delete directory if empty.
-                if (FileUtil.listFiles(file).isEmpty()) {
+                if (FileUtil.listFiles(file).isEmpty() && !undeletable.contains(file)) {
                     Util.delete(file);
                     if (!file.exists()) {
                         Log.d(TAG, "Deleted " + file.getPath());

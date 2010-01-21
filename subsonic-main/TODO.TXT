@@ -24,8 +24,9 @@ Add new languages to features.jsp
 
 TODO IN ANDROID 1.2
 -----------------------
+Long-click
+Use Context.getCacheDirectory()
 Crashes when changing orientation.
-Cache cleaning shouldn't delete 'music' directory.
 In offline mode, sort files.
 add layout-land/main_buttons.xml
 Increase timeouts in DownloadFile.
@@ -54,6 +55,7 @@ Save using suggested path, but remember to change suffix when transcoding. And a
 
 ANDROID
 -------
+Use Droid-Fu?
 "Newest" list in Android.
 Android: Long-click on song list.
 Android: Option to auto-sync certain directories or playlists.
