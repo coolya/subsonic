@@ -18,10 +18,12 @@
  */
 package net.sourceforge.subsonic.androidapp.util;
 
+import java.io.Serializable;
+
 /**
  * @author Sindre Mehus
  */
-public class Pair<S, T> {
+public class Pair<S, T> implements Serializable {
 
     private final S first;
     private final T second;

@@ -50,11 +50,14 @@ public class IndexesParser extends AbstractParser {
         Long lastModified = null;
         int eventType;
         String index = "#";
+        boolean changed = false;
+
         do {
             eventType = parser.next();
             if (eventType == XmlPullParser.START_TAG) {
                 String name = parser.getName();
                 if ("indexes".equals(name)) {
+                    changed = true;
                     lastModified = getLong(parser, "lastModified");
                 } else if ("index".equals(name)) {
                     index = get(parser, "name");
@@ -80,6 +83,13 @@ public class IndexesParser extends AbstractParser {
                 }
             }
         } while (eventType != XmlPullParser.END_DOCUMENT);
+
+        if (!changed) {
+            if (progressListener != null) {
+                progressListener.updateProgress("No changes.");
+            }
+            return null;
+        }
 
         long t1 = System.currentTimeMillis();
         Log.d(TAG, "Got " + artists.size() + " artist(s) in " + (t1 - t0) + "ms.");
