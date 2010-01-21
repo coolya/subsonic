@@ -23,13 +23,9 @@ import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 
 import java.io.File;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.Comparator;
-import java.util.Arrays;
 
 /**
  * @author Sindre Mehus
@@ -47,17 +43,38 @@ public class FileUtil {
     public static File getSongFile(MusicDirectory.Entry song, boolean createDir) {
         File dir = getAlbumDirectory(song, createDir);
 
-        String title = fileSystemSafe(song.getTitle());
+        StringBuilder fileName = new StringBuilder();
+        Integer track = song.getTrack();
+        if (track != null) {
+            if (track < 10) {
+                fileName.append("0");
+            }
+            fileName.append(track).append("-");
+        }
 
-        // TODO: Use transcodedSuffix, if possible.
-        return new File(dir, title + "." + song.getSuffix());
+        fileName.append(fileSystemSafe(song.getTitle())).append(".");
+
+        if (song.getTranscodedSuffix() != null) {
+            fileName.append(song.getTranscodedSuffix());
+        } else {
+            fileName.append(song.getSuffix());
+        }
+
+        return new File(dir, fileName.toString());
     }
 
     private static File getAlbumDirectory(MusicDirectory.Entry song, boolean create) {
-        String artist = fileSystemSafe(song.getArtist());
-        String album = fileSystemSafe(song.getAlbum());
+        File dir;
 
-        File dir = new File(musicDir.getPath() + "/" + artist + "/" + album);
+        if (song.getPath() != null) {
+            File f = new File(song.getPath());
+            dir = new File(musicDir.getPath() + "/" + f.getParent());
+        } else {
+            String artist = fileSystemSafe(song.getArtist());
+            String album = fileSystemSafe(song.getAlbum());
+            dir = new File(musicDir.getPath() + "/" + artist + "/" + album);
+        }
+
         if (create && !dir.exists()) {
             dir.mkdirs();
         }
