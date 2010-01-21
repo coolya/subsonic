@@ -1,5 +1,14 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +16,6 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -29,22 +37,11 @@ import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
-import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 public class SettingsActivity extends PreferenceActivity {
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
     private final Map<String, ServerSettings> serverSettings = new LinkedHashMap<String, ServerSettings>();
     private ListPreference serverInstance;
-    private Preference testConnection;
-    private CheckBoxPreference offline;
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private DownloadService downloadService;
 
@@ -55,9 +52,8 @@ public class SettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.settings);
 
         serverInstance = (ListPreference) findPreference("serverInstance");
-        offline = (CheckBoxPreference) findPreference("offline");
 
-        testConnection = findPreference("testConnection");
+        Preference testConnection = findPreference("testConnection");
         testConnection.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -123,10 +119,6 @@ public class SettingsActivity extends PreferenceActivity {
             entries.add(ss.serverName.getText());
         }
         serverInstance.setEntries(entries.toArray(new CharSequence[entries.size()]));
-
-        boolean online = !offline.isChecked();
-        serverInstance.setEnabled(online);
-        testConnection.setEnabled(online);
     }
 
     private void testConnection() {

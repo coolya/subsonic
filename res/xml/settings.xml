@@ -3,11 +3,6 @@
 <PreferenceScreen xmlns:a="http://schemas.android.com/apk/res/android"
                   a:title="@string/settings.title">
 
-    <CheckBoxPreference
-            a:key="offline"
-            a:title="@string/settings.offline_title"
-            a:summary="@string/settings.offline_summary"/>
-
     <ListPreference
             a:key="serverInstance"
             a:title="@string/settings.active_server_title"

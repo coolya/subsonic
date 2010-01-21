@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="main.my_music">My music</string>
+    <string name="main.offline_music">Offline music</string>
     <string name="main.my_playlists">My playlists</string>
     <string name="main.search">Search</string>
     <string name="main.select_playlist">Select playlist</string>
@@ -27,8 +28,6 @@
     <string name="options.help">Help</string>
 
     <string name="settings.title">Subsonic settings</string>
-    <string name="settings.offline_title">Use offline</string>
-    <string name="settings.offline_summary">Only play music stored on phone</string>
     <string name="settings.active_server_title">Active server</string>
     <string name="settings.test_connection_title">Test connection</string>
     <string name="settings.servers_title">Servers</string>
