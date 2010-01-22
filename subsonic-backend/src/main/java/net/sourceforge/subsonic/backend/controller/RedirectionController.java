@@ -20,6 +20,7 @@ package net.sourceforge.subsonic.backend.controller;
 
 import net.sourceforge.subsonic.backend.dao.RedirectionDao;
 import net.sourceforge.subsonic.backend.domain.Redirection;
+import static net.sourceforge.subsonic.backend.controller.RedirectionManagementController.RESERVED_REDIRECTS;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,6 +46,10 @@ public class RedirectionController implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String redirectFrom = getRedirectFrom(request);
+        if (RESERVED_REDIRECTS.containsKey(redirectFrom)) {
+            return new ModelAndView(new RedirectView(RESERVED_REDIRECTS.get(redirectFrom)));
+        }
+
         Redirection redirection = redirectFrom == null ? null : redirectionDao.getRedirection(redirectFrom);
 
         if (redirection == null) {

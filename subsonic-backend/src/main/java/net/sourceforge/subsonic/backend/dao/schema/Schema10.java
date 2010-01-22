@@ -69,7 +69,18 @@ public class Schema10 extends Schema {
                              "unique(redirect_from))");
             template.execute("create index idx_redirection_redirect_from on redirection(redirect_from)");
             template.execute("create index idx_redirection_server_id on redirection(server_id)");
+
+            createRedirection(template, "demo", "http://subsonic.org/demo");
+
             LOG.info("Database table 'redirection' was created successfully.");
+
+
         }
+    }
+
+    private void createRedirection(JdbcTemplate template, String redirectFrom, String redirectTo) {
+        template.update("insert into redirection values (null, 'sindre@activeobjects.no', '-1', ?, ?, false, null, null, null)",
+                        new Object[] {redirectFrom, redirectTo});
+        LOG.info("Creating redirection from " + redirectFrom + " to " + redirectTo);
     }
 }

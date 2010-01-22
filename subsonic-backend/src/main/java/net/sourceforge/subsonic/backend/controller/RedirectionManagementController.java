@@ -24,7 +24,8 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
-import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,8 +53,23 @@ import net.sourceforge.subsonic.backend.domain.Redirection;
 public class RedirectionManagementController extends MultiActionController {
 
     private static final Logger LOG = Logger.getLogger(RedirectionManagementController.class);
-    private static final List<String> RESERVED_REDIRECTS = Arrays.asList("www", "web", "demo", "forum", "ftp", "mail",
-            "m", "mobile", "mobil", "phone", "wap", "shop", "test");
+
+    public static final Map<String,String> RESERVED_REDIRECTS = new HashMap<String, String>();
+
+    static {
+        RESERVED_REDIRECTS.put("forum", "http://www.activeobjects.no/subsonic/forum/index.php");
+        RESERVED_REDIRECTS.put("www", "http://www.subsonic.org/pages/index.jsp");
+        RESERVED_REDIRECTS.put("web", "http://www.subsonic.org/pages/index.jsp");
+        RESERVED_REDIRECTS.put("ftp", "http://www.subsonic.org/pages/index.jsp");
+        RESERVED_REDIRECTS.put("mail", "http://www.subsonic.org/pages/index.jsp");
+        RESERVED_REDIRECTS.put("m", "http://www.subsonic.org/pages/index.jsp");
+        RESERVED_REDIRECTS.put("mobile", "http://www.subsonic.org/pages/index.jsp");
+        RESERVED_REDIRECTS.put("mobil", "http://www.subsonic.org/pages/index.jsp");
+        RESERVED_REDIRECTS.put("phone", "http://www.subsonic.org/pages/index.jsp");
+        RESERVED_REDIRECTS.put("wap", "http://www.subsonic.org/pages/index.jsp");
+        RESERVED_REDIRECTS.put("shop", "http://www.subsonic.org/pages/index.jsp");
+        RESERVED_REDIRECTS.put("test", "http://www.subsonic.org/pages/index.jsp");
+    }
 
     private RedirectionDao redirectionDao;
 
@@ -71,7 +87,7 @@ public class RedirectionManagementController extends MultiActionController {
             trialExpires = new Date(ServletRequestUtils.getRequiredLongParameter(request, "trialExpires"));
         }
 
-        if (RESERVED_REDIRECTS.contains(redirectFrom)) {
+        if (RESERVED_REDIRECTS.containsKey(redirectFrom)) {
             sendError(response, "\"" + redirectFrom + "\" is a reserved address. Please select another.");
             return null;
         }
