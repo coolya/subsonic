@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:sub="http://subsonic.sourceforge.net/restapi"
-           targetNamespace="http://subsonic.sourceforge.net/restapi"
+           xmlns:sub="http://subsonic.org/restapi"
+           targetNamespace="http://subsonic.org/restapi"
            attributeFormDefault="unqualified"
            elementFormDefault="qualified"
            version="1.1.1">

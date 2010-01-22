@@ -14,7 +14,7 @@
 
 <p>
     Subsonic encountered an internal error. You can report this error in the
-    <a href="http://subsonic.sourceforge.net/forum.html" target="_blank">Subsonic Forum</a>.
+    <a href="http://forum.subsonic.org" target="_blank">Subsonic Forum</a>.
     Please include the information below.
 </p>
 

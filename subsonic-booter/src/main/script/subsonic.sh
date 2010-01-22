@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ###################################################################################
-# Shell script for starting Subsonic.  See http://subsonic.sourceforge.net.
+# Shell script for starting Subsonic.  See http://subsonic.org.
 #
 # Author: Sindre Mehus
 ###################################################################################
@@ -110,4 +110,4 @@ if [ $SUBSONIC_PIDFILE ]; then
     echo $! > ${SUBSONIC_PIDFILE}
 fi
 
-echo Started Subsonic [PID $!, ${LOG}] 
+echo Started Subsonic [PID $!, ${LOG}]

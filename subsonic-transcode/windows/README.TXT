@@ -5,7 +5,7 @@
 This is a collection of free audio codecs for Windows.
 To be installed in c:\subsonic\transcode
 
-See http://subsonic.sourceforge.net/transcode for details.
+See http://subsonic.org for details.
 
 Sindre Mehus, Aug 03 2006
 ==========================================================

@@ -130,7 +130,7 @@ public class RedirectionManagementController extends MultiActionController {
         PrintWriter writer = response.getWriter();
 
         Redirection redirection = redirectionDao.getRedirection(redirectFrom);
-        String webAddress = redirectFrom + ".gosubsonic.com";
+        String webAddress = redirectFrom + ".subsonic.org";
         if (redirection == null) {
             writer.print("Web address " + webAddress + " not registered.");
             return null;

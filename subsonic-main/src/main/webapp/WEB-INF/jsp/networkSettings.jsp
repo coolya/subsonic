@@ -89,7 +89,7 @@
 
     <table>
         <tr>
-            <td>http://<form:input id="urlRedirectFrom" path="urlRedirectFrom" size="16" cssStyle="margin-left:0.25em"/>.gosubsonic.com</td>
+            <td>http://<form:input id="urlRedirectFrom" path="urlRedirectFrom" size="16" cssStyle="margin-left:0.25em"/>.subsonic.org</td>
             <td style="padding-left:1em"> <div class="forward"><a href="networkSettings.view?test"><fmt:message key="networksettings.urlredirectiontest"/></a></div></td>
         </tr>
     </table>

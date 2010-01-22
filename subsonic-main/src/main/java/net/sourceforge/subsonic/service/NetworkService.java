@@ -49,7 +49,7 @@ import net.sourceforge.subsonic.util.StringUtil;
 
 /**
  * Provides network-related services, including port forwarding on UPnP routers and
- * URL redirection from http://xxxx.gosubsonic.com.
+ * URL redirection from http://xxxx.subsonic.org.
  *
  * @author Sindre Mehus
  */
@@ -120,7 +120,7 @@ public class NetworkService {
     }
 
     public static String getBackendUrl() {
-        return "true".equals(System.getProperty("subsonic.test")) ? "http://localhost:8181" : "http://gosubsonic.com";
+        return "true".equals(System.getProperty("subsonic.test")) ? "http://localhost:8181" : "http://subsonic.org";
     }
 
     public void setSettingsService(SettingsService settingsService) {

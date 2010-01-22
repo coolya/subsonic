@@ -69,7 +69,7 @@ public class VersionService {
     /**
      * URL from which to fetch latest versions.
      */
-    private static final String VERSION_URL = "http://gosubsonic.com/backend/version.view";
+    private static final String VERSION_URL = "http://subsonic.org/backend/version.view";
 
     /**
      * Returns the version number for the locally installed Subsonic version.

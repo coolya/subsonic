@@ -65,7 +65,7 @@ import java.util.SortedSet;
 /**
  * Multi-controller used for the REST API.
  * <p/>
- * For documentation, please refer to api.php.
+ * For documentation, please refer to api.jsp.
  *
  * @author Sindre Mehus
  */
@@ -570,7 +570,7 @@ public class RESTController extends MultiActionController {
         XMLBuilder builder = new XMLBuilder();
         builder.preamble(StringUtil.ENCODING_UTF8);
         builder.add("subsonic-response", false,
-                new Attribute("xlmns", "http://subsonic.sourceforge.net/restapi"),
+                new Attribute("xlmns", "http://subsonic.org/restapi"),
                 new Attribute("status", ok ? "ok" : "failed"),
                 new Attribute("version", StringUtil.getRESTProtocolVersion()));
         return builder;

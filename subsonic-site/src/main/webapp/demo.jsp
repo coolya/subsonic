@@ -34,7 +34,7 @@
                 Random random = new Random(System.currentTimeMillis());
                 int userId = random.nextInt(5) + 1;
             %>
-            <p style="text-align:center;font-size:1.3em"><b><a href="http://gosubsonic.com/demo/login.view?user=guest<%=userId%>&password=guest" target="_blank">&raquo; Start demo</a></b></p>
+            <p style="text-align:center;font-size:1.3em"><b><a href="http://subsonic.org/demo/login.view?user=guest<%=userId%>&password=guest" target="_blank">&raquo; Start demo</a></b></p>
         </div>
 
         <div id="side-col">

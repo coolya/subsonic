@@ -33,7 +33,7 @@ import java.net.URL;
 import java.util.Date;
 
 /**
- * Redirects vanity URLs (such as http://sindre.gosubsonic.com).
+ * Redirects vanity URLs (such as http://sindre.subsonic.org).
  *
  * @author Sindre Mehus
  */
@@ -48,7 +48,7 @@ public class RedirectionController implements Controller {
         Redirection redirection = redirectFrom == null ? null : redirectionDao.getRedirection(redirectFrom);
 
         if (redirection == null) {
-            return new ModelAndView(new RedirectView("http://gosubsonic.com/pages"));
+            return new ModelAndView(new RedirectView("http://subsonic.org/pages"));
         }
 
         redirection.setLastRead(new Date());
@@ -57,13 +57,13 @@ public class RedirectionController implements Controller {
         // Check for trial expiration (unless called from Android app which manages its own trial expiry).
         if (isTrialExpired(redirection) && !isAndroid(request)) {
             LOG.info("Expired redirection: " + redirectFrom);
-            return new ModelAndView(new RedirectView("http://gosubsonic.com/pages/redirect-expired.jsp?redirectFrom=" +
+            return new ModelAndView(new RedirectView("http://subsonic.org/pages/redirect-expired.jsp?redirectFrom=" +
                     redirectFrom + "&expired=" + redirection.getTrialExpires().getTime()));
         }
 
         String requestUrl = getFullRequestURL(request);
         String to = StringUtils.removeEnd(redirection.getRedirectTo(), "/");
-        String redirectTo = requestUrl.replaceFirst("http://" + redirectFrom + "\\.gosubsonic\\.com", to);
+        String redirectTo = requestUrl.replaceFirst("http://" + redirectFrom + "\\.subsonic\\.org", to);
         LOG.info("Redirecting from " + requestUrl + " to " + redirectTo);
 
         return new ModelAndView(new RedirectView(redirectTo));

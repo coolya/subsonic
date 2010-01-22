@@ -151,10 +151,10 @@ public class StreamController implements Controller {
             if (isShoutCastRequested && !isSingleFile) {
                 response.setHeader("icy-metaint", "" + ShoutCastOutputStream.META_DATA_INTERVAL);
                 response.setHeader("icy-notice1", "This stream is served using Subsonic");
-                response.setHeader("icy-notice2", "Subsonic - Free media streamer - subsonic.sourceforge.net");
+                response.setHeader("icy-notice2", "Subsonic - Free media streamer - subsonic.org");
                 response.setHeader("icy-name", "Subsonic");
                 response.setHeader("icy-genre", "Mixed");
-                response.setHeader("icy-url", "http://subsonic.sourceforge.net/");
+                response.setHeader("icy-url", "http://subsonic.org/");
                 out = new ShoutCastOutputStream(out, playlist, settingsService);
             }
 

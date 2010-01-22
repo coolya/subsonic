@@ -13,7 +13,7 @@
 <h1>Trial period expired</h1>
 
 <p>
-    Sorry, the trial period for the web address <b><%= request.getParameter("redirectFrom")%>.gosubsonic.com</b> has expired.
+    Sorry, the trial period for the web address <b><%= request.getParameter("redirectFrom")%>.subsonic.org</b> has expired.
 </p>
 
 <p>
@@ -87,7 +87,7 @@
     </table>
 
 <p>
-    For more information, please visit <a href="http://subsonic.sf.net/">subsonic.sf.net</a>
+    For more information, please visit <a href="http://subsonic.org/">subsonic.org</a>
 </p>
 </body>
 </html>

@@ -91,7 +91,7 @@
 
             <pre>
    &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-   &lt;subsonic-response xmlns="http://subsonic.sourceforge.net/restapi"
+   &lt;subsonic-response xmlns="http://subsonic.org/restapi"
                       status="failed" version="1.1.0"&gt;
        &lt;error code="40" message="Wrong username or password"/&gt;
    &lt;/subsonic-response&gt;

@@ -80,7 +80,7 @@
 </table>
 
 <p>
-    For more information, please visit <a href="http://subsonic.sf.net/">subsonic.sf.net</a>
+    For more information, please visit <a href="http://subsonic.org/">subsonic.org</a>
 </p>
 </body>
 </html>
