@@ -29,7 +29,7 @@ public class HelpActivity extends OptionsMenuActivity {
         text.append("With Subsonic you can easily stream or download music from your home computer to your Android phone " +
                     "(and do lots of other cool stuff too).\n" +
                     "\n" +
-                    "To install the Subsonic server software on your computer, please visit http://subsonic.sf.net. It's available for " +
+                    "To install the Subsonic server software on your computer, please visit http://subsonic.org. It's available for " +
                     "Windows, Mac, Linux and Unix.\n" +
                     "\n" +
                     "By default, this program is configured to use the Subsonic demo server. Once you've set up your own " +
