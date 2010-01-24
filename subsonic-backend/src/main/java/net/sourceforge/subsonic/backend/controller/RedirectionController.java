@@ -47,12 +47,14 @@ public class RedirectionController implements Controller {
 
         String redirectFrom = getRedirectFrom(request);
         if (RESERVED_REDIRECTS.containsKey(redirectFrom)) {
+            LOG.info("Reserved redirection: " + redirectFrom);
             return new ModelAndView(new RedirectView(RESERVED_REDIRECTS.get(redirectFrom)));
         }
 
         Redirection redirection = redirectFrom == null ? null : redirectionDao.getRedirection(redirectFrom);
 
         if (redirection == null) {
+            LOG.info("No redirection found: " + redirectFrom);
             return new ModelAndView(new RedirectView("http://subsonic.org/pages"));
         }
 

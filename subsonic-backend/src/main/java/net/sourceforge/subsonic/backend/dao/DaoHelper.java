@@ -2,6 +2,7 @@ package net.sourceforge.subsonic.backend.dao;
 
 import net.sourceforge.subsonic.backend.dao.schema.Schema;
 import net.sourceforge.subsonic.backend.dao.schema.Schema10;
+import net.sourceforge.subsonic.backend.Util;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -58,7 +59,7 @@ public class DaoHelper {
     }
 
     private DataSource createDataSource() {
-        File home = getHomeDirectory();
+        File home = Util.getBackendHome();
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName("org.hsqldb.jdbcDriver");
         ds.setUrl("jdbc:hsqldb:file:" + home.getPath() + "/db/subsonic-backend");
@@ -66,19 +67,6 @@ public class DaoHelper {
         ds.setPassword("");
 
         return ds;
-    }
-
-    private File getHomeDirectory() {
-        File home = new File("/var/subsonic-backend");
-        if (!home.exists() || !home.isDirectory()) {
-            boolean success = home.mkdirs();
-            if (!success) {
-                String message = "The directory " + home + " does not exist. Please create it and make it writable.";
-                LOG.error(message);
-                throw new RuntimeException(message);
-            }
-        }
-        return home;
     }
 
     private void checkDatabase() {

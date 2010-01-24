@@ -19,13 +19,22 @@
 package net.sourceforge.subsonic.backend.controller;
 
 import java.io.PrintWriter;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.jdbc.core.ColumnMapRowMapper;
+import org.springframework.dao.DataAccessException;
+import net.sourceforge.subsonic.backend.dao.DaoHelper;
+import net.sourceforge.subsonic.backend.Util;
 
 /**
  * Multi-controller used for simple pages.
@@ -39,6 +48,8 @@ public class MultiController extends MultiActionController {
     private static final String SUBSONIC_VERSION = "3.8";
     private static final String SUBSONIC_BETA_VERSION = "3.9.beta1";
     private static final String SUBSONIC_ANDROID_VERSION = "1.1";
+
+    private DaoHelper daoHelper;
 
     public ModelAndView version(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -55,4 +66,33 @@ public class MultiController extends MultiActionController {
         return null;
     }
 
+    public ModelAndView db(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String password = ServletRequestUtils.getRequiredStringParameter(request, "p");
+        if (!password.equals(Util.getPassword("backendpwd.txt"))) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return null;
+        }
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        map.put("p", password);
+        String query = request.getParameter("query");
+        if (query != null) {
+            map.put("query", query);
+
+            try {
+                List<?> result = daoHelper.getJdbcTemplate().query(query, new ColumnMapRowMapper());
+                map.put("result", result);
+            } catch (DataAccessException x) {
+                map.put("error", ExceptionUtils.getRootCause(x).getMessage());
+            }
+        }
+
+        return new ModelAndView("backend/db", "model", map);
+    }
+
+    public void setDaoHelper(DaoHelper daoHelper) {
+        this.daoHelper = daoHelper;
+    }
 }

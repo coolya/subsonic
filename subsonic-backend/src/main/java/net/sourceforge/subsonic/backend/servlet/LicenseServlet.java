@@ -1,8 +1,6 @@
 package net.sourceforge.subsonic.backend.servlet;
 
 import java.io.IOException;
-import java.io.FileReader;
-import java.io.Reader;
 import java.security.MessageDigest;
 import java.util.Properties;
 import java.util.concurrent.Executors;
@@ -24,9 +22,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import net.sourceforge.subsonic.backend.Util;
 
 /**
  * Runs a task at regular intervals, checking for incoming donations and sending
@@ -103,15 +100,6 @@ public class LicenseServlet extends HttpServlet {
         }
     }
 
-    private String getPassword() throws IOException {
-        Reader reader = new FileReader("/var/subsonic-backend/gmailpwd.txt");
-        try {
-            return StringUtils.trimToNull(IOUtils.toString(reader));
-        } finally {
-            IOUtils.closeQuietly(reader);
-        }
-    }
-
     private void initSession() throws IOException {
         Properties props = new Properties();
 //        props.setProperty("mail.debug", "true");
@@ -120,7 +108,7 @@ public class LicenseServlet extends HttpServlet {
         props.setProperty("mail.smtps.auth", "true");
 
         session = Session.getDefaultInstance(props, null);
-        password = getPassword();
+        password = Util.getPassword("gmailpwd.txt");
     }
 
     private boolean isDonationMessage(Message message) throws MessagingException, IOException {

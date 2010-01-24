@@ -4,7 +4,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-    <bean id="multiController" class="net.sourceforge.subsonic.backend.controller.MultiController"/>
+    <bean id="multiController" class="net.sourceforge.subsonic.backend.controller.MultiController">
+        <property name="daoHelper" ref="daoHelper"/>
+    </bean>
 
     <bean id="redirectionController" class="net.sourceforge.subsonic.backend.controller.RedirectionController">
          <property name="redirectionDao" ref="redirectionDao"/>
@@ -19,6 +21,7 @@
         <property name="mappings">
             <props>
                 <prop key="/backend/version.view">multiController</prop>
+                <prop key="/backend/db.view">multiController</prop>
                 <prop key="/backend/redirect/register.view">redirectionManagementController</prop>
                 <prop key="/backend/redirect/unregister.view">redirectionManagementController</prop>
                 <prop key="/backend/redirect/test.view">redirectionManagementController</prop>
