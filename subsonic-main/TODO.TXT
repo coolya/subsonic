@@ -2,7 +2,7 @@ http://nonpixel.com/subair/
 
 TODO IN 3.9
 --------------
-Mention xxx.subsonic.org in donation texts.
+Mention xxx.subsonic.org in donation texts. (See redirect-expired.jsp)
 Lyrics. Use backend?
 Upgrade JWPlayer
 Make contrast color darker in new icons.
@@ -22,7 +22,9 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 
 TODO IN ANDROID 1.2
 -----------------------
-Optimize redirects to subsonic.org.
+Concurrent http requests fail.
+Optimize redirects to subsonic.org (in DownloadFile)
+Use IOUtils, StringUtils.
 In offline mode, sort files.
 Crashes when changing orientation.
 Increase timeouts in DownloadFile.

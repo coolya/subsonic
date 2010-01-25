@@ -73,7 +73,7 @@ public class RedirectionManagementController extends MultiActionController {
 
     private RedirectionDao redirectionDao;
 
-    public ModelAndView register(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void register(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String redirectFrom = StringUtils.lowerCase(ServletRequestUtils.getRequiredStringParameter(request, "redirectFrom"));
         String licenseHolder = ServletRequestUtils.getStringParameter(request, "licenseHolder");
@@ -89,12 +89,12 @@ public class RedirectionManagementController extends MultiActionController {
 
         if (RESERVED_REDIRECTS.containsKey(redirectFrom)) {
             sendError(response, "\"" + redirectFrom + "\" is a reserved address. Please select another.");
-            return null;
+            return;
         }
 
         if (!redirectFrom.matches("(\\w|\\-)+")) {
             sendError(response, "Illegal characters present in \"" + redirectFrom + "\". Please select another.");
-            return null;
+            return;
         }
 
         String host = request.getRemoteAddr();
@@ -128,20 +128,16 @@ public class RedirectionManagementController extends MultiActionController {
                 LOG.info("Updated " + redirection);
             } else {
                 sendError(response, "The web address \"" + redirectFrom + "\" is already in use. Please select another.");
-                return null;
             }
         }
-
-        return null;
     }
 
-    public ModelAndView unregister(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void unregister(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String serverId = ServletRequestUtils.getRequiredStringParameter(request, "serverId");
         redirectionDao.deleteRedirectionsByServerId(serverId);
-        return null;
     }
 
-    public ModelAndView test(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String redirectFrom = StringUtils.lowerCase(ServletRequestUtils.getRequiredStringParameter(request, "redirectFrom"));
         PrintWriter writer = response.getWriter();
 
@@ -149,12 +145,12 @@ public class RedirectionManagementController extends MultiActionController {
         String webAddress = redirectFrom + ".subsonic.org";
         if (redirection == null) {
             writer.print("Web address " + webAddress + " not registered.");
-            return null;
+            return;
         }
 
         if (redirection.getTrialExpires() != null && redirection.getTrialExpires().before(new Date())) {
             writer.print("Trial period expired. Please donate to activate web address.");
-            return null;
+            return;
         }
 
         String url = redirection.getRedirectTo();
@@ -189,7 +185,6 @@ public class RedirectionManagementController extends MultiActionController {
         } finally {
             client.getConnectionManager().shutdown();
         }
-        return null;
     }
 
     private void sendError(HttpServletResponse response, String message) throws IOException {
@@ -197,7 +192,7 @@ public class RedirectionManagementController extends MultiActionController {
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
 
-    public ModelAndView dump(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void dump(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         File file = File.createTempFile("redirections", ".txt");
         PrintWriter writer = new PrintWriter(file, "UTF-8");
@@ -218,7 +213,6 @@ public class RedirectionManagementController extends MultiActionController {
         } finally {
             IOUtils.closeQuietly(writer);
         }
-        return null;
     }
 
     public void setRedirectionDao(RedirectionDao redirectionDao) {

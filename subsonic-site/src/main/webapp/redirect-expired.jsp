@@ -17,7 +17,7 @@
 </p>
 
 <p>
-    But don't worry; to get permanent ownership of the address you must give a one-time donation to the Subsonic project.
+    But don't worry; to get permanent ownership of the address you can give a one-time donation to the Subsonic project.
 </p>
 
 <p>
@@ -50,6 +50,16 @@
                     </tr>
                     <tr>
                         <td style="text-align:center;border:none;padding:0">&euro;10</td>
+                    </tr>
+                </table>
+            </td>
+            <td style="border:none;">
+                <table>
+                    <tr>
+                        <td style="border:none;padding:0;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=redir15&no_shipping=1&amount=15.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;border:none;padding:0">&euro;15</td>
                     </tr>
                 </table>
             </td>
