@@ -20,9 +20,9 @@ package net.sourceforge.subsonic.androidapp.service;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
-import android.util.Log;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.Version;
@@ -30,27 +30,31 @@ import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import net.sourceforge.subsonic.androidapp.util.Util;
-import net.sourceforge.subsonic.androidapp.util.FileUtil;
+import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.ExecutionContext;
+import org.apache.http.protocol.HttpContext;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.io.ObjectInputStream;
-import java.io.FileInputStream;
 import java.io.ObjectOutputStream;
-import java.io.FileOutputStream;
-import java.io.File;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.HttpClient;
-import org.apache.http.HttpResponse;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  * @author Sindre Mehus
@@ -64,6 +68,8 @@ public class RESTMusicService implements MusicService {
      */
     private static final String VERSION_URL = "http://subsonic.org/backend/version.view";
 
+    private static final long REDIRECTION_CHECK_INTERVAL_MILLIS = 60L * 60L * 1000L;
+
     private final IndexesParser indexesParser = new IndexesParser();
     private final MusicDirectoryParser musicDirectoryParser = new MusicDirectoryParser();
     private final SearchResultParser searchResultParser = new SearchResultParser();
@@ -74,8 +80,11 @@ public class RESTMusicService implements MusicService {
     private final ErrorParser errorParser = new ErrorParser();
     private final List<Reader> readers = new ArrayList<Reader>(10);
     private final HttpClient httpClient = new DefaultHttpClient();
+    private Pair<String, Indexes> cachedIndexesPair;
 
-    private Pair<String,Indexes> cachedIndexesPair;
+    private long redirectionLastChecked;
+    private String redirectFrom;
+    private String redirectTo;
 
     public RESTMusicService() {
         HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), Constants.SOCKET_CONNECT_TIMEOUT);
@@ -231,6 +240,7 @@ public class RESTMusicService implements MusicService {
     @Override
     public Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
         String url = Util.getRestUrl(context, "getCoverArt") + "&id=" + id + "&size=" + size;
+        url = rewriteUrlWithRedirect(url);
 
         HttpGet method = new HttpGet(url);
         HttpResponse response = httpClient.execute(method);
@@ -285,14 +295,14 @@ public class RESTMusicService implements MusicService {
     private Reader getReader(Context context, ProgressListener progressListener, String method,
                              List<String> parameterNames, List<Object> parameterValues) throws Exception {
 
-        StringBuilder url = new StringBuilder();
-        url.append(Util.getRestUrl(context, method));
+        StringBuilder urlBuilder = new StringBuilder();
+        urlBuilder.append(Util.getRestUrl(context, method));
 
         if (parameterNames != null) {
             for (int i = 0; i < parameterNames.size(); i++) {
-                url.append("&");
-                url.append(parameterNames.get(i)).append("=");
-                url.append(parameterValues.get(i));
+                urlBuilder.append("&");
+                urlBuilder.append(parameterNames.get(i)).append("=");
+                urlBuilder.append(parameterValues.get(i));
             }
         }
 
@@ -300,17 +310,58 @@ public class RESTMusicService implements MusicService {
             progressListener.updateProgress("Contacting server.");
         }
 
+        String url = urlBuilder.toString();
+        url = rewriteUrlWithRedirect(url);
         Log.i(TAG, "Using URL " + url);
-        return openURL(url.toString());
+        return openURL(url);
     }
 
     private Reader openURL(String url) throws IOException {
         HttpGet method = new HttpGet(url);
 
-        HttpResponse response = httpClient.execute(method);
+        HttpContext context = new BasicHttpContext();
+        HttpResponse response = httpClient.execute(method, context);
+
         InputStream in = response.getEntity().getContent();
+        detectRedirect(url, context);
 
         return new InputStreamReader(in, Constants.UTF_8);
     }
 
+    private void detectRedirect(String originalUrl, HttpContext context) {
+        if (!originalUrl.contains(".subsonic.org")) {
+            return;
+        }
+
+        HttpUriRequest request = (HttpUriRequest) context.getAttribute(ExecutionContext.HTTP_REQUEST);
+        HttpHost host = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
+        String redirectedUrl = host.toURI() + request.getURI();
+
+        String path = StringUtils.substringAfter(originalUrl, ".subsonic.org");
+        redirectFrom = originalUrl.replace(path, "");
+        redirectTo = redirectedUrl.replace(path, "");
+
+        Log.i(TAG, redirectFrom + " redirects to " + redirectTo);
+        redirectionLastChecked = System.currentTimeMillis();
+    }
+
+    private String rewriteUrlWithRedirect(String url) throws IOException {
+
+        // Is it a subsonic.org address?
+        int index = url.indexOf(".subsonic.org");
+        if (index <= 0) {
+            return url;
+        }
+
+        // Only cache for a certain time.
+        if (System.currentTimeMillis() - redirectionLastChecked > REDIRECTION_CHECK_INTERVAL_MILLIS) {
+            return url;
+        }
+
+        if (redirectFrom == null || redirectTo == null) {
+            return url;
+        }
+
+        return url.replace(redirectFrom, redirectTo);
+    }
 }
