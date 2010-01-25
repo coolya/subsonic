@@ -125,6 +125,11 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
+    public String getDownloadURL(Context context, MusicDirectory.Entry song) throws Exception {
+        return musicService.getDownloadURL(context, song);
+    }
+
+    @Override
     public void cancel(Context context, ProgressListener progressListener) {
         musicService.cancel(context, progressListener);
     }

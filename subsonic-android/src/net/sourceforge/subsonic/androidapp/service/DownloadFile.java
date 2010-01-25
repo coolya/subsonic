@@ -104,8 +104,8 @@ public class DownloadFile {
         return partialFile;
     }
 
-    private String getDownloadURL(MusicDirectory.Entry song) {
-        return Util.getRestUrl(context, "stream") + "&id=" + song.getId();
+    private String getDownloadURL(MusicDirectory.Entry song) throws Exception {
+        return MusicServiceFactory.getMusicService(context).getDownloadURL(context, song);
     }
 
     private InputStream connect(String url) throws Exception {
