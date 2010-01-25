@@ -2,7 +2,7 @@ http://nonpixel.com/subair/
 
 TODO IN 3.9
 --------------
-Make db.view work.
+Mention xxx.subsonic.org in donation texts.
 Lyrics. Use backend?
 Upgrade JWPlayer
 Make contrast color darker in new icons.
@@ -24,11 +24,12 @@ TODO IN ANDROID 1.2
 -----------------------
 Optimize redirects to subsonic.org.
 In offline mode, sort files.
-Long-click
 Crashes when changing orientation.
 Increase timeouts in DownloadFile.
-List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7854
 Add "Save" option.
+-
+Long-click
+List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7854
 Make it downloadable from sf.net.
 Make proper services.
 Make web page for it.
