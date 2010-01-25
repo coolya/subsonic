@@ -263,6 +263,12 @@ public class RESTMusicService implements MusicService {
     }
 
     @Override
+    public String getDownloadURL(Context context, MusicDirectory.Entry song) throws IOException {
+        String url = Util.getRestUrl(context, "stream") + "&id=" + song.getId();
+        return rewriteUrlWithRedirect(url);
+    }
+
+    @Override
     public synchronized void cancel(Context context, ProgressListener progressListener) {
         while (!readers.isEmpty()) {
             Reader reader = readers.get(readers.size() - 1);

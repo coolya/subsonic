@@ -49,6 +49,8 @@ public interface MusicService {
 
     Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception;
 
+    String getDownloadURL(Context context, MusicDirectory.Entry song) throws Exception;
+
     void cancel(Context context, ProgressListener progressListener);
 
     Version getLocalVersion(Context context) throws Exception;
