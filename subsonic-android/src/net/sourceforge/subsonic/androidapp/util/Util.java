@@ -47,7 +47,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import org.apache.http.HttpResponse;
+import org.apache.http.HttpEntity;
 
 /**
  * @author Sindre Mehus
@@ -105,11 +105,11 @@ public final class Util {
         return builder.toString();
     }
 
-    public static String getContentType(HttpResponse response) {
-        if (response == null || response.getEntity() == null || response.getEntity().getContentType() == null) {
+    public static String getContentType(HttpEntity entity) {
+        if (entity == null || entity.getContentType() == null) {
             return null;
         }
-        return response.getEntity().getContentType().getValue();
+        return entity.getContentType().getValue();
     }
 
     public static int getRemainingTrialDays(Context context) {

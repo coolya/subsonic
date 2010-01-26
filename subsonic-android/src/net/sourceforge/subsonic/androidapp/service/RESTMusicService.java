@@ -18,30 +18,6 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
-import net.sourceforge.subsonic.androidapp.domain.Indexes;
-import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.domain.Version;
-import net.sourceforge.subsonic.androidapp.util.Constants;
-import net.sourceforge.subsonic.androidapp.util.Pair;
-import net.sourceforge.subsonic.androidapp.util.ProgressListener;
-import net.sourceforge.subsonic.androidapp.util.Util;
-import org.apache.commons.lang.StringUtils;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.ExecutionContext;
-import org.apache.http.protocol.HttpContext;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -55,6 +31,41 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.params.ConnManagerParams;
+import org.apache.http.conn.params.ConnPerRouteBean;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.ExecutionContext;
+import org.apache.http.protocol.HttpContext;
+
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+import net.sourceforge.subsonic.androidapp.domain.Indexes;
+import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.domain.Version;
+import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.Pair;
+import net.sourceforge.subsonic.androidapp.util.ProgressListener;
+import net.sourceforge.subsonic.androidapp.util.Util;
 
 /**
  * @author Sindre Mehus
@@ -79,7 +90,7 @@ public class RESTMusicService implements MusicService {
     private final VersionParser versionParser = new VersionParser();
     private final ErrorParser errorParser = new ErrorParser();
     private final List<Reader> readers = new ArrayList<Reader>(10);
-    private final HttpClient httpClient = new DefaultHttpClient();
+    private final HttpClient httpClient;
     private Pair<String, Indexes> cachedIndexesPair;
 
     private long redirectionLastChecked;
@@ -87,8 +98,23 @@ public class RESTMusicService implements MusicService {
     private String redirectTo;
 
     public RESTMusicService() {
-        HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), Constants.SOCKET_CONNECT_TIMEOUT);
-        HttpConnectionParams.setSoTimeout(httpClient.getParams(), Constants.SOCKET_READ_TIMEOUT);
+
+        // Create and initialize HTTP parameters
+        HttpParams params = new BasicHttpParams();
+        ConnManagerParams.setMaxTotalConnections(params, 10);
+        ConnManagerParams.setMaxConnectionsPerRoute(params, new ConnPerRouteBean(5));
+        HttpConnectionParams.setConnectionTimeout(params, Constants.SOCKET_CONNECT_TIMEOUT);
+        HttpConnectionParams.setSoTimeout(params, Constants.SOCKET_READ_TIMEOUT);
+
+        // Create and initialize scheme registry
+        SchemeRegistry schemeRegistry = new SchemeRegistry();
+        schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+
+        // Create an HttpClient with the ThreadSafeClientConnManager.
+        // This connection manager must be used if more than one thread will
+        // be using the HttpClient.
+        ClientConnectionManager cm = new ThreadSafeClientConnManager(params, schemeRegistry);
+        httpClient = new DefaultHttpClient(cm, params);
     }
 
     @Override
@@ -228,7 +254,7 @@ public class RESTMusicService implements MusicService {
 
     @Override
     public Version getLatestVersion(Context context, ProgressListener progressListener) throws Exception {
-        Reader reader = openURL(VERSION_URL);
+        Reader reader = getReaderForURL(VERSION_URL);
         addReader(reader);
         try {
             return versionParser.parse(reader, progressListener);
@@ -240,15 +266,14 @@ public class RESTMusicService implements MusicService {
     @Override
     public Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
         String url = Util.getRestUrl(context, "getCoverArt") + "&id=" + id + "&size=" + size;
-        url = rewriteUrlWithRedirect(url);
 
-        HttpGet method = new HttpGet(url);
-        HttpResponse response = httpClient.execute(method);
-        InputStream in = response.getEntity().getContent();
-
+        InputStream in = null;
         try {
+            HttpEntity entity = getEntityForURL(url);
+            in = entity.getContent();
+
             // If content type is XML, an error occured.  Get it.
-            String contentType = Util.getContentType(response);
+            String contentType = Util.getContentType(entity);
             if (contentType != null && contentType.startsWith("text/xml")) {
                 new ErrorParser().parse(new InputStreamReader(in, Constants.UTF_8));
                 return null; // Never reached.
@@ -263,13 +288,27 @@ public class RESTMusicService implements MusicService {
     }
 
     @Override
-    public String getDownloadURL(Context context, MusicDirectory.Entry song) throws IOException {
+    public InputStream getDownloadInputStream(Context context, MusicDirectory.Entry song) throws Exception {
+
+        // TODO: Use longer timeout.
         String url = Util.getRestUrl(context, "stream") + "&id=" + song.getId();
-        return rewriteUrlWithRedirect(url);
+
+        HttpEntity entity = getEntityForURL(url);
+        InputStream in = entity.getContent();
+
+        // If content type is XML, an error occured.  Get it.
+        String contentType = Util.getContentType(entity);
+        if (contentType != null && contentType.startsWith("text/xml")) {
+            new ErrorParser().parse(new InputStreamReader(in, Constants.UTF_8));
+            return null; // Never reached.
+        }
+        return in;
     }
 
     @Override
     public synchronized void cancel(Context context, ProgressListener progressListener) {
+        // TODO: close all connections?
+
         while (!readers.isEmpty()) {
             Reader reader = readers.get(readers.size() - 1);
             closeReader(reader);
@@ -294,21 +333,21 @@ public class RESTMusicService implements MusicService {
     }
 
     private Reader getReader(Context context, ProgressListener progressListener, String method,
-                             String parameterName, Object parameterValue) throws Exception {
+            String parameterName, Object parameterValue) throws Exception {
         return getReader(context, progressListener, method, Arrays.asList(parameterName), Arrays.<Object>asList(parameterValue));
     }
 
     private Reader getReader(Context context, ProgressListener progressListener, String method,
-                             List<String> parameterNames, List<Object> parameterValues) throws Exception {
+            List<String> parameterNames, List<Object> parameterValues) throws Exception {
 
-        StringBuilder urlBuilder = new StringBuilder();
-        urlBuilder.append(Util.getRestUrl(context, method));
+        StringBuilder url = new StringBuilder();
+        url.append(Util.getRestUrl(context, method));
 
         if (parameterNames != null) {
             for (int i = 0; i < parameterNames.size(); i++) {
-                urlBuilder.append("&");
-                urlBuilder.append(parameterNames.get(i)).append("=");
-                urlBuilder.append(parameterValues.get(i));
+                url.append("&");
+                url.append(parameterNames.get(i)).append("=");
+                url.append(parameterValues.get(i));
             }
         }
 
@@ -316,22 +355,34 @@ public class RESTMusicService implements MusicService {
             progressListener.updateProgress("Contacting server.");
         }
 
-        String url = urlBuilder.toString();
-        url = rewriteUrlWithRedirect(url);
-        Log.i(TAG, "Using URL " + url);
-        return openURL(url);
+        return getReaderForURL(url.toString());
     }
 
-    private Reader openURL(String url) throws IOException {
+    private Reader getReaderForURL(String url) throws Exception {
+        HttpEntity entity = getEntityForURL(url);
+        if (entity == null) {
+            throw new RuntimeException("No entity received for URL " + url);
+        }
+
+        InputStream in = entity.getContent();
+        return new InputStreamReader(in, Constants.UTF_8);
+    }
+
+    private HttpEntity getEntityForURL(String url) throws Exception {
+        url = rewriteUrlWithRedirect(url);
+
+        Log.i(TAG, "Using URL " + url);
         HttpGet method = new HttpGet(url);
 
         HttpContext context = new BasicHttpContext();
-        HttpResponse response = httpClient.execute(method, context);
-
-        InputStream in = response.getEntity().getContent();
-        detectRedirect(url, context);
-
-        return new InputStreamReader(in, Constants.UTF_8);
+        try {
+            HttpResponse response = httpClient.execute(method, context);
+            detectRedirect(url, context);
+            return response.getEntity();
+        } catch (Exception x) {
+            method.abort();
+            throw x;
+        }
     }
 
     private void detectRedirect(String originalUrl, HttpContext context) {

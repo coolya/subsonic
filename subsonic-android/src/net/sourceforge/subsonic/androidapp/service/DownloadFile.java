@@ -18,27 +18,19 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
-import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Util;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.HttpClient;
-import org.apache.http.HttpResponse;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  * @author Sindre Mehus
@@ -104,33 +96,6 @@ public class DownloadFile {
         return partialFile;
     }
 
-    private String getDownloadURL(MusicDirectory.Entry song) throws Exception {
-        return MusicServiceFactory.getMusicService(context).getDownloadURL(context, song);
-    }
-
-    private InputStream connect(String url) throws Exception {
-
-        HttpClient client = new DefaultHttpClient();
-        HttpConnectionParams.setConnectionTimeout(client.getParams(), Constants.SOCKET_CONNECT_TIMEOUT); // TODO: Increase
-        HttpConnectionParams.setSoTimeout(client.getParams(), Constants.SOCKET_READ_TIMEOUT); // TODO: Increase
-        HttpGet method = new HttpGet(url);
-
-        HttpResponse response = client.execute(method);
-        InputStream in = response.getEntity().getContent();
-
-        // If content type is XML, an error occured.  Get it.
-        String contentType = Util.getContentType(response);
-        if (contentType != null && contentType.startsWith("text/xml")) {
-            try {
-                new ErrorParser().parse(new InputStreamReader(in, Constants.UTF_8));
-            } finally {
-                Util.close(in);
-            }
-        }
-
-        return in;
-    }
-
     public boolean isComplete() {
         return saveFile.exists() || completeFile.exists();
     }
@@ -164,7 +129,7 @@ public class DownloadFile {
             InputStream in = null;
             FileOutputStream out = null;
             try {
-                in = connect(getDownloadURL(song));
+                in = MusicServiceFactory.getMusicService(context).getDownloadInputStream(context, song);
                 out = new FileOutputStream(partialFile);
                 long n = copy(in, out);
                 Log.i(TAG, "Downloaded " + n + " bytes to " + partialFile);

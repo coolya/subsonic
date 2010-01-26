@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.androidapp.service;
 
 import java.util.List;
+import java.io.InputStream;
 
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
@@ -49,7 +50,7 @@ public interface MusicService {
 
     Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception;
 
-    String getDownloadURL(Context context, MusicDirectory.Entry song) throws Exception;
+    InputStream getDownloadInputStream(Context context, MusicDirectory.Entry song) throws Exception;
 
     void cancel(Context context, ProgressListener progressListener);
 
