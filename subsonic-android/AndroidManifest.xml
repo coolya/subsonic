@@ -21,14 +21,18 @@
             </intent-filter>
         </activity>
 
-        <activity a:name=".activity.SelectArtistActivity"/>
+        <activity a:name=".activity.SelectArtistActivity"
+                  a:configChanges="orientation|keyboardHidden"/>
 
-        <activity a:name=".activity.SelectAlbumActivity"/>
+        <activity a:name=".activity.SelectAlbumActivity"
+                  a:configChanges="orientation|keyboardHidden"/>
 
         <activity a:name=".activity.DownloadActivity"
+                  a:configChanges="orientation|keyboardHidden"
                   a:launchMode="singleTask"/>
 
         <activity a:name=".activity.SettingsActivity"
+                  a:configChanges="orientation|keyboardHidden"
                   a:launchMode="singleTask"/>
 
         <activity a:name=".activity.ErrorActivity"

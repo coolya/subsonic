@@ -22,10 +22,8 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 
 TODO IN ANDROID 1.2
 -----------------------
-Concurrent http requests fail.
 Use IOUtils, StringUtils.
 In offline mode, sort files.
-Crashes when changing orientation.
 Increase timeouts in DownloadFile.
 Add "Save" option.
 -
