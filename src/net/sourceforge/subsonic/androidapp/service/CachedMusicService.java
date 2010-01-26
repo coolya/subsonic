@@ -18,6 +18,7 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -125,8 +126,8 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
-    public String getDownloadURL(Context context, MusicDirectory.Entry song) throws Exception {
-        return musicService.getDownloadURL(context, song);
+    public InputStream getDownloadInputStream(Context context, MusicDirectory.Entry song) throws Exception {
+        return musicService.getDownloadInputStream(context, song);
     }
 
     @Override
