@@ -18,6 +18,8 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -30,7 +32,9 @@ import android.media.AudioManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
+import net.sourceforge.subsonic.androidapp.util.FileUtil;
 
 /**
  * @author Sindre Mehus
@@ -38,6 +42,8 @@ import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 public class DownloadServiceLifecycleSupport {
 
     private static final String TAG = DownloadServiceLifecycleSupport.class.getSimpleName();
+    private static final String FILENAME_DOWNLOADS_SER = "downloads.ser";
+
     private final DownloadServiceImpl downloadService;
     private ScheduledExecutorService executorService;
     private BroadcastReceiver headsetEventReceiver;
@@ -74,11 +80,13 @@ public class DownloadServiceLifecycleSupport {
         phoneStateListener = new MyPhoneStateListener();
         TelephonyManager telephonyManager = (TelephonyManager) downloadService.getSystemService(Context.TELEPHONY_SERVICE);
         telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
+
+        deserializeDownloadQueue();
     }
 
     public void onDestroy() {
         executorService.shutdown();
-
+        serializeDownloadQueue();
         downloadService.clear();
         downloadService.unregisterReceiver(headsetEventReceiver);
 
@@ -86,6 +94,21 @@ public class DownloadServiceLifecycleSupport {
         telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
     }
 
+    public void serializeDownloadQueue() {
+        List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>();
+        for (DownloadFile downloadFile : downloadService.getDownloads()) {
+            songs.add(downloadFile.getSong());
+        }
+        FileUtil.serialize(downloadService, songs, FILENAME_DOWNLOADS_SER);
+    }
+
+    private void deserializeDownloadQueue() {
+        List<MusicDirectory.Entry> songs = FileUtil.deserialize(downloadService, FILENAME_DOWNLOADS_SER);
+        if (songs == null) {
+            return;
+        }
+        downloadService.download(songs, false, false);
+    }
 
     /**
      * Logic taken from packages/apps/Music.  Will pause when an incoming

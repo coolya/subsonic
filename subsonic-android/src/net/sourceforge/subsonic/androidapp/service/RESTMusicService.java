@@ -19,13 +19,9 @@
 package net.sourceforge.subsonic.androidapp.service;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,6 +59,7 @@ import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.Version;
 import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import net.sourceforge.subsonic.androidapp.util.Util;
@@ -80,6 +77,7 @@ public class RESTMusicService implements MusicService {
     private static final String VERSION_URL = "http://subsonic.org/backend/version.view";
 
     private static final long REDIRECTION_CHECK_INTERVAL_MILLIS = 60L * 60L * 1000L;
+    private static final String FILENAME_INDEXES_SER = "indexes.ser";
 
     private final IndexesParser indexesParser = new IndexesParser();
     private final MusicDirectoryParser musicDirectoryParser = new MusicDirectoryParser();
@@ -160,18 +158,8 @@ public class RESTMusicService implements MusicService {
 
     private Indexes readCachedIndexes(Context context) {
         String key = Util.getRestUrl(context, null);
-
-        File file = getCachedIndexesFile(context);
-        if (cachedIndexesPair == null && file.exists()) {
-            ObjectInputStream in = null;
-            try {
-                in = new ObjectInputStream(new FileInputStream(file));
-                cachedIndexesPair = (Pair<String, Indexes>) in.readObject();
-            } catch (Throwable x) {
-                Log.w(TAG, "Failed to deserialize indexes.", x);
-            } finally {
-                Util.close(in);
-            }
+        if (cachedIndexesPair == null) {
+            cachedIndexesPair = FileUtil.deserialize(context, FILENAME_INDEXES_SER);
         }
 
         if (cachedIndexesPair != null && key.equals(cachedIndexesPair.getFirst())) {
@@ -184,22 +172,11 @@ public class RESTMusicService implements MusicService {
     private void writeCachedIndexes(Context context, Indexes indexes) {
         String key = Util.getRestUrl(context, null);
         cachedIndexesPair = new Pair<String, Indexes>(key, indexes);
-
-        ObjectOutputStream out = null;
-        try {
-            File file = getCachedIndexesFile(context);
-            out = new ObjectOutputStream(new FileOutputStream(file));
-            out.writeObject(cachedIndexesPair);
-            Log.i(TAG, "Caching indexes in " + file);
-        } catch (Throwable x) {
-            Log.w(TAG, "Failed to serialize indexes.", x);
-        } finally {
-            Util.close(out);
-        }
+        FileUtil.serialize(context, cachedIndexesPair, FILENAME_INDEXES_SER);
     }
 
     private File getCachedIndexesFile(Context context) {
-        return new File(context.getCacheDir(), "indexes.dat");
+        return new File(context.getCacheDir(), FILENAME_INDEXES_SER);
     }
 
     @Override

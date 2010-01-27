@@ -21,6 +21,7 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 
 TODO IN ANDROID 1.2
 -----------------------
+DownloadActivity not updated if initially empty and then append to queue.
 Use IOUtils, StringUtils.
 Increase timeouts in DownloadFile.
 -
@@ -41,6 +42,7 @@ Remember position for podcasts.
 
 DONE IN ANDROID 1.2
 -------------------
+Remember playlist when app is restarted.
 Support landscape mode.
 Use HttpClient
 Added "Save on phone" option.

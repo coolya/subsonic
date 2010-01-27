@@ -100,6 +100,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         } else {
             checkDownloads();
         }
+        lifecycleSupport.serializeDownloadQueue();
     }
 
     @Override
