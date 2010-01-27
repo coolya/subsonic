@@ -1,7 +1,6 @@
-http://nonpixel.com/subair/
-
 TODO IN 3.9
 --------------
+http://nonpixel.com/subair/
 Mention xxx.subsonic.org in donation texts. (See redirect-expired.jsp)
 Lyrics. Use backend?
 Upgrade JWPlayer
@@ -23,9 +22,7 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 TODO IN ANDROID 1.2
 -----------------------
 Use IOUtils, StringUtils.
-In offline mode, sort files.
 Increase timeouts in DownloadFile.
-Add "Save" option.
 -
 Long-click
 List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7854
@@ -40,11 +37,13 @@ Show different colored asterix when .complete exists.
 Improve design of DownloadFile.getCompleteFile() etc.
 Goes crazy when bandwidth too small.
 Persist playlist
+Remember position for podcasts.
 
 DONE IN ANDROID 1.2
 -------------------
 Support landscape mode.
 Use HttpClient
+Added "Save on phone" option.
 New main menu item: "Offline music"
 Improved caching of artist list.
 Save using suggested path, but remember to change suffix when transcoding. And add track number as prefix.

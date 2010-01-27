@@ -97,6 +97,8 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
         if (autoplay) {
             play(0);
+        } else {
+            checkDownloads();
         }
     }
 
@@ -393,7 +395,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                 return;
             }
 
-            int start = downloadList.indexOf(currentPlaying);
+            int start = currentPlaying == null ? 0 : downloadList.indexOf(currentPlaying);
             int i = start;
             do {
                 DownloadFile downloadFile = downloadList.get(i);
