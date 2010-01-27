@@ -13,6 +13,7 @@
     <string name="help.close">Close</string>
     <string name="help.donate">Donate</string>
     <string name="help.text">TODO</string>
+    <string name="help.url">file:///android_asset/html/en/index.html</string>
 
     <string name="progress.wait">Please wait...</string>
     <string name="search.title">Music search</string>

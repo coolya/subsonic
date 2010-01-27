@@ -3,12 +3,12 @@ TODO IN 3.9
 http://nonpixel.com/subair/
 Mention xxx.subsonic.org in donation texts. (See redirect-expired.jsp)
 Lyrics. Use backend?
-Upgrade JWPlayer
 Make contrast color darker in new icons.
+
+Upgrade JWPlayer
 TBT: Added "accesskey" in left frame.
 TBT: Added API method to change password.
 Fix bug with executor in networkservice.
-
 Disable ads first 30 days?
 Update ads?
 Show status in getting started.

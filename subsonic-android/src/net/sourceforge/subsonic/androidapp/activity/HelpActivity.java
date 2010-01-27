@@ -20,18 +20,17 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebChromeClient;
 import android.widget.Button;
-import android.widget.Toast;
-import android.content.Intent;
-import android.net.Uri;
-import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Util;
@@ -42,8 +41,6 @@ import net.sourceforge.subsonic.androidapp.util.Util;
  * @author Sindre Mehus
  */
 public final class HelpActivity extends Activity {
-    // TODO
-    private static final String DEFAULT_URL = "file:///android_asset/html/en/index.html";
 
     private WebView webView;
     private Button backButton;
@@ -74,7 +71,7 @@ public final class HelpActivity extends Activity {
         if (bundle != null) {
             webView.restoreState(bundle);
         } else {
-            webView.loadUrl(DEFAULT_URL);
+            webView.loadUrl(getResources().getString(R.string.help_url));
         }
 
         backButton = (Button) findViewById(R.id.help_back);
