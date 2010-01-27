@@ -18,14 +18,19 @@
  */
 package net.sourceforge.subsonic.androidapp.util;
 
-import android.os.Environment;
-import android.util.Log;
-import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
+import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 
 /**
  * @author Sindre Mehus
@@ -38,7 +43,6 @@ public class FileUtil {
     private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", "..", ":", "\"", "?", "*"};
 
     private static final File musicDir = createDirectory("music");
-    private static final File varDir = createDirectory("var");
 
     public static File getSongFile(MusicDirectory.Entry song, boolean createDir) {
         File dir = getAlbumDirectory(song, createDir);
@@ -94,10 +98,6 @@ public class FileUtil {
         return musicDir;
     }
 
-    public static File getVarDirectory() {
-        return varDir;
-    }
-
     /**
      * Makes a given filename safe by replacing special characters like slashes ("/" and "\")
      * with dashes ("-").
@@ -145,5 +145,41 @@ public class FileUtil {
     public static String getPrefix(String s) {
         int index = s.lastIndexOf('.');
         return index == -1 ? s : s.substring(0, index);
+    }
+
+    public static <T> boolean serialize(Context context, T obj, String fileName) {
+        File file = new File(context.getCacheDir(), fileName);
+        ObjectOutputStream out = null;
+        try {
+            out = new ObjectOutputStream(new FileOutputStream(file));
+            out.writeObject(obj);
+            Log.i(TAG, "Serialized object to " + file);
+            return true;
+        } catch (Throwable x) {
+            Log.w(TAG, "Failed to serialize object to " + file);
+            return false;
+        } finally {
+            Util.close(out);
+        }
+    }
+
+    public static <T> T deserialize(Context context, String fileName) {
+        File file = new File(context.getCacheDir(), fileName);
+        if (!file.exists() || !file.isFile()) {
+            return null;
+        }
+
+        ObjectInputStream in = null;
+        try {
+            in = new ObjectInputStream(new FileInputStream(file));
+            T result = (T) in.readObject();
+            Log.i(TAG, "Deserialized object from " + file);
+            return result;
+        } catch (Throwable x) {
+            Log.w(TAG, "Failed to deserialize object from " + file, x);
+            return null;
+        } finally {
+            Util.close(in);
+        }
     }
 }
