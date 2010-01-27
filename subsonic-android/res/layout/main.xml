@@ -5,15 +5,24 @@
               a:layout_height="fill_parent">
 
     <LinearLayout
-            a:orientation="vertical"
+            a:orientation="horizontal"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:layoutAnimation="@anim/layout_slide_down">
         <ImageView
-                a:layout_width="fill_parent"
-                a:layout_height="wrap_content"
-                a:src="@drawable/subsonic_white"
-                a:layout_marginTop="20dip"/>
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"
+                a:layout_marginTop="20dip"
+                a:layout_weight="1"
+                a:src="@drawable/subsonic_white"/>
+        <TextView
+                a:id="@+id/main_version"
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"
+                a:layout_marginTop="6dip"
+                a:layout_marginRight="6dip"
+                a:layout_gravity="top|right"
+                a:textSize="11dip"/>
     </LinearLayout>
 
     <include layout="@layout/main_buttons"/>

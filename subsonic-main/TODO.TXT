@@ -22,9 +22,10 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 TODO IN ANDROID 1.2
 -----------------------
 DownloadActivity not updated if initially empty and then append to queue.
-Use IOUtils, StringUtils.
+Nicer html in help.
 i18n
 -
+Use IOUtils, StringUtils.
 Long-click
 List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7854
 Make it downloadable from sf.net.

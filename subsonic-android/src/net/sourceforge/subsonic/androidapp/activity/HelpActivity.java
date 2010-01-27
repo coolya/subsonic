@@ -1,63 +1,92 @@
+/*
+ This file is part of Subsonic.
+
+ Subsonic is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ Subsonic is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Subsonic.  If not, see <http://www.gnu.org/licenses/>.
+
+ Copyright 2009 (C) Sindre Mehus
+ */
+
 package net.sourceforge.subsonic.androidapp.activity;
 
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.net.Uri;
+import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.webkit.WebChromeClient;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Toast;
+import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.Util;
 
-public class HelpActivity extends OptionsMenuActivity {
+/**
+ * An HTML-based help screen with Back and Done buttons at the bottom.
+ *
+ * @author Sindre Mehus
+ */
+public final class HelpActivity extends Activity {
+    // TODO
+    private static final String DEFAULT_URL = "file:///android_asset/html/en/index.html";
 
-    private static final String TAG = HelpActivity.class.getSimpleName();
+    private WebView webView;
+    private Button backButton;
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        getWindow().requestFeature(Window.FEATURE_PROGRESS);
+
         setContentView(R.layout.help);
-        TextView helpTextView = (TextView) findViewById(R.id.help_text);
+        setProgressBarVisibility(true);
+//        setProgressBarVisibility(true);
 
-        StringBuilder text = new StringBuilder();
-        text.append("With Subsonic you can easily stream or download music from your home computer to your Android phone " +
-                    "(and do lots of other cool stuff too).\n" +
-                    "\n" +
-                    "To install the Subsonic server software on your computer, please visit http://subsonic.org. It's available for " +
-                    "Windows, Mac, Linux and Unix.\n" +
-                    "\n" +
-                    "By default, this program is configured to use the Subsonic demo server. Once you've set up your own " +
-                    "server, please go to Settings and change the configuration so that it connects to your own computer.\n" +
-                    "\n" +
-                    "You can use this program freely for 30 days. After that you will have to make a donation to the Subsonic project. " +
-                    "As a donor you get the following benefits:\n" +
-                    "\n" +
-                    " o Unlimited streaming and download to any number of Android phones.\n" +
-                    " o No ads in the Subsonic web interface.\n" +
-                    " o Free access to new premium features.\n" +
-                    "\n" +
-                    "The suggested donation amount is \u20ac20.\n\n");
+        webView = (WebView) findViewById(R.id.help_contents);
+        webView.getSettings().setJavaScriptEnabled(true);
 
-        try {
-            PackageInfo packageInfo = getPackageManager().getPackageInfo("net.sourceforge.subsonic.androidapp", 0);
-            if (packageInfo != null) {
-                text.append("Application version: ").append(packageInfo.versionName).append("\n");
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int progress) {
+                // Activities and WebViews measure progress with different scales.
+                // The progress meter will automatically disappear when we reach 100%
+                setProgress(progress * 1000);
+                Log.i("FOO", "Progress: " + progress);
             }
-        } catch (PackageManager.NameNotFoundException x) {
-            Log.w(TAG, "Failed to resolve application version name.", x);
+        });
+
+        webView.setWebViewClient(new HelpClient());
+        if (bundle != null) {
+            webView.restoreState(bundle);
+        } else {
+            webView.loadUrl(DEFAULT_URL);
         }
-        text.append("REST API version: ").append(Constants.REST_PROTOCOL_VERSION).append("\n");
 
-        helpTextView.setText(text);
+        backButton = (Button) findViewById(R.id.help_back);
+        backButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                webView.goBack();
+            }
+        });
 
-        Button okButton = (Button) findViewById(R.id.help_close);
-        okButton.setOnClickListener(new View.OnClickListener() {
+        Button doneButton = (Button) findViewById(R.id.help_close);
+        doneButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -72,4 +101,41 @@ public class HelpActivity extends OptionsMenuActivity {
             }
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle state) {
+        webView.saveState(state);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (webView.canGoBack()) {
+                webView.goBack();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private final class HelpClient extends WebViewClient {
+        @Override
+        public void onPageFinished(WebView view, String url) {
+//            setTitle(view.getTitle());
+            backButton.setEnabled(view.canGoBack());
+            setProgressBarVisibility(true);
+        }
+
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            Util.toast(HelpActivity.this, description);
+        }
+
+    }
+
 }
