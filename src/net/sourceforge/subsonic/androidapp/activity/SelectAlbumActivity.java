@@ -42,6 +42,10 @@ import java.util.List;
 public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
+    private static final int MENU_ITEM_DOWNLOAD = 1;
+    private static final int MENU_ITEM_ADD = 2;
+    private static final int MENU_ITEM_DELETE = 3;
+
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private ImageLoader imageLoader;
     private DownloadService downloadService;
@@ -78,7 +82,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                download(false, false);
+                download(false, false, true);
                 selectAll(false);
             }
         });
@@ -110,15 +114,15 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     @Override
     public boolean onContextItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case 1:
-                download(false, true);
+            case MENU_ITEM_DOWNLOAD:
+                download(true, true, false);
                 selectAll(false);
                 break;
-            case 2:
-                download(true, false);
+            case MENU_ITEM_ADD:
+                download(true, false, false);
                 selectAll(false);
                 break;
-            case 3:
+            case MENU_ITEM_DELETE:
                 delete();
                 selectAll(false);
                 break;
@@ -132,14 +136,14 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
         if (!Util.isOffline(this)) {
-            menu.add(Menu.NONE, 1, 1, "Play + Save");
+            menu.add(Menu.NONE, MENU_ITEM_DOWNLOAD, MENU_ITEM_DOWNLOAD, "Save on phone");
         }
-        menu.add(Menu.NONE, 2, 2, "Add to play queue");
+        menu.add(Menu.NONE, MENU_ITEM_ADD, MENU_ITEM_ADD, "Add to play queue");
 
         for (MusicDirectory.Entry song : getSelectedSongs()) {
             DownloadFile downloadFile = downloadService.forSong(song);
             if (downloadFile.getCompleteFile().exists()) {
-                menu.add(Menu.NONE, 3, 3, "Delete from phone");
+                menu.add(Menu.NONE, MENU_ITEM_DELETE, MENU_ITEM_DELETE, "Delete from phone");
                 break;
             }
         }
@@ -248,7 +252,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         moreButton.setEnabled(checked);
     }
 
-    private void download(final boolean append, final boolean save) {
+    private void download(final boolean append, final boolean save, final boolean autoplay) {
         if (downloadService == null) {
             return;
         }
@@ -261,8 +265,14 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                     downloadService.clear();
                 }
 
-                downloadService.download(songs, save, !append);
-                startActivity(new Intent(SelectAlbumActivity.this, DownloadActivity.class));
+                downloadService.download(songs, save, autoplay);
+                if (autoplay) {
+                    startActivity(new Intent(SelectAlbumActivity.this, DownloadActivity.class));
+                } else if (save) {
+                    Util.toast(SelectAlbumActivity.this, songs.size() + " song(s) scheduled for download.");
+                } else if (append) {
+                    Util.toast(SelectAlbumActivity.this, songs.size() + " song(s) added to play queue.");
+                }
             }
         };
 
