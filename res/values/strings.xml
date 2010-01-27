@@ -9,6 +9,7 @@
 
     <string name="help.label">Help</string>
     <string name="help.title">Welcome to Subsonic!</string>
+    <string name="help.back">Back</string>
     <string name="help.close">Close</string>
     <string name="help.donate">Donate</string>
     <string name="help.text">TODO</string>

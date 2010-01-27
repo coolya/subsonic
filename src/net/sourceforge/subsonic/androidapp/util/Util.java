@@ -26,6 +26,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
@@ -440,5 +442,17 @@ public final class Util {
                 notificationManager.notify(Constants.NOTIFICATION_ID_ERROR, notification);
             }
         });
+    }
+
+    public static String getVersion(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo("net.sourceforge.subsonic.androidapp", 0);
+            if (packageInfo != null) {
+                return packageInfo.versionName;
+            }
+        } catch (PackageManager.NameNotFoundException x) {
+            Log.w(TAG, "Failed to resolve application version name.", x);
+        }
+        return null;
     }
 }
