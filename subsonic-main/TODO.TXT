@@ -23,7 +23,7 @@ TODO IN ANDROID 1.2
 -----------------------
 DownloadActivity not updated if initially empty and then append to queue.
 Use IOUtils, StringUtils.
-Increase timeouts in DownloadFile.
+i18n
 -
 Long-click
 List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7854
@@ -31,7 +31,6 @@ Make it downloadable from sf.net.
 Make proper services.
 Make web page for it.
 Caching mgmt
-i18n
 Don't "Play + Save" for files that already exists.
 Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
 Show different colored asterix when .complete exists.

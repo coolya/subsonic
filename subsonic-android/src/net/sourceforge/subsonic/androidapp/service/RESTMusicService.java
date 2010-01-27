@@ -18,7 +18,6 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -71,6 +70,11 @@ public class RESTMusicService implements MusicService {
 
     private static final String TAG = RESTMusicService.class.getSimpleName();
 
+    private static final int SOCKET_CONNECT_TIMEOUT = 10 * 1000;
+    private static final int SOCKET_READ_TIMEOUT = 20 * 1000;
+    private static final int SOCKET_CONNECT_TIMEOUT_DOWNLOAD = 120 * 1000;
+    private static final int SOCKET_READ_TIMEOUT_DOWNLOAD = 180 * 1000;
+
     /**
      * URL from which to fetch latest versions.
      */
@@ -101,8 +105,8 @@ public class RESTMusicService implements MusicService {
         HttpParams params = new BasicHttpParams();
         ConnManagerParams.setMaxTotalConnections(params, 10);
         ConnManagerParams.setMaxConnectionsPerRoute(params, new ConnPerRouteBean(5));
-        HttpConnectionParams.setConnectionTimeout(params, Constants.SOCKET_CONNECT_TIMEOUT);
-        HttpConnectionParams.setSoTimeout(params, Constants.SOCKET_READ_TIMEOUT);
+        HttpConnectionParams.setConnectionTimeout(params, SOCKET_CONNECT_TIMEOUT);
+        HttpConnectionParams.setSoTimeout(params, SOCKET_READ_TIMEOUT);
 
         // Create and initialize scheme registry
         SchemeRegistry schemeRegistry = new SchemeRegistry();
@@ -173,10 +177,6 @@ public class RESTMusicService implements MusicService {
         String key = Util.getRestUrl(context, null);
         cachedIndexesPair = new Pair<String, Indexes>(key, indexes);
         FileUtil.serialize(context, cachedIndexesPair, FILENAME_INDEXES_SER);
-    }
-
-    private File getCachedIndexesFile(Context context) {
-        return new File(context.getCacheDir(), FILENAME_INDEXES_SER);
     }
 
     @Override
@@ -267,8 +267,12 @@ public class RESTMusicService implements MusicService {
     @Override
     public InputStream getDownloadInputStream(Context context, MusicDirectory.Entry song) throws Exception {
 
-        // TODO: Use longer timeout.
         String url = Util.getRestUrl(context, "stream") + "&id=" + song.getId();
+
+        // Use longer timeouts for download.
+        HttpParams params = new BasicHttpParams();
+        HttpConnectionParams.setConnectionTimeout(params, SOCKET_CONNECT_TIMEOUT_DOWNLOAD);
+        HttpConnectionParams.setSoTimeout(params, SOCKET_READ_TIMEOUT_DOWNLOAD);
 
         HttpEntity entity = getEntityForURL(url);
         InputStream in = entity.getContent();
@@ -346,18 +350,25 @@ public class RESTMusicService implements MusicService {
     }
 
     private HttpEntity getEntityForURL(String url) throws Exception {
+        return getEntityForURL(url, null);
+    }
+
+    private HttpEntity getEntityForURL(String url, HttpParams requestParams) throws Exception {
         url = rewriteUrlWithRedirect(url);
 
         Log.i(TAG, "Using URL " + url);
-        HttpGet method = new HttpGet(url);
+        HttpGet request = new HttpGet(url);
+        if (requestParams != null) {
+            request.setParams(requestParams);
+        }
 
         HttpContext context = new BasicHttpContext();
         try {
-            HttpResponse response = httpClient.execute(method, context);
+            HttpResponse response = httpClient.execute(request, context);
             detectRedirect(url, context);
             return response.getEntity();
         } catch (Exception x) {
-            method.abort();
+            request.abort();
             throw x;
         }
     }

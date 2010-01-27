@@ -58,12 +58,9 @@ public final class Constants {
     // Number of free trial days for non-licensed servers.
     public static final int FREE_TRIAL_DAYS = 30;
 
-    // Socket timeouts
-    public static final int SOCKET_CONNECT_TIMEOUT = 10000;
-    public static final int SOCKET_READ_TIMEOUT = 20000;
-
     // URL for project donations.
     public static final String DONATION_URL = "http://subsonic.org/pages/android-donation.jsp";
+
     public static final String ALBUM_ART_FILE = "folder.jpeg";
 
     private Constants() {
