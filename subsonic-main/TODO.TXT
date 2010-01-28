@@ -33,7 +33,6 @@ Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
 Show different colored asterix when .complete exists.
 Improve design of DownloadFile.getCompleteFile() etc.
 Goes crazy when bandwidth too small.
-Persist playlist
 Remember position for podcasts.
 
 DONE IN ANDROID 1.2

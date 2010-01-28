@@ -39,12 +39,13 @@ import net.sourceforge.subsonic.androidapp.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
+public class SelectAlbumActivity extends OptionsMenuActivity {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
     private static final int MENU_ITEM_DOWNLOAD = 1;
     private static final int MENU_ITEM_ADD = 2;
     private static final int MENU_ITEM_DELETE = 3;
+    private static final int MENU_ITEM_PLAY_ALL = 4;
 
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private ImageLoader imageLoader;
@@ -70,15 +71,28 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
         entryList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        entryList.setOnItemClickListener(this);
-
+        entryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position >= 0) {
+                    MusicDirectory.Entry entry = (MusicDirectory.Entry) parent.getItemAtPosition(position);
+                    if (entry.isDirectory()) {
+                        Intent intent = new Intent(SelectAlbumActivity.this, SelectAlbumActivity.class);
+                        intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, entry.getId());
+                        intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getTitle());
+                        startActivity(intent);
+                    } else {
+                        enableButtons();
+                    }
+                }
+            }
+        });
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectAllOrNone();
             }
         });
-
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,6 +102,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         });
 
         registerForContextMenu(moreButton);
+        registerForContextMenu(entryList);
 
         moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +141,9 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
                 delete();
                 selectAll(false);
                 break;
+            case MENU_ITEM_PLAY_ALL:
+                playAll();
+                break;
             default:
                 return super.onContextItemSelected(menuItem);
         }
@@ -135,16 +153,25 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
     @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
-        if (!Util.isOffline(this)) {
-            menu.add(Menu.NONE, MENU_ITEM_DOWNLOAD, MENU_ITEM_DOWNLOAD, "Save on phone");
-        }
-        menu.add(Menu.NONE, MENU_ITEM_ADD, MENU_ITEM_ADD, "Add to play queue");
 
-        for (MusicDirectory.Entry song : getSelectedSongs()) {
-            DownloadFile downloadFile = downloadService.forSong(song);
-            if (downloadFile.getCompleteFile().exists()) {
-                menu.add(Menu.NONE, MENU_ITEM_DELETE, MENU_ITEM_DELETE, "Delete from phone");
-                break;
+        if (view == moreButton) {
+            if (!Util.isOffline(this)) {
+                menu.add(Menu.NONE, MENU_ITEM_DOWNLOAD, MENU_ITEM_DOWNLOAD, "Save on phone");
+            }
+            menu.add(Menu.NONE, MENU_ITEM_ADD, MENU_ITEM_ADD, "Add to play queue");
+
+            for (MusicDirectory.Entry song : getSelectedSongs()) {
+                DownloadFile downloadFile = downloadService.forSong(song);
+                if (downloadFile.getCompleteFile().exists()) {
+                    menu.add(Menu.NONE, MENU_ITEM_DELETE, MENU_ITEM_DELETE, "Delete from phone");
+                    break;
+                }
+            }
+        } else {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition((int) info.id);
+            if (entry.isDirectory()) {
+                menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, "Play all");
             }
         }
     }
@@ -223,22 +250,6 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         imageLoader.cancel();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position >= 0) {
-            MusicDirectory.Entry entry = (MusicDirectory.Entry) parent.getItemAtPosition(position);
-            Log.d(TAG, entry + " clicked.");
-            if (entry.isDirectory()) {
-                Intent intent = new Intent(this, SelectAlbumActivity.class);
-                intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, entry.getId());
-                intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getTitle());
-                startActivity(intent);
-            } else {
-                enableButtons();
-            }
-        }
-    }
-
     private void enableButtons() {
         int count = entryList.getCount();
         boolean checked = false;
@@ -277,6 +288,16 @@ public class SelectAlbumActivity extends OptionsMenuActivity implements AdapterV
         };
 
         checkLicenseAndTrialPeriod(onValid);
+    }
+
+    private void playAll() {
+        MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getSelectedItem();
+
+        Intent intent = new Intent(SelectAlbumActivity.this, SelectAlbumActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, entry.getId());
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getTitle());
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAY_ALL, true);
+        startActivity(intent);
     }
 
     private void delete() {
