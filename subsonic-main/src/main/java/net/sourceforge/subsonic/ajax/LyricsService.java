@@ -20,16 +20,16 @@ package net.sourceforge.subsonic.ajax;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.util.StringUtil;
-import org.apache.commons.lang.CharUtils;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.HttpStatus;
 import org.apache.http.params.HttpConnectionParams;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 
 import java.io.IOException;
@@ -38,18 +38,17 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 /**
- * Provides AJAX-enabled services for retrieving song lyrics from lyricsfly.com.
+ * Provides AJAX-enabled services for retrieving song lyrics from chartlyrics.com.
  * <p/>
- * See http://lyricsfly.com/api/ for details.
+ * See http://www.chartlyrics.com/api.aspx for details.
  * <p/>
  * This class is used by the DWR framework (http://getahead.ltd.uk/dwr/).
- *
+ * 
  * @author Sindre Mehus
  */
 public class LyricsService {
 
     private static final Logger LOG = Logger.getLogger(LyricsService.class);
-    private static final String KEY_ENC = "35353630393138353835362d737562736f6e69632e736f75726365666f7267652e6e6574";
 
     /**
      * Returns lyrics for the given song and artist.
@@ -64,9 +63,17 @@ public class LyricsService {
             artist = encode(artist);
             song = encode(song);
 
-            String url = "http://api.lyricsfly.com/api/api.php?i=" + StringUtil.utf8HexDecode(KEY_ENC) + "&a=" + artist + "&t=" + song;
+            String url = "http://api.chartlyrics.com/apiv1.asmx/SearchLyric?artist=" + artist + "&song=" + song;
             String xml = executeGetRequest(url);
-            return parse(xml);
+
+            SearchLyricResult searchResult = parseSearchLyric(xml);
+            if (searchResult == null) {
+                return new LyricsInfo();
+            }
+
+            url = "http://api.chartlyrics.com/apiv1.asmx/GetLyric?lyricId=" + searchResult.getId() + "&lyricCheckSum=" + searchResult.getChecksum();
+            xml = executeGetRequest(url);
+            return parseSearchResult(xml);
 
         } catch (Exception x) {
             LOG.warn("Failed to get lyrics for song '" + song + "'.", x);
@@ -75,36 +82,46 @@ public class LyricsService {
     }
 
     private String encode(String s) throws UnsupportedEncodingException {
-        StringBuilder builder = new StringBuilder(s.length());
-
-        // Replace non-alphanumeric characters with "%".
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (CharUtils.isAsciiAlphanumeric(c) || Character.isWhitespace(c)) {
-                builder.append(c);
-            } else {
-                builder.append("%");
-            }
-        }
-
         return URLEncoder.encode(s, StringUtil.ENCODING_UTF8);
     }
 
-    protected LyricsInfo parse(String xml) throws Exception {
+    private SearchLyricResult parseSearchLyric(String xml) throws Exception {
         SAXBuilder builder = new SAXBuilder();
         Document document = builder.build(new StringReader(xml));
 
         Element root = document.getRootElement();
-        String status = root.getChildText("status");
-        if (!"200".equals(status)) {
-            throw new Exception("lyricsfly.com returned status " + status);
+        Namespace ns = root.getNamespace();
+        Element element = root.getChild("SearchLyricResult", ns);
+        if (element == null) {
+            return null;
         }
-        Element song = root.getChild("sg");
-        String lyrics = song.getChildText("tx").replace("[br]", "<br>");
-        String header = song.getChildText("ar") + " - " + song.getChildText("tt");
-        return new LyricsInfo(lyrics, header);
+
+        String id = element.getChildText("LyricId", ns);
+        String checksum = element.getChildText("LyricChecksum", ns);
+
+        if (id == null || checksum == null) {
+            return null;
+        }
+
+        return new SearchLyricResult(id, checksum);
     }
 
+    private LyricsInfo parseSearchResult(String xml) throws Exception {
+        SAXBuilder builder = new SAXBuilder();
+        Document document = builder.build(new StringReader(xml));
+
+        Element root = document.getRootElement();
+        Namespace ns = root.getNamespace();
+
+        String lyric = root.getChildText("Lyric", ns);
+        String song =  root.getChildText("LyricSong", ns);
+        String artist =  root.getChildText("LyricArtist", ns);
+
+        if (lyric != null) {
+            lyric = lyric.replace("\n", "<br>\n");
+        }
+        return new LyricsInfo(lyric, artist + " - " + song);
+    }
 
     private String executeGetRequest(String url) throws IOException {
         HttpClient client = new DefaultHttpClient();
@@ -118,6 +135,31 @@ public class LyricsService {
 
         } finally {
             client.getConnectionManager().shutdown();
+        }
+    }
+
+    public static void main(String[] args) {
+        LyricsInfo lyricsInfo = new LyricsService().getLyrics("pink floyd", "money");
+        System.out.println(lyricsInfo.getHeader());
+        System.out.println(lyricsInfo.getLyrics());
+    }
+
+    private static class SearchLyricResult {
+
+        private final String id;
+        private final String checksum;
+
+        private SearchLyricResult(String id, String checksum) {
+            this.id = id;
+            this.checksum = checksum;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getChecksum() {
+            return checksum;
         }
     }
 }

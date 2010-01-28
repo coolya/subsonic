@@ -26,7 +26,7 @@
         <ul class="stars column-right">
             <li>Manage 100,000+ files in your music collection without hazzle.</li>
             <li>Download and listen to Podcasts.</li>
-            <li>Get cover art, lyrics, reviews and other album info from Discogs, Lyricsfly, allmusic, Wikipedia and Google Music.</li>
+            <li>Get cover art, lyrics, reviews and other album info from Discogs, Chartlyrics, allmusic, Wikipedia and Google Music.</li>
             <li><a href="features.jsp">Plus much more...</a></li>
         </ul>
     </div>

@@ -2,8 +2,7 @@ TODO IN 3.9
 --------------
 http://nonpixel.com/subair/
 Mention xxx.subsonic.org in donation texts. (See redirect-expired.jsp)
-Lyrics. Use backend?
-Make contrast color darker in new icons.
+Test redir with context path.
 
 Upgrade JWPlayer
 TBT: Added "accesskey" in left frame.
@@ -83,7 +82,6 @@ Exclusion filter (*.svn, *.log, *.pun)
 Select music folder / playlist folder in Windows installer.
 Add links to Facebook group from home page and Help page.
 Bad performance, low bandwidth.
-http://lyricsfly.com/
 Avoid underlined image links in menu bar (FF, Chrome)
 Nightly build.
 "removeAllRows() can only be used with table, tbody, thead and tfoot elements. Attempt to use: HTMLDivElement"

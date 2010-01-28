@@ -31,7 +31,7 @@
     <li><span class="bugid">New: </span>Added API method to change password.</li>
     <li><span class="bugid">New: </span>Discontinued Subsonic JME client.</li>
     <li><span class="bugid">Bugfix: </span>Avoid setting incorrect content length when transcoding or downsampling.</li>
-    <li><span class="bugid">Bugfix: </span>Fixed lyrics lookup. Now uses lyricsfly.com which provides a stable API.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed lyrics lookup. Now uses chartlyrics.com which provides a stable API.</li>
     <li><span class="bugid">Bugfix: </span>Fixed "Not in GZIP format" error in Discogs cover image search, courtesy of Christian Nedreg&aring;rd.</li>
     <li><span class="bugid">Bugfix: </span>Sort list of saved playlists.</li>
     <li><span class="bugid">Bugfix: </span>Home &gt; Newest now sorts by creation date, not modification date.</li>
