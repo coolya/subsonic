@@ -15,21 +15,25 @@
 <div id="side-col"
      style="background-color: white;
      margin: 0;
-	width: 178px;
-	height: 398px;
-	border: 1px solid gray;
+	 width: 178px;
+	 height: 398px;
+	 border: 1px solid gray;
 	">
-    <div style="margin:6px;padding-top:1em">
-        <p>
-            <img src="inc/img/donate.png" alt="Subsonic" class="img-center"/>
-        </p>
-        <h2>Love Subsonic?</h2>
+    <div style="margin:6px;padding-top:0.5em">
+            <img src="inc/img/donate.png" alt="Subsonic" class="img-center">
+        <h2 style="padding-top:5px">Love Subsonic?</h2>
         <p>
             Please support continued development and maintenance by giving a donation.
         </p>
         <p>
-            As a donor you will receive a license key which disables ads and allows unlimited streaming to Android phones.
+            Donors get access to premium features like:
         </p>
+        <p>
+            o Subsonic on Android.<br>
+            o Your personal server address: <em>you</em>.subsonic.org<br>
+            o No ads.<br>
+        </p>
+        
         <p>
             The suggested donation amount is &euro;20, but you can give any amount you like.
             <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=ad10&no_shipping=1&amount=10.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8">&euro;10</a>,
@@ -41,9 +45,7 @@
         <p>
             <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=ad20&no_shipping=1&amount=20.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt="Donate" class="img-center"/></a>
         </p>
-        <p>
-            Thanks ;-)
-        </p>
+
     </div>
 </div>
 </body>

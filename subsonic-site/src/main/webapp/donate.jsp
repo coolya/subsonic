@@ -4,8 +4,13 @@
         Love Subsonic? Support continued development and maintenance by giving a donation.
     </p>
     <p>
-        As a donor you will receive a license key which disables ads in the Subsonic web interface.
+        Donors get access to premium features like:
     </p>
+    <ul>
+        <li>Unlimited use of the Subsonic Android app.</li>
+        <li>Your personal server address: <em>yourname</em>.subsonic.org</li>
+        <li>No ads in the web interface.</li>
+    </ul>
     <p>
         The suggested donation amount is &euro;20, but you can give any amount you like.
         <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=site10&no_shipping=1&amount=10.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8">&euro;10</a>,

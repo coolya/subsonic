@@ -1,8 +1,6 @@
 TODO IN 3.9
 --------------
 http://nonpixel.com/subair/
-Mention xxx.subsonic.org in donation texts. (See redirect-expired.jsp)
-Test redir with context path.
 
 Upgrade JWPlayer
 TBT: Added "accesskey" in left frame.

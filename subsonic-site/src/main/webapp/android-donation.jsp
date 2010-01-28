@@ -21,6 +21,7 @@
 </p>
 <ul>
     <li>Unlimited streaming and downloading with the Subsonic Android app.</li>
+    <li>A personal web address for your Subsonic server (<em>yourname</em>.subsonic.org).</li>
     <li>No ads in the Subsonic web interface.</li>
     <li>Free access to new premium features.</li>
 </ul>
