@@ -8,7 +8,7 @@
                   a:layout_height="wrap_content"
                   a:layout_weight="0"
                   a:layout_alignParentBottom="true"
-                  a:padding="6dip"
+                  a:padding="4dip"
                   a:gravity="center_horizontal"
                   a:background="#ffcccccc">
 
@@ -24,14 +24,7 @@
                 a:text="@string/help.close"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"
-                a:layout_marginRight="5dip"
-                a:paddingLeft="25dip"
-                a:paddingRight="25dip"/>
-
-        <Button a:id="@+id/help_donate"
-                a:text="@string/help.donate"
-                a:layout_width="wrap_content"
-                a:layout_height="fill_parent"
+                a:layout_marginLeft="5dip"
                 a:paddingLeft="25dip"
                 a:paddingRight="25dip"/>
     </LinearLayout>

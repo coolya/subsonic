@@ -20,19 +20,14 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
 /**
@@ -48,25 +43,12 @@ public final class HelpActivity extends Activity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        getWindow().requestFeature(Window.FEATURE_PROGRESS);
+        getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
         setContentView(R.layout.help);
-        setProgressBarVisibility(true);
-//        setProgressBarVisibility(true);
 
         webView = (WebView) findViewById(R.id.help_contents);
         webView.getSettings().setJavaScriptEnabled(true);
-
-        webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onProgressChanged(WebView view, int progress) {
-                // Activities and WebViews measure progress with different scales.
-                // The progress meter will automatically disappear when we reach 100%
-                setProgress(progress * 1000);
-                Log.i("FOO", "Progress: " + progress);
-            }
-        });
-
         webView.setWebViewClient(new HelpClient());
         if (bundle != null) {
             webView.restoreState(bundle);
@@ -87,14 +69,6 @@ public final class HelpActivity extends Activity {
             @Override
             public void onClick(View view) {
                 finish();
-            }
-        });
-
-        Button donateButton = (Button) findViewById(R.id.help_donate);
-        donateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.DONATION_URL)));
             }
         });
     }
@@ -122,17 +96,22 @@ public final class HelpActivity extends Activity {
 
     private final class HelpClient extends WebViewClient {
         @Override
+        public void onLoadResource(WebView webView, String url) {
+            setProgressBarIndeterminateVisibility(true);
+            setTitle(getResources().getString(R.string.help_loading));
+            super.onLoadResource(webView, url);
+        }
+
+        @Override
         public void onPageFinished(WebView view, String url) {
-//            setTitle(view.getTitle());
+            setProgressBarIndeterminateVisibility(false);
+            setTitle(view.getTitle());
             backButton.setEnabled(view.canGoBack());
-            setProgressBarVisibility(true);
         }
 
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             Util.toast(HelpActivity.this, description);
         }
-
     }
-
 }
