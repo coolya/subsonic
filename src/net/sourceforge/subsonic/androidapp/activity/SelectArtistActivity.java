@@ -26,12 +26,12 @@ import java.util.Set;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
+import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Artist;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
@@ -39,11 +39,9 @@ import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Util;
-import net.sourceforge.subsonic.androidapp.R;
 
 public class SelectArtistActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
 
-    private static final String TAG = SelectArtistActivity.class.getSimpleName();
     private ListView artistList;
 
     /**
@@ -57,11 +55,12 @@ public class SelectArtistActivity extends OptionsMenuActivity implements Adapter
         artistList = (ListView) findViewById(R.id.select_artist_list);
         artistList.setOnItemClickListener(this);
 
-        String title = "My music";
         if (Util.isOffline(this)) {
-            title += " (Offline)";
+            setTitle(R.string.select_artist_offline_music);
+        } else {
+            setTitle(R.string.select_artist_my_music);
         }
-        setTitle(title);
+
         load();
     }
 
@@ -94,7 +93,6 @@ public class SelectArtistActivity extends OptionsMenuActivity implements Adapter
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (position >= 0) {
             Artist artist = (Artist) parent.getItemAtPosition(position);
-            Log.d(TAG, artist + " clicked.");
             Intent intent = new Intent(this, SelectAlbumActivity.class);
             intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, artist.getId());
             intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, artist.getName());

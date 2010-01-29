@@ -23,25 +23,12 @@ package net.sourceforge.subsonic.androidapp.domain;
  * @version $Id$
  */
 public enum PlayerState {
-    IDLE(""),
-    INITIALIZED(""),
-    DOWNLOADING("Downloading"),
-    PREPARING("Buffering"),
-    PREPARED(""),
-    STARTED("Playing"),
-    STOPPED(""),
-    PAUSED("Paused"),
-    COMPLETED(""),
-    ERROR("Error");
-
-    private final String description;
-
-    PlayerState(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return description;
-    }
+    IDLE,
+    DOWNLOADING,
+    PREPARING,
+    PREPARED,
+    STARTED,
+    STOPPED,
+    PAUSED,
+    COMPLETED
 }
