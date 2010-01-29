@@ -1,5 +1,6 @@
 TODO IN 3.9
 --------------
+Mac installer, http://www.centerkey.com/mac/java/
 http://nonpixel.com/subair/
 
 Upgrade JWPlayer
@@ -18,6 +19,8 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 
 TODO IN ANDROID 1.2
 -----------------------
+Fails when searching with spaces.
+Show different colored asterix when .complete exists.
 DownloadActivity not updated if initially empty and then append to queue.
 i18n
 -
@@ -30,7 +33,6 @@ Make web page for it.
 Caching mgmt
 Don't "Play + Save" for files that already exists.
 Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
-Show different colored asterix when .complete exists.
 Improve design of DownloadFile.getCompleteFile() etc.
 Goes crazy when bandwidth too small.
 Remember position for podcasts.
@@ -39,6 +41,7 @@ DONE IN ANDROID 1.2
 -------------------
 Remember playlist when app is restarted.
 Support landscape mode.
+Long-click on album to play it.
 Use HttpClient
 Added "Save on phone" option.
 New main menu item: "Offline music"
@@ -363,7 +366,7 @@ HOW TO RELEASE
 Ask Jeremy Terpstra to update Dutch translation.
 Set JAVA_HOME to 1.6.
 Update version number in pom.xml etc.
-Update changelog.php, download.php and version.html
+Update changelog.jsp, download.jsp and version.html
 mvn clean install -P full
 cd subsonic-assembly
 mvn assembly:assembly
@@ -376,8 +379,8 @@ Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW
 Modify FRS properties (use Firefox)
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
 
-Upload site (OLD):
-  rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
+####Upload site (OLD):
+####  rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
 
 Upload site (NEW):
   rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps/pages/

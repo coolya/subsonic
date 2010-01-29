@@ -16,10 +16,10 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
-<a name="3.9.beta1"><h2 class="div">Subsonic 3.9.beta1 - Feb 01, 2010</h2></a>
+<a name="3.9.beta1"><h2 class="div">Subsonic 3.9.beta1 - Jan 28, 2010</h2></a>
 <ul>
     <li><span class="bugid">New: </span>Automatically configure port forwarding for compatible routers.</li>
-    <li><span class="bugid">New: </span>Access your server using an easy-to-remember address: yourname.subsonic.org</li>
+    <li><span class="bugid">New: </span>Access your server using an easy-to-remember address: <em>yourname.subsonic.org</em></li>
     <li><span class="bugid">New: </span>Added "Getting started" page for basic setup.</li>
     <li><span class="bugid">New: </span>Cover art batch download, courtesy of Christian Nedreg&aring;rd.</li>
     <li><span class="bugid">New: </span>Improved relevance for top hits in cover art search, courtesy of Christian Nedreg&aring;rd.</li>
