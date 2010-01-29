@@ -7,7 +7,6 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,6 @@ import java.util.concurrent.TimeUnit;
 
 public class DownloadActivity extends OptionsMenuActivity {
 
-    private static final String TAG = DownloadActivity.class.getSimpleName();
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private ImageLoader imageLoader;
     private DownloadService downloadService;
@@ -223,7 +221,6 @@ public class DownloadActivity extends OptionsMenuActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
-                Log.i(TAG, "Got MEDIA_PLAY_PAUSE key event.");
                 if (downloadService.getPlayerState() == STARTED) {
                     downloadService.pause();
                 } else {
@@ -231,11 +228,9 @@ public class DownloadActivity extends OptionsMenuActivity {
                 }
                 break;
             case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
-                Log.i(TAG, "Got MEDIA_PREVIOUS key event.");
                 downloadService.previous();
                 break;
             case KeyEvent.KEYCODE_MEDIA_NEXT:
-                Log.i(TAG, "Got MEDIA_NEXT key event.");
                 downloadService.next();
                 break;
             default:
@@ -290,11 +285,23 @@ public class DownloadActivity extends OptionsMenuActivity {
 
         PlayerState playerState = downloadService.getPlayerState();
 
-        if (playerState == PlayerState.DOWNLOADING) {
-            long bytes = currentPlaying.getPartialFile().length();
-            statusTextView.setText(playerState + " - " + Util.formatBytes(bytes));
-        } else {
-            statusTextView.setText(playerState.toString());
+        switch (playerState) {
+            case DOWNLOADING:
+                long bytes = currentPlaying.getPartialFile().length();
+                statusTextView.setText(getResources().getString(R.string.download_playerstate_downloading, Util.formatBytes(bytes)));
+                break;
+            case PREPARING:
+                statusTextView.setText(R.string.download_playerstate_buffering);
+                break;
+            case STARTED:
+                statusTextView.setText(R.string.download_playerstate_playing);
+                break;
+            case PAUSED:
+                statusTextView.setText(R.string.download_playerstate_paused);
+                break;
+            default:
+                statusTextView.setText(null);
+                break;
         }
 
         switch (playerState) {
@@ -329,7 +336,6 @@ public class DownloadActivity extends OptionsMenuActivity {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             downloadService = ((SimpleServiceBinder<DownloadService>) service).getService();
-            Log.i(TAG, "Connected to Download Service");
             onDownloadListChanged();
             onCurrentChanged();
             onProgressChanged();
@@ -338,7 +344,6 @@ public class DownloadActivity extends OptionsMenuActivity {
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             downloadService = null;
-            Log.i(TAG, "Disconnected from Download Service");
         }
     }
 

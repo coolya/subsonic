@@ -17,6 +17,9 @@
     <string name="progress.wait">Please wait...</string>
     <string name="search.title">Music search</string>
 
+    <string name="select_artist.my_music">My music</string>
+    <string name="select_artist.offline_music">Offline music</string>
+
     <string name="select_album.select">Select</string>
     <string name="select_album.play">Play</string>
     <string name="select_album.more">More...</string>
@@ -31,9 +34,13 @@
     <string name="select_album.donate_dialog_now">Now</string>
     <string name="select_album.donate_dialog_later">Later</string>
     <string name="select_album.0_search_result">Search results - No matches found</string>
-    <string name="select_album_donate_dialog_0_trial_days_left">Trial period is over</string>
+    <string name="select_album.donate_dialog_0_trial_days_left">Trial period is over</string>
 
-
+    <string name="download.playerstate_downloading">Downloading - %s</string>
+    <string name="download.playerstate_buffering">Buffering</string>
+    <string name="download.playerstate_playing">Playing</string>
+    <string name="download.playerstate_paused">Paused</string>
+    
     <string name="error.label">Error</string>
 
     <string name="options.home">Subsonic Home</string>

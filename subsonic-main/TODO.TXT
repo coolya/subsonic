@@ -22,7 +22,7 @@ TODO IN ANDROID 1.2
 Fails when searching with spaces.
 Show different colored asterix when .complete exists.
 DownloadActivity not updated if initially empty and then append to queue.
-i18n
+i18n - create Norwegian translation.
 -
 Use IOUtils, StringUtils.
 Long-click
