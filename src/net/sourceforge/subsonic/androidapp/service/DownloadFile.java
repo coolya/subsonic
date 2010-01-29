@@ -80,6 +80,10 @@ public class DownloadFile {
         }
     }
 
+    public boolean isSaved() {
+        return saveFile.exists();
+    }
+
     public File getCompleteFile() {
         if (saveFile.exists()) {
             return saveFile;
