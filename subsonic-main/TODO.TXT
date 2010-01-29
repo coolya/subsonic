@@ -19,7 +19,7 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 
 TODO IN ANDROID 1.2
 -----------------------
-Show different colored asterix when .complete exists.
+If a song is complete, the "save on phone" should simply copy the file.
 DownloadActivity not updated if initially empty and then append to queue.
 i18n - create Norwegian translation.
 -
