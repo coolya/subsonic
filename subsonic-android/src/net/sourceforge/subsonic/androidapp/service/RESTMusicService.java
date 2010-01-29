@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -328,7 +329,7 @@ public class RESTMusicService implements MusicService {
             for (int i = 0; i < parameterNames.size(); i++) {
                 url.append("&");
                 url.append(parameterNames.get(i)).append("=");
-                url.append(parameterValues.get(i));
+                url.append(URLEncoder.encode(String.valueOf(parameterValues.get(i)), "UTF-8"));
             }
         }
 
