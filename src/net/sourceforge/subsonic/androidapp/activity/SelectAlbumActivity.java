@@ -142,7 +142,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity {
                 selectAll(false);
                 break;
             case MENU_ITEM_PLAY_ALL:
-                playAll();
+                playAll(menuItem);
                 break;
             default:
                 return super.onContextItemSelected(menuItem);
@@ -156,22 +156,22 @@ public class SelectAlbumActivity extends OptionsMenuActivity {
 
         if (view == moreButton) {
             if (!Util.isOffline(this)) {
-                menu.add(Menu.NONE, MENU_ITEM_DOWNLOAD, MENU_ITEM_DOWNLOAD, "Save on phone");
+                menu.add(Menu.NONE, MENU_ITEM_DOWNLOAD, MENU_ITEM_DOWNLOAD, R.string.select_album_save);
             }
-            menu.add(Menu.NONE, MENU_ITEM_ADD, MENU_ITEM_ADD, "Add to play queue");
+            menu.add(Menu.NONE, MENU_ITEM_ADD, MENU_ITEM_ADD, R.string.select_album_add);
 
             for (MusicDirectory.Entry song : getSelectedSongs()) {
                 DownloadFile downloadFile = downloadService.forSong(song);
                 if (downloadFile.getCompleteFile().exists()) {
-                    menu.add(Menu.NONE, MENU_ITEM_DELETE, MENU_ITEM_DELETE, "Delete from phone");
+                    menu.add(Menu.NONE, MENU_ITEM_DELETE, MENU_ITEM_DELETE, R.string.select_album_delete);
                     break;
                 }
             }
         } else {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition((int) info.id);
+            MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
             if (entry.isDirectory()) {
-                menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, "Play all");
+                menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_album);
             }
         }
     }
@@ -179,7 +179,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity {
     private void getMusicDirectory() {
         String title = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME);
         if (Util.isOffline(this)) {
-            title += " (Offline)";
+            title += " (" + getResources().getString(R.string.select_album_offline) + ")";
         }
         setTitle(title);
         new LoadTask() {
@@ -192,7 +192,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity {
     }
 
     private void search() {
-        setTitle("Search results");
+        setTitle(R.string.select_album_searching);
         new LoadTask() {
             @Override
             protected MusicDirectory load(MusicService service) throws Exception {
@@ -204,7 +204,11 @@ public class SelectAlbumActivity extends OptionsMenuActivity {
             protected void done(Pair<MusicDirectory, Boolean> result) {
                 super.done(result);
                 int n = result.getFirst().getChildren().size();
-                setTitle("Search results - " + n + " match" + (n == 1 ? "" : "es"));
+                if (n == 0) {
+                    setTitle(R.string.select_album_0_search_result);
+                } else {
+                    setTitle(getResources().getQuantityString(R.plurals.select_album_n_search_result, n, n));
+                }
             }
         }.execute();
     }
@@ -280,9 +284,9 @@ public class SelectAlbumActivity extends OptionsMenuActivity {
                 if (autoplay) {
                     startActivity(new Intent(SelectAlbumActivity.this, DownloadActivity.class));
                 } else if (save) {
-                    Util.toast(SelectAlbumActivity.this, songs.size() + " song(s) scheduled for download.");
+                    Util.toast(SelectAlbumActivity.this, getResources().getQuantityString(R.plurals.select_album_n_songs_downloading, songs.size(), songs.size()));
                 } else if (append) {
-                    Util.toast(SelectAlbumActivity.this, songs.size() + " song(s) added to play queue.");
+                    Util.toast(SelectAlbumActivity.this, getResources().getQuantityString(R.plurals.select_album_n_songs_added, songs.size(), songs.size()));
                 }
             }
         };
@@ -290,8 +294,10 @@ public class SelectAlbumActivity extends OptionsMenuActivity {
         checkLicenseAndTrialPeriod(onValid);
     }
 
-    private void playAll() {
-        MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getSelectedItem();
+    private void playAll(MenuItem menuItem) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
+
+        MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
 
         Intent intent = new Intent(SelectAlbumActivity.this, SelectAlbumActivity.class);
         intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, entry.getId());
@@ -322,7 +328,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity {
         } else if (trialDaysLeft < Constants.FREE_TRIAL_DAYS / 2) {
             showDonationDialog(trialDaysLeft, onValid);
         } else {
-            Util.toast(this, "Server not licensed. " + trialDaysLeft + " trial days left.");
+            Util.toast(this, getResources().getString(R.string.select_album_not_licensed, trialDaysLeft));
             onValid.run();
         }
     }
@@ -332,22 +338,21 @@ public class SelectAlbumActivity extends OptionsMenuActivity {
         builder.setIcon(android.R.drawable.ic_dialog_info);
 
         if (trialDaysLeft == 0) {
-            builder.setTitle("Trial period is over");
-        } else if (trialDaysLeft == 1) {
-            builder.setTitle("One day left of trial period");
+            builder.setTitle(R.string.select_album_donate_dialog_0_trial_days_left);
         } else {
-            builder.setTitle((trialDaysLeft + " days left of trial period"));
+            builder.setTitle(getResources().getQuantityString(R.plurals.select_album_donate_dialog_n_trial_days_left, trialDaysLeft, trialDaysLeft));
         }
-        builder.setMessage("Get unlimited downloads by donating to Subsonic.");
 
-        builder.setPositiveButton("Now", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.select_album_donate_dialog_message);
+
+        builder.setPositiveButton(R.string.select_album_donate_dialog_now, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.DONATION_URL)));
             }
         });
 
-        builder.setNegativeButton("Later", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.select_album_donate_dialog_later, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -454,6 +459,13 @@ public class SelectAlbumActivity extends OptionsMenuActivity {
             selectButton.setVisibility(visibility);
             playButton.setVisibility(visibility);
             moreButton.setVisibility(visibility);
+
+            boolean playAll = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_PLAY_ALL, false);
+            if (playAll) {
+                selectAll(true);
+                download(false, false, true);
+                selectAll(false);
+            }
         }
 
         @Override

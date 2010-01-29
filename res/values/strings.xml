@@ -20,6 +20,19 @@
     <string name="select_album.select">Select</string>
     <string name="select_album.play">Play</string>
     <string name="select_album.more">More...</string>
+    <string name="select_album.play_album">Play album</string>
+    <string name="select_album.delete">Delete from phone</string>
+    <string name="select_album.add">Add to play queue</string>
+    <string name="select_album.save">Save on phone</string>
+    <string name="select_album.offline">Offline</string>
+    <string name="select_album.searching">Searching...</string>
+    <string name="select_album.not_licensed">Server not licensed. %d trial days left.</string>
+    <string name="select_album.donate_dialog_message">Get unlimited downloads by donating to Subsonic.</string>
+    <string name="select_album.donate_dialog_now">Now</string>
+    <string name="select_album.donate_dialog_later">Later</string>
+    <string name="select_album.0_search_result">Search results - No matches found</string>
+    <string name="select_album_donate_dialog_0_trial_days_left">Trial period is over</string>
+
 
     <string name="error.label">Error</string>
 
@@ -42,5 +55,23 @@
     <string name="settings.software_update">Check for software update</string>
     <string name="settings.empty_cache">Delete cached music</string>
     <string name="settings.empty_cache_confirm">Really delete all cached music files?</string>
+
+    <plurals name="select_album_n_songs_downloading">
+        <item quantity="one">One song scheduled for download.</item>
+        <item quantity="other">%d songs scheduled for download.</item>
+    </plurals>
+    <plurals name="select_album_n_songs_added">
+        <item quantity="one">One song added to play queue.</item>
+        <item quantity="other">%d songs added to play queue.</item>
+    </plurals>
+    <plurals name="select_album_n_search_result">
+        <item quantity="zero">Search results - No matches found</item>
+        <item quantity="one">Search results - One match</item>
+        <item quantity="other">Search results - %d matches</item>
+    </plurals>
+    <plurals name="select_album_donate_dialog_n_trial_days_left">
+        <item quantity="one">One day left of trial period</item>
+        <item quantity="other">%d days left of trial period</item>
+    </plurals>
 
 </resources>
