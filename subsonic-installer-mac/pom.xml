@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.sourceforge.subsonic</groupId>
+    <artifactId>subsonic-installer-mac</artifactId>
+    <packaging>pom</packaging>
+    <name>Subsonic Installer for Mac</name>
+
+    <parent>
+        <groupId>net.sourceforge.subsonic</groupId>
+        <artifactId>subsonic</artifactId>
+        <version>3.9.beta1</version>
+    </parent>
+
+    <properties>
+        <!--<nsis.home>c:/Program Files/NSIS</nsis.home>-->
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>net.sourceforge.subsonic</groupId>
+            <artifactId>subsonic-main</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>net.sourceforge.subsonic</groupId>-->
+            <!--<artifactId>subsonic-booter</artifactId>-->
+            <!--<version>${project.version}</version>-->
+        <!--</dependency>-->
+
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <configuration>
+                            <tasks>
+                                <taskdef name="jarbundler" classname="net.sourceforge.jarbundler.JarBundler"/>
+                                <mkdir dir="${project.build.directory}"/>
+                                <jarbundler dir="target"
+                                            name="Subsonic"
+                                            mainclass="net.sourceforge.subsonic.booter.Main"
+                                            version="${project.version}"
+                                            jvmversion="1.5+"
+                                            jar="../subsonic-booter/target/subsonic-booter-jar-with-dependencies.jar">
+                                    <resourcefilelist dir="../subsonic-main/target" files="subsonic.war"/>
+                                    <javaproperty name="subsonic.war" value="Subsonic.app/Contents/Resources/subsonic.war"/>
+                                </jarbundler>
+
+                                <!--<echo>Compiling NSIS script...</echo>-->
+                                <!--<exec executable="${nsis.home}/makensis">-->
+                                <!--<arg value="${basedir}/src/main/nsis/subsonic.nsi"/>-->
+                                <!--<arg value="-XOutFile ${project.build.directory}/subsonic-${project.version}-setup.exe"/>-->
+                                <!--</exec>-->
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            <dependencies>
+                <dependency>
+                    <groupId>net.sourceforge.jarbundler</groupId>
+                    <artifactId>jarbundler</artifactId>
+                    <version>2.1.0</version>
+                </dependency>
+            </dependencies>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

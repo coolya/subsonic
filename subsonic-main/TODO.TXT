@@ -1,6 +1,10 @@
 TODO IN 3.9
 --------------
 Mac installer, http://www.centerkey.com/mac/java/
+- refactor booter/installer
+- use app icon.
+- only build win installer on windows and mac installer on mac.
+html5 audio
 http://nonpixel.com/subair/
 
 Upgrade JWPlayer
