@@ -324,20 +324,19 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             mediaPlayer.prepare();
             setPlayerState(PREPARED);
 
-            final AtomicBoolean downloadComplete = new AtomicBoolean(false);
 
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
                     setPlayerState(COMPLETED);
 
-                    if (downloadComplete.get()) {
+                    if (downloadFile.isComplete()) {
                         next();
                         return;
                     }
 
+                    // If file is not completely downloaded, restart the playback from the current position.
                     try {
-                        downloadComplete.set(downloadFile.isComplete());
                         int pos = mediaPlayer.getCurrentPosition();
                         Log.i(TAG, "Restarting player from position " + pos);
 
