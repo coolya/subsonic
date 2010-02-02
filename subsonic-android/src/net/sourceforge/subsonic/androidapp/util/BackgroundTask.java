@@ -60,7 +60,7 @@ public abstract class BackgroundTask<T> implements ProgressListener {
                 cancel();
             }
         });
-        builder.setPositiveButton(R.string.background_task_cancel, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.common_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 cancelled = true;
