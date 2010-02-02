@@ -76,7 +76,8 @@ public class IndexesParser extends AbstractParser {
                     artists.add(artist);
 
                     if (progressListener != null && artists.size() % 10 == 0) {
-                        progressListener.updateProgress("Got " + artists.size() + " artists.");
+                        String msg = getContext().getResources().getString(R.string.parser_artist_count, artists.size());
+                        progressListener.updateProgress(msg);
                     }
                 } else if ("shortcut".equals(name)) {
                     Artist shortcut = new Artist();
@@ -91,9 +92,6 @@ public class IndexesParser extends AbstractParser {
         } while (eventType != XmlPullParser.END_DOCUMENT);
 
         if (!changed) {
-            if (progressListener != null) {
-                progressListener.updateProgress("No changes.");
-            }
             return null;
         }
 
@@ -101,7 +99,8 @@ public class IndexesParser extends AbstractParser {
         Log.d(TAG, "Got " + artists.size() + " artist(s) in " + (t1 - t0) + "ms.");
 
         if (progressListener != null) {
-            progressListener.updateProgress("Got " + artists.size() + " artists.");
+            String msg = getContext().getResources().getString(R.string.parser_artist_count, artists.size());
+            progressListener.updateProgress(msg);
         }
 
         return new Indexes(lastModified == null ? 0L : lastModified, shortcuts, artists);
