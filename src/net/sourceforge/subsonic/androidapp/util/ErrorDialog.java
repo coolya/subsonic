@@ -21,6 +21,7 @@ package net.sourceforge.subsonic.androidapp.util;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import net.sourceforge.subsonic.androidapp.R;
 
 /**
  * @author Sindre Mehus
@@ -31,7 +32,7 @@ public class ErrorDialog {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
-        builder.setTitle("Error");
+        builder.setTitle(R.string.error_label);
         builder.setMessage(errorMessage);
         builder.setCancelable(true);
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -42,7 +43,7 @@ public class ErrorDialog {
                 }
             }
         });
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.common_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (finishActivityOnCancel) {

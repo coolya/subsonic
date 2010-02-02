@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="common.ok">OK</string>
+    <string name="common.cancel">Cancel</string>
+
     <string name="main.my_music">My music</string>
     <string name="main.offline_music">Offline music</string>
     <string name="main.my_playlists">My playlists</string>
@@ -67,7 +71,6 @@
 
     <string name="background_task.wait">Please wait...</string>
     <string name="background_task.loading">Loading.</string>
-    <string name="background_task.cancel">Cancel</string>
     <string name="background_task.no_network">This program requires network access. Please turn on Wi-fi or mobile network.</string>
     <string name="background_task.not_found">Resource not found.</string>
 
