@@ -64,7 +64,13 @@
     <string name="settings.empty_cache_confirm">Really delete all cached music files?</string>
 
     <string name="music_service.retry">A network error occurred. Retrying %d of %d.</string>
-    
+
+    <string name="background_task.wait">Please wait...</string>
+    <string name="background_task.loading">Loading.</string>
+    <string name="background_task.cancel">Cancel</string>
+    <string name="background_task.no_network">This program requires network access. Please turn on Wi-fi or mobile network.</string>
+    <string name="background_task.not_found">Resource not found.</string>
+
     <plurals name="select_album_n_songs_downloading">
         <item quantity="one">One song scheduled for download.</item>
         <item quantity="other">%d songs scheduled for download.</item>

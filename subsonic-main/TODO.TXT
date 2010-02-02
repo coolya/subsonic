@@ -25,6 +25,7 @@ TODO IN ANDROID 1.2
 -----------------------
 DownloadActivity not updated if initially empty and then append to queue.
 i18n - create Norwegian translation.
+Better error message when xml parsing fails.
 -
 Use IOUtils, StringUtils.
 Long-click
