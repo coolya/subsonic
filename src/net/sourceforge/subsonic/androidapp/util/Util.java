@@ -337,7 +337,7 @@ public final class Util {
     }
 
     public static void error(Context context, String message) {
-        showDialog(context, android.R.drawable.ic_dialog_alert, "Error", message);
+        showDialog(context, android.R.drawable.ic_dialog_alert, context.getResources().getString(R.string.error_label), message);
     }
 
     public static void info(Context context, String title, String message) {
@@ -349,7 +349,7 @@ public final class Util {
                 .setIcon(icon)
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.common_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
                         dialog.dismiss();
@@ -362,14 +362,14 @@ public final class Util {
         new AlertDialog.Builder(context)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setTitle(message)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.common_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.dismiss();
                         task.run();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.common_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.dismiss();
