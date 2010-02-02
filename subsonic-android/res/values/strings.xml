@@ -75,6 +75,11 @@
     <string name="background_task.not_found">Resource not found. Please check the server address.</string>
     <string name="background_task.parse_error">Didn\'t understand the reply. Please check the server address.</string>
 
+    <string name="parser.reading">Reading from server.</string>
+    <string name="parser.reading_done">Reading from server. Done!</string>
+    <string name="parser.upgrade_client">Incompatible versions. Please upgrade Subsonic Android application.</string>
+    <string name="parser.upgrade_server">Incompatible versions. Please upgrade Subsonic server.</string>
+
     <plurals name="select_album_n_songs_downloading">
         <item quantity="one">One song scheduled for download.</item>
         <item quantity="other">%d songs scheduled for download.</item>

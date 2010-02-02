@@ -16,7 +16,7 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.androidapp.service;
+package net.sourceforge.subsonic.androidapp.service.parser;
 
 import java.io.Reader;
 import java.util.List;
@@ -24,6 +24,8 @@ import java.util.ArrayList;
 
 import org.xmlpull.v1.XmlPullParser;
 
+import android.content.Context;
+import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Artist;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
@@ -36,9 +38,13 @@ import android.util.Log;
 public class IndexesParser extends AbstractParser {
     private static final String TAG = IndexesParser.class.getSimpleName();
 
+    public IndexesParser(Context context) {
+        super(context);
+    }
+
     public Indexes parse(Reader reader, ProgressListener progressListener) throws Exception {
         if (progressListener != null) {
-            progressListener.updateProgress("Reading from server.");
+            progressListener.updateProgress(R.string.parser_reading);
         }
 
         long t0 = System.currentTimeMillis();

@@ -153,4 +153,9 @@ public abstract class BackgroundTask<T> implements ProgressListener {
             }
         });
     }
+
+    @Override
+    public void updateProgress(int messageId) {
+        updateProgress(activity.getResources().getString(messageId));
+    }
 }

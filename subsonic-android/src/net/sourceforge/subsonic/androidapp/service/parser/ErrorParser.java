@@ -16,36 +16,35 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.androidapp.service;
+package net.sourceforge.subsonic.androidapp.service.parser;
 
-import java.io.Reader;
-
+import android.content.Context;
+import android.util.Xml;
 import org.xmlpull.v1.XmlPullParser;
 
-import net.sourceforge.subsonic.androidapp.util.ProgressListener;
-import android.util.Xml;
+import java.io.Reader;
 
 /**
  * @author Sindre Mehus
  */
-public class LicenseParser extends AbstractParser {
+public class ErrorParser extends AbstractParser {
 
-    public boolean parse(Reader reader, ProgressListener progressListener) throws Exception {
+    public ErrorParser(Context context) {
+        super(context);
+    }
+
+    public void parse(Reader reader) throws Exception {
+
         XmlPullParser parser = Xml.newPullParser();
         parser.setInput(reader);
+
         int eventType;
         do {
             eventType = parser.next();
-            if (eventType == XmlPullParser.START_TAG) {
-                String name = parser.getName();
-                if ("license".equals(name)) {
-                    return getBoolean(parser, "valid");
-                } else if ("error".equals(name)) {
-                    handleError(parser);
-                }
+            if (eventType == XmlPullParser.START_TAG && "error".equals(parser.getName())) {
+                handleError(parser);
             }
         } while (eventType != XmlPullParser.END_DOCUMENT);
 
-        return false;
     }
 }

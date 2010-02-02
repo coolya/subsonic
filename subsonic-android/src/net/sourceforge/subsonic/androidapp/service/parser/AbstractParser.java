@@ -16,24 +16,37 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.androidapp.service;
+package net.sourceforge.subsonic.androidapp.service.parser;
 
 import org.xmlpull.v1.XmlPullParser;
+
+import android.content.Context;
+import net.sourceforge.subsonic.androidapp.R;
 
 /**
  * @author Sindre Mehus
  */
 public abstract class AbstractParser {
 
+    private final Context context;
+
+    public AbstractParser(Context context) {
+        this.context = context;
+    }
+
+    protected Context getContext() {
+        return context;
+    }
+
     protected void handleError(XmlPullParser parser) throws Exception {
         int code = getInteger(parser, "code");
         String message;
         switch (code) {
             case 20:
-                message = "Incompatible versions. Please upgrade Subsonic Android application.";
+                message = context.getResources().getString(R.string.parser_upgrade_client);
                 break;
             case 30:
-                message = "Incompatible versions. Please upgrade Subsonic server.";
+                message = context.getResources().getString(R.string.parser_upgrade_server);
                 break;
             default:
                 message = get(parser, "message");

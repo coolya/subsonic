@@ -23,4 +23,5 @@ package net.sourceforge.subsonic.androidapp.util;
  */
 public interface ProgressListener {
     void updateProgress(String message);
+    void updateProgress(int messageId);
 }
