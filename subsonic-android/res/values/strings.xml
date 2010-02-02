@@ -44,6 +44,8 @@
     <string name="download.playerstate_buffering">Buffering</string>
     <string name="download.playerstate_playing">Playing</string>
     <string name="download.playerstate_paused">Paused</string>
+    <string name="download.remove">Remove</string>
+    <string name="download.remove_all">Remove all</string>
 
     <string name="error.label">Error</string>
 

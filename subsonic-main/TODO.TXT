@@ -6,7 +6,9 @@ Mac installer, http://www.centerkey.com/mac/java/
 - only build win installer on windows and mac installer on mac.
 html5 audio
 Link to http://nonpixel.com/subair/
+Support offset in REST api(?) How will that work with dynamic bandwidth selection.  Use "Range" instead.
 
+Create album table, reimplement related services in SearchService.
 Upgrade JWPlayer
 TBT: Added "accesskey" in left frame.
 TBT: Added API method to change password.
@@ -47,6 +49,7 @@ http retry
 Remember playlist when app is restarted.
 Support landscape mode.
 Long-click on album to play it.
+Long click in playlist
 Use HttpClient
 Added "Save on phone" option.
 New main menu item: "Offline music"
@@ -455,7 +458,8 @@ DnB NOR
 0021 Oslo
 Norway
 
-IBAN number: NO4697104607601
+Account number: 97223688407
+IBAN number: NO7297223688407
 SWIFT/BIC code: DNBANOKK
 
 RipNAS, http://www.ripnas.com/

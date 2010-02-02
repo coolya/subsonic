@@ -33,6 +33,8 @@ public interface DownloadService {
 
     void clear();
 
+    void remove(DownloadFile downloadFile);
+
     List<DownloadFile> getDownloads();
 
     DownloadFile getCurrentPlaying();
@@ -66,4 +68,5 @@ public interface DownloadService {
     void delete(List<MusicDirectory.Entry> songs);
 
     DownloadFile forSong(MusicDirectory.Entry song);
+
 }

@@ -127,6 +127,18 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     @Override
+    public synchronized void remove(DownloadFile downloadFile) {
+        if (downloadFile == currentDownloading) {
+            currentDownloading.cancelDownload();
+        }
+        if (downloadFile == currentPlaying) {
+            reset();
+            next();
+        }
+        downloadList.remove(downloadFile);
+    }
+
+    @Override
     public synchronized void delete(List<MusicDirectory.Entry> songs) {
         for (MusicDirectory.Entry song : songs) {
             forSong(song).delete();
@@ -187,12 +199,19 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     @Override
     public synchronized void previous() {
-        play(downloadList.indexOf(currentPlaying) - 1);
+        int index = downloadList.indexOf(currentPlaying);
+        if (index != -1) {
+            play(index - 1);
+        }
+
     }
 
     @Override
     public synchronized void next() {
-        play(downloadList.indexOf(currentPlaying) + 1);
+        int index = downloadList.indexOf(currentPlaying);
+        if (index != -1) {
+            play(index + 1);
+        }
     }
 
     @Override

@@ -29,6 +29,9 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -55,6 +58,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class DownloadActivity extends OptionsMenuActivity {
+
+    private static final int MENU_ITEM_REMOVE = 100;
+    private static final int MENU_ITEM_REMOVE_ALL = 101;
 
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private ImageLoader imageLoader;
@@ -164,6 +170,8 @@ public class DownloadActivity extends OptionsMenuActivity {
             }
         });
 
+        registerForContextMenu(playlistView);
+
         bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         imageLoader = new ImageLoader();
     }
@@ -194,6 +202,34 @@ public class DownloadActivity extends OptionsMenuActivity {
     protected void onPause() {
         super.onPause();
         executorService.shutdown();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+        if (view == playlistView) {
+            menu.add(Menu.NONE, MENU_ITEM_REMOVE, MENU_ITEM_REMOVE, R.string.download_remove);
+            menu.add(Menu.NONE, MENU_ITEM_REMOVE_ALL, MENU_ITEM_REMOVE_ALL, R.string.download_remove_all);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case MENU_ITEM_REMOVE:
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
+                DownloadFile downloadFile = (DownloadFile) playlistView.getItemAtPosition(info.position);
+                downloadService.remove(downloadFile);
+                onDownloadListChanged();
+                break;
+            case MENU_ITEM_REMOVE_ALL:
+                downloadService.clear();
+                onDownloadListChanged();
+                break;
+            default:
+                return super.onContextItemSelected(menuItem);
+        }
+        return true;
     }
 
     private void update() {
