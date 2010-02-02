@@ -25,7 +25,6 @@ TODO IN ANDROID 1.2
 -----------------------
 DownloadActivity not updated if initially empty and then append to queue.
 i18n - create Norwegian translation.
-http retry
 -
 Use IOUtils, StringUtils.
 Long-click
@@ -42,6 +41,7 @@ Remember position for podcasts.
 
 DONE IN ANDROID 1.2
 -------------------
+http retry
 Remember playlist when app is restarted.
 Support landscape mode.
 Long-click on album to play it.
