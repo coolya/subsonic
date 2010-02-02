@@ -23,6 +23,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Handler;
 import android.util.Log;
+import net.sourceforge.subsonic.androidapp.R;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -49,8 +50,8 @@ public abstract class BackgroundTask<T> implements ProgressListener {
     private AlertDialog createProgressDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setIcon(android.R.drawable.ic_dialog_info);
-        builder.setTitle("Please wait...");
-        builder.setMessage("Loading.");
+        builder.setTitle(R.string.background_task_wait);
+        builder.setMessage(R.string.background_task_loading);
         builder.setCancelable(true);
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
@@ -59,7 +60,7 @@ public abstract class BackgroundTask<T> implements ProgressListener {
                 cancel();
             }
         });
-        builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.background_task_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 cancelled = true;
@@ -123,11 +124,11 @@ public abstract class BackgroundTask<T> implements ProgressListener {
     protected String getErrorMessage(Throwable error) {
 
         if (error instanceof IOException && !Util.isNetworkConnected(activity)) {
-            return "This program requires network access. Please turn on Wi-fi or mobile network.";
+            return activity.getResources().getString(R.string.background_task_no_network);
         }
 
         if (error instanceof FileNotFoundException) {
-            return "Resource not found.";
+            return activity.getResources().getString(R.string.background_task_not_found);
         }
 
         String message = error.getMessage();
