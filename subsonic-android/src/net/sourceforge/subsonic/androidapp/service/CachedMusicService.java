@@ -27,6 +27,7 @@ import android.graphics.Bitmap;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.Version;
+import net.sourceforge.subsonic.androidapp.util.LRUCache;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import net.sourceforge.subsonic.androidapp.util.TimeLimitedCache;
