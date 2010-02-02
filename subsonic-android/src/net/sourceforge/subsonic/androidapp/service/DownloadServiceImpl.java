@@ -399,7 +399,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             int i = start;
             do {
                 DownloadFile downloadFile = downloadList.get(i);
-                if (!downloadFile.isComplete()) {
+                if (!downloadFile.isDone()) {
                     currentDownloading = downloadFile;
                     currentDownloading.download();
                     cleanupCandidates.add(currentDownloading);

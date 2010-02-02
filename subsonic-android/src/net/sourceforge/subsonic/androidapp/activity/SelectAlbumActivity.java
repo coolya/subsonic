@@ -60,7 +60,7 @@ import java.util.List;
 public class SelectAlbumActivity extends OptionsMenuActivity {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
-    private static final int MENU_ITEM_DOWNLOAD = 1;
+    private static final int MENU_ITEM_SAVE = 1;
     private static final int MENU_ITEM_ADD = 2;
     private static final int MENU_ITEM_DELETE = 3;
     private static final int MENU_ITEM_PLAY_ALL = 4;
@@ -147,7 +147,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity {
     @Override
     public boolean onContextItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case MENU_ITEM_DOWNLOAD:
+            case MENU_ITEM_SAVE:
                 download(true, true, false);
                 selectAll(false);
                 break;
@@ -174,7 +174,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity {
 
         if (view == moreButton) {
             if (!Util.isOffline(this)) {
-                menu.add(Menu.NONE, MENU_ITEM_DOWNLOAD, MENU_ITEM_DOWNLOAD, R.string.select_album_save);
+                menu.add(Menu.NONE, MENU_ITEM_SAVE, MENU_ITEM_SAVE, R.string.select_album_save);
             }
             menu.add(Menu.NONE, MENU_ITEM_ADD, MENU_ITEM_ADD, R.string.select_album_add);
 

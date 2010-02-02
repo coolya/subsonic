@@ -66,10 +66,6 @@ public class DownloadFile {
     }
 
     public synchronized void download() {
-        if (isComplete()) {
-            return;
-        }
-
         downloadTask = new DownloadTask();
         downloadTask.start();
     }
@@ -104,6 +100,10 @@ public class DownloadFile {
         return saveFile.exists() || completeFile.exists();
     }
 
+    public boolean isDone() {
+        return saveFile.exists() || (completeFile.exists() && !save);
+    }
+
     public void delete() {
         cancelDownload();
         Util.delete(partialFile);
@@ -129,11 +129,25 @@ public class DownloadFile {
         public void execute() {
 
             Log.i(TAG, "Starting to download " + song);
-
             InputStream in = null;
             FileOutputStream out = null;
             try {
-                in = MusicServiceFactory.getMusicService(context).getDownloadInputStream(context, song);
+
+                if (saveFile.exists()) {
+                    Log.i(TAG, saveFile + " already exists. Skipping.");
+                    return;
+                }
+                if (completeFile.exists()) {
+                    if (save) {
+                        Util.atomicCopy(completeFile, saveFile);
+                    } else {
+                        Log.i(TAG, completeFile + " already exists. Skipping.");
+                    }
+                    return;
+                }
+
+                MusicService musicService = MusicServiceFactory.getMusicService(context);
+                in = musicService.getDownloadInputStream(context, song);
                 out = new FileOutputStream(partialFile);
                 long n = copy(in, out);
                 Log.i(TAG, "Downloaded " + n + " bytes to " + partialFile);
