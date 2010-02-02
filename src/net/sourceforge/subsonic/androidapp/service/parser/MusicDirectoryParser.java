@@ -16,10 +16,12 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.androidapp.service;
+package net.sourceforge.subsonic.androidapp.service.parser;
 
+import android.content.Context;
 import android.util.Log;
 import android.util.Xml;
+import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import org.xmlpull.v1.XmlPullParser;
@@ -33,9 +35,13 @@ public class MusicDirectoryParser extends AbstractParser {
 
     private static final String TAG = MusicDirectoryParser.class.getSimpleName();
 
+    public MusicDirectoryParser(Context context) {
+        super(context);
+    }
+
     public MusicDirectory parse(Reader reader, ProgressListener progressListener) throws Exception {
         if (progressListener != null) {
-            progressListener.updateProgress("Reading from server.");
+            progressListener.updateProgress(R.string.parser_reading);
         }
 
         long t0 = System.currentTimeMillis();
@@ -62,7 +68,7 @@ public class MusicDirectoryParser extends AbstractParser {
         Log.d(TAG, "Got music directory in " + (t1 - t0) + "ms.");
 
         if (progressListener != null) {
-            progressListener.updateProgress("Reading from server. Done!");
+            progressListener.updateProgress(R.string.parser_reading_done);
         }
         return dir;
     }

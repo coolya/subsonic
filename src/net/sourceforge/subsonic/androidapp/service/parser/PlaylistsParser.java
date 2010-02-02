@@ -16,37 +16,48 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.androidapp.service;
-
-import android.util.Xml;
-import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.util.ProgressListener;
-import org.xmlpull.v1.XmlPullParser;
+package net.sourceforge.subsonic.androidapp.service.parser;
 
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.xmlpull.v1.XmlPullParser;
+
+import android.content.Context;
+import android.util.Xml;
+import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.util.Pair;
+import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 
 /**
  * @author Sindre Mehus
  */
-public class SearchResultParser extends MusicDirectoryParser {
+public class PlaylistsParser extends AbstractParser {
 
-    public MusicDirectory parse(Reader reader, ProgressListener progressListener) throws Exception {
+    public PlaylistsParser(Context context) {
+        super(context);
+    }
+
+    public List<Pair<String, String>> parse(Reader reader, ProgressListener progressListener) throws Exception {
         if (progressListener != null) {
-            progressListener.updateProgress("Reading from server.");
+            progressListener.updateProgress(R.string.parser_reading);
         }
 
         XmlPullParser parser = Xml.newPullParser();
         parser.setInput(reader);
 
-        MusicDirectory dir = new MusicDirectory();
+        List<Pair<String, String>> result = new ArrayList<Pair<String, String>>();
         int eventType;
         do {
             eventType = parser.next();
             if (eventType == XmlPullParser.START_TAG) {
-                String name = parser.getName();
-                if ("match".equals(name)) {
-                    dir.addChild(parseEntry(parser));
-                } else if ("error".equals(name)) {
+                String tag = parser.getName();
+                if ("playlist".equals(tag)) {
+                    String name = get(parser, "name");
+                    String id = get(parser, "id");
+                    result.add(new Pair<String, String>(id, name));
+                } else if ("error".equals(tag)) {
                     handleError(parser);
                 }
             }
@@ -55,7 +66,7 @@ public class SearchResultParser extends MusicDirectoryParser {
         if (progressListener != null) {
             progressListener.updateProgress("Reading from server. Done!");
         }
-        return dir;
+        return result;
     }
 
 }

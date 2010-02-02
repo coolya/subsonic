@@ -16,9 +16,11 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.androidapp.service;
+package net.sourceforge.subsonic.androidapp.service.parser;
 
+import android.content.Context;
 import android.util.Xml;
+import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import org.xmlpull.v1.XmlPullParser;
@@ -28,11 +30,15 @@ import java.io.Reader;
 /**
  * @author Sindre Mehus
  */
-public class PlaylistParser extends MusicDirectoryParser {
+public class SearchResultParser extends MusicDirectoryParser {
+
+    public SearchResultParser(Context context) {
+        super(context);
+    }
 
     public MusicDirectory parse(Reader reader, ProgressListener progressListener) throws Exception {
         if (progressListener != null) {
-            progressListener.updateProgress("Reading from server.");
+            progressListener.updateProgress(R.string.parser_reading);
         }
 
         XmlPullParser parser = Xml.newPullParser();
@@ -44,7 +50,7 @@ public class PlaylistParser extends MusicDirectoryParser {
             eventType = parser.next();
             if (eventType == XmlPullParser.START_TAG) {
                 String name = parser.getName();
-                if ("entry".equals(name)) {
+                if ("match".equals(name)) {
                     dir.addChild(parseEntry(parser));
                 } else if ("error".equals(name)) {
                     handleError(parser);

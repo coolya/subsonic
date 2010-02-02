@@ -58,6 +58,14 @@ import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.Version;
+import net.sourceforge.subsonic.androidapp.service.parser.ErrorParser;
+import net.sourceforge.subsonic.androidapp.service.parser.IndexesParser;
+import net.sourceforge.subsonic.androidapp.service.parser.LicenseParser;
+import net.sourceforge.subsonic.androidapp.service.parser.MusicDirectoryParser;
+import net.sourceforge.subsonic.androidapp.service.parser.PlaylistParser;
+import net.sourceforge.subsonic.androidapp.service.parser.PlaylistsParser;
+import net.sourceforge.subsonic.androidapp.service.parser.SearchResultParser;
+import net.sourceforge.subsonic.androidapp.service.parser.VersionParser;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Pair;
@@ -85,14 +93,6 @@ public class RESTMusicService implements MusicService {
     private static final long REDIRECTION_CHECK_INTERVAL_MILLIS = 60L * 60L * 1000L;
     private static final String FILENAME_INDEXES_SER = "indexes.ser";
 
-    private final IndexesParser indexesParser = new IndexesParser();
-    private final MusicDirectoryParser musicDirectoryParser = new MusicDirectoryParser();
-    private final SearchResultParser searchResultParser = new SearchResultParser();
-    private final PlaylistParser playlistParser = new PlaylistParser();
-    private final PlaylistsParser playlistsParser = new PlaylistsParser();
-    private final LicenseParser licenseParser = new LicenseParser();
-    private final VersionParser versionParser = new VersionParser();
-    private final ErrorParser errorParser = new ErrorParser();
     private final List<Reader> readers = new ArrayList<Reader>(10);
     private final DefaultHttpClient httpClient;
     private Pair<String, Indexes> cachedIndexesPair;
@@ -126,7 +126,7 @@ public class RESTMusicService implements MusicService {
         Reader reader = getReader(context, progressListener, "ping");
         addReader(reader);
         try {
-            errorParser.parse(reader);
+            new ErrorParser(context).parse(reader);
         } finally {
             closeReader(reader);
         }
@@ -137,7 +137,7 @@ public class RESTMusicService implements MusicService {
         Reader reader = getReader(context, progressListener, "getLicense");
         addReader(reader);
         try {
-            return licenseParser.parse(reader, progressListener);
+            return new LicenseParser(context).parse(reader, progressListener);
         } finally {
             closeReader(reader);
         }
@@ -151,7 +151,7 @@ public class RESTMusicService implements MusicService {
         Reader reader = getReader(context, progressListener, "getIndexes", "ifModifiedSince", lastModified);
         addReader(reader);
         try {
-            Indexes indexes = indexesParser.parse(reader, progressListener);
+            Indexes indexes = new IndexesParser(context).parse(reader, progressListener);
             if (indexes != null) {
                 writeCachedIndexes(context, indexes);
                 return indexes;
@@ -186,7 +186,7 @@ public class RESTMusicService implements MusicService {
         Reader reader = getReader(context, progressListener, "getMusicDirectory", "id", id);
         addReader(reader);
         try {
-            return musicDirectoryParser.parse(reader, progressListener);
+            return new MusicDirectoryParser(context).parse(reader, progressListener);
         } finally {
             closeReader(reader);
         }
@@ -197,7 +197,7 @@ public class RESTMusicService implements MusicService {
         Reader reader = getReader(context, progressListener, "search", "any", query);
         addReader(reader);
         try {
-            return searchResultParser.parse(reader, progressListener);
+            return new SearchResultParser(context).parse(reader, progressListener);
         } finally {
             closeReader(reader);
         }
@@ -208,7 +208,7 @@ public class RESTMusicService implements MusicService {
         Reader reader = getReader(context, progressListener, "getPlaylist", "id", id);
         addReader(reader);
         try {
-            return playlistParser.parse(reader, progressListener);
+            return new PlaylistParser(context).parse(reader, progressListener);
         } finally {
             closeReader(reader);
         }
@@ -219,7 +219,7 @@ public class RESTMusicService implements MusicService {
         Reader reader = getReader(context, progressListener, "getPlaylists");
         addReader(reader);
         try {
-            return playlistsParser.parse(reader, progressListener);
+            return new PlaylistsParser(context).parse(reader, progressListener);
         } finally {
             closeReader(reader);
         }
@@ -236,7 +236,7 @@ public class RESTMusicService implements MusicService {
         Reader reader = getReaderForURL(context, VERSION_URL, progressListener);
         addReader(reader);
         try {
-            return versionParser.parse(reader, progressListener);
+            return new VersionParser().parse(reader, progressListener);
         } finally {
             closeReader(reader);
         }
@@ -254,7 +254,7 @@ public class RESTMusicService implements MusicService {
             // If content type is XML, an error occured.  Get it.
             String contentType = Util.getContentType(entity);
             if (contentType != null && contentType.startsWith("text/xml")) {
-                new ErrorParser().parse(new InputStreamReader(in, Constants.UTF_8));
+                new ErrorParser(context).parse(new InputStreamReader(in, Constants.UTF_8));
                 return null; // Never reached.
             }
 
@@ -282,7 +282,7 @@ public class RESTMusicService implements MusicService {
         // If content type is XML, an error occured.  Get it.
         String contentType = Util.getContentType(entity);
         if (contentType != null && contentType.startsWith("text/xml")) {
-            new ErrorParser().parse(new InputStreamReader(in, Constants.UTF_8));
+            new ErrorParser(context).parse(new InputStreamReader(in, Constants.UTF_8));
             return null; // Never reached.
         }
         return in;
