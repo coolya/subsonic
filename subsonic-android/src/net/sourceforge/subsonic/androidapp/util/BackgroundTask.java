@@ -28,6 +28,8 @@ import net.sourceforge.subsonic.androidapp.R;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 /**
  * @author Sindre Mehus
  */
@@ -129,6 +131,10 @@ public abstract class BackgroundTask<T> implements ProgressListener {
 
         if (error instanceof FileNotFoundException) {
             return activity.getResources().getString(R.string.background_task_not_found);
+        }
+
+        if (error instanceof XmlPullParserException) {
+            return activity.getResources().getString(R.string.background_task_parse_error);
         }
 
         String message = error.getMessage();

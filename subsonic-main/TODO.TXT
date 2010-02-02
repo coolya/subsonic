@@ -25,7 +25,8 @@ TODO IN ANDROID 1.2
 -----------------------
 DownloadActivity not updated if initially empty and then append to queue.
 i18n - create Norwegian translation.
-Better error message when xml parsing fails.
+SettingsActivity not repainting properly.
+Should keep on trying to download files "forever".
 -
 Use IOUtils, StringUtils.
 Long-click
@@ -51,6 +52,7 @@ Added "Save on phone" option.
 New main menu item: "Offline music"
 Improved caching of artist list.
 Save using suggested path, but remember to change suffix when transcoding. And add track number as prefix.
+Better error message when xml parsing fails.
 
 ANDROID
 -------
