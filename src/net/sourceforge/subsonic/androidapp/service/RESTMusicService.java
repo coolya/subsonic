@@ -32,7 +32,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.conn.ClientConnectionManager;
@@ -81,6 +80,7 @@ public class RESTMusicService implements MusicService {
      */
     private static final String VERSION_URL = "http://subsonic.org/backend/version.view";
 
+    private static final int HTTP_REQUEST_MAX_ATTEMPTS = 5;
     private static final long REDIRECTION_CHECK_INTERVAL_MILLIS = 60L * 60L * 1000L;
     private static final String FILENAME_INDEXES_SER = "indexes.ser";
 
@@ -93,7 +93,7 @@ public class RESTMusicService implements MusicService {
     private final VersionParser versionParser = new VersionParser();
     private final ErrorParser errorParser = new ErrorParser();
     private final List<Reader> readers = new ArrayList<Reader>(10);
-    private final HttpClient httpClient;
+    private final DefaultHttpClient httpClient;
     private Pair<String, Indexes> cachedIndexesPair;
 
     private long redirectionLastChecked;
@@ -232,7 +232,7 @@ public class RESTMusicService implements MusicService {
 
     @Override
     public Version getLatestVersion(Context context, ProgressListener progressListener) throws Exception {
-        Reader reader = getReaderForURL(VERSION_URL);
+        Reader reader = getReaderForURL(VERSION_URL, progressListener);
         addReader(reader);
         try {
             return versionParser.parse(reader, progressListener);
@@ -247,7 +247,7 @@ public class RESTMusicService implements MusicService {
 
         InputStream in = null;
         try {
-            HttpEntity entity = getEntityForURL(url);
+            HttpEntity entity = getEntityForURL(url, progressListener);
             in = entity.getContent();
 
             // If content type is XML, an error occured.  Get it.
@@ -275,7 +275,7 @@ public class RESTMusicService implements MusicService {
         HttpConnectionParams.setConnectionTimeout(params, SOCKET_CONNECT_TIMEOUT_DOWNLOAD);
         HttpConnectionParams.setSoTimeout(params, SOCKET_READ_TIMEOUT_DOWNLOAD);
 
-        HttpEntity entity = getEntityForURL(url);
+        HttpEntity entity = getEntityForURL(url, params, null);
         InputStream in = entity.getContent();
 
         // If content type is XML, an error occured.  Get it.
@@ -289,8 +289,6 @@ public class RESTMusicService implements MusicService {
 
     @Override
     public synchronized void cancel(Context context, ProgressListener progressListener) {
-        // TODO: close all connections?
-
         while (!readers.isEmpty()) {
             Reader reader = readers.get(readers.size() - 1);
             closeReader(reader);
@@ -337,11 +335,11 @@ public class RESTMusicService implements MusicService {
             progressListener.updateProgress("Contacting server.");
         }
 
-        return getReaderForURL(url.toString());
+        return getReaderForURL(url.toString(), progressListener);
     }
 
-    private Reader getReaderForURL(String url) throws Exception {
-        HttpEntity entity = getEntityForURL(url);
+    private Reader getReaderForURL(String url, ProgressListener progressListener) throws Exception {
+        HttpEntity entity = getEntityForURL(url, progressListener);
         if (entity == null) {
             throw new RuntimeException("No entity received for URL " + url);
         }
@@ -350,27 +348,42 @@ public class RESTMusicService implements MusicService {
         return new InputStreamReader(in, Constants.UTF_8);
     }
 
-    private HttpEntity getEntityForURL(String url) throws Exception {
-        return getEntityForURL(url, null);
+    private HttpEntity getEntityForURL(String url, ProgressListener progressListener) throws Exception {
+        return getEntityForURL(url, null, progressListener);
     }
 
-    private HttpEntity getEntityForURL(String url, HttpParams requestParams) throws Exception {
+    private HttpEntity getEntityForURL(String url, HttpParams requestParams, ProgressListener progressListener) throws Exception {
         url = rewriteUrlWithRedirect(url);
+        HttpResponse response = executeWithRetry(url, requestParams, progressListener);
+        return response.getEntity();
+    }
 
+    private HttpResponse executeWithRetry(String url, HttpParams requestParams, ProgressListener progressListener) throws IOException {
         Log.i(TAG, "Using URL " + url);
-        HttpGet request = new HttpGet(url);
-        if (requestParams != null) {
-            request.setParams(requestParams);
-        }
 
-        HttpContext context = new BasicHttpContext();
-        try {
-            HttpResponse response = httpClient.execute(request, context);
-            detectRedirect(url, context);
-            return response.getEntity();
-        } catch (Exception x) {
-            request.abort();
-            throw x;
+        int attempts = 0;
+        while (true) {
+            attempts++;
+            HttpContext context = new BasicHttpContext();
+            HttpGet request = new HttpGet(url);
+            if (requestParams != null) {
+                request.setParams(requestParams);
+            }
+            try {
+                HttpResponse response = httpClient.execute(request, context);
+                detectRedirect(url, context);
+                return response;
+            } catch (IOException x) {
+                request.abort();
+                if (attempts >= HTTP_REQUEST_MAX_ATTEMPTS) {
+                    throw x;
+                }
+                if (progressListener != null) {
+                    progressListener.updateProgress("A network error occurred. Retrying " + attempts + " of " + (HTTP_REQUEST_MAX_ATTEMPTS - 1) + ".");
+                }
+                Log.e(TAG, "Got IOException (" + attempts + "), will retry", x);
+                Util.sleepQuietly(2000L);
+            }
         }
     }
 
