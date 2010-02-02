@@ -138,37 +138,38 @@ public class NetworkService {
             if (router == null) {
                 LOG.warn("No UPnP router found.");
                 portForwardingStatus.setText(enabled ? "No router found." : "Port forwarding disabled.");
-                return;
-            }
-            portForwardingStatus.setText("Router found.");
-
-            // Delete old NAT entry.
-            if (currentPublicPort != 0 && (!enabled || currentPublicPort != settingsService.getPortForwardingPublicPort())) {
-                try {
-                    router.deletePortMapping(currentPublicPort);
-                    LOG.info("Deleted port mapping for public port " + currentPublicPort);
-                } catch (Throwable x) {
-                    LOG.warn("Failed to delete port mapping for public port " + currentPublicPort, x);
-                }
-            }
-
-            // Create new NAT entry.
-            if (enabled) {
-                currentPublicPort = settingsService.getPortForwardingPublicPort();
-                int localPort = 0;
-                try {
-                    localPort = settingsService.getPortForwardingLocalPort();
-                    router.addPortMapping(currentPublicPort, localPort, 0);
-                    String message = "Successfully forwarding public port " + currentPublicPort + " to local port " + localPort + ".";
-                    LOG.info(message);
-                    portForwardingStatus.setText(message);
-                } catch (Throwable x) {
-                    String message = "Failed to create port forwarding from public port " + currentPublicPort + " to local port " + localPort + ".";
-                    LOG.warn(message, x);
-                    portForwardingStatus.setText(message + " See log for details.");
-                }
             } else {
-                portForwardingStatus.setText("Port forwarding disabled.");
+
+                portForwardingStatus.setText("Router found.");
+
+                // Delete old NAT entry.
+                if (currentPublicPort != 0 && (!enabled || currentPublicPort != settingsService.getPortForwardingPublicPort())) {
+                    try {
+                        router.deletePortMapping(currentPublicPort);
+                        LOG.info("Deleted port mapping for public port " + currentPublicPort);
+                    } catch (Throwable x) {
+                        LOG.warn("Failed to delete port mapping for public port " + currentPublicPort, x);
+                    }
+                }
+
+                // Create new NAT entry.
+                if (enabled) {
+                    currentPublicPort = settingsService.getPortForwardingPublicPort();
+                    int localPort = 0;
+                    try {
+                        localPort = settingsService.getPortForwardingLocalPort();
+                        router.addPortMapping(currentPublicPort, localPort, 0);
+                        String message = "Successfully forwarding public port " + currentPublicPort + " to local port " + localPort + ".";
+                        LOG.info(message);
+                        portForwardingStatus.setText(message);
+                    } catch (Throwable x) {
+                        String message = "Failed to create port forwarding from public port " + currentPublicPort + " to local port " + localPort + ".";
+                        LOG.warn(message, x);
+                        portForwardingStatus.setText(message + " See log for details.");
+                    }
+                } else {
+                    portForwardingStatus.setText("Port forwarding disabled.");
+                }
             }
 
             //  Don't do it again if disabled.
