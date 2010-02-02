@@ -64,7 +64,7 @@ public class PlaylistsParser extends AbstractParser {
         } while (eventType != XmlPullParser.END_DOCUMENT);
 
         if (progressListener != null) {
-            progressListener.updateProgress("Reading from server. Done!");
+            progressListener.updateProgress(R.string.parser_reading_done);
         }
         return result;
     }
