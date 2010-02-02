@@ -173,6 +173,7 @@ public final class Util {
             if (!tmp.renameTo(to)) {
                 throw new IOException("Failed to rename " + tmp + " to " + to);
             }
+            Log.i(TAG, "Copied " + from + " to " + to);
         } catch (IOException x) {
             close(out);
             delete(to);
