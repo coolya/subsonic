@@ -30,7 +30,8 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 TODO IN ANDROID 1.2
 -----------------------
 DownloadActivity not updated if initially empty and then append to queue.
-i18n - create Norwegian translation.
+i18n (SettingsActivity, RESTMusicService)
+Create Norwegian translation.
 SettingsActivity not repainting properly.
 Should keep on trying to download files "forever".
 -
@@ -85,7 +86,7 @@ REST method for getting lyrics.
 
 BACKLOG
 ==========================
-Add "discovery date" to search index. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7369#7369
+Add "Copy settings from user" option.
 Improve menus in web pages.  Make sub menus.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
