@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
+import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
@@ -169,7 +170,7 @@ public class DownloadFile {
                 Util.delete(completeFile);
                 Util.delete(saveFile);
                 if (!isCancelled()) {
-                    String msg = "Error downloading \"" + song.getTitle() + "\"";
+                    String msg = context.getResources().getString(R.string.download_error, song.getTitle());
                     Util.showErrorNotification(context, handler, msg, x);
                     Log.e(TAG, msg, x);
                 }
