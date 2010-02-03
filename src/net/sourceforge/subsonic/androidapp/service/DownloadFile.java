@@ -50,6 +50,7 @@ public class DownloadFile {
     private final MediaStoreService mediaStoreService;
     private CancellableTask downloadTask;
     private boolean save;
+    private boolean failed;
 
     public DownloadFile(Context context, Handler handler, MusicDirectory.Entry song, boolean save) {
         this.context = context;
@@ -67,6 +68,7 @@ public class DownloadFile {
     }
 
     public synchronized void download() {
+        failed = false;
         downloadTask = new DownloadTask();
         downloadTask.start();
     }
@@ -97,12 +99,16 @@ public class DownloadFile {
         return partialFile;
     }
 
-    public boolean isComplete() {
+    public boolean isCompleteFileAvailable() {
         return saveFile.exists() || completeFile.exists();
     }
 
-    public boolean isDone() {
+    public boolean isWorkDone() {
         return saveFile.exists() || (completeFile.exists() && !save);
+    }
+
+    public boolean isFailed() {
+        return failed;
     }
 
     public void delete() {
@@ -170,6 +176,7 @@ public class DownloadFile {
                 Util.delete(completeFile);
                 Util.delete(saveFile);
                 if (!isCancelled()) {
+                    failed = true;
                     String msg = context.getResources().getString(R.string.download_error, song.getTitle());
                     Util.showErrorNotification(context, handler, msg, x);
                     Log.e(TAG, msg, x);
@@ -192,10 +199,16 @@ public class DownloadFile {
                 count += n;
 
                 long now = System.currentTimeMillis();
-                if (now - lastLog > 2000L) {  // Only every so often.
+                if (now - lastLog > 3000L) {  // Only every so often.
                     Log.i(TAG, "Downloaded " + Util.formatBytes(count) + " of " + song);
                     lastLog = now;
                 }
+
+                // TODO
+//                if (count > 512000) {
+//                    throw new IOException("Simulating I/O error.");
+//                }
+
             }
             return count;
         }
