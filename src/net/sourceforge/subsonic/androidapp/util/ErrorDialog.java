@@ -28,12 +28,16 @@ import net.sourceforge.subsonic.androidapp.R;
  */
 public class ErrorDialog {
 
-    public ErrorDialog(final Activity activity, String errorMessage, final boolean finishActivityOnCancel) {
+    public ErrorDialog(Activity activity, int messageId, boolean finishActivityOnCancel) {
+        this(activity, activity.getResources().getString(messageId), finishActivityOnCancel);
+    }
+
+    public ErrorDialog(final Activity activity, String message, final boolean finishActivityOnCancel) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setTitle(R.string.error_label);
-        builder.setMessage(errorMessage);
+        builder.setMessage(message);
         builder.setCancelable(true);
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override

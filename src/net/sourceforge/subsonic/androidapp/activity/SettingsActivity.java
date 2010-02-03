@@ -99,7 +99,7 @@ public class SettingsActivity extends PreferenceActivity {
                         emptyCache();
                     }
                 };
-                Util.confirm(SettingsActivity.this, getResources().getString(R.string.settings_empty_cache_confirm), task);
+                Util.confirm(SettingsActivity.this, R.string.settings_empty_cache_confirm, task);
                 return false;
             }
         });
@@ -152,9 +152,9 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             protected void done(Boolean licenseValid) {
                 if (licenseValid) {
-                    Util.toast(SettingsActivity.this, getResources().getString(R.string.settings_testing_ok));
+                    Util.toast(SettingsActivity.this, R.string.settings_testing_ok);
                 } else {
-                    Util.toast(SettingsActivity.this, getResources().getString(R.string.settings_testing_unlicensed));
+                    Util.toast(SettingsActivity.this, R.string.settings_testing_unlicensed);
                 }
             }
 
@@ -165,8 +165,7 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             protected void error(Throwable error) {
                 Log.w(TAG, error.toString(), error);
-                new ErrorDialog(SettingsActivity.this, getResources().getString(R.string.settings_connection_failure) +
-                                                       getErrorMessage(error), false);
+                new ErrorDialog(SettingsActivity.this, R.string.settings_connection_failure + getErrorMessage(error), false);
             }
         };
         task.execute();
@@ -255,15 +254,14 @@ public class SettingsActivity extends PreferenceActivity {
                 Version localVersion = versions.getFirst();
                 Version latestVersion = versions.getSecond();
                 if (localVersion == null) {
-                    Util.error(SettingsActivity.this, getResources().getString(R.string.settings_version_current_failed));
+                    Util.error(SettingsActivity.this, R.string.settings_version_current_failed);
                 } else if (latestVersion == null) {
-                    Util.error(SettingsActivity.this, getResources().getString(R.string.settings_version_latest_failed));
+                    Util.error(SettingsActivity.this, R.string.settings_version_latest_failed);
                 } else if (localVersion.compareTo(latestVersion) < 0) {
-                    Util.info(SettingsActivity.this,
-                              getResources().getString(R.string.settings_version_update_available_title),
-                              getResources().getString(R.string.settings_version_update_available_text));
+                    Util.info(SettingsActivity.this, R.string.settings_version_update_available_title,
+                              R.string.settings_version_update_available_text);
                 } else {
-                    Util.toast(SettingsActivity.this, getResources().getString(R.string.settings_version_update_not_available));
+                    Util.toast(SettingsActivity.this, R.string.settings_version_update_not_available);
                 }
             }
 
@@ -293,7 +291,7 @@ public class SettingsActivity extends PreferenceActivity {
                     try {
                         new URL((String) value);
                     } catch (Exception x) {
-                        new ErrorDialog(SettingsActivity.this, getResources().getString(R.string.settings_invalid_url), false);
+                        new ErrorDialog(SettingsActivity.this, R.string.settings_invalid_url, false);
                         return false;
                     }
                     return true;
