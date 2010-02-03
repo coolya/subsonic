@@ -25,6 +25,7 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
@@ -384,7 +385,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     private void handleError(Exception x) {
-        String msg = "Error playing \"" + currentPlaying.getSong().getTitle() + "\"";
+        String msg = getResources().getString(R.string.download_error, currentPlaying.getSong().getTitle());
         Util.showErrorNotification(this, handler, msg, x);
         Log.e(TAG, msg, x);
         mediaPlayer.reset();
