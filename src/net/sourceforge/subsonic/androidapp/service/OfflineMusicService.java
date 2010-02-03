@@ -30,6 +30,7 @@ import java.util.Set;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Artist;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
@@ -130,17 +131,17 @@ public class OfflineMusicService extends RESTMusicService {
 
     @Override
     public MusicDirectory search(String query, Context context, ProgressListener progressListener) throws Exception {
-        throw new RuntimeException("Search not available in offline mode.");
+        throw new RuntimeException(context.getResources().getString(R.string.offline_search_unavailable));
     }
 
     @Override
     public List<Pair<String, String>> getPlaylists(Context context, ProgressListener progressListener) throws Exception {
-        throw new RuntimeException("Playlists not available in offline mode.");
+        throw new RuntimeException(context.getResources().getString(R.string.offline_playlists_unavailable));
     }
 
     @Override
     public MusicDirectory getPlaylist(String id, Context context, ProgressListener progressListener) throws Exception {
-        throw new RuntimeException("Playlists not available in offline mode.");
+        throw new RuntimeException(context.getResources().getString(R.string.offline_playlists_unavailable));
     }
 
 }
