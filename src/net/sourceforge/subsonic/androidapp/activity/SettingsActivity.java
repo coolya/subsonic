@@ -143,7 +143,7 @@ public class SettingsActivity extends PreferenceActivity {
         BackgroundTask<Boolean> task = new BackgroundTask<Boolean>(this) {
             @Override
             protected Boolean doInBackground() throws Throwable {
-                updateProgress("Testing connection...");
+                updateProgress(R.string.settings_testing_connection);
                 MusicService musicService = MusicServiceFactory.getMusicService(SettingsActivity.this);
                 musicService.ping(SettingsActivity.this, this);
                 return musicService.isLicenseValid(SettingsActivity.this, null);
@@ -152,9 +152,9 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             protected void done(Boolean licenseValid) {
                 if (licenseValid) {
-                    Util.toast(SettingsActivity.this, "Connection is OK");
+                    Util.toast(SettingsActivity.this, getResources().getString(R.string.settings_testing_ok));
                 } else {
-                    Util.toast(SettingsActivity.this, "Connection is OK. Server unlicensed.");
+                    Util.toast(SettingsActivity.this, getResources().getString(R.string.settings_testing_unlicensed));
                 }
             }
 
@@ -165,7 +165,8 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             protected void error(Throwable error) {
                 Log.w(TAG, error.toString(), error);
-                new ErrorDialog(SettingsActivity.this, "Connection failure. " + getErrorMessage(error), false);
+                new ErrorDialog(SettingsActivity.this, getResources().getString(R.string.settings_connection_failure) +
+                                                       getErrorMessage(error), false);
             }
         };
         task.execute();
@@ -178,7 +179,7 @@ public class SettingsActivity extends PreferenceActivity {
 
             @Override
             protected Object doInBackground() throws Throwable {
-                updateProgress("Deleting cached files...");
+                updateProgress(R.string.settings_cache_deleting);
 
                 undeletable = new HashSet<File>(5);
                 DownloadFile currentDownload = downloadService.getCurrentDownloading();
@@ -208,7 +209,7 @@ public class SettingsActivity extends PreferenceActivity {
                         if (!file.exists()) {
                             Log.d(TAG, "Deleted " + file.getPath());
                             deleteCount++;
-                            updateProgress("Deleted " + deleteCount + " file(s).");
+                            updateProgress(getResources().getString(R.string.settings_cache_deleted, deleteCount));
                         }
                     }
                     return;
@@ -242,7 +243,7 @@ public class SettingsActivity extends PreferenceActivity {
         BackgroundTask<Pair<Version, Version>> task = new BackgroundTask<Pair<Version, Version>>(this) {
             @Override
             protected Pair<Version, Version> doInBackground() throws Throwable {
-                updateProgress("Checking for updates...");
+                updateProgress(R.string.settings_version_checking);
                 MusicService musicService = MusicServiceFactory.getMusicService(SettingsActivity.this);
                 Version localVersion = musicService.getLocalVersion(SettingsActivity.this);
                 Version latestVersion = musicService.getLatestVersion(SettingsActivity.this, this);
@@ -254,13 +255,15 @@ public class SettingsActivity extends PreferenceActivity {
                 Version localVersion = versions.getFirst();
                 Version latestVersion = versions.getSecond();
                 if (localVersion == null) {
-                    Util.error(SettingsActivity.this, "Failed to resolve current version.");
+                    Util.error(SettingsActivity.this, getResources().getString(R.string.settings_version_current_failed));
                 } else if (latestVersion == null) {
-                    Util.error(SettingsActivity.this, "Failed to resolve latest version.");
+                    Util.error(SettingsActivity.this, getResources().getString(R.string.settings_version_latest_failed));
                 } else if (localVersion.compareTo(latestVersion) < 0) {
-                    Util.info(SettingsActivity.this, "Update available", "A newer version is available on Android Market.");
+                    Util.info(SettingsActivity.this,
+                              getResources().getString(R.string.settings_version_update_available_title),
+                              getResources().getString(R.string.settings_version_update_available_text));
                 } else {
-                    Util.toast(SettingsActivity.this, "You are running the latest version.");
+                    Util.toast(SettingsActivity.this, getResources().getString(R.string.settings_version_update_not_available));
                 }
             }
 
@@ -290,7 +293,7 @@ public class SettingsActivity extends PreferenceActivity {
                     try {
                         new URL((String) value);
                     } catch (Exception x) {
-                        new ErrorDialog(SettingsActivity.this, "Please specify a valid URL.", false);
+                        new ErrorDialog(SettingsActivity.this, getResources().getString(R.string.settings_invalid_url), false);
                         return false;
                     }
                     return true;
