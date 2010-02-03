@@ -224,8 +224,12 @@ public final class Util {
         });
     }
 
-    public static void toast(final Context context, final String message) {
+    public static void toast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void toast(Context context, int messageId) {
+        Toast.makeText(context, messageId, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -336,19 +340,19 @@ public final class Util {
         return networkInfo != null && networkInfo.isConnected();
     }
 
-    public static void error(Context context, String message) {
-        showDialog(context, android.R.drawable.ic_dialog_alert, context.getResources().getString(R.string.error_label), message);
+    public static void error(Context context, int messageId) {
+        showDialog(context, android.R.drawable.ic_dialog_alert, R.string.error_label, messageId);
     }
 
-    public static void info(Context context, String title, String message) {
-        showDialog(context, android.R.drawable.ic_dialog_info, title, message);
+    public static void info(Context context, int titleId, int messageId) {
+        showDialog(context, android.R.drawable.ic_dialog_info, titleId, messageId);
     }
 
-    private static void showDialog(Context context, int icon, String title, String message) {
+    private static void showDialog(Context context, int icon, int titleId, int messageId) {
         new AlertDialog.Builder(context)
                 .setIcon(icon)
-                .setTitle(title)
-                .setMessage(message)
+                .setTitle(titleId)
+                .setMessage(messageId)
                 .setPositiveButton(R.string.common_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
@@ -358,10 +362,10 @@ public final class Util {
                 .show();
     }
 
-    public static void confirm(Context context, String message, final Runnable task) {
+    public static void confirm(Context context, int messageId, final Runnable task) {
         new AlertDialog.Builder(context)
                 .setIcon(android.R.drawable.ic_dialog_info)
-                .setTitle(message)
+                .setTitle(messageId)
                 .setPositiveButton(R.string.common_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
