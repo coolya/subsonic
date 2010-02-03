@@ -124,6 +124,8 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
         mediaPlayer.reset();
         setPlayerState(IDLE);
+
+        lifecycleSupport.serializeDownloadQueue();
     }
 
     @Override
@@ -136,6 +138,8 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             next();
         }
         downloadList.remove(downloadFile);
+
+        lifecycleSupport.serializeDownloadQueue();
     }
 
     @Override
