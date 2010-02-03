@@ -333,7 +333,7 @@ public class RESTMusicService implements MusicService {
         }
 
         if (progressListener != null) {
-            progressListener.updateProgress("Contacting server.");
+            progressListener.updateProgress(R.string.service_connecting);
         }
 
         return getReaderForURL(context, url.toString(), progressListener);
