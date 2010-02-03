@@ -111,19 +111,22 @@ public class StreamController implements Controller {
                 playlist.addFiles(true, file);
                 player.setPlaylist(playlist);
 
+                response.setHeader("ETag", StringUtil.utf8HexEncode(path));
+                response.setHeader("Accept-Ranges", "bytes");
+
+                long contentLength;
+                range = StringUtil.parseRange(request.getHeader("Range"));
+                if (range != null) {
+                    response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
+                    contentLength = file.length() - range.getMinimumLong();
+                    LOG.info("Got range: " + range);
+                } else {
+                    contentLength = file.length();
+                }
+
                 boolean transcodingRequired = transcodingService.isTranscodingRequired(file, player);
                 if (!transcodingRequired) {
-                    response.setHeader("ETag", StringUtil.utf8HexEncode(path));
-                    response.setHeader("Accept-Ranges", "bytes");
-
-                    range = StringUtil.parseRange(request.getHeader("Range"));
-                    if (range != null) {
-                        response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
-                        Util.setContentLength(response, file.length() - range.getMinimumLong());
-                        LOG.info("Got range: " + range);
-                    } else {
-                        Util.setContentLength(response, file.length());
-                    }
+                    Util.setContentLength(response, contentLength);
                 }
             }
 

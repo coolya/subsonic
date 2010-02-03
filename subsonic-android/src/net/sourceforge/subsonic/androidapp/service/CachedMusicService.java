@@ -32,6 +32,7 @@ import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import net.sourceforge.subsonic.androidapp.util.TimeLimitedCache;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import org.apache.http.HttpResponse;
 
 /**
  * @author Sindre Mehus
@@ -127,8 +128,8 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
-    public InputStream getDownloadInputStream(Context context, MusicDirectory.Entry song) throws Exception {
-        return musicService.getDownloadInputStream(context, song);
+    public HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset) throws Exception {
+        return musicService.getDownloadInputStream(context, song, offset);
     }
 
     @Override

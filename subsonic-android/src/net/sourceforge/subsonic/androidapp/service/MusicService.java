@@ -28,6 +28,7 @@ import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import android.content.Context;
 import android.graphics.Bitmap;
+import org.apache.http.HttpResponse;
 
 /**
  * @author Sindre Mehus
@@ -50,7 +51,7 @@ public interface MusicService {
 
     Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception;
 
-    InputStream getDownloadInputStream(Context context, MusicDirectory.Entry song) throws Exception;
+    HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset) throws Exception;
 
     void cancel(Context context, ProgressListener progressListener);
 

@@ -33,6 +33,8 @@ DownloadActivity not updated if initially empty and then append to queue.
 Create Norwegian translation.
 SettingsActivity not repainting properly.
 Should keep on trying to download files "forever".
+Close streams when using ErrorParser.
+
 -
 Use IOUtils, StringUtils.
 Long-click
