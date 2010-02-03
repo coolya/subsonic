@@ -32,6 +32,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
+import org.apache.http.Header;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.conn.ClientConnectionManager;
@@ -267,7 +269,7 @@ public class RESTMusicService implements MusicService {
     }
 
     @Override
-    public InputStream getDownloadInputStream(Context context, MusicDirectory.Entry song) throws Exception {
+    public HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset) throws Exception {
 
         String url = Util.getRestUrl(context, "stream") + "&id=" + song.getId();
 
@@ -276,16 +278,22 @@ public class RESTMusicService implements MusicService {
         HttpConnectionParams.setConnectionTimeout(params, SOCKET_CONNECT_TIMEOUT_DOWNLOAD);
         HttpConnectionParams.setSoTimeout(params, SOCKET_READ_TIMEOUT_DOWNLOAD);
 
-        HttpEntity entity = getEntityForURL(context, url, params, null);
-        InputStream in = entity.getContent();
+        // Add "Range" header if offset is given.
+        List<Header> headers = new ArrayList<Header>();
+        if (offset > 0) {
+            headers.add(new BasicHeader("Range", "bytes=" + offset + "-"));
+        }
+        HttpResponse response = getResponseForURL(context, url, params, headers, null);
 
         // If content type is XML, an error occured.  Get it.
-        String contentType = Util.getContentType(entity);
+        String contentType = Util.getContentType(response.getEntity());
         if (contentType != null && contentType.startsWith("text/xml")) {
+            InputStream in = response.getEntity().getContent();
             new ErrorParser(context).parse(new InputStreamReader(in, Constants.UTF_8));
             return null; // Never reached.
         }
-        return in;
+
+        return response;
     }
 
     @Override
@@ -350,16 +358,17 @@ public class RESTMusicService implements MusicService {
     }
 
     private HttpEntity getEntityForURL(Context context, String url, ProgressListener progressListener) throws Exception {
-        return getEntityForURL(context, url, null, progressListener);
+        return getResponseForURL(context, url, null, null, progressListener).getEntity();
     }
 
-    private HttpEntity getEntityForURL(Context context, String url, HttpParams requestParams, ProgressListener progressListener) throws Exception {
+    private HttpResponse getResponseForURL(Context context, String url, HttpParams requestParams,
+                                           List<Header> headers, ProgressListener progressListener) throws Exception {
         url = rewriteUrlWithRedirect(url);
-        HttpResponse response = executeWithRetry(context, url, requestParams, progressListener);
-        return response.getEntity();
+        return executeWithRetry(context, url, requestParams, headers, progressListener);
     }
 
-    private HttpResponse executeWithRetry(Context context, String url, HttpParams requestParams, ProgressListener progressListener) throws IOException {
+    private HttpResponse executeWithRetry(Context context, String url, HttpParams requestParams,
+                                          List<Header> headers, ProgressListener progressListener) throws IOException {
         Log.i(TAG, "Using URL " + url);
 
         int attempts = 0;
@@ -367,9 +376,17 @@ public class RESTMusicService implements MusicService {
             attempts++;
             HttpContext httpContext = new BasicHttpContext();
             HttpGet request = new HttpGet(url);
+
             if (requestParams != null) {
                 request.setParams(requestParams);
             }
+
+            if (headers != null) {
+                for (Header header : headers) {
+                    request.addHeader(header);
+                }
+            }
+
             try {
                 HttpResponse response = httpClient.execute(request, httpContext);
                 detectRedirect(url, httpContext);

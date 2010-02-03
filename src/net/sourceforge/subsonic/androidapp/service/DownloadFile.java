@@ -32,6 +32,8 @@ import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 
 /**
  * @author Sindre Mehus
@@ -121,10 +123,10 @@ public class DownloadFile {
 
     public boolean cleanup() {
         boolean ok = true;
-        if (partialFile.exists()) {
+        if (completeFile.exists() || saveFile.exists()) {
             ok = Util.delete(partialFile);
         }
-        if (saveFile.exists() && completeFile.exists()) {
+        if (saveFile.exists()) {
             ok &= Util.delete(completeFile);
         }
         return ok;
@@ -154,8 +156,16 @@ public class DownloadFile {
                 }
 
                 MusicService musicService = MusicServiceFactory.getMusicService(context);
-                in = musicService.getDownloadInputStream(context, song);
-                out = new FileOutputStream(partialFile);
+
+                // Attempt partial HTTP GET, appending to the file if it exists.
+                HttpResponse response = musicService.getDownloadInputStream(context, song, partialFile.length());
+                in = response.getEntity().getContent();
+                boolean partial = response.getStatusLine().getStatusCode() == HttpStatus.SC_PARTIAL_CONTENT;
+                if (partial) {
+                    Log.i(TAG, "Executed partial HTTP GET, skipping " + partialFile.length() + " bytes");
+                }
+
+                out = new FileOutputStream(partialFile, partial);
                 long n = copy(in, out);
                 Log.i(TAG, "Downloaded " + n + " bytes to " + partialFile);
                 out.flush();
@@ -172,7 +182,6 @@ public class DownloadFile {
 
             } catch (Exception x) {
                 Util.close(out);
-                Util.delete(partialFile);
                 Util.delete(completeFile);
                 Util.delete(saveFile);
                 if (!isCancelled()) {
