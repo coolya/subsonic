@@ -30,7 +30,6 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 TODO IN ANDROID 1.2
 -----------------------
 DownloadActivity not updated if initially empty and then append to queue.
-i18n (SettingsActivity)
 Create Norwegian translation.
 SettingsActivity not repainting properly.
 Should keep on trying to download files "forever".

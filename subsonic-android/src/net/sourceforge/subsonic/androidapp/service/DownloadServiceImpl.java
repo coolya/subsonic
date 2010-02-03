@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Sindre Mehus
@@ -326,7 +325,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
             private boolean bufferComplete() {
                 File file = downloadFile.getPartialFile();
-                return downloadFile.isComplete() || file.exists() && file.length() > bufferSize;
+                return downloadFile.isCompleteFileAvailable() || file.exists() && file.length() > bufferSize;
             }
         };
         bufferTask.start();
@@ -334,7 +333,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     private synchronized void doPlay(final DownloadFile downloadFile) {
         try {
-            File file = downloadFile.isComplete() ? downloadFile.getCompleteFile() : downloadFile.getPartialFile();
+            File file = downloadFile.isCompleteFileAvailable() ? downloadFile.getCompleteFile() : downloadFile.getPartialFile();
             mediaPlayer.setOnCompletionListener(null);
             mediaPlayer.reset();
             setPlayerState(IDLE);
@@ -350,7 +349,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                 public void onCompletion(MediaPlayer mediaPlayer) {
                     setPlayerState(COMPLETED);
 
-                    if (downloadFile.isComplete()) {
+                    if (downloadFile.isCompleteFileAvailable()) {
                         next();
                         return;
                     }
@@ -362,7 +361,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
                         mediaPlayer.reset();
                         setPlayerState(IDLE);
-                        File file = downloadFile.isComplete() ? downloadFile.getCompleteFile() : downloadFile.getPartialFile();
+                        File file = downloadFile.isCompleteFileAvailable() ? downloadFile.getCompleteFile() : downloadFile.getPartialFile();
                         mediaPlayer.setDataSource(file.getPath());
                         setPlayerState(PREPARING);
                         mediaPlayer.prepare();
@@ -395,7 +394,9 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     protected synchronized void checkDownloads() {
 
         // Need to download current playing?
-        if (currentPlaying != null && currentPlaying != currentDownloading && !currentPlaying.isComplete()) {
+        if (currentPlaying != null &&
+            currentPlaying != currentDownloading &&
+            !currentPlaying.isCompleteFileAvailable()) {
 
             // Cancel current download, if necessary.
             if (currentDownloading != null) {
@@ -408,7 +409,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
 
         // Find a suitable target for download.
-        else if (currentDownloading == null || currentDownloading.isComplete()) {
+        else if (currentDownloading == null || currentDownloading.isCompleteFileAvailable() || currentDownloading.isFailed()) {
 
             int n = downloadList.size();
             if (n == 0) {
@@ -419,7 +420,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             int i = start;
             do {
                 DownloadFile downloadFile = downloadList.get(i);
-                if (!downloadFile.isDone()) {
+                if (!downloadFile.isWorkDone()) {
                     currentDownloading = downloadFile;
                     currentDownloading.download();
                     cleanupCandidates.add(currentDownloading);
