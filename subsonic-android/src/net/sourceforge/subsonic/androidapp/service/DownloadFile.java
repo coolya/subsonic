@@ -171,13 +171,14 @@ public class DownloadFile {
                 out.flush();
                 out.close();
 
+                if (isCancelled()) {
+                    throw new Exception("Download of " + song + " was cancelled");
+                }
+
                 Util.atomicCopy(partialFile, completeFile);
                 if (save) {
                     Util.atomicCopy(partialFile, saveFile);
                     mediaStoreService.saveInMediaStore(DownloadFile.this);
-                }
-                if (isCancelled()) {
-                    throw new Exception("Download of " + song + " was cancelled");
                 }
 
             } catch (Exception x) {

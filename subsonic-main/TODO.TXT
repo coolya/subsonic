@@ -1,5 +1,6 @@
 TODO IN 3.9
 --------------
+Mention xxx.subsonic.org in getting started.
 Mac installer, http://www.centerkey.com/mac/java/
 - refactor booter/installer
 - use app icon.
@@ -34,7 +35,7 @@ Create Norwegian translation.
 SettingsActivity not repainting properly.
 Should keep on trying to download files "forever".
 Close streams when using ErrorParser.
-
+Don't restart playback too often.
 -
 Use IOUtils, StringUtils.
 Long-click
