@@ -107,7 +107,7 @@ public class SongView extends LinearLayout implements Checkable {
             leftImage = downloadFile.isSaved() ? R.drawable.saved : R.drawable.downloaded;
         }
 
-        if (partialFile.exists() && !completeFile.exists()) {
+        if (downloadFile.isDownloading() && !downloadFile.isDownloadCancelled() && partialFile.exists()) {
             imageView2.setText(Util.formatBytes(partialFile.length()));
             rightImage = R.drawable.downloading;
         } else {

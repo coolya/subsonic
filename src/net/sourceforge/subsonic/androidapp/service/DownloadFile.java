@@ -81,10 +81,6 @@ public class DownloadFile {
         }
     }
 
-    public boolean isSaved() {
-        return saveFile.exists();
-    }
-
     public File getCompleteFile() {
         if (saveFile.exists()) {
             return saveFile;
@@ -101,12 +97,24 @@ public class DownloadFile {
         return partialFile;
     }
 
-    public boolean isCompleteFileAvailable() {
+    public boolean isSaved() {
+        return saveFile.exists();
+    }
+
+    public synchronized boolean isCompleteFileAvailable() {
         return saveFile.exists() || completeFile.exists();
     }
 
-    public boolean isWorkDone() {
+    public synchronized boolean isWorkDone() {
         return saveFile.exists() || (completeFile.exists() && !save);
+    }
+
+    public synchronized boolean isDownloading() {
+        return downloadTask != null && downloadTask.isRunning();
+    }
+
+    public synchronized boolean isDownloadCancelled() {
+        return downloadTask != null && downloadTask.isCancelled();
     }
 
     public boolean isFailed() {
