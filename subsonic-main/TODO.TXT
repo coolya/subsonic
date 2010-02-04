@@ -1,10 +1,11 @@
 TODO IN 3.9
 --------------
-Mention xxx.subsonic.org in getting started.
 Mac installer, http://www.centerkey.com/mac/java/
 - refactor booter/installer
 - use app icon.
 - only build win installer on windows and mac installer on mac.
+- create /var/subsonic?
+- include transcoders
 html5 audio
 Link to http://nonpixel.com/subair/
 Support offset in REST api(?) How will that work with dynamic bandwidth selection.  Use "Range" instead.
