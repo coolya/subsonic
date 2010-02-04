@@ -31,19 +31,26 @@ public abstract class CancellableTask {
 
     private static final String TAG = CancellableTask.class.getSimpleName();
 
+    private final AtomicBoolean running = new AtomicBoolean(false);
     private final AtomicBoolean cancelled = new AtomicBoolean(false);
     private final AtomicReference<Thread> thread = new AtomicReference<Thread>();
 
     public void cancel() {
+        Log.d(TAG, "Cancelling " + CancellableTask.this);
         cancelled.set(true);
         Thread t = thread.get();
         if (t != null && t.isAlive()) {
             t.interrupt();
+            Log.d(TAG, "Interrupted " + CancellableTask.this);
         }
     }
 
     public boolean isCancelled() {
         return cancelled.get();
+    }
+
+    public boolean isRunning() {
+        return running.get();
     }
 
     public abstract void execute();
@@ -52,10 +59,12 @@ public abstract class CancellableTask {
         thread.set(new Thread() {
             @Override
             public void run() {
+                running.set(true);
                 Log.d(TAG, "Starting thread for " + CancellableTask.this);
                 try {
                     execute();
                 } finally {
+                    running.set(false);
                     Log.d(TAG, "Stopping thread for " + CancellableTask.this);
                 }
             }
