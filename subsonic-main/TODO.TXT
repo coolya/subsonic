@@ -8,11 +8,11 @@ Mac installer, http://www.centerkey.com/mac/java/
 - include transcoders
 html5 audio
 Link to http://nonpixel.com/subair/
-Support offset in REST api(?) How will that work with dynamic bandwidth selection.  Use "Range" instead.
 
 DONE IN 3.9
 -----------
 Bugfix: Don't look for UPnP routers if port forwarding is disabled.
+New: Added link to SubAir in "More" page.
 
 Create album table, reimplement related services in SearchService.
 Upgrade JWPlayer

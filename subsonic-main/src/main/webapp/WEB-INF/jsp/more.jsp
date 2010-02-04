@@ -111,6 +111,9 @@
 <h2><img src="<spring:theme code="androidImage"/>" alt=""/>&nbsp;<fmt:message key="more.android.title"/></h2>
 <fmt:message key="more.android.text"/>
 
+<h2><img src="<spring:theme code="subairImage"/>" alt=""/>&nbsp;<fmt:message key="more.subair.title"/></h2>
+<fmt:message key="more.subair.text"/>
+
 <h2><img src="<spring:theme code="wapImage"/>" alt=""/>&nbsp;<fmt:message key="more.mobile.title"/></h2>
 <fmt:message key="more.mobile.text"><fmt:param value="${model.brand}"/></fmt:message>
 
