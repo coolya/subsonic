@@ -119,6 +119,15 @@ public class MainActivity extends OptionsMenuActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String server = Util.getActiveServer(this);
+//        TextView serverText = (TextView) findViewById(R.id.main_server);
+//        serverText.setText(server);
+    }
+
     private void showPlaylistDialog() {
         new BackgroundTask<List<Pair<String, String>>>(this) {
             @Override

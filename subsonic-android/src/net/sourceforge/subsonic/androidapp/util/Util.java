@@ -81,6 +81,13 @@ public final class Util {
         editor.commit();
     }
 
+    public static String getActiveServer(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        String instance = prefs.getString(Constants.PREFERENCES_KEY_SERVER_INSTANCE, "1");
+
+        return prefs.getString(Constants.PREFERENCES_KEY_SERVER_NAME + instance, null);
+    }
+
     public static String getRestUrl(Context context, String method) {
         StringBuilder builder = new StringBuilder();
 
