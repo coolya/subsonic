@@ -88,6 +88,17 @@ public final class Util {
         return prefs.getString(Constants.PREFERENCES_KEY_SERVER_NAME + instance, null);
     }
 
+    public static void nextActiveServer(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+
+        int instance = Integer.parseInt(prefs.getString(Constants.PREFERENCES_KEY_SERVER_INSTANCE, "1"));
+        instance = instance == 3 ? 1 : instance + 1;
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(Constants.PREFERENCES_KEY_SERVER_INSTANCE, String.valueOf(instance));
+        editor.commit();
+    }
+
     public static String getRestUrl(Context context, String method) {
         StringBuilder builder = new StringBuilder();
 
