@@ -52,6 +52,15 @@ public class MainActivity extends OptionsMenuActivity {
         startService(new Intent(this, DownloadServiceImpl.class));
         setContentView(R.layout.main);
 
+        View serverText = findViewById(R.id.main_server);
+        serverText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Util.nextActiveServer(MainActivity.this);
+                updateServer();
+            }
+        });
+
         View browseButton = findViewById(R.id.main_browse);
         browseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,10 +131,13 @@ public class MainActivity extends OptionsMenuActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        updateServer();
+    }
 
+    private void updateServer() {
         String server = Util.getActiveServer(this);
-//        TextView serverText = (TextView) findViewById(R.id.main_server);
-//        serverText.setText(server);
+        TextView serverText = (TextView) findViewById(R.id.main_server);
+        serverText.setText(server);
     }
 
     private void showPlaylistDialog() {

@@ -5,24 +5,42 @@
               a:layout_height="fill_parent">
 
     <LinearLayout
-            a:orientation="horizontal"
+            a:orientation="vertical"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:layoutAnimation="@anim/layout_slide_down">
+
+        <LinearLayout
+                a:orientation="horizontal"
+                a:layout_width="fill_parent"
+                a:layout_height="wrap_content">
+            <TextView
+                    a:id="@+id/main_server"
+                    a:layout_width="wrap_content"
+                    a:layout_height="wrap_content"
+                    a:layout_marginTop="6dip"
+                    a:layout_marginLeft="6dip"
+                    a:layout_gravity="top|left"
+                    a:textSize="12dip"/>
+            <TextView
+                    a:id="@+id/main_version"
+                    a:layout_width="wrap_content"
+                    a:layout_height="wrap_content"
+                    a:layout_marginTop="6dip"
+                    a:layout_marginRight="6dip"
+                    a:layout_gravity="top|right"
+                    a:layout_weight="1"
+                    a:gravity="right"
+                    a:textSize="12dip"/>
+        </LinearLayout>
+
         <ImageView
                 a:layout_width="wrap_content"
-                a:layout_height="fill_parent"
-                a:layout_marginTop="20dip"
+                a:layout_height="wrap_content"
+                a:layout_marginTop="12dip"
+                a:layout_gravity="center_horizontal"
                 a:layout_weight="1"
                 a:src="@drawable/subsonic_white"/>
-        <TextView
-                a:id="@+id/main_version"
-                a:layout_width="wrap_content"
-                a:layout_height="fill_parent"
-                a:layout_marginTop="6dip"
-                a:layout_marginRight="6dip"
-                a:layout_gravity="top|right"
-                a:textSize="11dip"/>
     </LinearLayout>
 
     <include layout="@layout/main_buttons"/>
