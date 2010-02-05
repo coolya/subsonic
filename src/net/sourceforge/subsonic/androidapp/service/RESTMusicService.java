@@ -289,8 +289,11 @@ public class RESTMusicService implements MusicService {
         String contentType = Util.getContentType(response.getEntity());
         if (contentType != null && contentType.startsWith("text/xml")) {
             InputStream in = response.getEntity().getContent();
-            new ErrorParser(context).parse(new InputStreamReader(in, Constants.UTF_8));
-            return null; // Never reached.
+            try {
+                new ErrorParser(context).parse(new InputStreamReader(in, Constants.UTF_8));
+            } finally {
+                Util.close(in);
+            }
         }
 
         return response;
