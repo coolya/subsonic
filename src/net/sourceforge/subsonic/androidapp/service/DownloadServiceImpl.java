@@ -115,15 +115,17 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     @Override
     public synchronized void clear() {
+        reset();
         downloadList.clear();
-        if (bufferTask != null) {
-            bufferTask.cancel();
-        }
+//        if (bufferTask != null) {
+//            bufferTask.cancel();
+//        }
         if (currentDownloading != null) {
             currentDownloading.cancelDownload();
         }
-        mediaPlayer.reset();
-        setPlayerState(IDLE);
+        currentPlaying = null;
+//        mediaPlayer.reset();
+//        setPlayerState(IDLE);
 
         lifecycleSupport.serializeDownloadQueue();
     }
@@ -135,7 +137,8 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
         if (downloadFile == currentPlaying) {
             reset();
-            next();
+            currentPlaying = null;
+//            next();
         }
         downloadList.remove(downloadFile);
 
@@ -298,44 +301,13 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     private synchronized void bufferAndPlay(final DownloadFile downloadFile) {
-        if (bufferTask != null) {
-            bufferTask.cancel();
-        }
+        reset();
 
-        mediaPlayer.reset();
-        setPlayerState(IDLE);
-
-        // Buffer ten seconds.
-        Integer bitRate = downloadFile.getSong().getBitRate();
-        if (bitRate == null) {
-            bitRate = 160;
-        }
-        final int bufferSize = Math.max(100000, bitRate * 1024 / 8 * 10);
-
-        bufferTask = new CancellableTask() {
-            @Override
-            public void execute() {
-                setPlayerState(DOWNLOADING);
-
-                while (!isCancelled() && !bufferComplete()) {
-                    try {
-                        Thread.sleep(250L);
-                    } catch (InterruptedException x) {
-                        return;
-                    }
-                }
-                doPlay(downloadFile);
-            }
-
-            private boolean bufferComplete() {
-                File file = downloadFile.getPartialFile();
-                return downloadFile.isCompleteFileAvailable() || file.exists() && file.length() > bufferSize;
-            }
-        };
+        bufferTask = new BufferTask(downloadFile, 0);
         bufferTask.start();
     }
 
-    private synchronized void doPlay(final DownloadFile downloadFile) {
+    private synchronized void doPlay(final DownloadFile downloadFile, int position) {
         try {
             File file = downloadFile.isCompleteFileAvailable() ? downloadFile.getCompleteFile() : downloadFile.getPartialFile();
             mediaPlayer.setOnCompletionListener(null);
@@ -346,7 +318,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             setPlayerState(PREPARING);
             mediaPlayer.prepare();
             setPlayerState(PREPARED);
-
 
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
@@ -359,25 +330,19 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                     }
 
                     // If file is not completely downloaded, restart the playback from the current position.
-                    try {
-                        int pos = mediaPlayer.getCurrentPosition();
-                        Log.i(TAG, "Restarting player from position " + pos);
-
-                        mediaPlayer.reset();
-                        setPlayerState(IDLE);
-                        File file = downloadFile.isCompleteFileAvailable() ? downloadFile.getCompleteFile() : downloadFile.getPartialFile();
-                        mediaPlayer.setDataSource(file.getPath());
-                        setPlayerState(PREPARING);
-                        mediaPlayer.prepare();
-                        setPlayerState(PREPARED);
-                        mediaPlayer.seekTo(pos);
-                        mediaPlayer.start();
-                        setPlayerState(STARTED);
-                    } catch (Exception x) {
-                        handleError(x);
+                    int pos = mediaPlayer.getCurrentPosition();
+                    synchronized (DownloadServiceImpl.this) {
+                        reset();
+                        bufferTask = new BufferTask(downloadFile, pos);
+                        bufferTask.start();
                     }
                 }
             });
+
+            if (position != 0) {
+                Log.i(TAG, "Restarting player from position " + position);
+                mediaPlayer.seekTo(position);
+            }
 
             mediaPlayer.start();
             setPlayerState(STARTED);
@@ -450,4 +415,45 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
     }
 
+    private class BufferTask extends CancellableTask {
+
+        private final DownloadFile downloadFile;
+        private final int position;
+        private final long expectedFileSize;
+        private File partialFile;
+
+        public BufferTask(DownloadFile downloadFile, int position) {
+            this.downloadFile = downloadFile;
+            this.position = position;
+            partialFile = downloadFile.getPartialFile();
+
+            // Buffer five seconds.
+            Integer bitRate = downloadFile.getSong().getBitRate();
+            if (bitRate == null) {
+                bitRate = 160;
+            }
+            int byteCount = Math.max(100000, bitRate * 1024 / 8 * 5);
+
+            expectedFileSize = position == 0 ? byteCount : (partialFile.length() + byteCount);
+        }
+
+        @Override
+        public void execute() {
+            setPlayerState(DOWNLOADING);
+
+            while (!isCancelled() && !bufferComplete()) {
+                try {
+                    Log.i(TAG, "Buffering " + partialFile + " (" + partialFile.length() + ")");
+                    Thread.sleep(1000L);
+                } catch (InterruptedException x) {
+                    return;
+                }
+            }
+            doPlay(downloadFile, position);
+        }
+
+        private boolean bufferComplete() {
+            return downloadFile.isCompleteFileAvailable() || partialFile.length() > expectedFileSize;
+        }
+    }
 }
