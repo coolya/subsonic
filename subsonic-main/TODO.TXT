@@ -35,7 +35,6 @@ DownloadActivity not updated if initially empty and then append to queue.
 Understand why threads in CancellableTask are not interrupted.
 Create Norwegian translation.
 SettingsActivity not repainting properly.
-Close streams when using ErrorParser.
 -
 Use IOUtils, StringUtils.
 List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7854
