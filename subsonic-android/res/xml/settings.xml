@@ -50,7 +50,7 @@
             <EditTextPreference
                     a:key="serverName2"
                     a:title="@string/settings.server_name"
-                    a:defaultValue="@string/settings.server_unused2"/>
+                    a:defaultValue="@string/settings.server_unused1"/>
 
             <EditTextPreference
                     a:key="serverUrl2"
@@ -75,7 +75,7 @@
             <EditTextPreference
                     a:key="serverName3"
                     a:title="@string/settings.server_name"
-                    a:defaultValue="@string/settings.server_unused1"/>
+                    a:defaultValue="@string/settings.server_unused2"/>
 
             <EditTextPreference
                     a:key="serverUrl3"

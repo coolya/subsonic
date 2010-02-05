@@ -31,6 +31,8 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 
 TODO IN ANDROID 1.2
 -----------------------
+Don't hide/show notification when rebuffering.
+Skipping fails when playing partial file.  SeekTo() should test if playing from partial.
 Select server from main menu.
 DownloadActivity not updated if initially empty and then append to queue.
 Understand why threads in CancellableTask are not interrupted.
