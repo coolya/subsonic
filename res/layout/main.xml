@@ -21,6 +21,7 @@
                     a:layout_marginTop="6dip"
                     a:layout_marginLeft="6dip"
                     a:layout_gravity="top|left"
+                    a:textColor="@color/secondaryForeground"
                     a:textSize="12dip"/>
             <TextView
                     a:id="@+id/main_version"
@@ -31,6 +32,7 @@
                     a:layout_gravity="top|right"
                     a:layout_weight="1"
                     a:gravity="right"
+                    a:textColor="@color/secondaryForeground"
                     a:textSize="12dip"/>
         </LinearLayout>
 
