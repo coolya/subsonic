@@ -303,13 +303,14 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private synchronized void bufferAndPlay(final DownloadFile downloadFile) {
         reset();
 
+        fileSizeAtLastResume = 0;
         bufferTask = new BufferTask(downloadFile, 0);
         bufferTask.start();
     }
 
     private synchronized void doPlay(final DownloadFile downloadFile, int position) {
         try {
-            File file = downloadFile.isCompleteFileAvailable() ? downloadFile.getCompleteFile() : downloadFile.getPartialFile();
+            final File file = downloadFile.isCompleteFileAvailable() ? downloadFile.getCompleteFile() : downloadFile.getPartialFile();
             mediaPlayer.setOnCompletionListener(null);
             mediaPlayer.reset();
             setPlayerState(IDLE);
@@ -324,7 +325,9 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                 public void onCompletion(MediaPlayer mediaPlayer) {
                     setPlayerState(COMPLETED);
 
-                    if (downloadFile.isCompleteFileAvailable()) {
+                    // If COMPLETED and not playing partial file, we are *really" finished
+                    // with the song and can move on to the next.
+                    if (!file.equals(downloadFile.getPartialFile())) {
                         next();
                         return;
                     }
@@ -344,6 +347,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                 mediaPlayer.seekTo(position);
             }
 
+            fileSizeAtLastResume = downloadFile.getPartialFile().length();
             mediaPlayer.start();
             setPlayerState(STARTED);
 
@@ -415,7 +419,11 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
     }
 
+    private long fileSizeAtLastResume;
+
     private class BufferTask extends CancellableTask {
+
+        private static final int BUFFER_LENGTH_SECONDS = 5;
 
         private final DownloadFile downloadFile;
         private final int position;
@@ -427,14 +435,15 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             this.position = position;
             partialFile = downloadFile.getPartialFile();
 
-            // Buffer five seconds.
+            // Calculate roughly how many bytes BUFFER_LENGTH_SECONDS corresponds to.
             Integer bitRate = downloadFile.getSong().getBitRate();
             if (bitRate == null) {
                 bitRate = 160;
             }
-            int byteCount = Math.max(100000, bitRate * 1024 / 8 * 5);
+            long byteCount = Math.max(100000, bitRate * 1024 / 8 * BUFFER_LENGTH_SECONDS);
 
-            expectedFileSize = position == 0 ? byteCount : (partialFile.length() + byteCount);
+            // Find out how large the file should grow before resuming playback.
+            expectedFileSize = fileSizeAtLastResume + byteCount;
         }
 
         @Override
@@ -453,7 +462,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
 
         private boolean bufferComplete() {
-            return downloadFile.isCompleteFileAvailable() || partialFile.length() > expectedFileSize;
+            return downloadFile.isCompleteFileAvailable() || partialFile.length() >= expectedFileSize;
         }
     }
 }
