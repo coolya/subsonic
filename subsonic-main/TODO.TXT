@@ -36,19 +36,15 @@ Understand why threads in CancellableTask are not interrupted.
 Create Norwegian translation.
 SettingsActivity not repainting properly.
 Close streams when using ErrorParser.
-Don't restart playback too often.
 -
 Use IOUtils, StringUtils.
-Long-click
 List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7854
 Make it downloadable from sf.net.
 Make proper services.
 Make web page for it.
 Caching mgmt
-Don't "Play + Save" for files that already exists.
 Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
 Improve design of DownloadFile.getCompleteFile() etc.
-Goes crazy when bandwidth too small.
 Remember position for podcasts.
 
 DONE IN ANDROID 1.2
