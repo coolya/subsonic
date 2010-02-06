@@ -7,6 +7,17 @@
               a:layoutAnimation="@anim/layout_slide_right">
 
     <Button
+            a:id="@+id/main_select_server"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:layout_marginBottom="6dp"
+            a:drawableLeft="@drawable/select_server"
+            a:drawablePadding="20dp"
+            a:gravity="left|center_vertical"
+            a:textAppearance="?android:attr/textAppearanceLarge"
+            a:text="@string/main.select_server"/>
+
+    <Button
             a:id="@+id/main_browse"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
@@ -16,17 +27,6 @@
             a:gravity="left|center_vertical"
             a:textAppearance="?android:attr/textAppearanceLarge"
             a:text="@string/main.my_music"/>
-
-    <Button
-            a:id="@+id/main_browse_offline"
-            a:layout_width="fill_parent"
-            a:layout_height="wrap_content"
-            a:layout_marginBottom="6dp"
-            a:drawableLeft="@drawable/browse_offline"
-            a:drawablePadding="20dp"
-            a:gravity="left|center_vertical"
-            a:textAppearance="?android:attr/textAppearanceLarge"
-            a:text="@string/main.offline_music"/>
 
     <Button
             a:id="@+id/main_load_playlist"

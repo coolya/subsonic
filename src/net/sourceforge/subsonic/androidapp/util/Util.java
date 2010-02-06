@@ -70,32 +70,26 @@ public final class Util {
     }
 
     public static boolean isOffline(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
-        return prefs.getBoolean(Constants.PREFERENCES_KEY_OFFLINE, false);
+        return getActiveServer(context) == 0;
     }
 
-    public static void setOffline(Context context, boolean offline) {
+    public static int getActiveServer(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean(Constants.PREFERENCES_KEY_OFFLINE, offline);
-        editor.commit();
+        return prefs.getInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, 1);
     }
 
-    public static String getActiveServer(Context context) {
+    public static String getServerName(Context context, int instance) {
+        if (instance == 0) {
+            return context.getResources().getString(R.string.main_offline);
+        }
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
-        String instance = prefs.getString(Constants.PREFERENCES_KEY_SERVER_INSTANCE, "1");
-
         return prefs.getString(Constants.PREFERENCES_KEY_SERVER_NAME + instance, null);
     }
 
-    public static void nextActiveServer(Context context) {
+    public static void setActiveServer(Context context, int instance) {
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
-
-        int instance = Integer.parseInt(prefs.getString(Constants.PREFERENCES_KEY_SERVER_INSTANCE, "1"));
-        instance = instance == 3 ? 1 : instance + 1;
-
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(Constants.PREFERENCES_KEY_SERVER_INSTANCE, String.valueOf(instance));
+        editor.putInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, instance);
         editor.commit();
     }
 
@@ -104,7 +98,7 @@ public final class Util {
 
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
 
-        String instance = prefs.getString(Constants.PREFERENCES_KEY_SERVER_INSTANCE, "1");
+        int instance = prefs.getInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, 1);
         String serverUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_URL + instance, null);
         String username = prefs.getString(Constants.PREFERENCES_KEY_USERNAME + instance, null);
         String password = prefs.getString(Constants.PREFERENCES_KEY_PASSWORD + instance, null);

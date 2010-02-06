@@ -4,8 +4,9 @@
     <string name="common.ok">OK</string>
     <string name="common.cancel">Cancel</string>
 
+    <string name="main.select_server">Select server</string>
+    <string name="main.offline">Offline</string>
     <string name="main.my_music">My music</string>
-    <string name="main.offline_music">Offline music</string>
     <string name="main.my_playlists">My playlists</string>
     <string name="main.search">Search</string>
     <string name="main.select_playlist">Select playlist</string>
@@ -60,7 +61,6 @@
     <string name="options.help">Help</string>
 
     <string name="settings.title">Subsonic settings</string>
-    <string name="settings.active_server_title">Active server</string>
     <string name="settings.test_connection_title">Test connection</string>
     <string name="settings.servers_title">Servers</string>
     <string name="settings.server_unused1">Unused 1</string>
