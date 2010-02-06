@@ -59,9 +59,9 @@ public class SettingsActivity extends PreferenceActivity {
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
     private final Map<String, ServerSettings> serverSettings = new LinkedHashMap<String, ServerSettings>();
-    private ListPreference serverInstance;
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private DownloadService downloadService;
+    private boolean testingConnection;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,13 +69,26 @@ public class SettingsActivity extends PreferenceActivity {
         bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         addPreferencesFromResource(R.xml.settings);
 
-        serverInstance = (ListPreference) findPreference("serverInstance");
-
-        Preference testConnection = findPreference("testConnection");
-        testConnection.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        findPreference("testConnection1").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                testConnection();
+                testConnection(1);
+                return false;
+            }
+        });
+
+        findPreference("testConnection2").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                testConnection(2);
+                return false;
+            }
+        });
+
+        findPreference("testConnection3").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                testConnection(3);
                 return false;
             }
         });
@@ -126,27 +139,35 @@ public class SettingsActivity extends PreferenceActivity {
         unbindService(downloadServiceConnection);
     }
 
-    private void update() {
-        String instance = serverInstance.getValue();
-        ServerSettings serverSetting = serverSettings.get(instance);
-        serverInstance.setSummary(serverSetting.serverName.getText());
 
-        List<String> entries = new ArrayList<String>();
+
+    private void update() {
+        if (testingConnection) {
+            return;
+        }
         for (ServerSettings ss : serverSettings.values()) {
             ss.update();
-            entries.add(ss.serverName.getText());
         }
-        serverInstance.setEntries(entries.toArray(new CharSequence[entries.size()]));
     }
 
-    private void testConnection() {
+    private void testConnection(final int instance) {
         BackgroundTask<Boolean> task = new BackgroundTask<Boolean>(this) {
+            private int previousInstance;
             @Override
             protected Boolean doInBackground() throws Throwable {
                 updateProgress(R.string.settings_testing_connection);
-                MusicService musicService = MusicServiceFactory.getMusicService(SettingsActivity.this);
-                musicService.ping(SettingsActivity.this, this);
-                return musicService.isLicenseValid(SettingsActivity.this, null);
+
+                previousInstance = Util.getActiveServer(SettingsActivity.this);
+                testingConnection = true;
+                Util.setActiveServer(SettingsActivity.this, instance);
+                try {
+                    MusicService musicService = MusicServiceFactory.getMusicService(SettingsActivity.this);
+                    musicService.ping(SettingsActivity.this, this);
+                    return musicService.isLicenseValid(SettingsActivity.this, null);
+                } finally {
+                    Util.setActiveServer(SettingsActivity.this, previousInstance);
+                    testingConnection = false;
+                }
             }
 
             @Override
@@ -165,7 +186,8 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             protected void error(Throwable error) {
                 Log.w(TAG, error.toString(), error);
-                new ErrorDialog(SettingsActivity.this, R.string.settings_connection_failure + getErrorMessage(error), false);
+                new ErrorDialog(SettingsActivity.this, getResources().getString(R.string.settings_connection_failure) +
+                                                       " " + getErrorMessage(error), false);
             }
         };
         task.execute();

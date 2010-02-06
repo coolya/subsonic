@@ -24,8 +24,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.ContextMenu;
 import android.view.View;
 import android.view.Window;
+import android.view.MenuItem;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
@@ -38,6 +40,16 @@ import net.sourceforge.subsonic.androidapp.util.Util;
 import java.util.List;
 
 public class MainActivity extends OptionsMenuActivity {
+
+    private static final int MENU_GROUP_SERVER = 10;
+    private static final int MENU_ITEM_SERVER_1 = 101;
+    private static final int MENU_ITEM_SERVER_2 = 102;
+    private static final int MENU_ITEM_SERVER_3 = 103;
+    private static final int MENU_ITEM_OFFLINE = 104;
+
+    private View serverButton;
+    private View searchButton;
+    private View loadPlaylistButton;
 
     /**
      * Called when the activity is first created.
@@ -52,47 +64,35 @@ public class MainActivity extends OptionsMenuActivity {
         startService(new Intent(this, DownloadServiceImpl.class));
         setContentView(R.layout.main);
 
-        View serverText = findViewById(R.id.main_server);
-        serverText.setOnClickListener(new View.OnClickListener() {
+        serverButton = findViewById(R.id.main_select_server);
+        serverButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Util.nextActiveServer(MainActivity.this);
-                updateServer();
+                serverButton.showContextMenu();
             }
         });
+        registerForContextMenu(serverButton);
 
         View browseButton = findViewById(R.id.main_browse);
         browseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Util.setOffline(MainActivity.this, false);
                 startActivity(new Intent(MainActivity.this, SelectArtistActivity.class));
             }
         });
 
-        View browseOfflineButton = findViewById(R.id.main_browse_offline);
-        browseOfflineButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Util.setOffline(MainActivity.this, true);
-                startActivity(new Intent(MainActivity.this, SelectArtistActivity.class));
-            }
-        });
-
-        View searchButton = findViewById(R.id.main_search);
+        searchButton = findViewById(R.id.main_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Util.setOffline(MainActivity.this, false);
                 showSearchDialog();
             }
         });
 
-        View loadPlaylistButton = findViewById(R.id.main_load_playlist);
+        loadPlaylistButton = findViewById(R.id.main_load_playlist);
         loadPlaylistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Util.setOffline(MainActivity.this, false);
                 showPlaylistDialog();
             }
         });
@@ -131,13 +131,69 @@ public class MainActivity extends OptionsMenuActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        updateServer();
+        updateActiveServer();
     }
 
-    private void updateServer() {
-        String server = Util.getActiveServer(this);
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+
+        if (view == serverButton) {
+
+            MenuItem menuItem1 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_1, MENU_ITEM_SERVER_1, Util.getServerName(this, 1));
+            MenuItem menuItem2 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_2, MENU_ITEM_SERVER_2, Util.getServerName(this, 2));
+            MenuItem menuItem3 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_3, MENU_ITEM_SERVER_3, Util.getServerName(this, 3));
+            MenuItem menuItem4 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_OFFLINE, MENU_ITEM_OFFLINE, Util.getServerName(this, 0));
+            menu.setGroupCheckable(MENU_GROUP_SERVER, true, true);
+
+            switch (Util.getActiveServer(this)) {
+                case 0:
+                    menuItem4.setChecked(true);
+                    break;
+                case 1:
+                    menuItem1.setChecked(true);
+                    break;
+                case 2:
+                    menuItem2.setChecked(true);
+                    break;
+                case 3:
+                    menuItem3.setChecked(true);
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case MENU_ITEM_SERVER_1:
+                Util.setActiveServer(this, 1);
+                break;
+            case MENU_ITEM_SERVER_2:
+                Util.setActiveServer(this, 2);
+                break;
+            case MENU_ITEM_SERVER_3:
+                Util.setActiveServer(this, 3);
+                break;
+            case MENU_ITEM_OFFLINE:
+                Util.setActiveServer(this, 0);
+                break;
+            default:
+                return super.onContextItemSelected(menuItem);
+        }
+        updateActiveServer();
+        return true;
+    }
+
+    private void updateActiveServer() {
+        int instance = Util.getActiveServer(this);
+        String name = Util.getServerName(this, instance);
         TextView serverText = (TextView) findViewById(R.id.main_server);
-        serverText.setText(server);
+        serverText.setText(name);
+
+        boolean offline = instance == 0;
+        loadPlaylistButton.setEnabled(!offline);
+        searchButton.setEnabled(!offline);
     }
 
     private void showPlaylistDialog() {

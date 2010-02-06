@@ -3,17 +3,6 @@
 <PreferenceScreen xmlns:a="http://schemas.android.com/apk/res/android"
                   a:title="@string/settings.title">
 
-    <ListPreference
-            a:key="serverInstance"
-            a:title="@string/settings.active_server_title"
-            a:defaultValue="1"
-            a:entryValues="@array/active_server_values"/>
-
-    <Preference
-            a:key="testConnection"
-            a:title="@string/settings.test_connection_title"
-            a:persistent="false"/>
-
     <PreferenceCategory
             a:title="@string/settings.servers_title">
 
@@ -42,6 +31,11 @@
                     a:defaultValue="guest"
                     a:summary="****"/>
 
+            <Preference
+                    a:key="testConnection1"
+                    a:title="@string/settings.test_connection_title"
+                    a:persistent="false"/>
+
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -67,6 +61,11 @@
                     a:password="true"
                     a:summary="****"/>
 
+            <Preference
+                    a:key="testConnection2"
+                    a:title="@string/settings.test_connection_title"
+                    a:persistent="false"/>
+
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -91,6 +90,11 @@
                     a:title="@string/settings.server_password"
                     a:password="true"
                     a:summary="****"/>
+
+            <Preference
+                    a:key="testConnection3"
+                    a:title="@string/settings.test_connection_title"
+                    a:persistent="false"/>
 
         </PreferenceScreen>
 

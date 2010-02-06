@@ -45,8 +45,7 @@ public final class Constants {
     public static final int NOTIFICATION_ID_ERROR = 101;
 
     // Preferences keys.
-    public static final String PREFERENCES_KEY_OFFLINE = "offline";
-    public static final String PREFERENCES_KEY_SERVER_INSTANCE = "serverInstance";
+    public static final String PREFERENCES_KEY_SERVER_INSTANCE = "serverInstanceId";
     public static final String PREFERENCES_KEY_SERVER_NAME = "serverName";
     public static final String PREFERENCES_KEY_SERVER_URL = "serverUrl";
     public static final String PREFERENCES_KEY_USERNAME = "username";
