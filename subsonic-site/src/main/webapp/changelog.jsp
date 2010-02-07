@@ -16,6 +16,12 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="3.9"><h2 class="div">Subsonic 3.9 - Feb 12, 2010</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>Added link to <a href="http://www.nonpixel.com/subair/">SubAir</a> in "More" page.</li>
+    <li><span class="bugid">Bugfix: </span>Don't look for UPnP routers if port forwarding is disabled.</li>
+</ul>
+
 <a name="3.9.beta1"><h2 class="div">Subsonic 3.9.beta1 - Jan 28, 2010</h2></a>
 <ul>
     <li><span class="bugid">New: </span>Automatically configure port forwarding for compatible routers.</li>
@@ -659,6 +665,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#3.9">Subsonic 3.9</a></li>
             <li><a href="#3.9.beta1">Subsonic 3.9.beta1</a></li>
             <li><a href="#3.8">Subsonic 3.8</a></li>
             <li><a href="#3.8.beta1">Subsonic 3.8.beta1</a></li>

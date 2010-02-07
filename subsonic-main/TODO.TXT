@@ -11,8 +11,6 @@ Link to http://nonpixel.com/subair/
 
 DONE IN 3.9
 -----------
-Bugfix: Don't look for UPnP routers if port forwarding is disabled.
-New: Added link to SubAir in "More" page.
 
 Create album table, reimplement related services in SearchService.
 Upgrade JWPlayer
