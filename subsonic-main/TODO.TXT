@@ -31,9 +31,10 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 
 TODO IN ANDROID 1.2
 -----------------------
-Don't hide/show notification when rebuffering.
-Skipping fails when playing partial file.  SeekTo() should test if playing from partial.
+Seeking fails when playing partial file.  seekTo() should test if playing from partial.
+Only show fullscreen when applicable.
 DownloadActivity not updated if initially empty and then append to queue.
+Don't hide/show notification when rebuffering.
 Understand why threads in CancellableTask are not interrupted.
 Create Norwegian translation.
 SettingsActivity not repainting properly.
@@ -52,6 +53,7 @@ DONE IN ANDROID 1.2
 -------------------
 http retry
 Handle network errors. Resume downloads after network loss.
+Fixed problem with playback stopping on device standby.
 Remember playlist when app is restarted.
 Support landscape mode.
 Long-click on album to play it.

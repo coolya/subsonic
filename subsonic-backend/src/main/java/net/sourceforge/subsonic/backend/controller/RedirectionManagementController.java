@@ -65,11 +65,15 @@ public class RedirectionManagementController extends MultiActionController {
         RESERVED_REDIRECTS.put("s", "http://www.subsonic.org/pages/index.jsp");
         RESERVED_REDIRECTS.put("subsonic", "http://www.subsonic.org/pages/index.jsp");
         RESERVED_REDIRECTS.put("gosubsonic", "http://www.subsonic.org/pages/index.jsp");
+        RESERVED_REDIRECTS.put("android", "http://www.subsonic.org/pages/android.jsp");
+        RESERVED_REDIRECTS.put("iphone", "http://www.subsonic.org/pages/index.jsp");
+        RESERVED_REDIRECTS.put("subair", "http://www.subsonic.org/pages/index.jsp");
         RESERVED_REDIRECTS.put("m", "http://www.subsonic.org/pages/index.jsp");
         RESERVED_REDIRECTS.put("mobile", "http://www.subsonic.org/pages/index.jsp");
         RESERVED_REDIRECTS.put("mobil", "http://www.subsonic.org/pages/index.jsp");
         RESERVED_REDIRECTS.put("phone", "http://www.subsonic.org/pages/index.jsp");
         RESERVED_REDIRECTS.put("wap", "http://www.subsonic.org/pages/index.jsp");
+        RESERVED_REDIRECTS.put("db", "http://www.subsonic.org/pages/index.jsp");
         RESERVED_REDIRECTS.put("shop", "http://www.subsonic.org/pages/index.jsp");
         RESERVED_REDIRECTS.put("test", "http://www.subsonic.org/pages/index.jsp");
     }
