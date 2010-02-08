@@ -1,6 +1,8 @@
 TODO IN 3.9
 --------------
-Used saved paypal buttons.
+Use saved paypal buttons.
+Simplify implementation of trial period.  Use "feature" string.
+
 Mac installer, http://www.centerkey.com/mac/java/
 - refactor booter/installer
 - use app icon.
@@ -86,7 +88,7 @@ REST method for getting lyrics.
 
 BACKLOG
 ==========================
-Next to Lyrics link, add "Share" link with permalink?
+Next to Lyrics link, add "Share" link with permalink? (link.subsonic.org/iksj)
 Add "Copy settings from user" option.
 Improve menus in web pages.  Make sub menus.
 Add FLAC>WAV transcoding
