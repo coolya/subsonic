@@ -151,8 +151,10 @@ public class RedirectionManagementController extends MultiActionController {
     }
 
     public void unregister(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String serverId = ServletRequestUtils.getRequiredStringParameter(request, "serverId");
-        redirectionDao.deleteRedirectionsByServerId(serverId);
+        String serverId = ServletRequestUtils.getStringParameter(request, "serverId");
+        if (!StringUtils.isEmpty(serverId)) {
+            redirectionDao.deleteRedirectionsByServerId(serverId);
+        }
     }
 
     public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {

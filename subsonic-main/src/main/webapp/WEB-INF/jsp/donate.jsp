@@ -20,78 +20,12 @@
     <br/>
 </c:if>
 
-<c:url value="https://www.paypal.com/cgi-bin/webscr" var="donate10Url">
-    <c:param name="cmd" value="_xclick"/>
-    <c:param name="business" value="subsonic_donation@activeobjects.no"/>
-    <c:param name="item_name" value="Subsonic Donation"/>
-    <c:param name="item_number" value="subsonic10"/>
-    <c:param name="no_shipping" value="1"/>
-    <c:param name="amount" value="10.00"/>
-    <c:param name="currency_code" value="EUR"/>
-    <c:param name="tax" value="0"/>
-    <c:param name="bn" value="PP-DonationsBF"/>
-    <c:param name="charset" value="UTF-8"/>
-</c:url>
-<c:url value="https://www.paypal.com/cgi-bin/webscr" var="donate15Url">
-    <c:param name="cmd" value="_xclick"/>
-    <c:param name="business" value="subsonic_donation@activeobjects.no"/>
-    <c:param name="item_name" value="Subsonic Donation"/>
-    <c:param name="item_number" value="subsonic15"/>
-    <c:param name="no_shipping" value="1"/>
-    <c:param name="amount" value="15.00"/>
-    <c:param name="currency_code" value="EUR"/>
-    <c:param name="tax" value="0"/>
-    <c:param name="bn" value="PP-DonationsBF"/>
-    <c:param name="charset" value="UTF-8"/>
-</c:url>
-<c:url value="https://www.paypal.com/cgi-bin/webscr" var="donate20Url">
-    <c:param name="cmd" value="_xclick"/>
-    <c:param name="business" value="subsonic_donation@activeobjects.no"/>
-    <c:param name="item_name" value="Subsonic Donation"/>
-    <c:param name="item_number" value="subsonic20"/>
-    <c:param name="no_shipping" value="1"/>
-    <c:param name="amount" value="20.00"/>
-    <c:param name="currency_code" value="EUR"/>
-    <c:param name="tax" value="0"/>
-    <c:param name="bn" value="PP-DonationsBF"/>
-    <c:param name="charset" value="UTF-8"/>
-</c:url>
-<c:url value="https://www.paypal.com/cgi-bin/webscr" var="donate25Url">
-    <c:param name="cmd" value="_xclick"/>
-    <c:param name="business" value="subsonic_donation@activeobjects.no"/>
-    <c:param name="item_name" value="Subsonic Donation"/>
-    <c:param name="item_number" value="subsonic25"/>
-    <c:param name="no_shipping" value="1"/>
-    <c:param name="amount" value="25.00"/>
-    <c:param name="currency_code" value="EUR"/>
-    <c:param name="tax" value="0"/>
-    <c:param name="bn" value="PP-DonationsBF"/>
-    <c:param name="charset" value="UTF-8"/>
-</c:url>
-<c:url value="https://www.paypal.com/cgi-bin/webscr" var="donate30Url">
-    <c:param name="cmd" value="_xclick"/>
-    <c:param name="business" value="subsonic_donation@activeobjects.no"/>
-    <c:param name="item_name" value="Subsonic Donation"/>
-    <c:param name="item_number" value="subsonic30"/>
-    <c:param name="no_shipping" value="1"/>
-    <c:param name="amount" value="30.00"/>
-    <c:param name="currency_code" value="EUR"/>
-    <c:param name="tax" value="0"/>
-    <c:param name="bn" value="PP-DonationsBF"/>
-    <c:param name="charset" value="UTF-8"/>
-</c:url>
-<c:url value="https://www.paypal.com/cgi-bin/webscr" var="donate50Url">
-    <c:param name="cmd" value="_xclick"/>
-    <c:param name="business" value="subsonic_donation@activeobjects.no"/>
-    <c:param name="item_name" value="Subsonic Donation"/>
-    <c:param name="item_number" value="subsonic50"/>
-    <c:param name="no_shipping" value="1"/>
-    <c:param name="amount" value="50.00"/>
-    <c:param name="currency_code" value="EUR"/>
-    <c:param name="tax" value="0"/>
-    <c:param name="bn" value="PP-DonationsBF"/>
-    <c:param name="charset" value="UTF-8"/>
-</c:url>
+<c:url value="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=E5RNJMDJ7C862" var="donate10Url"/>
+<c:url value="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CKRS9A4J99TFN" var="donate15Url"/>
+<c:url value="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=H79PAZLVHFT6E" var="donate20Url"/>
+<c:url value="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2TGXFN7AVREEN" var="donate25Url"/>
+<c:url value="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BXJVAQALLFREC" var="donate30Url"/>
+<c:url value="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=M5PX55AC4ER9Y" var="donate50Url"/>
 
 <div style="width:50em; max-width:50em">
 
