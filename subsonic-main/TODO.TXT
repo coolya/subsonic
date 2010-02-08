@@ -1,5 +1,6 @@
 TODO IN 3.9
 --------------
+Used saved paypal buttons.
 Mac installer, http://www.centerkey.com/mac/java/
 - refactor booter/installer
 - use app icon.
@@ -9,8 +10,6 @@ Mac installer, http://www.centerkey.com/mac/java/
 html5 audio
 Link to http://nonpixel.com/subair/
 
-DONE IN 3.9
------------
 
 Create album table, reimplement related services in SearchService.
 Upgrade JWPlayer

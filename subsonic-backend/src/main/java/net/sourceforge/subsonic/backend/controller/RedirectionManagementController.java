@@ -41,7 +41,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.params.HttpConnectionParams;
 import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import net.sourceforge.subsonic.backend.dao.RedirectionDao;
@@ -69,6 +68,8 @@ public class RedirectionManagementController extends MultiActionController {
         RESERVED_REDIRECTS.put("iphone", "http://www.subsonic.org/pages/index.jsp");
         RESERVED_REDIRECTS.put("subair", "http://www.subsonic.org/pages/index.jsp");
         RESERVED_REDIRECTS.put("m", "http://www.subsonic.org/pages/index.jsp");
+        RESERVED_REDIRECTS.put("link", "http://www.subsonic.org/pages/index.jsp");
+        RESERVED_REDIRECTS.put("share", "http://www.subsonic.org/pages/index.jsp");
         RESERVED_REDIRECTS.put("mobile", "http://www.subsonic.org/pages/index.jsp");
         RESERVED_REDIRECTS.put("mobil", "http://www.subsonic.org/pages/index.jsp");
         RESERVED_REDIRECTS.put("phone", "http://www.subsonic.org/pages/index.jsp");
@@ -86,8 +87,11 @@ public class RedirectionManagementController extends MultiActionController {
         String licenseHolder = ServletRequestUtils.getStringParameter(request, "licenseHolder");
         String serverId = ServletRequestUtils.getRequiredStringParameter(request, "serverId");
         int port = ServletRequestUtils.getRequiredIntParameter(request, "port");
+        Integer localPort = ServletRequestUtils.getIntParameter(request, "localPort");
+        String localIp = ServletRequestUtils.getStringParameter(request, "localIp");
         String contextPath = ServletRequestUtils.getRequiredStringParameter(request, "contextPath");
         boolean trial = ServletRequestUtils.getBooleanParameter(request, "trial", false);
+
         Date lastUpdated = new Date();
         Date trialExpires = null;
         if (trial) {
@@ -108,13 +112,19 @@ public class RedirectionManagementController extends MultiActionController {
         URL url = new URL("http", host, port, "/" + contextPath);
         String redirectTo = url.toExternalForm();
 
+        String localRedirectTo = null;
+        if (localIp != null && localPort != null) {
+            URL localUrl = new URL("http", localIp, localPort, "/" + contextPath);
+            localRedirectTo = localUrl.toExternalForm();
+        }
+
         Redirection redirection = redirectionDao.getRedirection(redirectFrom);
         if (redirection == null) {
 
             // Delete other redirects for same server ID.
             redirectionDao.deleteRedirectionsByServerId(serverId);
 
-            redirection = new Redirection(0, licenseHolder, serverId, redirectFrom, redirectTo, trial, trialExpires, lastUpdated, null);
+            redirection = new Redirection(0, licenseHolder, serverId, redirectFrom, redirectTo, localRedirectTo, trial, trialExpires, lastUpdated, null, 0);
             redirectionDao.createRedirection(redirection);
             LOG.info("Created " + redirection);
 
@@ -128,6 +138,7 @@ public class RedirectionManagementController extends MultiActionController {
                 redirection.setServerId(serverId);
                 redirection.setRedirectFrom(redirectFrom);
                 redirection.setRedirectTo(redirectTo);
+                redirection.setLocalRedirectTo(localRedirectTo);
                 redirection.setTrial(trial);
                 redirection.setTrialExpires(trialExpires);
                 redirection.setLastUpdated(lastUpdated);

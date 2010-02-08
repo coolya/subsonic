@@ -17,7 +17,7 @@ import java.util.List;
 public class RedirectionDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(RedirectionDao.class);
-    private static final String COLUMNS = "id, license_holder, server_id, redirect_from, redirect_to, trial, trial_expires, last_updated, last_read";
+    private static final String COLUMNS = "id, license_holder, server_id, redirect_from, redirect_to, local_redirect_to, trial, trial_expires, last_updated, last_read, read_count";
 
     private RedirectionRowMapper rowMapper = new RedirectionRowMapper();
 
@@ -55,11 +55,11 @@ public class RedirectionDao extends AbstractDao {
      * @param redirection The redirection to create.
      */
     public void createRedirection(Redirection redirection) {
-        String sql = "insert into redirection (" + COLUMNS + ") values (null, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into redirection (" + COLUMNS + ") values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         update(sql, redirection.getLicenseHolder(), redirection.getServerId(), redirection.getRedirectFrom(),
-               redirection.getRedirectTo(), redirection.isTrial(),
-               redirection.getTrialExpires(), redirection.getLastUpdated(),
-               redirection.getLastRead());
+                redirection.getRedirectTo(), redirection.getLocalRedirectTo(), redirection.isTrial(),
+                redirection.getTrialExpires(), redirection.getLastUpdated(),
+                redirection.getLastRead(), redirection.getReadCount());
         LOG.info("Created redirection " + redirection.getRedirectFrom() + " -> " + redirection.getRedirectTo());
     }
 
@@ -70,10 +70,10 @@ public class RedirectionDao extends AbstractDao {
      */
     public void updateRedirection(Redirection redirection) {
         String sql = "update redirection set license_holder=?, server_id=?, redirect_from=?, redirect_to=?, " +
-                     "trial=?, trial_expires=?, last_updated=?, last_read=? where id=?";
+                     "local_redirect_to=?, trial=?, trial_expires=?, last_updated=?, last_read=?, read_count=? where id=?";
         update(sql, redirection.getLicenseHolder(), redirection.getServerId(), redirection.getRedirectFrom(),
-               redirection.getRedirectTo(), redirection.isTrial(), redirection.getTrialExpires(),
-               redirection.getLastUpdated(), redirection.getLastRead(), redirection.getId());
+               redirection.getRedirectTo(), redirection.getLocalRedirectTo(), redirection.isTrial(), redirection.getTrialExpires(),
+               redirection.getLastUpdated(), redirection.getLastRead(), redirection.getReadCount(), redirection.getId());
     }
 
     /**
@@ -89,7 +89,8 @@ public class RedirectionDao extends AbstractDao {
     private static class RedirectionRowMapper implements ParameterizedRowMapper<Redirection> {
         public Redirection mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Redirection(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-                    rs.getBoolean(6), rs.getTimestamp(7), rs.getTimestamp(8), rs.getTimestamp(9));
+                    rs.getString(6), rs.getBoolean(7), rs.getTimestamp(8), rs.getTimestamp(9), rs.getTimestamp(10),
+                    rs.getInt(11));
         }
     }
 }

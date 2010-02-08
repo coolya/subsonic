@@ -19,6 +19,7 @@
 <a name="3.9"><h2 class="div">Subsonic 3.9 - Feb 12, 2010</h2></a>
 <ul>
     <li><span class="bugid">New: </span>Added link to <a href="http://www.nonpixel.com/subair/">SubAir</a> in "More" page.</li>
+    <li><span class="bugid">New: </span>Make <em>yourname.subsonic.org</em> addresses also work within LANs.</li>
     <li><span class="bugid">Bugfix: </span>Don't look for UPnP routers if port forwarding is disabled.</li>
 </ul>
 

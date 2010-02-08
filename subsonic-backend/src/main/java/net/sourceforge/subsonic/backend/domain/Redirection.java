@@ -30,22 +30,26 @@ public class Redirection {
     private String serverId;
     private String redirectFrom;
     private String redirectTo;
+    private String localRedirectTo;
     private boolean trial;
     private Date trialExpires;
     private Date lastUpdated;
     private Date lastRead;
+    private int readCount;
 
-    public Redirection(int id, String licenseHolder, String serverId, String redirectFrom, String redirectTo, boolean trial,
-            Date trialExpires, Date lastUpdated, Date lastRead) {
+    public Redirection(int id, String licenseHolder, String serverId, String redirectFrom, String redirectTo,
+            String localRedirectTo, boolean trial, Date trialExpires, Date lastUpdated, Date lastRead, int readCount) {
         this.id = id;
         this.licenseHolder = licenseHolder;
         this.serverId = serverId;
         this.redirectFrom = redirectFrom;
         this.redirectTo = redirectTo;
+        this.localRedirectTo = localRedirectTo;
         this.trial = trial;
         this.trialExpires = trialExpires;
         this.lastUpdated = lastUpdated;
         this.lastRead = lastRead;
+        this.readCount = readCount;
     }
 
     public int getId() {
@@ -84,6 +88,14 @@ public class Redirection {
         this.redirectTo = redirectTo;
     }
 
+    public String getLocalRedirectTo() {
+        return localRedirectTo;
+    }
+
+    public void setLocalRedirectTo(String localRedirectTo) {
+        this.localRedirectTo = localRedirectTo;
+    }
+
     public boolean isTrial() {
         return trial;
     }
@@ -116,6 +128,14 @@ public class Redirection {
         this.lastRead = lastRead;
     }
 
+    public int getReadCount() {
+        return readCount;
+    }
+
+    public void setReadCount(int readCount) {
+        this.readCount = readCount;
+    }
+
     @Override
     public String toString() {
         return "Redirection{" +
@@ -124,10 +144,12 @@ public class Redirection {
                 ", serverId='" + serverId + '\'' +
                 ", redirectFrom='" + redirectFrom + '\'' +
                 ", redirectTo='" + redirectTo + '\'' +
+                ", localRedirectTo='" + localRedirectTo + '\'' +
                 ", trial=" + trial +
                 ", trialExpires=" + trialExpires +
                 ", lastUpdated=" + lastUpdated +
                 ", lastRead=" + lastRead +
+                ", readCount=" + readCount +
                 '}';
     }
 }

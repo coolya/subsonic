@@ -40,6 +40,7 @@ public class Schema10 extends Schema {
         server_id: 972342834928656
         redirect_from: sindre
         redirect_to: http://23.45.123.56:8080/subsonic
+        local_redirect_to: http://192.168.0.7:80/subsonic
         trial: false
         trial_expires: null
 
@@ -50,6 +51,7 @@ public class Schema10 extends Schema {
         server_id: 72121983567129
         redirect_from: joe
         redirect_to: http://232.21.18.14/subsonic
+        local_redirect_to: http://192.168.0.7:80/subsonic
         trial: true
         trial_expires: 2010-01-13 05:34:17
          */
@@ -73,8 +75,20 @@ public class Schema10 extends Schema {
             createRedirection(template, "demo", "http://subsonic.org/demo");
 
             LOG.info("Database table 'redirection' was created successfully.");
+        }
 
+        if (!columnExists(template, "local_redirect_to", "redirection")) {
+            LOG.info("Database column 'redirection.local_redirect_to' not found.  Creating it.");
+            template.execute("alter table redirection " +
+                             "add local_redirect_to varchar");
+            LOG.info("Database column 'redirection.local_redirect_to' was added successfully.");
+        }
 
+        if (!columnExists(template, "read_count", "redirection")) {
+            LOG.info("Database column 'redirection.read_count' not found.  Creating it.");
+            template.execute("alter table redirection " +
+                             "add read_count int default 0 not null");
+            LOG.info("Database column 'redirection.read_count' was added successfully.");
         }
     }
 

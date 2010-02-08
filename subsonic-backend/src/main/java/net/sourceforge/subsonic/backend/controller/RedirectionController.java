@@ -59,6 +59,7 @@ public class RedirectionController implements Controller {
         }
 
         redirection.setLastRead(new Date());
+        redirection.setReadCount(redirection.getReadCount() + 1);
         redirectionDao.updateRedirection(redirection);
 
         // Check for trial expiration (unless called from Android app which manages its own trial expiry).
@@ -69,11 +70,31 @@ public class RedirectionController implements Controller {
         }
 
         String requestUrl = getFullRequestURL(request);
-        String to = StringUtils.removeEnd(redirection.getRedirectTo(), "/");
+        String to = StringUtils.removeEnd(getRedirectTo(request, redirection), "/");
         String redirectTo = requestUrl.replaceFirst("http://" + redirectFrom + "\\.subsonic\\.org", to);
         LOG.info("Redirecting from " + requestUrl + " to " + redirectTo);
 
         return new ModelAndView(new RedirectView(redirectTo));
+    }
+
+    private String getRedirectTo(HttpServletRequest request, Redirection redirection) {
+
+        // If the request comes from within the same LAN as the destination Subsonic
+        // server, redirect using the local IP address of the server.
+
+        String localRedirectTo = redirection.getLocalRedirectTo();
+        if (localRedirectTo != null) {
+            try {
+                URL url = new URL(localRedirectTo);
+                if (url.getHost().equals(request.getRemoteAddr())) {
+                    return localRedirectTo;
+                }
+            } catch (MalformedURLException x) {
+                LOG.error("Malformed local redirect URL.", x);
+            }
+        }
+
+        return redirection.getRedirectTo();
     }
 
     private boolean isTrialExpired(Redirection redirection) {

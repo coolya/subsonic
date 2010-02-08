@@ -19,6 +19,8 @@
 package net.sourceforge.subsonic.service;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -209,9 +211,15 @@ public class NetworkService {
             boolean enable = settingsService.isUrlRedirectionEnabled();
             HttpPost request = new HttpPost(enable ? URL_REDIRECTION_REGISTER_URL : URL_REDIRECTION_UNREGISTER_URL);
 
-            int port = settingsService.isPortForwardingEnabled() ?
-                    settingsService.getPortForwardingPublicPort() :
-                    settingsService.getPortForwardingLocalPort();
+            String localIp = null;
+            try {
+                localIp = InetAddress.getLocalHost().getHostAddress();
+            } catch (Throwable x) {
+                LOG.warn("Failed to resolve local IP address.", x);
+            }
+            int localPort = settingsService.getPortForwardingLocalPort();
+            int publicPort = settingsService.getPortForwardingPublicPort();
+            int port = settingsService.isPortForwardingEnabled() ? publicPort : localPort;
             boolean trial = !settingsService.isLicenseValid();
             Date trialExpires = settingsService.getUrlRedirectTrialExpires();
 
@@ -219,6 +227,8 @@ public class NetworkService {
             params.add(new BasicNameValuePair("serverId", settingsService.getServerId()));
             params.add(new BasicNameValuePair("redirectFrom", settingsService.getUrlRedirectFrom()));
             params.add(new BasicNameValuePair("port", String.valueOf(port)));
+            params.add(new BasicNameValuePair("localIp", localIp));
+            params.add(new BasicNameValuePair("localPort", String.valueOf(localPort)));
             params.add(new BasicNameValuePair("contextPath", settingsService.getUrlRedirectContextPath()));
             params.add(new BasicNameValuePair("trial", String.valueOf(trial)));
             if (trial && trialExpires != null) {
