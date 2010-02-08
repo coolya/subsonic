@@ -85,11 +85,11 @@ public class RedirectionController implements Controller {
         String localRedirectTo = redirection.getLocalRedirectTo();
         if (localRedirectTo != null) {
             try {
-                URL url = new URL(localRedirectTo);
+                URL url = new URL(redirection.getRedirectTo());
                 if (url.getHost().equals(request.getRemoteAddr())) {
                     return localRedirectTo;
                 }
-            } catch (MalformedURLException x) {
+            } catch (Throwable x) {
                 LOG.error("Malformed local redirect URL.", x);
             }
         }
