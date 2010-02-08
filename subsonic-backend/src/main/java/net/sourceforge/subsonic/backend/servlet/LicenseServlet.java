@@ -178,7 +178,11 @@ public class LicenseServlet extends HttpServlet {
                 "Thanks again for supporting the project!\n" +
                 "\n" +
                 "Best regards,\n" +
-                "Sindre";
+                "Sindre\n" +
+                "\n" +
+                "--\n" +
+                "Sindre Mehus\n" +
+                "Subsonic developer";
     }
 
     /**
