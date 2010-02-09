@@ -32,7 +32,7 @@
 
 <p>
     The suggested donation amount is
-    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=redir20&no_shipping=1&amount=20.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><b>&euro;20</b></a>,
+    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HBYHMJC3TL4HW"><b>&euro;20</b></a>,
     but you can give any amount you like.
 </p>
 
@@ -46,7 +46,7 @@
             <td style="border:none;">
                 <table>
                     <tr>
-                        <td style="border:none;padding:0;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=redir10&no_shipping=1&amount=10.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
+                        <td style="border:none;padding:0;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NCYZTDPDEAFSG"><img src="inc/img/paypal.gif" alt=""/></a> </td>
                     </tr>
                     <tr>
                         <td style="text-align:center;border:none;padding:0">&euro;10</td>
@@ -56,7 +56,7 @@
             <td style="border:none;">
                 <table>
                     <tr>
-                        <td style="border:none;padding:0;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=redir15&no_shipping=1&amount=15.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
+                        <td style="border:none;padding:0;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NF8AFLP86QR7W"><img src="inc/img/paypal.gif" alt=""/></a> </td>
                     </tr>
                     <tr>
                         <td style="text-align:center;border:none;padding:0">&euro;15</td>
@@ -66,7 +66,7 @@
             <td style="border:none;">
                 <table>
                     <tr>
-                        <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=redir20&no_shipping=1&amount=20.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
+                        <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HBYHMJC3TL4HW"><img src="inc/img/paypal.gif" alt=""/></a> </td>
                     </tr>
                     <tr>
                         <td style="text-align:center;border:none;padding:0">&euro;20</td>
@@ -76,7 +76,7 @@
             <td style="border:none;">
                 <table>
                     <tr>
-                        <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=redir25&no_shipping=1&amount=25.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
+                        <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FRZ9FX9XRLHQN"><img src="inc/img/paypal.gif" alt=""/></a> </td>
                     </tr>
                     <tr>
                         <td style="text-align:center;border:none;padding:0">&euro;25</td>
@@ -86,7 +86,7 @@
             <td style="border:none;">
                 <table>
                     <tr>
-                        <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=redir30&no_shipping=1&amount=30.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
+                        <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C5REPEZX2DFQS"><img src="inc/img/paypal.gif" alt=""/></a> </td>
                     </tr>
                     <tr>
                         <td style="text-align:center;border:none;padding:0">&euro;30</td>

@@ -33,17 +33,17 @@
             o Your personal server address: <em>you</em>.subsonic.org<br>
             o No ads.<br>
         </p>
-        
+
         <p>
             The suggested donation amount is &euro;20, but you can give any amount you like.
-            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=ad10&no_shipping=1&amount=10.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8">&euro;10</a>,
-            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=ad15&no_shipping=1&amount=15.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8">&euro;15</a>,
-            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=ad20&no_shipping=1&amount=20.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8">&euro;20</a>,
-            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=ad25&no_shipping=1&amount=25.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8">&euro;25</a>,
-            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=ad30&no_shipping=1&amount=30.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8">&euro;30</a>
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JUF7FRS6WTLHC">&euro;10</a>,
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LQGGXPWSHEFRQ">&euro;15</a>,
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BMH2GB5E4MU7G">&euro;20</a>,
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YS72FN3AFG3LN">&euro;25</a>,
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G9FTC3YWKEGS6">&euro;30</a>
         </p>
         <p>
-            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=ad20&no_shipping=1&amount=20.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt="Donate" class="img-center"/></a>
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BMH2GB5E4MU7G"><img src="inc/img/paypal.gif" alt="Donate" class="img-center"/></a>
         </p>
 
     </div>

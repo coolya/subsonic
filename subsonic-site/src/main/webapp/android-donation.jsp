@@ -40,7 +40,7 @@
         <td style="border:none;">
             <table>
                 <tr>
-                    <td style="border:none;padding:0;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=android10&no_shipping=1&amount=10.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
+                    <td style="border:none;padding:0;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3RTGWJRNAW2PU"><img src="inc/img/paypal.gif" alt=""/></a> </td>
                 </tr>
                 <tr>
                     <td style="text-align:center;border:none;padding:0">&euro;10</td>
@@ -50,7 +50,7 @@
         <td style="border:none;">
             <table>
                 <tr>
-                    <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=android20&no_shipping=1&amount=20.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
+                    <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UCUUB2TYE4PGN"><img src="inc/img/paypal.gif" alt=""/></a> </td>
                 </tr>
                 <tr>
                     <td style="text-align:center;border:none;padding:0">&euro;20</td>
@@ -60,7 +60,7 @@
         <td style="border:none;">
             <table>
                 <tr>
-                    <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=android25&no_shipping=1&amount=25.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
+                    <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3M6TFHWEPSU44"><img src="inc/img/paypal.gif" alt=""/></a> </td>
                 </tr>
                 <tr>
                     <td style="text-align:center;border:none;padding:0">&euro;25</td>
@@ -70,7 +70,7 @@
         <td style="border:none;">
             <table>
                 <tr>
-                    <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=subsonic_donation%40activeobjects.no&item_name=Subsonic+Donation&item_number=android30&no_shipping=1&amount=30.00&currency_code=EUR&tax=0&bn=PP-DonationsBF&charset=UTF-8"><img src="inc/img/paypal.gif" alt=""/></a> </td>
+                    <td style="border:none;padding:0"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5KP7LPQU77UAS"><img src="inc/img/paypal.gif" alt=""/></a> </td>
                 </tr>
                 <tr>
                     <td style="text-align:center;border:none;padding:0">&euro;30</td>

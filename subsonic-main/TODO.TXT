@@ -1,6 +1,5 @@
 TODO IN 3.9
 --------------
-Use saved paypal buttons.
 Simplify implementation of trial period.  Use "feature" string.
 
 Mac installer, http://www.centerkey.com/mac/java/
@@ -28,8 +27,9 @@ Scrobbling broken for transcoded songs? http://www.activeobjects.no/subsonic/for
 Bug: Double-scrobbling when transcoding.
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
 
-TODO IN ANDROID 1.2
+TODO IN ANDROID 1.3
 -----------------------
+Avoid stuttering when restarting playback during download.  Use local socket.
 Seeking fails when playing partial file.  seekTo() should test if playing from partial.
 Only show fullscreen when applicable.
 DownloadActivity not updated if initially empty and then append to queue.
