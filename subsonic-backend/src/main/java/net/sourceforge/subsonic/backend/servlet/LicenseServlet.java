@@ -43,6 +43,7 @@ public class LicenseServlet extends HttpServlet {
     private static final String[] DONATION_SUBJECTS = {
             "Notification of donation received",
             "Payment received",
+            "Subsonic Donation - Donation from",
             "Notification of payment received",
             "Notification of a Cleared eCheck Payment",
             "You've got money"};
