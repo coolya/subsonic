@@ -5,19 +5,22 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * Application entry point for Subsonic booter.
  * <p/>
- * Use command line argument "-agent" to start the service monitoring agent.
+ * Use command line argument "-agent" to start the Windows service monitoring agent,
+ * or "-mac" to start the Mac version of the deployer.
  *
  * @author Sindre Mehus
  */
 public class Main {
 
-    public Main(boolean agent) {
-        String context = agent ? "applicationContext-agent.xml" : "applicationContext-deployer.xml";
-        new ClassPathXmlApplicationContext(context);
+    public Main(String context) {
+        new ClassPathXmlApplicationContext("applicationContext" + context + ".xml");
     }
 
     public static void main(String[] args) {
-        boolean agent = args.length > 0 && "-agent".equals(args[0]);
-        new Main(agent);
+        String context = "-deployer";
+        if (args.length > 0) {
+            context = args[0];
+        }
+        new Main(context);
     }
 }
