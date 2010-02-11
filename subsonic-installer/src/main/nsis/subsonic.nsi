@@ -58,10 +58,10 @@ Section "Subsonic"
   SetOutPath $INSTDIR
 
   # Write files.
-  File ..\..\..\..\subsonic-booter\target\subsonic-agent.exe
-  File ..\..\..\..\subsonic-booter\target\subsonic-agent.exe.vmoptions
-  File ..\..\..\..\subsonic-booter\target\subsonic-service.exe
-  File ..\..\..\..\subsonic-booter\target\subsonic-service.exe.vmoptions
+  File ..\..\..\target\subsonic-agent.exe
+  File ..\..\..\target\subsonic-agent.exe.vmoptions
+  File ..\..\..\target\subsonic-service.exe
+  File ..\..\..\target\subsonic-service.exe.vmoptions
   File ..\..\..\..\subsonic-booter\target\subsonic-booter-jar-with-dependencies.jar
   File ..\..\..\..\subsonic-main\README.TXT
   File ..\..\..\..\subsonic-main\LICENSE.TXT
@@ -164,7 +164,7 @@ Function CheckInstalledJRE
     InstallJRE:
       # Launch Java web installer.
       MessageBox MB_OK "Java 6 was not found and will now be installed."
-      File /oname=$TEMP\jre-setup.exe jre-6u11-windows-i586-p-iftw.exe
+      File /oname=$TEMP\jre-setup.exe jre-6u18-windows-i586-iftw-rv.exe
       ExecWait '"$TEMP\jre-setup.exe"' $0
       Delete "$TEMP\jre-setup.exe"
 

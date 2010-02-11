@@ -392,7 +392,7 @@ Deploy
 Check that correct local version is displayed.
 Commit
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-assembly/target/subsonic* subsonic-installer/target/subsonic*  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/3.9/
+  rsync -avP -e ssh subsonic-assembly/target/subsonic* subsonic-installer/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/3.9/
 
 Modify FRS properties (use Firefox)
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
@@ -437,7 +437,11 @@ Upload to market (use Firefox)
 Upload to sourceforge.
 http://market.android.com/publish/Home
 Also upload to http://appslib.com/developers/index.html
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.1 -m "Tagging Android 1.1."
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.2 -m "Tagging Android 1.2."
+Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
+  rsync -avP -e ssh subsonic-android/bin/subsonic.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.2/subsonic-1.2.apk
+
+
 
 HOW TO RELEASE TRANSCODING PACK
 ===============================
