@@ -1,16 +1,29 @@
-TODO IN 3.9
---------------
-Simplify implementation of trial period.  Use "feature" string.
+Android: Is playback in external player broken?
+Debian pacakge
+RPM package
+Mac package
+WHS?
 
 Mac installer, http://www.centerkey.com/mac/java/
+- Create minimal gui, only showing stdout?
+- refactor booter/installer
 - use app icon.
-- Set intial music dir etc
+- only build win installer on windows and mac installer on mac?
+- Use port 8080
 - create /var/subsonic?
+- set initial music folder etc
 - include transcoders http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=8728
-- document how to change port number, memory etc.
-
+- Document how to change port numbers, etc? Modify Subsonic.app/Contents/Info.plist
+- configure transcoders.
+- /Library/StartupItems ?
+- ~/Library/Application Support
+- http://developer.apple.com/tools/installerpolicy.html
+- For debugging, start Subsonic.app from terminal, look at output.
+- Auto-start
 html5 audio
-Create album table, reimplement related services in SearchService.
+Link to http://nonpixel.com/subair/
+
+Create album table (or reuse music_file_info), reimplement related services in SearchService.
 Upgrade JWPlayer
 TBT: Added "accesskey" in left frame.
 TBT: Added API method to change password.
@@ -24,8 +37,9 @@ Scrobbling broken for transcoded songs? http://www.activeobjects.no/subsonic/for
 Bug: Double-scrobbling when transcoding.
 Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
 
-TODO IN ANDROID 1.3
+ANDROID
 -----------------------
+REST method for getting lyrics (long-click on song in playlist).
 Swipe album art to go to prev/next track.
 Avoid stuttering when restarting playback during download.  Use local socket.
 Seeking fails when playing partial file.  seekTo() should test if playing from partial.
@@ -35,7 +49,6 @@ Don't hide/show notification when rebuffering.
 Understand why threads in CancellableTask are not interrupted.
 Create Norwegian translation.
 SettingsActivity not repainting properly.
--
 Use IOUtils, StringUtils.
 List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7854
 Make it downloadable from sf.net.
@@ -45,25 +58,6 @@ Caching mgmt
 Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
 Improve design of DownloadFile.getCompleteFile() etc.
 Remember position for podcasts.
-
-DONE IN ANDROID 1.2
--------------------
-http retry
-Handle network errors. Resume downloads after network loss.
-Fixed problem with playback stopping on device standby.
-Remember playlist when app is restarted.
-Support landscape mode.
-Long-click on album to play it.
-Long click in playlist
-Use HttpClient
-Added "Save on phone" option.
-New main menu item: "Offline music"
-Improved caching of artist list.
-Save using suggested path, but remember to change suffix when transcoding. And add track number as prefix.
-Better error message when xml parsing fails.
-
-ANDROID
--------
 Use Droid-Fu?
 "Newest" list in Android.
 Android: Long-click on song list.
@@ -82,7 +76,6 @@ Must resolve content type in StreamController, even if "suffix" is not given.
 Add duration to rest api.
 User should be able to select music folder. (Let REST method support it at least).
 Merge artists in REST method.  Make it possible to specify music folder.
-REST method for getting lyrics.
 
 BACKLOG
 ==========================

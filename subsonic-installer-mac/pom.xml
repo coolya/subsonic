@@ -59,7 +59,7 @@
                                                     jvmversion="1.5+"
                                                     jar="../subsonic-booter/target/subsonic-booter-jar-with-dependencies.jar"
                                                     bundleid="net.sourceforge.subsonic"
-                                                    icon="src/main/resources/subsonic.icns"
+                                                    icon="src/subsonic.icns"
                                                     showplist="true"
                                                     verbose="true">
                                             <resourcefilelist dir="../subsonic-main/target" files="subsonic.war"/>

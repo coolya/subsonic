@@ -1,8 +1,6 @@
 package net.sourceforge.subsonic.booter.mac;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -37,7 +35,7 @@ public class SubsonicFrame extends JFrame {
         layoutComponents();
         addBehaviour();
 
-        URL url = Main.class.getResource("/images/subsonic-32.png");
+        URL url = Main.class.getResource("/images/subsonic-512.png");
         setIconImage(Toolkit.getDefaultToolkit().createImage(url));
 
         pack();
@@ -69,7 +67,7 @@ public class SubsonicFrame extends JFrame {
     private void addBehaviour() {
         hideButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setVisible(false);
+                setExtendedState(Frame.ICONIFIED);
             }
         });
         exitButton.addActionListener(new ActionListener() {
