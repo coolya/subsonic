@@ -5,9 +5,11 @@ Simplify implementation of trial period.  Use "feature" string.
 Mac installer, http://www.centerkey.com/mac/java/
 - refactor booter/installer
 - use app icon.
+- Set intial music dir etc
 - only build win installer on windows and mac installer on mac.
 - create /var/subsonic?
-- include transcoders
+- include transcoders http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=8728
+- document how to change port number, memory etc.
 html5 audio
 Link to http://nonpixel.com/subair/
 
