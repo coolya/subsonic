@@ -34,41 +34,5 @@
             <outputDirectory>subsonic-main</outputDirectory>
         </fileSet>
 
-        <fileSet>
-            <directory>../subsonic-site</directory>
-            <includes>
-                <include>src/**</include>
-                <include>pom.xml</include>
-            </includes>
-            <outputDirectory>subsonic-site</outputDirectory>
-        </fileSet>
-
-        <fileSet>
-            <directory>../subsonic-booter</directory>
-            <includes>
-                <include>src/**</include>
-                <include>pom.xml</include>
-            </includes>
-            <outputDirectory>subsonic-booter</outputDirectory>
-        </fileSet>
-
-        <fileSet>
-            <directory>../subsonic-installer</directory>
-            <includes>
-                <include>src/**</include>
-                <include>pom.xml</include>
-            </includes>
-            <outputDirectory>subsonic-installer</outputDirectory>
-        </fileSet>
-
-        <fileSet>
-            <directory>../subsonic-assembly</directory>
-            <includes>
-                <include>src/**</include>
-                <include>pom.xml</include>
-            </includes>
-            <outputDirectory>subsonic-assembly</outputDirectory>
-        </fileSet>
-
     </fileSets>
 </assembly>

@@ -3,9 +3,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.sourceforge.subsonic</groupId>
-    <artifactId>subsonic-installer</artifactId>
+    <artifactId>subsonic-installer-windows</artifactId>
     <packaging>pom</packaging>
-    <name>Subsonic Installer</name>
+    <name>Subsonic Installer - Windows</name>
 
     <parent>
         <groupId>net.sourceforge.subsonic</groupId>

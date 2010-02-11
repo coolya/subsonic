@@ -71,7 +71,7 @@
             <id>full</id>
             <modules>
                 <module>subsonic-booter</module>
-                <module>subsonic-installer</module>
+                <module>subsonic-installer-windows</module>
                 <module>subsonic-backend</module>
                 <module>subsonic-site</module>
                 <module>subsonic-assembly</module>
