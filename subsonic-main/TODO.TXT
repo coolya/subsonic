@@ -3,24 +3,19 @@ TODO IN 3.9
 Simplify implementation of trial period.  Use "feature" string.
 
 Mac installer, http://www.centerkey.com/mac/java/
-- refactor booter/installer
 - use app icon.
 - Set intial music dir etc
-- only build win installer on windows and mac installer on mac.
 - create /var/subsonic?
 - include transcoders http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=8728
 - document how to change port number, memory etc.
+
 html5 audio
-Link to http://nonpixel.com/subair/
-
-
 Create album table, reimplement related services in SearchService.
 Upgrade JWPlayer
 TBT: Added "accesskey" in left frame.
 TBT: Added API method to change password.
 Fix bug with executor in networkservice.
 Disable ads first 30 days?
-Update ads?
 Show status in getting started.
 Test lyrics with non-ascii.
 Optimize SettingsService.getAllMusicFolders()?
