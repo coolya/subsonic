@@ -1,28 +1,23 @@
 Android: Is playback in external player broken?
+Don't use port 8080.
 Debian pacakge
 RPM package
 Mac package
 WHS?
 
 Mac installer, http://www.centerkey.com/mac/java/
-- Create minimal gui, only showing stdout?
-- refactor booter/installer
-- use app icon.
-- only build win installer on windows and mac installer on mac?
-- Use port 8080
 - create /var/subsonic?
 - set initial music folder etc
 - include transcoders http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=8728
 - Document how to change port numbers, etc? Modify Subsonic.app/Contents/Info.plist
+- Document how to auto-start.
+- Document:  For debugging, start Subsonic.app from terminal, look at output.
 - configure transcoders.
 - /Library/StartupItems ?
-- ~/Library/Application Support
+- subsonic.home = /Library/Application Support/Subsonic
 - http://developer.apple.com/tools/installerpolicy.html
-- For debugging, start Subsonic.app from terminal, look at output.
-- Auto-start
-html5 audio
-Link to http://nonpixel.com/subair/
 
+html5 audio
 Create album table (or reuse music_file_info), reimplement related services in SearchService.
 Upgrade JWPlayer
 TBT: Added "accesskey" in left frame.
