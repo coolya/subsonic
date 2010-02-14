@@ -16,8 +16,7 @@ import net.sourceforge.subsonic.booter.Main;
 import net.sourceforge.subsonic.booter.deployer.SubsonicDeployerService;
 
 /**
- * Frame that is activated by the tray icon. Contains a tabbed pane
- * with status and settings panels.
+ * Frame with Subsonic status.  Used on Mac installs.
  *
  * @author Sindre Mehus
  */
@@ -29,7 +28,7 @@ public class SubsonicFrame extends JFrame {
     private JButton exitButton;
 
     public SubsonicFrame(SubsonicDeployerService deployer) {
-        super("Subsonic Control Panel");
+        super("Subsonic");
         this.deployer = deployer;
         createComponents();
         layoutComponents();
