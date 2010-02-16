@@ -1,6 +1,7 @@
 TODO IN 4.0
 ------------
 Update text in donate.jsp (in Subsonic)
+Use port 4040 instead of 8080.
 
 DONE IN 4.0
 -----------
@@ -8,13 +9,13 @@ Added Monochrome themes, courtesy of David D.
 
 Redirect php pages to jsp.
 Android: Is playback in external player broken?
-Don't use port 8080.
-Debian pacakge
+Debian pacakge, use Parallels Desktop
 RPM package
 Mac package
 WHS?
 
 Mac installer, http://www.centerkey.com/mac/java/
+- Delete jetty dir when installing.
 - create /var/subsonic?
 - set initial music folder etc
 - include transcoders http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=8728
