@@ -29,3 +29,9 @@ midnightfun "Midnight Fun"
 
 # Theme by Dan Eriksen
 coolandclean "Cool and Clean"
+
+# Theme by David D.
+monochrome "Monochrome"
+
+# Theme by David D.
+monochrome_black "Monochrome (Black)"

@@ -1,3 +1,11 @@
+TODO IN 4.0
+------------
+Update text in donate.jsp (in Subsonic)
+
+DONE IN 4.0
+-----------
+Added Monochrome themes, courtesy of David D.
+
 Redirect php pages to jsp.
 Android: Is playback in external player broken?
 Don't use port 8080.
