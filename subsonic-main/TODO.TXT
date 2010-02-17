@@ -7,6 +7,12 @@ DONE IN 4.0
 -----------
 Added Monochrome themes, courtesy of David D.
 
+
+UBUNTU
+------
+% sudo apt-get install sun-java6-jdk (or -jre)
+todo: update-alternatives
+
 Redirect php pages to jsp.
 Android: Is playback in external player broken?
 Debian pacakge, use Parallels Desktop
@@ -384,6 +390,7 @@ Check that correct local version is displayed.
 Commit
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
   rsync -avP -e ssh subsonic-assembly/target/subsonic* subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/3.9/
+  rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/3.9/
 
 Modify FRS properties (use Firefox)
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
