@@ -24,7 +24,7 @@ Mac installer, http://www.centerkey.com/mac/java/
 - Document:  For debugging, start Subsonic.app from terminal, look at output.
 - configure transcoders.
 - /Library/StartupItems ?
-- subsonic.home = /Library/Application Support/Subsonic
+- subsonic.home = ~/Library/Application Support/Subsonic
 - http://developer.apple.com/tools/installerpolicy.html
 
 html5 audio

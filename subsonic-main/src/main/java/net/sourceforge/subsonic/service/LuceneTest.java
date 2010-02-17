@@ -18,20 +18,23 @@
  */
 package net.sourceforge.subsonic.service;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicFolder;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Searcher;
+import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Searcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
 
 import java.io.File;
 import java.io.FileReader;
@@ -43,6 +46,7 @@ import java.io.IOException;
 public class LuceneTest {
 
     private static final File INDEX_DIR = new File("/tmp/subsonic-index");
+    private static final Logger LOG = Logger.getLogger(SearchService.class);
 
 
     /*
@@ -100,6 +104,11 @@ public class LuceneTest {
 
         Query query = new TermQuery(new Term("id", ""));
         searcher.search(query, 1);
+
+    }
+
+
+    private void foo() {
 
     }
 }
