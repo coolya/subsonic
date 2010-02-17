@@ -64,6 +64,9 @@
                                             <resourcefilelist dir="../subsonic-main/target" files="subsonic.war"/>
                                             <javaproperty name="subsonic.war" value="Subsonic.app/Contents/Resources/subsonic.war"/>
                                             <javaproperty name="subsonic.home" value="/Library/Application Support/Subsonic"/>
+                                            <javaproperty name="subsonic.defaultMusicFolder" value="/Users/Shared/Music/iTunes/iTunes Media"/>
+                                            <javaproperty name="subsonic.defaultPodcastFolder" value="/Users/Shared/Podcasts"/>
+                                            <javaproperty name="subsonic.defaultPlaylistFolder" value="/Users/Shared/Playlists"/>
                                             <javaproperty name="subsonic.port" value="4040"/>
                                             <javaproperty name="subsonic.contextPath" value="/"/>
                                         </jarbundler>
