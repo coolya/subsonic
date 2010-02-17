@@ -10,6 +10,8 @@ Added Monochrome themes, courtesy of David D.
 
 UBUNTU
 ------
+subsonic_3.9_all.deb
+Create dependency to sun-java6-xxx
 % sudo apt-get install sun-java6-jdk (or -jre)
 todo: update-alternatives
 
