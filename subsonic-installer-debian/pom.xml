@@ -56,11 +56,9 @@
                                 <configuration>
                                     <tasks>
                                         <echo>Creating Debian package...</echo>
-                                        <!--<copy file="${basedir}/src/main/exe4j/subsonic-agent.exe.vmoptions" todir="${project.build.directory}"/>-->
-                                        <!--<copy file="${basedir}/src/main/exe4j/subsonic-service.exe.vmoptions" todir="${project.build.directory}"/>-->
-                                        <!--<exec executable="${exe4j.home}/bin/exe4jc">-->
-                                            <!--<arg value="-license=L-SINDRE_MEHUS#14926715500010001-1ty7dbe11l10ll#140"/>-->
-                                        <!--</exec>-->
+                                        <copy file="../subsonic-booter/src/main/script/subsonic.sh" todir="${project.build.directory}/classes/usr/share/subsonic"/>
+                                        <copy file="../subsonic-booter/target/subsonic-booter-jar-with-dependencies.jar" todir="${project.build.directory}/classes/usr/share/subsonic"/>
+                                        <copy file="../subsonic-main/target/subsonic.war" todir="${project.build.directory}/classes/usr/share/subsonic"/>
                                         <exec executable="chmod">
                                             <arg value="oug+x"/>
                                             <arg value="${project.build.directory}/classes/DEBIAN/postinst"/>

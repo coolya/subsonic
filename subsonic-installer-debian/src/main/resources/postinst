@@ -1,2 +1,2 @@
 #! /bin/sh
-ln -s /usr/share/mucommander/mucommander.sh /usr/bin/mucommander
+ln -s /usr/share/subsonic/subsonic.sh /usr/bin/subsonic
