@@ -1,12 +1,11 @@
 Package: subsonic
-Version: 0.8.4
+Version: ${project.version}
 Section: utils
 Priority: optional
 Recommends: java-virtual-machine, java2-runtime
 Suggests: sun-java6-jre
 Architecture: all
-Installed-Size: 3334
-Maintainer: Maxence Bernard <maxence@maxence.info>
+Maintainer: Sindre Mehus <sindre@activeobjects.no>
 Description: a lightweight, cross-platform file manager
  muCommander is a lightweight, cross-platform file manager running on any operating system with Java support.
  It features a dual-pane interface in the tradition of Norton Commander and other commanders, allowing to quickly

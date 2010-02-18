@@ -46,6 +46,12 @@
             </activation>
 
             <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
                 <plugins>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
@@ -67,6 +73,7 @@
                                         <exec executable="dpkg">
                                             <arg value="--build"/>
                                             <arg value="${project.build.directory}/classes"/>
+                                            <arg value="${project.build.directory}/subsonic_${project.version}_all.deb"/>
                                         </exec>
                                     </tasks>
                                 </configuration>
