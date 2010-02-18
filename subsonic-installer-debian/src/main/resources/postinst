@@ -1,2 +1,9 @@
 #! /bin/sh
+
 ln -s /usr/share/subsonic/subsonic.sh /usr/bin/subsonic
+
+mkdir -p /var/subsonic
+chmod oug+rwx /var/subsonic
+chown root:admin /var/subsonic
+rm -rf /var/subsonic/jetty
+

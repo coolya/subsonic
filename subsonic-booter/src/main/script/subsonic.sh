@@ -8,7 +8,7 @@
 
 SUBSONIC_HOME=/var/subsonic
 SUBSONIC_HOST=0.0.0.0
-SUBSONIC_PORT=8080
+SUBSONIC_PORT=4040
 SUBSONIC_CONTEXT_PATH=/
 SUBSONIC_MAX_MEMORY=64
 SUBSONIC_PIDFILE=
@@ -26,7 +26,7 @@ usage() {
     echo "                       to make Subsonic available on only one of them. The default value"
     echo "                       will bind Subsonic to all available network interfaces. Default: 0.0.0.0"
     echo "  --port=PORT          The port on which Subsonic will listen for"
-    echo "                       incoming HTTP traffic. Default: 8080"
+    echo "                       incoming HTTP traffic. Default: 4040"
     echo "  --context-path=PATH  The context path, i.e., the last part of the Subsonic"
     echo "                       URL. Typically '/' or '/subsonic'. Default '/'"
     echo "  --max-memory=MB      The memory limit (max Java heap size) in megabytes."

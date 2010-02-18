@@ -9,7 +9,7 @@ REM  The default value 0.0.0.0 will bind Subsonic to all available network inter
 set SUBSONIC_HOST=0.0.0.0
 
 REM  The port on which Subsonic will listen for incoming HTTP traffic.
-set SUBSONIC_PORT=8080
+set SUBSONIC_PORT=4040
 
 REM  The context path (i.e., the last part of the Subsonic URL).  Typically "/" or "/subsonic".
 set SUBSONIC_CONTEXT_PATH=/
