@@ -41,7 +41,7 @@
             <id>mac</id>
             <activation>
                 <os>
-                    <family>mac</family>
+                    <family>linux</family>
                 </os>
             </activation>
 
@@ -70,7 +70,8 @@
                                             <arg value="${project.build.directory}/classes/DEBIAN/postinst"/>
                                             <arg value="${project.build.directory}/classes/DEBIAN/postrm"/>
                                         </exec>
-                                        <exec executable="dpkg">
+                                        <exec executable="fakeroot">
+                                            <arg value="dpkg"/>
                                             <arg value="--build"/>
                                             <arg value="${project.build.directory}/classes"/>
                                             <arg value="${project.build.directory}/subsonic_${project.version}_all.deb"/>
