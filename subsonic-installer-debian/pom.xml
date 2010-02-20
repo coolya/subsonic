@@ -69,11 +69,18 @@
                                             <arg value="oug+x"/>
                                             <arg value="${project.build.directory}/classes/DEBIAN/postinst"/>
                                             <arg value="${project.build.directory}/classes/DEBIAN/postrm"/>
+                                            <arg value="${project.build.directory}/classes/usr/share/subsonic/subsonic.sh"/>
+                                        </exec>
+                                        <exec executable="sleep">
+                                            <arg value="2"/>
                                         </exec>
                                         <exec executable="fakeroot">
                                             <arg value="dpkg"/>
                                             <arg value="--build"/>
                                             <arg value="${project.build.directory}/classes"/>
+                                            <arg value="${project.build.directory}/subsonic_${project.version}_all.deb"/>
+                                        </exec>
+                                        <exec executable="lintian">
                                             <arg value="${project.build.directory}/subsonic_${project.version}_all.deb"/>
                                         </exec>
                                     </tasks>

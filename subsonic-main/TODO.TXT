@@ -10,7 +10,7 @@ Updated Finnish translation, courtesy of Reijo J&auml;&auml;rni
 
 UBUNTU
 ------
-subsonic_3.9_all.deb
+Use DEBIAN/conffiles
 $ lintian, fakeroot http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/
 deamon, http://girasoli.org/?p=120
 http://www.wiggy.net/presentations/2001/DebianWalkThrough/handouts/handouts.html#AEN477

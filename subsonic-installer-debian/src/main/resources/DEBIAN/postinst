@@ -1,9 +1,12 @@
 #! /bin/sh
 
+set -e
+
 ln -s /usr/share/subsonic/subsonic.sh /usr/bin/subsonic
 
-mkdir -p /var/subsonic
+# TODO: Put /var/subsonic together with /usr?
+#mkdir -p /var/subsonic
 chmod oug+rwx /var/subsonic
-chown root:admin /var/subsonic
+#chown root:root /var/subsonic
 rm -rf /var/subsonic/jetty
 

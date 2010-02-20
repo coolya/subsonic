@@ -93,7 +93,11 @@ mkdir -p ${SUBSONIC_HOME}
 LOG=${SUBSONIC_HOME}/subsonic_sh.log
 rm -f ${LOG}
 
-cd `dirname $0`
+cd $(dirname $0)
+if [ -e /bin/readlink ]
+    then
+    cd $(dirname $(readlink -f $0))
+fi
 
 ${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m \
   -Dsubsonic.home=${SUBSONIC_HOME} \
