@@ -11,12 +11,7 @@ Updated Finnish translation, courtesy of Reijo J&auml;&auml;rni
 UBUNTU
 ------
 Use DEBIAN/conffiles
-$ lintian, fakeroot http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/
-deamon, http://girasoli.org/?p=120
-http://www.wiggy.net/presentations/2001/DebianWalkThrough/handouts/handouts.html#AEN477
-Create dependency to sun-java6-xxx
-% sudo apt-get install sun-java6-jdk (or -jre)
-todo: update-alternatives
+Add transcoders.
 
 Redirect php pages to jsp.
 Android: Is playback in external player broken?

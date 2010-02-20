@@ -4,9 +4,8 @@ set -e
 
 ln -s /usr/share/subsonic/subsonic.sh /usr/bin/subsonic
 
-# TODO: Put /var/subsonic together with /usr?
-#mkdir -p /var/subsonic
 chmod oug+rwx /var/subsonic
-#chown root:root /var/subsonic
 rm -rf /var/subsonic/jetty
 
+update-rc.d subsonic defaults 99
+invoke-rc.d subsonic restart

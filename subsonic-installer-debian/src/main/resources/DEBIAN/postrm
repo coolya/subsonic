@@ -5,3 +5,6 @@ set -e
 if [ -h /usr/bin/subsonic ] ; then
   rm /usr/bin/subsonic
 fi
+
+invoke-rc.d subsonic stop
+update-rc.d -f subsonic remove

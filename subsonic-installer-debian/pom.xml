@@ -70,6 +70,7 @@
                                             <arg value="${project.build.directory}/classes/DEBIAN/postinst"/>
                                             <arg value="${project.build.directory}/classes/DEBIAN/postrm"/>
                                             <arg value="${project.build.directory}/classes/usr/share/subsonic/subsonic.sh"/>
+                                            <arg value="${project.build.directory}/classes/etc/init.d/subsonic"/>
                                         </exec>
                                         <exec executable="sleep">
                                             <arg value="2"/>
