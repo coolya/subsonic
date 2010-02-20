@@ -1,3 +1,4 @@
+<%@ page import="java.net.URL" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -27,8 +28,31 @@
             <a href="inc/img/screenshots/screen11.png"><img src="inc/img/screenshots/thumb11.png" alt="" style="padding:3px"/></a>
             <a href="inc/img/screenshots/screen12.png"><img src="inc/img/screenshots/thumb12.png" alt="" style="padding:3px"/></a>
             <a href="inc/img/screenshots/screen13.png"><img src="inc/img/screenshots/thumb13.png" alt="" style="padding:3px"/></a>
-            <object width="320" height="265"><param name="movie" value="http://www.youtube.com/v/Va9DtFeG7cA&hl=en&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/Va9DtFeG7cA&hl=en&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="320" height="265"></embed></object>
+
+            <script type="text/javascript" src="inc/js/swfobject.js"></script>
+
+            <div id="mediaspace"></div>
+
+            <%
+                URL url = new URL(request.getRequestURL().toString());
+                String host = url.getHost();
+                if (url.getPort() != 80 && url.getPort() != -1) {
+                    host += ":" + url.getPort();
+                }
+            %>
+            <script type="text/javascript">
+                var so = new SWFObject("inc/flash/player.swf","mpl","640","360","9");
+                so.addParam("allowfullscreen","true");
+                so.addParam("allowscriptaccess","always");
+                so.addParam("wmode","opaque");
+                so.addVariable("duration","162");
+                so.addVariable("file","http://<%=host%>/pages/inc/video/subsonic-medium.m4v");
+                so.addVariable("image","http://<%=host%>/pages/inc/video/subsonic-medium.jpg");
+                so.addVariable("stretching","none");
+                so.write("mediaspace");
+            </script>
         </div>
+
 
         <div id="side-col">
             <%@ include file="download-subsonic.jsp" %>
