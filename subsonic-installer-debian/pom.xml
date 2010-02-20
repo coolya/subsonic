@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.sourceforge.subsonic</groupId>
     <artifactId>subsonic-installer-debian</artifactId>
-    <!--<packaging>pom</packaging>-->
+    <packaging>pom</packaging>
     <name>Subsonic Installer for Debian</name>
 
     <parent>
@@ -46,12 +46,6 @@
             </activation>
 
             <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <filtering>true</filtering>
-                    </resource>
-                </resources>
                 <plugins>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
@@ -62,15 +56,23 @@
                                 <configuration>
                                     <tasks>
                                         <echo>Creating Debian package...</echo>
-                                        <copy file="../subsonic-booter/src/main/script/subsonic.sh" todir="${project.build.directory}/classes/usr/share/subsonic"/>
-                                        <copy file="../subsonic-booter/target/subsonic-booter-jar-with-dependencies.jar" todir="${project.build.directory}/classes/usr/share/subsonic"/>
-                                        <copy file="../subsonic-main/target/subsonic.war" todir="${project.build.directory}/classes/usr/share/subsonic"/>
+                                        <copy todir="${project.build.directory}/deb">
+                                            <fileset dir="${basedir}/src/main/resources"/>
+                                            <filterset>
+                                                <filter token="VERSION" value="${project.version}"/>
+                                            </filterset>
+                                        </copy>
+
+                                        <copy file="../subsonic-booter/src/main/script/subsonic.sh" todir="${project.build.directory}/deb/usr/share/subsonic"/>
+                                        <copy file="../subsonic-booter/target/subsonic-booter-jar-with-dependencies.jar" todir="${project.build.directory}/deb/usr/share/subsonic"/>
+                                        <copy file="../subsonic-main/target/subsonic.war" todir="${project.build.directory}/deb/usr/share/subsonic"/>
+
                                         <exec executable="chmod">
                                             <arg value="oug+x"/>
-                                            <arg value="${project.build.directory}/classes/DEBIAN/postinst"/>
-                                            <arg value="${project.build.directory}/classes/DEBIAN/postrm"/>
-                                            <arg value="${project.build.directory}/classes/usr/share/subsonic/subsonic.sh"/>
-                                            <arg value="${project.build.directory}/classes/etc/init.d/subsonic"/>
+                                            <arg value="${project.build.directory}/deb/DEBIAN/postinst"/>
+                                            <arg value="${project.build.directory}/deb/DEBIAN/postrm"/>
+                                            <arg value="${project.build.directory}/deb/usr/share/subsonic/subsonic.sh"/>
+                                            <arg value="${project.build.directory}/deb/etc/init.d/subsonic"/>
                                         </exec>
                                         <exec executable="sleep">
                                             <arg value="2"/>
@@ -78,7 +80,7 @@
                                         <exec executable="fakeroot">
                                             <arg value="dpkg"/>
                                             <arg value="--build"/>
-                                            <arg value="${project.build.directory}/classes"/>
+                                            <arg value="${project.build.directory}/deb"/>
                                             <arg value="${project.build.directory}/subsonic_${project.version}_all.deb"/>
                                         </exec>
                                         <exec executable="lintian">
