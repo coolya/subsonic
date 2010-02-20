@@ -1,8 +1,9 @@
 Package: subsonic
 Version: ${project.version}
-Section: web
+Section: sound
 Priority: optional
 Depends: sun-java6-jre
+Recommends: lame
 Architecture: all
 Maintainer: Sindre Mehus <sindre@activeobjects.no>
 Description: a web-based music streamer, jukebox and Podcast receiver

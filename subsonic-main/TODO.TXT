@@ -12,6 +12,8 @@ UBUNTU
 ------
 Use DEBIAN/conffiles
 Add transcoders.
+APT repo http://www.debian.org/doc/manuals/repository-howto/repository-howto
+Decide what to do with /var/subsonic
 
 Redirect php pages to jsp.
 Android: Is playback in external player broken?

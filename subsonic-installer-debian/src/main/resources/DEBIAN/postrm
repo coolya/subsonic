@@ -2,9 +2,7 @@
 
 set -e
 
-if [ -h /usr/bin/subsonic ] ; then
-  rm /usr/bin/subsonic
-fi
+rm -f /usr/bin/subsonic
 
-invoke-rc.d subsonic stop
+[ -e /etc/init.d/subsonic ] && invoke-rc.d subsonic stop
 update-rc.d -f subsonic remove
