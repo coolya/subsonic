@@ -3,7 +3,7 @@ Version: @VERSION@
 Section: sound
 Priority: optional
 Depends: sun-java6-jre
-Recommends: lame
+Recommends: lame, flac, faad, vorbis-tools, ffmpeg
 Architecture: all
 Maintainer: Sindre Mehus <sindre@activeobjects.no>
 Description: a web-based music streamer, jukebox and Podcast receiver

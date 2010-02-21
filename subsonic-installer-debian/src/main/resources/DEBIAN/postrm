@@ -2,7 +2,8 @@
 
 set -e
 
+# Remove symlink.
 rm -f /usr/bin/subsonic
 
-[ -e /etc/init.d/subsonic ] && invoke-rc.d subsonic stop
+# Remove startup scripts.
 update-rc.d -f subsonic remove

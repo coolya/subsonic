@@ -69,7 +69,9 @@
 
                                         <exec executable="chmod">
                                             <arg value="oug+x"/>
+                                            <arg value="${project.build.directory}/deb/DEBIAN/preinst"/>
                                             <arg value="${project.build.directory}/deb/DEBIAN/postinst"/>
+                                            <arg value="${project.build.directory}/deb/DEBIAN/prerm"/>
                                             <arg value="${project.build.directory}/deb/DEBIAN/postrm"/>
                                             <arg value="${project.build.directory}/deb/usr/share/subsonic/subsonic.sh"/>
                                             <arg value="${project.build.directory}/deb/etc/init.d/subsonic"/>
