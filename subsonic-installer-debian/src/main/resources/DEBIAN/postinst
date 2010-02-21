@@ -4,8 +4,16 @@ set -e
 
 ln -s /usr/share/subsonic/subsonic.sh /usr/bin/subsonic
 
+mkdir p /var/subsonic/transcode
 chmod oug+rwx /var/subsonic
 rm -rf /var/subsonic/jetty
+
+ln -sf /usr/bin/lame /var/subsonic/transcode/
+ln -sf /usr/bin/ffmpeg /var/subsonic/transcode/
+ln -sf /usr/bin/flac /var/subsonic/transcode/
+ln -sf /usr/bin/faad /var/subsonic/transcode/
+ln -sf /usr/bin/oggdec /var/subsonic/transcode/
+ln -sf /usr/bin/oggenc /var/subsonic/transcode/
 
 update-rc.d subsonic defaults 99
 invoke-rc.d subsonic restart

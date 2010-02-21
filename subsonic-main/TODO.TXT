@@ -12,6 +12,11 @@ UBUNTU
 ------
 Use DEBIAN/conffiles
 Add transcoders.
+sudo apt-get install lame
+sudo apt-get install flac
+sudo apt-get install faad
+sudo apt-get install vorbis-tools
+sudo apt-get install ffmpeg
 APT repo http://www.debian.org/doc/manuals/repository-howto/repository-howto
 Decide what to do with /var/subsonic
 
