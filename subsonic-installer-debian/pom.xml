@@ -57,7 +57,7 @@
                                     <tasks>
                                         <echo>Creating Debian package...</echo>
                                         <copy todir="${project.build.directory}/deb">
-                                            <fileset dir="${basedir}/src/main/resources"/>
+                                            <fileset dir="${basedir}/src"/>
                                             <filterset>
                                                 <filter token="VERSION" value="${project.version}"/>
                                             </filterset>
