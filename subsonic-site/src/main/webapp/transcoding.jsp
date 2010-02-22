@@ -37,7 +37,7 @@
                         <p>
                             A transcoding pack for Windows with a selection of codecs can be
                             <a href="http://prdownloads.sourceforge.net/subsonic/transcode_windows.zip"><b>downloaded here</b></a>.
-                            It supports the following media types:
+                            The list of supported media types includes:
                         </p>
 
                         <div class="floatcontainer margin10-t margin10-b">
@@ -53,7 +53,6 @@
                                 <li>MPC (Musepack)</li>
                                 <li>WavPack</li>
                                 <li>SHN (Shorten)</li>
-                                <li>OptimFROG Lossless and DualStream</li>
                             </ul>
                         </div>
 
@@ -93,61 +92,55 @@
                 <tr>
                     <td class="transcoding">ogg</td>
                     <td class="transcoding">mp3</td>
-                    <td class="transcoding">oggdec %s -o</td>
+                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
                     <td class="transcoding">lame -b %b - -</td>
                 </tr>
                 <tr class="table-altrow">
                     <td class="transcoding">wma</td>
                     <td class="transcoding">mp3</td>
-                    <td class="transcoding">wmadec %s</td>
-                    <td class="transcoding">lame -b %b -x - -</td>
+                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
+                    <td class="transcoding">lame -b %b - -</td>
                 </tr>
                 <tr>
                     <td class="transcoding">flac</td>
                     <td class="transcoding">mp3</td>
-                    <td class="transcoding">flac -c -s -d %s</td>
+                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
                     <td class="transcoding">lame -b %b - -</td>
                 </tr>
                 <tr class="table-altrow">
                     <td class="transcoding">ape</td>
                     <td class="transcoding">mp3</td>
-                    <td class="transcoding">mac %s - -d</td>
+                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
                     <td class="transcoding">lame -b %b - -</td>
                 </tr>
                 <tr>
                     <td class="transcoding">m4a</td>
                     <td class="transcoding">mp3</td>
-                    <td class="transcoding">faad -w %s</td>
-                    <td class="transcoding">lame -b %b -x - -</td>
+                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
+                    <td class="transcoding">lame -b %b - -</td>
                 </tr>
                 <tr class="table-altrow">
                     <td class="transcoding">aac</td>
                     <td class="transcoding">mp3</td>
-                    <td class="transcoding">faad -w %s</td>
-                    <td class="transcoding">lame -b %b -x - -</td>
+                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
+                    <td class="transcoding">lame -b %b - -</td>
                 </tr>
                 <tr>
                     <td class="transcoding">mpc</td>
                     <td class="transcoding">mp3</td>
-                    <td class="transcoding">mppdec --wav --silent %s -</td>
+                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
                     <td class="transcoding">lame -b %b - -</td>
                 </tr>
-                <tr class="table-altrow">
-                    <td class="transcoding">ofr</td>
+                <tr class="table-altrow"> 
+                    <td class="transcoding">wv</td>
                     <td class="transcoding">mp3</td>
-                    <td class="transcoding">ofr --decode --silent %s --output -</td>
+                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
                     <td class="transcoding">lame -b %b - -</td>
                 </tr>
                 <tr>
-                    <td class="transcoding">wv</td>
-                    <td class="transcoding">mp3</td>
-                    <td class="transcoding">wvunpack -q %s -</td>
-                    <td class="transcoding">lame -b %b - -</td>
-                </tr>
-                <tr class="table-altrow">
                     <td class="transcoding">shn</td>
                     <td class="transcoding">mp3</td>
-                    <td class="transcoding">shorten -x %s -</td>
+                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
                     <td class="transcoding">lame -b %b - -</td>
                 </tr>
             </table>

@@ -50,7 +50,7 @@
                     Although optimized for MP3 streaming, it works for any audio or video format that can stream over HTTP,
                     for instance AAC and OGG. By using <a href="transcoding.jsp">transcoder plug-ins</a>, Subsonic supports
                     on-the-fly conversion and streaming of virtually any audio format, including WMA, FLAC, APE, Musepack,
-                    WavPack, Shorten and OptimFROG.
+                    WavPack and Shorten.
                 </p>
 
                 <p>
