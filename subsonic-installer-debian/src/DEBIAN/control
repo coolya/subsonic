@@ -1,12 +1,12 @@
 Package: subsonic
 Version: @VERSION@
-Section: sound
+Section: Multimedia
 Priority: optional
 Depends: sun-java6-bin
 Recommends: lame, flac, faad, vorbis-tools, ffmpeg
 Architecture: all
 Maintainer: Sindre Mehus <sindre@activeobjects.no>
-Description: a web-based music streamer, jukebox and Podcast receiver
+Description: A web-based music streamer, jukebox and Podcast receiver
  Subsonic is a web-based music streamer, jukebox and Podcast receiver,
  providing access to your music collection wherever you are. Use it
  to share your music with friends, or to listen to your music while away

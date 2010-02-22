@@ -3,9 +3,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.sourceforge.subsonic</groupId>
-    <artifactId>subsonic-installer-debian</artifactId>
+    <artifactId>subsonic-installer-rpm</artifactId>
     <packaging>pom</packaging>
-    <name>Subsonic Installer for Debian</name>
+    <name>Subsonic Installer for RPM</name>
 
     <parent>
         <groupId>net.sourceforge.subsonic</groupId>
@@ -29,11 +29,11 @@
                         <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>dpkg</id>
+                                <id>rpm</id>
                                 <phase>compile</phase>
                                 <configuration>
                                     <tasks>
-                                        <echo>Creating Debian package...</echo>
+                                        <echo>Creating RPM package...</echo>
                                         <copy todir="${project.build.directory}/deb">
                                             <fileset dir="${basedir}/src"/>
                                             <filterset>

@@ -23,10 +23,11 @@ Try clean install
 
 RPM INSTALLER
 --------------
-Install Fedora
+sudo yum install java-1.6.0-openjdk
 http://www.g-loaded.eu/2006/04/05/how-to-build-rpm-packages-on-fedora/
 http://fedoraproject.org/wiki/How_to_create_an_RPM_package
 http://fedoraproject.org/wiki/Packaging/ScriptletSnippets
+http://ant.apache.org/manual/OptionalTasks/rpm.html
 
 MAC INSTALLER
 -------------
