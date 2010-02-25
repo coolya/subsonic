@@ -64,19 +64,18 @@
     <div class="heading"><img src="inc/img/download-mac.png" alt="" height="16" width="16"/> Mac installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
     <div class="content">
         <div class="wide-content">
+            <a href="inc/img/mac-installer.png"><img class="img-right" src="inc/img/mac-installer-small.png" alt="Mac Installer"/></a>
             <p>
-                Download the installation package and run it. This installs Subsonic.app in Applications and starts it.
-                If you want Subsonic to start automatically when you log in, right-click on the Subsonic icon in the dock and select "Open at login".
-
-                TODO: SCREENSHOT
+                Download the installation package and run it. This installs Subsonic.app in Applications. Start it by opening Applications and
+                click the Subsonic icon.  If you want Subsonic to start automatically when you log in, right-click on the Subsonic icon in the dock
+                and select "Open at Login".
             </p>
-            <a href="inc/img/windows-installer.png"><img class="img-right" src="inc/img/windows-installer-small.png" alt="Windows Installer"/></a>
             <p>
                 After installing and starting Subsonic, open the Subsonic web page on <a href="http://localhost:4040">http://localhost:4040</a>.
             </p>
             <p><b>Advanced configuration</b></p>
             <p>
-                To change the port number, Java memory settings or other low-level configuration you can edit <code>/Application/Subsonic.app/Contents/Info.plist</code>.
+                To change the port number, Java memory settings or other low-level configuration you can edit <code style="white-space:nowrap;">/Application/Subsonic.app/Contents/Info.plist</code>.
             </p>
             <p>
                 To make use of Subsonic's powerful <a href="transcoding.jsp">transcoding</a> feature, it's highly recommended to install some third-party
@@ -90,8 +89,11 @@
 
             <p><b>Troubleshooting</b></p>
             <p>
-                If Subsonic doesn't start properly you can troubleshoot it by starting it from a terminal: <code>/Applications/Subsonic.app/Contents/TODO</code>.
-                Also check the logs in <code>/Library/Application Support/Subsonic</code>.
+                If Subsonic doesn't start properly you can troubleshoot it by starting it from the command line:
+                <code style="white-space:nowrap;" >/Applications/Subsonic.app/Contents/MacOS/JavaApplicationStub</code>.
+            </p>
+            <p>
+                Also check the logs in <code style="white-space:nowrap;">/Library/Application Support/Subsonic</code>.
             </p>
 
         </div>
