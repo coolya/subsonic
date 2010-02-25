@@ -28,16 +28,20 @@ http://www.g-loaded.eu/2006/04/05/how-to-build-rpm-packages-on-fedora/
 http://fedoraproject.org/wiki/How_to_create_an_RPM_package
 http://fedoraproject.org/wiki/Packaging/ScriptletSnippets
 http://ant.apache.org/manual/OptionalTasks/rpm.html
+rpmlint
 
 MAC INSTALLER
 -------------
 - http://www.centerkey.com/mac/java/
-- Create symlinks to lame etc
+- Create symlinks to lame and ffmpeg (/opt/local/bin) mac ports
 - set initial music folder etc
 - include transcoders http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=8728
 - Document how to change port numbers, etc? Modify Subsonic.app/Contents/Info.plist
 - Document how to auto-start.
 - Document:  For debugging, start Subsonic.app from terminal, look at output.
+- Document: How to install ffmpeg and lame, mac ports.
+- sudo port install lame
+- sudo port install ffmpeg
 - configure transcoders.
 - http://developer.apple.com/tools/installerpolicy.html
 
