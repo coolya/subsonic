@@ -6,6 +6,9 @@ Use port 4040 instead of 8080.
 Update transcoding.jsp, Schema28
 Make transcoders enabled by default?
 Write more explanatory text in Network > Settings
+jaudiotagger, http://www.jthink.net/jaudiotagger/index.jsp
+auto-detect links in chat.
+Fix bug in coverart batch: http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2862
 
 DONE IN 4.0
 -----------
@@ -15,7 +18,7 @@ New transcoder pack.
 
 DEBIAN INSTALLER
 ----------------
-Add transcoders.
+Add symlink to transcoders, but don't overwrite.
 Run daemon as non-root?
 sudo apt-get install sun-java6-bin
 sudo apt-get install lame flac faad vorbis-tools ffmpeg
@@ -32,18 +35,11 @@ rpmlint
 
 MAC INSTALLER
 -------------
-- http://www.centerkey.com/mac/java/
-- Create symlinks to lame and ffmpeg (/opt/local/bin) mac ports
-- set initial music folder etc
-- include transcoders http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=8728
-- Document how to change port numbers, etc? Modify Subsonic.app/Contents/Info.plist
-- Document how to auto-start.
-- Document:  For debugging, start Subsonic.app from terminal, look at output.
-- Document: How to install ffmpeg and lame, mac ports.
-- sudo port install lame
-- sudo port install ffmpeg
-- configure transcoders.
-- http://developer.apple.com/tools/installerpolicy.html
+Build and test new installer, especially symlinks to ffmpeg, lame.
+Update download.jsp and installation.jsp
+  - screenshot
+  - todos
+http://developer.apple.com/tools/installerpolicy.html
 
 Redirect php pages to jsp.
 WHS installer?

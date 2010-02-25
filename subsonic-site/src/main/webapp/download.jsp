@@ -24,18 +24,24 @@
                     <th>Instructions</th>
                 </tr>
                 <tr class="table-altrow">
-                    <td class="featurename">Windows installer</td>
-                    <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9-setup.exe"><img
+                    <td class="featurename">Windows installer <img src="inc/img/download-windows.png" alt="Download" height="16" width="16"/></td>
+                    <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9-setup.exe"> <img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>
                     <td><a href="installation.jsp#windows"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
                 <tr>
+                    <td class="featurename">Mac installer <img src="inc/img/download-mac.png" alt="Download" height="16" width="16"/></td>
+                    <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9.pkg"><img
+                            src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download </a></td>
+                    <td><a href="installation.jsp#mac"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                </tr>
+                <tr class="table-altrow">
                     <td class="featurename">Stand-alone version (all platforms)</td>
                     <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9-standalone.tar.gz"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>
                     <td><a href="installation.jsp#standalone"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
-                <tr class="table-altrow">
+                <tr>
                     <td class="featurename">WAR version (all platforms)</td>
                     <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9-war.zip"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>

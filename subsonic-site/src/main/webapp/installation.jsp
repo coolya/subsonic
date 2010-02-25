@@ -21,6 +21,7 @@
 
 <ul class="list">
     <li><a href="#windows">Windows installation</a></li>
+    <li><a href="#mac">Mac installation</a></li>
     <li><a href="#standalone">Stand-alone installation</a></li>
     <li><a href="#war">WAR installation</a></li>
 </ul>
@@ -34,7 +35,7 @@
 
 <div class="featureitem">
     <a name="windows"></a>
-    <div class="heading">Windows installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
+    <div class="heading"><img src="inc/img/download-windows.png" alt="" height="16" width="16"/> Windows installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
     <div class="content">
         <div class="wide-content">
             <p><b>Requirements: </b>Java 6 or later (<a href="http://www.java.com">Download</a>)</p>
@@ -57,6 +58,44 @@
             </p>
         </div>
     </div>
+
+</div><div class="featureitem">
+    <a name="mac"></a>
+    <div class="heading"><img src="inc/img/download-mac.png" alt="" height="16" width="16"/> Mac installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
+    <div class="content">
+        <div class="wide-content">
+            <p>
+                Download the installation package and run it. This installs Subsonic.app in Applications and starts it.
+                If you want Subsonic to start automatically when you log in, right-click on the Subsonic icon in the dock and select "Open at login".
+
+                TODO: SCREENSHOT
+            </p>
+            <a href="inc/img/windows-installer.png"><img class="img-right" src="inc/img/windows-installer-small.png" alt="Windows Installer"/></a>
+            <p>
+                After installing and starting Subsonic, open the Subsonic web page on <a href="http://localhost:4040">http://localhost:4040</a>.
+            </p>
+            <p><b>Advanced configuration</b></p>
+            <p>
+                To change the port number, Java memory settings or other low-level configuration you can edit <code>/Application/Subsonic.app/Contents/Info.plist</code>.
+            </p>
+            <p>
+                To make use of Subsonic's powerful <a href="transcoding.jsp">transcoding</a> feature, it's highly recommended to install some third-party
+                transcoders from <a href="http://www.macports.org/">MacPorts</a>:
+            </p>
+
+            <ul>
+                <li>If necessary, <a href="http://www.macports.org/install.php">install MacPorts</a>.</li>
+                <li>From the command line: <code>sudo port install lame</code> and <code>sudo port install ffmpeg</code>.</li>
+            </ul>
+
+            <p><b>Troubleshooting</b></p>
+            <p>
+                If Subsonic doesn't start properly you can troubleshoot it by starting it from a terminal: <code>/Applications/Subsonic.app/Contents/TODO</code>.
+                Also check the logs in <code>/Library/Application Support/Subsonic</code>.
+            </p>
+
+        </div>
+    </div>
 </div>
 
 <div class="featureitem">
@@ -66,7 +105,7 @@
         <div class="wide-content">
             <p><b>Requirements: </b>Sun Java 5 or later (<a href="http://www.java.com">Download</a>)</p>
             <p>
-                This is Subsonic with an embedded Jetty server. Recommended for most Linux and Mac users.
+                This is Subsonic with an embedded Jetty server. Recommended for most Linux users.
             </p>
             <ul>
                 <li>Unpack <code>subsonic-x.x-standalone.tar.gz</code> to <code>SUBSONIC_HOME/standalone</code>.
