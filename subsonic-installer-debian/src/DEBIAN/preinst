@@ -3,5 +3,6 @@
 set -e
 
 # Stop Subsonic service.
-[ -e /etc/init.d/subsonic ] && invoke-rc.d subsonic stop
-
+if [ -e /etc/init.d/subsonic ]; then
+  invoke-rc.d subsonic stop
+fi

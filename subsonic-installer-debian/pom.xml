@@ -61,10 +61,10 @@
                                             <arg value="dpkg"/>
                                             <arg value="--build"/>
                                             <arg value="${project.build.directory}/deb"/>
-                                            <arg value="${project.build.directory}/subsonic_${project.version}_all.deb"/>
+                                            <arg value="${project.build.directory}/subsonic-${project.version}.deb"/>
                                         </exec>
                                         <exec executable="lintian">
-                                            <arg value="${project.build.directory}/subsonic_${project.version}_all.deb"/>
+                                            <arg value="${project.build.directory}/subsonic-${project.version}.deb"/>
                                         </exec>
                                     </tasks>
                                 </configuration>

@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <%! String current = "installation"; %>
@@ -22,6 +22,7 @@
 <ul class="list">
     <li><a href="#windows">Windows installation</a></li>
     <li><a href="#mac">Mac installation</a></li>
+    <li><a href="#debian">Debian/Ubuntu installation</a></li>
     <li><a href="#standalone">Stand-alone installation</a></li>
     <li><a href="#war">WAR installation</a></li>
 </ul>
@@ -38,7 +39,6 @@
     <div class="heading"><img src="inc/img/download-windows.png" alt="" height="16" width="16"/> Windows installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
     <div class="content">
         <div class="wide-content">
-            <p><b>Requirements: </b>Java 6 or later (<a href="http://www.java.com">Download</a>)</p>
             <p>
                 On Windows, the easiest way to install Subsonic is using the provided Windows Installer: <code>subsonic-x.x-setup.exe</code>.
             </p>
@@ -58,8 +58,9 @@
             </p>
         </div>
     </div>
+</div>
 
-</div><div class="featureitem">
+<div class="featureitem">
     <a name="mac"></a>
     <div class="heading"><img src="inc/img/download-mac.png" alt="" height="16" width="16"/> Mac installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
     <div class="content">
@@ -75,7 +76,7 @@
             </p>
             <p><b>Advanced configuration</b></p>
             <p>
-                To change the port number, Java memory settings or other low-level configuration you can edit <code style="white-space:nowrap;">/Application/Subsonic.app/Contents/Info.plist</code>.
+                To change the port number, Java memory settings or other startup parameters, edit <code style="white-space:nowrap;">/Application/Subsonic.app/Contents/Info.plist</code>.
             </p>
             <p>
                 To make use of Subsonic's powerful <a href="transcoding.jsp">transcoding</a> feature, it's highly recommended to install some third-party
@@ -101,13 +102,49 @@
 </div>
 
 <div class="featureitem">
+    <a name="debian"></a>
+    <div class="heading"><img src="inc/img/download-linux.png" alt="" height="16" width="16"/> Debian/Ubuntu installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
+    <div class="content">
+        <div class="wide-content">
+            <p>
+                First, install Java: <code style="white-space:nowrap;">sudo apt-get install sun-java6-bin</code>
+            </p>
+            <p>
+                Download the .deb installation package and install it: <code style="white-space:nowrap;">sudo dpkg -i subsonic-x.x.deb</code>
+            </p>
+            <p>
+                Notice that the installer configures your system to start Subsonic automatically when booting.
+                After installing, open the Subsonic web page on <a href="http://localhost:4040">http://localhost:4040</a>.
+            </p>
+            <p><b>Transcoders</b></p>
+            <p>
+                To make use of Subsonic's powerful <a href="transcoding.jsp">transcoding</a> feature, it's highly recommended to install some third-party
+                transcoders:
+                <code style="white-space:nowrap;">sudo apt-get install lame flac faad vorbis-tools ffmpeg</code>
+            </p>
+            <p><b>Advanced configuration</b></p>
+            <p>
+                To change the port number, Java memory settings or other startup parameters, edit the SUBSONIC_ARGS variable in
+                <code style="white-space:nowrap;">/etc/init.d/subsonic</code>. To restart Subsonic, do
+                <code style="white-space:nowrap;">sudo /etc/init.d/subsonic restart</code>
+            </p>
+            <p><b>Troubleshooting</b></p>
+            <p>
+                Check the logs in <code style="white-space:nowrap;">/var/subsonic</code>.
+            </p>
+
+        </div>
+    </div>
+</div>
+
+<div class="featureitem">
     <a name="standalone"></a>
     <div class="heading">Stand-alone installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
     <div class="content">
         <div class="wide-content">
             <p><b>Requirements: </b>Sun Java 5 or later (<a href="http://www.java.com">Download</a>)</p>
             <p>
-                This is Subsonic with an embedded Jetty server. Recommended for most Linux users.
+                This is Subsonic with an embedded Jetty server, and can be installed on any Windows, Linux, Unix, FreeNAS, unRAID etc operating system.
             </p>
             <ul>
                 <li>Unpack <code>subsonic-x.x-standalone.tar.gz</code> to <code>SUBSONIC_HOME/standalone</code>.
