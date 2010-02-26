@@ -33,15 +33,6 @@ http://fedoraproject.org/wiki/Packaging/ScriptletSnippets
 http://ant.apache.org/manual/OptionalTasks/rpm.html
 rpmlint
 
-MAC INSTALLER
--------------
-Build and test new installer, especially symlinks to ffmpeg, lame.
-Update download.jsp and installation.jsp
-  - screenshot
-  - todos
-http://developer.apple.com/tools/installerpolicy.html
-
-Redirect php pages to jsp.
 WHS installer?
 
 html5 audio
