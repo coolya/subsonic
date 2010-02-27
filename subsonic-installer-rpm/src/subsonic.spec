@@ -1,16 +1,11 @@
 Name:           subsonic
-Version:        3.9
+Version:        @VERSION@
 Release:        1%{?dist}
 Summary:        A web-based music streamer, jukebox and Podcast receiver
 
 Group:          Applications/Multimedia
 License:        GPLv3
 URL:            http://subsonic.org
-Source0:
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-
-BuildRequires:
-Requires:
 
 %description
 Subsonic is a web-based music streamer, jukebox and Podcast receiver,
@@ -24,22 +19,8 @@ Java 1.6 or higher is required to run Subsonic.
 
 Subsonic can be found at http://subsonic.org
 
-%prep
-%setup -q
-
-%build
-%configure
-#make %{?_smp_mflags}
-
-%install
-#rm -rf $RPM_BUILD_ROOT
-#make install DESTDIR=$RPM_BUILD_ROOT
-
-%clean
-#rm -rf $RPM_BUILD_ROOT
-
 %files
-%defattr(-,root,root,-)
-%doc
-
-%changelog
+%defattr(644,root,root,755)
+ /usr/share/subsonic/subsonic-booter-jar-with-dependencies.jar
+ /usr/share/subsonic/subsonic.war
+%attr(755,root,root) /usr/share/subsonic/subsonic.sh

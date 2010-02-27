@@ -13,72 +13,56 @@
         <version>3.9</version>
     </parent>
 
-    <profiles>
+    <build>
+        <plugins>
 
-        <profile>
-            <id>linux</id>
-            <activation>
-                <os>
-                    <family>linux</family>
-                </os>
-            </activation>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>rpm</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <tasks>
+                                <echo>Creating RPM package...</echo>
 
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>rpm</id>
-                                <phase>compile</phase>
-                                <configuration>
-                                    <tasks>
-                                        <echo>Creating RPM package...</echo>
-                                        <copy todir="${project.build.directory}/deb">
-                                            <fileset dir="${basedir}/src"/>
-                                            <filterset>
-                                                <filter token="VERSION" value="${project.version}"/>
-                                            </filterset>
-                                        </copy>
+                                <copy file="${basedir}/src/subsonic.spec" todir="${project.build.directory}/rpm/SPECS">
+                                    <filterset>
+                                        <filter token="VERSION" value="${project.version}"/>
+                                    </filterset>
+                                </copy>
 
-                                        <copy file="../subsonic-booter/src/main/script/subsonic.sh" todir="${project.build.directory}/deb/usr/share/subsonic"/>
-                                        <copy file="../subsonic-booter/target/subsonic-booter-jar-with-dependencies.jar" todir="${project.build.directory}/deb/usr/share/subsonic"/>
-                                        <copy file="../subsonic-main/target/subsonic.war" todir="${project.build.directory}/deb/usr/share/subsonic"/>
+                                <copy file="../subsonic-booter/src/main/script/subsonic.sh" todir="${project.build.directory}/rpm/buildroot/usr/share/subsonic"/>
+                                <copy file="../subsonic-booter/target/subsonic-booter-jar-with-dependencies.jar" todir="${project.build.directory}/rpm/buildroot/usr/share/subsonic"/>
+                                <copy file="../subsonic-main/target/subsonic.war" todir="${project.build.directory}/rpm/buildroot/usr/share/subsonic"/>
 
-                                        <exec executable="chmod">
-                                            <arg value="oug+x"/>
-                                            <arg value="${project.build.directory}/deb/DEBIAN/preinst"/>
-                                            <arg value="${project.build.directory}/deb/DEBIAN/postinst"/>
-                                            <arg value="${project.build.directory}/deb/DEBIAN/prerm"/>
-                                            <arg value="${project.build.directory}/deb/DEBIAN/postrm"/>
-                                            <arg value="${project.build.directory}/deb/usr/share/subsonic/subsonic.sh"/>
-                                            <arg value="${project.build.directory}/deb/etc/init.d/subsonic"/>
-                                        </exec>
-                                        <exec executable="sleep">
-                                            <arg value="2"/>
-                                        </exec>
-                                        <exec executable="fakeroot">
-                                            <arg value="dpkg"/>
-                                            <arg value="--build"/>
-                                            <arg value="${project.build.directory}/deb"/>
-                                            <arg value="${project.build.directory}/subsonic_${project.version}_all.deb"/>
-                                        </exec>
-                                        <exec executable="lintian">
-                                            <arg value="${project.build.directory}/subsonic_${project.version}_all.deb"/>
-                                        </exec>
-                                    </tasks>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
+                                <exec executable="rpmbuild">
+                                    <arg value="-bb"/>
+                                    <arg value="--buildroot"/>
+                                    <arg value="${project.build.directory}/rpm/buildroot"/>
+                                    <arg value="--define"/>
+                                    <arg value="_topdir ${project.build.directory}/rpm"/>
+                                    <arg value="--target"/>
+                                    <arg value="noarch-pc-linux"/>
+                                    <arg value="${project.build.directory}/rpm/SPECS/subsonic.spec"/>
+                                </exec>
 
-                        </executions>
-                    </plugin>
+                                <copy tofile="${project.build.directory}/subsonic-${project.version}.rpm">
+                                    <fileset dir="${project.build.directory}/rpm/RPMS/noarch">
+                                        <include name="*.rpm"/>
+                                    </fileset>
+                                </copy>
 
-                </plugins>
-            </build>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
 
-        </profile>
-    </profiles>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

@@ -6,15 +6,15 @@
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: Subsonic daemon
-# Description:       Starts the Subsonic daemon. Subsonic is a web-based 
+# Description:       Starts the Subsonic daemon. Subsonic is a web-based
 #                    music streamer, jukebox and Podcast receiver.
 #                    See http://subsonic.org for more details.
 ### END INIT INFO
 
-# Author: Sindre Mehus <sindre@activeobjects.no
+# Author: Sindre Mehus <sindre@activeobjects.no>
 
 #
-# To change the startup parameters of Subsonic, modify 
+# To change the startup parameters of Subsonic, modify
 # the SUBSONIC_ARGS variable below.
 #
 # Type "subsonic --help" on the command line to read an
@@ -57,13 +57,13 @@ do_start()
 	#   0 if daemon has been started
 	#   1 if daemon was already running
 	#   2 if daemon could not be started
-    
+
     if [ -e $PIDFILE ]
     then
 	ps -p $(cat $PIDFILE) > /dev/null
 	[ "$?" = 0 ] && return 1
     fi
-    
+
     start-stop-daemon --start --pidfile $PIDFILE --exec $DAEMON -- $DAEMON_ARGS || return 2
 }
 

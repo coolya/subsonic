@@ -20,7 +20,10 @@ New transcoder pack.
 
 RPM INSTALLER
 --------------
+signing
+http://mojo.codehaus.org/rpm-maven-plugin/
 sudo yum install java-1.6.0-openjdk
+http://www.coderanch.com/t/467466/Linux-UNIX/create-RPM-package-my-java
 http://www.g-loaded.eu/2006/04/05/how-to-build-rpm-packages-on-fedora/
 http://fedoraproject.org/wiki/How_to_create_an_RPM_package
 http://fedoraproject.org/wiki/Packaging/ScriptletSnippets
