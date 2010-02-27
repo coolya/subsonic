@@ -13,56 +13,74 @@
         <version>3.9</version>
     </parent>
 
-    <build>
-        <plugins>
+    <profiles>
 
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>rpm</id>
-                        <phase>compile</phase>
-                        <configuration>
-                            <tasks>
-                                <echo>Creating RPM package...</echo>
+        <profile>
+            <id>linux</id>
+            <activation>
+                <os>
+                    <family>linux</family>
+                </os>
+            </activation>
 
-                                <copy file="${basedir}/src/subsonic.spec" todir="${project.build.directory}/rpm/SPECS">
-                                    <filterset>
-                                        <filter token="VERSION" value="${project.version}"/>
-                                    </filterset>
-                                </copy>
+            <build>
+                <plugins>
 
-                                <copy file="../subsonic-booter/src/main/script/subsonic.sh" todir="${project.build.directory}/rpm/buildroot/usr/share/subsonic"/>
-                                <copy file="../subsonic-booter/target/subsonic-booter-jar-with-dependencies.jar" todir="${project.build.directory}/rpm/buildroot/usr/share/subsonic"/>
-                                <copy file="../subsonic-main/target/subsonic.war" todir="${project.build.directory}/rpm/buildroot/usr/share/subsonic"/>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>rpm</id>
+                                <phase>compile</phase>
+                                <configuration>
+                                    <tasks>
+                                        <echo>Creating RPM package...</echo>
 
-                                <exec executable="rpmbuild">
-                                    <arg value="-bb"/>
-                                    <arg value="--buildroot"/>
-                                    <arg value="${project.build.directory}/rpm/buildroot"/>
-                                    <arg value="--define"/>
-                                    <arg value="_topdir ${project.build.directory}/rpm"/>
-                                    <arg value="--target"/>
-                                    <arg value="noarch-pc-linux"/>
-                                    <arg value="${project.build.directory}/rpm/SPECS/subsonic.spec"/>
-                                </exec>
+                                        <copy file="${basedir}/src/subsonic.spec"
+                                              todir="${project.build.directory}/rpm/SPECS">
+                                            <filterset>
+                                                <filter token="VERSION" value="${project.version}"/>
+                                            </filterset>
+                                        </copy>
+                                        <copy file="${basedir}/src/etc/init.d/subsonic"
+                                              todir="${project.build.directory}/rpm/buildroot/etc/init.d"/>
 
-                                <copy tofile="${project.build.directory}/subsonic-${project.version}.rpm">
-                                    <fileset dir="${project.build.directory}/rpm/RPMS/noarch">
-                                        <include name="*.rpm"/>
-                                    </fileset>
-                                </copy>
+                                        <copy file="../subsonic-booter/src/main/script/subsonic.sh"
+                                              todir="${project.build.directory}/rpm/buildroot/usr/share/subsonic"/>
+                                        <copy file="../subsonic-booter/target/subsonic-booter-jar-with-dependencies.jar"
+                                              todir="${project.build.directory}/rpm/buildroot/usr/share/subsonic"/>
+                                        <copy file="../subsonic-main/target/subsonic.war"
+                                              todir="${project.build.directory}/rpm/buildroot/usr/share/subsonic"/>
 
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
+                                        <exec executable="rpmbuild">
+                                            <arg value="-bb"/>
+                                            <arg value="--buildroot"/>
+                                            <arg value="${project.build.directory}/rpm/buildroot"/>
+                                            <arg value="--define"/>
+                                            <arg value="_topdir ${project.build.directory}/rpm"/>
+                                            <arg value="--target"/>
+                                            <arg value="noarch-pc-linux"/>
+                                            <arg value="${project.build.directory}/rpm/SPECS/subsonic.spec"/>
+                                        </exec>
 
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+                                        <copy tofile="${project.build.directory}/subsonic-${project.version}.rpm">
+                                            <fileset dir="${project.build.directory}/rpm/RPMS/noarch">
+                                                <include name="*.rpm"/>
+                                            </fileset>
+                                        </copy>
+
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

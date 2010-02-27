@@ -21,6 +21,11 @@ Subsonic can be found at http://subsonic.org
 
 %files
 %defattr(644,root,root,755)
+ /usr/share/subsonic/
  /usr/share/subsonic/subsonic-booter-jar-with-dependencies.jar
  /usr/share/subsonic/subsonic.war
 %attr(755,root,root) /usr/share/subsonic/subsonic.sh
+%attr(755,root,root) /etc/init.d/subsonic
+
+%post
+ln -sf /usr/share/subsonic/subsonic.sh /usr/bin/subsonic

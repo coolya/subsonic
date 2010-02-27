@@ -21,8 +21,12 @@ New transcoder pack.
 RPM INSTALLER
 --------------
 signing
+Use svn revision as rpm version
+service subsonic {start, stop, status}
+start daemon
 http://mojo.codehaus.org/rpm-maven-plugin/
 sudo yum install java-1.6.0-openjdk
+sudo yum install --nogpgcheck subsonic-x.x.rpm
 http://www.coderanch.com/t/467466/Linux-UNIX/create-RPM-package-my-java
 http://www.g-loaded.eu/2006/04/05/how-to-build-rpm-packages-on-fedora/
 http://fedoraproject.org/wiki/How_to_create_an_RPM_package

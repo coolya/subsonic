@@ -94,8 +94,7 @@ LOG=${SUBSONIC_HOME}/subsonic_sh.log
 rm -f ${LOG}
 
 cd $(dirname $0)
-if [ -e /bin/readlink ]
-    then
+if [ -e /bin/readlink ] || [ -e /usr/bin/readlink ]; then
     cd $(dirname $(readlink -f $0))
 fi
 

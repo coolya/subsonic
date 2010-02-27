@@ -2,7 +2,7 @@
 
 set -e
 
-ln -s /usr/share/subsonic/subsonic.sh /usr/bin/subsonic
+ln -sf /usr/share/subsonic/subsonic.sh /usr/bin/subsonic
 
 # Create transcoder symlinks.
 mkdir -p /var/subsonic/transcode
