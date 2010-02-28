@@ -16,6 +16,8 @@ SUBSONIC_DEFAULT_MUSIC_FOLDER=/var/music
 SUBSONIC_DEFAULT_PODCAST_FOLDER=/var/music/Podcast
 SUBSONIC_DEFAULT_PLAYLIST_FOLDER=/var/playlists
 
+quiet=0
+
 usage() {
     echo "Usage: subsonic.sh [options]"
     echo "  --help               This small usage guide."
@@ -32,6 +34,7 @@ usage() {
     echo "  --max-memory=MB      The memory limit (max Java heap size) in megabytes."
     echo "                       Default: 64"
     echo "  --pidfile=PIDFILE    Write PID to this file. Default not created."
+    echo "  --quiet              Don't print anything to standard out. Default false."
     echo "  --default-music-folder=DIR    Configure Subsonic to use this folder for music.  This option "
     echo "                                only has effect the first time Subsonic is started. Default '/var/music'"
     echo "  --default-podcast-folder=DIR  Configure Subsonic to use this folder for Podcasts.  This option "
@@ -64,6 +67,9 @@ while [ $# -ge 1 ]; do
             ;;
         --pidfile=?*)
             SUBSONIC_PIDFILE=${1#--pidfile=}
+            ;;
+        --quiet)
+            quiet=1
             ;;
         --default-music-folder=?*)
             SUBSONIC_DEFAULT_MUSIC_FOLDER=${1#--default-music-folder=}
@@ -113,4 +119,7 @@ if [ $SUBSONIC_PIDFILE ]; then
     echo $! > ${SUBSONIC_PIDFILE}
 fi
 
-echo Started Subsonic [PID $!, ${LOG}]
+if [ $quiet = 0 ]; then
+    echo Started Subsonic [PID $!, ${LOG}]
+fi
+

@@ -21,11 +21,46 @@ Subsonic can be found at http://subsonic.org
 
 %files
 %defattr(644,root,root,755)
- /usr/share/subsonic/
- /usr/share/subsonic/subsonic-booter-jar-with-dependencies.jar
- /usr/share/subsonic/subsonic.war
+/usr/share/subsonic/subsonic-booter-jar-with-dependencies.jar
+/usr/share/subsonic/subsonic.war
 %attr(755,root,root) /usr/share/subsonic/subsonic.sh
 %attr(755,root,root) /etc/init.d/subsonic
 
+%pre
+# Stop Subsonic service.
+if [ -e /etc/init.d/subsonic ]; then
+  service subsonic stop
+fi
+
 %post
 ln -sf /usr/share/subsonic/subsonic.sh /usr/bin/subsonic
+
+# Create transcoder symlinks.
+mkdir -p /var/subsonic/transcode
+chmod oug+rwx /var/subsonic
+
+[ ! -e /var/subsonic/transcode/lame ]   && ln -sf /usr/bin/lame   /var/subsonic/transcode/
+[ ! -e /var/subsonic/transcode/ffmpeg ] && ln -sf /usr/bin/ffmpeg /var/subsonic/transcode/
+[ ! -e /var/subsonic/transcode/flac ]   && ln -sf /usr/bin/flac   /var/subsonic/transcode/
+[ ! -e /var/subsonic/transcode/faad ]   && ln -sf /usr/bin/faad   /var/subsonic/transcode/
+[ ! -e /var/subsonic/transcode/oggdec ] && ln -sf /usr/bin/oggdec /var/subsonic/transcode/
+[ ! -e /var/subsonic/transcode/oggenc ] && ln -sf /usr/bin/oggenc /var/subsonic/transcode/
+
+# Clear jetty cache.
+rm -rf /var/subsonic/jetty
+
+# Configure and start Subsonic service.
+chkconfig --add subsonic
+service subsonic start
+
+%preun
+if [ -e /etc/init.d/subsonic ]; then
+  service subsonic stop
+fi
+
+# Remove symlink.
+rm -f /usr/bin/subsonic
+
+# Remove startup scripts.
+chkconfig --del subsonic
+
