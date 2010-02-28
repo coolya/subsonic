@@ -24,23 +24,20 @@ Check that upgrades updates /etc/init.d/subsonic
 
 RPM INSTALLER
 --------------
-http://www.rpm.org/max-rpm/
-signing
-Use svn revision as rpm version
-service subsonic {start, stop, status}
-start daemon
-transcoders
-uninstall
-daemon runlevels
-http://mojo.codehaus.org/rpm-maven-plugin/
 sudo yum install java-1.6.0-openjdk
 sudo yum install --nogpgcheck subsonic-x.x.rpm
+http://rpmfusion.org/
+sudo yum install lame flac faad2 vorbis-tools ffmpeg
+
+http://www.rpm.org/max-rpm/
+Remove /usr/share/subsonic when erasing.
+Use svn revision as rpm version
+transcoders
 http://www.coderanch.com/t/467466/Linux-UNIX/create-RPM-package-my-java
 http://www.g-loaded.eu/2006/04/05/how-to-build-rpm-packages-on-fedora/
 http://fedoraproject.org/wiki/How_to_create_an_RPM_package
 http://fedoraproject.org/wiki/Packaging/ScriptletSnippets
 http://ant.apache.org/manual/OptionalTasks/rpm.html
-rpmlint
 
 WHS installer?
 
