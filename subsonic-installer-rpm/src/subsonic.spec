@@ -49,6 +49,9 @@ chmod oug+rwx /var/subsonic
 # Clear jetty cache.
 rm -rf /var/subsonic/jetty
 
+# For SELinux: Set security context
+chcon -t java_exec_t /etc/init.d/subsonic 2>/dev/null
+
 # Configure and start Subsonic service.
 chkconfig --add subsonic
 service subsonic start

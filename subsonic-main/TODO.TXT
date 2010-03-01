@@ -26,11 +26,8 @@ Check that upgrades updates /etc/init.d/subsonic
 
 RPM INSTALLER
 --------------
-sudo yum install java-1.6.0-openjdk
-sudo yum install --nogpgcheck subsonic-x.x.rpm
-http://rpmfusion.org/
-sudo yum install lame flac faad2 vorbis-tools ffmpeg
-
+sudo setsebool allow_execstack 1
+chkconfig shows that Subsonic isn't configured correctly.
 http://www.rpm.org/max-rpm/
 Remove /usr/share/subsonic when erasing.
 Use svn revision as rpm version

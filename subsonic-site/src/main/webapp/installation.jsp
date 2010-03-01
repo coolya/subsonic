@@ -149,7 +149,7 @@
             </p>
             <ul>
                 <li>First, install Java: <code>sudo yum install java-1.6.0-openjdk</code></li>
-                <li><a href="download.jsp">Download</a> the Subsonic .rpm installation package and install it: <code>sudo yum install --nogpgcheck subsonic-x.x.rpm</code></li>
+                <li><a href="download.jsp">Download</a> the Subsonic .rpm installation package and install it: <code style="white-space:nowrap;">sudo yum install --nogpgcheck subsonic-x.x.rpm</code></li>
             </ul>
             <p>
                 Notice that the installer configures your system to start Subsonic automatically when booting.

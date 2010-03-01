@@ -8,8 +8,8 @@
 # Provides: subsonic
 # Required-Start: $network $syslog
 # Required-Stop: $network $syslog
-# Default-Start:
-# Default-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
 # Short-Description: Subsonic daemon
 # Description:       Starts the Subsonic daemon. Subsonic is a web-based
 #                    music streamer, jukebox and Podcast receiver.
@@ -28,9 +28,9 @@
 # For example, to specify that Subsonic should use port 7070
 # and use a Java memory heap size of 80 MB, use the following:
 #
-# SUBSONIC_ARGS="--port=7070 --max-memory=80 --quiet"
+# SUBSONIC_ARGS="--port=7070 --max-memory=80"
 
-SUBSONIC_ARGS="--quiet"
+SUBSONIC_ARGS=""
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Subsonic Daemon"
@@ -59,8 +59,8 @@ do_start()
 	[ "$?" = 0 ] && return 1
     fi
 
-    echo -n $"Starting $NAME ..."
-    daemon --pidfile $PIDFILE $DAEMON $DAEMON_ARGS
+    echo $"Starting $NAME ..."
+    $DAEMON $DAEMON_ARGS
     RETVAL=$?
     echo
     [ $RETVAL -eq 0 ] && touch $LOCKFILE
