@@ -322,7 +322,7 @@ th.param-heading {
 
 /* ---------- Content ---------- */
 .bugid, code, pre, td.transcoding {
-	font: 12px "Bitstream Vera Sans Mono", 'Courier New', Courier, Fixed, monospace;
+	font: 13px "Bitstream Vera Sans Mono", 'Courier New', Courier, Fixed, monospace;
 }
 .bugid { color: #09f; }
 code, pre { color: #093; }

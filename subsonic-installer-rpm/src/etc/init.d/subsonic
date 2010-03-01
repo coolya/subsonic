@@ -1,13 +1,15 @@
 #!/bin/bash
-
-# chkconfig:    1000 50 50
-
+#
+# subsonic      This shell script takes care of starting and stopping Subsonic
+#
+# chkconfig: - 80 20
+#
 ### BEGIN INIT INFO
-# Provides:          subsonic
-# Required-Start:    $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
+# Provides: subsonic
+# Required-Start: $network $syslog
+# Required-Stop: $network $syslog
+# Default-Start:
+# Default-Stop:
 # Short-Description: Subsonic daemon
 # Description:       Starts the Subsonic daemon. Subsonic is a web-based
 #                    music streamer, jukebox and Podcast receiver.
@@ -56,7 +58,7 @@ do_start()
 	ps -p $(cat $PIDFILE) > /dev/null
 	[ "$?" = 0 ] && return 1
     fi
-    
+
     echo -n $"Starting $NAME ..."
     daemon --pidfile $PIDFILE $DAEMON $DAEMON_ARGS
     RETVAL=$?
@@ -72,7 +74,7 @@ do_stop()
 {
     # Check if pidfile exists
     [ ! -e $PIDFILE ] && return 1
-    
+
     echo -n $"Stopping $NAME ..."
     killproc -p $PIDFILE $DAEMON
     RETVAL=$?

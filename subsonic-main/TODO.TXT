@@ -1,5 +1,7 @@
 TODO IN 4.0
 ------------
+Android: Support mounting SD card.
+Android: Support filenames with "<" and ">".
 3rd party license popup broken.
 Change documentation of subsonic_home.  Use popup?
 Update text in donate.jsp (in Subsonic)
@@ -404,6 +406,7 @@ Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW
   rsync -avP -e ssh subsonic-assembly/target/subsonic* subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/3.9/
   rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/3.9/
   rsync -avP -e ssh subsonic-installer-debian/target/subsonic*.deb  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/3.9/
+  rsync -avP -e ssh subsonic-installer-rpm/target/subsonic*.rpm  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/3.9/
 
 Modify FRS properties (use Firefox)
   https://sourceforge.net/project/admin/explorer.php?group_id=126265

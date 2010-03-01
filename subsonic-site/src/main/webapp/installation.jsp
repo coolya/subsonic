@@ -23,6 +23,7 @@
     <li><a href="#windows">Windows installation</a></li>
     <li><a href="#mac">Mac installation</a></li>
     <li><a href="#debian">Debian/Ubuntu installation</a></li>
+    <li><a href="#rpm">Red Hat/Fedora installation</a></li>
     <li><a href="#standalone">Stand-alone installation</a></li>
     <li><a href="#war">WAR installation</a></li>
 </ul>
@@ -103,15 +104,16 @@
 
 <div class="featureitem">
     <a name="debian"></a>
-    <div class="heading"><img src="inc/img/download-linux.png" alt="" height="16" width="16"/> Debian/Ubuntu installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
+    <div class="heading"><img src="inc/img/download-ubuntu.png" alt="" height="16" width="16"/> Debian/Ubuntu installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
     <div class="content">
         <div class="wide-content">
             <p>
-                First, install Java: <code style="white-space:nowrap;">sudo apt-get install sun-java6-bin</code>
+                This installation option applies to Debian Linux, including Ubuntu.
             </p>
-            <p>
-                Download the .deb installation package and install it: <code style="white-space:nowrap;">sudo dpkg -i subsonic-x.x.deb</code>
-            </p>
+            <ul>
+                <li>First, install Java: <code>sudo apt-get install sun-java6-bin</code></li>
+                <li><a href="download.jsp">Download</a> the Subsonic .deb package and install it: <code>sudo dpkg -i subsonic-x.x.deb</code></li>
+            </ul>
             <p>
                 Notice that the installer configures your system to start Subsonic automatically when booting.
                 After installing, open the Subsonic web page on <a href="http://localhost:4040">http://localhost:4040</a>.
@@ -127,6 +129,47 @@
                 To change the port number, Java memory settings or other startup parameters, edit the SUBSONIC_ARGS variable in
                 <code style="white-space:nowrap;">/etc/init.d/subsonic</code>. To restart Subsonic, do
                 <code style="white-space:nowrap;">sudo /etc/init.d/subsonic restart</code>
+            </p>
+            <p><b>Troubleshooting</b></p>
+            <p>
+                Check the logs in <code style="white-space:nowrap;">/var/subsonic</code>.
+            </p>
+
+        </div>
+    </div>
+</div>
+
+<div class="featureitem">
+    <a name="rpm"></a>
+    <div class="heading"><img src="inc/img/download-fedora.png" alt="" height="16" width="16"/> Red Hat/Fedora installation <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
+    <div class="content">
+        <div class="wide-content">
+            <p>
+                This installation option applies to Red Hat Linux, including Fedora.
+            </p>
+            <ul>
+                <li>First, install Java: <code>sudo yum install java-1.6.0-openjdk</code></li>
+                <li><a href="download.jsp">Download</a> the Subsonic .rpm installation package and install it: <code>sudo yum install --nogpgcheck subsonic-x.x.rpm</code></li>
+            </ul>
+            <p>
+                Notice that the installer configures your system to start Subsonic automatically when booting.
+                After installing, open the Subsonic web page on <a href="http://localhost:4040">http://localhost:4040</a>.
+            </p>
+            <p><b>Transcoders</b></p>
+            <p>
+                To make use of Subsonic's powerful <a href="transcoding.jsp">transcoding</a> feature, it's highly recommended to install some third-party
+                transcoders, available from <a href="http://rpmfusion.org/">RPM Fusion</a>:
+            </p>
+            <ul>
+                <li>If necessary, <a href="http://rpmfusion.org/Configuration">configure yum to use the RPM Fusion repository</a>.</li>
+                <li>From the command line: <code>sudo yum install lame flac faad2 vorbis-tools ffmpeg</code></li>
+            </ul>
+
+            <p><b>Advanced configuration</b></p>
+            <p>
+                To change the port number, Java memory settings or other startup parameters, edit the SUBSONIC_ARGS variable in
+                <code style="white-space:nowrap;">/etc/init.d/subsonic</code>. To restart Subsonic, do
+                <code style="white-space:nowrap;">sudo service subsonic restart</code>
             </p>
             <p><b>Troubleshooting</b></p>
             <p>

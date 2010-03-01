@@ -38,20 +38,27 @@
                     <td><a href="installation.jsp#mac"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
                 <tr class="table-altrow">
-                    <td style="padding:0"><img src="inc/img/download-linux.png" alt="" height="16" width="16"/></td>
+                    <td style="padding:0"><img src="inc/img/download-ubuntu.png" alt="" height="16" width="16"/></td>
                     <td class="featurename" style="padding-left:0">Debian/Ubuntu installer</td>
                     <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9.deb"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download </a></td>
                     <td><a href="installation.jsp#debian"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
                 <tr>
+                    <td style="padding:0"><img src="inc/img/download-fedora.png" alt="" height="16" width="16"/></td>
+                    <td class="featurename" style="padding-left:0">Red Hat/Fedora installer</td>
+                    <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9.rpm"><img
+                            src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download </a></td>
+                    <td><a href="installation.jsp#rpm"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                </tr>
+                <tr class="table-altrow">
                     <td style="padding:0"></td>
                     <td class="featurename" style="padding-left:0">Stand-alone version (all platforms)</td>
                     <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9-standalone.tar.gz"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>
                     <td><a href="installation.jsp#standalone"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
-                <tr class="table-altrow">
+                <tr>
                     <td style="padding:0"></td>
                     <td class="featurename" style="padding-left:0"> WAR version (all platforms)</td>
                     <td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9-war.zip"><img
