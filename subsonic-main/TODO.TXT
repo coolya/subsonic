@@ -22,16 +22,13 @@ New transcoder pack.
 
 DEBIAN INSTALLER
 ----------------
-Check that upgrades updates /etc/init.d/subsonic
+Check upgrading!
 
 RPM INSTALLER
 --------------
-sudo setsebool allow_execstack 1
-chkconfig shows that Subsonic isn't configured correctly.
 http://www.rpm.org/max-rpm/
 Remove /usr/share/subsonic when erasing.
 Use svn revision as rpm version
-transcoders
 http://www.coderanch.com/t/467466/Linux-UNIX/create-RPM-package-my-java
 http://www.g-loaded.eu/2006/04/05/how-to-build-rpm-packages-on-fedora/
 http://fedoraproject.org/wiki/How_to_create_an_RPM_package

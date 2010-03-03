@@ -25,6 +25,22 @@
 
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>buildnumber-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>create</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <doCheck>false</doCheck>
+                            <doUpdate>false</doUpdate>
+                        </configuration>
+                    </plugin>
 
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
@@ -40,8 +56,18 @@
                                               todir="${project.build.directory}/rpm/SPECS">
                                             <filterset>
                                                 <filter token="VERSION" value="${project.version}"/>
+                                                <filter token="BUILD_NUMBER" value="${buildNumber}"/>
                                             </filterset>
                                         </copy>
+
+                                        <!--Remove ".beta" suffix from version tag.-->
+                                        <replace file="${project.build.directory}/rpm/SPECS/subsonic.spec">
+                                            <replacetoken>.beta1</replacetoken>
+                                            <replacetoken>.beta2</replacetoken>
+                                            <replacetoken>.beta3</replacetoken>
+                                            <replacetoken>.beta4</replacetoken>
+                                        </replace>
+
                                         <copy file="${basedir}/src/etc/init.d/subsonic"
                                               todir="${project.build.directory}/rpm/buildroot/etc/init.d"/>
 

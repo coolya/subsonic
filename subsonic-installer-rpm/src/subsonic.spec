@@ -1,6 +1,6 @@
 Name:           subsonic
 Version:        @VERSION@
-Release:        1%{?dist}
+Release:        @BUILD_NUMBER@
 Summary:        A web-based music streamer, jukebox and Podcast receiver
 
 Group:          Applications/Multimedia
@@ -32,6 +32,8 @@ if [ -e /etc/init.d/subsonic ]; then
   service subsonic stop
 fi
 
+exit 0
+
 %post
 ln -sf /usr/share/subsonic/subsonic.sh /usr/bin/subsonic
 
@@ -56,14 +58,22 @@ chcon -t java_exec_t /etc/init.d/subsonic 2>/dev/null
 chkconfig --add subsonic
 service subsonic start
 
+exit 0
+
 %preun
-if [ -e /etc/init.d/subsonic ]; then
-  service subsonic stop
+# Only do it if uninstalling, not upgrading.
+if [ $1 = 0 ] ; then
+
+  # Stop the service.
+  [ -e /etc/init.d/subsonic ] && service subsonic stop
+
+  # Remove symlink.
+  rm -f /usr/bin/subsonic
+
+  # Remove startup scripts.
+  chkconfig --del subsonic
+
 fi
 
-# Remove symlink.
-rm -f /usr/bin/subsonic
-
-# Remove startup scripts.
-chkconfig --del subsonic
+exit 0
 
