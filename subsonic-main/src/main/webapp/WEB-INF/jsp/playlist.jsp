@@ -74,7 +74,7 @@
             id:"player1",
             name:"player1"
         }
-        swfobject.embedSWF("<c:url value="/flash/jw-player-4.4.swf"/>", "placeholder", "340", "20", "9.0.0", false, flashvars, params, attributes);
+        swfobject.embedSWF("<c:url value="/flash/jw-player-5.0.swf"/>", "placeholder", "340", "24", "9.0.0", false, flashvars, params, attributes);
     }
 
     function playerReady(thePlayer) {
@@ -84,7 +84,7 @@
     }
 
     function stateListener(obj) { // IDLE, BUFFERING, PLAYING, PAUSED, COMPLETED
-        if (obj.newstate == "COMPLETED" && obj.oldstate == "PLAYING") {
+        if (obj.newstate == "COMPLETED") {
             onNext(repeatEnabled);
         }
     }
@@ -406,7 +406,7 @@
                 </select></td>
             </c:if>
             <c:if test="${model.player.web}">
-                <td style="width:340px; height:20px;padding-left:10px;padding-right:10px"><div id="placeholder">
+                <td style="width:340px; height:24px;padding-left:10px;padding-right:10px"><div id="placeholder">
                     <a href="http://www.adobe.com/go/getflashplayer" target="_blank"><fmt:message key="playlist.getflash"/></a>
                 </div></td>
             </c:if>

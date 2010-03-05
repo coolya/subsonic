@@ -1,13 +1,13 @@
 TODO IN 4.0
 ------------
+JWPlayer popup, http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9147
 Android: Support mounting SD card.
 Android: Support filenames with "<" and ">".
+Android: Avoid stutter
 3rd party license popup broken.
 Change documentation of subsonic_home.  Use popup?
 Update text in donate.jsp (in Subsonic)
 Use port 4040 instead of 8080.
-Update transcoding.jsp, Schema28
-Make transcoders enabled by default?
 Write more explanatory text in Network > Settings
 jaudiotagger, http://www.jthink.net/jaudiotagger/index.jsp
 auto-detect links in chat.
@@ -19,21 +19,6 @@ DONE IN 4.0
 Added Monochrome themes, courtesy of David D.
 Updated Finnish translation, courtesy of Reijo J&auml;&auml;rni
 New transcoder pack.
-
-DEBIAN INSTALLER
-----------------
-Check upgrading!
-
-RPM INSTALLER
---------------
-http://www.rpm.org/max-rpm/
-Remove /usr/share/subsonic when erasing.
-Use svn revision as rpm version
-http://www.coderanch.com/t/467466/Linux-UNIX/create-RPM-package-my-java
-http://www.g-loaded.eu/2006/04/05/how-to-build-rpm-packages-on-fedora/
-http://fedoraproject.org/wiki/How_to_create_an_RPM_package
-http://fedoraproject.org/wiki/Packaging/ScriptletSnippets
-http://ant.apache.org/manual/OptionalTasks/rpm.html
 
 WHS installer?
 
@@ -54,6 +39,7 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 
 ANDROID
 -----------------------
+Use filename.complete.mp3 rather than filename.mp3.complete
 REST method for getting lyrics (long-click on song in playlist).
 Swipe album art to go to prev/next track.
 Avoid stuttering when restarting playback during download.  Use local socket.
