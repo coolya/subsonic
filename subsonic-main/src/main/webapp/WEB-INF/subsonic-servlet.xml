@@ -299,6 +299,7 @@
     <bean id="multiController" class="net.sourceforge.subsonic.controller.MultiController">
         <property name="securityService" ref="securityService"/>
         <property name="settingsService" ref="settingsService"/>
+        <property name="musicFileService" ref="musicFileService"/>
     </bean>
     <bean id="wapController" class="net.sourceforge.subsonic.controller.WapController">
         <property name="settingsService" ref="settingsService"/>

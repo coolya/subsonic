@@ -25,6 +25,7 @@ VIDEO
 5. Add transcoding definitions.
 6. Use 100% size in player and divs.
 7. Use "provider" http://developer.longtailvideo.com/trac/wiki/Player5Formats
+8. Be able to select stretching type.
 Fix window popup.
 Use provider=video for playing back AAC? http://developer.longtailvideo.com/trac/wiki/Player5Formats
 Test playback on Android.

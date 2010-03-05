@@ -22,6 +22,7 @@ import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.lang.ObjectUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -43,6 +44,7 @@ public class MultiController extends MultiActionController {
 
     private SecurityService securityService;
     private SettingsService settingsService;
+    private MusicFileService musicFileService;
 
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -98,7 +100,9 @@ public class MultiController extends MultiActionController {
     }
 
     public ModelAndView videoPlayer(HttpServletRequest request, HttpServletResponse response) {
-        return new ModelAndView("videoPlayer");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("video", musicFileService.getMusicFile(request.getParameter("path")));
+        return new ModelAndView("videoPlayer", "model", map);
     }
 
     private void updatePortAndContextPath(HttpServletRequest request) {
@@ -124,5 +128,9 @@ public class MultiController extends MultiActionController {
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
+    }
+
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
     }
 }
