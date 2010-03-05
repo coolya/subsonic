@@ -1,6 +1,6 @@
+
 TODO IN 4.0
 ------------
-JWPlayer popup, http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9147
 Android: Support mounting SD card.
 Android: Support filenames with "<" and ">".
 Android: Avoid stutter
@@ -13,6 +13,31 @@ jaudiotagger, http://www.jthink.net/jaudiotagger/index.jsp
 auto-detect links in chat.
 Fix bug in coverart batch: http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2862
 Upload new transcoder pack to FRS.
+
+VIDEO
+-----
+1. Create "Video mask"
+2. Create MusicFile.isVideo()
+3. Modify playAddDownload.jsp to create video player popup.
+4. Add H.264 presets to transcoder install.
+5. Add transcoding definitions.
+6. Use 100% size in player and divs.
+7. Use "provider" http://developer.longtailvideo.com/trac/wiki/Player5Formats
+Use provider=video for playing back AAC? http://developer.longtailvideo.com/trac/wiki/Player5Formats
+Test playback on Android.
+c:/subsonic-dev/transcode/ffmpeg.exe -i in.avi -vcodec libx264 -fpre libx264-normal.ffpreset out.mp4
+JWPlayer popup, http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9147
+http://developer.longtailvideo.com/trac/wiki/Player5Formats
+http://developer.android.com/guide/appendix/media-formats.html
+http://www.pldx.com/blog.php/2009/06/encoding-h264-with-ffmpeg/
+Don't set duration to zero.
+Set proper "type" (video/sound).
+Set proper size.
+ffmpeg flv transcoding.
+When adding a transcoding with default=true, enable it for all players.
+Don't audioscrobble videos.
+Test new JW Player on Mac and Linux.
+mp4 tag parser https://contributions.coremedia.com/isobox4j
 
 DONE IN 4.0
 -----------
