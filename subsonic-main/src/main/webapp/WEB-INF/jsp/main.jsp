@@ -182,6 +182,7 @@
                 <tr style="margin:0;padding:0;border:0">
                     <c:import url="playAddDownload.jsp">
                         <c:param name="path" value="${child.path}"/>
+                        <c:param name="video" value="${child.video}"/>
                         <c:param name="playEnabled" value="${model.user.streamRole and not model.partyMode}"/>
                         <c:param name="addEnabled" value="${model.user.streamRole and (not model.partyMode or not child.directory)}"/>
                         <c:param name="downloadEnabled" value="${model.user.downloadRole and not model.partyMode}"/>

@@ -97,6 +97,10 @@ public class MultiController extends MultiActionController {
         return new ModelAndView("index", "model", map);
     }
 
+    public ModelAndView videoPlayer(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("videoPlayer");
+    }
+
     private void updatePortAndContextPath(HttpServletRequest request) {
         int localPort = request.getLocalPort();
         String contextPath = request.getContextPath().replace("/", "");

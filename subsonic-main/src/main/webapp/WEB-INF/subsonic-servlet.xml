@@ -368,6 +368,7 @@
                 <prop key="/accessDenied.view">multiController</prop>
                 <prop key="/gettingStarted.view">multiController</prop>
                 <prop key="/index.view">multiController</prop>
+                <prop key="/videoPlayer.view">multiController</prop>
                 <prop key="/nowPlaying.view">nowPlayingController</prop>
                 <prop key="/search.view">searchController</prop>
                 <prop key="/settings.view">settingsController</prop>
