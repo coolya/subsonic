@@ -65,6 +65,7 @@ public class SettingsService {
     private static final String KEY_SHORTCUTS = "Shortcuts";
     private static final String KEY_PLAYLIST_FOLDER = "PlaylistFolder";
     private static final String KEY_MUSIC_MASK = "MusicMask";
+    private static final String KEY_VIDEO_MASK = "VideoMask";
     private static final String KEY_COVER_ART_MASK = "CoverArtMask";
     private static final String KEY_COVER_ART_LIMIT = "CoverArtLimit";
     private static final String KEY_WELCOME_TITLE = "WelcomeTitle";
@@ -114,6 +115,7 @@ public class SettingsService {
     private static final String DEFAULT_SHORTCUTS = "New Incoming Podcast";
     private static final String DEFAULT_PLAYLIST_FOLDER = Util.getDefaultPlaylistFolder();
     private static final String DEFAULT_MUSIC_MASK = ".mp3 .ogg .aac .flac .m4a .wav .wma";
+    private static final String DEFAULT_VIDEO_MASK = ".avi .mpg .mpeg .flv .mp4 .m4v .mkv .mov .wmv";
     private static final String DEFAULT_COVER_ART_MASK = "folder.jpg cover.jpg .jpg .jpeg .gif .png";
     private static final int DEFAULT_COVER_ART_LIMIT = 30;
     private static final String DEFAULT_WELCOME_TITLE = "Welcome to Subsonic!";
@@ -182,6 +184,7 @@ public class SettingsService {
 
     private String[] cachedCoverArtMaskArray;
     private String[] cachedMusicMaskArray;
+    private String[] cachedVideoMaskArray;
     private static File subsonicHome;
 
     public SettingsService() {
@@ -337,6 +340,22 @@ public class SettingsService {
             cachedMusicMaskArray = toStringArray(getMusicMask());
         }
         return cachedMusicMaskArray;
+    }
+
+    public String getVideoMask() {
+        return properties.getProperty(KEY_VIDEO_MASK, DEFAULT_VIDEO_MASK);
+    }
+
+    public synchronized void setVideoMask(String mask) {
+        setProperty(KEY_VIDEO_MASK, mask);
+        cachedVideoMaskArray = null;
+    }
+
+    public synchronized String[] getVideoMaskAsArray() {
+        if (cachedVideoMaskArray == null) {
+            cachedVideoMaskArray = toStringArray(getVideoMask());
+        }
+        return cachedVideoMaskArray;
     }
 
     public String getCoverArtMask() {

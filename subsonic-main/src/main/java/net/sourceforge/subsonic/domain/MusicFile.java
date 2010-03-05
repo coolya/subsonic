@@ -56,6 +56,7 @@ public class MusicFile implements Serializable {
     private File file;
     private boolean isFile;
     private boolean isDirectory;
+    private boolean isVideo;
     private long lastModified;
     private MetaData metaData;
     private Set<String> excludes;
@@ -74,6 +75,7 @@ public class MusicFile implements Serializable {
         isFile = file.isFile();
         isDirectory = file.isDirectory();
         lastModified = file.lastModified();
+        isVideo = isFile && isVideoFile(file.getName().toLowerCase());
     }
 
     /**
@@ -108,6 +110,15 @@ public class MusicFile implements Serializable {
      */
     public boolean isDirectory() {
         return isDirectory;
+    }
+
+    /**
+     * Returns whether this "music" file is a video.
+     *
+     * @return Whether this "music" file is a video.
+     */
+    public boolean isVideo() {
+        return isVideo;
     }
 
     /**
@@ -280,7 +291,7 @@ public class MusicFile implements Serializable {
 
         for (File child : children) {
             try {
-                if (acceptMusic(child)) {
+                if (acceptMedia(child)) {
                     result.add(createMusicFile(child));
                 }
             } catch (SecurityException x) {
@@ -360,7 +371,7 @@ public class MusicFile implements Serializable {
     public MusicFile getFirstChild() throws IOException {
         File[] files = FileUtil.listFiles(file);
         for (File f : files) {
-            if (f.isFile() && acceptMusic(f)) {
+            if (f.isFile() && acceptMedia(f)) {
                 try {
                     return createMusicFile(f);
                 } catch (SecurityException x) {
@@ -371,7 +382,7 @@ public class MusicFile implements Serializable {
         return null;
     }
 
-    private boolean acceptMusic(File file) throws IOException {
+    private boolean acceptMedia(File file) throws IOException {
 
         if (isExcluded(file)) {
             return false;
@@ -381,8 +392,22 @@ public class MusicFile implements Serializable {
             return true;
         }
 
+        String filename = file.getName().toLowerCase();
+        return isMusicFile(filename) || isVideoFile(filename);
+    }
+
+    private boolean isMusicFile(String filename) {
         for (String suffix : ServiceLocator.getSettingsService().getMusicMaskAsArray()) {
-            if (file.getName().toLowerCase().endsWith(suffix.toLowerCase())) {
+            if (filename.endsWith(suffix.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isVideoFile(String filename) {
+        for (String suffix : ServiceLocator.getSettingsService().getVideoMaskAsArray()) {
+            if (filename.endsWith(suffix.toLowerCase())) {
                 return true;
             }
         }

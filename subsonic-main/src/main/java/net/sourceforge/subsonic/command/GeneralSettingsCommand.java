@@ -27,8 +27,10 @@ import net.sourceforge.subsonic.domain.Theme;
  * @author Sindre Mehus
  */
 public class GeneralSettingsCommand {
+
     private String playlistFolder;
     private String musicMask;
+    private String videoMask;
     private String coverArtMask;
     private String index;
     private String ignoredArticles;
@@ -58,6 +60,14 @@ public class GeneralSettingsCommand {
 
     public void setMusicMask(String musicMask) {
         this.musicMask = musicMask;
+    }
+
+    public String getVideoMask() {
+        return videoMask;
+    }
+
+    public void setVideoMask(String videoMask) {
+        this.videoMask = videoMask;
     }
 
     public String getCoverArtMask() {
