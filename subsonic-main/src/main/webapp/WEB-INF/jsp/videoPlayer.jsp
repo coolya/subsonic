@@ -6,13 +6,16 @@
     <script type="text/javascript" src="<c:url value="/script/swfobject.js"/>"></script>
 </head>
 
-<body class="mainframe bgcolor1" style="margin:15px" onload="createPlayer();">
+<body class="mainframe bgcolor1" style="margin:15px" onload="init();">
 
 <sub:url value="/stream" var="streamUrl">
     <sub:param name="path" value="${model.video.path}"/>
 </sub:url>
 
 <script type="text/javascript" language="javascript">
+    function init() {
+        createPlayer();
+    }
     function createPlayer() {
         var flashvars = {
             id:"player1",

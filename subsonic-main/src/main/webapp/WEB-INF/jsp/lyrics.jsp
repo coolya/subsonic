@@ -11,10 +11,11 @@
 
         dwr.engine.setErrorHandler(null);
 
-        function getLyrics(artist, song) {
-            window.focus();
-            window.moveTo(300, 200);
+        function init() {
+            getLyrics('${model.artist}', '${model.song}');
+        }
 
+        function getLyrics(artist, song) {
             $("wait").style.display = "inline";
             $("lyrics").style.display = "none";
             $("noLyricsFound").style.display = "none";
@@ -34,7 +35,7 @@
     </script>
 
 </head>
-<body class="mainframe bgcolor1" onload="getLyrics('${model.artist}', '${model.song}')">
+<body class="mainframe bgcolor1" onload="init();">
 
 <table>
     <tr>
