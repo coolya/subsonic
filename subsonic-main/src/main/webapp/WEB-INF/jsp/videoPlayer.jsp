@@ -20,10 +20,11 @@
         var flashvars = {
             id:"player1",
             file:"${streamUrl}",
+//            duration:360,
             autostart:"true",
             backcolor:"<spring:theme code="backgroundColor"/>",
             frontcolor:"<spring:theme code="textColor"/>",
-            provider:"video"
+            provider:"http"
         };
         var params = {
             allowfullscreen:"true",

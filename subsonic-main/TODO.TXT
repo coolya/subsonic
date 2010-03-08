@@ -4,7 +4,9 @@ TODO IN 4.0
 Android: Support mounting SD card.
 Android: Support filenames with "<" and ">".
 Android: Avoid stutter
+Android: Download error notification is nagging.
 3rd party license popup broken.
+Change default_cover
 Change documentation of subsonic_home.  Use popup?
 Update text in donate.jsp (in Subsonic)
 Use port 4040 instead of 8080.
@@ -18,18 +20,20 @@ Change Android screenshots.
 
 VIDEO
 -----
-1. Create "Video mask"
-2. Create MusicFile.isVideo()
-3. Modify playAddDownload.jsp to create video player popup.
-4. Add H.264 presets to transcoder install.
-5. Add transcoding definitions.
-6. Use 100% size in player and divs.
-7. Use "provider" http://developer.longtailvideo.com/trac/wiki/Player5Formats
-8. Be able to select stretching type.
+http pseudostreaming
+Compile qt-faststart and put in transcoder dir.
+Add H.264 presets to transcoder install.
+Add transcoding definitions.
+Use "provider" http://developer.longtailvideo.com/trac/wiki/Player5Formats
+Be able to select stretching type.
+Cache transcoded movies. Nightly job? Requires license.
 Fix window popup.
 Use provider=video for playing back AAC? http://developer.longtailvideo.com/trac/wiki/Player5Formats
 Test playback on Android.
 c:/subsonic-dev/transcode/ffmpeg.exe -i in.avi -vcodec libx264 -fpre libx264-normal.ffpreset out.mp4
+Copy x264 preset files to HOME or something.
+Encode audio as mp3?
+Manually put videos in transcoding queue?
 JWPlayer popup, http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9147
 http://developer.longtailvideo.com/trac/wiki/Player5Formats
 http://developer.android.com/guide/appendix/media-formats.html
@@ -393,7 +397,7 @@ Vis "lignende" album.
 
 VIDEO
 -----
-Create "Video mask" setting.
+Rename "mask" to "file types" or something.
 Test with mp4.
 Video support.  FLV, MP4
 If video file, disable "Add" button, and make "Play" button open playlist in video mode.
