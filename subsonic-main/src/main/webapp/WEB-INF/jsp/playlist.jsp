@@ -303,11 +303,17 @@
         updateCurrentImage();
         var list = new Array();
         list[0] = {
-            duration:song.duration,
             file:song.streamUrl,
             title:song.title,
             provider:"sound"
         };
+
+        if (song.duration != null) {
+            list[0].duration = song.duration;
+        }
+        if (song.format == "aac" || song.format == "m4a") {
+            list[0].provider = "video";
+        }
 
         player.sendEvent("LOAD", list);
         player.sendEvent("PLAY");

@@ -29,7 +29,9 @@ Be able to select stretching type.
 Cache transcoded movies. Nightly job? Requires license.
 Fix window popup.
 Database support.
-Use provider=video for playing back AAC/M4A. Don't set duration if unknown. http://developer.longtailvideo.com/trac/wiki/Player5Formats
+Use provider=video for playing back AAC/M4A. Don't set duration if unknown.
+Add "transcodedFormat" to PlaylistService.
+Don't transcode aac/m4a by default.
 Test playback on Android.
 c:/subsonic-dev/transcode/ffmpeg.exe -i in.avi -vcodec libx264 -fpre libx264-normal.ffpreset out.mp4
 Copy x264 preset files to HOME or something.
