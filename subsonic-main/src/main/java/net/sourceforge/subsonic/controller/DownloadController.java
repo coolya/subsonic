@@ -307,6 +307,12 @@ public class DownloadController implements Controller {
      * @throws IOException If an I/O error occurs.
      */
     private void zip(ZipOutputStream out, File root, File file, TransferStatus status, LongRange range) throws IOException {
+
+        // Exclude all hidden files starting with a "."
+        if (file.getName().startsWith(".")) {
+            return;
+        }
+
         String zipName = file.getCanonicalPath().substring(root.getCanonicalPath().length() + 1);
 
         if (file.isFile()) {

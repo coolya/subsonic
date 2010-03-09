@@ -417,13 +417,19 @@ public class MusicFile implements Serializable {
     }
 
     /**
-     * Returns whether the given file is excluded, i.e., whether it is listed in 'subsonic_exlude.txt' in
+     * Returns whether the given file is excluded, i.e., whether it is listed in 'subsonic_exclude.txt' in
      * the current directory.
      *
      * @param file The child file in question.
      * @return Whether the child file is excluded.
      */
     public boolean isExcluded(File file) throws IOException {
+
+        // Exclude all hidden files starting with a "."
+        if (file.getName().startsWith(".")) {
+            return true;
+        }
+
         if (excludes == null) {
             excludes = new HashSet<String>();
             File excludeFile = new File(this.file, "subsonic_exclude.txt");
