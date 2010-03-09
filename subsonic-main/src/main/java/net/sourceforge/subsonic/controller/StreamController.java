@@ -21,7 +21,6 @@ package net.sourceforge.subsonic.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -188,13 +187,6 @@ public class StreamController implements Controller {
 
                     } else {
                         out.write(buf, 0, n);
-
-                        // TODO: REMOVE!!!!!!
-                        // TODO: REMOVE!!!!!!
-                        // TODO: REMOVE!!!!!!
-                        // TODO: REMOVE!!!!!!
-                        Thread.sleep(10);
-                        LOG.info(new Date());
                     }
                 }
             }
