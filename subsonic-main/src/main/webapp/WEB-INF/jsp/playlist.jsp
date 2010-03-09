@@ -306,7 +306,7 @@
             duration:song.duration,
             file:song.streamUrl,
             title:song.title,
-            type:"sound"
+            provider:"sound"
         };
 
         player.sendEvent("LOAD", list);

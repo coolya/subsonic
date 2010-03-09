@@ -18,6 +18,19 @@
  */
 package net.sourceforge.subsonic.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.math.LongRange;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
+
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
@@ -39,16 +52,6 @@ import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.util.Util;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.math.LongRange;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Arrays;
 
 /**
  * A controller which streams the content of a {@link Playlist} to a remote
@@ -115,7 +118,7 @@ public class StreamController implements Controller {
                 response.setHeader("Accept-Ranges", "bytes");
 
                 long contentLength;
-                range = StringUtil.parseRange(request.getHeader("Range"));
+                range = getRange(request, file);
                 if (range != null) {
                     response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
                     contentLength = file.length() - range.getMinimumLong();
@@ -185,6 +188,13 @@ public class StreamController implements Controller {
 
                     } else {
                         out.write(buf, 0, n);
+
+                        // TODO: REMOVE!!!!!!
+                        // TODO: REMOVE!!!!!!
+                        // TODO: REMOVE!!!!!!
+                        // TODO: REMOVE!!!!!!
+                        Thread.sleep(10);
+                        LOG.info(new Date());
                     }
                 }
             }
@@ -197,6 +207,43 @@ public class StreamController implements Controller {
             IOUtils.closeQuietly(in);
         }
         return null;
+    }
+
+    private LongRange getRange(HttpServletRequest request, MusicFile file) {
+
+        // First, look for "Range" HTTP header.
+        LongRange range = StringUtil.parseRange(request.getHeader("Range"));
+        if (range != null) {
+            return range;
+        }
+
+        // Second, look for "offsetSeconds" request parameter.
+        String offsetSeconds = request.getParameter("offsetSeconds");
+        range = parseAndConvertOffsetSeconds(offsetSeconds, file);
+        if (range != null) {
+            return range;
+        }
+
+        return null;
+    }
+
+    private LongRange parseAndConvertOffsetSeconds(String offsetSeconds, MusicFile file) {
+        try {
+            Integer duration = file.getMetaData().getDuration();
+            Long fileSize = file.getMetaData().getFileSize();
+            if (duration == null || fileSize == null) {
+                return null;
+            }
+            float offset = Float.parseFloat(offsetSeconds);
+
+            // Convert from time offset to byte offset.
+            long byteOffset = (long) (fileSize * (offset / duration));
+            return new LongRange(byteOffset, Long.MAX_VALUE);
+
+        } catch (Exception x) {
+            LOG.error("Failed to parse and convert time offset.", x);
+            return null;
+        }
     }
 
     /**

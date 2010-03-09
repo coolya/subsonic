@@ -17,14 +17,15 @@
         createPlayer();
     }
     function createPlayer() {
+
         var flashvars = {
             id:"player1",
             file:"${streamUrl}",
-//            duration:360,
+            duration:"${model.video.metaData.duration}",
             autostart:"true",
             backcolor:"<spring:theme code="backgroundColor"/>",
             frontcolor:"<spring:theme code="textColor"/>",
-            provider:"http"
+            provider:"video"
         };
         var params = {
             allowfullscreen:"true",

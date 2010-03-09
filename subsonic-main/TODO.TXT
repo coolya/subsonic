@@ -1,6 +1,6 @@
 TODO IN 4.0
 ------------
-Support small/large screens: http://developer.android.com/guide/topics/manifest/supports-screens-element.html
+Support small/large screens: http://developer.android.com/guide/topics/manifest/supports-screens-element.html, must improve layout of main activity.
 Android app not available on HTC Tattoo? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9288
 http://www.subsonic.org/pages/download.jsp looks daft in FF.
 Support Basic auth in REST API http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9270
@@ -9,6 +9,7 @@ Android: Support mounting SD card.
 Android: Support filenames with "<" and ">".
 Android: Avoid stutter
 Android: Download error notification is nagging.
+Android: Select music folder in server settings. (Including "All").
 3rd party license popup broken.
 Change default_cover
 Change documentation of subsonic_home.  Use popup?
@@ -24,14 +25,13 @@ Change Android screenshots.
 
 VIDEO
 -----
-http pseudostreaming
 Compile qt-faststart and put in transcoder dir.
 Add H.264 presets to transcoder install.
 Add transcoding definitions.
-Use "provider" http://developer.longtailvideo.com/trac/wiki/Player5Formats
 Be able to select stretching type.
 Cache transcoded movies. Nightly job? Requires license.
 Fix window popup.
+Database support.
 Use provider=video for playing back AAC? http://developer.longtailvideo.com/trac/wiki/Player5Formats
 Test playback on Android.
 c:/subsonic-dev/transcode/ffmpeg.exe -i in.avi -vcodec libx264 -fpre libx264-normal.ffpreset out.mp4
