@@ -10,7 +10,6 @@ Android: Avoid stutter
 Android: Download error notification is nagging.
 Android: Select music folder in server settings. (Including "All").
 3rd party license popup broken.
-Change default_cover
 Change documentation of subsonic_home.  Use popup?
 Update text in donate.jsp (in Subsonic)
 Use port 4040 instead of 8080.
