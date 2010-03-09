@@ -16,7 +16,7 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.domain;
+package net.sourceforge.subsonic.service.metadata;
 
 import entagged.audioformats.AudioFile;
 import entagged.audioformats.AudioFileIO;
@@ -24,6 +24,9 @@ import entagged.audioformats.Tag;
 import entagged.audioformats.generic.TagField;
 import entagged.audioformats.mp3.util.id3frames.ApicId3Frame;
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.service.metadata.MetaDataParser;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 

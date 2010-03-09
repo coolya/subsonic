@@ -16,7 +16,10 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.domain;
+package net.sourceforge.subsonic.service.metadata;
+
+import net.sourceforge.subsonic.service.metadata.MetaDataParser;
+import net.sourceforge.subsonic.domain.MusicFile;
 
 /**
  * Parses meta data by guessing artist, album and song title based on the path of the file.

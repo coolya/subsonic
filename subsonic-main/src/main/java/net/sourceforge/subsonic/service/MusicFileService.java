@@ -20,7 +20,7 @@ package net.sourceforge.subsonic.service;
 
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
-import net.sourceforge.subsonic.domain.EntaggedParser;
+import net.sourceforge.subsonic.service.metadata.EntaggedParser;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.util.FileUtil;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;

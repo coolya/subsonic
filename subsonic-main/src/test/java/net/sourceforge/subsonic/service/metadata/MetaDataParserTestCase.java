@@ -16,9 +16,11 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.domain;
+package net.sourceforge.subsonic.service.metadata;
 
 import junit.framework.*;
+import net.sourceforge.subsonic.service.metadata.MetaDataParser;
+import net.sourceforge.subsonic.domain.MusicFile;
 
 /**
  * Unit test of {@link MetaDataParser}.

@@ -18,6 +18,10 @@
  */
 package net.sourceforge.subsonic.service;
 
+import javax.xml.parsers.SAXParser;
+
+import net.sourceforge.subsonic.service.metadata.MetaDataParserFactory;
+
 /**
  * Locates services for objects that are not part of the Spring context.
  *
@@ -26,8 +30,8 @@ package net.sourceforge.subsonic.service;
 public class ServiceLocator {
 
     private static SettingsService settingsService;
-    private static SecurityService securityService;
     private static MusicFileService musicFileService;
+    private static MetaDataParserFactory metaDataParserFactory;
 
     private ServiceLocator() {
     }
@@ -46,6 +50,14 @@ public class ServiceLocator {
 
     public static void setMusicFileService(MusicFileService musicFileService) {
         ServiceLocator.musicFileService = musicFileService;
+    }
+
+    public static MetaDataParserFactory getMetaDataParserFactory() {
+        return metaDataParserFactory;
+    }
+
+    public static void setMetaDataParserFactory(MetaDataParserFactory metaDataParserFactory) {
+        ServiceLocator.metaDataParserFactory = metaDataParserFactory;
     }
 }
 

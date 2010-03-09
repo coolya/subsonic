@@ -239,6 +239,7 @@
     <bean id="editTagsController" class="net.sourceforge.subsonic.controller.EditTagsController">
         <property name="viewName" value="editTags"/>
         <property name="musicFileService" ref="musicFileService"/>
+        <property name="metaDataParserFactory" ref="metaDataParserFactory"/>
     </bean>
     <bean id="playlistController" class="net.sourceforge.subsonic.controller.PlaylistController">
         <property name="viewName" value="playlist"/>

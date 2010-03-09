@@ -20,8 +20,13 @@ package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.service.*;
+import net.sourceforge.subsonic.service.metadata.MetaDataParser;
+import net.sourceforge.subsonic.service.metadata.EntaggedParser;
+import net.sourceforge.subsonic.service.metadata.MetaDataParserFactory;
+
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.*;
+import org.apache.tools.ant.util.JAXPUtils;
 
 import javax.servlet.http.*;
 import java.util.*;
@@ -34,6 +39,7 @@ import java.util.*;
 public class EditTagsController extends ParameterizableViewController {
 
     private MusicFileService musicFileService;
+    private MetaDataParserFactory metaDataParserFactory;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -64,7 +70,7 @@ public class EditTagsController extends ParameterizableViewController {
     }
 
     private Song createSong(MusicFile file, int index) {
-        MetaDataParser parser = MetaDataParser.Factory.getInstance().getParser(file);
+        MetaDataParser parser = metaDataParserFactory.getParser(file);
         MusicFile.MetaData metaData = parser.getRawMetaData(file);
 
         Song song = new Song();
@@ -83,6 +89,10 @@ public class EditTagsController extends ParameterizableViewController {
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
+    }
+
+    public void setMetaDataParserFactory(MetaDataParserFactory metaDataParserFactory) {
+        this.metaDataParserFactory = metaDataParserFactory;
     }
 
     /**

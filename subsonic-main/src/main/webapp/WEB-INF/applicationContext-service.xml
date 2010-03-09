@@ -141,6 +141,18 @@
         <property name="audioScrobblerService" ref="audioScrobblerService"/>
     </bean>
 
+    <bean id="metaDataParserFactory" class="net.sourceforge.subsonic.service.metadata.MetaDataParserFactory" init-method="init">
+        <property name="parsers">
+            <list>
+                <bean class="net.sourceforge.subsonic.service.metadata.EntaggedParser"/>
+                <bean class="net.sourceforge.subsonic.service.metadata.FFmpegParser">
+                    <property name="transcodingService" ref="transcodingService"/>
+                </bean>
+                <bean class="net.sourceforge.subsonic.service.metadata.DefaultMetaDataParser"/>
+            </list>
+        </property>
+    </bean>
+
     <!-- AJAX services -->
 
     <bean id="ajaxMultiService" class="net.sourceforge.subsonic.ajax.MultiService">
@@ -172,6 +184,7 @@
 
     <bean id="ajaxTagService" class="net.sourceforge.subsonic.ajax.TagService">
         <property name="musicFileService" ref="musicFileService"/>
+        <property name="metaDataParserFactory" ref="metaDataParserFactory"/>
     </bean>
 
     <bean id="ajaxTransferService" class="net.sourceforge.subsonic.ajax.TransferService"/>

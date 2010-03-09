@@ -19,12 +19,14 @@
 package net.sourceforge.subsonic.ajax;
 
 import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.domain.MetaDataParser;
+import net.sourceforge.subsonic.service.metadata.MetaDataParser;
 import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.service.metadata.MetaDataParserFactory;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.tools.ant.util.JAXPUtils;
 
 /**
  * Provides AJAX-enabled services for editing tags in music files.
@@ -37,6 +39,7 @@ public class TagService {
     private static final Logger LOG = Logger.getLogger(TagService.class);
 
     private MusicFileService musicFileService;
+    private MetaDataParserFactory metaDataParserFactory;
 
     /**
      * Updated tags for a given music file.
@@ -72,7 +75,7 @@ public class TagService {
         try {
 
             MusicFile file = musicFileService.getMusicFile(path);
-            MetaDataParser parser = MetaDataParser.Factory.getInstance().getParser(file);
+            MetaDataParser parser = metaDataParserFactory.getParser(file);
 
             if (!parser.isEditingSupported()) {
                 return "Tag editing of " + StringUtil.getSuffix(file.getName()) + " files is not supported.";
@@ -107,5 +110,9 @@ public class TagService {
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
+    }
+
+    public void setMetaDataParserFactory(MetaDataParserFactory metaDataParserFactory) {
+        this.metaDataParserFactory = metaDataParserFactory;
     }
 }

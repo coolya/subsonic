@@ -1,6 +1,10 @@
-
 TODO IN 4.0
 ------------
+Support small/large screens: http://developer.android.com/guide/topics/manifest/supports-screens-element.html
+Android app not available on HTC Tattoo? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9288
+http://www.subsonic.org/pages/download.jsp looks daft in FF.
+Support Basic auth in REST API http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9270
+Automatically exclude all hidden files and directories (those starting with ".")
 Android: Support mounting SD card.
 Android: Support filenames with "<" and ">".
 Android: Avoid stutter

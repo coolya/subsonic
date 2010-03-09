@@ -16,9 +16,10 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.domain;
+package net.sourceforge.subsonic.service.metadata;
 
 import net.sourceforge.subsonic.*;
+import net.sourceforge.subsonic.domain.MusicFile;
 
 import java.io.*;
 
@@ -160,43 +161,6 @@ public abstract class MetaDataParser {
 
         String result = title.replaceFirst("^\\d{2}[\\.\\- ]+", "");
         return result.length() == 0 ? title : result;
-    }
-
-    /**
-     * Factory for creating meta-data parsers.
-     */
-    public static class Factory {
-
-        private static final Factory INSTANCE = new Factory();
-        private MetaDataParser[] parsers;
-
-        private Factory() {
-            parsers = new MetaDataParser[]{new EntaggedParser(), new DefaultMetaDataParser()};
-        }
-
-        /**
-         * Returns the singleton instance of the factory.
-         *
-         * @return The singleton instance of the factory.
-         */
-        public static Factory getInstance() {
-            return INSTANCE;
-        }
-
-        /**
-         * Returns a meta-data parser for the given music file.
-         *
-         * @param file The file in question.
-         * @return An applicable parser, or <code>null</code> if no parser is found.
-         */
-        public MetaDataParser getParser(MusicFile file) {
-            for (MetaDataParser parser : parsers) {
-                if (parser.isApplicable(file)) {
-                    return parser;
-                }
-            }
-            return null;
-        }
     }
 
 }
