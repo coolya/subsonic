@@ -577,7 +577,7 @@ public class RESTController extends MultiActionController {
     }
 
     private void createPlayerIfNecessary(HttpServletRequest request) {
-        String username = request.getParameter("u");
+        String username = request.getRemoteUser();
         String clientId = request.getParameter("c");
         List<Player> players = playerService.getPlayersForUserAndClientId(username, clientId);
 

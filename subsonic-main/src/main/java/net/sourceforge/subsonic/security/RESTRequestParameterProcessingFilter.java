@@ -82,7 +82,23 @@ public class RESTRequestParameterProcessingFilter implements Filter {
 
         RESTController.ErrorCode errorCode = null;
 
-        if (username == null || password == null || version == null || client == null) {
+        // The username and password parameters are not required if the user
+        // was previously authenticated, for example using Basic Auth.
+        Authentication previousAuth = SecurityContextHolder.getContext().getAuthentication();
+        if (previousAuth == null) {
+            if (username == null || password == null) {
+                errorCode = RESTController.ErrorCode.MISSING_PARAMETER;
+            }
+        } else {
+            if (username != null || password != null) {
+                LOG.warn("Username and password provided in URL params, but discarded. User already authenticated as "
+                        + previousAuth.getName());
+            }
+            username = previousAuth.getName();
+        }
+
+
+        if (version == null || client == null) {
             errorCode = RESTController.ErrorCode.MISSING_PARAMETER;
         }
 
@@ -90,7 +106,7 @@ public class RESTRequestParameterProcessingFilter implements Filter {
             errorCode = checkAPIVersion(version);
         }
 
-        if (errorCode == null) {
+        if (errorCode == null && previousAuth == null) {
             errorCode = authenticate(username, password);
         }
 
