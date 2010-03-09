@@ -194,7 +194,7 @@
                     <code>SUBSONIC_HOME</code> is typically <code>c:\subsonic</code> on Windows, and <code>/var/subsonic</code> on Unix-based operating systems.</li>
                 <li>Optionally configure the startup script <code>SUBSONIC_HOME/standalone/subsonic.sh</code></li>
                 <li>Execute the startup script. (Typically you will configure your operating system to execute the script automatically at start-up.)</li>
-                <li>Open the Subsonic web page. The default address is <a href="http://localhost:8080">http://localhost:8080</a>.</li>
+                <li>Open the Subsonic web page. The default address is <a href="http://localhost:4040">http://localhost:4040</a>.</li>
             </ul>
         </div>
     </div>

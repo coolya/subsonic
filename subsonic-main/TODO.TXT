@@ -12,7 +12,6 @@ Android: Select music folder in server settings. (Including "All").
 3rd party license popup broken.
 Change documentation of subsonic_home.  Use popup?
 Update text in donate.jsp (in Subsonic)
-Use port 4040 instead of 8080.
 Write more explanatory text in Network > Settings
 jaudiotagger, http://www.jthink.net/jaudiotagger/index.jsp
 auto-detect links in chat.
