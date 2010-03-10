@@ -43,7 +43,7 @@ import java.net.URLEncoder;
  * See http://www.chartlyrics.com/api.aspx for details.
  * <p/>
  * This class is used by the DWR framework (http://getahead.ltd.uk/dwr/).
- * 
+ *
  * @author Sindre Mehus
  */
 public class LyricsService {
@@ -136,12 +136,6 @@ public class LyricsService {
         } finally {
             client.getConnectionManager().shutdown();
         }
-    }
-
-    public static void main(String[] args) {
-        LyricsInfo lyricsInfo = new LyricsService().getLyrics("pink floyd", "money");
-        System.out.println(lyricsInfo.getHeader());
-        System.out.println(lyricsInfo.getLyrics());
     }
 
     private static class SearchLyricResult {

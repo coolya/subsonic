@@ -189,6 +189,8 @@
 
     <bean id="ajaxTransferService" class="net.sourceforge.subsonic.ajax.TransferService"/>
 
+    <bean id="ajaxVideoService" class="net.sourceforge.subsonic.ajax.VideoService" init-method="init"/>
+
     <bean id="ajaxChatService" class="net.sourceforge.subsonic.ajax.ChatService" init-method="init">
         <property name="securityService" ref="securityService"/>
         <property name="chatCache" ref="chatCache"/>
