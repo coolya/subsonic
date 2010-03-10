@@ -46,23 +46,25 @@
         </fmt:message>
     </b></p>
 
-    <table>
-        <c:forEach items="${command.coverArtReport.albumsWithoutCover}" var="musicFile" begin="${command.startIndex}"
-                   end="${command.endIndex}" varStatus="loopStatus">
+    <c:if test="${command.startIndex >= 0}">
+        <table>
+            <c:forEach items="${command.coverArtReport.albumsWithoutCover}" var="musicFile" begin="${command.startIndex}"
+                       end="${command.endIndex}" varStatus="loopStatus">
 
-            <c:set var="artist">${empty musicFile.metaData.artist ? musicFile.firstChild.metaData.artist : musicFile.metaData.artist}</c:set>
-            <c:set var="album">${empty musicFile.metaData.album ? musicFile.firstChild.metaData.album : musicFile.metaData.album}</c:set>
-            <tr>
-                <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""}>
-                    <str:truncateNicely upper="50">${fn:escapeXml(artist)}</str:truncateNicely>
-                </td>
-                <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-left:0.25em">
-                    <a href="<sub:url value="changeCoverArt.view"><sub:param name="path" value="${musicFile.path}"/></sub:url>">
-                        <str:truncateNicely upper="75">${fn:escapeXml(album)}</str:truncateNicely></a>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
+                <c:set var="artist">${empty musicFile.metaData.artist ? musicFile.firstChild.metaData.artist : musicFile.metaData.artist}</c:set>
+                <c:set var="album">${empty musicFile.metaData.album ? musicFile.firstChild.metaData.album : musicFile.metaData.album}</c:set>
+                <tr>
+                    <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""}>
+                        <str:truncateNicely upper="50">${fn:escapeXml(artist)}</str:truncateNicely>
+                    </td>
+                    <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-left:0.25em">
+                        <a href="<sub:url value="changeCoverArt.view"><sub:param name="path" value="${musicFile.path}"/></sub:url>">
+                            <str:truncateNicely upper="75">${fn:escapeXml(album)}</str:truncateNicely></a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
+    </c:if>
 
     <p>
         <c:forEach items="${command.paginationElements}" var="page" varStatus="status">
