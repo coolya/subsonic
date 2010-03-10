@@ -21,6 +21,7 @@ package net.sourceforge.subsonic.ajax;
 import java.util.List;
 
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.dao.ProcessedVideoDao;
 import net.sourceforge.subsonic.domain.ProcessedVideo;
 
 /**
@@ -33,10 +34,10 @@ import net.sourceforge.subsonic.domain.ProcessedVideo;
 public class VideoService {
 
     private static final Logger LOG = Logger.getLogger(VideoService.class);
+    private ProcessedVideoDao processedVideoDao;
 
     public List<ProcessedVideo> getProcessedVideos(String path) {
-        // TODO
-        return null;
+        return processedVideoDao.getProcessedVideos(path);
     }
 
     public List<String> getVideoQualities() {
@@ -45,15 +46,22 @@ public class VideoService {
     }
 
     public void processVideo(String path, String quality) {
+        ProcessedVideo video = new ProcessedVideo();
         // TODO
+
+        processedVideoDao.createProcessedVideo(video);
     }
 
     public void cancelVideoProcessing(int id) {
+        ProcessedVideo video = processedVideoDao.getProcessedVideo(id);
         // TODO
+
+        processedVideoDao.updateProcessedVideo(video);
     }
 
     public void deleteProcessedVideo(int id) {
         // TODO
+        processedVideoDao.deleteProcessedVideo(id);
     }
 
     public String getVideoProcessingLog(int id) {
@@ -66,5 +74,9 @@ public class VideoService {
      */
     public void init() {
         // TODO
+    }
+
+    public void setProcessedVideoDao(ProcessedVideoDao processedVideoDao) {
+        this.processedVideoDao = processedVideoDao;
     }
 }

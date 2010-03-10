@@ -31,7 +31,23 @@ public class ProcessedVideo {
     private String logPath;
     private String quality;
     private Status status;
-    private Integer bitRate;
+    private int bitRate;
+    private long size;
+
+    public ProcessedVideo() {
+    }
+
+    public ProcessedVideo(int id, String path, String sourcePath, String logPath,
+            String quality, Status status, int bitRate, long size) {
+        this.id = id;
+        this.path = path;
+        this.sourcePath = sourcePath;
+        this.logPath = logPath;
+        this.quality = quality;
+        this.status = status;
+        this.bitRate = bitRate;
+        this.size = size;
+    }
 
     public int getId() {
         return id;
@@ -81,12 +97,20 @@ public class ProcessedVideo {
         this.status = status;
     }
 
-    public Integer getBitRate() {
+    public int getBitRate() {
         return bitRate;
     }
 
-    public void setBitRate(Integer bitRate) {
+    public void setBitRate(int bitRate) {
         this.bitRate = bitRate;
+    }
+
+    public long getSize() {
+        return size;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
     }
 
     public static enum Status {
