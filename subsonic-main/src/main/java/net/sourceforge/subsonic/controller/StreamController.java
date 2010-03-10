@@ -220,6 +220,10 @@ public class StreamController implements Controller {
     }
 
     private LongRange parseAndConvertOffsetSeconds(String offsetSeconds, MusicFile file) {
+        if (offsetSeconds == null) {
+            return null;
+        }
+
         try {
             Integer duration = file.getMetaData().getDuration();
             Long fileSize = file.getMetaData().getFileSize();
@@ -233,7 +237,7 @@ public class StreamController implements Controller {
             return new LongRange(byteOffset, Long.MAX_VALUE);
 
         } catch (Exception x) {
-            LOG.error("Failed to parse and convert time offset.", x);
+            LOG.error("Failed to parse and convert time offset: " + offsetSeconds, x);
             return null;
         }
     }

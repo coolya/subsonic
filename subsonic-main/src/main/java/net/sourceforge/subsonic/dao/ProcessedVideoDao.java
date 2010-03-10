@@ -51,11 +51,11 @@ public class ProcessedVideoDao extends AbstractDao {
     /**
      * Returns all processed videos for the given path.
      *
-     * @param path The path of the source video.
+     * @param sourcePath The path of the source video.
      * @return List of processed videos.
      */
-    public List<ProcessedVideo> getProcessedVideos(String path) {
-        return query("select " + COLUMNS + " from processed_video where source_path=?", rowMapper, path);
+    public List<ProcessedVideo> getProcessedVideos(String sourcePath) {
+        return query("select " + COLUMNS + " from processed_video where source_path=?", rowMapper, sourcePath);
     }
 
     /**
@@ -65,7 +65,7 @@ public class ProcessedVideoDao extends AbstractDao {
      */
     public void createProcessedVideo(ProcessedVideo video) {
         String sql = "insert into processed_video (" + COLUMNS + ") values (null, ?, ?, ?, ?, ?, ?, ?)";
-        update(sql, video.getPath(), video.getSourcePath(), video.getLogPath(), video.getQuality(), video.getStatus(),
+        update(sql, video.getPath(), video.getSourcePath(), video.getLogPath(), video.getQuality(), video.getStatus().name(),
                 video.getBitRate(), video.getSize());
     }
 
@@ -77,7 +77,7 @@ public class ProcessedVideoDao extends AbstractDao {
     public void updateProcessedVideo(ProcessedVideo video) {
         String sql = "update processed_video set path=?, source_path=?, log_path=?, " +
                 "quality=?, status=?, bit_rate=?, size=? where id=?";
-        update(sql, video.getPath(), video.getSourcePath(), video.getLogPath(), video.getQuality(), video.getStatus(),
+        update(sql, video.getPath(), video.getSourcePath(), video.getLogPath(), video.getQuality(), video.getStatus().name(),
                 video.getBitRate(), video.getSize(), video.getId());
     }
 
