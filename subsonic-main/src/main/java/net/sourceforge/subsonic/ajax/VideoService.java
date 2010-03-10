@@ -18,11 +18,18 @@
  */
 package net.sourceforge.subsonic.ajax;
 
-import java.util.List;
-
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.ProcessedVideoDao;
 import net.sourceforge.subsonic.domain.ProcessedVideo;
+import net.sourceforge.subsonic.service.TranscodingService;
+import net.sourceforge.subsonic.util.FileUtil;
+import org.apache.commons.io.FilenameUtils;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Provides AJAX-enabled services for video processing.
@@ -34,33 +41,87 @@ import net.sourceforge.subsonic.domain.ProcessedVideo;
 public class VideoService {
 
     private static final Logger LOG = Logger.getLogger(VideoService.class);
+
     private ProcessedVideoDao processedVideoDao;
+    private TranscodingService transcodingService;
 
-    public List<ProcessedVideo> getProcessedVideos(String path) {
-        return processedVideoDao.getProcessedVideos(path);
+    /**
+     * Returns all processed videos for the given path.
+     *
+     * @param sourcePath The path of the source video.
+     * @return List of processed videos.
+     */
+    public List<ProcessedVideo> getProcessedVideos(String sourcePath) {
+        return processedVideoDao.getProcessedVideos(sourcePath);
     }
 
+    /**
+     * Returns all available video qualities. Each quality is represented as a
+     * processing script in SUBSONIC_HOME/transcode/video
+     *
+     * @return Available video qualities.
+     */
     public List<String> getVideoQualities() {
-        // TODO
-        return null;
+        File dir = new File(transcodingService.getTranscodeDirectory(), "video");
+
+        if (!dir.exists() || !dir.isDirectory()) {
+            LOG.warn("Video transcoding directory not found: " + dir);
+            return Collections.emptyList();
+        }
+
+        FileFilter filter = new FileFilter() {
+            public boolean accept(File file) {
+                return file.isFile() && !file.isHidden() && file.canRead();
+            }
+        };
+        File[] files = FileUtil.listFiles(dir, filter);
+        List<String> result = new ArrayList<String>();
+        for (File file : files) {
+            result.add(file.getName());
+        }
+        return result;
     }
 
-    public void processVideo(String path, String quality) {
+    /**
+     * Request processing of the given video in the given quality.
+     *
+     * @param sourcePath Path of the source video file.
+     * @param quality    The requested video quality.
+     */
+    public void processVideo(String sourcePath, String quality) {
+        File sourceFile = new File(sourcePath);
+
+        String logFileName = "." + FilenameUtils.getBaseName(sourcePath) + "." + quality + ".log";
+        File logFile = new File(sourceFile.getParentFile(), logFileName);
+
+        String processedFileName = "." + FilenameUtils.getBaseName(sourcePath) + "." + quality + ".mp4";
+        File processedFile = new File(sourceFile.getParentFile(), processedFileName);
+
         ProcessedVideo video = new ProcessedVideo();
-        // TODO
+        video.setPath(processedFile.getPath());
+        video.setSourcePath(sourcePath);
+        video.setQuality(quality);
+        video.setLogPath(logFile.getPath());
+        video.setStatus(ProcessedVideo.Status.QUEUED);
 
         processedVideoDao.createProcessedVideo(video);
+        // TODO: Trigger processing.
     }
 
     public void cancelVideoProcessing(int id) {
         ProcessedVideo video = processedVideoDao.getProcessedVideo(id);
         // TODO
-
+        // TODO: Delete log and tmp files.
         processedVideoDao.updateProcessedVideo(video);
     }
 
+    /**
+     * Deletes the processed video with the given ID.
+     *
+     * @param id The video ID.
+     */
     public void deleteProcessedVideo(int id) {
-        // TODO
+        cancelVideoProcessing(id);
         processedVideoDao.deleteProcessedVideo(id);
     }
 
@@ -78,5 +139,9 @@ public class VideoService {
 
     public void setProcessedVideoDao(ProcessedVideoDao processedVideoDao) {
         this.processedVideoDao = processedVideoDao;
+    }
+
+    public void setTranscodingService(TranscodingService transcodingService) {
+        this.transcodingService = transcodingService;
     }
 }

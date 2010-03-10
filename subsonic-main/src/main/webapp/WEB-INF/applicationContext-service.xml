@@ -195,6 +195,7 @@
 
     <bean id="ajaxVideoService" class="net.sourceforge.subsonic.ajax.VideoService" init-method="init">
         <property name="processedVideoDao" ref="processedVideoDao"/>
+        <property name="transcodingService" ref="transcodingService"/>
     </bean>
 
     <bean id="ajaxChatService" class="net.sourceforge.subsonic.ajax.ChatService" init-method="init">
