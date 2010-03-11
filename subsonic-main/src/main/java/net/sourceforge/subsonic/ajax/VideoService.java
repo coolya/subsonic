@@ -19,17 +19,25 @@
 package net.sourceforge.subsonic.ajax;
 
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.io.InputStreamReaderThread;
 import net.sourceforge.subsonic.dao.ProcessedVideoDao;
 import net.sourceforge.subsonic.domain.ProcessedVideo;
 import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.util.FileUtil;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Provides AJAX-enabled services for video processing.
@@ -45,12 +53,14 @@ public class VideoService {
     private ProcessedVideoDao processedVideoDao;
     private TranscodingService transcodingService;
 
+//    private final BlockingQueue<Integer> processingQueue = new LinkedBlockingQueue<Integer>();
+
     /**
-     * Returns all processed videos for the given path.
-     *
-     * @param sourcePath The path of the source video.
-     * @return List of processed videos.
-     */
+    * Returns all processed videos for the given path.
+    *
+    * @param sourcePath The path of the source video.
+    * @return List of processed videos.
+    */
     public List<ProcessedVideo> getProcessedVideos(String sourcePath) {
         return processedVideoDao.getProcessedVideos(sourcePath);
     }
@@ -77,7 +87,7 @@ public class VideoService {
         File[] files = FileUtil.listFiles(dir, filter);
         List<String> result = new ArrayList<String>();
         for (File file : files) {
-            result.add(file.getName());
+            result.add(FilenameUtils.getBaseName(file.getName()));
         }
         return result;
     }
@@ -108,10 +118,23 @@ public class VideoService {
         // TODO: Trigger processing.
     }
 
+    /**
+     * Cancels video processing.
+     *
+     * @param id The video ID.
+     */
     public void cancelVideoProcessing(int id) {
         ProcessedVideo video = processedVideoDao.getProcessedVideo(id);
-        // TODO
+        if (video == null) {
+            LOG.warn("Video " + id + " not found.");
+            return;
+        }
+
+        // TODO: Stop process
+
         // TODO: Delete log and tmp files.
+
+        video.setStatus(ProcessedVideo.Status.FAILED);
         processedVideoDao.updateProcessedVideo(video);
     }
 
@@ -125,14 +148,52 @@ public class VideoService {
         processedVideoDao.deleteProcessedVideo(id);
     }
 
+    /**
+     * Returns the log for a given video processing.
+     * @param id The video ID.
+     * @return The log, or <code>null</code>.
+     */
     public String getVideoProcessingLog(int id) {
-        // TODO
-        return null;
+        ProcessedVideo video = processedVideoDao.getProcessedVideo(id);
+        if (video == null) {
+            LOG.warn("Video " + id + " not found.");
+            return null;
+        }
+
+        File logFile = new File(video.getLogPath());
+        if (!logFile.exists()) {
+            return null;
+        }
+
+        // TODO: Don't read entire file it it's big.
+        InputStream in = null;
+        try {
+            in = new FileInputStream(logFile);
+            return IOUtils.toString(in);
+        } catch (IOException x) {
+            LOG.warn("Failed to read log file " + logFile, x);
+            return null;
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
     }
 
+    private void processAndWait(ProcessedVideo video) {
+        video.setStatus(ProcessedVideo.Status.PROCESSING);
+        processedVideoDao.updateProcessedVideo(video);
+
+        Process process = Runtime.getRuntime().exec(command);
+
+        // Consume stdout and stderr from the process, otherwise it may block.
+        new InputStreamReaderThread(process.getErrorStream(), video.getSourcePath(), true).start();
+        new InputStreamReaderThread(process.getInputStream(), video.getSourcePath(), true).start();
+
+        process.waitFor();
+    }
+    
     /**
-     * Invoked by Spring container on startup.
-     */
+    * Invoked by Spring container on startup.
+    */
     public void init() {
         // TODO
     }
