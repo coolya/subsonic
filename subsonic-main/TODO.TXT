@@ -61,7 +61,8 @@ New transcoder pack.
 Automatically exclude all hidden files and directories (those starting with ".")
 Bugfix: Fix bug in coverart batch: http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2862
 Make user statistics graphs logarithmic, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2066
-Truncate long genre names in "more" page. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2923
+Truncate long genre names in "more" page.
+Improved year selection in "more" page.
 
 MAC INSTALLER
 -------------

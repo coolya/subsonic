@@ -74,13 +74,20 @@
                 <td>
                     <select name="year">
                         <option value="any"><fmt:message key="more.random.anyyear"/></option>
-                        <option value="2000 9999">&gt; 2000</option>
-                        <option value="1990 1999">1990 &ndash; 1999</option>
-                        <option value="1980 1989">1980 &ndash; 1989</option>
-                        <option value="1970 1979">1970 &ndash; 1979</option>
-                        <option value="1960 1969">1960 &ndash; 1969</option>
-                        <option value="1950 1959">1950 &ndash; 1959</option>
-                        <option value="0 1950">&lt; 1950</option>
+                        
+                        <c:forEach begin="0" end="${model.currentYear - 2006}" var="yearOffset">
+                            <c:set var="year" value="${model.currentYear - yearOffset}"/>
+                            <option value="${year} ${year}">${year}</option>
+                        </c:forEach>
+
+                        <option value="2005 2010">2005 &ndash; 2010</option>
+                        <option value="2000 2005">2000 &ndash; 2005</option>
+                        <option value="1990 2000">1990 &ndash; 2000</option>
+                        <option value="1980 1990">1980 &ndash; 1990</option>
+                        <option value="1970 1980">1970 &ndash; 1980</option>
+                        <option value="1960 1970">1960 &ndash; 1970</option>
+                        <option value="1950 1960">1950 &ndash; 1960</option>
+                        <option value="0 1949">&lt; 1950</option>
                     </select>
                 </td>
                 <td><fmt:message key="more.random.folder"/></td>
