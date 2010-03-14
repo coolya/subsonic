@@ -117,8 +117,8 @@ public class StatusChartController extends AbstractChartController {
         plot.setBackgroundPaint(background);
 
         XYItemRenderer renderer = plot.getRendererForDataset(dataset);
-        renderer.setPaint(Color.blue.darker());
-        renderer.setStroke(new BasicStroke(2f));
+        renderer.setSeriesPaint(0, Color.blue.darker());
+        renderer.setSeriesStroke(0, new BasicStroke(2f));
 
         // Set theme-specific colors.
         Color bgColor = getBackground(request);

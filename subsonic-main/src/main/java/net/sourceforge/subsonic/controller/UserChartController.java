@@ -32,7 +32,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
-import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.LogarithmicAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
@@ -102,9 +102,10 @@ public class UserChartController extends AbstractChartController {
         plot.setRangeGridlinePaint(Color.white);
         plot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
 
-        // Set the range axis to display integers only.
-        final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        LogarithmicAxis rangeAxis = new LogarithmicAxis(null);
+        rangeAxis.setStrictValuesFlag(false);
+        rangeAxis.setAllowNegativesFlag(true);
+        plot.setRangeAxis(rangeAxis);
 
         // Disable bar outlines.
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
