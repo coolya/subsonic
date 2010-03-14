@@ -59,6 +59,16 @@ public class ProcessedVideoDao extends AbstractDao {
     }
 
     /**
+     * Returns all processed videos with the given status.
+     *
+     * @param status The status.
+     * @return List of processed videos.
+     */
+    public List<ProcessedVideo>  getProcessedVideos(Status status) {
+        return query("select " + COLUMNS + " from processed_video where status=?", rowMapper, status.name());
+    }
+
+    /**
      * Creates a new processed video.
      *
      * @param video The video to create.

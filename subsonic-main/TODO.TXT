@@ -1,5 +1,7 @@
 TODO IN 4.0
 ------------
+Genre box too wide. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2923
+UPnP broken?
 Make user statistics graphs logarithmic, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2066
 Support small/large screens: http://developer.android.com/guide/topics/manifest/supports-screens-element.html, must improve layout of main activity.
 Android app not available on HTC Tattoo? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9288
@@ -61,7 +63,10 @@ MAC INSTALLER
 -------------
 Make maven build from root work.
 
-WHS installer?
+MISC
+----
+Java silent installation: http://java.sun.com/javase/6/webnotes/install/jre/silent.html
+WiX: https://sourceforge.net/projects/wix/
 
 html5 audio
 Create album table (or reuse music_file_info), reimplement related services in SearchService.
