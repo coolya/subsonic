@@ -66,7 +66,7 @@
                     <select name="genre">
                         <option value="any"><fmt:message key="more.random.anygenre"/></option>
                         <c:forEach items="${model.genres}" var="genre">
-                            <option value="${genre}">${genre}</option>
+                            <option value="${genre}"><str:truncateNicely upper="20">${genre}</str:truncateNicely></option>
                         </c:forEach>
                     </select>
                 </td>

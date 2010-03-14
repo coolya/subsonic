@@ -1,15 +1,14 @@
 TODO IN 4.0
 ------------
-TEST: Gzipping hmtl (and xml).
 Dynamic AJAX content.
    http://api.jquery.com/load/
    http://www.dynamicdrive.com/dynamicindex17/ajaxcontent.htm
-Genre box too wide. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2923
 UPnP broken?
 Support small/large screens: http://developer.android.com/guide/topics/manifest/supports-screens-element.html, must improve layout of main activity.
 Android app not available on HTC Tattoo? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9288
 http://www.subsonic.org/pages/download.jsp looks daft in FF.
 TEST: Support Basic auth in REST API http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9270
+TEST: Gzipping hmtl (and xml).
 Android: Support mounting SD card.
 Android: Support filenames with "<" and ">".
 Android: Avoid stutter
@@ -62,6 +61,7 @@ New transcoder pack.
 Automatically exclude all hidden files and directories (those starting with ".")
 Bugfix: Fix bug in coverart batch: http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2862
 Make user statistics graphs logarithmic, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2066
+Truncate long genre names in "more" page. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2923
 
 MAC INSTALLER
 -------------
