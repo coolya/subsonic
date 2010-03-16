@@ -1,5 +1,8 @@
 TODO IN 4.0
 ------------
+Increase default heap size on Mac.
+Change Linux installer config file.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2926
+Use AAC rather than MP3 for transcoding.
 Dynamic AJAX content.
    http://api.jquery.com/load/
    http://www.dynamicdrive.com/dynamicindex17/ajaxcontent.htm
@@ -26,6 +29,7 @@ Change Android screenshots.
 
 VIDEO
 -----
+Create separate "Video folder" definition?
 Compile qt-faststart and put in transcoder dir.
 Add H.264 presets to transcoder install.
 Add transcoding definitions.

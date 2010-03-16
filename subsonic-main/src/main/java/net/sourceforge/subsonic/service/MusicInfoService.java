@@ -22,6 +22,7 @@ import net.sourceforge.subsonic.dao.*;
 import net.sourceforge.subsonic.domain.*;
 
 import java.util.*;
+import java.io.File;
 
 /**
  * Provides services for user rating and comments, as well
@@ -33,6 +34,7 @@ public class MusicInfoService {
 
     private MusicFileInfoDao musicFileInfoDao;
     private MusicFileService musicFileService;
+    private SecurityService securityService;
 
     /**
      * Returns music file info for the given path.
@@ -66,7 +68,10 @@ public class MusicInfoService {
         List<String> highestRated = musicFileInfoDao.getHighestRated(offset, count);
         List<MusicFile> result = new ArrayList<MusicFile>();
         for (String path : highestRated) {
-            result.add(musicFileService.getMusicFile(path));
+            File file = new File(path);
+            if (file.exists() && securityService.isReadAllowed(file)) {
+                result.add(musicFileService.getMusicFile(path));
+            }
         }
         return result;
     }
@@ -168,5 +173,9 @@ public class MusicInfoService {
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 }
