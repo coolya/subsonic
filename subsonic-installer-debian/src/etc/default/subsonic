@@ -1,0 +1,16 @@
+#
+# This is the configuration file for the Subsonic service
+# (/etc/init.d/subsonic)
+#
+# To change the startup parameters of Subsonic, modify
+# the SUBSONIC_ARGS variable below.
+#
+# Type "subsonic --help" on the command line to read an
+# explanation of the different options.
+#
+# For example, to specify that Subsonic should use port 7070
+# and use a Java memory heap size of 80 MB, use the following:
+#
+# SUBSONIC_ARGS="--port=7070 --max-memory=80"
+
+SUBSONIC_ARGS=""
