@@ -70,7 +70,8 @@
 
                                         <copy file="${basedir}/src/etc/init.d/subsonic"
                                               todir="${project.build.directory}/rpm/buildroot/etc/init.d"/>
-
+                                        <copy file="${basedir}/src/etc/sysconfig/subsonic"
+                                              todir="${project.build.directory}/rpm/buildroot/etc/sysconfig"/>
                                         <copy file="../subsonic-booter/src/main/script/subsonic.sh"
                                               todir="${project.build.directory}/rpm/buildroot/usr/share/subsonic"/>
                                         <copy file="../subsonic-booter/target/subsonic-booter-jar-with-dependencies.jar"

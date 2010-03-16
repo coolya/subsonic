@@ -25,6 +25,7 @@ Subsonic can be found at http://subsonic.org
 /usr/share/subsonic/subsonic.war
 %attr(755,root,root) /usr/share/subsonic/subsonic.sh
 %attr(755,root,root) /etc/init.d/subsonic
+%config(noreplace) /etc/sysconfig/subsonic
 
 %pre
 # Stop Subsonic service.

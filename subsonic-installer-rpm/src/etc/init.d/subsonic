@@ -18,19 +18,9 @@
 
 # Author: Sindre Mehus <sindre@activeobjects.no>
 
-#
-# To change the startup parameters of Subsonic, modify
-# the SUBSONIC_ARGS variable below.
-#
-# Type "subsonic --help" on the command line to read an
-# explanation of the different options.
-#
-# For example, to specify that Subsonic should use port 7070
-# and use a Java memory heap size of 80 MB, use the following:
-#
-# SUBSONIC_ARGS="--port=7070 --max-memory=80"
-
-SUBSONIC_ARGS=""
+# To change the startup parameters of Subsonic, modify the service
+# configuration file /etc/sysconfig/subsonic rather than this file. 
+[ -r /etc/sysconfig/subsonic ] && . /etc/sysconfig/subsonic
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Subsonic Daemon"
@@ -41,7 +31,7 @@ DAEMON=/usr/bin/$NAME
 DAEMON_ARGS="--pidfile=$PIDFILE $SUBSONIC_ARGS"
 SCRIPTNAME=/etc/init.d/$NAME
 
-# Exit if the package is not installed
+# Exit if the package is not installed.
 [ -x "$DAEMON" ] || exit 0
 
 # Source function library.
