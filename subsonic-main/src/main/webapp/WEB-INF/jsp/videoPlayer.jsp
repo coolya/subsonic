@@ -5,9 +5,6 @@
     <%@ include file="head.jsp" %>
     <script type="text/javascript" src="<c:url value="/script/swfobject.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/dwr/interface/videoService.js"/>"></script>
 </head>
 
 <body class="mainframe bgcolor1" style="margin:15px" onload="init();">
@@ -21,19 +18,11 @@
     var playerVisible = true;
 
     function init() {
-        dwr.engine.setErrorHandler(null);
-        videoService.getVideoQualities(getVideoQualitiesCallback);
-        createPlayer();
+//        createPlayer();
     }
 
     function playerReady(thePlayer) {
         player = $(thePlayer.id);
-    }
-
-    function getVideoQualitiesCallback(qualities) {
-        for (var i = 0; i < qualities.length; i++) {
-//            alert(qualities[i]);
-        }
     }
 
     function togglePlayer() {
@@ -86,8 +75,30 @@
 
 </script>
 
+<p>The video is available in the following qualities:</p>
+<table>
+    <c:forEach items="${model.processedVideos}" var="video">
+        <tr>
+            <td>${video.quality}</td>
+            <td>${video.status}</td>
+            <td>${video.bitRate}</td>
+            <td>${video.size}</td>
+        </tr>
+    </c:forEach>
+</table>
 
-<input type="button" value="Toggle player" onClick="togglePlayer();"/>
+<form action="videoPlayer.view" method="POST">
+    Process video in quality
+    <select name="quality">
+        <c:forEach items="${model.qualities}" var="quality">
+            <option value="${quality}">${quality}</option>
+        </c:forEach>
+    </select>
+    <input type="hidden" name="process" value="true"/>
+    <input type="hidden" name="path" value="${model.video.path}"/>
+    <input type="submit" value="Start"/>
+</form>
+<%--<input type="button" value="Toggle player" onClick="togglePlayer();"/>--%>
 
 <div id="control">
 </div>

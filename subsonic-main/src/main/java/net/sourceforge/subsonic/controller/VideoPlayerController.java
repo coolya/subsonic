@@ -18,19 +18,19 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import java.util.Map;
-import java.util.HashMap;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.servlet.mvc.ParameterizableViewController;
-import org.springframework.web.servlet.ModelAndView;
-
+import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.TranscodingService;
-import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.VideoService;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller for the page used to play videos.
@@ -43,16 +43,32 @@ public class VideoPlayerController extends ParameterizableViewController {
     private SettingsService settingsService;
     private TranscodingService transcodingService;
     private MusicFileService musicFileService;
+    private VideoService videoService;
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+        processRequest(request);
+
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("video", musicFileService.getMusicFile(request.getParameter("path")));
+        String path = request.getParameter("path");
+        map.put("video", musicFileService.getMusicFile(path));
+        map.put("processedVideos", videoService.getProcessedVideos(path));
+        map.put("qualities", videoService.getVideoQualities());
 
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
+    }
+
+    private void processRequest(HttpServletRequest request) throws Exception {
+        if (!ServletRequestUtils.getBooleanParameter(request, "process", false)) {
+            return;
+        }
+
+        String path = ServletRequestUtils.getRequiredStringParameter(request, "path");
+        String quality = ServletRequestUtils.getRequiredStringParameter(request, "quality");
+        videoService.processVideo(path, quality);
     }
 
     public void setSecurityService(SecurityService securityService) {
@@ -69,5 +85,9 @@ public class VideoPlayerController extends ParameterizableViewController {
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
+    }
+
+    public void setVideoService(VideoService videoService) {
+        this.videoService = videoService;
     }
 }

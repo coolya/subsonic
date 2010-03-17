@@ -104,6 +104,11 @@
 
     <bean id="statusService" class="net.sourceforge.subsonic.service.StatusService"/>
 
+    <bean id="videoService" class="net.sourceforge.subsonic.service.VideoService" init-method="init">
+        <property name="processedVideoDao" ref="processedVideoDao"/>
+        <property name="transcodingService" ref="transcodingService"/>
+    </bean>
+
     <bean id="musicInfoService" class="net.sourceforge.subsonic.service.MusicInfoService">
         <property name="musicFileInfoDao" ref="musicFileInfoDao"/>
         <property name="musicFileService" ref="musicFileService"/>
@@ -193,11 +198,6 @@
     </bean>
 
     <bean id="ajaxTransferService" class="net.sourceforge.subsonic.ajax.TransferService"/>
-
-    <bean id="ajaxVideoService" class="net.sourceforge.subsonic.ajax.VideoService" init-method="init">
-        <property name="processedVideoDao" ref="processedVideoDao"/>
-        <property name="transcodingService" ref="transcodingService"/>
-    </bean>
 
     <bean id="ajaxChatService" class="net.sourceforge.subsonic.ajax.ChatService" init-method="init">
         <property name="securityService" ref="securityService"/>

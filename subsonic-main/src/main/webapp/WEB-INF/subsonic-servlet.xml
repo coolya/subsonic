@@ -289,6 +289,7 @@
         <property name="settingsService" ref="settingsService"/>
         <property name="transcodingService" ref="transcodingService"/>
         <property name="musicFileService" ref="musicFileService"/>
+        <property name="videoService" ref="videoService"/>
     </bean>
     <bean id="downloadController" class="net.sourceforge.subsonic.controller.DownloadController">
         <property name="playerService" ref="playerService"/>

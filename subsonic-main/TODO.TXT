@@ -1,7 +1,7 @@
 TODO IN 4.0
 ------------
 Update documentation of /etc/sysconfig/subsonic (rpm) and /etc/default/subsonic (debian)
-Increase default heap size on Mac.
+Increase default heap size.
 Change Linux installer config file.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2926
 Use AAC rather than MP3 for transcoding.
 Dynamic AJAX content.

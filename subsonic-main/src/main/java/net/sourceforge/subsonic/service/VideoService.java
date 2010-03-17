@@ -16,7 +16,7 @@
 
  Copyright 2009 (C) Sindre Mehus
  */
-package net.sourceforge.subsonic.ajax;
+package net.sourceforge.subsonic.service;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.ProcessedVideoDao;
@@ -39,9 +39,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Provides AJAX-enabled services for video processing.
- * <p/>
- * This class is used by the DWR framework (http://getahead.ltd.uk/dwr/).
+ * Provides services for video processing.
  *
  * @author Sindre Mehus
  */
@@ -236,6 +234,8 @@ public class VideoService {
                 }
             } catch (Throwable x) {
                 LOG.error("Error while processing " + video.getSourcePath(), x);
+                video.setStatus(FAILED);
+                processedVideoDao.updateProcessedVideo(video);
             } finally {
                 triggerProcessing();
             }
