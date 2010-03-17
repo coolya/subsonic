@@ -16,6 +16,7 @@ TEST: Gzipping hmtl (and xml).
 Android: Support mounting SD card.
 Android: Support filenames with "<" and ">".
 Android: Avoid stutter
+Android: Trim username, servername. Url-encode username.
 Android: Download error notification is nagging.
 Android: Select music folder in server settings. (Including "All").
 3rd party license popup broken.
