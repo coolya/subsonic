@@ -18,19 +18,26 @@
  */
 package net.sourceforge.subsonic.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
+
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.service.VideoService;
-import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.ParameterizableViewController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
+import net.sourceforge.subsonic.domain.ProcessedVideo;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.util.StringUtil;
+import net.sourceforge.subsonic.filter.ParameterDecodingFilter;
 
 /**
  * Controller for the page used to play videos.
@@ -38,6 +45,8 @@ import java.util.Map;
  * @author Sindre Mehus
  */
 public class VideoPlayerController extends ParameterizableViewController {
+
+    private static final Logger LOG = Logger.getLogger(StreamController.class);
 
     private SecurityService securityService;
     private SettingsService settingsService;
@@ -47,8 +56,10 @@ public class VideoPlayerController extends ParameterizableViewController {
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        processRequest(request);
+        ModelAndView result = handleCommand(request, response);
+        if (result != null) {
+            return result;
+        }
 
         Map<String, Object> map = new HashMap<String, Object>();
         String path = request.getParameter("path");
@@ -56,19 +67,55 @@ public class VideoPlayerController extends ParameterizableViewController {
         map.put("processedVideos", videoService.getProcessedVideos(path));
         map.put("qualities", videoService.getVideoQualities());
 
-        ModelAndView result = super.handleRequestInternal(request, response);
+        result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
     }
 
-    private void processRequest(HttpServletRequest request) throws Exception {
-        if (!ServletRequestUtils.getBooleanParameter(request, "process", false)) {
-            return;
+    private ModelAndView handleCommand(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String action = request.getParameter("action");
+        if ("create".equals(action)) {
+            return handleCreateCommand(request, response);
         }
+        if ("delete".equals(action)) {
+            return handleDeleteCommand(request, response);
+        }
+        return null;
+    }
 
+    private ModelAndView handleCreateCommand(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String path = ServletRequestUtils.getRequiredStringParameter(request, "path");
         String quality = ServletRequestUtils.getRequiredStringParameter(request, "quality");
-        videoService.processVideo(path, quality);
+
+        boolean exists = false;
+        for (ProcessedVideo processedVideo : videoService.getProcessedVideos(path)) {
+            if (processedVideo.getQuality().equals(quality)) {
+                exists = true;
+                break;
+            }
+        }
+
+        if (exists) {
+            LOG.warn("The video '" + path + "' already exists in quality '" + quality + "'.");
+        } else {
+            videoService.processVideo(path, quality);
+        }
+
+        return createRedirectView(path);
+    }
+
+    private ModelAndView handleDeleteCommand(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        int id = ServletRequestUtils.getRequiredIntParameter(request, "id");
+        ProcessedVideo video = videoService.getProcessedVideo(id);
+        if (video == null) {
+            return null;
+        }
+        videoService.cancelVideoProcessing(id);
+        return createRedirectView(video.getSourcePath());
+    }
+
+    private ModelAndView createRedirectView(String path) {
+        return new ModelAndView(new RedirectView("videoPlayer.view?path" + ParameterDecodingFilter.PARAM_SUFFIX + "=" + StringUtil.utf8HexEncode(path)));
     }
 
     public void setSecurityService(SecurityService securityService) {

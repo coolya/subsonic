@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1" %>
 
 <html>
 <head>
@@ -7,48 +7,18 @@
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
 </head>
 
-<body class="mainframe bgcolor1" style="margin:15px" onload="init();">
+<body class="mainframe bgcolor1" style="margin:15px">
 
-<sub:url value="/stream" var="streamUrl">
-    <sub:param name="path" value="${model.video.path}"/>
-</sub:url>
 
 <script type="text/javascript" language="javascript">
-    var player = null;
-    var playerVisible = true;
 
-    function init() {
-//        createPlayer();
-    }
+    function play(streamUrl) {
 
-    function playerReady(thePlayer) {
-        player = $(thePlayer.id);
-    }
-
-    function togglePlayer() {
-        var control = $("control");
-        var foo = $("foo");
-
-        if (playerVisible) {
-            //            deletePlayer();
-            foo.hide();
-            control.show();
-
-        } else {
-            //        if (player == null) {
-            //            createPlayer();
-            control.hide();
-            foo.show();
-        }
-        playerVisible = !playerVisible;
-    }
-
-    function createPlayer() {
         var flashvars = {
             id:"player1",
-            file:"${streamUrl}",
-            duration:"${model.video.metaData.duration}",
-            autostart:"false",
+            file:streamUrl,
+            <%--duration:"${model.video.metaData.duration}",--%>
+            autostart:"true",
             backcolor:"<spring:theme code="backgroundColor"/>",
             frontcolor:"<spring:theme code="textColor"/>",
             provider:"video"
@@ -61,49 +31,80 @@
             id:"player1",
             name:"player1"
         };
-        swfobject.embedSWF("<c:url value="/flash/jw-player-5.0.swf"/>", "placeholder1", "100%", "100%", "9.0.0", false, flashvars, params, attributes);
-    }
 
-    function deletePlayer() {
-        swfobject.removeSWF("player1");
-        player = null;
-        var tmp = document.getElementById("wrapper");
-        if (tmp) {
-            tmp.innerHTML = "<div id='placeholder1'></div>";
-        }
+        $("control").hide();
+        swfobject.embedSWF("<c:url value="/flash/jw-player-5.0.swf"/>", "placeholder1", "100%", "100%", "9.0.0", false, flashvars, params, attributes);
     }
 
 </script>
 
-<p>The video is available in the following qualities:</p>
-<table>
-    <c:forEach items="${model.processedVideos}" var="video">
-        <tr>
-            <td>${video.quality}</td>
-            <td>${video.status}</td>
-            <td>${video.bitRate}</td>
-            <td>${video.size}</td>
-        </tr>
-    </c:forEach>
-</table>
+<div style="width:100%; height:97%">
 
-<form action="videoPlayer.view" method="POST">
-    Process video in quality
-    <select name="quality">
-        <c:forEach items="${model.qualities}" var="quality">
-            <option value="${quality}">${quality}</option>
-        </c:forEach>
-    </select>
-    <input type="hidden" name="process" value="true"/>
-    <input type="hidden" name="path" value="${model.video.path}"/>
-    <input type="submit" value="Start"/>
-</form>
-<%--<input type="button" value="Toggle player" onClick="togglePlayer();"/>--%>
+    <div id="control">
+        <c:if test="${not model.play}">
 
-<div id="control">
-</div>
+            <c:choose>
+                <c:when test="${empty model.processedVideos}">
+                    <p>This video must be processed before it can be streamed over the network.</p>
+                </c:when>
+                <c:otherwise>
+                    <p>The video is available in the following qualities:</p>
+                    <table style="width:100%;border-collapse:collapse;white-space:nowrap">
+                    <tr>
+                        <td class="bgcolor2" style="font-weight: bold;">Quality</td>
+                        <td class="bgcolor2" style="font-weight: bold;">Status</td>
+                        <td class="bgcolor2" style="font-weight: bold;">Bit rate</td>
+                        <td class="bgcolor2" style="font-weight: bold;">Size</td>
+                        <td class="bgcolor2" style="font-weight: bold;">Actions</td>
+                    </tr>
+                        <c:forEach items="${model.processedVideos}" var="video" varStatus="loopStatus">
 
-<div id="foo" style="width:100%; height:95%">
+                            <c:choose>
+                                <c:when test="${loopStatus.count % 2 == 0}">
+                                    <c:set var="class" value="class='bgcolor2'"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="class" value=""/>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <sub:url value="/stream" var="streamUrl">
+                                <sub:param name="path" value="${model.video.path}"/>
+                            </sub:url>
+                            <tr>
+                                <td ${class}>${video.quality}</td>
+                                <td ${class}>${video.status}</td>
+                                <td ${class}>${video.bitRate}</td>
+                                <td ${class}>${video.size}</td>
+                                <td ${class}><a href="#" onclick="play('${streamUrl}'); return false;">[Play]</a>
+                                    <a href="videoPlayer.view?action=delete&id=${video.id}">[Delete]</a></td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </c:otherwise>
+            </c:choose>
+
+            <c:choose>
+                <c:when test="${empty model.qualities}">
+                    <p>No video processing scripts found.</p>
+                </c:when>
+                <c:otherwise>
+                    <form action="videoPlayer.view" method="POST">
+                        Process video in quality
+                        <select name="quality">
+                            <c:forEach items="${model.qualities}" var="quality">
+                                <option value="${quality}">${quality}</option>
+                            </c:forEach>
+                        </select>
+                        <input type="hidden" name="action" value="create"/>
+                        <input type="hidden" name="path" value="${model.video.path}"/>
+                        <input type="submit" value="Start"/>
+                    </form>
+                </c:otherwise>
+            </c:choose>
+        </c:if>
+    </div>
+
     <div id="wrapper" style="padding-top:1em">
         <div id="placeholder1"></div>
     </div>

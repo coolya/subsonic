@@ -24,6 +24,7 @@ import net.sourceforge.subsonic.domain.ProcessedVideo;
 import static net.sourceforge.subsonic.domain.ProcessedVideo.Status.*;
 import net.sourceforge.subsonic.io.InputStreamReaderThread;
 import net.sourceforge.subsonic.service.TranscodingService;
+import net.sourceforge.subsonic.service.metadata.FFmpegParser;
 import net.sourceforge.subsonic.util.FileUtil;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -50,6 +51,16 @@ public class VideoService {
     private ProcessedVideoDao processedVideoDao;
     private TranscodingService transcodingService;
     private ProcessingThread processingThread;
+
+    /**
+     * Returns the video with the given ID.
+     *
+     * @param id The video ID.
+     * @return The video, or {@code null} if not found.
+     */
+    public ProcessedVideo getProcessedVideo(int id) {
+        return processedVideoDao.getProcessedVideo(id);
+    }
 
     /**
      * Returns all processed videos for the given path.
@@ -229,6 +240,8 @@ public class VideoService {
                 process.waitFor();
                 if (!cancelled) {
                     video.setStatus(FINISHED);
+                    video.setSize(new File(video.getPath()).length());
+                    // TODO: Set bitrate
                     processedVideoDao.updateProcessedVideo(video);
                     LOG.info("Finished video processing for " + video.getSourcePath());
                 }
