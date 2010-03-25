@@ -29,7 +29,7 @@
             Donors get access to premium features like:
         </p>
         <p>
-            o Subsonic on Android.<br>
+            o Subsonic on Android, iPhone and AIR.<br>
             o Your personal server address: <em>you</em>.subsonic.org<br>
             o No ads.<br>
         </p>

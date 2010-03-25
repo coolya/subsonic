@@ -15,16 +15,17 @@
 <hr/>
 <div id="nav">
     <ul>
-        <li id="menu-home"><a href="index.jsp" class="<%=current.equals("home") ? "open" : ""%>"><span>Home</span></a></li>
-        <li id="menu-features"><a href="features.jsp" class="<%=current.equals("features") ? "open" : ""%>"><span>Features</span></a></li>
-        <li id="menu-screenshots"><a href="screenshots.jsp" class="<%=current.equals("screenshots") ? "open" : ""%>"><span>Screenshots</span></a></li>
-        <li id="menu-demo"><a href="demo.jsp" class="<%=current.equals("demo") ? "open" : ""%>"><span>Demo</span></a></li>
-        <li id="menu-download"><a href="download.jsp" class="<%=current.equals("download") ? "open" : ""%>"><span>Download</span></a></li>
-        <li id="menu-installation"><a href="installation.jsp" class="<%=current.equals("installation") ? "open" : ""%>"><span>Installation</span></a></li>
-        <li id="menu-transcoding"><a href="transcoding.jsp" class="<%=current.equals("transcoding") ? "open" : ""%>"><span>Transcoding</span></a></li>
-        <li id="menu-changelog"><a href="changelog.jsp" class="<%=current.equals("changelog") ? "open" : ""%>"><span>Change Log</span></a></li>
-        <li id="menu-forum"><a href="forum.jsp" class="<%=current.equals("forum") ? "open" : ""%>"><span>Forum</span></a></li>
-        <li id="menu-api"><a href="api.jsp" class="<%=current.equals("api") ? "open" : ""%>"><span>API</span></a></li>
+        <li><a href="index.jsp" class="<%=current.equals("home") ? "open" : ""%>"><span>Home</span></a></li>
+        <li><a href="features.jsp" class="<%=current.equals("features") ? "open" : ""%>"><span>Features</span></a></li>
+        <li><a href="apps.jsp" class="<%=current.equals("apps") ? "open" : ""%>"><span>Apps</span></a></li>
+        <li><a href="screenshots.jsp" class="<%=current.equals("screenshots") ? "open" : ""%>"><span>Screenshots</span></a></li>
+        <li><a href="demo.jsp" class="<%=current.equals("demo") ? "open" : ""%>"><span>Demo</span></a></li>
+        <li><a href="download.jsp" class="<%=current.equals("download") ? "open" : ""%>"><span>Download</span></a></li>
+        <li><a href="installation.jsp" class="<%=current.equals("installation") ? "open" : ""%>"><span>Installation</span></a></li>
+        <li><a href="transcoding.jsp" class="<%=current.equals("transcoding") ? "open" : ""%>"><span>Transcoding</span></a></li>
+        <li><a href="changelog.jsp" class="<%=current.equals("changelog") ? "open" : ""%>"><span>Change Log</span></a></li>
+        <li><a href="forum.jsp" class="<%=current.equals("forum") ? "open" : ""%>"><span>Forum</span></a></li>
+        <li><a href="api.jsp" class="<%=current.equals("api") ? "open" : ""%>"><span>API</span></a></li>
     </ul>
 </div>
 <hr/>

@@ -1,5 +1,9 @@
 TODO IN 4.0
 ------------
+Add iPhone apps to More page.
+Add REST method for chat messages.
+Add track count REST.
+Album link to last.fm broken
 Update documentation of /etc/sysconfig/subsonic (rpm) and /etc/default/subsonic (debian)
 Increase default heap size.
 Change Linux installer config file.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2926

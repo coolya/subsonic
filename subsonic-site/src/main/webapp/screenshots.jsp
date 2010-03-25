@@ -14,11 +14,9 @@
 
     <div id="content">
         <div id="main-col">
-            <h1>Subsonic Screenshots</h1>
             <a href="inc/img/screenshots/screen02.png"><img src="inc/img/screenshots/thumb02.png" alt="" style="padding:3px"/></a>
             <a href="inc/img/screenshots/screen01.png"><img src="inc/img/screenshots/thumb01.png" alt="" style="padding:3px"/></a>
             <a href="inc/img/screenshots/screen05.png"><img src="inc/img/screenshots/thumb05.png" alt="" style="padding:3px"/></a>
-            <a href="inc/img/screenshots/screen04.png"><img src="inc/img/screenshots/thumb04.png" alt="" style="padding:3px"/></a>
             <a href="inc/img/screenshots/screen06.png"><img src="inc/img/screenshots/thumb06.png" alt="" style="padding:3px"/></a>
             <a href="inc/img/screenshots/screen03.png"><img src="inc/img/screenshots/thumb03.png" alt="" style="padding:3px"/></a>
             <a href="inc/img/screenshots/screen07.png"><img src="inc/img/screenshots/thumb07.png" alt="" style="padding:3px"/></a>
@@ -26,12 +24,17 @@
             <a href="inc/img/screenshots/screen09.png"><img src="inc/img/screenshots/thumb09.png" alt="" style="padding:3px"/></a>
             <a href="inc/img/screenshots/screen10.png"><img src="inc/img/screenshots/thumb10.png" alt="" style="padding:3px"/></a>
             <a href="inc/img/screenshots/screen11.png"><img src="inc/img/screenshots/thumb11.png" alt="" style="padding:3px"/></a>
-            <a href="inc/img/screenshots/screen12.png"><img src="inc/img/screenshots/thumb12.png" alt="" style="padding:3px"/></a>
-            <a href="inc/img/screenshots/screen13.png"><img src="inc/img/screenshots/thumb13.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen16.png" title="SubAir app"><img src="inc/img/screenshots/thumb16.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen17.png" title="Z-Subsonic app for iPhone"><img src="inc/img/screenshots/thumb17.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen20.png" title="iSub app for iPhone"><img src="inc/img/screenshots/thumb20.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen12.png" title="Subsonic app for Android"><img src="inc/img/screenshots/thumb12.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen13.png" title="Subsonic app for Android"><img src="inc/img/screenshots/thumb13.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen14.png" title="Subsonic app for Android"><img src="inc/img/screenshots/thumb14.png" alt="" style="padding:3px"/></a>
+            <a href="inc/img/screenshots/screen15.png" title="Subsonic app for Android"><img src="inc/img/screenshots/thumb15.png" alt="" style="padding:3px"/></a>
 
             <script type="text/javascript" src="inc/js/swfobject.js"></script>
 
-            <div id="mediaspace"></div>
+            <a name="video"><div id="mediaspace"></div></a>
 
             <%
                 URL url = new URL(request.getRequestURL().toString());

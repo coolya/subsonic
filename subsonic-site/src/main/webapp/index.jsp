@@ -19,8 +19,8 @@
     <div class="floatcontainer margin10-t margin10-b">
         <ul class="stars column-left">
             <li>Listen to your music wherever you are. Share your collection with family and friends.</li>
-            <li>Browse and manage your music collection with the user-friendly web interface.</li>
-            <li>Stream music to your Android phone, using the Subsonic Android application.</li>
+            <li>Browse and manage your music collection with the user-friendly web interface, or use the <a href="apps.jsp">AIR desktop app</a>.</li>
+            <li>Stream music to <a href="apps.jsp">iPhone</a> or <a href="apps.jsp">Android</a>.</li>
             <li>Convert and stream lossless music on the fly.</li>
         </ul>
         <ul class="stars column-right">

@@ -40,6 +40,28 @@
 </div>
 
 <div class="featureitem">
+    <a name="flexible"></a>
+
+    <div class="heading">Flexible <a href="#top" class="backtotop" title="Back To Top"><img
+            src="inc/img/top.gif" alt="Back To Top" height="16" width="16"/></a></div>
+    <div class="content">
+        <div class="screenshot">
+            <a href="inc/img/screenshots/screen13.png"><img src="inc/img/screenshots/thumb13.png" alt="" style="padding-left:10px"/></a>
+        </div>
+        <div class="description">
+            <ul class="list">
+                <li>Stream or download music directly to your Android mobile phone, using the <a href="apps.jsp">Subsonic Android app</a>.</li>
+                <li>Two iPhone apps are also available: <a href="apps.jsp">Z-Subsonic</a> and <a href="apps.jsp">iSub</a>.</li>
+                <li>Or use the AIR desktop application, <a href="apps.jsp">SubAir</a>.</li>
+                <li>Control Subsonic from any mobile phone or PDA, using the WAP interface.</li>
+                <li>Supports multiple simultaneous players. Manage any player from any location.</li>
+                <li>Upload and download files to/from Subsonic, with automatic zipping and unzipping.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="featureitem">
     <a name="mediasupport"></a>
 
     <div class="heading">Supports most media formats <a href="#top" class="backtotop" title="Back To Top"><img
@@ -100,26 +122,6 @@
                 </li>
                 <li>Select from eleven different themes, including some that are optimized for HD screens.</li>
                 <li>Highly configurable user interface.</li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<div class="featureitem">
-    <a name="flexible"></a>
-
-    <div class="heading">Flexible <a href="#top" class="backtotop" title="Back To Top"><img
-            src="inc/img/top.gif" alt="Back To Top" height="16" width="16"/></a></div>
-    <div class="content">
-        <div class="screenshot">
-            <a href="inc/img/screenshots/screen13.png"><img src="inc/img/screenshots/thumb13.png" alt="" style="padding-left:10px"/></a>
-        </div>
-        <div class="description">
-            <ul class="list">
-                <li>Stream or download music directly to your Android mobile phone, using the <b>Subsonic Android application</b>.</li>
-                <li>Control Subsonic from any mobile phone or PDA, using the WAP interface.</li>
-                <li>Supports multiple simultaneous players. Manage any player from any location.</li>
-                <li>Upload and download files to/from Subsonic, with automatic zipping and unzipping.</li>
             </ul>
         </div>
     </div>
@@ -194,9 +196,9 @@
         <h2>Features</h2>
         <ul class="list">
             <li><a href="#userfriendly">Easy to use</a></li>
+            <li><a href="#flexible">Flexible</a></li>
             <li><a href="#mediasupport">Supports most media formats</a></li>
             <li><a href="#customize">Customizable user experience</a></li>
-            <li><a href="#flexible">Flexible</a></li>
             <li><a href="#integrate">Integrates with the best web services</a></li>
             <li><a href="#secure">Secure and reliable</a></li>
             <li><a href="#extras">Cool extra features</a></li>

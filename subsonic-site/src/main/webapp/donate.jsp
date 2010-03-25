@@ -7,7 +7,7 @@
         Donors get access to premium features like:
     </p>
     <ul>
-        <li>Unlimited use of the Subsonic Android app.</li>
+        <li>Unlimited use of Subsonic <a href="apps.jsp">apps</a> for iPhone, Android and AIR.</li>
         <li>Your personal server address: <em>yourname</em>.subsonic.org</li>
         <li>No ads in the web interface.</li>
     </ul>

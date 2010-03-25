@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<subsonic-response xmlns="http://subsonic.org/restapi"
+                   status="ok" version="1.1.1">
+
+    <chatMessages>
+        <chatMessage username="sindre" time="237462836450078" content="Sindre was here"/>
+        <chatMessage username="ben" time="237462836472342" content="Ben too"/>
+    </chatMessages>
+
+</subsonic-response>
+

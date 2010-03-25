@@ -46,6 +46,7 @@ public class LicenseServlet extends HttpServlet {
             "Subsonic Donation - Donation from",
             "Notification of payment received",
             "Notification of a Cleared eCheck",
+            "U heeft een betaling ontvangen",
             "You've got money"};
 
     private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
