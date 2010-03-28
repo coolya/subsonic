@@ -62,6 +62,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
+import java.util.Collections;
 
 /**
  * Multi-controller used for the REST API.
@@ -83,6 +84,7 @@ public class RESTController extends MultiActionController {
     private CoverArtController coverArtController;
     private UserSettingsController userSettingsController;
     private LeftController leftController;
+    private HomeController homeController;
     private StatusService statusService;
     private StreamController streamController;
     private SearchService searchService;
@@ -306,6 +308,54 @@ public class RESTController extends MultiActionController {
         }
 
         return null;
+    }
+
+    public void getAlbumList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        createPlayerIfNecessary(request);
+        Player player = playerService.getPlayer(request, response);
+
+        XMLBuilder builder = createXMLBuilder(response, true);
+        builder.add("albumList", false);
+
+        try {
+            int size = ServletRequestUtils.getIntParameter(request, "size", 10);
+            int offset = ServletRequestUtils.getIntParameter(request, "offset", 0);
+
+            size = Math.max(0, Math.min(size, 500));
+            offset = Math.max(0, Math.min(offset, 5000));
+
+            String type = ServletRequestUtils.getRequiredStringParameter(request, "type");
+
+            List<HomeController.Album> albums;
+            if ("highest".equals(type)) {
+                albums = homeController.getHighestRated(offset, size);
+            } else if ("frequent".equals(type)) {
+                albums = homeController.getMostFrequent(offset, size);
+            } else if ("recent".equals(type)) {
+                albums = homeController.getMostRecent(offset, size);
+            } else if ("newest".equals(type)) {
+                albums = homeController.getNewest(offset, size);
+            } else {
+                albums = homeController.getRandom(size);
+            }
+
+            for (HomeController.Album album : albums) {
+                MusicFile musicFile = musicFileService.getMusicFile(album.getPath());
+                List<File> coverArt = new ArrayList<File>();
+                if (album.getCoverArtPath() != null) {
+                    coverArt.add(new File(album.getCoverArtPath()));
+                }
+                List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
+                builder.add("album", attributes, true);
+            }
+            builder.endAll();
+            response.getWriter().print(builder);
+        } catch (ServletRequestBindingException x) {
+            error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
+        } catch (Exception x) {
+            error(response, ErrorCode.GENERIC, x.getMessage());
+        }
     }
 
     public ModelAndView getNowPlaying(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -679,6 +729,10 @@ public class RESTController extends MultiActionController {
 
     public void setChatService(ChatService chatService) {
         this.chatService = chatService;
+    }
+
+    public void setHomeController(HomeController homeController) {
+        this.homeController = homeController;
     }
 
     public static enum ErrorCode {

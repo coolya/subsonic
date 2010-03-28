@@ -110,7 +110,7 @@ public class HomeController extends ParameterizableViewController {
         return result;
     }
 
-    private List<Album> getHighestRated(int offset, int count) {
+    List<Album> getHighestRated(int offset, int count) {
         List<Album> result = new ArrayList<Album>();
         for (MusicFile musicFile : musicInfoService.getHighestRated(offset, count)) {
             Album album = createAlbum(musicFile);
@@ -122,7 +122,7 @@ public class HomeController extends ParameterizableViewController {
         return result;
     }
 
-    private List<Album> getMostFrequent(int offset, int count) {
+    List<Album> getMostFrequent(int offset, int count) {
         List<Album> result = new ArrayList<Album>();
         for (MusicFileInfo info : musicInfoService.getMostFrequentlyPlayed(offset, count)) {
             Album album = createAlbum(info);
@@ -134,7 +134,7 @@ public class HomeController extends ParameterizableViewController {
         return result;
     }
 
-    private List<Album> getMostRecent(int offset, int count) {
+    List<Album> getMostRecent(int offset, int count) {
         List<Album> result = new ArrayList<Album>();
         for (MusicFileInfo info : musicInfoService.getMostRecentlyPlayed(offset, count)) {
             Album album = createAlbum(info);
@@ -146,7 +146,7 @@ public class HomeController extends ParameterizableViewController {
         return result;
     }
 
-    private List<Album> getNewest(int offset, int count) throws IOException {
+    List<Album> getNewest(int offset, int count) throws IOException {
         List<Album> result = new ArrayList<Album>();
         for (MusicFile file : searchService.getNewestAlbums(offset, count)) {
             Album album = createAlbum(file);
@@ -162,7 +162,7 @@ public class HomeController extends ParameterizableViewController {
         return result;
     }
 
-    private List<Album> getRandom(int count) throws IOException {
+    List<Album> getRandom(int count) throws IOException {
         List<Album> result = new ArrayList<Album>();
         for (MusicFile file : searchService.getRandomAlbums(count)) {
             Album album = createAlbum(file);
