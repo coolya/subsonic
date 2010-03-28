@@ -541,11 +541,16 @@ public class RESTController extends MultiActionController {
         request = wrapRequest(request);
         XMLBuilder builder = createXMLBuilder(response, true);
 
+        long since = ServletRequestUtils.getLongParameter(request, "since", 0L);
+
         builder.add("chatMessages", false);
 
         for (ChatService.Message message : chatService.getMessages()) {
-            builder.add("chatMessage", true, new Attribute("username", message.getUsername()),
-                        new Attribute("time", message.getDate().getTime()), new Attribute("message", message.getContent()));
+            long time = message.getDate().getTime();
+            if (time > since) {
+                builder.add("chatMessage", true, new Attribute("username", message.getUsername()),
+                            new Attribute("time", time), new Attribute("message", message.getContent()));
+            }
         }
         builder.endAll();
         response.getWriter().print(builder);
