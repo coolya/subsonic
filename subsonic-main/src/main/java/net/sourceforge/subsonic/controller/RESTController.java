@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.ajax.ChatService;
 import net.sourceforge.subsonic.command.UserSettingsCommand;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicFolder;
@@ -86,6 +87,7 @@ public class RESTController extends MultiActionController {
     private StreamController streamController;
     private SearchService searchService;
     private PlaylistService playlistService;
+    private ChatService chatService;
 
     public ModelAndView ping(HttpServletRequest request, HttpServletResponse response) throws Exception {
         XMLBuilder builder = createXMLBuilder(response, true).endAll();
@@ -535,6 +537,31 @@ public class RESTController extends MultiActionController {
         return null;
     }
 
+    public void getChatMessages(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        XMLBuilder builder = createXMLBuilder(response, true);
+
+        builder.add("chatMessages", false);
+
+        for (ChatService.Message message : chatService.getMessages()) {
+            builder.add("chatMessage", true, new Attribute("username", message.getUsername()),
+                        new Attribute("time", message.getDate().getTime()), new Attribute("message", message.getContent()));
+        }
+        builder.endAll();
+        response.getWriter().print(builder);
+    }
+
+    public void addChatMessage(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        try {
+            chatService.addMessage(ServletRequestUtils.getRequiredStringParameter(request, "message"), request);
+            XMLBuilder builder = createXMLBuilder(response, true).endAll();
+            response.getWriter().print(builder);
+        } catch (ServletRequestBindingException x) {
+            error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
+        }
+    }
+
     /**
      * Renames "id" request parameter to "path".
      */
@@ -643,6 +670,10 @@ public class RESTController extends MultiActionController {
 
     public void setStreamController(StreamController streamController) {
         this.streamController = streamController;
+    }
+
+    public void setChatService(ChatService chatService) {
+        this.chatService = chatService;
     }
 
     public static enum ErrorCode {

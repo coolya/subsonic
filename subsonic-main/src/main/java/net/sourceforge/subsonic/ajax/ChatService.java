@@ -23,6 +23,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -32,12 +34,16 @@ import org.directwebremoting.ScriptBuffer;
 import org.directwebremoting.ScriptSession;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
+import org.directwebremoting.ServerContext;
+import org.directwebremoting.ServerContextFactory;
 
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.util.BoundedList;
 import net.sourceforge.subsonic.Logger;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Provides AJAX-enabled services for the chatting.
@@ -94,8 +100,13 @@ public class ChatService {
 
     public synchronized void addMessage(String message) {
         WebContext webContext = WebContextFactory.get();
+        addMessage(message, webContext.getHttpServletRequest());
+    }
+
+    public synchronized void addMessage(String message, HttpServletRequest request) {
+
+        String user = securityService.getCurrentUsername(request);
         message = StringUtils.trimToNull(message);
-        String user = securityService.getCurrentUsername(webContext.getHttpServletRequest());
         if (message != null && user != null) {
             messages.addFirst(new Message(message, user, new Date()));
             chatCache.put(new Element(CACHE_KEY, messages));
@@ -105,11 +116,16 @@ public class ChatService {
         script.appendScript("receiveMessages(").appendData(messages).appendScript(");");
 
         // Find all the browsers showing the chat page. Invoke javascript for populating the chat log.
-        String chatPage = webContext.getCurrentPage();
-        Collection<ScriptSession> sessions = (Collection<ScriptSession>) webContext.getScriptSessionsByPage(chatPage);
+        String chatPage = "/right.view";
+        ServerContext serverContext = ServerContextFactory.get(request.getSession().getServletContext());
+        Collection<ScriptSession> sessions = (Collection<ScriptSession>) serverContext.getScriptSessionsByPage(chatPage);
         for (ScriptSession session : sessions) {
             session.addScript(script);
         }
+    }
+
+    public synchronized List<Message> getMessages() {
+        return new ArrayList<Message>(messages);
     }
 
     public void setSecurityService(SecurityService securityService) {

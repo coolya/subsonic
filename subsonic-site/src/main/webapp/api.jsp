@@ -99,7 +99,7 @@
 
             <p>
                 The following error codes are defined:
-
+            </p>
             <table width="100%" class="bottomspace">
                 <tr>
                     <th class="param-heading">Code</th>
@@ -114,9 +114,30 @@
                 <tr class="table-altrow"><td><code>60</code></td><td>The trial period is over. Please donate to get a license key.</td></tr>
             </table>
 
+            <h2 class="div"><a name="versions"></a>Versions</h2>
+            <p>
+                This table shows the REST API version implemented in different Subsonic versions:
+            </p>
+                <table width="50%" class="bottomspace">
+                <tr>
+                    <th class="param-heading">Subsonic version</th>
+                    <th class="param-heading">REST API version</th>
+                </tr>
+                <tr class="table-altrow"><td>3.8</td><td>1.0.0</td></tr>
+                <tr>                     <td>3.9</td><td>1.1.1</td></tr>
+                <tr class="table-altrow"><td>4.0 (not released)</td><td>1.2.0</td></tr>
+            </table>
+            <p>
+                Note that a Subsonic server is backward compatible with a REST client if and only if the major version is the same,
+                and the minor version of the client is less than or equal to the server's.  For example, if the server has
+                REST API version 2.2, it supports client versions 2.0, 2.1 and 2.2, but not versions 1.x, 2.3+ or 3.x. The third part
+                of the version number is not used to determine compatibility.
+            </p>
+
             <h2 class="div">ping</h2>
             <p>
                 <code>http://your-server/rest/ping.view</code>
+                <br>Since <a href="#versions">1.0.0</a>
             </p>
             <p>
                 Used to test connectivity with the server.  Takes no extra parameters.
@@ -128,6 +149,7 @@
             <h2 class="div">getLicense</h2>
             <p>
                 <code>http://your-server/rest/getLicense.view</code>
+                <br>Since <a href="#versions">1.0.0</a>
             </p>
             <p>
                 Get details about the software license.  Takes no extra parameters.  Please note that access to the
@@ -142,6 +164,7 @@
             <h2 class="div">getMusicFolders</h2>
             <p>
                 <code>http://your-server/rest/getMusicFolders.view</code>
+                <br>Since <a href="#versions">1.0.0</a>
             </p>
             <p>
                 Returns all configured music folders. Takes no extra parameters.
@@ -154,6 +177,7 @@
             <h2 class="div">getNowPlaying</h2>
             <p>
                 <code>http://your-server/rest/getNowPlaying.view</code>
+                <br>Since <a href="#versions">1.0.0</a>
             </p>
             <p>
                 Returns what is currently being played by all users. Takes no extra parameters.
@@ -166,6 +190,7 @@
             <h2 class="div">getIndexes</h2>
             <p>
                 <code>http://your-server/rest/getIndexes.view</code>
+                <br>Since <a href="#versions">1.0.0</a>
             </p>
             <p>
                 Returns an indexed structure of all artists.
@@ -198,6 +223,7 @@
             <h2 class="div">getMusicDirectory</h2>
             <p>
                 <code>http://your-server/rest/getMusicDirectory.view</code>
+                <br>Since <a href="#versions">1.0.0</a>
             </p>
             <p>
                 Returns a listing of all files in a music directory. Typically used to get list of albums for an artist,
@@ -225,6 +251,7 @@
             <h2 class="div">search</h2>
             <p>
                 <code>http://your-server/rest/search.view</code>
+                <br>Since <a href="#versions">1.0.0</a>
             </p>
             <p>
                 Returns a listing of files matching the given search criteria. Supports paging through the result.
@@ -287,6 +314,7 @@
             <h2 class="div">getPlaylists</h2>
             <p>
                 <code>http://your-server/rest/getPlaylists.view</code>
+                <br>Since <a href="#versions">1.0.0</a>
             </p>
             <p>
                 Returns the ID and name of all saved playlists.
@@ -296,10 +324,10 @@
                 element on success.
             </p>
 
-
             <h2 class="div">getPlaylist</h2>
             <p>
                 <code>http://your-server/rest/getPlaylist.view</code>
+                <br>Since <a href="#versions">1.0.0</a>
             </p>
             <p>
                 Returns a listing of files in a saved playlist.
@@ -326,6 +354,7 @@
             <h2 class="div">download</h2>
             <p>
                 <code>http://your-server/rest/download.view</code>
+                <br>Since <a href="#versions">1.0.0</a>
             </p>
             <p>
                 Downloads a given music file.
@@ -351,6 +380,7 @@
             <h2 class="div">stream</h2>
             <p>
                 <code>http://your-server/rest/stream.view</code>
+                <br>Since <a href="#versions">1.0.0</a>
             </p>
             <p>
                 Streams a given music file.
@@ -376,6 +406,7 @@
             <h2 class="div">getCoverArt</h2>
             <p>
                 <code>http://your-server/rest/getCoverArt.view</code>
+                <br>Since <a href="#versions">1.0.0</a>
             </p>
             <p>
                 Returns a cover art image.
@@ -407,6 +438,7 @@
             <h2 class="div">changePassword</h2>
             <p>
                 <code>http://your-server/rest/changePassword.view</code>
+                <br>Since <a href="#versions">1.1.0</a>
             </p>
             <p>
                 Changes the password of an existing Subsonic user, using the following parameters.
@@ -440,6 +472,7 @@
             <h2 class="div">createUser</h2>
             <p>
                 <code>http://your-server/rest/createUser.view</code>
+                <br>Since <a href="#versions">1.1.0</a>
             </p>
             <p>
                 Creates a new Subsonic user, using the following parameters:
@@ -531,6 +564,59 @@
                 </tr>
             </table>
 
+            <p>
+                Returns an empty <code>&lt;subsonic-response&gt;</code> element on success.
+            </p>
+
+            <h2 class="div">getChatMessages</h2>
+            <p>
+                <code>http://your-server/rest/getChatMessages.view</code>
+                <br>Since <a href="#versions">1.2</a>
+            </p>
+            <p>
+                Returns the current visible (non-expired) chat messages.
+            </p>
+            <table width="100%" class="bottomspace">
+                <tr>
+                    <th class="param-heading">Parameter</th>
+                    <th class="param-heading">Required</th>
+                    <th class="param-heading">Default</th>
+                    <th class="param-heading">Comment</th>
+                </tr>
+                <tr class="table-altrow">
+                    <td><code>since</code></td>
+                    <td>No</td>
+                    <td></td>
+                    <td>Only return messages newer than this time (in millis since Jan 1 1970).</td>
+                </tr>
+            </table>
+            <p>
+                Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;chatMessages&gt;</code>
+                element on success.
+            </p>
+
+            <h2 class="div">addChatMessage</h2>
+            <p>
+                <code>http://your-server/rest/addChatMessage.view</code>
+                <br>Since <a href="#versions">1.2</a>
+            </p>
+            <p>
+                Adds a message to the chat log.
+            </p>
+            <table width="100%" class="bottomspace">
+                <tr>
+                    <th class="param-heading">Parameter</th>
+                    <th class="param-heading">Required</th>
+                    <th class="param-heading">Default</th>
+                    <th class="param-heading">Comment</th>
+                </tr>
+                <tr class="table-altrow">
+                    <td><code>message</code></td>
+                    <td>Yes</td>
+                    <td></td>
+                    <td>The chat message.</td>
+                </tr>
+            </table>
 
             <p>
                 Returns an empty <code>&lt;subsonic-response&gt;</code> element on success.

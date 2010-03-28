@@ -1,5 +1,6 @@
 TODO IN 4.0
 ------------
+Make Settings > Network save/test more intuitive.
 Add iPhone apps to More page.
 Add REST method for chat messages.
 Add track count REST.
