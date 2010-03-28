@@ -72,7 +72,13 @@
                 <code>http://your-server/rest/getIndexes.view?u=joe&amp;p=enc:736573616d65&amp;v=1.1.0&amp;c=myapp</code>
             </p>
             <p>
-                Also note that UTF-8 should be used when sending parameters to API methods. The XML returned
+                Starting with API version 1.2.0 it is deprecated to send the username and password as part of the URL.
+                Instead, HTTP <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">Basic</a> authentication should be used.
+                (Only <em>preemptive</em> authentication is supported, meaning that the credentials should be supplied by the client
+                without being challenged for it.)
+            </p>
+            <p>
+                Note that UTF-8 should be used when sending parameters to API methods. The XML returned
                 will also be encoded with UTF-8.
             </p>
 
@@ -206,7 +212,7 @@
                     <td><code>musicFolderId</code></td>
                     <td>No</td>
                     <td></td>
-                    <td>If specified, only return artists in the music folder with the given ID.</td>
+                    <td>If specified, only return artists in the music folder with the given ID. See <code>getMusicFolders</code>.</td>
                 </tr>
                 <tr>
                     <td><code>ifModifiedSince</code></td>
@@ -571,7 +577,7 @@
             <h2 class="div">getChatMessages</h2>
             <p>
                 <code>http://your-server/rest/getChatMessages.view</code>
-                <br>Since <a href="#versions">1.2</a>
+                <br>Since <a href="#versions">1.2.0</a>
             </p>
             <p>
                 Returns the current visible (non-expired) chat messages.
@@ -598,7 +604,7 @@
             <h2 class="div">addChatMessage</h2>
             <p>
                 <code>http://your-server/rest/addChatMessage.view</code>
-                <br>Since <a href="#versions">1.2</a>
+                <br>Since <a href="#versions">1.2.0</a>
             </p>
             <p>
                 Adds a message to the chat log.
@@ -625,7 +631,7 @@
             <h2 class="div">getAlbumList</h2>
             <p>
                 <code>http://your-server/rest/getAlbumList.view</code>
-                <br>Since <a href="#versions">1.2</a>
+                <br>Since <a href="#versions">1.2.0</a>
             </p>
             <p>
                 Returns a list of random, newest, highest rated etc. albums. Similar to the album lists
@@ -660,6 +666,57 @@
             </table>
             <p>
                 Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;albumList&gt;</code>
+                element on success.
+            </p>
+
+            <h2 class="div">getRandomSongs</h2>
+            <p>
+                <code>http://your-server/rest/getRandomSongs.view</code>
+                <br>Since <a href="#versions">1.2.0</a>
+            </p>
+            <p>
+                Returns random songs matching the given criteria.
+            </p>
+            <table width="100%" class="bottomspace">
+                <tr>
+                    <th class="param-heading">Parameter</th>
+                    <th class="param-heading">Required</th>
+                    <th class="param-heading">Default</th>
+                    <th class="param-heading">Comment</th>
+                </tr>
+                <tr class="table-altrow">
+                    <td><code>size</code></td>
+                    <td>No</td>
+                    <td>10</td>
+                    <td>The maximum number of songs to return. Max 500.</td>
+                </tr>
+                <tr>
+                    <td><code>genre</code></td>
+                    <td>No</td>
+                    <td></td>
+                    <td>Only returns songs belonging to this genre.</td>
+                </tr>
+                <tr class="table-altrow">
+                    <td><code>fromYear</code></td>
+                    <td>No</td>
+                    <td></td>
+                    <td>Only return songs published after or in this year.</td>
+                </tr>
+                <tr class="table-altrow">
+                    <td><code>toYear</code></td>
+                    <td>No</td>
+                    <td></td>
+                    <td>Only return songs published before or in this year.</td>
+                </tr>
+                <tr>
+                    <td><code>musicFolderId</code></td>
+                    <td>No</td>
+                    <td></td>
+                    <td>Only return songs in the music folder with the given ID. See <code>getMusicFolders</code>.</td>
+                </tr>
+            </table>
+            <p>
+                Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;randomSongs&gt;</code>
                 element on success.
             </p>
 

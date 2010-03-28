@@ -398,13 +398,12 @@ public class SearchService {
 
                 // Skip if wrong year.
                 if (fromYearString != null) {
-                    if (song.year == null) {
+                    if (song.year == null || song.year.compareTo(fromYearString) < 0) {
                         continue;
                     }
-                    if (song.year.compareTo(fromYearString) < 0) {
-                        continue;
-                    }
-                    if (song.year.compareTo(toYearString) > 0) {
+                }
+                if (toYearString != null) {
+                    if (song.year == null || song.year.compareTo(toYearString) > 0) {
                         continue;
                     }
                 }

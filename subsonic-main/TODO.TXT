@@ -3,8 +3,6 @@ TODO IN 4.0
 Make Settings > Network save/test more intuitive.
 Add iPhone apps to More page.
 Add track count REST.
-Add getAlbumList methods to REST API.
-Add random method to REST API.
 Album link to last.fm broken
 Update documentation of /etc/sysconfig/subsonic (rpm) and /etc/default/subsonic (debian)
 Increase default heap size.
@@ -69,6 +67,7 @@ DONE IN 4.0
 -----------
 Add REST method for chat messages.
 Fixed playback of AAC in flash player.
+Added getRandomSongs method to REST API.
 Added Monochrome themes, courtesy of David D.
 Updated Finnish translation, courtesy of Reijo J&auml;&auml;rni
 New transcoder pack.

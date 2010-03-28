@@ -33,6 +33,7 @@ import net.sourceforge.subsonic.domain.TranscodeScheme;
 import net.sourceforge.subsonic.domain.TransferStatus;
 import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.domain.RandomSearchCriteria;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.PlaylistService;
@@ -206,6 +207,7 @@ public class RESTController extends MultiActionController {
             String path = StringUtil.utf8HexDecode(ServletRequestUtils.getRequiredStringParameter(request, "id"));
             dir = musicFileService.getMusicFile(path);
         } catch (Exception x) {
+            LOG.warn("Error in REST API.", x);
             error(response, ErrorCode.GENERIC, x.getMessage());
             return null;
         }
@@ -304,6 +306,7 @@ public class RESTController extends MultiActionController {
         } catch (ServletRequestBindingException x) {
             error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
         } catch (Exception x) {
+            LOG.warn("Error in REST API.", x);
             error(response, ErrorCode.GENERIC, x.getMessage());
         }
 
@@ -354,6 +357,39 @@ public class RESTController extends MultiActionController {
         } catch (ServletRequestBindingException x) {
             error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
         } catch (Exception x) {
+            LOG.warn("Error in REST API.", x);
+            error(response, ErrorCode.GENERIC, x.getMessage());
+        }
+    }
+
+    public void getRandomSongs(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        createPlayerIfNecessary(request);
+        Player player = playerService.getPlayer(request, response);
+
+        XMLBuilder builder = createXMLBuilder(response, true);
+        builder.add("randomSongs", false);
+
+        try {
+            int size = ServletRequestUtils.getIntParameter(request, "size", 10);
+            size = Math.max(0, Math.min(size, 500));
+            String genre = ServletRequestUtils.getStringParameter(request, "genre");
+            Integer fromYear = ServletRequestUtils.getIntParameter(request, "fromYear");
+            Integer toYear = ServletRequestUtils.getIntParameter(request, "toYear");
+            Integer musicFolderId = ServletRequestUtils.getIntParameter(request, "musicFolderId");
+            RandomSearchCriteria criteria = new RandomSearchCriteria(size, genre, fromYear, toYear, musicFolderId);
+
+            for (MusicFile musicFile : searchService.getRandomSongs(criteria)) {
+                List<File> coverArt = musicFileService.getCoverArt(musicFile.getParent(), 1);
+                List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
+                builder.add("song", attributes, true);
+            }
+            builder.endAll();
+            response.getWriter().print(builder);
+        } catch (ServletRequestBindingException x) {
+            error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
+        } catch (Exception x) {
+            LOG.warn("Error in REST API.", x);
             error(response, ErrorCode.GENERIC, x.getMessage());
         }
     }
@@ -543,6 +579,7 @@ public class RESTController extends MultiActionController {
         } catch (ServletRequestBindingException x) {
             error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
         } catch (Exception x) {
+            LOG.warn("Error in REST API.", x);
             error(response, ErrorCode.GENERIC, x.getMessage());
         }
         return null;
@@ -581,6 +618,7 @@ public class RESTController extends MultiActionController {
         } catch (ServletRequestBindingException x) {
             error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
         } catch (Exception x) {
+            LOG.warn("Error in REST API.", x);
             error(response, ErrorCode.GENERIC, x.getMessage());
         }
 
