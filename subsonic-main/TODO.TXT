@@ -1,5 +1,6 @@
 TODO IN 4.0
 ------------
+REST method for getting lyrics (long-click on song in playlist).
 Make Settings > Network save/test more intuitive.
 Add iPhone apps to More page.
 Add track count REST.
@@ -20,6 +21,8 @@ TEST: Gzipping hmtl (and xml).
 Android: Support mounting SD card.
 Android: Support filenames with "<" and ">".
 Android: Avoid stutter
+Android: Shuffle queue
+Android: Long-click on folder to play recursive.
 Android: Trim username, servername. Url-encode username.
 Android: Download error notification is nagging.
 Android: Select music folder in server settings. (Including "All").
@@ -76,6 +79,7 @@ Bugfix: Fix bug in coverart batch: http://www.activeobjects.no/subsonic/forum/vi
 Make user statistics graphs logarithmic, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2066
 Truncate long genre names in "more" page.
 Improved year selection in "more" page.
+Updated Slovenian translation, courtesy of Andrej &#381;i&#382;mond
 
 MAC INSTALLER
 -------------
@@ -104,7 +108,6 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 ANDROID
 -----------------------
 Use filename.complete.mp3 rather than filename.mp3.complete
-REST method for getting lyrics (long-click on song in playlist).
 Swipe album art to go to prev/next track.
 Avoid stuttering when restarting playback during download.  Use local socket.
 Seeking fails when playing partial file.  seekTo() should test if playing from partial.
