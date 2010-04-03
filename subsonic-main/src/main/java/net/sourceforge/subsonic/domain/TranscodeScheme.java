@@ -86,4 +86,19 @@ public enum TranscodeScheme {
         }
         return "" + getMaxBitRate() + " Kbps";
     }
+
+    /**
+     * Returns the enum constant which corresponds to the given max bit rate.
+     *
+     * @param maxBitRate The max bit rate.
+     * @return The corresponding enum, or <code>null</code> if not found.
+     */
+    public static TranscodeScheme valueOf(int maxBitRate) {
+        for (TranscodeScheme scheme : values()) {
+            if (scheme.getMaxBitRate() == maxBitRate) {
+                return scheme;
+            }
+        }
+        return null;
+    }
 }

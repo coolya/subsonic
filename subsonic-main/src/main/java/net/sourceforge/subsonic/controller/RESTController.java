@@ -535,6 +535,18 @@ public class RESTController extends MultiActionController {
             return null;
         }
 
+        Integer maxBitRate = ServletRequestUtils.getIntParameter(request, "maxBitRate");
+        if (maxBitRate != null) {
+            Player player = playerService.getPlayer(request, response);
+            TranscodeScheme transcodeScheme = TranscodeScheme.valueOf(maxBitRate);
+            if (transcodeScheme != null) {
+                player.setTranscodeScheme(transcodeScheme);
+                playerService.updatePlayer(player);
+            } else {
+                LOG.warn("No transcode scheme found for bit rate " + maxBitRate);
+            }
+        }
+
         return streamController.handleRequest(request, response);
     }
 

@@ -404,6 +404,15 @@
                     <td></td>
                     <td>A string which uniquely identifies the file to stream. Obtained by calls to getMusicDirectory.</td>
                 </tr>
+                <tr>
+                    <td><code>maxBitRate</code></td>
+                    <td>No</td>
+                    <td></td>
+                    <td>(Since <a href="#versions">1.2.0</a>) If specified, the server will attempt to limit the bitrate
+                        to this value, in kilobits per second. If set to zero, no limit is imposed. Legal values are:
+                        0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256 and 320.
+                    </td>
+                </tr>
             </table>
             <p>
                 Returns binary data on success.
