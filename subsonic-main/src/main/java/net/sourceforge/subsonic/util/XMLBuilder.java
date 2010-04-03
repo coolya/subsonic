@@ -141,6 +141,18 @@ public class XMLBuilder {
     }
 
     /**
+     * Adds character data.
+     *
+     * @param text The character data.
+     * @throws IOException
+     */
+    public void addText(String text) throws IOException {
+        if (text != null) {
+            writer.write(StringEscapeUtils.escapeXml(text));
+        }
+    }
+
+    /**
      * Closes the current element.
      *
      * @return A reference to this object.

@@ -20,6 +20,8 @@ package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.ajax.ChatService;
+import net.sourceforge.subsonic.ajax.LyricsService;
+import net.sourceforge.subsonic.ajax.LyricsInfo;
 import net.sourceforge.subsonic.command.UserSettingsCommand;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.MusicFolder;
@@ -91,14 +93,14 @@ public class RESTController extends MultiActionController {
     private SearchService searchService;
     private PlaylistService playlistService;
     private ChatService chatService;
+    private LyricsService lyricsService;
 
-    public ModelAndView ping(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void ping(HttpServletRequest request, HttpServletResponse response) throws Exception {
         XMLBuilder builder = createXMLBuilder(response, true).endAll();
         response.getWriter().print(builder);
-        return null;
     }
 
-    public ModelAndView getLicense(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void getLicense(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         XMLBuilder builder = createXMLBuilder(response, true);
 
@@ -118,10 +120,9 @@ public class RESTController extends MultiActionController {
         builder.add("license", attributes, true);
         builder.endAll();
         response.getWriter().print(builder);
-        return null;
     }
 
-    public ModelAndView getMusicFolders(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void getMusicFolders(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         createPlayerIfNecessary(request);
         XMLBuilder builder = createXMLBuilder(response, true);
@@ -137,11 +138,9 @@ public class RESTController extends MultiActionController {
         }
         builder.endAll();
         response.getWriter().print(builder);
-
-        return null;
     }
 
-    public ModelAndView getIndexes(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void getIndexes(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         createPlayerIfNecessary(request);
         XMLBuilder builder = createXMLBuilder(response, true);
@@ -152,7 +151,7 @@ public class RESTController extends MultiActionController {
         if (lastModified <= ifModifiedSince) {
             builder.endAll();
             response.getWriter().print(builder);
-            return null;
+            return;
         }
 
         builder.add("indexes", "lastModified", lastModified, false);
@@ -193,11 +192,9 @@ public class RESTController extends MultiActionController {
         }
         builder.endAll();
         response.getWriter().print(builder);
-
-        return null;
     }
 
-    public ModelAndView getMusicDirectory(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void getMusicDirectory(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         createPlayerIfNecessary(request);
         Player player = playerService.getPlayer(request, response);
@@ -209,7 +206,7 @@ public class RESTController extends MultiActionController {
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
             error(response, ErrorCode.GENERIC, x.getMessage());
-            return null;
+            return;
         }
 
         XMLBuilder builder = createXMLBuilder(response, true);
@@ -225,11 +222,9 @@ public class RESTController extends MultiActionController {
         }
         builder.endAll();
         response.getWriter().print(builder);
-
-        return null;
     }
 
-    public ModelAndView search(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void search(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         XMLBuilder builder = createXMLBuilder(response, true);
         Player player = playerService.getPlayer(request, response);
@@ -258,11 +253,9 @@ public class RESTController extends MultiActionController {
         }
         builder.endAll();
         response.getWriter().print(builder);
-
-        return null;
     }
 
-    public ModelAndView getPlaylists(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void getPlaylists(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         XMLBuilder builder = createXMLBuilder(response, true);
 
@@ -275,11 +268,9 @@ public class RESTController extends MultiActionController {
         }
         builder.endAll();
         response.getWriter().print(builder);
-
-        return null;
     }
 
-    public ModelAndView getPlaylist(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void getPlaylist(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         createPlayerIfNecessary(request);
         Player player = playerService.getPlayer(request, response);
@@ -309,8 +300,6 @@ public class RESTController extends MultiActionController {
             LOG.warn("Error in REST API.", x);
             error(response, ErrorCode.GENERIC, x.getMessage());
         }
-
-        return null;
     }
 
     public void getAlbumList(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -394,7 +383,7 @@ public class RESTController extends MultiActionController {
         }
     }
 
-    public ModelAndView getNowPlaying(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void getNowPlaying(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         createPlayerIfNecessary(request);
         XMLBuilder builder = createXMLBuilder(response, true);
@@ -431,8 +420,6 @@ public class RESTController extends MultiActionController {
 
         builder.endAll();
         response.getWriter().print(builder);
-
-        return null;
     }
 
     private List<Attribute> createAttributesForMusicFile(Player player, List<File> coverArt, MusicFile musicFile) throws IOException {
@@ -557,7 +544,7 @@ public class RESTController extends MultiActionController {
         return coverArtController.handleRequest(request, response);
     }
 
-    public ModelAndView changePassword(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void changePassword(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         try {
 
@@ -567,7 +554,7 @@ public class RESTController extends MultiActionController {
             User authUser = securityService.getCurrentUser(request);
             if (!authUser.isAdminRole() && !username.equals(authUser.getUsername())) {
                 error(response, ErrorCode.NOT_AUTHORIZED, authUser.getUsername() + " is not authorized to change password for " + username);
-                return null;
+                return;
             }
 
             User user = securityService.getUserByName(username);
@@ -582,16 +569,15 @@ public class RESTController extends MultiActionController {
             LOG.warn("Error in REST API.", x);
             error(response, ErrorCode.GENERIC, x.getMessage());
         }
-        return null;
     }
 
 
-    public ModelAndView createUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void createUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         User user = securityService.getCurrentUser(request);
         if (!user.isAdminRole()) {
             error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to create new users.");
-            return null;
+            return;
         }
 
         try {
@@ -621,8 +607,6 @@ public class RESTController extends MultiActionController {
             LOG.warn("Error in REST API.", x);
             error(response, ErrorCode.GENERIC, x.getMessage());
         }
-
-        return null;
     }
 
     public void getChatMessages(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -653,6 +637,29 @@ public class RESTController extends MultiActionController {
         } catch (ServletRequestBindingException x) {
             error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
         }
+    }
+
+    public void getLyrics(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        String artist = request.getParameter("artist");
+        String title = request.getParameter("title");
+        LyricsInfo lyrics = lyricsService.getLyrics(artist, title);
+
+        XMLBuilder builder = createXMLBuilder(response, true);
+        List<Attribute> attributes = new ArrayList<Attribute>();
+        if (lyrics.getArtist() != null) {
+            attributes.add(new Attribute("artist", lyrics.getArtist()));
+        }
+        if (lyrics.getTitle() != null) {
+            attributes.add(new Attribute("title", lyrics.getTitle()));
+        }
+        builder.add("lyrics", attributes, false);
+        if (lyrics.getLyrics() != null) {
+            builder.addText(lyrics.getLyrics() + "\n");
+        }
+
+        builder.endAll();
+        response.getWriter().print(builder);
     }
 
     /**
@@ -771,6 +778,10 @@ public class RESTController extends MultiActionController {
 
     public void setHomeController(HomeController homeController) {
         this.homeController = homeController;
+    }
+
+    public void setLyricsService(LyricsService lyricsService) {
+        this.lyricsService = lyricsService;
     }
 
     public static enum ErrorCode {

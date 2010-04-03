@@ -71,6 +71,9 @@ public class LyricsService {
                 return new LyricsInfo();
             }
 
+            // Wait a little while, otherwise chartlyrics refuses the request
+            Thread.sleep(1000);
+
             url = "http://api.chartlyrics.com/apiv1.asmx/GetLyric?lyricId=" + searchResult.getId() + "&lyricCheckSum=" + searchResult.getChecksum();
             xml = executeGetRequest(url);
             return parseSearchResult(xml);
@@ -117,10 +120,7 @@ public class LyricsService {
         String song =  root.getChildText("LyricSong", ns);
         String artist =  root.getChildText("LyricArtist", ns);
 
-        if (lyric != null) {
-            lyric = lyric.replace("\n", "<br>\n");
-        }
-        return new LyricsInfo(lyric, artist + " - " + song);
+        return new LyricsInfo(lyric, artist, song);
     }
 
     private String executeGetRequest(String url) throws IOException {

@@ -23,10 +23,14 @@
         }
 
         function getLyricsCallback(lyricsInfo) {
-            dwr.util.setValue("lyricsHeader", lyricsInfo.header);
-            dwr.util.setValue("lyricsText", lyricsInfo.lyrics, { escapeHtml:false });
-            $("wait").style.display = "none";
+            dwr.util.setValue("lyricsHeader", lyricsInfo.artist + " - " + lyricsInfo.title);
+            var lyrics;
             if (lyricsInfo.lyrics != null) {
+                lyrics = lyricsInfo.lyrics.replace(/\n/g, "<br>");
+            }
+            dwr.util.setValue("lyricsText", lyrics, { escapeHtml:false });
+            $("wait").style.display = "none";
+            if (lyrics != null) {
                 $("lyrics").style.display = "inline";
             } else {
                 $("noLyricsFound").style.display = "inline";

@@ -329,6 +329,7 @@
         <property name="searchService" ref="searchService"/>
         <property name="playlistService" ref="playlistService"/>
         <property name="chatService" ref="ajaxChatService"/>
+        <property name="lyricsService" ref="ajaxLyricsService"/>
         <property name="downloadController" ref="downloadController"/>
         <property name="streamController" ref="streamController"/>
         <property name="coverArtController" ref="coverArtController"/>

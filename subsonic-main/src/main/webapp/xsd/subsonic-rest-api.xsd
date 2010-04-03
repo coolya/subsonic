@@ -21,6 +21,7 @@
             <xs:element name="chatMessages" type="sub:ChatMessages" minOccurs="1" maxOccurs="1"/>
             <xs:element name="albumList" type="sub:AlbumList" minOccurs="1" maxOccurs="1"/>
             <xs:element name="randomSongs" type="sub:RandomSongs" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="lyrics" type="sub:Lyrics" minOccurs="1" maxOccurs="1"/>
             <xs:element name="error" type="sub:Error" minOccurs="1" maxOccurs="1"/>
         </xs:choice>
         <xs:attribute name="status" type="sub:ResponseStatus" use="required"/>
@@ -167,6 +168,11 @@
         <xs:sequence>
             <xs:element name="song" type="sub:Child" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Lyrics" mixed="true">
+        <xs:attribute name="artist" type="xs:string" use="optional"/>
+        <xs:attribute name="title" type="xs:string" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="License">

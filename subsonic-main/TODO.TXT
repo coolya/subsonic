@@ -1,6 +1,6 @@
 TODO IN 4.0
 ------------
-REST method for getting lyrics (long-click on song in playlist).
+REST support to dynamically set the bitrate.
 Make Settings > Network save/test more intuitive.
 Add iPhone apps to More page.
 Add track count REST.
@@ -69,6 +69,7 @@ mp4 tag parser https://contributions.coremedia.com/isobox4j
 DONE IN 4.0
 -----------
 Add REST method for chat messages.
+REST method for getting lyrics
 Fixed playback of AAC in flash player.
 Added getRandomSongs method to REST API.
 Added Monochrome themes, courtesy of David D.
