@@ -1,7 +1,5 @@
 TODO IN 4.0
 ------------
-Mention trial in Android description.
-OpenJDK for Debian. http://www.activeobjects.no/subsonic/forum/privmsg.php?folder=inbox&mode=read&p=892
 Mac OS requirement, lower. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9855#9855
 REST create playlist
 REST jukebox control.

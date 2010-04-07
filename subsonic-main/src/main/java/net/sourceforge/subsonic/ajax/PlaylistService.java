@@ -264,7 +264,6 @@ public class PlaylistService {
         return playerService.getPlayer(webContext.getHttpServletRequest(), webContext.getHttpServletResponse());
     }
 
-
     public void setPlayerService(PlayerService playerService) {
         this.playerService = playerService;
     }

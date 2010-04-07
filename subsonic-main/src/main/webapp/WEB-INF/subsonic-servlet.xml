@@ -327,7 +327,9 @@
         <property name="transcodingService" ref="transcodingService"/>
         <property name="statusService" ref="statusService"/>
         <property name="searchService" ref="searchService"/>
+        <property name="jukeboxService" ref="jukeboxService"/>
         <property name="playlistService" ref="playlistService"/>
+        <property name="playlistControlService" ref="ajaxPlaylistService"/>
         <property name="chatService" ref="ajaxChatService"/>
         <property name="lyricsService" ref="ajaxLyricsService"/>
         <property name="downloadController" ref="downloadController"/>

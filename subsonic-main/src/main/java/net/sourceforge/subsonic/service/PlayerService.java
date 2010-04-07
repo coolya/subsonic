@@ -75,7 +75,10 @@ public class PlayerService {
 
         // Find in session context.
         if (player == null && remoteControlEnabled) {
-            player = getPlayerById((String) request.getSession().getAttribute("player"));
+            String playerId = (String) request.getSession().getAttribute("player");
+            if (playerId != null) {
+                player = getPlayerById(playerId);
+            }
         }
 
         // Find by cookie.
@@ -84,18 +87,13 @@ public class PlayerService {
             player = getPlayerById(getPlayerIdFromCookie(request, username));
         }
 
-        // Find by REST client ID.
-        String clientId = request.getParameter("c");
-        if (clientId != null) {
-            List<Player> players = getPlayersForUserAndClientId(username, clientId);
-            if (!players.isEmpty()) {
-                player = players.get(0);
-            }
-        }
-
         // Look for player with same IP address and user name.
         if (player == null) {
             player = getPlayerByIpAddressAndUsername(request.getRemoteAddr(), username);
+            // Don't use this player if it's used by REST API.
+            if (player.getClientId() != null) {
+                player = null;
+            }
         }
 
         // If no player was found, create it.

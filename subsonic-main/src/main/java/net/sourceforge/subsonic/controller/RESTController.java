@@ -44,10 +44,12 @@ import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.service.TranscodingService;
+import net.sourceforge.subsonic.service.JukeboxService;
 import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.util.XMLBuilder;
 import static net.sourceforge.subsonic.util.XMLBuilder.Attribute;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -65,7 +67,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
-import java.util.Collections;
 
 /**
  * Multi-controller used for the REST API.
@@ -94,6 +95,8 @@ public class RESTController extends MultiActionController {
     private PlaylistService playlistService;
     private ChatService chatService;
     private LyricsService lyricsService;
+    private net.sourceforge.subsonic.ajax.PlaylistService playlistControlService;
+    private JukeboxService jukeboxService;
 
     public void ping(HttpServletRequest request, HttpServletResponse response) throws Exception {
         XMLBuilder builder = createXMLBuilder(response, true).endAll();
@@ -124,7 +127,6 @@ public class RESTController extends MultiActionController {
 
     public void getMusicFolders(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        createPlayerIfNecessary(request);
         XMLBuilder builder = createXMLBuilder(response, true);
         builder.add("musicFolders", false);
 
@@ -142,7 +144,6 @@ public class RESTController extends MultiActionController {
 
     public void getIndexes(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        createPlayerIfNecessary(request);
         XMLBuilder builder = createXMLBuilder(response, true);
 
         long ifModifiedSince = ServletRequestUtils.getLongParameter(request, "ifModifiedSince", 0L);
@@ -196,7 +197,6 @@ public class RESTController extends MultiActionController {
 
     public void getMusicDirectory(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        createPlayerIfNecessary(request);
         Player player = playerService.getPlayer(request, response);
 
         MusicFile dir;
@@ -272,7 +272,6 @@ public class RESTController extends MultiActionController {
 
     public void getPlaylist(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        createPlayerIfNecessary(request);
         Player player = playerService.getPlayer(request, response);
 
         XMLBuilder builder = createXMLBuilder(response, true);
@@ -303,30 +302,62 @@ public class RESTController extends MultiActionController {
     }
 
     public void jukeboxControl(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        // TODO
-        request = wrapRequest(request);
-        createPlayerIfNecessary(request);
-        Player player = playerService.getPlayer(request, response);
+        request = wrapRequest(request, true);
 
-        XMLBuilder builder = createXMLBuilder(response, true);
-        builder.add("playlist", false);
+        User user = securityService.getCurrentUser(request);
+        if (!user.isJukeboxRole()) {
+            error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to use jukebox.");
+            return;
+        }
 
         try {
-            String id = StringUtil.utf8HexDecode(ServletRequestUtils.getRequiredStringParameter(request, "id"));
-            File file = playlistService.getSavedPlaylist(id);
-            if (file == null) {
-                throw new Exception("Playlist not found.");
+            boolean returnPlaylist = false;
+            String action = ServletRequestUtils.getRequiredStringParameter(request, "action");
+            if ("start".equals(action)) {
+                playlistControlService.start();
+            } else if ("stop".equals(action)) {
+                playlistControlService.stop();
+            } else if ("skip".equals(action)) {
+                int index = ServletRequestUtils.getRequiredIntParameter(request, "index");
+                playlistControlService.skip(index);
+            } else if ("add".equals(action)) {
+                String ids = ServletRequestUtils.getRequiredStringParameter(request, "ids");
+                for (String path : convertCommaSeparatedIDs(ids)) {
+                    playlistControlService.add(path);
+                }
+            } else if ("clear".equals(action)) {
+                playlistControlService.clear();
+            } else if ("remove".equals(action)) {
+                int index = ServletRequestUtils.getRequiredIntParameter(request, "index");
+                playlistControlService.remove(index);
+            } else if ("shuffle".equals(action)) {
+                playlistControlService.shuffle();
+            } else if ("setGain".equals(action)) {
+                float gain = ServletRequestUtils.getRequiredFloatParameter(request, "gain");
+                playlistControlService.setGain(gain);
+            } else if ("get".equals(action)) {
+                returnPlaylist = true;
             }
-            Playlist playlist = new Playlist();
-            playlistService.loadPlaylist(playlist, id);
 
-            for (MusicFile musicFile : playlist.getFiles()) {
-                List<File> coverArt = musicFileService.getCoverArt(musicFile.getParent(), 1);
-                List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
-                builder.add("entry", attributes, true);
+            XMLBuilder builder = createXMLBuilder(response, true);
+
+            if (returnPlaylist) {
+
+                Player player = playerService.getPlayer(request, response);
+                Playlist playlist = player.getPlaylist();
+                Iterable<Attribute> attrs = Arrays.asList(new Attribute("currentIndex", playlist.getIndex()),
+                                                          new Attribute("gain", jukeboxService.getGain()));
+                builder.add("jukeboxPlaylist", attrs, false);
+                for (MusicFile musicFile : playlist.getFiles()) {
+                    List<File> coverArt = musicFileService.getCoverArt(musicFile.getParent(), 1);
+                    List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
+                    builder.add("entry", attributes, true);
+                }
             }
+
             builder.endAll();
             response.getWriter().print(builder);
+
         } catch (ServletRequestBindingException x) {
             error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
         } catch (Exception x) {
@@ -337,7 +368,6 @@ public class RESTController extends MultiActionController {
 
     public void getAlbumList(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        createPlayerIfNecessary(request);
         Player player = playerService.getPlayer(request, response);
 
         XMLBuilder builder = createXMLBuilder(response, true);
@@ -386,7 +416,6 @@ public class RESTController extends MultiActionController {
 
     public void getRandomSongs(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        createPlayerIfNecessary(request);
         Player player = playerService.getPlayer(request, response);
 
         XMLBuilder builder = createXMLBuilder(response, true);
@@ -418,7 +447,6 @@ public class RESTController extends MultiActionController {
 
     public void getNowPlaying(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        createPlayerIfNecessary(request);
         XMLBuilder builder = createXMLBuilder(response, true);
         builder.add("nowPlaying", false);
 
@@ -547,9 +575,20 @@ public class RESTController extends MultiActionController {
         return null;
     }
 
+    private List<String> convertCommaSeparatedIDs(String ids) throws Exception {
+        List<String> result = new ArrayList<String>();
+        for (String id : ids.split(",")) {
+            id = StringUtils.trimToNull(id);
+            if (id != null) {
+                result.add(StringUtil.utf8HexDecode(id));
+            }
+        }
+        return result;
+    }
+
+
     public ModelAndView download(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        createPlayerIfNecessary(request);
         User user = securityService.getCurrentUser(request);
         if (!user.isDownloadRole()) {
             error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to download files.");
@@ -561,7 +600,6 @@ public class RESTController extends MultiActionController {
 
     public ModelAndView stream(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        createPlayerIfNecessary(request);
         User user = securityService.getCurrentUser(request);
         if (!user.isStreamRole()) {
             error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to play files.");
@@ -572,11 +610,11 @@ public class RESTController extends MultiActionController {
         if (maxBitRate != null) {
             Player player = playerService.getPlayer(request, response);
             TranscodeScheme transcodeScheme = TranscodeScheme.valueOf(maxBitRate);
-            if (transcodeScheme != null) {
+            if (transcodeScheme == null) {
+                LOG.warn("No transcode scheme found for bit rate " + maxBitRate);
+            } else if (transcodeScheme != player.getTranscodeScheme()) {
                 player.setTranscodeScheme(transcodeScheme);
                 playerService.updatePlayer(player);
-            } else {
-                LOG.warn("No transcode scheme found for bit rate " + maxBitRate);
             }
         }
 
@@ -585,7 +623,6 @@ public class RESTController extends MultiActionController {
 
     public ModelAndView getCoverArt(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        createPlayerIfNecessary(request);
         return coverArtController.handleRequest(request, response);
     }
 
@@ -707,13 +744,17 @@ public class RESTController extends MultiActionController {
         response.getWriter().print(builder);
     }
 
-    /**
-     * Renames "id" request parameter to "path".
-     */
-    private HttpServletRequest wrapRequest(final HttpServletRequest request) {
+    private HttpServletRequest wrapRequest(HttpServletRequest request) {
+        return wrapRequest(request, false);
+    }
+
+    private HttpServletRequest wrapRequest(final HttpServletRequest request, boolean jukebox) {
+        final String playerId = createPlayerIfNecessary(request, jukebox);
         return new HttpServletRequestWrapper(request) {
             @Override
             public String getParameter(String name) {
+
+                // Renames "id" request parameter to "path".
                 if ("path".equals(name)) {
                     try {
                         return StringUtil.utf8HexDecode(request.getParameter("id"));
@@ -721,6 +762,12 @@ public class RESTController extends MultiActionController {
                         return null;
                     }
                 }
+
+                // Returns the correct player to be used in PlayerService.getPlayer()
+                else if ("player".equals(name)) {
+                    return playerId;
+                }
+
                 return super.getParameter(name);
             }
         };
@@ -748,18 +795,13 @@ public class RESTController extends MultiActionController {
         return builder;
     }
 
-    private void createPlayerIfNecessary(HttpServletRequest request) {
-        createPlayerIfNecessary(request, false);
-    }
-
-    private void createPlayerIfNecessary(HttpServletRequest request, boolean jukebox) {
+    private String createPlayerIfNecessary(HttpServletRequest request, boolean jukebox) {
         String username = request.getRemoteUser();
         String clientId = request.getParameter("c");
         if (jukebox) {
             clientId += "-jukebox";
         }
 
-        // TODO: Put player in session context?
         List<Player> players = playerService.getPlayersForUserAndClientId(username, clientId);
 
         // If not found, create it.
@@ -771,7 +813,11 @@ public class RESTController extends MultiActionController {
             player.setName(clientId);
             player.setTechnology(jukebox ? PlayerTechnology.JUKEBOX : PlayerTechnology.EXTERNAL_WITH_PLAYLIST);
             playerService.createPlayer(player);
+            players = playerService.getPlayersForUserAndClientId(username, clientId);
         }
+
+        // Return the player ID.
+        return !players.isEmpty() ? players.get(0).getId() : null;
     }
 
     public void setSettingsService(SettingsService settingsService) {
@@ -836,6 +882,14 @@ public class RESTController extends MultiActionController {
 
     public void setLyricsService(LyricsService lyricsService) {
         this.lyricsService = lyricsService;
+    }
+
+    public void setPlaylistControlService(net.sourceforge.subsonic.ajax.PlaylistService playlistControlService) {
+        this.playlistControlService = playlistControlService;
+    }
+
+    public void setJukeboxService(JukeboxService jukeboxService) {
+        this.jukeboxService = jukeboxService;
     }
 
     public static enum ErrorCode {
