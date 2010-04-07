@@ -1,4 +1,4 @@
--Xmx64m
+-Xmx100m
 -Dsubsonic.host=0.0.0.0
 -Dsubsonic.port=80
 -Dsubsonic.contextPath=/

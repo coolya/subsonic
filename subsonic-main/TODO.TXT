@@ -2,7 +2,7 @@ TODO IN 4.0
 ------------
 Mention trial in Android description.
 OpenJDK for Debian. http://www.activeobjects.no/subsonic/forum/privmsg.php?folder=inbox&mode=read&p=892
-Mac OS requirement, lower and document. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9855#9855
+Mac OS requirement, lower. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9855#9855
 REST create playlist
 REST jukebox control.
 REST album/artist search.
@@ -11,8 +11,6 @@ Make Settings > Network save/test more intuitive.
 Add iPhone apps to More page.
 Add track count REST.
 Album link to last.fm broken
-Update documentation of /etc/sysconfig/subsonic (rpm) and /etc/default/subsonic (debian)
-Increase default heap size.
 Change Linux installer config file.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2926
 Use AAC rather than MP3 for transcoding.
 Dynamic AJAX content.
