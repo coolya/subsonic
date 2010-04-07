@@ -17,6 +17,7 @@
             <xs:element name="searchResult" type="sub:SearchResult" minOccurs="1" maxOccurs="1"/>
             <xs:element name="playlists" type="sub:Playlists" minOccurs="1" maxOccurs="1"/>
             <xs:element name="playlist" type="sub:Playlist" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="jukeboxPlaylist" type="sub:JukeboxPlaylist" minOccurs="1" maxOccurs="1"/>
             <xs:element name="license" type="sub:License" minOccurs="1" maxOccurs="1"/>
             <xs:element name="chatMessages" type="sub:ChatMessages" minOccurs="1" maxOccurs="1"/>
             <xs:element name="albumList" type="sub:AlbumList" minOccurs="1" maxOccurs="1"/>
@@ -144,6 +145,14 @@
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="JukeboxPlaylist">
+        <xs:sequence>
+            <xs:element name="entry" type="sub:Child" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="currentIndex" type="xs:int" use="required"/>
+        <xs:attribute name="gain" type="xs:float" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="ChatMessages">

@@ -144,9 +144,9 @@
                             <a href="http://einsteinx2.com/projects/isub/">iSub</a> is an iPhone app developed by Ben Baron, and is
                             available for purchase on the <a href="http://itunes.apple.com/us/app/isub-music-streamer/id362920532?mt=8">App&nbsp;Store</a>.
                         </p>
-                        <a href="inc/img/screenshots/screen20.png"><img src="inc/img/screenshots/thumb20.png" alt="" style="margin-left:40px;padding:3px"/></a>
-                        <a href="inc/img/screenshots/screen21.png"><img src="inc/img/screenshots/thumb21.png" alt="" style="padding:3px"/></a>
-                        <a href="inc/img/screenshots/screen22.png"><img src="inc/img/screenshots/thumb22.png" alt="" style="padding:3px"/></a>
+                        <a href="inc/img/screenshots/screen20.png"><img src="inc/img/screenshots/thumb20.png" alt="" style="margin-left:40px;padding:15px"/></a>
+                        <a href="inc/img/screenshots/screen21.png"><img src="inc/img/screenshots/thumb21.png" alt="" style="padding:15px"/></a>
+                        <a href="inc/img/screenshots/screen22.png"><img src="inc/img/screenshots/thumb22.png" alt="" style="padding:15px"/></a>
 
                         <ul class="list">
                             <li>iPod app style browsing.</li>

@@ -302,6 +302,39 @@ public class RESTController extends MultiActionController {
         }
     }
 
+    public void jukeboxControl(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        // TODO
+        request = wrapRequest(request);
+        createPlayerIfNecessary(request);
+        Player player = playerService.getPlayer(request, response);
+
+        XMLBuilder builder = createXMLBuilder(response, true);
+        builder.add("playlist", false);
+
+        try {
+            String id = StringUtil.utf8HexDecode(ServletRequestUtils.getRequiredStringParameter(request, "id"));
+            File file = playlistService.getSavedPlaylist(id);
+            if (file == null) {
+                throw new Exception("Playlist not found.");
+            }
+            Playlist playlist = new Playlist();
+            playlistService.loadPlaylist(playlist, id);
+
+            for (MusicFile musicFile : playlist.getFiles()) {
+                List<File> coverArt = musicFileService.getCoverArt(musicFile.getParent(), 1);
+                List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
+                builder.add("entry", attributes, true);
+            }
+            builder.endAll();
+            response.getWriter().print(builder);
+        } catch (ServletRequestBindingException x) {
+            error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
+        } catch (Exception x) {
+            LOG.warn("Error in REST API.", x);
+            error(response, ErrorCode.GENERIC, x.getMessage());
+        }
+    }
+
     public void getAlbumList(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         createPlayerIfNecessary(request);
@@ -716,8 +749,17 @@ public class RESTController extends MultiActionController {
     }
 
     private void createPlayerIfNecessary(HttpServletRequest request) {
+        createPlayerIfNecessary(request, false);
+    }
+
+    private void createPlayerIfNecessary(HttpServletRequest request, boolean jukebox) {
         String username = request.getRemoteUser();
         String clientId = request.getParameter("c");
+        if (jukebox) {
+            clientId += "-jukebox";
+        }
+
+        // TODO: Put player in session context?
         List<Player> players = playerService.getPlayersForUserAndClientId(username, clientId);
 
         // If not found, create it.
@@ -727,7 +769,7 @@ public class RESTController extends MultiActionController {
             player.setUsername(username);
             player.setClientId(clientId);
             player.setName(clientId);
-            player.setTechnology(PlayerTechnology.EXTERNAL_WITH_PLAYLIST);
+            player.setTechnology(jukebox ? PlayerTechnology.JUKEBOX : PlayerTechnology.EXTERNAL_WITH_PLAYLIST);
             playerService.createPlayer(player);
         }
     }

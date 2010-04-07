@@ -13,4 +13,4 @@
 #
 # SUBSONIC_ARGS="--port=7070 --max-memory=80"
 
-SUBSONIC_ARGS=""
+SUBSONIC_ARGS="--max-memory=100"

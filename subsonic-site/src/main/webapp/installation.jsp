@@ -111,7 +111,7 @@
                 This installation option applies to Debian Linux, including Ubuntu.
             </p>
             <ul>
-                <li>First, install Java: <code>sudo apt-get install sun-java6-bin</code></li>
+                <li>First, install Java: <code>sudo apt-get install openjdk-6-jre</code></li>
                 <li><a href="download.jsp">Download</a> the Subsonic .deb package and install it: <code>sudo dpkg -i subsonic-x.x.deb</code></li>
             </ul>
             <p>
@@ -127,8 +127,8 @@
             <p><b>Advanced configuration</b></p>
             <p>
                 To change the port number, Java memory settings or other startup parameters, edit the SUBSONIC_ARGS variable in
-                <code style="white-space:nowrap;">/etc/init.d/subsonic</code>. To restart Subsonic, do
-                <code style="white-space:nowrap;">sudo /etc/init.d/subsonic restart</code>
+                <code style="white-space:nowrap;">/etc/default/subsonic</code>. To restart Subsonic, do
+                <code style="white-space:nowrap;">sudo service subsonic restart</code>
             </p>
             <p><b>Troubleshooting</b></p>
             <p>
@@ -168,7 +168,7 @@
             <p><b>Advanced configuration</b></p>
             <p>
                 To change the port number, Java memory settings or other startup parameters, edit the SUBSONIC_ARGS variable in
-                <code style="white-space:nowrap;">/etc/init.d/subsonic</code>. To restart Subsonic, do
+                <code style="white-space:nowrap;">/etc/sysconfig/subsonic</code>. To restart Subsonic, do
                 <code style="white-space:nowrap;">sudo service subsonic restart</code>
             </p>
             <p><b>Troubleshooting</b></p>

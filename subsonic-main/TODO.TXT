@@ -1,5 +1,12 @@
 TODO IN 4.0
 ------------
+Mention trial in Android description.
+OpenJDK for Debian. http://www.activeobjects.no/subsonic/forum/privmsg.php?folder=inbox&mode=read&p=892
+Mac OS requirement, lower and document. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9855#9855
+REST create playlist
+REST jukebox control.
+REST album/artist search.
+REST video support.
 Make Settings > Network save/test more intuitive.
 Add iPhone apps to More page.
 Add track count REST.
@@ -21,6 +28,7 @@ Android: Support mounting SD card.
 Android: Support filenames with "<" and ">".
 Android: Avoid stutter
 Android: Shuffle queue
+Android: Pause on Bluetooth disconnect.
 Android: Long-click on folder to play recursive.
 Android: Trim username, servername. Url-encode username.
 Android: Download error notification is nagging.
