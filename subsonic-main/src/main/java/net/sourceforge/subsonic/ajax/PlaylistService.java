@@ -25,9 +25,9 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
@@ -61,122 +61,188 @@ public class PlaylistService {
      * @return The playlist.
      */
     public PlaylistInfo getPlaylist() throws Exception {
-        Player player = getCurrentPlayer();
-        return convert(player, false);
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        Player player = getCurrentPlayer(request, response);
+        return convert(request, player, false);
     }
 
     public PlaylistInfo start() throws Exception {
-        Player player = getCurrentPlayer();
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        return start(request, response);
+    }
+
+    public PlaylistInfo start(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Player player = getCurrentPlayer(request, response);
         player.getPlaylist().setStatus(Playlist.Status.PLAYING);
-        return convert(player, true);
+        return convert(request, player, true);
     }
 
     public PlaylistInfo stop() throws Exception {
-        Player player = getCurrentPlayer();
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        return stop(request, response);
+    }
+
+    public PlaylistInfo stop(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Player player = getCurrentPlayer(request, response);
         player.getPlaylist().setStatus(Playlist.Status.STOPPED);
-        return convert(player, true);
+        return convert(request, player, true);
     }
 
     public PlaylistInfo skip(int index) throws Exception {
-        Player player = getCurrentPlayer();
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        return skip(request, response, index);
+    }
+
+    public PlaylistInfo skip(HttpServletRequest request, HttpServletResponse response, int index) throws Exception {
+        Player player = getCurrentPlayer(request, response);
         player.getPlaylist().setIndex(index);
         boolean serverSidePlaylist = !player.isExternalWithPlaylist();
-        return convert(player, serverSidePlaylist);
+        return convert(request, player, serverSidePlaylist);
     }
 
     public PlaylistInfo play(String path) throws Exception {
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+
+        Player player = getCurrentPlayer(request, response);
         MusicFile file = musicFileService.getMusicFile(path);
-        Player player = getCurrentPlayer();
         player.getPlaylist().addFiles(false, file);
         player.getPlaylist().setRandomSearchCriteria(null);
-        return convert(player, true);
+        return convert(request, player, true);
     }
 
     public PlaylistInfo playRandom(String path, int count) throws Exception {
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+
         MusicFile file = musicFileService.getMusicFile(path);
         List<MusicFile> randomFiles = getRandomChildren(file, count);
-        Player player = getCurrentPlayer();
+        Player player = getCurrentPlayer(request, response);
         player.getPlaylist().addFiles(false, randomFiles);
         player.getPlaylist().setRandomSearchCriteria(null);
-        return convert(player, true);
+        return convert(request, player, true);
     }
 
     public PlaylistInfo add(String path) throws Exception {
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        return add(request, response, path);
+    }
+
+    public PlaylistInfo add(HttpServletRequest request, HttpServletResponse response, String path) throws Exception {
+        Player player = getCurrentPlayer(request, response);
         MusicFile file = musicFileService.getMusicFile(path);
-        Player player = getCurrentPlayer();
         player.getPlaylist().addFiles(true, file);
         player.getPlaylist().setRandomSearchCriteria(null);
-        return convert(player, false);
+        return convert(request, player, false);
     }
 
     public PlaylistInfo clear() throws Exception {
-        Player player = getCurrentPlayer();
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        return clear(request, response);
+    }
+
+    public PlaylistInfo clear(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Player player = getCurrentPlayer(request, response);
         player.getPlaylist().clear();
         boolean serverSidePlaylist = !player.isExternalWithPlaylist();
-        return convert(player, serverSidePlaylist);
+        return convert(request, player, serverSidePlaylist);
     }
 
     public PlaylistInfo shuffle() throws Exception {
-        Player player = getCurrentPlayer();
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        return shuffle(request, response);
+    }
+
+    public PlaylistInfo shuffle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Player player = getCurrentPlayer(request, response);
         player.getPlaylist().shuffle();
-        return convert(player, false);
+        return convert(request, player, false);
     }
 
     public PlaylistInfo remove(int index) throws Exception {
-        Player player = getCurrentPlayer();
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        return remove(request, response, index);
+    }
+
+    public PlaylistInfo remove(HttpServletRequest request, HttpServletResponse response, int index) throws Exception {
+        Player player = getCurrentPlayer(request, response);
         player.getPlaylist().removeFileAt(index);
-        return convert(player, false);
+        return convert(request, player, false);
     }
 
     public PlaylistInfo removeMany(int[] indexes) throws Exception {
-        Player player = getCurrentPlayer();
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        Player player = getCurrentPlayer(request, response);
         for (int i = indexes.length - 1; i >= 0; i--) {
             player.getPlaylist().removeFileAt(indexes[i]);
         }
-        return convert(player, false);
+        return convert(request, player, false);
     }
 
     public PlaylistInfo up(int index) throws Exception {
-        Player player = getCurrentPlayer();
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        Player player = getCurrentPlayer(request, response);
         player.getPlaylist().moveUp(index);
-        return convert(player, false);
+        return convert(request, player, false);
     }
 
     public PlaylistInfo down(int index) throws Exception {
-        Player player = getCurrentPlayer();
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        Player player = getCurrentPlayer(request, response);
         player.getPlaylist().moveDown(index);
-        return convert(player, false);
+        return convert(request, player, false);
     }
 
     public PlaylistInfo toggleRepeat() throws Exception {
-        Player player = getCurrentPlayer();
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        Player player = getCurrentPlayer(request, response);
         player.getPlaylist().setRepeatEnabled(!player.getPlaylist().isRepeatEnabled());
-        return convert(player, false);
+        return convert(request, player, false);
     }
 
     public PlaylistInfo undo() throws Exception {
-        Player player = getCurrentPlayer();
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        Player player = getCurrentPlayer(request, response);
         player.getPlaylist().undo();
         boolean serverSidePlaylist = !player.isExternalWithPlaylist();
-        return convert(player, serverSidePlaylist);
+        return convert(request, player, serverSidePlaylist);
     }
 
     public PlaylistInfo sortByTrack() throws Exception {
-        Player player = getCurrentPlayer();
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        Player player = getCurrentPlayer(request, response);
         player.getPlaylist().sort(Playlist.SortOrder.TRACK);
-        return convert(player, false);
+        return convert(request, player, false);
     }
 
     public PlaylistInfo sortByArtist() throws Exception {
-        Player player = getCurrentPlayer();
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        Player player = getCurrentPlayer(request, response);
         player.getPlaylist().sort(Playlist.SortOrder.ARTIST);
-        return convert(player, false);
+        return convert(request, player, false);
     }
 
     public PlaylistInfo sortByAlbum() throws Exception {
-        Player player = getCurrentPlayer();
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
+        Player player = getCurrentPlayer(request, response);
         player.getPlaylist().sort(Playlist.SortOrder.ALBUM);
-        return convert(player, false);
+        return convert(request, player, false);
     }
 
     public void setGain(float gain) {
@@ -192,8 +258,7 @@ public class PlaylistService {
         return children.subList(0, Math.min(count, children.size()));
     }
 
-    private PlaylistInfo convert(Player player, boolean sendM3U) throws Exception {
-        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+    private PlaylistInfo convert(HttpServletRequest request, Player player, boolean sendM3U) throws Exception {
         String url = request.getRequestURL().toString();
 
         if (sendM3U && player.isJukebox()) {
@@ -203,6 +268,7 @@ public class PlaylistService {
 
         boolean m3uSupported = player.isExternal() || player.isExternalWithPlaylist();
         sendM3U = player.isAutoControlEnabled() && m3uSupported && isCurrentPlayer && sendM3U;
+        Locale locale = RequestContextUtils.getLocale(request);
 
         List<PlaylistInfo.Entry> entries = new ArrayList<PlaylistInfo.Entry>();
         Playlist playlist = player.getPlaylist();
@@ -223,20 +289,17 @@ public class PlaylistService {
             entries.add(new PlaylistInfo.Entry(metaData.getTrackNumber(), metaData.getTitle(), metaData.getArtist(),
                     metaData.getAlbum(), metaData.getGenre(), metaData.getYear(), formatBitRate(metaData),
                     metaData.getDuration(), metaData.getDurationAsString(), formatFormat(metaData.getFormat()),
-                    formatContentType(player, file), formatFileSize(metaData.getFileSize()), albumUrl, streamUrl));
+                    formatContentType(player, file), formatFileSize(metaData.getFileSize(), locale), albumUrl, streamUrl));
         }
         boolean isStopEnabled = playlist.getStatus() == Playlist.Status.PLAYING && !player.isExternalWithPlaylist();
         float gain = jukeboxService.getGain();
         return new PlaylistInfo(entries, playlist.getIndex(), isStopEnabled, playlist.isRepeatEnabled(), sendM3U, gain);
     }
 
-    private String formatFileSize(Long fileSize) {
+    private String formatFileSize(Long fileSize, Locale locale) {
         if (fileSize == null) {
             return null;
         }
-
-        WebContext webContext = WebContextFactory.get();
-        Locale locale = RequestContextUtils.getLocale(webContext.getHttpServletRequest());
         return StringUtil.formatBytes(fileSize, locale);
     }
 
@@ -259,9 +322,8 @@ public class PlaylistService {
         return metaData.getBitRate() + " Kbps";
     }
 
-    private Player getCurrentPlayer() {
-        WebContext webContext = WebContextFactory.get();
-        return playerService.getPlayer(webContext.getHttpServletRequest(), webContext.getHttpServletResponse());
+    private Player getCurrentPlayer(HttpServletRequest request, HttpServletResponse response) {
+        return playerService.getPlayer(request, response);
     }
 
     public void setPlayerService(PlayerService playerService) {

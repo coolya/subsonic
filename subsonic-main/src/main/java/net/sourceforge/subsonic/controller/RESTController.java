@@ -314,27 +314,27 @@ public class RESTController extends MultiActionController {
             boolean returnPlaylist = false;
             String action = ServletRequestUtils.getRequiredStringParameter(request, "action");
             if ("start".equals(action)) {
-                playlistControlService.start();
+                playlistControlService.start(request, response);
             } else if ("stop".equals(action)) {
-                playlistControlService.stop();
+                playlistControlService.stop(request, response);
             } else if ("skip".equals(action)) {
                 int index = ServletRequestUtils.getRequiredIntParameter(request, "index");
-                playlistControlService.skip(index);
+                playlistControlService.skip(request, response, index);
             } else if ("add".equals(action)) {
                 String ids = ServletRequestUtils.getRequiredStringParameter(request, "ids");
                 for (String path : convertCommaSeparatedIDs(ids)) {
-                    playlistControlService.add(path);
+                    playlistControlService.add(request, response, path);
                 }
             } else if ("clear".equals(action)) {
-                playlistControlService.clear();
+                playlistControlService.clear(request, response);
             } else if ("remove".equals(action)) {
                 int index = ServletRequestUtils.getRequiredIntParameter(request, "index");
-                playlistControlService.remove(index);
+                playlistControlService.remove(request, response, index);
             } else if ("shuffle".equals(action)) {
-                playlistControlService.shuffle();
+                playlistControlService.shuffle(request, response);
             } else if ("setGain".equals(action)) {
                 float gain = ServletRequestUtils.getRequiredFloatParameter(request, "gain");
-                playlistControlService.setGain(gain);
+                jukeboxService.setGain(gain);
             } else if ("get".equals(action)) {
                 returnPlaylist = true;
             }
@@ -346,6 +346,7 @@ public class RESTController extends MultiActionController {
                 Player player = playerService.getPlayer(request, response);
                 Playlist playlist = player.getPlaylist();
                 Iterable<Attribute> attrs = Arrays.asList(new Attribute("currentIndex", playlist.getIndex()),
+                                                          new Attribute("playing", playlist.getStatus() == Playlist.Status.PLAYING),
                                                           new Attribute("gain", jukeboxService.getGain()));
                 builder.add("jukeboxPlaylist", attrs, false);
                 for (MusicFile musicFile : playlist.getFiles()) {

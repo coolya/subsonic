@@ -1,7 +1,10 @@
+,2f55736572732f73696e6472652f4d757369632f446572656c656563682f446f776e73747265616d2f3037202d20417420536572656e697479277320456467652e6d7033
+
 TODO IN 4.0
 ------------
 Mac OS requirement, lower. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9855#9855
-REST create playlist
+Use REST POST. Make "ids" multivalued.
+REST create playlist, mind max http header size.
 REST jukebox control.
 REST album/artist search.
 REST video support.
