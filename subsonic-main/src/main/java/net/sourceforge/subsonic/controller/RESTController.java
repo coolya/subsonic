@@ -18,46 +18,6 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.ajax.ChatService;
-import net.sourceforge.subsonic.ajax.LyricsService;
-import net.sourceforge.subsonic.ajax.LyricsInfo;
-import net.sourceforge.subsonic.command.UserSettingsCommand;
-import net.sourceforge.subsonic.domain.MusicFile;
-import net.sourceforge.subsonic.domain.MusicFolder;
-import net.sourceforge.subsonic.domain.MusicIndex;
-import net.sourceforge.subsonic.domain.Player;
-import net.sourceforge.subsonic.domain.PlayerTechnology;
-import net.sourceforge.subsonic.domain.Playlist;
-import net.sourceforge.subsonic.domain.SearchCriteria;
-import net.sourceforge.subsonic.domain.SearchResult;
-import net.sourceforge.subsonic.domain.TranscodeScheme;
-import net.sourceforge.subsonic.domain.TransferStatus;
-import net.sourceforge.subsonic.domain.User;
-import net.sourceforge.subsonic.domain.UserSettings;
-import net.sourceforge.subsonic.domain.RandomSearchCriteria;
-import net.sourceforge.subsonic.service.MusicFileService;
-import net.sourceforge.subsonic.service.PlayerService;
-import net.sourceforge.subsonic.service.PlaylistService;
-import net.sourceforge.subsonic.service.SearchService;
-import net.sourceforge.subsonic.service.SecurityService;
-import net.sourceforge.subsonic.service.SettingsService;
-import net.sourceforge.subsonic.service.StatusService;
-import net.sourceforge.subsonic.service.TranscodingService;
-import net.sourceforge.subsonic.service.JukeboxService;
-import net.sourceforge.subsonic.util.StringUtil;
-import net.sourceforge.subsonic.util.XMLBuilder;
-import static net.sourceforge.subsonic.util.XMLBuilder.Attribute;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.web.bind.ServletRequestBindingException;
-import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,6 +27,48 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.web.bind.ServletRequestBindingException;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.ajax.ChatService;
+import net.sourceforge.subsonic.ajax.LyricsInfo;
+import net.sourceforge.subsonic.ajax.LyricsService;
+import net.sourceforge.subsonic.command.UserSettingsCommand;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.domain.MusicIndex;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.PlayerTechnology;
+import net.sourceforge.subsonic.domain.Playlist;
+import net.sourceforge.subsonic.domain.RandomSearchCriteria;
+import net.sourceforge.subsonic.domain.SearchCriteria;
+import net.sourceforge.subsonic.domain.SearchResult;
+import net.sourceforge.subsonic.domain.TranscodeScheme;
+import net.sourceforge.subsonic.domain.TransferStatus;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.service.JukeboxService;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.service.PlaylistService;
+import net.sourceforge.subsonic.service.SearchService;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.StatusService;
+import net.sourceforge.subsonic.service.TranscodingService;
+import net.sourceforge.subsonic.util.StringUtil;
+import net.sourceforge.subsonic.util.XMLBuilder;
+
+import static net.sourceforge.subsonic.util.XMLBuilder.Attribute;
 
 /**
  * Multi-controller used for the REST API.
@@ -321,9 +323,9 @@ public class RESTController extends MultiActionController {
                 int index = ServletRequestUtils.getRequiredIntParameter(request, "index");
                 playlistControlService.skip(request, response, index);
             } else if ("add".equals(action)) {
-                String ids = ServletRequestUtils.getRequiredStringParameter(request, "ids");
-                for (String path : convertCommaSeparatedIDs(ids)) {
-                    playlistControlService.add(request, response, path);
+                String[] ids = ServletRequestUtils.getRequiredStringParameters(request, "id");
+                for (String id : ids) {
+                    playlistControlService.add(request, response, StringUtil.utf8HexDecode(id));
                 }
             } else if ("clear".equals(action)) {
                 playlistControlService.clear(request, response);
@@ -346,8 +348,8 @@ public class RESTController extends MultiActionController {
                 Player player = playerService.getPlayer(request, response);
                 Playlist playlist = player.getPlaylist();
                 Iterable<Attribute> attrs = Arrays.asList(new Attribute("currentIndex", playlist.getIndex()),
-                                                          new Attribute("playing", playlist.getStatus() == Playlist.Status.PLAYING),
-                                                          new Attribute("gain", jukeboxService.getGain()));
+                        new Attribute("playing", playlist.getStatus() == Playlist.Status.PLAYING),
+                        new Attribute("gain", jukeboxService.getGain()));
                 builder.add("jukeboxPlaylist", attrs, false);
                 for (MusicFile musicFile : playlist.getFiles()) {
                     List<File> coverArt = musicFileService.getCoverArt(musicFile.getParent(), 1);
@@ -576,18 +578,6 @@ public class RESTController extends MultiActionController {
         return null;
     }
 
-    private List<String> convertCommaSeparatedIDs(String ids) throws Exception {
-        List<String> result = new ArrayList<String>();
-        for (String id : ids.split(",")) {
-            id = StringUtils.trimToNull(id);
-            if (id != null) {
-                result.add(StringUtil.utf8HexDecode(id));
-            }
-        }
-        return result;
-    }
-
-
     public ModelAndView download(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         User user = securityService.getCurrentUser(request);
@@ -704,7 +694,7 @@ public class RESTController extends MultiActionController {
             long time = message.getDate().getTime();
             if (time > since) {
                 builder.add("chatMessage", true, new Attribute("username", message.getUsername()),
-                            new Attribute("time", time), new Attribute("message", message.getContent()));
+                        new Attribute("time", time), new Attribute("message", message.getContent()));
             }
         }
         builder.endAll();
