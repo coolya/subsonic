@@ -38,6 +38,7 @@ public class SubsonicDeployer implements SubsonicDeployerService {
     public static final String DEFAULT_CONTEXT_PATH = "/";
     public static final String DEFAULT_WAR = "subsonic.war";
     private static final int MAX_IDLE_TIME_MILLIS = 7 * 24 * 60 * 60 * 1000; // One week.
+    private static final int HEADER_BUFFER_SIZE = 64 * 1024;
 
     // Subsonic home directory.
     private static final File SUBSONIC_HOME_WINDOWS = new File("c:/subsonic");
@@ -86,6 +87,7 @@ public class SubsonicDeployer implements SubsonicDeployerService {
             Server server = new Server();
             SelectChannelConnector connector = new SelectChannelConnector();
             connector.setMaxIdleTime(MAX_IDLE_TIME_MILLIS);
+            connector.setHeaderBufferSize(HEADER_BUFFER_SIZE);
             connector.setHost(getHost());
             connector.setPort(getPort());
             server.addConnector(connector);

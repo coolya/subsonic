@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -130,13 +131,16 @@ public class PlaylistService {
     public PlaylistInfo add(String path) throws Exception {
         HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
         HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
-        return add(request, response, path);
+        return add(request, response, Arrays.asList(path));
     }
 
-    public PlaylistInfo add(HttpServletRequest request, HttpServletResponse response, String path) throws Exception {
+    public PlaylistInfo add(HttpServletRequest request, HttpServletResponse response, List<String> paths) throws Exception {
         Player player = getCurrentPlayer(request, response);
-        MusicFile file = musicFileService.getMusicFile(path);
-        player.getPlaylist().addFiles(true, file);
+        List<MusicFile> files = new ArrayList<MusicFile>(paths.size());
+        for (String path : paths) {
+            files.add(musicFileService.getMusicFile(path));
+        }
+        player.getPlaylist().addFiles(true, files);
         player.getPlaylist().setRandomSearchCriteria(null);
         return convert(request, player, false);
     }

@@ -3,7 +3,6 @@
 TODO IN 4.0
 ------------
 Mac OS requirement, lower. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9855#9855
-Use REST POST. Make "ids" multivalued.
 REST create playlist, mind max http header size.
 REST jukebox control.
 REST album/artist search.
