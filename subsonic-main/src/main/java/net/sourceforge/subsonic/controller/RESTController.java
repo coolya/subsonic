@@ -207,7 +207,7 @@ public class RESTController extends MultiActionController {
             dir = musicFileService.getMusicFile(path);
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, x.getMessage());
+            error(response, ErrorCode.GENERIC, getErrorMessage(x));
             return;
         }
 
@@ -296,10 +296,10 @@ public class RESTController extends MultiActionController {
             builder.endAll();
             response.getWriter().print(builder);
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
+            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, x.getMessage());
+            error(response, ErrorCode.GENERIC, getErrorMessage(x));
         }
     }
 
@@ -364,10 +364,49 @@ public class RESTController extends MultiActionController {
             response.getWriter().print(builder);
 
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
+            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, x.getMessage());
+            error(response, ErrorCode.GENERIC, getErrorMessage(x));
+        }
+    }
+
+    public void createPlaylist(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request, true);
+
+        User user = securityService.getCurrentUser(request);
+        if (!user.isPlaylistRole()) {
+            error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to create playlists.");
+            return;
+        }
+
+        try {
+
+            String playlistId = request.getParameter("playlistId");
+            String name = request.getParameter("name");
+            if (playlistId == null && name == null) {
+                error(response, ErrorCode.MISSING_PARAMETER, "Playlist ID or name must be specified.");
+                return;
+            }
+
+            Playlist playlist = new Playlist();
+            playlist.setName(playlistId != null ? playlistId : name);
+
+            String[] ids = ServletRequestUtils.getRequiredStringParameters(request, "songId");
+            for (String id : ids) {
+                playlist.addFiles(true, musicFileService.getMusicFile(StringUtil.utf8HexDecode(id)));
+            }
+            playlistService.savePlaylist(playlist);
+
+            XMLBuilder builder = createXMLBuilder(response, true);
+            builder.endAll();
+            response.getWriter().print(builder);
+
+        } catch (ServletRequestBindingException x) {
+            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+        } catch (Exception x) {
+            LOG.warn("Error in REST API.", x);
+            error(response, ErrorCode.GENERIC, getErrorMessage(x));
         }
     }
 
@@ -412,10 +451,10 @@ public class RESTController extends MultiActionController {
             builder.endAll();
             response.getWriter().print(builder);
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
+            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, x.getMessage());
+            error(response, ErrorCode.GENERIC, getErrorMessage(x));
         }
     }
 
@@ -443,10 +482,10 @@ public class RESTController extends MultiActionController {
             builder.endAll();
             response.getWriter().print(builder);
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
+            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, x.getMessage());
+            error(response, ErrorCode.GENERIC, getErrorMessage(x));
         }
     }
 
@@ -639,10 +678,10 @@ public class RESTController extends MultiActionController {
             XMLBuilder builder = createXMLBuilder(response, true).endAll();
             response.getWriter().print(builder);
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
+            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, x.getMessage());
+            error(response, ErrorCode.GENERIC, getErrorMessage(x));
         }
     }
 
@@ -677,10 +716,10 @@ public class RESTController extends MultiActionController {
             response.getWriter().print(builder);
 
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
+            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, x.getMessage());
+            error(response, ErrorCode.GENERIC, getErrorMessage(x));
         }
     }
 
@@ -710,7 +749,7 @@ public class RESTController extends MultiActionController {
             XMLBuilder builder = createXMLBuilder(response, true).endAll();
             response.getWriter().print(builder);
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, x.getMessage());
+            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         }
     }
 
@@ -764,6 +803,13 @@ public class RESTController extends MultiActionController {
                 return super.getParameter(name);
             }
         };
+    }
+
+    private String getErrorMessage(Exception x) {
+        if (x.getMessage() != null) {
+            return x.getMessage();
+        }
+        return x.getClass().getSimpleName();
     }
 
     private void error(HttpServletResponse response, ErrorCode code, String message) throws IOException {
