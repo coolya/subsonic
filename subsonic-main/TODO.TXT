@@ -1,8 +1,6 @@
 TODO IN 4.0
 ------------
 Mac OS requirement, lower. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9855#9855
-REST create playlist, mind max http header size.
-REST jukebox control.
 REST album/artist search.
 REST video support.
 Make Settings > Network save/test more intuitive.
@@ -42,6 +40,7 @@ Change Android screenshots.
 
 VIDEO
 -----
+http://rob.opendot.cl/index.php/useful-stuff/ffmpeg-x264-encoding-guide/
 Create separate "Video folder" definition?
 Compile qt-faststart and put in transcoder dir.
 Add H.264 presets to transcoder install.
