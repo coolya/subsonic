@@ -1,12 +1,12 @@
 TODO IN 4.0
 ------------
+Amahi
 Mac OS requirement, lower. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9855#9855
 REST album/artist search.
 REST video support.
 Make Settings > Network save/test more intuitive.
 Add iPhone apps to More page.
 Add track count REST.
-Album link to last.fm broken
 Change Linux installer config file.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2926
 Use AAC rather than MP3 for transcoding.
 Dynamic AJAX content.
@@ -87,6 +87,7 @@ Make user statistics graphs logarithmic, http://www.activeobjects.no/subsonic/fo
 Truncate long genre names in "more" page.
 Improved year selection in "more" page.
 Updated Slovenian translation, courtesy of Andrej &#381;i&#382;mond
+Album link to last.fm broken
 
 MAC INSTALLER
 -------------

@@ -120,7 +120,14 @@
                             <li>Queue the same song multiple times.</li>
                             <li>Load playlists stored on the Subsonic server.</li>
                             <li>Easily select any of 5 Subsonic server connections.</li>
+                            <li>SSL support.</li>
+                            <li>Favorites.</li>
+                            <li>Complete artist, album and song info caching.</li>
                         </ul>
+
+                        <p>
+                           See the <a href="http://www.youtube.com/watch?v=yFzM7-rfINM">video on YouTube</a>.
+                        </p>
 
                         <p>
                             Support: <a href="mailto:helpdesk@z-subsonic.com">helpdesk@z-subsonic.com</a> &ndash;

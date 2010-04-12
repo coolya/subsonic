@@ -939,7 +939,7 @@ public class RESTController extends MultiActionController {
         PROTOCOL_MISMATCH_SERVER_TOO_OLD(30, "Incompatible Subsonic REST protocol version. Server must upgrade."),
         NOT_AUTHENTICATED(40, "Wrong username or password."),
         NOT_AUTHORIZED(50, "User is not authorized for the given operation."),
-        NOT_LICENSED(60, "The trial period is over. Please donate to get a license key. Visit subsonic.org for details.");
+        NOT_LICENSED(60, "The trial period for the Subsonic server is over. Please donate to get a license key. Visit subsonic.org for details.");
 
         private final int code;
         private final String message;
