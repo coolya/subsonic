@@ -127,8 +127,7 @@ SettingsActivity not repainting properly.
 Use IOUtils, StringUtils.
 List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7854
 Make it downloadable from sf.net.
-Make proper services.
-Make web page for it.
+Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
 Caching mgmt
 Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
 Improve design of DownloadFile.getCompleteFile() etc.
@@ -563,3 +562,8 @@ Creating xxx_pressed.png
 Use brush: radius 23, spisser 2, hardhet 0.95, sideforhold 1.0, vinkel 0.0, mellomrom 1.0
 Use color: #ff8200
 
+A lot of Simplify Media and ORB users have moved over to [URL="http://subsonic.org"]Subsonic[/URL], and never looked back.
+
+The Subsonic streaming server is available for Windows, Mac and Linux, and is packed with features (like podcast subcription, jukebox mode, last.fm integration, tag editing, transcoding). In addition to the clean and fast web interface, there are iPhone, Android and AIR apps available.
+
+Check out the screenshots, videos and demo on http://subsonic.org
