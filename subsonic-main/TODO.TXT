@@ -1,17 +1,12 @@
 TODO IN 4.0
 ------------
-Amahi
+jaudiotagger, http://www.jthink.net/jaudiotagger/index.jsp
 Mac OS requirement, lower. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9855#9855
 REST album/artist search.
 REST video support.
 Add iPhone apps to More page.
 Add track count REST.
-Change Linux installer config file.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2926
 Use AAC rather than MP3 for transcoding.
-Dynamic AJAX content.
-   http://api.jquery.com/load/
-   http://www.dynamicdrive.com/dynamicindex17/ajaxcontent.htm
-UPnP broken?
 Support small/large screens: http://developer.android.com/guide/topics/manifest/supports-screens-element.html, must improve layout of main activity.
 Android app not available on HTC Tattoo? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9288
 http://www.subsonic.org/pages/download.jsp looks daft in FF.
@@ -20,12 +15,8 @@ TEST: Gzipping hmtl (and xml).
 3rd party license popup broken.
 Change documentation of subsonic_home.  Use popup?
 Update text in donate.jsp (in Subsonic)
-Write more explanatory text in Network > Settings
-jaudiotagger, http://www.jthink.net/jaudiotagger/index.jsp
-auto-detect links in chat.
 Upload new transcoder pack to FRS.
 Make web page for Android, iPhone, AIR clients.
-Change Android screenshots.
 
 VIDEO
 -----
@@ -60,6 +51,7 @@ mp4 tag parser https://contributions.coremedia.com/isobox4j
 
 DONE IN 4.0
 -----------
+clear chat for admin
 Make Settings > Network save/test more intuitive.
 Remove option to specify public port != local port.
 Updated German translation, courtesy of deejay2302
@@ -156,6 +148,8 @@ Merge artists in REST method.  Make it possible to specify music folder.
 BACKLOG
 ==========================
 Next to Lyrics link, add "Share" link with permalink? (link.subsonic.org/iksj)
+auto-detect links in chat.
+Chat broken on Safari
 Add "Copy settings from user" option.
 Improve menus in web pages.  Make sub menus.
 Add FLAC>WAV transcoding
@@ -168,7 +162,6 @@ Add links to Facebook group from home page and Help page.
 Bad performance, low bandwidth.
 Avoid underlined image links in menu bar (FF, Chrome)
 Nightly build.
-"removeAllRows() can only be used with table, tbody, thead and tfoot elements. Attempt to use: HTMLDivElement"
 Write installation note on how to setup internet access.
 Mention Amahi in web pages.
 Contact Amahi

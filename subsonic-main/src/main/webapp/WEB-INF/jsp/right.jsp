@@ -21,6 +21,10 @@
     <c:if test="${model.showChat}">
         dwr.engine.setActiveReverseAjax(true);
         chatService.addMessage(null);
+        var clearDiv = $("clearDiv");
+        if (clearDiv) {
+            clearDiv.hide();
+        }
     </c:if>
     }
 </script>
@@ -82,6 +86,9 @@
             chatService.addMessage($("message").value);
             dwr.util.setValue("message", null);
         }
+        function clearMessages() {
+            chatService.clearMessages();
+        }
         function receiveMessages(messages) {
 
             // Delete all the rows except for the "pattern" row
@@ -99,6 +106,15 @@
                 dwr.util.setValue("content" + id, message.content);
                 $("pattern" + id).show();
             }
+
+            var clearDiv = $("clearDiv");
+            if (clearDiv) {
+                if (messages.length == 0) {
+                    clearDiv.hide();
+                } else {
+                    clearDiv.show();
+                }
+            }
         }
         function formatDate(date) {
             var hours = date.getHours();
@@ -115,14 +131,21 @@
     </script>
 
     <h2><fmt:message key="main.chat"/></h2>
-    <div id="chatlog">
-        <div style="padding-top:0.3em;padding-bottom:0.3em">
-            <input id="message" value=" <fmt:message key="main.message"/>" style="width:90%" onclick="dwr.util.setValue('message', null);" onkeypress="dwr.util.onReturn(event, addMessage)"/>
-        </div>
-        <div id="pattern" style="display:none;margin:0;padding:0 0 0.15em 0;border:0">
-            <span id="user" class="detail" style="font-weight:bold"></span> <span id="date" class="detail"></span> <span id="content"></span>
-        </div>
+    <div style="padding-top:0.3em;padding-bottom:0.3em">
+        <input id="message" value=" <fmt:message key="main.message"/>" style="width:90%" onclick="dwr.util.setValue('message', null);" onkeypress="dwr.util.onReturn(event, addMessage)"/>
     </div>
+
+    <table>
+        <tbody id="chatlog">
+        <tr id="pattern" style="display:none;margin:0;padding:0 0 0.15em 0;border:0">
+            <span id="user" class="detail" style="font-weight:bold"></span> <span id="date" class="detail"></span> <span id="content"></span>
+        </tr>
+        </tbody>
+    </table>
+
+    <c:if test="${model.user.adminRole}">
+        <div id="clearDiv" class="forward"><a href="#" onclick="clearMessages(); return false;">Clear messages</a></div>
+    </c:if>
 </c:if>
 
 </body>

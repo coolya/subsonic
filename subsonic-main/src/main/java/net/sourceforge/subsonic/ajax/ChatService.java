@@ -112,6 +112,20 @@ public class ChatService {
             chatCache.put(new Element(CACHE_KEY, messages));
         }
 
+        updateBrowsers(request);
+    }
+
+    public synchronized void clearMessages() {
+        messages.clear();
+        chatCache.put(new Element(CACHE_KEY, messages));
+        updateBrowsers(WebContextFactory.get().getHttpServletRequest());
+    }
+
+    public synchronized List<Message> getMessages() {
+        return new ArrayList<Message>(messages);
+    }
+
+    private void updateBrowsers(HttpServletRequest request) {
         ScriptBuffer script = new ScriptBuffer();
         script.appendScript("receiveMessages(").appendData(messages).appendScript(");");
 
@@ -122,10 +136,6 @@ public class ChatService {
         for (ScriptSession session : sessions) {
             session.addScript(script);
         }
-    }
-
-    public synchronized List<Message> getMessages() {
-        return new ArrayList<Message>(messages);
     }
 
     public void setSecurityService(SecurityService securityService) {

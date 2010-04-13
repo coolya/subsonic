@@ -50,6 +50,7 @@ public class RightController extends ParameterizableViewController {
         UserSettings userSettings = settingsService.getUserSettings(securityService.getCurrentUsername(request));
         map.put("showNowPlaying", userSettings.isShowNowPlayingEnabled());
         map.put("showChat", userSettings.isShowChatEnabled());
+        map.put("user", securityService.getCurrentUser(request));
 
         result.addObject("model", map);
         return result;

@@ -39,7 +39,7 @@ public class BoundedList<E> extends LinkedList<E> {
     }
 
     /**
-     * Adds an element to the list. If the list is full, the first element is removed.
+     * Adds an element to the tail of the list. If the list is full, the first element is removed.
      * @param e The element to add.
      * @return Always <code>true</code>.
      */
@@ -48,6 +48,17 @@ public class BoundedList<E> extends LinkedList<E> {
             removeFirst();
         }
         return super.add(e);
+    }
+
+    /**
+     * Adds an element to the head of list. If the list is full, the last element is removed.
+     * @param e The element to add.
+     */
+    public void addFirst(E e) {
+        if (isFull()) {
+            removeLast();
+        }
+        super.addFirst(e);
     }
 
     /**
