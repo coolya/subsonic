@@ -20,7 +20,6 @@ package net.sourceforge.subsonic.service;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -70,17 +69,16 @@ public class NetworkService {
     private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(4);
     private final PortForwardingTask portForwardingTask = new PortForwardingTask();
     private final URLRedirectionTask urlRedirectionTask = new URLRedirectionTask();
-    private final TestURLRedirectionTask testUrlRedirectionTask = new TestURLRedirectionTask();
     private Future<?> portForwardingFuture;
     private Future<?> urlRedirectionFuture;
-    private Future<?> testUrlRedirectionFuture;
 
     private final Status portForwardingStatus = new Status();
     private final Status urlRedirectionStatus = new Status();
+    private boolean testUrlRedirection;
 
     public void init() {
         initPortForwarding();
-        initUrlRedirection();
+        initUrlRedirection(false);
     }
 
     /**
@@ -96,21 +94,16 @@ public class NetworkService {
 
     /**
      * Configures URL redirection.
+     *
+     * @param test Whether to test that the redirection works.
      */
-    public synchronized void initUrlRedirection() {
+    public synchronized void initUrlRedirection(boolean test) {
         urlRedirectionStatus.setText("Idle");
         if (urlRedirectionFuture != null) {
             urlRedirectionFuture.cancel(true);
         }
+        testUrlRedirection = test;
         urlRedirectionFuture = executor.scheduleWithFixedDelay(urlRedirectionTask, 0L, URL_REDIRECTION_DELAY, TimeUnit.SECONDS);
-    }
-
-    public void testUrlRedirection() {
-        urlRedirectionStatus.setText("Idle");
-        if (testUrlRedirectionFuture != null) {
-            testUrlRedirectionFuture.cancel(true);
-        }
-        testUrlRedirectionFuture = executor.submit(testUrlRedirectionTask);
     }
 
     public Status getPortForwardingStatus() {
@@ -203,7 +196,7 @@ public class NetworkService {
         }
     }
 
-    private class URLRedirectionTask extends Task{
+    private class URLRedirectionTask extends Task {
 
         @Override
         protected void execute() {
@@ -265,17 +258,19 @@ public class NetworkService {
                 client.getConnectionManager().shutdown();
             }
 
+            // Test redirection, but only once.
+            if (testUrlRedirection) {
+                testUrlRedirection = false;
+                testUrlRedirection();
+            }
+
             //  Don't do it again if disabled.
             if (!enable && urlRedirectionFuture != null) {
                 urlRedirectionFuture.cancel(false);
             }
         }
-    }
 
-    private class TestURLRedirectionTask extends Task {
-
-        @Override
-        protected void execute() {
+        private void testUrlRedirection() {
 
             HttpGet request = new HttpGet(URL_REDIRECTION_TEST_URL + "?redirectFrom=" + settingsService.getUrlRedirectFrom());
             HttpClient client = new DefaultHttpClient();
@@ -283,7 +278,7 @@ public class NetworkService {
             HttpConnectionParams.setSoTimeout(client.getParams(), 30000);
 
             try {
-                urlRedirectionStatus.setText("Testing web address...");
+                urlRedirectionStatus.setText("Testing web address " + settingsService.getUrlRedirectFrom() + ".subsonic.org. Please wait...");
                 String response = client.execute(request, new BasicResponseHandler());
                 urlRedirectionStatus.setText(response);
 

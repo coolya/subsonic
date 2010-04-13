@@ -18,16 +18,17 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.command.NetworkSettingsCommand;
-import net.sourceforge.subsonic.service.NetworkService;
-import net.sourceforge.subsonic.service.SettingsService;
-import org.apache.commons.lang.ObjectUtils;
+import java.util.Date;
+import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.Random;
+import net.sourceforge.subsonic.command.NetworkSettingsCommand;
+import net.sourceforge.subsonic.service.NetworkService;
+import net.sourceforge.subsonic.service.SettingsService;
 
 /**
  * Controller for the page used to change the network settings.
@@ -42,11 +43,6 @@ public class NetworkSettingsController extends SimpleFormController {
     private NetworkService networkService;
 
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
-
-        if (request.getParameter("test") != null) {
-            networkService.testUrlRedirection();
-        }
-
         NetworkSettingsCommand command = new NetworkSettingsCommand();
         command.setPortForwardingEnabled(settingsService.isPortForwardingEnabled());
         command.setPortForwardingPublicPort(settingsService.getPortForwardingPublicPort());
@@ -64,33 +60,24 @@ public class NetworkSettingsController extends SimpleFormController {
     protected void doSubmitAction(Object cmd) throws Exception {
         NetworkSettingsCommand command = (NetworkSettingsCommand) cmd;
 
-        if (command.isPortForwardingEnabled() != settingsService.isPortForwardingEnabled() ||
-            command.getPortForwardingPublicPort() != settingsService.getPortForwardingPublicPort()) {
-            settingsService.setPortForwardingEnabled(command.isPortForwardingEnabled());
-            settingsService.setPortForwardingPublicPort(command.getPortForwardingPublicPort());
-            settingsService.save();
-            networkService.initPortForwarding();
-            networkService.initUrlRedirection(); // Necessary to reflect changed port number.
+        settingsService.setPortForwardingEnabled(command.isPortForwardingEnabled());
+        settingsService.setPortForwardingPublicPort(command.getPortForwardingPublicPort());
+        settingsService.setUrlRedirectionEnabled(command.isUrlRedirectionEnabled());
+        settingsService.setUrlRedirectFrom(StringUtils.lowerCase(command.getUrlRedirectFrom()));
+
+        if (!settingsService.isLicenseValid() && settingsService.getUrlRedirectTrialExpires() == null) {
+            Date expiryDate = new Date(System.currentTimeMillis() + TRIAL_DAYS * 24L * 3600L * 1000L);
+            settingsService.setUrlRedirectTrialExpires(expiryDate);
         }
 
-        if (command.isUrlRedirectionEnabled() != settingsService.isUrlRedirectionEnabled() ||
-            !ObjectUtils.equals(command.getUrlRedirectFrom(), settingsService.getUrlRedirectFrom())) {
-            settingsService.setUrlRedirectionEnabled(command.isUrlRedirectionEnabled());
-            settingsService.setUrlRedirectFrom(StringUtils.lowerCase(command.getUrlRedirectFrom()));
-
-            if (!settingsService.isLicenseValid() && settingsService.getUrlRedirectTrialExpires() == null) {
-                Date expiryDate = new Date(System.currentTimeMillis() + TRIAL_DAYS * 24L * 3600L * 1000L);
-                settingsService.setUrlRedirectTrialExpires(expiryDate);
-            }
-
-            if (settingsService.getServerId() == null) {
-                Random rand = new Random(System.currentTimeMillis());
-                settingsService.setServerId(String.valueOf(Math.abs(rand.nextLong())));
-            }
-
-            settingsService.save();
-            networkService.initUrlRedirection();
+        if (settingsService.getServerId() == null) {
+            Random rand = new Random(System.currentTimeMillis());
+            settingsService.setServerId(String.valueOf(Math.abs(rand.nextLong())));
         }
+
+        settingsService.save();
+        networkService.initPortForwarding();
+        networkService.initUrlRedirection(true);
     }
 
     public void setSettingsService(SettingsService settingsService) {

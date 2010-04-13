@@ -62,15 +62,16 @@
 
 <form:form commandName="command" action="networkSettings.view" method="post">
     <p style="padding-top:1em">
-                    <form:checkbox id="portForwardingEnabled" path="portForwardingEnabled" onclick="enablePortForwardingFields()"/>
-                <label for="portForwardingEnabled"><fmt:message key="networksettings.portforwardingenabled"/></label>
+        <form:checkbox id="portForwardingEnabled" path="portForwardingEnabled" onclick="enablePortForwardingFields()"/>
+        <label for="portForwardingEnabled"><fmt:message key="networksettings.portforwardingenabled"/></label>
     </p>
 
     <table>
         <tr>
             <td>
                 <fmt:message key="networksettings.portforwardingport"/>
-                <form:input id="portForwardingPublicPort" path="portForwardingPublicPort" size="6" cssStyle="margin-left:0.25em"/>
+                <form:input id="portForwardingPublicPort" path="portForwardingPublicPort" size="6"
+                            cssStyle="margin-left:0.25em"/>
             </td>
             <td style="padding-left:0.5em">
                 <c:import url="helpToolTip.jsp"><c:param name="topic" value="portforwarding"/></c:import>
@@ -83,16 +84,12 @@
         <span id="portForwardingStatus" style="margin-left:0.25em"></span>
     </p>
 
-    <p style="padding-top:1em"><form:checkbox id="urlRedirectionEnabled" path="urlRedirectionEnabled" onclick="enableUrlRedirectionFields()"/>
+    <p style="padding-top:1em"><form:checkbox id="urlRedirectionEnabled" path="urlRedirectionEnabled"
+                                              onclick="enableUrlRedirectionFields()"/>
         <label for="urlRedirectionEnabled"><fmt:message key="networksettings.urlredirectionenabled"/></label>
     </p>
 
-    <table>
-        <tr>
-            <td>http://<form:input id="urlRedirectFrom" path="urlRedirectFrom" size="16" cssStyle="margin-left:0.25em"/>.subsonic.org</td>
-            <td style="padding-left:1em"> <div class="forward"><a href="networkSettings.view?test"><fmt:message key="networksettings.urlredirectiontest"/></a></div></td>
-        </tr>
-    </table>
+    <p>http://<form:input id="urlRedirectFrom" path="urlRedirectFrom" size="16" cssStyle="margin-left:0.25em"/>.subsonic.org</p>
 
     <p class="detail">
         <fmt:message key="networksettings.status"/>
@@ -109,7 +106,8 @@
                     <fmt:message key="networksettings.trialexpired"><fmt:param>${expiryDate}</fmt:param></fmt:message>
                 </c:when>
                 <c:otherwise>
-                    <fmt:message key="networksettings.trialnotexpired"><fmt:param>${expiryDate}</fmt:param></fmt:message>
+                    <fmt:message
+                            key="networksettings.trialnotexpired"><fmt:param>${expiryDate}</fmt:param></fmt:message>
                 </c:otherwise>
             </c:choose>
         </p>

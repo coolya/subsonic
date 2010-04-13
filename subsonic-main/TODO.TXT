@@ -4,7 +4,6 @@ Amahi
 Mac OS requirement, lower. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9855#9855
 REST album/artist search.
 REST video support.
-Make Settings > Network save/test more intuitive.
 Add iPhone apps to More page.
 Add track count REST.
 Change Linux installer config file.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2926
@@ -18,17 +17,6 @@ Android app not available on HTC Tattoo? http://www.activeobjects.no/subsonic/fo
 http://www.subsonic.org/pages/download.jsp looks daft in FF.
 TEST: Support Basic auth in REST API http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9270
 TEST: Gzipping hmtl (and xml).
-Android: https support
-Android: Menu option to exit.
-Android: Support mounting SD card.
-Android: Support filenames with "<" and ">".
-Android: Avoid stutter
-Android: Shuffle queue
-Android: Pause on Bluetooth disconnect.
-Android: Long-click on folder to play recursive.
-Android: Trim username, servername. Url-encode username.
-Android: Download error notification is nagging.
-Android: Select music folder in server settings. (Including "All").
 3rd party license popup broken.
 Change documentation of subsonic_home.  Use popup?
 Update text in donate.jsp (in Subsonic)
@@ -72,6 +60,7 @@ mp4 tag parser https://contributions.coremedia.com/isobox4j
 
 DONE IN 4.0
 -----------
+Make Settings > Network save/test more intuitive.
 Updated German translation, courtesy of deejay2302
 REST support to dynamically set the bitrate.
 Add REST method for chat messages.
@@ -115,6 +104,17 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 
 ANDROID
 -----------------------
+Android: https support
+Android: Menu option to exit.
+Android: Support mounting SD card.
+Android: Support filenames with "<" and ">".
+Android: Avoid stutter
+Android: Shuffle queue
+Android: Pause on Bluetooth disconnect.
+Android: Long-click on folder to play recursive.
+Android: Trim username, servername. Url-encode username.
+Android: Download error notification is nagging.
+Android: Select music folder in server settings. (Including "All").
 Use filename.complete.mp3 rather than filename.mp3.complete
 Swipe album art to go to prev/next track.
 Avoid stuttering when restarting playback during download.  Use local socket.
