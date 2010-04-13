@@ -18,21 +18,23 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.domain.User;
-import net.sourceforge.subsonic.domain.UserSettings;
-import net.sourceforge.subsonic.service.SecurityService;
-import net.sourceforge.subsonic.service.SettingsService;
-import net.sourceforge.subsonic.util.StringUtil;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.ObjectUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
+import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.util.StringUtil;
 
 /**
  * Multi-controller used for simple pages.
@@ -53,7 +55,7 @@ public class MultiController extends MultiActionController {
             username = URLEncoder.encode(username, StringUtil.ENCODING_UTF8);
             password = URLEncoder.encode(password, StringUtil.ENCODING_UTF8);
             return new ModelAndView(new RedirectView("j_acegi_security_check?j_username=" + username +
-                                                     "&j_password=" + password + "&_acegi_security_remember_me=checked"));
+                    "&j_password=" + password + "&_acegi_security_remember_me=checked"));
         }
 
         Map<String, Object> map = new HashMap<String, Object>();
@@ -100,8 +102,8 @@ public class MultiController extends MultiActionController {
     private void updatePortAndContextPath(HttpServletRequest request) {
         int localPort = request.getLocalPort();
         String contextPath = request.getContextPath().replace("/", "");
-        if (settingsService.getPortForwardingLocalPort() != localPort) {
-            settingsService.setPortForwardingLocalPort(localPort);
+        if (settingsService.getPort() != localPort) {
+            settingsService.setPort(localPort);
             settingsService.save();
         }
         if (!ObjectUtils.equals(settingsService.getUrlRedirectContextPath(), contextPath)) {

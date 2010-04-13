@@ -45,9 +45,9 @@ public class NetworkSettingsController extends SimpleFormController {
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         NetworkSettingsCommand command = new NetworkSettingsCommand();
         command.setPortForwardingEnabled(settingsService.isPortForwardingEnabled());
-        command.setPortForwardingPublicPort(settingsService.getPortForwardingPublicPort());
         command.setUrlRedirectionEnabled(settingsService.isUrlRedirectionEnabled());
         command.setUrlRedirectFrom(settingsService.getUrlRedirectFrom());
+        command.setPort(settingsService.getPort());
 
         Date trialExpires = settingsService.getUrlRedirectTrialExpires();
         command.setTrialExpires(trialExpires);
@@ -61,7 +61,6 @@ public class NetworkSettingsController extends SimpleFormController {
         NetworkSettingsCommand command = (NetworkSettingsCommand) cmd;
 
         settingsService.setPortForwardingEnabled(command.isPortForwardingEnabled());
-        settingsService.setPortForwardingPublicPort(command.getPortForwardingPublicPort());
         settingsService.setUrlRedirectionEnabled(command.isUrlRedirectionEnabled());
         settingsService.setUrlRedirectFrom(StringUtils.lowerCase(command.getUrlRedirectFrom()));
 

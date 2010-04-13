@@ -11,7 +11,6 @@
     <script type="text/javascript" language="javascript">
 
         function init() {
-            enablePortForwardingFields();
             enableUrlRedirectionFields();
             refreshStatus();
         }
@@ -24,17 +23,6 @@
             dwr.util.setValue("portForwardingStatus", networkStatus.portForwardingStatusText);
             dwr.util.setValue("urlRedirectionStatus", networkStatus.urlRedirectionStatusText);
             window.setTimeout("refreshStatus()", 1000);
-        }
-
-        function enablePortForwardingFields() {
-            var checkbox = $("portForwardingEnabled");
-            var field = $("portForwardingPublicPort");
-
-            if (checkbox && checkbox.checked) {
-                field.enable();
-            } else {
-                field.disable();
-            }
         }
 
         function enableUrlRedirectionFields() {
@@ -62,45 +50,41 @@
 
 <form:form commandName="command" action="networkSettings.view" method="post">
     <p style="padding-top:1em">
-        <form:checkbox id="portForwardingEnabled" path="portForwardingEnabled" onclick="enablePortForwardingFields()"/>
+        <form:checkbox id="portForwardingEnabled" path="portForwardingEnabled"/>
         <label for="portForwardingEnabled"><fmt:message key="networksettings.portforwardingenabled"/></label>
     </p>
 
-    <table>
-        <tr>
-            <td>
-                <fmt:message key="networksettings.portforwardingport"/>
-                <form:input id="portForwardingPublicPort" path="portForwardingPublicPort" size="6"
-                            cssStyle="margin-left:0.25em"/>
-            </td>
-            <td style="padding-left:0.5em">
-                <c:import url="helpToolTip.jsp"><c:param name="topic" value="portforwarding"/></c:import>
-            </td>
-        </tr>
-    </table>
+    <div style="padding-left:2em;max-width:60em">
+        <p>
+            <fmt:message key="networksettings.portforwardinghelp"><fmt:param>${command.port}</fmt:param></fmt:message>
+        </p>
 
-    <p class="detail">
-        <fmt:message key="networksettings.status"/>
-        <span id="portForwardingStatus" style="margin-left:0.25em"></span>
-    </p>
+        <p class="detail">
+            <fmt:message key="networksettings.status"/>
+            <span id="portForwardingStatus" style="margin-left:0.25em"></span>
+        </p>
+    </div>
 
     <p style="padding-top:1em"><form:checkbox id="urlRedirectionEnabled" path="urlRedirectionEnabled"
                                               onclick="enableUrlRedirectionFields()"/>
         <label for="urlRedirectionEnabled"><fmt:message key="networksettings.urlredirectionenabled"/></label>
     </p>
 
-    <p>http://<form:input id="urlRedirectFrom" path="urlRedirectFrom" size="16" cssStyle="margin-left:0.25em"/>.subsonic.org</p>
+    <div style="padding-left:2em">
 
-    <p class="detail">
-        <fmt:message key="networksettings.status"/>
-        <span id="urlRedirectionStatus" style="margin-left:0.25em"></span>
-        <span id="urlRedirectionTestStatus" style="margin-left:0.25em"></span>
-    </p>
+        <p>http://<form:input id="urlRedirectFrom" path="urlRedirectFrom" size="16" cssStyle="margin-left:0.25em"/>.subsonic.org</p>
+
+        <p class="detail">
+            <fmt:message key="networksettings.status"/>
+            <span id="urlRedirectionStatus" style="margin-left:0.25em"></span>
+            <span id="urlRedirectionTestStatus" style="margin-left:0.25em"></span>
+        </p>
+    </div>
 
     <c:if test="${command.trial}">
         <fmt:formatDate value="${command.trialExpires}" dateStyle="long" var="expiryDate"/>
 
-        <p class="warning">
+        <p class="warning" style="padding-top:1em">
             <c:choose>
                 <c:when test="${command.trialExpired}">
                     <fmt:message key="networksettings.trialexpired"><fmt:param>${expiryDate}</fmt:param></fmt:message>

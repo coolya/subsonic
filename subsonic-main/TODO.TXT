@@ -61,6 +61,7 @@ mp4 tag parser https://contributions.coremedia.com/isobox4j
 DONE IN 4.0
 -----------
 Make Settings > Network save/test more intuitive.
+Remove option to specify public port != local port.
 Updated German translation, courtesy of deejay2302
 REST support to dynamically set the bitrate.
 Add REST method for chat messages.

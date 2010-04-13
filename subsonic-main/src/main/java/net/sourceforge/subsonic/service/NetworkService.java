@@ -65,7 +65,6 @@ public class NetworkService {
     private static final String URL_REDIRECTION_TEST_URL = getBackendUrl() + "/backend/redirect/test.view";
 
     private SettingsService settingsService;
-    private int currentPublicPort;
     private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(4);
     private final PortForwardingTask portForwardingTask = new PortForwardingTask();
     private final URLRedirectionTask urlRedirectionTask = new URLRedirectionTask();
@@ -132,37 +131,35 @@ public class NetworkService {
             Router router = findRouter();
             if (router == null) {
                 LOG.warn("No UPnP router found.");
-                portForwardingStatus.setText(enabled ? "No router found." : "Port forwarding disabled.");
+                portForwardingStatus.setText("No router found.");
             } else {
 
                 portForwardingStatus.setText("Router found.");
 
-                // Delete old NAT entry.
-                if (currentPublicPort != 0 && (!enabled || currentPublicPort != settingsService.getPortForwardingPublicPort())) {
-                    try {
-                        router.deletePortMapping(currentPublicPort);
-                        LOG.info("Deleted port mapping for public port " + currentPublicPort);
-                    } catch (Throwable x) {
-                        LOG.warn("Failed to delete port mapping for public port " + currentPublicPort, x);
-                    }
-                }
+                int port = settingsService.getPort();
 
                 // Create new NAT entry.
                 if (enabled) {
-                    currentPublicPort = settingsService.getPortForwardingPublicPort();
-                    int localPort = 0;
                     try {
-                        localPort = settingsService.getPortForwardingLocalPort();
-                        router.addPortMapping(currentPublicPort, localPort, 0);
-                        String message = "Successfully forwarding public port " + currentPublicPort + " to local port " + localPort + ".";
+                        router.addPortMapping(port, port, 0);
+                        String message = "Successfully forwarding port " + port + ".";
                         LOG.info(message);
                         portForwardingStatus.setText(message);
                     } catch (Throwable x) {
-                        String message = "Failed to create port forwarding from public port " + currentPublicPort + " to local port " + localPort + ".";
+                        String message = "Failed to create port forwarding for port " + port + ".";
                         LOG.warn(message, x);
                         portForwardingStatus.setText(message + " See log for details.");
                     }
-                } else {
+                }
+
+                // Delete NAT entry.
+                else {
+                    try {
+                        router.deletePortMapping(port);
+                        LOG.info("Deleted port mapping for port " + port);
+                    } catch (Throwable x) {
+                        LOG.warn("Failed to delete port mapping for port " + port, x);
+                    }
                     portForwardingStatus.setText("Port forwarding disabled.");
                 }
             }
@@ -210,9 +207,7 @@ public class NetworkService {
             } catch (Throwable x) {
                 LOG.warn("Failed to resolve local IP address.", x);
             }
-            int localPort = settingsService.getPortForwardingLocalPort();
-            int publicPort = settingsService.getPortForwardingPublicPort();
-            int port = settingsService.isPortForwardingEnabled() ? publicPort : localPort;
+            int port = settingsService.getPort();
             boolean trial = !settingsService.isLicenseValid();
             Date trialExpires = settingsService.getUrlRedirectTrialExpires();
 
@@ -221,7 +216,7 @@ public class NetworkService {
             params.add(new BasicNameValuePair("redirectFrom", settingsService.getUrlRedirectFrom()));
             params.add(new BasicNameValuePair("port", String.valueOf(port)));
             params.add(new BasicNameValuePair("localIp", localIp));
-            params.add(new BasicNameValuePair("localPort", String.valueOf(localPort)));
+            params.add(new BasicNameValuePair("localPort", String.valueOf(port)));
             params.add(new BasicNameValuePair("contextPath", settingsService.getUrlRedirectContextPath()));
             params.add(new BasicNameValuePair("trial", String.valueOf(trial)));
             if (trial && trialExpires != null) {

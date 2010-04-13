@@ -18,21 +18,6 @@
  */
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.dao.AvatarDao;
-import net.sourceforge.subsonic.dao.InternetRadioDao;
-import net.sourceforge.subsonic.dao.MusicFolderDao;
-import net.sourceforge.subsonic.dao.UserDao;
-import net.sourceforge.subsonic.domain.Avatar;
-import net.sourceforge.subsonic.domain.InternetRadio;
-import net.sourceforge.subsonic.domain.MusicFolder;
-import net.sourceforge.subsonic.domain.Theme;
-import net.sourceforge.subsonic.domain.UserSettings;
-import net.sourceforge.subsonic.util.StringUtil;
-import net.sourceforge.subsonic.util.Util;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -47,6 +32,22 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.StringTokenizer;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.dao.AvatarDao;
+import net.sourceforge.subsonic.dao.InternetRadioDao;
+import net.sourceforge.subsonic.dao.MusicFolderDao;
+import net.sourceforge.subsonic.dao.UserDao;
+import net.sourceforge.subsonic.domain.Avatar;
+import net.sourceforge.subsonic.domain.InternetRadio;
+import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.domain.Theme;
+import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.util.StringUtil;
+import net.sourceforge.subsonic.util.Util;
 
 /**
  * Provides persistent storage of application settings and preferences.
@@ -99,8 +100,7 @@ public class SettingsService {
     private static final String KEY_AUTO_COVER_BATCH = "AutoCoverBatch";
     private static final String KEY_GETTING_STARTED_ENABLED = "GettingStartedEnabled";
     private static final String KEY_PORT_FORWARDING_ENABLED = "PortForwardingEnabled";
-    private static final String KEY_PORT_FORWARDING_PUBLIC_PORT = "PortForwardingPublicPort";
-    private static final String KEY_PORT_FORWARDING_LOCAL_PORT = "PortForwardingLocalPort";
+    private static final String KEY_PORT = "Port";
     private static final String KEY_URL_REDIRECTION_ENABLED = "UrlRedirectionEnabled";
     private static final String KEY_URL_REDIRECT_FROM = "UrlRedirectFrom";
     private static final String KEY_URL_REDIRECT_TRIAL_EXPIRES = "UrlRedirectTrialExpires";
@@ -121,13 +121,13 @@ public class SettingsService {
     private static final String DEFAULT_WELCOME_TITLE = "Welcome to Subsonic!";
     private static final String DEFAULT_WELCOME_SUBTITLE = null;
     private static final String DEFAULT_WELCOME_MESSAGE = "__Welcome to Subsonic!__\n" +
-                                                          "\\\\ \\\\\n" +
-                                                          "Subsonic is a free, web-based media streamer, providing ubiquitous access to your music. \n" +
-                                                          "\\\\ \\\\\n" +
-                                                          "Use it to share your music with friends, or to listen to your own music while at work. You can stream to multiple " +
-                                                          "players simultaneously, for instance to one player in your kitchen and another in your living room.\n" +
-                                                          "\\\\ \\\\\n" +
-                                                          "To change or remove this message, log in with administrator rights and go to {link:Settings > General|generalSettings.view}.";
+            "\\\\ \\\\\n" +
+            "Subsonic is a free, web-based media streamer, providing ubiquitous access to your music. \n" +
+            "\\\\ \\\\\n" +
+            "Use it to share your music with friends, or to listen to your own music while at work. You can stream to multiple " +
+            "players simultaneously, for instance to one player in your kitchen and another in your living room.\n" +
+            "\\\\ \\\\\n" +
+            "To change or remove this message, log in with administrator rights and go to {link:Settings > General|generalSettings.view}.";
     private static final String DEFAULT_LOGIN_MESSAGE = null;
     private static final String DEFAULT_LOCALE_LANGUAGE = "en";
     private static final String DEFAULT_LOCALE_COUNTRY = "";
@@ -156,8 +156,7 @@ public class SettingsService {
     private static final boolean DEFAULT_AUTO_COVER_BATCH = false;
     private static final boolean DEFAULT_PORT_FORWARDING_ENABLED = false;
     private static final boolean DEFAULT_GETTING_STARTED_ENABLED = true;
-    private static final int DEFAULT_PORT_FORWARDING_PUBLIC_PORT = 80;
-    private static final int DEFAULT_PORT_FORWARDING_LOCAL_PORT = 80;
+    private static final int DEFAULT_PORT = 80;
     private static final boolean DEFAULT_URL_REDIRECTION_ENABLED = false;
     private static final String DEFAULT_URL_REDIRECT_FROM = "yourname";
     private static final String DEFAULT_URL_REDIRECT_TRIAL_EXPIRES = null;
@@ -167,7 +166,7 @@ public class SettingsService {
     private static final long DEFAULT_SETTINGS_CHANGED = 0L;
 
     // Array of obsolete keys.  Used to clean property file.
-    private static final List<String> OBSOLETE_KEYS = Arrays.asList();
+    private static final List<String> OBSOLETE_KEYS = Arrays.asList("PortForwardingPublicPort", "PortForwardingLocalPort");
 
     private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
     private static final String THEMES_FILE = "/net/sourceforge/subsonic/theme/themes.txt";
@@ -275,8 +274,8 @@ public class SettingsService {
                 subsonicHome = home;
             } else {
                 String message = "The directory " + home + " does not exist. Please create it and make it writable. " +
-                                 "(You can override the directory location by specifying -Dsubsonic.home=... when " +
-                                 "starting the servlet container.)";
+                        "(You can override the directory location by specifying -Dsubsonic.home=... when " +
+                        "starting the servlet container.)";
                 System.err.println("ERROR: " + message);
             }
         } else {
@@ -684,20 +683,12 @@ public class SettingsService {
         setProperty(KEY_PORT_FORWARDING_ENABLED, String.valueOf(isPortForwardingEnabled));
     }
 
-    public int getPortForwardingPublicPort() {
-        return Integer.valueOf(properties.getProperty(KEY_PORT_FORWARDING_PUBLIC_PORT, String.valueOf(DEFAULT_PORT_FORWARDING_PUBLIC_PORT)));
+    public int getPort() {
+        return Integer.valueOf(properties.getProperty(KEY_PORT, String.valueOf(DEFAULT_PORT)));
     }
 
-    public void setPortForwardingPublicPort(int port) {
-        setProperty(KEY_PORT_FORWARDING_PUBLIC_PORT, String.valueOf(port));
-    }
-
-    public int getPortForwardingLocalPort() {
-        return Integer.valueOf(properties.getProperty(KEY_PORT_FORWARDING_LOCAL_PORT, String.valueOf(DEFAULT_PORT_FORWARDING_LOCAL_PORT)));
-    }
-
-    public void setPortForwardingLocalPort(int port) {
-        setProperty(KEY_PORT_FORWARDING_LOCAL_PORT, String.valueOf(port));
+    public void setPort(int port) {
+        setProperty(KEY_PORT, String.valueOf(port));
     }
 
     public boolean isUrlRedirectionEnabled() {

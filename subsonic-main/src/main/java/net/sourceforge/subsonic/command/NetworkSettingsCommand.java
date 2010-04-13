@@ -27,9 +27,9 @@ import java.util.Date;
 public class NetworkSettingsCommand {
 
     private boolean portForwardingEnabled;
-    private int portForwardingPublicPort;
     private boolean urlRedirectionEnabled;
     private String urlRedirectFrom;
+    private int port;
     private boolean trial;
     private Date trialExpires;
     private boolean trialExpired;
@@ -40,14 +40,6 @@ public class NetworkSettingsCommand {
 
     public boolean isPortForwardingEnabled() {
         return portForwardingEnabled;
-    }
-
-    public void setPortForwardingPublicPort(int portForwardingPublicPort) {
-        this.portForwardingPublicPort = portForwardingPublicPort;
-    }
-
-    public int getPortForwardingPublicPort() {
-        return portForwardingPublicPort;
     }
 
     public boolean isUrlRedirectionEnabled() {
@@ -64,6 +56,14 @@ public class NetworkSettingsCommand {
 
     public void setUrlRedirectFrom(String urlRedirectFrom) {
         this.urlRedirectFrom = urlRedirectFrom;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 
     public void setTrial(boolean trial) {
