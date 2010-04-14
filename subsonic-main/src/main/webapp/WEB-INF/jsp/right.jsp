@@ -21,10 +21,6 @@
     <c:if test="${model.showChat}">
         dwr.engine.setActiveReverseAjax(true);
         chatService.addMessage(null);
-        var clearDiv = $("clearDiv");
-        if (clearDiv) {
-            clearDiv.hide();
-        }
     </c:if>
     }
 </script>
@@ -137,14 +133,14 @@
 
     <table>
         <tbody id="chatlog">
-        <tr id="pattern" style="display:none;margin:0;padding:0 0 0.15em 0;border:0">
-            <span id="user" class="detail" style="font-weight:bold"></span> <span id="date" class="detail"></span> <span id="content"></span>
+        <tr id="pattern" style="display:none;margin:0;padding:0 0 0.15em 0;border:0"><td>
+            <span id="user" class="detail" style="font-weight:bold"></span>&nbsp;<span id="date" class="detail"></span> <span id="content"></span></td>
         </tr>
         </tbody>
     </table>
 
     <c:if test="${model.user.adminRole}">
-        <div id="clearDiv" class="forward"><a href="#" onclick="clearMessages(); return false;">Clear messages</a></div>
+        <div id="clearDiv" style="display:none;" class="forward"><a href="#" onclick="clearMessages(); return false;">Clear messages</a></div>
     </c:if>
 </c:if>
 
