@@ -90,8 +90,9 @@ public class PlayerService {
         // Look for player with same IP address and user name.
         if (player == null) {
             player = getPlayerByIpAddressAndUsername(request.getRemoteAddr(), username);
+
             // Don't use this player if it's used by REST API.
-            if (player.getClientId() != null) {
+            if (player != null && player.getClientId() != null) {
                 player = null;
             }
         }
