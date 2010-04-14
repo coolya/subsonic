@@ -1,7 +1,6 @@
 TODO IN 4.0
 ------------
 jaudiotagger, http://www.jthink.net/jaudiotagger/index.jsp
-Mac OS requirement, lower. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9855#9855
 REST album/artist search.
 REST video support.
 Add iPhone apps to More page.
@@ -17,6 +16,7 @@ Change documentation of subsonic_home.  Use popup?
 Update text in donate.jsp (in Subsonic)
 Upload new transcoder pack to FRS.
 Make web page for Android, iPhone, AIR clients.
+DOCUMENT: Mac OS requirement, lower to 10.4. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9855#9855
 
 VIDEO
 -----
