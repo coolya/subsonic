@@ -35,3 +35,7 @@ monochrome "Monochrome"
 
 # Theme by David D.
 monochrome_black "Monochrome (Black)"
+
+# Theme by Thomas Bruce Dyrud
+2010 "2010"
+

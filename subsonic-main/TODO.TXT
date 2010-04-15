@@ -52,6 +52,7 @@ mp4 tag parser https://contributions.coremedia.com/isobox4j
 
 DONE IN 4.0
 -----------
+Added new theme "2010", courtesy of Thomas Bruce Dyrud.
 clear chat for admin
 Make Settings > Network save/test more intuitive.
 Remove option to specify public port != local port.
