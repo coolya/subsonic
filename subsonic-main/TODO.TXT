@@ -1,5 +1,6 @@
 TODO IN 4.0
 ------------
+"Add all" throws org.directwebremoting.extend.MarshallException: Error marshalling java.util.List: Error reading collection. Input parameter probably is not a collection. (Missing: [). See the logs for more details.
 jaudiotagger, http://www.jthink.net/jaudiotagger/index.jsp
 REST album/artist search.
 REST video support.

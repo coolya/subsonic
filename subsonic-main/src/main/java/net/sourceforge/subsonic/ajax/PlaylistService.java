@@ -71,10 +71,10 @@ public class PlaylistService {
     public PlaylistInfo start() throws Exception {
         HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
         HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
-        return start(request, response);
+        return doStart(request, response);
     }
 
-    public PlaylistInfo start(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public PlaylistInfo doStart(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Player player = getCurrentPlayer(request, response);
         player.getPlaylist().setStatus(Playlist.Status.PLAYING);
         return convert(request, player, true);
@@ -83,10 +83,10 @@ public class PlaylistService {
     public PlaylistInfo stop() throws Exception {
         HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
         HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
-        return stop(request, response);
+        return doStop(request, response);
     }
 
-    public PlaylistInfo stop(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public PlaylistInfo doStop(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Player player = getCurrentPlayer(request, response);
         player.getPlaylist().setStatus(Playlist.Status.STOPPED);
         return convert(request, player, true);
@@ -95,10 +95,10 @@ public class PlaylistService {
     public PlaylistInfo skip(int index) throws Exception {
         HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
         HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
-        return skip(request, response, index);
+        return doSkip(request, response, index);
     }
 
-    public PlaylistInfo skip(HttpServletRequest request, HttpServletResponse response, int index) throws Exception {
+    public PlaylistInfo doSkip(HttpServletRequest request, HttpServletResponse response, int index) throws Exception {
         Player player = getCurrentPlayer(request, response);
         player.getPlaylist().setIndex(index);
         boolean serverSidePlaylist = !player.isExternalWithPlaylist();
@@ -131,10 +131,10 @@ public class PlaylistService {
     public PlaylistInfo add(String path) throws Exception {
         HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
         HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
-        return add(request, response, Arrays.asList(path));
+        return doAdd(request, response, Arrays.asList(path));
     }
 
-    public PlaylistInfo add(HttpServletRequest request, HttpServletResponse response, List<String> paths) throws Exception {
+    public PlaylistInfo doAdd(HttpServletRequest request, HttpServletResponse response, List<String> paths) throws Exception {
         Player player = getCurrentPlayer(request, response);
         List<MusicFile> files = new ArrayList<MusicFile>(paths.size());
         for (String path : paths) {
@@ -148,10 +148,10 @@ public class PlaylistService {
     public PlaylistInfo clear() throws Exception {
         HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
         HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
-        return clear(request, response);
+        return doClear(request, response);
     }
 
-    public PlaylistInfo clear(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public PlaylistInfo doClear(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Player player = getCurrentPlayer(request, response);
         player.getPlaylist().clear();
         boolean serverSidePlaylist = !player.isExternalWithPlaylist();
@@ -161,10 +161,10 @@ public class PlaylistService {
     public PlaylistInfo shuffle() throws Exception {
         HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
         HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
-        return shuffle(request, response);
+        return doShuffle(request, response);
     }
 
-    public PlaylistInfo shuffle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public PlaylistInfo doShuffle(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Player player = getCurrentPlayer(request, response);
         player.getPlaylist().shuffle();
         return convert(request, player, false);
@@ -173,10 +173,10 @@ public class PlaylistService {
     public PlaylistInfo remove(int index) throws Exception {
         HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
         HttpServletResponse response = WebContextFactory.get().getHttpServletResponse();
-        return remove(request, response, index);
+        return doRemove(request, response, index);
     }
 
-    public PlaylistInfo remove(HttpServletRequest request, HttpServletResponse response, int index) throws Exception {
+    public PlaylistInfo doRemove(HttpServletRequest request, HttpServletResponse response, int index) throws Exception {
         Player player = getCurrentPlayer(request, response);
         player.getPlaylist().removeFileAt(index);
         return convert(request, player, false);

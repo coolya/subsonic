@@ -316,26 +316,26 @@ public class RESTController extends MultiActionController {
             boolean returnPlaylist = false;
             String action = ServletRequestUtils.getRequiredStringParameter(request, "action");
             if ("start".equals(action)) {
-                playlistControlService.start(request, response);
+                playlistControlService.doStart(request, response);
             } else if ("stop".equals(action)) {
-                playlistControlService.stop(request, response);
+                playlistControlService.doStop(request, response);
             } else if ("skip".equals(action)) {
                 int index = ServletRequestUtils.getRequiredIntParameter(request, "index");
-                playlistControlService.skip(request, response, index);
+                playlistControlService.doSkip(request, response, index);
             } else if ("add".equals(action)) {
                 String[] ids = ServletRequestUtils.getRequiredStringParameters(request, "id");
                 List<String> paths = new ArrayList<String>(ids.length);
                 for (String id : ids) {
                     paths.add(StringUtil.utf8HexDecode(id));
                 }
-                playlistControlService.add(request, response, paths);
+                playlistControlService.doAdd(request, response, paths);
             } else if ("clear".equals(action)) {
-                playlistControlService.clear(request, response);
+                playlistControlService.doClear(request, response);
             } else if ("remove".equals(action)) {
                 int index = ServletRequestUtils.getRequiredIntParameter(request, "index");
-                playlistControlService.remove(request, response, index);
+                playlistControlService.doRemove(request, response, index);
             } else if ("shuffle".equals(action)) {
-                playlistControlService.shuffle(request, response);
+                playlistControlService.doShuffle(request, response);
             } else if ("setGain".equals(action)) {
                 float gain = ServletRequestUtils.getRequiredFloatParameter(request, "gain");
                 jukeboxService.setGain(gain);
