@@ -1,11 +1,12 @@
 /*
- * CSS styleshet for the "2010" theme.
+ * CSS styleshet for the "Groove" theme.
  *
  * Author: Thomas Bruce Dyrud (thomasbrucedyrud[at]gmail.com)
  *
  * Moified version of the "Cool and Clean" and "Monochrome Black" themes.
  * (Cool and Clean created by: Dan Eriksen - dan.o.eriksen[at]gmail.com )
  * (Monochrome Black created by: David D - ddavis1[at]gmail.com )
+ *
  *
  * Icons used are released under Creative Commons.
  * Heading icons: (http://toffeenut.deviantart.com/art/Black-Neon-Agua-iPhone-Theme-85452072)
@@ -16,12 +17,12 @@
 
 /* The primary background colour. */
 .bgcolor1 {
-    background-color: #222222;
+    background-color: #222;
 }
 
 /* The secondary background colour, light blue, primary theme colour. */
 .bgcolor2, .ruleTableHeader, .log {
-    background-color: #222222;
+    background-color: #222;
     color: #FFFFFF;
 
 }
@@ -50,22 +51,24 @@ table {
 
 /* Main frame image & colour */
 .mainframe {
-    background-image:url( "../icons/2010/background_main.png" );
+    background-image:url( "../icons/groove/background_main.png" );
     background-repeat:no-repeat;
     background-attachment:fixed;
     background-color: #222;
     background-position:right;
 }
 
+
 /* Back image */
 .back {
-    background-image:url( "../icons/2010/back.png" );
+    background-image:url( "../icons/groove/back.png" );
 }
 
 /* Forward image */
 .forward {
-    background-image:url( "../icons/2010/forward.png" );
+    background-image:url( "../icons/groove/forward.png" );
 }
+
 
 /* Link colour */
 a:link, a:active, a:visited, a:link *, a:active *, a:visited * {
@@ -83,6 +86,7 @@ a:hover, a:hover * {
     color: #990099;
 }
 
+
 /* The primary foreground colour. */
 body {
     background-color: #DDDDDD;
@@ -93,6 +97,7 @@ body {
 	right: 10px;
 	overflow-y: auto;
 	overflow-x: hidden;
+
 }
 
 html {
