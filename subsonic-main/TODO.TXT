@@ -7,16 +7,11 @@ REST video support.
 Add iPhone apps to More page.
 Add track count REST.
 Use AAC rather than MP3 for transcoding.
-Support small/large screens: http://developer.android.com/guide/topics/manifest/supports-screens-element.html, must improve layout of main activity.
-Android app not available on HTC Tattoo? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9288
 http://www.subsonic.org/pages/download.jsp looks daft in FF.
-TEST: Support Basic auth in REST API http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9270
-TEST: Gzipping hmtl (and xml).
 3rd party license popup broken.
 Change documentation of subsonic_home.  Use popup?
 Update text in donate.jsp (in Subsonic)
 Upload new transcoder pack to FRS.
-Make web page for Android, iPhone, AIR clients.
 DOCUMENT: Mac OS requirement, lower to 10.4. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9855#9855
 
 VIDEO
@@ -52,6 +47,8 @@ mp4 tag parser https://contributions.coremedia.com/isobox4j
 
 DONE IN 4.0
 -----------
+TEST: Support Basic auth in REST API http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9270
+TEST: Gzipping hmtl (and xml).
 Replaced tag library with jaudiotagger
 Added new "Groove" themes, courtesy of Thomas Bruce Dyrud.
 clear chat for admin
@@ -111,6 +108,8 @@ Android: Long-click on folder to play recursive.
 Android: Trim username, servername. Url-encode username.
 Android: Download error notification is nagging.
 Android: Select music folder in server settings. (Including "All").
+Support small/large screens: http://developer.android.com/guide/topics/manifest/supports-screens-element.html, must improve layout of main activity.
+Android app not available on HTC Tattoo? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9288
 Use filename.complete.mp3 rather than filename.mp3.complete
 Swipe album art to go to prev/next track.
 Avoid stuttering when restarting playback during download.  Use local socket.
