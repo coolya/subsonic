@@ -18,35 +18,32 @@
  */
 package net.sourceforge.subsonic.service.metadata;
 
-import entagged.audioformats.AudioFile;
-import entagged.audioformats.AudioFileIO;
-import entagged.audioformats.Tag;
-import entagged.audioformats.generic.TagField;
-import entagged.audioformats.mp3.util.id3frames.ApicId3Frame;
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.MusicFile;
-import net.sourceforge.subsonic.service.metadata.MetaDataParser;
-
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.AudioHeader;
+import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.datatype.Artwork;
+import org.jaudiotagger.tag.reference.GenreTypes;
 
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Parses meta data from audio files using the Entagged library
- * (http://entagged.sourceforge.net/)
+ * Parses meta data from audio files using the Jaudiotagger library
+ * (http://www.jthink.net/jaudiotagger/)
  *
  * @author Sindre Mehus
  */
-@Deprecated
-public class EntaggedParser extends MetaDataParser {
+public class JaudiotaggerParser extends MetaDataParser {
 
-    private static final Logger LOG = Logger.getLogger(EntaggedParser.class);
+    private static final Logger LOG = Logger.getLogger(JaudiotaggerParser.class);
     private static final Pattern GENRE_PATTERN = Pattern.compile("\\((\\d+)\\).*");
     private static final Pattern TRACK_NUMBER_PATTERN = Pattern.compile("(\\d+)/\\d+");
 
@@ -64,16 +61,20 @@ public class EntaggedParser extends MetaDataParser {
         try {
             AudioFile audioFile = AudioFileIO.read(file.getFile());
             Tag tag = audioFile.getTag();
-            metaData.setArtist(StringUtils.trimToNull(tag.getFirstArtist()));
-            metaData.setAlbum(StringUtils.trimToNull(tag.getFirstAlbum()));
-            metaData.setTitle(StringUtils.trimToNull(tag.getFirstTitle()));
-            metaData.setYear(StringUtils.trimToNull(tag.getFirstYear()));
-            metaData.setGenre(mapGenre(StringUtils.trimToNull(tag.getFirstGenre())));
-            metaData.setTrackNumber(parseTrackNumber(StringUtils.trimToNull(tag.getFirstTrack())));
+            metaData.setArtist(StringUtils.trimToNull(tag.getFirst(FieldKey.ARTIST)));
+            metaData.setAlbum(StringUtils.trimToNull(tag.getFirst(FieldKey.ALBUM)));
+            metaData.setTitle(StringUtils.trimToNull(tag.getFirst(FieldKey.TITLE)));
+            metaData.setYear(StringUtils.trimToNull(tag.getFirst(FieldKey.YEAR)));
+            metaData.setGenre(mapGenre(StringUtils.trimToNull(tag.getFirst(FieldKey.GENRE))));
+            metaData.setTrackNumber(parseTrackNumber(StringUtils.trimToNull(tag.getFirst(FieldKey.TRACK))));
 
-            metaData.setVariableBitRate(audioFile.isVbr());
-            metaData.setBitRate(audioFile.getBitrate());
-            metaData.setDuration(audioFile.getLength());
+            AudioHeader audioHeader = audioFile.getAudioHeader();
+            if (audioHeader != null) {
+                metaData.setVariableBitRate(audioHeader.isVariableBitRate());
+                metaData.setBitRate((int) audioHeader.getBitRateAsNumber());
+                metaData.setDuration(audioHeader.getTrackLength());
+            }
+
 
         } catch (Throwable x) {
             LOG.warn("Error when parsing tags in " + file, x);
@@ -86,9 +87,8 @@ public class EntaggedParser extends MetaDataParser {
      * Returns all tags supported by id3v1.
      */
     public static SortedSet<String> getID3V1Genres() {
-        return new TreeSet<String>(Arrays.asList(Tag.DEFAULT_GENRES));
+        return new TreeSet<String>(GenreTypes.getInstanceOf().getAlphabeticalValueList());
     }
-
 
     /**
      * Sometimes the genre is returned as "(17)" or "(17)Rock", instead of "Rock".  This method
@@ -101,11 +101,10 @@ public class EntaggedParser extends MetaDataParser {
         Matcher matcher = GENRE_PATTERN.matcher(genre);
         if (matcher.matches()) {
             int genreId = Integer.parseInt(matcher.group(1));
-            if (genreId >= 0 && genreId < Tag.DEFAULT_GENRES.length) {
-                return Tag.DEFAULT_GENRES[genreId];
+            if (genreId >= 0 && genreId < GenreTypes.getInstanceOf().getSize()) {
+                return GenreTypes.getInstanceOf().getValueForId(genreId);
             }
         }
-
         return genre;
     }
 
@@ -152,13 +151,18 @@ public class EntaggedParser extends MetaDataParser {
             AudioFile audioFile = AudioFileIO.read(file.getFile());
             Tag tag = audioFile.getTag();
 
-            tag.setArtist(StringUtils.trimToEmpty(metaData.getArtist()));
-            tag.setAlbum(StringUtils.trimToEmpty(metaData.getAlbum()));
-            tag.setTitle(StringUtils.trimToEmpty(metaData.getTitle()));
-            tag.setYear(StringUtils.trimToEmpty(metaData.getYear()));
-            tag.setGenre(StringUtils.trimToEmpty(metaData.getGenre()));
+            tag.setField(FieldKey.ARTIST, StringUtils.trimToEmpty(metaData.getArtist()));
+            tag.setField(FieldKey.ALBUM, StringUtils.trimToEmpty(metaData.getAlbum()));
+            tag.setField(FieldKey.TITLE, StringUtils.trimToEmpty(metaData.getTitle()));
+            tag.setField(FieldKey.YEAR, StringUtils.trimToEmpty(metaData.getYear()));
+            tag.setField(FieldKey.GENRE, StringUtils.trimToEmpty(metaData.getGenre()));
+
             Integer track = metaData.getTrackNumber();
-            tag.setTrack(track == null ? "" : String.valueOf(track));
+            if (track == null) {
+                tag.deleteField(FieldKey.TRACK);
+            } else {
+                tag.setField(FieldKey.TRACK, String.valueOf(track));
+            }
 
             audioFile.commit();
 
@@ -210,9 +214,9 @@ public class EntaggedParser extends MetaDataParser {
      */
     public boolean isImageAvailable(MusicFile file) {
         try {
-            return getAPICFrame(file) != null;
+            return getArtwork(file) != null;
         } catch (Throwable x) {
-            LOG.warn("Failed to parse APIC frame for " + file, x);
+            LOG.warn("Failed to find cover art tag in " + file, x);
             return false;
         }
     }
@@ -225,25 +229,15 @@ public class EntaggedParser extends MetaDataParser {
      */
     public byte[] getImageData(MusicFile file) {
         try {
-            ApicId3Frame apic = getAPICFrame(file);
-            return apic.getData();
+            return getArtwork(file).getBinaryData();
         } catch (Throwable x) {
-            LOG.warn("Failed to parse APIC frame for " + file, x);
+            LOG.warn("Failed to find cover art tag in " + file, x);
             return null;
         }
     }
 
-    private ApicId3Frame getAPICFrame(MusicFile file) throws Exception {
+    private Artwork getArtwork(MusicFile file) throws Exception {
         AudioFile audioFile = AudioFileIO.read(file.getFile());
-
-        @SuppressWarnings({"unchecked"})
-        List<TagField> list = audioFile.getTag().get("APIC");
-
-        if (list.isEmpty()) {
-            return null;
-        }
-
-        TagField field = list.get(0);
-        return field instanceof ApicId3Frame ? (ApicId3Frame) field : null;
+        return audioFile.getTag().getFirstArtwork();
     }
 }

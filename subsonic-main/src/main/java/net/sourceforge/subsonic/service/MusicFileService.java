@@ -20,7 +20,7 @@ package net.sourceforge.subsonic.service;
 
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
-import net.sourceforge.subsonic.service.metadata.EntaggedParser;
+import net.sourceforge.subsonic.service.metadata.JaudiotaggerParser;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.util.FileUtil;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
@@ -196,7 +196,7 @@ public class MusicFileService {
         }
 
         // Look for embedded images in audiofiles. (Only check first audio file encountered).
-        EntaggedParser parser = new EntaggedParser();
+        JaudiotaggerParser parser = new JaudiotaggerParser();
         for (File candidate : candidates) {
             MusicFile musicFile = getMusicFile(candidate);
             if (parser.isApplicable(musicFile)) {

@@ -19,7 +19,7 @@
 package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.service.metadata.EntaggedParser;
+import net.sourceforge.subsonic.service.metadata.JaudiotaggerParser;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.SecurityService;
@@ -163,11 +163,11 @@ public class CoverArtController implements Controller, LastModified {
 
     /**
      * Returns an input stream to the image in the given file.  If the file is an audio file,
-     * the embedded ID3 image (APIC) is returned.
+     * the embedded album art is returned.
      */
     private InputStream getImageInputStream(File file) throws IOException {
         MusicFile musicFile = musicFileService.getMusicFile(file);
-        EntaggedParser parser = new EntaggedParser();
+        JaudiotaggerParser parser = new JaudiotaggerParser();
         if (parser.isApplicable(musicFile)) {
             return new ByteArrayInputStream(parser.getImageData(musicFile));
         } else {

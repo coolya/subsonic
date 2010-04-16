@@ -75,7 +75,7 @@
         <property name="avatarDao" ref="avatarDao"/>
     </bean>
 
-    <bean id="searchService" class="net.sourceforge.subsonic.service.SearchService" init-method="schedule">
+    <bean id="searchService" class="net.sourceforge.subsonic.service.SearchService" init-method="schedule" depends-on="metaDataParserFactory">
         <property name="settingsService" ref="settingsService"/>
         <property name="securityService" ref="securityService"/>
         <property name="musicFileService" ref="musicFileService"/>
@@ -154,7 +154,7 @@
     <bean id="metaDataParserFactory" class="net.sourceforge.subsonic.service.metadata.MetaDataParserFactory" init-method="init">
         <property name="parsers">
             <list>
-                <bean class="net.sourceforge.subsonic.service.metadata.EntaggedParser"/>
+                <bean class="net.sourceforge.subsonic.service.metadata.JaudiotaggerParser"/>
                 <bean class="net.sourceforge.subsonic.service.metadata.FFmpegParser">
                     <property name="transcodingService" ref="transcodingService"/>
                 </bean>

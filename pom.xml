@@ -28,6 +28,11 @@
             <name>Local Repository 2</name>
             <url>file:../repo</url>
         </repository>
+        <repository>
+            <id>java_net</id>
+            <name>download.java.net</name>
+            <url>http://download.java.net/maven/2/</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>

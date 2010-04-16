@@ -21,7 +21,6 @@ package net.sourceforge.subsonic.service.metadata;
 import java.util.List;
 
 import net.sourceforge.subsonic.domain.MusicFile;
-import net.sourceforge.subsonic.service.metadata.MetaDataParser;
 import net.sourceforge.subsonic.service.ServiceLocator;
 
 /**

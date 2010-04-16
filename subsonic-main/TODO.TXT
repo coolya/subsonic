@@ -1,7 +1,7 @@
 TODO IN 4.0
 ------------
-"Add all" throws org.directwebremoting.extend.MarshallException: Error marshalling java.util.List: Error reading collection. Input parameter probably is not a collection. (Missing: [). See the logs for more details.
-jaudiotagger, http://www.jthink.net/jaudiotagger/index.jsp
+Remove EntaggedParser
+Support encoded passwords in Basic auth.
 REST album/artist search.
 REST video support.
 Add iPhone apps to More page.
@@ -52,6 +52,7 @@ mp4 tag parser https://contributions.coremedia.com/isobox4j
 
 DONE IN 4.0
 -----------
+Replaced tag library with jaudiotagger
 Added new "Groove" themes, courtesy of Thomas Bruce Dyrud.
 clear chat for admin
 Make Settings > Network save/test more intuitive.
