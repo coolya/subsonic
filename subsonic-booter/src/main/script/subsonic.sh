@@ -32,7 +32,7 @@ usage() {
     echo "  --context-path=PATH  The context path, i.e., the last part of the Subsonic"
     echo "                       URL. Typically '/' or '/subsonic'. Default '/'"
     echo "  --max-memory=MB      The memory limit (max Java heap size) in megabytes."
-    echo "                       Default: 64"
+    echo "                       Default: 100"
     echo "  --pidfile=PIDFILE    Write PID to this file. Default not created."
     echo "  --quiet              Don't print anything to standard out. Default false."
     echo "  --default-music-folder=DIR    Configure Subsonic to use this folder for music.  This option "
