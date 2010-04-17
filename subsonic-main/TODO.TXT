@@ -7,7 +7,6 @@ REST video support.
 Add iPhone apps to More page.
 Add track count REST.
 Use AAC rather than MP3 for transcoding.
-http://www.subsonic.org/pages/download.jsp looks daft in FF.
 3rd party license popup broken.
 Change documentation of subsonic_home.  Use popup?
 Update text in donate.jsp (in Subsonic)
