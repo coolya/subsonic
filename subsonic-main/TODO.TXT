@@ -1,25 +1,30 @@
+TODO IN 4.0.BETA1
+-----------------
+Comment out video support.
+Test FLAC > mp3 transcoding on Linux.
+Update text in donate.jsp (in Subsonic)
+
 TODO IN 4.0
 ------------
-lame link
-Test FLAC > mp3 transcoding on Linux.
-Remove EntaggedParser
-REST album/artist search.
-REST video support.
+Link to lame broken in max-bandwidth transcoding popup.
 Add iPhone apps to More page.
-Add track count REST.
-Use AAC rather than MP3 for transcoding.
+Go thru About page.
 3rd party license popup broken.
 Change documentation of subsonic_home.  Use popup?
-Update text in donate.jsp (in Subsonic)
 Upload new transcoder pack to FRS.
 DOCUMENT: Mac OS requirement, lower to 10.4. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9855#9855
 
 VIDEO
 -----
+Air Video
+  http://www.inmethod.com/air-video/index.html
+  http://lifehacker.com/5473128/air-video-streams-your-videos-to-your-iphone-with-minimal-effort-is-incredible
+  http://www.inmethod.com/forum/posts/list/60/34.page
 http://rob.opendot.cl/index.php/useful-stuff/ffmpeg-x264-encoding-guide/
 Create separate "Video folder" definition?
 Compile qt-faststart and put in transcoder dir.
 Add H.264 presets to transcoder install.
+REST video support.
 Add transcoding definitions.
 Be able to select stretching type.
 Cache transcoded movies. Nightly job? Requires license.
@@ -81,6 +86,9 @@ MISC
 Java silent installation: http://java.sun.com/javase/6/webnotes/install/jre/silent.html
 WiX: https://sourceforge.net/projects/wix/
 
+REST album/artist search.
+Add track count REST.
+Use AAC rather than MP3 for transcoding.
 html5 audio
 Create album table (or reuse music_file_info), reimplement related services in SearchService.
 Upgrade JWPlayer
