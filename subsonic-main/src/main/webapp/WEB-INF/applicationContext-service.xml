@@ -38,9 +38,9 @@
         <property name="daoHelper" ref="daoHelper"/>
     </bean>
 
-    <bean id="processedVideoDao" class="net.sourceforge.subsonic.dao.ProcessedVideoDao">
-        <property name="daoHelper" ref="daoHelper"/>
-    </bean>
+    <!--<bean id="processedVideoDao" class="net.sourceforge.subsonic.dao.ProcessedVideoDao">-->
+        <!--<property name="daoHelper" ref="daoHelper"/>-->
+    <!--</bean>-->
 
     <bean id="daoHelper" class="net.sourceforge.subsonic.dao.DaoHelper"/>
 
@@ -104,10 +104,10 @@
 
     <bean id="statusService" class="net.sourceforge.subsonic.service.StatusService"/>
 
-    <bean id="videoService" class="net.sourceforge.subsonic.service.VideoService" init-method="init">
-        <property name="processedVideoDao" ref="processedVideoDao"/>
-        <property name="transcodingService" ref="transcodingService"/>
-    </bean>
+    <!--<bean id="videoService" class="net.sourceforge.subsonic.service.VideoService" init-method="init">-->
+        <!--<property name="processedVideoDao" ref="processedVideoDao"/>-->
+        <!--<property name="transcodingService" ref="transcodingService"/>-->
+    <!--</bean>-->
 
     <bean id="musicInfoService" class="net.sourceforge.subsonic.service.MusicInfoService">
         <property name="musicFileInfoDao" ref="musicFileInfoDao"/>

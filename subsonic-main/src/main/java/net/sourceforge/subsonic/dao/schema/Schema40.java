@@ -34,26 +34,26 @@ public class Schema40 extends Schema {
     @Override
     public void execute(JdbcTemplate template) {
 
-        if (template.queryForInt("select count(*) from version where version = 15") == 0) {
-            LOG.info("Updating database schema to version 15.");
-            template.execute("insert into version values (15)");
-        }
-
-        if (!tableExists(template, "processed_video")) {
-            LOG.info("Database table 'processed_video' not found.  Creating it.");
-            template.execute("create table processed_video (" +
-                             "id identity," +
-                             "path varchar not null," +
-                             "source_path varchar not null," +
-                             "log_path varchar not null," +
-                             "quality varchar not null," +
-                             "status varchar not null," +
-                             "bit_rate int not null," +
-                             "size bigint not null)");
-
-            template.execute("create index idx_processed_video_source_path on processed_video(source_path)");
-
-            LOG.info("Database table 'processed_video' was created successfully.");
-        }
+//        if (template.queryForInt("select count(*) from version where version = 15") == 0) {
+//            LOG.info("Updating database schema to version 15.");
+//            template.execute("insert into version values (15)");
+//        }
+//
+//        if (!tableExists(template, "processed_video")) {
+//            LOG.info("Database table 'processed_video' not found.  Creating it.");
+//            template.execute("create table processed_video (" +
+//                             "id identity," +
+//                             "path varchar not null," +
+//                             "source_path varchar not null," +
+//                             "log_path varchar not null," +
+//                             "quality varchar not null," +
+//                             "status varchar not null," +
+//                             "bit_rate int not null," +
+//                             "size bigint not null)");
+//
+//            template.execute("create index idx_processed_video_source_path on processed_video(source_path)");
+//
+//            LOG.info("Database table 'processed_video' was created successfully.");
+//        }
     }
 }
