@@ -1,7 +1,8 @@
 TODO IN 4.0
 ------------
+lame link
+Test FLAC > mp3 transcoding on Linux.
 Remove EntaggedParser
-Support encoded passwords in Basic auth.
 REST album/artist search.
 REST video support.
 Add iPhone apps to More page.
@@ -69,6 +70,7 @@ Truncate long genre names in "more" page.
 Improved year selection in "more" page.
 Updated Slovenian translation, courtesy of Andrej &#381;i&#382;mond
 Album link to last.fm broken
+Improved lyrics lookup
 
 MAC INSTALLER
 -------------

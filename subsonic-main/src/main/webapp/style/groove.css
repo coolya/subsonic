@@ -30,7 +30,8 @@
 /* Background colour for selected header, log etc. */
 .headerSelected {
     color: #FFFFFF;
-    background-color: #333333;
+    background-color: #222;
+    border: 1px solid #eee;
 }
 
 
