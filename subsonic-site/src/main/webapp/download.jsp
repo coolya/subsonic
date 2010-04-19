@@ -32,7 +32,7 @@
                 </tr>
                 <tr>
                     <td><img src="inc/img/download-mac.png" alt="" height="16" width="16"/></td>
-                    <td class="featurename" style="padding-left:0">Mac OS 10.5+ installer</td>
+                    <td class="featurename" style="padding-left:0">Mac OS X 10.5+ installer</td>
                     <td style="white-space:nowrap;"><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9.pkg"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
                     <td style="white-space:nowrap;"><a href="installation.jsp#mac"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>

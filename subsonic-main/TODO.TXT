@@ -2,7 +2,7 @@ TODO IN 4.0.BETA1
 -----------------
 Install on home pc, test android.
 Test FLAC > mp3 transcoding on Linux.
-Update text in donate.jsp (in Subsonic)
+Explain in license email how to activate subsonic.org address etc.
 
 TODO IN 4.0
 ------------
