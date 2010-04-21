@@ -1,13 +1,16 @@
 TODO IN 4.0.BETA1
 -----------------
+Require flash version 10+
 Install on home pc, test android.
 Test FLAC > mp3 transcoding on Linux.
 Explain in license email how to activate subsonic.org address etc.
+Update site
+In donate.jsp, provide link to Settings > Network.
 
 TODO IN 4.0
 ------------
 Link to lame broken in max-bandwidth transcoding popup.
-Add iPhone apps to More page.
+Add iPhone apps to More page.  Link to subsonic.org
 Go thru About page.
 3rd party license popup broken.
 Change documentation of subsonic_home.  Use popup?
