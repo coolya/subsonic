@@ -1,11 +1,12 @@
 TODO IN 4.0.BETA1
 -----------------
-Require flash version 10+
 Install on home pc, test android.
 Test FLAC > mp3 transcoding on Linux.
 Explain in license email how to activate subsonic.org address etc.
 Update site
 In donate.jsp, provide link to Settings > Network.
+Mention 30-day trial in api.jsp
+Link to Jaudiotagger
 
 TODO IN 4.0
 ------------
@@ -55,6 +56,7 @@ mp4 tag parser https://contributions.coremedia.com/isobox4j
 
 DONE IN 4.0
 -----------
+Bugfix: Make Flash player work on Linux.
 TEST: Support Basic auth in REST API http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9270
 TEST: Gzipping hmtl (and xml).
 Replaced tag library with jaudiotagger

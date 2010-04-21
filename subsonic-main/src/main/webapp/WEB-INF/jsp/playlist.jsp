@@ -78,7 +78,7 @@
     }
 
     function playerReady(thePlayer) {
-        player = $(thePlayer.id);
+        player = $("player1");
         player.addModelListener("STATE", "stateListener");
         getPlaylist();
     }
