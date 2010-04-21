@@ -34,7 +34,7 @@ public class SubsonicDeployer implements SubsonicDeployerService {
 
     public static final String DEFAULT_HOST = "0.0.0.0";
     public static final int DEFAULT_PORT = 80;
-    public static final int DEFAULT_MEMORY_LIMIT = 64;
+    public static final int DEFAULT_MEMORY_LIMIT = 100;
     public static final String DEFAULT_CONTEXT_PATH = "/";
     public static final String DEFAULT_WAR = "subsonic.war";
     private static final int MAX_IDLE_TIME_MILLIS = 7 * 24 * 60 * 60 * 1000; // One week.
