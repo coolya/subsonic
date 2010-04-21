@@ -4,7 +4,7 @@
         <build>/Users/sindre/Projects/subsonic/subsonic-installer-mac/target/Subsonic.pkg</build>
         <organization>net.sourceforge.subsonic</organization>
         <userSees ui="easy"/>
-        <min-target os="2"/>
+        <min-target os="3"/>
         <domain anywhere="true"/>
     </properties>
     <distribution>
