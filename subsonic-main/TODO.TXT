@@ -1,6 +1,8 @@
 TODO IN 4.0
 -----------------
 Install on home pc, test android.
+Test native aac streaming.
+Don't enable aac>mp3 transcoding by default.
 Test FLAC > mp3 transcoding on Linux.
 Explain in license email how to activate subsonic.org address etc.
 Update site
