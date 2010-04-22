@@ -32,6 +32,7 @@ import org.jaudiotagger.tag.reference.GenreTypes;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.logging.LogManager;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -46,6 +47,14 @@ public class JaudiotaggerParser extends MetaDataParser {
     private static final Logger LOG = Logger.getLogger(JaudiotaggerParser.class);
     private static final Pattern GENRE_PATTERN = Pattern.compile("\\((\\d+)\\).*");
     private static final Pattern TRACK_NUMBER_PATTERN = Pattern.compile("(\\d+)/\\d+");
+
+    static {
+        try {
+            LogManager.getLogManager().reset();
+        } catch (Throwable x) {
+            LOG.warn("Failed to turn off logging from Jaudiotagger.", x);
+        }
+    }
 
     /**
      * Parses meta data for the given music file. No guessing or reformatting is done.

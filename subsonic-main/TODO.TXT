@@ -1,6 +1,5 @@
 TODO IN 4.0
 -----------------
-Avoid jaudiotagger logging.
 Install on home pc, test android.
 Test FLAC > mp3 transcoding on Linux.
 Explain in license email how to activate subsonic.org address etc.
