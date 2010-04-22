@@ -16,6 +16,30 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="4.0.beta1"><h2 class="div">Subsonic 4.0.beta1 - Apr 23, 2010</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>New version of the <a href="api.jsp">Subsonic API</a> with many new methods to be used by Subsonic <a href="apps.jsp">apps</a>.</li>
+    <li><span class="bugid">New: </span>New transcoder pack with ffmpeg and lame.</li>
+    <li><span class="bugid">New: </span>Improved usability of Settings &gt; Network.</li>
+    <li><span class="bugid">New: </span>Added option to clear chat messages.</li>
+    <li><span class="bugid">New: </span>Added Monochrome themes, courtesy of David D.</li>
+    <li><span class="bugid">New: </span>Added Groove themes, courtesy of Thomas Bruce Dyrud.</li>
+    <li><span class="bugid">New: </span>Updated German translation, courtesy of deejay2302.</li>
+    <li><span class="bugid">New: </span>Updated Finnish translation, courtesy of Reijo J&auml;&auml;rni.</li>
+    <li><span class="bugid">New: </span>Updated Slovenian translation, courtesy of Andrej &#381;i&#382;mond.</li>
+    <li><span class="bugid">New: </span>Made user statistics graphs logarithmic.</li>
+    <li><span class="bugid">New: </span>Truncate long genre names in "More" page.</li>
+    <li><span class="bugid">New: </span>Improved year selection in "More" page.</li>
+    <li><span class="bugid">New: </span>Automatically exclude all hidden files and directories (those starting with ".")</li>
+    <li><span class="bugid">Bugfix: </span>Fixed playback of AAC in Flash player.</li>
+    <li><span class="bugid">Bugfix: </span>Make Flash player work on Linux.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed bug in coverart batch.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed album link to last.fm.</li>
+    <li><span class="bugid">Bugfix: </span>Improved stability of lyrics lookup.</li>
+    <li><span class="bugid">Tech: </span>Replaced tag library with <a href="http://www.jthink.net/jaudiotagger/">Jaudiotagger</a>.</li>
+    <li><span class="bugid">Tech: </span>Compress html pages with gzip.</li>
+</ul>
+
 <a name="3.9"><h2 class="div">Subsonic 3.9 - Feb 12, 2010</h2></a>
 <ul>
     <li><span class="bugid">New: </span>Added link to <a href="http://www.nonpixel.com/subair/">SubAir</a> in "More" page.</li>
@@ -666,6 +690,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#4.0.beta1">Subsonic 4.0.beta1</a></li>
             <li><a href="#3.9">Subsonic 3.9</a></li>
             <li><a href="#3.9.beta1">Subsonic 3.9.beta1</a></li>
             <li><a href="#3.8">Subsonic 3.8</a></li>

@@ -67,32 +67,56 @@
                 </tr>
             </table>
 
-            <%--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="featuretable bottomspace"--%>
-                   <%--id="comparisontable2">--%>
-                <%--<tr class="table-heading">--%>
-                    <%--<th class="featurename">Latest beta release &ndash; Subsonic 3.9.beta1</th>--%>
-                    <%--<th>Download</th>--%>
-                    <%--<th>Instructions</th>--%>
-                <%--</tr>--%>
-                <%--<tr class="table-altrow">--%>
-                    <%--<td class="featurename">Windows installer</td>--%>
-                    <%--<td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9.beta1-setup.exe"><img--%>
-                            <%--src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>--%>
-                    <%--<td><a href="installation.jsp#windows"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>--%>
-                <%--</tr>--%>
-                <%--<tr>--%>
-                    <%--<td class="featurename">Stand-alone version (all platforms)</td>--%>
-                    <%--<td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9.beta1-standalone.tar.gz"><img--%>
-                            <%--src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>--%>
-                    <%--<td><a href="installation.jsp#standalone"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>--%>
-                <%--</tr>--%>
-                <%--<tr class="table-altrow">--%>
-                    <%--<td class="featurename">WAR version (all platforms)</td>--%>
-                    <%--<td><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9.beta1-war.zip"><img--%>
-                            <%--src="inc/img/download_small.gif" alt="Download" height="11" width="11"/> Download</a></td>--%>
-                    <%--<td><a href="installation.jsp#war"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>--%>
-                <%--</tr>--%>
-            <%--</table>--%>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="featuretable bottomspace" id="comparisontable">
+                <tr class="table-heading">
+                    <th></th>
+                    <th class="featurename">Latest beta release &ndash; Subsonic 3.9.beta1</th>
+                    <th>Download</th>
+                    <th>Instructions</th>
+                </tr>
+                <tr class="table-altrow">
+                    <td><img src="inc/img/download-windows.png" alt="" height="16" width="16"/></td>
+                    <td class="featurename" style="padding-left:0">Windows installer</td>
+                    <td style="white-space:nowrap;"><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9.beta1-setup.exe"><img
+                            src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#windows"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                </tr>
+                <tr>
+                    <td><img src="inc/img/download-mac.png" alt="" height="16" width="16"/></td>
+                    <td class="featurename" style="padding-left:0">Mac OS X 10.5+ installer</td>
+                    <td style="white-space:nowrap;"><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9.beta1.pkg"><img
+                            src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#mac"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                </tr>
+                <tr class="table-altrow">
+                    <td><img src="inc/img/download-ubuntu.png" alt="" height="16" width="16"/></td>
+                    <td class="featurename" style="padding-left:0">Debian/Ubuntu installer</td>
+                    <td style="white-space:nowrap;"><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9.beta1.deb"><img
+                            src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#debian"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                </tr>
+                <tr>
+                    <td><img src="inc/img/download-fedora.png" alt="" height="16" width="16"/></td>
+                    <td class="featurename" style="padding-left:0">Red Hat/Fedora installer</td>
+                    <td style="white-space:nowrap;"><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9.beta1.rpm"><img
+                            src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#rpm"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                </tr>
+                <tr class="table-altrow">
+                    <td></td>
+                    <td class="featurename" style="padding-left:0">Stand-alone version (all platforms)</td>
+                    <td style="white-space:nowrap;"><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9.beta1-standalone.tar.gz"><img
+                            src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#standalone"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="featurename" style="padding-left:0"> WAR version (all platforms)</td>
+                    <td style="white-space:nowrap;"><a href="http://prdownloads.sourceforge.net/subsonic/subsonic-3.9.beta1-war.zip"><img
+                            src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#war"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                </tr>
+            </table>
 
             <p class="margin10-t">
                 <a href="http://www.gnu.org/copyleft/gpl.html"><img class="img-left" alt="GPL" src="inc/img/gpl.png"/></a>
