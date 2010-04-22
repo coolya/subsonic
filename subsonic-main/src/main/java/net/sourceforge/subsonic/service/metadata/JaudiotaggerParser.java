@@ -61,12 +61,12 @@ public class JaudiotaggerParser extends MetaDataParser {
         try {
             AudioFile audioFile = AudioFileIO.read(file.getFile());
             Tag tag = audioFile.getTag();
-            metaData.setArtist(StringUtils.trimToNull(tag.getFirst(FieldKey.ARTIST)));
-            metaData.setAlbum(StringUtils.trimToNull(tag.getFirst(FieldKey.ALBUM)));
-            metaData.setTitle(StringUtils.trimToNull(tag.getFirst(FieldKey.TITLE)));
-            metaData.setYear(StringUtils.trimToNull(tag.getFirst(FieldKey.YEAR)));
-            metaData.setGenre(mapGenre(StringUtils.trimToNull(tag.getFirst(FieldKey.GENRE))));
-            metaData.setTrackNumber(parseTrackNumber(StringUtils.trimToNull(tag.getFirst(FieldKey.TRACK))));
+            metaData.setArtist(getTagField(tag, FieldKey.ARTIST));
+            metaData.setAlbum(getTagField(tag, FieldKey.ALBUM));
+            metaData.setTitle(getTagField(tag, FieldKey.TITLE));
+            metaData.setYear(getTagField(tag, FieldKey.YEAR));
+            metaData.setGenre(mapGenre(getTagField(tag, FieldKey.GENRE)));
+            metaData.setTrackNumber(parseTrackNumber(getTagField(tag, FieldKey.TRACK)));
 
             AudioHeader audioHeader = audioFile.getAudioHeader();
             if (audioHeader != null) {
@@ -81,6 +81,15 @@ public class JaudiotaggerParser extends MetaDataParser {
         }
 
         return metaData;
+    }
+
+    private String getTagField(Tag tag, FieldKey fieldKey) {
+        try {
+            return StringUtils.trimToNull(tag.getFirst(fieldKey));
+        } catch (Exception x) {
+            // Ignored.
+            return null;
+        }
     }
 
     /**
