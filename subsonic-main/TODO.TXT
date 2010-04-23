@@ -1,6 +1,5 @@
 TODO IN 4.0
 -----------------
-Mention 30-day trial in api.jsp
 New screenshots for themes.
 User statistics too big.
 Test FLAC > mp3 transcoding on Linux.

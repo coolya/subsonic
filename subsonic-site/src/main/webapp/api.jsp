@@ -207,8 +207,8 @@
 
 <p>
     Get details about the software license. Takes no extra parameters. Please note that access to the
-    REST API requires that the server has a valid license. To get a license key you can give a donation
-    to the Subsonic project.
+    REST API requires that the server has a valid license (after a 30-day trial period). To get a license key you can
+    give a donation to the Subsonic project.
 </p>
 
 <p>
