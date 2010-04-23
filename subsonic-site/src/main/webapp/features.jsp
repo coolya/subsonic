@@ -120,7 +120,7 @@
                         <tr><td>&#149; Icelandic </td><td>(by DJ Danny)</td></tr>
                     </table>
                 </li>
-                <li>Select from eleven different themes, including some that are optimized for HD screens.</li>
+                <li>Select from 15 different themes, including some that are optimized for HD screens.</li>
                 <li>Highly configurable user interface.</li>
             </ul>
         </div>

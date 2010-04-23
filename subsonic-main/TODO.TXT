@@ -1,14 +1,10 @@
 TODO IN 4.0
 -----------------
+Mention 30-day trial in api.jsp
 New screenshots for themes.
 User statistics too big.
-Install on home pc, test android.
 Test FLAC > mp3 transcoding on Linux.
 Explain in license email how to activate subsonic.org address etc.
-Update site
-In donate.jsp, provide link to Settings > Network.
-Mention 30-day trial in api.jsp
-Link to Jaudiotagger
 Link to lame broken in max-bandwidth transcoding popup.
 Add iPhone apps to More page.  Link to subsonic.org
 Go thru About page.
@@ -463,6 +459,7 @@ Update version number in pom.xml etc.
 Take backup of forum.
 
 Upgrade Subsonic backend:
+  Backup backend database.
   scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps/ROOT.war.tmp
   scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps/demo.war.tmp
   ssh sindremehus@subsonic.org
