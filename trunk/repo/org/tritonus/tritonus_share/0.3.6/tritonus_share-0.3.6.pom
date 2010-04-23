@@ -1,0 +1,6 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.tritonus</groupId>
+    <artifactId>tritonus_share</artifactId>
+    <version>0.3.6</version>
+</project>

@@ -1,0 +1,59 @@
+# List of available locales.
+# Author: Sindre Mehus
+
+# English
+en
+
+# English (United Kingdom)
+en_GB
+
+# English (United States)
+en_US
+
+# French
+fr
+
+# Spanish
+es
+
+# German
+de
+
+# Italian
+it
+
+# Russian
+ru
+
+# Slovenian
+sl
+
+# Macedonian
+mk
+
+# Polish
+pl
+
+# Simplified Chinese
+zh_CN
+
+# Japanese
+ja_JP
+
+# Dutch
+nl
+
+# Norwegian
+no
+
+# Swedish
+sv
+
+# Danish
+da
+
+# Finnish
+fi
+
+# Icelandic
+is
