@@ -408,12 +408,13 @@ public class MusicFile implements Serializable {
     }
 
     private boolean isVideoFile(String filename) {
-        for (String suffix : ServiceLocator.getSettingsService().getVideoMaskAsArray()) {
-            if (filename.endsWith(suffix.toLowerCase())) {
-                return true;
-            }
-        }
         return false;
+//        for (String suffix : ServiceLocator.getSettingsService().getVideoMaskAsArray()) {
+//            if (filename.endsWith(suffix.toLowerCase())) {
+//                return true;
+//            }
+//        }
+//        return false;
     }
 
     /**

@@ -16,6 +16,10 @@ Go thru About page.
 Change documentation of subsonic_home.  Use popup?
 Upload new transcoder pack to FRS.
 
+DONE IN 4.0
+-----------
+Removed "Settings > General > Video mask" that was added by mistake.
+
 VIDEO
 -----
 Air Video
