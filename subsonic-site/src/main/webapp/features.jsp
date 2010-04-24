@@ -76,7 +76,7 @@
                 <li>Supports MP3, OGG, AAC and any other audio or video format that streams over HTTP.</li>
                 <li><a href="transcoding.jsp"><b>Transcoding engine</b></a> allows for streaming of a variety of lossy and lossless formats by converting to MP3 on-the-fly.</li>
                 <li>Works with any network-enabled media player, such as Winamp, iTunes, XMMS, VLC, MusicMatch and Windows Media Player. Also includes an embedded Flash player.</li>
-                <li>Tag parsing and editing of MP3, OGG, FLAC, WMA and APE files, using the <a href="http://www.jthink.net/jaudiotagger/">Jaudiotagger</a> library.</li>
+                <li>Tag parsing and editing of MP3, AAC, OGG, FLAC, WMA and APE files, using the <a href="http://www.jthink.net/jaudiotagger/">Jaudiotagger</a> library.</li>
                 <li>Playlists can be saved and restored. M3U, PLS and XSPF formats are supported. Saved playlists are available as Podcasts.</li>
                 <li>On-the-fly resampling to lower bitrates using the high-quality LAME encoder. Handy if your bandwidth is limited.</li>
                 <li>Implements the SHOUTcast protocol. Players which support this (including Winamp, iTunes and XMMS) display the current artist and song, along

@@ -13,7 +13,8 @@ Upload new transcoder pack to FRS.
 
 DONE IN 4.0
 -----------
-Removed "Settings > General > Video mask" that was added by mistake.
+Bugfix: Removed "Settings > General > Video mask" that was added by mistake.
+Bugfix: Read tags from AAC files.
 
 VIDEO
 -----

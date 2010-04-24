@@ -215,6 +215,8 @@ public class JaudiotaggerParser extends MetaDataParser {
         String extension = FilenameUtils.getExtension(file.getName()).toLowerCase();
 
         return extension.equals("mp3") ||
+               extension.equals("m4a") ||
+               extension.equals("aac") ||
                extension.equals("ogg") ||
                extension.equals("flac") ||
                extension.equals("wav") ||
