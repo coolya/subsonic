@@ -39,3 +39,9 @@ monochrome_black "Monochrome (Black)"
 # Themes by Thomas Bruce Dyrud
 groove "Groove"
 groove_simple "Groove (Simple)"
+
+# Themes by Jeebs (Fisher Evans)
+slick "Slick"
+hicon "High Contrast"
+hiconi "High Contrast (Inverted)"
+hitech "High-Tech"
