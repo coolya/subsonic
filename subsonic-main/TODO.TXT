@@ -84,6 +84,7 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 ANDROID
 -----------------------
 Android: https support
+Android: shuffle play
 Android: Menu option to exit.
 Android: Support mounting SD card.
 Android: Support filenames with "<" and ">".
