@@ -40,6 +40,7 @@ monochrome_black "Monochrome (Black)"
 groove "Groove"
 groove_simple "Groove (Simple)"
 simplify "Simplify"
+pinkpanther "PinkPanther"
 
 # Themes by Jeebs (Fisher Evans)
 slick "Slick"

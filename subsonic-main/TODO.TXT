@@ -14,7 +14,7 @@ Upload new transcoder pack to FRS.
 DONE IN 4.0
 -----------
 New: Added themes Slick, High Contrast, High Contrast (Inverted) and High-Tech, courtesy of Fisher Evans.
-New: Added Simplify theme, courtesy of Thomas Bruce Dyrud.
+New: Added themes Simplify and PinkPanther, courtesy of Thomas Bruce Dyrud.
 Bugfix: Removed "Settings > General > Video mask" that was added by mistake.
 Bugfix: Read tags from AAC files.
 
