@@ -17,16 +17,16 @@
 
 /* Main frame image */
 .mainframe {
-    background-image:url( "../icons/groove_simple/background_main.png" );
+    background-image:url( "../icons/groove_simple/background_main_blank.png" );
 }
 
 
 /* Back image */
 .back {
-    background-image:url( "../icons/groove_simple/back.png" );
+    background-image:url( "../icons/groove/back.png" );
 }
 
 /* Forward image */
 .forward {
-    background-image:url( "../icons/groove_simple/forward.png" );
+    background-image:url( "../icons/groove/forward.png" );
 }

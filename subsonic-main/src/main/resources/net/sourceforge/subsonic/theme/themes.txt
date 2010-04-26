@@ -39,6 +39,7 @@ monochrome_black "Monochrome (Black)"
 # Themes by Thomas Bruce Dyrud
 groove "Groove"
 groove_simple "Groove (Simple)"
+simplify "Simplify"
 
 # Themes by Jeebs (Fisher Evans)
 slick "Slick"
