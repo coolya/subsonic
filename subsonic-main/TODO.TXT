@@ -1,11 +1,12 @@
 TODO IN 4.0
 -----------------
+Test chat with Opera 10.52
+Test m4a streaming, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3179
 New screenshots for themes.
 User statistics too big.
 Test FLAC > mp3 transcoding on Linux.
 Explain in license email how to activate subsonic.org address etc.
 Link to lame broken in max-bandwidth transcoding popup.
-Add iPhone apps to More page.  Link to subsonic.org
 Go thru About page.
 3rd party license popup broken.
 Change documentation of subsonic_home.  Use popup?

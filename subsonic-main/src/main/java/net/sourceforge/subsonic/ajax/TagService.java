@@ -26,7 +26,6 @@ import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.tools.ant.util.JAXPUtils;
 
 /**
  * Provides AJAX-enabled services for editing tags in music files.
