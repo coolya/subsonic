@@ -548,8 +548,38 @@ Creating xxx_pressed.png
 Use brush: radius 23, spisser 2, hardhet 0.95, sideforhold 1.0, vinkel 0.0, mellomrom 1.0
 Use color: #ff8200
 
-A lot of Simplify Media and ORB users have moved over to [URL="http://subsonic.org"]Subsonic[/URL], and never looked back.
 
-The Subsonic streaming server is available for Windows, Mac and Linux, and is packed with features (like podcast subcription, jukebox mode, last.fm integration, tag editing, transcoding). In addition to the clean and fast web interface, there are iPhone, Android and AIR apps available.
-
-Check out the screenshots, videos and demo on http://subsonic.org
+"pool-4-thread-1" prio=1 tid=0xa2942468 nid=0x1d56 runnable [0xa38fc000..0xa38fd130]
+        at java.net.SocketInputStream.socketRead0(Native Method)
+        at java.net.SocketInputStream.read(SocketInputStream.java:129)
+        at com.sun.net.ssl.internal.ssl.InputRecord.readFully(InputRecord.java:293)
+        at com.sun.net.ssl.internal.ssl.InputRecord.read(InputRecord.java:331)
+        at com.sun.net.ssl.internal.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:782)
+        - locked <0xae413a68> (a java.lang.Object)
+        at com.sun.net.ssl.internal.ssl.SSLSocketImpl.readDataRecord(SSLSocketImpl.java:739)
+        at com.sun.net.ssl.internal.ssl.AppInputStream.read(AppInputStream.java:75)
+        - locked <0xae4137d8> (a com.sun.net.ssl.internal.ssl.AppInputStream)
+        at java.io.BufferedInputStream.fill(BufferedInputStream.java:218)
+        at java.io.BufferedInputStream.read(BufferedInputStream.java:235)
+        - locked <0xae4134d0> (a java.io.BufferedInputStream)
+        at java.io.FilterInputStream.read(FilterInputStream.java:66)
+        at com.sun.mail.pop3.Protocol.multilineCommand(Protocol.java:379)
+        at com.sun.mail.pop3.Protocol.top(Protocol.java:271)
+        - locked <0xae413378> (a com.sun.mail.pop3.Protocol)
+        at com.sun.mail.pop3.POP3Message.loadHeaders(POP3Message.java:451)
+        - locked <0xae428870> (a com.sun.mail.pop3.POP3Message)
+        at com.sun.mail.pop3.POP3Message.getHeader(POP3Message.java:275)
+        at javax.mail.internet.MimeMessage.getSubject(MimeMessage.java:717)
+        at net.sourceforge.subsonic.backend.servlet.LicenseServlet.isDonationMessage(LicenseServlet.java:117)
+        at net.sourceforge.subsonic.backend.servlet.LicenseServlet.processMessages(LicenseServlet.java:94)
+        at net.sourceforge.subsonic.backend.servlet.LicenseServlet.access$100(LicenseServlet.java:35)
+        at net.sourceforge.subsonic.backend.servlet.LicenseServlet$1.run(LicenseServlet.java:64)
+        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:417)
+        at java.util.concurrent.FutureTask$Sync.innerRunAndReset(FutureTask.java:280)
+        at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:135)
+        at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$101(ScheduledThreadPoolExecutor.java:65)
+        at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.runPeriodic(ScheduledThreadPoolExecutor.java:142)
+        at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:166)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:650)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:675)
+        at java.lang.Thread.run(Thread.java:595)
