@@ -18,10 +18,13 @@
 
             <ul class="list" style="padding-top:1em">
                 <li><b><a href="installation.jsp">Installation instructions</a></b><br>
-                    How to install Subsonic on Windows, Mac and Linux.
+                    How to install Subsonic on Windows, Mac, Linux and other platforms.
                 </li>
                 <li><b><a href="getting-started.jsp">Getting started</a></b><br>
                     How to configure your Subsonic server by setting up music folders and remote access. 
+                </li>
+                <li><b><a href="faq.jsp">FAQ</a></b><br>
+                    Frequently asked questions.
                 </li>
                 <li><b><a href="forum.jsp">Forum</a></b><br>
                     Discuss and ask questions to fellow users. Roughly 30 new posts per day.
