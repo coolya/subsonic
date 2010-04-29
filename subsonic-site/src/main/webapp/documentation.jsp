@@ -16,7 +16,7 @@
         <div id="main-col">
             <h1>Documentation</h1>
 
-            <ul class="list">
+            <ul class="list" style="padding-top:1em">
                 <li><b><a href="installation.jsp">Installation instructions</a></b><br>
                     How to install Subsonic on Windows, Mac and Linux.
                 </li>
