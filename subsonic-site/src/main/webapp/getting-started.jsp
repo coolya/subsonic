@@ -39,11 +39,45 @@
                 embedded in the files. (It does, however, also read the tags for presentation and search purposes.)</p>
 
             <p>Consequently, it's recommended that the music folders you add to Subsonic are organized in an
-                "artist/album/song" manner. There are music managers, like <a href="http://www.mediamonkey.com/" target="_blank">MediaMonkey</a> ,
-                that can help you achieve this.</p>
+                <span style="white-space:nowrap;">"artist/album/song"</span> manner. There are music managers, like
+                <a href="http://www.mediamonkey.com/" target="_blank">MediaMonkey</a>, that can help you achieve this.</p>
 
             <h2>Setting up remote access</h2>
+            <p>With Subsonic you can access your music anywhere on the internet. However in order to do that certain conditions must be met:</p>
+            <ul class="list">
+                <li>Your router must have a public IP address and must be accessible from the internet. This is true for most home internet connections.</li>
+                <li>Your router must support the UPnP protocol so that Subsonic can setup the appropriate port forwarding. If your router doesn't support
+                    this you will have to configure the port forwarding manually.</li>
+            </ul>
+
+            <h3>Automatic port forwarding</h3>
+            <p>To enable automatic port forwarding in Subsonic, go to <b>Settings &gt; Network</b> and enable the
+                "Automatically configure your router..." option. Click the Save button and pay close attention to the status message
+                that is displayed. If you get an error message, you should first try to configure your router to enable UPnP.
+                If it still fails, or your router doesn't support UPnP, follow the instructions below.
+                If it works, the Subsonic server will at regular intervals (every hour) contact the router and tell it to
+                forward incoming connections (from the internet) to the Subsonic server.
+            </p>
+
+            <h3>Manual port forwarding</h3>
+            <p>If the automatic option didn't work you can still set it up manually. Consult <a href="http://portforward.com/" target="_blank">portforward.com</a>
+                to get instructions specific to your router. Note that the instructions contain important steps on how to
+                configure a <em>static IP address</em> for your computer. You should follow these. Later in the process, you
+                will find that Subsonic is not on the list of applications, so select the "Default Guide" instead.
+            </p>
+            <p>
+                When you get to the point where the router asks for <em>private and public ports</em>, enter the port number the
+                Subsonic server is using (normally 80 on Windows and 4040 on other operating systems) for both values.
+                If asked for a <em>protocol</em>, select TCP.
+            </p>
+            <p>
+                If you are unsure what any of this means you will probably need to consult someone with network configuration
+                experience.
+            </p>
+
+            <h3>Setting up your personal subsonic.org address</h3>
             <p>TODO</p>
+            
         </div>
 
         <div id="side-col">
