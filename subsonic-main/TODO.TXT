@@ -1,12 +1,13 @@
 TODO IN 4.0
 -----------------
-Create getting-started.jsp
+Create getting started guide.
 Test chat with Opera 10.52
 Test m4a streaming, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3179
 New screenshots for themes.
 User statistics too big.
 Test FLAC > mp3 transcoding on Linux.
 Explain in license email how to activate subsonic.org address etc.
+Link from Settings > Network to tutorial/faq
 Link to lame broken in max-bandwidth transcoding popup.
 Go thru About page.
 3rd party license popup broken.
@@ -585,3 +586,4 @@ Use color: #ff8200
         at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:650)
         at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:675)
         at java.lang.Thread.run(Thread.java:595)
+

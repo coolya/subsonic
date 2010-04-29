@@ -17,11 +17,11 @@
             <h1>Documentation</h1>
 
             <ul class="list" style="padding-top:1em">
-                <li><b><a href="installation.jsp">Installation instructions</a></b><br>
+                <li><b><a href="installation.jsp">Installation</a></b><br>
                     How to install Subsonic on Windows, Mac, Linux and other platforms.
                 </li>
                 <li><b><a href="getting-started.jsp">Getting started</a></b><br>
-                    How to configure your Subsonic server by setting up music folders and remote access. 
+                    How to set up music folders, remote access etc.
                 </li>
                 <li><b><a href="faq.jsp">FAQ</a></b><br>
                     Frequently asked questions.
@@ -32,12 +32,12 @@
                 <li><b><a href="transcoding.jsp">Transcoding</a></b><br>
                     Detailed documentation of how Subsonic automatically converts between music formats.
                 </li>
-                <li><b><a href="translate.jsp">Translation instructions</a></b><br>
+                <li><b><a href="translate.jsp">Translation</a></b><br>
                     How to translate Subsonic to a new language.
                 </li>
                 <li><b><a href="api.jsp">API documentation</a></b><br>
                     How to access Subsonic using the REST API. (For developers)
-                </li> 
+                </li>
 
             </ul>
 
