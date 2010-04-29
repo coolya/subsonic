@@ -42,7 +42,6 @@
         <fmt:message key="help.license.text"><fmt:param value="${model.brand}"/></fmt:message></td></tr>
     <tr><td class="ruleTableHeader"><fmt:message key="help.homepage.title"/></td><td class="ruleTableCell"><a target="_blank" href="http://www.subsonic.org/">http://www.subsonic.org/</a></td></tr>
     <tr><td class="ruleTableHeader"><fmt:message key="help.forum.title"/></td><td class="ruleTableCell"><a target="_blank" href="http://forum.subsonic.org">http://forum.subsonic.org</a></td></tr>
-    <tr><td class="ruleTableHeader"><fmt:message key="help.shop.title"/></td><td class="ruleTableCell"><a target="_blank" href="http://www.cafepress.com/subsonic_shop">http://www.cafepress.com/subsonic_shop</a></td></tr>
     <tr><td class="ruleTableHeader"><fmt:message key="help.contact.title"/></td><td class="ruleTableCell"><fmt:message key="help.contact.text"><fmt:param value="${model.brand}"/></fmt:message></td></tr>
 </table>
 
