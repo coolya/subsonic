@@ -108,6 +108,10 @@ public class LicenseServlet extends HttpServlet {
         props.setProperty("mail.store.protocol", "pop3s");
         props.setProperty("mail.smtps.host", SMTP_MAIL_SERVER);
         props.setProperty("mail.smtps.auth", "true");
+        props.put("mail.smtps.timeout", "10000");
+        props.put("mail.smtps.connectiontimeout", "10000");
+        props.put("mail.pop3s.timeout", "10000");
+        props.put("mail.pop3s.connectiontimeout", "10000");
 
         session = Session.getDefaultInstance(props, null);
         password = Util.getPassword("gmailpwd.txt");
