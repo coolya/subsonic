@@ -40,9 +40,9 @@
 </div>
 
 <div class="featureitem">
-    <a name="flexible"></a>
+    <a name="versatile"></a>
 
-    <div class="heading">Flexible <a href="#top" class="backtotop" title="Back To Top"><img
+    <div class="heading">Versatile <a href="#top" class="backtotop" title="Back To Top"><img
             src="inc/img/top.gif" alt="Back To Top" height="16" width="16"/></a></div>
     <div class="content">
         <div class="screenshot">
@@ -196,7 +196,7 @@
         <h2>Features</h2>
         <ul class="list">
             <li><a href="#userfriendly">Easy to use</a></li>
-            <li><a href="#flexible">Flexible</a></li>
+            <li><a href="#versatile">Versatile</a></li>
             <li><a href="#mediasupport">Supports most media formats</a></li>
             <li><a href="#customize">Customizable user experience</a></li>
             <li><a href="#integrate">Integrates with the best web services</a></li>
