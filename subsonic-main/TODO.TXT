@@ -1,5 +1,6 @@
 TODO IN 4.0
 -----------------
+Sort by disc number.  Also tag edit support.
 Create getting started guide.
 Make chat work.
 Continue to include flac, faad in transcoding pack.

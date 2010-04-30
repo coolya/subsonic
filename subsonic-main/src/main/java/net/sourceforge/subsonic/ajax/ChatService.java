@@ -40,6 +40,7 @@ import org.directwebremoting.ServerContextFactory;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.util.BoundedList;
 import net.sourceforge.subsonic.Logger;
 
@@ -59,6 +60,7 @@ public class ChatService {
 
     private LinkedList<Message> messages;
     private SecurityService securityService;
+    private SettingsService settingsService;
     private Ehcache chatCache;
     private static final long TTL_MILLIS = 3L * 24L * 60L* 60L * 1000L; // 3 days.
 
@@ -131,6 +133,11 @@ public class ChatService {
 
         // Find all the browsers showing the chat page. Invoke javascript for populating the chat log.
         String chatPage = "/right.view";
+        String contextPath = settingsService.getUrlRedirectContextPath();
+        if (!StringUtils.isEmpty(contextPath)) {
+            chatPage = "/" + contextPath + chatPage;
+        }
+
         ServerContext serverContext = ServerContextFactory.get(request.getSession().getServletContext());
         Collection<ScriptSession> sessions = (Collection<ScriptSession>) serverContext.getScriptSessionsByPage(chatPage);
         for (ScriptSession session : sessions) {
@@ -144,6 +151,10 @@ public class ChatService {
 
     public void setChatCache(Ehcache chatCache) {
         this.chatCache = chatCache;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
     }
 
     public static class Message implements Serializable {

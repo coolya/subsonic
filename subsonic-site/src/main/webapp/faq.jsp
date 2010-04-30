@@ -24,6 +24,7 @@
             <p>Please follow the guide in the <a href="getting-started.jsp">Getting Started</a> documentation.</p>
 
             <%--TODO: Network shares--%>
+            <%--TODO: How to install the license--%>
         </div>
 
         <div id="side-col">
