@@ -41,6 +41,7 @@ groove "Groove"
 groove_simple "Groove (Simple)"
 simplify "Simplify"
 pinkpanther "PinkPanther"
+denim "Denim"
 
 # Themes by Jeebs (Fisher Evans)
 slick "Slick"
