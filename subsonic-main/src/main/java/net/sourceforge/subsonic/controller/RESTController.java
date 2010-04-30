@@ -745,7 +745,7 @@ public class RESTController extends MultiActionController {
     public void addChatMessage(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         try {
-            chatService.addMessage(ServletRequestUtils.getRequiredStringParameter(request, "message"), request);
+            chatService.doAddMessage(ServletRequestUtils.getRequiredStringParameter(request, "message"), request);
             XMLBuilder builder = createXMLBuilder(response, true).endAll();
             response.getWriter().print(builder);
         } catch (ServletRequestBindingException x) {

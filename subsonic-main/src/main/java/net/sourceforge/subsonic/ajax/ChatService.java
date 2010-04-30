@@ -100,10 +100,10 @@ public class ChatService {
 
     public synchronized void addMessage(String message) {
         WebContext webContext = WebContextFactory.get();
-        addMessage(message, webContext.getHttpServletRequest());
+        doAddMessage(message, webContext.getHttpServletRequest());
     }
 
-    public synchronized void addMessage(String message, HttpServletRequest request) {
+    public synchronized void doAddMessage(String message, HttpServletRequest request) {
 
         String user = securityService.getCurrentUsername(request);
         message = StringUtils.trimToNull(message);
