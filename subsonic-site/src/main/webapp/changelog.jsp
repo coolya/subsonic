@@ -38,6 +38,7 @@
     <li><span class="bugid">Bugfix: </span>Improved stability of lyrics lookup.</li>
     <li><span class="bugid">Tech: </span>Replaced tag library with <a href="http://www.jthink.net/jaudiotagger/">Jaudiotagger</a>.</li>
     <li><span class="bugid">Tech: </span>Compress html pages with gzip.</li>
+    <li><span class="bugid">Tech: </span>Changed default Java memory limit to 100 MB.</li>
 </ul>
 
 <a name="3.9"><h2 class="div">Subsonic 3.9 - Feb 12, 2010</h2></a>

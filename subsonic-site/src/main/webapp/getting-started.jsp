@@ -34,6 +34,8 @@
             <p>Note that if you add more than one music folder, a list will appear on the left side of the screen where you can
                 select the active folder.</p>
 
+            <a href="inc/img/gettingstarted/musicfolders.png"><img src="inc/img/gettingstarted/musicfolders_thumb.png" alt=""/></a>
+
             <p>Also note that Subsonic will organize your music according to how they are organized on your disk.
                 Unlike many other music applications, Subsonic does not organize the music according to the tag information
                 embedded in the files. (It does, however, also read the tags for presentation and search purposes.)</p>
