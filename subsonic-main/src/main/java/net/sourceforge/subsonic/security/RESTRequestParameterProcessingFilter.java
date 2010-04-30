@@ -91,8 +91,8 @@ public class RESTRequestParameterProcessingFilter implements Filter {
             }
         } else {
             if (username != null || password != null) {
-                LOG.warn("Username and password provided in URL params, but discarded. User already authenticated as "
-                        + previousAuth.getName());
+//                LOG.warn("Username and password provided in URL params, but discarded. User already authenticated as "
+//                        + previousAuth.getName());
             }
             username = previousAuth.getName();
         }

@@ -75,6 +75,7 @@ public class JaudiotaggerParser extends MetaDataParser {
             metaData.setTitle(getTagField(tag, FieldKey.TITLE));
             metaData.setYear(getTagField(tag, FieldKey.YEAR));
             metaData.setGenre(mapGenre(getTagField(tag, FieldKey.GENRE)));
+            metaData.setDiscNumber(parseDiscNumber(getTagField(tag, FieldKey.DISC_NO)));
             metaData.setTrackNumber(parseTrackNumber(getTagField(tag, FieldKey.TRACK)));
 
             AudioHeader audioHeader = audioFile.getAudioHeader();
@@ -143,7 +144,7 @@ public class JaudiotaggerParser extends MetaDataParser {
             Matcher matcher = TRACK_NUMBER_PATTERN.matcher(trackNumber);
             if (matcher.matches()) {
                 try {
-                    result = new Integer(matcher.group(1));
+                    result = Integer.valueOf(matcher.group(1));
                 } catch (NumberFormatException e) {
                     return null;
                 }
@@ -156,12 +157,23 @@ public class JaudiotaggerParser extends MetaDataParser {
         return result;
     }
 
+    private Integer parseDiscNumber(String discNumber) {
+        if (discNumber == null) {
+            return null;
+        }
+        try {
+            return Integer.valueOf(discNumber);
+        } catch (NumberFormatException x) {
+            return null;
+        }
+    }
+
     /**
-     * Updates the given file with the given meta data.
-     *
-     * @param file     The music file to update.
-     * @param metaData The new meta data.
-     */
+    * Updates the given file with the given meta data.
+    *
+    * @param file     The music file to update.
+    * @param metaData The new meta data.
+    */
     @Override
     public void setMetaData(MusicFile file, MusicFile.MetaData metaData) {
 

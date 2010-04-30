@@ -41,7 +41,6 @@ import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.ServiceLocator;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.metadata.MetaDataParser;
-import net.sourceforge.subsonic.service.metadata.MetaDataParserFactory;
 import net.sourceforge.subsonic.util.FileUtil;
 import net.sourceforge.subsonic.util.StringUtil;
 
@@ -493,6 +492,7 @@ public class MusicFile implements Serializable {
      */
     public static class MetaData implements Serializable {
 
+        private Integer discNumber;
         private Integer trackNumber;
         private String title;
         private String artist;
@@ -504,6 +504,14 @@ public class MusicFile implements Serializable {
         private Integer duration;
         private String format;
         private Long fileSize;
+
+        public Integer getDiscNumber() {
+            return discNumber;
+        }
+
+        public void setDiscNumber(Integer discNumber) {
+            this.discNumber = discNumber;
+        }
 
         public Integer getTrackNumber() {
             return trackNumber;
@@ -656,6 +664,16 @@ public class MusicFile implements Serializable {
 
             if (trackA == null && trackB == null) {
                 return a.getName().compareToIgnoreCase(b.getName());
+            }
+
+            // Compare by disc number, if present.
+            Integer discA = a.getMetaData() == null ? null : a.getMetaData().getDiscNumber();
+            Integer discB = b.getMetaData() == null ? null : b.getMetaData().getDiscNumber();
+            if (discA != null && discB != null) {
+                int i = discA.compareTo(discB);
+                if (i != 0) {
+                    return i;
+                }
             }
 
             return trackA.compareTo(trackB);
