@@ -179,6 +179,7 @@
         </div>
 
         <div id="side-col">
+            <%@ include file="google-translate.jsp" %>
             <%@ include file="donate.jsp" %>
         </div>
 

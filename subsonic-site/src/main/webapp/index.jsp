@@ -98,6 +98,7 @@
 </div>
 
 <div id="side-col">
+    <%@ include file="google-translate.jsp" %>
     <%@ include file="download-subsonic.jsp" %>
     <%@ include file="quotes.jsp" %>
     <%@ include file="donate.jsp" %>

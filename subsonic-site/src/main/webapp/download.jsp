@@ -125,6 +125,7 @@
         </div>
 
         <div id="side-col">
+            <%@ include file="google-translate.jsp" %>
             <div class="sidebox">
                 <h2>Archive</h2>
                 <p>

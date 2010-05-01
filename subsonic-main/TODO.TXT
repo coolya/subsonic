@@ -15,7 +15,6 @@ org.apache.http.conn.ConnectTimeoutException: Connect to post.audioscrobbler.com
 	TODO IN 4.0
 -----------------
 Create getting started guide.
-Make chat work.
 Continue to include flac, faad in transcoding pack.
 Test m4a streaming, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3179
 New screenshots for themes.
@@ -34,9 +33,10 @@ DONE IN 4.0
 New: Added themes Slick, High Contrast, High Contrast (Inverted) and High-Tech, courtesy of Fisher Evans.
 New: Added themes Simplify, PinkPanther and Denim, courtesy of Thomas Bruce Dyrud.
 Bugfix: Proper ordering songs on multi-disc albums.
+Bugfix: Read tags from AAC files.
+Bugfix: Fixed errors with chat feature.
 Bugfix: More robust tag parsing and editing.
 Bugfix: Removed "Settings > General > Video mask" that was added by mistake.
-Bugfix: Read tags from AAC files.
 
 VIDEO
 -----

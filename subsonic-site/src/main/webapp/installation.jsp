@@ -257,7 +257,7 @@
 </div>
 
 <div id="side-col">
-
+    <%@ include file="google-translate.jsp" %>
     <%@ include file="tutorial.jsp" %>
     <%@ include file="donate.jsp" %>
     <%@ include file="translate-subsonic.jsp" %>

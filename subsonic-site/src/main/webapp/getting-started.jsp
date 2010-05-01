@@ -90,9 +90,11 @@
                 forwarding is not set up correctly.</p>
 
             <p>If you don't want to use a subsonic.org address you can get similar services from dynamic DNS providers such as dyndns.com.</p>
-        </div>
+
+       </div>
 
         <div id="side-col">
+            <%@ include file="google-translate.jsp" %>
             <div class="sidebox">
                 <h2>Table of contents</h2>
                 <ul class="list">

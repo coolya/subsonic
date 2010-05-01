@@ -192,6 +192,7 @@
 
 
 <div id="side-col">
+    <%@ include file="google-translate.jsp" %>
     <div class="sidebox">
         <h2>Features</h2>
         <ul class="list">

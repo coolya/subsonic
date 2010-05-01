@@ -131,7 +131,7 @@
                     <td class="transcoding">ffmpeg -i %s -f wav -</td>
                     <td class="transcoding">lame -b %b - -</td>
                 </tr>
-                <tr class="table-altrow"> 
+                <tr class="table-altrow">
                     <td class="transcoding">wv</td>
                     <td class="transcoding">mp3</td>
                     <td class="transcoding">ffmpeg -i %s -f wav -</td>
@@ -157,10 +157,9 @@
         </div>
 
         <div id="side-col">
-
+            <%@ include file="google-translate.jsp" %>
             <%@ include file="donate.jsp" %>
             <%@ include file="merchandise.jsp" %>
-
         </div>
 
         <div class="clear">
