@@ -1,6 +1,19 @@
-TODO IN 4.0
+
+[2010-05-01 00:25:30,733] INFO AudioScrobblerService - Last.fm registration for Titten Tei André Von Drei encountered network error.  Will try again later. In queue: 27
+org.apache.http.conn.ConnectTimeoutException: Connect to post.audioscrobbler.com/195.24.232.207:80 timed out
+	at org.apache.http.conn.scheme.PlainSocketFactory.connectSocket(PlainSocketFactory.java:125)
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:123)
+	at org.apache.http.impl.conn.AbstractPoolEntry.open(AbstractPoolEntry.java:147)
+	at org.apache.http.impl.conn.AbstractPooledConnAdapter.open(AbstractPooledConnAdapter.java:108)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:415)
+	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:641)
+	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:731)
+	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:709)
+	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:700)
+	at net.sourceforge.subsonic.service.AudioScrobblerService.executeRequest(AudioScrobblerService.java:277)
+
+	TODO IN 4.0
 -----------------
-Sort by disc number.  Also tag edit support.
 Create getting started guide.
 Make chat work.
 Continue to include flac, faad in transcoding pack.
@@ -21,6 +34,7 @@ DONE IN 4.0
 New: Added themes Slick, High Contrast, High Contrast (Inverted) and High-Tech, courtesy of Fisher Evans.
 New: Added themes Simplify, PinkPanther and Denim, courtesy of Thomas Bruce Dyrud.
 Bugfix: Proper ordering songs on multi-disc albums.
+Bugfix: More robust tag parsing and editing.
 Bugfix: Removed "Settings > General > Video mask" that was added by mistake.
 Bugfix: Read tags from AAC files.
 
