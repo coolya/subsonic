@@ -31,7 +31,7 @@
     <li><span class="bugid">New: </span>Truncate long genre names in "More" page.</li>
     <li><span class="bugid">New: </span>Improved year selection in "More" page.</li>
     <li><span class="bugid">New: </span>Automatically exclude all hidden files and directories (those starting with ".")</li>
-    <li><span class="bugid">Bugfix: </span>Fixed playback of AAC in Flash player.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed native playback of AAC in Flash player.</li>
     <li><span class="bugid">Bugfix: </span>Make Flash player work on Linux.</li>
     <li><span class="bugid">Bugfix: </span>Fixed bug in coverart batch.</li>
     <li><span class="bugid">Bugfix: </span>Fixed album link to last.fm.</li>

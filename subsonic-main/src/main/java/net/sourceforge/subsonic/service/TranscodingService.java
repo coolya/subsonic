@@ -188,12 +188,12 @@ public class TranscodingService {
             }
 
             TranscodeScheme transcodeScheme = getTranscodeScheme(player);
-            boolean downsample = transcodeScheme != TranscodeScheme.OFF;
-            boolean supported = isDownsamplingSupported();
-            Integer bitRate = musicFile.getMetaData().getBitRate();
-
-            if (downsample && supported && bitRate != null && bitRate > transcodeScheme.getMaxBitRate()) {
-                return getDownsampledInputStream(musicFile, transcodeScheme);
+            if (transcodeScheme != TranscodeScheme.OFF) {
+                boolean supported = isDownsamplingSupported();
+                Integer bitRate = musicFile.getMetaData().getBitRate();
+                if (supported && bitRate != null && bitRate > transcodeScheme.getMaxBitRate()) {
+                    return getDownsampledInputStream(musicFile, transcodeScheme);
+                }
             }
         } catch (Exception x) {
             LOG.warn("Failed to transcode " + musicFile + ". Using original.", x);
