@@ -19,7 +19,7 @@
 <a name="4.0.beta1"><h2 class="div">Subsonic 4.0.beta1 - Apr 23, 2010</h2></a>
 <ul>
     <li><span class="bugid">New: </span>New version of the <a href="api.jsp">Subsonic API</a> with many new methods to be used by Subsonic <a href="apps.jsp">apps</a>.</li>
-    <li><span class="bugid">New: </span>New transcoder pack with ffmpeg and lame.</li>
+    <li><span class="bugid">New: </span>New, simpler transcoder pack with ffmpeg and lame.</li>
     <li><span class="bugid">New: </span>Improved usability of Settings &gt; Network.</li>
     <li><span class="bugid">New: </span>Added option to clear chat messages.</li>
     <li><span class="bugid">New: </span>Added Monochrome themes, courtesy of David D.</li>
