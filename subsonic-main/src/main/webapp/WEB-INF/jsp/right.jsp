@@ -140,7 +140,7 @@
     </table>
 
     <c:if test="${model.user.adminRole}">
-        <div id="clearDiv" style="display:none;" class="forward"><a href="#" onclick="clearMessages(); return false;">Clear messages</a></div>
+        <div id="clearDiv" style="display:none;" class="forward"><a href="#" onclick="clearMessages(); return false;"> <fmt:message key="main.clearchat"/></a></div>
     </c:if>
 </c:if>
 

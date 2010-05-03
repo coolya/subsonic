@@ -15,6 +15,8 @@ org.apache.http.conn.ConnectTimeoutException: Connect to post.audioscrobbler.com
 TODO IN 4.0
 -----------------
 Create post-payment landing page.
+Create translation tool for backend.
+Bug: Quick index links broken in some themes.
 Downsample command used for non-mp3.
 Create getting started guide.
 Continue to include flac, faad in transcoding pack.
@@ -34,6 +36,7 @@ DONE IN 4.0
 -----------
 New: Added themes Slick, High Contrast, High Contrast (Inverted) and High-Tech, courtesy of Fisher Evans.
 New: Added themes Simplify, PinkPanther and Denim, courtesy of Thomas Bruce Dyrud.
+New: Updated Danish translation, courtesy of Morten Hartvich.
 Bugfix: Proper ordering songs on multi-disc albums.
 Bugfix: Read tags from AAC files.
 Bugfix: Fixed errors with chat feature.
