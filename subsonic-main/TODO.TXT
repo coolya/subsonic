@@ -1,7 +1,8 @@
 TODO IN 4.0
 -----------------
 User statistics too big.
-3rd party license popup broken.
+Update Danish translation
+Create beta2
 
 Create post-payment landing page.
 Create translation tool for backend.
