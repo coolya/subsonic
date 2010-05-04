@@ -45,7 +45,7 @@ public class LicenseServlet extends HttpServlet {
             "Payment received",
             "Subsonic Donation - Donation from",
             "Notification of payment received",
-            "Notification of a Cleared eCheck",
+            "Notification of a Pending eCheck",
             "U heeft een betaling ontvangen",
             "You've got money"};
 

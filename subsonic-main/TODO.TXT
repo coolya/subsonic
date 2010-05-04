@@ -1,34 +1,18 @@
-
-[2010-05-01 00:25:30,733] INFO AudioScrobblerService - Last.fm registration for Titten Tei André Von Drei encountered network error.  Will try again later. In queue: 27
-org.apache.http.conn.ConnectTimeoutException: Connect to post.audioscrobbler.com/195.24.232.207:80 timed out
-	at org.apache.http.conn.scheme.PlainSocketFactory.connectSocket(PlainSocketFactory.java:125)
-	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:123)
-	at org.apache.http.impl.conn.AbstractPoolEntry.open(AbstractPoolEntry.java:147)
-	at org.apache.http.impl.conn.AbstractPooledConnAdapter.open(AbstractPooledConnAdapter.java:108)
-	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:415)
-	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:641)
-	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:731)
-	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:709)
-	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:700)
-	at net.sourceforge.subsonic.service.AudioScrobblerService.executeRequest(AudioScrobblerService.java:277)
-
 TODO IN 4.0
 -----------------
+User statistics too big.
+3rd party license popup broken.
+
 Create post-payment landing page.
 Create translation tool for backend.
 Bug: Quick index links broken in some themes.
 Downsample command used for non-mp3.
 Create getting started guide.
 Continue to include flac, faad in transcoding pack.
-Test m4a streaming, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3179
 New screenshots for themes.
-User statistics too big.
 Test FLAC > mp3 transcoding on Linux.
 Explain in license email how to activate subsonic.org address etc.
-Link from Settings > Network to tutorial/faq
-Link to lame broken in max-bandwidth transcoding popup.
 Go thru About page.
-3rd party license popup broken.
 Change documentation of subsonic_home.  Use popup?
 Upload new transcoder pack to FRS.
 
