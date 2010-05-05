@@ -1,6 +1,5 @@
 TODO IN 4.0
 -----------------
-Update Danish translation
 Create beta2
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
 
