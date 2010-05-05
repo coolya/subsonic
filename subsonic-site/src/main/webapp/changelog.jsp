@@ -16,6 +16,19 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="4.0.beta2"><h2 class="div">Subsonic 4.0.beta2 - May 05, 2010</h2></a>
+<ul>
+    <li><span class="bugid">New: Added themes Slick, High Contrast, High Contrast (Inverted) and High-Tech, courtesy of Fisher Evans.</span></li>
+    <li><span class="bugid">New: Added themes Simplify, PinkPanther and Denim, courtesy of Thomas Bruce Dyrud.</span></li>
+    <li><span class="bugid">New: Updated Danish translation, courtesy of Morten Hartvich.</span></li>
+    <li><span class="bugid">Bugfix: User statistics for streamed data was too high.</span></li>
+    <li><span class="bugid">Bugfix: Proper ordering songs on multi-disc albums.</span></li>
+    <li><span class="bugid">Bugfix: Read tags from AAC files.</span></li>
+    <li><span class="bugid">Bugfix: Fixed errors with chat feature.</span></li>
+    <li><span class="bugid">Bugfix: More robust tag parsing and editing.</span></li>
+    <li><span class="bugid">Bugfix: Removed "Settings &gt; General &gt; Video mask" that was added by mistake.</span></li>
+</ul>
+
 <a name="4.0.beta1"><h2 class="div">Subsonic 4.0.beta1 - Apr 23, 2010</h2></a>
 <ul>
     <li><span class="bugid">New: </span>New version of the <a href="api.jsp">Subsonic API</a> with many new methods to be used by Subsonic <a href="apps.jsp">apps</a>.</li>
@@ -691,6 +704,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#4.0.beta2">Subsonic 4.0.beta2</a></li>
             <li><a href="#4.0.beta1">Subsonic 4.0.beta1</a></li>
             <li><a href="#3.9">Subsonic 3.9</a></li>
             <li><a href="#3.9.beta1">Subsonic 3.9.beta1</a></li>

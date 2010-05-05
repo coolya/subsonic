@@ -18,15 +18,6 @@ Upload new transcoder pack to FRS.
 
 DONE IN 4.0
 -----------
-New: Added themes Slick, High Contrast, High Contrast (Inverted) and High-Tech, courtesy of Fisher Evans.
-New: Added themes Simplify, PinkPanther and Denim, courtesy of Thomas Bruce Dyrud.
-New: Updated Danish translation, courtesy of Morten Hartvich.
-Bugfix: User statistics for streamed data was too high.
-Bugfix: Proper ordering songs on multi-disc albums.
-Bugfix: Read tags from AAC files.
-Bugfix: Fixed errors with chat feature.
-Bugfix: More robust tag parsing and editing.
-Bugfix: Removed "Settings > General > Video mask" that was added by mistake.
 
 VIDEO
 -----
@@ -453,11 +444,11 @@ Deploy
 Check that correct local version is displayed.
 Commit
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0.beta1/
-  rsync -avP -e ssh subsonic-assembly/target/subsonic* sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0.beta1/
-  rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0.beta1/
-  rsync -avP -e ssh subsonic-installer-debian/target/subsonic*.deb  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0.beta1/
-  rsync -avP -e ssh subsonic-installer-rpm/target/subsonic*.rpm  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0.beta1/
+  rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0.beta2/
+  rsync -avP -e ssh subsonic-assembly/target/subsonic* sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0.beta2/
+  rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0.beta2/
+  rsync -avP -e ssh subsonic-installer-debian/target/subsonic*.deb  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0.beta2/
+  rsync -avP -e ssh subsonic-installer-rpm/target/subsonic*.rpm  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0.beta2/
 
 Modify FRS properties (use Firefox)
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
