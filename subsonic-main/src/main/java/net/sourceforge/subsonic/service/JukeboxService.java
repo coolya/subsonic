@@ -178,9 +178,9 @@ public class JukeboxService {
         }
 
         private void close() {
-            statusService.removeStreamStatus(status);
             User user = securityService.getUserByName(subsonicPlayer.getUsername());
             securityService.updateUserByteCounts(user, status.getBytesTransfered(), 0L, 0L);
+            statusService.removeStreamStatus(status);
             IOUtils.closeQuietly(in);
         }
 

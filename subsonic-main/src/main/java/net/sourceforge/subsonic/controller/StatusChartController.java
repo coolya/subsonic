@@ -77,7 +77,7 @@ public class StatusChartController extends AbstractChartController {
                 TransferStatus.Sample sample = history.get(i);
 
                 long elapsedTimeMilis = sample.getTimestamp() - previous.getTimestamp();
-                long bytesStreamed = sample.getBytesTransfered() - previous.getBytesTransfered();
+                long bytesStreamed = Math.max(0L, sample.getBytesTransfered() - previous.getBytesTransfered());
 
                 double kbps = (8.0 * bytesStreamed / 1024.0) / (elapsedTimeMilis / 1000.0);
                 series.add(new Millisecond(new Date(sample.getTimestamp())), kbps);

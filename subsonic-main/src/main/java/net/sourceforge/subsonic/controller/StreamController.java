@@ -193,8 +193,8 @@ public class StreamController implements Controller {
 
         } finally {
             if (status != null) {
-                statusService.removeStreamStatus(status);
                 securityService.updateUserByteCounts(user, status.getBytesTransfered(), 0L, 0L);
+                statusService.removeStreamStatus(status);
             }
             IOUtils.closeQuietly(in);
         }

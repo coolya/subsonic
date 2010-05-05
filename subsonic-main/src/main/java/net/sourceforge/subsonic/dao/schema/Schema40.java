@@ -34,10 +34,14 @@ public class Schema40 extends Schema {
     @Override
     public void execute(JdbcTemplate template) {
 
-//        if (template.queryForInt("select count(*) from version where version = 15") == 0) {
-//            LOG.info("Updating database schema to version 15.");
-//            template.execute("insert into version values (15)");
-//        }
+        if (template.queryForInt("select count(*) from version where version = 15") == 0) {
+            LOG.info("Updating database schema to version 15.");
+            template.execute("insert into version values (15)");
+
+            // Reset stream byte count since they have been wrong in earlier releases.
+            template.execute("update user set bytes_streamed = 0");
+            LOG.info("Reset stream byte count statistics.");
+        }
 //
 //        if (!tableExists(template, "processed_video")) {
 //            LOG.info("Database table 'processed_video' not found.  Creating it.");

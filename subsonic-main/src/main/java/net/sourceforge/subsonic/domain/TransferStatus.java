@@ -37,7 +37,7 @@ public class TransferStatus {
     private long bytesTransfered;
     private long bytesSkipped;
     private long bytesTotal;
-    private SampleHistory history = new SampleHistory();
+    private final SampleHistory history = new SampleHistory();
     private boolean terminated;
     private boolean active = true;
 
@@ -66,14 +66,18 @@ public class TransferStatus {
      */
     public synchronized void setBytesTransfered(long bytesTransfered) {
         this.bytesTransfered = bytesTransfered;
+        createSample(bytesTransfered, false);
+    }
+
+    private void createSample(long bytesTransfered, boolean force) {
         long now = System.currentTimeMillis();
 
         if (history.isEmpty()) {
-            history.add(new TransferStatus.Sample(bytesTransfered, now));
+            history.add(new Sample(bytesTransfered, now));
         } else {
-            TransferStatus.Sample lastSample = history.getLast();
-            if (now - lastSample.getTimestamp() > TransferStatus.SAMPLE_INTERVAL_MILLIS) {
-                history.add(new TransferStatus.Sample(bytesTransfered, now));
+            Sample lastSample = history.getLast();
+            if (force || now - lastSample.getTimestamp() > TransferStatus.SAMPLE_INTERVAL_MILLIS) {
+                history.add(new Sample(bytesTransfered, now));
             }
         }
     }
@@ -184,15 +188,6 @@ public class TransferStatus {
     }
 
     /**
-     * Sets the history of samples. A defensive copy is taken.
-     *
-     * @param history The history list of samples.
-     */
-    public synchronized void setHistory(SampleHistory history) {
-        this.history = new SampleHistory(history);
-    }
-
-    /**
      * Returns the history length in milliseconds.
      *
      * @return The history length in milliseconds.
@@ -236,6 +231,14 @@ public class TransferStatus {
      */
     public void setActive(boolean active) {
         this.active = active;
+
+        if (active) {
+            setBytesSkipped(0L);
+            setBytesTotal(0L);
+            setBytesTransfered(0L);
+        } else {
+            createSample(getBytesTransfered(), true);
+        }
     }
 
     /**
