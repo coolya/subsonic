@@ -1,6 +1,8 @@
 TODO IN 4.0
 -----------------
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
+alipay
+MOTODEV https://developer.motorola.com
 
 Create post-payment landing page.
 Create translation tool for backend.
