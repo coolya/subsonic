@@ -16,12 +16,12 @@
         <div id="main-col">
             <h1 class="bottomspace">Download Subsonic</h1>
 
-            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="featuretable bottomspace" id="comparisontable">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="featuretable bottomspace">
                 <tr class="table-heading">
                     <th></th>
                     <th class="featurename">Latest stable release &ndash; Subsonic 3.9</th>
-                    <th>Download</th>
-                    <th>Instructions</th>
+                    <th><a href="changelog.jsp#3.9">What's new?</a></th>
+                    <th><a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2783">Discuss</a></th>
                 </tr>
                 <tr class="table-altrow">
                     <td><img src="inc/img/download-windows.png" alt="" height="16" width="16"/></td>
@@ -67,12 +67,12 @@
                 </tr>
             </table>
 
-            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="featuretable bottomspace" id="comparisontable">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="featuretable bottomspace">
                 <tr class="table-heading">
                     <th></th>
                     <th class="featurename">Latest beta release &ndash; Subsonic 4.0.beta2</th>
-                    <th>Download</th>
-                    <th>Instructions</th>
+                    <th><a href="changelog.jsp#4.0.beta2">What's new?</a></th>
+                    <th><a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3246">Discuss</a></th>
                 </tr>
                 <tr class="table-altrow">
                     <td><img src="inc/img/download-windows.png" alt="" height="16" width="16"/></td>

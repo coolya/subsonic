@@ -18,15 +18,15 @@
 
 <a name="4.0.beta2"><h2 class="div">Subsonic 4.0.beta2 - May 05, 2010</h2></a>
 <ul>
-    <li><span class="bugid">New: Added themes Slick, High Contrast, High Contrast (Inverted) and High-Tech, courtesy of Fisher Evans.</span></li>
-    <li><span class="bugid">New: Added themes Simplify, PinkPanther and Denim, courtesy of Thomas Bruce Dyrud.</span></li>
-    <li><span class="bugid">New: Updated Danish translation, courtesy of Morten Hartvich.</span></li>
-    <li><span class="bugid">Bugfix: User statistics for streamed data was too high.</span></li>
-    <li><span class="bugid">Bugfix: Proper ordering songs on multi-disc albums.</span></li>
-    <li><span class="bugid">Bugfix: Read tags from AAC files.</span></li>
-    <li><span class="bugid">Bugfix: Fixed errors with chat feature.</span></li>
-    <li><span class="bugid">Bugfix: More robust tag parsing and editing.</span></li>
-    <li><span class="bugid">Bugfix: Removed "Settings &gt; General &gt; Video mask" that was added by mistake.</span></li>
+    <li><span class="bugid">New: </span>Added themes Slick, High Contrast, High Contrast (Inverted) and High-Tech, courtesy of Fisher Evans.</li>
+    <li><span class="bugid">New: </span>Added themes Simplify, PinkPanther and Denim, courtesy of Thomas Bruce Dyrud.</li>
+    <li><span class="bugid">New: </span>Updated Danish translation, courtesy of Morten Hartvich.</li>
+    <li><span class="bugid">Bugfix: </span>User statistics for streamed data was too high.</li>
+    <li><span class="bugid">Bugfix: </span>Proper ordering songs on multi-disc albums.</li>
+    <li><span class="bugid">Bugfix: </span>Read tags from AAC files.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed errors with chat feature.</li>
+    <li><span class="bugid">Bugfix: </span>More robust tag parsing and editing.</li>
+    <li><span class="bugid">Bugfix: </span>Removed "Settings &gt; General &gt; Video mask" that was added by mistake.</li>
 </ul>
 
 <a name="4.0.beta1"><h2 class="div">Subsonic 4.0.beta1 - Apr 23, 2010</h2></a>

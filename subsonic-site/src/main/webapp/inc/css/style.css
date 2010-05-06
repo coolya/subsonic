@@ -241,6 +241,9 @@ table.featuretable td {
 	padding: 6px 10px 6px 10px;
 	text-align: center;
 }
+table.featuretable th a{
+    color: #cccccc;
+}
 table.featuretable {
 	padding: 6px 4px;
 }
