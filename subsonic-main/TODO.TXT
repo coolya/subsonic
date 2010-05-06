@@ -1,6 +1,5 @@
 TODO IN 4.0
 -----------------
-Create beta2
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
 
 Create post-payment landing page.
@@ -13,7 +12,6 @@ Test FLAC > mp3 transcoding on Linux.
 Explain in license email how to activate subsonic.org address etc.
 Go thru About page.
 Change documentation of subsonic_home.  Use popup?
-Upload new transcoder pack to FRS.
 
 DONE IN 4.0
 -----------
@@ -502,6 +500,7 @@ Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW
 HOW TO RELEASE TRANSCODING PACK
 ===============================
 Create transcode_windows.zip and release it in SourceForge FRS.
+  rsync -avP -e ssh transcoding-windows-1.1.zip  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/transcoding/1.1/
 
 MISCELLANEOUS
 =============

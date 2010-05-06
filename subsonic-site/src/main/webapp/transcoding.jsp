@@ -36,7 +36,7 @@
 
                         <p>
                             A transcoding pack for Windows with a selection of codecs can be
-                            <a href="http://prdownloads.sourceforge.net/subsonic/transcode_windows.zip"><b>downloaded here</b></a>.
+                            <a href="http://prdownloads.sourceforge.net/subsonic/transcoding-windows-1.1.zip"><b>downloaded here</b></a>.
                             The list of supported media types includes:
                         </p>
 
