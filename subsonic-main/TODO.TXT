@@ -1,8 +1,8 @@
 TODO IN 4.0
 -----------------
+https://slideme.org/node/add/mobileapp
+
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
-alipay
-MOTODEV https://developer.motorola.com
 
 Create post-payment landing page.
 Create translation tool for backend.
@@ -493,6 +493,7 @@ Upload to market (use Firefox)
 Upload to sourceforge.
 http://market.android.com/publish/Home
 Also upload to http://appslib.com/developers/index.html
+Also upload to https://myapps.developer.motorola.com/
 svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.2 -m "Tagging Android 1.2."
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
   rsync -avP -e ssh subsonic-android/bin/subsonic.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.2/subsonic-1.2.apk
