@@ -8,7 +8,6 @@ Create translation tool for backend.
 Bug: Quick index links broken in some themes.
 Downsample command used for non-mp3.
 Create getting started guide.
-Continue to include flac, faad in transcoding pack.
 New screenshots for themes.
 Test FLAC > mp3 transcoding on Linux.
 Explain in license email how to activate subsonic.org address etc.
