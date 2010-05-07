@@ -1,7 +1,5 @@
 TODO IN 4.0
 -----------------
-https://slideme.org/node/add/mobileapp
-
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
 
 Create post-payment landing page.
@@ -84,6 +82,8 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 ANDROID
 -----------------------
 Android: Never attempt to download if offline. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3196
+Android: Suggest switching to offline mode if network error.
+Android: Make offline mode more visible. 
 Android: https support
 Android: shuffle play
 Android: Reorder playlist
@@ -492,8 +492,10 @@ jarsigner -verbose -keystore subsonic.keystore -signedjar bin/subsonic.apk bin/S
 Upload to market (use Firefox)
 Upload to sourceforge.
 http://market.android.com/publish/Home
-Also upload to http://appslib.com/developers/index.html
-Also upload to https://myapps.developer.motorola.com/
+Update
+    http://appslib.com/developers/index.html
+    https://myapps.developer.motorola.com/
+    https://slideme.org/application/subsonic
 svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.2 -m "Tagging Android 1.2."
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
   rsync -avP -e ssh subsonic-android/bin/subsonic.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.2/subsonic-1.2.apk
