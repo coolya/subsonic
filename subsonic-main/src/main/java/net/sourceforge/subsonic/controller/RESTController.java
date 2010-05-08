@@ -410,6 +410,31 @@ public class RESTController extends MultiActionController {
         }
     }
 
+    public void deletePlaylist(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request, true);
+
+        User user = securityService.getCurrentUser(request);
+        if (!user.isPlaylistRole()) {
+            error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to delete playlists.");
+            return;
+        }
+
+        try {
+            String id = StringUtil.utf8HexDecode(ServletRequestUtils.getRequiredStringParameter(request, "id"));
+            playlistService.deletePlaylist(id);
+
+            XMLBuilder builder = createXMLBuilder(response, true);
+            builder.endAll();
+            response.getWriter().print(builder);
+
+        } catch (ServletRequestBindingException x) {
+            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+        } catch (Exception x) {
+            LOG.warn("Error in REST API.", x);
+            error(response, ErrorCode.GENERIC, getErrorMessage(x));
+        }
+    }
+
     public void getAlbumList(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         Player player = playerService.getPlayer(request, response);

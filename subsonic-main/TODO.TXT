@@ -17,6 +17,7 @@ Change documentation of subsonic_home.  Use popup?
 
 DONE IN 4.0
 -----------
+New: Added REST API method for deleting playlists.
 Bugfix: Use UTF-8 encoding when creating M3U playlists.
 Security: Network and cover art settings require admin role.
 
