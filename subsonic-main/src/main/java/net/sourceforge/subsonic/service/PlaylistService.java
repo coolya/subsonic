@@ -22,6 +22,7 @@ import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.util.FileUtil;
+import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -32,7 +33,6 @@ import org.jdom.input.SAXBuilder;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -71,9 +71,10 @@ public class PlaylistService {
         File playlistFile = new File(getPlaylistDirectory(), name);
         checkAccess(playlistFile);
 
-        PrintWriter writer = new PrintWriter(new FileWriter(playlistFile));
+        PrintWriter writer = new PrintWriter(playlistFile, StringUtil.ENCODING_UTF8);
+
         try {
-            PlaylistFormat format = PlaylistFormat.getFilelistFormat(playlistFile);
+            PlaylistFormat format = PlaylistFormat.getPlaylistFormat(playlistFile);
             format.savePlaylist(playlist, writer);
         } finally {
             writer.close();
@@ -96,7 +97,7 @@ public class PlaylistService {
 
         BufferedReader reader = new BufferedReader(new FileReader(playlistFile));
         try {
-            PlaylistFormat format = PlaylistFormat.getFilelistFormat(playlistFile);
+            PlaylistFormat format = PlaylistFormat.getPlaylistFormat(playlistFile);
             format.loadPlaylist(playlist, reader, musicFileService);
         } finally {
             reader.close();
@@ -181,7 +182,7 @@ public class PlaylistService {
 
         public abstract void savePlaylist(Playlist playlist, PrintWriter writer) throws IOException;
 
-        public static PlaylistFormat getFilelistFormat(File file) {
+        public static PlaylistFormat getPlaylistFormat(File file) {
             String name = file.getName().toLowerCase();
             if (name.endsWith(".m3u")) {
                 return new M3UFormat();

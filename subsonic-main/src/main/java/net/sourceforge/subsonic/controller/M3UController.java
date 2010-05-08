@@ -29,10 +29,10 @@ import net.sourceforge.subsonic.util.StringUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Controller which produces the M3U playlist.
@@ -50,7 +50,7 @@ public class M3UController implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("audio/x-mpegurl");
         response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
-        
+
         Player player = playerService.getPlayer(request, response);
 
         String url = request.getRequestURL().toString();
@@ -70,14 +70,14 @@ public class M3UController implements Controller {
         }
 
         if (player.isExternalWithPlaylist()) {
-            createClientSidePlaylist(response.getOutputStream(), player, url);
+            createClientSidePlaylist(response.getWriter(), player, url);
         } else {
-            createServerSidePlaylist(response.getOutputStream(), player, url);
+            createServerSidePlaylist(response.getWriter(), player, url);
         }
         return null;
     }
 
-    private void createClientSidePlaylist(ServletOutputStream out, Player player, String url) throws Exception {
+    private void createClientSidePlaylist(PrintWriter out, Player player, String url) throws Exception {
         out.println("#EXTM3U");
         for (MusicFile musicFile : player.getPlaylist().getFiles()) {
             MusicFile.MetaData metaData = musicFile.getMetaData();
@@ -90,7 +90,7 @@ public class M3UController implements Controller {
         }
     }
 
-    private void createServerSidePlaylist(ServletOutputStream out, Player player, String url) throws IOException {
+    private void createServerSidePlaylist(PrintWriter out, Player player, String url) throws IOException {
 
         url += "player=" + player.getId();
 
