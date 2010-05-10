@@ -1,8 +1,10 @@
+http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2903
+
 TODO IN 4.0
 -----------------
-UTF-8 support in m3u, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2246
-UTF-8 support when saving as m3u.
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
+Re-add *all* transcoders.
+Chat slow when deploying on tomcat?
 
 Create post-payment landing page.
 Create translation tool for backend.
@@ -145,6 +147,8 @@ Merge artists in REST method.  Make it possible to specify music folder.
 
 BACKLOG
 ==========================
+"readlink" in subsonic.sh doesn't work in FreeBSD.
+Add id3 tags to lame command, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3270
 Next to Lyrics link, add "Share" link with permalink? (link.subsonic.org/iksj)
 auto-detect links in chat.
 Chat broken on Safari

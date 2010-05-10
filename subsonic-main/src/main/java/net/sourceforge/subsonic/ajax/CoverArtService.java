@@ -135,13 +135,13 @@ public class CoverArtService {
             }
 
             // Check permissions.
-            File newCoverFile = new File(path, "folder." + suffix);
+            File newCoverFile = new File(path, "cover." + suffix);
             if (!securityService.isWriteAllowed(newCoverFile)) {
                 throw new Exception("Permission denied: " + StringUtil.toHtml(newCoverFile.getPath()));
             }
 
             // If file exists, create a backup.
-            backup(newCoverFile, new File(path, "folder.backup." + suffix));
+            backup(newCoverFile, new File(path, "cover.backup." + suffix));
 
             // Write file.
             IOUtils.copy(input, new FileOutputStream(newCoverFile));
