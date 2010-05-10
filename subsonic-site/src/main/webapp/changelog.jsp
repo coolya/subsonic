@@ -16,6 +16,13 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="4.0"><h2 class="div">Subsonic 4.0 - May 12, 2010</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>Added REST API method for deleting playlists.</li>
+    <li><span class="bugid">Bugfix: </span>Use UTF-8 encoding when creating M3U playlists.</li>
+    <li><span class="bugid">Security: </span>Network and cover art settings require admin role.</li>
+</ul>
+
 <a name="4.0.beta2"><h2 class="div">Subsonic 4.0.beta2 - May 05, 2010</h2></a>
 <ul>
     <li><span class="bugid">New: </span>Added themes Slick, High Contrast, High Contrast (Inverted) and High-Tech, courtesy of Fisher Evans.</li>
@@ -704,6 +711,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#4.0">Subsonic 4.0</a></li>
             <li><a href="#4.0.beta2">Subsonic 4.0.beta2</a></li>
             <li><a href="#4.0.beta1">Subsonic 4.0.beta1</a></li>
             <li><a href="#3.9">Subsonic 3.9</a></li>
