@@ -86,6 +86,7 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 
 ANDROID
 -----------------------
+Android: FLAC bugfix, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2903
 Android: Never attempt to download if offline. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3196
 Android: Suggest switching to offline mode if network error.
 Android: Make offline mode more visible.
@@ -93,6 +94,8 @@ Android: https support
 Android: shuffle play
 Android: Reorder playlist
 Android: Save playlist
+Android: Lyrics.
+Android: Queue Next + Queue Last
 Android: Menu option to exit.
 Android: Support mounting SD card.
 Android: Support filenames with "<" and ">".

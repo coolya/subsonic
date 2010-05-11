@@ -148,7 +148,7 @@
     </tr>
     <tr class="table-altrow">
         <td><code>60</code></td>
-        <td>The trial period is over. Please donate to get a license key.</td>
+        <td>The trial period for the Subsonic server is over. Please donate to get a license key. Visit subsonic.org for details.</td>
     </tr>
 </table>
 
@@ -520,7 +520,7 @@
     </tr>
 </table>
 <p>
-    Returns binary data on success.
+    Returns binary data on success, or an XML document on error (in which case the HTTP content type will start with "text/xml").
 </p>
 
 <h2 class="div">stream</h2>
@@ -557,7 +557,7 @@
     </tr>
 </table>
 <p>
-    Returns binary data on success.
+    Returns binary data on success, or an XML document on error (in which case the HTTP content type will start with "text/xml").
 </p>
 
 <h2 class="div">getCoverArt</h2>
@@ -592,7 +592,7 @@
     </tr>
 </table>
 <p>
-    Returns binary data on success.
+    Returns binary data on success, or an XML document on error (in which case the HTTP content type will start with "text/xml").
 </p>
 
 <h2 class="div">changePassword</h2>

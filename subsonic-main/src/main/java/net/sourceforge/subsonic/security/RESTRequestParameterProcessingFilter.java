@@ -40,7 +40,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Performs authentication based on credentials being present in the HTTP request parameters. Also checks
@@ -111,7 +113,8 @@ public class RESTRequestParameterProcessingFilter implements Filter {
         }
 
         if (errorCode == null) {
-            errorCode = checkLicense(client);
+            String restMethod = StringUtils.substringAfterLast(httpRequest.getRequestURI(), "/");
+            errorCode = checkLicense(client, restMethod);
         }
 
         if (errorCode == null) {
@@ -149,7 +152,7 @@ public class RESTRequestParameterProcessingFilter implements Filter {
         return null;
     }
 
-    private RESTController.ErrorCode checkLicense(String client) {
+    private RESTController.ErrorCode checkLicense(String client, String restMethod) {
         if (settingsService.isLicenseValid()) {
             return null;
         }
@@ -160,6 +163,14 @@ public class RESTRequestParameterProcessingFilter implements Filter {
             settingsService.save();
             LOG.info("REST access for client '" + client + "' will expire " + expiryDate);
         } else if (settingsService.getRESTTrialExpires(client).before(new Date())) {
+
+            // Exception: iPhone clients are allowed to call any method except stream.view and download.view.
+            List<String> iPhoneClients = Arrays.asList("iSub", "zsubsonic");
+            List<String> restrictedMethods = Arrays.asList("stream.view", "download.view");
+            if (iPhoneClients.contains(client) && !restrictedMethods.contains(restMethod)) {
+                return null;
+            }
+
             LOG.info("REST access for client '" + client + "' has expired.");
             return RESTController.ErrorCode.NOT_LICENSED;
         }
