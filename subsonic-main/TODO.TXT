@@ -1,9 +1,6 @@
-http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2903
-
 TODO IN 4.0
 -----------------
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
-Re-add *all* transcoders.
 Chat slow when deploying on tomcat?
 
 Create post-payment landing page.
@@ -16,10 +13,6 @@ Test FLAC > mp3 transcoding on Linux.
 Explain in license email how to activate subsonic.org address etc.
 Go thru About page.
 Change documentation of subsonic_home.  Use popup?
-
-DONE IN 4.0
------------
-
 
 VIDEO
 -----
@@ -465,8 +458,9 @@ Modify FRS properties (use Firefox)
 Upload site (OLD):
 rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
 
-Upload site (NEW):
+Upload site (NEW): CHANGE DATE BELOW
   rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps/pages/
+  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-05-12/pages/
 
 svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-2.7.beta1 -m "Tagging 2.7.beta1."
 Register at freshmeat.
@@ -474,20 +468,18 @@ Post message on forum.
 Update version number in pom.xml etc.
 Take backup of forum.
 
-Upgrade Subsonic backend:
+Upgrade Subsonic backend: CHANGE DATE BELOW
   Backup backend database.
-  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps/ROOT.war.tmp
-  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps/demo.war.tmp
+  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-05-12/ROOT.war
+  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-05-12/demo.war
   ssh sindremehus@subsonic.org
   su
   cd /usr/java/tomcat-5.5
-  ./bin/shutdown.sh (or pkill java)
-  mv webapps/ROOT.war.tmp webapps/ROOT.war
-  rm -rf webapps/ROOT
+  pkill java
+  rm webapps
+  ln -s webapps-2010-05-12 webapps
   rm -rf work
-  ./bin/startup.sh (or reboot)
-
-Same for demo (just replace "ROOT" with "demo" above)
+  reboot
 
 
 HOW TO RELEASE TO ANDROID MARKET

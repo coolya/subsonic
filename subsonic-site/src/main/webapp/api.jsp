@@ -171,7 +171,7 @@
         <td>1.1.1</td>
     </tr>
     <tr class="table-altrow">
-        <td>4.0 (not released)</td>
+        <td>4.0</td>
         <td>1.2.0</td>
     </tr>
 </table>
