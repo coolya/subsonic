@@ -79,43 +79,10 @@ a:hover, a:hover * {
 /* The primary foreground colour. */
 body {
     background-color: #DDDDDD;
-    position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 10px;
-	overflow-y: auto;
-	overflow-x: hidden;
-
 }
 
 html {
-overflow-y: auto;
-background-color: transparent;
-}
-
-::-webkit-scrollbar {
-width: 10px;
-height: 10px;
-}
-
-::-webkit-scrollbar-button:start:decrement,
-::-webkit-scrollbar-button:end:increment  {
-height: 30px;
-display: block;
-background-color: transparent;
-}
-
-::-webkit-scrollbar-track-piece  {
-background-color: #362429;
--webkit-border-radius: 6px;
-}
-
-::-webkit-scrollbar-thumb:vertical {
-height: 50px;
-background-color: #402c31;
-border: 1px solid #EFE9D9;
--webkit-border-radius: 6px;
+    background-color: transparent;
 }
 
 label, p {

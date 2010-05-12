@@ -1,6 +1,3 @@
-Revert folder.jpg / cover.jpg?  Or change downloader to use the name first listed in settings.  Fix security setting.
-Fix quick jump in new themes.
-
 TODO IN 4.0.1
 -----------------
 Update to FLAC 1.2.1, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3278
@@ -22,7 +19,7 @@ DONE IN 4.0.1
 -------------
 Bugfix: Fixed broken cover art download.
 Bugfix: Fixed broken m4a transcoding.
-
+Bugfix: Fixed broken quick links in artist frame for some new themes.
 VIDEO
 -----
 Air Video
