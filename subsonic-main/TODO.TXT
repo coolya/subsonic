@@ -1,6 +1,7 @@
-Revert folder.jpg / cover.jpg?  Or change downloader to use the name first listed in settings.
+Revert folder.jpg / cover.jpg?  Or change downloader to use the name first listed in settings.  Fix security setting.
+Fix quick jump in new themes.
 
-TODO IN 4.1
+TODO IN 4.0.1
 -----------------
 Update to FLAC 1.2.1, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3278
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
@@ -16,6 +17,10 @@ Test FLAC > mp3 transcoding on Linux.
 Explain in license email how to activate subsonic.org address etc.
 Go thru About page.
 Change documentation of subsonic_home.  Use popup?
+
+DONE IN 4.0.1
+-------------
+Bugfix: Fixed broken cover art download.
 
 VIDEO
 -----

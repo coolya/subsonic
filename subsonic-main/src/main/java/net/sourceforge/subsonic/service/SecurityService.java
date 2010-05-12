@@ -188,7 +188,7 @@ public class SecurityService implements UserDetailsService {
         // Only allowed to write playlists, podcasts or cover art.
         boolean isPlaylist = isInPlaylistFolder(file);
         boolean isPodcast = isInPodcastFolder(file);
-        boolean isCoverArt = isInMusicFolder(file) && file.getName().startsWith("folder.");
+        boolean isCoverArt = isInMusicFolder(file) && file.getName().startsWith("cover.");
 
         return isPlaylist || isPodcast || isCoverArt;
     }
