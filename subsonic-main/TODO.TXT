@@ -21,6 +21,7 @@ Change documentation of subsonic_home.  Use popup?
 DONE IN 4.0.1
 -------------
 Bugfix: Fixed broken cover art download.
+Bugfix: Fixed broken m4a transcoding.
 
 VIDEO
 -----

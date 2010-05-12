@@ -28,7 +28,6 @@ import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.directwebremoting.WebContextFactory;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
@@ -290,10 +289,11 @@ public class PlaylistService {
                 streamUrl = StringUtil.rewriteUrl(streamUrl, referer);
             }
 
+            String format = formatFormat(player, file);
             entries.add(new PlaylistInfo.Entry(metaData.getTrackNumber(), metaData.getTitle(), metaData.getArtist(),
                     metaData.getAlbum(), metaData.getGenre(), metaData.getYear(), formatBitRate(metaData),
-                    metaData.getDuration(), metaData.getDurationAsString(), formatFormat(metaData.getFormat()),
-                    formatContentType(player, file), formatFileSize(metaData.getFileSize(), locale), albumUrl, streamUrl));
+                    metaData.getDuration(), metaData.getDurationAsString(), format, formatContentType(format),
+                    formatFileSize(metaData.getFileSize(), locale), albumUrl, streamUrl));
         }
         boolean isStopEnabled = playlist.getStatus() == Playlist.Status.PLAYING && !player.isExternalWithPlaylist();
         float gain = jukeboxService.getGain();
@@ -307,13 +307,12 @@ public class PlaylistService {
         return StringUtil.formatBytes(fileSize, locale);
     }
 
-    private String formatFormat(String format) {
-        return StringUtils.lowerCase(format);
+    private String formatFormat(Player player, MusicFile file) {
+        return transcodingService.getSuffix(player, file);
     }
 
-    private String formatContentType(Player player, MusicFile file) {
-        String suffix = transcodingService.getSuffix(player, file);
-        return StringUtil.getMimeType(suffix);
+    private String formatContentType(String format) {
+        return StringUtil.getMimeType(format);
     }
 
     private String formatBitRate(MusicFile.MetaData metaData) {
