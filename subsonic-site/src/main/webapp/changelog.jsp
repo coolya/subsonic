@@ -16,6 +16,13 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="4.0.1"><h2 class="div">Subsonic 4.0.1 - May 13, 2010</h2></a>
+<ul>
+    <li><span class="bugid">Bugfix: Fixed broken cover art download.</span></li>
+    <li><span class="bugid">Bugfix: Fixed broken m4a transcoding.</span></li>
+    <li><span class="bugid">Bugfix: Fixed broken quick links in artist frame for some new themes.</span></li>
+</ul>
+
 <a name="4.0"><h2 class="div">Subsonic 4.0 - May 12, 2010</h2></a>
 <ul>
     <li><span class="bugid">New: </span>Added REST API method for deleting playlists.</li>
@@ -711,6 +718,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#4.0.1">Subsonic 4.0.1</a></li>
             <li><a href="#4.0">Subsonic 4.0</a></li>
             <li><a href="#4.0.beta2">Subsonic 4.0.beta2</a></li>
             <li><a href="#4.0.beta1">Subsonic 4.0.beta1</a></li>

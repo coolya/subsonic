@@ -17,9 +17,6 @@ Change documentation of subsonic_home.  Use popup?
 
 DONE IN 4.0.1
 -------------
-Bugfix: Fixed broken cover art download.
-Bugfix: Fixed broken m4a transcoding.
-Bugfix: Fixed broken quick links in artist frame for some new themes.
 
 VIDEO
 -----
@@ -445,7 +442,7 @@ HOW TO RELEASE
 Ask Jeremy Terpstra to update Dutch translation.
 Set JAVA_HOME to 1.6.
 Update version number in pom.xml, version.html, MultiController.java etc.
-Update changelog.jsp, download.jsp and version.html
+Update changelog.jsp, download.jsp 
 mvn clean install -P full
 cd subsonic-assembly
 mvn assembly:assembly

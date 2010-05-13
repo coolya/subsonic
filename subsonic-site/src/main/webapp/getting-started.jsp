@@ -82,7 +82,8 @@
             <p>Once you get the port forwarding set up correctly, the next step is to get yourself an easy-to-remember web address.
                 You will use this address to access your Subsonic server from the internet.</p>
 
-            <p>From <b>Settings &gt; Network</b> you can register your address. Enable the "Access your server over the internet..." option,
+            <p>From <b>Settings &gt; Network</b> you can register your address. (Remember to log on with admin rights).
+                Enable the "Access your server over the internet..." option,
                 and enter your preferred address, for instance http://joe.subsonic.org.</p>
 
             <p>Click the Save button, and pay attention to the status message that is displayed. Note that Subsonic will also perform
