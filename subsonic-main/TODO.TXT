@@ -1,3 +1,18 @@
+TODO IN ANDROID 1.3
+-------------------
+Bugfix: Wrong initial empty playlist
+Bugfix: Wrong notificaion
+Bugfix: Support filenames with "<" and ">".
+Bugfix: Trim username, servername. Url-encode username.
+Bugfix: Support small/large screens: http://developer.android.com/guide/topics/manifest/supports-screens-element.html, must improve layout of main activity.
+Bugfix: Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
+Layout: Tabbed layout, ala wimp
+Layout: Scrollable main menu, ala wimp
+Layout: "Back to playlist"-button, ala wimp
+Layout: Add buttons after song lists, ala wimp
+Layout: Nicer playlist background, e.g., from Slick theme
+
+
 TODO IN 4.1
 -----------------
 Update to FLAC 1.2.1, LAME 3.98.4  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3278
@@ -17,6 +32,92 @@ Change documentation of subsonic_home.  Use popup?
 
 DONE IN 4.0.1
 -------------
+
+MAC INSTALLER
+-------------
+Make maven build from root work.
+
+MISC
+----
+Java silent installation: http://java.sun.com/javase/6/webnotes/install/jre/silent.html
+WiX: https://sourceforge.net/projects/wix/
+
+REST album/artist search.
+Add track count REST.
+Use AAC rather than MP3 for transcoding.
+html5 audio
+Create album table (or reuse music_file_info), reimplement related services in SearchService.
+Upgrade JWPlayer
+TBT: Added "accesskey" in left frame.
+TBT: Added API method to change password.
+Fix bug with executor in networkservice.
+Disable ads first 30 days?
+Show status in getting started.
+Test lyrics with non-ascii.
+Optimize SettingsService.getAllMusicFolders()?
+Global option to disable chat.  Admin should be able to remove individual messages.
+Scrobbling broken for transcoded songs? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2316
+Bug: Double-scrobbling when transcoding.
+Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
+
+ANDROID
+-----------------------
+Android: Fix bugs reported by Market.
+Android: FLAC bugfix, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2903
+Android: Never attempt to download if offline. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3196
+Android: Suggest switching to offline mode if network error.
+Android: Make offline mode more visible.
+Android: https support
+Android: shuffle play
+Android: Reorder playlist
+Android: Save playlist
+Android: Lyrics.
+Android: Queue Next + Queue Last
+Android: Menu option to exit.
+Android: Support mounting SD card.
+Android: Avoid stutter
+Android: Shuffle queue
+Android: Pause on Bluetooth disconnect.
+Android: Long-click on folder to play recursive.
+Android: Download error notification is nagging.
+Android: Select music folder in server settings. (Including "All").
+Android app not available on HTC Tattoo? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9288
+Use filename.complete.mp3 rather than filename.mp3.complete
+Swipe album art to go to prev/next track.
+Avoid stuttering when restarting playback during download.  Use local socket.
+Seeking fails when playing partial file.  seekTo() should test if playing from partial.
+Only show fullscreen when applicable.
+DownloadActivity not updated if initially empty and then append to queue.
+Don't hide/show notification when rebuffering.
+Understand why threads in CancellableTask are not interrupted.
+Create Norwegian translation.
+SettingsActivity not repainting properly.
+Use IOUtils, StringUtils.
+List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7854
+Make it downloadable from sf.net.
+Caching mgmt
+Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
+Improve design of DownloadFile.getCompleteFile() etc.
+Remember position for podcasts.
+Use Droid-Fu?
+"Newest" list in Android.
+Android: Long-click on song list.
+Android: Option to auto-sync certain directories or playlists.
+Android: Option to tag certain directories as favorite.
+Is there a more generic broadcast event to listen to when the media collection changes?
+Fix encoding problems in Subsonic Demo files.
+Handle XML exception better.
+Use music index last modified + invalidate cache after a while.
+Use weak references in image cache?
+Make playlist bg b/w?
+Change colors of selected songs.
+Show currently playing song in playlist.
+Support max bitrate in settings. ("Preferred bitrate")
+Must resolve content type in StreamController, even if "suffix" is not given.
+Add duration to rest api.
+User should be able to select music folder. (Let REST method support it at least).
+Merge artists in REST method.  Make it possible to specify music folder.
+
 
 VIDEO
 -----
@@ -54,101 +155,15 @@ Don't audioscrobble videos.
 Test new JW Player on Mac and Linux.  Also with Flash plugin 9.0
 mp4 tag parser https://contributions.coremedia.com/isobox4j
 
-MAC INSTALLER
--------------
-Make maven build from root work.
-
-MISC
-----
-Java silent installation: http://java.sun.com/javase/6/webnotes/install/jre/silent.html
-WiX: https://sourceforge.net/projects/wix/
-
-REST album/artist search.
-Add track count REST.
-Use AAC rather than MP3 for transcoding.
-html5 audio
-Create album table (or reuse music_file_info), reimplement related services in SearchService.
-Upgrade JWPlayer
-TBT: Added "accesskey" in left frame.
-TBT: Added API method to change password.
-Fix bug with executor in networkservice.
-Disable ads first 30 days?
-Show status in getting started.
-Test lyrics with non-ascii.
-Optimize SettingsService.getAllMusicFolders()?
-Global option to disable chat.  Admin should be able to remove individual messages.
-Scrobbling broken for transcoded songs? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2316
-Bug: Double-scrobbling when transcoding.
-Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=6225
-
-ANDROID
------------------------
-Android: FLAC bugfix, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2903
-Android: Never attempt to download if offline. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3196
-Android: Suggest switching to offline mode if network error.
-Android: Make offline mode more visible.
-Android: https support
-Android: shuffle play
-Android: Reorder playlist
-Android: Save playlist
-Android: Lyrics.
-Android: Queue Next + Queue Last
-Android: Menu option to exit.
-Android: Support mounting SD card.
-Android: Support filenames with "<" and ">".
-Android: Avoid stutter
-Android: Shuffle queue
-Android: Pause on Bluetooth disconnect.
-Android: Long-click on folder to play recursive.
-Android: Trim username, servername. Url-encode username.
-Android: Download error notification is nagging.
-Android: Select music folder in server settings. (Including "All").
-Support small/large screens: http://developer.android.com/guide/topics/manifest/supports-screens-element.html, must improve layout of main activity.
-Android app not available on HTC Tattoo? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9288
-Use filename.complete.mp3 rather than filename.mp3.complete
-Swipe album art to go to prev/next track.
-Avoid stuttering when restarting playback during download.  Use local socket.
-Seeking fails when playing partial file.  seekTo() should test if playing from partial.
-Only show fullscreen when applicable.
-DownloadActivity not updated if initially empty and then append to queue.
-Don't hide/show notification when rebuffering.
-Understand why threads in CancellableTask are not interrupted.
-Create Norwegian translation.
-SettingsActivity not repainting properly.
-Use IOUtils, StringUtils.
-List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7854
-Make it downloadable from sf.net.
-Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
-Caching mgmt
-Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
-Improve design of DownloadFile.getCompleteFile() etc.
-Remember position for podcasts.
-Use Droid-Fu?
-"Newest" list in Android.
-Android: Long-click on song list.
-Android: Option to auto-sync certain directories or playlists.
-Android: Option to tag certain directories as favorite.
-Is there a more generic broadcast event to listen to when the media collection changes?
-Fix encoding problems in Subsonic Demo files.
-Handle XML exception better.
-Use music index last modified + invalidate cache after a while.
-Use weak references in image cache?
-Make playlist bg b/w?
-Change colors of selected songs.
-Show currently playing song in playlist.
-Support max bitrate in settings. ("Preferred bitrate")
-Must resolve content type in StreamController, even if "suffix" is not given.
-Add duration to rest api.
-User should be able to select music folder. (Let REST method support it at least).
-Merge artists in REST method.  Make it possible to specify music folder.
-
 BACKLOG
 ==========================
+Show song title in Browser Title Bar, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3304
 "readlink" in subsonic.sh doesn't work in FreeBSD.
 Add id3 tags to lame command, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3270
 Next to Lyrics link, add "Share" link with permalink? (link.subsonic.org/iksj)
 auto-detect links in chat.
 Chat broken on Safari
+Automatically import iTunes playlists.
 Add "Copy settings from user" option.
 Improve menus in web pages.  Make sub menus.
 Add FLAC>WAV transcoding
@@ -442,7 +457,7 @@ HOW TO RELEASE
 Ask Jeremy Terpstra to update Dutch translation.
 Set JAVA_HOME to 1.6.
 Update version number in pom.xml, version.html, MultiController.java etc.
-Update changelog.jsp, download.jsp 
+Update changelog.jsp, download.jsp
 mvn clean install -P full
 cd subsonic-assembly
 mvn assembly:assembly
@@ -450,20 +465,20 @@ Deploy
 Check that correct local version is displayed.
 Commit
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0/
-  rsync -avP -e ssh subsonic-assembly/target/subsonic* sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0/
-  rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0/
-  rsync -avP -e ssh subsonic-installer-debian/target/subsonic*.deb  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0/
-  rsync -avP -e ssh subsonic-installer-rpm/target/subsonic*.rpm  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0/
+  rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0.1/
+  rsync -avP -e ssh subsonic-assembly/target/subsonic* sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0.1/
+  rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0.1/
+  rsync -avP -e ssh subsonic-installer-debian/target/subsonic*.deb  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0.1/
+  rsync -avP -e ssh subsonic-installer-rpm/target/subsonic*.rpm  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.0.1/
 
-Modify FRS properties (use Firefox)
+Modify FRS properties
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
 
 Upload site (OLD):
 rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
 
 Upload site (NEW): CHANGE DATE BELOW
-  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-05-12/pages/
+  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-05-13/pages/
   rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps/pages/
 
 svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-2.7.beta1 -m "Tagging 2.7.beta1."
@@ -474,14 +489,16 @@ Take backup of forum.
 
 Upgrade Subsonic backend: CHANGE DATE BELOW
   Backup backend database.
-  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-05-12/ROOT.war
-  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-05-12/demo.war
+  cd subsonic-backend
+  mvn clean install
+  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-05-13/ROOT.war
+  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-05-13/demo.war
   ssh sindremehus@subsonic.org
   su
   cd /usr/java/tomcat-5.5
-  pkill java
+  pkill java  # wait a bit
   rm webapps
-  ln -s webapps-2010-05-12 webapps
+  ln -s webapps-2010-05-13 webapps
   rm -rf work
   reboot
 

@@ -18,9 +18,9 @@
 
 <a name="4.0.1"><h2 class="div">Subsonic 4.0.1 - May 13, 2010</h2></a>
 <ul>
-    <li><span class="bugid">Bugfix: Fixed broken cover art download.</span></li>
-    <li><span class="bugid">Bugfix: Fixed broken m4a transcoding.</span></li>
-    <li><span class="bugid">Bugfix: Fixed broken quick links in artist frame for some new themes.</span></li>
+    <li><span class="bugid">Bugfix: </span>Fixed broken cover art download.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed broken m4a transcoding.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed broken quick links in artist frame for some new themes.</li>
 </ul>
 
 <a name="4.0"><h2 class="div">Subsonic 4.0 - May 12, 2010</h2></a>
