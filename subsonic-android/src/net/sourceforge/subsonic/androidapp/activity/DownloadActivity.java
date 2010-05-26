@@ -25,13 +25,13 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -67,7 +67,6 @@ public class DownloadActivity extends OptionsMenuActivity {
     private DownloadService downloadService;
 
     private ViewFlipper flipper;
-    private TextView currentTextView;
     private TextView albumArtTextView;
     private ImageView albumArtImageView;
     private ListView playlistView;
@@ -80,6 +79,7 @@ public class DownloadActivity extends OptionsMenuActivity {
     private View pauseButton;
     private View stopButton;
     private View startButton;
+    private View toggleListButton;
     private ScheduledExecutorService executorService;
     private DownloadFile currentPlaying;
 
@@ -94,7 +94,6 @@ public class DownloadActivity extends OptionsMenuActivity {
         setContentView(R.layout.download);
 
         flipper = (ViewFlipper) findViewById(R.id.download_flipper);
-        currentTextView = (TextView) findViewById(R.id.download_current);
         albumArtTextView = (TextView) findViewById(R.id.download_album_art_text);
         albumArtImageView = (ImageView) findViewById(R.id.download_album_art_image);
         positionTextView = (TextView) findViewById(R.id.download_position);
@@ -107,18 +106,12 @@ public class DownloadActivity extends OptionsMenuActivity {
         pauseButton = findViewById(R.id.download_pause);
         stopButton = findViewById(R.id.download_stop);
         startButton = findViewById(R.id.download_start);
-
-        currentTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showFullscreenAlbumArt(true);
-            }
-        });
+        toggleListButton = findViewById(R.id.download_toggle_list);
 
         albumArtImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showFullscreenAlbumArt(false);
+                toggleFullscreenAlbumArt();
             }
         });
 
@@ -154,6 +147,13 @@ public class DownloadActivity extends OptionsMenuActivity {
             @Override
             public void onClick(View view) {
                 start();
+            }
+        });
+
+        toggleListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleFullscreenAlbumArt();
             }
         });
 
@@ -244,21 +244,15 @@ public class DownloadActivity extends OptionsMenuActivity {
         onProgressChanged();
     }
 
-    private void showFullscreenAlbumArt(boolean fullscreen) {
-        boolean empty = downloadService == null || downloadService.getCurrentPlaying() == null;
-        int newDisplayedChild = fullscreen && !empty ? 0 : 1;
-
-        if (flipper.getDisplayedChild() != newDisplayedChild) {
-
-            if (newDisplayedChild == 0) {
-                flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_in));
-                flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_out));
-            } else {
-                flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_up_in));
-                flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_up_out));
-            }
-
-            flipper.setDisplayedChild(newDisplayedChild);
+    private void toggleFullscreenAlbumArt() {
+        if (flipper.getDisplayedChild() == 1) {
+            flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_in));
+            flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_out));
+            flipper.setDisplayedChild(0);
+        } else {
+            flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_up_in));
+            flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_up_out));
+            flipper.setDisplayedChild(1);
         }
     }
 
@@ -300,10 +294,6 @@ public class DownloadActivity extends OptionsMenuActivity {
         List<DownloadFile> list = downloadService.getDownloads();
 
         playlistView.setAdapter(new SongListAdapter(list));
-        if (list.isEmpty()) {
-            currentTextView.setText(null);
-            currentTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-        }
     }
 
     private void onCurrentChanged() {
@@ -313,9 +303,7 @@ public class DownloadActivity extends OptionsMenuActivity {
         currentPlaying = downloadService.getCurrentPlaying();
         if (currentPlaying != null) {
             MusicDirectory.Entry song = currentPlaying.getSong();
-            currentTextView.setText(song.getTitle());
             albumArtTextView.setText(song.getTitle() + " - " + song.getArtist());
-            imageLoader.loadImage(currentTextView, song, 48);
             imageLoader.loadImage(albumArtImageView, song, 320);
         }
     }

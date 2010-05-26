@@ -15,6 +15,7 @@
                       a:layout_weight="1">
             <ImageView
                     a:id="@+id/download_album_art_image"
+                    a:src="@drawable/unknown_album_320"
                     a:layout_width="fill_parent"
                     a:layout_height="fill_parent"
                     a:layout_weight="1"
@@ -30,32 +31,13 @@
                     a:textColor="@color/secondaryForeground"/>
         </LinearLayout>
 
-        <LinearLayout a:orientation="vertical"
-                      a:layout_width="fill_parent"
-                      a:layout_height="fill_parent"
-                      a:layout_weight="1">
-
-            <TextView
-                    a:id="@+id/download_current"
-                    a:drawableLeft="@drawable/unknown_album"
-                    a:drawablePadding="10dp"
-                    a:textAppearance="?android:attr/textAppearanceLarge"
-                    a:textColor="@color/secondaryForeground"
-                    a:singleLine="true"
-                    a:ellipsize="end"
-                    a:gravity="left|center_vertical"
-                    a:layout_width="fill_parent"
-                    a:layout_height="wrap_content"
-                    a:layout_margin="5dp"/>
-
-            <ListView
-                    a:id="@+id/download_list"
-                    a:layout_width="fill_parent"
-                    a:layout_height="fill_parent"
-                    a:layout_weight="1"
-                    a:background="@drawable/repeat_background"
-                    a:cacheColorHint="#00000000"/>
-        </LinearLayout>
+        <ListView
+                a:id="@+id/download_list"
+                a:layout_width="fill_parent"
+                a:layout_height="fill_parent"
+                a:layout_weight="1"
+                a:background="@drawable/repeat_background"
+                a:cacheColorHint="#00000000"/>
 
     </ViewFlipper>
 
