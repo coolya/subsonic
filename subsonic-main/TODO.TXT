@@ -10,10 +10,10 @@ Layout: Tabbed layout, ala wimp
 Layout: Scrollable main menu, ala wimp
 Layout: "Back to playlist"-button, ala wimp
 Layout: Add buttons after song lists, ala wimp
-Layout: Nicer default cover image.
 
 DONE IN ANDROID 1.3
 -------------------
+Layout: Nicer default cover image.
 Layout: Nicer playlist background
 
 TODO IN 4.1
