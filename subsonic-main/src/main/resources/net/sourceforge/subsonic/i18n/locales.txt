@@ -37,6 +37,9 @@ pl
 # Simplified Chinese
 zh_CN
 
+# Traditional Chinese
+zh_TW
+
 # Japanese
 ja_JP
 

@@ -17,7 +17,10 @@ TODO IN 4.1
 -----------------
 Update to FLAC 1.2.1, LAME 3.98.4  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3278
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
+Fix readlink
 Chat slow when deploying on tomcat?
+Run Mac server in background (status bar).
+Sonic themes, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3371
 
 Create post-payment landing page.
 Create translation tool for backend.
@@ -30,8 +33,9 @@ Explain in license email how to activate subsonic.org address etc.
 Go thru About page.
 Change documentation of subsonic_home.  Use popup?
 
-DONE IN 4.0.1
+DONE IN 4.1
 -------------
+Added Traditional Chinese translation, courtesy of Cheng Jen Li.
 
 MAC INSTALLER
 -------------
