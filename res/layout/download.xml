@@ -74,36 +74,43 @@
         <Button
                 a:id="@+id/download_previous"
                 a:drawableLeft="@android:drawable/ic_media_previous"
-                a:paddingLeft="20dp"
-                a:paddingRight="20dp"
+                a:paddingLeft="18dp"
+                a:paddingRight="18dp"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
         <Button
                 a:id="@+id/download_pause"
                 a:drawableLeft="@android:drawable/ic_media_pause"
-                a:paddingLeft="20dp"
-                a:paddingRight="20dp"
+                a:paddingLeft="18dp"
+                a:paddingRight="18dp"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
         <Button
                 a:id="@+id/download_stop"
                 a:drawableLeft="@drawable/media_stop"
-                a:paddingLeft="20dp"
-                a:paddingRight="20dp"
+                a:paddingLeft="18dp"
+                a:paddingRight="18dp"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
         <Button
                 a:id="@+id/download_start"
                 a:drawableLeft="@android:drawable/ic_media_play"
-                a:paddingLeft="20dp"
-                a:paddingRight="20dp"
+                a:paddingLeft="18dp"
+                a:paddingRight="18dp"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
         <Button
                 a:id="@+id/download_next"
                 a:drawableLeft="@android:drawable/ic_media_next"
-                a:paddingLeft="20dp"
-                a:paddingRight="20dp"
+                a:paddingLeft="18dp"
+                a:paddingRight="18dp"
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"/>
+        <Button
+                a:id="@+id/download_toggle_list"
+                a:drawableLeft="@android:drawable/ic_media_next"
+                a:paddingLeft="18dp"
+                a:paddingRight="18dp"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"/>
     </LinearLayout>
