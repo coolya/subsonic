@@ -75,11 +75,11 @@ public class DownloadActivity extends OptionsMenuActivity {
     private TextView durationTextView;
     private TextView statusTextView;
     private HorizontalSlider progressBar;
-    private ImageView previousButton;
-    private ImageView nextButton;
-    private ImageView pauseButton;
-    private ImageView stopButton;
-    private ImageView startButton;
+    private View previousButton;
+    private View nextButton;
+    private View pauseButton;
+    private View stopButton;
+    private View startButton;
     private ScheduledExecutorService executorService;
     private DownloadFile currentPlaying;
 
@@ -102,11 +102,11 @@ public class DownloadActivity extends OptionsMenuActivity {
         statusTextView = (TextView) findViewById(R.id.download_status);
         progressBar = (HorizontalSlider) findViewById(R.id.download_progress_bar);
         playlistView = (ListView) findViewById(R.id.download_list);
-        previousButton = (ImageView) findViewById(R.id.download_previous);
-        nextButton = (ImageView) findViewById(R.id.download_next);
-        pauseButton = (ImageView) findViewById(R.id.download_pause);
-        stopButton = (ImageView) findViewById(R.id.download_stop);
-        startButton = (ImageView) findViewById(R.id.download_start);
+        previousButton = findViewById(R.id.download_previous);
+        nextButton = findViewById(R.id.download_next);
+        pauseButton = findViewById(R.id.download_pause);
+        stopButton = findViewById(R.id.download_stop);
+        startButton = findViewById(R.id.download_start);
 
         currentTextView.setOnClickListener(new View.OnClickListener() {
             @Override
