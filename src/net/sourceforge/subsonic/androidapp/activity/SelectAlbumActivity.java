@@ -98,7 +98,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity {
                         Intent intent = new Intent(SelectAlbumActivity.this, SelectAlbumActivity.class);
                         intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, entry.getId());
                         intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getTitle());
-                        startActivity(intent);
+                        Util.startActivityWithoutTransition(SelectAlbumActivity.this, intent);
                     } else {
                         enableButtons();
                     }
@@ -300,7 +300,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity {
 
                 downloadService.download(songs, save, autoplay);
                 if (autoplay) {
-                    startActivity(new Intent(SelectAlbumActivity.this, DownloadActivity.class));
+                    Util.startActivityWithoutTransition(SelectAlbumActivity.this, DownloadActivity.class);
                 } else if (save) {
                     Util.toast(SelectAlbumActivity.this, getResources().getQuantityString(R.plurals.select_album_n_songs_downloading, songs.size(), songs.size()));
                 } else if (append) {
@@ -321,7 +321,7 @@ public class SelectAlbumActivity extends OptionsMenuActivity {
         intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, entry.getId());
         intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getTitle());
         intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAY_ALL, true);
-        startActivity(intent);
+        Util.startActivityWithoutTransition(SelectAlbumActivity.this, intent);
     }
 
     private void delete() {

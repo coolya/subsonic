@@ -28,6 +28,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.lang.reflect.Method;
 
 import org.apache.http.HttpEntity;
 
@@ -35,6 +36,7 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -49,6 +51,9 @@ import android.widget.Toast;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
 import net.sourceforge.subsonic.androidapp.activity.ErrorActivity;
+import net.sourceforge.subsonic.androidapp.activity.OptionsMenuActivity;
+import net.sourceforge.subsonic.androidapp.activity.SelectArtistActivity;
+import net.sourceforge.subsonic.androidapp.activity.MainActivity;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 
 /**
@@ -478,6 +483,24 @@ public final class Util {
             Thread.sleep(millis);
         } catch (InterruptedException x) {
             Log.e(TAG, "Interrupted from sleep.", x);
+        }
+    }
+
+    public static void startActivityWithoutTransition(Activity currentActivity, Class<? extends Activity> newActivitiy) {
+        startActivityWithoutTransition(currentActivity, new Intent(currentActivity, newActivitiy));
+    }
+
+    public static void startActivityWithoutTransition(Activity currentActivity, Intent intent) {
+        currentActivity.startActivity(intent);
+
+        // Activity.overridePendingTransition() was introduced in Android 2.0.  Use reflection to maintain
+        // compatibility with 1.5.
+        try {
+            Method method = Activity.class.getMethod("overridePendingTransition", int.class, int.class);
+            method.invoke(currentActivity, 0, 0);
+        } catch (Throwable x) {
+            Log.w(TAG, "Failed to disable activity transition.", x);
+            // Ignored
         }
     }
 }
