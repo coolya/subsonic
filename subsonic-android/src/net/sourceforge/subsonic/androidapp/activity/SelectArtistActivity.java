@@ -40,7 +40,7 @@ import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
-public class SelectArtistActivity extends OptionsMenuActivity implements AdapterView.OnItemClickListener {
+public class SelectArtistActivity extends SubsonicTabActivity implements AdapterView.OnItemClickListener {
 
     private ListView artistList;
 

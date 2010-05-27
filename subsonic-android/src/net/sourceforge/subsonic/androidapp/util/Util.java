@@ -51,9 +51,6 @@ import android.widget.Toast;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
 import net.sourceforge.subsonic.androidapp.activity.ErrorActivity;
-import net.sourceforge.subsonic.androidapp.activity.OptionsMenuActivity;
-import net.sourceforge.subsonic.androidapp.activity.SelectArtistActivity;
-import net.sourceforge.subsonic.androidapp.activity.MainActivity;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 
 /**
