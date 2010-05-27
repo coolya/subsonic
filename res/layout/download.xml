@@ -154,5 +154,7 @@
             a:layout_height="wrap_content"
             a:padding="5dip"/>
 
+    <include layout="@layout/button_bar"/>
+
 </LinearLayout>
 
