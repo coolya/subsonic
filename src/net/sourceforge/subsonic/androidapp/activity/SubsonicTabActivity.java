@@ -25,8 +25,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -37,12 +35,7 @@ import net.sourceforge.subsonic.androidapp.util.Util;
 /**
  * @author Sindre Mehus
  */
-public class OptionsMenuActivity extends Activity {
-
-    private static final int MENU_HOME = 1;
-    private static final int MENU_PLAYING = 2;
-    private static final int MENU_SETTINGS = 3;
-    private static final int MENU_HELP = 4;
+public class SubsonicTabActivity extends Activity {
 
     private Dialog searchDialog;
 
@@ -59,9 +52,9 @@ public class OptionsMenuActivity extends Activity {
             @Override
             public void onClick(View view) {
                 searchDialog.dismiss();
-                Intent intent = new Intent(OptionsMenuActivity.this, SelectAlbumActivity.class);
+                Intent intent = new Intent(SubsonicTabActivity.this, SelectAlbumActivity.class);
                 intent.putExtra(Constants.INTENT_EXTRA_NAME_QUERY, String.valueOf(queryTextView.getText()));
-                Util.startActivityWithoutTransition(OptionsMenuActivity.this, intent);
+                Util.startActivityWithoutTransition(SubsonicTabActivity.this, intent);
             }
         });
 
@@ -78,50 +71,21 @@ public class OptionsMenuActivity extends Activity {
         findViewById(R.id.button_bar_home).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Util.startActivityWithoutTransition(OptionsMenuActivity.this, MainActivity.class);
+                Util.startActivityWithoutTransition(SubsonicTabActivity.this, MainActivity.class);
             }
         });
         findViewById(R.id.button_bar_music).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Util.startActivityWithoutTransition(OptionsMenuActivity.this, SelectArtistActivity.class);
+                Util.startActivityWithoutTransition(SubsonicTabActivity.this, SelectArtistActivity.class);
             }
         });
         findViewById(R.id.button_bar_now_playing).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Util.startActivityWithoutTransition(OptionsMenuActivity.this, DownloadActivity.class);
+                Util.startActivityWithoutTransition(SubsonicTabActivity.this, DownloadActivity.class);
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, MENU_HOME, 0, R.string.options_home).setIcon(R.drawable.menu_home);
-        menu.add(0, MENU_PLAYING, 0, R.string.options_playing).setIcon(R.drawable.now_playing);
-        menu.add(0, MENU_SETTINGS, 0, R.string.options_settings).setIcon(R.drawable.settings);
-        menu.add(0, MENU_HELP, 0, R.string.options_help).setIcon(R.drawable.help);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case MENU_HOME:
-                // TODO: use FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(new Intent(this, MainActivity.class));
-                return true;
-            case MENU_PLAYING:
-                startActivity(new Intent(this, DownloadActivity.class));
-                return true;
-            case MENU_SETTINGS:
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            case MENU_HELP:
-                startActivity(new Intent(this, HelpActivity.class));
-                return true;
-        }
-        return false;
     }
 
     protected void showSearchDialog() {

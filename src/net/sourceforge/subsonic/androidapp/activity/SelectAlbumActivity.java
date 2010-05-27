@@ -57,7 +57,7 @@ import net.sourceforge.subsonic.androidapp.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectAlbumActivity extends OptionsMenuActivity {
+public class SelectAlbumActivity extends SubsonicTabActivity {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
     private static final int MENU_ITEM_SAVE = 1;

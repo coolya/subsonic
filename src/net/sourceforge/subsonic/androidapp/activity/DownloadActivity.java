@@ -57,7 +57,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class DownloadActivity extends OptionsMenuActivity {
+public class DownloadActivity extends SubsonicTabActivity {
 
     private static final int MENU_ITEM_REMOVE = 100;
     private static final int MENU_ITEM_REMOVE_ALL = 101;

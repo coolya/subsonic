@@ -39,7 +39,7 @@ import net.sourceforge.subsonic.androidapp.util.Util;
 
 import java.util.List;
 
-public class MainActivity extends OptionsMenuActivity {
+public class MainActivity extends SubsonicTabActivity {
 
     private static final int MENU_GROUP_SERVER = 10;
     private static final int MENU_ITEM_SERVER_1 = 101;
