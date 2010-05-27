@@ -83,11 +83,11 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         setContentView(R.layout.select_album);
 
         imageLoader = new ImageLoader();
-        selectButton = (Button) findViewById(R.id.select_album_select);
-        playButton = (Button) findViewById(R.id.select_album_play);
-        moreButton = (Button) findViewById(R.id.select_album_more);
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
+        View buttons = LayoutInflater.from(this).inflate(R.layout.select_album_buttons, entryList, false);
+        entryList.addFooterView(buttons);
+//        entryList.addFooterView(new Button(this));
         entryList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         entryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -105,6 +105,11 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                 }
             }
         });
+
+        selectButton = (Button) buttons.findViewById(R.id.select_album_select);
+        playButton = (Button) buttons.findViewById(R.id.select_album_play);
+        moreButton = (Button) buttons.findViewById(R.id.select_album_more);
+
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -258,7 +263,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         int count = entryList.getCount();
         for (int i = 0; i < count; i++) {
             MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(i);
-            if (!entry.isDirectory()) {
+            if (entry != null && !entry.isDirectory()) {
                 entryList.setItemChecked(i, selected);
             }
         }
@@ -474,9 +479,10 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             }
             licenseValid = result.getSecond();
 
-            selectButton.setVisibility(visibility);
-            playButton.setVisibility(visibility);
-            moreButton.setVisibility(visibility);
+            // TODO
+//            selectButton.setVisibility(visibility);
+//            playButton.setVisibility(visibility);
+//            moreButton.setVisibility(visibility);
 
             boolean playAll = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_PLAY_ALL, false);
             if (playAll) {

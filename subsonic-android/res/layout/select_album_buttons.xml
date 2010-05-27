@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+              a:id="@+id/select_album_buttons"
+              a:orientation="vertical"
+              a:layout_width="fill_parent"
+              a:layout_height="wrap_content">
+
+    <Button a:id="@+id/select_album_select"
+            a:text="@string/select_album.select"
+            a:textAppearance="?android:attr/textAppearanceSmall"
+            a:layout_marginTop="6dp"
+            a:layout_marginBottom="3dp"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"/>
+
+    <Button a:id="@+id/select_album_play"
+            a:text="@string/select_album.play"
+            a:textAppearance="?android:attr/textAppearanceSmall"
+            a:layout_marginTop="3dp"
+            a:layout_marginBottom="3dp"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"/>
+
+    <Button a:id="@+id/select_album_more"
+            a:text="@string/select_album.more"
+            a:textAppearance="?android:attr/textAppearanceSmall"
+            a:layout_marginTop="3dp"
+            a:layout_marginBottom="6dp"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"/>
+
+</LinearLayout>
+

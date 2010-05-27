@@ -15,6 +15,7 @@ Make stop button smaller.  Remove unused button selectors.
 Create screenshots of wimp.
 Main menu: SELECT_SERVER, SEARCH, SETTINGS, HELP
 Tabs: HOME, MUSIC, PLAYLISTS, PLAY_QUEUE
+Avoid transition when going back.
 
 DONE IN ANDROID 1.3
 -------------------
