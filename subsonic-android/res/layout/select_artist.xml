@@ -4,12 +4,14 @@
               a:layout_width="fill_parent"
               a:layout_height="fill_parent">
 
-
     <ListView a:id="@+id/select_artist_list"
               a:textFilterEnabled="true"
               a:fastScrollEnabled="true"
               a:layout_width="fill_parent"
-              a:layout_height="fill_parent"/>
+              a:layout_height="0dip"
+              a:layout_weight="1.0"/>
+
+    <include layout="@layout/button_bar"/>
 
 </LinearLayout>
 

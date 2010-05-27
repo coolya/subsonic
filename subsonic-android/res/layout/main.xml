@@ -84,5 +84,8 @@
                 a:focusable="true"
                 a:gravity="right"/>
     </LinearLayout>
+
+    <include layout="@layout/button_bar"/>
+
 </LinearLayout>
 

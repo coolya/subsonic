@@ -12,6 +12,10 @@ Layout: Scrollable main menu, ala wimp
 Layout: "Back to playlist"-button, ala wimp, and remove header.
 Layout: Add buttons after song lists, ala wimp
 Make stop button smaller.  Remove unused button selectors.
+Create screenshots of wimp.
+Disable activity transitions. overridePendingTransition ?
+Main menu: SELECT_SERVER, SEARCH, SETTINGS, HELP
+Tabs: HOME, MUSIC, PLAYLISTS, PLAY_QUEUE
 
 DONE IN ANDROID 1.3
 -------------------

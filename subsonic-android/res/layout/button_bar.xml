@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+              a:orientation="horizontal"
+              a:layout_width="fill_parent"
+              a:layout_height="wrap_content"
+              a:gravity="center_horizontal"
+              a:paddingTop="10dip">
+
+    <Button a:id="@+id/button_bar_home"
+            a:text="@string/button_bar.home"
+            a:textAppearance="?android:attr/textAppearanceSmall"
+            a:layout_marginLeft="6dp"
+            a:layout_marginRight="3dp"
+            a:layout_weight="1"
+            a:layout_width="0dp"
+            a:layout_height="fill_parent"/>
+
+    <Button a:id="@+id/button_bar_music"
+            a:text="@string/button_bar.music"
+            a:textAppearance="?android:attr/textAppearanceSmall"
+            a:layout_marginLeft="3dp"
+            a:layout_marginRight="3dp"
+            a:layout_weight="1"
+            a:layout_width="0dp"
+            a:layout_height="fill_parent"/>
+
+    <Button a:id="@+id/button_bar_now_playing"
+            a:text="@string/button_bar.now_playing"
+            a:textAppearance="?android:attr/textAppearanceSmall"
+            a:layout_marginLeft="3dp"
+            a:layout_marginRight="6dp"
+            a:layout_weight="1"
+            a:layout_width="0dp"
+            a:layout_height="fill_parent"/>
+
+</LinearLayout>
+

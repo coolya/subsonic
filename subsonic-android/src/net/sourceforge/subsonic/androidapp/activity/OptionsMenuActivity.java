@@ -71,6 +71,30 @@ public class OptionsMenuActivity extends Activity {
     }
 
     @Override
+    protected void onPostCreate(Bundle bundle) {
+        super.onPostCreate(bundle);
+
+        findViewById(R.id.button_bar_home).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OptionsMenuActivity.this, MainActivity.class));
+            }
+        });
+        findViewById(R.id.button_bar_music).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OptionsMenuActivity.this, SelectArtistActivity.class));
+            }
+        });
+        findViewById(R.id.button_bar_now_playing).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OptionsMenuActivity.this, DownloadActivity.class));
+            }
+        });
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, MENU_HOME, 0, R.string.options_home).setIcon(R.drawable.menu_home);
         menu.add(0, MENU_PLAYING, 0, R.string.options_playing).setIcon(R.drawable.now_playing);
