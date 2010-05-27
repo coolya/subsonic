@@ -16,6 +16,7 @@ Create screenshots of wimp.
 Disable activity transitions. overridePendingTransition ?
 Main menu: SELECT_SERVER, SEARCH, SETTINGS, HELP
 Tabs: HOME, MUSIC, PLAYLISTS, PLAY_QUEUE
+Remove options menu.
 
 DONE IN ANDROID 1.3
 -------------------

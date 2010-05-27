@@ -96,7 +96,7 @@ public class SelectArtistActivity extends OptionsMenuActivity implements Adapter
             Intent intent = new Intent(this, SelectAlbumActivity.class);
             intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, artist.getId());
             intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, artist.getName());
-            startActivity(intent);
+            Util.startActivityWithoutTransition(this, intent);
         }
     }
 

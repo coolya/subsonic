@@ -77,7 +77,7 @@ public class MainActivity extends OptionsMenuActivity {
         browseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, SelectArtistActivity.class));
+                Util.startActivityWithoutTransition(MainActivity.this, SelectArtistActivity.class);
             }
         });
 
@@ -228,7 +228,7 @@ public class MainActivity extends OptionsMenuActivity {
                             Intent intent = new Intent(MainActivity.this, SelectAlbumActivity.class);
                             intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_ID, result.get(button).getFirst());
                             intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME, result.get(button).getSecond());
-                            startActivity(intent);
+                            Util.startActivityWithoutTransition(MainActivity.this, intent);
                         }
                     });
                 }

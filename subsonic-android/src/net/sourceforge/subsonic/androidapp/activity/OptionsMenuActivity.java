@@ -32,6 +32,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.Util;
 
 /**
  * @author Sindre Mehus
@@ -60,7 +61,7 @@ public class OptionsMenuActivity extends Activity {
                 searchDialog.dismiss();
                 Intent intent = new Intent(OptionsMenuActivity.this, SelectAlbumActivity.class);
                 intent.putExtra(Constants.INTENT_EXTRA_NAME_QUERY, String.valueOf(queryTextView.getText()));
-                startActivity(intent);
+                Util.startActivityWithoutTransition(OptionsMenuActivity.this, intent);
             }
         });
 
@@ -77,19 +78,19 @@ public class OptionsMenuActivity extends Activity {
         findViewById(R.id.button_bar_home).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(OptionsMenuActivity.this, MainActivity.class));
+                Util.startActivityWithoutTransition(OptionsMenuActivity.this, MainActivity.class);
             }
         });
         findViewById(R.id.button_bar_music).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(OptionsMenuActivity.this, SelectArtistActivity.class));
+                Util.startActivityWithoutTransition(OptionsMenuActivity.this, SelectArtistActivity.class);
             }
         });
         findViewById(R.id.button_bar_now_playing).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(OptionsMenuActivity.this, DownloadActivity.class));
+                Util.startActivityWithoutTransition(OptionsMenuActivity.this, DownloadActivity.class);
             }
         });
     }
