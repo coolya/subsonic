@@ -60,10 +60,7 @@ import java.util.List;
 public class SelectAlbumActivity extends SubsonicTabActivity {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
-    private static final int MENU_ITEM_SAVE = 1;
-    private static final int MENU_ITEM_ADD = 2;
-    private static final int MENU_ITEM_DELETE = 3;
-    private static final int MENU_ITEM_PLAY_ALL = 4;
+    private static final int MENU_ITEM_PLAY_ALL = 1;
 
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private ImageLoader imageLoader;
@@ -71,8 +68,11 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     private ListView entryList;
     private Button selectButton;
     private Button playButton;
-    private Button moreButton;
+    private Button queueButton;
+    private Button saveButton;
+    private Button deleteButton;
     private boolean licenseValid;
+    private View buttons;
 
     /**
      * Called when the activity is first created.
@@ -85,9 +85,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         imageLoader = new ImageLoader();
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
-        View buttons = LayoutInflater.from(this).inflate(R.layout.select_album_buttons, entryList, false);
+        buttons = LayoutInflater.from(this).inflate(R.layout.select_album_buttons, entryList, false);
         entryList.addFooterView(buttons);
-//        entryList.addFooterView(new Button(this));
         entryList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         entryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -108,7 +107,9 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
         selectButton = (Button) buttons.findViewById(R.id.select_album_select);
         playButton = (Button) buttons.findViewById(R.id.select_album_play);
-        moreButton = (Button) buttons.findViewById(R.id.select_album_more);
+        queueButton = (Button) buttons.findViewById(R.id.select_album_queue);
+        saveButton = (Button) buttons.findViewById(R.id.select_album_save);
+        deleteButton = (Button) buttons.findViewById(R.id.select_album_delete);
 
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,16 +124,29 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                 selectAll(false);
             }
         });
-
-        registerForContextMenu(moreButton);
-        registerForContextMenu(entryList);
-
-        moreButton.setOnClickListener(new View.OnClickListener() {
+        queueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                moreButton.showContextMenu();
+                download(true, false, false);
+                selectAll(false);
             }
         });
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                download(true, true, false);
+                selectAll(false);
+            }
+        });
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                delete();
+                selectAll(false);
+            }
+        });
+
+        registerForContextMenu(entryList);
 
         bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         enableButtons();
@@ -152,18 +166,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     @Override
     public boolean onContextItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case MENU_ITEM_SAVE:
-                download(true, true, false);
-                selectAll(false);
-                break;
-            case MENU_ITEM_ADD:
-                download(true, false, false);
-                selectAll(false);
-                break;
-            case MENU_ITEM_DELETE:
-                delete();
-                selectAll(false);
-                break;
             case MENU_ITEM_PLAY_ALL:
                 playAll(menuItem);
                 break;
@@ -177,25 +179,10 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
 
-        if (view == moreButton) {
-            if (!Util.isOffline(this)) {
-                menu.add(Menu.NONE, MENU_ITEM_SAVE, MENU_ITEM_SAVE, R.string.select_album_save);
-            }
-            menu.add(Menu.NONE, MENU_ITEM_ADD, MENU_ITEM_ADD, R.string.select_album_add);
-
-            for (MusicDirectory.Entry song : getSelectedSongs()) {
-                DownloadFile downloadFile = downloadService.forSong(song);
-                if (downloadFile.getCompleteFile().exists()) {
-                    menu.add(Menu.NONE, MENU_ITEM_DELETE, MENU_ITEM_DELETE, R.string.select_album_delete);
-                    break;
-                }
-            }
-        } else {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
-            if (entry.isDirectory()) {
-                menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_album);
-            }
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
+        if (entry.isDirectory()) {
+            menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_album);
         }
     }
 
@@ -251,7 +238,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         boolean someUnselected = false;
         int count = entryList.getCount();
         for (int i = 0; i < count; i++) {
-            if (!entryList.isItemChecked(i)) {
+            if (!entryList.isItemChecked(i) && entryList.getItemAtPosition(i) instanceof MusicDirectory.Entry) {
                 someUnselected = true;
                 break;
             }
@@ -278,16 +265,33 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     }
 
     private void enableButtons() {
-        int count = entryList.getCount();
-        boolean checked = false;
-        for (int i = 0; i < count; i++) {
-            if (entryList.isItemChecked(i)) {
-                checked = true;
+        List<MusicDirectory.Entry> selection = getSelectedSongs();
+        boolean enabled = !selection.isEmpty();
+        boolean deleteEnabled = false;
+
+        for (MusicDirectory.Entry song : selection) {
+            DownloadFile downloadFile = downloadService.forSong(song);
+            if (downloadFile.getCompleteFile().exists()) {
+                deleteEnabled = true;
                 break;
             }
         }
-        playButton.setEnabled(checked);
-        moreButton.setEnabled(checked);
+
+        playButton.setEnabled(enabled);
+        queueButton.setEnabled(enabled);
+        saveButton.setEnabled(enabled && !Util.isOffline(this));
+        deleteButton.setEnabled(deleteEnabled);
+    }
+
+    private List<MusicDirectory.Entry> getSelectedSongs() {
+        List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>(10);
+        int count = entryList.getCount();
+        for (int i = 0; i < count; i++) {
+            if (entryList.isItemChecked(i)) {
+                songs.add((MusicDirectory.Entry) entryList.getItemAtPosition(i));
+            }
+        }
+        return songs;
     }
 
     private void download(final boolean append, final boolean save, final boolean autoplay) {
@@ -388,17 +392,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         builder.create().show();
     }
 
-    private List<MusicDirectory.Entry> getSelectedSongs() {
-        List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>(10);
-        int count = entryList.getCount();
-        for (int i = 0; i < count; i++) {
-            if (entryList.isItemChecked(i)) {
-                songs.add((MusicDirectory.Entry) entryList.getItemAtPosition(i));
-            }
-        }
-        return songs;
-    }
-
     private class DownloadServiceConnection implements ServiceConnection {
 
         @Override
@@ -479,10 +472,13 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             }
             licenseValid = result.getSecond();
 
+            buttons.setVisibility(visibility);
             // TODO
-//            selectButton.setVisibility(visibility);
-//            playButton.setVisibility(visibility);
-//            moreButton.setVisibility(visibility);
+            selectButton.setVisibility(visibility);
+            playButton.setVisibility(visibility);
+            queueButton.setVisibility(visibility);
+            saveButton.setVisibility(visibility);
+            deleteButton.setVisibility(visibility);
 
             boolean playAll = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_PLAY_ALL, false);
             if (playAll) {
