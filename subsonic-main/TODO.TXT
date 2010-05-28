@@ -8,19 +8,20 @@ Bugfix: Trim username, servername. Url-encode username.
 Bugfix: Support small/large screens: http://developer.android.com/guide/topics/manifest/supports-screens-element.html, must improve layout of main activity.
 Bugfix: Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
 Layout: Tabbed layout, ala wimp
-Layout: Scrollable main menu, ala wimp
 Layout: "Back to playlist"-button, ala wimp, and remove header.
-Layout: Add buttons after song lists, ala wimp
+Layout: Scrollable main menu, ala wimp
 Make stop button smaller.  Remove unused button selectors.
 Create screenshots of wimp.
 Main menu: SELECT_SERVER, SEARCH, SETTINGS, HELP
 Tabs: HOME, MUSIC, PLAYLISTS, PLAY_QUEUE
 Avoid transition when going back.
+Add hdpi icons
 
 DONE IN ANDROID 1.3
 -------------------
 Layout: Nicer default cover image.
 Layout: Nicer playlist background
+Layout: Add buttons after song lists, ala wimp
 
 TODO IN 4.1
 -----------------

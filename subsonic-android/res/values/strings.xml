@@ -27,10 +27,10 @@
 
     <string name="select_album.select">Select</string>
     <string name="select_album.play">Play</string>
+    <string name="select_album.queue">Queue</string>
     <string name="select_album.more">More...</string>
     <string name="select_album.play_album">Play album</string>
     <string name="select_album.delete">Delete from phone</string>
-    <string name="select_album.add">Add to play queue</string>
     <string name="select_album.save">Save on phone</string>
     <string name="select_album.offline">Offline</string>
     <string name="select_album.searching">Searching...</string>
