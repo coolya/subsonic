@@ -16,6 +16,8 @@ Main menu: SELECT_SERVER, SEARCH, SETTINGS, HELP
 Tabs: HOME, MUSIC, PLAYLISTS, PLAY_QUEUE
 Avoid transition when going back.
 Add hdpi icons
+Avoid scaling of cover art images.
+Create tabs for search and playlists.
 
 DONE IN ANDROID 1.3
 -------------------

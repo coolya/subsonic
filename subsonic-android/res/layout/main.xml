@@ -47,44 +47,6 @@
 
     <include layout="@layout/main_buttons"/>
 
-    <LinearLayout a:orientation="horizontal"
-                  a:layout_width="fill_parent"
-                  a:layout_height="wrap_content">
-
-        <ImageView
-                a:id="@+id/main_now_playing"
-                a:layout_width="wrap_content"
-                a:layout_height="wrap_content"
-                a:src="@drawable/now_playing_selector"
-                a:focusable="true"
-                a:gravity="left"/>
-
-        <TextView
-                a:layout_width="wrap_content"
-                a:layout_height="wrap_content"
-                a:layout_weight="1"/>
-
-        <ImageView
-                a:id="@+id/main_settings"
-                a:layout_width="wrap_content"
-                a:layout_height="wrap_content"
-                a:src="@drawable/settings_selector"
-                a:focusable="true"/>
-
-        <TextView
-                a:layout_width="wrap_content"
-                a:layout_height="wrap_content"
-                a:layout_weight="1"/>
-
-        <ImageView
-                a:id="@+id/main_help"
-                a:layout_width="wrap_content"
-                a:layout_height="wrap_content"
-                a:src="@drawable/help_selector"
-                a:focusable="true"
-                a:gravity="right"/>
-    </LinearLayout>
-
     <include layout="@layout/button_bar"/>
 
 </LinearLayout>

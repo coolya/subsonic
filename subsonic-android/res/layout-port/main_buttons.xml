@@ -18,15 +18,15 @@
             a:text="@string/main.select_server"/>
 
     <Button
-            a:id="@+id/main_browse"
+            a:id="@+id/main_search"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:layout_marginBottom="6dp"
-            a:drawableLeft="@drawable/browse"
+            a:drawableLeft="@android:drawable/ic_menu_search"
             a:drawablePadding="20dp"
             a:gravity="left|center_vertical"
             a:textAppearance="?android:attr/textAppearanceLarge"
-            a:text="@string/main.my_music"/>
+            a:text="@string/main.search"/>
 
     <Button
             a:id="@+id/main_load_playlist"
@@ -40,14 +40,25 @@
             a:text="@string/main.my_playlists"/>
 
     <Button
-            a:id="@+id/main_search"
+            a:id="@+id/main_settings"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:layout_marginBottom="6dp"
-            a:drawableLeft="@android:drawable/ic_menu_search"
+            a:drawableLeft="@drawable/settings"
             a:drawablePadding="20dp"
             a:gravity="left|center_vertical"
             a:textAppearance="?android:attr/textAppearanceLarge"
-            a:text="@string/main.search"/>
+            a:text="@string/main.settings"/>
+
+<Button
+            a:id="@+id/main_help"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:layout_marginBottom="6dp"
+            a:drawableLeft="@drawable/help"
+            a:drawablePadding="20dp"
+            a:gravity="left|center_vertical"
+            a:textAppearance="?android:attr/textAppearanceLarge"
+            a:text="@string/main.help"/>
 
 </LinearLayout>

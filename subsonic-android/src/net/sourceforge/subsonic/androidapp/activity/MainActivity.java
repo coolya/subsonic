@@ -73,14 +73,6 @@ public class MainActivity extends SubsonicTabActivity {
         });
         registerForContextMenu(serverButton);
 
-        View browseButton = findViewById(R.id.main_browse);
-        browseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Util.startActivityWithoutTransition(MainActivity.this, SelectArtistActivity.class);
-            }
-        });
-
         searchButton = findViewById(R.id.main_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,14 +86,6 @@ public class MainActivity extends SubsonicTabActivity {
             @Override
             public void onClick(View view) {
                 showPlaylistDialog();
-            }
-        });
-
-        View nowPlayingButton = findViewById(R.id.main_now_playing);
-        nowPlayingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, DownloadActivity.class));
             }
         });
 
