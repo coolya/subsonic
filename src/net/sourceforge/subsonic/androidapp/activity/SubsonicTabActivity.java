@@ -19,17 +19,10 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
 /**
@@ -37,31 +30,9 @@ import net.sourceforge.subsonic.androidapp.util.Util;
  */
 public class SubsonicTabActivity extends Activity {
 
-    private Dialog searchDialog;
-
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-
-        LayoutInflater factory = LayoutInflater.from(this);
-        View searchView = factory.inflate(R.layout.search, null);
-
-        final Button searchViewButton = (Button) searchView.findViewById(R.id.search_search);
-        final TextView queryTextView = (TextView) searchView.findViewById(R.id.search_query);
-        searchViewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                searchDialog.dismiss();
-                Intent intent = new Intent(SubsonicTabActivity.this, SelectAlbumActivity.class);
-                intent.putExtra(Constants.INTENT_EXTRA_NAME_QUERY, String.valueOf(queryTextView.getText()));
-                Util.startActivityWithoutTransition(SubsonicTabActivity.this, intent);
-            }
-        });
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(searchView);
-        builder.setCancelable(true);
-        searchDialog = builder.create();
     }
 
     @Override
@@ -80,6 +51,18 @@ public class SubsonicTabActivity extends Activity {
                 Util.startActivityWithoutTransition(SubsonicTabActivity.this, SelectArtistActivity.class);
             }
         });
+        findViewById(R.id.button_bar_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Util.startActivityWithoutTransition(SubsonicTabActivity.this, SearchActivity.class);
+            }
+        });
+        findViewById(R.id.button_bar_playlists).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Util.startActivityWithoutTransition(SubsonicTabActivity.this, SelectPlaylistActivity.class);
+            }
+        });
         findViewById(R.id.button_bar_now_playing).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,14 +71,10 @@ public class SubsonicTabActivity extends Activity {
         });
     }
 
-    protected void showSearchDialog() {
-        searchDialog.show();
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-            showSearchDialog();
+            Util.startActivityWithoutTransition(SubsonicTabActivity.this, SearchActivity.class);
         }
         return super.onKeyDown(keyCode, event);
     }

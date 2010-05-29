@@ -19,25 +19,17 @@
 
 package net.sourceforge.subsonic.androidapp.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.MenuItem;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
-import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
-import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
-import net.sourceforge.subsonic.androidapp.util.Constants;
-import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.Util;
-
-import java.util.List;
 
 public class MainActivity extends SubsonicTabActivity {
 
@@ -48,8 +40,6 @@ public class MainActivity extends SubsonicTabActivity {
     private static final int MENU_ITEM_OFFLINE = 104;
 
     private View serverButton;
-    private View searchButton;
-    private View loadPlaylistButton;
 
     /**
      * Called when the activity is first created.
@@ -72,22 +62,6 @@ public class MainActivity extends SubsonicTabActivity {
             }
         });
         registerForContextMenu(serverButton);
-
-        searchButton = findViewById(R.id.main_search);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showSearchDialog();
-            }
-        });
-
-        loadPlaylistButton = findViewById(R.id.main_load_playlist);
-        loadPlaylistButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPlaylistDialog();
-            }
-        });
 
         View settingsButton = findViewById(R.id.main_settings);
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -175,49 +149,10 @@ public class MainActivity extends SubsonicTabActivity {
         TextView serverText = (TextView) findViewById(R.id.main_server);
         serverText.setText(name);
 
+        // TODO
         boolean offline = instance == 0;
-        loadPlaylistButton.setEnabled(!offline);
-        searchButton.setEnabled(!offline);
+//        loadPlaylistButton.setEnabled(!offline);
+//        searchButton.setEnabled(!offline);
     }
 
-    private void showPlaylistDialog() {
-        new BackgroundTask<List<Pair<String, String>>>(this) {
-            @Override
-            protected List<Pair<String, String>> doInBackground() throws Throwable {
-                return MusicServiceFactory.getMusicService(MainActivity.this).getPlaylists(MainActivity.this, this);
-            }
-
-            @Override
-            protected void cancel() {
-                // Do nothing.
-            }
-
-            @Override
-            protected void done(final List<Pair<String, String>> result) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle(R.string.main_select_playlist);
-                builder.setCancelable(true);
-
-                if (result.isEmpty()) {
-                    builder.setMessage(R.string.main_no_playlists);
-                } else {
-                    final CharSequence[] items = new CharSequence[result.size()];
-                    for (int i = 0; i < items.length; i++) {
-                        items[i] = result.get(i).getSecond();
-                    }
-                    builder.setItems(items, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int button) {
-                            dialog.dismiss();
-                            Intent intent = new Intent(MainActivity.this, SelectAlbumActivity.class);
-                            intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_ID, result.get(button).getFirst());
-                            intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME, result.get(button).getSecond());
-                            Util.startActivityWithoutTransition(MainActivity.this, intent);
-                        }
-                    });
-                }
-                builder.show();
-            }
-        }.execute();
-    }
 }

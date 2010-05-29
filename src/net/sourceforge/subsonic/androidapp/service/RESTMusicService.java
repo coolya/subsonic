@@ -60,6 +60,7 @@ import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.Version;
+import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.service.parser.ErrorParser;
 import net.sourceforge.subsonic.androidapp.service.parser.IndexesParser;
 import net.sourceforge.subsonic.androidapp.service.parser.LicenseParser;
@@ -217,7 +218,7 @@ public class RESTMusicService implements MusicService {
     }
 
     @Override
-    public List<Pair<String, String>> getPlaylists(Context context, ProgressListener progressListener) throws Exception {
+    public List<Playlist> getPlaylists(Context context, ProgressListener progressListener) throws Exception {
         Reader reader = getReader(context, progressListener, "getPlaylists");
         addReader(reader);
         try {

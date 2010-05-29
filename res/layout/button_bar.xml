@@ -7,7 +7,7 @@
               a:paddingTop="10dip">
 
     <Button a:id="@+id/button_bar_home"
-            a:text="@string/button_bar.home"
+            a:drawableLeft="@drawable/menu_home"
             a:textAppearance="?android:attr/textAppearanceSmall"
             a:layout_marginLeft="6dp"
             a:layout_marginRight="3dp"
@@ -16,7 +16,25 @@
             a:layout_height="fill_parent"/>
 
     <Button a:id="@+id/button_bar_music"
-            a:text="@string/button_bar.music"
+            a:drawableLeft="@drawable/browse"
+            a:textAppearance="?android:attr/textAppearanceSmall"
+            a:layout_marginLeft="3dp"
+            a:layout_marginRight="3dp"
+            a:layout_weight="1"
+            a:layout_width="0dp"
+            a:layout_height="fill_parent"/>
+
+    <Button a:id="@+id/button_bar_playlists"
+            a:drawableLeft="@drawable/playlist"
+            a:textAppearance="?android:attr/textAppearanceSmall"
+            a:layout_marginLeft="3dp"
+            a:layout_marginRight="3dp"
+            a:layout_weight="1"
+            a:layout_width="0dp"
+            a:layout_height="fill_parent"/>
+
+    <Button a:id="@+id/button_bar_search"
+            a:drawableLeft="@drawable/search"
             a:textAppearance="?android:attr/textAppearanceSmall"
             a:layout_marginLeft="3dp"
             a:layout_marginRight="3dp"
@@ -25,7 +43,7 @@
             a:layout_height="fill_parent"/>
 
     <Button a:id="@+id/button_bar_now_playing"
-            a:text="@string/button_bar.now_playing"
+            a:drawableLeft="@drawable/now_playing"
             a:textAppearance="?android:attr/textAppearanceSmall"
             a:layout_marginLeft="3dp"
             a:layout_marginRight="6dp"
