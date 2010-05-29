@@ -18,21 +18,20 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
-import java.io.InputStream;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.domain.Version;
 import net.sourceforge.subsonic.androidapp.util.LRUCache;
-import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import net.sourceforge.subsonic.androidapp.util.TimeLimitedCache;
 import net.sourceforge.subsonic.androidapp.util.Util;
 import org.apache.http.HttpResponse;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Sindre Mehus
@@ -49,7 +48,7 @@ public class CachedMusicService implements MusicService {
     private final TimeLimitedCache<Boolean> cachedLicenseValid = new TimeLimitedCache<Boolean>(120, TimeUnit.SECONDS);
     private final TimeLimitedCache<Indexes> cachedIndexes = new TimeLimitedCache<Indexes>(60 * 60, TimeUnit.SECONDS);
 
-    private final TimeLimitedCache<List<Pair<String, String>>> cachedPlaylists = new TimeLimitedCache<List<Pair<String, String>>>(60, TimeUnit.SECONDS);
+    private final TimeLimitedCache<List<Playlist>> cachedPlaylists = new TimeLimitedCache<List<Playlist>>(60, TimeUnit.SECONDS);
     private String restUrl;
 
     public CachedMusicService(MusicService musicService) {
@@ -107,7 +106,7 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
-    public List<Pair<String, String>> getPlaylists(Context context, ProgressListener progressListener) throws Exception {
+    public List<Playlist> getPlaylists(Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
         if (cachedPlaylists.get() == null) {
             cachedPlaylists.set(musicService.getPlaylists(context, progressListener));

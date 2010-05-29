@@ -18,17 +18,16 @@
  */
 package net.sourceforge.subsonic.androidapp.service.parser;
 
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.xmlpull.v1.XmlPullParser;
-
 import android.content.Context;
 import android.util.Xml;
 import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.util.Pair;
+import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
+import org.xmlpull.v1.XmlPullParser;
+
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Sindre Mehus
@@ -39,7 +38,7 @@ public class PlaylistsParser extends AbstractParser {
         super(context);
     }
 
-    public List<Pair<String, String>> parse(Reader reader, ProgressListener progressListener) throws Exception {
+    public List<Playlist> parse(Reader reader, ProgressListener progressListener) throws Exception {
         if (progressListener != null) {
             progressListener.updateProgress(R.string.parser_reading);
         }
@@ -47,7 +46,7 @@ public class PlaylistsParser extends AbstractParser {
         XmlPullParser parser = Xml.newPullParser();
         parser.setInput(reader);
 
-        List<Pair<String, String>> result = new ArrayList<Pair<String, String>>();
+        List<Playlist> result = new ArrayList<Playlist>();
         int eventType;
         do {
             eventType = parser.next();
@@ -56,7 +55,7 @@ public class PlaylistsParser extends AbstractParser {
                 if ("playlist".equals(tag)) {
                     String name = get(parser, "name");
                     String id = get(parser, "id");
-                    result.add(new Pair<String, String>(id, name));
+                    result.add(new Playlist(id, name));
                 } else if ("error".equals(tag)) {
                     handleError(parser);
                 }

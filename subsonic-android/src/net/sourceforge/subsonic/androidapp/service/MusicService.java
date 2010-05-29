@@ -18,17 +18,16 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
-import java.util.List;
-import java.io.InputStream;
-
-import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.domain.Indexes;
-import net.sourceforge.subsonic.androidapp.domain.Version;
-import net.sourceforge.subsonic.androidapp.util.ProgressListener;
-import net.sourceforge.subsonic.androidapp.util.Pair;
 import android.content.Context;
 import android.graphics.Bitmap;
+import net.sourceforge.subsonic.androidapp.domain.Indexes;
+import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.domain.Playlist;
+import net.sourceforge.subsonic.androidapp.domain.Version;
+import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import org.apache.http.HttpResponse;
+
+import java.util.List;
 
 /**
  * @author Sindre Mehus
@@ -47,7 +46,7 @@ public interface MusicService {
 
     MusicDirectory getPlaylist(String id, Context context, ProgressListener progressListener) throws Exception;
 
-    List<Pair<String,String>> getPlaylists(Context context, ProgressListener progressListener) throws Exception;
+    List<Playlist> getPlaylists(Context context, ProgressListener progressListener) throws Exception;
 
     Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception;
 
