@@ -1,55 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
-              a:orientation="horizontal"
+              a:orientation="vertical"
               a:layout_width="fill_parent"
-              a:layout_height="wrap_content"
-              a:gravity="center_horizontal"
-              a:paddingTop="10dip">
+              a:layout_height="wrap_content">
 
-    <Button a:id="@+id/button_bar_home"
-            a:drawableLeft="@drawable/menu_home"
-            a:textAppearance="?android:attr/textAppearanceSmall"
-            a:layout_marginLeft="6dp"
-            a:layout_marginRight="3dp"
-            a:layout_weight="1"
-            a:layout_width="0dp"
-            a:layout_height="fill_parent"/>
+    <View
+            a:layout_width="fill_parent"
+            a:layout_height="1px"
+            a:background="#555555"/>
 
-    <Button a:id="@+id/button_bar_music"
-            a:drawableLeft="@drawable/browse"
-            a:textAppearance="?android:attr/textAppearanceSmall"
-            a:layout_marginLeft="3dp"
-            a:layout_marginRight="3dp"
-            a:layout_weight="1"
-            a:layout_width="0dp"
-            a:layout_height="fill_parent"/>
+    <LinearLayout a:orientation="horizontal"
+                  a:layout_width="fill_parent"
+                  a:layout_height="wrap_content"
+                  a:gravity="center_horizontal"
+                  a:background="#DDDDDD"
+                  a:paddingTop="3dip"
+                  a:paddingBottom="3dip">
 
-    <Button a:id="@+id/button_bar_playlists"
-            a:drawableLeft="@drawable/playlist"
-            a:textAppearance="?android:attr/textAppearanceSmall"
-            a:layout_marginLeft="3dp"
-            a:layout_marginRight="3dp"
-            a:layout_weight="1"
-            a:layout_width="0dp"
-            a:layout_height="fill_parent"/>
+        <ImageButton a:id="@+id/button_bar_home"
+                     a:src="@drawable/menu_home"
+                     a:background="@android:color/transparent"
+                     a:layout_weight="1"
+                     a:layout_width="0dp"
+                     a:layout_height="fill_parent"/>
 
-    <Button a:id="@+id/button_bar_search"
-            a:drawableLeft="@drawable/search"
-            a:textAppearance="?android:attr/textAppearanceSmall"
-            a:layout_marginLeft="3dp"
-            a:layout_marginRight="3dp"
-            a:layout_weight="1"
-            a:layout_width="0dp"
-            a:layout_height="fill_parent"/>
+        <ImageButton a:id="@+id/button_bar_music"
+                     a:src="@drawable/browse"
+                     a:background="@android:color/transparent"
+                     a:layout_weight="1"
+                     a:layout_width="0dp"
+                     a:layout_height="fill_parent"/>
 
-    <Button a:id="@+id/button_bar_now_playing"
-            a:drawableLeft="@drawable/now_playing"
-            a:textAppearance="?android:attr/textAppearanceSmall"
-            a:layout_marginLeft="3dp"
-            a:layout_marginRight="6dp"
-            a:layout_weight="1"
-            a:layout_width="0dp"
-            a:layout_height="fill_parent"/>
+        <ImageButton a:id="@+id/button_bar_search"
+                     a:src="@drawable/search"
+                     a:background="@android:color/transparent"
+                     a:layout_weight="1"
+                     a:layout_width="0dp"
+                     a:layout_height="fill_parent"/>
 
+        <ImageButton a:id="@+id/button_bar_playlists"
+                     a:src="@drawable/playlist"
+                     a:background="@android:color/transparent"
+                     a:layout_weight="1"
+                     a:layout_width="0dp"
+                     a:layout_height="fill_parent"/>
+
+        <ImageButton a:id="@+id/button_bar_now_playing"
+                     a:src="@drawable/now_playing"
+                     a:background="@android:color/transparent"
+                     a:layout_weight="1"
+                     a:layout_width="0dp"
+                     a:layout_height="fill_parent"/>
+
+    </LinearLayout>
 </LinearLayout>
 
