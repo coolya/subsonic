@@ -13,44 +13,42 @@
                   a:layout_width="fill_parent"
                   a:layout_height="wrap_content"
                   a:gravity="center_horizontal"
-                  a:background="#DDDDDD"
-                  a:paddingTop="3dip"
-                  a:paddingBottom="3dip">
+                  a:background="#DDDDDD">
 
         <ImageButton a:id="@+id/button_bar_home"
                      a:src="@drawable/menu_home"
                      a:background="@android:color/transparent"
                      a:layout_weight="1"
                      a:layout_width="0dp"
-                     a:layout_height="fill_parent"/>
+                     a:layout_height="wrap_content"/>
 
         <ImageButton a:id="@+id/button_bar_music"
                      a:src="@drawable/browse"
                      a:background="@android:color/transparent"
                      a:layout_weight="1"
                      a:layout_width="0dp"
-                     a:layout_height="fill_parent"/>
+                     a:layout_height="wrap_content"/>
 
         <ImageButton a:id="@+id/button_bar_search"
                      a:src="@drawable/search"
                      a:background="@android:color/transparent"
                      a:layout_weight="1"
                      a:layout_width="0dp"
-                     a:layout_height="fill_parent"/>
+                     a:layout_height="wrap_content"/>
 
         <ImageButton a:id="@+id/button_bar_playlists"
                      a:src="@drawable/playlist"
                      a:background="@android:color/transparent"
                      a:layout_weight="1"
                      a:layout_width="0dp"
-                     a:layout_height="fill_parent"/>
+                     a:layout_height="wrap_content"/>
 
         <ImageButton a:id="@+id/button_bar_now_playing"
                      a:src="@drawable/now_playing"
                      a:background="@android:color/transparent"
                      a:layout_weight="1"
                      a:layout_width="0dp"
-                     a:layout_height="fill_parent"/>
+                     a:layout_height="wrap_content"/>
 
     </LinearLayout>
 </LinearLayout>

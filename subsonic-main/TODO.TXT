@@ -18,7 +18,9 @@ Avoid transition when going back.
 Add hdpi icons
 Avoid scaling of cover art images.
 Create tabs for search and playlists.
+Larger search icon.
 
+http://stackoverflow.com/questions/1521640/standard-android-button-with-a-different-color
 http://github.com/commonsguy/cwac-sacklist
 http://jsharkey.org/blog/2008/08/18/separating-lists-with-headers-in-android-09/
 
