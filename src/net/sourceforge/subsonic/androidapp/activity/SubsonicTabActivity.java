@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.graphics.Color;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
@@ -29,6 +30,8 @@ import net.sourceforge.subsonic.androidapp.util.Util;
  * @author Sindre Mehus
  */
 public class SubsonicTabActivity extends Activity {
+
+    private static final int SELECTED_TAB_COLOR = Color.rgb(190, 190, 190);
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -39,36 +42,57 @@ public class SubsonicTabActivity extends Activity {
     protected void onPostCreate(Bundle bundle) {
         super.onPostCreate(bundle);
 
-        findViewById(R.id.button_bar_home).setOnClickListener(new View.OnClickListener() {
+        View homeButton = findViewById(R.id.button_bar_home);
+        homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Util.startActivityWithoutTransition(SubsonicTabActivity.this, MainActivity.class);
             }
         });
-        findViewById(R.id.button_bar_music).setOnClickListener(new View.OnClickListener() {
+
+        View musicButton = findViewById(R.id.button_bar_music);
+        musicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Util.startActivityWithoutTransition(SubsonicTabActivity.this, SelectArtistActivity.class);
             }
         });
-        findViewById(R.id.button_bar_search).setOnClickListener(new View.OnClickListener() {
+
+        View searchButton = findViewById(R.id.button_bar_search);
+        searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Util.startActivityWithoutTransition(SubsonicTabActivity.this, SearchActivity.class);
             }
         });
-        findViewById(R.id.button_bar_playlists).setOnClickListener(new View.OnClickListener() {
+
+        View playlistButton = findViewById(R.id.button_bar_playlists);
+        playlistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Util.startActivityWithoutTransition(SubsonicTabActivity.this, SelectPlaylistActivity.class);
             }
         });
-        findViewById(R.id.button_bar_now_playing).setOnClickListener(new View.OnClickListener() {
+
+        View nowPlayingButton = findViewById(R.id.button_bar_now_playing);
+        nowPlayingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Util.startActivityWithoutTransition(SubsonicTabActivity.this, DownloadActivity.class);
             }
         });
+
+        if (this instanceof MainActivity) {
+            homeButton.setBackgroundColor(SELECTED_TAB_COLOR);
+        } else if (this instanceof SelectAlbumActivity || this instanceof SelectArtistActivity) {
+            musicButton.setBackgroundColor(SELECTED_TAB_COLOR);
+        } else if (this instanceof SearchActivity) {
+            searchButton.setBackgroundColor(SELECTED_TAB_COLOR);
+        } else if (this instanceof SelectPlaylistActivity) {
+            playlistButton.setBackgroundColor(SELECTED_TAB_COLOR);
+        } else if (this instanceof DownloadActivity) {
+            nowPlayingButton.setBackgroundColor(SELECTED_TAB_COLOR);
+        }
     }
 
     @Override
