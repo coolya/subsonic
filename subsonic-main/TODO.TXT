@@ -12,12 +12,15 @@ Layout: "Back to playlist"-button, ala wimp, and remove header.
 Layout: Scrollable main menu, ala wimp
 Make stop button smaller.  Remove unused button selectors.
 Create screenshots of wimp.
-Main menu: SELECT_SERVER, SEARCH, SETTINGS, HELP
+Main menu: SELECT_SERVER, SETTINGS, HELP, RANDOM/NEW/ETC ALBUMS
 Tabs: HOME, MUSIC, PLAYLISTS, PLAY_QUEUE
 Avoid transition when going back.
 Add hdpi icons
 Avoid scaling of cover art images.
 Create tabs for search and playlists.
+
+http://github.com/commonsguy/cwac-sacklist
+http://jsharkey.org/blog/2008/08/18/separating-lists-with-headers-in-android-09/
 
 DONE IN ANDROID 1.3
 -------------------

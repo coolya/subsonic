@@ -26,10 +26,17 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ListView;
+import android.widget.AbsListView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.SackOfViewsAdapter;
+
+import java.util.Arrays;
 
 public class MainActivity extends SubsonicTabActivity {
 
@@ -53,6 +60,9 @@ public class MainActivity extends SubsonicTabActivity {
 
         startService(new Intent(this, DownloadServiceImpl.class));
         setContentView(R.layout.main);
+
+//        ListView list = (ListView) findViewById(R.id.main_list);
+//        View buttons = LayoutInflater.from(this).inflate(R.layout.main_buttons, list, false);
 
         serverButton = findViewById(R.id.main_select_server);
         serverButton.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +89,10 @@ public class MainActivity extends SubsonicTabActivity {
             }
         });
 
+//        list.setAdapter(new SackOfViewsAdapter(Arrays.asList(serverButton, settingsButton, helpButton)));
+//        settingsButton.setLayoutParams(new AbsListView.LayoutParams(100, 100));
+//        list.setAdapter(new SackOfViewsAdapter(Arrays.asList(settingsButton)));
+//
         String version = Util.getVersion(this);
         if (version != null) {
             TextView versionText = (TextView) findViewById(R.id.main_version);

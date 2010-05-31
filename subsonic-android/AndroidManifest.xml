@@ -11,7 +11,7 @@
 
     <uses-sdk a:minSdkVersion="3"/>
 
-    <application a:label="Subsonic" a:icon="@drawable/launch">
+    <application a:label="Subsonic" a:icon="@drawable/launch" a:theme="@android:style/Theme.Light">
 
         <activity a:name=".activity.MainActivity"
                   a:label="Subsonic"
