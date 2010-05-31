@@ -36,7 +36,6 @@
                 a:layout_width="fill_parent"
                 a:layout_height="fill_parent"
                 a:layout_weight="1"
-                a:background="@drawable/repeat_background"
                 a:cacheColorHint="#00000000"/>
 
     </ViewFlipper>
