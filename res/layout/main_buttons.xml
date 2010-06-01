@@ -4,36 +4,49 @@
               a:layout_width="fill_parent"
               a:layout_height="wrap_content">
 
-    <TwoLineListItem
+    <LinearLayout
             a:id="@+id/main_select_server"
+            a:orientation="horizontal"
             a:paddingTop="2dip"
             a:paddingBottom="2dip"
+            a:paddingLeft="6dp"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
-            a:minHeight="?android:attr/listPreferredItemHeight"
-            a:mode="twoLine">
+            a:minHeight="?android:attr/listPreferredItemHeight">
 
-        <TextView a:id="@+id/main.select_server_1"
-                  a:text="@string/main.select_server"
-                  a:drawableLeft="@drawable/main_select_server"
-                  a:layout_width="fill_parent"
-                  a:layout_height="wrap_content"
-                  a:layout_marginLeft="6dip"
-                  a:layout_marginTop="6dip"
-                  a:textAppearance="?android:attr/textAppearanceLarge"/>
+        <ImageView
+                a:src="@drawable/main_select_server"
+                a:layout_gravity="center_vertical"
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content"/>
 
-        <TextView a:id="@+id/main.select_server_2"
-                  a:layout_width="fill_parent"
-                  a:layout_height="wrap_content"
-                  a:layout_below="@+id/main.select_server_1"
-                  a:layout_alignLeft="@+id/main.select_server_1"
-                  a:textAppearance="?android:attr/textAppearanceSmall"/>
-    </TwoLineListItem>
+        <LinearLayout
+                a:orientation="vertical"
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content">
+
+            <TextView a:id="@+id/main.select_server_1"
+                      a:text="@string/main.select_server"
+                      a:layout_width="fill_parent"
+                      a:layout_height="wrap_content"
+                      a:layout_marginLeft="10dip"
+                      a:layout_marginTop="6dip"
+                      a:textAppearance="?android:attr/textAppearanceLarge"/>
+
+            <TextView a:id="@+id/main.select_server_2"
+                      a:layout_width="fill_parent"
+                      a:layout_height="wrap_content"
+                      a:layout_marginLeft="10dip"
+                      a:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        </LinearLayout>
+    </LinearLayout>
 
     <TextView
             a:id="@+id/main_settings"
             a:text="@string/main.settings"
             a:drawableLeft="@drawable/main_settings"
+            a:drawablePadding="10dip"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:textAppearance="?android:attr/textAppearanceLarge"
@@ -45,6 +58,7 @@
             a:id="@+id/main_help"
             a:text="@string/main.help"
             a:drawableLeft="@drawable/main_help"
+            a:drawablePadding="10dip"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:textAppearance="?android:attr/textAppearanceLarge"
