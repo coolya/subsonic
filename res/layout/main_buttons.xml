@@ -7,7 +7,7 @@
     <TextView
             a:id="@+id/main_select_server"
             a:text="@string/main.select_server"
-            a:drawableLeft="@drawable/select_server"
+            a:drawableLeft="@drawable/main_select_server"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:textAppearance="?android:attr/textAppearanceLarge"
@@ -18,7 +18,7 @@
     <TextView
             a:id="@+id/main_settings"
             a:text="@string/main.settings"
-            a:drawableLeft="@drawable/settings"
+            a:drawableLeft="@drawable/main_settings"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:textAppearance="?android:attr/textAppearanceLarge"
@@ -29,7 +29,7 @@
     <TextView
             a:id="@+id/main_help"
             a:text="@string/main.help"
-            a:drawableLeft="@drawable/help"
+            a:drawableLeft="@drawable/main_help"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:textAppearance="?android:attr/textAppearanceLarge"
