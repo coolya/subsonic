@@ -402,7 +402,7 @@ public final class Util {
         String title = song.getTitle();
 
         // Set the icon, scrolling text and timestamp
-        final Notification notification = new Notification(R.drawable.stat_sys_playing, title, System.currentTimeMillis());
+        final Notification notification = new Notification(R.drawable.stat_notify_playing, title, System.currentTimeMillis());
         notification.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
 
         // The PendingIntent to launch our activity if the user selects this notification
