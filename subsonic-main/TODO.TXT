@@ -15,10 +15,10 @@ Create screenshots of wimp.
 Main menu: SHUFFLE_PLAY, SELECT_SERVER, SETTINGS, HELP, RANDOM/NEW/ETC ALBUMS
 Tabs: HOME, MUSIC, PLAYLISTS, PLAY_QUEUE
 Avoid transition when going back.
+Show server name in "Select server"
 Add hdpi icons
 Avoid scaling of cover art images.
-Create tabs for search and playlists.
-Larger search icon.
+Server settings doesn't obey theme.
 
 Colors: http://www.androidtapp.com/opentable/
 http://stackoverflow.com/questions/1521640/standard-android-button-with-a-different-color
