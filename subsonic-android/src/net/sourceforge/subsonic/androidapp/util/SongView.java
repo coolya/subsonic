@@ -117,7 +117,7 @@ public class SongView extends LinearLayout implements Checkable {
 
         boolean playing = downloadService.getCurrentPlaying() == downloadFile;
         if (playing) {
-            textView1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.stat_sys_playing, 0, 0, 0);
+            textView1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.stat_notify_playing, 0, 0, 0);
         } else {
             textView1.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
