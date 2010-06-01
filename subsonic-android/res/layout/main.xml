@@ -4,51 +4,25 @@
               a:layout_width="fill_parent"
               a:layout_height="fill_parent">
 
-    <LinearLayout
-            a:orientation="vertical"
+    <ImageView
+            a:src="@drawable/subsonic_white"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
-            a:layoutAnimation="@anim/layout_slide_down">
+            a:paddingTop="12dip"
+            a:paddingBottom="12dip"
+            a:layout_gravity="center_horizontal"
+            a:background="#DDDDDD"/>
 
-        <LinearLayout
-                a:orientation="horizontal"
-                a:layout_width="fill_parent"
-                a:layout_height="wrap_content">
-            <TextView
-                    a:id="@+id/main_server"
-                    a:layout_width="wrap_content"
-                    a:layout_height="wrap_content"
-                    a:layout_marginTop="6dip"
-                    a:layout_marginLeft="6dip"
-                    a:layout_gravity="top|left"
-                    a:textColor="@color/secondaryForeground"
-                    a:textSize="12dip"/>
-            <TextView
-                    a:id="@+id/main_version"
-                    a:layout_width="wrap_content"
-                    a:layout_height="wrap_content"
-                    a:layout_marginTop="6dip"
-                    a:layout_marginRight="6dip"
-                    a:layout_gravity="top|right"
-                    a:layout_weight="1"
-                    a:gravity="right"
-                    a:textColor="@color/secondaryForeground"
-                    a:textSize="12dip"/>
-        </LinearLayout>
+    <View
+            a:layout_width="fill_parent"
+            a:layout_height="1px"
+            a:background="#555555"/>
 
-        <ImageView
-                a:layout_width="wrap_content"
-                a:layout_height="wrap_content"
-                a:layout_marginTop="12dip"
-                a:layout_gravity="center_horizontal"
-                a:layout_weight="1"
-                a:src="@drawable/subsonic_white"/>
-    </LinearLayout>
-
-    <ListView a:id="@+id/main_list"
-              a:layout_width="fill_parent"
-              a:layout_height="0dip"
-              a:layout_weight="1.0"/>
+    <ListView
+            a:id="@+id/main_list"
+            a:layout_width="fill_parent"
+            a:layout_height="0dip"
+            a:layout_weight="1.0"/>
 
     <include layout="@layout/button_bar"/>
 
