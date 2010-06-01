@@ -23,28 +23,28 @@
                      a:layout_height="wrap_content"/>
 
         <ImageButton a:id="@+id/button_bar_music"
-                     a:src="@drawable/browse"
+                     a:src="@drawable/menu_browse"
                      a:background="@android:color/transparent"
                      a:layout_weight="1"
                      a:layout_width="0dp"
                      a:layout_height="wrap_content"/>
 
         <ImageButton a:id="@+id/button_bar_search"
-                     a:src="@drawable/search"
+                     a:src="@drawable/menu_search"
                      a:background="@android:color/transparent"
                      a:layout_weight="1"
                      a:layout_width="0dp"
                      a:layout_height="wrap_content"/>
 
         <ImageButton a:id="@+id/button_bar_playlists"
-                     a:src="@drawable/playlist"
+                     a:src="@drawable/menu_playlists"
                      a:background="@android:color/transparent"
                      a:layout_weight="1"
                      a:layout_width="0dp"
                      a:layout_height="wrap_content"/>
 
         <ImageButton a:id="@+id/button_bar_now_playing"
-                     a:src="@drawable/now_playing"
+                     a:src="@drawable/menu_now_playing"
                      a:background="@android:color/transparent"
                      a:layout_weight="1"
                      a:layout_width="0dp"

@@ -9,8 +9,10 @@
     <uses-permission a:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission a:name="android.permission.WAKE_LOCK"/>
 
-    <uses-sdk a:minSdkVersion="3"/>
+    <uses-sdk a:minSdkVersion="4"/>
 
+    <supports-screens a:anyDensity="true" a:largeScreens="true" a:normalScreens="true" a:smallScreens="true"/>
+    
     <application a:label="Subsonic" a:icon="@drawable/launch" a:theme="@android:style/Theme.Light">
 
         <activity a:name=".activity.MainActivity"
