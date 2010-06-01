@@ -61,10 +61,9 @@ public class MainActivity extends SubsonicTabActivity {
         startService(new Intent(this, DownloadServiceImpl.class));
         setContentView(R.layout.main);
 
-//        ListView list = (ListView) findViewById(R.id.main_list);
-//        View buttons = LayoutInflater.from(this).inflate(R.layout.main_buttons, list, false);
+        View buttons = LayoutInflater.from(this).inflate(R.layout.main_buttons, null);
 
-        serverButton = findViewById(R.id.main_select_server);
+        serverButton = buttons.findViewById(R.id.main_select_server);
         serverButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +72,7 @@ public class MainActivity extends SubsonicTabActivity {
         });
         registerForContextMenu(serverButton);
 
-        View settingsButton = findViewById(R.id.main_settings);
+        View settingsButton = buttons.findViewById(R.id.main_settings);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +80,7 @@ public class MainActivity extends SubsonicTabActivity {
             }
         });
 
-        View helpButton = findViewById(R.id.main_help);
+        View helpButton = buttons.findViewById(R.id.main_help);
         helpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,10 +88,9 @@ public class MainActivity extends SubsonicTabActivity {
             }
         });
 
-//        list.setAdapter(new SackOfViewsAdapter(Arrays.asList(serverButton, settingsButton, helpButton)));
-//        settingsButton.setLayoutParams(new AbsListView.LayoutParams(100, 100));
-//        list.setAdapter(new SackOfViewsAdapter(Arrays.asList(settingsButton)));
-//
+        ListView list = (ListView) findViewById(R.id.main_list);
+        list.setAdapter(new SackOfViewsAdapter(Arrays.asList(serverButton, settingsButton, helpButton)));
+
         String version = Util.getVersion(this);
         if (version != null) {
             TextView versionText = (TextView) findViewById(R.id.main_version);

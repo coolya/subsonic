@@ -17,6 +17,7 @@ package net.sourceforge.subsonic.androidapp.util;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,8 +70,9 @@ public class SackOfViewsAdapter extends BaseAdapter {
      * in the list are null.
      */
     public SackOfViewsAdapter(List<View> views) {
-        super();
-
+        for (View view : views) {
+            view.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.FILL_PARENT, ListView.LayoutParams.WRAP_CONTENT));
+        }
         this.views = views;
     }
 
@@ -120,7 +122,7 @@ public class SackOfViewsAdapter extends BaseAdapter {
      */
     @Override
     public boolean areAllItemsEnabled() {
-        return (false);
+        return true;
     }
 
     /**
@@ -131,7 +133,7 @@ public class SackOfViewsAdapter extends BaseAdapter {
      */
     @Override
     public boolean isEnabled(int position) {
-        return (false);
+        return true;
     }
 
     /**
