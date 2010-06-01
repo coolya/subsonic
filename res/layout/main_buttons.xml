@@ -4,16 +4,31 @@
               a:layout_width="fill_parent"
               a:layout_height="wrap_content">
 
-    <TextView
+    <TwoLineListItem
             a:id="@+id/main_select_server"
-            a:text="@string/main.select_server"
-            a:drawableLeft="@drawable/main_select_server"
+            a:paddingTop="2dip"
+            a:paddingBottom="2dip"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
-            a:textAppearance="?android:attr/textAppearanceLarge"
-            a:gravity="center_vertical"
-            a:paddingLeft="6dp"
-            a:minHeight="?android:attr/listPreferredItemHeight"/>
+            a:minHeight="?android:attr/listPreferredItemHeight"
+            a:mode="twoLine">
+
+        <TextView a:id="@+id/main.select_server_1"
+                  a:text="@string/main.select_server"
+                  a:drawableLeft="@drawable/main_select_server"
+                  a:layout_width="fill_parent"
+                  a:layout_height="wrap_content"
+                  a:layout_marginLeft="6dip"
+                  a:layout_marginTop="6dip"
+                  a:textAppearance="?android:attr/textAppearanceLarge"/>
+
+        <TextView a:id="@+id/main.select_server_2"
+                  a:layout_width="fill_parent"
+                  a:layout_height="wrap_content"
+                  a:layout_below="@+id/main.select_server_1"
+                  a:layout_alignLeft="@+id/main.select_server_1"
+                  a:textAppearance="?android:attr/textAppearanceSmall"/>
+    </TwoLineListItem>
 
     <TextView
             a:id="@+id/main_settings"

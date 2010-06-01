@@ -23,18 +23,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.ListView;
-import android.widget.AbsListView;
+import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
-import net.sourceforge.subsonic.androidapp.util.Util;
 import net.sourceforge.subsonic.androidapp.util.SackOfViewsAdapter;
+import net.sourceforge.subsonic.androidapp.util.Util;
 
 import java.util.Arrays;
 
@@ -90,12 +88,6 @@ public class MainActivity extends SubsonicTabActivity {
 
         ListView list = (ListView) findViewById(R.id.main_list);
         list.setAdapter(new SackOfViewsAdapter(Arrays.asList(serverButton, settingsButton, helpButton)));
-
-        String version = Util.getVersion(this);
-        if (version != null) {
-            TextView versionText = (TextView) findViewById(R.id.main_version);
-            versionText.setText("v " + version);
-        }
     }
 
     @Override
@@ -158,7 +150,7 @@ public class MainActivity extends SubsonicTabActivity {
     private void updateActiveServer() {
         int instance = Util.getActiveServer(this);
         String name = Util.getServerName(this, instance);
-        TextView serverText = (TextView) findViewById(R.id.main_server);
+        TextView serverText = (TextView) serverButton.findViewById(R.id.main_select_server_2);
         serverText.setText(name);
 
         // TODO
