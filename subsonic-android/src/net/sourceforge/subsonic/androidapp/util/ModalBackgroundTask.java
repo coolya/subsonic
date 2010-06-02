@@ -21,7 +21,6 @@ package net.sourceforge.subsonic.androidapp.util;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.Handler;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
 
@@ -29,7 +28,7 @@ import net.sourceforge.subsonic.androidapp.R;
  * @author Sindre Mehus
  */
 public abstract class ModalBackgroundTask<T> extends BackgroundTask<T> {
-    
+
     private static final String TAG = ModalBackgroundTask.class.getSimpleName();
 
     private final AlertDialog progressDialog;

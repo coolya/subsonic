@@ -15,9 +15,7 @@ Avoid scaling of cover art images.
 Activity.setVolumeControlStream()
 
 Handle empty list of playlists.
-Use TabActivityBackgroundTask in all tab activities.
 Test that cache clean cancelling works.
-Fix MusicService.cancel();  Use threads+context rather than readers.
 Colors: http://www.androidtapp.com/opentable/
 http://stackoverflow.com/questions/1521640/standard-android-button-with-a-different-color
 http://github.com/commonsguy/cwac-sacklist
