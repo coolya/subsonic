@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.io.Reader;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.lang.reflect.Method;
@@ -204,7 +205,17 @@ public final class Util {
             if (in != null) {
                 in.close();
             }
-        } catch (IOException ioe) {
+        } catch (IOException x) {
+            // ignore
+        }
+    }
+
+    public static void close(Reader reader) {
+        try {
+            if (reader != null) {
+                reader.close();
+            }
+        } catch (IOException x) {
             // ignore
         }
     }

@@ -132,11 +132,6 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
-    public void cancel(Context context, ProgressListener progressListener) {
-        musicService.cancel(context, progressListener);
-    }
-
-    @Override
     public Version getLocalVersion(Context context) throws Exception {
         return musicService.getLocalVersion(context);
     }

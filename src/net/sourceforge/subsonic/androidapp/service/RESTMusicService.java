@@ -96,7 +96,6 @@ public class RESTMusicService implements MusicService {
     private static final long REDIRECTION_CHECK_INTERVAL_MILLIS = 60L * 60L * 1000L;
     private static final String FILENAME_INDEXES_SER = "indexes.ser";
 
-    private final List<Reader> readers = new ArrayList<Reader>(10);
     private final DefaultHttpClient httpClient;
     private Pair<String, Indexes> cachedIndexesPair;
 
@@ -127,22 +126,20 @@ public class RESTMusicService implements MusicService {
     @Override
     public void ping(Context context, ProgressListener progressListener) throws Exception {
         Reader reader = getReader(context, progressListener, "ping");
-        addReader(reader);
         try {
             new ErrorParser(context).parse(reader);
         } finally {
-            closeReader(reader);
+            Util.close(reader);
         }
     }
 
     @Override
     public boolean isLicenseValid(Context context, ProgressListener progressListener) throws Exception {
         Reader reader = getReader(context, progressListener, "getLicense");
-        addReader(reader);
         try {
             return new LicenseParser(context).parse(reader, progressListener);
         } finally {
-            closeReader(reader);
+            Util.close(reader);
         }
     }
 
@@ -152,7 +149,6 @@ public class RESTMusicService implements MusicService {
         long lastModified = cachedIndexes == null ? 0L : cachedIndexes.getLastModified();
 
         Reader reader = getReader(context, progressListener, "getIndexes", "ifModifiedSince", lastModified);
-        addReader(reader);
         try {
             Indexes indexes = new IndexesParser(context).parse(reader, progressListener);
             if (indexes != null) {
@@ -161,7 +157,7 @@ public class RESTMusicService implements MusicService {
             }
             return cachedIndexes;
         } finally {
-            closeReader(reader);
+            Util.close(reader);
         }
     }
 
@@ -187,44 +183,40 @@ public class RESTMusicService implements MusicService {
     @Override
     public MusicDirectory getMusicDirectory(String id, Context context, ProgressListener progressListener) throws Exception {
         Reader reader = getReader(context, progressListener, "getMusicDirectory", "id", id);
-        addReader(reader);
         try {
             return new MusicDirectoryParser(context).parse(reader, progressListener);
         } finally {
-            closeReader(reader);
+            Util.close(reader);
         }
     }
 
     @Override
     public MusicDirectory search(String query, Context context, ProgressListener progressListener) throws Exception {
         Reader reader = getReader(context, progressListener, "search", "any", query);
-        addReader(reader);
         try {
             return new SearchResultParser(context).parse(reader, progressListener);
         } finally {
-            closeReader(reader);
+            Util.close(reader);
         }
     }
 
     @Override
     public MusicDirectory getPlaylist(String id, Context context, ProgressListener progressListener) throws Exception {
         Reader reader = getReader(context, progressListener, "getPlaylist", "id", id);
-        addReader(reader);
         try {
             return new PlaylistParser(context).parse(reader, progressListener);
         } finally {
-            closeReader(reader);
+            Util.close(reader);
         }
     }
 
     @Override
     public List<Playlist> getPlaylists(Context context, ProgressListener progressListener) throws Exception {
         Reader reader = getReader(context, progressListener, "getPlaylists");
-        addReader(reader);
         try {
             return new PlaylistsParser(context).parse(reader, progressListener);
         } finally {
-            closeReader(reader);
+            Util.close(reader);
         }
     }
 
@@ -237,11 +229,10 @@ public class RESTMusicService implements MusicService {
     @Override
     public Version getLatestVersion(Context context, ProgressListener progressListener) throws Exception {
         Reader reader = getReaderForURL(context, VERSION_URL, progressListener);
-        addReader(reader);
         try {
             return new VersionParser().parse(reader, progressListener);
         } finally {
-            closeReader(reader);
+            Util.close(reader);
         }
     }
 
@@ -298,27 +289,6 @@ public class RESTMusicService implements MusicService {
         }
 
         return response;
-    }
-
-    @Override
-    public synchronized void cancel(Context context, ProgressListener progressListener) {
-        while (!readers.isEmpty()) {
-            Reader reader = readers.get(readers.size() - 1);
-            closeReader(reader);
-        }
-    }
-
-    private synchronized void addReader(Reader reader) {
-        readers.add(reader);
-    }
-
-    private synchronized void closeReader(Reader reader) {
-        try {
-            reader.close();
-        } catch (IOException x) {
-            x.printStackTrace();
-        }
-        readers.remove(reader);
     }
 
     private Reader getReader(Context context, ProgressListener progressListener, String method) throws Exception {
