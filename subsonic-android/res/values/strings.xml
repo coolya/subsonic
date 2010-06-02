@@ -6,13 +6,11 @@
 
     <string name="main.select_server">Select server</string>
     <string name="main.offline">Offline</string>
-    <string name="main.my_music">My music</string>
-    <string name="main.my_playlists">My playlists</string>
-    <string name="main.search">Search</string>
     <string name="main.settings">Settings</string>
     <string name="main.help">Help</string>
-    <string name="main.select_playlist">Select playlist</string>
-    <string name="main.no_playlists">No saved playlists on server.</string>
+
+    <string name="playlist.label">Playlists</string>
+    <!--<string name="main.no_playlists">No saved playlists on server.</string>-->
 
     <string name="help.label">Help</string>
     <string name="help.title">Welcome to Subsonic!</string>
@@ -21,10 +19,12 @@
     <string name="help.url">file:///android_asset/html/en/index.html</string>
     <string name="help.loading">Loading...</string>
 
-    <string name="progress.wait">Please wait...</string>
+    <string name="search.label">Search</string>
     <string name="search.title">Music search</string>
 
-    <string name="select_artist.my_music">My music</string>
+    <string name="progress.wait">Please wait...</string>
+
+    <string name="select_artist.my_music">Music library</string>
     <string name="select_artist.offline_music">Offline music</string>
 
     <string name="select_album.select">Select</string>
@@ -56,16 +56,6 @@
     <string name="offline.playlists_unavailable">Playlists not available in offline mode.</string>
 
     <string name="error.label">Error</string>
-
-    <string name="options.home">Subsonic Home</string>
-    <string name="options.playing">Now playing</string>
-    <string name="options.settings">Settings</string>
-    <string name="options.help">Help</string>
-
-    <string name="button_bar.home">Home</string>
-    <string name="button_bar.music">Music</string>
-    <string name="button_bar.now_playing">Now playing</string>
-
 
     <string name="settings.title">Subsonic settings</string>
     <string name="settings.test_connection_title">Test connection</string>
