@@ -52,6 +52,7 @@ public interface MusicService {
 
     HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset) throws Exception;
 
+    @Deprecated
     void cancel(Context context, ProgressListener progressListener);
 
     Version getLocalVersion(Context context) throws Exception;

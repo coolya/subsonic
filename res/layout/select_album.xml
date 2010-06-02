@@ -4,6 +4,8 @@
               a:layout_width="fill_parent"
               a:layout_height="fill_parent">
 
+    <include layout="@layout/tab_progress"/>
+
     <ListView a:id="@+id/select_album_entries"
               a:textFilterEnabled="true"
               a:layout_width="fill_parent"

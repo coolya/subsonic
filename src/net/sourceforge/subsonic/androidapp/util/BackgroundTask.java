@@ -18,17 +18,15 @@
  */
 package net.sourceforge.subsonic.androidapp.util;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.os.Handler;
-import android.util.Log;
-import net.sourceforge.subsonic.androidapp.R;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.xmlpull.v1.XmlPullParserException;
+
+import android.app.Activity;
+import android.os.Handler;
+import android.util.Log;
+import net.sourceforge.subsonic.androidapp.R;
 
 /**
  * @author Sindre Mehus
@@ -36,87 +34,27 @@ import org.xmlpull.v1.XmlPullParserException;
 public abstract class BackgroundTask<T> implements ProgressListener {
 
     private static final String TAG = BackgroundTask.class.getSimpleName();
-
     private final Activity activity;
     private final Handler handler;
-    private final AlertDialog progressDialog;
-    private boolean cancelled;
 
     public BackgroundTask(Activity activity) {
         this.activity = activity;
         handler = new Handler();
-
-        progressDialog = createProgressDialog();
     }
 
-    private AlertDialog createProgressDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setIcon(android.R.drawable.ic_dialog_info);
-        builder.setTitle(R.string.background_task_wait);
-        builder.setMessage(R.string.background_task_loading);
-        builder.setCancelable(true);
-        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialogInterface) {
-                cancelled = true;
-                cancel();
-            }
-        });
-        builder.setPositiveButton(R.string.common_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                cancelled = true;
-                cancel();
-            }
-        });
-
-        return builder.create();
+    protected Activity getActivity() {
+        return activity;
     }
 
-    public void execute() {
-        cancelled = false;
-        progressDialog.show();
-
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    final T result = doInBackground();
-                    if (cancelled) {
-                        progressDialog.dismiss();
-                        return;
-                    }
-
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressDialog.dismiss();
-                            done(result);
-                        }
-                    });
-                } catch (final Throwable t) {
-                    if (cancelled) {
-                        return;
-                    }
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressDialog.dismiss();
-                            error(t);
-                        }
-                    });
-                }
-            }
-        }.start();
+    protected Handler getHandler() {
+        return handler;
     }
+
+    public abstract void execute();
 
     protected abstract T doInBackground() throws Throwable;
 
     protected abstract void done(T result);
-
-    protected void cancel() {
-        activity.finish();
-    }
 
     protected void error(Throwable error) {
         Log.w(TAG, "Got exception: " + error, error);
@@ -145,14 +83,7 @@ public abstract class BackgroundTask<T> implements ProgressListener {
     }
 
     @Override
-    public void updateProgress(final String message) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                progressDialog.setMessage(message);
-            }
-        });
-    }
+    public abstract void updateProgress(final String message);
 
     @Override
     public void updateProgress(int messageId) {

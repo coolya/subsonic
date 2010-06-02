@@ -46,12 +46,13 @@ import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
-import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
+import net.sourceforge.subsonic.androidapp.util.ModalBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.SongView;
+import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
 import java.util.ArrayList;
@@ -442,7 +443,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         }
     }
 
-    private abstract class LoadTask extends BackgroundTask<Pair<MusicDirectory, Boolean>> {
+    private abstract class LoadTask extends TabActivityBackgroundTask<Pair<MusicDirectory, Boolean>> {
 
         public LoadTask() {
             super(SelectAlbumActivity.this);
@@ -486,12 +487,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                 download(false, false, true);
                 selectAll(false);
             }
-        }
-
-        @Override
-        protected void cancel() {
-            MusicServiceFactory.getMusicService(SelectAlbumActivity.this).cancel(SelectAlbumActivity.this, this);
-            finish();
         }
     }
 }

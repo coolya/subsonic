@@ -37,7 +37,9 @@ import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
+import net.sourceforge.subsonic.androidapp.util.ModalBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
 public class SelectArtistActivity extends SubsonicTabActivity implements AdapterView.OnItemClickListener {
@@ -65,7 +67,7 @@ public class SelectArtistActivity extends SubsonicTabActivity implements Adapter
     }
 
     private void load() {
-        BackgroundTask<Indexes> task = new BackgroundTask<Indexes>(this) {
+        BackgroundTask<Indexes> task = new TabActivityBackgroundTask<Indexes>(this) {
             @Override
             protected Indexes doInBackground() throws Throwable {
                 MusicService musicService = MusicServiceFactory.getMusicService(SelectArtistActivity.this);
@@ -78,12 +80,6 @@ public class SelectArtistActivity extends SubsonicTabActivity implements Adapter
                 artists.addAll(result.getShortcuts());
                 artists.addAll(result.getArtists());
                 artistList.setAdapter(new ArtistAdapter(artists));
-            }
-
-            @Override
-            protected void cancel() {
-                MusicServiceFactory.getMusicService(SelectArtistActivity.this).cancel(SelectArtistActivity.this, this);
-                finish();
             }
         };
         task.execute();

@@ -20,10 +20,8 @@ package net.sourceforge.subsonic.androidapp.activity;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,7 +33,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.EditTextPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
@@ -47,7 +44,7 @@ import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
-import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
+import net.sourceforge.subsonic.androidapp.util.ModalBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.ErrorDialog;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
@@ -151,7 +148,7 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     private void testConnection(final int instance) {
-        BackgroundTask<Boolean> task = new BackgroundTask<Boolean>(this) {
+        ModalBackgroundTask<Boolean> task = new ModalBackgroundTask<Boolean>(this, false) {
             private int previousInstance;
             @Override
             protected Boolean doInBackground() throws Throwable {
@@ -180,10 +177,6 @@ public class SettingsActivity extends PreferenceActivity {
             }
 
             @Override
-            protected void cancel() {
-            }
-
-            @Override
             protected void error(Throwable error) {
                 Log.w(TAG, error.toString(), error);
                 new ErrorDialog(SettingsActivity.this, getResources().getString(R.string.settings_connection_failure) +
@@ -194,7 +187,7 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     private void emptyCache() {
-        BackgroundTask<?> task = new BackgroundTask<Object>(this) {
+        ModalBackgroundTask<?> task = new ModalBackgroundTask<Object>(this, false) {
             private int deleteCount;
             private Set<File> undeletable;
 
@@ -221,6 +214,10 @@ public class SettingsActivity extends PreferenceActivity {
             }
 
             private void cleanRecursively(File file) {
+                if (isCancelled()) {
+                    return;
+                }
+
                 if (file.isFile()) {
                     String name = file.getName();
 
@@ -252,16 +249,12 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             protected void done(Object result) {
             }
-
-            @Override
-            protected void cancel() {
-            }
         };
         task.execute();
     }
 
     private void checkForUpdates() {
-        BackgroundTask<Pair<Version, Version>> task = new BackgroundTask<Pair<Version, Version>>(this) {
+        ModalBackgroundTask<Pair<Version, Version>> task = new ModalBackgroundTask<Pair<Version, Version>>(this, false) {
             @Override
             protected Pair<Version, Version> doInBackground() throws Throwable {
                 updateProgress(R.string.settings_version_checking);
@@ -285,10 +278,6 @@ public class SettingsActivity extends PreferenceActivity {
                 } else {
                     Util.toast(SettingsActivity.this, R.string.settings_version_update_not_available);
                 }
-            }
-
-            @Override
-            protected void cancel() {
             }
         };
         task.execute();
