@@ -4,6 +4,8 @@
               a:layout_width="fill_parent"
               a:layout_height="fill_parent">
 
+    <include layout="@layout/tab_progress"/>
+
     <ListView a:id="@+id/select_playlist_list"
               a:layout_width="fill_parent"
               a:layout_height="0dip"

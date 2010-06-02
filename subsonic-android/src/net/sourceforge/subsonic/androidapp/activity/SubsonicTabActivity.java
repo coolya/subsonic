@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.graphics.Color;
+import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
@@ -32,6 +33,7 @@ import net.sourceforge.subsonic.androidapp.util.Util;
 public class SubsonicTabActivity extends Activity {
 
     private static final int SELECTED_TAB_COLOR = Color.rgb(190, 190, 190);
+    private boolean destroyed;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -96,10 +98,34 @@ public class SubsonicTabActivity extends Activity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        destroyed = true;
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_SEARCH) {
             Util.startActivityWithoutTransition(SubsonicTabActivity.this, SearchActivity.class);
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void setProgressVisible(boolean visible) {
+        View view = findViewById(R.id.tab_progress);
+        if (view != null) {
+            view.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    public void updateProgress(String message) {
+        TextView view = (TextView) findViewById(R.id.tab_progress_message);
+        if (view != null) {
+            view.setText(message);
+        }
     }
 }

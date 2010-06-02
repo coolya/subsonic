@@ -7,19 +7,17 @@ Bugfix: Support filenames with "<" and ">".
 Bugfix: Trim username, servername. Url-encode username.
 Bugfix: Support small/large screens: http://developer.android.com/guide/topics/manifest/supports-screens-element.html, must improve layout of main activity.
 Bugfix: Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
-Layout: Tabbed layout, ala wimp
 Layout: "Back to playlist"-button, ala wimp, and remove header.
-Layout: Scrollable main menu, ala wimp
 Make stop button smaller.  Remove unused button selectors.
-Create screenshots of wimp.
 Main menu: SHUFFLE_PLAY, SELECT_SERVER, SETTINGS, HELP, RANDOM/NEW/ETC ALBUMS
-Tabs: HOME, MUSIC, PLAYLISTS, PLAY_QUEUE
 Avoid transition when going back.
-Show server name in "Select server"
-Add hdpi icons
 Avoid scaling of cover art images.
-Server settings doesn't obey theme.
+Activity.setVolumeControlStream()
 
+Handle empty list of playlists.
+Use TabActivityBackgroundTask in all tab activities.
+Test that cache clean cancelling works.
+Fix MusicService.cancel();  Use threads+context rather than readers.
 Colors: http://www.androidtapp.com/opentable/
 http://stackoverflow.com/questions/1521640/standard-android-button-with-a-different-color
 http://github.com/commonsguy/cwac-sacklist

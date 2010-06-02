@@ -30,6 +30,7 @@ import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public class SelectPlaylistActivity extends SubsonicTabActivity implements Adapt
     }
 
     private void load() {
-        BackgroundTask<List<Playlist>> task = new BackgroundTask<List<Playlist>>(this) {
+        BackgroundTask<List<Playlist>> task = new TabActivityBackgroundTask<List<Playlist>>(this) {
             @Override
             protected List<Playlist> doInBackground() throws Throwable {
                 return MusicServiceFactory.getMusicService(SelectPlaylistActivity.this).getPlaylists(SelectPlaylistActivity.this, this);
@@ -56,19 +57,12 @@ public class SelectPlaylistActivity extends SubsonicTabActivity implements Adapt
 
             @Override
             protected void done(List<Playlist> result) {
-
                 if (result.isEmpty()) {
 //                    todo
 //                    builder.setMessage(R.string.main_no_playlists);
                 } else {
                     list.setAdapter(new PlaylistAdapter(result));
                 }
-            }
-
-            @Override
-            protected void cancel() {
-                MusicServiceFactory.getMusicService(SelectPlaylistActivity.this).cancel(SelectPlaylistActivity.this, this);
-                finish();
             }
         };
         task.execute();
