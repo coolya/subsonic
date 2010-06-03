@@ -10,6 +10,7 @@ Bugfix: Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=1
 Remove unused button selectors.
 Main menu: SHUFFLE_PLAY, SELECT_SERVER, SETTINGS, HELP, RANDOM/NEW/ETC ALBUMS
 
+Main menu doesn't paint focus.
 Preserve 1.5 compatibility.
 Use larger unknown_album_large in hdpi.
 Add "Play all" button at the top, ala wimp.
