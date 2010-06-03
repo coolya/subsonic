@@ -11,7 +11,7 @@
             a:paddingTop="12dip"
             a:paddingBottom="12dip"
             a:layout_gravity="center_horizontal"
-            a:background="#DDDDDD"/>
+            a:background="#6C6C6C"/>
 
     <View
             a:layout_width="fill_parent"

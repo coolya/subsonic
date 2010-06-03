@@ -13,7 +13,6 @@ Main menu: SHUFFLE_PLAY, SELECT_SERVER, SETTINGS, HELP, RANDOM/NEW/ETC ALBUMS
 Avoid scaling of cover art images.
 
 Add hdpi version of subsonic logo.
-Make logo bg darker.
 Handle empty list of playlists.
 Test that cache clean cancelling works.
 Fix now playing layout
