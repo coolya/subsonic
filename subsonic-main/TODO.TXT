@@ -15,11 +15,11 @@ Avoid scaling of cover art images.
 Add hdpi version of subsonic logo.
 Make logo bg darker.
 Avoid double list lines in SelectAlbumActivity
-Add icons to artists and playlists.
 Handle empty list of playlists.
 Test that cache clean cancelling works.
 Fix now playing layout
-
+Settings changes not updated.
+Offline mode
 Colors: http://www.androidtapp.com/opentable/
 http://stackoverflow.com/questions/1521640/standard-android-button-with-a-different-color
 http://github.com/commonsguy/cwac-sacklist

@@ -22,9 +22,11 @@ package net.sourceforge.subsonic.androidapp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
@@ -81,8 +83,7 @@ public class SelectPlaylistActivity extends SubsonicTabActivity implements Adapt
 
     private class PlaylistAdapter extends ArrayAdapter<Playlist> {
         public PlaylistAdapter(List<Playlist> playlists) {
-            super(SelectPlaylistActivity.this, android.R.layout.simple_list_item_1, playlists);
+            super(SelectPlaylistActivity.this, R.layout.playlist_list_item, playlists);
         }
-
     }
 }

@@ -37,7 +37,6 @@ import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
-import net.sourceforge.subsonic.androidapp.util.ModalBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
@@ -103,7 +102,7 @@ public class SelectArtistActivity extends SubsonicTabActivity implements Adapter
         private final Integer[] positions;
 
         public ArtistAdapter(List<Artist> artists) {
-            super(SelectArtistActivity.this, android.R.layout.simple_list_item_1, artists);
+            super(SelectArtistActivity.this, R.layout.artist_list_item, artists);
 
             Set<String> sectionSet = new LinkedHashSet<String>(30);
             List<Integer> positionList = new ArrayList<Integer>(30);
