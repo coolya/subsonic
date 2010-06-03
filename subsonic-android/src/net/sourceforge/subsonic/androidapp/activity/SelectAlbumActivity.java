@@ -46,7 +46,6 @@ import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
-import net.sourceforge.subsonic.androidapp.util.ModalBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.Pair;
@@ -87,7 +86,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
         buttons = LayoutInflater.from(this).inflate(R.layout.select_album_buttons, entryList, false);
-        entryList.addFooterView(buttons);
         entryList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         entryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -462,24 +460,16 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         @Override
         protected void done(Pair<MusicDirectory, Boolean> result) {
             List<MusicDirectory.Entry> entries = result.getFirst().getChildren();
-            entryList.setAdapter(new EntryAdapter(entries));
 
-            int visibility = View.GONE;
             for (MusicDirectory.Entry entry : entries) {
                 if (!entry.isDirectory()) {
-                    visibility = View.VISIBLE;
+                    entryList.addFooterView(buttons);
                     break;
                 }
             }
-            licenseValid = result.getSecond();
 
-            buttons.setVisibility(visibility);
-            // TODO
-            selectButton.setVisibility(visibility);
-            playButton.setVisibility(visibility);
-            queueButton.setVisibility(visibility);
-            saveButton.setVisibility(visibility);
-            deleteButton.setVisibility(visibility);
+            entryList.setAdapter(new EntryAdapter(entries));
+            licenseValid = result.getSecond();
 
             boolean playAll = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_PLAY_ALL, false);
             if (playAll) {

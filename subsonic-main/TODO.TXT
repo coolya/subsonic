@@ -14,7 +14,6 @@ Avoid scaling of cover art images.
 
 Add hdpi version of subsonic logo.
 Make logo bg darker.
-Avoid double list lines in SelectAlbumActivity
 Handle empty list of playlists.
 Test that cache clean cancelling works.
 Fix now playing layout
