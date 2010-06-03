@@ -173,7 +173,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         registerForContextMenu(playlistView);
 
         bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
-        imageLoader = new ImageLoader();
+        imageLoader = new ImageLoader(this);
     }
 
     @Override
@@ -304,7 +304,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         if (currentPlaying != null) {
             MusicDirectory.Entry song = currentPlaying.getSong();
             albumArtTextView.setText(song.getTitle() + " - " + song.getArtist());
-            imageLoader.loadImage(albumArtImageView, song, 320);
+            imageLoader.loadImage(albumArtImageView, song, true);
         }
     }
 

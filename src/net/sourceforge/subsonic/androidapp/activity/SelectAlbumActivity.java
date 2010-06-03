@@ -82,7 +82,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_album);
 
-        imageLoader = new ImageLoader();
+        imageLoader = new ImageLoader(this);
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
         buttons = LayoutInflater.from(this).inflate(R.layout.select_album_buttons, entryList, false);
@@ -422,7 +422,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                         android.R.layout.simple_list_item_1, parent, false);
 
                 view.setCompoundDrawablePadding(10);
-                imageLoader.loadImage(view, entry, 48);
+                imageLoader.loadImage(view, entry, false);
                 view.setText(entry.getTitle());
 
                 return view;
