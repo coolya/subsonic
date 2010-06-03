@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.util.SackOfViewsAdapter;
@@ -43,8 +44,7 @@ public class MainActivity extends SubsonicTabActivity {
     private static final int MENU_ITEM_SERVER_2 = 102;
     private static final int MENU_ITEM_SERVER_3 = 103;
     private static final int MENU_ITEM_OFFLINE = 104;
-
-    private View serverButton;
+    private TextView serverTextView;
 
     /**
      * Called when the activity is first created.
@@ -61,33 +61,28 @@ public class MainActivity extends SubsonicTabActivity {
 
         View buttons = LayoutInflater.from(this).inflate(R.layout.main_buttons, null);
 
-        serverButton = buttons.findViewById(R.id.main_select_server);
-        serverButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                serverButton.showContextMenu();
-            }
-        });
-        registerForContextMenu(serverButton);
-
-        View settingsButton = buttons.findViewById(R.id.main_settings);
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-            }
-        });
-
-        View helpButton = buttons.findViewById(R.id.main_help);
-        helpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, HelpActivity.class));
-            }
-        });
+        final View serverButton = buttons.findViewById(R.id.main_select_server);
+        final View settingsButton = buttons.findViewById(R.id.main_settings);
+        final View helpButton = buttons.findViewById(R.id.main_help);
+        serverTextView = (TextView) serverButton.findViewById(R.id.main_select_server_2);
 
         ListView list = (ListView) findViewById(R.id.main_list);
         list.setAdapter(new SackOfViewsAdapter(Arrays.asList(serverButton, settingsButton, helpButton)));
+        registerForContextMenu(list);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (view == serverButton) {
+                    serverButton.showContextMenu();
+                } else if (view == settingsButton) {
+                    startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                } else if (view == helpButton) {
+                    startActivity(new Intent(MainActivity.this, HelpActivity.class));
+                }
+            }
+        });
+
     }
 
     @Override
@@ -100,28 +95,25 @@ public class MainActivity extends SubsonicTabActivity {
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
 
-        if (view == serverButton) {
+        MenuItem menuItem1 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_1, MENU_ITEM_SERVER_1, Util.getServerName(this, 1));
+        MenuItem menuItem2 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_2, MENU_ITEM_SERVER_2, Util.getServerName(this, 2));
+        MenuItem menuItem3 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_3, MENU_ITEM_SERVER_3, Util.getServerName(this, 3));
+        MenuItem menuItem4 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_OFFLINE, MENU_ITEM_OFFLINE, Util.getServerName(this, 0));
+        menu.setGroupCheckable(MENU_GROUP_SERVER, true, true);
 
-            MenuItem menuItem1 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_1, MENU_ITEM_SERVER_1, Util.getServerName(this, 1));
-            MenuItem menuItem2 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_2, MENU_ITEM_SERVER_2, Util.getServerName(this, 2));
-            MenuItem menuItem3 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_3, MENU_ITEM_SERVER_3, Util.getServerName(this, 3));
-            MenuItem menuItem4 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_OFFLINE, MENU_ITEM_OFFLINE, Util.getServerName(this, 0));
-            menu.setGroupCheckable(MENU_GROUP_SERVER, true, true);
-
-            switch (Util.getActiveServer(this)) {
-                case 0:
-                    menuItem4.setChecked(true);
-                    break;
-                case 1:
-                    menuItem1.setChecked(true);
-                    break;
-                case 2:
-                    menuItem2.setChecked(true);
-                    break;
-                case 3:
-                    menuItem3.setChecked(true);
-                    break;
-            }
+        switch (Util.getActiveServer(this)) {
+            case 0:
+                menuItem4.setChecked(true);
+                break;
+            case 1:
+                menuItem1.setChecked(true);
+                break;
+            case 2:
+                menuItem2.setChecked(true);
+                break;
+            case 3:
+                menuItem3.setChecked(true);
+                break;
         }
     }
 
@@ -150,8 +142,7 @@ public class MainActivity extends SubsonicTabActivity {
     private void updateActiveServer() {
         int instance = Util.getActiveServer(this);
         String name = Util.getServerName(this, instance);
-        TextView serverText = (TextView) serverButton.findViewById(R.id.main_select_server_2);
-        serverText.setText(name);
+        serverTextView.setText(name);
 
         // TODO
         boolean offline = instance == 0;
