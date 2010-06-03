@@ -1,6 +1,6 @@
 TODO IN ANDROID 1.3
 -------------------
-http://android.git.kernel.org/?p=platform/packages/apps/Music.git;a=tree
+http://android.git.kernel.org/?p=platfor©m/packages/apps/Music.git;a=tree
 Bugfix: Wrong initial empty playlist
 Bugfix: Wrong notificaion
 Bugfix: Support filenames with "<" and ">".
