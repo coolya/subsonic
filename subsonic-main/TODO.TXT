@@ -10,11 +10,16 @@ Bugfix: Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=1
 Layout: "Back to playlist"-button, ala wimp, and remove header.
 Make stop button smaller.  Remove unused button selectors.
 Main menu: SHUFFLE_PLAY, SELECT_SERVER, SETTINGS, HELP, RANDOM/NEW/ETC ALBUMS
-Avoid transition when going back.
 Avoid scaling of cover art images.
 
+Add hdpi version of subsonic logo.
+Make logo bg darker.
+Avoid double list lines in SelectAlbumActivity
+Add icons to artists and playlists.
 Handle empty list of playlists.
 Test that cache clean cancelling works.
+Fix now playing layout
+
 Colors: http://www.androidtapp.com/opentable/
 http://stackoverflow.com/questions/1521640/standard-android-button-with-a-different-color
 http://github.com/commonsguy/cwac-sacklist
