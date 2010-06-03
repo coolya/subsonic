@@ -500,12 +500,16 @@ public final class Util {
 
     public static void startActivityWithoutTransition(Activity currentActivity, Intent intent) {
         currentActivity.startActivity(intent);
+        disablePendingTransition(currentActivity);
+    }
+
+    public static void disablePendingTransition(Activity activity) {
 
         // Activity.overridePendingTransition() was introduced in Android 2.0.  Use reflection to maintain
-        // compatibility with 1.5.
+        // compatibility with 1.6.
         try {
             Method method = Activity.class.getMethod("overridePendingTransition", int.class, int.class);
-            method.invoke(currentActivity, 0, 0);
+            method.invoke(activity, 0, 0);
         } catch (Throwable x) {
             Log.w(TAG, "Failed to disable activity transition.", x);
             // Ignored

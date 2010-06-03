@@ -105,6 +105,12 @@ public class SubsonicTabActivity extends Activity {
         destroyed = true;
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        Util.disablePendingTransition(this);
+    }
+
     public boolean isDestroyed() {
         return destroyed;
     }

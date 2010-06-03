@@ -2,14 +2,14 @@
 <LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
               a:id="@+id/tab_progress"
               a:orientation="horizontal"
-              a:padding="10dp"
+              a:padding="7dp"
               a:layout_gravity="top"
               a:layout_width="fill_parent"
               a:layout_height="wrap_content">
 
     <ProgressBar
-            a:layout_width="20dp"
-            a:layout_height="20dp"
+            a:layout_width="16dp"
+            a:layout_height="16dp"
             a:layout_gravity="center_vertical"
             a:layout_marginRight="10dp"/>
 
