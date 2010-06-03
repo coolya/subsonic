@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
 import android.app.Activity;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -38,6 +39,7 @@ public class SubsonicTabActivity extends Activity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
 
     @Override
