@@ -55,7 +55,7 @@ public class SongView extends LinearLayout implements Checkable {
 
     public SongView(Context context) {
         super(context);
-        LayoutInflater.from(context).inflate(R.layout.song, this, true);
+        LayoutInflater.from(context).inflate(R.layout.song_list_item, this, true);
 
         checkedTextView = (CheckedTextView) findViewById(R.id.song_check);
         textView1 = (TextView) findViewById(R.id.song_text1);
