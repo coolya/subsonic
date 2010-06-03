@@ -30,6 +30,7 @@ import java.io.Reader;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.lang.reflect.Method;
+import java.lang.reflect.Constructor;
 
 import org.apache.http.HttpEntity;
 
@@ -42,6 +43,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
@@ -49,6 +51,9 @@ import android.net.NetworkInfo;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.BitmapDrawable;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
 import net.sourceforge.subsonic.androidapp.activity.ErrorActivity;
@@ -506,13 +511,24 @@ public final class Util {
     public static void disablePendingTransition(Activity activity) {
 
         // Activity.overridePendingTransition() was introduced in Android 2.0.  Use reflection to maintain
-        // compatibility with 1.6.
+        // compatibility with 1.5.
         try {
             Method method = Activity.class.getMethod("overridePendingTransition", int.class, int.class);
             method.invoke(activity, 0, 0);
         } catch (Throwable x) {
             Log.w(TAG, "Failed to disable activity transition.", x);
             // Ignored
+        }
+    }
+
+    public static Drawable createDrawableFromBitmap(Context context, Bitmap bitmap) {
+        // BitmapDrawable(Resources, Bitmap) was introduced in Android 1.6.  Use reflection to maintain
+        // compatibility with 1.5.
+        try {
+            Constructor<BitmapDrawable> constructor = BitmapDrawable.class.getConstructor(Resources.class, Bitmap.class);
+            return constructor.newInstance(context.getResources(), bitmap);
+        } catch (Throwable x) {
+            return new BitmapDrawable(bitmap);
         }
     }
 }

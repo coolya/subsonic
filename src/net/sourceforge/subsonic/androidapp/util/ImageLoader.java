@@ -51,16 +51,18 @@ public class ImageLoader implements Runnable {
     private final Thread thread;
     private final int imageSizeDefault;
     private final int imageSizeLarge;
+    private final Context context;
 
 
     public ImageLoader(Context context) {
+        this.context = context;
         queue = new LinkedBlockingQueue<Task>(500);
         thread = new Thread(this, "ImageLoader");
         thread.start();
 
         // Determine the density-dependent image sizes.
         imageSizeDefault = context.getResources().getDrawable(R.drawable.unknown_album).getIntrinsicHeight();
-        imageSizeLarge = context.getResources().getDrawable(R.drawable.unknown_album_large).getIntrinsicHeight();
+        imageSizeLarge = context.getResources().getDisplayMetrics().widthPixels;
     }
 
     public void loadImage(ImageView view, MusicDirectory.Entry entry, boolean large) {
@@ -94,6 +96,7 @@ public class ImageLoader implements Runnable {
 
     private void setImage(View view, Drawable drawable) {
         if (view instanceof TextView) {
+            Log.i(TAG, "************* Intrinsic bounds: " + drawable.getIntrinsicWidth() + " x " + drawable.getIntrinsicHeight());
             ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
         } else if (view instanceof ImageView) {
             ((ImageView) view).setImageDrawable(drawable);
@@ -153,7 +156,10 @@ public class ImageLoader implements Runnable {
             MusicService musicService = MusicServiceFactory.getMusicService(view.getContext());
             try {
                 Bitmap bitmap = musicService.getCoverArt(view.getContext(), entry.getCoverArt(), size, null);
-                final Drawable drawable = new BitmapDrawable(bitmap);
+                Log.i(TAG, "************* Bitmap size: " + bitmap.getWidth() + " x " + bitmap.getHeight());
+
+                // TODO: Do with reflection.
+                final Drawable drawable = Util.createDrawableFromBitmap(context, bitmap);
                 cache.put(getKey(entry, size), drawable);
 
                 handler.post(new Runnable() {
