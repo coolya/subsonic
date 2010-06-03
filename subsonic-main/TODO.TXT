@@ -12,7 +12,6 @@ Make stop button smaller.  Remove unused button selectors.
 Main menu: SHUFFLE_PLAY, SELECT_SERVER, SETTINGS, HELP, RANDOM/NEW/ETC ALBUMS
 Avoid transition when going back.
 Avoid scaling of cover art images.
-Activity.setVolumeControlStream()
 
 Handle empty list of playlists.
 Test that cache clean cancelling works.
