@@ -64,33 +64,29 @@ public class ImageLoader implements Runnable {
         imageSizeLarge = context.getResources().getDisplayMetrics().widthPixels;
     }
 
-    public void loadImage(ImageView view, MusicDirectory.Entry entry, boolean large) {
-        doLoadImage(view, entry, large);
+    public void loadImage(View view, MusicDirectory.Entry entry, boolean large) {
+        loadImage(view, entry.getCoverArt(), large);
     }
 
-    public void loadImage(TextView view, MusicDirectory.Entry entry, boolean large) {
-        doLoadImage(view, entry, large);
-    }
-
-    private void doLoadImage(View view, MusicDirectory.Entry entry, boolean large) {
-        if (entry.getCoverArt() == null) {
+    public void loadImage(View view, String coverArtId, boolean large) {
+        if (coverArtId == null) {
             setUnknownImage(view, large);
             return;
         }
 
         int size = large ? imageSizeLarge : imageSizeDefault;
-        Drawable drawable = cache.get(getKey(entry, size));
+        Drawable drawable = cache.get(getKey(coverArtId, size));
         if (drawable != null) {
             setImage(view, drawable);
             return;
         }
 
         setUnknownImage(view, large);
-        queue.offer(new Task(view, entry, size));
+        queue.offer(new Task(view, coverArtId, size));
     }
 
-    private String getKey(MusicDirectory.Entry entry, int size) {
-        return entry.getCoverArt() + size;
+    private String getKey(String coverArtId, int size) {
+        return coverArtId + size;
     }
 
     private void setImage(View view, Drawable drawable) {
@@ -139,13 +135,13 @@ public class ImageLoader implements Runnable {
 
     private class Task {
         private final View view;
-        private final MusicDirectory.Entry entry;
+        private final String coverArtId;
         private final Handler handler;
         private final int size;
 
-        public Task(View view, MusicDirectory.Entry entry, int size) {
+        public Task(View view, String coverArtId, int size) {
             this.view = view;
-            this.entry = entry;
+            this.coverArtId = coverArtId;
             this.size = size;
             handler = new Handler();
         }
@@ -153,9 +149,9 @@ public class ImageLoader implements Runnable {
         public void execute() {
             MusicService musicService = MusicServiceFactory.getMusicService(view.getContext());
             try {
-                Bitmap bitmap = musicService.getCoverArt(view.getContext(), entry.getCoverArt(), size, null);
+                Bitmap bitmap = musicService.getCoverArt(view.getContext(), coverArtId, size, null);
                 final Drawable drawable = Util.createDrawableFromBitmap(context, bitmap);
-                cache.put(getKey(entry, size), drawable);
+                cache.put(getKey(coverArtId, size), drawable);
 
                 handler.post(new Runnable() {
                     @Override
