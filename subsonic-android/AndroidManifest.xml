@@ -8,6 +8,7 @@
     <uses-permission a:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission a:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission a:name="android.permission.WAKE_LOCK"/>
+    <uses-permission a:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <uses-sdk a:minSdkVersion="3" a:targetSdkVersion="7"/>
 
