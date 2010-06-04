@@ -66,13 +66,15 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     private ImageLoader imageLoader;
     private DownloadService downloadService;
     private ListView entryList;
+    private Button playAllButton;
     private Button selectButton;
     private Button playButton;
     private Button queueButton;
     private Button saveButton;
     private Button deleteButton;
     private boolean licenseValid;
-    private View buttons;
+    private View header;
+    private View footer;
 
     /**
      * Called when the activity is first created.
@@ -85,7 +87,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         imageLoader = new ImageLoader(this);
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
-        buttons = LayoutInflater.from(this).inflate(R.layout.select_album_buttons, entryList, false);
+        header = LayoutInflater.from(this).inflate(R.layout.select_album_header, entryList, false);
+        footer = LayoutInflater.from(this).inflate(R.layout.select_album_footer, entryList, false);
         entryList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         entryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -104,11 +107,12 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             }
         });
 
-        selectButton = (Button) buttons.findViewById(R.id.select_album_select);
-        playButton = (Button) buttons.findViewById(R.id.select_album_play);
-        queueButton = (Button) buttons.findViewById(R.id.select_album_queue);
-        saveButton = (Button) buttons.findViewById(R.id.select_album_save);
-        deleteButton = (Button) buttons.findViewById(R.id.select_album_delete);
+        playAllButton = (Button) header.findViewById(R.id.select_album_play_all);
+        selectButton = (Button) footer.findViewById(R.id.select_album_select);
+        playButton = (Button) footer.findViewById(R.id.select_album_play);
+        queueButton = (Button) footer.findViewById(R.id.select_album_queue);
+        saveButton = (Button) footer.findViewById(R.id.select_album_save);
+        deleteButton = (Button) footer.findViewById(R.id.select_album_delete);
 
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -463,7 +467,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
             for (MusicDirectory.Entry entry : entries) {
                 if (!entry.isDirectory()) {
-                    entryList.addFooterView(buttons);
+                    entryList.addHeaderView(header);
+                    entryList.addFooterView(footer);
                     break;
                 }
             }
