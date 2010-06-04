@@ -10,8 +10,8 @@ Bugfix: Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=1
 Remove unused button selectors.
 Main menu: SHUFFLE_PLAY, SELECT_SERVER, SETTINGS, HELP, RANDOM/NEW/ETC ALBUMS
 
+Wrong icons used on Hero.
 Reuse list item views in SelectAlbumActivity?
-Use larger unknown_album_large in hdpi.
 Add "Play all" button at the top, ala wimp.
 Show "Playlist is empty"
 Add icon for toggling fullscreen/playlist.
