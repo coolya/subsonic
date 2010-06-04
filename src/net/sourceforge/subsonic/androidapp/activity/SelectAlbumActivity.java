@@ -37,6 +37,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
@@ -66,6 +67,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     private ImageLoader imageLoader;
     private DownloadService downloadService;
     private ListView entryList;
+    private View header;
+    private View footer;
     private Button playAllButton;
     private Button selectButton;
     private Button playButton;
@@ -73,8 +76,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     private Button saveButton;
     private Button deleteButton;
     private boolean licenseValid;
-    private View header;
-    private View footer;
+    private ImageView coverArtView;
 
     /**
      * Called when the activity is first created.
@@ -97,7 +99,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                     MusicDirectory.Entry entry = (MusicDirectory.Entry) parent.getItemAtPosition(position);
                     if (entry.isDirectory()) {
                         Intent intent = new Intent(SelectAlbumActivity.this, SelectAlbumActivity.class);
-                        intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, entry.getId());
+                        intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, entry.getId());
+                        intent.putExtra(Constants.INTENT_EXTRA_NAME_COVER_ART_ID, entry.getCoverArt());
                         intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getTitle());
                         Util.startActivityWithoutTransition(SelectAlbumActivity.this, intent);
                     } else {
@@ -108,6 +111,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         });
 
         playAllButton = (Button) header.findViewById(R.id.select_album_play_all);
+        coverArtView = (ImageView) header.findViewById(R.id.select_album_cover_art);
+
         selectButton = (Button) footer.findViewById(R.id.select_album_select);
         playButton = (Button) footer.findViewById(R.id.select_album_play);
         queueButton = (Button) footer.findViewById(R.id.select_album_queue);
@@ -191,15 +196,18 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
     private void getMusicDirectory() {
         String title = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME);
+        String coverArtId = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_COVER_ART_ID);
         if (Util.isOffline(this)) {
             title += " (" + getResources().getString(R.string.select_album_offline) + ")";
         }
+        imageLoader.loadImage(coverArtView, coverArtId, false);
+
         setTitle(title);
         new LoadTask() {
             @Override
             protected MusicDirectory load(MusicService service) throws Exception {
-                String path = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PATH);
-                return service.getMusicDirectory(path, SelectAlbumActivity.this, this);
+                String id = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ID);
+                return service.getMusicDirectory(id, SelectAlbumActivity.this, this);
             }
         }.execute();
     }
@@ -330,7 +338,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
 
         Intent intent = new Intent(SelectAlbumActivity.this, SelectAlbumActivity.class);
-        intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, entry.getId());
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, entry.getId());
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_COVER_ART_ID, entry.getCoverArt());
         intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getTitle());
         intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAY_ALL, true);
         Util.startActivityWithoutTransition(SelectAlbumActivity.this, intent);

@@ -32,7 +32,8 @@ public final class Constants {
     public static final String REST_CLIENT_ID = "android";
 
     // Names for intent extras.
-    public static final String INTENT_EXTRA_NAME_PATH = "subsonic.path";
+    public static final String INTENT_EXTRA_NAME_ID = "subsonic.id";
+    public static final String INTENT_EXTRA_NAME_COVER_ART_ID = "subsonic.coverart.id";
     public static final String INTENT_EXTRA_NAME_NAME = "subsonic.name";
     public static final String INTENT_EXTRA_NAME_PLAY_ALL = "subsonic.playall";
     public static final String INTENT_EXTRA_NAME_ERROR = "subsonic.error";

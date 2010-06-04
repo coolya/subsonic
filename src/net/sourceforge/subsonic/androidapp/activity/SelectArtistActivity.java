@@ -89,7 +89,7 @@ public class SelectArtistActivity extends SubsonicTabActivity implements Adapter
         if (position >= 0) {
             Artist artist = (Artist) parent.getItemAtPosition(position);
             Intent intent = new Intent(this, SelectAlbumActivity.class);
-            intent.putExtra(Constants.INTENT_EXTRA_NAME_PATH, artist.getId());
+            intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, artist.getId());
             intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, artist.getName());
             Util.startActivityWithoutTransition(this, intent);
         }
