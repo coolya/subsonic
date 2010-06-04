@@ -80,7 +80,9 @@ public class FileUtil {
         }
 
         if (create && !dir.exists()) {
-            dir.mkdirs();
+            if (!dir.mkdirs()) {
+                Log.e(TAG, "Failed to create directory " + dir);
+            }
         }
         return dir;
     }

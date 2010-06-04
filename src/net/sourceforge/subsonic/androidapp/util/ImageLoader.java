@@ -25,7 +25,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.util.Log;
@@ -96,7 +95,6 @@ public class ImageLoader implements Runnable {
 
     private void setImage(View view, Drawable drawable) {
         if (view instanceof TextView) {
-            Log.i(TAG, "************* Intrinsic bounds: " + drawable.getIntrinsicWidth() + " x " + drawable.getIntrinsicHeight());
             ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
         } else if (view instanceof ImageView) {
             ((ImageView) view).setImageDrawable(drawable);
@@ -156,9 +154,6 @@ public class ImageLoader implements Runnable {
             MusicService musicService = MusicServiceFactory.getMusicService(view.getContext());
             try {
                 Bitmap bitmap = musicService.getCoverArt(view.getContext(), entry.getCoverArt(), size, null);
-                Log.i(TAG, "************* Bitmap size: " + bitmap.getWidth() + " x " + bitmap.getHeight());
-
-                // TODO: Do with reflection.
                 final Drawable drawable = Util.createDrawableFromBitmap(context, bitmap);
                 cache.put(getKey(entry, size), drawable);
 
