@@ -56,11 +56,7 @@ public class SelectArtistActivity extends SubsonicTabActivity implements Adapter
         artistList = (ListView) findViewById(R.id.select_artist_list);
         artistList.setOnItemClickListener(this);
 
-        if (Util.isOffline(this)) {
-            setTitle(R.string.select_artist_offline_music);
-        } else {
-            setTitle(R.string.select_artist_my_music);
-        }
+        setTitle(Util.isOffline(this) ? R.string.music_library_label_offline : R.string.music_library_label);
 
         load();
     }
