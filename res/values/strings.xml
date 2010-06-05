@@ -40,6 +40,7 @@
     <string name="select_album.donate_dialog_message">Get unlimited downloads by donating to Subsonic.</string>
     <string name="select_album.donate_dialog_now">Now</string>
     <string name="select_album.donate_dialog_later">Later</string>
+    <string name="select_album.search_result">Search results</string>
     <string name="select_album.0_search_result">Search results - No matches found</string>
     <string name="select_album.donate_dialog_0_trial_days_left">Trial period is over</string>
 
@@ -96,7 +97,7 @@
 
     <string name="parser.reading">Reading from server.</string>
     <string name="parser.reading_done">Reading from server. Done!</string>
-    <string name="parser.upgrade_client">Incompatible versions. Please upgrade Subsonic Android application.</string>
+    <string name="parser.upgrade_client">Incompatible versions. Please upgrade Subsonic Android app.</string>
     <string name="parser.upgrade_server">Incompatible versions. Please upgrade Subsonic server.</string>
     <string name="parser.artist_count">Got %d artists.</string>
 
