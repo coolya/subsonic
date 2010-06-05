@@ -40,6 +40,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ImageButton;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
@@ -69,14 +70,16 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     private ListView entryList;
     private View header;
     private View footer;
-    private Button playAllButton;
     private Button selectButton;
     private Button playButton;
     private Button queueButton;
     private Button saveButton;
     private Button deleteButton;
-    private boolean licenseValid;
     private ImageView coverArtView;
+    private TextView headerText1;
+    private TextView headerText2;
+    private ImageButton playAllButton;
+    private boolean licenseValid;
 
     /**
      * Called when the activity is first created.
@@ -100,7 +103,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                     if (entry.isDirectory()) {
                         Intent intent = new Intent(SelectAlbumActivity.this, SelectAlbumActivity.class);
                         intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, entry.getId());
-                        intent.putExtra(Constants.INTENT_EXTRA_NAME_COVER_ART_ID, entry.getCoverArt());
                         intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getTitle());
                         Util.startActivityWithoutTransition(SelectAlbumActivity.this, intent);
                     } else {
@@ -110,8 +112,10 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             }
         });
 
-        playAllButton = (Button) header.findViewById(R.id.select_album_play_all);
         coverArtView = (ImageView) header.findViewById(R.id.select_album_cover_art);
+        headerText1 = (TextView) header.findViewById(R.id.select_album_text1);
+        headerText2 = (TextView) header.findViewById(R.id.select_album_text2);
+        playAllButton = (ImageButton) header.findViewById(R.id.select_album_play_all);
 
         selectButton = (Button) footer.findViewById(R.id.select_album_select);
         playButton = (Button) footer.findViewById(R.id.select_album_play);
@@ -196,11 +200,11 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
     private void getMusicDirectory() {
         String title = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME);
-        String coverArtId = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_COVER_ART_ID);
+        // TODO
         if (Util.isOffline(this)) {
             title += " (" + getResources().getString(R.string.select_album_offline) + ")";
         }
-        imageLoader.loadImage(coverArtView, coverArtId, false);
+        headerText1.setText(title);
 
         setTitle(title);
         new LoadTask() {
@@ -235,7 +239,10 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     }
 
     private void getPlaylist() {
-        setTitle(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME));
+        String playlistName = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME);
+        setTitle(playlistName);
+        headerText1.setText(playlistName);
+
         new LoadTask() {
             @Override
             protected MusicDirectory load(MusicService service) throws Exception {
@@ -339,7 +346,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
         Intent intent = new Intent(SelectAlbumActivity.this, SelectAlbumActivity.class);
         intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, entry.getId());
-        intent.putExtra(Constants.INTENT_EXTRA_NAME_COVER_ART_ID, entry.getCoverArt());
         intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getTitle());
         intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAY_ALL, true);
         Util.startActivityWithoutTransition(SelectAlbumActivity.this, intent);
@@ -474,12 +480,18 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         protected void done(Pair<MusicDirectory, Boolean> result) {
             List<MusicDirectory.Entry> entries = result.getFirst().getChildren();
 
+            int songCount = 0;
             for (MusicDirectory.Entry entry : entries) {
                 if (!entry.isDirectory()) {
-                    entryList.addHeaderView(header);
-                    entryList.addFooterView(footer);
-                    break;
+                    songCount++;
                 }
+            }
+
+            if (songCount > 0) {
+                headerText2.setText(getResources().getQuantityString(R.plurals.select_album_n_songs, songCount, songCount));
+                imageLoader.loadImage(coverArtView, entries.get(0), false);
+                entryList.addHeaderView(header);
+                entryList.addFooterView(footer);
             }
 
             entryList.setAdapter(new EntryAdapter(entries));
