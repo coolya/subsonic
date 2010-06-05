@@ -238,6 +238,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                 } else {
                     setTitle(getResources().getQuantityString(R.plurals.select_album_n_search_result, n, n));
                 }
+                headerText1.setText(R.string.select_album_search_result);
             }
         }.execute();
     }
