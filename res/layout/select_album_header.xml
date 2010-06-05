@@ -1,52 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout
         xmlns:a="http://schemas.android.com/apk/res/android"
-        a:orientation="horizontal"
-        a:background="#A0A0A0"
-        a:paddingTop="6dip"
-        a:paddingBottom="6dip"
-        a:paddingLeft="6dp"
-        a:paddingRight="6dp"
+        a:orientation="vertical"
         a:layout_width="fill_parent"
         a:layout_height="wrap_content">
 
-    <ImageView
-            a:id="@+id/select_album_cover_art"
-            a:layout_gravity="center_vertical"
-            a:layout_width="wrap_content"
-            a:layout_height="wrap_content"/>
-
     <LinearLayout
-            a:orientation="vertical"
+            a:orientation="horizontal"
+            a:background="#A0A0A0"
+            a:paddingTop="6dip"
+            a:paddingBottom="4dip"
+            a:paddingLeft="6dp"
+            a:paddingRight="6dp"
             a:layout_weight="1"
-            a:layout_width="0dip"
-            a:layout_height="wrap_content">
+            a:layout_width="fill_parent"
+            a:layout_height="0dip">
 
-        <TextView
-                a:id="@+id/select_album_text1"
-                a:singleLine="true"
+        <ImageView
+                a:id="@+id/select_album_cover_art"
+                a:layout_gravity="center_vertical"
                 a:layout_width="wrap_content"
-                a:layout_height="wrap_content"
-                a:layout_marginLeft="10dip"
-                a:layout_marginRight="10dip"
-                a:textAppearance="?android:attr/textAppearanceMedium"/>
+                a:layout_height="wrap_content"/>
 
-        <TextView
-                a:id="@+id/select_album_text2"
-                a:singleLine="true"
+        <LinearLayout
+                a:orientation="vertical"
+                a:layout_weight="1"
+                a:layout_width="0dip"
+                a:layout_height="wrap_content">
+
+            <TextView
+                    a:id="@+id/select_album_text1"
+                    a:singleLine="true"
+                    a:layout_width="wrap_content"
+                    a:layout_height="wrap_content"
+                    a:layout_marginLeft="10dip"
+                    a:layout_marginRight="10dip"
+                    a:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <TextView
+                    a:id="@+id/select_album_text2"
+                    a:singleLine="true"
+                    a:layout_width="wrap_content"
+                    a:layout_height="wrap_content"
+                    a:layout_marginLeft="10dip"
+                    a:layout_marginRight="10dip"
+                    a:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        </LinearLayout>
+
+        <ImageButton
+                a:id="@+id/select_album_play_all"
+                a:src="@drawable/media_start"
+                a:layout_gravity="center_vertical"
                 a:layout_width="wrap_content"
-                a:layout_height="wrap_content"
-                a:layout_marginLeft="10dip"
-                a:layout_marginRight="10dip"
-                a:textAppearance="?android:attr/textAppearanceSmall"/>
+                a:layout_height="wrap_content"/>
 
     </LinearLayout>
 
-    <ImageButton
-            a:id="@+id/select_album_play_all"
-            a:src="@drawable/media_start"
-            a:layout_gravity="center_vertical"
-            a:layout_width="wrap_content"
-            a:layout_height="wrap_content"/>
+    <View
+            a:layout_width="fill_parent"
+            a:layout_height="1px"
+            a:background="#555555"/>
 
 </LinearLayout>
