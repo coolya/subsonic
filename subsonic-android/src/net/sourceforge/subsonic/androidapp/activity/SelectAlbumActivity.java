@@ -158,6 +158,15 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             }
         });
 
+        playAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectAll(true);
+                download(false, false, true);
+                selectAll(false);
+            }
+        });
+
         registerForContextMenu(entryList);
 
         bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
