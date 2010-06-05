@@ -1,17 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
-              a:orientation="horizontal"
-              a:layout_width="fill_parent"
-              a:layout_height="wrap_content">
+<LinearLayout
+        xmlns:a="http://schemas.android.com/apk/res/android"
+        a:orientation="horizontal"
+        a:background="#A0A0A0"
+        a:paddingTop="6dip"
+        a:paddingBottom="6dip"
+        a:paddingLeft="6dp"
+        a:paddingRight="6dp"
+        a:layout_width="fill_parent"
+        a:layout_height="wrap_content">
 
-    <ImageView a:id="@+id/select_album_cover_art"
-               a:layout_width="wrap_content"
-               a:layout_height="wrap_content"/>
+    <ImageView
+            a:id="@+id/select_album_cover_art"
+            a:layout_gravity="center_vertical"
+            a:layout_width="wrap_content"
+            a:layout_height="wrap_content"/>
 
-    <Button a:id="@+id/select_album_play_all"
-            a:text="@string/select_album.play_all"
+    <LinearLayout
+            a:orientation="vertical"
+            a:layout_weight="1"
+            a:layout_width="0dip"
+            a:layout_height="wrap_content">
+
+        <TextView
+                a:id="@+id/select_album_text1"
+                a:singleLine="true"
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content"
+                a:layout_marginLeft="10dip"
+                a:layout_marginRight="10dip"
+                a:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <TextView
+                a:id="@+id/select_album_text2"
+                a:singleLine="true"
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content"
+                a:layout_marginLeft="10dip"
+                a:layout_marginRight="10dip"
+                a:textAppearance="?android:attr/textAppearanceSmall"/>
+
+    </LinearLayout>
+
+    <ImageButton
+            a:id="@+id/select_album_play_all"
+            a:src="@drawable/media_start"
+            a:layout_gravity="center_vertical"
             a:layout_width="wrap_content"
             a:layout_height="wrap_content"/>
 
 </LinearLayout>
-
