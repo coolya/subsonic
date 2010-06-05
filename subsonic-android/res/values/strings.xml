@@ -24,8 +24,8 @@
 
     <string name="progress.wait">Please wait...</string>
 
-    <string name="select_artist.my_music">Music library</string>
-    <string name="select_artist.offline_music">Offline music</string>
+    <string name="music_library.label">Music library</string>
+    <string name="music_library.label_offline">Offline music</string>
 
     <string name="select_album.select">Select</string>
     <string name="select_album.play">Play</string>

@@ -208,14 +208,9 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     }
 
     private void getMusicDirectory() {
-        String title = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME);
-        // TODO
-        if (Util.isOffline(this)) {
-            title += " (" + getResources().getString(R.string.select_album_offline) + ")";
-        }
-        headerText1.setText(title);
+        headerText1.setText(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
+        setTitle(Util.isOffline(this) ? R.string.music_library_label_offline : R.string.music_library_label);
 
-        setTitle(title);
         new LoadTask() {
             @Override
             protected MusicDirectory load(MusicService service) throws Exception {

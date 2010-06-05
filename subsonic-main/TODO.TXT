@@ -10,9 +10,9 @@ Bugfix: Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=1
 Remove unused button selectors.
 Main menu: SHUFFLE_PLAY, SELECT_SERVER, SETTINGS, HELP, RANDOM/NEW/ETC ALBUMS
 
+Clean up Chinese translation.
 Smaller font in song/artist list items.
 Different color/size of header/footer borders, ala wimp.
-Fix title in SelectAlbum.
 Fix title when searching.
 Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
