@@ -100,20 +100,17 @@
                   a:layout_width="fill_parent"
                   a:layout_height="wrap_content"
                   a:background="#ff5a5a5a"
-                  a:paddingLeft="5dip"
-                  a:paddingRight="5dip">
+                  a:paddingLeft="7dip"
+                  a:paddingRight="7dip">
         <TextView
                 a:id="@+id/download_position"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"
                 a:gravity="left"
                 a:textAppearance="?android:attr/textAppearanceMedium"
-                a:textSize="14sp"
+                a:textSize="14dp"
                 a:textStyle="bold"
-                a:shadowColor="#ff000000"
-                a:shadowDx="0"
-                a:shadowDy="0"
-                a:shadowRadius="3"
+                a:textColor="#D0D0D0"
                 a:text="0:00"/>
 
         <TextView
@@ -123,24 +120,19 @@
                 a:gravity="center_horizontal"
                 a:layout_weight="1"
                 a:textAppearance="?android:attr/textAppearanceMedium"
-                a:textSize="14sp"
+                a:textSize="14dp"
                 a:textStyle="bold"
-                a:shadowColor="#ff000000"
-                a:shadowDx="0"
-                a:shadowDy="0"
-                a:shadowRadius="3"/>
+                a:textColor="#D0D0D0"/>
+
         <TextView
                 a:id="@+id/download_duration"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"
                 a:gravity="right"
                 a:textAppearance="?android:attr/textAppearanceMedium"
-                a:textSize="14sp"
+                a:textSize="14dp"
                 a:textStyle="bold"
-                a:shadowColor="#ff000000"
-                a:shadowDx="0"
-                a:shadowDy="0"
-                a:shadowRadius="3"
+                a:textColor="#D0D0D0"
                 a:text="0:00"/>
     </LinearLayout>
 
@@ -151,7 +143,10 @@
             a:background="#ff5a5a5a"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
-            a:padding="5dip"/>
+            a:paddingLeft="7dip"
+            a:paddingRight="7dip"
+            a:paddingTop="3dip"
+            a:paddingBottom="7dip"/>
 
     <include layout="@layout/button_bar"/>
 
