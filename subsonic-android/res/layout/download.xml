@@ -28,7 +28,12 @@
                     a:gravity="center_horizontal"
                     a:singleLine="true"
                     a:ellipsize="end"
-                    a:textColor="@color/secondaryForeground"/>
+                    a:background="#5a5a5a"
+                    a:textAppearance="?android:attr/textAppearanceMedium"
+                    a:textSize="14dp"
+                    a:textStyle="bold"
+                    a:textColor="#D0D0D0"/>
+
         </LinearLayout>
 
         <ListView
@@ -40,16 +45,11 @@
 
     </ViewFlipper>
 
-    <View
-            a:layout_width="fill_parent"
-            a:layout_height="1px"
-            a:background="#ffffffff" />
-
     <LinearLayout a:orientation="horizontal"
                   a:layout_width="fill_parent"
                   a:layout_height="wrap_content"
                   a:layout_marginTop="0dip"
-                  a:background="#ff5a5a5a"
+                  a:background="#5a5a5a"
                   a:paddingTop="4dip"
                   a:gravity="center_horizontal">
         <Button
