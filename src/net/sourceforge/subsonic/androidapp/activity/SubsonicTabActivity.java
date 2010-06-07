@@ -33,6 +33,11 @@ import net.sourceforge.subsonic.androidapp.util.Util;
 public class SubsonicTabActivity extends Activity {
 
     private boolean destroyed;
+    private View homeButton;
+    private View musicButton;
+    private View searchButton;
+    private View playlistButton;
+    private View nowPlayingButton;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -44,7 +49,7 @@ public class SubsonicTabActivity extends Activity {
     protected void onPostCreate(Bundle bundle) {
         super.onPostCreate(bundle);
 
-        View homeButton = findViewById(R.id.button_bar_home);
+        homeButton = findViewById(R.id.button_bar_home);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,7 +57,7 @@ public class SubsonicTabActivity extends Activity {
             }
         });
 
-        View musicButton = findViewById(R.id.button_bar_music);
+        musicButton = findViewById(R.id.button_bar_music);
         musicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +65,7 @@ public class SubsonicTabActivity extends Activity {
             }
         });
 
-        View searchButton = findViewById(R.id.button_bar_search);
+        searchButton = findViewById(R.id.button_bar_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +73,7 @@ public class SubsonicTabActivity extends Activity {
             }
         });
 
-        View playlistButton = findViewById(R.id.button_bar_playlists);
+        playlistButton = findViewById(R.id.button_bar_playlists);
         playlistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +81,7 @@ public class SubsonicTabActivity extends Activity {
             }
         });
 
-        View nowPlayingButton = findViewById(R.id.button_bar_now_playing);
+        nowPlayingButton = findViewById(R.id.button_bar_now_playing);
         nowPlayingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +100,8 @@ public class SubsonicTabActivity extends Activity {
         } else if (this instanceof DownloadActivity) {
             nowPlayingButton.setEnabled(false);
         }
+
+        updateButtonVisibility();
     }
 
     @Override
@@ -119,6 +126,12 @@ public class SubsonicTabActivity extends Activity {
             Util.startActivityWithoutTransition(SubsonicTabActivity.this, SearchActivity.class);
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    protected void updateButtonVisibility() {
+        int visibility = Util.isOffline(this) ? View.GONE : View.VISIBLE;
+        searchButton.setVisibility(visibility);
+        playlistButton.setVisibility(visibility);
     }
 
     public void setProgressVisible(boolean visible) {
