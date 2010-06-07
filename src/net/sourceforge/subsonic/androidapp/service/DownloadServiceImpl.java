@@ -18,6 +18,12 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -29,16 +35,11 @@ import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 
 /**
  * @author Sindre Mehus
@@ -295,16 +296,17 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     private synchronized void setPlayerState(PlayerState playerState) {
         Log.i(TAG, this.playerState.name() + " -> " + playerState.name());
-        this.playerState = playerState;
-        if (playerState == STARTED) {
+        if (this.playerState == PAUSED && playerState == STARTED) {
             Util.showPlayingNotification(this, handler, currentPlaying.getSong());
-        } else {
+        } else if (this.playerState == STARTED && playerState == PAUSED) {
             Util.hidePlayingNotification(this, handler);
         }
+        this.playerState = playerState;
     }
 
     private synchronized void bufferAndPlay(final DownloadFile downloadFile) {
         reset();
+        Util.showPlayingNotification(this, handler, currentPlaying.getSong());
 
         fileSizeAtLastResume = 0;
         bufferTask = new BufferTask(downloadFile, 0);
@@ -331,6 +333,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                     // If COMPLETED and not playing partial file, we are *really" finished
                     // with the song and can move on to the next.
                     if (!file.equals(downloadFile.getPartialFile())) {
+                        Util.hidePlayingNotification(DownloadServiceImpl.this, handler);
                         next();
                         return;
                     }
@@ -371,8 +374,8 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
         // Need to download current playing?
         if (currentPlaying != null &&
-            currentPlaying != currentDownloading &&
-            !currentPlaying.isCompleteFileAvailable()) {
+                currentPlaying != currentDownloading &&
+                !currentPlaying.isCompleteFileAvailable()) {
 
             // Cancel current download, if necessary.
             if (currentDownloading != null) {
