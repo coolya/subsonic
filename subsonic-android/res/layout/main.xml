@@ -8,10 +8,10 @@
             a:src="@drawable/subsonic_white"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
-            a:paddingTop="12dip"
-            a:paddingBottom="12dip"
+            a:paddingTop="10dip"
+            a:paddingBottom="10dip"
             a:layout_gravity="center_horizontal"
-            a:background="#6C6C6C"/>
+            a:background="@drawable/menubar_button_disabled"/>
 
     <View
             a:layout_width="fill_parent"
