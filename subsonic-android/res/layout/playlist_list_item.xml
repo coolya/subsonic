@@ -9,4 +9,4 @@
           a:gravity="center_vertical"
           a:paddingLeft="6dip"
           a:paddingRight="6dip"
-          a:minHeight="?android:attr/listPreferredItemHeight"/>
+          a:minHeight="50dip"/>
