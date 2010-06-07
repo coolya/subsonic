@@ -6,11 +6,6 @@
 
     <string name="main.select_server">请选择服务器</string>
     <string name="main.offline">离线</string>
-    <string name="main.my_music">我的音乐</string>
-    <string name="main.my_playlists">我的播放列表</string>
-    <string name="main.search">搜索</string>
-    <string name="main.select_playlist">选择播放列表</string>
-    <string name="main.no_playlists">在服务器上不保存播放列表。</string>
 
     <string name="help.label">帮助</string>
     <string name="help.title">欢迎使用 Subsonic!</string>
@@ -22,15 +17,11 @@
     <string name="progress.wait">请稍候...</string>
     <string name="search.title">音乐搜索</string>
 
-    <string name="select_artist.my_music">我的音乐</string>
-    <string name="select_artist.offline_music">离线音乐</string>
-
     <string name="select_album.select">选择</string>
     <string name="select_album.play">播放</string>
     <string name="select_album.more">更多...</string>
     <string name="select_album.play_album">播放专辑</string>
     <string name="select_album.delete">从手机中删除</string>
-    <string name="select_album.add">添加到播放列表</string>
     <string name="select_album.save">在手机中保存</string>
     <string name="select_album.offline">离线</string>
     <string name="select_album.searching">搜索中...</string>
@@ -54,11 +45,6 @@
     <string name="offline.playlists_unavailable">播放列表无法使用离线模式。</string>
 
     <string name="error.label">错误</string>
-
-    <string name="options.home">Subsonic 首页</string>
-    <string name="options.playing">正在播放</string>
-    <string name="options.settings">设置</string>
-    <string name="options.help">帮助</string>
 
     <string name="settings.title">Subsonic 设置</string>
     <string name="settings.test_connection_title">测试连接</string>
