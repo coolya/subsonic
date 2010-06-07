@@ -9,7 +9,6 @@ Remove unused button selectors.
 Main menu: SHUFFLE_PLAY, SELECT_SERVER, SETTINGS, HELP, RANDOM/NEW/ETC ALBUMS
 
 Wrong notificaion
-Offline mode
 
 Clean up Chinese translation.
 Smaller font in song/artist list items.
@@ -33,6 +32,7 @@ Update to FLAC 1.2.1, LAME 3.98.4  http://www.activeobjects.no/subsonic/forum/vi
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
 Fix readlink
 Chat slow when deploying on tomcat?
+Replace reverse Ajax with polling.
 Run Mac server in background (status bar).
 Sonic themes, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3371
 

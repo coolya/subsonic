@@ -8,7 +8,7 @@
 
     <LinearLayout
             a:orientation="horizontal"
-            a:background="#A0A0A0"
+            a:background="@drawable/menubar_button_normal"
             a:paddingTop="6dip"
             a:paddingBottom="4dip"
             a:paddingLeft="6dp"

@@ -144,10 +144,7 @@ public class MainActivity extends SubsonicTabActivity {
         String name = Util.getServerName(this, instance);
         serverTextView.setText(name);
 
-        // TODO
-        boolean offline = instance == 0;
-//        loadPlaylistButton.setEnabled(!offline);
-//        searchButton.setEnabled(!offline);
+        updateButtonVisibility();
     }
 
 }
