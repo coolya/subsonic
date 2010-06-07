@@ -67,6 +67,7 @@ public class DownloadActivity extends SubsonicTabActivity {
     private DownloadService downloadService;
 
     private ViewFlipper flipper;
+    private TextView emptyTextView;
     private TextView albumArtTextView;
     private ImageView albumArtImageView;
     private ListView playlistView;
@@ -94,6 +95,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         setContentView(R.layout.download);
 
         flipper = (ViewFlipper) findViewById(R.id.download_flipper);
+        emptyTextView = (TextView) findViewById(R.id.download_empty);
         albumArtTextView = (TextView) findViewById(R.id.download_album_art_text);
         albumArtImageView = (ImageView) findViewById(R.id.download_album_art_image);
         positionTextView = (TextView) findViewById(R.id.download_position);
@@ -294,6 +296,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         List<DownloadFile> list = downloadService.getDownloads();
 
         playlistView.setAdapter(new SongListAdapter(list));
+        emptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
     private void onCurrentChanged() {
