@@ -44,6 +44,7 @@
     <string name="select_album.0_search_result">Search results - No matches found</string>
     <string name="select_album.donate_dialog_0_trial_days_left">Trial period is over</string>
 
+    <string name="download.empty">Playlist is empty</string>
     <string name="download.playerstate_downloading">Downloading - %s</string>
     <string name="download.playerstate_buffering">Buffering</string>
     <string name="download.playerstate_playing">Playing</string>

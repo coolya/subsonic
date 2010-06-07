@@ -2,30 +2,25 @@ TODO IN ANDROID 1.3
 -------------------
 http://android.git.kernel.org/?p=platfor©m/packages/apps/Music.git;a=tree
 Bugfix: Wrong initial empty playlist
-Bugfix: Wrong notificaion
 Bugfix: Support filenames with "<" and ">".
 Bugfix: Trim username, servername. Url-encode username.
-Bugfix: Support small/large screens: http://developer.android.com/guide/topics/manifest/supports-screens-element.html, must improve layout of main activity.
 Bugfix: Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
 Remove unused button selectors.
 Main menu: SHUFFLE_PLAY, SELECT_SERVER, SETTINGS, HELP, RANDOM/NEW/ETC ALBUMS
+
+Wrong notificaion
+Handle empty list of playlists.
+Offline mode
 
 Clean up Chinese translation.
 Smaller font in song/artist list items.
 Different color/size of header/footer borders, ala wimp.
 Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
-Handle empty list of playlists.
-Show "Playlist is empty"
 Test that cache clean cancelling works.
-Fix now playing layout
 Settings changes not updated.
-Offline mode
 Extract colors to xml.
 Colors: http://www.androidtapp.com/opentable/
-http://stackoverflow.com/questions/1521640/standard-android-button-with-a-different-color
-http://github.com/commonsguy/cwac-sacklist
-http://jsharkey.org/blog/2008/08/18/separating-lists-with-headers-in-android-09/
 
 DONE IN ANDROID 1.3
 -------------------
