@@ -13,40 +13,39 @@
     <LinearLayout a:orientation="horizontal"
                   a:layout_width="fill_parent"
                   a:layout_height="wrap_content"
-                  a:gravity="center_horizontal"
-                  a:background="#DDDDDD">
+                  a:gravity="center_horizontal">
 
         <ImageButton a:id="@+id/button_bar_home"
                      a:src="@drawable/menu_home"
-                     a:background="@android:color/transparent"
+                     a:background="@drawable/menubar_button"
                      a:layout_weight="1"
                      a:layout_width="0dp"
                      a:layout_height="wrap_content"/>
 
         <ImageButton a:id="@+id/button_bar_music"
                      a:src="@drawable/menu_browse"
-                     a:background="@android:color/transparent"
+                     a:background="@drawable/menubar_button"
                      a:layout_weight="1"
                      a:layout_width="0dp"
                      a:layout_height="wrap_content"/>
 
         <ImageButton a:id="@+id/button_bar_search"
                      a:src="@drawable/menu_search"
-                     a:background="@android:color/transparent"
+                     a:background="@drawable/menubar_button"
                      a:layout_weight="1"
                      a:layout_width="0dp"
                      a:layout_height="wrap_content"/>
 
         <ImageButton a:id="@+id/button_bar_playlists"
                      a:src="@drawable/menu_playlists"
-                     a:background="@android:color/transparent"
+                     a:background="@drawable/menubar_button"
                      a:layout_weight="1"
                      a:layout_width="0dp"
                      a:layout_height="wrap_content"/>
 
         <ImageButton a:id="@+id/button_bar_now_playing"
                      a:src="@drawable/menu_now_playing"
-                     a:background="@android:color/transparent"
+                     a:background="@drawable/menubar_button"
                      a:layout_weight="1"
                      a:layout_width="0dp"
                      a:layout_height="wrap_content"/>
