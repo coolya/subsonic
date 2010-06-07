@@ -23,7 +23,6 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.graphics.Color;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.util.Util;
@@ -33,7 +32,6 @@ import net.sourceforge.subsonic.androidapp.util.Util;
  */
 public class SubsonicTabActivity extends Activity {
 
-    private static final int SELECTED_TAB_COLOR = Color.rgb(190, 190, 190);
     private boolean destroyed;
 
     @Override
@@ -87,15 +85,15 @@ public class SubsonicTabActivity extends Activity {
         });
 
         if (this instanceof MainActivity) {
-            homeButton.setBackgroundColor(SELECTED_TAB_COLOR);
+            homeButton.setEnabled(false);
         } else if (this instanceof SelectAlbumActivity || this instanceof SelectArtistActivity) {
-            musicButton.setBackgroundColor(SELECTED_TAB_COLOR);
+            musicButton.setEnabled(false);
         } else if (this instanceof SearchActivity) {
-            searchButton.setBackgroundColor(SELECTED_TAB_COLOR);
+            searchButton.setEnabled(false);
         } else if (this instanceof SelectPlaylistActivity) {
-            playlistButton.setBackgroundColor(SELECTED_TAB_COLOR);
+            playlistButton.setEnabled(false);
         } else if (this instanceof DownloadActivity) {
-            nowPlayingButton.setBackgroundColor(SELECTED_TAB_COLOR);
+            nowPlayingButton.setEnabled(false);
         }
     }
 
