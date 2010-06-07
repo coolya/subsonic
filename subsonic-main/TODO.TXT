@@ -9,7 +9,6 @@ Remove unused button selectors.
 Main menu: SHUFFLE_PLAY, SELECT_SERVER, SETTINGS, HELP, RANDOM/NEW/ETC ALBUMS
 
 Wrong notificaion
-Handle empty list of playlists.
 Offline mode
 
 Clean up Chinese translation.

@@ -40,12 +40,14 @@ import java.util.List;
 public class SelectPlaylistActivity extends SubsonicTabActivity implements AdapterView.OnItemClickListener {
 
     private ListView list;
+    private View emptyTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_playlist);
         list = (ListView) findViewById(R.id.select_playlist_list);
+        emptyTextView = findViewById(R.id.select_playlist_empty);
         list.setOnItemClickListener(this);
         load();
     }
@@ -59,12 +61,8 @@ public class SelectPlaylistActivity extends SubsonicTabActivity implements Adapt
 
             @Override
             protected void done(List<Playlist> result) {
-                if (result.isEmpty()) {
-//                    todo
-//                    builder.setMessage(R.string.main_no_playlists);
-                } else {
-                    list.setAdapter(new PlaylistAdapter(result));
-                }
+                list.setAdapter(new PlaylistAdapter(result));
+                emptyTextView.setVisibility(result.isEmpty() ? View.VISIBLE : View.GONE);
             }
         };
         task.execute();

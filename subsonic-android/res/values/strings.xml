@@ -10,7 +10,6 @@
     <string name="main.help">Help</string>
 
     <string name="playlist.label">Playlists</string>
-    <!--<string name="main.no_playlists">No saved playlists on server.</string>-->
 
     <string name="help.label">Help</string>
     <string name="help.title">Welcome to Subsonic!</string>
@@ -43,6 +42,8 @@
     <string name="select_album.search_result">Search results</string>
     <string name="select_album.0_search_result">Search results - No matches found</string>
     <string name="select_album.donate_dialog_0_trial_days_left">Trial period is over</string>
+
+    <string name="select_playlist.empty">No saved playlists on server</string>
 
     <string name="download.empty">Playlist is empty</string>
     <string name="download.playerstate_downloading">Downloading - %s</string>
