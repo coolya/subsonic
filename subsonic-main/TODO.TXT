@@ -8,19 +8,15 @@ Bugfix: Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=1
 Remove unused button selectors.
 Main menu: SHUFFLE_PLAY, SELECT_SERVER, SETTINGS, HELP, RANDOM/NEW/ETC ALBUMS
 
-Create new screenshots
 Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Test that cache clean cancelling works.
-Settings changes not updated.
 Also delete cover art when cleaning cache.
 Colors: http://www.androidtapp.com/opentable/
 
-DONE IN ANDROID 1.3
+DONE IN ANDROID 1.4
 -------------------
-Layout: Nicer default cover image.
-Layout: Nicer playlist background
-Layout: Add buttons after song lists, ala wimp
+Fixed bug with server settings not being updated on screen.
 
 TODO IN 4.1
 -----------------
@@ -534,9 +530,9 @@ Update
     http://appslib.com/developers/index.html
     https://myapps.developer.motorola.com/
     https://slideme.org/application/subsonic
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.2 -m "Tagging Android 1.2."
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.3 -m "Tagging Android 1.3."
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-android/bin/subsonic.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.2/subsonic-1.2.apk
+  rsync -avP -e ssh subsonic-android/bin/subsonic.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.3/subsonic-1.3.apk
 
 
 
