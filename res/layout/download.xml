@@ -28,11 +28,11 @@
                     a:gravity="center_horizontal"
                     a:singleLine="true"
                     a:ellipsize="end"
-                    a:background="#5a5a5a"
+                    a:background="@color/mediaControlBackground"
                     a:textAppearance="?android:attr/textAppearanceMedium"
                     a:textSize="14dp"
                     a:textStyle="bold"
-                    a:textColor="#D0D0D0"/>
+                    a:textColor="@color/mediaControlForeground"/>
 
         </LinearLayout>
 
@@ -63,7 +63,7 @@
                   a:layout_width="fill_parent"
                   a:layout_height="wrap_content"
                   a:layout_marginTop="0dip"
-                  a:background="#5a5a5a"
+                  a:background="@color/mediaControlBackground"
                   a:paddingTop="4dip"
                   a:gravity="center_horizontal">
         <Button
@@ -113,7 +113,7 @@
     <LinearLayout a:orientation="horizontal"
                   a:layout_width="fill_parent"
                   a:layout_height="wrap_content"
-                  a:background="#ff5a5a5a"
+                  a:background="@color/mediaControlBackground"
                   a:paddingLeft="7dip"
                   a:paddingRight="7dip">
         <TextView
@@ -124,7 +124,7 @@
                 a:textAppearance="?android:attr/textAppearanceMedium"
                 a:textSize="14dp"
                 a:textStyle="bold"
-                a:textColor="#D0D0D0"
+                a:textColor="@color/mediaControlForeground"
                 a:text="0:00"/>
 
         <TextView
@@ -136,7 +136,7 @@
                 a:textAppearance="?android:attr/textAppearanceMedium"
                 a:textSize="14dp"
                 a:textStyle="bold"
-                a:textColor="#D0D0D0"/>
+                a:textColor="@color/mediaControlForeground"/>
 
         <TextView
                 a:id="@+id/download_duration"
@@ -146,7 +146,7 @@
                 a:textAppearance="?android:attr/textAppearanceMedium"
                 a:textSize="14dp"
                 a:textStyle="bold"
-                a:textColor="#D0D0D0"
+                a:textColor="@color/mediaControlForeground"
                 a:text="0:00"/>
     </LinearLayout>
 
@@ -154,7 +154,7 @@
             style="?android:attr/progressBarStyleHorizontal"
             a:id="@+id/download_progress_bar"
             a:indeterminate="false"
-            a:background="#ff5a5a5a"
+            a:background="@color/mediaControlBackground"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:paddingLeft="7dip"

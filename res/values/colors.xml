@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="secondaryForeground">#BEBEBE</color>
+    <color name="mediaControlBackground">#909090</color>
+    <color name="mediaControlForeground">#F0F0F0</color>
+    <color name="dividerColor">#555555</color>
 </resources>

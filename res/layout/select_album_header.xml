@@ -61,6 +61,6 @@
     <View
             a:layout_width="fill_parent"
             a:layout_height="1px"
-            a:background="#555555"/>
+            a:background="@color/dividerColor"/>
 
 </LinearLayout>
