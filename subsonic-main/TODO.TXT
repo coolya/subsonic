@@ -15,6 +15,8 @@ Only retry if network error.
 https support
 Select music folder in server settings. (Including "All").
 Support max bitrate in settings. ("Preferred bitrate") Differentiate between Wifi and Mobile
+Configurable dark or light theme.
+Avoid scrolling for play/queue buttons.
 
 Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
