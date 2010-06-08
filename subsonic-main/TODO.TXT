@@ -8,7 +8,7 @@ Bugfix: Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=1
 Remove unused button selectors.
 Main menu: SHUFFLE_PLAY, SELECT_SERVER, SETTINGS, HELP, RANDOM/NEW/ETC ALBUMS
 
-Show "No music found"
+search button hdpi
 Create new screenshots
 Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
