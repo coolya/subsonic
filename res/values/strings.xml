@@ -26,6 +26,7 @@
     <string name="music_library.label">Music library</string>
     <string name="music_library.label_offline">Offline music</string>
 
+    <string name="select_album.empty">No music found</string>
     <string name="select_album.select">Select</string>
     <string name="select_album.play">Play</string>
     <string name="select_album.queue">Queue</string>

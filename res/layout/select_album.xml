@@ -6,6 +6,14 @@
 
     <include layout="@layout/tab_progress"/>
 
+    <TextView
+            a:id="@+id/select_album_empty"
+            a:text="@string/select_album.empty"
+            a:visibility="gone"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:padding="10dip"/>
+
     <ListView a:id="@+id/select_album_entries"
               a:textFilterEnabled="true"
               a:layout_width="fill_parent"

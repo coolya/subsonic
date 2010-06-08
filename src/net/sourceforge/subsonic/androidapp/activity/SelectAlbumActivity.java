@@ -70,6 +70,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     private ListView entryList;
     private View header;
     private View footer;
+    private View emptyView;
     private Button selectButton;
     private Button playButton;
     private Button queueButton;
@@ -122,7 +123,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         queueButton = (Button) footer.findViewById(R.id.select_album_queue);
         saveButton = (Button) footer.findViewById(R.id.select_album_save);
         deleteButton = (Button) footer.findViewById(R.id.select_album_delete);
-
+        emptyView = findViewById(R.id.select_album_empty);
+        
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -499,6 +501,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                 entryList.addFooterView(footer);
             }
 
+            emptyView.setVisibility(entries.isEmpty() ? View.VISIBLE : View.GONE);
             entryList.setAdapter(new EntryAdapter(entries));
             licenseValid = result.getSecond();
 
