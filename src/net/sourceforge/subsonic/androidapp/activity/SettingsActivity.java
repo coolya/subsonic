@@ -52,7 +52,7 @@ import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
     private final Map<String, ServerSettings> serverSettings = new LinkedHashMap<String, ServerSettings>();
@@ -120,12 +120,8 @@ public class SettingsActivity extends PreferenceActivity {
         }
 
         SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
-        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                update();
-            }
-        });
+        prefs.registerOnSharedPreferenceChangeListener(this);
+        Log.d(TAG, "registerOnSharedPreferenceChangeListener");
 
         update();
     }
@@ -134,9 +130,17 @@ public class SettingsActivity extends PreferenceActivity {
     protected void onDestroy() {
         super.onDestroy();
         unbindService(downloadServiceConnection);
+
+        SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        prefs.unregisterOnSharedPreferenceChangeListener(this);
+        Log.d(TAG, "unregisterOnSharedPreferenceChangeListener");
     }
 
-
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        Log.d(TAG, "Preference changed: " + key);
+        update();
+    }
 
     private void update() {
         if (testingConnection) {
