@@ -1,17 +1,24 @@
-TODO IN ANDROID 1.3
+TODO IN ANDROID 1.4
 -------------------
-http://android.git.kernel.org/?p=platfor©m/packages/apps/Music.git;a=tree
-Bugfix: Wrong initial empty playlist
-Bugfix: Support filenames with "<" and ">".
-Bugfix: Trim username, servername. Url-encode username.
-Bugfix: Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
-Remove unused button selectors.
-Main menu: SHUFFLE_PLAY, SELECT_SERVER, SETTINGS, HELP, RANDOM/NEW/ETC ALBUMS
+Support filenames with "<" and ">".
+Trim username, servername. Url-encode username.
+Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
+FLAC bugfix, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2903
+Shuffle play
+Avoid slow copying of files.
+Problem when saving songs?
+Random, new, recent, frequent albums
+Also delete cover art when cleaning cache.
+Never attempt to download if offline. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3196
+Support mounting SD card.
+Only retry if network error.
+https support
+Select music folder in server settings. (Including "All").
+Support max bitrate in settings. ("Preferred bitrate") Differentiate between Wifi and Mobile
 
 Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Test that cache clean cancelling works.
-Also delete cover art when cleaning cache.
 Colors: http://www.androidtapp.com/opentable/
 
 DONE IN ANDROID 1.4
@@ -73,25 +80,18 @@ Restart BasicPlayer for each song in playlist. http://www.activeobjects.no/subso
 ANDROID
 -----------------------
 Android: Fix bugs reported by Market.
-Android: FLAC bugfix, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2903
-Android: Never attempt to download if offline. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3196
 Android: Suggest switching to offline mode if network error.
 Android: Make offline mode more visible.
-Android: https support
-Android: shuffle play
 Android: Reorder playlist
 Android: Save playlist
 Android: Lyrics.
 Android: Queue Next + Queue Last
 Android: Menu option to exit.
-Android: Support mounting SD card.
 Android: Avoid stutter
 Android: Shuffle queue
 Android: Pause on Bluetooth disconnect.
 Android: Long-click on folder to play recursive.
 Android: Download error notification is nagging.
-Android: Select music folder in server settings. (Including "All").
-Android app not available on HTC Tattoo? http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=9288
 Use filename.complete.mp3 rather than filename.mp3.complete
 Swipe album art to go to prev/next track.
 Avoid stuttering when restarting playback during download.  Use local socket.
@@ -119,14 +119,9 @@ Fix encoding problems in Subsonic Demo files.
 Handle XML exception better.
 Use music index last modified + invalidate cache after a while.
 Use weak references in image cache?
-Make playlist bg b/w?
-Change colors of selected songs.
 Show currently playing song in playlist.
-Support max bitrate in settings. ("Preferred bitrate")
 Must resolve content type in StreamController, even if "suffix" is not given.
 Add duration to rest api.
-User should be able to select music folder. (Let REST method support it at least).
-Merge artists in REST method.  Make it possible to specify music folder.
 
 
 VIDEO
