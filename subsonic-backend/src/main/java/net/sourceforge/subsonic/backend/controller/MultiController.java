@@ -47,7 +47,7 @@ public class MultiController extends MultiActionController {
 
     private static final String SUBSONIC_VERSION = "4.0.1";
     private static final String SUBSONIC_BETA_VERSION = "4.0.beta2";
-    private static final String SUBSONIC_ANDROID_VERSION = "1.2";
+    private static final String SUBSONIC_ANDROID_VERSION = "1.3";
 
     private DaoHelper daoHelper;
 
