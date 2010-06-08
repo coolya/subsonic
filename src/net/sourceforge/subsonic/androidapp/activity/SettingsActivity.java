@@ -121,7 +121,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
         SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
         prefs.registerOnSharedPreferenceChangeListener(this);
-        Log.d(TAG, "registerOnSharedPreferenceChangeListener");
 
         update();
     }
@@ -133,7 +132,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
         SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
         prefs.unregisterOnSharedPreferenceChangeListener(this);
-        Log.d(TAG, "unregisterOnSharedPreferenceChangeListener");
     }
 
     @Override
