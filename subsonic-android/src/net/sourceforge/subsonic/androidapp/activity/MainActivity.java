@@ -64,10 +64,18 @@ public class MainActivity extends SubsonicTabActivity {
         final View serverButton = buttons.findViewById(R.id.main_select_server);
         final View settingsButton = buttons.findViewById(R.id.main_settings);
         final View helpButton = buttons.findViewById(R.id.main_help);
+        final View albumsTitle = buttons.findViewById(R.id.main_albums);
+        final View albumsNewestButton = buttons.findViewById(R.id.main_albums_newest);
         serverTextView = (TextView) serverButton.findViewById(R.id.main_select_server_2);
 
         ListView list = (ListView) findViewById(R.id.main_list);
-        list.setAdapter(new SackOfViewsAdapter(Arrays.asList(serverButton, settingsButton, helpButton)));
+        SackOfViewsAdapter adapter = new SackOfViewsAdapter(Arrays.asList(serverButton, settingsButton, helpButton, albumsTitle, albumsNewestButton)) {
+            @Override
+            public boolean isEnabled(int position) {
+                return position != 3;
+            }
+        };
+        list.setAdapter(adapter);
         registerForContextMenu(list);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

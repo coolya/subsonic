@@ -1,3 +1,5 @@
+http://android.git.kernel.org/?p=platform/frameworks/base.git;a=tree;f=core;
+
 TODO IN ANDROID 1.4
 -------------------
 Support filenames with "<" and ">".
@@ -8,6 +10,7 @@ Shuffle play
 Avoid slow copying of files.
 Problem when saving songs?
 Random, new, recent, frequent albums
+Shuffle play
 Also delete cover art when cleaning cache.
 Never attempt to download if offline. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3196
 Support mounting SD card.
@@ -16,6 +19,7 @@ https support
 Select music folder in server settings. (Including "All").
 Support max bitrate in settings. ("Preferred bitrate") Differentiate between Wifi and Mobile
 
+Long-click on Settings/Help brings up server selection
 Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Test that cache clean cancelling works.
