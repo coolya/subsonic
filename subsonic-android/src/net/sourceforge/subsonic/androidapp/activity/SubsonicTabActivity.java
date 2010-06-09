@@ -19,12 +19,14 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
 /**
@@ -41,7 +43,7 @@ public class SubsonicTabActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle bundle) {
-//        setTheme(android.R.style.Theme);
+        setTheme();
         super.onCreate(bundle);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
@@ -115,6 +117,14 @@ public class SubsonicTabActivity extends Activity {
     public void finish() {
         super.finish();
         Util.disablePendingTransition(this);
+    }
+
+    private void setTheme() {
+        SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        String theme = prefs.getString(Constants.PREFERENCES_KEY_THEME, null);
+        if ("dark".equals(theme)) {
+            setTheme(android.R.style.Theme);
+        }
     }
 
     public boolean isDestroyed() {

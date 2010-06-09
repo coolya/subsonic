@@ -87,6 +87,10 @@
     <string name="settings.version_update_available_text">A newer version is available on Android Market.</string>
     <string name="settings.version_update_not_available">You are running the latest version.</string>
     <string name="settings.invalid_url">Please specify a valid URL.</string>
+    <string name="settings.appearance_title">Appearance</string>
+    <string name="settings.theme_title">Theme</string>
+    <string name="settings.theme_light">Light</string>
+    <string name="settings.theme_dark">Dark</string>
 
     <string name="music_service.retry">A network error occurred. Retrying %d of %d.</string>
 

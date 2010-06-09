@@ -33,6 +33,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
@@ -59,12 +60,16 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private DownloadService downloadService;
     private boolean testingConnection;
+    private ListPreference theme;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         addPreferencesFromResource(R.xml.settings);
+
+        theme = (ListPreference) findPreference(Constants.PREFERENCES_KEY_THEME);
+
 
         findPreference("testConnection1").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -144,6 +149,8 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         if (testingConnection) {
             return;
         }
+
+        theme.setSummary(theme.getEntry());
         for (ServerSettings ss : serverSettings.values()) {
             ss.update();
         }

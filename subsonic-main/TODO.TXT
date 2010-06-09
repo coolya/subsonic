@@ -15,7 +15,6 @@ Only retry if network error.
 https support
 Select music folder in server settings. (Including "All").
 Support max bitrate in settings. ("Preferred bitrate") Differentiate between Wifi and Mobile
-Configurable dark or light theme.
 
 Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
@@ -26,6 +25,7 @@ DONE IN ANDROID 1.4
 -------------------
 Fixed bug with server settings not being updated on screen.
 Always display Select, Play, Queue buttons.
+Configurable dark or light theme.
 
 TODO IN 4.1
 -----------------
