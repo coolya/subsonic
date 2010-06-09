@@ -34,6 +34,7 @@ import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.util.SackOfViewsAdapter;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.Constants;
 
 import java.util.Arrays;
 
@@ -66,10 +67,16 @@ public class MainActivity extends SubsonicTabActivity {
         final View helpButton = buttons.findViewById(R.id.main_help);
         final View albumsTitle = buttons.findViewById(R.id.main_albums);
         final View albumsNewestButton = buttons.findViewById(R.id.main_albums_newest);
+        final View albumsRandomButton = buttons.findViewById(R.id.main_albums_random);
+        final View albumsHighestButton = buttons.findViewById(R.id.main_albums_highest);
+        final View albumsRecentButton = buttons.findViewById(R.id.main_albums_recent);
+        final View albumsFrequentButton = buttons.findViewById(R.id.main_albums_frequent);
         serverTextView = (TextView) serverButton.findViewById(R.id.main_select_server_2);
 
         ListView list = (ListView) findViewById(R.id.main_list);
-        SackOfViewsAdapter adapter = new SackOfViewsAdapter(Arrays.asList(serverButton, settingsButton, helpButton, albumsTitle, albumsNewestButton)) {
+        SackOfViewsAdapter adapter = new SackOfViewsAdapter(Arrays.asList(serverButton, settingsButton, helpButton,
+                                                                          albumsTitle, albumsNewestButton, albumsRandomButton,
+                                                                          albumsHighestButton, albumsRecentButton, albumsFrequentButton)) {
             @Override
             public boolean isEnabled(int position) {
                 return position != 3;
@@ -87,10 +94,25 @@ public class MainActivity extends SubsonicTabActivity {
                     startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 } else if (view == helpButton) {
                     startActivity(new Intent(MainActivity.this, HelpActivity.class));
+                } else if (view == albumsNewestButton) {
+                    showAlbumList("newest");
+                } else if (view == albumsRandomButton) {
+                    showAlbumList("random");
+                } else if (view == albumsHighestButton) {
+                    showAlbumList("highest");
+                } else if (view == albumsRecentButton) {
+                    showAlbumList("recent");
+                } else if (view == albumsFrequentButton) {
+                    showAlbumList("frequent");
                 }
             }
         });
+    }
 
+    private void showAlbumList(String type) {
+        Intent intent = new Intent(this, SelectAlbumActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE, type);
+        Util.startActivityWithoutTransition(this, intent);
     }
 
     @Override

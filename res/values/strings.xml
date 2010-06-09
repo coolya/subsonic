@@ -10,6 +10,10 @@
     <string name="main.help">Help</string>
     <string name="main.albums_title">Albums</string>
     <string name="main.albums_newest">Newest</string>
+    <string name="main.albums_random">Random</string>
+    <string name="main.albums_highest">Highest rated</string>
+    <string name="main.albums_recent">Recently played</string>
+    <string name="main.albums_frequent">Frequently played</string>
 
     <string name="playlist.label">Playlists</string>
 
@@ -57,9 +61,6 @@
     <string name="download.remove_all">Remove all</string>
     <string name="download.play_error">Error playing \"%s\"</string>
     <string name="download.error">Error downloading \"%s\"</string>
-
-    <string name="offline.search_unavailable">Search not available in offline mode.</string>
-    <string name="offline.playlists_unavailable">Playlists not available in offline mode.</string>
 
     <string name="error.label">Error</string>
 

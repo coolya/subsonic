@@ -41,9 +41,6 @@
     <string name="download.play_error">播放错误 \"%s\"</string>
     <string name="download.error">下载错误 \"%s\"</string>
 
-    <string name="offline.search_unavailable">搜索在离线模式下不可用</string>
-    <string name="offline.playlists_unavailable">播放列表无法使用离线模式。</string>
-
     <string name="error.label">错误</string>
 
     <string name="settings.title">Subsonic 设置</string>
