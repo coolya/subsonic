@@ -69,6 +69,7 @@ import net.sourceforge.subsonic.androidapp.service.parser.PlaylistParser;
 import net.sourceforge.subsonic.androidapp.service.parser.PlaylistsParser;
 import net.sourceforge.subsonic.androidapp.service.parser.SearchResultParser;
 import net.sourceforge.subsonic.androidapp.service.parser.VersionParser;
+import net.sourceforge.subsonic.androidapp.service.parser.AlbumListParser;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Pair;
@@ -215,6 +216,16 @@ public class RESTMusicService implements MusicService {
         Reader reader = getReader(context, progressListener, "getPlaylists");
         try {
             return new PlaylistsParser(context).parse(reader, progressListener);
+        } finally {
+            Util.close(reader);
+        }
+    }
+
+    @Override
+    public MusicDirectory getAlbumList(String albumListType, Context context, ProgressListener progressListener) throws Exception {
+        Reader reader = getReader(context, progressListener, "getAlbumList", "type", albumListType);
+        try {
+            return new AlbumListParser(context).parse(reader, progressListener);
         } finally {
             Util.close(reader);
         }

@@ -124,7 +124,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         saveButton = (Button) footer.findViewById(R.id.select_album_save);
         deleteButton = (Button) footer.findViewById(R.id.select_album_delete);
         emptyView = findViewById(R.id.select_album_empty);
-        
+
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,15 +174,21 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         enableButtons();
 
+        String id = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ID);
+        String name = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME);
         String query = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_QUERY);
-        String playlist = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME);
+        String playlistId = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_ID);
+        String playlistName = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME);
+        String albumListType = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE);
 
         if (query != null) {
-            search();
-        } else if (playlist != null) {
-            getPlaylist();
+            search(query);
+        } else if (playlistId != null) {
+            getPlaylist(playlistId, playlistName);
+        } else if (albumListType != null) {
+            getAlbumList(albumListType);
         } else {
-            getMusicDirectory();
+            getMusicDirectory(id, name);
         }
     }
 
@@ -209,25 +215,23 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         }
     }
 
-    private void getMusicDirectory() {
-        headerText1.setText(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME));
+    private void getMusicDirectory(final String id, String name) {
+        headerText1.setText(name);
         setTitle(Util.isOffline(this) ? R.string.music_library_label_offline : R.string.music_library_label);
 
         new LoadTask() {
             @Override
             protected MusicDirectory load(MusicService service) throws Exception {
-                String id = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ID);
                 return service.getMusicDirectory(id, SelectAlbumActivity.this, this);
             }
         }.execute();
     }
 
-    private void search() {
+    private void search(final String query) {
         setTitle(R.string.select_album_searching);
         new LoadTask() {
             @Override
             protected MusicDirectory load(MusicService service) throws Exception {
-                String query = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_QUERY);
                 return service.search(query, SelectAlbumActivity.this, this);
             }
 
@@ -245,16 +249,36 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         }.execute();
     }
 
-    private void getPlaylist() {
-        String playlistName = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME);
+    private void getPlaylist(final String playlistId, String playlistName) {
         setTitle(playlistName);
         headerText1.setText(playlistName);
 
         new LoadTask() {
             @Override
             protected MusicDirectory load(MusicService service) throws Exception {
-                String id = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_ID);
-                return service.getPlaylist(id, SelectAlbumActivity.this, this);
+                return service.getPlaylist(playlistId, SelectAlbumActivity.this, this);
+            }
+        }.execute();
+    }
+
+    private void getAlbumList(final String albumListType) {
+
+        if ("newest".equals(albumListType)) {
+            setTitle(R.string.main_albums_newest);
+        } else if ("random".equals(albumListType)) {
+            setTitle(R.string.main_albums_random);
+        } else if ("highest".equals(albumListType)) {
+            setTitle(R.string.main_albums_highest);
+        } else if ("recent".equals(albumListType)) {
+            setTitle(R.string.main_albums_recent);
+        } else if ("frequent".equals(albumListType)) {
+            setTitle(R.string.main_albums_frequent);
+        }
+
+        new LoadTask() {
+            @Override
+            protected MusicDirectory load(MusicService service) throws Exception {
+                return service.getAlbumList(albumListType, SelectAlbumActivity.this, this);
             }
         }.execute();
     }

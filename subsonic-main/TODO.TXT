@@ -9,7 +9,6 @@ FLAC bugfix, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2903
 Shuffle play
 Avoid slow copying of files.
 Problem when saving songs?
-Random, new, recent, frequent albums
 Shuffle play
 Also delete cover art when cleaning cache.
 Never attempt to download if offline. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3196
@@ -17,7 +16,11 @@ Support mounting SD card.
 Only retry if network error.
 https support
 Select music folder in server settings. (Including "All").
+Add More button to album list. Show 25 albums at a time.
 Support max bitrate in settings. ("Preferred bitrate") Differentiate between Wifi and Mobile
+Show notification when changing theme.
+Hide album lists if offline. Restart activity?
+Use combination of progress bar and slide bar.
 
 Long-click on Settings/Help brings up server selection
 Album art border, ala wimp

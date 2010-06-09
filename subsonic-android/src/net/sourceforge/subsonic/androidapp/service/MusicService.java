@@ -25,6 +25,7 @@ import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.domain.Version;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
+import net.sourceforge.subsonic.androidapp.activity.SelectAlbumActivity;
 import org.apache.http.HttpResponse;
 
 import java.util.List;
@@ -48,6 +49,8 @@ public interface MusicService {
 
     List<Playlist> getPlaylists(Context context, ProgressListener progressListener) throws Exception;
 
+    MusicDirectory getAlbumList(String albumListType, Context context, ProgressListener progressListener) throws Exception;
+
     Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception;
 
     HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset) throws Exception;
@@ -55,4 +58,5 @@ public interface MusicService {
     Version getLocalVersion(Context context) throws Exception;
 
     Version getLatestVersion(Context context, ProgressListener progressListener) throws Exception;
+
 }

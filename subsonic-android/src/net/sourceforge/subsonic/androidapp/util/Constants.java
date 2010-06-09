@@ -39,6 +39,7 @@ public final class Constants {
     public static final String INTENT_EXTRA_NAME_QUERY = "subsonic.query";
     public static final String INTENT_EXTRA_NAME_PLAYLIST_ID = "subsonic.playlist.id";
     public static final String INTENT_EXTRA_NAME_PLAYLIST_NAME = "subsonic.playlist.name";
+    public static final String INTENT_EXTRA_NAME_ALBUM_LIST_TYPE = "subsonic.albumlisttype";
 
     // Notification IDs.
     public static final int NOTIFICATION_ID_PLAYING = 100;
