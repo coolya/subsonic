@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
               a:orientation="horizontal"
-              a:background="@android:color/white"
+              a:background="@android:color/transparent"
               a:paddingTop="6dp"
               a:paddingBottom="0dp"
               a:layout_width="fill_parent"

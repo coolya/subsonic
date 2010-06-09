@@ -36,6 +36,7 @@
                     a:layout_height="wrap_content"
                     a:layout_marginLeft="10dip"
                     a:layout_marginRight="10dip"
+                    a:textColor="@android:color/primary_text_light"
                     a:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <TextView
@@ -45,6 +46,7 @@
                     a:layout_height="wrap_content"
                     a:layout_marginLeft="10dip"
                     a:layout_marginRight="10dip"
+                    a:textColor="@android:color/secondary_text_light"
                     a:textAppearance="?android:attr/textAppearanceSmall"/>
 
         </LinearLayout>
