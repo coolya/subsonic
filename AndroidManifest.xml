@@ -18,6 +18,7 @@
 
         <activity a:name=".activity.MainActivity"
                   a:label="Subsonic"
+                  a:configChanges="orientation|keyboardHidden"
                   a:launchMode="singleTask">
             <intent-filter>
                 <action a:name="android.intent.action.MAIN"/>
