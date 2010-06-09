@@ -41,6 +41,7 @@ public class SubsonicTabActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle bundle) {
+//        setTheme(android.R.style.Theme);
         super.onCreate(bundle);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
