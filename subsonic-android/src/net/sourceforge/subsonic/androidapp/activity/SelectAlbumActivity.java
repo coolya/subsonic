@@ -118,9 +118,9 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         headerText2 = (TextView) header.findViewById(R.id.select_album_text2);
         playAllButton = (ImageButton) header.findViewById(R.id.select_album_play_all);
 
-        selectButton = (Button) footer.findViewById(R.id.select_album_select);
-        playButton = (Button) footer.findViewById(R.id.select_album_play);
-        queueButton = (Button) footer.findViewById(R.id.select_album_queue);
+        selectButton = (Button) findViewById(R.id.select_album_select);
+        playButton = (Button) findViewById(R.id.select_album_play);
+        queueButton = (Button) findViewById(R.id.select_album_queue);
         saveButton = (Button) footer.findViewById(R.id.select_album_save);
         deleteButton = (Button) footer.findViewById(R.id.select_album_delete);
         emptyView = findViewById(R.id.select_album_empty);
@@ -499,6 +499,9 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                 imageLoader.loadImage(coverArtView, entries.get(0), false);
                 entryList.addHeaderView(header);
                 entryList.addFooterView(footer);
+                selectButton.setVisibility(View.VISIBLE);
+                playButton.setVisibility(View.VISIBLE);
+                queueButton.setVisibility(View.VISIBLE);
             }
 
             emptyView.setVisibility(entries.isEmpty() ? View.VISIBLE : View.GONE);
