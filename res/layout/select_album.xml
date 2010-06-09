@@ -20,6 +20,44 @@
               a:layout_height="0dip"
               a:layout_weight="1.0"/>
 
+    <LinearLayout a:orientation="horizontal"
+                  a:layout_marginTop="6dp"
+                  a:layout_marginBottom="3dp"
+                  a:layout_width="fill_parent"
+                  a:layout_height="wrap_content">
+
+        <Button a:id="@+id/select_album_select"
+                a:text="@string/select_album.select"
+                a:textAppearance="?android:attr/textAppearanceSmall"
+                a:visibility="gone"
+                a:layout_marginLeft="6dp"
+                a:layout_marginRight="3dp"
+                a:layout_weight="1"
+                a:layout_width="0dp"
+                a:layout_height="wrap_content"/>
+
+        <Button a:id="@+id/select_album_play"
+                a:text="@string/select_album.play"
+                a:textAppearance="?android:attr/textAppearanceSmall"
+                a:visibility="gone"
+                a:layout_marginLeft="3dp"
+                a:layout_marginRight="3dp"
+                a:layout_weight="1"
+                a:layout_width="0dp"
+                a:layout_height="wrap_content"/>
+
+        <Button a:id="@+id/select_album_queue"
+                a:text="@string/select_album.queue"
+                a:textAppearance="?android:attr/textAppearanceSmall"
+                a:visibility="gone"
+                a:layout_marginLeft="3dp"
+                a:layout_marginRight="6dp"
+                a:layout_weight="1"
+                a:layout_width="0dp"
+                a:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
     <include layout="@layout/button_bar"/>
 
 </LinearLayout>
