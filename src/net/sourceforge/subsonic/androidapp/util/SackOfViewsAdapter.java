@@ -122,7 +122,7 @@ public class SackOfViewsAdapter extends BaseAdapter {
      */
     @Override
     public boolean areAllItemsEnabled() {
-        return true;
+        return false;
     }
 
     /**
