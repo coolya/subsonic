@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -56,7 +57,9 @@ public class SubsonicTabActivity extends Activity {
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Util.startActivityWithoutTransition(SubsonicTabActivity.this, MainActivity.class);
+                Intent intent = new Intent(SubsonicTabActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Util.startActivityWithoutTransition(SubsonicTabActivity.this, intent);
             }
         });
 
@@ -139,7 +142,7 @@ public class SubsonicTabActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
-    protected void updateButtonVisibility() {
+    private void updateButtonVisibility() {
         int visibility = Util.isOffline(this) ? View.GONE : View.VISIBLE;
         searchButton.setVisibility(visibility);
         playlistButton.setVisibility(visibility);
