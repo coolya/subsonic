@@ -36,7 +36,9 @@ import net.sourceforge.subsonic.androidapp.util.SackOfViewsAdapter;
 import net.sourceforge.subsonic.androidapp.util.Util;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends SubsonicTabActivity {
 
@@ -45,7 +47,6 @@ public class MainActivity extends SubsonicTabActivity {
     private static final int MENU_ITEM_SERVER_2 = 102;
     private static final int MENU_ITEM_SERVER_3 = 103;
     private static final int MENU_ITEM_OFFLINE = 104;
-    private TextView serverTextView;
 
     /**
      * Called when the activity is first created.
@@ -71,12 +72,20 @@ public class MainActivity extends SubsonicTabActivity {
         final View albumsHighestButton = buttons.findViewById(R.id.main_albums_highest);
         final View albumsRecentButton = buttons.findViewById(R.id.main_albums_recent);
         final View albumsFrequentButton = buttons.findViewById(R.id.main_albums_frequent);
-        serverTextView = (TextView) serverButton.findViewById(R.id.main_select_server_2);
+        final TextView serverTextView = (TextView) serverButton.findViewById(R.id.main_select_server_2);
 
+        int instance = Util.getActiveServer(this);
+        String name = Util.getServerName(this, instance);
+        serverTextView.setText(name);
+        
         ListView list = (ListView) findViewById(R.id.main_list);
-        SackOfViewsAdapter adapter = new SackOfViewsAdapter(Arrays.asList(serverButton, settingsButton, helpButton,
-                                                                          albumsTitle, albumsNewestButton, albumsRandomButton,
-                                                                          albumsHighestButton, albumsRecentButton, albumsFrequentButton)) {
+
+        List<View> views = new ArrayList<View>(Arrays.asList(serverButton, settingsButton, helpButton));
+        if (!Util.isOffline(this)) {
+            views.addAll(Arrays.asList(albumsTitle, albumsNewestButton, albumsRandomButton,
+                    albumsHighestButton, albumsRecentButton, albumsFrequentButton));
+        }
+        SackOfViewsAdapter adapter = new SackOfViewsAdapter(views) {
             @Override
             public boolean isEnabled(int position) {
                 return position != 3;
@@ -115,12 +124,6 @@ public class MainActivity extends SubsonicTabActivity {
         intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_SIZE, 20);
         intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET, 0);
         Util.startActivityWithoutTransition(this, intent);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateActiveServer();
     }
 
     @Override
@@ -167,16 +170,11 @@ public class MainActivity extends SubsonicTabActivity {
             default:
                 return super.onContextItemSelected(menuItem);
         }
-        updateActiveServer();
+
+        // Restart activity
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Util.startActivityWithoutTransition(this, intent);
         return true;
     }
-
-    private void updateActiveServer() {
-        int instance = Util.getActiveServer(this);
-        String name = Util.getServerName(this, instance);
-        serverTextView.setText(name);
-
-        updateButtonVisibility();
-    }
-
 }
