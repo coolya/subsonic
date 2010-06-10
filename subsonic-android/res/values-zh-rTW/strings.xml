@@ -19,7 +19,7 @@
 
     <string name="select_album.select">選擇</string>
     <string name="select_album.play">播放</string>
-    <string name="select_album.more">更多...</string>
+    <string name="select_album.more">更多</string>
     <string name="select_album.play_album">播放專輯</string>
     <string name="select_album.delete">從手機中移除</string>
     <string name="select_album.save">在手機中儲存檔案</string>

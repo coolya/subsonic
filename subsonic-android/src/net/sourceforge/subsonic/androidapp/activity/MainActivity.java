@@ -112,6 +112,8 @@ public class MainActivity extends SubsonicTabActivity {
     private void showAlbumList(String type) {
         Intent intent = new Intent(this, SelectAlbumActivity.class);
         intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE, type);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_SIZE, 20);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET, 0);
         Util.startActivityWithoutTransition(this, intent);
     }
 

@@ -49,7 +49,7 @@ public interface MusicService {
 
     List<Playlist> getPlaylists(Context context, ProgressListener progressListener) throws Exception;
 
-    MusicDirectory getAlbumList(String albumListType, Context context, ProgressListener progressListener) throws Exception;
+    MusicDirectory getAlbumList(String type, int size, int offset, Context context, ProgressListener progressListener) throws Exception;
 
     Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception;
 

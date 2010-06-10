@@ -222,8 +222,9 @@ public class RESTMusicService implements MusicService {
     }
 
     @Override
-    public MusicDirectory getAlbumList(String albumListType, Context context, ProgressListener progressListener) throws Exception {
-        Reader reader = getReader(context, progressListener, "getAlbumList", "type", albumListType);
+    public MusicDirectory getAlbumList(String type, int size, int offset, Context context, ProgressListener progressListener) throws Exception {
+        Reader reader = getReader(context, progressListener, "getAlbumList",
+                Arrays.asList("type", "size", "offset"), Arrays.<Object>asList(type, size, offset));
         try {
             return new AlbumListParser(context).parse(reader, progressListener);
         } finally {

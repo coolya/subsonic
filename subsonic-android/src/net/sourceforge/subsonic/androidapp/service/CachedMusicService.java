@@ -115,8 +115,8 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
-    public MusicDirectory getAlbumList(String albumListType, Context context, ProgressListener progressListener) throws Exception {
-        return musicService.getAlbumList(albumListType, context, progressListener);
+    public MusicDirectory getAlbumList(String type, int size, int offset, Context context, ProgressListener progressListener) throws Exception {
+        return musicService.getAlbumList(type, size, offset, context, progressListener);
     }
 
     @Override

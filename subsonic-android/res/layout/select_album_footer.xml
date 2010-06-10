@@ -25,5 +25,15 @@
                 a:layout_width="0dp"
                 a:layout_height="wrap_content"/>
 
+        <Button a:id="@+id/select_album_more"
+                a:text="@string/select_album.more"
+                a:textAppearance="?android:attr/textAppearanceSmall"
+                a:visibility="gone"
+                a:layout_marginLeft="6dp"
+                a:layout_marginRight="6dp"
+                a:layout_weight="1"
+                a:layout_width="0dp"
+                a:layout_height="wrap_content"/>
+
 </LinearLayout>
 
