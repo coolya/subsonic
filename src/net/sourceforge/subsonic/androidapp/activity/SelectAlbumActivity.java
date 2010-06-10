@@ -76,6 +76,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     private Button queueButton;
     private Button saveButton;
     private Button deleteButton;
+    private Button moreButton;
     private ImageView coverArtView;
     private TextView headerText1;
     private TextView headerText2;
@@ -123,6 +124,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         queueButton = (Button) findViewById(R.id.select_album_queue);
         saveButton = (Button) footer.findViewById(R.id.select_album_save);
         deleteButton = (Button) footer.findViewById(R.id.select_album_delete);
+        moreButton = (Button) footer.findViewById(R.id.select_album_more);
         emptyView = findViewById(R.id.select_album_empty);
 
         selectButton.setOnClickListener(new View.OnClickListener() {
@@ -180,13 +182,15 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         String playlistId = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_ID);
         String playlistName = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME);
         String albumListType = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE);
+        int albumListSize = getIntent().getIntExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_SIZE, 0);
+        int albumListOffset = getIntent().getIntExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET, 0);
 
         if (query != null) {
             search(query);
         } else if (playlistId != null) {
             getPlaylist(playlistId, playlistName);
         } else if (albumListType != null) {
-            getAlbumList(albumListType);
+            getAlbumList(albumListType, albumListSize, albumListOffset);
         } else {
             getMusicDirectory(id, name);
         }
@@ -261,7 +265,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         }.execute();
     }
 
-    private void getAlbumList(final String albumListType) {
+    private void getAlbumList(final String albumListType, final int size, final int offset) {
 
         if ("newest".equals(albumListType)) {
             setTitle(R.string.main_albums_newest);
@@ -278,7 +282,33 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         new LoadTask() {
             @Override
             protected MusicDirectory load(MusicService service) throws Exception {
-                return service.getAlbumList(albumListType, SelectAlbumActivity.this, this);
+                return service.getAlbumList(albumListType, size, offset, SelectAlbumActivity.this, this);
+            }
+
+            @Override
+            protected void done(Pair<MusicDirectory, Boolean> result) {
+                if (!result.getFirst().getChildren().isEmpty()) {
+                    saveButton.setVisibility(View.GONE);
+                    deleteButton.setVisibility(View.GONE);
+                    moreButton.setVisibility(View.VISIBLE);
+                    entryList.addFooterView(footer);
+
+                    moreButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(SelectAlbumActivity.this, SelectAlbumActivity.class);
+                            String type = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE);
+                            int size = getIntent().getIntExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_SIZE, 0);
+                            int offset = getIntent().getIntExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET, 0) + size;
+
+                            intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE, type);
+                            intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_SIZE, size);
+                            intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET, offset);
+                            Util.startActivityWithoutTransition(SelectAlbumActivity.this, intent);
+                        }
+                    });
+                }
+                super.done(result);
             }
         }.execute();
     }
