@@ -67,7 +67,9 @@ public class SubsonicTabActivity extends Activity {
         musicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Util.startActivityWithoutTransition(SubsonicTabActivity.this, SelectArtistActivity.class);
+                Intent intent = new Intent(SubsonicTabActivity.this, SelectArtistActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Util.startActivityWithoutTransition(SubsonicTabActivity.this, intent);
             }
         });
 
@@ -75,7 +77,9 @@ public class SubsonicTabActivity extends Activity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Util.startActivityWithoutTransition(SubsonicTabActivity.this, SearchActivity.class);
+                Intent intent = new Intent(SubsonicTabActivity.this, SearchActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Util.startActivityWithoutTransition(SubsonicTabActivity.this, intent);
             }
         });
 
@@ -83,7 +87,9 @@ public class SubsonicTabActivity extends Activity {
         playlistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Util.startActivityWithoutTransition(SubsonicTabActivity.this, SelectPlaylistActivity.class);
+                Intent intent = new Intent(SubsonicTabActivity.this, SelectPlaylistActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Util.startActivityWithoutTransition(SubsonicTabActivity.this, intent);
             }
         });
 
@@ -137,7 +143,9 @@ public class SubsonicTabActivity extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-            Util.startActivityWithoutTransition(SubsonicTabActivity.this, SearchActivity.class);
+            Intent intent = new Intent(SubsonicTabActivity.this, SearchActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            Util.startActivityWithoutTransition(SubsonicTabActivity.this, intent);
         }
         return super.onKeyDown(keyCode, event);
     }
