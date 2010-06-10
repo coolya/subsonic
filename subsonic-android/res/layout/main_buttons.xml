@@ -89,7 +89,7 @@
             a:gravity="center_vertical"
             a:paddingLeft="6dip"
             a:paddingRight="6dip"
-            a:minHeight="40dip"/>
+            a:minHeight="50dip"/>
     <TextView
             a:id="@+id/main_albums_random"
             a:text="@string/main.albums_random"
@@ -101,7 +101,7 @@
             a:gravity="center_vertical"
             a:paddingLeft="6dip"
             a:paddingRight="6dip"
-            a:minHeight="40dip"/>
+            a:minHeight="50dip"/>
     <TextView
             a:id="@+id/main_albums_highest"
             a:text="@string/main.albums_highest"
@@ -113,7 +113,7 @@
             a:gravity="center_vertical"
             a:paddingLeft="6dip"
             a:paddingRight="6dip"
-            a:minHeight="40dip"/>
+            a:minHeight="50dip"/>
     <TextView
             a:id="@+id/main_albums_recent"
             a:text="@string/main.albums_recent"
@@ -125,7 +125,7 @@
             a:gravity="center_vertical"
             a:paddingLeft="6dip"
             a:paddingRight="6dip"
-            a:minHeight="40dip"/>
+            a:minHeight="50dip"/>
     <TextView
             a:id="@+id/main_albums_frequent"
             a:text="@string/main.albums_frequent"
@@ -137,7 +137,7 @@
             a:gravity="center_vertical"
             a:paddingLeft="6dip"
             a:paddingRight="6dip"
-            a:minHeight="40dip"/>
+            a:minHeight="50dip"/>
 
 </LinearLayout>
 
