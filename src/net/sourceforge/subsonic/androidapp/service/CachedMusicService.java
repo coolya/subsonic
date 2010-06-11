@@ -47,7 +47,6 @@ public class CachedMusicService implements MusicService {
     private final LRUCache<String, Bitmap> cachedCoverArts;
     private final TimeLimitedCache<Boolean> cachedLicenseValid = new TimeLimitedCache<Boolean>(120, TimeUnit.SECONDS);
     private final TimeLimitedCache<Indexes> cachedIndexes = new TimeLimitedCache<Indexes>(60 * 60, TimeUnit.SECONDS);
-
     private final TimeLimitedCache<List<Playlist>> cachedPlaylists = new TimeLimitedCache<List<Playlist>>(60, TimeUnit.SECONDS);
     private String restUrl;
 
@@ -66,19 +65,23 @@ public class CachedMusicService implements MusicService {
     @Override
     public boolean isLicenseValid(Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
-        if (cachedLicenseValid.get() == null) {
-            cachedLicenseValid.set(musicService.isLicenseValid(context, progressListener));
+        Boolean result = cachedLicenseValid.get();
+        if (result == null) {
+            result = musicService.isLicenseValid(context, progressListener);
+            cachedLicenseValid.set(result);
         }
-        return cachedLicenseValid.get();
+        return result;
     }
 
     @Override
     public Indexes getIndexes(Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
-        if (cachedIndexes.get() == null) {
-            cachedIndexes.set(musicService.getIndexes(context, progressListener));
+        Indexes result = cachedIndexes.get();
+        if (result == null) {
+            result = musicService.getIndexes(context, progressListener);
+            cachedIndexes.set(result);
         }
-        return cachedIndexes.get();
+        return result;
     }
 
     @Override
@@ -108,10 +111,12 @@ public class CachedMusicService implements MusicService {
     @Override
     public List<Playlist> getPlaylists(Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
-        if (cachedPlaylists.get() == null) {
-            cachedPlaylists.set(musicService.getPlaylists(context, progressListener));
+        List<Playlist> result = cachedPlaylists.get();
+        if (result == null) {
+            result = musicService.getPlaylists(context, progressListener);
+            cachedPlaylists.set(result);
         }
-        return cachedPlaylists.get();
+        return result;
     }
 
     @Override
