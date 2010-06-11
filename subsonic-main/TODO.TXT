@@ -19,12 +19,12 @@ Select music folder in server settings. (Including "All").
 Support max bitrate in settings. ("Preferred bitrate") Differentiate between Wifi and Mobile
 Use combination of progress bar and slide bar.
 
+Add icons to server popup.
 Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Test that cache clean cancelling works.
 Colors: http://www.androidtapp.com/opentable/
 
-Long-click on Settings/Help brings up server selection
 
 DONE IN ANDROID 1.4
 -------------------
