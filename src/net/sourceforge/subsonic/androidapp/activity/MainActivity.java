@@ -68,6 +68,7 @@ public class MainActivity extends SubsonicTabActivity {
         final View serverButton = buttons.findViewById(R.id.main_select_server);
         final View settingsButton = buttons.findViewById(R.id.main_settings);
         final View helpButton = buttons.findViewById(R.id.main_help);
+        final View dummyView = findViewById(R.id.main_dummy);
         final View albumsTitle = buttons.findViewById(R.id.main_albums);
         final View albumsNewestButton = buttons.findViewById(R.id.main_albums_newest);
         final View albumsRandomButton = buttons.findViewById(R.id.main_albums_random);
@@ -94,13 +95,13 @@ public class MainActivity extends SubsonicTabActivity {
             }
         };
         list.setAdapter(adapter);
-        registerForContextMenu(list);
+        registerForContextMenu(dummyView);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (view == serverButton) {
-                    serverButton.showContextMenu();
+                    dummyView.showContextMenu();
                 } else if (view == settingsButton) {
                     startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 } else if (view == helpButton) {
