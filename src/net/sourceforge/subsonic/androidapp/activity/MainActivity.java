@@ -48,9 +48,11 @@ public class MainActivity extends SubsonicTabActivity {
     private static final int MENU_ITEM_SERVER_3 = 103;
     private static final int MENU_ITEM_OFFLINE = 104;
 
+    private String theme;
+
     /**
-     * Called when the activity is first created.
-     */
+    * Called when the activity is first created.
+    */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,14 +118,19 @@ public class MainActivity extends SubsonicTabActivity {
                 }
             }
         });
+
+        // Remember the current theme.
+        theme = Util.getTheme(this);
     }
 
-    private void showAlbumList(String type) {
-        Intent intent = new Intent(this, SelectAlbumActivity.class);
-        intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE, type);
-        intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_SIZE, 20);
-        intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET, 0);
-        Util.startActivityWithoutTransition(this, intent);
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Restart activity if theme has changed.
+        if (theme != null && !theme.equals(Util.getTheme(this))) {
+            restart();
+        }
     }
 
     @Override
@@ -172,9 +179,21 @@ public class MainActivity extends SubsonicTabActivity {
         }
 
         // Restart activity
+        restart();
+        return true;
+    }
+
+    private void restart() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Util.startActivityWithoutTransition(this, intent);
-        return true;
+    }
+
+    private void showAlbumList(String type) {
+        Intent intent = new Intent(this, SelectAlbumActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE, type);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_SIZE, 20);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET, 0);
+        Util.startActivityWithoutTransition(this, intent);
     }
 }

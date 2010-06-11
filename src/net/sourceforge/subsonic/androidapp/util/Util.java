@@ -86,6 +86,11 @@ public final class Util {
         return prefs.getInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, 1);
     }
 
+    public static String getTheme(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        return prefs.getString(Constants.PREFERENCES_KEY_THEME, null);
+    }
+
     public static String getServerName(Context context, int instance) {
         if (instance == 0) {
             return context.getResources().getString(R.string.main_offline);
