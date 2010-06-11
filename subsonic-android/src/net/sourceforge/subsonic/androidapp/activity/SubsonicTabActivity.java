@@ -44,7 +44,7 @@ public class SubsonicTabActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle bundle) {
-        setTheme();
+        applyTheme();
         super.onCreate(bundle);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
@@ -128,9 +128,8 @@ public class SubsonicTabActivity extends Activity {
         Util.disablePendingTransition(this);
     }
 
-    private void setTheme() {
-        SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
-        String theme = prefs.getString(Constants.PREFERENCES_KEY_THEME, null);
+    private void applyTheme() {
+        String theme = Util.getTheme(this);
         if ("dark".equals(theme)) {
             setTheme(android.R.style.Theme);
         }
