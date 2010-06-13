@@ -1,6 +1,7 @@
 http://android.git.kernel.org/?p=platform/frameworks/base.git;a=tree;f=core;
 https://cms.paypal.com/us/cgi-bin/?&cmd=_render-content&content_ID=developer/e_howto_html_donation_buttons#id08AAF0P05LK
 https://cms.paypal.com/cms_content/US/en_US/files/developer/IPNGuide.pdf
+http://79.161.78.5:8181/backend/ipn.view
 
 TODO IN ANDROID 1.4
 -------------------

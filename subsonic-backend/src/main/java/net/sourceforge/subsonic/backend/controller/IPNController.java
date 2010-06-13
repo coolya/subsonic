@@ -18,12 +18,25 @@
  */
 package net.sourceforge.subsonic.backend.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.params.HttpConnectionParams;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
+import java.util.Enumeration;
+import java.util.Date;
+import java.io.UnsupportedEncodingException;
+
+import net.sourceforge.subsonic.backend.domain.Payment;
+import net.sourceforge.subsonic.backend.dao.PaymentDao;
 
 /**
  * Processes IPNs (Instant Payment Notifications) from PayPal.
@@ -34,11 +47,95 @@ public class IPNController implements Controller {
 
     private static final Logger LOG = Logger.getLogger(IPNController.class);
 
+    // TODO: CHANGE
+    private static final String PAYPAL_URL = "https://www.sandbox.paypal.com/cgi-bin/webscr";
+
+    private PaymentDao paymentDao;
+
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        try {
 
-        String query = request.getQueryString();
-        LOG.info("Incoming IPN with query " + query);
+            LOG.info("Incoming IPN from " + request.getRemoteAddr());
 
-        return null;
+            String url = createValidationURL(request);
+
+            if (validate(url)) {
+                createPayment(request);
+            } else {
+                LOG.warn("Failed to verify payment. " + url);
+            }
+
+            return null;
+        } catch (Exception x) {
+            LOG.error("Failed to process IPN.", x);
+            throw x;
+        }
     }
+
+    private String createValidationURL(HttpServletRequest request) throws UnsupportedEncodingException {
+        Enumeration<?> en = request.getParameterNames();
+        StringBuilder url = new StringBuilder(PAYPAL_URL).append("?cmd=_notify-validate");
+        String encoding = request.getCharacterEncoding();
+        LOG.info("Encoding: " + encoding);
+        if (encoding == null) {
+            encoding = "UTF-8";
+        }
+
+        while (en.hasMoreElements()) {
+            String paramName = (String) en.nextElement();
+            String paramValue = request.getParameter(paramName);
+            url.append("&").append(paramName).append("=").append(URLEncoder.encode(paramValue, encoding));
+        }
+
+        return url.toString();
+    }
+
+    private void createPayment(HttpServletRequest request) {
+        String item = request.getParameter("item_number");
+        if (item == null) {
+            item = request.getParameter("item_number1");
+        }
+        String paymentStatus = request.getParameter("payment_status");
+        String paymentType = request.getParameter("payment_type");
+        int paymentAmount = Math.round(new Float(request.getParameter("mc_gross")));
+        String paymentCurrency = request.getParameter("mc_currency");
+        String txnId = request.getParameter("txn_id");
+        String txnType = request.getParameter("txn_type");
+        String payerEmail = request.getParameter("payer_email");
+        String payerFirstName = request.getParameter("first_name");
+        String payerLastName = request.getParameter("last_name");
+        String payerCountry = request.getParameter("address_country");
+
+        Payment payment = new Payment(null, txnId, txnType, item, paymentType, paymentStatus,
+                                      paymentAmount, paymentCurrency, payerEmail, payerFirstName, payerLastName,
+                                      payerCountry, Payment.ProcessingStatus.NEW, new Date(), new Date());
+
+        LOG.info("Received payment of " + paymentAmount + " " + paymentCurrency + " from " + payerFirstName + " " +
+                 payerLastName + " (" + payerEmail + ") TX: " + txnId);
+
+        paymentDao.createPayment(payment);
+    }
+
+    private boolean validate(String url) throws Exception {
+
+        HttpClient client = new DefaultHttpClient();
+        HttpConnectionParams.setConnectionTimeout(client.getParams(), 60000);
+        HttpConnectionParams.setSoTimeout(client.getParams(), 60000);
+        HttpGet method = new HttpGet(url);
+        String content;
+        try {
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            content = client.execute(method, responseHandler);
+
+            LOG.info("Validation result: " + content);
+            return "VERIFIED".equals(content);
+        } finally {
+            client.getConnectionManager().shutdown();
+        }
+    }
+
+    public void setPaymentDao(PaymentDao paymentDao) {
+        this.paymentDao = paymentDao;
+    }
+
 }

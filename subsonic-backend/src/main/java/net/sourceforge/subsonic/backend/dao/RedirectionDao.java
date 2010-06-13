@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Provides database services for transcoding configurations.
+ * Provides database services for xxx.subsonic.org redirections.
  *
  * @author Sindre Mehus
  */

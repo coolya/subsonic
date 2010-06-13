@@ -2,6 +2,7 @@ package net.sourceforge.subsonic.backend.dao;
 
 import net.sourceforge.subsonic.backend.dao.schema.Schema;
 import net.sourceforge.subsonic.backend.dao.schema.Schema10;
+import net.sourceforge.subsonic.backend.dao.schema.Schema20;
 import net.sourceforge.subsonic.backend.Util;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,7 +20,7 @@ public class DaoHelper {
 
     private static final Logger LOG = Logger.getLogger(DaoHelper.class);
 
-    private Schema[] schemas = {new Schema10()};
+    private Schema[] schemas = {new Schema10(), new Schema20()};
     private DataSource dataSource;
     private static boolean shutdownHookAdded;
 

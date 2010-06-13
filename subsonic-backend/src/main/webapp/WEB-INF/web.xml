@@ -23,12 +23,6 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
-    <servlet>
-        <servlet-name>license-generator</servlet-name>
-        <servlet-class>net.sourceforge.subsonic.backend.servlet.LicenseServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
     <servlet-mapping>
         <servlet-name>subsonic-backend</servlet-name>
         <url-pattern>/</url-pattern>

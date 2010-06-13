@@ -19,11 +19,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 import net.sourceforge.subsonic.backend.Util;
+import net.sourceforge.subsonic.backend.dao.PaymentDao;
 
 /**
  * Runs a task at regular intervals, checking for incoming donations and sending
@@ -32,31 +32,22 @@ import net.sourceforge.subsonic.backend.Util;
  * @author Sindre Mehus
  * @version $Id$
  */
-public class LicenseServlet extends HttpServlet {
+public class LicenseGenerator {
 
-    private static final Logger LOG = Logger.getLogger(LicenseServlet.class);
+    private static final Logger LOG = Logger.getLogger(LicenseGenerator.class);
 
-    private static final long DELAY = 5 * 60; // Five minutes.
+    private static final long DELAY = 60; // One minute.
     private static final String POP_MAIL_SERVER = "pop.gmail.com";
     private static final String SMTP_MAIL_SERVER = "smtp.gmail.com";
     private static final String USER = "subsonic@activeobjects.no";
-    private static final String[] DONATION_SUBJECTS = {
-            "Notification of donation received",
-            "Payment received",
-            "Subsonic Donation - Donation from",
-            "Notification of payment received",
-            "Notification of a Pending eCheck",
-            "U heeft een betaling ontvangen",
-            "You've got money"};
 
+    private PaymentDao paymentDao;
     private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
     private Session session;
     private String password;
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
+    public void init() {
         Runnable task = new Runnable() {
             public void run() {
                 try {
@@ -72,13 +63,9 @@ public class LicenseServlet extends HttpServlet {
         LOG.info("Scheduled license generator to run every " + DELAY + " seconds.");
     }
 
-    @Override
-    public void destroy() {
-        super.destroy();
-        executor.shutdown();
-    }
-
     private void processMessages() throws Exception {
+
+        paymentDao
         initSession();
         Store store = session.getStore();
         store.connect(POP_MAIL_SERVER, USER, password);
@@ -210,4 +197,7 @@ public class LicenseServlet extends HttpServlet {
         }
     }
 
+    public void setPaymentDao(PaymentDao paymentDao) {
+        this.paymentDao = paymentDao;
+    }
 }
