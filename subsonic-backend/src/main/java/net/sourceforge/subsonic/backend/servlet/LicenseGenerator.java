@@ -49,7 +49,7 @@ public class LicenseGenerator {
             public void run() {
                 try {
                     LOG.info("Starting license generator.");
-                    processMessages();
+                    processPayments();
                     LOG.info("Completed license generator.");
                 } catch (Throwable x) {
                     LOG.error("Failed to process license emails.", x);
@@ -60,7 +60,7 @@ public class LicenseGenerator {
         LOG.info("Scheduled license generator to run every " + DELAY + " seconds.");
     }
 
-    private void processMessages() throws Exception {
+    private void processPayments() throws Exception {
 
         List<Payment> payments = paymentDao.getPaymentsByProcessingStatus(Payment.ProcessingStatus.NEW);
         LOG.info(payments.size() + " new payment(s).");
@@ -70,7 +70,7 @@ public class LicenseGenerator {
 
         initSession();
         for (Payment payment : payments) {
-            sendLicense(payment);
+            processPayment(payment);
         }
     }
 
@@ -89,19 +89,32 @@ public class LicenseGenerator {
         password = Util.getPassword("gmailpwd.txt");
     }
 
-    private void sendLicense(Payment payment) {
+    private void processPayment(Payment payment) {
         try {
             String email = payment.getPayerEmail();
             if (email == null) {
                 throw new Exception("Missing email address.");
             }
-            sendLicenseTo(email);
+
+            if (isEligible(payment)) {
+                sendLicenseTo(email);
+                LOG.info("Sent license key for payment " + payment.getTransactionId() + " (" + payment.getPayerEmail() + ")");
+            } else {
+                LOG.info("Payment not eligible for license: " + payment.getTransactionId() + " (" + payment.getPayerEmail() + ")");
+            }
+
             payment.setProcessingStatus(Payment.ProcessingStatus.COMPLETED);
             paymentDao.updatePayment(payment);
-            LOG.info("Sent license key for payment " + payment.getTransactionId() + " (" + payment.getPayerEmail() + ")");
         } catch (Exception x) {
             LOG.error("Failed to send license for payment " + payment.getTransactionId(), x);
         }
+    }
+
+    private boolean isEligible(Payment payment) {
+        if ("echeck".equalsIgnoreCase(payment.getPaymentType())) {
+            return "Pending".equalsIgnoreCase(payment.getPaymentStatus());
+        }
+        return "Completed".equalsIgnoreCase(payment.getPaymentStatus());
     }
 
     public void sendLicenseTo(String recipient) throws MessagingException {

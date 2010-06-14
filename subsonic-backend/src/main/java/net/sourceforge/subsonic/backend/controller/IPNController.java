@@ -60,8 +60,7 @@ public class IPNController implements Controller {
             String url = createValidationURL(request);
 
             if (validate(url)) {
-                // TODO: Create or update
-                createPayment(request);
+                createOrUpdatePayment(request);
             } else {
                 LOG.warn("Failed to verify payment. " + url);
             }
@@ -91,7 +90,7 @@ public class IPNController implements Controller {
         return url.toString();
     }
 
-    private void createPayment(HttpServletRequest request) {
+    private void createOrUpdatePayment(HttpServletRequest request) {
         String item = request.getParameter("item_number");
         if (item == null) {
             item = request.getParameter("item_number1");
@@ -107,14 +106,29 @@ public class IPNController implements Controller {
         String payerLastName = request.getParameter("last_name");
         String payerCountry = request.getParameter("address_country");
 
-        Payment payment = new Payment(null, txnId, txnType, item, paymentType, paymentStatus,
-                                      paymentAmount, paymentCurrency, payerEmail, payerFirstName, payerLastName,
-                                      payerCountry, Payment.ProcessingStatus.NEW, new Date(), new Date());
+        Payment payment = paymentDao.getPaymentByTransactionId(txnId);
+        if (payment == null) {
+            payment = new Payment(null, txnId, txnType, item, paymentType, paymentStatus,
+                                  paymentAmount, paymentCurrency, payerEmail, payerFirstName, payerLastName,
+                                  payerCountry, Payment.ProcessingStatus.NEW, new Date(), new Date());
+            paymentDao.createPayment(payment);
+        } else {
+            payment.setItem(item);
+            payment.setPaymentType(paymentType);
+            payment.setPaymentStatus(paymentStatus);
+            payment.setPaymentAmount(paymentAmount);
+            payment.setPaymentCurrency(paymentCurrency);
+            payment.setPayerEmail(payerEmail);
+            payment.setPayerFirstName(payerFirstName);
+            payment.setPayerLastName(payerLastName);
+            payment.setPayerCountry(payerCountry);
+            payment.setProcessingStatus(Payment.ProcessingStatus.NEW); // TODO
+            payment.setLastUpdated(new Date());
+            paymentDao.updatePayment(payment);
+        }
 
         LOG.info("Received payment of " + paymentAmount + " " + paymentCurrency + " from " + payerFirstName + " " +
                  payerLastName + " (" + payerEmail + ") TX: " + txnId);
-
-        paymentDao.createPayment(payment);
     }
 
     private boolean validate(String url) throws Exception {
