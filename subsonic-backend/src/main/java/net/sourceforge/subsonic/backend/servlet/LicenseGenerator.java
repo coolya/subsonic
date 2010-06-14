@@ -2,28 +2,26 @@ package net.sourceforge.subsonic.backend.servlet;
 
 import java.io.IOException;
 import java.security.MessageDigest;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.mail.Address;
-import javax.mail.Flags;
-import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
-import javax.mail.Store;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
+
 import net.sourceforge.subsonic.backend.Util;
 import net.sourceforge.subsonic.backend.dao.PaymentDao;
+import net.sourceforge.subsonic.backend.domain.Payment;
 
 /**
  * Runs a task at regular intervals, checking for incoming donations and sending
@@ -37,7 +35,6 @@ public class LicenseGenerator {
     private static final Logger LOG = Logger.getLogger(LicenseGenerator.class);
 
     private static final long DELAY = 60; // One minute.
-    private static final String POP_MAIL_SERVER = "pop.gmail.com";
     private static final String SMTP_MAIL_SERVER = "smtp.gmail.com";
     private static final String USER = "subsonic@activeobjects.no";
 
@@ -65,27 +62,15 @@ public class LicenseGenerator {
 
     private void processMessages() throws Exception {
 
-        paymentDao
+        List<Payment> payments = paymentDao.getPaymentsByProcessingStatus(Payment.ProcessingStatus.NEW);
+        LOG.info(payments.size() + " new payment(s).");
+        if (payments.isEmpty()) {
+            return;
+        }
+
         initSession();
-        Store store = session.getStore();
-        store.connect(POP_MAIL_SERVER, USER, password);
-        Folder folder = store.getFolder("INBOX");
-        folder.open(Folder.READ_WRITE);
-
-        try {
-            int messageCount = folder.getMessageCount();
-            LOG.info("Got " + messageCount + " message(s).");
-
-            Message[] messages = folder.getMessages();
-            for (Message message : messages) {
-                if (isDonationMessage(message)) {
-                    sendLicense(message);
-                    message.setFlag(Flags.Flag.DELETED, true);
-                }
-            }
-        } finally {
-            folder.close(true);
-            store.close();
+        for (Payment payment : payments) {
+            sendLicense(payment);
         }
     }
 
@@ -104,21 +89,19 @@ public class LicenseGenerator {
         password = Util.getPassword("gmailpwd.txt");
     }
 
-    private boolean isDonationMessage(Message message) throws MessagingException, IOException {
-        String subject = message.getSubject();
-        LOG.info("Evaluating message with subject: '" + subject + "' sent " + message.getSentDate());
-        for (String donationSubject : DONATION_SUBJECTS) {
-            if (subject != null && subject.toLowerCase().contains(donationSubject.toLowerCase())) {
-                return true;
+    private void sendLicense(Payment payment) {
+        try {
+            String email = payment.getPayerEmail();
+            if (email == null) {
+                throw new Exception("Missing email address.");
             }
+            sendLicenseTo(email);
+            payment.setProcessingStatus(Payment.ProcessingStatus.COMPLETED);
+            paymentDao.updatePayment(payment);
+            LOG.info("Sent license key for payment " + payment.getTransactionId() + " (" + payment.getPayerEmail() + ")");
+        } catch (Exception x) {
+            LOG.error("Failed to send license for payment " + payment.getTransactionId(), x);
         }
-        return false;
-    }
-
-    private void sendLicense(Message donationMessage) throws MessagingException {
-        Message licenseMessage = donationMessage.reply(false);
-        Address to = licenseMessage.getRecipients(Message.RecipientType.TO)[0];
-        sendMessage(licenseMessage, to);
     }
 
     public void sendLicenseTo(String recipient) throws MessagingException {
