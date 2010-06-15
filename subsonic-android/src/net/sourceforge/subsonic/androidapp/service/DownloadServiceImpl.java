@@ -395,6 +395,8 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                 return;
             }
 
+            int preloaded = 0;
+
             int start = currentPlaying == null ? 0 : downloadList.indexOf(currentPlaying);
             int i = start;
             do {
@@ -404,7 +406,15 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                     currentDownloading.download();
                     cleanupCandidates.add(currentDownloading);
                     break;
+                } else if (!downloadFile.isSaved()) {
+                    if (currentPlaying != downloadFile) {
+                        preloaded++;
+                    }
+                    if (preloaded >= Util.getPreloadCount(this)) {
+                        break;
+                    }
                 }
+
                 i = (i + 1) % n;
             } while (i != start);
         }

@@ -11,4 +11,22 @@
         <item>@string/settings.theme_dark</item>
     </string-array>
 
+    <string-array name="preloadCountValues">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+        <item>10</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="preloadCountNames">
+        <item>@string/settings.preload_1</item>
+        <item>@string/settings.preload_2</item>
+        <item>@string/settings.preload_3</item>
+        <item>@string/settings.preload_5</item>
+        <item>@string/settings.preload_10</item>
+        <item>@string/settings.preload_unlimited</item>
+    </string-array>
+
 </resources>

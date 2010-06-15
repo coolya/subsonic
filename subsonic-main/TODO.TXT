@@ -29,6 +29,7 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN ANDROID 1.3.2
 ---------------------
+New settings: Number of songs to preload.
 Fixed problem with saving songs.
 
 TODO IN 4.1
