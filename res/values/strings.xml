@@ -76,6 +76,7 @@
     <string name="settings.cache_title">Music cache</string>
     <string name="settings.software_update">Check for software update</string>
     <string name="settings.preload">Songs to preload</string>
+    <string name="settings.cache_size">Cache size</string>
     <string name="settings.empty_cache">Delete cached music</string>
     <string name="settings.empty_cache_confirm">Really delete all cached music files?</string>
     <string name="settings.testing_connection">Testing connection...</string>
@@ -101,6 +102,13 @@
     <string name="settings.preload_5">5 songs</string>
     <string name="settings.preload_10">10 songs</string>
     <string name="settings.preload_unlimited">Unlimited</string>
+    <string name="settings.cache_size_1">1 GB</string>
+    <string name="settings.cache_size_2">2 GB</string>
+    <string name="settings.cache_size_5">5 GB</string>
+    <string name="settings.cache_size_10">10 GB</string>
+    <string name="settings.cache_size_20">20 GB</string>
+    <string name="settings.cache_size_50">50 GB</string>
+    <string name="settings.cache_size_unlimited">Unlimited</string>
 
     <string name="music_service.retry">A network error occurred. Retrying %d of %d.</string>
 

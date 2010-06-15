@@ -122,6 +122,13 @@
                 a:entryValues="@array/preloadCountValues"
                 a:entries="@array/preloadCountNames"/>
 
+        <ListPreference
+                a:title="@string/settings.cache_size"
+                a:key="cacheSize"
+                a:defaultValue="-1"
+                a:entryValues="@array/cacheSizeValues"
+                a:entries="@array/cacheSizeNames"/>
+
         <Preference
                 a:key="emptyCache"
                 a:title="@string/settings.empty_cache"
