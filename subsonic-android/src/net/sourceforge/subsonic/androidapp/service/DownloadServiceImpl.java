@@ -388,7 +388,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
 
         // Find a suitable target for download.
-        else if (currentDownloading == null || currentDownloading.isCompleteFileAvailable() || currentDownloading.isFailed()) {
+        else if (currentDownloading == null || currentDownloading.isWorkDone() || currentDownloading.isFailed()) {
 
             int n = downloadList.size();
             if (n == 0) {

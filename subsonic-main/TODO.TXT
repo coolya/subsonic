@@ -11,7 +11,6 @@ Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
 FLAC bugfix, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2903
 Shuffle play
 Avoid slow copying of files.
-Problem when saving songs?
 Shuffle play
 Also delete cover art when cleaning cache.
 Never attempt to download if offline. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3196
@@ -27,6 +26,10 @@ Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Test that cache clean cancelling works.
 Colors: http://www.androidtapp.com/opentable/
+
+DONE IN ANDROID 1.3.2
+---------------------
+Fixed problem with saving songs.
 
 TODO IN 4.1
 -----------------
@@ -527,6 +530,7 @@ Update
     http://appslib.com/developers/index.html
     https://myapps.developer.motorola.com/
     https://slideme.org/application/subsonic
+    http://www.camangimarket.com/index.html
 svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.3.1 -m "Tagging Android 1.3.1"
 Create new directory in FRS
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
