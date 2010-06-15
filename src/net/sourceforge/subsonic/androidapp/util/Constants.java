@@ -55,6 +55,7 @@ public final class Constants {
     public static final String PREFERENCES_KEY_PASSWORD = "password";
     public static final String PREFERENCES_KEY_INSTALL_TIME = "installTime";
     public static final String PREFERENCES_KEY_THEME = "theme";
+    public static final String PREFERENCES_KEY_PRELOAD_COUNT = "preloadCount";
 
     // Name of the preferences file.
     public static final String PREFERENCES_FILE_NAME = "net.sourceforge.subsonic.androidapp_preferences";

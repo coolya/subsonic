@@ -58,6 +58,7 @@ import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
 import net.sourceforge.subsonic.androidapp.activity.ErrorActivity;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 
 /**
  * @author Sindre Mehus
@@ -82,25 +83,35 @@ public final class Util {
     }
 
     public static int getActiveServer(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        SharedPreferences prefs = getPreferences(context);
         return prefs.getInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, 1);
     }
 
     public static String getTheme(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        SharedPreferences prefs = getPreferences(context);
         return prefs.getString(Constants.PREFERENCES_KEY_THEME, null);
+    }
+
+    private static SharedPreferences getPreferences(Context context) {
+        return context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+    }
+
+    public static int getPreloadCount(Context context) {
+        SharedPreferences prefs = getPreferences(context);
+        int preloadCount = Integer.parseInt(prefs.getString(Constants.PREFERENCES_KEY_PRELOAD_COUNT, "-1"));
+        return preloadCount == -1 ? Integer.MAX_VALUE : preloadCount;
     }
 
     public static String getServerName(Context context, int instance) {
         if (instance == 0) {
             return context.getResources().getString(R.string.main_offline);
         }
-        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        SharedPreferences prefs = getPreferences(context);
         return prefs.getString(Constants.PREFERENCES_KEY_SERVER_NAME + instance, null);
     }
 
     public static void setActiveServer(Context context, int instance) {
-        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        SharedPreferences prefs = getPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, instance);
         editor.commit();
@@ -109,7 +120,7 @@ public final class Util {
     public static String getRestUrl(Context context, String method) {
         StringBuilder builder = new StringBuilder();
 
-        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        SharedPreferences prefs = getPreferences(context);
 
         int instance = prefs.getInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, 1);
         String serverUrl = prefs.getString(Constants.PREFERENCES_KEY_SERVER_URL + instance, null);
@@ -140,7 +151,7 @@ public final class Util {
     }
 
     public static int getRemainingTrialDays(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        SharedPreferences prefs = getPreferences(context);
         long installTime = prefs.getLong(Constants.PREFERENCES_KEY_INSTALL_TIME, 0L);
 
         if (installTime == 0L) {

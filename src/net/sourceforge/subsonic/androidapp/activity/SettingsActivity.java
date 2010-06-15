@@ -61,6 +61,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     private DownloadService downloadService;
     private boolean testingConnection;
     private ListPreference theme;
+    private ListPreference preloadCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         addPreferencesFromResource(R.xml.settings);
 
         theme = (ListPreference) findPreference(Constants.PREFERENCES_KEY_THEME);
-
+        preloadCount = (ListPreference) findPreference(Constants.PREFERENCES_KEY_PRELOAD_COUNT);
 
         findPreference("testConnection1").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -151,6 +152,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         }
 
         theme.setSummary(theme.getEntry());
+        preloadCount.setSummary(preloadCount.getEntry());
         for (ServerSettings ss : serverSettings.values()) {
             ss.update();
         }

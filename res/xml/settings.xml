@@ -113,17 +113,25 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-            a:title="@string/settings.maintenance_title">
+            a:title="@string/settings.cache_title">
+
+        <ListPreference
+                a:title="@string/settings.preload"
+                a:key="preloadCount"
+                a:defaultValue="-1"
+                a:entryValues="@array/preloadCountValues"
+                a:entries="@array/preloadCountNames"/>
+
+        <Preference
+                a:key="emptyCache"
+                a:title="@string/settings.empty_cache"
+                a:persistent="false"/>
 
         <Preference
                 a:key="checkForUpdates"
                 a:title="@string/settings.software_update"
                 a:persistent="false"/>
 
-        <Preference
-                a:key="emptyCache"
-                a:title="@string/settings.empty_cache"
-                a:persistent="false"/>
 
     </PreferenceCategory>
 

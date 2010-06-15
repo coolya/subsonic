@@ -73,8 +73,9 @@
     <string name="settings.server_address">Server address</string>
     <string name="settings.server_username">Username</string>
     <string name="settings.server_password">Password</string>
-    <string name="settings.maintenance_title">Maintenance</string>
+    <string name="settings.cache_title">Music cache</string>
     <string name="settings.software_update">Check for software update</string>
+    <string name="settings.preload">Songs to preload</string>
     <string name="settings.empty_cache">Delete cached music</string>
     <string name="settings.empty_cache_confirm">Really delete all cached music files?</string>
     <string name="settings.testing_connection">Testing connection...</string>
@@ -94,6 +95,12 @@
     <string name="settings.theme_title">Theme</string>
     <string name="settings.theme_light">Light</string>
     <string name="settings.theme_dark">Dark</string>
+    <string name="settings.preload_1">1 song</string>
+    <string name="settings.preload_2">2 songs</string>
+    <string name="settings.preload_3">3 songs</string>
+    <string name="settings.preload_5">5 songs</string>
+    <string name="settings.preload_10">10 songs</string>
+    <string name="settings.preload_unlimited">Unlimited</string>
 
     <string name="music_service.retry">A network error occurred. Retrying %d of %d.</string>
 
