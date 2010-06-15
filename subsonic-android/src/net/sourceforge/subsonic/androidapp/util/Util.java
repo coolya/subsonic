@@ -102,6 +102,12 @@ public final class Util {
         return preloadCount == -1 ? Integer.MAX_VALUE : preloadCount;
     }
 
+    public static int getCacheSizeGB(Context context) {
+        SharedPreferences prefs = getPreferences(context);
+        int cacheSize = Integer.parseInt(prefs.getString(Constants.PREFERENCES_KEY_CACHE_SIZE, "-1"));
+        return cacheSize == -1 ? Integer.MAX_VALUE : cacheSize;
+    }
+
     public static String getServerName(Context context, int instance) {
         if (instance == 0) {
             return context.getResources().getString(R.string.main_offline);
