@@ -239,7 +239,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
                     if (isCacheFile && !undeletable.contains(file)) {
                         Util.delete(file);
                         if (!file.exists()) {
-                            Log.d(TAG, "Deleted " + file.getPath());
                             deleteCount++;
                             updateProgress(getResources().getString(R.string.settings_cache_deleted, deleteCount));
                         }
@@ -254,9 +253,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
                 // Delete directory if empty.
                 if (FileUtil.listFiles(file).isEmpty() && !undeletable.contains(file)) {
                     Util.delete(file);
-                    if (!file.exists()) {
-                        Log.d(TAG, "Deleted " + file.getPath());
-                    }
                 }
             }
 

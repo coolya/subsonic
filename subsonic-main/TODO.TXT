@@ -5,6 +5,7 @@ http://79.161.78.5:8181/backend/ipn.view
 
 TODO IN ANDROID 1.4
 -------------------
+Allow installation on SD card.
 Support filenames with "<" and ">".
 Trim username, servername. Url-encode username.
 Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
@@ -34,6 +35,7 @@ Fixed problem with saving songs.
 
 TODO IN 4.1
 -----------------
+Make port 4040 the default on Windows installations not 80
 Update to FLAC 1.2.1, LAME 3.98.4  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3278
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
 Fix readlink

@@ -252,6 +252,7 @@ public final class Util {
                 Log.w(TAG, "Failed to delete file " + file);
                 return false;
             }
+            Log.i(TAG, "Deleted file " + file);
         }
         return true;
     }
