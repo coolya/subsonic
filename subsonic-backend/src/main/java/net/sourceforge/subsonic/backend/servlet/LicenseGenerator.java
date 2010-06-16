@@ -98,13 +98,13 @@ public class LicenseGenerator {
 
             if (isEligible(payment)) {
                 sendLicenseTo(email);
+                payment.setProcessingStatus(Payment.ProcessingStatus.COMPLETED);
+                paymentDao.updatePayment(payment);
                 LOG.info("Sent license key for payment " + payment.getTransactionId() + " (" + payment.getPayerEmail() + ")");
             } else {
                 LOG.info("Payment not eligible for license: " + payment.getTransactionId() + " (" + payment.getPayerEmail() + ")");
             }
 
-            payment.setProcessingStatus(Payment.ProcessingStatus.COMPLETED);
-            paymentDao.updatePayment(payment);
         } catch (Exception x) {
             LOG.error("Failed to send license for payment " + payment.getTransactionId(), x);
         }

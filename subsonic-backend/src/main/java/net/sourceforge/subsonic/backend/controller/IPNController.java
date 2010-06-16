@@ -122,7 +122,6 @@ public class IPNController implements Controller {
             payment.setPayerFirstName(payerFirstName);
             payment.setPayerLastName(payerLastName);
             payment.setPayerCountry(payerCountry);
-            payment.setProcessingStatus(Payment.ProcessingStatus.NEW); // TODO
             payment.setLastUpdated(new Date());
             paymentDao.updatePayment(payment);
         }
