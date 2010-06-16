@@ -125,7 +125,7 @@
         <ListPreference
                 a:title="@string/settings.cache_size"
                 a:key="cacheSize"
-                a:defaultValue="1"
+                a:defaultValue="1000"
                 a:entryValues="@array/cacheSizeValues"
                 a:entries="@array/cacheSizeNames"/>
 

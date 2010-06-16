@@ -58,7 +58,6 @@ import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
 import net.sourceforge.subsonic.androidapp.activity.ErrorActivity;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 
 /**
  * @author Sindre Mehus
@@ -102,7 +101,7 @@ public final class Util {
         return preloadCount == -1 ? Integer.MAX_VALUE : preloadCount;
     }
 
-    public static int getCacheSizeGB(Context context) {
+    public static int getCacheSizeMB(Context context) {
         SharedPreferences prefs = getPreferences(context);
         int cacheSize = Integer.parseInt(prefs.getString(Constants.PREFERENCES_KEY_CACHE_SIZE, "-1"));
         return cacheSize == -1 ? Integer.MAX_VALUE : cacheSize;
@@ -265,15 +264,6 @@ public final class Util {
         } catch (IOException ioe) {
             // ignore
         }
-    }
-
-    public static void toast(final Context context, Handler handler, final String message) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                toast(context, message);
-            }
-        });
     }
 
     public static void toast(Context context, String message) {
