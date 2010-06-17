@@ -180,7 +180,7 @@ public class LicenseGenerator {
      * @param s Data to digest.
      * @return MD5 digest as a hex string.
      */
-    public static String md5Hex(String s) {
+    private static String md5Hex(String s) {
         if (s == null) {
             return null;
         }
@@ -195,5 +195,12 @@ public class LicenseGenerator {
 
     public void setPaymentDao(PaymentDao paymentDao) {
         this.paymentDao = paymentDao;
+    }
+
+    public static void main(String[] args) {
+        String address = args[0];
+        String license = md5Hex(address.toLowerCase());
+        System.out.println("Email: " + address);
+        System.out.println("License: " + license);
     }
 }

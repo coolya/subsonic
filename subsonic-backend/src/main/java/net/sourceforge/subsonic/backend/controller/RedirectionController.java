@@ -62,8 +62,8 @@ public class RedirectionController implements Controller {
         redirection.setReadCount(redirection.getReadCount() + 1);
         redirectionDao.updateRedirection(redirection);
 
-        // Check for trial expiration (unless called from Android app which manages its own trial expiry).
-        if (isTrialExpired(redirection) && !isAndroid(request)) {
+        // Check for trial expiration (unless called from REST client for which the Subsonic server manages trial expiry).
+        if (isTrialExpired(redirection) && !isREST(request)) {
             LOG.info("Expired redirection: " + redirectFrom);
             return new ModelAndView(new RedirectView("http://subsonic.org/pages/redirect-expired.jsp?redirectFrom=" +
                     redirectFrom + "&expired=" + redirection.getTrialExpires().getTime()));
@@ -101,8 +101,8 @@ public class RedirectionController implements Controller {
         return redirection.isTrial() && redirection.getTrialExpires() != null && redirection.getTrialExpires().before(new Date());
     }
 
-    private boolean isAndroid(HttpServletRequest request) {
-        return "android".equals(request.getParameter("c"));
+    private boolean isREST(HttpServletRequest request) {
+        return request.getParameter("c") != null;
     }
 
     private String getFullRequestURL(HttpServletRequest request) {
