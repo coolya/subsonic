@@ -63,6 +63,20 @@ public class DownloadFile {
         partialFile = new File(saveFile.getPath() + ".partial");
         completeFile = new File(saveFile.getPath() + ".complete");
         mediaStoreService = new MediaStoreService(context);
+
+        // In support of LRU caching.
+        updateModificationDate(saveFile);
+        updateModificationDate(partialFile);
+        updateModificationDate(completeFile);
+    }
+
+    private void updateModificationDate(File file) {
+        if (file.exists()) {
+            boolean ok = file.setLastModified(System.currentTimeMillis());
+            if (!ok) {
+                Log.w(TAG, "Failed to set last-modified date on " + file);
+            }
+        }
     }
 
     public MusicDirectory.Entry getSong() {

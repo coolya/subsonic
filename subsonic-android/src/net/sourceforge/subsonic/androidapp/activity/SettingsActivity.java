@@ -18,20 +18,12 @@
  */
 package net.sourceforge.subsonic.androidapp.activity;
 
-import java.io.File;
 import java.net.URL;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -39,26 +31,17 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.domain.Version;
-import net.sourceforge.subsonic.androidapp.service.DownloadFile;
-import net.sourceforge.subsonic.androidapp.service.DownloadService;
-import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
-import net.sourceforge.subsonic.androidapp.util.ModalBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.ErrorDialog;
-import net.sourceforge.subsonic.androidapp.util.FileUtil;
-import net.sourceforge.subsonic.androidapp.util.Pair;
-import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
+import net.sourceforge.subsonic.androidapp.util.ModalBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
 public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
     private final Map<String, ServerSettings> serverSettings = new LinkedHashMap<String, ServerSettings>();
-    private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
-    private DownloadService downloadService;
     private boolean testingConnection;
     private ListPreference theme;
     private ListPreference cacheSize;
@@ -67,7 +50,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         addPreferencesFromResource(R.xml.settings);
 
         theme = (ListPreference) findPreference(Constants.PREFERENCES_KEY_THEME);
@@ -98,30 +80,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             }
         });
 
-        Preference checkForUpdates = findPreference("checkForUpdates");
-        checkForUpdates.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                checkForUpdates();
-                return false;
-            }
-        });
-
-        Preference emptyCache = findPreference("emptyCache");
-        emptyCache.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Runnable task = new Runnable() {
-                    @Override
-                    public void run() {
-                        emptyCache();
-                    }
-                };
-                Util.confirm(SettingsActivity.this, R.string.settings_empty_cache_confirm, task);
-                return false;
-            }
-        });
-
         for (int i = 1; i <= 3; i++) {
             String instance = String.valueOf(i);
             serverSettings.put(instance, new ServerSettings(instance));
@@ -136,7 +94,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(downloadServiceConnection);
 
         SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
         prefs.unregisterOnSharedPreferenceChangeListener(this);
@@ -164,6 +121,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     private void testConnection(final int instance) {
         ModalBackgroundTask<Boolean> task = new ModalBackgroundTask<Boolean>(this, false) {
             private int previousInstance;
+
             @Override
             protected Boolean doInBackground() throws Throwable {
                 updateProgress(R.string.settings_testing_connection);
@@ -194,100 +152,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             protected void error(Throwable error) {
                 Log.w(TAG, error.toString(), error);
                 new ErrorDialog(SettingsActivity.this, getResources().getString(R.string.settings_connection_failure) +
-                                                       " " + getErrorMessage(error), false);
-            }
-        };
-        task.execute();
-    }
-
-    private void emptyCache() {
-        ModalBackgroundTask<?> task = new ModalBackgroundTask<Object>(this, false) {
-            private int deleteCount;
-            private Set<File> undeletable;
-
-            @Override
-            protected Object doInBackground() throws Throwable {
-                updateProgress(R.string.settings_cache_deleting);
-
-                undeletable = new HashSet<File>(5);
-                DownloadFile currentDownload = downloadService.getCurrentDownloading();
-                if (currentDownload != null) {
-                    undeletable.add(currentDownload.getPartialFile());
-                    undeletable.add(currentDownload.getCompleteFile());
-                }
-                DownloadFile currentPlaying = downloadService.getCurrentPlaying();
-                if (currentPlaying != null) {
-                    undeletable.add(currentPlaying.getPartialFile());
-                    undeletable.add(currentPlaying.getCompleteFile());
-                }
-
-                File root = FileUtil.getMusicDirectory();
-                undeletable.add(root);
-                cleanRecursively(root);
-                return null;
-            }
-
-            private void cleanRecursively(File file) {
-                if (isCancelled()) {
-                    return;
-                }
-
-                if (file.isFile()) {
-                    String name = file.getName();
-
-                    boolean isCacheFile = name.endsWith(".partial") || name.endsWith(".complete");
-                    if (isCacheFile && !undeletable.contains(file)) {
-                        Util.delete(file);
-                        if (!file.exists()) {
-                            deleteCount++;
-                            updateProgress(getResources().getString(R.string.settings_cache_deleted, deleteCount));
-                        }
-                    }
-                    return;
-                }
-
-                for (File child : FileUtil.listFiles(file)) {
-                    cleanRecursively(child);
-                }
-
-                // Delete directory if empty.
-                if (FileUtil.listFiles(file).isEmpty() && !undeletable.contains(file)) {
-                    Util.delete(file);
-                }
-            }
-
-            @Override
-            protected void done(Object result) {
-            }
-        };
-        task.execute();
-    }
-
-    private void checkForUpdates() {
-        ModalBackgroundTask<Pair<Version, Version>> task = new ModalBackgroundTask<Pair<Version, Version>>(this, false) {
-            @Override
-            protected Pair<Version, Version> doInBackground() throws Throwable {
-                updateProgress(R.string.settings_version_checking);
-                MusicService musicService = MusicServiceFactory.getMusicService(SettingsActivity.this);
-                Version localVersion = musicService.getLocalVersion(SettingsActivity.this);
-                Version latestVersion = musicService.getLatestVersion(SettingsActivity.this, this);
-                return new Pair<Version, Version>(localVersion, latestVersion);
-            }
-
-            @Override
-            protected void done(Pair<Version, Version> versions) {
-                Version localVersion = versions.getFirst();
-                Version latestVersion = versions.getSecond();
-                if (localVersion == null) {
-                    Util.error(SettingsActivity.this, R.string.settings_version_current_failed);
-                } else if (latestVersion == null) {
-                    Util.error(SettingsActivity.this, R.string.settings_version_latest_failed);
-                } else if (localVersion.compareTo(latestVersion) < 0) {
-                    Util.info(SettingsActivity.this, R.string.settings_version_update_available_title,
-                              R.string.settings_version_update_available_text);
-                } else {
-                    Util.toast(SettingsActivity.this, R.string.settings_version_update_not_available);
-                }
+                        " " + getErrorMessage(error), false);
             }
         };
         task.execute();
@@ -330,18 +195,4 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             screen.setTitle(serverName.getText());
         }
     }
-
-    private class DownloadServiceConnection implements ServiceConnection {
-
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder service) {
-            downloadService = ((SimpleServiceBinder<DownloadService>) service).getService();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            downloadService = null;
-        }
-    }
-
 }
