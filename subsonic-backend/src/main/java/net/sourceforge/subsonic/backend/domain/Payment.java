@@ -182,9 +182,19 @@ public class Payment {
         this.lastUpdated = lastUpdated;
     }
 
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "tx='" + transactionId + '\'' +
+                ", type='" + paymentType + '\'' +
+                ", status='" + paymentStatus + '\'' +
+                ", amount=" + paymentAmount +
+                ", email='" + payerEmail + '\'' +
+                '}';
+    }
+
     public enum ProcessingStatus {
         NEW,
-        COMPLETED,
-        FAILED
+        COMPLETED
     }
 }

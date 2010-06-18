@@ -76,7 +76,6 @@ public class IPNController implements Controller {
         Enumeration<?> en = request.getParameterNames();
         StringBuilder url = new StringBuilder(PAYPAL_URL).append("?cmd=_notify-validate");
         String encoding = request.getCharacterEncoding();
-        LOG.info("Encoding: " + encoding);
         if (encoding == null) {
             encoding = "UTF-8";
         }
@@ -113,6 +112,7 @@ public class IPNController implements Controller {
                                   payerCountry, Payment.ProcessingStatus.NEW, new Date(), new Date());
             paymentDao.createPayment(payment);
         } else {
+            payment.setTransactionType(txnType);
             payment.setItem(item);
             payment.setPaymentType(paymentType);
             payment.setPaymentStatus(paymentStatus);
@@ -126,8 +126,7 @@ public class IPNController implements Controller {
             paymentDao.updatePayment(payment);
         }
 
-        LOG.info("Received payment of " + paymentAmount + " " + paymentCurrency + " from " + payerFirstName + " " +
-                 payerLastName + " (" + payerEmail + ") TX: " + txnId);
+        LOG.info("Received payment: " + payment);
     }
 
     private boolean validate(String url) throws Exception {

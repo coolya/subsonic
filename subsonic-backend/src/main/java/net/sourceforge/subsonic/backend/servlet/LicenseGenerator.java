@@ -91,6 +91,7 @@ public class LicenseGenerator {
 
     private void processPayment(Payment payment) {
         try {
+            LOG.info("Processing " + payment);
             String email = payment.getPayerEmail();
             if (email == null) {
                 throw new Exception("Missing email address.");
@@ -100,13 +101,13 @@ public class LicenseGenerator {
                 sendLicenseTo(email);
                 payment.setProcessingStatus(Payment.ProcessingStatus.COMPLETED);
                 paymentDao.updatePayment(payment);
-                LOG.info("Sent license key for payment " + payment.getTransactionId() + " (" + payment.getPayerEmail() + ")");
+                LOG.info("Sent license key for " + payment);
             } else {
-                LOG.info("Payment not eligible for license: " + payment.getTransactionId() + " (" + payment.getPayerEmail() + ")");
+                LOG.info("Payment not eligible for " + payment);
             }
 
-        } catch (Exception x) {
-            LOG.error("Failed to send license for payment " + payment.getTransactionId(), x);
+        } catch (Throwable x) {
+            LOG.error("Failed to process " + payment, x);
         }
     }
 
