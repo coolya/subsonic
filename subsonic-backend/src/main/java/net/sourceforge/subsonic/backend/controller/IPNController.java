@@ -47,8 +47,7 @@ public class IPNController implements Controller {
 
     private static final Logger LOG = Logger.getLogger(IPNController.class);
 
-    // TODO: CHANGE
-    private static final String PAYPAL_URL = "https://www.sandbox.paypal.com/cgi-bin/webscr";
+    private static final String PAYPAL_URL = "https://www.paypal.com/cgi-bin/webscr";
 
     private PaymentDao paymentDao;
 
@@ -126,11 +125,10 @@ public class IPNController implements Controller {
             paymentDao.updatePayment(payment);
         }
 
-        LOG.info("Received payment: " + payment);
+        LOG.info("Received " + payment);
     }
 
     private boolean validate(String url) throws Exception {
-
         HttpClient client = new DefaultHttpClient();
         HttpConnectionParams.setConnectionTimeout(client.getParams(), 60000);
         HttpConnectionParams.setSoTimeout(client.getParams(), 60000);

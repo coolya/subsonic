@@ -55,7 +55,7 @@ public class PaymentDao extends AbstractDao {
                payment.getPaymentType(), payment.getPaymentStatus(), payment.getPaymentAmount(),
                payment.getPaymentCurrency(), payment.getPayerEmail(), payment.getPayerFirstName(), payment.getPayerLastName(),
                payment.getPayerCountry(), payment.getProcessingStatus().name(), payment.getCreated(), payment.getLastUpdated());
-        LOG.info("Created payment " + payment.getTransactionId());
+        LOG.info("Created " + payment);
     }
 
     /**
@@ -71,6 +71,7 @@ public class PaymentDao extends AbstractDao {
                payment.getPaymentAmount(), payment.getPaymentCurrency(), payment.getPayerEmail(), payment.getPayerFirstName(),
                payment.getPayerLastName(), payment.getPayerCountry(), payment.getProcessingStatus().name(), payment.getCreated(),
                payment.getLastUpdated(), payment.getId());
+        LOG.info("Updated " + payment);
     }
 
     private static class PaymentRowMapper implements ParameterizedRowMapper<Payment> {

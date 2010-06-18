@@ -112,10 +112,11 @@ public class LicenseGenerator {
     }
 
     private boolean isEligible(Payment payment) {
+        String status = payment.getPaymentStatus();
         if ("echeck".equalsIgnoreCase(payment.getPaymentType())) {
-            return "Pending".equalsIgnoreCase(payment.getPaymentStatus());
+            return "Pending".equalsIgnoreCase(status) || "Completed".equalsIgnoreCase(status);
         }
-        return "Completed".equalsIgnoreCase(payment.getPaymentStatus());
+        return "Completed".equalsIgnoreCase(status);
     }
 
     public void sendLicenseTo(String recipient) throws MessagingException {
