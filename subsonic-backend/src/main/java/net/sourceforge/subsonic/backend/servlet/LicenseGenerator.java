@@ -2,6 +2,7 @@ package net.sourceforge.subsonic.backend.servlet;
 
 import java.io.IOException;
 import java.security.MessageDigest;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Executors;
@@ -100,6 +101,7 @@ public class LicenseGenerator {
             if (isEligible(payment)) {
                 sendLicenseTo(email);
                 payment.setProcessingStatus(Payment.ProcessingStatus.COMPLETED);
+                payment.setLastUpdated(new Date());
                 paymentDao.updatePayment(payment);
                 LOG.info("Sent license key for " + payment);
             } else {

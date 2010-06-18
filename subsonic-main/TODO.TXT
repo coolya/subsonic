@@ -514,6 +514,7 @@ Upgrade Subsonic backend: CHANGE DATE BELOW
   rm webapps
   ln -s webapps-2010-05-13 webapps
   rm -rf work
+  rm logs/*
   reboot
 
 
