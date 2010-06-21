@@ -213,6 +213,7 @@ public class DownloadFile {
                 if (!isCancelled()) {
                     failed = true;
                     String msg = context.getResources().getString(R.string.download_error, song.getTitle());
+                    // TODO: REMOVE
                     Util.showErrorNotification(context, handler, msg, x);
                     Log.e(TAG, msg, x);
                 }
@@ -238,12 +239,6 @@ public class DownloadFile {
                     Log.i(TAG, "Downloaded " + Util.formatBytes(count) + " of " + song);
                     lastLog = now;
                 }
-
-                // TODO
-//                if (count > 512000) {
-//                    throw new IOException("Simulating I/O error.");
-//                }
-
             }
             return count;
         }
