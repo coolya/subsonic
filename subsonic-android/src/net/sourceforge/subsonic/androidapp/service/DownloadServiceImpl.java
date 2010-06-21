@@ -316,6 +316,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private synchronized void doPlay(final DownloadFile downloadFile, int position) {
         try {
             final File file = downloadFile.isCompleteFileAvailable() ? downloadFile.getCompleteFile() : downloadFile.getPartialFile();
+            downloadFile.updateModificationDate();
             mediaPlayer.setOnCompletionListener(null);
             mediaPlayer.reset();
             setPlayerState(IDLE);

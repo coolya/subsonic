@@ -1,11 +1,15 @@
+https://www.paypal.com/no/cgi-bin/webscr?cmd=_display-ipns-history
+
 http://android.git.kernel.org/?p=platform/frameworks/base.git;a=tree;f=core;
 https://cms.paypal.com/us/cgi-bin/?&cmd=_render-content&content_ID=developer/e_howto_html_donation_buttons#id08AAF0P05LK
 https://cms.paypal.com/cms_content/US/en_US/files/developer/IPNGuide.pdf
-http://79.161.78.5:8181/backend/ipn.view
+
+TODO IN BACKEND
+---------------
+If trying to assign an expired web address used by someone else, don't show "Expired..." message.
 
 TODO IN ANDROID 1.4
 -------------------
-Allow installation on SD card.
 Support filenames with "<" and ">".
 Trim username, servername. Url-encode username.
 Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
@@ -13,7 +17,6 @@ FLAC bugfix, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2903
 Shuffle play
 Avoid slow copying of files.
 Shuffle play
-Also delete cover art when cleaning cache.
 Never attempt to download if offline. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3196
 Support mounting SD card.
 Only retry if network error.
@@ -25,12 +28,12 @@ Use combination of progress bar and slide bar.
 Add icons to server popup.
 Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
-Test that cache clean cancelling works.
 Colors: http://www.androidtapp.com/opentable/
 
 DONE IN ANDROID 1.3.2
 ---------------------
 New settings: Number of songs to preload.
+New settings: Music cache size
 Fixed problem with saving songs.
 
 TODO IN 4.1
