@@ -199,10 +199,11 @@ public class DownloadFile {
                     throw new Exception("Download of " + song + " was cancelled");
                 }
 
-                Util.atomicCopy(partialFile, completeFile);
                 if (save) {
                     Util.atomicCopy(partialFile, saveFile);
                     mediaStoreService.saveInMediaStore(DownloadFile.this);
+                } else {
+                    Util.atomicCopy(partialFile, completeFile);
                 }
 
             } catch (Exception x) {
