@@ -35,6 +35,7 @@ import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
+import net.sourceforge.subsonic.androidapp.util.CacheCleaner;
 
 /**
  * @author Sindre Mehus
@@ -54,14 +55,23 @@ public class DownloadServiceLifecycleSupport {
     }
 
     public void onCreate() {
-        executorService = Executors.newSingleThreadScheduledExecutor();
-        Runnable runnable = new Runnable() {
+        Runnable downloadChecker = new Runnable() {
             @Override
             public void run() {
                 downloadService.checkDownloads();
             }
         };
-        executorService.scheduleWithFixedDelay(runnable, 5000L, 5000L, TimeUnit.MILLISECONDS);
+
+        Runnable cacheCleaner = new Runnable() {
+            @Override
+            public void run() {
+                new CacheCleaner(downloadService, downloadService).clean();
+            }
+        };
+
+        executorService = Executors.newScheduledThreadPool(2);
+        executorService.scheduleWithFixedDelay(downloadChecker, 5, 5, TimeUnit.SECONDS);
+        executorService.scheduleWithFixedDelay(cacheCleaner, 5 * 60, 2 * 60 * 60, TimeUnit.SECONDS);
 
         headsetEventReceiver = new BroadcastReceiver() {
             @Override

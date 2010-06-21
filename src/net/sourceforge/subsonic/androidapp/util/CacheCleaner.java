@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import android.content.Context;
+import android.util.Log;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 
@@ -29,16 +30,25 @@ public class CacheCleaner {
     }
 
     public void clean() {
-        List<File> files = new ArrayList<File>();
-        List<File> dirs = new ArrayList<File>();
+        Log.i(TAG, "Starting cache cleaning.");
+        try {
 
-        findCandidatesForDeletion(FileUtil.getMusicDirectory(), files, dirs);
-        sortByAscendingModificationTime(files);
+            List<File> files = new ArrayList<File>();
+            List<File> dirs = new ArrayList<File>();
 
-        Set<File> undeletable = findUndeletableFiles();
+            findCandidatesForDeletion(FileUtil.getMusicDirectory(), files, dirs);
+            sortByAscendingModificationTime(files);
 
-        deleteFiles(files, undeletable);
-        deleteEmptyDirs(dirs, undeletable);
+            Set<File> undeletable = findUndeletableFiles();
+
+            deleteFiles(files, undeletable);
+            deleteEmptyDirs(dirs, undeletable);
+            Log.i(TAG, "Completed cache cleaning.");
+
+        } catch (RuntimeException x) {
+            Log.e(TAG, "Error in cache cleaning.", x);
+            throw x;
+        }
     }
 
     private void deleteEmptyDirs(List<File> dirs, Set<File> undeletable) {
@@ -69,6 +79,9 @@ public class CacheCleaner {
             bytesUsed += file.length();
         }
 
+        Log.i(TAG, "Cache size limit: " + Util.formatBytes(cacheSizeBytes));
+        Log.i(TAG, "Cache size before: " + Util.formatBytes(bytesUsed));
+
         for (File file : files) {
             if (bytesUsed < cacheSizeBytes) {
                 break;
@@ -81,6 +94,8 @@ public class CacheCleaner {
                 }
             }
         }
+
+        Log.i(TAG, "Cache size after: " + Util.formatBytes(bytesUsed));
     }
 
     private void findCandidatesForDeletion(File file, List<File> files, List<File> dirs) {
@@ -117,15 +132,9 @@ public class CacheCleaner {
     private Set<File> findUndeletableFiles() {
         Set<File> undeletable = new HashSet<File>(5);
 
-        DownloadFile currentDownload = downloadService.getCurrentDownloading();
-        if (currentDownload != null) {
-            undeletable.add(currentDownload.getPartialFile());
-            undeletable.add(currentDownload.getCompleteFile());
-        }
-        DownloadFile currentPlaying = downloadService.getCurrentPlaying();
-        if (currentPlaying != null) {
-            undeletable.add(currentPlaying.getPartialFile());
-            undeletable.add(currentPlaying.getCompleteFile());
+        for (DownloadFile downloadFile : downloadService.getDownloads()) {
+            undeletable.add(downloadFile.getPartialFile());
+            undeletable.add(downloadFile.getCompleteFile());
         }
 
         undeletable.add(FileUtil.getMusicDirectory());

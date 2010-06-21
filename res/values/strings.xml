@@ -96,7 +96,9 @@
     <string name="settings.cache_size_500">500 MB</string>
     <string name="settings.cache_size_1000">1 GB</string>
     <string name="settings.cache_size_2000">2 GB</string>
+    <string name="settings.cache_size_5000">5 GB</string>
     <string name="settings.cache_size_10000">10 GB</string>
+    <string name="settings.cache_size_20000">20 GB</string>
     <string name="settings.cache_size_unlimited">Unlimited</string>
 
     <string name="music_service.retry">A network error occurred. Retrying %d of %d.</string>
