@@ -57,8 +57,8 @@ public class IPNController implements Controller {
             LOG.info("Incoming IPN from " + request.getRemoteAddr());
 
             String url = createValidationURL(request);
-
             if (validate(url)) {
+                LOG.info("Verified payment. " + url);
                 createOrUpdatePayment(request);
             } else {
                 LOG.warn("Failed to verify payment. " + url);
@@ -74,9 +74,9 @@ public class IPNController implements Controller {
     private String createValidationURL(HttpServletRequest request) throws UnsupportedEncodingException {
         Enumeration<?> en = request.getParameterNames();
         StringBuilder url = new StringBuilder(PAYPAL_URL).append("?cmd=_notify-validate");
-        String encoding = request.getCharacterEncoding();
+        String encoding = request.getParameter("charset");
         if (encoding == null) {
-            encoding = "UTF-8";
+            encoding = "ISO-8859-1";
         }
 
         while (en.hasMoreElements()) {
