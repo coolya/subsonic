@@ -31,6 +31,7 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.os.Environment;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
@@ -373,6 +374,10 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     protected synchronized void checkDownloads() {
 
+        if (downloadList.isEmpty() || !Util.isNetworkConnected(this) || !isExternalStoragePresent()) {
+            return;
+        }
+
         // Need to download current playing?
         if (currentPlaying != null &&
                 currentPlaying != currentDownloading &&
@@ -422,6 +427,10 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
         // Delete obsolete .partial and .complete files.
         cleanup();
+    }
+
+    private boolean isExternalStoragePresent() {
+        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
     private synchronized void cleanup() {
