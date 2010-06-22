@@ -36,7 +36,6 @@ import net.sourceforge.subsonic.androidapp.util.SackOfViewsAdapter;
 import net.sourceforge.subsonic.androidapp.util.Util;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -66,6 +65,7 @@ public class MainActivity extends SubsonicTabActivity {
         View buttons = LayoutInflater.from(this).inflate(R.layout.main_buttons, null);
 
         final View serverButton = buttons.findViewById(R.id.main_select_server);
+        final View shuffleButton = buttons.findViewById(R.id.main_shuffle);
         final View settingsButton = buttons.findViewById(R.id.main_settings);
         final View helpButton = buttons.findViewById(R.id.main_help);
         final View dummyView = findViewById(R.id.main_dummy);
@@ -83,15 +83,18 @@ public class MainActivity extends SubsonicTabActivity {
         
         ListView list = (ListView) findViewById(R.id.main_list);
 
-        List<View> views = new ArrayList<View>(Arrays.asList(serverButton, settingsButton, helpButton));
-        if (!Util.isOffline(this)) {
-            views.addAll(Arrays.asList(albumsTitle, albumsNewestButton, albumsRandomButton,
-                    albumsHighestButton, albumsRecentButton, albumsFrequentButton));
+        List<View> views;
+        if (Util.isOffline(this)) {
+            views = Arrays.asList(serverButton, settingsButton, helpButton);
+        } else {
+            views = Arrays.asList(serverButton, shuffleButton, settingsButton, helpButton, albumsTitle,
+                    albumsNewestButton, albumsRandomButton, albumsHighestButton, albumsRecentButton, albumsFrequentButton);
         }
+        final int albumTitlePosition = views.indexOf(albumsTitle);
         SackOfViewsAdapter adapter = new SackOfViewsAdapter(views) {
             @Override
             public boolean isEnabled(int position) {
-                return position != 3;
+                return position != albumTitlePosition;
             }
         };
         list.setAdapter(adapter);
