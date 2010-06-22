@@ -125,6 +125,11 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
+    public MusicDirectory getRandomSongs(int size, Context context, ProgressListener progressListener) throws Exception {
+        return musicService.getRandomSongs(size, context, progressListener);
+    }
+
+    @Override
     public Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
         String key = id + size;

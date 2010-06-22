@@ -147,4 +147,9 @@ public class OfflineMusicService extends RESTMusicService {
     public MusicDirectory getAlbumList(String type, int size, int offset, Context context, ProgressListener progressListener) throws Exception {
         throw new RuntimeException("Album lists not available in offline mode");
     }
+
+    @Override
+    public MusicDirectory getRandomSongs(int size, Context context, ProgressListener progressListener) throws Exception {
+        throw new RuntimeException("Random songs not available in offline mode");
+    }
 }
