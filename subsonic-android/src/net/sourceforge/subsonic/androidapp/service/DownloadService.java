@@ -31,6 +31,8 @@ public interface DownloadService {
 
     void download(List<MusicDirectory.Entry> songs, boolean save, boolean autoplay);
 
+    void shufflePlay();
+
     void clear();
 
     void remove(DownloadFile downloadFile);
@@ -66,5 +68,4 @@ public interface DownloadService {
     void delete(List<MusicDirectory.Entry> songs);
 
     DownloadFile forSong(MusicDirectory.Entry song);
-
 }
