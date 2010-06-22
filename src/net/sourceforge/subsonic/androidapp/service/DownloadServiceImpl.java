@@ -37,6 +37,7 @@ import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
+import net.sourceforge.subsonic.androidapp.util.ShufflePlayBuffer;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
@@ -54,11 +55,14 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private final List<DownloadFile> downloadList = new CopyOnWriteArrayList<DownloadFile>();
     private final Handler handler = new Handler();
     private final DownloadServiceLifecycleSupport lifecycleSupport = new DownloadServiceLifecycleSupport(this);
+    private final ShufflePlayBuffer shufflePlayBuffer = new ShufflePlayBuffer(this);
+
     private final List<DownloadFile> cleanupCandidates = new ArrayList<DownloadFile>();
     private DownloadFile currentPlaying;
     private DownloadFile currentDownloading;
     private CancellableTask bufferTask;
     private PlayerState playerState = IDLE;
+    private boolean shufflePlay;
 
     private static DownloadService instance;
 
@@ -99,6 +103,8 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     @Override
     public synchronized void download(List<MusicDirectory.Entry> songs, boolean save, boolean autoplay) {
+        shufflePlay = false;
+
         if (songs.isEmpty()) {
             return;
         }
@@ -114,6 +120,13 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             checkDownloads();
         }
         lifecycleSupport.serializeDownloadQueue();
+    }
+
+    @Override
+    public void shufflePlay() {
+        clear();
+        shufflePlay = true;
+        checkDownloads();
     }
 
     @Override
@@ -367,7 +380,15 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     protected synchronized void checkDownloads() {
 
-        if (downloadList.isEmpty() || !Util.isNetworkConnected(this) || !isExternalStoragePresent()) {
+        if (!Util.isNetworkConnected(this) || !isExternalStoragePresent()) {
+            return;
+        }
+
+        if (shufflePlay) {
+            checkShufflePlay();
+        }
+
+        if (downloadList.isEmpty()) {
             return;
         }
 
@@ -420,6 +441,20 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
         // Delete obsolete .partial and .complete files.
         cleanup();
+    }
+
+    private void checkShufflePlay() {
+
+        int currIndex = currentPlaying == null ? 0 : downloadList.indexOf(currentPlaying);
+        int remaining = downloadList.size() - currIndex;
+
+        if (remaining < 5) {
+            List<MusicDirectory.Entry> randomSongs = shufflePlayBuffer.get(10);
+            for (MusicDirectory.Entry song : randomSongs) {
+                DownloadFile downloadFile = new DownloadFile(this, handler, song, false);
+                downloadList.add(downloadFile);
+            }
+        } 
     }
 
     private boolean isExternalStoragePresent() {

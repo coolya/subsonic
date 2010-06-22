@@ -45,6 +45,7 @@ import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
+import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.HorizontalSlider;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.SongView;
@@ -169,6 +170,10 @@ public class DownloadActivity extends SubsonicTabActivity {
         registerForContextMenu(playlistView);
         imageLoader = new ImageLoader(this);
         downloadService = DownloadServiceImpl.getInstance();
+
+        if (getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_SHUFFLE, false)) {
+            downloadService.shufflePlay();
+        }
     }
 
     @Override
