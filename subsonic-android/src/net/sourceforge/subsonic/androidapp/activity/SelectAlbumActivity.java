@@ -18,15 +18,14 @@
  */
 package net.sourceforge.subsonic.androidapp.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -37,10 +36,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.ImageButton;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
@@ -51,20 +50,15 @@ import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.Pair;
-import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.SongView;
 import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SelectAlbumActivity extends SubsonicTabActivity {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
     private static final int MENU_ITEM_PLAY_ALL = 1;
 
-    private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private ImageLoader imageLoader;
     private DownloadService downloadService;
     private ListView entryList;
@@ -91,6 +85,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_album);
 
+        downloadService = DownloadServiceImpl.getInstance();
         imageLoader = new ImageLoader(this);
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
@@ -173,7 +168,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
         registerForContextMenu(entryList);
 
-        bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         enableButtons();
 
         String id = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ID);
@@ -339,7 +333,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(downloadServiceConnection);
         imageLoader.cancel();
     }
 
@@ -470,22 +463,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
         builder.create().show();
     }
-
-    private class DownloadServiceConnection implements ServiceConnection {
-
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder service) {
-            downloadService = ((SimpleServiceBinder<DownloadService>) service).getService();
-            Log.i(TAG, "Connected to Download Service");
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            downloadService = null;
-            Log.i(TAG, "Disconnected from Download Service");
-        }
-    }
-
 
     private class EntryAdapter extends ArrayAdapter<MusicDirectory.Entry> {
         public EntryAdapter(List<MusicDirectory.Entry> entries) {

@@ -41,8 +41,6 @@ public interface DownloadService {
 
     DownloadFile getCurrentDownloading();
 
-    DownloadFile getDownloadAt(int index);
-
     void play(DownloadFile file);
 
     void play(int index);
