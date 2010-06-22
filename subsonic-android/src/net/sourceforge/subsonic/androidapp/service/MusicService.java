@@ -51,6 +51,8 @@ public interface MusicService {
 
     MusicDirectory getAlbumList(String type, int size, int offset, Context context, ProgressListener progressListener) throws Exception;
 
+    MusicDirectory getRandomSongs(int size, Context context, ProgressListener progressListener) throws Exception;
+
     Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception;
 
     HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset) throws Exception;
