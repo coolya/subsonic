@@ -107,6 +107,10 @@ public class MainActivity extends SubsonicTabActivity {
                     dummyView.showContextMenu();
                 } else if (view == settingsButton) {
                     startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                } else if (view == shuffleButton) {
+                    Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
+                    intent.putExtra(Constants.INTENT_EXTRA_NAME_SHUFFLE, true);
+                    Util.startActivityWithoutTransition(MainActivity.this, intent);
                 } else if (view == helpButton) {
                     startActivity(new Intent(MainActivity.this, HelpActivity.class));
                 } else if (view == albumsNewestButton) {

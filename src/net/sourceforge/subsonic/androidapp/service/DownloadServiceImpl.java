@@ -60,6 +60,8 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private CancellableTask bufferTask;
     private PlayerState playerState = IDLE;
 
+    private static DownloadService instance;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -75,6 +77,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                 return false;
             }
         });
+        instance = this;
     }
 
     @Override
@@ -82,6 +85,11 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         super.onDestroy();
         lifecycleSupport.onDestroy();
         mediaPlayer.release();
+        instance = null;
+    }
+
+    public static DownloadService getInstance() {
+        return instance;
     }
 
     @Override
@@ -122,15 +130,10 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     public synchronized void clear() {
         reset();
         downloadList.clear();
-//        if (bufferTask != null) {
-//            bufferTask.cancel();
-//        }
         if (currentDownloading != null) {
             currentDownloading.cancelDownload();
         }
         currentPlaying = null;
-//        mediaPlayer.reset();
-//        setPlayerState(IDLE);
 
         lifecycleSupport.serializeDownloadQueue();
     }
@@ -143,7 +146,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         if (downloadFile == currentPlaying) {
             reset();
             currentPlaying = null;
-//            next();
         }
         downloadList.remove(downloadFile);
 
@@ -171,15 +173,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     @Override
     public synchronized List<DownloadFile> getDownloads() {
         return new ArrayList<DownloadFile>(downloadList);
-    }
-
-    @Override
-    public synchronized DownloadFile getDownloadAt(int index) {
-        try {
-            return downloadList.get(index);
-        } catch (IndexOutOfBoundsException x) {
-            return null;
-        }
     }
 
     @Override

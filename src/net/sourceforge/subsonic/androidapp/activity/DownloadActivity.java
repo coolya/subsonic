@@ -18,13 +18,13 @@
  */
 package net.sourceforge.subsonic.androidapp.activity;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -42,27 +42,21 @@ import android.widget.ViewFlipper;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.util.HorizontalSlider;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
-import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.SongView;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 
 public class DownloadActivity extends SubsonicTabActivity {
 
     private static final int MENU_ITEM_REMOVE = 100;
     private static final int MENU_ITEM_REMOVE_ALL = 101;
 
-    private final DownloadServiceConnection downloadServiceConnection = new DownloadServiceConnection();
     private ImageLoader imageLoader;
     private DownloadService downloadService;
 
@@ -173,15 +167,16 @@ public class DownloadActivity extends SubsonicTabActivity {
         });
 
         registerForContextMenu(playlistView);
-
-        bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         imageLoader = new ImageLoader(this);
+        downloadService = DownloadServiceImpl.getInstance();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         onDownloadListChanged();
+        onCurrentChanged();
+        onProgressChanged();
 
         final Handler handler = new Handler();
         Runnable runnable = new Runnable() {
@@ -235,10 +230,6 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void update() {
-        if (downloadService == null) {
-            return;
-        }
-
         if (currentPlaying != downloadService.getCurrentPlaying()) {
             onCurrentChanged();
         }
@@ -289,10 +280,6 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void onDownloadListChanged() {
-        if (downloadService == null) {
-            return;
-        }
-
         List<DownloadFile> list = downloadService.getDownloads();
 
         playlistView.setAdapter(new SongListAdapter(list));
@@ -300,9 +287,6 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void onCurrentChanged() {
-        if (downloadService == null) {
-            return;
-        }
         currentPlaying = downloadService.getCurrentPlaying();
         if (currentPlaying != null) {
             MusicDirectory.Entry song = currentPlaying.getSong();
@@ -312,9 +296,6 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void onProgressChanged() {
-        if (downloadService == null) {
-            return;
-        }
         if (currentPlaying != null) {
 
             int millisPlayed = Math.max(0, downloadService.getPlayerPosition());
@@ -372,26 +353,8 @@ public class DownloadActivity extends SubsonicTabActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(downloadServiceConnection);
         imageLoader.cancel();
     }
-
-    private class DownloadServiceConnection implements ServiceConnection {
-
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder service) {
-            downloadService = ((SimpleServiceBinder<DownloadService>) service).getService();
-            onDownloadListChanged();
-            onCurrentChanged();
-            onProgressChanged();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            downloadService = null;
-        }
-    }
-
 
     private class SongListAdapter extends ArrayAdapter<DownloadFile> {
         public SongListAdapter(List<DownloadFile> entries) {
