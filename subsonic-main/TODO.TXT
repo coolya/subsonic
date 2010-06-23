@@ -19,10 +19,6 @@ Support filenames with "<" and ">".
 Trim username, servername. Url-encode username.
 Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
 Shuffle play
-Avoid slow copying of files.
-Shuffle play
-Never attempt to download if offline. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3196
-Support mounting SD card.
 Only retry if network error.
 https support
 Select music folder in server settings. (Including "All").
