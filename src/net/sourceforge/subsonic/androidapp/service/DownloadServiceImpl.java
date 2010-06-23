@@ -202,7 +202,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         DownloadFile downloadFile = downloadList.get(index);
         currentPlaying = downloadFile;
         checkDownloads();
-        bufferAndPlay(downloadFile);
+        bufferAndPlay();
     }
 
 
@@ -311,12 +311,12 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         this.playerState = playerState;
     }
 
-    private synchronized void bufferAndPlay(final DownloadFile downloadFile) {
+    private synchronized void bufferAndPlay() {
         reset();
         Util.showPlayingNotification(this, handler, currentPlaying.getSong());
 
         fileSizeAtLastResume = 0;
-        bufferTask = new BufferTask(downloadFile, 0);
+        bufferTask = new BufferTask(currentPlaying, 0);
         bufferTask.start();
     }
 
@@ -443,18 +443,26 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         cleanup();
     }
 
-    private void checkShufflePlay() {
+    private synchronized void checkShufflePlay() {
 
+        boolean wasEmpty = downloadList.isEmpty();
         int currIndex = currentPlaying == null ? 0 : downloadList.indexOf(currentPlaying);
         int remaining = downloadList.size() - currIndex;
 
         if (remaining < 5) {
-            List<MusicDirectory.Entry> randomSongs = shufflePlayBuffer.get(10);
-            for (MusicDirectory.Entry song : randomSongs) {
+            for (MusicDirectory.Entry song : shufflePlayBuffer.get(10)) {
                 DownloadFile downloadFile = new DownloadFile(this, handler, song, false);
                 downloadList.add(downloadFile);
+                if (downloadList.size() > 10) {
+                    downloadList.get(0).cancelDownload();
+                    downloadList.remove(0);
+                }
             }
-        } 
+        }
+
+        if (wasEmpty && !downloadList.isEmpty()) {
+            play(0);
+        }
     }
 
     private boolean isExternalStoragePresent() {

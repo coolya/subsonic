@@ -64,6 +64,7 @@ public class ShufflePlayBuffer {
                 result.add(buffer.remove(buffer.size() - 1));
             }
         }
+        Log.i(TAG, "Taking " + result.size() + " songs from shuffle play buffer. " + buffer.size() + " remaining.");
         return result;
     }
 
