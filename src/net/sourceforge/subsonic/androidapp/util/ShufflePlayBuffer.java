@@ -54,7 +54,7 @@ public class ShufflePlayBuffer {
                 refill();
             }
         };
-        executorService.schedule(runnable, 10, TimeUnit.SECONDS);
+        executorService.scheduleWithFixedDelay(runnable, 1, 10, TimeUnit.SECONDS);
     }
 
     public List<MusicDirectory.Entry> get(int size) {
