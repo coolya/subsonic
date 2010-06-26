@@ -59,10 +59,10 @@ public class IPNController implements Controller {
             String url = createValidationURL(request);
             if (validate(url)) {
                 LOG.info("Verified payment. " + url);
-                createOrUpdatePayment(request);
             } else {
                 LOG.warn("Failed to verify payment. " + url);
             }
+            createOrUpdatePayment(request);
 
             return null;
         } catch (Exception x) {
