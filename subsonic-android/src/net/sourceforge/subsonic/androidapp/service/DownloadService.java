@@ -68,4 +68,6 @@ public interface DownloadService {
     void delete(List<MusicDirectory.Entry> songs);
 
     DownloadFile forSong(MusicDirectory.Entry song);
+
+    long getDownloadListUpdateRevision();
 }
