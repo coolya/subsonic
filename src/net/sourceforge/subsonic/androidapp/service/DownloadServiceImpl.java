@@ -63,7 +63,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private CancellableTask bufferTask;
     private PlayerState playerState = IDLE;
     private boolean shufflePlay;
-
+    private long revision;
     private static DownloadService instance;
 
     @Override
@@ -113,6 +113,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             DownloadFile downloadFile = new DownloadFile(this, handler, song, save);
             downloadList.add(downloadFile);
         }
+        revision++;
 
         if (autoplay) {
             play(0);
@@ -143,6 +144,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     public synchronized void clear() {
         reset();
         downloadList.clear();
+        revision++;
         if (currentDownloading != null) {
             currentDownloading.cancelDownload();
         }
@@ -161,7 +163,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             currentPlaying = null;
         }
         downloadList.remove(downloadFile);
-
+        revision++;
         lifecycleSupport.serializeDownloadQueue();
     }
 
@@ -445,24 +447,33 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     private synchronized void checkShufflePlay() {
 
+        final int listSize = 10;
+
         boolean wasEmpty = downloadList.isEmpty();
         int currIndex = currentPlaying == null ? 0 : downloadList.indexOf(currentPlaying);
-        int remaining = downloadList.size() - currIndex;
+        int size = downloadList.size();
+        int remaining = size - currIndex;
 
-        if (remaining < 5) {
-            for (MusicDirectory.Entry song : shufflePlayBuffer.get(10)) {
+        if (remaining < listSize) {
+            for (MusicDirectory.Entry song : shufflePlayBuffer.get(Math.max(size,listSize) - remaining)) {
                 DownloadFile downloadFile = new DownloadFile(this, handler, song, false);
                 downloadList.add(downloadFile);
-                if (downloadList.size() > 10) {
-                    downloadList.get(0).cancelDownload();
-                    downloadList.remove(0);
-                }
+                revision++;
+            }
+            while (downloadList.size() > listSize) {
+                downloadList.get(0).cancelDownload();
+                downloadList.remove(0);
+                revision++;
             }
         }
 
         if (wasEmpty && !downloadList.isEmpty()) {
             play(0);
         }
+    }
+
+    public long getDownloadListUpdateRevision() {
+        return revision;
     }
 
     private boolean isExternalStoragePresent() {

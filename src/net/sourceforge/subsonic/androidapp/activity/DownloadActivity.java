@@ -78,6 +78,7 @@ public class DownloadActivity extends SubsonicTabActivity {
     private View toggleListButton;
     private ScheduledExecutorService executorService;
     private DownloadFile currentPlaying;
+    private long currentRevision;
 
     /**
      * Called when the activity is first created.
@@ -235,6 +236,11 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void update() {
+
+        if (currentRevision != downloadService.getDownloadListUpdateRevision()) {
+            onDownloadListChanged();
+        }
+
         if (currentPlaying != downloadService.getCurrentPlaying()) {
             onCurrentChanged();
         }
@@ -289,6 +295,7 @@ public class DownloadActivity extends SubsonicTabActivity {
 
         playlistView.setAdapter(new SongListAdapter(list));
         emptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
+        currentRevision = downloadService.getDownloadListUpdateRevision();
     }
 
     private void onCurrentChanged() {
