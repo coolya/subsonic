@@ -277,7 +277,6 @@ public class RESTController extends MultiActionController {
         Player player = playerService.getPlayer(request, response);
 
         XMLBuilder builder = createXMLBuilder(response, true);
-        builder.add("playlist", false);
 
         try {
             String id = StringUtil.utf8HexDecode(ServletRequestUtils.getRequiredStringParameter(request, "id"));
@@ -288,6 +287,8 @@ public class RESTController extends MultiActionController {
             Playlist playlist = new Playlist();
             playlistService.loadPlaylist(playlist, id);
 
+            builder.add("playlist", false, new Attribute("id", StringUtil.utf8HexEncode(playlist.getName())),
+                    new Attribute("name", FilenameUtils.getBaseName(playlist.getName())));
             for (MusicFile musicFile : playlist.getFiles()) {
                 List<File> coverArt = musicFileService.getCoverArt(musicFile.getParent(), 1);
                 List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);

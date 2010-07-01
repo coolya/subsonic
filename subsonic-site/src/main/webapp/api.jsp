@@ -311,7 +311,7 @@
     </tr>
 </table>
 <p>
-    Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;musicFolder&gt;</code>
+    Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;directory&gt;</code>
     element on success.
 </p>
 

@@ -50,7 +50,9 @@ Bugfix: Don't attempt download if network or SD card is unavailable.
 
 TODO IN ANDROID 1.4
 -------------------
+Trim search query.
 Delete .partial files when cleaning cache.
+Use filename foo.complete.mp3
 Support filenames with "<" and ">".
 Trim username, servername. Url-encode username.
 Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
@@ -75,6 +77,7 @@ Fixed problem with saving songs.
 TODO IN 4.1
 -----------------
 Make port 4040 the default on Windows installations not 80
+Proper lookup of local IP on linux.
 Update to FLAC 1.2.1, LAME 3.98.4  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3278
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
 Fix readlink
