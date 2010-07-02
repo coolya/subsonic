@@ -37,6 +37,7 @@ import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnManagerParams;
 import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.scheme.PlainSocketFactory;
@@ -392,7 +393,7 @@ public class RESTMusicService implements MusicService {
                 return response;
             } catch (IOException x) {
                 request.abort();
-                if (attempts >= HTTP_REQUEST_MAX_ATTEMPTS) {
+                if (attempts >= HTTP_REQUEST_MAX_ATTEMPTS || x instanceof InterruptedIOException) {
                     throw x;
                 }
                 if (progressListener != null) {
