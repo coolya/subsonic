@@ -232,7 +232,7 @@ public final class Util {
                 in.close();
             }
         } catch (IOException x) {
-            // ignore
+            Log.w(TAG, "Failed to close input stream.", x);
         }
     }
 
@@ -242,7 +242,7 @@ public final class Util {
                 reader.close();
             }
         } catch (IOException x) {
-            // ignore
+            Log.w(TAG, "Failed to close reader.", x);
         }
     }
 

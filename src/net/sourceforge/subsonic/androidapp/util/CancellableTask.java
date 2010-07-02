@@ -38,11 +38,6 @@ public abstract class CancellableTask {
     public void cancel() {
         Log.d(TAG, "Cancelling " + CancellableTask.this);
         cancelled.set(true);
-        Thread t = thread.get();
-        if (t != null && t.isAlive()) {
-            t.interrupt();
-            Log.d(TAG, "Interrupted " + CancellableTask.this);
-        }
     }
 
     public boolean isCancelled() {

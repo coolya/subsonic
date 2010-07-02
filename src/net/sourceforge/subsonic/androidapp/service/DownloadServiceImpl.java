@@ -523,11 +523,10 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         public void execute() {
             setPlayerState(DOWNLOADING);
 
-            while (!isCancelled() && !bufferComplete()) {
-                try {
-                    Log.i(TAG, "Buffering " + partialFile + " (" + partialFile.length() + ")");
-                    Thread.sleep(1000L);
-                } catch (InterruptedException x) {
+            while (!bufferComplete()) {
+                Log.i(TAG, "Buffering " + partialFile + " (" + partialFile.length() + ")");
+                Util.sleepQuietly(1000L);
+                if (isCancelled()) {
                     return;
                 }
             }
