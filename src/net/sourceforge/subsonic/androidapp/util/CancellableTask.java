@@ -34,19 +34,28 @@ public abstract class CancellableTask {
     private final AtomicBoolean running = new AtomicBoolean(false);
     private final AtomicBoolean cancelled = new AtomicBoolean(false);
     private final AtomicReference<Thread> thread = new AtomicReference<Thread>();
+    private final AtomicReference<OnCancelListener> cancelListener = new AtomicReference<OnCancelListener>();
 
     public void cancel() {
         Log.d(TAG, "Cancelling " + CancellableTask.this);
         cancelled.set(true);
-        Thread t = thread.get();
-        if (t != null && t.isAlive()) {
-            t.interrupt();
-            Log.d(TAG, "Interrupted " + CancellableTask.this);
+
+        OnCancelListener listener = cancelListener.get();
+        if (listener != null) {
+            try {
+            listener.onCancel();
+            } catch (Throwable x) {
+                Log.w(TAG, "Error when invoking OnCancelListener.", x);
+            }
         }
     }
 
     public boolean isCancelled() {
         return cancelled.get();
+    }
+
+    public void setOnCancelListener(OnCancelListener listener) {
+        cancelListener.set(listener);
     }
 
     public boolean isRunning() {
@@ -70,5 +79,9 @@ public abstract class CancellableTask {
             }
         });
         thread.get().start();
+    }
+
+    public static interface OnCancelListener {
+        void onCancel();
     }
 }
