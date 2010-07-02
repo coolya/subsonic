@@ -21,6 +21,7 @@ package net.sourceforge.subsonic.androidapp.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.InterruptedIOException;
 import java.io.Reader;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -390,14 +391,14 @@ public class RESTMusicService implements MusicService {
                 return response;
             } catch (IOException x) {
                 request.abort();
-                if (attempts >= HTTP_REQUEST_MAX_ATTEMPTS) {
+                if (attempts >= HTTP_REQUEST_MAX_ATTEMPTS || x instanceof InterruptedIOException) {
                     throw x;
                 }
                 if (progressListener != null) {
                     String msg = context.getResources().getString(R.string.music_service_retry, attempts, HTTP_REQUEST_MAX_ATTEMPTS - 1);
                     progressListener.updateProgress(msg);
                 }
-                Log.e(TAG, "Got IOException (" + attempts + "), will retry", x);
+                Log.w(TAG, "Got IOException (" + attempts + "), will retry", x);
                 Util.sleepQuietly(2000L);
             }
         }
