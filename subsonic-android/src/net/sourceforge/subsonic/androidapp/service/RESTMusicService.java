@@ -37,7 +37,6 @@ import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnManagerParams;
 import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.scheme.PlainSocketFactory;
@@ -72,6 +71,7 @@ import net.sourceforge.subsonic.androidapp.service.parser.RandomSongsParser;
 import net.sourceforge.subsonic.androidapp.service.parser.SearchResultParser;
 import net.sourceforge.subsonic.androidapp.service.parser.VersionParser;
 import net.sourceforge.subsonic.androidapp.service.parser.AlbumListParser;
+import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Pair;
@@ -286,7 +286,7 @@ public class RESTMusicService implements MusicService {
     }
 
     @Override
-    public HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset) throws Exception {
+    public HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset, CancellableTask task) throws Exception {
 
         String url = Util.getRestUrl(context, "stream") + "&id=" + song.getId();
 
@@ -300,7 +300,7 @@ public class RESTMusicService implements MusicService {
         if (offset > 0) {
             headers.add(new BasicHeader("Range", "bytes=" + offset + "-"));
         }
-        HttpResponse response = getResponseForURL(context, url, params, headers, null);
+        HttpResponse response = getResponseForURL(context, url, params, headers, null, task);
 
         // If content type is XML, an error occured.  Get it.
         String contentType = Util.getContentType(response.getEntity());
@@ -357,25 +357,35 @@ public class RESTMusicService implements MusicService {
     }
 
     private HttpEntity getEntityForURL(Context context, String url, ProgressListener progressListener) throws Exception {
-        return getResponseForURL(context, url, null, null, progressListener).getEntity();
+        return getResponseForURL(context, url, null, null, progressListener, null).getEntity();
     }
 
     private HttpResponse getResponseForURL(Context context, String url, HttpParams requestParams,
-                                           List<Header> headers, ProgressListener progressListener) throws Exception {
+            List<Header> headers, ProgressListener progressListener, CancellableTask task) throws Exception {
         Log.d(TAG, "Connections in pool: " + connManager.getConnectionsInPool());
         url = rewriteUrlWithRedirect(url);
-        return executeWithRetry(context, url, requestParams, headers, progressListener);
+        return executeWithRetry(context, url, requestParams, headers, progressListener, task);
     }
 
     private HttpResponse executeWithRetry(Context context, String url, HttpParams requestParams,
-                                          List<Header> headers, ProgressListener progressListener) throws IOException {
+            List<Header> headers, ProgressListener progressListener, CancellableTask task) throws IOException {
         Log.i(TAG, "Using URL " + url);
 
         int attempts = 0;
         while (true) {
             attempts++;
             HttpContext httpContext = new BasicHttpContext();
-            HttpGet request = new HttpGet(url);
+            final HttpGet request = new HttpGet(url);
+
+            if (task != null) {
+                task.setOnCancelListener(new CancellableTask.OnCancelListener() {
+                    @Override
+                    public void onCancel() {
+                        request.abort();
+                        Log.d(TAG, "Aborting HTTP request " + request.getURI());
+                    }
+                });
+            }
 
             if (requestParams != null) {
                 request.setParams(requestParams);

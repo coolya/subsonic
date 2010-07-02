@@ -182,7 +182,7 @@ public class DownloadFile {
                 MusicService musicService = MusicServiceFactory.getMusicService(context);
 
                 // Attempt partial HTTP GET, appending to the file if it exists.
-                HttpResponse response = musicService.getDownloadInputStream(context, song, partialFile.length());
+                HttpResponse response = musicService.getDownloadInputStream(context, song, partialFile.length(), DownloadTask.this);
                 in = response.getEntity().getContent();
                 boolean partial = response.getStatusLine().getStatusCode() == HttpStatus.SC_PARTIAL_CONTENT;
                 if (partial) {

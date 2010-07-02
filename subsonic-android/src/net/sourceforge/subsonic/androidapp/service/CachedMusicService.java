@@ -24,6 +24,7 @@ import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.domain.Version;
+import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.LRUCache;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import net.sourceforge.subsonic.androidapp.util.TimeLimitedCache;
@@ -142,8 +143,8 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
-    public HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset) throws Exception {
-        return musicService.getDownloadInputStream(context, song, offset);
+    public HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset, CancellableTask task) throws Exception {
+        return musicService.getDownloadInputStream(context, song, offset, task);
     }
 
     @Override

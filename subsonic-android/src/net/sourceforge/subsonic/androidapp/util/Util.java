@@ -508,7 +508,7 @@ public final class Util {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException x) {
-            Log.e(TAG, "Interrupted from sleep.", x);
+            Log.w(TAG, "Interrupted from sleep.", x);
         }
     }
 
