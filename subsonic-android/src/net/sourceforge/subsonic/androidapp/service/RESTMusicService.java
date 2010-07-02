@@ -37,7 +37,6 @@ import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnManagerParams;
 import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.scheme.PlainSocketFactory;
@@ -105,6 +104,7 @@ public class RESTMusicService implements MusicService {
     private long redirectionLastChecked;
     private String redirectFrom;
     private String redirectTo;
+    private final ThreadSafeClientConnManager connManager;
 
     public RESTMusicService() {
 
@@ -122,8 +122,8 @@ public class RESTMusicService implements MusicService {
         // Create an HttpClient with the ThreadSafeClientConnManager.
         // This connection manager must be used if more than one thread will
         // be using the HttpClient.
-        ClientConnectionManager cm = new ThreadSafeClientConnManager(params, schemeRegistry);
-        httpClient = new DefaultHttpClient(cm, params);
+        connManager = new ThreadSafeClientConnManager(params, schemeRegistry);
+        httpClient = new DefaultHttpClient(connManager, params);
     }
 
     @Override
@@ -361,6 +361,7 @@ public class RESTMusicService implements MusicService {
 
     private HttpResponse getResponseForURL(Context context, String url, HttpParams requestParams,
                                            List<Header> headers, ProgressListener progressListener) throws Exception {
+        Log.d(TAG, "Connections in pool: " + connManager.getConnectionsInPool());
         url = rewriteUrlWithRedirect(url);
         return executeWithRetry(context, url, requestParams, headers, progressListener);
     }
@@ -391,7 +392,7 @@ public class RESTMusicService implements MusicService {
                 return response;
             } catch (IOException x) {
                 request.abort();
-                if (attempts >= HTTP_REQUEST_MAX_ATTEMPTS || x instanceof InterruptedIOException) {
+                if (attempts >= HTTP_REQUEST_MAX_ATTEMPTS) {
                     throw x;
                 }
                 if (progressListener != null) {
