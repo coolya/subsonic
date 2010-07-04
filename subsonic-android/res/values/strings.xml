@@ -61,7 +61,6 @@
     <string name="download.remove">Remove</string>
     <string name="download.remove_all">Remove all</string>
     <string name="download.play_error">Error playing \"%s\"</string>
-    <string name="download.error">Error downloading \"%s\"</string>
 
     <string name="error.label">Error</string>
 
