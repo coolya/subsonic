@@ -43,7 +43,7 @@ public abstract class CancellableTask {
         OnCancelListener listener = cancelListener.get();
         if (listener != null) {
             try {
-            listener.onCancel();
+                listener.onCancel();
             } catch (Throwable x) {
                 Log.w(TAG, "Error when invoking OnCancelListener.", x);
             }

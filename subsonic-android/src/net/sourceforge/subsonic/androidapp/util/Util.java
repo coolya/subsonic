@@ -231,8 +231,8 @@ public final class Util {
             if (in != null) {
                 in.close();
             }
-        } catch (IOException x) {
-            Log.w(TAG, "Failed to close input stream.", x);
+        } catch (Throwable x) {
+            // Ignored
         }
     }
 
@@ -241,8 +241,8 @@ public final class Util {
             if (reader != null) {
                 reader.close();
             }
-        } catch (IOException x) {
-            Log.w(TAG, "Failed to close reader.", x);
+        } catch (Throwable x) {
+            // Ignored
         }
     }
 
@@ -262,8 +262,8 @@ public final class Util {
             if (out != null) {
                 out.close();
             }
-        } catch (IOException ioe) {
-            // ignore
+        } catch (Throwable x) {
+            // Ignored
         }
     }
 

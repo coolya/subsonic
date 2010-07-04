@@ -86,9 +86,9 @@ public class RESTMusicService implements MusicService {
     private static final String TAG = RESTMusicService.class.getSimpleName();
 
     private static final int SOCKET_CONNECT_TIMEOUT = 10 * 1000;
-    private static final int SOCKET_READ_TIMEOUT = 20 * 1000;
-    private static final int SOCKET_CONNECT_TIMEOUT_DOWNLOAD = 120 * 1000;
-    private static final int SOCKET_READ_TIMEOUT_DOWNLOAD = 180 * 1000;
+    private static final int SOCKET_READ_TIMEOUT = 10 * 1000;
+    private static final int SOCKET_CONNECT_TIMEOUT_DOWNLOAD = 10 * 1000;
+    private static final int SOCKET_READ_TIMEOUT_DOWNLOAD = 25 * 1000;
 
     /**
      * URL from which to fetch latest versions.
@@ -111,8 +111,8 @@ public class RESTMusicService implements MusicService {
 
         // Create and initialize HTTP parameters
         HttpParams params = new BasicHttpParams();
-        ConnManagerParams.setMaxTotalConnections(params, 10);
-        ConnManagerParams.setMaxConnectionsPerRoute(params, new ConnPerRouteBean(5));
+        ConnManagerParams.setMaxTotalConnections(params, 20);
+        ConnManagerParams.setMaxConnectionsPerRoute(params, new ConnPerRouteBean(20));
         HttpConnectionParams.setConnectionTimeout(params, SOCKET_CONNECT_TIMEOUT);
         HttpConnectionParams.setSoTimeout(params, SOCKET_READ_TIMEOUT);
 
@@ -378,11 +378,11 @@ public class RESTMusicService implements MusicService {
             final HttpGet request = new HttpGet(url);
 
             if (task != null) {
+                // Attempt to abort the HTTP request if the task is cancelled.
                 task.setOnCancelListener(new CancellableTask.OnCancelListener() {
                     @Override
                     public void onCancel() {
                         request.abort();
-                        Log.d(TAG, "Aborting HTTP request " + request.getURI());
                     }
                 });
             }

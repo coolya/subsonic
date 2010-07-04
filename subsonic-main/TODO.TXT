@@ -15,7 +15,9 @@ Bugfix: Don't attempt download if network or SD card is unavailable.
 
 TODO IN ANDROID 1.4
 -------------------
+Subsonic attempts to create directory when browsing music.
 Abort http download request if user cancels.
+Use FileChannel.transferTo() to copy files.
 Notify user if SD card or network is unavailable.
 Trim search query.
 Delete .partial files when cleaning cache.

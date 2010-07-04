@@ -159,9 +159,13 @@ public class DownloadFile {
     private class DownloadTask extends CancellableTask {
 
         @Override
+        public String toString() {
+            return "DownloadTask (" + song + ")";
+        }
+
+        @Override
         public void execute() {
 
-            Log.i(TAG, "Starting to download " + song);
             InputStream in = null;
             FileOutputStream out = null;
             try {
@@ -196,7 +200,7 @@ public class DownloadFile {
                 out.close();
 
                 if (isCancelled()) {
-                    throw new Exception("Download of " + song + " was cancelled");
+                    throw new Exception("Download of '" + song + "' was cancelled");
                 }
 
                 if (save) {
@@ -222,9 +226,29 @@ public class DownloadFile {
                 Util.close(in);
                 Util.close(out);
             }
+
         }
 
-        private long copy(InputStream in, OutputStream out) throws IOException, InterruptedException {
+        private long copy(final InputStream in, OutputStream out) throws IOException, InterruptedException {
+
+            // Start a thread that will close the input stream if the task is
+            // cancelled, thus causing the copy() method to return.
+            new Thread() {
+                @Override
+                public void run() {
+                    while (true) {
+                        Util.sleepQuietly(3000L);
+                        if (isCancelled()) {
+                            Util.close(in);
+                            return;
+                        }
+                        if (!isRunning()) {
+                            return;
+                        }
+                    }
+                }
+            }.start();
+
             byte[] buffer = new byte[1024 * 16];
             long count = 0;
             int n;
