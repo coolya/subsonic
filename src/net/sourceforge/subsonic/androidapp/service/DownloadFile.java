@@ -43,7 +43,6 @@ public class DownloadFile {
 
     private static final String TAG = DownloadFile.class.getSimpleName();
     private final Context context;
-    private final Handler handler;
     private final MusicDirectory.Entry song;
     private final File partialFile;
     private final File completeFile;
@@ -54,9 +53,8 @@ public class DownloadFile {
     private boolean save;
     private boolean failed;
 
-    public DownloadFile(Context context, Handler handler, MusicDirectory.Entry song, boolean save) {
+    public DownloadFile(Context context, MusicDirectory.Entry song, boolean save) {
         this.context = context;
-        this.handler = handler;
         this.song = song;
         this.save = save;
         saveFile = FileUtil.getSongFile(song, true);
@@ -216,10 +214,7 @@ public class DownloadFile {
                 Util.delete(saveFile);
                 if (!isCancelled()) {
                     failed = true;
-                    String msg = context.getResources().getString(R.string.download_error, song.getTitle());
-                    // TODO: REMOVE
-                    Util.showErrorNotification(context, handler, msg, x);
-                    Log.e(TAG, msg, x);
+                    Log.w(TAG, "Failed to download '" + song + "'.", x);
                 }
 
             } finally {

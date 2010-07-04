@@ -110,7 +110,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
 
         for (MusicDirectory.Entry song : songs) {
-            DownloadFile downloadFile = new DownloadFile(this, handler, song, save);
+            DownloadFile downloadFile = new DownloadFile(this, song, save);
             downloadList.add(downloadFile);
         }
         revision++;
@@ -137,7 +137,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                 return downloadFile;
             }
         }
-        return new DownloadFile(this, handler, song, false);
+        return new DownloadFile(this, song, false);
     }
 
     @Override
@@ -201,8 +201,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             return;
         }
 
-        DownloadFile downloadFile = downloadList.get(index);
-        currentPlaying = downloadFile;
+        currentPlaying = downloadList.get(index);
         checkDownloads();
         bufferAndPlay();
     }
@@ -456,7 +455,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
         if (remaining < listSize) {
             for (MusicDirectory.Entry song : shufflePlayBuffer.get(Math.max(size,listSize) - remaining)) {
-                DownloadFile downloadFile = new DownloadFile(this, handler, song, false);
+                DownloadFile downloadFile = new DownloadFile(this, song, false);
                 downloadList.add(downloadFile);
                 revision++;
             }
