@@ -181,9 +181,25 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object value) {
                     try {
-                        new URL((String) value);
+                        String url = (String) value;
+                        new URL(url);
+                        if (!url.equals(url.trim())) {
+                            throw new Exception();
+                        }
                     } catch (Exception x) {
                         new ErrorDialog(SettingsActivity.this, R.string.settings_invalid_url, false);
+                        return false;
+                    }
+                    return true;
+                }
+            });
+
+            username.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object value) {
+                    String username = (String) value;
+                    if (username == null || !username.equals(username.trim())) {
+                        new ErrorDialog(SettingsActivity.this, R.string.settings_invalid_username, false);
                         return false;
                     }
                     return true;
