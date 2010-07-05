@@ -19,6 +19,8 @@
 
 package net.sourceforge.subsonic.androidapp.activity;
 
+import org.apache.commons.lang.StringUtils;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -40,9 +42,12 @@ public class SearchActivity extends SubsonicTabActivity {
         searchViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SearchActivity.this, SelectAlbumActivity.class);
-                intent.putExtra(Constants.INTENT_EXTRA_NAME_QUERY, String.valueOf(queryTextView.getText()));
-                Util.startActivityWithoutTransition(SearchActivity.this, intent);
+                String query = StringUtils.trimToNull(String.valueOf(queryTextView.getText()));
+                if (query != null) {
+                    Intent intent = new Intent(SearchActivity.this, SelectAlbumActivity.class);
+                    intent.putExtra(Constants.INTENT_EXTRA_NAME_QUERY, query);
+                    Util.startActivityWithoutTransition(SearchActivity.this, intent);
+                }
             }
         });
     }

@@ -13,11 +13,11 @@ Shuffle play.
 Bugfix: Don't attempt download if network or SD card is unavailable.
 Bugfix: Don't create empty directories when browsing albums.
 Delete .partial files when cleaning cache.
+Trim search query.
 
 TODO IN ANDROID 1.4
 -------------------
 Notify user if SD card or network is unavailable.
-Trim search query.
 Use filename foo.complete.mp3
 Support filenames with "<" and ">".
 Trim username, servername. Url-encode username.
