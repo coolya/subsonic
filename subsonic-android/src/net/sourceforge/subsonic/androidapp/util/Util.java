@@ -81,18 +81,29 @@ public final class Util {
         return getActiveServer(context) == 0;
     }
 
+    public static void setActiveServer(Context context, int instance) {
+        SharedPreferences prefs = getPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, instance);
+        editor.commit();
+    }
+
     public static int getActiveServer(Context context) {
         SharedPreferences prefs = getPreferences(context);
         return prefs.getInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, 1);
     }
 
+    public static String getServerName(Context context, int instance) {
+        if (instance == 0) {
+            return context.getResources().getString(R.string.main_offline);
+        }
+        SharedPreferences prefs = getPreferences(context);
+        return prefs.getString(Constants.PREFERENCES_KEY_SERVER_NAME + instance, null);
+    }
+
     public static String getTheme(Context context) {
         SharedPreferences prefs = getPreferences(context);
         return prefs.getString(Constants.PREFERENCES_KEY_THEME, null);
-    }
-
-    private static SharedPreferences getPreferences(Context context) {
-        return context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
     }
 
     public static int getPreloadCount(Context context) {
@@ -105,21 +116,6 @@ public final class Util {
         SharedPreferences prefs = getPreferences(context);
         int cacheSize = Integer.parseInt(prefs.getString(Constants.PREFERENCES_KEY_CACHE_SIZE, "-1"));
         return cacheSize == -1 ? Integer.MAX_VALUE : cacheSize;
-    }
-
-    public static String getServerName(Context context, int instance) {
-        if (instance == 0) {
-            return context.getResources().getString(R.string.main_offline);
-        }
-        SharedPreferences prefs = getPreferences(context);
-        return prefs.getString(Constants.PREFERENCES_KEY_SERVER_NAME + instance, null);
-    }
-
-    public static void setActiveServer(Context context, int instance) {
-        SharedPreferences prefs = getPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, instance);
-        editor.commit();
     }
 
     public static String getRestUrl(Context context, String method) {
@@ -146,6 +142,10 @@ public final class Util {
         builder.append("&c=").append(Constants.REST_CLIENT_ID);
 
         return builder.toString();
+    }
+
+    private static SharedPreferences getPreferences(Context context) {
+        return context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
     }
 
     public static String getContentType(HttpEntity entity) {

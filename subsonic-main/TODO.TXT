@@ -17,10 +17,12 @@ Trim search query.
 
 TODO IN ANDROID 1.4
 -------------------
+Testing connection causes wrong radio button to be selected in Select server.
+Connection still OK even when changing username/password. 
+Trim username, servername. Url-encode username.
 Notify user if SD card or network is unavailable.
 Use filename foo.complete.mp3
 Support filenames with "<" and ">".
-Trim username, servername. Url-encode username.
 
 Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
 Shuffle play

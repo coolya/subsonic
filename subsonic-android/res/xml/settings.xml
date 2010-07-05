@@ -17,7 +17,8 @@
             <EditTextPreference
                     a:key="serverUrl1"
                     a:title="@string/settings.server_address"
-                    a:defaultValue="http://demo.subsonic.org"/>
+                    a:defaultValue="http://demo.subsonic.org"
+                    a:inputType="textUri"/>
 
             <EditTextPreference
                     a:key="username1"
@@ -49,7 +50,8 @@
             <EditTextPreference
                     a:key="serverUrl2"
                     a:title="@string/settings.server_address"
-                    a:defaultValue="http://yourhost"/>
+                    a:defaultValue="http://yourhost"
+                    a:inputType="textUri"/>
 
             <EditTextPreference
                     a:key="username2"
@@ -79,7 +81,8 @@
             <EditTextPreference
                     a:key="serverUrl3"
                     a:title="@string/settings.server_address"
-                    a:defaultValue="http://yourhost"/>
+                    a:defaultValue="http://yourhost"
+                    a:inputType="textUri"/>
 
             <EditTextPreference
                     a:key="username3"
