@@ -15,7 +15,6 @@ Bugfix: Don't create empty directories when browsing albums.
 
 TODO IN ANDROID 1.4
 -------------------
-Improve "Socket is not connected" error message.
 Use FileChannel.transferTo() to copy files.
 Notify user if SD card or network is unavailable.
 Trim search query.
@@ -23,6 +22,7 @@ Delete .partial files when cleaning cache.
 Use filename foo.complete.mp3
 Support filenames with "<" and ">".
 Trim username, servername. Url-encode username.
+
 Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
 Shuffle play
 Only retry if network error.

@@ -67,6 +67,10 @@ public abstract class BackgroundTask<T> implements ProgressListener {
             return activity.getResources().getString(R.string.background_task_no_network);
         }
 
+        if (error instanceof IOException) {
+            return activity.getResources().getString(R.string.background_task_network_error);
+        }
+
         if (error instanceof FileNotFoundException) {
             return activity.getResources().getString(R.string.background_task_not_found);
         }
