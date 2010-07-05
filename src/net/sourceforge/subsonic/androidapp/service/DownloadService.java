@@ -31,7 +31,7 @@ public interface DownloadService {
 
     void download(List<MusicDirectory.Entry> songs, boolean save, boolean autoplay);
 
-    void shufflePlay();
+    void setShufflePlayEnabled(boolean enabled);
 
     void clear();
 
