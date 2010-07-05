@@ -71,7 +71,7 @@ public class DownloadServiceLifecycleSupport {
 
         executorService = Executors.newScheduledThreadPool(2);
         executorService.scheduleWithFixedDelay(downloadChecker, 5, 5, TimeUnit.SECONDS);
-        executorService.scheduleWithFixedDelay(cacheCleaner, 5 * 60, 2 * 60 * 60, TimeUnit.SECONDS);
+        executorService.scheduleWithFixedDelay(cacheCleaner, 5 * 60, 60 * 60, TimeUnit.SECONDS);
 
         headsetEventReceiver = new BroadcastReceiver() {
             @Override
