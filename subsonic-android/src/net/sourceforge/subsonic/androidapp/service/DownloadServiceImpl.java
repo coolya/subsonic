@@ -124,10 +124,12 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     @Override
-    public void shufflePlay() {
-        clear();
-        shufflePlay = true;
-        checkDownloads();
+    public void setShufflePlayEnabled(boolean enabled) {
+        shufflePlay = enabled;
+        if (shufflePlay) {
+            clear();
+            checkDownloads();
+        }
     }
 
     @Override

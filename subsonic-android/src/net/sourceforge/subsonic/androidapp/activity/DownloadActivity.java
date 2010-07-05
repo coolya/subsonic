@@ -173,7 +173,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         downloadService = DownloadServiceImpl.getInstance();
 
         if (getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_SHUFFLE, false)) {
-            downloadService.shufflePlay();
+            downloadService.setShufflePlayEnabled(true);
         }
     }
 
@@ -226,6 +226,7 @@ public class DownloadActivity extends SubsonicTabActivity {
                 onDownloadListChanged();
                 break;
             case MENU_ITEM_REMOVE_ALL:
+                downloadService.setShufflePlayEnabled(false);
                 downloadService.clear();
                 onDownloadListChanged();
                 break;

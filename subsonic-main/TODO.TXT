@@ -15,10 +15,11 @@ Bugfix: Don't create empty directories when browsing albums.
 Delete .partial files when cleaning cache.
 Trim search query.
 Trim username and url.
+Disable shuffle play when user removes all.
 
 TODO IN ANDROID 1.4
 -------------------
-Improve shuffle play algorithm.  Disable shuffle play when user removes all.
+Improve shuffle play algorithm.
 Notify user if SD card or network is unavailable.
 Use filename foo.complete.mp3
 Support filenames with "<" and ">".
