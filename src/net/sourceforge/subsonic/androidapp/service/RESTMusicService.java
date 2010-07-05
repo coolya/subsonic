@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
@@ -302,7 +303,7 @@ public class RESTMusicService implements MusicService {
         }
         HttpResponse response = getResponseForURL(context, url, params, headers, null, task);
 
-        // If content type is XML, an error occured.  Get it.
+        // If content type is XML, an error occurred.  Get it.
         String contentType = Util.getContentType(response.getEntity());
         if (contentType != null && contentType.startsWith("text/xml")) {
             InputStream in = response.getEntity().getContent();
@@ -371,6 +372,7 @@ public class RESTMusicService implements MusicService {
             List<Header> headers, ProgressListener progressListener, CancellableTask task) throws IOException {
         Log.i(TAG, "Using URL " + url);
 
+        final AtomicReference<Boolean> cancelled = new AtomicReference<Boolean>(false);
         int attempts = 0;
         while (true) {
             attempts++;
@@ -382,6 +384,7 @@ public class RESTMusicService implements MusicService {
                 task.setOnCancelListener(new CancellableTask.OnCancelListener() {
                     @Override
                     public void onCancel() {
+                        cancelled.set(true);
                         request.abort();
                     }
                 });
@@ -403,7 +406,7 @@ public class RESTMusicService implements MusicService {
                 return response;
             } catch (IOException x) {
                 request.abort();
-                if (attempts >= HTTP_REQUEST_MAX_ATTEMPTS || x instanceof InterruptedIOException) {
+                if (attempts >= HTTP_REQUEST_MAX_ATTEMPTS || cancelled.get()) {
                     throw x;
                 }
                 if (progressListener != null) {
