@@ -44,8 +44,8 @@ public class FileUtil {
 
     private static final File musicDir = createDirectory("music");
 
-    public static File getSongFile(MusicDirectory.Entry song, boolean createDir) {
-        File dir = getAlbumDirectory(song, createDir);
+    public static File getSongFile(MusicDirectory.Entry song) {
+        File dir = getAlbumDirectory(song);
 
         StringBuilder fileName = new StringBuilder();
         Integer track = song.getTrack();
@@ -67,9 +67,8 @@ public class FileUtil {
         return new File(dir, fileName.toString());
     }
 
-    private static File getAlbumDirectory(MusicDirectory.Entry song, boolean create) {
+    private static File getAlbumDirectory(MusicDirectory.Entry song) {
         File dir;
-
         if (song.getPath() != null) {
             File f = new File(song.getPath());
             dir = new File(musicDir.getPath() + "/" + f.getParent());
@@ -78,13 +77,16 @@ public class FileUtil {
             String album = fileSystemSafe(song.getAlbum());
             dir = new File(musicDir.getPath() + "/" + artist + "/" + album);
         }
+        return dir;
+    }
 
-        if (create && !dir.exists()) {
+    public static void createDirectoryForParent(File file) {
+        File dir = file.getParentFile();
+        if (!dir.exists()) {
             if (!dir.mkdirs()) {
                 Log.e(TAG, "Failed to create directory " + dir);
             }
         }
-        return dir;
     }
 
     private static File createDirectory(String name) {
