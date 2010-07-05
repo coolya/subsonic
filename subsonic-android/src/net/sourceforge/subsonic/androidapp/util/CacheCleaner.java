@@ -83,14 +83,12 @@ public class CacheCleaner {
         Log.i(TAG, "Cache size before: " + Util.formatBytes(bytesUsed));
 
         for (File file : files) {
-            if (bytesUsed < cacheSizeBytes) {
-                break;
-            }
-
-            if (!undeletable.contains(file)) {
-                long size = file.length();
-                if (Util.delete(file)) {
-                    bytesUsed -= size;
+            if (bytesUsed > cacheSizeBytes || file.getName().endsWith(".partial")) {
+                if (!undeletable.contains(file)) {
+                    long size = file.length();
+                    if (Util.delete(file)) {
+                        bytesUsed -= size;
+                    }
                 }
             }
         }

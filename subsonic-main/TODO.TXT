@@ -12,12 +12,12 @@ DONE IN ANDROID 1.3.3
 Shuffle play.
 Bugfix: Don't attempt download if network or SD card is unavailable.
 Bugfix: Don't create empty directories when browsing albums.
+Delete .partial files when cleaning cache.
 
 TODO IN ANDROID 1.4
 -------------------
 Notify user if SD card or network is unavailable.
 Trim search query.
-Delete .partial files when cleaning cache.
 Use filename foo.complete.mp3
 Support filenames with "<" and ">".
 Trim username, servername. Url-encode username.
