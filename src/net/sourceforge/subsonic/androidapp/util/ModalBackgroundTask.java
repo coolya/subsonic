@@ -107,7 +107,7 @@ public abstract class ModalBackgroundTask<T> extends BackgroundTask<T> {
         thread.start();
     }
 
-    private void cancel() {
+    protected void cancel() {
         cancelled = true;
         if (thread != null) {
             thread.interrupt();
