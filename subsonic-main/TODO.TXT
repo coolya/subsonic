@@ -11,12 +11,11 @@ DONE IN ANDROID 1.3.3
 -----------------------
 Shuffle play.
 Bugfix: Don't attempt download if network or SD card is unavailable.
-
+Bugfix: Don't create empty directories when browsing albums.
 
 TODO IN ANDROID 1.4
 -------------------
-Subsonic attempts to create directory when browsing music.
-Abort http download request if user cancels.
+Improve "Socket is not connected" error message.
 Use FileChannel.transferTo() to copy files.
 Notify user if SD card or network is unavailable.
 Trim search query.

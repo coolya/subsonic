@@ -57,7 +57,7 @@ public class DownloadFile {
         this.context = context;
         this.song = song;
         this.save = save;
-        saveFile = FileUtil.getSongFile(song, true);
+        saveFile = FileUtil.getSongFile(song);
         partialFile = new File(saveFile.getPath() + ".partial");
         completeFile = new File(saveFile.getPath() + ".complete");
         mediaStoreService = new MediaStoreService(context);
@@ -68,6 +68,7 @@ public class DownloadFile {
     }
 
     public synchronized void download() {
+        FileUtil.createDirectoryForParent(saveFile);
         failed = false;
         downloadTask = new DownloadTask();
         downloadTask.start();
