@@ -189,8 +189,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             serverName.setSummary(serverName.getText());
             serverUrl.setSummary(serverUrl.getText());
             username.setSummary(username.getText());
-
-            screen.setTitle(""); // Work-around for missing update of screen summary.
             screen.setSummary(serverUrl.getText());
             screen.setTitle(serverName.getText());
         }
