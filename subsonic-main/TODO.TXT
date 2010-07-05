@@ -15,7 +15,6 @@ Bugfix: Don't create empty directories when browsing albums.
 
 TODO IN ANDROID 1.4
 -------------------
-Use FileChannel.transferTo() to copy files.
 Notify user if SD card or network is unavailable.
 Trim search query.
 Delete .partial files when cleaning cache.
