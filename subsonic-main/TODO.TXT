@@ -17,8 +17,7 @@ Trim search query.
 
 TODO IN ANDROID 1.4
 -------------------
-Testing connection causes wrong radio button to be selected in Select server.
-Connection still OK even when changing username/password. 
+Improve shuffle play algorithm.  Disable shuffle play when user removes all.
 Trim username, servername. Url-encode username.
 Notify user if SD card or network is unavailable.
 Use filename foo.complete.mp3

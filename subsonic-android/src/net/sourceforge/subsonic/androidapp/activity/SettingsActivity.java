@@ -149,6 +149,12 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             }
 
             @Override
+            protected void cancel() {
+                super.cancel();
+                Util.setActiveServer(SettingsActivity.this, previousInstance);
+            }
+
+            @Override
             protected void error(Throwable error) {
                 Log.w(TAG, error.toString(), error);
                 new ErrorDialog(SettingsActivity.this, getResources().getString(R.string.settings_connection_failure) +
