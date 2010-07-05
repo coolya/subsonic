@@ -202,14 +202,14 @@ public final class Util {
     }
 
     public static void atomicCopy(File from, File to) throws IOException {
-        InputStream in = null;
-        OutputStream out = null;
+        FileInputStream in = null;
+        FileOutputStream out = null;
         File tmp = null;
         try {
             tmp = new File(to.getPath() + ".tmp");
             in = new FileInputStream(from);
             out = new FileOutputStream(tmp);
-            copy(in, out);
+            in.getChannel().transferTo(0, from.length(), out.getChannel());
             out.close();
             if (!tmp.renameTo(to)) {
                 throw new IOException("Failed to rename " + tmp + " to " + to);
