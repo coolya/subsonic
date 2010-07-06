@@ -116,6 +116,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                warnIfNetworkOrStorageUnavailable();
                 downloadService.previous();
             }
         });
@@ -123,6 +124,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                warnIfNetworkOrStorageUnavailable();
                 downloadService.next();
             }
         });
@@ -144,6 +146,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                warnIfNetworkOrStorageUnavailable();
                 start();
             }
         });
@@ -164,6 +167,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         playlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                warnIfNetworkOrStorageUnavailable();
                 downloadService.play(position);
             }
         });
@@ -173,6 +177,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         downloadService = DownloadServiceImpl.getInstance();
 
         if (getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_SHUFFLE, false)) {
+            warnIfNetworkOrStorageUnavailable();
             downloadService.setShufflePlayEnabled(true);
         }
     }
@@ -266,6 +271,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         if (state == PAUSED || state == COMPLETED) {
             downloadService.start();
         } else if (state == STOPPED || state == IDLE) {
+            warnIfNetworkOrStorageUnavailable();
             downloadService.play(downloadService.getCurrentPlaying());
         }
     }

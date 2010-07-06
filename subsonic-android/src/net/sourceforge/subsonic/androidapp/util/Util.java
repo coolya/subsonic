@@ -48,6 +48,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
@@ -381,6 +382,10 @@ public final class Util {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
+    }
+
+    public static boolean isExternalStoragePresent() {
+        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
     public static void error(Context context, int messageId) {

@@ -17,11 +17,11 @@ Trim search query.
 Trim username and url.
 Disable shuffle play when user removes all.
 Use filename foo.complete.mp3
-Properly hide notification.
+Notify user if SD card or network is unavailable.
 
 TODO IN ANDROID 1.4
 -------------------
-Notify user if SD card or network is unavailable.
+Properly hide/show notification.
 
 https support
 Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
