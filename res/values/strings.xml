@@ -43,6 +43,8 @@
     <string name="select_album.save">Save on phone</string>
     <string name="select_album.offline">Offline</string>
     <string name="select_album.searching">Searching...</string>
+    <string name="select_album.no_sdcard">Warning: No SD card available.</string>
+    <string name="select_album.no_network">Warning: No network available.</string>
     <string name="select_album.not_licensed">Server not licensed. %d trial days left.</string>
     <string name="select_album.donate_dialog_message">Get unlimited downloads by donating to Subsonic.</string>
     <string name="select_album.donate_dialog_now">Now</string>

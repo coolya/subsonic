@@ -389,7 +389,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     protected synchronized void checkDownloads() {
 
-        if (!Util.isNetworkConnected(this) || !isExternalStoragePresent()) {
+        if (!Util.isNetworkConnected(this) || !Util.isExternalStoragePresent()) {
             return;
         }
 
@@ -487,10 +487,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     public long getDownloadListUpdateRevision() {
         return revision;
-    }
-
-    private boolean isExternalStoragePresent() {
-        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
     private synchronized void cleanup() {

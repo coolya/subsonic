@@ -168,4 +168,12 @@ public class SubsonicTabActivity extends Activity {
             view.setText(message);
         }
     }
+
+    protected void warnIfNetworkOrStorageUnavailable() {
+        if (!Util.isExternalStoragePresent()) {
+            Util.toast(this, R.string.select_album_no_sdcard);
+        } else if (!Util.isOffline(this) && !Util.isNetworkConnected(this)) {
+            Util.toast(this, R.string.select_album_no_network);
+        }
+    }
 }

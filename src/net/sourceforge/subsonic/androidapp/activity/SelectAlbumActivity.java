@@ -379,6 +379,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                     downloadService.clear();
                 }
 
+                warnIfNetworkOrStorageUnavailable();
                 downloadService.download(songs, save, autoplay);
                 if (autoplay) {
                     Util.startActivityWithoutTransition(SelectAlbumActivity.this, DownloadActivity.class);
