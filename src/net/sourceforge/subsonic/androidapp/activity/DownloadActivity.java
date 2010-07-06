@@ -305,7 +305,10 @@ public class DownloadActivity extends SubsonicTabActivity {
             MusicDirectory.Entry song = currentPlaying.getSong();
             albumArtTextView.setText(song.getTitle() + " - " + song.getArtist());
             imageLoader.loadImage(albumArtImageView, song, true);
-        }
+        } else {
+            albumArtTextView.setText(null);
+            imageLoader.loadImage(albumArtImageView, (String) null, true);
+        } 
     }
 
     private void onProgressChanged() {
@@ -320,7 +323,12 @@ public class DownloadActivity extends SubsonicTabActivity {
             progressBar.setMax(millisTotal == 0 ? 100 : millisTotal); // Work-around for apparent bug.
             progressBar.setProgress(millisPlayed);
             progressBar.setSlidingEnabled(currentPlaying.isCompleteFileAvailable());
-        }
+        } else {
+            positionTextView.setText("0:00");
+            durationTextView.setText("-:--");
+            progressBar.setProgress(0);
+            progressBar.setSlidingEnabled(false);
+        } 
 
         PlayerState playerState = downloadService.getPlayerState();
 
@@ -333,7 +341,7 @@ public class DownloadActivity extends SubsonicTabActivity {
                 statusTextView.setText(R.string.download_playerstate_buffering);
                 break;
             case STARTED:
-                statusTextView.setText(R.string.download_playerstate_playing);
+                statusTextView.setText(downloadService.isShufflePlayEnabled() ? R.string.download_playerstate_playing_shuffle : R.string.download_playerstate_playing);
                 break;
             case PAUSED:
                 statusTextView.setText(R.string.download_playerstate_paused);

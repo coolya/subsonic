@@ -147,7 +147,7 @@
                 a:textSize="14dp"
                 a:textStyle="bold"
                 a:textColor="@color/mediaControlForeground"
-                a:text="0:00"/>
+                a:text="-:--"/>
     </LinearLayout>
 
     <net.sourceforge.subsonic.androidapp.util.HorizontalSlider
