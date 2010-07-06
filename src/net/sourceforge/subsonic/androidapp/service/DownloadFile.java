@@ -32,6 +32,8 @@ import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Util;
+
+import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 
@@ -59,7 +61,8 @@ public class DownloadFile {
         this.save = save;
         saveFile = FileUtil.getSongFile(song);
         partialFile = new File(saveFile.getPath() + ".partial");
-        completeFile = new File(saveFile.getPath() + ".complete");
+        completeFile = new File(saveFile.getParent(), FilenameUtils.getBaseName(saveFile.getName()) +
+                ".complete." + FilenameUtils.getExtension(saveFile.getName()));
         mediaStoreService = new MediaStoreService(context);
     }
 
