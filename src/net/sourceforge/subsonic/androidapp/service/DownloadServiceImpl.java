@@ -271,6 +271,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         } catch (Exception x) {
             handleError(x);
         }
+        Util.hidePlayingNotification(this, handler);
     }
 
     @Override
