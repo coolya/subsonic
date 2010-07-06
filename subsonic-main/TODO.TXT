@@ -22,10 +22,9 @@ TODO IN ANDROID 1.4
 -------------------
 Notify user if SD card or network is unavailable.
 
-Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
-Shuffle play
-Only retry if network error.
 https support
+Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
+Only retry if network error.
 Select music folder in server settings. (Including "All").
 Support max bitrate in settings. ("Preferred bitrate") Differentiate between Wifi and Mobile
 Use combination of progress bar and slide bar.
@@ -35,11 +34,6 @@ Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Colors: http://www.androidtapp.com/opentable/
 
-DONE IN ANDROID 1.3.2
----------------------
-New settings: Number of songs to preload.
-New settings: Music cache size
-Fixed problem with saving songs.
 
 TODO IN 4.1
 -----------------

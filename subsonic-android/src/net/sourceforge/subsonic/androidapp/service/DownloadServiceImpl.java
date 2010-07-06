@@ -133,6 +133,11 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     @Override
+    public synchronized boolean isShufflePlayEnabled() {
+        return shufflePlay;
+    }
+
+    @Override
     public synchronized DownloadFile forSong(MusicDirectory.Entry song) {
         for (DownloadFile downloadFile : downloadList) {
             if (downloadFile.getSong() == song) {

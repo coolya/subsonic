@@ -33,6 +33,8 @@ public interface DownloadService {
 
     void setShufflePlayEnabled(boolean enabled);
 
+    boolean isShufflePlayEnabled();
+
     void clear();
 
     void remove(DownloadFile downloadFile);
