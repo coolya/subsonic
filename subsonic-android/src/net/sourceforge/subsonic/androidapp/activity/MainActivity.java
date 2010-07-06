@@ -49,6 +49,8 @@ public class MainActivity extends SubsonicTabActivity {
 
     private String theme;
 
+    private static boolean infoDialogDisplayed;
+
     /**
     * Called when the activity is first created.
     */
@@ -129,6 +131,8 @@ public class MainActivity extends SubsonicTabActivity {
 
         // Remember the current theme.
         theme = Util.getTheme(this);
+
+        showInfoDialog();
     }
 
     @Override
@@ -195,6 +199,15 @@ public class MainActivity extends SubsonicTabActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Util.startActivityWithoutTransition(this, intent);
+    }
+
+    private void showInfoDialog() {
+        if (!infoDialogDisplayed) {
+            infoDialogDisplayed = true;
+            if (Util.getRestUrl(this, null).contains("demo.subsonic.org")) {
+                Util.info(this, R.string.main_welcome_title, R.string.main_welcome_text);
+            }
+        }
     }
 
     private void showAlbumList(String type) {

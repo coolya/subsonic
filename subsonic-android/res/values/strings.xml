@@ -4,6 +4,9 @@
     <string name="common.ok">OK</string>
     <string name="common.cancel">Cancel</string>
 
+    <string name="main.welcome_title">Welcome!</string>
+    <string name="main.welcome_text">Welcome to Subsonic! The app is currently configured to use the <b>Subsonic demo server</b>. After you\'ve
+        set up your personal server (available from subsonic.org), please go to <b>Settings</b> and change the configuration to connect to it.</string>
     <string name="main.select_server">Select server</string>
     <string name="main.shuffle">Shuffle play</string>
     <string name="main.offline">Offline</string>
