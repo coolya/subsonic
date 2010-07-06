@@ -20,7 +20,6 @@ Use filename foo.complete.mp3
 
 TODO IN ANDROID 1.4
 -------------------
-Improve shuffle play algorithm.
 Notify user if SD card or network is unavailable.
 
 Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101

@@ -124,7 +124,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     @Override
-    public void setShufflePlayEnabled(boolean enabled) {
+    public synchronized void setShufflePlayEnabled(boolean enabled) {
         shufflePlay = enabled;
         if (shufflePlay) {
             clear();
@@ -448,20 +448,26 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     private synchronized void checkShufflePlay() {
 
-        final int listSize = 10;
-
+        final int listSize = 20;
         boolean wasEmpty = downloadList.isEmpty();
-        int currIndex = currentPlaying == null ? 0 : downloadList.indexOf(currentPlaying);
-        int size = downloadList.size();
-        int remaining = size - currIndex;
 
-        if (remaining < listSize) {
-            for (MusicDirectory.Entry song : shufflePlayBuffer.get(Math.max(size,listSize) - remaining)) {
+        // First, ensure that list is at least 20 songs long.
+        int size = downloadList.size();
+        if (size < listSize) {
+            for (MusicDirectory.Entry song : shufflePlayBuffer.get(listSize - size)) {
                 DownloadFile downloadFile = new DownloadFile(this, song, false);
                 downloadList.add(downloadFile);
                 revision++;
             }
-            while (downloadList.size() > listSize) {
+        }
+
+        int currIndex = currentPlaying == null ? 0 : downloadList.indexOf(currentPlaying);
+
+        // Only shift playlist if playing song #5 or later.
+        if (currIndex > 4) {
+            int songsToShift = currIndex - 2;
+            for (MusicDirectory.Entry song : shufflePlayBuffer.get(songsToShift)) {
+                downloadList.add(new DownloadFile(this, song, false));
                 downloadList.get(0).cancelDownload();
                 downloadList.remove(0);
                 revision++;
