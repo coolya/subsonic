@@ -99,7 +99,7 @@ public class CacheCleaner {
     private void findCandidatesForDeletion(File file, List<File> files, List<File> dirs) {
         if (file.isFile()) {
             String name = file.getName();
-            boolean isCacheFile = name.endsWith(".partial") || name.endsWith(".complete");
+            boolean isCacheFile = name.endsWith(".partial") || name.endsWith(".complete") || name.contains(".complete.");
             if (isCacheFile) {
                 files.add(file);
             }

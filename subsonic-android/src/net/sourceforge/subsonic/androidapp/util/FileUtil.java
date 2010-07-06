@@ -40,7 +40,7 @@ public class FileUtil {
     private static final String TAG = FileUtil.class.getSimpleName();
 
     // Used by fileSystemSafe()
-    private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", "..", ":", "\"", "?", "*"};
+    private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", "..", ":", "\"", "?", "*", "<", ">"};
 
     private static final File musicDir = createDirectory("music");
 
@@ -140,12 +140,16 @@ public class FileUtil {
      *
      * @param s The string in question.
      * @return The suffix, or an empty string if no suffix is found.
+     * @deprecated Use FilenameUtils instead
      */
+    @Deprecated
     public static String getSuffix(String s) {
         int index = s.lastIndexOf('.');
         return index == -1 ? "" : s.substring(index + 1);
     }
 
+    /** @deprecated Use FilenameUtils instead */
+    @Deprecated
     public static String getPrefix(String s) {
         int index = s.lastIndexOf('.');
         return index == -1 ? s : s.substring(0, index);
