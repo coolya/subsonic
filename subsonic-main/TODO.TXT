@@ -17,6 +17,7 @@ Trim search query.
 Trim username and url.
 Disable shuffle play when user removes all.
 Use filename foo.complete.mp3
+Properly hide notification.
 
 TODO IN ANDROID 1.4
 -------------------
