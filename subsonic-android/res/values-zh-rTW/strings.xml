@@ -39,7 +39,6 @@
     <string name="download.remove">移除</string>
     <string name="download.remove_all">全部移除</string>
     <string name="download.play_error">播放錯誤 \"%s\"</string>
-    <string name="download.error">下載錯誤 \"%s\"</string>
 
     <string name="error.label">錯誤</string>
 
@@ -52,22 +51,10 @@
     <string name="settings.server_address">伺服器位址</string>
     <string name="settings.server_username">使用者名稱</string>
     <string name="settings.server_password">密碼</string>
-    <string name="settings.maintenance_title">保持</string>
-    <string name="settings.software_update">檢查軟體更新</string>
-    <string name="settings.empty_cache">移除快取音樂</string>
-    <string name="settings.empty_cache_confirm">要移除所有快取的音樂檔案嗎?</string>
     <string name="settings.testing_connection">測試連線...</string>
     <string name="settings.testing_ok">測試透過</string>
     <string name="settings.testing_unlicensed">測試透過。未經授權的伺服器</string>
     <string name="settings.connection_failure">連線故障。</string>
-    <string name="settings.cache_deleting">移除快取檔案...</string>
-    <string name="settings.cache_deleted">移除 %d 檔案。</string>
-    <string name="settings.version_checking">檢查更新...</string>
-    <string name="settings.version_current_failed">解析最新版本失敗。</string>
-    <string name="settings.version_latest_failed">解析最新版本失敗。</string>
-    <string name="settings.version_update_available_title">更新可用</string>
-    <string name="settings.version_update_available_text">較新的版本在電子市場。</string>
-    <string name="settings.version_update_not_available">您正在執行最新版本。</string>
     <string name="settings.invalid_url">請指定一個有效的網址。</string>
 
     <string name="music_service.retry">發生網路錯誤。 重試 %d 的 %d.</string>

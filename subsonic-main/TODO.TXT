@@ -7,7 +7,7 @@ TODO IN BACKEND
 ---------------
 If trying to assign an expired web address used by someone else, don't show "Expired..." message.
 
-DONE IN ANDROID 1.3.3
+DONE IN ANDROID 1.4
 -----------------------
 Shuffle play.
 Bugfix: Don't attempt download if network or SD card is unavailable.

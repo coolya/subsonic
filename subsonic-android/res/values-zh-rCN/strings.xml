@@ -39,7 +39,6 @@
     <string name="download.remove">删除</string>
     <string name="download.remove_all">全部删除</string>
     <string name="download.play_error">播放错误 \"%s\"</string>
-    <string name="download.error">下载错误 \"%s\"</string>
 
     <string name="error.label">错误</string>
 
@@ -52,22 +51,10 @@
     <string name="settings.server_address">服务器地址</string>
     <string name="settings.server_username">用户名</string>
     <string name="settings.server_password">密码</string>
-    <string name="settings.maintenance_title">保持</string>
-    <string name="settings.software_update">检查软件更新</string>
-    <string name="settings.empty_cache">删除缓存音乐</string>
-    <string name="settings.empty_cache_confirm">要删除所有缓存的音乐文件吗?</string>
     <string name="settings.testing_connection">测试连接...</string>
     <string name="settings.testing_ok">测试通过</string>
     <string name="settings.testing_unlicensed">测试通过。未经许可的服务器</string>
     <string name="settings.connection_failure">连接故障。</string>
-    <string name="settings.cache_deleting">删除缓存文件...</string>
-    <string name="settings.cache_deleted">删除 %d 文件。</string>
-    <string name="settings.version_checking">检查更新...</string>
-    <string name="settings.version_current_failed">解析最新版本失败。</string>
-    <string name="settings.version_latest_failed">解析最新版本失败。</string>
-    <string name="settings.version_update_available_title">更新可用</string>
-    <string name="settings.version_update_available_text">较新的版本在电子市场。</string>
-    <string name="settings.version_update_not_available">您正在运行最新版本。</string>
     <string name="settings.invalid_url">请指定一个有效的网址。</string>
 
     <string name="music_service.retry">发生网络错误。 重试 %d 的 %d.</string>
