@@ -31,6 +31,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView;
 import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.util.SackOfViewsAdapter;
 import net.sourceforge.subsonic.androidapp.util.Util;
@@ -184,7 +185,14 @@ public class MainActivity extends SubsonicTabActivity {
                 Util.setActiveServer(this, 3);
                 break;
             case MENU_ITEM_OFFLINE:
-                Util.setActiveServer(this, 0);
+                if (Util.getActiveServer(this) != 0) {
+                    DownloadService service = DownloadServiceImpl.getInstance();
+                    if (service != null) {
+                        service.clear();
+                        service.setShufflePlayEnabled(false);
+                    }
+                    Util.setActiveServer(this, 0);
+                }
                 break;
             default:
                 return super.onContextItemSelected(menuItem);
