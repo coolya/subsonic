@@ -155,7 +155,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         if (currentDownloading != null) {
             currentDownloading.cancelDownload();
         }
-        currentPlaying = null;
+        setCurrentPlaying(null);
 
         lifecycleSupport.serializeDownloadQueue();
     }
@@ -167,7 +167,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
         if (downloadFile == currentPlaying) {
             reset();
-            currentPlaying = null;
+            setCurrentPlaying(null);
         }
         downloadList.remove(downloadFile);
         revision++;
@@ -181,6 +181,15 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
     }
 
+    private synchronized void setCurrentPlaying(DownloadFile currentPlaying) {
+        this.currentPlaying = currentPlaying;
+
+        if (currentPlaying != null) {
+            Util.showPlayingNotification(this, handler, currentPlaying.getSong());
+        } else {
+            Util.hidePlayingNotification(this, handler);
+        }
+    }
 
     @Override
     public DownloadFile getCurrentPlaying() {
@@ -208,7 +217,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             return;
         }
 
-        currentPlaying = downloadList.get(index);
+        setCurrentPlaying(downloadList.get(index));
         checkDownloads();
         bufferAndPlay();
     }
@@ -271,7 +280,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         } catch (Exception x) {
             handleError(x);
         }
-        Util.hidePlayingNotification(this, handler);
     }
 
     @Override
@@ -312,17 +320,11 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     private synchronized void setPlayerState(PlayerState playerState) {
         Log.i(TAG, this.playerState.name() + " -> " + playerState.name());
-        if (this.playerState == PAUSED && playerState == STARTED) {
-            Util.showPlayingNotification(this, handler, currentPlaying.getSong());
-        } else if (this.playerState == STARTED && playerState == PAUSED) {
-            Util.hidePlayingNotification(this, handler);
-        }
         this.playerState = playerState;
     }
 
     private synchronized void bufferAndPlay() {
         reset();
-        Util.showPlayingNotification(this, handler, currentPlaying.getSong());
 
         fileSizeAtLastResume = 0;
         bufferTask = new BufferTask(currentPlaying, 0);
@@ -350,7 +352,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                     // If COMPLETED and not playing partial file, we are *really" finished
                     // with the song and can move on to the next.
                     if (!file.equals(downloadFile.getPartialFile())) {
-                        Util.hidePlayingNotification(DownloadServiceImpl.this, handler);
                         next();
                         return;
                     }

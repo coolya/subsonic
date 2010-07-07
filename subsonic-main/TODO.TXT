@@ -21,8 +21,6 @@ Notify user if SD card or network is unavailable.
 
 TODO IN ANDROID 1.4
 -------------------
-Properly hide/show notification.
-
 https support
 Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
 Only retry if network error.
@@ -47,7 +45,7 @@ Chat slow when deploying on tomcat?
 Replace reverse Ajax with polling.
 Run Mac server in background (status bar).
 Sonic themes, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3371
-Update themes.
+Update themes. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3082
 
 Create post-payment landing page.
 Create translation tool for backend.
