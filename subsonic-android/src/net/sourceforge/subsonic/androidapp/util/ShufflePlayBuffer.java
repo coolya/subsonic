@@ -82,7 +82,7 @@ public class ShufflePlayBuffer {
             }
         }
 
-        if (buffer.size() > REFILL_THRESHOLD || !Util.isNetworkConnected(context)) {
+        if (buffer.size() > REFILL_THRESHOLD || Util.isOffline(context) || !Util.isNetworkConnected(context)) {
             return;
         }
 

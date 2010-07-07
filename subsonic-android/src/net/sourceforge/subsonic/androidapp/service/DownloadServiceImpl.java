@@ -89,6 +89,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         super.onDestroy();
         lifecycleSupport.onDestroy();
         mediaPlayer.release();
+        shufflePlayBuffer.shutdown();
         instance = null;
     }
 
