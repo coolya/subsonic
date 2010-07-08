@@ -57,10 +57,10 @@ public class DownloadActivity extends SubsonicTabActivity {
 
     private static final int MENU_ITEM_REMOVE = 100;
     private static final int MENU_ITEM_REMOVE_ALL = 101;
+    private static final int MENU_ITEM_SHUFFLE = 200;
 
     private ImageLoader imageLoader;
     private DownloadService downloadService;
-
     private ViewFlipper flipper;
     private TextView emptyTextView;
     private TextView albumArtTextView;
@@ -213,6 +213,25 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(Menu.NONE, MENU_ITEM_SHUFFLE, Menu.NONE, R.string.download_menu_shuffle);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case MENU_ITEM_SHUFFLE:
+                downloadService.shuffle();
+                Util.toast(this, R.string.download_menu_shuffle_notification);
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
         if (view == playlistView) {
@@ -314,7 +333,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         } else {
             albumArtTextView.setText(null);
             imageLoader.loadImage(albumArtImageView, (String) null, true);
-        } 
+        }
     }
 
     private void onProgressChanged() {
@@ -334,7 +353,7 @@ public class DownloadActivity extends SubsonicTabActivity {
             durationTextView.setText("-:--");
             progressBar.setProgress(0);
             progressBar.setSlidingEnabled(false);
-        } 
+        }
 
         PlayerState playerState = downloadService.getPlayerState();
 
