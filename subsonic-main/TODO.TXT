@@ -7,24 +7,18 @@ TODO IN BACKEND
 ---------------
 If trying to assign an expired web address used by someone else, don't show "Expired..." message.
 
-DONE IN ANDROID 1.4
------------------------
-Shuffle play.
-Bugfix: Don't attempt download if network or SD card is unavailable.
-Bugfix: Don't create empty directories when browsing albums.
-Delete .partial files when cleaning cache.
-Trim search query.
-Trim username and url.
-Disable shuffle play when user removes all.
-Use filename foo.complete.mp3
-Notify user if SD card or network is unavailable.
-Clear playlist when selecting Offline.
+DONE IN ANDROID 1.4.1
+---------------------
+Playlist shuffle.
 
-TODO IN ANDROID 1.4
--------------------
-
+TODO IN ANDROID 1.4.1
+---------------------
+Skipping broken when downloading file.
+Remove notification when paused or last song completed
+Save playlist on server.
 https support
-Support ogg http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
+Exit menu option
+Support ogg, aac http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
 Only retry if network error.
 Select music folder in server settings. (Including "All").
 Support max bitrate in settings. ("Preferred bitrate") Differentiate between Wifi and Mobile
@@ -38,6 +32,10 @@ Colors: http://www.androidtapp.com/opentable/
 
 TODO IN 4.1
 -----------------
+Support html5 audio
+   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2746
+   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2154
+
 Make port 4040 the default on Windows installations not 80
 Proper lookup of local IP on linux.
 Update to FLAC 1.2.1, LAME 3.98.4  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3278

@@ -22,6 +22,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Collections;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.app.Service;
@@ -31,7 +32,6 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.os.Environment;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
@@ -136,6 +136,16 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     @Override
     public synchronized boolean isShufflePlayEnabled() {
         return shufflePlay;
+    }
+
+    @Override
+    public synchronized void shuffle() {
+        Collections.shuffle(downloadList);
+        if (currentPlaying != null) {
+            downloadList.remove(downloadList.indexOf(currentPlaying));
+            downloadList.add(0, currentPlaying);
+        }
+        revision++;
     }
 
     @Override

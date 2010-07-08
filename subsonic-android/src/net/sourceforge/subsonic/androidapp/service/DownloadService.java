@@ -35,6 +35,8 @@ public interface DownloadService {
 
     boolean isShufflePlayEnabled();
 
+    void shuffle();
+
     void clear();
 
     void remove(DownloadFile downloadFile);
