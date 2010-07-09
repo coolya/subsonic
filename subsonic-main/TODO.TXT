@@ -1,3 +1,35 @@
+java.lang.NullPointerException
+E/AndroidRuntime( 8811): 	at net.sourceforge.subsonic.androidapp.activity.SelectAlbumActivity$EntryAdapter.getView(SelectAlbumActivity.java:495)
+E/AndroidRuntime( 8811): 	at android.widget.HeaderViewListAdapter.getView(HeaderViewListAdapter.java:220)
+E/AndroidRuntime( 8811): 	at android.widget.AbsListView.obtainView(AbsListView.java:1315)
+E/AndroidRuntime( 8811): 	at android.widget.ListView.makeAndAddView(ListView.java:1727)
+E/AndroidRuntime( 8811): 	at android.widget.ListView.fillDown(ListView.java:652)
+E/AndroidRuntime( 8811): 	at android.widget.ListView.fillFromTop(ListView.java:709)
+E/AndroidRuntime( 8811): 	at android.widget.ListView.layoutChildren(ListView.java:1580)
+E/AndroidRuntime( 8811): 	at android.widget.AbsListView.onLayout(AbsListView.java:1147)
+E/AndroidRuntime( 8811): 	at android.view.View.layout(View.java:7035)
+E/AndroidRuntime( 8811): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1249)
+E/AndroidRuntime( 8811): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1125)
+E/AndroidRuntime( 8811): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1042)
+E/AndroidRuntime( 8811): 	at android.view.View.layout(View.java:7035)
+E/AndroidRuntime( 8811): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:333)
+E/AndroidRuntime( 8811): 	at android.view.View.layout(View.java:7035)
+E/AndroidRuntime( 8811): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1249)
+E/AndroidRuntime( 8811): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1125)
+E/AndroidRuntime( 8811): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1042)
+E/AndroidRuntime( 8811): 	at android.view.View.layout(View.java:7035)
+E/AndroidRuntime( 8811): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:333)
+E/AndroidRuntime( 8811): 	at android.view.View.layout(View.java:7035)
+E/AndroidRuntime( 8811): 	at android.view.ViewRoot.performTraversals(ViewRoot.java:1045)
+E/AndroidRuntime( 8811): 	at android.view.ViewRoot.handleMessage(ViewRoot.java:1727)
+E/AndroidRuntime( 8811): 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/AndroidRuntime( 8811): 	at android.os.Looper.loop(Looper.java:123)
+E/AndroidRuntime( 8811): 	at android.app.ActivityThread.main(ActivityThread.java:4627)
+E/AndroidRuntime( 8811): 	at java.lang.reflect.Method.invokeNative(Native Method)
+E/AndroidRuntime( 8811): 	at java.lang.reflect.Method.invoke(Method.java:521)
+E/AndroidRuntime( 8811): 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:868)
+
+
 https://www.paypal.com/no/cgi-bin/webscr?cmd=_display-ipns-history
 http://android.git.kernel.org/?p=platform/frameworks/base.git;a=tree;f=core;
 https://cms.paypal.com/us/cgi-bin/?&cmd=_render-content&content_ID=developer/e_howto_html_donation_buttons#id08AAF0P05LK
@@ -10,14 +42,19 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 DONE IN ANDROID 1.4.1
 ---------------------
 Playlist shuffle.
+When resuming DownloadActivity, scroll to current playing/downloading.
 
 TODO IN ANDROID 1.4.1
 ---------------------
+Extend playlist menu (Clear, Save...)
+Use naming scheme foo.partial.mp3
 Skipping broken when downloading file.
 Remove notification when paused or last song completed
+Download stops when screen is off.
+Crashes if plugging in usb while downloading. See stack trace above.
 Save playlist on server.
 https support
-Exit menu option
+Exit menu option?
 Support ogg, aac http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
 Only retry if network error.
 Select music folder in server settings. (Including "All").

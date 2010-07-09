@@ -32,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.LayoutInflater;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,6 +40,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
+import android.widget.EditText;
+import android.app.Dialog;
+import android.app.AlertDialog;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
@@ -58,6 +62,8 @@ public class DownloadActivity extends SubsonicTabActivity {
     private static final int MENU_ITEM_REMOVE = 100;
     private static final int MENU_ITEM_REMOVE_ALL = 101;
     private static final int MENU_ITEM_SHUFFLE = 200;
+    private static final int MENU_ITEM_SAVE = 201;
+    private static final int DIALOG_SAVE_PLAYLIST = 400;
 
     private ImageLoader imageLoader;
     private DownloadService downloadService;
@@ -188,6 +194,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         onDownloadListChanged();
         onCurrentChanged();
         onProgressChanged();
+        scrollToCurrent();
 
         final Handler handler = new Handler();
         Runnable runnable = new Runnable() {
@@ -206,6 +213,23 @@ public class DownloadActivity extends SubsonicTabActivity {
         executorService.scheduleWithFixedDelay(runnable, 0L, 1000L, TimeUnit.MILLISECONDS);
     }
 
+    // Scroll to current playing/downloading.
+    private void scrollToCurrent() {
+        for (int i = 0; i < playlistView.getAdapter().getCount(); i++) {
+            if (currentPlaying == playlistView.getItemAtPosition(i)) {
+                playlistView.setSelectionFromTop(i, 40);
+                return;
+            }
+        }
+        DownloadFile currentDownloading = downloadService.getCurrentDownloading();
+        for (int i = 0; i < playlistView.getAdapter().getCount(); i++) {
+            if (currentDownloading == playlistView.getItemAtPosition(i)) {
+                playlistView.setSelectionFromTop(i, 40);
+                return;
+            }
+        }
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -213,8 +237,26 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     @Override
+    protected Dialog onCreateDialog(int id) {
+        if (id == DIALOG_SAVE_PLAYLIST) {
+            AlertDialog.Builder builder;
+
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.save_playlist, (ViewGroup) findViewById(R.id.save_playlist_root));
+
+
+            builder = new AlertDialog.Builder(this);
+            builder.setView(layout);
+            return builder.create();
+        } else {
+            return super.onCreateDialog(id);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(Menu.NONE, MENU_ITEM_SHUFFLE, Menu.NONE, R.string.download_menu_shuffle);
+//        menu.add(Menu.NONE, MENU_ITEM_SAVE, Menu.NONE, R.string.download_menu_save);
         return true;
     }
 
@@ -224,6 +266,9 @@ public class DownloadActivity extends SubsonicTabActivity {
             case MENU_ITEM_SHUFFLE:
                 downloadService.shuffle();
                 Util.toast(this, R.string.download_menu_shuffle_notification);
+                break;
+            case MENU_ITEM_SAVE:
+                showDialog(DIALOG_SAVE_PLAYLIST);
                 break;
             default:
                 break;
