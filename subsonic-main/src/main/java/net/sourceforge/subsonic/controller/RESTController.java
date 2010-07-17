@@ -757,7 +757,7 @@ public class RESTController extends MultiActionController {
 
         builder.add("chatMessages", false);
 
-        for (ChatService.Message message : chatService.getMessages()) {
+        for (ChatService.Message message : chatService.getMessages(0L).getMessages()) {
             long time = message.getDate().getTime();
             if (time > since) {
                 builder.add("chatMessage", true, new Attribute("username", message.getUsername()),

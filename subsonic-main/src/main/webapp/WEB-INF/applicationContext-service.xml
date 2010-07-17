@@ -201,7 +201,6 @@
 
     <bean id="ajaxChatService" class="net.sourceforge.subsonic.ajax.ChatService" init-method="init">
         <property name="securityService" ref="securityService"/>
-        <property name="settingsService" ref="settingsService"/>
         <property name="chatCache" ref="chatCache"/>
     </bean>
 

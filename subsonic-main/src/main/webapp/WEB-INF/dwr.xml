@@ -46,6 +46,7 @@
         <convert converter="bean" match="net.sourceforge.subsonic.ajax.LyricsInfo"/>
         <convert converter="bean" match="net.sourceforge.subsonic.ajax.CoverArtInfo"/>
         <convert converter="bean" match="net.sourceforge.subsonic.ajax.ChatService$Message"/>
+        <convert converter="bean" match="net.sourceforge.subsonic.ajax.ChatService$Messages"/>
 
     </allow>
 </dwr>

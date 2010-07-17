@@ -18,33 +18,25 @@
  */
 package net.sourceforge.subsonic.ajax;
 
+import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.util.BoundedList;
+import org.apache.commons.lang.StringUtils;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.lang.StringUtils;
-import org.directwebremoting.ScriptBuffer;
-import org.directwebremoting.ScriptSession;
-import org.directwebremoting.WebContext;
-import org.directwebremoting.WebContextFactory;
-import org.directwebremoting.ServerContext;
-import org.directwebremoting.ServerContextFactory;
-
-import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.Element;
-import net.sourceforge.subsonic.service.SecurityService;
-import net.sourceforge.subsonic.service.SettingsService;
-import net.sourceforge.subsonic.util.BoundedList;
-import net.sourceforge.subsonic.Logger;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Provides AJAX-enabled services for the chatting.
@@ -57,12 +49,13 @@ public class ChatService {
     private static final Logger LOG = Logger.getLogger(ChatService.class);
     private static final Object CACHE_KEY = 1;
     private static final int MAX_MESSAGES = 10;
+    private static final long TTL_MILLIS = 3L * 24L * 60L * 60L * 1000L; // 3 days.
 
     private LinkedList<Message> messages;
     private SecurityService securityService;
-    private SettingsService settingsService;
     private Ehcache chatCache;
-    private static final long TTL_MILLIS = 3L * 24L * 60L* 60L * 1000L; // 3 days.
+
+    private long revision = System.identityHashCode(this);
 
     /**
      * Invoked by Spring.
@@ -96,6 +89,7 @@ public class ChatService {
             Message message = iterator.next();
             if (now - message.getDate().getTime() > TTL_MILLIS) {
                 iterator.remove();
+                revision++;
             }
         }
     }
@@ -112,37 +106,25 @@ public class ChatService {
         if (message != null && user != null) {
             messages.addFirst(new Message(message, user, new Date()));
             chatCache.put(new Element(CACHE_KEY, messages));
+            revision++;
         }
-
-        updateBrowsers(request);
     }
 
     public synchronized void clearMessages() {
         messages.clear();
         chatCache.put(new Element(CACHE_KEY, messages));
-        updateBrowsers(WebContextFactory.get().getHttpServletRequest());
+        revision++;
     }
 
-    public synchronized List<Message> getMessages() {
-        return new ArrayList<Message>(messages);
-    }
-
-    private void updateBrowsers(HttpServletRequest request) {
-        ScriptBuffer script = new ScriptBuffer();
-        script.appendScript("receiveMessages(").appendData(messages).appendScript(");");
-
-        // Find all the browsers showing the chat page. Invoke javascript for populating the chat log.
-        String chatPage = "/right.view";
-        String contextPath = settingsService.getUrlRedirectContextPath();
-        if (!StringUtils.isEmpty(contextPath)) {
-            chatPage = "/" + contextPath + chatPage;
+    /**
+     * Returns all messages, but only if the given revision is different from the
+     * current revision.
+     */
+    public synchronized Messages getMessages(long revision) {
+        if (this.revision != revision) {
+            return new Messages(new ArrayList<Message>(messages), this.revision);
         }
-
-        ServerContext serverContext = ServerContextFactory.get(request.getSession().getServletContext());
-        Collection<ScriptSession> sessions = (Collection<ScriptSession>) serverContext.getScriptSessionsByPage(chatPage);
-        for (ScriptSession session : sessions) {
-            session.addScript(script);
-        }
+        return null;
     }
 
     public void setSecurityService(SecurityService securityService) {
@@ -153,8 +135,23 @@ public class ChatService {
         this.chatCache = chatCache;
     }
 
-    public void setSettingsService(SettingsService settingsService) {
-        this.settingsService = settingsService;
+    public static class Messages implements Serializable {
+
+        private final  List<Message> messages;
+        private final long revision;
+
+        public Messages(List<Message> messages, long revision) {
+            this.messages = messages;
+            this.revision = revision;
+        }
+
+        public List<Message> getMessages() {
+            return messages;
+        }
+
+        public long getRevision() {
+            return revision;
+        }
     }
 
     public static class Message implements Serializable {

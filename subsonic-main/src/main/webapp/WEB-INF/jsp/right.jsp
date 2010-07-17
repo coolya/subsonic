@@ -19,7 +19,6 @@
         setupZoom('<c:url value="/"/>');
         dwr.engine.setErrorHandler(null);
     <c:if test="${model.showChat}">
-        dwr.engine.setActiveReverseAjax(true);
         chatService.addMessage(null);
     </c:if>
     }
@@ -78,14 +77,29 @@
 <c:if test="${model.showChat}">
     <script type="text/javascript">
 
+        var revision = 0;
+        startGetMessagesTimer();
+
+        function startGetMessagesTimer() {
+            chatService.getMessages(revision, getMessagesCallback);
+            setTimeout("startGetMessagesTimer()", 10000);
+        }
+
         function addMessage() {
             chatService.addMessage($("message").value);
             dwr.util.setValue("message", null);
+            setTimeout("startGetMessagesTimer()", 500);
         }
         function clearMessages() {
             chatService.clearMessages();
+            setTimeout("startGetMessagesTimer()", 500);
         }
-        function receiveMessages(messages) {
+        function getMessagesCallback(messages) {
+
+            if (messages == null) {
+                return;
+            }
+            revision = messages.revision;
 
             // Delete all the rows except for the "pattern" row
             dwr.util.removeAllRows("chatlog", { filter:function(div) {
@@ -93,8 +107,8 @@
             }});
 
             // Create a new set cloned from the pattern row
-            for (var i = 0; i < messages.length; i++) {
-                var message = messages[i];
+            for (var i = 0; i < messages.messages.length; i++) {
+                var message = messages.messages[i];
                 var id = i + 1;
                 dwr.util.cloneNode("pattern", { idSuffix:id });
                 dwr.util.setValue("user" + id, message.username);
@@ -105,7 +119,7 @@
 
             var clearDiv = $("clearDiv");
             if (clearDiv) {
-                if (messages.length == 0) {
+                if (messages.messages.length == 0) {
                     clearDiv.hide();
                 } else {
                     clearDiv.show();
