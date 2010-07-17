@@ -26,11 +26,14 @@ import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.Iterator;
+import java.util.List;
 
 import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  * @author Sindre Mehus
@@ -38,11 +41,9 @@ import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 public class FileUtil {
 
     private static final String TAG = FileUtil.class.getSimpleName();
-
-    // Used by fileSystemSafe()
     private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", "..", ":", "\"", "?", "*", "<", ">"};
-
-    private static final File musicDir = createDirectory("music");
+    private static final List<String> MUSIC_FILE_EXTENSIONS = Arrays.asList("mp3", "ogg", "aac", "flac", "m4a", "wav", "wma");
+    private static final File MUSIC_DIR = createDirectory("music");
 
     public static File getSongFile(MusicDirectory.Entry song) {
         File dir = getAlbumDirectory(song);
@@ -71,11 +72,11 @@ public class FileUtil {
         File dir;
         if (song.getPath() != null) {
             File f = new File(song.getPath());
-            dir = new File(musicDir.getPath() + "/" + f.getParent());
+            dir = new File(MUSIC_DIR.getPath() + "/" + f.getParent());
         } else {
             String artist = fileSystemSafe(song.getArtist());
             String album = fileSystemSafe(song.getAlbum());
-            dir = new File(musicDir.getPath() + "/" + artist + "/" + album);
+            dir = new File(MUSIC_DIR.getPath() + "/" + artist + "/" + album);
         }
         return dir;
     }
@@ -99,7 +100,7 @@ public class FileUtil {
     }
 
     public static File getMusicDirectory() {
-        return musicDir;
+        return MUSIC_DIR;
     }
 
     /**
@@ -132,6 +133,23 @@ public class FileUtil {
         }
 
         return new TreeSet<File>(Arrays.asList(files));
+    }
+
+    public static SortedSet<File> listMusicFiles(File dir) {
+        SortedSet<File> files = listFiles(dir);
+        Iterator<File> iterator = files.iterator();
+        while (iterator.hasNext()) {
+            File file = iterator.next();
+            if (!file.isDirectory() && !isMusicFile(file)) {
+                iterator.remove();
+            }
+        }
+        return files;
+    }
+
+    private static boolean isMusicFile(File file) {
+        String extension = FilenameUtils.getExtension(file.getName());
+        return MUSIC_FILE_EXTENSIONS.contains(extension);
     }
 
     /**

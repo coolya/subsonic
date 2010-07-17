@@ -73,7 +73,7 @@ public class OfflineMusicService extends RESTMusicService {
 
         Set<String> names = new HashSet<String>();
 
-        for (File file : FileUtil.listFiles(dir)) {
+        for (File file : FileUtil.listMusicFiles(dir)) {
             String name = getName(file);
             if (name != null & !names.contains(name)) {
                 names.add(name);
@@ -140,6 +140,11 @@ public class OfflineMusicService extends RESTMusicService {
 
     @Override
     public MusicDirectory getPlaylist(String id, Context context, ProgressListener progressListener) throws Exception {
+        throw new RuntimeException("Playlists not available in offline mode");
+    }
+
+    @Override
+    public void createPlaylist(String id, String name, List<MusicDirectory.Entry> entries, Context context, ProgressListener progressListener) throws Exception {
         throw new RuntimeException("Playlists not available in offline mode");
     }
 

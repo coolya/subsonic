@@ -32,7 +32,7 @@ public class ErrorDialog {
         this(activity, activity.getResources().getString(messageId), finishActivityOnCancel);
     }
 
-    public ErrorDialog(final Activity activity, String message, final boolean finishActivityOnCancel) {
+    public ErrorDialog(final Activity activity, String message, final boolean finishActivityOnClose) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
@@ -42,7 +42,7 @@ public class ErrorDialog {
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
-                if (finishActivityOnCancel) {
+                if (finishActivityOnClose) {
                     activity.finish();
                 }
             }
@@ -50,7 +50,7 @@ public class ErrorDialog {
         builder.setPositiveButton(R.string.common_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if (finishActivityOnCancel) {
+                if (finishActivityOnClose) {
                     activity.finish();
                 }
             }

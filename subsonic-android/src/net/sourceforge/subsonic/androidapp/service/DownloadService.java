@@ -20,6 +20,7 @@ package net.sourceforge.subsonic.androidapp.service;
 
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
+import net.sourceforge.subsonic.androidapp.domain.Playlist;
 
 import java.util.List;
 
@@ -74,4 +75,8 @@ public interface DownloadService {
     DownloadFile forSong(MusicDirectory.Entry song);
 
     long getDownloadListUpdateRevision();
+
+    void setCurrentPlaylist(Playlist playlist);
+
+    Playlist getCurrentPlaylist();
 }

@@ -116,6 +116,25 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+            a:title="@string/settings.network_title">
+
+        <ListPreference
+                a:title="@string/settings.max_bitrate_wifi"
+                a:key="maxBitrateWifi"
+                a:defaultValue="0"
+                a:entryValues="@array/maxBitrateValues"
+                a:entries="@array/maxBitrateNames"/>
+
+        <ListPreference
+                a:title="@string/settings.max_bitrate_mobile"
+                a:key="maxBitrateMobile"
+                a:defaultValue="0"
+                a:entryValues="@array/maxBitrateValues"
+                a:entries="@array/maxBitrateNames"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
             a:title="@string/settings.cache_title">
 
         <ListPreference

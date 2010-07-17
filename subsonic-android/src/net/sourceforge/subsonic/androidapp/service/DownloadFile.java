@@ -25,9 +25,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
-import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
@@ -54,13 +52,15 @@ public class DownloadFile {
     private CancellableTask downloadTask;
     private boolean save;
     private boolean failed;
+    private int bitrate;
 
     public DownloadFile(Context context, MusicDirectory.Entry song, boolean save) {
         this.context = context;
         this.song = song;
         this.save = save;
         saveFile = FileUtil.getSongFile(song);
-        partialFile = new File(saveFile.getPath() + ".partial");
+        bitrate = Util.getMaxBitrate(context);
+        partialFile = new File(saveFile.getPath() + "." + bitrate + ".partial");
         completeFile = new File(saveFile.getParent(), FilenameUtils.getBaseName(saveFile.getName()) +
                 ".complete." + FilenameUtils.getExtension(saveFile.getName()));
         mediaStoreService = new MediaStoreService(context);
@@ -188,7 +188,7 @@ public class DownloadFile {
                 MusicService musicService = MusicServiceFactory.getMusicService(context);
 
                 // Attempt partial HTTP GET, appending to the file if it exists.
-                HttpResponse response = musicService.getDownloadInputStream(context, song, partialFile.length(), DownloadTask.this);
+                HttpResponse response = musicService.getDownloadInputStream(context, song, partialFile.length(), bitrate, DownloadTask.this);
                 in = response.getEntity().getContent();
                 boolean partial = response.getStatusLine().getStatusCode() == HttpStatus.SC_PARTIAL_CONTENT;
                 if (partial) {

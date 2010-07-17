@@ -121,6 +121,11 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
+    public void createPlaylist(String id, String name, List<MusicDirectory.Entry> entries, Context context, ProgressListener progressListener) throws Exception {
+        musicService.createPlaylist(id, name, entries, context, progressListener);
+    }
+
+    @Override
     public MusicDirectory getAlbumList(String type, int size, int offset, Context context, ProgressListener progressListener) throws Exception {
         return musicService.getAlbumList(type, size, offset, context, progressListener);
     }
@@ -143,8 +148,8 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
-    public HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset, CancellableTask task) throws Exception {
-        return musicService.getDownloadInputStream(context, song, offset, task);
+    public HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset, int maxBitrate, CancellableTask task) throws Exception {
+        return musicService.getDownloadInputStream(context, song, offset, maxBitrate, task);
     }
 
     @Override

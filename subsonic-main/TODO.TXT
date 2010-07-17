@@ -43,50 +43,62 @@ DONE IN ANDROID 1.4.1
 ---------------------
 Playlist shuffle.
 When resuming DownloadActivity, scroll to current playing/downloading.
+Remove notification when paused or last song completed
+Fixed: "Play all" in offline mode includes non-music files.
+Fixed: Index cache isn't cleared in offline mode.
+
 
 TODO IN ANDROID 1.4.1
 ---------------------
-Extend playlist menu (Clear, Save...)
-Use naming scheme foo.partial.mp3
-Skipping broken when downloading file.
-Remove notification when paused or last song completed
-Download stops when screen is off.
-Crashes if plugging in usb while downloading. See stack trace above.
+Support max bitrate in settings.
+  Differentiate between 3G and non-3G
 Save playlist on server.
-https support
+  Optimize suggested playlist name.
+Extend playlist menu (Clear, Save...)
+Use naming scheme foo.partial.mp3?
+Skipping broken when downloading file.
+Crashes if plugging in usb while downloading. See stack trace above.
+https support, SSLCertificateSocketFactory.getInsecure() CAN'T USE; API LEVEL 8
 Exit menu option?
 Support ogg, aac http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
 Only retry if network error.
 Select music folder in server settings. (Including "All").
-Support max bitrate in settings. ("Preferred bitrate") Differentiate between Wifi and Mobile
 Use combination of progress bar and slide bar.
+Bluetooth and audio button control support.
 
 Add icons to server popup.
 Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Colors: http://www.androidtapp.com/opentable/
 
+DONE IN 4.1
+------------
+Fixed chat when deploying Subsonic on Tomcat.
+Proper lookup of local IP on linux.
 
 TODO IN 4.1
 -----------------
+Run Mac server in background (status bar).
+  Change icon.
+  Bring to front when clicking Control Panel.
+  Automatically configure to start at boot.
+  See "Air Video Server"
+  Optionally show control panel when starting.
+  Avoid dock icon.
+
 Support html5 audio
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2746
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2154
-
+Add "append" parameter to createPlaylist REST method.
 Make port 4040 the default on Windows installations not 80
-Proper lookup of local IP on linux.
 Update to FLAC 1.2.1, LAME 3.98.4  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3278
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
 Fix readlink
-Chat slow when deploying on tomcat?
-Replace reverse Ajax with polling.
-Run Mac server in background (status bar).
 Sonic themes, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3371
 Update themes. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3082
 
 Create post-payment landing page.
 Create translation tool for backend.
-Bug: Quick index links broken in some themes.
 Downsample command used for non-mp3.
 Create getting started guide.
 New screenshots for themes.
@@ -111,11 +123,8 @@ WiX: https://sourceforge.net/projects/wix/
 REST album/artist search.
 Add track count REST.
 Use AAC rather than MP3 for transcoding.
-html5 audio
 Create album table (or reuse music_file_info), reimplement related services in SearchService.
 Upgrade JWPlayer
-TBT: Added "accesskey" in left frame.
-TBT: Added API method to change password.
 Fix bug with executor in networkservice.
 Disable ads first 30 days?
 Show status in getting started.
@@ -132,46 +141,30 @@ Android: Fix bugs reported by Market.
 Android: Suggest switching to offline mode if network error.
 Android: Make offline mode more visible.
 Android: Reorder playlist
-Android: Save playlist
 Android: Lyrics.
 Android: Queue Next + Queue Last
 Android: Menu option to exit.
 Android: Avoid stutter
-Android: Shuffle queue
 Android: Pause on Bluetooth disconnect.
 Android: Long-click on folder to play recursive.
 Android: Download error notification is nagging.
-Use filename.complete.mp3 rather than filename.mp3.complete
 Swipe album art to go to prev/next track.
-Avoid stuttering when restarting playback during download.  Use local socket.
 Seeking fails when playing partial file.  seekTo() should test if playing from partial.
 Only show fullscreen when applicable.
-DownloadActivity not updated if initially empty and then append to queue.
-Don't hide/show notification when rebuffering.
-Understand why threads in CancellableTask are not interrupted.
 Create Norwegian translation.
-SettingsActivity not repainting properly.
 Use IOUtils, StringUtils.
 List of bugs/requests from cwilliams:  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7854
-Make it downloadable from sf.net.
-Caching mgmt
 Use CancellableTask in BackgroundTask. Check for isCancelled in loops.
 Improve design of DownloadFile.getCompleteFile() etc.
 Remember position for podcasts.
 Use Droid-Fu?
-"Newest" list in Android.
 Android: Long-click on song list.
 Android: Option to auto-sync certain directories or playlists.
 Android: Option to tag certain directories as favorite.
 Is there a more generic broadcast event to listen to when the media collection changes?
 Fix encoding problems in Subsonic Demo files.
-Handle XML exception better.
-Use music index last modified + invalidate cache after a while.
 Use weak references in image cache?
-Show currently playing song in playlist.
 Must resolve content type in StreamController, even if "suffix" is not given.
-Add duration to rest api.
-
 
 VIDEO
 -----

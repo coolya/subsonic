@@ -28,7 +28,7 @@ import net.sourceforge.subsonic.androidapp.util.Util;
 public class MusicServiceFactory {
 
     private static final MusicService REST_MUSIC_SERVICE = new CachedMusicService(new RESTMusicService());
-    private static final MusicService OFFLINE_MUSIC_SERVICE = new CachedMusicService(new OfflineMusicService());
+    private static final MusicService OFFLINE_MUSIC_SERVICE = new OfflineMusicService();
 
     public static MusicService getMusicService(Context context) {
         return Util.isOffline(context) ? OFFLINE_MUSIC_SERVICE : REST_MUSIC_SERVICE;

@@ -21,13 +21,13 @@ package net.sourceforge.subsonic.androidapp.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.InterruptedIOException;
 import java.io.Reader;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.commons.lang.StringUtils;
@@ -43,6 +43,7 @@ import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
@@ -57,6 +58,7 @@ import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.net.SSLCertificateSocketFactory;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
@@ -226,6 +228,32 @@ public class RESTMusicService implements MusicService {
     }
 
     @Override
+    public void createPlaylist(String id, String name, List<MusicDirectory.Entry> entries, Context context, ProgressListener progressListener) throws Exception {
+        List<String> parameterNames = new LinkedList<String>();
+        List<Object> parameterValues = new LinkedList<Object>();
+
+        if (id != null) {
+            parameterNames.add("playlistId");
+            parameterValues.add(id);
+        }
+        if (name != null) {
+            parameterNames.add("name");
+            parameterValues.add(name);
+        }
+        for (MusicDirectory.Entry entry : entries) {
+            parameterNames.add("songId");
+            parameterValues.add(entry.getId());
+        }
+
+        Reader reader = getReader(context, progressListener, "createPlaylist", parameterNames, parameterValues);
+        try {
+            new ErrorParser(context).parse(reader);
+        } finally {
+            Util.close(reader);
+        }
+    }
+
+    @Override
     public MusicDirectory getAlbumList(String type, int size, int offset, Context context, ProgressListener progressListener) throws Exception {
         Reader reader = getReader(context, progressListener, "getAlbumList",
                 Arrays.asList("type", "size", "offset"), Arrays.<Object>asList(type, size, offset));
@@ -287,9 +315,12 @@ public class RESTMusicService implements MusicService {
     }
 
     @Override
-    public HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset, CancellableTask task) throws Exception {
+    public HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset, int maxBitrate, CancellableTask task) throws Exception {
 
         String url = Util.getRestUrl(context, "stream") + "&id=" + song.getId();
+        if (maxBitrate != 0) {
+            url += "&maxBitRate=" + maxBitrate;
+        }
 
         // Use longer timeouts for download.
         HttpParams params = new BasicHttpParams();
