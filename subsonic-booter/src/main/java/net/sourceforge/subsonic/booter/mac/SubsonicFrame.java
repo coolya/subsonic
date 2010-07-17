@@ -5,9 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -26,10 +24,15 @@ public class SubsonicFrame extends JFrame {
     private StatusPanel statusPanel;
     private JButton hideButton;
     private JButton exitButton;
+    private TrayIcon trayIcon;
+    private Action openAction;
+    private Action controlPanelAction;
+    private Action quitAction;
 
     public SubsonicFrame(SubsonicDeployerService deployer) {
         super("Subsonic");
         this.deployer = deployer;
+        createActions();
         createComponents();
         layoutComponents();
         addBehaviour();
@@ -48,10 +51,43 @@ public class SubsonicFrame extends JFrame {
                 screenSize.height / 2 - getHeight() / 2);
     }
 
+    private void createActions() {
+        openAction = new AbstractAction("Open Subsonic in Browser") {
+            public void actionPerformed(ActionEvent e) {
+                statusPanel.openBrowser();
+            }
+        };
+
+        controlPanelAction = new AbstractAction("Subsonic Control Panel") {
+            public void actionPerformed(ActionEvent e) {
+                setVisible(true);
+                // TODO: Bring to front
+            }
+        };
+
+        quitAction = new AbstractAction("Quit Subsonic") {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        };
+    }
+
     private void createComponents() {
         statusPanel = new StatusPanel(deployer);
         hideButton = new JButton("Hide");
         exitButton = new JButton("Exit");
+
+        PopupMenu menu = new PopupMenu();
+        menu.add(createMenuItem(openAction));
+        menu.add(createMenuItem(controlPanelAction));
+        menu.addSeparator();
+        menu.add(createMenuItem(quitAction));
+
+        // TODO: Use different icon.
+        URL url = getClass().getResource("/images/subsonic-512.png");
+        Image image = Toolkit.getDefaultToolkit().createImage(url);
+        trayIcon = new TrayIcon(image, "Subsonic Music Streamer", menu);
+        trayIcon.setImageAutoSize(true);
     }
 
     private void layoutComponents() {
@@ -61,6 +97,12 @@ public class SubsonicFrame extends JFrame {
         pane.add(ButtonBarFactory.buildRightAlignedBar(hideButton, exitButton), BorderLayout.SOUTH);
 
         pane.setBorder(Borders.DIALOG_BORDER);
+
+        try {
+            SystemTray.getSystemTray().add(trayIcon);
+        } catch (Throwable x) {
+            System.err.println("Failed to add tray icon.");
+        }
     }
 
     private void addBehaviour() {
@@ -74,5 +116,11 @@ public class SubsonicFrame extends JFrame {
                 System.exit(0);
             }
         });
+    }
+
+    private MenuItem createMenuItem(Action action) {
+        MenuItem menuItem = new MenuItem((String) action.getValue(Action.NAME));
+        menuItem.addActionListener(action);
+        return menuItem;
     }
 }

@@ -94,7 +94,7 @@ public class StatusPanel extends JPanel {
         timer.start();
     }
 
-    private void openBrowser() {
+    public void openBrowser() {
         String url = urlButton.getText();
         if (url == null) {
             return;
