@@ -18,8 +18,14 @@
  */
 package net.sourceforge.subsonic.util;
 
+import net.sourceforge.subsonic.Logger;
+
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.Inet4Address;
+import java.util.Enumeration;
 
 /**
  * Miscellaneous general utility methods.
@@ -27,6 +33,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author Sindre Mehus
  */
 public final class Util {
+
+    private static final Logger LOG = Logger.getLogger(Util.class);
 
     /**
      * Disallow external instantiation.
@@ -72,5 +80,38 @@ public final class Util {
         } else {
             response.setHeader("Content-Length", String.valueOf(length));
         }
+    }
+
+    /**
+     * Returns the local IP address.
+     * @return The local IP, or the loopback address (127.0.0.1) if not found.
+     */
+    public static String getLocalIpAddress() {
+        try {
+
+            // Try the simple way first.
+            InetAddress address = InetAddress.getLocalHost();
+            if (!address.isLoopbackAddress()) {
+                return address.getHostAddress();
+            }
+
+            // Iterate through all network interfaces, looking for a suitable IP.
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface iface = interfaces.nextElement();
+                Enumeration<InetAddress> addresses = iface.getInetAddresses();
+                while (addresses.hasMoreElements()) {
+                    InetAddress addr = addresses.nextElement();
+                    if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
+                        return addr.getHostAddress();
+                    }
+                }
+            }
+
+        } catch (Throwable x) {
+            LOG.warn("Failed to resolve local IP address.", x);
+        }
+
+        return "127.0.0.1";
     }
 }
