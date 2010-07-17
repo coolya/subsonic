@@ -92,6 +92,27 @@
 
             <p>If you don't want to use a subsonic.org address you can get similar services from dynamic DNS providers such as dyndns.com.</p>
 
+
+            <a name="2.4"><h3>2.4 Troubleshooting</h3></a>
+            <p>This section describes some common network problems and how to fix them.</p>
+            <ul class="list">
+                <li><b>Multiple routers.</b> There might be more than one router on your network, for instance both an "inner"
+                    wireless router and an "outer" (closest to the internet) cable/fiber modem with routing enabled. You must
+                    make sure that incoming traffic received by the outermost router is forwarded to the inner router (which
+                    in turn forwards the traffic on to your Subsonic server).  You can do this by configuring port forwarding on the
+                    outer router (forward traffic to the inner router), or setting it in <em>bridge mode</em>. Your ISP should
+                    be able to help you if you have problems with this. </li>
+                <li><b>Port blocked by ISP.</b> Many ISPs (Internet Service Providers) block incoming traffic on port 80, which is
+                    used by most web servers. Subsonic uses port 80 by default on Windows. You can avoid this by configuring
+                    Subsonic to use a different port. Open the Subsonic Control Panel by clicking on the Subsonic tray icon.
+                    Change the port number to any random number between 1025 and 65,000.  If you set up manual port forwarding
+                    (see above), remember to update that as well.</li>
+                <li><b>Firewall.</b> You might be running firewall software (on the Subsonic server) which blocks incoming traffic.
+                    If this is the case, try first to turn the firewall off. If this helps, turn the firewall back on and configure it
+                    to allow incoming traffic to Subsonic. Note: The Windows installer version of Subsonic will automatically
+                    configure the built-in Windows Firewall.</li>
+            </ul>
+
        </div>
 
         <div id="side-col">
@@ -106,6 +127,7 @@
                         <li><a href="#2.1">2.1 Automatic port forwarding</a></li>
                         <li><a href="#2.2">2.2 Manual port forwarding</a></li>
                         <li><a href="#2.3">2.3 Setting up your personal subsonic.org address</a></li>
+                        <li><a href="#2.3">2.4 Troubleshooting</a></li>
                     </ul>
                 </ul>
             </div>
