@@ -36,6 +36,7 @@ import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
+import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.ShufflePlayBuffer;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
@@ -65,6 +66,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private boolean shufflePlay;
     private long revision;
     private static DownloadService instance;
+    private Playlist playlist;
 
     @Override
     public void onCreate() {
@@ -225,14 +227,14 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     @Override
     public synchronized void play(int index) {
         if (index < 0 || index >= downloadList.size()) {
-            return;
+            reset();
+            setCurrentPlaying(null);
+        } else {
+            setCurrentPlaying(downloadList.get(index));
+            checkDownloads();
+            bufferAndPlay();
         }
-
-        setCurrentPlaying(downloadList.get(index));
-        checkDownloads();
-        bufferAndPlay();
     }
-
 
     @Override
     public synchronized void seekTo(int position) {
@@ -331,7 +333,24 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     private synchronized void setPlayerState(PlayerState playerState) {
         Log.i(TAG, this.playerState.name() + " -> " + playerState.name());
+
+        if (this.playerState == PAUSED && playerState == PlayerState.STARTED) {
+            Util.showPlayingNotification(this, handler, currentPlaying.getSong());
+        } else if (this.playerState == STARTED && playerState == PlayerState.PAUSED) {
+            Util.hidePlayingNotification(this, handler);
+        }
+
         this.playerState = playerState;
+    }
+
+    @Override
+    public void setCurrentPlaylist(Playlist playlist) {
+        this.playlist = playlist;
+    }
+
+    @Override
+    public Playlist getCurrentPlaylist() {
+        return playlist;
     }
 
     private synchronized void bufferAndPlay() {

@@ -53,4 +53,24 @@
         <item>@string/settings.cache_size_unlimited</item>
     </string-array>
 
+    <string-array name="maxBitrateValues">
+        <item>32</item>
+        <item>64</item>
+        <item>96</item>
+        <item>128</item>
+        <item>160</item>
+        <item>320</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="maxBitrateNames">
+        <item>@string/settings.max_bitrate_32</item>
+        <item>@string/settings.max_bitrate_64</item>
+        <item>@string/settings.max_bitrate_96</item>
+        <item>@string/settings.max_bitrate_128</item>
+        <item>@string/settings.max_bitrate_160</item>
+        <item>@string/settings.max_bitrate_320</item>
+        <item>@string/settings.max_bitrate_unlimited</item>
+    </string-array>
+
 </resources>

@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
 import java.util.List;
+import java.util.LinkedList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -43,17 +44,23 @@ import android.widget.ViewFlipper;
 import android.widget.EditText;
 import android.app.Dialog;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
+import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
+import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
+import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.HorizontalSlider;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.SongView;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.SilentBackgroundTask;
+import net.sourceforge.subsonic.androidapp.util.ErrorDialog;
 
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 
@@ -62,7 +69,7 @@ public class DownloadActivity extends SubsonicTabActivity {
     private static final int MENU_ITEM_REMOVE = 100;
     private static final int MENU_ITEM_REMOVE_ALL = 101;
     private static final int MENU_ITEM_SHUFFLE = 200;
-    private static final int MENU_ITEM_SAVE = 201;
+    private static final int MENU_ITEM_SAVE_PLAYLIST = 201;
     private static final int DIALOG_SAVE_PLAYLIST = 400;
 
     private ImageLoader imageLoader;
@@ -85,6 +92,7 @@ public class DownloadActivity extends SubsonicTabActivity {
     private ScheduledExecutorService executorService;
     private DownloadFile currentPlaying;
     private long currentRevision;
+    private EditText playlistNameView;
 
     /**
      * Called when the activity is first created.
@@ -242,11 +250,27 @@ public class DownloadActivity extends SubsonicTabActivity {
             AlertDialog.Builder builder;
 
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.save_playlist, (ViewGroup) findViewById(R.id.save_playlist_root));
-
+            final View layout = inflater.inflate(R.layout.save_playlist, (ViewGroup) findViewById(R.id.save_playlist_root));
+            playlistNameView = (EditText) layout.findViewById(R.id.save_playlist_name);
 
             builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.download_playlist_title);
+            builder.setMessage(R.string.download_playlist_name);
+            builder.setPositiveButton(R.string.common_save, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    savePlaylistInBackground(String.valueOf(playlistNameView.getText()));
+                }
+            });
+            builder.setNegativeButton(R.string.common_cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
             builder.setView(layout);
+            builder.setCancelable(true);
+
             return builder.create();
         } else {
             return super.onCreateDialog(id);
@@ -254,10 +278,31 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     @Override
+    protected void onPrepareDialog(int id, Dialog dialog) {
+        if (id == DIALOG_SAVE_PLAYLIST) {
+            Playlist playlist = downloadService.getCurrentPlaylist();
+            if (playlist != null) {
+                playlistNameView.setText(playlist.getName());
+            } else {
+                playlistNameView.setText(R.string.download_playlist_unnamed);
+            }
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(Menu.NONE, MENU_ITEM_SHUFFLE, Menu.NONE, R.string.download_menu_shuffle);
-//        menu.add(Menu.NONE, MENU_ITEM_SAVE, Menu.NONE, R.string.download_menu_save);
+        menu.add(Menu.NONE, MENU_ITEM_SAVE_PLAYLIST, Menu.NONE, R.string.download_menu_save);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem savePlaylist = menu.findItem(MENU_ITEM_SAVE_PLAYLIST);
+        boolean savePlaylistEnabled = !Util.isOffline(this);
+        savePlaylist.setEnabled(savePlaylistEnabled);
+        savePlaylist.setVisible(savePlaylistEnabled);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -267,7 +312,7 @@ public class DownloadActivity extends SubsonicTabActivity {
                 downloadService.shuffle();
                 Util.toast(this, R.string.download_menu_shuffle_notification);
                 break;
-            case MENU_ITEM_SAVE:
+            case MENU_ITEM_SAVE_PLAYLIST:
                 showDialog(DIALOG_SAVE_PLAYLIST);
                 break;
             default:
@@ -316,6 +361,33 @@ public class DownloadActivity extends SubsonicTabActivity {
         }
 
         onProgressChanged();
+    }
+
+    private void savePlaylistInBackground(final String playlistName) {
+        Util.toast(DownloadActivity.this, getResources().getString(R.string.download_playlist_saving, playlistName));
+        new SilentBackgroundTask<Void>(this) {
+            @Override
+            protected Void doInBackground() throws Throwable {
+                List<MusicDirectory.Entry> entries = new LinkedList<MusicDirectory.Entry>();
+                for (DownloadFile downloadFile : downloadService.getDownloads()) {
+                    entries.add(downloadFile.getSong());
+                }
+                MusicService musicService = MusicServiceFactory.getMusicService(DownloadActivity.this);
+                musicService.createPlaylist(null, playlistName, entries, DownloadActivity.this, null);
+                return null;
+            }
+
+            @Override
+            protected void done(Void result) {
+                Util.toast(DownloadActivity.this, R.string.download_playlist_done);
+            }
+
+            @Override
+            protected void error(Throwable error) {
+                String msg = getResources().getString(R.string.download_playlist_error) + ": " + getErrorMessage(error);
+                Util.toast(DownloadActivity.this, msg);
+            }
+        }.execute();
     }
 
     private void toggleFullscreenAlbumArt() {

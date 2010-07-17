@@ -49,16 +49,17 @@ public interface MusicService {
 
     List<Playlist> getPlaylists(Context context, ProgressListener progressListener) throws Exception;
 
+    void createPlaylist(String id, String name, List<MusicDirectory.Entry> entries, Context context, ProgressListener progressListener) throws Exception;
+
     MusicDirectory getAlbumList(String type, int size, int offset, Context context, ProgressListener progressListener) throws Exception;
 
     MusicDirectory getRandomSongs(int size, Context context, ProgressListener progressListener) throws Exception;
 
     Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception;
 
-    HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset, CancellableTask task) throws Exception;
+    HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset, int maxBitrate, CancellableTask task) throws Exception;
 
     Version getLocalVersion(Context context) throws Exception;
 
     Version getLatestVersion(Context context, ProgressListener progressListener) throws Exception;
-
 }

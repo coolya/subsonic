@@ -107,6 +107,18 @@ public final class Util {
         return prefs.getString(Constants.PREFERENCES_KEY_THEME, null);
     }
 
+    public static int getMaxBitrate(Context context) {
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        if (networkInfo == null) {
+            return 0;
+        }
+
+        boolean wifi = networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+        SharedPreferences prefs = getPreferences(context);
+        return Integer.parseInt(prefs.getString(wifi ? Constants.PREFERENCES_KEY_MAX_BITRATE_WIFI : Constants.PREFERENCES_KEY_MAX_BITRATE_MOBILE, "0"));
+    }
+
     public static int getPreloadCount(Context context) {
         SharedPreferences prefs = getPreferences(context);
         int preloadCount = Integer.parseInt(prefs.getString(Constants.PREFERENCES_KEY_PRELOAD_COUNT, "-1"));
