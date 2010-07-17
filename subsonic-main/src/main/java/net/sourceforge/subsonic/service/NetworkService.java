@@ -47,6 +47,7 @@ import net.sourceforge.subsonic.domain.Router;
 import net.sourceforge.subsonic.domain.SBBIRouter;
 import net.sourceforge.subsonic.domain.WeUPnPRouter;
 import net.sourceforge.subsonic.util.StringUtil;
+import net.sourceforge.subsonic.util.Util;
 
 /**
  * Provides network-related services, including port forwarding on UPnP routers and
@@ -201,12 +202,6 @@ public class NetworkService {
             boolean enable = settingsService.isUrlRedirectionEnabled();
             HttpPost request = new HttpPost(enable ? URL_REDIRECTION_REGISTER_URL : URL_REDIRECTION_UNREGISTER_URL);
 
-            String localIp = null;
-            try {
-                localIp = InetAddress.getLocalHost().getHostAddress();
-            } catch (Throwable x) {
-                LOG.warn("Failed to resolve local IP address.", x);
-            }
             int port = settingsService.getPort();
             boolean trial = !settingsService.isLicenseValid();
             Date trialExpires = settingsService.getUrlRedirectTrialExpires();
@@ -215,7 +210,7 @@ public class NetworkService {
             params.add(new BasicNameValuePair("serverId", settingsService.getServerId()));
             params.add(new BasicNameValuePair("redirectFrom", settingsService.getUrlRedirectFrom()));
             params.add(new BasicNameValuePair("port", String.valueOf(port)));
-            params.add(new BasicNameValuePair("localIp", localIp));
+            params.add(new BasicNameValuePair("localIp", Util.getLocalIpAddress()));
             params.add(new BasicNameValuePair("localPort", String.valueOf(port)));
             params.add(new BasicNameValuePair("contextPath", settingsService.getUrlRedirectContextPath()));
             params.add(new BasicNameValuePair("trial", String.valueOf(trial)));
