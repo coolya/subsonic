@@ -132,7 +132,7 @@
 
     <string name="background_task.wait">Please wait...</string>
     <string name="background_task.loading">Loading.</string>
-    <string name="background_task.no_network">This program requires network access. Please turn on Wi-fi or mobile network.</string>
+    <string name="background_task.no_network">This program requires network access. Please turn on Wi-Fi or mobile network.</string>
     <string name="background_task.network_error">A network error occurred. Please check the server address or try again later.</string>
     <string name="background_task.not_found">Resource not found. Please check the server address.</string>
     <string name="background_task.parse_error">Didn\'t understand the reply. Please check the server address.</string>

@@ -78,6 +78,7 @@ Proper lookup of local IP on linux.
 
 TODO IN 4.1
 -----------------
+AdWords
 Run Mac server in background (status bar).
   Change icon.
   Bring to front when clicking Control Panel.

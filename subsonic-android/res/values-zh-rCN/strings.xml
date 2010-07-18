@@ -61,7 +61,7 @@
 
     <string name="background_task.wait">请稍后...</string>
     <string name="background_task.loading">加载。</string>
-    <string name="background_task.no_network">该程序需要访问网络。请开始 Wi-fi 或移动网络。</string>
+    <string name="background_task.no_network">该程序需要访问网络。请开始 Wi-Fi 或移动网络。</string>
     <string name="background_task.not_found">找不到资源。请检查服务器的地址。</string>
     <string name="background_task.parse_error">无响应。请检查服务器的地址。</string>
 
