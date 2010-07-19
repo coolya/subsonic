@@ -42,7 +42,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
@@ -382,8 +381,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
                 warnIfNetworkOrStorageUnavailable();
                 downloadService.download(songs, save, autoplay);
-                Playlist playlist = new Playlist(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_ID), getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME));
-                downloadService.setCurrentPlaylist(playlist);
+                downloadService.setSuggestedPlaylistName(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME));
                 if (autoplay) {
                     Util.startActivityWithoutTransition(SelectAlbumActivity.this, DownloadActivity.class);
                 } else if (save) {

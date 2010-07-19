@@ -66,7 +66,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private boolean shufflePlay;
     private long revision;
     private static DownloadService instance;
-    private Playlist playlist;
+    private String suggestedPlaylistName;
 
     @Override
     public void onCreate() {
@@ -249,9 +249,13 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     public synchronized void previous() {
         int index = downloadList.indexOf(currentPlaying);
         if (index != -1) {
-            play(index - 1);
+            // Restart song if played more than five seconds.
+            if (getPlayerPosition() > 5000) {
+                play(index);
+            } else {
+                play(index - 1);
+            }
         }
-
     }
 
     @Override
@@ -344,13 +348,13 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     @Override
-    public void setCurrentPlaylist(Playlist playlist) {
-        this.playlist = playlist;
+    public void setSuggestedPlaylistName(String name) {
+        this.suggestedPlaylistName = name;
     }
 
     @Override
-    public Playlist getCurrentPlaylist() {
-        return playlist;
+    public String getSuggestedPlaylistName() {
+        return suggestedPlaylistName;
     }
 
     private synchronized void bufferAndPlay() {
