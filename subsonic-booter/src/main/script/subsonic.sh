@@ -101,7 +101,7 @@ rm -f ${LOG}
 
 cd $(dirname $0)
 if [ -e /bin/readlink ] || [ -e /usr/bin/readlink ]; then
-    cd $(dirname $(readlink -f $0))
+    cd $(dirname $(readlink $0))
 fi
 
 ${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m \
