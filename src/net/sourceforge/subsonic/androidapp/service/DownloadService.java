@@ -76,7 +76,7 @@ public interface DownloadService {
 
     long getDownloadListUpdateRevision();
 
-    void setCurrentPlaylist(Playlist playlist);
+    void setSuggestedPlaylistName(String name);
 
-    Playlist getCurrentPlaylist();
+    String getSuggestedPlaylistName();
 }

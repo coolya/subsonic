@@ -60,7 +60,6 @@ import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.SongView;
 import net.sourceforge.subsonic.androidapp.util.Util;
 import net.sourceforge.subsonic.androidapp.util.SilentBackgroundTask;
-import net.sourceforge.subsonic.androidapp.util.ErrorDialog;
 
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 
@@ -280,9 +279,9 @@ public class DownloadActivity extends SubsonicTabActivity {
     @Override
     protected void onPrepareDialog(int id, Dialog dialog) {
         if (id == DIALOG_SAVE_PLAYLIST) {
-            Playlist playlist = downloadService.getCurrentPlaylist();
-            if (playlist != null) {
-                playlistNameView.setText(playlist.getName());
+            String playlistName = downloadService.getSuggestedPlaylistName();
+            if (playlistName != null) {
+                playlistNameView.setText(playlistName);
             } else {
                 playlistNameView.setText(R.string.download_playlist_unnamed);
             }
@@ -365,6 +364,7 @@ public class DownloadActivity extends SubsonicTabActivity {
 
     private void savePlaylistInBackground(final String playlistName) {
         Util.toast(DownloadActivity.this, getResources().getString(R.string.download_playlist_saving, playlistName));
+        downloadService.setSuggestedPlaylistName(playlistName);
         new SilentBackgroundTask<Void>(this) {
             @Override
             protected Void doInBackground() throws Throwable {
