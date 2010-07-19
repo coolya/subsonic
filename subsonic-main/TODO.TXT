@@ -46,14 +46,12 @@ When resuming DownloadActivity, scroll to current playing/downloading.
 Remove notification when paused or last song completed
 Fixed: "Play all" in offline mode includes non-music files.
 Fixed: Index cache isn't cleared in offline mode.
-
+Save playlist on server.
+  Optimize suggested playlist name.
+Support max bitrate in settings.
 
 TODO IN ANDROID 1.4.1
 ---------------------
-Support max bitrate in settings.
-  Differentiate between 3G and non-3G
-Save playlist on server.
-  Optimize suggested playlist name.
 Extend playlist menu (Clear, Save...)
 Use naming scheme foo.partial.mp3?
 Skipping broken when downloading file.
@@ -65,6 +63,7 @@ Only retry if network error.
 Select music folder in server settings. (Including "All").
 Use combination of progress bar and slide bar.
 Bluetooth and audio button control support.
+Max bitrate settings: Differentiate between 3G and non-3G
 
 Add icons to server popup.
 Album art border, ala wimp

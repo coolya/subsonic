@@ -10,4 +10,9 @@
         <constructor-arg ref="deployer"/>
     </bean>
 
+    <bean id="controller" class="net.sourceforge.subsonic.booter.mac.SubsonicController">
+        <constructor-arg ref="deployer"/>
+        <constructor-arg ref="frame"/>
+    </bean>
+
 </beans>
