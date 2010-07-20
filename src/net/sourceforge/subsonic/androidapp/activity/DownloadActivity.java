@@ -384,7 +384,7 @@ public class DownloadActivity extends SubsonicTabActivity {
 
             @Override
             protected void error(Throwable error) {
-                String msg = getResources().getString(R.string.download_playlist_error) + ": " + getErrorMessage(error);
+                String msg = getResources().getString(R.string.download_playlist_error) + " " + getErrorMessage(error);
                 Util.toast(DownloadActivity.this, msg);
             }
         }.execute();
