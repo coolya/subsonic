@@ -317,10 +317,7 @@ public class RESTMusicService implements MusicService {
     @Override
     public HttpResponse getDownloadInputStream(Context context, MusicDirectory.Entry song, long offset, int maxBitrate, CancellableTask task) throws Exception {
 
-        String url = Util.getRestUrl(context, "stream") + "&id=" + song.getId();
-        if (maxBitrate != 0) {
-            url += "&maxBitRate=" + maxBitrate;
-        }
+        String url = Util.getRestUrl(context, "stream") + "&id=" + song.getId() + "&maxBitRate=" + maxBitrate;
 
         // Use longer timeouts for download.
         HttpParams params = new BasicHttpParams();

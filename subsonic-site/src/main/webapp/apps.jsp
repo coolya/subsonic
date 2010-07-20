@@ -62,7 +62,7 @@
 
                         <p>
                             Supports streaming, downloading, playlists, album art and searching. For improved performance, music you have
-                            listened to is cached on the phone. An offline mode is also available for when you are outside 3G/Wifi coverage.
+                            listened to is cached on the phone. An offline mode is also available for when you are outside 3G/Wi-Fi coverage.
                         </p>
 
                         <a href="inc/img/screenshots/screen12.png"><img src="inc/img/screenshots/thumb12.png" alt="" style="padding:3px"/></a>

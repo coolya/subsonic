@@ -47,7 +47,6 @@ Remove notification when paused or last song completed
 Fixed: "Play all" in offline mode includes non-music files.
 Fixed: Index cache isn't cleared in offline mode.
 Save playlist on server.
-  Optimize suggested playlist name.
 Support max bitrate in settings.
 
 TODO IN ANDROID 1.4.1
@@ -77,6 +76,7 @@ Proper lookup of local IP on linux.
 
 TODO IN 4.1
 -----------------
+Reset maxBitrate in RESTController.
 AdWords
 Run Mac server in background (status bar).
   Change icon.
@@ -86,6 +86,7 @@ Run Mac server in background (status bar).
   Optionally show control panel when starting.
   Avoid dock icon.
 
+NAT-PMP, UPnP alternative, http://sourceforge.net/projects/jnat-pmplib/
 Support html5 audio
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2746
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2154
