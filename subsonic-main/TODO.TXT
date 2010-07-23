@@ -39,18 +39,13 @@ TODO IN BACKEND
 ---------------
 If trying to assign an expired web address used by someone else, don't show "Expired..." message.
 
-DONE IN ANDROID 1.4.1
----------------------
-Playlist shuffle.
-When resuming DownloadActivity, scroll to current playing/downloading.
-Remove notification when paused or last song completed
-Fixed: "Play all" in offline mode includes non-music files.
-Fixed: Index cache isn't cleared in offline mode.
-Save playlist on server.
-Support max bitrate in settings.
-
-TODO IN ANDROID 1.4.1
----------------------
+TODO IN ANDROID 1.6
+-------------------
+Fix crash
+   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3677
+Clear cached redirect url if network type changed.
+ogg support
+  https://mail.google.com/a/activeobjects.no/?tab=cm#inbox/129f7959b2353a3d
 Extend playlist menu (Clear, Save...)
 Use naming scheme foo.partial.mp3?
 Skipping broken when downloading file.
@@ -85,16 +80,18 @@ Run Mac server in background (status bar).
   See "Air Video Server"
   Optionally show control panel when starting.
   Avoid dock icon.
-
+Year parsing.  http://www.activeobjects.no/subsonic/forum/privmsg.php?folder=inbox&mode=read&p=1511
+REST API for Now playing
+  https://mail.google.com/a/activeobjects.no/?tab=cm#inbox/129f7bc0659df6cf
 NAT-PMP, UPnP alternative, http://sourceforge.net/projects/jnat-pmplib/
 Support html5 audio
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2746
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2154
+   content-length missing when accessing thru REST. due to gzip filter.
 Add "append" parameter to createPlaylist REST method.
 Make port 4040 the default on Windows installations not 80
 Update to FLAC 1.2.1, LAME 3.98.4  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3278
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
-Fix readlink
 Sonic themes, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3371
 Update themes. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3082
 
@@ -569,11 +566,11 @@ Update
     https://myapps.developer.motorola.com/
     https://slideme.org/application/subsonic
     http://www.camangimarket.com/index.html
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.4 -m "Tagging Android 1.4"
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.5 -m "Tagging Android 1.5"
 Create new directory in FRS
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-android/bin/subsonic.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.4/subsonic-1.4.apk
+  rsync -avP -e ssh subsonic-android/bin/subsonic.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.5/subsonic-1.5.apk
 
 
 HOW TO RELEASE TRANSCODING PACK
