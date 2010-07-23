@@ -27,7 +27,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
 /**
@@ -46,6 +46,7 @@ public class SubsonicTabActivity extends Activity {
     protected void onCreate(Bundle bundle) {
         applyTheme();
         super.onCreate(bundle);
+        startService(new Intent(this, DownloadServiceImpl.class));
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
 

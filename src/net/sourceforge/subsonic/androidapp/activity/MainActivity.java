@@ -62,7 +62,6 @@ public class MainActivity extends SubsonicTabActivity {
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 
-        startService(new Intent(this, DownloadServiceImpl.class));
         setContentView(R.layout.main);
 
         View buttons = LayoutInflater.from(this).inflate(R.layout.main_buttons, null);
@@ -83,7 +82,7 @@ public class MainActivity extends SubsonicTabActivity {
         int instance = Util.getActiveServer(this);
         String name = Util.getServerName(this, instance);
         serverTextView.setText(name);
-        
+
         ListView list = (ListView) findViewById(R.id.main_list);
 
         List<View> views;
