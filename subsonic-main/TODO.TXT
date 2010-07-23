@@ -72,6 +72,7 @@ Proper lookup of local IP on linux.
 TODO IN 4.1
 -----------------
 Reset maxBitrate in RESTController.
+Write tip in Google group about subsonic.org redirect optimization.
 AdWords
 Run Mac server in background (status bar).
   Change icon.
