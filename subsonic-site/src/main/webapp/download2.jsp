@@ -2,7 +2,15 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-<body>
+<head>
+    <title>Subsonic &raquo; Free Music Streamer</title>
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/reset/reset.css">
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/fonts/fonts.css">
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/grid/grid.css">
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/base/base.css">
+</head>
+
+<body onload="setTimeout('redirect()', 1500);">
 <!-- Google Code for Download Conversion Page -->
 <script type="text/javascript">
 /* <![CDATA[ */
@@ -17,13 +25,17 @@ var google_conversion_value = 0;
 <script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
 </script>
 <noscript>
-<div style="display:inline;">
-<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/1068027807/?label=REx2CIW81AEQn5-j_QM&amp;guid=ON&amp;script=0"/>
-</div>
+    <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/1068027807/?label=REx2CIW81AEQn5-j_QM&amp;guid=ON&amp;script=0"/>
+    </div>
 </noscript>
 
-<%
-    response.sendRedirect("http://prdownloads.sourceforge.net/subsonic/" + request.getParameter("target"));
-%>
+<script type="text/javascript">
+    function redirect() {
+        window.location = "http://prdownloads.sourceforge.net/subsonic/<%=request.getParameter("target")%>";
+    }
+</script>
+
+<h2>Please wait, contacting SourceForge download center...</h2>
 </body>
 </html>
