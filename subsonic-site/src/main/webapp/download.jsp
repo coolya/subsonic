@@ -124,7 +124,13 @@
             </table>
             <% } %>
 
-            <p class="margin10-t">
+            <h1>Hosting</h1>
+            <p>
+                If you don't want to install and configure Subsonic on your own computer you can get a pre-installed Subsonic server,
+                which works immediately out-of-the-box, from GigaPros.  <a href="hosting.jsp">Read more about their Subsonic hosting offer</a>.
+            </p>
+
+            <p class="margin20-t">
                 <a href="http://www.gnu.org/copyleft/gpl.html"><img class="img-left" alt="GPL" src="inc/img/gpl.png"/></a>
                 Subsonic is open-source software licensed under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</a>.
             </p>

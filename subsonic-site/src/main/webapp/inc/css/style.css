@@ -170,7 +170,7 @@ body.page-features #main-col {
 #nav li a span {
 	display: block;
 	float: left;
-	padding: 12px 12px 12px 12px; /* Change for narrower menu items. */
+	padding: 12px 9px 12px 9px; /* Change for narrower menu items. */
 	background: url('../img/topnav-div.gif') right 1px no-repeat;
 }
 #nav li a:hover, #nav li a.active {
