@@ -29,7 +29,7 @@ public class SubsonicController {
     }
 
     private void createActions() {
-        openAction = new AbstractAction("Open Subsonic in Browser") {
+        openAction = new AbstractAction("Open Subsonic Web Page") {
             public void actionPerformed(ActionEvent e) {
                 openBrowser();
             }
