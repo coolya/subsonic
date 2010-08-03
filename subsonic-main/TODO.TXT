@@ -77,10 +77,13 @@ Updated French translation, courtesy of Christophe
 
 TODO IN 4.1
 -----------------
+Funtonia integration
+Change ugly sub fav/tray icon.
 Reset maxBitrate in RESTController.
 Write tip in Google group about subsonic.org redirect optimization.
 Run Mac server in background (status bar).
   http://www.macosxhints.com/article.php?story=20050316020738829
+  http://developer.apple.com/mac/library/documentation/MacOSX/Conceptual/BPSystemStartup/Articles/CustomLogin.html#//apple_ref/doc/uid/20002134-BAJCGEGG
   Change icon.
   Bring to front when clicking Control Panel.
   Automatically configure to start at boot.
