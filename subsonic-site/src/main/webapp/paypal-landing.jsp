@@ -21,7 +21,8 @@
     regarding the payment or the Subsonic license key.
 </p>
 <p>
-    To install the license, click the "Donate" link in the top right corner of the Subsonic web interface.
+    To install the license, click the "Donate" link in the top right corner of the Subsonic web interface
+    (<a href="getting-started.jsp#3">more info</a>).
 </p>
 <p>
     For more information, please visit <a href="http://subsonic.org/">subsonic.org</a>

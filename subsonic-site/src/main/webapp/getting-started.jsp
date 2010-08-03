@@ -14,7 +14,7 @@
 
     <div id="content">
         <div id="main-col">
-            <h1>Getting Started</h1>
+            <h1 class="bottomspace">Getting Started</h1>
 
             <p>
                 This guide assumes that you have successfully installed the Subsonic server on your computer. If not,
@@ -113,7 +113,19 @@
                     configure the built-in Windows Firewall.</li>
             </ul>
 
-       </div>
+            <a name="3"><h2>3 Registering your license key</h2></a>
+            <p>Most features in Subsonic are free, but some (like mobile phone streaming) require a license after the 30-day
+                free trial. You get the license key by donating &euro;10 or more to the Subsonic project. After you receive the license key
+                by email, you must register it on your server as follows:</p>
+
+            <ul class="list">
+                <li>Click the "Donate" link in the top right corner of the Subsonic web interface.</li>
+                <li>Enter the email address and license key you received by email.</li>
+            </ul>
+
+            <a href="inc/img/gettingstarted/license.png"><img src="inc/img/gettingstarted/license_thumb.png" alt=""/></a>
+
+        </div>
 
         <div id="side-col">
             <%@ include file="google-translate.jsp" %>
@@ -129,6 +141,7 @@
                         <li><a href="#2.3">2.3 Setting up your personal subsonic.org address</a></li>
                         <li><a href="#2.3">2.4 Troubleshooting</a></li>
                     </ul>
+                    <li><a href="#3">3 Registering your license key</a></li>
                 </ul>
             </div>
         </div>

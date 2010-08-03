@@ -14,17 +14,22 @@
 
     <div id="content">
         <div id="main-col">
-            <h1>Frequently Asked Questions</h1>
+            <h1 class="bottomspace">Frequently Asked Questions</h1>
 
             <h3>How long does it take to get the license after I have donated?</h3>
             <p>Normally no more than ten minutes.  If it should take longer, please <a href="mailto:sindre@activeobjects.no">take contact</a>,
                 but please check your spam filter first.</p>
 
+            <h3>How do I install the license key I received by email?</h3>
+            <p>Please follow the guide in the <a href="getting-started.jsp#3">Getting Started</a> documentation.</p>
+
             <h3>I can't access my Subsonic server from the internet or from my iPhone/Android phone.</h3>
-            <p>Please follow the guide in the <a href="getting-started.jsp">Getting Started</a> documentation.</p>
+            <p>Please follow the guide in the <a href="getting-started.jsp#2">Getting Started</a> documentation.</p>
+
+            <h3>I forgot my Subsonic password. Can it be retrieved?</h3>
+            <p>Yes. Please read <a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3770">this forum post</a>.</p>
 
             <%--TODO: Network shares--%>
-            <%--TODO: How to install the license--%>
         </div>
 
         <div id="side-col">

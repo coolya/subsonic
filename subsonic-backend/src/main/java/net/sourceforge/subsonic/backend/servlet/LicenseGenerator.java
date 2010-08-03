@@ -168,6 +168,8 @@ public class LicenseGenerator {
                 "To install the license, click the \"Donate\" link in the top right corner of the Subsonic " +
                 "web interface.\n" +
                 "\n" +
+                "More info here: http://subsonic.org/pages/getting-started.jsp#3" +
+                "\n" +
                 "Thanks again for supporting the project!\n" +
                 "\n" +
                 "Best regards,\n" +
