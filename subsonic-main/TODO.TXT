@@ -75,6 +75,7 @@ Removed gzip filter
 Fixed chat when deploying Subsonic on Tomcat.
 Proper lookup of local IP on linux.
 Updated French translation, courtesy of Christophe
+Improved tray/application icons.
 
 TODO IN 4.1
 -----------------
