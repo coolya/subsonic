@@ -75,12 +75,13 @@ Removed gzip filter
 Fixed chat when deploying Subsonic on Tomcat.
 Proper lookup of local IP on linux.
 Updated French translation, courtesy of Christophe
-Improved tray/application icons.
+Improved tray/application/fav icons.
 
 TODO IN 4.1
 -----------------
 Funtonia integration
-Change ugly sub fav/tray icon.
+Using Android App Causes subsonic-service.exe to 100% CPU
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3771
 Reset maxBitrate in RESTController.
 Exclude dot files in cover art search.
   https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce
@@ -102,7 +103,7 @@ Support html5 audio
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2746
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2154
    content-length missing when accessing thru REST. due to gzip filter.
-   Set correct content-length in StreamController.
+   Set correct content-type in StreamController.
 Add "append" parameter to createPlaylist REST method.
 Make port 4040 the default on Windows installations not 80
 Update to FLAC 1.2.1, LAME 3.98.4  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3278
