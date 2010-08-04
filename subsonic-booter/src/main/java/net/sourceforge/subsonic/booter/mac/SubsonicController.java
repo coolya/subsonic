@@ -56,9 +56,10 @@ public class SubsonicController {
         menu.addSeparator();
         menu.add(createMenuItem(quitAction));
 
-        URL url = getClass().getResource("/images/subsonic-16.png");
+        URL url = getClass().getResource("/images/subsonic-21.png");
         Image image = Toolkit.getDefaultToolkit().createImage(url);
         TrayIcon trayIcon = new TrayIcon(image, "Subsonic Music Streamer", menu);
+        trayIcon.setImageAutoSize(false);
 
         try {
             SystemTray.getSystemTray().add(trayIcon);
