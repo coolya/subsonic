@@ -77,11 +77,12 @@ a:hover, a:hover * {
 
 /* The primary foreground colour. */
 body {
+    color: #EFE9D9;
     background-color: #DDDDDD;
 }
 
 html {
-background-color: transparent;
+    background-color: transparent;
 }
 
 label, p {

@@ -79,13 +79,29 @@ Improved tray/application/fav icons.
 
 TODO IN 4.1
 -----------------
-Funtonia integration
-Using Android App Causes subsonic-service.exe to 100% CPU
-  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3771
 Reset maxBitrate in RESTController.
+Funtonia integration
 Exclude dot files in cover art search.
   https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce
+Year parsing.  http://www.activeobjects.no/subsonic/forum/privmsg.php?folder=inbox&mode=read&p=1511
+Support html5 audio
+   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2746
+   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2154
+   content-length missing when accessing thru REST. due to gzip filter.
+   Set correct content-type in StreamController.
+Sonic themes, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3371
+Update themes. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3082
+
+Using Android App Causes subsonic-service.exe to 100% CPU
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3771
+REST API for Now playing
+  https://mail.google.com/a/activeobjects.no/?tab=cm#inbox/129f7bc0659df6cf
+NAT-PMP, UPnP alternative, http://sourceforge.net/projects/jnat-pmplib/
+Add "append" parameter to createPlaylist REST method.
+Make port 4040 the default on Windows installations not 80
+Update to FLAC 1.2.1, LAME 3.98.4  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3278
 Write tip in Google group about subsonic.org redirect optimization.
+Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
 Run Mac server in background (status bar).
   http://www.macosxhints.com/article.php?story=20050316020738829
   http://developer.apple.com/mac/library/documentation/MacOSX/Conceptual/BPSystemStartup/Articles/CustomLogin.html#//apple_ref/doc/uid/20002134-BAJCGEGG
@@ -94,21 +110,6 @@ Run Mac server in background (status bar).
   See "Air Video Server"
   Optionally show control panel when starting.
   Avoid dock icon.
-Year parsing.  http://www.activeobjects.no/subsonic/forum/privmsg.php?folder=inbox&mode=read&p=1511
-REST API for Now playing
-  https://mail.google.com/a/activeobjects.no/?tab=cm#inbox/129f7bc0659df6cf
-NAT-PMP, UPnP alternative, http://sourceforge.net/projects/jnat-pmplib/
-Support html5 audio
-   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2746
-   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2154
-   content-length missing when accessing thru REST. due to gzip filter.
-   Set correct content-type in StreamController.
-Add "append" parameter to createPlaylist REST method.
-Make port 4040 the default on Windows installations not 80
-Update to FLAC 1.2.1, LAME 3.98.4  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3278
-Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
-Sonic themes, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3371
-Update themes. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3082
 
 Create translation tool for backend.
 Downsample command used for non-mp3.

@@ -89,6 +89,7 @@ a:hover, a:hover * {
 
 /* The primary foreground colour. */
 body {
+    color: #FFFFFF;
     background-color: #DDDDDD;
 }
 

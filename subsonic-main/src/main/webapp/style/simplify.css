@@ -72,12 +72,12 @@ a:hover, a:hover * {
 
 /* Colour for warning messages. */
 .warning {
-    color: #990099;
+    color: #e7238b;
 }
-
 
 /* The primary foreground colour. */
 body {
+    color: #FFFFFF;
     background-color: #DDDDDD;
 }
 
