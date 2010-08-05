@@ -91,9 +91,11 @@ Support html5 audio
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2154
    content-length missing when accessing thru REST. due to gzip filter.
    Set correct content-type in StreamController.
-
-Using Android App Causes subsonic-service.exe to 100% CPU
+Using Android App Causes subsonic-service.exe to 100% CPU (cover art)
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3771
+REST: Don't set cover art for songs! Also avoid recursion.
+
+REST API for getUser, deleteUser
 REST API for Now playing
   https://mail.google.com/a/activeobjects.no/?tab=cm#inbox/129f7bc0659df6cf
 NAT-PMP, UPnP alternative, http://sourceforge.net/projects/jnat-pmplib/
