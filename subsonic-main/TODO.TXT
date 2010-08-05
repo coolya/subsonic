@@ -76,6 +76,8 @@ Fixed chat when deploying Subsonic on Tomcat.
 Proper lookup of local IP on linux.
 Updated French translation, courtesy of Christophe
 Improved tray/application/fav icons.
+Sonic themes, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3371
+Update themes. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3082
 
 TODO IN 4.1
 -----------------
@@ -89,8 +91,6 @@ Support html5 audio
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2154
    content-length missing when accessing thru REST. due to gzip filter.
    Set correct content-type in StreamController.
-Sonic themes, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3371
-Update themes. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3082
 
 Using Android App Causes subsonic-service.exe to 100% CPU
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3771

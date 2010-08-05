@@ -42,6 +42,9 @@ groove_simple "Groove (Simple)"
 simplify "Simplify"
 pinkpanther "PinkPanther"
 denim "Denim"
+sonic "Sonic"
+sonic_blue "Sonic (Blue)"
+sonic_white "Sonic (White)"
 
 # Themes by Jeebs (Fisher Evans)
 slick "Slick"
