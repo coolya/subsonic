@@ -218,9 +218,9 @@ public class HomeController extends ParameterizableViewController {
             if (file.isRoot()) {
                 return;
             }
-            List<File> coverArts = musicFileService.getCoverArt(file, 1);
-            if (!coverArts.isEmpty()) {
-                album.setCoverArtPath(coverArts.get(0).getPath());
+            File coverArt = musicFileService.getCoverArt(file);
+            if (coverArt != null) {
+                album.setCoverArtPath(coverArt.getPath());
             }
         } catch (IOException x) {
             LOG.warn("Failed to resolve cover art for " + file, x);

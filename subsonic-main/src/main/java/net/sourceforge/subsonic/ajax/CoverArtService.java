@@ -23,7 +23,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -149,11 +148,11 @@ public class CoverArtService {
             // Rename existing cover file if new cover file is not the preferred.
             try {
                 MusicFile musicFile = musicFileService.getMusicFile(path);
-                List<File> coverFiles = musicFileService.getCoverArt(musicFile, 1);
-                if (!coverFiles.isEmpty()) {
-                    if (!newCoverFile.equals(coverFiles.get(0))) {
-                        coverFiles.get(0).renameTo(new File(coverFiles.get(0).getCanonicalPath() + ".old"));
-                        LOG.info("Renamed old image file " + coverFiles.get(0));
+                File coverFile = musicFileService.getCoverArt(musicFile);
+                if (coverFile != null) {
+                    if (!newCoverFile.equals(coverFile)) {
+                        coverFile.renameTo(new File(coverFile.getCanonicalPath() + ".old"));
+                        LOG.info("Renamed old image file " + coverFile);
                     }
                 }
             } catch (Exception x) {

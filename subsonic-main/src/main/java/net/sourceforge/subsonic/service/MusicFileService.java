@@ -26,7 +26,6 @@ import net.sourceforge.subsonic.util.FileUtil;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -87,15 +86,24 @@ public class MusicFileService {
     }
 
     /**
+     * Equivalent to <code>getCoverArt(dir, 1, 1)</code>.
+     */
+    public File getCoverArt(MusicFile dir) throws IOException {
+        List<File> list = getCoverArt(dir, 1, 1);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    /**
      * Returns a list of appropriate cover art images for the given directory.
      *
      * @param dir   The directory.
      * @param limit Maximum number of images to return.
+     * @param depth Recursion depth when searching for images.
      * @return A list of appropriate cover art images for the directory.
      * @throws IOException If an I/O error occurs.
      */
     @SuppressWarnings({"unchecked"})
-    public List<File> getCoverArt(MusicFile dir, int limit) throws IOException {
+    public List<File> getCoverArt(MusicFile dir, int limit, int depth) throws IOException {
 
         // Look in cache.
         Element element = coverArtCache.get(dir);
@@ -109,7 +117,7 @@ public class MusicFileService {
         }
 
         List<File> result = new ArrayList<File>();
-        listCoverArtRecursively(dir, result, limit);
+        listCoverArtRecursively(dir, result, limit, depth);
 
         coverArtCache.put(new Element(dir, result));
         return result;
@@ -143,15 +151,15 @@ public class MusicFileService {
 
     private long getDirectoryLastModified(File dir) {
         long lastModified = dir.lastModified();
-        File[] subDirs = FileUtil.listFiles(dir, (FileFilter) DirectoryFileFilter.INSTANCE);
+        File[] subDirs = FileUtil.listFiles(dir, DirectoryFileFilter.INSTANCE);
         for (File subDir : subDirs) {
             lastModified = Math.max(lastModified, subDir.lastModified());
         }
         return lastModified;
     }
 
-    private void listCoverArtRecursively(MusicFile dir, List<File> coverArtFiles, int limit) throws IOException {
-        if (coverArtFiles.size() == limit) {
+    private void listCoverArtRecursively(MusicFile dir, List<File> coverArtFiles, int limit, int depth) throws IOException {
+        if (depth == 0 || coverArtFiles.size() == limit) {
             return;
         }
 
@@ -172,7 +180,7 @@ public class MusicFileService {
 
         for (File file : files) {
             if (file.isDirectory() && !dir.isExcluded(file)) {
-                listCoverArtRecursively(getMusicFile(file), coverArtFiles, limit);
+                listCoverArtRecursively(getMusicFile(file), coverArtFiles, limit, depth - 1);
             }
         }
 

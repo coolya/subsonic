@@ -91,7 +91,7 @@ public class NowPlayingService {
                 }
 
                 MusicFile musicFile = musicFileService.getMusicFile(file);
-                List<File> coverArts = musicFileService.getCoverArt(musicFile.getParent(), 1);
+                File coverArt = musicFileService.getCoverArt(musicFile.getParent());
 
                 String artist = musicFile.getMetaData().getArtist();
                 String title = musicFile.getMetaData().getTitle();
@@ -103,12 +103,10 @@ public class NowPlayingService {
                                                                StringUtil.utf8HexEncode(musicFile.getMetaData().getArtist()) +
                                                                "&songUtf8Hex=" +
                                                                StringUtil.utf8HexEncode(musicFile.getMetaData().getTitle()));
-                String coverArtUrl = coverArts.isEmpty() ? null :
-                                     url.replaceFirst("/dwr/.*", "/coverArt.view?size=48&pathUtf8Hex=" +
-                                                                 StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
-                String coverArtZoomUrl = coverArts.isEmpty() ? null :
-                                         url.replaceFirst("/dwr/.*", "/coverArt.view?pathUtf8Hex=" +
-                                                                     StringUtil.utf8HexEncode(coverArts.get(0).getPath()));
+                String coverArtUrl = coverArt == null ? null :
+                                     url.replaceFirst("/dwr/.*", "/coverArt.view?size=48&pathUtf8Hex=" + StringUtil.utf8HexEncode(coverArt.getPath()));
+                String coverArtZoomUrl = coverArt == null ? null :
+                                         url.replaceFirst("/dwr/.*", "/coverArt.view?pathUtf8Hex=" + StringUtil.utf8HexEncode(coverArt.getPath()));
 
                 String avatarUrl = null;
                 if (userSettings.getAvatarScheme() == AvatarScheme.SYSTEM) {

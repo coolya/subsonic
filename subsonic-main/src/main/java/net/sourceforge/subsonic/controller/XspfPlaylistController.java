@@ -67,10 +67,7 @@ public class XspfPlaylistController extends ParameterizableViewController {
             Song song = new Song();
             song.setMusicFile(file);
             try {
-                List<File> list = musicFileService.getCoverArt(file.getParent(), 1);
-                if (!list.isEmpty()) {
-                    song.setCoverArtFile(list.get(0));
-                }
+                song.setCoverArtFile(musicFileService.getCoverArt(file.getParent()));
             } catch (IOException x) {
                 LOG.warn("Failed to get cover art for " + file);
             }

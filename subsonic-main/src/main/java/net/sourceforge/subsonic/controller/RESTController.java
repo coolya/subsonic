@@ -216,7 +216,7 @@ public class RESTController extends MultiActionController {
                 new Attribute("id", StringUtil.utf8HexEncode(dir.getPath())),
                 new Attribute("name", dir.getName()));
 
-        List<File> coverArt = musicFileService.getCoverArt(dir, 1);
+        File coverArt = musicFileService.getCoverArt(dir);
 
         for (MusicFile musicFile : dir.getChildren(true, true, true)) {
             List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
@@ -249,7 +249,7 @@ public class RESTController extends MultiActionController {
                 new Attribute("totalHits", result.getTotalHits()));
 
         for (MusicFile musicFile : result.getMusicFiles()) {
-            List<File> coverArt = musicFileService.getCoverArt(musicFile.getParent(), 1);
+            File coverArt = musicFileService.getCoverArt(musicFile.getParent());
             List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
             builder.add("match", attributes, true);
         }
@@ -290,7 +290,7 @@ public class RESTController extends MultiActionController {
             builder.add("playlist", false, new Attribute("id", StringUtil.utf8HexEncode(playlist.getName())),
                     new Attribute("name", FilenameUtils.getBaseName(playlist.getName())));
             for (MusicFile musicFile : playlist.getFiles()) {
-                List<File> coverArt = musicFileService.getCoverArt(musicFile.getParent(), 1);
+                File coverArt = musicFileService.getCoverArt(musicFile.getParent());
                 List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
                 builder.add("entry", attributes, true);
             }
@@ -355,7 +355,7 @@ public class RESTController extends MultiActionController {
                         new Attribute("gain", jukeboxService.getGain()));
                 builder.add("jukeboxPlaylist", attrs, false);
                 for (MusicFile musicFile : playlist.getFiles()) {
-                    List<File> coverArt = musicFileService.getCoverArt(musicFile.getParent(), 1);
+                    File coverArt = musicFileService.getCoverArt(musicFile.getParent());
                     List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
                     builder.add("entry", attributes, true);
                 }
@@ -467,9 +467,9 @@ public class RESTController extends MultiActionController {
 
             for (HomeController.Album album : albums) {
                 MusicFile musicFile = musicFileService.getMusicFile(album.getPath());
-                List<File> coverArt = new ArrayList<File>();
+                File coverArt = null;
                 if (album.getCoverArtPath() != null) {
-                    coverArt.add(new File(album.getCoverArtPath()));
+                    coverArt = new File(album.getCoverArtPath());
                 }
                 List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
                 builder.add("album", attributes, true);
@@ -501,7 +501,7 @@ public class RESTController extends MultiActionController {
             RandomSearchCriteria criteria = new RandomSearchCriteria(size, genre, fromYear, toYear, musicFolderId);
 
             for (MusicFile musicFile : searchService.getRandomSongs(criteria)) {
-                List<File> coverArt = musicFileService.getCoverArt(musicFile.getParent(), 1);
+                File coverArt = musicFileService.getCoverArt(musicFile.getParent());
                 List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
                 builder.add("song", attributes, true);
             }
@@ -533,7 +533,7 @@ public class RESTController extends MultiActionController {
                 }
 
                 MusicFile musicFile = musicFileService.getMusicFile(file);
-                List<File> coverArt = musicFileService.getCoverArt(musicFile.getParent(), 1);
+                File coverArt = musicFileService.getCoverArt(musicFile.getParent());
 
                 long minutesAgo = status.getMillisSinceLastUpdate() / 1000L / 60L;
                 if (minutesAgo < 60) {
@@ -553,7 +553,7 @@ public class RESTController extends MultiActionController {
         response.getWriter().print(builder);
     }
 
-    private List<Attribute> createAttributesForMusicFile(Player player, List<File> coverArt, MusicFile musicFile) throws IOException {
+    private List<Attribute> createAttributesForMusicFile(Player player, File coverArt, MusicFile musicFile) throws IOException {
         List<Attribute> attributes = new ArrayList<Attribute>();
         attributes.add(new Attribute("id", StringUtil.utf8HexEncode(musicFile.getPath())));
         attributes.add(new Attribute("title", musicFile.getTitle()));
@@ -577,13 +577,9 @@ public class RESTController extends MultiActionController {
                 attributes.add(new Attribute("track", track));
             }
 
-            String year = metaData.getYear();
+            Integer year = metaData.getYearAsInteger();
             if (year != null) {
-                try {
-                    attributes.add(new Attribute("year", Integer.valueOf(year)));
-                } catch (NumberFormatException x) {
-                    LOG.warn("Invalid year: " + year, x);
-                }
+                attributes.add(new Attribute("year", year));
             }
 
             String genre = metaData.getGenre();
@@ -596,8 +592,8 @@ public class RESTController extends MultiActionController {
             attributes.add(new Attribute("suffix", suffix));
             attributes.add(new Attribute("contentType", StringUtil.getMimeType(suffix)));
 
-            if (!coverArt.isEmpty()) {
-                attributes.add(new Attribute("coverArt", StringUtil.utf8HexEncode(coverArt.get(0).getPath())));
+            if (coverArt != null) {
+                attributes.add(new Attribute("coverArt", StringUtil.utf8HexEncode(coverArt.getPath())));
             }
 
             if (transcodingService.isTranscodingRequired(musicFile, player)) {
@@ -613,9 +609,9 @@ public class RESTController extends MultiActionController {
 
         } else {
 
-            List<File> childCoverArt = musicFileService.getCoverArt(musicFile, 1);
-            if (!childCoverArt.isEmpty()) {
-                attributes.add(new Attribute("coverArt", StringUtil.utf8HexEncode(childCoverArt.get(0).getPath())));
+            File childCoverArt = musicFileService.getCoverArt(musicFile);
+            if (childCoverArt != null) {
+                attributes.add(new Attribute("coverArt", StringUtil.utf8HexEncode(childCoverArt.getPath())));
             }
         }
         return attributes;
@@ -665,18 +661,26 @@ public class RESTController extends MultiActionController {
         }
 
         Integer maxBitRate = ServletRequestUtils.getIntParameter(request, "maxBitRate");
+        TranscodeScheme oldTranscodeScheme = null;
+        Player player = playerService.getPlayer(request, response);
         if (maxBitRate != null) {
-            Player player = playerService.getPlayer(request, response);
+            oldTranscodeScheme = player.getTranscodeScheme();
             TranscodeScheme transcodeScheme = TranscodeScheme.valueOf(maxBitRate);
             if (transcodeScheme == null) {
                 LOG.warn("No transcode scheme found for bit rate " + maxBitRate);
-            } else if (transcodeScheme != player.getTranscodeScheme()) {
+            } else if (transcodeScheme != oldTranscodeScheme) {
                 player.setTranscodeScheme(transcodeScheme);
                 playerService.updatePlayer(player);
             }
         }
 
-        return streamController.handleRequest(request, response);
+        streamController.handleRequest(request, response);
+        if (oldTranscodeScheme != null) {
+            player.setTranscodeScheme(oldTranscodeScheme);
+            playerService.updatePlayer(player);
+        }
+
+        return null;
     }
 
     public ModelAndView getCoverArt(HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -119,7 +119,7 @@ public class CoverArtBatchService {
             if (musicFile.isDirectory()) {
                 try {
                     if (musicFile.isAlbum()) {
-                        boolean hasCover = musicFileService.getCoverArt(musicFile, 1).size() > 0;
+                        boolean hasCover = musicFileService.getCoverArt(musicFile) != null;
                         if (hasCover) {
                             albumsWithCover.add(musicFile);
                         } else {

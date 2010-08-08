@@ -155,7 +155,7 @@ public class MainController extends ParameterizableViewController {
             if (dir.isFile()) {
                 dir = dir.getParent();
             }
-            result.addAll(musicFileService.getCoverArt(dir, limit - result.size()));
+            result.addAll(musicFileService.getCoverArt(dir, limit - result.size(), 2));
         }
         return result;
     }
