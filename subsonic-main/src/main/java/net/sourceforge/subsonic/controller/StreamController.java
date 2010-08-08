@@ -99,6 +99,9 @@ public class StreamController implements Controller {
                 LOG.info("Incoming Podcast request for playlist " + playlistName);
             }
 
+            String contentType = StringUtil.getMimeType(request.getParameter("suffix"));
+            response.setContentType(contentType);
+
             // If "path" request parameter is set, this is a request for a single file
             // (typically from the embedded Flash player). In that case, create a separate
             // playlist (in order to support multiple parallel streams). Also, enable
@@ -130,6 +133,9 @@ public class StreamController implements Controller {
                 if (!transcodingRequired) {
                     Util.setContentLength(response, contentLength);
                 }
+
+                String transcodedSuffix = transcodingService.getSuffix(player, file);
+                response.setContentType(StringUtil.getMimeType(transcodedSuffix));
             }
 
             Playlist playlist = player.getPlaylist();
@@ -144,9 +150,6 @@ public class StreamController implements Controller {
             }
 
             status = statusService.createStreamStatus(player);
-
-            String contentType = StringUtil.getMimeType(request.getParameter("suffix"));
-            response.setContentType(contentType);
 
             in = new PlaylistInputStream(player, status, transcodingService, musicInfoService, audioScrobblerService, searchService);
             OutputStream out = RangeOutputStream.wrap(response.getOutputStream(), range);
