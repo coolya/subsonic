@@ -57,4 +57,27 @@ public class MetaDataTestCase extends TestCase {
         metaData.setDuration(seconds);
         assertEquals("Error in getDurationAsString().", expected, metaData.getDurationAsString());
     }
+
+    public void testGetYearAsInteger() {
+        doTestGetYearAsInteger(null, null);
+        doTestGetYearAsInteger("", null);
+        doTestGetYearAsInteger(" ", null);
+        doTestGetYearAsInteger("    ", null);
+        doTestGetYearAsInteger("abc", null);
+        doTestGetYearAsInteger("abcd", null);
+        doTestGetYearAsInteger("abcde", null);
+        doTestGetYearAsInteger("12", null);
+        doTestGetYearAsInteger("123", null);
+        doTestGetYearAsInteger("1234", 1234);
+        doTestGetYearAsInteger("12345", 1234);
+        doTestGetYearAsInteger("2010-06-01", 2010);
+        doTestGetYearAsInteger("2010 06 01", 2010);
+        doTestGetYearAsInteger("2010abc", 2010);
+    }
+
+    private void doTestGetYearAsInteger(String yearString, Integer expected) {
+        MusicFile.MetaData metaData = new MusicFile.MetaData();
+        metaData.setYear(yearString);
+        assertEquals("Error in getYearAsInteger().", expected, metaData.getYearAsInteger());
+    }
 }

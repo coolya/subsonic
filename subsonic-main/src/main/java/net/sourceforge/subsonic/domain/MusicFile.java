@@ -557,6 +557,17 @@ public class MusicFile implements Serializable {
             return year;
         }
 
+        public Integer getYearAsInteger() {
+            if (year == null || year.length() < 4) {
+                return null;
+            }
+            try {
+                return new Integer(year.substring(0, 4));
+            } catch (NumberFormatException x) {
+                return null;
+            }
+        }
+
         public void setYear(String year) {
             this.year = year;
         }
