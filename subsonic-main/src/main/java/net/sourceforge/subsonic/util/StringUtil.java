@@ -73,6 +73,7 @@ public final class StringUtil {
             {"ogg", "application/ogg"},
             {"mid", "audio/midi"},
             {"wav", "audio/x-wav"},
+            {"flac", "audio/flac"},
             {"gif", "image/gif"},
             {"jpg", "image/jpeg"},
             {"jpeg", "image/jpeg"},

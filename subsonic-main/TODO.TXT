@@ -41,10 +41,9 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.6
 -------------------
+Longer timeout/fewer songs in getRandomSongs.
 Long-click download
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2651&start=105
-Multiple lame/ffmpeg processes
-  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3834&highlight=
 Fix crash
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3677
 Clear cached redirect url if network type changed.
@@ -80,25 +79,33 @@ Sonic themes, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3371
 Update themes. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3082
 Upgraded to dwr 3.0. Less logging.
 NAT-PMP support, http://sourceforge.net/projects/jnat-pmplib/
+Year parsing.
+  http://www.activeobjects.no/subsonic/forum/privmsg.php?folder=inbox&mode=read&p=1511
+Reset maxBitrate in RESTController.
+Support html5 audio
+   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2746
+   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2154
+   content-length missing when accessing thru REST. due to gzip filter.
+   Set correct content-type in StreamController.
+Reset maxBitrate in RESTController.
+Non-recursive coverart lookup
+Add content-type for flac.
 
 TODO IN 4.1
 -----------------
 Update to dwr 3.0rc1
 Include lame, ffmpeg in mac install
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3909&highlight=
-Reset maxBitrate in RESTController.
-Funtonia integration
 Exclude dot files in cover art search.
   https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce
-Year parsing.  http://www.activeobjects.no/subsonic/forum/privmsg.php?folder=inbox&mode=read&p=1511
-Support html5 audio
-   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2746
-   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2154
-   content-length missing when accessing thru REST. due to gzip filter.
-   Set correct content-type in StreamController.
+Fix /rest/stream.view: java.io.IOException: Closed
 Using Android App Causes subsonic-service.exe to 100% CPU (cover art)
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3771
-REST: Don't set cover art for songs! Also avoid recursion.
+  REST: Don't set cover art for songs? Also avoid recursion.
+Funtonia integration
+Multiple lame/ffmpeg processes
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3834&highlight=
+Transparent icons in menu bar.
 
 REST API for getUser, deleteUser
 REST API for Now playing
