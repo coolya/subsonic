@@ -57,7 +57,7 @@ public class SBBIRouter implements Router {
         device.addPortMapping("Subsonic", null, internalPort, externalPort, localIp, leaseDuration, "TCP");
     }
 
-    public void deletePortMapping(int externalPort) throws Exception {
+    public void deletePortMapping(int externalPort, int internal) throws Exception {
         device.deletePortMapping(null, externalPort, "TCP");
     }
 }

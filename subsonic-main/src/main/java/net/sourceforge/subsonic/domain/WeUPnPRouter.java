@@ -50,7 +50,7 @@ public class WeUPnPRouter implements Router {
         device.addPortMapping(externalPort, internalPort, localIp, "TCP", "Subsonic");
     }
 
-    public void deletePortMapping(int externalPort) throws Exception {
+    public void deletePortMapping(int externalPort, int internalPort) throws Exception {
         device.deletePortMapping(externalPort, "TCP");
     }
 }

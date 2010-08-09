@@ -19,7 +19,6 @@
 package net.sourceforge.subsonic.service;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,6 +42,7 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
 
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.NATPMPRouter;
 import net.sourceforge.subsonic.domain.Router;
 import net.sourceforge.subsonic.domain.SBBIRouter;
 import net.sourceforge.subsonic.domain.WeUPnPRouter;
@@ -156,7 +156,7 @@ public class NetworkService {
                 // Delete NAT entry.
                 else {
                     try {
-                        router.deletePortMapping(port);
+                        router.deletePortMapping(port, port);
                         LOG.info("Deleted port mapping for port " + port);
                     } catch (Throwable x) {
                         LOG.warn("Failed to delete port mapping for port " + port, x);
@@ -188,6 +188,15 @@ public class NetworkService {
                 }
             } catch (Throwable x) {
                 LOG.warn("Failed to find UPnP router using WeUPnP library.", x);
+            }
+
+            try {
+                Router router = NATPMPRouter.findRouter();
+                if (router != null) {
+                    return router;
+                }
+            } catch (Throwable x) {
+                LOG.warn("Failed to find NAT-PMP router.", x);
             }
 
             return null;

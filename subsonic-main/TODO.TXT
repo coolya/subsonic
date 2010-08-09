@@ -79,9 +79,11 @@ Improved tray/application/fav icons.
 Sonic themes, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3371
 Update themes. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3082
 Upgraded to dwr 3.0. Less logging.
+NAT-PMP support, http://sourceforge.net/projects/jnat-pmplib/
 
 TODO IN 4.1
 -----------------
+Update to dwr 3.0rc1
 Include lame, ffmpeg in mac install
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3909&highlight=
 Reset maxBitrate in RESTController.
@@ -101,7 +103,6 @@ REST: Don't set cover art for songs! Also avoid recursion.
 REST API for getUser, deleteUser
 REST API for Now playing
   https://mail.google.com/a/activeobjects.no/?tab=cm#inbox/129f7bc0659df6cf
-NAT-PMP, UPnP alternative, http://sourceforge.net/projects/jnat-pmplib/
 Add "append" parameter to createPlaylist REST method.
 Make port 4040 the default on Windows installations not 80
 Update to FLAC 1.2.1, LAME 3.98.4  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3278
