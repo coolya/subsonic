@@ -91,12 +91,12 @@ Support html5 audio
 Reset maxBitrate in RESTController.
 Non-recursive coverart lookup
 Add content-type for flac.
+Fix /rest/stream.view: java.io.IOException: Closed
 
 TODO IN 4.1
 -----------------
 Exclude dot files in cover art search.
   https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce
-Fix /rest/stream.view: java.io.IOException: Closed
 Using Android App Causes subsonic-service.exe to 100% CPU (cover art)
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3771
   REST: Don't set cover art for songs? Also avoid recursion.

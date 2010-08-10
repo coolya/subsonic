@@ -186,8 +186,11 @@ public class StreamController implements Controller {
 
                     int n = in.read(buf);
                     if (n == -1) {
-                        sendDummy(buf, out);
-
+                        if (isPodcast || isSingleFile) {
+                            break;
+                        } else {
+                            sendDummy(buf, out);
+                        }
                     } else {
                         out.write(buf, 0, n);
                     }
