@@ -12,7 +12,7 @@ Sindre Mehus, Mar 12 2010
 
 lame
 MP3 encoder
-Version 3.96.1
+Version 3.98.4
 http://www.rarewares.org/mp3.html
 
 ffmpeg
