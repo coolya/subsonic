@@ -104,6 +104,7 @@ Run Mac server in background (status bar).
 
 TODO IN 4.1
 -----------------
+Use setIconImages() in booter. Note: requires java 1.6.
 Upgrade to 4.1.beta1
 Exclude dot files in cover art search.
   https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce

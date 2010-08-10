@@ -8,7 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 
 /**
  * Frame that is activated by the tray icon. Contains a tabbed pane
@@ -31,12 +32,28 @@ public class SubsonicFrame extends JFrame {
         createComponents();
         layoutComponents();
         addBehaviour();
-
-        URL url = Main.class.getResource("/images/subsonic-32.png");
-        setIconImage(Toolkit.getDefaultToolkit().createImage(url));
+        setupIcons();
 
         pack();
         centerComponent();
+    }
+
+    private void setupIcons() {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+
+        // Window.setIconImages() was added in Java 1.6.  Since Subsonic only requires 1.5, we
+        // use reflection to invoke it.
+        try {
+            Method method = Window.class.getMethod("setIconImages", java.util.List.class);
+            java.util.List<Image> images = Arrays.asList(
+                    toolkit.createImage(Main.class.getResource("/images/subsonic-16.png")),
+                    toolkit.createImage(Main.class.getResource("/images/subsonic-32.png")),
+                    toolkit.createImage(Main.class.getResource("/images/subsonic-512.png")));
+            method.invoke(this, images);
+        } catch (Throwable x) {
+            // Fallback to old method.
+            setIconImage(toolkit.createImage(Main.class.getResource("/images/subsonic-32.png")));
+        }
     }
 
     public void centerComponent() {
