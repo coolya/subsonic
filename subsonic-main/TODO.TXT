@@ -2,7 +2,7 @@ TODO IN U1M
 ---------------
 x Implement "exit" option.
   Save playlist on exit.
-  Smaller shuffle play buffer, and longer timeout.
+x Smaller shuffle play buffer
   How to enable Offline mode?
 x https support.
   Setup branch in SourceForge SVN, grant access to U1M developers.
