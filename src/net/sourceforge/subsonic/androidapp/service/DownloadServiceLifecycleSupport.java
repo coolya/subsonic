@@ -97,7 +97,7 @@ public class DownloadServiceLifecycleSupport {
     public void onDestroy() {
         executorService.shutdown();
         serializeDownloadQueue();
-        downloadService.clear();
+        downloadService.clear(false);
         downloadService.unregisterReceiver(headsetEventReceiver);
 
         TelephonyManager telephonyManager = (TelephonyManager) downloadService.getSystemService(Context.TELEPHONY_SERVICE);

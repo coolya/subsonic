@@ -162,6 +162,10 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     @Override
     public synchronized void clear() {
+        clear(true);
+    }
+
+    public synchronized void clear(boolean serialize) {
         reset();
         downloadList.clear();
         revision++;
@@ -170,7 +174,9 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
         setCurrentPlaying(null);
 
-        lifecycleSupport.serializeDownloadQueue();
+        if (serialize) {
+            lifecycleSupport.serializeDownloadQueue();
+        }
     }
 
     @Override
