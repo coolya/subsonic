@@ -1,6 +1,7 @@
 TODO IN U1M
 ---------------
 Implement "exit" option.
+Move "Help" and "Exit" to the top.
 How to enable Offline mode?
 https support?
 Setup branch in SourceForge SVN, grant access to U1M developers.

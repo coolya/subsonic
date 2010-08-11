@@ -79,6 +79,18 @@
             a:minHeight="?android:attr/listPreferredItemHeight"/>
 
     <TextView
+            a:id="@+id/main_exit"
+            a:text="@string/main.exit"
+            a:drawableLeft="@drawable/main_exit"
+            a:drawablePadding="10dip"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:textAppearance="?android:attr/textAppearanceLarge"
+            a:gravity="center_vertical"
+            a:paddingLeft="6dp"
+            a:minHeight="?android:attr/listPreferredItemHeight"/>
+
+    <TextView
             a:id="@+id/main_albums"
             a:text="@string/main.albums_title"
             a:layout_width="fill_parent"
