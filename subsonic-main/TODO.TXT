@@ -1,21 +1,21 @@
 TODO IN U1M
 ---------------
-Implement "exit" option.
-Smaller shuffle play buffer.
-Move "Help" and "Exit" to the top.
-How to enable Offline mode?
-https support?
-Setup branch in SourceForge SVN, grant access to U1M developers.
-New Android manifest for U1M.
-Setup new code signing certificate.
-Remove incomplete Chinese translations?
-Remove playlist feature
-Remove max bitrate setting.
-Remove server settings, lock server url.
-Find a way to override server url for testing purposes
-New authentication scheme.
-New "Help" page.
-New icons.
+x Implement "exit" option.
+  Save playlist on exit.
+  Smaller shuffle play buffer, and longer timeout.
+  How to enable Offline mode?
+x https support.
+  Setup branch in SourceForge SVN, grant access to U1M developers.
+  New Android manifest for U1M.
+  Setup new code signing certificate.
+  Remove incomplete Chinese translations?
+  Remove playlist feature
+  Remove max bitrate setting.
+  Remove server settings, lock server url.
+  Find a way to override server url for testing purposes
+  New authentication scheme.
+  New "Help" page.
+  New icons.
 
 TODO IN BACKEND
 ---------------
@@ -23,7 +23,6 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.6
 -------------------
-Exit menu option
 Add more bitrate options (e.g., 80 kbit/s)
 Longer timeout/fewer songs in getRandomSongs.
 Long-click download
@@ -45,14 +44,18 @@ Select music folder in server settings. (Including "All").
 Use combination of progress bar and slide bar.
 Bluetooth and audio button control support.
 Max bitrate settings: Differentiate between 3G and non-3G
-
 Add icons to server popup.
 Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Colors: http://www.androidtapp.com/opentable/
 
+DONE IN ANDROID 1.6
+-------------------
+Exit button
+
 DONE IN 4.1
 ------------
+Added Traditional Chinese translation, courtesy of Cheng Jen Li.
 Removed gzip filter
 Fixed chat when deploying Subsonic on Tomcat.
 Proper lookup of local IP on linux.
@@ -112,19 +115,9 @@ Test FLAC > mp3 transcoding on Linux.
 Go thru About page.
 Change documentation of subsonic_home.  Use popup?
 
-DONE IN 4.1
--------------
-Added Traditional Chinese translation, courtesy of Cheng Jen Li.
-
-MAC INSTALLER
--------------
 Make maven build from root work.
-
-MISC
-----
 Java silent installation: http://java.sun.com/javase/6/webnotes/install/jre/silent.html
 WiX: https://sourceforge.net/projects/wix/
-
 REST album/artist search.
 Add track count REST.
 Use AAC rather than MP3 for transcoding.
