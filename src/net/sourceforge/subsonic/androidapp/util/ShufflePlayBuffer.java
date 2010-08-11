@@ -37,8 +37,8 @@ import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 public class ShufflePlayBuffer {
 
     private static final String TAG = ShufflePlayBuffer.class.getSimpleName();
-    private static final int CAPACITY = 100;
-    private static final int REFILL_THRESHOLD = 80;
+    private static final int CAPACITY = 50;
+    private static final int REFILL_THRESHOLD = 40;
 
     private final ScheduledExecutorService executorService;
     private final List<MusicDirectory.Entry> buffer = new ArrayList<MusicDirectory.Entry>();
