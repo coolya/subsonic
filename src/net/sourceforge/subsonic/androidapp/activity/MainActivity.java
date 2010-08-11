@@ -70,6 +70,7 @@ public class MainActivity extends SubsonicTabActivity {
         final View shuffleButton = buttons.findViewById(R.id.main_shuffle);
         final View settingsButton = buttons.findViewById(R.id.main_settings);
         final View helpButton = buttons.findViewById(R.id.main_help);
+        final View exitButton = buttons.findViewById(R.id.main_exit);
         final View dummyView = findViewById(R.id.main_dummy);
         final View albumsTitle = buttons.findViewById(R.id.main_albums);
         final View albumsNewestButton = buttons.findViewById(R.id.main_albums_newest);
@@ -87,9 +88,9 @@ public class MainActivity extends SubsonicTabActivity {
 
         List<View> views;
         if (Util.isOffline(this)) {
-            views = Arrays.asList(serverButton, settingsButton, helpButton);
+            views = Arrays.asList(serverButton, settingsButton, helpButton, exitButton);
         } else {
-            views = Arrays.asList(serverButton, shuffleButton, settingsButton, helpButton, albumsTitle,
+            views = Arrays.asList(serverButton, shuffleButton, settingsButton, helpButton, exitButton, albumsTitle,
                     albumsNewestButton, albumsRandomButton, albumsHighestButton, albumsRecentButton, albumsFrequentButton);
         }
         final int albumTitlePosition = views.indexOf(albumsTitle);
@@ -115,6 +116,8 @@ public class MainActivity extends SubsonicTabActivity {
                     Util.startActivityWithoutTransition(MainActivity.this, intent);
                 } else if (view == helpButton) {
                     startActivity(new Intent(MainActivity.this, HelpActivity.class));
+                } else if (view == exitButton) {
+                    exit();
                 } else if (view == albumsNewestButton) {
                     showAlbumList("newest");
                 } else if (view == albumsRandomButton) {
@@ -206,6 +209,11 @@ public class MainActivity extends SubsonicTabActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Util.startActivityWithoutTransition(this, intent);
+    }
+
+    private void exit() {
+        stopService(new Intent(this, DownloadServiceImpl.class));
+        finish();
     }
 
     private void showInfoDialog() {
