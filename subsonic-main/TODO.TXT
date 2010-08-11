@@ -1,10 +1,11 @@
 TODO IN U1M
 ---------------
 x Implement "exit" option.
-  Save playlist on exit.
-x Smaller shuffle play buffer
-  How to enable Offline mode?
 x https support.
+x Smaller shuffle play buffer
+  getRandomSongs times out.  Fetch max 10 at a time? Increate socket timeout for each retry.
+x Save playlist on exit.
+  How to enable Offline mode?
   Setup branch in SourceForge SVN, grant access to U1M developers.
   New Android manifest for U1M.
   Setup new code signing certificate.
