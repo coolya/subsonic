@@ -33,7 +33,6 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import org.apache.commons.io.FilenameUtils;
 
 /**
  * @author Sindre Mehus
@@ -148,29 +147,32 @@ public class FileUtil {
     }
 
     private static boolean isMusicFile(File file) {
-        String extension = FilenameUtils.getExtension(file.getName());
+        String extension = getExtension(file.getName());
         return MUSIC_FILE_EXTENSIONS.contains(extension);
     }
 
     /**
-     * Returns the suffix (the substring after the last dot) of the given string. The dot
-     * is not included in the returned suffix.
+     * Returns the extension (the substring after the last dot) of the given file. The dot
+     * is not included in the returned extension.
      *
-     * @param s The string in question.
-     * @return The suffix, or an empty string if no suffix is found.
-     * @deprecated Use FilenameUtils instead
+     * @param name The filename in question.
+     * @return The extension, or an empty string if no extension is found.
      */
-    @Deprecated
-    public static String getSuffix(String s) {
-        int index = s.lastIndexOf('.');
-        return index == -1 ? "" : s.substring(index + 1);
+    public static String getExtension(String name) {
+        int index = name.lastIndexOf('.');
+        return index == -1 ? "" : name.substring(index + 1);
     }
 
-    /** @deprecated Use FilenameUtils instead */
-    @Deprecated
-    public static String getPrefix(String s) {
-        int index = s.lastIndexOf('.');
-        return index == -1 ? s : s.substring(0, index);
+    /**
+     * Returns the base name (the substring before the last dot) of the given file. The dot
+     * is not included in the returned basename.
+     *
+     * @param name The filename in question.
+     * @return The base name, or an empty string if no basename is found.
+     */
+    public static String getBaseName(String name) {
+        int index = name.lastIndexOf('.');
+        return index == -1 ? name : name.substring(0, index);
     }
 
     public static <T> boolean serialize(Context context, T obj, String fileName) {

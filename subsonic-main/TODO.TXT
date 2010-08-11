@@ -1,39 +1,19 @@
-java.lang.NullPointerException
-E/AndroidRuntime( 8811): 	at net.sourceforge.subsonic.androidapp.activity.SelectAlbumActivity$EntryAdapter.getView(SelectAlbumActivity.java:495)
-E/AndroidRuntime( 8811): 	at android.widget.HeaderViewListAdapter.getView(HeaderViewListAdapter.java:220)
-E/AndroidRuntime( 8811): 	at android.widget.AbsListView.obtainView(AbsListView.java:1315)
-E/AndroidRuntime( 8811): 	at android.widget.ListView.makeAndAddView(ListView.java:1727)
-E/AndroidRuntime( 8811): 	at android.widget.ListView.fillDown(ListView.java:652)
-E/AndroidRuntime( 8811): 	at android.widget.ListView.fillFromTop(ListView.java:709)
-E/AndroidRuntime( 8811): 	at android.widget.ListView.layoutChildren(ListView.java:1580)
-E/AndroidRuntime( 8811): 	at android.widget.AbsListView.onLayout(AbsListView.java:1147)
-E/AndroidRuntime( 8811): 	at android.view.View.layout(View.java:7035)
-E/AndroidRuntime( 8811): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1249)
-E/AndroidRuntime( 8811): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1125)
-E/AndroidRuntime( 8811): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1042)
-E/AndroidRuntime( 8811): 	at android.view.View.layout(View.java:7035)
-E/AndroidRuntime( 8811): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:333)
-E/AndroidRuntime( 8811): 	at android.view.View.layout(View.java:7035)
-E/AndroidRuntime( 8811): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1249)
-E/AndroidRuntime( 8811): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1125)
-E/AndroidRuntime( 8811): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1042)
-E/AndroidRuntime( 8811): 	at android.view.View.layout(View.java:7035)
-E/AndroidRuntime( 8811): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:333)
-E/AndroidRuntime( 8811): 	at android.view.View.layout(View.java:7035)
-E/AndroidRuntime( 8811): 	at android.view.ViewRoot.performTraversals(ViewRoot.java:1045)
-E/AndroidRuntime( 8811): 	at android.view.ViewRoot.handleMessage(ViewRoot.java:1727)
-E/AndroidRuntime( 8811): 	at android.os.Handler.dispatchMessage(Handler.java:99)
-E/AndroidRuntime( 8811): 	at android.os.Looper.loop(Looper.java:123)
-E/AndroidRuntime( 8811): 	at android.app.ActivityThread.main(ActivityThread.java:4627)
-E/AndroidRuntime( 8811): 	at java.lang.reflect.Method.invokeNative(Native Method)
-E/AndroidRuntime( 8811): 	at java.lang.reflect.Method.invoke(Method.java:521)
-E/AndroidRuntime( 8811): 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:868)
-
-
-https://www.paypal.com/no/cgi-bin/webscr?cmd=_display-ipns-history
-http://android.git.kernel.org/?p=platform/frameworks/base.git;a=tree;f=core;
-https://cms.paypal.com/us/cgi-bin/?&cmd=_render-content&content_ID=developer/e_howto_html_donation_buttons#id08AAF0P05LK
-https://cms.paypal.com/cms_content/US/en_US/files/developer/IPNGuide.pdf
+TODO IN U1M
+---------------
+Implement "exit" option.
+How to enable Offline mode?
+https support?
+Setup branch in SourceForge SVN, grant access to U1M developers.
+New Android manifest for U1M.
+Setup new code signing certificate.
+Remove incomplete Chinese translations?
+Remove playlist feature
+Remove max bitrate setting.
+Remove server settings, lock server url.
+Find a way to override server url for testing purposes
+New authentication scheme.
+New "Help" page.
+New icons.
 
 TODO IN BACKEND
 ---------------
@@ -100,7 +80,7 @@ Run Mac server in background (status bar).
   See "Air Video Server"
   Optionally show control panel when starting.
   Avoid dock icon.
-
+Upgraded to LAME 3.98.4
 
 TODO IN 4.1
 -----------------
@@ -115,8 +95,6 @@ Funtonia integration
 Multiple lame/ffmpeg processes
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3834&highlight=
 Transparent icons in menu bar.
-Update to FLAC 1.2.1, LAME 3.98.4  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3278
-Upgraded to LAME 3.98.4
 
 REST API for getUser, deleteUser
 REST API for Now playing
@@ -295,7 +273,6 @@ Change LAME download url.
 PHPBB authentication. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1857
 Ignore files/directories by name (e.g., ".svn"), FilenameUtils.wildcardMatch(), http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=831
 Jetty download performance, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1712
-Create Ubuntu etc package using maven-unix-plugin (and appassembler?)
 Add to Ubuntu repo.
 Podcast : Playing Direct from URL, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1667
 iPod/iPhone support.

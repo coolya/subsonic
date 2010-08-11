@@ -390,6 +390,74 @@ public final class Util {
         return new String(out);
     }
 
+    /**
+     * <p>Gets the substring after the first occurrence of a separator.
+     * The separator is not returned.</p>
+     *
+     * <p>A <code>null</code> string input will return <code>null</code>.
+     * An empty ("") string input will return the empty string.
+     * A <code>null</code> separator will return the empty string if the
+     * input string is not <code>null</code>.</p>
+     *
+     * <pre>
+     * substringAfter(null, *)      = null
+     * substringAfter("", *)        = ""
+     * substringAfter(*, null)      = ""
+     * substringAfter("abc", "a")   = "bc"
+     * substringAfter("abcba", "b") = "cba"
+     * substringAfter("abc", "c")   = ""
+     * substringAfter("abc", "d")   = ""
+     * substringAfter("abc", "")    = "abc"
+     * </pre>
+     *
+     * @param s  the String to get a substring from, may be null
+     * @param separator  the String to search for, may be null
+     * @return the substring after the first occurrence of the separator,
+     *  <code>null</code> if null String input
+     */
+    public static String substringAfter(String s, String separator) {
+        if (s == null || s.length() == 0) {
+            return s;
+        }
+        if (separator == null) {
+            return "";
+        }
+        int pos = s.indexOf(separator);
+        if (pos == -1) {
+            return "";
+        }
+        return s.substring(pos + separator.length());
+    }
+
+    /**
+     * <p>Removes control characters (char &lt;= 32) from both
+     * ends of this String returning <code>null</code> if the String is
+     * empty ("") after the trim or if it is <code>null</code>.
+     *
+     * <p>The String is trimmed using {@link String#trim()}.
+     * Trim removes start and end characters &lt;= 32.
+     *
+     * <pre>
+     * trimToNull(null)          = null
+     * trimToNull("")            = null
+     * trimToNull("     ")       = null
+     * trimToNull("abc")         = "abc"
+     * trimToNull("    abc    ") = "abc"
+     * </pre>
+     *
+     * @param s  the String to be trimmed, may be null
+     * @return the trimmed String,
+     *  <code>null</code> if only chars &lt;= 32, empty or null String input
+     */
+    public static String trimToNull(String s) {
+        if (s == null) {
+            return null;
+        }
+        s = s.trim();
+        return s.length() == 0 ? null : s;
+    }
+
+
     public static boolean isNetworkConnected(Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();

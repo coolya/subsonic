@@ -31,7 +31,6 @@ import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 
@@ -61,8 +60,8 @@ public class DownloadFile {
         saveFile = FileUtil.getSongFile(song);
         bitrate = Util.getMaxBitrate(context);
         partialFile = new File(saveFile.getPath() + "." + bitrate + ".partial");
-        completeFile = new File(saveFile.getParent(), FilenameUtils.getBaseName(saveFile.getName()) +
-                ".complete." + FilenameUtils.getExtension(saveFile.getName()));
+        completeFile = new File(saveFile.getParent(), FileUtil.getBaseName(saveFile.getName()) +
+                ".complete." + FileUtil.getExtension(saveFile.getName()));
         mediaStoreService = new MediaStoreService(context);
     }
 
