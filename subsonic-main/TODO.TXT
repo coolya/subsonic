@@ -1,6 +1,7 @@
 TODO IN U1M
 ---------------
 Implement "exit" option.
+Smaller shuffle play buffer.
 Move "Help" and "Exit" to the top.
 How to enable Offline mode?
 https support?

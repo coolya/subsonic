@@ -16,7 +16,7 @@
 
     <application a:label="Subsonic" a:icon="@drawable/launch" a:theme="@android:style/Theme.Light">
 
-        <activity a:name=".activity.MainActivity"
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.MainActivity"
                   a:label="Subsonic"
                   a:configChanges="orientation|keyboardHidden"
                   a:launchMode="standard">
@@ -26,41 +26,41 @@
             </intent-filter>
         </activity>
 
-        <activity a:name=".activity.SelectArtistActivity"
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.SelectArtistActivity"
                   a:configChanges="orientation|keyboardHidden"
                   a:launchMode="standard"/>
 
-        <activity a:name=".activity.SelectAlbumActivity"
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.SelectAlbumActivity"
                   a:configChanges="orientation|keyboardHidden"/>
 
-        <activity a:name=".activity.SearchActivity"
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.SearchActivity"
                   a:label="@string/search.label"
                   a:configChanges="orientation|keyboardHidden"
                   a:launchMode="standard"/>
 
-        <activity a:name=".activity.SelectPlaylistActivity"
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.SelectPlaylistActivity"
                   a:label="@string/playlist.label"
                   a:configChanges="orientation|keyboardHidden"
                   a:launchMode="standard"/>
 
-        <activity a:name=".activity.DownloadActivity"
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.DownloadActivity"
                   a:configChanges="orientation|keyboardHidden"
                   a:launchMode="singleTask"/>
 
-        <activity a:name=".activity.SettingsActivity"
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.SettingsActivity"
                   a:theme="@android:style/Theme"
                   a:configChanges="orientation|keyboardHidden"
                   a:launchMode="singleTask"/>
 
-        <activity a:name=".activity.ErrorActivity"
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.ErrorActivity"
                   a:label="@string/error.label"
                   a:launchMode="singleTask"/>
 
-        <activity a:name=".activity.HelpActivity"
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.HelpActivity"
                   a:label="@string/help.label"
                   a:launchMode="singleTask"/>
 
-        <service a:name=".service.DownloadServiceImpl"
+        <service a:name="net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl"
                  a:label="Subsonic Download Service"/>
 
     </application>
