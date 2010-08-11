@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -43,7 +42,6 @@ import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
@@ -58,7 +56,6 @@ import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-import android.net.SSLCertificateSocketFactory;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
@@ -456,7 +453,7 @@ public class RESTMusicService implements MusicService {
         HttpHost host = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
         String redirectedUrl = host.toURI() + request.getURI();
 
-        String path = StringUtils.substringAfter(originalUrl, ".subsonic.org");
+        String path = Util.substringAfter(originalUrl, ".subsonic.org");
         redirectFrom = originalUrl.replace(path, "");
         redirectTo = redirectedUrl.replace(path, "");
 

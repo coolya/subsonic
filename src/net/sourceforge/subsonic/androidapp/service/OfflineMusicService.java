@@ -94,7 +94,7 @@ public class OfflineMusicService extends RESTMusicService {
         }
 
         name = name.replace(".complete", "");
-        return FileUtil.getPrefix(name);
+        return FileUtil.getBaseName(name);
     }
 
     private MusicDirectory.Entry createEntry(File file, String name) {
@@ -107,7 +107,7 @@ public class OfflineMusicService extends RESTMusicService {
             entry.setAlbum(file.getParentFile().getName());
         }
         entry.setTitle(name);
-        entry.setSuffix(FileUtil.getSuffix(file.getName().replace(".complete", "")));
+        entry.setSuffix(FileUtil.getExtension(file.getName().replace(".complete", "")));
 
         File albumArt = new File(file.isDirectory() ? file : file.getParentFile(), Constants.ALBUM_ART_FILE);
         if (albumArt.exists()) {
