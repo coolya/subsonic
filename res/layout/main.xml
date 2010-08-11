@@ -4,14 +4,43 @@
               a:layout_width="fill_parent"
               a:layout_height="fill_parent">
 
-    <ImageView
-            a:src="@drawable/subsonic_white"
+    <LinearLayout
+            a:orientation="horizontal"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
-            a:paddingTop="10dip"
-            a:paddingBottom="10dip"
-            a:layout_gravity="center_horizontal"
-            a:background="@drawable/menubar_button_disabled"/>
+            a:background="@drawable/menubar_button_disabled">
+
+        <ImageView
+                a:src="@drawable/subsonic_white"
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content"
+                a:paddingLeft ="10dip"
+                a:paddingTop="10dip"
+                a:paddingBottom="8dip"/>
+
+        <View
+                a:layout_width="0dip"
+                a:layout_height="fill_parent"
+                a:layout_weight="1"/>
+
+        <ImageView
+                a:id="@+id/main_exit"
+                a:src="@drawable/main_exit"
+                a:paddingTop="5dip"
+                a:paddingBottom="3dip"
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content"/>
+
+        <ImageView
+                a:id="@+id/main_help"
+                a:src="@drawable/main_help"
+                a:paddingTop="5dip"
+                a:paddingBottom="3dip"
+                a:paddingRight="5dip"
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
     <View
             a:layout_width="fill_parent"

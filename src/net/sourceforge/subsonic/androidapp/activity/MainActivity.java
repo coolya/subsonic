@@ -69,8 +69,8 @@ public class MainActivity extends SubsonicTabActivity {
         final View serverButton = buttons.findViewById(R.id.main_select_server);
         final View shuffleButton = buttons.findViewById(R.id.main_shuffle);
         final View settingsButton = buttons.findViewById(R.id.main_settings);
-        final View helpButton = buttons.findViewById(R.id.main_help);
-        final View exitButton = buttons.findViewById(R.id.main_exit);
+        final View helpButton = findViewById(R.id.main_help);
+        final View exitButton = findViewById(R.id.main_exit);
         final View dummyView = findViewById(R.id.main_dummy);
         final View albumsTitle = buttons.findViewById(R.id.main_albums);
         final View albumsNewestButton = buttons.findViewById(R.id.main_albums_newest);
@@ -88,9 +88,9 @@ public class MainActivity extends SubsonicTabActivity {
 
         List<View> views;
         if (Util.isOffline(this)) {
-            views = Arrays.asList(serverButton, settingsButton, helpButton, exitButton);
+            views = Arrays.asList(serverButton, settingsButton);
         } else {
-            views = Arrays.asList(serverButton, shuffleButton, settingsButton, helpButton, exitButton, albumsTitle,
+            views = Arrays.asList(serverButton, shuffleButton, settingsButton, albumsTitle,
                     albumsNewestButton, albumsRandomButton, albumsHighestButton, albumsRecentButton, albumsFrequentButton);
         }
         final int albumTitlePosition = views.indexOf(albumsTitle);
@@ -114,10 +114,6 @@ public class MainActivity extends SubsonicTabActivity {
                     Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
                     intent.putExtra(Constants.INTENT_EXTRA_NAME_SHUFFLE, true);
                     Util.startActivityWithoutTransition(MainActivity.this, intent);
-                } else if (view == helpButton) {
-                    startActivity(new Intent(MainActivity.this, HelpActivity.class));
-                } else if (view == exitButton) {
-                    exit();
                 } else if (view == albumsNewestButton) {
                     showAlbumList("newest");
                 } else if (view == albumsRandomButton) {
@@ -129,6 +125,21 @@ public class MainActivity extends SubsonicTabActivity {
                 } else if (view == albumsFrequentButton) {
                     showAlbumList("frequent");
                 }
+            }
+        });
+
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, HelpActivity.class));
+            }
+        });
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stopService(new Intent(MainActivity.this, DownloadServiceImpl.class));
+                finish();
             }
         });
 
@@ -209,11 +220,6 @@ public class MainActivity extends SubsonicTabActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Util.startActivityWithoutTransition(this, intent);
-    }
-
-    private void exit() {
-        stopService(new Intent(this, DownloadServiceImpl.class));
-        finish();
     }
 
     private void showInfoDialog() {
