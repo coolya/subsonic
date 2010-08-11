@@ -3,8 +3,9 @@ TODO IN U1M
 x Implement "exit" option.
 x https support.
 x Smaller shuffle play buffer
-  getRandomSongs times out.  Fetch max 10 at a time? Increate socket timeout for each retry.
 x Save playlist on exit.
+  getRandomSongs times out.  Fetch max 10 at a time? Increate socket timeout for each retry.
+  Increase read timeout if transcoding and range is set. In general, increase socket timeout.
   How to enable Offline mode?
   Setup branch in SourceForge SVN, grant access to U1M developers.
   New Android manifest for U1M.
@@ -17,6 +18,8 @@ x Save playlist on exit.
   New authentication scheme.
   New "Help" page.
   New icons.
+
+ons 11 aug - 8t
 
 TODO IN BACKEND
 ---------------
