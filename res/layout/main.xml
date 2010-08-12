@@ -11,7 +11,7 @@
             a:background="@drawable/menubar_button_disabled">
 
         <ImageView
-                a:src="@drawable/subsonic_white"
+                a:src="@drawable/main_header"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:paddingLeft ="10dip"
