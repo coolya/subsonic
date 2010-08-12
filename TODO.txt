@@ -1,0 +1,22 @@
+TODO IN U1M
+---------------
+x Implement "exit" option.
+x https support.
+x Smaller shuffle play buffer
+x Save playlist on exit.
+x Increase read timeout if transcoding and range is set. In general, increase socket timeout.
+x Setup branch in SourceForge SVN, grant access to U1M developers.
+x New Android manifest for U1M.
+- Setup new code signing certificate.
+x Remove max bitrate setting.
+  How to enable Offline mode?
+  Remove incomplete Chinese translations?
+  Remove playlist feature
+  Remove server settings, lock server url.
+  Find a way to override server url for testing purposes
+  New authentication scheme.
+  New "Help" page.
+  New icons.
+
+ons 11 aug - 8t
+

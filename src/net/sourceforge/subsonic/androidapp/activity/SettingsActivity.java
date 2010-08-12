@@ -115,8 +115,8 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         }
 
         theme.setSummary(theme.getEntry());
-        maxBitrateWifi.setSummary(maxBitrateWifi.getEntry());
-        maxBitrateMobile.setSummary(maxBitrateMobile.getEntry());
+//        maxBitrateWifi.setSummary(maxBitrateWifi.getEntry());
+//        maxBitrateMobile.setSummary(maxBitrateMobile.getEntry());
         cacheSize.setSummary(cacheSize.getEntry());
         preloadCount.setSummary(preloadCount.getEntry());
         for (ServerSettings ss : serverSettings.values()) {
