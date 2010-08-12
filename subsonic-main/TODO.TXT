@@ -1,11 +1,14 @@
+1000000 * (20000.0 / 1000000.0)
+
+
 TODO IN U1M
 ---------------
 x Implement "exit" option.
 x https support.
 x Smaller shuffle play buffer
 x Save playlist on exit.
-  getRandomSongs times out.  Fetch max 10 at a time? Increate socket timeout for each retry.
-  Increase read timeout if transcoding and range is set. In general, increase socket timeout.
+x Increase read timeout if transcoding and range is set. In general, increase socket timeout.
+  getRandomSongs times out.  Fetch max 10 at a time?
   How to enable Offline mode?
   Setup branch in SourceForge SVN, grant access to U1M developers.
   New Android manifest for U1M.
@@ -55,7 +58,8 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN ANDROID 1.6
 -------------------
-Exit button
+Exit button.
+Improved network timeout/retry mechanism. Avoid thrashing.
 
 DONE IN 4.1
 ------------
