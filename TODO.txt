@@ -12,11 +12,12 @@ x Remove max bitrate setting.
 x Remove playlist feature
 x How to enable Offline mode?
 x Remove server settings, lock server url.
+x Find a way to override server url for testing purposes
   Remove incomplete Chinese translations?
-  Find a way to override server url for testing purposes
   New authentication scheme.
   New "Help" page.
   New icons.
 
 ons 11 aug - 8t
+tor 12 aug - 8t
 

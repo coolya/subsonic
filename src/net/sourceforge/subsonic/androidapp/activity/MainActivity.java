@@ -22,8 +22,6 @@ package net.sourceforge.subsonic.androidapp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Config;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -99,11 +97,9 @@ public class MainActivity extends SubsonicTabActivity {
                     albumsNewestButton, albumsRandomButton, albumsHighestButton, albumsRecentButton, albumsFrequentButton));
         }
 
-        // TODO: Detect if we are in release or debug mode.
-        Log.d("foo", "DEBUG = " + Config.DEBUG);
-//        if (Config.DEBUG) {
+        if (Constants.DEBUG) {
             views.add(views.indexOf(settingsButton) + 1, debugSettingsButton);
-//        }
+        }
 
         final int albumTitlePosition = views.indexOf(albumsTitle);
         SackOfViewsAdapter adapter = new SackOfViewsAdapter(views) {

@@ -72,6 +72,10 @@ public final class Constants {
 
     public static final String ALBUM_ART_FILE = "folder.jpeg";
 
+    // Whether this is a debug or release build.
+    // NOTE: The value of this field is set automatically during ANT build. See build.xml.
+    public static final boolean DEBUG = true;
+
     private Constants() {
     }
 }
