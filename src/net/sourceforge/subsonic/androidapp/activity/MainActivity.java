@@ -61,6 +61,7 @@ public class MainActivity extends SubsonicTabActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+        PreferenceManager.setDefaultValues(this, R.xml.hidden_settings, false);
 
         setContentView(R.layout.main);
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:a="http://schemas.android.com/apk/res/android"
+                  a:title="@string/settings.title">
+
+    <EditTextPreference
+            a:key="serverName1"
+            a:title="@string/settings.server_name"
+            a:defaultValue="Ubuntu One cloud"/>
+
+    <EditTextPreference
+            a:key="serverUrl1"
+            a:title="@string/settings.server_address"
+            a:defaultValue="http://ubuntu.com/"
+            a:inputType="textUri"/>
+
+    <EditTextPreference
+            a:key="username1"
+            a:title="@string/settings.server_username"
+            a:defaultValue="foo"/>
+
+    <EditTextPreference
+            a:key="password1"
+            a:title="@string/settings.server_password"
+            a:password="true"
+            a:defaultValue="bar"
+            a:summary="****"/>
+
+    <Preference
+            a:key="testConnection1"
+            a:title="@string/settings.test_connection_title"
+            a:persistent="false"/>
+
+</PreferenceScreen>

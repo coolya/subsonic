@@ -8,7 +8,7 @@
     <string name="main.welcome_title">Welcome!</string>
     <string name="main.welcome_text">Welcome to Subsonic! The app is currently configured to use the Subsonic demo server. After you\'ve
         set up your personal server (available from <b>subsonic.org</b>), please go to <b>Settings</b> and change the configuration to connect to it.</string>
-    <string name="main.select_server">Select server</string>
+    <string name="main.select_server">Select mode</string>
     <string name="main.shuffle">Shuffle play</string>
     <string name="main.offline">Offline</string>
     <string name="main.settings">Settings</string>
@@ -79,7 +79,7 @@
 
     <string name="error.label">Error</string>
 
-    <string name="settings.title">Subsonic settings</string>
+    <string name="settings.title">Settings</string>
     <string name="settings.test_connection_title">Test connection</string>
     <string name="settings.servers_title">Servers</string>
     <string name="settings.server_unused1">Unused 1</string>
