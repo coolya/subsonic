@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.content.Context;
-import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.u1m.R;
 import net.sourceforge.subsonic.androidapp.domain.Artist;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;

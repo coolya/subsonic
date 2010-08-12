@@ -24,7 +24,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.u1m.R;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Util;
 

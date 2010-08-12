@@ -21,7 +21,7 @@ package net.sourceforge.subsonic.androidapp.util;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.u1m.R;
 
 /**
  * @author Sindre Mehus

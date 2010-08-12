@@ -24,7 +24,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 import android.content.Context;
 import android.util.Xml;
-import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.u1m.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 

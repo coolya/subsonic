@@ -20,7 +20,7 @@ package net.sourceforge.subsonic.androidapp.service.parser;
 
 import android.content.Context;
 import android.util.Xml;
-import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.u1m.R;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import org.xmlpull.v1.XmlPullParser;

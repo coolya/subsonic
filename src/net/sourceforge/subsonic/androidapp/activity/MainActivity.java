@@ -30,12 +30,12 @@ import android.view.Window;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView;
-import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.util.SackOfViewsAdapter;
 import net.sourceforge.subsonic.androidapp.util.Util;
 import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.u1m.R;
 
 import java.util.Arrays;
 import java.util.List;
@@ -164,8 +164,8 @@ public class MainActivity extends SubsonicTabActivity {
         super.onCreateContextMenu(menu, view, menuInfo);
 
         MenuItem menuItem1 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_1, MENU_ITEM_SERVER_1, Util.getServerName(this, 1));
-        MenuItem menuItem2 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_2, MENU_ITEM_SERVER_2, Util.getServerName(this, 2));
-        MenuItem menuItem3 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_3, MENU_ITEM_SERVER_3, Util.getServerName(this, 3));
+//        MenuItem menuItem2 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_2, MENU_ITEM_SERVER_2, Util.getServerName(this, 2));
+//        MenuItem menuItem3 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_3, MENU_ITEM_SERVER_3, Util.getServerName(this, 3));
         MenuItem menuItem4 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_OFFLINE, MENU_ITEM_OFFLINE, Util.getServerName(this, 0));
         menu.setGroupCheckable(MENU_GROUP_SERVER, true, true);
 
@@ -176,12 +176,12 @@ public class MainActivity extends SubsonicTabActivity {
             case 1:
                 menuItem1.setChecked(true);
                 break;
-            case 2:
-                menuItem2.setChecked(true);
-                break;
-            case 3:
-                menuItem3.setChecked(true);
-                break;
+//            case 2:
+//                menuItem2.setChecked(true);
+//                break;
+//            case 3:
+//                menuItem3.setChecked(true);
+//                break;
         }
     }
 

@@ -21,7 +21,7 @@ package net.sourceforge.subsonic.androidapp.service.parser;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.content.Context;
-import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.u1m.R;
 
 /**
  * @author Sindre Mehus

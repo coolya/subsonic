@@ -26,7 +26,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import android.app.Activity;
 import android.os.Handler;
 import android.util.Log;
-import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.u1m.R;
 
 /**
  * @author Sindre Mehus
