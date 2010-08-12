@@ -34,16 +34,16 @@ import net.sourceforge.subsonic.androidapp.util.ModalBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
 import net.sourceforge.subsonic.u1m.R;
 
-public class HiddenSettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class DebugSettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private static final String TAG = HiddenSettingsActivity.class.getSimpleName();
+    private static final String TAG = DebugSettingsActivity.class.getSimpleName();
     private ServerSettings serverSettings;
     private boolean testingConnection;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.hidden_settings);
+        addPreferencesFromResource(R.xml.debug_settings);
 
         findPreference("testConnection1").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -90,15 +90,15 @@ public class HiddenSettingsActivity extends PreferenceActivity implements Shared
             protected Boolean doInBackground() throws Throwable {
                 updateProgress(R.string.settings_testing_connection);
 
-                previousInstance = Util.getActiveServer(HiddenSettingsActivity.this);
+                previousInstance = Util.getActiveServer(DebugSettingsActivity.this);
                 testingConnection = true;
-                Util.setActiveServer(HiddenSettingsActivity.this, instance);
+                Util.setActiveServer(DebugSettingsActivity.this, instance);
                 try {
-                    MusicService musicService = MusicServiceFactory.getMusicService(HiddenSettingsActivity.this);
-                    musicService.ping(HiddenSettingsActivity.this, this);
-                    return musicService.isLicenseValid(HiddenSettingsActivity.this, null);
+                    MusicService musicService = MusicServiceFactory.getMusicService(DebugSettingsActivity.this);
+                    musicService.ping(DebugSettingsActivity.this, this);
+                    return musicService.isLicenseValid(DebugSettingsActivity.this, null);
                 } finally {
-                    Util.setActiveServer(HiddenSettingsActivity.this, previousInstance);
+                    Util.setActiveServer(DebugSettingsActivity.this, previousInstance);
                     testingConnection = false;
                 }
             }
@@ -106,22 +106,22 @@ public class HiddenSettingsActivity extends PreferenceActivity implements Shared
             @Override
             protected void done(Boolean licenseValid) {
                 if (licenseValid) {
-                    Util.toast(HiddenSettingsActivity.this, R.string.settings_testing_ok);
+                    Util.toast(DebugSettingsActivity.this, R.string.settings_testing_ok);
                 } else {
-                    Util.toast(HiddenSettingsActivity.this, R.string.settings_testing_unlicensed);
+                    Util.toast(DebugSettingsActivity.this, R.string.settings_testing_unlicensed);
                 }
             }
 
             @Override
             protected void cancel() {
                 super.cancel();
-                Util.setActiveServer(HiddenSettingsActivity.this, previousInstance);
+                Util.setActiveServer(DebugSettingsActivity.this, previousInstance);
             }
 
             @Override
             protected void error(Throwable error) {
                 Log.w(TAG, error.toString(), error);
-                new ErrorDialog(HiddenSettingsActivity.this, getResources().getString(R.string.settings_connection_failure) +
+                new ErrorDialog(DebugSettingsActivity.this, getResources().getString(R.string.settings_connection_failure) +
                         " " + getErrorMessage(error), false);
             }
         };
@@ -149,7 +149,7 @@ public class HiddenSettingsActivity extends PreferenceActivity implements Shared
                             throw new Exception();
                         }
                     } catch (Exception x) {
-                        new ErrorDialog(HiddenSettingsActivity.this, R.string.settings_invalid_url, false);
+                        new ErrorDialog(DebugSettingsActivity.this, R.string.settings_invalid_url, false);
                         return false;
                     }
                     return true;
@@ -161,7 +161,7 @@ public class HiddenSettingsActivity extends PreferenceActivity implements Shared
                 public boolean onPreferenceChange(Preference preference, Object value) {
                     String username = (String) value;
                     if (username == null || !username.equals(username.trim())) {
-                        new ErrorDialog(HiddenSettingsActivity.this, R.string.settings_invalid_username, false);
+                        new ErrorDialog(DebugSettingsActivity.this, R.string.settings_invalid_username, false);
                         return false;
                     }
                     return true;

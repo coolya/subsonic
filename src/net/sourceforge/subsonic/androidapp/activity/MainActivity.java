@@ -22,6 +22,8 @@ package net.sourceforge.subsonic.androidapp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Config;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -37,6 +39,7 @@ import net.sourceforge.subsonic.androidapp.util.Util;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.u1m.R;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,7 +64,7 @@ public class MainActivity extends SubsonicTabActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
-        PreferenceManager.setDefaultValues(this, R.xml.hidden_settings, false);
+        PreferenceManager.setDefaultValues(this, R.xml.debug_settings, true);
 
         setContentView(R.layout.main);
 
@@ -70,6 +73,7 @@ public class MainActivity extends SubsonicTabActivity {
         final View serverButton = buttons.findViewById(R.id.main_select_server);
         final View shuffleButton = buttons.findViewById(R.id.main_shuffle);
         final View settingsButton = buttons.findViewById(R.id.main_settings);
+        final View debugSettingsButton = buttons.findViewById(R.id.main_debug_settings);
         final View helpButton = findViewById(R.id.main_help);
         final View exitButton = findViewById(R.id.main_exit);
         final View dummyView = findViewById(R.id.main_dummy);
@@ -87,13 +91,20 @@ public class MainActivity extends SubsonicTabActivity {
 
         ListView list = (ListView) findViewById(R.id.main_list);
 
-        List<View> views;
+        List<View> views = new ArrayList<View>();
         if (Util.isOffline(this)) {
-            views = Arrays.asList(serverButton, settingsButton);
+            views.addAll(Arrays.asList(serverButton, settingsButton));
         } else {
-            views = Arrays.asList(serverButton, shuffleButton, settingsButton, albumsTitle,
-                    albumsNewestButton, albumsRandomButton, albumsHighestButton, albumsRecentButton, albumsFrequentButton);
+            views.addAll(Arrays.asList(serverButton, shuffleButton, settingsButton, albumsTitle,
+                    albumsNewestButton, albumsRandomButton, albumsHighestButton, albumsRecentButton, albumsFrequentButton));
         }
+
+        // TODO: Detect if we are in release or debug mode.
+        Log.d("foo", "DEBUG = " + Config.DEBUG);
+//        if (Config.DEBUG) {
+            views.add(views.indexOf(settingsButton) + 1, debugSettingsButton);
+//        }
+
         final int albumTitlePosition = views.indexOf(albumsTitle);
         SackOfViewsAdapter adapter = new SackOfViewsAdapter(views) {
             @Override
@@ -111,6 +122,8 @@ public class MainActivity extends SubsonicTabActivity {
                     dummyView.showContextMenu();
                 } else if (view == settingsButton) {
                     startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                } else if (view == debugSettingsButton) {
+                    startActivity(new Intent(MainActivity.this, DebugSettingsActivity.class));
                 } else if (view == shuffleButton) {
                     Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
                     intent.putExtra(Constants.INTENT_EXTRA_NAME_SHUFFLE, true);

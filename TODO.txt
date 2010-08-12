@@ -10,9 +10,9 @@ x New Android manifest for U1M.
 - Setup new code signing certificate.
 x Remove max bitrate setting.
 x Remove playlist feature
-  How to enable Offline mode?
+x How to enable Offline mode?
+x Remove server settings, lock server url.
   Remove incomplete Chinese translations?
-  Remove server settings, lock server url.
   Find a way to override server url for testing purposes
   New authentication scheme.
   New "Help" page.
