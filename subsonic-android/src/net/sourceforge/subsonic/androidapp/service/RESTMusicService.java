@@ -90,6 +90,7 @@ public class RESTMusicService implements MusicService {
     private static final int SOCKET_READ_TIMEOUT_DEFAULT = 10 * 1000;
     private static final int SOCKET_READ_TIMEOUT_DOWNLOAD = 30 * 1000;
     private static final int SOCKET_READ_TIMEOUT_GET_RANDOM_SONGS = 60 * 1000;
+    private static final int SOCKET_READ_TIMEOUT_GET_PLAYLIST = 60 * 1000;
 
     // Allow 20 seconds extra timeout per MB offset.
     private static final double TIMEOUT_MILLIS_PER_OFFSET_BYTE = 20000.0 / 1000000.0;
@@ -211,7 +212,10 @@ public class RESTMusicService implements MusicService {
 
     @Override
     public MusicDirectory getPlaylist(String id, Context context, ProgressListener progressListener) throws Exception {
-        Reader reader = getReader(context, progressListener, "getPlaylist", null, "id", id);
+        HttpParams params = new BasicHttpParams();
+        HttpConnectionParams.setSoTimeout(params, SOCKET_READ_TIMEOUT_GET_PLAYLIST);
+
+        Reader reader = getReader(context, progressListener, "getPlaylist", params, "id", id);
         try {
             return new PlaylistParser(context).parse(reader, progressListener);
         } finally {
