@@ -298,7 +298,7 @@ public class DownloadActivity extends SubsonicTabActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem savePlaylist = menu.findItem(MENU_ITEM_SAVE_PLAYLIST);
-        boolean savePlaylistEnabled = !Util.isOffline(this);
+        boolean savePlaylistEnabled = false;
         savePlaylist.setEnabled(savePlaylistEnabled);
         savePlaylist.setVisible(savePlaylistEnabled);
         return super.onPrepareOptionsMenu(menu);

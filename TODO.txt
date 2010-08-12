@@ -9,9 +9,10 @@ x Setup branch in SourceForge SVN, grant access to U1M developers.
 x New Android manifest for U1M.
 - Setup new code signing certificate.
 x Remove max bitrate setting.
+  "Select server" broken.
+x Remove playlist feature
   How to enable Offline mode?
   Remove incomplete Chinese translations?
-  Remove playlist feature
   Remove server settings, lock server url.
   Find a way to override server url for testing purposes
   New authentication scheme.

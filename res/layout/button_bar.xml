@@ -39,7 +39,7 @@
         <ImageButton a:id="@+id/button_bar_playlists"
                      a:src="@drawable/menu_playlists"
                      a:background="@drawable/menubar_button"
-                     a:layout_weight="1"
+                     a:layout_weight="0"
                      a:layout_width="0dp"
                      a:layout_height="wrap_content"/>
 
