@@ -62,7 +62,7 @@ public final class Constants {
     public static final String PREFERENCES_KEY_PRELOAD_COUNT = "preloadCount";
 
     // Name of the preferences file.
-    public static final String PREFERENCES_FILE_NAME = "net.sourceforge.subsonic.androidapp_preferences";
+    public static final String PREFERENCES_FILE_NAME = "net.sourceforge.subsonic.u1m_preferences";
 
     // Number of free trial days for non-licensed servers.
     public static final int FREE_TRIAL_DAYS = 30;
