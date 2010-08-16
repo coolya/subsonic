@@ -72,6 +72,8 @@ Upgraded to LAME 3.98.4
 
 TODO IN 4.1
 -----------------
+Spring 3.0
+JSON support in REST API.
 Use setIconImages() in booter. Note: requires java 1.6.
 Upgrade to 4.1.beta1
 Exclude dot files in cover art search.
