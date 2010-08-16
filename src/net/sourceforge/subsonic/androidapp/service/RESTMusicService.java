@@ -56,6 +56,8 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
@@ -108,6 +110,7 @@ public class RESTMusicService implements MusicService {
     private Pair<String, Indexes> cachedIndexesPair;
 
     private long redirectionLastChecked;
+    private int redirectionNetworkType = -1;
     private String redirectFrom;
     private String redirectTo;
     private final ThreadSafeClientConnManager connManager;
@@ -403,7 +406,7 @@ public class RESTMusicService implements MusicService {
     private HttpResponse getResponseForURL(Context context, String url, HttpParams requestParams,
             List<Header> headers, ProgressListener progressListener, CancellableTask task) throws Exception {
         Log.d(TAG, "Connections in pool: " + connManager.getConnectionsInPool());
-        url = rewriteUrlWithRedirect(url);
+        url = rewriteUrlWithRedirect(context, url);
         return executeWithRetry(context, url, requestParams, headers, progressListener, task);
     }
 
@@ -442,7 +445,7 @@ public class RESTMusicService implements MusicService {
 
             try {
                 HttpResponse response = httpClient.execute(request, httpContext);
-                detectRedirect(url, httpContext);
+                detectRedirect(url, context, httpContext);
                 return response;
             } catch (IOException x) {
                 request.abort();
@@ -473,13 +476,13 @@ public class RESTMusicService implements MusicService {
         }
     }
 
-    private void detectRedirect(String originalUrl, HttpContext context) {
+    private void detectRedirect(String originalUrl, Context context, HttpContext httpContext) {
         if (!originalUrl.contains(".subsonic.org")) {
             return;
         }
 
-        HttpUriRequest request = (HttpUriRequest) context.getAttribute(ExecutionContext.HTTP_REQUEST);
-        HttpHost host = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
+        HttpUriRequest request = (HttpUriRequest) httpContext.getAttribute(ExecutionContext.HTTP_REQUEST);
+        HttpHost host = (HttpHost) httpContext.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
         String redirectedUrl = host.toURI() + request.getURI();
 
         String path = Util.substringAfter(originalUrl, ".subsonic.org");
@@ -488,9 +491,10 @@ public class RESTMusicService implements MusicService {
 
         Log.i(TAG, redirectFrom + " redirects to " + redirectTo);
         redirectionLastChecked = System.currentTimeMillis();
+        redirectionNetworkType = getCurrentNetworkType(context);
     }
 
-    private String rewriteUrlWithRedirect(String url) throws IOException {
+    private String rewriteUrlWithRedirect(Context context, String url) throws IOException {
 
         // Is it a subsonic.org address?
         int index = url.indexOf(".subsonic.org");
@@ -503,10 +507,20 @@ public class RESTMusicService implements MusicService {
             return url;
         }
 
+        // Ignore cache if network type has changed.
+        if (redirectionNetworkType != getCurrentNetworkType(context)) {
+            return url;
+        }
+
         if (redirectFrom == null || redirectTo == null) {
             return url;
         }
 
         return url.replace(redirectFrom, redirectTo);
+    }
+    private int getCurrentNetworkType(Context context) {
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        return networkInfo == null ? -1 : networkInfo.getType();
     }
 }
