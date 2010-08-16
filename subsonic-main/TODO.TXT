@@ -1,42 +1,16 @@
-1000000 * (20000.0 / 1000000.0)
-
-
-TODO IN U1M
----------------
-x Implement "exit" option.
-x https support.
-x Smaller shuffle play buffer
-x Save playlist on exit.
-x Increase read timeout if transcoding and range is set. In general, increase socket timeout.
-  getRandomSongs times out.  Fetch max 10 at a time?
-  How to enable Offline mode?
-  Setup branch in SourceForge SVN, grant access to U1M developers.
-  New Android manifest for U1M.
-  Setup new code signing certificate.
-  Remove incomplete Chinese translations?
-  Remove playlist feature
-  Remove max bitrate setting.
-  Remove server settings, lock server url.
-  Find a way to override server url for testing purposes
-  New authentication scheme.
-  New "Help" page.
-  New icons.
-
-ons 11 aug - 8t
-
 TODO IN BACKEND
 ---------------
 If trying to assign an expired web address used by someone else, don't show "Expired..." message.
 
 TODO IN ANDROID 1.6
 -------------------
+Socket connect timeout too long?  Behaves strange?
 Add more bitrate options (e.g., 80 kbit/s)
 Longer timeout/fewer songs in getRandomSongs.
 Long-click download
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2651&start=105
 Fix crash
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3677
-Clear cached redirect url if network type changed.
 ogg support
   https://mail.google.com/a/activeobjects.no/?tab=cm#inbox/129f7959b2353a3d
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
@@ -60,6 +34,7 @@ DONE IN ANDROID 1.6
 -------------------
 Exit button.
 Improved network timeout/retry mechanism. Avoid thrashing.
+Clear cached redirect url if network type changed.
 
 DONE IN 4.1
 ------------
