@@ -47,7 +47,6 @@ Improved tray/application/fav icons.
 Sonic themes, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3371
 Update themes. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3082
 Upgraded to dwr 3.0. Less logging.
-NAT-PMP support, http://sourceforge.net/projects/jnat-pmplib/
 Year parsing.
   http://www.activeobjects.no/subsonic/forum/privmsg.php?folder=inbox&mode=read&p=1511
 Reset maxBitrate in RESTController.
@@ -69,21 +68,21 @@ Run Mac server in background (status bar).
   Optionally show control panel when starting.
   Avoid dock icon.
 Upgraded to LAME 3.98.4
-
-TODO IN 4.1
------------------
-Spring 3.0
-JSON support in REST API.
-Use setIconImages() in booter. Note: requires java 1.6.
-Upgrade to 4.1.beta1
-Exclude dot files in cover art search.
-  https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce
 Using Android App Causes subsonic-service.exe to 100% CPU (cover art)
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3771
   REST: Don't set cover art for songs? Also avoid recursion.
-Funtonia integration
 Multiple lame/ffmpeg processes
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3834&highlight=
+Use setIconImages() in booter. Note: requires java 1.6.
+
+TODO IN 4.1
+-----------------
+JSON support in REST API?
+Upgrade to 4.1.beta1
+NAT-PMP support, http://sourceforge.net/projects/jnat-pmplib/
+Exclude dot files in cover art search.
+  https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce
+Funtonia integration
 Transparent icons in menu bar.
 
 REST API for getUser, deleteUser
