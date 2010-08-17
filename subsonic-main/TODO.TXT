@@ -74,6 +74,7 @@ Using Android App Causes subsonic-service.exe to 100% CPU (cover art)
 Multiple lame/ffmpeg processes
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3834&highlight=
 Use setIconImages() in booter. Note: requires java 1.6.
+Transparent icons in menu bar.
 
 TODO IN 4.1
 -----------------
@@ -83,7 +84,6 @@ NAT-PMP support, http://sourceforge.net/projects/jnat-pmplib/
 Exclude dot files in cover art search.
   https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce
 Funtonia integration
-Transparent icons in menu bar.
 
 REST API for getUser, deleteUser
 REST API for Now playing
