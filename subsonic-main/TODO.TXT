@@ -6,6 +6,7 @@ TODO IN ANDROID 1.6
 -------------------
 Socket connect timeout too long?  Behaves strange?
 Add more bitrate options (e.g., 80 kbit/s)
+Optionally hide music from other players (.nomedia)
 Longer timeout/fewer songs in getRandomSongs.
 Long-click download
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2651&start=105
@@ -55,7 +56,6 @@ Support html5 audio
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2154
    content-length missing when accessing thru REST. due to gzip filter.
    Set correct content-type in StreamController.
-Reset maxBitrate in RESTController.
 Non-recursive coverart lookup
 Add content-type for flac.
 Fix /rest/stream.view: java.io.IOException: Closed
@@ -75,20 +75,21 @@ Multiple lame/ffmpeg processes
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3834&highlight=
 Use setIconImages() in booter. Note: requires java 1.6.
 Transparent icons in menu bar.
+REST API for getUser, deleteUser
 
 TODO IN 4.1
 -----------------
+Test getUser/deleteUser
 JSON support in REST API?
 Upgrade to 4.1.beta1
 NAT-PMP support, http://sourceforge.net/projects/jnat-pmplib/
 Exclude dot files in cover art search.
   https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce
-Funtonia integration
+Add "append" parameter to createPlaylist REST method.
 
-REST API for getUser, deleteUser
+Funtonia integration
 REST API for Now playing
   https://mail.google.com/a/activeobjects.no/?tab=cm#inbox/129f7bc0659df6cf
-Add "append" parameter to createPlaylist REST method.
 Make port 4040 the default on Windows installations not 80
 Write tip in Google group about subsonic.org redirect optimization.
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en

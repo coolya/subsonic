@@ -4,7 +4,7 @@
            targetNamespace="http://subsonic.org/restapi"
            attributeFormDefault="unqualified"
            elementFormDefault="qualified"
-           version="1.2">
+           version="1.3.0">
 
     <xs:element name="subsonic-response" type="sub:Response"/>
 
@@ -19,6 +19,7 @@
             <xs:element name="playlist" type="sub:Playlist" minOccurs="1" maxOccurs="1"/>
             <xs:element name="jukeboxPlaylist" type="sub:JukeboxPlaylist" minOccurs="1" maxOccurs="1"/>
             <xs:element name="license" type="sub:License" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="user" type="sub:User" minOccurs="1" maxOccurs="1"/>
             <xs:element name="chatMessages" type="sub:ChatMessages" minOccurs="1" maxOccurs="1"/>
             <xs:element name="albumList" type="sub:AlbumList" minOccurs="1" maxOccurs="1"/>
             <xs:element name="randomSongs" type="sub:RandomSongs" minOccurs="1" maxOccurs="1"/>
@@ -189,6 +190,20 @@
         <xs:attribute name="email" type="xs:string" use="optional"/>
         <xs:attribute name="key" type="xs:string" use="optional"/>
         <xs:attribute name="date" type="xs:dateTime" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="User">
+        <xs:attribute name="username" type="xs:string" use="required"/>
+        <xs:attribute name="adminRole" type="xs:boolean" use="required"/>
+        <xs:attribute name="settingsRole" type="xs:boolean" use="required"/>
+        <xs:attribute name="downloadRole" type="xs:boolean" use="required"/>
+        <xs:attribute name="uploadRole" type="xs:boolean" use="required"/>
+        <xs:attribute name="playlistRole" type="xs:boolean" use="required"/>
+        <xs:attribute name="coverArtRole" type="xs:boolean" use="required"/>
+        <xs:attribute name="commentRole" type="xs:boolean" use="required"/>
+        <xs:attribute name="podcastRole" type="xs:boolean" use="required"/>
+        <xs:attribute name="streamRole" type="xs:boolean" use="required"/>
+        <xs:attribute name="jukeboxRole" type="xs:boolean" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="Error">

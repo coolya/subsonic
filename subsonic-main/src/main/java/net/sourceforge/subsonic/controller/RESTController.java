@@ -715,6 +715,48 @@ public class RESTController extends MultiActionController {
         }
     }
 
+    public void getUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+
+        String username;
+        try {
+            username = ServletRequestUtils.getRequiredStringParameter(request, "username");
+        } catch (ServletRequestBindingException x) {
+            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+            return;
+        }
+
+        User currentUser = securityService.getCurrentUser(request);
+        if (!username.equals(currentUser.getUsername()) && !currentUser.isAdminRole()) {
+            error(response, ErrorCode.NOT_AUTHORIZED, currentUser.getUsername() + " is not authorized to get details for other users.");
+            return;
+        }
+
+        User requestedUser = securityService.getUserByName(username);
+        if (requestedUser == null) {
+            error(response, ErrorCode.NOT_FOUND, "No such user: " + username);
+            return;
+        }
+
+        XMLBuilder builder = createXMLBuilder(response, true);
+        List<Attribute> attributes = Arrays.asList(
+                new Attribute("username", requestedUser.getUsername()),
+                new Attribute("adminRole", requestedUser.isAdminRole()),
+                new Attribute("settingsRole", requestedUser.isSettingsRole()),
+                new Attribute("downloadRole", requestedUser.isDownloadRole()),
+                new Attribute("uploadRole", requestedUser.isUploadRole()),
+                new Attribute("playlistRole", requestedUser.isPlaylistRole()),
+                new Attribute("coverArtRole", requestedUser.isCoverArtRole()),
+                new Attribute("commentRole", requestedUser.isCommentRole()),
+                new Attribute("podcastRole", requestedUser.isPodcastRole()),
+                new Attribute("streamRole", requestedUser.isStreamRole()),
+                new Attribute("jukeboxRole", requestedUser.isJukeboxRole())
+        );
+
+        builder.add("user", attributes, true);
+        builder.endAll();
+        response.getWriter().print(builder);
+    }
 
     public void createUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
@@ -742,6 +784,29 @@ public class RESTController extends MultiActionController {
             command.setTranscodeSchemeName(ServletRequestUtils.getStringParameter(request, "transcodeScheme", TranscodeScheme.OFF.name()));
 
             userSettingsController.createUser(command);
+            XMLBuilder builder = createXMLBuilder(response, true).endAll();
+            response.getWriter().print(builder);
+
+        } catch (ServletRequestBindingException x) {
+            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+        } catch (Exception x) {
+            LOG.warn("Error in REST API.", x);
+            error(response, ErrorCode.GENERIC, getErrorMessage(x));
+        }
+    }
+
+    public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        User user = securityService.getCurrentUser(request);
+        if (!user.isAdminRole()) {
+            error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to delete users.");
+            return;
+        }
+
+        try {
+            String username = ServletRequestUtils.getRequiredStringParameter(request, "username");
+            securityService.deleteUser(username);
+
             XMLBuilder builder = createXMLBuilder(response, true).endAll();
             response.getWriter().print(builder);
 
@@ -969,7 +1034,8 @@ public class RESTController extends MultiActionController {
         PROTOCOL_MISMATCH_SERVER_TOO_OLD(30, "Incompatible Subsonic REST protocol version. Server must upgrade."),
         NOT_AUTHENTICATED(40, "Wrong username or password."),
         NOT_AUTHORIZED(50, "User is not authorized for the given operation."),
-        NOT_LICENSED(60, "The trial period for the Subsonic server is over. Please donate to get a license key. Visit subsonic.org for details.");
+        NOT_LICENSED(60, "The trial period for the Subsonic server is over. Please donate to get a license key. Visit subsonic.org for details."),
+        NOT_FOUND(70, "Requested data was not found.");
 
         private final int code;
         private final String message;

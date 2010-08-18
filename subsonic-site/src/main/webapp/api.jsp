@@ -153,6 +153,10 @@
         <td><code>60</code></td>
         <td>The trial period for the Subsonic server is over. Please donate to get a license key. Visit subsonic.org for details.</td>
     </tr>
+    <tr>
+        <td><code>70</code></td>
+        <td>The requested data was not found.</td>
+    </tr>
 </table>
 
 <h2 class="div"><a name="versions"></a>Versions</h2>
@@ -176,6 +180,10 @@
     <tr class="table-altrow">
         <td>4.0</td>
         <td>1.2.0</td>
+    </tr>
+    <tr>
+        <td>4.1</td>
+        <td>1.3.0</td>
     </tr>
 </table>
 <p>
@@ -607,7 +615,7 @@
 
 <p>
     Changes the password of an existing Subsonic user, using the following parameters.
-    You can only change your own password unless you are the admin user.
+    You can only change your own password unless you have admin privileges.
 </p>
 <table width="100%" class="bottomspace">
     <tr>
@@ -632,6 +640,36 @@
 
 <p>
     Returns an empty <code>&lt;subsonic-response&gt;</code> element on success.
+</p>
+
+<h2 class="div">getUser</h2>
+
+<p>
+    <code>http://your-server/rest/getUser.view</code>
+    <br>Since <a href="#versions">1.3.0</a>
+</p>
+
+<p>
+    Get details about a given user, including which authorization roles it has.
+    Can be used to enable/disable certain features in the client, such as jukebox control.
+</p>
+<table width="100%" class="bottomspace">
+    <tr>
+        <th class="param-heading">Parameter</th>
+        <th class="param-heading">Required</th>
+        <th class="param-heading">Default</th>
+        <th class="param-heading">Comment</th>
+    </tr>
+    <tr class="table-altrow">
+        <td><code>username</code></td>
+        <td>Yes</td>
+        <td></td>
+        <td>The name of the user to retrieve. You can only retrieve your own user unless you have admin privileges.</td>
+    </tr>
+</table>
+<p>
+    Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;user&gt;</code>
+    element on success.
 </p>
 
 <h2 class="div">createUser</h2>
@@ -728,6 +766,34 @@
         <td>No</td>
         <td>false</td>
         <td>Whether the user is allowed to administrate Podcasts.</td>
+    </tr>
+</table>
+
+<p>
+    Returns an empty <code>&lt;subsonic-response&gt;</code> element on success.
+</p>
+<h2 class="div">deleteUser</h2>
+
+<p>
+    <code>http://your-server/rest/deleteUser.view</code>
+    <br>Since <a href="#versions">1.3.0</a>
+</p>
+
+<p>
+    Deletes an existing Subsonic user, using the following parameters:
+</p>
+<table width="100%" class="bottomspace">
+    <tr>
+        <th class="param-heading">Parameter</th>
+        <th class="param-heading">Required</th>
+        <th class="param-heading">Default</th>
+        <th class="param-heading">Comment</th>
+    </tr>
+    <tr class="table-altrow">
+        <td><code>username</code></td>
+        <td>Yes</td>
+        <td></td>
+        <td>The name of the user to delete.</td>
     </tr>
 </table>
 
