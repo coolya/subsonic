@@ -76,6 +76,7 @@ Multiple lame/ffmpeg processes
 Use setIconImages() in booter. Note: requires java 1.6.
 Transparent icons in menu bar.
 REST API for getUser, deleteUser
+No longer need .view extension in REST URLs.
 
 TODO IN 4.1
 -----------------
