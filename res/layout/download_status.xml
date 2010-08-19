@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+              a:orientation="horizontal"
+              a:layout_width="fill_parent"
+              a:layout_height="wrap_content"
+              a:background="@color/mediaControlBackground"
+              a:paddingLeft="7dip"
+              a:paddingRight="7dip">
+    <TextView
+            a:id="@+id/download_position"
+            a:layout_width="wrap_content"
+            a:layout_height="fill_parent"
+            a:gravity="left"
+            a:textAppearance="?android:attr/textAppearanceMedium"
+            a:textSize="14dp"
+            a:textStyle="bold"
+            a:textColor="@color/mediaControlForeground"
+            a:text="0:00"/>
+
+    <TextView
+            a:id="@+id/download_status"
+            a:layout_width="wrap_content"
+            a:layout_height="fill_parent"
+            a:gravity="center_horizontal"
+            a:layout_weight="1"
+            a:textAppearance="?android:attr/textAppearanceMedium"
+            a:textSize="14dp"
+            a:textStyle="bold"
+            a:textColor="@color/mediaControlForeground"/>
+
+    <TextView
+            a:id="@+id/download_duration"
+            a:layout_width="wrap_content"
+            a:layout_height="fill_parent"
+            a:gravity="right"
+            a:textAppearance="?android:attr/textAppearanceMedium"
+            a:textSize="14dp"
+            a:textStyle="bold"
+            a:textColor="@color/mediaControlForeground"
+            a:text="-:--"/>
+</LinearLayout>
+        
