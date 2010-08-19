@@ -43,8 +43,6 @@ import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
-import net.sourceforge.subsonic.androidapp.service.DownloadService;
-import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.Constants;
@@ -60,7 +58,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     private static final int MENU_ITEM_PLAY_ALL = 1;
 
     private ImageLoader imageLoader;
-    private DownloadService downloadService;
     private ListView entryList;
     private View header;
     private View footer;
@@ -85,7 +82,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_album);
 
-        downloadService = DownloadServiceImpl.getInstance();
         imageLoader = new ImageLoader(this);
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
@@ -342,7 +338,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         boolean deleteEnabled = false;
 
         for (MusicDirectory.Entry song : selection) {
-            DownloadFile downloadFile = downloadService.forSong(song);
+            DownloadFile downloadFile = getDownloadService().forSong(song);
             if (downloadFile.getCompleteFile().exists()) {
                 deleteEnabled = true;
                 break;
@@ -367,7 +363,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     }
 
     private void download(final boolean append, final boolean save, final boolean autoplay) {
-        if (downloadService == null) {
+        if (getDownloadService() == null) {
             return;
         }
 
@@ -376,12 +372,12 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             @Override
             public void run() {
                 if (!append) {
-                    downloadService.clear();
+                    getDownloadService().clear();
                 }
 
                 warnIfNetworkOrStorageUnavailable();
-                downloadService.download(songs, save, autoplay);
-                downloadService.setSuggestedPlaylistName(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME));
+                getDownloadService().download(songs, save, autoplay);
+                getDownloadService().setSuggestedPlaylistName(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME));
                 if (autoplay) {
                     Util.startActivityWithoutTransition(SelectAlbumActivity.this, DownloadActivity.class);
                 } else if (save) {
@@ -408,11 +404,11 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     }
 
     private void delete() {
-        if (downloadService == null) {
+        if (getDownloadService() == null) {
             return;
         }
 
-        downloadService.delete(getSelectedSongs());
+        getDownloadService().delete(getSelectedSongs());
     }
 
     private void checkLicenseAndTrialPeriod(Runnable onValid) {
@@ -493,7 +489,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                 } else {
                     view = new SongView(SelectAlbumActivity.this);
                 }
-                view.setDownloadFile(downloadService.forSong(entry), downloadService, true);
+                view.setDownloadFile(getDownloadService().forSong(entry), getDownloadService(), true);
 
                 return view;
             }

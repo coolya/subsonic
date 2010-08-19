@@ -199,7 +199,7 @@ public class MainActivity extends SubsonicTabActivity {
                 break;
             case MENU_ITEM_OFFLINE:
                 if (Util.getActiveServer(this) != 0) {
-                    DownloadService service = DownloadServiceImpl.getInstance();
+                    DownloadService service = getDownloadService();
                     if (service != null) {
                         service.clear();
                         service.setShufflePlayEnabled(false);

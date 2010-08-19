@@ -18,48 +18,45 @@
  */
 package net.sourceforge.subsonic.androidapp.activity;
 
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.LayoutInflater;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
-import android.widget.EditText;
-import android.app.Dialog;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
-import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
-import net.sourceforge.subsonic.androidapp.service.DownloadService;
-import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
-import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
+import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.HorizontalSlider;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
+import net.sourceforge.subsonic.androidapp.util.SilentBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.SongView;
 import net.sourceforge.subsonic.androidapp.util.Util;
-import net.sourceforge.subsonic.androidapp.util.SilentBackgroundTask;
 
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 
@@ -72,7 +69,6 @@ public class DownloadActivity extends SubsonicTabActivity {
     private static final int DIALOG_SAVE_PLAYLIST = 400;
 
     private ImageLoader imageLoader;
-    private DownloadService downloadService;
     private ViewFlipper flipper;
     private TextView emptyTextView;
     private TextView albumArtTextView;
@@ -130,7 +126,7 @@ public class DownloadActivity extends SubsonicTabActivity {
             @Override
             public void onClick(View view) {
                 warnIfNetworkOrStorageUnavailable();
-                downloadService.previous();
+                getDownloadService().previous();
             }
         });
 
@@ -138,21 +134,21 @@ public class DownloadActivity extends SubsonicTabActivity {
             @Override
             public void onClick(View view) {
                 warnIfNetworkOrStorageUnavailable();
-                downloadService.next();
+                getDownloadService().next();
             }
         });
 
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                downloadService.pause();
+                getDownloadService().pause();
             }
         });
 
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                downloadService.reset();
+                getDownloadService().reset();
             }
         });
 
@@ -174,34 +170,29 @@ public class DownloadActivity extends SubsonicTabActivity {
         progressBar.setOnSliderChangeListener(new HorizontalSlider.OnSliderChangeListener() {
             @Override
             public void onSliderChanged(View view, int position) {
-                downloadService.seekTo(position);
+                getDownloadService().seekTo(position);
             }
         });
         playlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 warnIfNetworkOrStorageUnavailable();
-                downloadService.play(position);
+                getDownloadService().play(position);
             }
         });
 
         registerForContextMenu(playlistView);
         imageLoader = new ImageLoader(this);
-        downloadService = DownloadServiceImpl.getInstance();
 
         if (getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_SHUFFLE, false)) {
             warnIfNetworkOrStorageUnavailable();
-            downloadService.setShufflePlayEnabled(true);
+            getDownloadService().setShufflePlayEnabled(true);
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        onDownloadListChanged();
-        onCurrentChanged();
-        onProgressChanged();
-        scrollToCurrent();
 
         final Handler handler = new Handler();
         Runnable runnable = new Runnable() {
@@ -220,7 +211,16 @@ public class DownloadActivity extends SubsonicTabActivity {
         executorService.scheduleWithFixedDelay(runnable, 0L, 1000L, TimeUnit.MILLISECONDS);
     }
 
+    @Override
+    protected void onDownloadServiceConnected() {
+        onDownloadListChanged();
+        onCurrentChanged();
+        onProgressChanged();
+        scrollToCurrent();
+    }
+
     // Scroll to current playing/downloading.
+
     private void scrollToCurrent() {
         for (int i = 0; i < playlistView.getAdapter().getCount(); i++) {
             if (currentPlaying == playlistView.getItemAtPosition(i)) {
@@ -228,7 +228,7 @@ public class DownloadActivity extends SubsonicTabActivity {
                 return;
             }
         }
-        DownloadFile currentDownloading = downloadService.getCurrentDownloading();
+        DownloadFile currentDownloading = getDownloadService().getCurrentDownloading();
         for (int i = 0; i < playlistView.getAdapter().getCount(); i++) {
             if (currentDownloading == playlistView.getItemAtPosition(i)) {
                 playlistView.setSelectionFromTop(i, 40);
@@ -279,7 +279,7 @@ public class DownloadActivity extends SubsonicTabActivity {
     @Override
     protected void onPrepareDialog(int id, Dialog dialog) {
         if (id == DIALOG_SAVE_PLAYLIST) {
-            String playlistName = downloadService.getSuggestedPlaylistName();
+            String playlistName = getDownloadService().getSuggestedPlaylistName();
             if (playlistName != null) {
                 playlistNameView.setText(playlistName);
             } else {
@@ -308,7 +308,7 @@ public class DownloadActivity extends SubsonicTabActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case MENU_ITEM_SHUFFLE:
-                downloadService.shuffle();
+                getDownloadService().shuffle();
                 Util.toast(this, R.string.download_menu_shuffle_notification);
                 break;
             case MENU_ITEM_SAVE_PLAYLIST:
@@ -335,12 +335,12 @@ public class DownloadActivity extends SubsonicTabActivity {
             case MENU_ITEM_REMOVE:
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
                 DownloadFile downloadFile = (DownloadFile) playlistView.getItemAtPosition(info.position);
-                downloadService.remove(downloadFile);
+                getDownloadService().remove(downloadFile);
                 onDownloadListChanged();
                 break;
             case MENU_ITEM_REMOVE_ALL:
-                downloadService.setShufflePlayEnabled(false);
-                downloadService.clear();
+                getDownloadService().setShufflePlayEnabled(false);
+                getDownloadService().clear();
                 onDownloadListChanged();
                 break;
             default:
@@ -350,12 +350,15 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void update() {
+        if (getDownloadService() == null) {
+            return;
+        }
 
-        if (currentRevision != downloadService.getDownloadListUpdateRevision()) {
+        if (currentRevision != getDownloadService().getDownloadListUpdateRevision()) {
             onDownloadListChanged();
         }
 
-        if (currentPlaying != downloadService.getCurrentPlaying()) {
+        if (currentPlaying != getDownloadService().getCurrentPlaying()) {
             onCurrentChanged();
         }
 
@@ -364,12 +367,12 @@ public class DownloadActivity extends SubsonicTabActivity {
 
     private void savePlaylistInBackground(final String playlistName) {
         Util.toast(DownloadActivity.this, getResources().getString(R.string.download_playlist_saving, playlistName));
-        downloadService.setSuggestedPlaylistName(playlistName);
+        getDownloadService().setSuggestedPlaylistName(playlistName);
         new SilentBackgroundTask<Void>(this) {
             @Override
             protected Void doInBackground() throws Throwable {
                 List<MusicDirectory.Entry> entries = new LinkedList<MusicDirectory.Entry>();
-                for (DownloadFile downloadFile : downloadService.getDownloads()) {
+                for (DownloadFile downloadFile : getDownloadService().getDownloads()) {
                     entries.add(downloadFile.getSong());
                 }
                 MusicService musicService = MusicServiceFactory.getMusicService(DownloadActivity.this);
@@ -403,12 +406,12 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void start() {
-        PlayerState state = downloadService.getPlayerState();
+        PlayerState state = getDownloadService().getPlayerState();
         if (state == PAUSED || state == COMPLETED) {
-            downloadService.start();
+            getDownloadService().start();
         } else if (state == STOPPED || state == IDLE) {
             warnIfNetworkOrStorageUnavailable();
-            downloadService.play(downloadService.getCurrentPlaying());
+            getDownloadService().play(getDownloadService().getCurrentPlaying());
         }
     }
 
@@ -416,17 +419,17 @@ public class DownloadActivity extends SubsonicTabActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
-                if (downloadService.getPlayerState() == STARTED) {
-                    downloadService.pause();
+                if (getDownloadService().getPlayerState() == STARTED) {
+                    getDownloadService().pause();
                 } else {
                     start();
                 }
                 break;
             case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
-                downloadService.previous();
+                getDownloadService().previous();
                 break;
             case KeyEvent.KEYCODE_MEDIA_NEXT:
-                downloadService.next();
+                getDownloadService().next();
                 break;
             default:
         }
@@ -434,15 +437,15 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void onDownloadListChanged() {
-        List<DownloadFile> list = downloadService.getDownloads();
+        List<DownloadFile> list = getDownloadService().getDownloads();
 
         playlistView.setAdapter(new SongListAdapter(list));
         emptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
-        currentRevision = downloadService.getDownloadListUpdateRevision();
+        currentRevision = getDownloadService().getDownloadListUpdateRevision();
     }
 
     private void onCurrentChanged() {
-        currentPlaying = downloadService.getCurrentPlaying();
+        currentPlaying = getDownloadService().getCurrentPlaying();
         if (currentPlaying != null) {
             MusicDirectory.Entry song = currentPlaying.getSong();
             albumArtTextView.setText(song.getTitle() + " - " + song.getArtist());
@@ -456,8 +459,8 @@ public class DownloadActivity extends SubsonicTabActivity {
     private void onProgressChanged() {
         if (currentPlaying != null) {
 
-            int millisPlayed = Math.max(0, downloadService.getPlayerPosition());
-            Integer duration = downloadService.getPlayerDuration();
+            int millisPlayed = Math.max(0, getDownloadService().getPlayerPosition());
+            Integer duration = getDownloadService().getPlayerDuration();
             int millisTotal = duration == null ? 0 : duration;
 
             positionTextView.setText(Util.formatDuration(millisPlayed / 1000));
@@ -472,7 +475,7 @@ public class DownloadActivity extends SubsonicTabActivity {
             progressBar.setSlidingEnabled(false);
         }
 
-        PlayerState playerState = downloadService.getPlayerState();
+        PlayerState playerState = getDownloadService().getPlayerState();
 
         switch (playerState) {
             case DOWNLOADING:
@@ -483,7 +486,7 @@ public class DownloadActivity extends SubsonicTabActivity {
                 statusTextView.setText(R.string.download_playerstate_buffering);
                 break;
             case STARTED:
-                statusTextView.setText(downloadService.isShufflePlayEnabled() ? R.string.download_playerstate_playing_shuffle : R.string.download_playerstate_playing);
+                statusTextView.setText(getDownloadService().isShufflePlayEnabled() ? R.string.download_playerstate_playing_shuffle : R.string.download_playerstate_playing);
                 break;
             case PAUSED:
                 statusTextView.setText(R.string.download_playerstate_paused);
@@ -533,7 +536,7 @@ public class DownloadActivity extends SubsonicTabActivity {
                 view = new SongView(DownloadActivity.this);
             }
             DownloadFile downloadFile = getItem(position);
-            view.setDownloadFile(downloadFile, downloadService, false);
+            view.setDownloadFile(downloadFile, getDownloadService(), false);
             return view;
         }
     }
