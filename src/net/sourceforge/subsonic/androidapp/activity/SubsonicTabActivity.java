@@ -63,6 +63,7 @@ public class SubsonicTabActivity extends Activity {
             }
         };
         bindService(new Intent(this, DownloadServiceImpl.class), serviceConnection, Context.BIND_AUTO_CREATE);
+        downloadService = DownloadServiceImpl.getInstance();
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
 
