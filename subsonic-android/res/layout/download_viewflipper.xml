@@ -5,7 +5,7 @@
              a:layout_height="fill_parent"
              a:layout_weight="1">
 
-    <LinearLayout a:orientation="vertical"
+    <FrameLayout
                   a:layout_width="fill_parent"
                   a:layout_height="fill_parent"
                   a:layout_weight="1">
@@ -15,23 +15,24 @@
                 a:background="@android:color/black"
                 a:layout_width="fill_parent"
                 a:layout_height="fill_parent"
-                a:layout_weight="1"
                 a:scaleType="centerInside"/>
 
         <TextView
                 a:id="@+id/download_album_art_text"
-                a:layout_width="fill_parent"
+                a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
-                a:gravity="center_horizontal"
+                a:layout_marginBottom="6dip"
+                a:layout_gravity="center_horizontal|bottom"
+                a:padding="2dip"
+                a:background="#66000000"
                 a:singleLine="true"
                 a:ellipsize="end"
-                a:background="@android:color/black"
                 a:textAppearance="?android:attr/textAppearanceMedium"
                 a:textSize="14dp"
                 a:textStyle="bold"
                 a:textColor="@color/mediaControlForeground"/>
 
-    </LinearLayout>
+    </FrameLayout>
 
     <LinearLayout a:orientation="vertical"
                   a:layout_width="fill_parent"
