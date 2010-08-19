@@ -5,17 +5,6 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 TODO IN ANDROID 1.7
 -------------------
 Fix NPE's.
-E/ActivityThread(  597): Activity net.sourceforge.subsonic.androidapp.activity.DownloadActivity has leaked ServiceConnection net.sourceforge.subsonic.androidapp.activity.SubsonicTabActivity$1@43db9e28 that was originally bound here
-E/ActivityThread(  597): android.app.ServiceConnectionLeaked: Activity net.sourceforge.subsonic.androidapp.activity.DownloadActivity has leaked ServiceConnection net.sourceforge.subsonic.androidapp.activity.SubsonicTabActivity$1@43db9e28 that was originally bound here
-E/ActivityThread(  597): 	at android.app.ActivityThread$PackageInfo$ServiceDispatcher.<init>(ActivityThread.java:1121)
-E/ActivityThread(  597): 	at android.app.ActivityThread$PackageInfo.getServiceDispatcher(ActivityThread.java:1016)
-E/ActivityThread(  597): 	at android.app.ContextImpl.bindService(ContextImpl.java:863)
-E/ActivityThread(  597): 	at android.content.ContextWrapper.bindService(ContextWrapper.java:347)
-E/ActivityThread(  597): 	at net.sourceforge.subsonic.androidapp.activity.SubsonicTabActivity.onCreate(SubsonicTabActivity.java:65)
-E/ActivityThread(  597): 	at net.sourceforge.subsonic.androidapp.activity.DownloadActivity.onCreate(DownloadActivity.java:100)
-
-Write song title on top of album art.
-Improve landscape mode for DownloadActivity.
 Add more bitrate options (e.g., 80 kbit/s)
 Optionally hide music from other players (.nomedia)
 Long-click download
@@ -44,6 +33,8 @@ Colors: http://www.androidtapp.com/opentable/
 DONE IN ANDROID 1.7
 -------------------
 Proper binding to DownloadService. Avoid NPE's.
+Write song title on top of album art.
+Improve landscape mode for DownloadActivity.
 
 DONE IN 4.1
 ------------
