@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewFlipper xmlns:a="http://schemas.android.com/apk/res/android"
+             a:id="@+id/download_flipper"
+             a:layout_width="fill_parent"
+             a:layout_height="fill_parent"
+             a:layout_weight="1">
+
+    <LinearLayout a:orientation="vertical"
+                  a:layout_width="fill_parent"
+                  a:layout_height="fill_parent"
+                  a:layout_weight="1">
+        <ImageView
+                a:id="@+id/download_album_art_image"
+                a:src="@drawable/unknown_album_large"
+                a:background="@android:color/black"
+                a:layout_width="fill_parent"
+                a:layout_height="fill_parent"
+                a:layout_weight="1"
+                a:scaleType="centerInside"/>
+
+        <TextView
+                a:id="@+id/download_album_art_text"
+                a:layout_width="fill_parent"
+                a:layout_height="wrap_content"
+                a:gravity="center_horizontal"
+                a:singleLine="true"
+                a:ellipsize="end"
+                a:background="@android:color/black"
+                a:textAppearance="?android:attr/textAppearanceMedium"
+                a:textSize="14dp"
+                a:textStyle="bold"
+                a:textColor="@color/mediaControlForeground"/>
+
+    </LinearLayout>
+
+    <LinearLayout a:orientation="vertical"
+                  a:layout_width="fill_parent"
+                  a:layout_height="fill_parent"
+                  a:layout_weight="1">
+
+        <TextView
+                a:id="@+id/download_empty"
+                a:text="@string/download.empty"
+                a:layout_width="fill_parent"
+                a:layout_height="wrap_content"
+                a:padding="10dip"/>
+
+        <ListView
+                a:id="@+id/download_list"
+                a:layout_width="fill_parent"
+                a:layout_height="fill_parent"
+                a:layout_weight="1"
+                a:cacheColorHint="#00000000"/>
+
+    </LinearLayout>
+
+</ViewFlipper>
+
+
