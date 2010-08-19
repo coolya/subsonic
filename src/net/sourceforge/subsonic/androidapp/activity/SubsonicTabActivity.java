@@ -46,12 +46,13 @@ public class SubsonicTabActivity extends Activity {
     private View playlistButton;
     private View nowPlayingButton;
     private DownloadService downloadService;
+    private ServiceConnection downloadServiceConnection;
 
     @Override
     protected void onCreate(Bundle bundle) {
         applyTheme();
         super.onCreate(bundle);
-        ServiceConnection serviceConnection = new ServiceConnection() {
+        downloadServiceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                 downloadService = DownloadServiceImpl.getInstance();
@@ -62,7 +63,7 @@ public class SubsonicTabActivity extends Activity {
             public void onServiceDisconnected(ComponentName componentName) {
             }
         };
-        bindService(new Intent(this, DownloadServiceImpl.class), serviceConnection, Context.BIND_AUTO_CREATE);
+        bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
         downloadService = DownloadServiceImpl.getInstance();
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
@@ -138,6 +139,7 @@ public class SubsonicTabActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         destroyed = true;
+        unbindService(downloadServiceConnection);
     }
 
     @Override
