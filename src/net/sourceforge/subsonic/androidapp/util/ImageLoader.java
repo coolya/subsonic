@@ -27,6 +27,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.Bitmap;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -52,7 +53,6 @@ public class ImageLoader implements Runnable {
     private final int imageSizeLarge;
     private final Context context;
 
-
     public ImageLoader(Context context) {
         this.context = context;
         queue = new LinkedBlockingQueue<Task>(500);
@@ -61,7 +61,8 @@ public class ImageLoader implements Runnable {
 
         // Determine the density-dependent image sizes.
         imageSizeDefault = context.getResources().getDrawable(R.drawable.unknown_album).getIntrinsicHeight();
-        imageSizeLarge = context.getResources().getDisplayMetrics().widthPixels;
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        imageSizeLarge = Math.min(metrics.widthPixels, metrics.heightPixels);
     }
 
     public void loadImage(View view, MusicDirectory.Entry entry, boolean large) {

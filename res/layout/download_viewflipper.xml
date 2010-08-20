@@ -21,7 +21,7 @@
                 a:id="@+id/download_album_art_text"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
-                a:layout_marginBottom="6dip"
+                a:layout_marginBottom="10dip"
                 a:layout_gravity="center_horizontal|bottom"
                 a:padding="2dip"
                 a:background="#66000000"
