@@ -4,6 +4,9 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.7
 -------------------
+Crashes on 404 (e.g., using ubuntu.com as server)
+Make Util.getPreferences() public.
+Add shadow to launch icon.
 Fix NPE's.
 Add more bitrate options (e.g., 80 kbit/s)
 Optionally hide music from other players (.nomedia)
