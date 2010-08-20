@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.io.Reader;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.lang.reflect.Method;
@@ -457,6 +458,16 @@ public final class Util {
         return s.length() == 0 ? null : s;
     }
 
+    public static String urlEncode(String s) {
+        if (s == null) {
+            return null;
+        }
+        try {
+            return URLEncoder.encode(s, "UTF-8");
+        } catch (UnsupportedEncodingException x) {
+            throw new RuntimeException(x);
+        }
+    }
 
     public static boolean isNetworkConnected(Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

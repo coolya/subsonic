@@ -66,7 +66,13 @@ public class AuthConfirmActivity extends Activity {
                             }
                         })
                         .show();
+            } else {
+                finish();
             }
+
+        } else {
+            finish();
         }
+
     }
 }

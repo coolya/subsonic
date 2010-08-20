@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.ContextMenu;
@@ -262,7 +263,20 @@ public class MainActivity extends SubsonicTabActivity {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             dialog.dismiss();
                             Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse(Constants.U1M_AUTH_URL));
+
+                            String url = Constants.U1M_AUTH_URL;
+                            String manufacturer = Util.urlEncode(Build.MANUFACTURER);
+                            String model = Util.urlEncode(Build.MODEL);
+
+                            if (manufacturer != null) {
+                                url += "&manufacturer=" + manufacturer;
+                            }
+
+                            if (model != null) {
+                                url += "&model=" + model;
+                            }
+
+                            intent.setData(Uri.parse(url));
                             startActivity(intent);
                         }
                     })
