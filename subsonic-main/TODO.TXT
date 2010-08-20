@@ -4,10 +4,8 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.7
 -------------------
-Crashes on 404 (e.g., using ubuntu.com as server)
 Make Util.getPreferences() public.
 Add shadow to launch icon.
-Fix NPE's.
 Add more bitrate options (e.g., 80 kbit/s)
 Optionally hide music from other players (.nomedia)
 Long-click download
@@ -35,7 +33,8 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN ANDROID 1.7
 -------------------
-Proper binding to DownloadService. Avoid NPE's.
+Proper binding to DownloadService.
+Avoid NPE's.
 Write song title on top of album art.
 Improve landscape mode for DownloadActivity.
 Shuffle play restarts when changing orientation.

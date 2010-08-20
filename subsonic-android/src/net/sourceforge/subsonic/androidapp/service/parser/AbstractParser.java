@@ -21,7 +21,11 @@ package net.sourceforge.subsonic.androidapp.service.parser;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.content.Context;
+import android.util.Xml;
 import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.util.ProgressListener;
+
+import java.io.Reader;
 
 /**
  * @author Sindre Mehus
@@ -29,6 +33,8 @@ import net.sourceforge.subsonic.androidapp.R;
 public abstract class AbstractParser {
 
     private final Context context;
+    private XmlPullParser parser;
+    private boolean rootElementFound;
 
     public AbstractParser(Context context) {
         this.context = context;
@@ -38,8 +44,8 @@ public abstract class AbstractParser {
         return context;
     }
 
-    protected void handleError(XmlPullParser parser) throws Exception {
-        int code = getInteger(parser, "code");
+    protected void handleError() throws Exception {
+        int code = getInteger("code");
         String message;
         switch (code) {
             case 20:
@@ -49,27 +55,63 @@ public abstract class AbstractParser {
                 message = context.getResources().getString(R.string.parser_upgrade_server);
                 break;
             default:
-                message = get(parser, "message");
+                message = get("message");
                 break;
         }
         throw new Exception(message);
     }
 
-    protected String get(XmlPullParser parser, String name) {
+    protected void updateProgress(ProgressListener progressListener, int messageId) {
+        if (progressListener != null) {
+            progressListener.updateProgress(messageId);
+        }
+    }
+
+    protected void updateProgress(ProgressListener progressListener, String message) {
+        if (progressListener != null) {
+            progressListener.updateProgress(message);
+        }
+    }
+
+    protected String get(String name) {
         return parser.getAttributeValue(null, name);
     }
 
-    protected boolean getBoolean(XmlPullParser parser, String name) {
-        return "true".equals(get(parser, name));
+    protected boolean getBoolean(String name) {
+        return "true".equals(get(name));
     }
 
-    protected Integer getInteger(XmlPullParser parser, String name) {
-        String s = get(parser, name);
+    protected Integer getInteger(String name) {
+        String s = get(name);
         return s == null ? null : Integer.valueOf(s);
     }
 
-    protected Long getLong(XmlPullParser parser, String name) {
-        String s = get(parser, name);
+    protected Long getLong(String name) {
+        String s = get(name);
         return s == null ? null : Long.valueOf(s);
+    }
+
+    protected void init(Reader reader) throws Exception {
+        parser = Xml.newPullParser();
+        parser.setInput(reader);
+        rootElementFound = false;
+    }
+
+    protected int nextParseEvent() throws Exception {
+        return parser.next();
+    }
+
+    protected String getElementName() {
+        String name = parser.getName();
+        if ("subsonic-response".equals(name)) {
+            rootElementFound = true;
+        }
+        return name;
+    }
+
+    protected void validate() throws Exception {
+        if (!rootElementFound) {
+            throw new Exception(context.getResources().getString(R.string.background_task_parse_error));
+        }
     }
 }

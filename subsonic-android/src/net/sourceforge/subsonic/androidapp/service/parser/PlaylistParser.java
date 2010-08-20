@@ -19,7 +19,6 @@
 package net.sourceforge.subsonic.androidapp.service.parser;
 
 import android.content.Context;
-import android.util.Xml;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
@@ -37,30 +36,26 @@ public class PlaylistParser extends MusicDirectoryParser {
     }
 
     public MusicDirectory parse(Reader reader, ProgressListener progressListener) throws Exception {
-        if (progressListener != null) {
-            progressListener.updateProgress(R.string.parser_reading);
-        }
-
-        XmlPullParser parser = Xml.newPullParser();
-        parser.setInput(reader);
+        updateProgress(progressListener, R.string.parser_reading);
+        init(reader);
 
         MusicDirectory dir = new MusicDirectory();
         int eventType;
         do {
-            eventType = parser.next();
+            eventType = nextParseEvent();
             if (eventType == XmlPullParser.START_TAG) {
-                String name = parser.getName();
+                String name = getElementName();
                 if ("entry".equals(name)) {
-                    dir.addChild(parseEntry(parser));
+                    dir.addChild(parseEntry());
                 } else if ("error".equals(name)) {
-                    handleError(parser);
+                    handleError();
                 }
             }
         } while (eventType != XmlPullParser.END_DOCUMENT);
 
-        if (progressListener != null) {
-            progressListener.updateProgress(R.string.parser_reading_done);
-        }
+        validate();
+        updateProgress(progressListener, R.string.parser_reading_done);
+
         return dir;
     }
 

@@ -20,7 +20,6 @@ package net.sourceforge.subsonic.androidapp.service.parser;
 
 import android.content.Context;
 import android.util.Log;
-import android.util.Xml;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
@@ -40,61 +39,58 @@ public class MusicDirectoryParser extends AbstractParser {
     }
 
     public MusicDirectory parse(Reader reader, ProgressListener progressListener) throws Exception {
-        if (progressListener != null) {
-            progressListener.updateProgress(R.string.parser_reading);
-        }
 
         long t0 = System.currentTimeMillis();
-        XmlPullParser parser = Xml.newPullParser();
-        parser.setInput(reader);
+        updateProgress(progressListener, R.string.parser_reading);
+        init(reader);
 
         MusicDirectory dir = new MusicDirectory();
         int eventType;
         do {
-            eventType = parser.next();
+            eventType = nextParseEvent();
             if (eventType == XmlPullParser.START_TAG) {
-                String name = parser.getName();
+                String name = getElementName();
                 if ("child".equals(name)) {
-                    dir.addChild(parseEntry(parser));
+                    dir.addChild(parseEntry());
                 } else if ("directory".equals(name)) {
-                    dir.setName(get(parser, "name"));
+                    dir.setName(get("name"));
                 } else if ("error".equals(name)) {
-                    handleError(parser);
+                    handleError();
                 }
             }
         } while (eventType != XmlPullParser.END_DOCUMENT);
 
+        validate();
+        updateProgress(progressListener, R.string.parser_reading_done);
+
         long t1 = System.currentTimeMillis();
         Log.d(TAG, "Got music directory in " + (t1 - t0) + "ms.");
 
-        if (progressListener != null) {
-            progressListener.updateProgress(R.string.parser_reading_done);
-        }
         return dir;
     }
 
-    protected MusicDirectory.Entry parseEntry(XmlPullParser parser) {
+    protected MusicDirectory.Entry parseEntry() {
         MusicDirectory.Entry entry = new MusicDirectory.Entry();
-        entry.setId(get(parser, "id"));
-        entry.setTitle(get(parser, "title"));
-        entry.setDirectory(getBoolean(parser, "isDir"));
-        entry.setCoverArt(get(parser, "coverArt"));
+        entry.setId(get("id"));
+        entry.setTitle(get("title"));
+        entry.setDirectory(getBoolean("isDir"));
+        entry.setCoverArt(get("coverArt"));
 
         if (!entry.isDirectory()) {
-            entry.setAlbum(get(parser, "album"));
-            entry.setArtist(get(parser, "artist"));
-            entry.setTrack(getInteger(parser, "track"));
-            entry.setYear(getInteger(parser, "year"));
-            entry.setGenre(get(parser, "genre"));
-            entry.setArtist(get(parser, "artist"));
-            entry.setContentType(get(parser, "contentType"));
-            entry.setSuffix(get(parser, "suffix"));
-            entry.setTranscodedContentType(get(parser, "transcodedContentType"));
-            entry.setTranscodedSuffix(get(parser, "transcodedSuffix"));
-            entry.setSize(getLong(parser, "size"));
-            entry.setDuration(getInteger(parser, "duration"));
-            entry.setBitRate(getInteger(parser, "bitRate"));
-            entry.setPath(get(parser, "path"));
+            entry.setAlbum(get("album"));
+            entry.setArtist(get("artist"));
+            entry.setTrack(getInteger("track"));
+            entry.setYear(getInteger("year"));
+            entry.setGenre(get("genre"));
+            entry.setArtist(get("artist"));
+            entry.setContentType(get("contentType"));
+            entry.setSuffix(get("suffix"));
+            entry.setTranscodedContentType(get("transcodedContentType"));
+            entry.setTranscodedSuffix(get("transcodedSuffix"));
+            entry.setSize(getLong("size"));
+            entry.setDuration(getInteger("duration"));
+            entry.setBitRate(getInteger("bitRate"));
+            entry.setPath(get("path"));
         }
         return entry;
     }

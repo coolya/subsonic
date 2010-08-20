@@ -19,7 +19,6 @@
 package net.sourceforge.subsonic.androidapp.service.parser;
 
 import android.content.Context;
-import android.util.Xml;
 import org.xmlpull.v1.XmlPullParser;
 
 import java.io.Reader;
@@ -35,16 +34,16 @@ public class ErrorParser extends AbstractParser {
 
     public void parse(Reader reader) throws Exception {
 
-        XmlPullParser parser = Xml.newPullParser();
-        parser.setInput(reader);
+        init(reader);
 
         int eventType;
         do {
-            eventType = parser.next();
-            if (eventType == XmlPullParser.START_TAG && "error".equals(parser.getName())) {
-                handleError(parser);
+            eventType = nextParseEvent();
+            if (eventType == XmlPullParser.START_TAG && "error".equals(getElementName())) {
+                handleError();
             }
         } while (eventType != XmlPullParser.END_DOCUMENT);
 
+        validate();
     }
 }
