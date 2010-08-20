@@ -157,7 +157,7 @@ public final class Util {
         return builder.toString();
     }
 
-    private static SharedPreferences getPreferences(Context context) {
+    public static SharedPreferences getPreferences(Context context) {
         return context.getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
     }
 
