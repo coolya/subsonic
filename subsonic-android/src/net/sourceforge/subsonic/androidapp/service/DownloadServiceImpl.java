@@ -128,6 +128,10 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     @Override
     public synchronized void setShufflePlayEnabled(boolean enabled) {
+        if (shufflePlay == enabled) {
+            return;
+        }
+
         shufflePlay = enabled;
         if (shufflePlay) {
             clear();

@@ -35,6 +35,7 @@ DONE IN ANDROID 1.7
 Proper binding to DownloadService. Avoid NPE's.
 Write song title on top of album art.
 Improve landscape mode for DownloadActivity.
+Shuffle play restarts when changing orientation.
 
 DONE IN 4.1
 ------------
@@ -79,6 +80,7 @@ No longer need .view extension in REST URLs.
 
 TODO IN 4.1
 -----------------
+Deprecate current cover art method.  Make new which takes song/album ID.
 Add trialExpires to REST API.
 Test getUser/deleteUser
 Change font in logo?
@@ -429,7 +431,7 @@ Drop ResourceBundle_en.
 Upload quota per user.
 Support reverse proxies.  Send url as parameter. (<a href="javascript:document.location.href='foo.jsp?referrer=' + document.location.href">Trykk her</a>)
 Support forward proxies.
-Hvis spilleren har "Auto-control enabled" skrudd av, sÂ vises det en ny knapp "Stream" i playlista som kan brukes for Â fÂ m3u-en.
+Hvis spilleren har "Auto-control enabled" skrudd av, s√• vises det en ny knapp "Stream" i playlista som kan brukes for √• f√• m3u-en.
 Replace use of arrays with type-safe collections.
 "Mini" interface for phones, pda's etc.
 Longer log file. Option to not display DEBUG lines in help.jsp.
@@ -449,10 +451,10 @@ Register at myprogs.net
 Link to Pandora (http://blog.pandora.com/faq/index.html#92)
 Check Jinzora features. http://www.jinzora.com/pages.php?pn=developers&sub=changelog
 Add Cancel button to Save Playlist.
-HÂndtere galt format samt manglende filer i playlister.
-HÂndtere playere med navn som ikke er iht httpurl.
+H√•ndtere galt format samt manglende filer i playlister.
+H√•ndtere playere med navn som ikke er iht httpurl.
 Rydd opp i http-parameternavn.
-Gj¯re sidene XHTML-kompatibel.
+Gj√∏re sidene XHTML-kompatibel.
 Validaton of index specification.
 Make playlist loading more robust.  (Fails on url's, for instance.)
 Make PDA skin.
@@ -606,7 +608,7 @@ rsync -avP -e ssh music.demo/ sindremehus@www.subsonic.org:music.demo
 GIMP
 ----
 Creating xxx_focused.png
-Farger > Farg > Kul¯r 34, Metning 97, Lysverdi -50
+Farger > Farg > Kul√∏r 34, Metning 97, Lysverdi -50
 
 Creating xxx_pressed.png
 Use brush: radius 23, spisser 2, hardhet 0.95, sideforhold 1.0, vinkel 0.0, mellomrom 1.0
