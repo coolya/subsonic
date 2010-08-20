@@ -19,7 +19,6 @@
 package net.sourceforge.subsonic.androidapp.service.parser;
 
 import net.sourceforge.subsonic.androidapp.domain.Version;
-import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 
 import java.io.BufferedReader;
 import java.io.Reader;
@@ -31,7 +30,7 @@ import java.util.regex.Pattern;
  */
 public class VersionParser {
 
-    public Version parse(Reader reader, ProgressListener progressListener) throws Exception {
+    public Version parse(Reader reader) throws Exception {
 
         BufferedReader bufferedReader = new BufferedReader(reader);
         Pattern pattern = Pattern.compile("SUBSONIC_ANDROID_VERSION_BEGIN(.*)SUBSONIC_ANDROID_VERSION_END");

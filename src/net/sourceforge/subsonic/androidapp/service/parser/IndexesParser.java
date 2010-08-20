@@ -29,7 +29,6 @@ import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Artist;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
-import android.util.Xml;
 import android.util.Log;
 
 /**
@@ -43,13 +42,10 @@ public class IndexesParser extends AbstractParser {
     }
 
     public Indexes parse(Reader reader, ProgressListener progressListener) throws Exception {
-        if (progressListener != null) {
-            progressListener.updateProgress(R.string.parser_reading);
-        }
 
         long t0 = System.currentTimeMillis();
-        XmlPullParser parser = Xml.newPullParser();
-        parser.setInput(reader);
+        updateProgress(progressListener, R.string.parser_reading);
+        init(reader);
 
         List<Artist> artists = new ArrayList<Artist>();
         List<Artist> shortcuts = new ArrayList<Artist>();
@@ -59,37 +55,39 @@ public class IndexesParser extends AbstractParser {
         boolean changed = false;
 
         do {
-            eventType = parser.next();
+            eventType = nextParseEvent();
             if (eventType == XmlPullParser.START_TAG) {
-                String name = parser.getName();
+                String name = getElementName();
                 if ("indexes".equals(name)) {
                     changed = true;
-                    lastModified = getLong(parser, "lastModified");
+                    lastModified = getLong("lastModified");
                 } else if ("index".equals(name)) {
-                    index = get(parser, "name");
+                    index = get("name");
 
                 } else if ("artist".equals(name)) {
                     Artist artist = new Artist();
-                    artist.setId(get(parser, "id"));
-                    artist.setName(get(parser, "name"));
+                    artist.setId(get("id"));
+                    artist.setName(get("name"));
                     artist.setIndex(index);
                     artists.add(artist);
 
-                    if (progressListener != null && artists.size() % 10 == 0) {
+                    if (artists.size() % 10 == 0) {
                         String msg = getContext().getResources().getString(R.string.parser_artist_count, artists.size());
-                        progressListener.updateProgress(msg);
+                        updateProgress(progressListener, msg);
                     }
                 } else if ("shortcut".equals(name)) {
                     Artist shortcut = new Artist();
-                    shortcut.setId(get(parser, "id"));
-                    shortcut.setName(get(parser, "name"));
+                    shortcut.setId(get("id"));
+                    shortcut.setName(get("name"));
                     shortcut.setIndex("*");
                     shortcuts.add(shortcut);
                 } else if ("error".equals(name)) {
-                    handleError(parser);
+                    handleError();
                 }
             }
         } while (eventType != XmlPullParser.END_DOCUMENT);
+
+        validate();
 
         if (!changed) {
             return null;
@@ -98,10 +96,8 @@ public class IndexesParser extends AbstractParser {
         long t1 = System.currentTimeMillis();
         Log.d(TAG, "Got " + artists.size() + " artist(s) in " + (t1 - t0) + "ms.");
 
-        if (progressListener != null) {
-            String msg = getContext().getResources().getString(R.string.parser_artist_count, artists.size());
-            progressListener.updateProgress(msg);
-        }
+        String msg = getContext().getResources().getString(R.string.parser_artist_count, artists.size());
+        updateProgress(progressListener, msg);
 
         return new Indexes(lastModified == null ? 0L : lastModified, shortcuts, artists);
     }

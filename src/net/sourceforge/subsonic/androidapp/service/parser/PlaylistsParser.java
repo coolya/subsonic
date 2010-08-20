@@ -19,7 +19,6 @@
 package net.sourceforge.subsonic.androidapp.service.parser;
 
 import android.content.Context;
-import android.util.Xml;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
@@ -39,32 +38,29 @@ public class PlaylistsParser extends AbstractParser {
     }
 
     public List<Playlist> parse(Reader reader, ProgressListener progressListener) throws Exception {
-        if (progressListener != null) {
-            progressListener.updateProgress(R.string.parser_reading);
-        }
 
-        XmlPullParser parser = Xml.newPullParser();
-        parser.setInput(reader);
+        updateProgress(progressListener, R.string.parser_reading);
+        init(reader);
 
         List<Playlist> result = new ArrayList<Playlist>();
         int eventType;
         do {
-            eventType = parser.next();
+            eventType = nextParseEvent();
             if (eventType == XmlPullParser.START_TAG) {
-                String tag = parser.getName();
+                String tag = getElementName();
                 if ("playlist".equals(tag)) {
-                    String name = get(parser, "name");
-                    String id = get(parser, "id");
+                    String name = get("name");
+                    String id = get("id");
                     result.add(new Playlist(id, name));
                 } else if ("error".equals(tag)) {
-                    handleError(parser);
+                    handleError();
                 }
             }
         } while (eventType != XmlPullParser.END_DOCUMENT);
 
-        if (progressListener != null) {
-            progressListener.updateProgress(R.string.parser_reading_done);
-        }
+        validate();
+        updateProgress(progressListener, R.string.parser_reading_done);
+
         return result;
     }
 
