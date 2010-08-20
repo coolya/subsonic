@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+              a:orientation="vertical"
+              a:layout_width="fill_parent"
+              a:layout_height="fill_parent">
+
+    <LinearLayout a:orientation="horizontal"
+                  a:layout_width="fill_parent"
+                  a:layout_height="0dip"
+                  a:layout_weight="1">
+
+        <include layout="@layout/download_viewflipper"/>
+
+        <LinearLayout a:orientation="vertical"
+                      a:layout_width="wrap_content"
+                      a:layout_height="fill_parent"
+                      a:layout_marginTop="0dip"
+                      a:background="@android:color/black"
+                      a:padding="4dip"
+                      a:gravity="center_vertical">
+            <Button
+                    a:id="@+id/download_pause"
+                    a:drawableLeft="@drawable/media_pause"
+                    a:paddingLeft="18dp"
+                    a:paddingRight="18dp"
+                    a:layout_width="fill_parent"
+                    a:layout_height="wrap_content"/>
+            <Button
+                    a:id="@+id/download_stop"
+                    a:drawableLeft="@drawable/media_stop"
+                    a:paddingLeft="18dp"
+                    a:paddingRight="18dp"
+                    a:layout_width="fill_parent"
+                    a:layout_height="wrap_content"/>
+            <Button
+                    a:id="@+id/download_start"
+                    a:drawableLeft="@drawable/media_start"
+                    a:paddingLeft="18dp"
+                    a:paddingRight="18dp"
+                    a:layout_width="fill_parent"
+                    a:layout_height="wrap_content"/>
+            <Button
+                    a:id="@+id/download_previous"
+                    a:drawableLeft="@drawable/media_backward"
+                    a:visibility="gone"
+                    a:paddingLeft="18dp"
+                    a:paddingRight="18dp"
+                    a:layout_width="fill_parent"
+                    a:layout_height="wrap_content"/>
+            <Button
+                    a:id="@+id/download_next"
+                    a:drawableLeft="@drawable/media_forward"
+                    a:paddingLeft="18dp"
+                    a:paddingRight="18dp"
+                    a:layout_width="fill_parent"
+                    a:layout_height="wrap_content"/>
+            <Button
+                    a:id="@+id/download_toggle_list"
+                    a:drawableLeft="@drawable/media_toggle_list"
+                    a:paddingLeft="18dp"
+                    a:paddingRight="18dp"
+                    a:layout_width="fill_parent"
+                    a:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <include layout="@layout/download_status"/>
+
+    <include layout="@layout/download_slider"/>
+
+    <include layout="@layout/button_bar"/>
+
+</LinearLayout>
+
