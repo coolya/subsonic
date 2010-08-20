@@ -18,6 +18,12 @@
     <string name="main.albums_highest">Highest rated</string>
     <string name="main.albums_recent">Recently played</string>
     <string name="main.albums_frequent">Frequently played</string>
+    <string name="main.auth_title">Sign in to Ubuntu One</string>
+    <string name="main.auth_text">Please sign in with your Ubuntu One login or go to <b>one.ubuntu.com</b> to join.</string>
+    <string name="main.signin">Sign in</string>
+
+    <string name="authconfirm.title">Successfully signed in</string>
+    <string name="authconfirm.text">Excellent! You\'re now signed in to Ubuntu One.</string>
 
     <string name="playlist.label">Playlists</string>
 

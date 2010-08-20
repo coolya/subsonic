@@ -19,7 +19,11 @@
 
 package net.sourceforge.subsonic.androidapp.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.ContextMenu;
@@ -233,11 +237,42 @@ public class MainActivity extends SubsonicTabActivity {
     }
 
     private void showInfoDialog() {
-        if (!infoDialogDisplayed) {
-            infoDialogDisplayed = true;
-            if (Util.getRestUrl(this, null).contains("demo.subsonic.org")) {
-                Util.info(this, R.string.main_welcome_title, R.string.main_welcome_text);
-            }
+        if (Util.isOffline(this)) {
+            return;
+        }
+
+        SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        String username = prefs.getString(Constants.PREFERENCES_KEY_USERNAME + 1, null);
+        boolean isAuthenticated = Util.trimToNull(username) != null;
+
+        if (!isAuthenticated) {
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setTitle(R.string.main_auth_title)
+                    .setMessage(R.string.main_auth_text)
+                    .setCancelable(true)
+                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            finish();
+                        }
+                    })
+                    .setPositiveButton(R.string.main_signin, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.dismiss();
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(Constants.U1M_AUTH_URL));
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton(R.string.common_cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            finish();
+                        }
+                    })
+                    .show();
         }
     }
 

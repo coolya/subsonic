@@ -26,6 +26,19 @@
             </intent-filter>
         </activity>
 
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.AuthConfirmActivity"
+                  a:label="Ubuntu One Music"
+                  a:theme="@android:style/Theme"
+                  a:configChanges="orientation|keyboardHidden"
+                  a:launchMode="standard">
+            <intent-filter>
+                <action a:name="android.intent.action.VIEW"/>
+                <category a:name="android.intent.category.DEFAULT"/>
+                <category a:name="android.intent.category.BROWSABLE"/>
+                <data a:scheme="x-ubuntuone-music"/>
+            </intent-filter>
+        </activity>
+
         <activity a:name="net.sourceforge.subsonic.androidapp.activity.SelectArtistActivity"
                   a:configChanges="orientation|keyboardHidden"
                   a:launchMode="standard"/>

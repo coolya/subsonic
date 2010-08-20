@@ -76,6 +76,9 @@ public final class Constants {
     // NOTE: The value of this field is set automatically during ANT build. See build.xml.
     public static final boolean DEBUG = true;
 
+    // URL used for Ubuntu One authentication.
+    public static final String U1M_AUTH_URL = "https://one.ubuntu.com/phones/creds/android?scheme=x-ubuntuone-music";
+
     private Constants() {
     }
 }

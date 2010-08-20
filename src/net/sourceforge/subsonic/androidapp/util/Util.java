@@ -493,7 +493,7 @@ public final class Util {
     public static void confirm(Context context, int messageId, final Runnable task) {
         new AlertDialog.Builder(context)
                 .setIcon(android.R.drawable.ic_dialog_info)
-                .setTitle(messageId)
+                .setMessage(messageId)
                 .setPositiveButton(R.string.common_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
