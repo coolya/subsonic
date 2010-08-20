@@ -4,7 +4,6 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.7
 -------------------
-Make Util.getPreferences() public.
 Add shadow to launch icon.
 Add more bitrate options (e.g., 80 kbit/s)
 Optionally hide music from other players (.nomedia)

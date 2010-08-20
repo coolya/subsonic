@@ -89,7 +89,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             serverSettings.put(instance, new ServerSettings(instance));
         }
 
-        SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        SharedPreferences prefs = Util.getPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
 
         update();
@@ -99,7 +99,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     protected void onDestroy() {
         super.onDestroy();
 
-        SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        SharedPreferences prefs = Util.getPreferences(this);
         prefs.unregisterOnSharedPreferenceChangeListener(this);
     }
 
