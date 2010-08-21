@@ -50,14 +50,15 @@
 
             <ul class="list">
                 <li>Your router must have a public IP address and must be accessible from the internet. This is true for most home internet connections.</li>
-                <li>Your router must support the UPnP protocol so that Subsonic can setup the appropriate port forwarding. If your router doesn't support
+                <li>Your router must support the UPnP or NAT-PMP protocol so that Subsonic can setup the appropriate port forwarding. If your router doesn't support
                     this you will have to configure the port forwarding manually.</li>
             </ul>
 
             <a name="2.1"><h3>2.1 Automatic port forwarding</h3></a>
             <p>To enable automatic port forwarding in Subsonic, go to <b>Settings &gt; Network</b> and enable the
                 "Automatically configure your router..." option. Click the Save button and pay close attention to the status message
-                that is displayed. If you get an error message, you should first try to configure your router to enable UPnP.
+                that is displayed. If you get an error message, you should first try to configure your router to enable UPnP
+                (or NAT-PMP if you have an AirPort from Apple).
                 If it still fails, or your router doesn't support UPnP, follow the instructions below.
                 If it works, the Subsonic server will at regular intervals (every hour) contact the router and tell it to
                 forward incoming connections (from the internet) to the Subsonic server.

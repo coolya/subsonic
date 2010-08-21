@@ -4,18 +4,6 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.7
 -------------------
-Media button support
-  x Hitting play should start playing first track.
-  x Next/Prev buttons should not go "outside" playlist.
-  x Register media button receiver many times.
-  x Reflection
-    Bluetooth
-    Handle incoming call (audio focus?)
-    Compile with 1.5
-    http://android-developers.blogspot.com/2010_06_01_archive.html
-    http://osdir.com/ml/Android-Developers/2010-02/msg03265.html
-    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4014
-
 Add shadow to launch icon.
 Add more bitrate options (e.g., 80 kbit/s)
 Optionally hide music from other players (.nomedia)
@@ -43,11 +31,7 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN ANDROID 1.7
 -------------------
-Proper binding to DownloadService.
-Avoid NPE's.
-Write song title on top of album art.
-Improve landscape mode for DownloadActivity.
-Shuffle play restarts when changing orientation.
+Media button support
 
 DONE IN 4.1
 ------------
@@ -89,6 +73,7 @@ Use setIconImages() in booter. Note: requires java 1.6.
 Transparent icons in menu bar.
 REST API for getUser, deleteUser
 No longer need .view extension in REST URLs.
+NAT-PMP support, http://sourceforge.net/projects/jnat-pmplib/
 
 TODO IN 4.1
 -----------------
@@ -98,7 +83,6 @@ Test getUser/deleteUser
 Change font in logo?
 JSON support in REST API?
 Upgrade to 4.1.beta1
-NAT-PMP support, http://sourceforge.net/projects/jnat-pmplib/
 Exclude dot files in cover art search.
   https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce
 Add "append" parameter to createPlaylist REST method.
