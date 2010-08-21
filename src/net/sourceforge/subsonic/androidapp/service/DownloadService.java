@@ -40,9 +40,13 @@ public interface DownloadService {
 
     void clear();
 
+    int size();
+
     void remove(DownloadFile downloadFile);
 
     List<DownloadFile> getDownloads();
+
+    int getCurrentPlayingIndex();
 
     DownloadFile getCurrentPlaying();
 

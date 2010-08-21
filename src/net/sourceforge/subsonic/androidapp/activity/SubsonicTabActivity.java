@@ -136,6 +136,12 @@ public class SubsonicTabActivity extends Activity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Util.registerMediaButtonEventReceiver(this);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         destroyed = true;

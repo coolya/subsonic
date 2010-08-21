@@ -51,6 +51,7 @@ import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
+import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.HorizontalSlider;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
@@ -134,7 +135,9 @@ public class DownloadActivity extends SubsonicTabActivity {
             @Override
             public void onClick(View view) {
                 warnIfNetworkOrStorageUnavailable();
-                getDownloadService().next();
+                if (getDownloadService().getCurrentPlayingIndex() < getDownloadService().size() - 1) {
+                    getDownloadService().next();
+                }
             }
         });
 
@@ -406,34 +409,19 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void start() {
-        PlayerState state = getDownloadService().getPlayerState();
+        DownloadService service = getDownloadService();
+        PlayerState state = service.getPlayerState();
         if (state == PAUSED || state == COMPLETED) {
-            getDownloadService().start();
+            service.start();
         } else if (state == STOPPED || state == IDLE) {
             warnIfNetworkOrStorageUnavailable();
-            getDownloadService().play(getDownloadService().getCurrentPlaying());
+            int current = service.getCurrentPlayingIndex();
+            if (current == -1) {
+                service.play(0);
+            } else {
+                service.play(current);
+            }
         }
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
-                if (getDownloadService().getPlayerState() == STARTED) {
-                    getDownloadService().pause();
-                } else {
-                    start();
-                }
-                break;
-            case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
-                getDownloadService().previous();
-                break;
-            case KeyEvent.KEYCODE_MEDIA_NEXT:
-                getDownloadService().next();
-                break;
-            default:
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
     private void onDownloadListChanged() {
