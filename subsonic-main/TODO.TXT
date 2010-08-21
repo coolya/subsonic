@@ -33,47 +33,6 @@ DONE IN ANDROID 1.7
 -------------------
 Media button support
 
-DONE IN 4.1
-------------
-Added Traditional Chinese translation, courtesy of Cheng Jen Li.
-Removed gzip filter
-Fixed chat when deploying Subsonic on Tomcat.
-Proper lookup of local IP on linux.
-Updated French translation, courtesy of Christophe
-Improved tray/application/fav icons.
-Sonic themes, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3371
-Update themes. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3082
-Upgraded to dwr 3.0. Less logging.
-Year parsing.
-  http://www.activeobjects.no/subsonic/forum/privmsg.php?folder=inbox&mode=read&p=1511
-Reset maxBitrate in RESTController.
-Support html5 audio
-   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2746
-   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2154
-   content-length missing when accessing thru REST. due to gzip filter.
-   Set correct content-type in StreamController.
-Non-recursive coverart lookup
-Add content-type for flac.
-Fix /rest/stream.view: java.io.IOException: Closed
-Run Mac server in background (status bar).
-  http://www.macosxhints.com/article.php?story=20050316020738829
-  http://developer.apple.com/mac/library/documentation/MacOSX/Conceptual/BPSystemStartup/Articles/CustomLogin.html#//apple_ref/doc/uid/20002134-BAJCGEGG
-  Bring to front when clicking Control Panel.
-  Automatically configure to start at boot.
-  See "Air Video Server"
-  Optionally show control panel when starting.
-  Avoid dock icon.
-Upgraded to LAME 3.98.4
-Using Android App Causes subsonic-service.exe to 100% CPU (cover art)
-  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3771
-  REST: Don't set cover art for songs? Also avoid recursion.
-Multiple lame/ffmpeg processes
-  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3834&highlight=
-Use setIconImages() in booter. Note: requires java 1.6.
-Transparent icons in menu bar.
-REST API for getUser, deleteUser
-No longer need .view extension in REST URLs.
-NAT-PMP support, http://sourceforge.net/projects/jnat-pmplib/
 
 TODO IN 4.1
 -----------------
@@ -483,8 +442,6 @@ By default, create music folder for video.
 
 HOW TO RELEASE
 ===============================
-Ask Jeremy Terpstra to update Dutch translation.
-Set JAVA_HOME to 1.6.
 Update version number in pom.xml, version.html, MultiController.java etc.
 Update changelog.jsp, download.jsp
 mvn clean install -P full
@@ -495,16 +452,13 @@ Check that correct local version is displayed.
 Commit
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
   rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.1.beta1/
-  rsync -avP -e ssh subsonic-assembly/target/subsonic* sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.1.beta1/
-  rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.1.beta1/
-  rsync -avP -e ssh subsonic-installer-debian/target/subsonic*.deb  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.1.beta1/
-  rsync -avP -e ssh subsonic-installer-rpm/target/subsonic*.rpm  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.1.beta1/
+  rsync -avP -e ssh subsonic-assembly/target/subsonic* subsonic-installer-mac/target/subsonic*.pkg subsonic-installer-debian/target/subsonic*.deb subsonic-installer-rpm/target/subsonic*.rpm sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.1.beta1/
 
 Modify FRS properties
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
 
 Upload site (OLD):
-rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
+ rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
 
 Upload site (NEW): CHANGE DATE BELOW
   rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-05-13/pages/

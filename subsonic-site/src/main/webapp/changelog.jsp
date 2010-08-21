@@ -16,6 +16,22 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="4.1.beta1"><h2 class="div">Subsonic 4.1.beta1 - Aug 21, 2010</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>Support automatic port forwarding on Airport Extreme/Express.</li>
+    <li><span class="bugid">New: </span>Improved tray/application/fav icons.</li>
+    <li><span class="bugid">New: </span>New and updated themes.</li>
+    <li><span class="bugid">New: </span>Improved Mac control panel.</li>
+    <li><span class="bugid">New: </span>Added REST API methods getUser and deleteUser.</li>
+    <li><span class="bugid">New: </span>Added Traditional Chinese translation, courtesy of Cheng Jen Li.</li>
+    <li><span class="bugid">New: </span>Updated French translation, courtesy of Christophe.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed chat feature when deploying Subsonic on Tomcat.</li>
+    <li><span class="bugid">Bugfix: </span>Proper lookup of local IP on Linux.</li>
+    <li><span class="bugid">Bugfix: </span>Support html5 (return correct content type and length).</li>
+    <li><span class="bugid">Performance: </span>Faster coverart lookup.</li>
+    <li><span class="bugid">Tech: </span>Upgraded to LAME 3.98.4.</li>
+</ul>
+
 <a name="4.0.1"><h2 class="div">Subsonic 4.0.1 - May 13, 2010</h2></a>
 <ul>
     <li><span class="bugid">Bugfix: </span>Fixed broken cover art download.</li>
@@ -718,6 +734,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#4.1.beta1">Subsonic 4.1.beta1</a></li>
             <li><a href="#4.0.1">Subsonic 4.0.1</a></li>
             <li><a href="#4.0">Subsonic 4.0</a></li>
             <li><a href="#4.0.beta2">Subsonic 4.0.beta2</a></li>

@@ -5,7 +5,7 @@
 <%!
     String current = "download";
     String stable = "4.0.1";
-    String beta = null; // Set to null if no beta is available.
+    String beta = "4.1.beta1"; // Set to null if no beta is available.
 %>
 <%@ include file="header.jsp" %>
 
