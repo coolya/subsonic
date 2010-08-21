@@ -148,7 +148,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     public synchronized void shuffle() {
         Collections.shuffle(downloadList);
         if (currentPlaying != null) {
-            downloadList.remove(downloadList.indexOf(currentPlaying));
+            downloadList.remove(getCurrentPlayingIndex());
             downloadList.add(0, currentPlaying);
         }
         revision++;
@@ -167,6 +167,11 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     @Override
     public synchronized void clear() {
         clear(true);
+    }
+
+    @Override
+    public synchronized int size() {
+        return downloadList.size();
     }
 
     public synchronized void clear(boolean serialize) {
@@ -215,6 +220,11 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     @Override
+    public synchronized int getCurrentPlayingIndex() {
+        return downloadList.indexOf(currentPlaying);
+    }
+
+    @Override
     public DownloadFile getCurrentPlaying() {
         return currentPlaying;
     }
@@ -236,7 +246,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     @Override
     public synchronized void play(int index) {
-        if (index < 0 || index >= downloadList.size()) {
+        if (index < 0 || index >= size()) {
             reset();
             setCurrentPlaying(null);
         } else {
@@ -257,20 +267,22 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     @Override
     public synchronized void previous() {
-        int index = downloadList.indexOf(currentPlaying);
-        if (index != -1) {
-            // Restart song if played more than five seconds.
-            if (getPlayerPosition() > 5000) {
-                play(index);
-            } else {
-                play(index - 1);
-            }
+        int index = getCurrentPlayingIndex();
+        if (index == -1) {
+            return;
+        }
+
+        // Restart song if played more than five seconds.
+        if (getPlayerPosition() > 5000 || index == 0) {
+            play(index);
+        } else {
+            play(index - 1);
         }
     }
 
     @Override
     public synchronized void next() {
-        int index = downloadList.indexOf(currentPlaying);
+        int index = getCurrentPlayingIndex();
         if (index != -1) {
             play(index + 1);
         }
@@ -466,14 +478,14 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         // Find a suitable target for download.
         else if (currentDownloading == null || currentDownloading.isWorkDone() || currentDownloading.isFailed()) {
 
-            int n = downloadList.size();
+            int n = size();
             if (n == 0) {
                 return;
             }
 
             int preloaded = 0;
 
-            int start = currentPlaying == null ? 0 : downloadList.indexOf(currentPlaying);
+            int start = currentPlaying == null ? 0 : getCurrentPlayingIndex();
             int i = start;
             do {
                 DownloadFile downloadFile = downloadList.get(i);
@@ -505,7 +517,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         boolean wasEmpty = downloadList.isEmpty();
 
         // First, ensure that list is at least 20 songs long.
-        int size = downloadList.size();
+        int size = size();
         if (size < listSize) {
             for (MusicDirectory.Entry song : shufflePlayBuffer.get(listSize - size)) {
                 DownloadFile downloadFile = new DownloadFile(this, song, false);
@@ -514,7 +526,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             }
         }
 
-        int currIndex = currentPlaying == null ? 0 : downloadList.indexOf(currentPlaying);
+        int currIndex = currentPlaying == null ? 0 : getCurrentPlayingIndex();
 
         // Only shift playlist if playing song #5 or later.
         if (currIndex > 4) {

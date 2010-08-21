@@ -18,12 +18,6 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -34,8 +28,15 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
-import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.CacheCleaner;
+import net.sourceforge.subsonic.androidapp.util.FileUtil;
+import net.sourceforge.subsonic.androidapp.util.Util;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Sindre Mehus
@@ -48,6 +49,7 @@ public class DownloadServiceLifecycleSupport {
     private final DownloadServiceImpl downloadService;
     private ScheduledExecutorService executorService;
     private BroadcastReceiver headsetEventReceiver;
+    private BroadcastReceiver mediaButtonEventReceiver;
     private PhoneStateListener phoneStateListener;
 
     public DownloadServiceLifecycleSupport(DownloadServiceImpl downloadService) {
@@ -73,6 +75,7 @@ public class DownloadServiceLifecycleSupport {
         executorService.scheduleWithFixedDelay(downloadChecker, 5, 5, TimeUnit.SECONDS);
         executorService.scheduleWithFixedDelay(cacheCleaner, 5 * 60, 60 * 60, TimeUnit.SECONDS);
 
+        // Pause when headset is unplugged.
         headsetEventReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -82,9 +85,10 @@ public class DownloadServiceLifecycleSupport {
                 }
             }
         };
-
-        // Pause when headset is unplugged.
         downloadService.registerReceiver(headsetEventReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
+
+        // React to media buttons.
+        Util.registerMediaButtonEventReceiver(downloadService);
 
         // Pause temporarily on incoming phone calls.
         phoneStateListener = new MyPhoneStateListener();
@@ -99,6 +103,7 @@ public class DownloadServiceLifecycleSupport {
         serializeDownloadQueue();
         downloadService.clear(false);
         downloadService.unregisterReceiver(headsetEventReceiver);
+        Util.unregisterMediaButtonEventReceiver(downloadService);
 
         TelephonyManager telephonyManager = (TelephonyManager) downloadService.getSystemService(Context.TELEPHONY_SERVICE);
         telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
@@ -157,4 +162,5 @@ public class DownloadServiceLifecycleSupport {
             }
         }
     }
+
 }

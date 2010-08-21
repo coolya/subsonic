@@ -4,13 +4,24 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.7
 -------------------
+Media button support
+  x Hitting play should start playing first track.
+  x Next/Prev buttons should not go "outside" playlist.
+  x Register media button receiver many times.
+  x Reflection
+    Bluetooth
+    Handle incoming call (audio focus?)
+    Compile with 1.5
+    http://android-developers.blogspot.com/2010_06_01_archive.html
+    http://osdir.com/ml/Android-Developers/2010-02/msg03265.html
+    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4014
+
 Add shadow to launch icon.
 Add more bitrate options (e.g., 80 kbit/s)
 Optionally hide music from other players (.nomedia)
 Long-click download
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2651&start=105
 Fix crash
-   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3677
 ogg support
   https://mail.google.com/a/activeobjects.no/?tab=cm#inbox/129f7959b2353a3d
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
@@ -18,7 +29,7 @@ Cover art download doesn't cancel properly.
 Extend playlist menu (Clear, Save...)
 Use naming scheme foo.partial.mp3?
 Skipping broken when downloading file.
-Crashes if plugging in usb while downloading. See stack trace above.
+Crashes if plugging in usb while downloading.
 https support, SSLCertificateSocketFactory.getInsecure() CAN'T USE; API LEVEL 8
 Only retry if network error.
 Select music folder in server settings. (Including "All").

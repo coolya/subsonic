@@ -18,6 +18,36 @@
  */
 package net.sourceforge.subsonic.androidapp.util;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
+import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
+import net.sourceforge.subsonic.androidapp.activity.ErrorActivity;
+import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.receiver.MediaButtonIntentReceiver;
+import org.apache.http.HttpEntity;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,40 +55,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.lang.reflect.Method;
-import java.lang.reflect.Constructor;
-
-import org.apache.http.HttpEntity;
-
-import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Environment;
-import android.os.Handler;
-import android.util.Log;
-import android.widget.Toast;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.BitmapDrawable;
-import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
-import net.sourceforge.subsonic.androidapp.activity.ErrorActivity;
-import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 
 /**
  * @author Sindre Mehus
@@ -393,12 +395,12 @@ public final class Util {
     /**
      * <p>Gets the substring after the first occurrence of a separator.
      * The separator is not returned.</p>
-     *
+     * <p/>
      * <p>A <code>null</code> string input will return <code>null</code>.
      * An empty ("") string input will return the empty string.
      * A <code>null</code> separator will return the empty string if the
      * input string is not <code>null</code>.</p>
-     *
+     * <p/>
      * <pre>
      * substringAfter(null, *)      = null
      * substringAfter("", *)        = ""
@@ -410,10 +412,10 @@ public final class Util {
      * substringAfter("abc", "")    = "abc"
      * </pre>
      *
-     * @param s  the String to get a substring from, may be null
-     * @param separator  the String to search for, may be null
+     * @param s         the String to get a substring from, may be null
+     * @param separator the String to search for, may be null
      * @return the substring after the first occurrence of the separator,
-     *  <code>null</code> if null String input
+     *         <code>null</code> if null String input
      */
     public static String substringAfter(String s, String separator) {
         if (s == null || s.length() == 0) {
@@ -433,10 +435,10 @@ public final class Util {
      * <p>Removes control characters (char &lt;= 32) from both
      * ends of this String returning <code>null</code> if the String is
      * empty ("") after the trim or if it is <code>null</code>.
-     *
+     * <p/>
      * <p>The String is trimmed using {@link String#trim()}.
      * Trim removes start and end characters &lt;= 32.
-     *
+     * <p/>
      * <pre>
      * trimToNull(null)          = null
      * trimToNull("")            = null
@@ -445,9 +447,9 @@ public final class Util {
      * trimToNull("    abc    ") = "abc"
      * </pre>
      *
-     * @param s  the String to be trimmed, may be null
+     * @param s the String to be trimmed, may be null
      * @return the trimmed String,
-     *  <code>null</code> if only chars &lt;= 32, empty or null String input
+     *         <code>null</code> if only chars &lt;= 32, empty or null String input
      */
     public static String trimToNull(String s) {
         if (s == null) {
@@ -627,6 +629,32 @@ public final class Util {
             return constructor.newInstance(context.getResources(), bitmap);
         } catch (Throwable x) {
             return new BitmapDrawable(bitmap);
+        }
+    }
+
+    public static void registerMediaButtonEventReceiver(Context context) {
+        // AudioManager.registerMediaButtonEventReceiver() was introduced in Android 2.2.
+        // Use reflection to maintain compatibility with 1.5.
+        try {
+            AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+            ComponentName componentName = new ComponentName(context.getPackageName(), MediaButtonIntentReceiver.class.getName());
+            Method method = AudioManager.class.getMethod("registerMediaButtonEventReceiver", ComponentName.class);
+            method.invoke(audioManager, componentName);
+        } catch (Throwable x) {
+            // Ignored.
+        }
+    }
+
+    public static void unregisterMediaButtonEventReceiver(Context context) {
+        // AudioManager.unregisterMediaButtonEventReceiver() was introduced in Android 2.2.
+        // Use reflection to maintain compatibility with 1.5.
+        try {
+            AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+            ComponentName componentName = new ComponentName(context.getPackageName(), MediaButtonIntentReceiver.class.getName());
+            Method method = AudioManager.class.getMethod("unregisterMediaButtonEventReceiver", ComponentName.class);
+            method.invoke(audioManager, componentName);
+        } catch (Throwable x) {
+            // Ignored.
         }
     }
 }

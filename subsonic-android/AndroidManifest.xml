@@ -63,6 +63,12 @@
         <service a:name="net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl"
                  a:label="Subsonic Download Service"/>
 
+        <receiver a:name="net.sourceforge.subsonic.androidapp.receiver.MediaButtonIntentReceiver">
+            <intent-filter>
+                <action a:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
