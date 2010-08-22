@@ -31,11 +31,16 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN ANDROID 1.7
 -------------------
-Media button support
+Media button support (headset and bluetooth)
+Programatically change coverart zoom according to orientation.
 
+DONE IN 4.1
+-------------
+Servlet.service() for servlet dwr-invoker threw exception java.lang.NoClassDefFoundError: com/yahoo/platform/yui/compressor/JavaScriptCompressor
 
 TODO IN 4.1
 -----------------
+
 Deprecate current cover art method.  Make new which takes song/album ID.
 Add trialExpires to REST API.
 Test getUser/deleteUser
@@ -461,10 +466,10 @@ Upload site (OLD):
  rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
 
 Upload site (NEW): CHANGE DATE BELOW
-  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-05-13/pages/
+  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-08-22/pages/
   rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps/pages/
 
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-2.7.beta1 -m "Tagging 2.7.beta1."
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-4.1.beta1 -m "Tagging 4.1.beta1."
 Register at freshmeat.
 Post message on forum.
 Update version number in pom.xml etc.
@@ -474,14 +479,14 @@ Upgrade Subsonic backend: CHANGE DATE BELOW
   Backup backend database.
   cd subsonic-backend
   mvn clean install
-  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-05-13/ROOT.war
-  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-05-13/demo.war
+  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-08-22/ROOT.war
+  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-08-22/demo.war
   ssh sindremehus@subsonic.org
   su
   cd /usr/java/tomcat-5.5
   pkill java  # wait a bit
   rm webapps
-  ln -s webapps-2010-05-13 webapps
+  ln -s webapps-2010-08-22 webapps
   rm -rf work
   rm logs/*
   reboot
