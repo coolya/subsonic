@@ -27,10 +27,10 @@ import java.util.concurrent.TimeUnit;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.ContextMenu;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -115,6 +115,10 @@ public class DownloadActivity extends SubsonicTabActivity {
         stopButton = findViewById(R.id.download_stop);
         startButton = findViewById(R.id.download_start);
         toggleListButton = findViewById(R.id.download_toggle_list);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            albumArtImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        }
 
         albumArtImageView.setOnClickListener(new View.OnClickListener() {
             @Override
