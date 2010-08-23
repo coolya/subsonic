@@ -2,9 +2,8 @@ TODO IN BACKEND
 ---------------
 If trying to assign an expired web address used by someone else, don't show "Expired..." message.
 
-TODO IN ANDROID 1.7
+TODO IN ANDROID 1.8
 -------------------
-Use startService, not bindService.
 Change server -> random playlist buffer doesn't change.
 Add shadow to launch icon.
 Add more bitrate options (e.g., 80 kbit/s)
@@ -31,10 +30,8 @@ Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Colors: http://www.androidtapp.com/opentable/
 
-DONE IN ANDROID 1.7
+DONE IN ANDROID 1.8
 -------------------
-Media button support (headset and bluetooth)
-Programatically change coverart zoom according to orientation.
 
 DONE IN 4.1
 -------------
@@ -496,6 +493,7 @@ Upgrade Subsonic backend: CHANGE DATE BELOW
 
 HOW TO RELEASE TO ANDROID MARKET
 ================================
+Build against Android 1.5
 Update versionCode and versionName in AndroidManifest.xml
 Update version.html and MultiController
 cd subsonic-android
