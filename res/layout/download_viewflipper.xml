@@ -15,7 +15,7 @@
                 a:background="@android:color/black"
                 a:layout_width="fill_parent"
                 a:layout_height="fill_parent"
-                a:scaleType="centerInside"/>
+                a:scaleType="centerCrop"/>
 
         <TextView
                 a:id="@+id/download_album_art_text"
