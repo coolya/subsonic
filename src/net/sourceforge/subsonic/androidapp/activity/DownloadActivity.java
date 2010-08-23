@@ -191,7 +191,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         registerForContextMenu(playlistView);
         imageLoader = new ImageLoader(this);
 
-        if (getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_SHUFFLE, false)) {
+        if (getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_SHUFFLE, false) && getDownloadService() != null) {
             warnIfNetworkOrStorageUnavailable();
             getDownloadService().setShufflePlayEnabled(true);
         }
@@ -216,10 +216,7 @@ public class DownloadActivity extends SubsonicTabActivity {
 
         executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.scheduleWithFixedDelay(runnable, 0L, 1000L, TimeUnit.MILLISECONDS);
-    }
 
-    @Override
-    protected void onDownloadServiceConnected() {
         onDownloadListChanged();
         onCurrentChanged();
         onProgressChanged();
@@ -229,6 +226,10 @@ public class DownloadActivity extends SubsonicTabActivity {
     // Scroll to current playing/downloading.
 
     private void scrollToCurrent() {
+        if (getDownloadService() == null) {
+            return;
+        }
+
         for (int i = 0; i < playlistView.getAdapter().getCount(); i++) {
             if (currentPlaying == playlistView.getItemAtPosition(i)) {
                 playlistView.setSelectionFromTop(i, 40);
@@ -429,6 +430,10 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void onDownloadListChanged() {
+        if (getDownloadService() == null) {
+            return;
+        }
+
         List<DownloadFile> list = getDownloadService().getDownloads();
 
         playlistView.setAdapter(new SongListAdapter(list));
@@ -437,6 +442,10 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void onCurrentChanged() {
+        if (getDownloadService() == null) {
+            return;
+        }
+
         currentPlaying = getDownloadService().getCurrentPlaying();
         if (currentPlaying != null) {
             MusicDirectory.Entry song = currentPlaying.getSong();
@@ -449,6 +458,10 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void onProgressChanged() {
+        if (getDownloadService() == null) {
+            return;
+        }
+
         if (currentPlaying != null) {
 
             int millisPlayed = Math.max(0, getDownloadService().getPlayerPosition());
