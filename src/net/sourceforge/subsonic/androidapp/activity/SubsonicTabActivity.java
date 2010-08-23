@@ -19,13 +19,9 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -46,26 +42,12 @@ public class SubsonicTabActivity extends Activity {
     private View searchButton;
     private View playlistButton;
     private View nowPlayingButton;
-    private DownloadService downloadService;
-    private ServiceConnection downloadServiceConnection;
 
     @Override
     protected void onCreate(Bundle bundle) {
         applyTheme();
         super.onCreate(bundle);
-        downloadServiceConnection = new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-                downloadService = DownloadServiceImpl.getInstance();
-                onDownloadServiceConnected();
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName componentName) {
-            }
-        };
-        bindService(new Intent(this, DownloadServiceImpl.class), downloadServiceConnection, Context.BIND_AUTO_CREATE);
-        downloadService = DownloadServiceImpl.getInstance();
+        startService(new Intent(this, DownloadServiceImpl.class));
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
 
@@ -146,7 +128,6 @@ public class SubsonicTabActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         destroyed = true;
-        unbindService(downloadServiceConnection);
     }
 
     @Override
@@ -196,15 +177,8 @@ public class SubsonicTabActivity extends Activity {
         }
     }
 
-    /**
-     * Overridden by subclasses that are interested in knowing when the
-     * DownloadService is available.
-     */
-    protected void onDownloadServiceConnected() {
-    }
-
     protected DownloadService getDownloadService() {
-        return downloadService;
+        return DownloadServiceImpl.getInstance();
     }
 
     protected void warnIfNetworkOrStorageUnavailable() {

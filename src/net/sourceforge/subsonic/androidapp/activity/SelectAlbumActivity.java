@@ -333,6 +333,10 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     }
 
     private void enableButtons() {
+        if (getDownloadService() == null) {
+            return;
+        }
+
         List<MusicDirectory.Entry> selection = getSelectedSongs();
         boolean enabled = !selection.isEmpty();
         boolean deleteEnabled = false;
