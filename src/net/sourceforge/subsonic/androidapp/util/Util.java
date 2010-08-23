@@ -37,6 +37,7 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
@@ -666,6 +667,16 @@ public final class Util {
             method.invoke(audioManager, componentName);
         } catch (Throwable x) {
             // Ignored.
+        }
+    }
+
+    public static String getManufacturer() {
+        // Build.MANUFACTURER() was introduced in Android 1.6.
+        // Use reflection to maintain compatibility with 1.5.
+        try {
+            return (String) Build.class.getField("MANUFACTURER").get(null);
+        } catch (Throwable x) {
+            return null;
         }
     }
 }

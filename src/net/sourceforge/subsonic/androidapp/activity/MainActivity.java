@@ -265,7 +265,7 @@ public class MainActivity extends SubsonicTabActivity {
                             Intent intent = new Intent(Intent.ACTION_VIEW);
 
                             String url = Constants.U1M_AUTH_URL;
-                            String manufacturer = Util.urlEncode(Build.MANUFACTURER);
+                            String manufacturer = Util.urlEncode(Util.getManufacturer());
                             String model = Util.urlEncode(Build.MODEL);
 
                             if (manufacturer != null) {

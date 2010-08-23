@@ -20,7 +20,7 @@ x Find a way to override server url for testing purposes
   Handle wrong credentials. Allow user to sign in again.
   Add manufacturer=Google&model=Nexus+One
   Add nonce?
-  
+
 ons 11 aug - 8t
 tor 12 aug - 8t
 
