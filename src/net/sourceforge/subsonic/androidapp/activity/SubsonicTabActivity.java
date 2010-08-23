@@ -31,6 +31,7 @@ import android.view.View;
 import android.widget.TextView;
 import net.sourceforge.subsonic.u1m.R;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
+import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
@@ -133,6 +134,12 @@ public class SubsonicTabActivity extends Activity {
         }
 
         updateButtonVisibility();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Util.registerMediaButtonEventReceiver(this);
     }
 
     @Override

@@ -24,6 +24,7 @@ import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.Util;
 import net.sourceforge.subsonic.u1m.R;
 
 public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -42,7 +43,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         cacheSize = (ListPreference) findPreference(Constants.PREFERENCES_KEY_CACHE_SIZE);
         preloadCount = (ListPreference) findPreference(Constants.PREFERENCES_KEY_PRELOAD_COUNT);
 
-        SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        SharedPreferences prefs = Util.getPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
 
         update();
@@ -52,7 +53,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     protected void onDestroy() {
         super.onDestroy();
 
-        SharedPreferences prefs = getSharedPreferences(Constants.PREFERENCES_FILE_NAME, 0);
+        SharedPreferences prefs = Util.getPreferences(this);
         prefs.unregisterOnSharedPreferenceChangeListener(this);
     }
 

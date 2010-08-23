@@ -27,10 +27,10 @@ import java.util.concurrent.TimeUnit;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.ContextMenu;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,10 +45,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
-import net.sourceforge.subsonic.u1m.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
+import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.Constants;
@@ -57,6 +57,7 @@ import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.SilentBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.SongView;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.u1m.R;
 
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 
@@ -115,6 +116,10 @@ public class DownloadActivity extends SubsonicTabActivity {
         startButton = findViewById(R.id.download_start);
         toggleListButton = findViewById(R.id.download_toggle_list);
 
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            albumArtImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        }
+
         albumArtImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,7 +139,9 @@ public class DownloadActivity extends SubsonicTabActivity {
             @Override
             public void onClick(View view) {
                 warnIfNetworkOrStorageUnavailable();
-                getDownloadService().next();
+                if (getDownloadService().getCurrentPlayingIndex() < getDownloadService().size() - 1) {
+                    getDownloadService().next();
+                }
             }
         });
 
@@ -406,34 +413,19 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void start() {
-        PlayerState state = getDownloadService().getPlayerState();
+        DownloadService service = getDownloadService();
+        PlayerState state = service.getPlayerState();
         if (state == PAUSED || state == COMPLETED) {
-            getDownloadService().start();
+            service.start();
         } else if (state == STOPPED || state == IDLE) {
             warnIfNetworkOrStorageUnavailable();
-            getDownloadService().play(getDownloadService().getCurrentPlaying());
+            int current = service.getCurrentPlayingIndex();
+            if (current == -1) {
+                service.play(0);
+            } else {
+                service.play(current);
+            }
         }
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
-                if (getDownloadService().getPlayerState() == STARTED) {
-                    getDownloadService().pause();
-                } else {
-                    start();
-                }
-                break;
-            case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
-                getDownloadService().previous();
-                break;
-            case KeyEvent.KEYCODE_MEDIA_NEXT:
-                getDownloadService().next();
-                break;
-            default:
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
     private void onDownloadListChanged() {

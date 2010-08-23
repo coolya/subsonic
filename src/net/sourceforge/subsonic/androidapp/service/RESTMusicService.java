@@ -150,7 +150,7 @@ public class RESTMusicService implements MusicService {
     public boolean isLicenseValid(Context context, ProgressListener progressListener) throws Exception {
         Reader reader = getReader(context, progressListener, "getLicense", null);
         try {
-            return new LicenseParser(context).parse(reader, progressListener);
+            return new LicenseParser(context).parse(reader);
         } finally {
             Util.close(reader);
         }
@@ -296,7 +296,7 @@ public class RESTMusicService implements MusicService {
     public Version getLatestVersion(Context context, ProgressListener progressListener) throws Exception {
         Reader reader = getReaderForURL(context, VERSION_URL, null, progressListener);
         try {
-            return new VersionParser().parse(reader, progressListener);
+            return new VersionParser().parse(reader);
         } finally {
             Util.close(reader);
         }
