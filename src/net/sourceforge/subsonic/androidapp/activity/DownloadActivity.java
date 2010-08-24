@@ -217,6 +217,10 @@ public class DownloadActivity extends SubsonicTabActivity {
         executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.scheduleWithFixedDelay(runnable, 0L, 1000L, TimeUnit.MILLISECONDS);
 
+        if (getDownloadService() == null || getDownloadService().getCurrentPlaying() == null) {
+            flipper.setDisplayedChild(1);
+        }
+
         onDownloadListChanged();
         onCurrentChanged();
         onProgressChanged();
