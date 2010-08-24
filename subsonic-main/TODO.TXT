@@ -6,6 +6,7 @@ TODO IN ANDROID 1.8
 -------------------
 Change server -> random playlist buffer doesn't change.
 Add more bitrate options (e.g., 80 kbit/s)
+Save/resume current playing and position.
 Optionally hide music from other players (.nomedia)
 Long-click download
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2651&start=105
@@ -32,6 +33,7 @@ Colors: http://www.androidtapp.com/opentable/
 DONE IN ANDROID 1.8
 -------------------
 Add shadow to launch icon.
+Don't show coverart in DownloadActivity if currentPlaying == null.
 
 DONE IN 4.1
 -------------
@@ -482,13 +484,12 @@ Upgrade Subsonic backend: CHANGE DATE BELOW
   scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-08-22/demo.war
   ssh sindremehus@subsonic.org
   su
-  cd /usr/java/tomcat-5.5
-  pkill java  # wait a bit
+  /etc/init.d/tomcat55 stop
   rm webapps
   ln -s webapps-2010-08-22 webapps
   rm -rf work
   rm logs/*
-  reboot
+  /etc/init.d/tomcat55 start
 
 
 HOW TO RELEASE TO ANDROID MARKET
