@@ -4,7 +4,7 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.8
 -------------------
-Change server -> random playlist buffer doesn't change.
+Change default preload to 3.
 Add more bitrate options (e.g., 80 kbit/s)
 Save/resume current playing and position.
 Optionally hide music from other players (.nomedia)
@@ -34,6 +34,7 @@ DONE IN ANDROID 1.8
 -------------------
 Add shadow to launch icon.
 Don't show coverart in DownloadActivity if currentPlaying == null.
+MediaButtonIntentReceiver should do startService(Intent)
 
 DONE IN 4.1
 -------------

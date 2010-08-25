@@ -23,9 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.KeyEvent;
-import net.sourceforge.subsonic.androidapp.domain.PlayerState;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
-import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 
 /**
@@ -37,53 +34,15 @@ public class MediaButtonIntentReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        handleKeyEvent((KeyEvent) intent.getExtras().get(Intent.EXTRA_KEY_EVENT));
-//        if (isOrderedBroadcast()) {
-//            abortBroadcast();
-//        }
-    }
-
-    private void handleKeyEvent(KeyEvent event) {
+        KeyEvent event = (KeyEvent) intent.getExtras().get(Intent.EXTRA_KEY_EVENT);
         Log.i(TAG, "Got MEDIA_BUTTON key event: " + event);
-        if (event == null || event.getAction() != KeyEvent.ACTION_DOWN || event.getRepeatCount() > 0) {
-            return;
-        }
 
-        DownloadService service = DownloadServiceImpl.getInstance();
-        if (service == null) {
-            return;
-        }
+        Intent serviceIntent = new Intent(context, DownloadServiceImpl.class);
+        serviceIntent.putExtra(Intent.EXTRA_KEY_EVENT, event);
+        context.startService(serviceIntent);
 
-        PlayerState state = service.getPlayerState();
-        switch (event.getKeyCode()) {
-            case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
-            case KeyEvent.KEYCODE_HEADSETHOOK:
-                if (state == PAUSED || state == COMPLETED) {
-                    service.start();
-                } else if (state == STOPPED || state == IDLE) {
-                    int current = service.getCurrentPlayingIndex();
-                    if (current == -1) {
-                        service.play(0);
-                    } else {
-                        service.play(current);
-                    }
-                } else if (state == STARTED) {
-                    service.pause();
-                }
-
-                break;
-            case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
-                service.previous();
-                break;
-            case KeyEvent.KEYCODE_MEDIA_NEXT:
-                if (service.getCurrentPlayingIndex() < service.size() - 1) {
-                    service.next();
-                }
-                break;
-            case KeyEvent.KEYCODE_MEDIA_STOP:
-                service.reset();
-                break;
-            default:
+        if (isOrderedBroadcast()) {
+            abortBroadcast();
         }
     }
 }

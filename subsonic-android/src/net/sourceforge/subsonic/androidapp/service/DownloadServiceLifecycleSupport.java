@@ -26,8 +26,12 @@ import android.media.AudioManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.os.Bundle;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.STARTED;
 import net.sourceforge.subsonic.androidapp.util.CacheCleaner;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Util;
@@ -49,7 +53,6 @@ public class DownloadServiceLifecycleSupport {
     private final DownloadServiceImpl downloadService;
     private ScheduledExecutorService executorService;
     private BroadcastReceiver headsetEventReceiver;
-    private BroadcastReceiver mediaButtonEventReceiver;
     private PhoneStateListener phoneStateListener;
 
     public DownloadServiceLifecycleSupport(DownloadServiceImpl downloadService) {
@@ -98,12 +101,22 @@ public class DownloadServiceLifecycleSupport {
         deserializeDownloadQueue();
     }
 
+    public void onStart(Intent intent) {
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            KeyEvent event = (KeyEvent) extras.get(Intent.EXTRA_KEY_EVENT);
+            if (event != null) {
+                handleKeyEvent(event);
+            }
+        }
+    }
+
     public void onDestroy() {
         executorService.shutdown();
         serializeDownloadQueue();
         downloadService.clear(false);
         downloadService.unregisterReceiver(headsetEventReceiver);
-        Util.unregisterMediaButtonEventReceiver(downloadService);
+//        Util.unregisterMediaButtonEventReceiver(downloadService);
 
         TelephonyManager telephonyManager = (TelephonyManager) downloadService.getSystemService(Context.TELEPHONY_SERVICE);
         telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
@@ -123,6 +136,43 @@ public class DownloadServiceLifecycleSupport {
             return;
         }
         downloadService.download(songs, false, false);
+    }
+
+    private void handleKeyEvent(KeyEvent event) {
+        if (event.getAction() != KeyEvent.ACTION_DOWN || event.getRepeatCount() > 0) {
+            return;
+        }
+        PlayerState state = downloadService.getPlayerState();
+        switch (event.getKeyCode()) {
+            case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
+            case KeyEvent.KEYCODE_HEADSETHOOK:
+                if (state == PAUSED || state == COMPLETED) {
+                    downloadService.start();
+                } else if (state == STOPPED || state == IDLE) {
+                    int current = downloadService.getCurrentPlayingIndex();
+                    if (current == -1) {
+                        downloadService.play(0);
+                    } else {
+                        downloadService.play(current);
+                    }
+                } else if (state == STARTED) {
+                    downloadService.pause();
+                }
+
+                break;
+            case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
+                downloadService.previous();
+                break;
+            case KeyEvent.KEYCODE_MEDIA_NEXT:
+                if (downloadService.getCurrentPlayingIndex() < downloadService.size() - 1) {
+                    downloadService.next();
+                }
+                break;
+            case KeyEvent.KEYCODE_MEDIA_STOP:
+                downloadService.reset();
+                break;
+            default:
+        }
     }
 
     /**
