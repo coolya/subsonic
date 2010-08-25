@@ -64,7 +64,7 @@
                  a:label="Subsonic Download Service"/>
 
         <receiver a:name="net.sourceforge.subsonic.androidapp.receiver.MediaButtonIntentReceiver">
-            <intent-filter>
+            <intent-filter a:priority="999">
                 <action a:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
