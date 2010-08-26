@@ -35,6 +35,7 @@ DONE IN ANDROID 1.8
 Add shadow to launch icon.
 Don't show coverart in DownloadActivity if currentPlaying == null.
 MediaButtonIntentReceiver should do startService(Intent)
+Remember current song when restarting app.
 
 DONE IN 4.1
 -------------
@@ -42,15 +43,14 @@ Servlet.service() for servlet dwr-invoker threw exception java.lang.NoClassDefFo
 
 TODO IN 4.1
 -----------------
+Exclude dot files in cover art search.
+  https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce
 
 Deprecate current cover art method.  Make new which takes song/album ID.
 Add trialExpires to REST API.
 Test getUser/deleteUser
 Change font in logo?
 JSON support in REST API?
-Upgrade to 4.1.beta1
-Exclude dot files in cover art search.
-  https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce
 Add "append" parameter to createPlaylist REST method.
 
 Funtonia integration
