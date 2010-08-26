@@ -14,6 +14,7 @@
                 a:src="@drawable/main_header"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
+                a:layout_gravity="center_vertical"
                 a:paddingLeft ="10dip"
                 a:paddingTop="10dip"
                 a:paddingBottom="8dip"/>
@@ -56,7 +57,7 @@
     <View a:id="@+id/main_dummy"
           a:layout_width="0dip"
           a:layout_height="0dip"/>
-    
+
     <include layout="@layout/button_bar"/>
 
 </LinearLayout>
