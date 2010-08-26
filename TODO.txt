@@ -14,14 +14,10 @@ x How to enable Offline mode?
 x Remove server settings, lock server url.
 x Find a way to override server url for testing purposes
   Remove incomplete Chinese translations?
-  New authentication scheme.
-  New "Help" page.
-  New icons.
+x New authentication scheme.
+x New "Help" page.
+x New icons.
   Handle wrong credentials. Allow user to sign in again.
-  Add manufacturer=Google&model=Nexus+One
+x Add manufacturer=Google&model=Nexus+One
   Add nonce?
-  Uses reflection to get the MANUFACTURER.
-
-ons 11 aug - 8t
-tor 12 aug - 8t
-
+x Use reflection to get the MANUFACTURER.
