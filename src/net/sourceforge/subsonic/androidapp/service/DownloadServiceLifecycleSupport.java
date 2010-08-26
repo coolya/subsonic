@@ -18,6 +18,13 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -36,19 +43,13 @@ import net.sourceforge.subsonic.androidapp.util.CacheCleaner;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 /**
  * @author Sindre Mehus
  */
 public class DownloadServiceLifecycleSupport {
 
     private static final String TAG = DownloadServiceLifecycleSupport.class.getSimpleName();
-    private static final String FILENAME_DOWNLOADS_SER = "downloads.ser";
+    private static final String FILENAME_DOWNLOADS_SER = "downloadstate.ser";
 
     private final DownloadServiceImpl downloadService;
     private ScheduledExecutorService executorService;
@@ -123,19 +124,25 @@ public class DownloadServiceLifecycleSupport {
     }
 
     public void serializeDownloadQueue() {
-        List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>();
+        State state = new State();
         for (DownloadFile downloadFile : downloadService.getDownloads()) {
-            songs.add(downloadFile.getSong());
+            state.songs.add(downloadFile.getSong());
         }
-        FileUtil.serialize(downloadService, songs, FILENAME_DOWNLOADS_SER);
+        state.currentPlayingIndex = downloadService.getCurrentPlayingIndex();
+        state.currentPlayingPosition = downloadService.getPlayerPosition();
+
+        FileUtil.serialize(downloadService, state, FILENAME_DOWNLOADS_SER);
     }
 
     private void deserializeDownloadQueue() {
-        List<MusicDirectory.Entry> songs = FileUtil.deserialize(downloadService, FILENAME_DOWNLOADS_SER);
-        if (songs == null) {
+       State state = FileUtil.deserialize(downloadService, FILENAME_DOWNLOADS_SER);
+        if (state == null) {
             return;
         }
-        downloadService.download(songs, false, false);
+        downloadService.download(state.songs, false, false);
+        if (state.currentPlayingIndex != -1) {
+            downloadService.play(state.currentPlayingIndex, false);
+        }
     }
 
     private void handleKeyEvent(KeyEvent event) {
@@ -213,4 +220,10 @@ public class DownloadServiceLifecycleSupport {
         }
     }
 
+
+    private static class State implements Serializable {
+        private List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>();
+        private int currentPlayingIndex;
+        private int currentPlayingPosition;
+    }
 }
