@@ -147,7 +147,7 @@
         <ListPreference
                 a:title="@string/settings.preload"
                 a:key="preloadCount"
-                a:defaultValue="-1"
+                a:defaultValue="3"
                 a:entryValues="@array/preloadCountValues"
                 a:entries="@array/preloadCountNames"/>
 
