@@ -18,6 +18,13 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -26,17 +33,15 @@ import android.media.AudioManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.os.Bundle;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.STARTED;
 import net.sourceforge.subsonic.androidapp.util.CacheCleaner;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Util;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Sindre Mehus
@@ -44,12 +49,11 @@ import java.util.concurrent.TimeUnit;
 public class DownloadServiceLifecycleSupport {
 
     private static final String TAG = DownloadServiceLifecycleSupport.class.getSimpleName();
-    private static final String FILENAME_DOWNLOADS_SER = "downloads.ser";
+    private static final String FILENAME_DOWNLOADS_SER = "downloadstate.ser";
 
     private final DownloadServiceImpl downloadService;
     private ScheduledExecutorService executorService;
     private BroadcastReceiver headsetEventReceiver;
-    private BroadcastReceiver mediaButtonEventReceiver;
     private PhoneStateListener phoneStateListener;
 
     public DownloadServiceLifecycleSupport(DownloadServiceImpl downloadService) {
@@ -98,31 +102,84 @@ public class DownloadServiceLifecycleSupport {
         deserializeDownloadQueue();
     }
 
+    public void onStart(Intent intent) {
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            KeyEvent event = (KeyEvent) extras.get(Intent.EXTRA_KEY_EVENT);
+            if (event != null) {
+                handleKeyEvent(event);
+            }
+        }
+    }
+
     public void onDestroy() {
         executorService.shutdown();
         serializeDownloadQueue();
         downloadService.clear(false);
         downloadService.unregisterReceiver(headsetEventReceiver);
-        Util.unregisterMediaButtonEventReceiver(downloadService);
+//        Util.unregisterMediaButtonEventReceiver(downloadService);
 
         TelephonyManager telephonyManager = (TelephonyManager) downloadService.getSystemService(Context.TELEPHONY_SERVICE);
         telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
     }
 
     public void serializeDownloadQueue() {
-        List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>();
+        State state = new State();
         for (DownloadFile downloadFile : downloadService.getDownloads()) {
-            songs.add(downloadFile.getSong());
+            state.songs.add(downloadFile.getSong());
         }
-        FileUtil.serialize(downloadService, songs, FILENAME_DOWNLOADS_SER);
+        state.currentPlayingIndex = downloadService.getCurrentPlayingIndex();
+        state.currentPlayingPosition = downloadService.getPlayerPosition();
+
+        FileUtil.serialize(downloadService, state, FILENAME_DOWNLOADS_SER);
     }
 
     private void deserializeDownloadQueue() {
-        List<MusicDirectory.Entry> songs = FileUtil.deserialize(downloadService, FILENAME_DOWNLOADS_SER);
-        if (songs == null) {
+       State state = FileUtil.deserialize(downloadService, FILENAME_DOWNLOADS_SER);
+        if (state == null) {
             return;
         }
-        downloadService.download(songs, false, false);
+        downloadService.download(state.songs, false, false);
+        if (state.currentPlayingIndex != -1) {
+            downloadService.play(state.currentPlayingIndex, false);
+        }
+    }
+
+    private void handleKeyEvent(KeyEvent event) {
+        if (event.getAction() != KeyEvent.ACTION_DOWN || event.getRepeatCount() > 0) {
+            return;
+        }
+        PlayerState state = downloadService.getPlayerState();
+        switch (event.getKeyCode()) {
+            case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
+            case KeyEvent.KEYCODE_HEADSETHOOK:
+                if (state == PAUSED || state == COMPLETED) {
+                    downloadService.start();
+                } else if (state == STOPPED || state == IDLE) {
+                    int current = downloadService.getCurrentPlayingIndex();
+                    if (current == -1) {
+                        downloadService.play(0);
+                    } else {
+                        downloadService.play(current);
+                    }
+                } else if (state == STARTED) {
+                    downloadService.pause();
+                }
+
+                break;
+            case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
+                downloadService.previous();
+                break;
+            case KeyEvent.KEYCODE_MEDIA_NEXT:
+                if (downloadService.getCurrentPlayingIndex() < downloadService.size() - 1) {
+                    downloadService.next();
+                }
+                break;
+            case KeyEvent.KEYCODE_MEDIA_STOP:
+                downloadService.reset();
+                break;
+            default:
+        }
     }
 
     /**
@@ -163,4 +220,10 @@ public class DownloadServiceLifecycleSupport {
         }
     }
 
+
+    private static class State implements Serializable {
+        private List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>();
+        private int currentPlayingIndex;
+        private int currentPlayingPosition;
+    }
 }

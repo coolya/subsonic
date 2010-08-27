@@ -36,7 +36,6 @@ import android.util.Log;
 import net.sourceforge.subsonic.u1m.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
-import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.ShufflePlayBuffer;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
@@ -71,7 +70,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     @Override
     public void onCreate() {
         super.onCreate();
-        lifecycleSupport.onCreate();
 
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setWakeMode(this, PowerManager.PARTIAL_WAKE_LOCK);
@@ -84,6 +82,13 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             }
         });
         instance = this;
+        lifecycleSupport.onCreate();
+    }
+
+    @Override
+    public void onStart(Intent intent, int startId) {
+        super.onStart(intent, startId);
+        lifecycleSupport.onStart(intent);
     }
 
     @Override
@@ -181,7 +186,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         if (currentDownloading != null) {
             currentDownloading.cancelDownload();
         }
-        setCurrentPlaying(null);
+        setCurrentPlaying(null, false);
 
         if (serialize) {
             lifecycleSupport.serializeDownloadQueue();
@@ -195,7 +200,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
         if (downloadFile == currentPlaying) {
             reset();
-            setCurrentPlaying(null);
+            setCurrentPlaying(null, false);
         }
         downloadList.remove(downloadFile);
         revision++;
@@ -209,10 +214,10 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
     }
 
-    private synchronized void setCurrentPlaying(DownloadFile currentPlaying) {
+    private synchronized void setCurrentPlaying(DownloadFile currentPlaying, boolean showNotification) {
         this.currentPlaying = currentPlaying;
 
-        if (currentPlaying != null) {
+        if (currentPlaying != null && showNotification) {
             Util.showPlayingNotification(this, handler, currentPlaying.getSong());
         } else {
             Util.hidePlayingNotification(this, handler);
@@ -246,13 +251,19 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     @Override
     public synchronized void play(int index) {
+        play(index, true);
+    }
+
+    synchronized void play(int index, boolean start) {
         if (index < 0 || index >= size()) {
             reset();
-            setCurrentPlaying(null);
+            setCurrentPlaying(null, false);
         } else {
-            setCurrentPlaying(downloadList.get(index));
+            setCurrentPlaying(downloadList.get(index), start);
             checkDownloads();
-            bufferAndPlay();
+            if (start) {
+                bufferAndPlay();
+            }
         }
     }
 
