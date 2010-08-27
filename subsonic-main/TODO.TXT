@@ -6,7 +6,6 @@ TODO IN ANDROID 1.8
 -------------------
 Save coverart when caching music. (and reuse it rather than doing http)
 Support shuffle play in online mode. (emulate rest method)
-Change default preload to 3.
 Add more bitrate options (e.g., 80 kbit/s)
 Save/resume current playing and position.
 Optionally hide music from other players (.nomedia)
@@ -39,6 +38,7 @@ Don't show coverart in DownloadActivity if currentPlaying == null.
 MediaButtonIntentReceiver should do startService(Intent)
 Remember current song when restarting app.
 Use wakelock when switching songs.
+Change default preload to 3.
 
 DONE IN 4.1
 -------------
