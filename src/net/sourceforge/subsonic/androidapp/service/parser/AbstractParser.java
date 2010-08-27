@@ -54,11 +54,14 @@ public abstract class AbstractParser {
             case 30:
                 message = context.getResources().getString(R.string.parser_upgrade_server);
                 break;
+            case 40:
+                message = context.getResources().getString(R.string.parser_not_authenticated);
+                break;
             default:
                 message = get("message");
                 break;
         }
-        throw new Exception(message);
+        throw new SubsonicRESTException(code, message);
     }
 
     protected void updateProgress(ProgressListener progressListener, int messageId) {
