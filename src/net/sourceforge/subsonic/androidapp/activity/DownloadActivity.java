@@ -457,7 +457,7 @@ public class DownloadActivity extends SubsonicTabActivity {
             imageLoader.loadImage(albumArtImageView, song, true);
         } else {
             albumArtTextView.setText(null);
-            imageLoader.loadImage(albumArtImageView, (String) null, true);
+            imageLoader.loadImage(albumArtImageView, null, true);
         }
     }
 
