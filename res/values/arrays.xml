@@ -56,7 +56,9 @@
     <string-array name="maxBitrateValues">
         <item>32</item>
         <item>64</item>
+        <item>80</item>
         <item>96</item>
+        <item>112</item>
         <item>128</item>
         <item>160</item>
         <item>320</item>
@@ -66,7 +68,9 @@
     <string-array name="maxBitrateNames">
         <item>@string/settings.max_bitrate_32</item>
         <item>@string/settings.max_bitrate_64</item>
+        <item>@string/settings.max_bitrate_80</item>
         <item>@string/settings.max_bitrate_96</item>
+        <item>@string/settings.max_bitrate_112</item>
         <item>@string/settings.max_bitrate_128</item>
         <item>@string/settings.max_bitrate_160</item>
         <item>@string/settings.max_bitrate_320</item>
