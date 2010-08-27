@@ -4,6 +4,7 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.8
 -------------------
+Support self-signed certs (API level 8) SSLCertificateSocketFactory.getInsecure()
 Change default preload to 3.
 Add more bitrate options (e.g., 80 kbit/s)
 Save/resume current playing and position.
@@ -19,7 +20,6 @@ Extend playlist menu (Clear, Save...)
 Use naming scheme foo.partial.mp3?
 Skipping broken when downloading file.
 Crashes if plugging in usb while downloading.
-https support, SSLCertificateSocketFactory.getInsecure() CAN'T USE; API LEVEL 8
 Only retry if network error.
 Select music folder in server settings. (Including "All").
 Use combination of progress bar and slide bar.
