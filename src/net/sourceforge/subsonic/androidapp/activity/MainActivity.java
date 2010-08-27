@@ -247,46 +247,7 @@ public class MainActivity extends SubsonicTabActivity {
         boolean isAuthenticated = Util.trimToNull(username) != null;
 
         if (!isAuthenticated) {
-            new AlertDialog.Builder(this)
-                    .setIcon(android.R.drawable.ic_dialog_info)
-                    .setTitle(R.string.main_auth_title)
-                    .setMessage(R.string.main_auth_text)
-                    .setCancelable(true)
-                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialog) {
-                            finish();
-                        }
-                    })
-                    .setPositiveButton(R.string.main_signin, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            dialog.dismiss();
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-
-                            String url = Constants.U1M_AUTH_URL;
-                            String manufacturer = Util.urlEncode(Util.getManufacturer());
-                            String model = Util.urlEncode(Build.MODEL);
-
-                            if (manufacturer != null) {
-                                url += "&manufacturer=" + manufacturer;
-                            }
-
-                            if (model != null) {
-                                url += "&model=" + model;
-                            }
-
-                            intent.setData(Uri.parse(url));
-                            startActivity(intent);
-                        }
-                    })
-                    .setNegativeButton(R.string.common_cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            finish();
-                        }
-                    })
-                    .show();
+            Util.requestAuthentication(this);
         }
     }
 

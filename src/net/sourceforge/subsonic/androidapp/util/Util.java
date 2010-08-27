@@ -37,6 +37,7 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
@@ -678,5 +679,48 @@ public final class Util {
         } catch (Throwable x) {
             return null;
         }
+    }
+
+    public static void requestAuthentication(final Activity activity) {
+        new AlertDialog.Builder(activity)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setTitle(R.string.main_auth_title)
+                .setMessage(R.string.main_auth_text)
+                .setCancelable(true)
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        activity.finish();
+                    }
+                })
+                .setPositiveButton(R.string.main_signin, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+
+                        String url = Constants.U1M_AUTH_URL;
+                        String manufacturer = Util.urlEncode(Util.getManufacturer());
+                        String model = Util.urlEncode(Build.MODEL);
+
+                        if (manufacturer != null) {
+                            url += "&manufacturer=" + manufacturer;
+                        }
+
+                        if (model != null) {
+                            url += "&model=" + model;
+                        }
+
+                        intent.setData(Uri.parse(url));
+                        activity.startActivity(intent);
+                    }
+                })
+                .setNegativeButton(R.string.common_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        activity.finish();
+                    }
+                })
+                .show();
     }
 }

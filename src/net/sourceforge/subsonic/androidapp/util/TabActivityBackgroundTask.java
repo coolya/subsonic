@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.androidapp.util;
 
 import net.sourceforge.subsonic.androidapp.activity.SubsonicTabActivity;
+import net.sourceforge.subsonic.androidapp.service.parser.SubsonicRESTException;
 
 /**
  * @author Sindre Mehus
@@ -53,6 +54,15 @@ public abstract class TabActivityBackgroundTask<T> extends BackgroundTask<T> {
 
     private boolean isCancelled() {
         return tabActivity.isDestroyed();
+    }
+
+    @Override
+    protected void error(Throwable error) {
+        if (error instanceof SubsonicRESTException && ((SubsonicRESTException) error).getCode() == 40) {
+            Util.requestAuthentication(tabActivity);
+        } else {
+            super.error(error);
+        }
     }
 
     @Override
