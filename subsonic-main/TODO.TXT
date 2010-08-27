@@ -5,13 +5,16 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 TODO IN ANDROID 1.8
 -------------------
 Save coverart when caching music. (and reuse it rather than doing http)
+  Remove logic from MediaStoreService.
+  Go through caching logic.
+  File load/save should be done in CachedMusicService.
+Fix crashes
 Support shuffle play in online mode. (emulate rest method)
 Save/resume current playing and position.
 Optionally hide music from other players (.nomedia)
 Long-click download
 Support self-signed certs (API level 8) SSLCertificateSocketFactory.getInsecure()
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2651&start=105
-Fix crash
 ogg support
   https://mail.google.com/a/activeobjects.no/?tab=cm#inbox/129f7959b2353a3d
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=10101
