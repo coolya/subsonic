@@ -11,19 +11,17 @@
     <EditTextPreference
             a:key="serverUrl1"
             a:title="@string/settings.server_address"
-            a:defaultValue="http://ubuntu.com/"
+            a:defaultValue="https://streaming.one.ubuntu.com/"
             a:inputType="textUri"/>
 
     <EditTextPreference
             a:key="username1"
-            a:title="@string/settings.server_username"
-            a:defaultValue="foo"/>
+            a:title="@string/settings.server_username"/>
 
     <EditTextPreference
             a:key="password1"
             a:title="@string/settings.server_password"
             a:password="true"
-            a:defaultValue="bar"
             a:summary="****"/>
 
     <Preference
