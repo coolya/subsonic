@@ -4,6 +4,12 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.8
 -------------------
+Detect Bluetooth disconnect
+  android.bluetooth.intent.action.HEADSET_STATE_CHANGED
+  android.bluetooth.intent.HEADSET_STATE
+  android.bluetooth.headset.action.STATE_CHANGED
+Test "Save on phone" in offline mode.
+Bookmark location in long files.
 Save coverart when caching music. (and reuse it rather than doing http)
   Remove logic from MediaStoreService.
   Go through caching logic.
@@ -51,13 +57,14 @@ TODO IN 4.1
 -----------------
 Exclude dot files in cover art search.
   https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce
-
+Change icons all around.
 Deprecate current cover art method.  Make new which takes song/album ID.
 Add trialExpires to REST API.
 Test getUser/deleteUser
 Change font in logo?
 JSON support in REST API?
 Add "append" parameter to createPlaylist REST method.
+Modify port number and memory on Mac.
 
 Funtonia integration
 REST API for Now playing
