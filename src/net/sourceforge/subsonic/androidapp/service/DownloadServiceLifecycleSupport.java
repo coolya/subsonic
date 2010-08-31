@@ -34,7 +34,6 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.os.Bundle;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
@@ -103,9 +102,8 @@ public class DownloadServiceLifecycleSupport {
     }
 
     public void onStart(Intent intent) {
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            KeyEvent event = (KeyEvent) extras.get(Intent.EXTRA_KEY_EVENT);
+        if (intent != null && intent.getExtras() != null) {
+            KeyEvent event = (KeyEvent) intent.getExtras().get(Intent.EXTRA_KEY_EVENT);
             if (event != null) {
                 handleKeyEvent(event);
             }
