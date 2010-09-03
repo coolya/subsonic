@@ -52,6 +52,7 @@ Change default preload to 3.
 DONE IN 4.1
 -------------
 Servlet.service() for servlet dwr-invoker threw exception java.lang.NoClassDefFoundError: com/yahoo/platform/yui/compressor/JavaScriptCompressor
+Updated Danish translation, courtesy of Morten Hartvich.
 
 TODO IN 4.1
 -----------------
