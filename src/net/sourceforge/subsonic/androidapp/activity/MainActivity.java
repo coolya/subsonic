@@ -99,7 +99,7 @@ public class MainActivity extends SubsonicTabActivity {
             views.addAll(Arrays.asList(serverButton, settingsButton));
         } else {
             views.addAll(Arrays.asList(serverButton, shuffleButton, settingsButton, albumsTitle,
-                    albumsNewestButton, albumsRandomButton, albumsHighestButton, albumsRecentButton, albumsFrequentButton));
+                    albumsNewestButton, albumsRandomButton));
         }
 
         if (Constants.DEBUG) {
