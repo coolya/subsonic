@@ -56,6 +56,7 @@ Updated Danish translation, courtesy of Morten Hartvich.
 
 TODO IN 4.1
 -----------------
+Discogs broken?
 Exclude dot files in cover art search.
   https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce
 Change icons all around.
