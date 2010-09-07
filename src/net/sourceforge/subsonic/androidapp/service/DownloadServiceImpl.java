@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -66,6 +67,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private long revision;
     private static DownloadService instance;
     private String suggestedPlaylistName;
+    private PowerManager.WakeLock wakeLock;
 
     @Override
     public void onCreate() {
@@ -81,6 +83,11 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                 return false;
             }
         });
+
+        PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
+        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, this.getClass().getName());
+        wakeLock.setReferenceCounted(false);
+
         instance = this;
         lifecycleSupport.onCreate();
     }
@@ -414,6 +421,12 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
+
+                    // Acquire a temporary wakelock, since when we return from
+                    // this callback the MediaPlayer will release its wakelock
+                    // and allow the device to go to sleep.
+                    wakeLock.acquire(60000);
+
                     setPlayerState(COMPLETED);
 
                     // If COMPLETED and not playing partial file, we are *really" finished

@@ -66,24 +66,21 @@ public class ImageLoader implements Runnable {
     }
 
     public void loadImage(View view, MusicDirectory.Entry entry, boolean large) {
-        loadImage(view, entry.getCoverArt(), large);
-    }
 
-    public void loadImage(View view, String coverArtId, boolean large) {
-        if (coverArtId == null) {
+        if (entry == null) {
             setUnknownImage(view, large);
             return;
         }
 
         int size = large ? imageSizeLarge : imageSizeDefault;
-        Drawable drawable = cache.get(getKey(coverArtId, size));
+        Drawable drawable = cache.get(getKey(entry.getCoverArt(), size));
         if (drawable != null) {
             setImage(view, drawable);
             return;
         }
 
         setUnknownImage(view, large);
-        queue.offer(new Task(view, coverArtId, size));
+        queue.offer(new Task(view, entry, size));
     }
 
     private String getKey(String coverArtId, int size) {
@@ -136,13 +133,13 @@ public class ImageLoader implements Runnable {
 
     private class Task {
         private final View view;
-        private final String coverArtId;
+        private final MusicDirectory.Entry entry;
         private final Handler handler;
         private final int size;
 
-        public Task(View view, String coverArtId, int size) {
+        public Task(View view, MusicDirectory.Entry entry, int size) {
             this.view = view;
-            this.coverArtId = coverArtId;
+            this.entry = entry;
             this.size = size;
             handler = new Handler();
         }
@@ -150,9 +147,9 @@ public class ImageLoader implements Runnable {
         public void execute() {
             MusicService musicService = MusicServiceFactory.getMusicService(view.getContext());
             try {
-                Bitmap bitmap = musicService.getCoverArt(view.getContext(), coverArtId, size, null);
+                Bitmap bitmap = musicService.getCoverArt(view.getContext(), entry.getCoverArt(), size, null);
                 final Drawable drawable = Util.createDrawableFromBitmap(context, bitmap);
-                cache.put(getKey(coverArtId, size), drawable);
+                cache.put(getKey(entry.getCoverArt(), size), drawable);
 
                 handler.post(new Runnable() {
                     @Override
