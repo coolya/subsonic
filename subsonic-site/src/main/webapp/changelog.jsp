@@ -16,6 +16,12 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="4.1"><h2 class="div">Subsonic 4.1 - Sep 10, 2010</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>Updated Danish translation, courtesy of Morten Hartvich.</li>
+    <li><span class="bugid">Bugfix: </span>Exclude dot files in cover art search.</li>
+</ul>
+
 <a name="4.1.beta1"><h2 class="div">Subsonic 4.1.beta1 - Aug 21, 2010</h2></a>
 <ul>
     <li><span class="bugid">New: </span>Support automatic port forwarding on Airport Extreme/Express.</li>
@@ -734,6 +740,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#4.1">Subsonic 4.1</a></li>
             <li><a href="#4.1.beta1">Subsonic 4.1.beta1</a></li>
             <li><a href="#4.0.1">Subsonic 4.0.1</a></li>
             <li><a href="#4.0">Subsonic 4.0</a></li>
