@@ -467,7 +467,8 @@ Check that correct local version is displayed.
 Commit
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
   rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.1/
-  rsync -avP -e ssh subsonic-assembly/target/subsonic* subsonic-installer-mac/target/subsonic*.pkg subsonic-installer-debian/target/subsonic*.deb subsonic-installer-rpm/target/subsonic*.rpm sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.1/
+  rsync -avP -e ssh subsonic-assembly/target/subsonic* sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.1/
+  rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg subsonic-installer-debian/target/subsonic*.deb subsonic-installer-rpm/target/subsonic*.rpm sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.1/
 
 Modify FRS properties
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
@@ -476,7 +477,7 @@ Upload site (OLD):
  rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
 
 Upload site (NEW): CHANGE DATE BELOW
-  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-08-22/pages/
+  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-09-10/pages/
   rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps/pages/
 
 svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-4.1 -m "Tagging 4.1."
@@ -509,7 +510,6 @@ Update version.html and MultiController
 cd subsonic-android
 ant clean
 ant release
-mv bin/Subsonic-release.apk bin/subsonic.apk
 ### keytool -genkey -v -keystore subsonic.keystore -alias subsonic -keyalg RSA -validity 100000 -dname "CN=Active Objects"
 ### jarsigner -verbose -keystore subsonic.keystore -signedjar bin/subsonic.apk bin/SubsonicActivity-unsigned.apk subsonic
 Upload to market
@@ -523,7 +523,7 @@ svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-an
 Create new directory in FRS
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-android/bin/subsonic.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.7/subsonic-1.7.apk
+  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.7.1/subsonic-1.7.1.apk
 
 
 HOW TO RELEASE TRANSCODING PACK
