@@ -53,12 +53,12 @@ DONE IN 4.1
 -------------
 Servlet.service() for servlet dwr-invoker threw exception java.lang.NoClassDefFoundError: com/yahoo/platform/yui/compressor/JavaScriptCompressor
 Updated Danish translation, courtesy of Morten Hartvich.
+Exclude dot files in cover art search.
+  https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce
 
 TODO IN 4.1
 -----------------
 Discogs broken?
-Exclude dot files in cover art search.
-  https://mail.google.com/a/activeobjects.no/#search/sam+doshi/12a1a9ebc97d98ce
 Change icons all around.
 Deprecate current cover art method.  Make new which takes song/album ID.
 Add trialExpires to REST API.

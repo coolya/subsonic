@@ -197,7 +197,7 @@ public class MusicFileService {
     private File getBestCoverArt(File[] candidates) {
         for (String mask : settingsService.getCoverArtMaskAsArray()) {
             for (File candidate : candidates) {
-                if (candidate.getName().toUpperCase().endsWith(mask.toUpperCase())) {
+                if (candidate.getName().toUpperCase().endsWith(mask.toUpperCase()) && !candidate.getName().startsWith(".")) {
                     return candidate;
                 }
             }
