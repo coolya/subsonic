@@ -4,6 +4,8 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.8
 -------------------
+New ImageLoader
+  http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html
 Detect Bluetooth disconnect
   android.bluetooth.intent.action.HEADSET_STATE_CHANGED
   android.bluetooth.intent.HEADSET_STATE
@@ -39,15 +41,6 @@ Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Colors: http://www.androidtapp.com/opentable/
 
-DONE IN ANDROID 1.8
--------------------
-Added more bitrate options (80 and 112 kbit/s)
-Add shadow to launch icon.
-Don't show coverart in DownloadActivity if currentPlaying == null.
-MediaButtonIntentReceiver should do startService(Intent)
-Remember current song when restarting app.
-Use wakelock when switching songs.
-Change default preload to 3.
 
 TODO IN 4.1
 -----------------
@@ -515,11 +508,12 @@ ant release
 Upload to market
 http://market.android.com/publish/Home
 Update
+    http://appoke.com
     http://appslib.com/developers/index.html
     https://myapps.developer.motorola.com/
     https://slideme.org/application/subsonic
     http://www.camangimarket.com/index.html
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.7 -m "Tagging Android 1.7"
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.7.1 -m "Tagging Android 1.7.1"
 Create new directory in FRS
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
