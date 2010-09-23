@@ -4,6 +4,7 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.8
 -------------------
+Improve behaviour when SD card is mounted.
 New ImageLoader
   http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html
 Detect Bluetooth disconnect
@@ -17,7 +18,7 @@ Save coverart when caching music. (and reuse it rather than doing http)
   Go through caching logic.
   File load/save should be done in CachedMusicService.
 Fix crashes
-Support shuffle play in online mode. (emulate rest method)
+Support shuffle play in offline mode. (emulate rest method)
 Save/resume current playing and position.
 Optionally hide music from other players (.nomedia)
 Long-click download
@@ -44,6 +45,8 @@ Colors: http://www.androidtapp.com/opentable/
 
 TODO IN 4.1
 -----------------
+Add one-liner intro in web page, a la http://www.rogueamoeba.com/nicecast/
+  o No monthly fees, no uploading.
 Discogs broken?
 Change icons all around.
 Deprecate current cover art method.  Make new which takes song/album ID.
@@ -483,13 +486,13 @@ Upgrade Subsonic backend: CHANGE DATE BELOW
   Backup backend database.
   cd subsonic-backend
   mvn clean install
-  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-08-22/ROOT.war
-  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-08-22/demo.war
+  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-09-10/ROOT.war
+  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-09-10/demo.war
   ssh sindremehus@subsonic.org
   su
   /etc/init.d/tomcat55 stop
   rm webapps
-  ln -s webapps-2010-08-22 webapps
+  ln -s webapps-2010-09-10 webapps
   rm -rf work
   rm logs/*
   /etc/init.d/tomcat55 start

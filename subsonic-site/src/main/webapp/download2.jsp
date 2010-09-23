@@ -30,6 +30,9 @@ var google_conversion_value = 0;
     </div>
 </noscript>
 
+<%--Microsoft adCenter conversion--%>
+<script type="text/javascript">if (!window.mstag) mstag = {loadTag : function(){},time : (new Date()).getTime()};</script> <script id="mstag_tops" type="text/javascript" src="//flex.atdmt.com/mstag/site/97afbb31-0ace-43b0-a06d-1d8930db1ce5/mstag.js"></script> <script type="text/javascript"> mstag.loadTag("conversion", {cp : "5050", dedup : "1"})</script> <noscript> <iframe src="//flex.atdmt.com/mstag/tag/97afbb31-0ace-43b0-a06d-1d8930db1ce5/conversion.html?cp=5050&dedup=1" frameborder="0" scrolling="no" width="1" height="1" style="visibility:hidden; display:none"> </iframe> </noscript>
+
 <script type="text/javascript">
     function redirect() {
         window.location = "http://prdownloads.sourceforge.net/subsonic/<%=request.getParameter("target")%>";
