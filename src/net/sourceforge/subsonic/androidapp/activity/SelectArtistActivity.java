@@ -27,10 +27,12 @@ import java.util.Set;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.LayoutInflater;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
+import android.widget.Button;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Artist;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
@@ -56,17 +58,35 @@ public class SelectArtistActivity extends SubsonicTabActivity implements Adapter
         artistList = (ListView) findViewById(R.id.select_artist_list);
         artistList.setOnItemClickListener(this);
 
+        View header = LayoutInflater.from(this).inflate(R.layout.select_artist_header, artistList, false);
+        artistList.addHeaderView(header);
+        Button refreshButton = (Button) header.findViewById(R.id.select_artist_refresh);
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                refresh();
+            }
+        });
+
         setTitle(Util.isOffline(this) ? R.string.music_library_label_offline : R.string.music_library_label);
 
         load();
+    }
+
+    private void refresh() {
+        finish();
+        Intent intent = new Intent(this, SelectArtistActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_REFRESH, true);
+        Util.startActivityWithoutTransition(this, intent);
     }
 
     private void load() {
         BackgroundTask<Indexes> task = new TabActivityBackgroundTask<Indexes>(this) {
             @Override
             protected Indexes doInBackground() throws Throwable {
+                boolean refresh = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_REFRESH, false);
                 MusicService musicService = MusicServiceFactory.getMusicService(SelectArtistActivity.this);
-                return musicService.getIndexes(SelectArtistActivity.this, this);
+                return musicService.getIndexes(refresh, SelectArtistActivity.this, this);
             }
 
             @Override
