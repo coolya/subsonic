@@ -67,7 +67,7 @@ public class ImageLoader implements Runnable {
 
     public void loadImage(View view, MusicDirectory.Entry entry, boolean large) {
 
-        if (entry == null) {
+        if (entry == null || entry.getCoverArt() == null) {
             setUnknownImage(view, large);
             return;
         }
