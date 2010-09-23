@@ -2,6 +2,11 @@ TODO IN BACKEND
 ---------------
 If trying to assign an expired web address used by someone else, don't show "Expired..." message.
 
+DONE IN ANDROID 1.8
+-------------------
+Added refresh button to artist list.
+Misc minor bug fixes.
+
 TODO IN ANDROID 1.8
 -------------------
 Improve behaviour when SD card is mounted.

@@ -39,7 +39,7 @@ public interface MusicService {
 
     boolean isLicenseValid(Context context, ProgressListener progressListener) throws Exception;
 
-    Indexes getIndexes(Context context, ProgressListener progressListener) throws Exception;
+    Indexes getIndexes(boolean refresh, Context context, ProgressListener progressListener) throws Exception;
 
     MusicDirectory getMusicDirectory(String id, Context context, ProgressListener progressListener) throws Exception;
 

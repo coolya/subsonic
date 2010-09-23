@@ -127,7 +127,7 @@ public class RESTMusicService implements MusicService {
         // Turn off stale checking.  Our connections break all the time anyway,
         // and it's not worth it to pay the penalty of checking every time.
         HttpConnectionParams.setStaleCheckingEnabled(params, false);
-        
+
         // Create and initialize scheme registry
         SchemeRegistry schemeRegistry = new SchemeRegistry();
         schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
@@ -161,7 +161,7 @@ public class RESTMusicService implements MusicService {
     }
 
     @Override
-    public Indexes getIndexes(Context context, ProgressListener progressListener) throws Exception {
+    public Indexes getIndexes(boolean refresh, Context context, ProgressListener progressListener) throws Exception {
         Indexes cachedIndexes = readCachedIndexes(context);
         long lastModified = cachedIndexes == null ? 0L : cachedIndexes.getLastModified();
 

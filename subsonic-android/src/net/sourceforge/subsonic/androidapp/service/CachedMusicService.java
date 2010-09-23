@@ -75,11 +75,11 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
-    public Indexes getIndexes(Context context, ProgressListener progressListener) throws Exception {
+    public Indexes getIndexes(boolean refresh, Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
-        Indexes result = cachedIndexes.get();
+        Indexes result = refresh ? null : cachedIndexes.get();
         if (result == null) {
-            result = musicService.getIndexes(context, progressListener);
+            result = musicService.getIndexes(refresh, context, progressListener);
             cachedIndexes.set(result);
         }
         return result;
