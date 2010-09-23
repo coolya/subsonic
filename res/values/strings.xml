@@ -23,7 +23,8 @@
     <string name="main.signin">Sign in</string>
 
     <string name="authconfirm.title">Successfully signed in</string>
-    <string name="authconfirm.text">Excellent! You\'re now signed in to Ubuntu One.</string>
+    <string name="authconfirm.text">Welcome to Ubuntu One Music! You will immediately see all your music, but it will take a little while
+        for the artists and albums to be scanned for the first time.</string>
 
     <string name="playlist.label">Playlists</string>
 
