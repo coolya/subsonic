@@ -124,6 +124,10 @@ public class RESTMusicService implements MusicService {
         HttpConnectionParams.setConnectionTimeout(params, SOCKET_CONNECT_TIMEOUT);
         HttpConnectionParams.setSoTimeout(params, SOCKET_READ_TIMEOUT_DEFAULT);
 
+        // Turn off stale checking.  Our connections break all the time anyway,
+        // and it's not worth it to pay the penalty of checking every time.
+        HttpConnectionParams.setStaleCheckingEnabled(params, false);
+        
         // Create and initialize scheme registry
         SchemeRegistry schemeRegistry = new SchemeRegistry();
         schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
