@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/fonts/fonts.css">
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/grid/grid.css">
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/base/base.css">
+    <%@ include file="adwords.jsp" %>
 </head>
 <body style="padding-left:5em; padding-top:1em; width:42em">
 
