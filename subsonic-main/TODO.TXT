@@ -9,6 +9,8 @@ Misc minor bug fixes.
 
 TODO IN ANDROID 1.8
 -------------------
+Skipping problem
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=15260#15260
 Improve behaviour when SD card is mounted.
 New ImageLoader
   http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html
@@ -48,8 +50,11 @@ Reuse list item views in SelectAlbumActivity?
 Colors: http://www.androidtapp.com/opentable/
 
 
-TODO IN 4.1
+TODO IN 4.2
 -----------------
+Include statically linked ffmpeg, lame from einstein2x.
+  o Update documentation
+  o Uninstaller should remove ffmpeg, lame?
 Add one-liner intro in web page, a la http://www.rogueamoeba.com/nicecast/
   o No monthly fees, no uploading.
 Discogs broken?

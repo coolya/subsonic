@@ -15,6 +15,12 @@
         <choice title="Subsonic" id="choice0" starts_selected="true" starts_enabled="true" starts_hidden="false">
             <pkgref id="net.sourceforge.subsonic.subsonic.Subsonic.pkg"/>
         </choice>
+        <choice title="ffmpeg" id="choice2" starts_selected="true" starts_enabled="true" starts_hidden="false">
+            <pkgref id="net.sourceforge.subsonic.subsonic.ffmpeg.pkg"/>
+        </choice>
+        <choice title="lame" id="choice3" starts_selected="true" starts_enabled="true" starts_hidden="false">
+            <pkgref id="net.sourceforge.subsonic.subsonic.lame.pkg"/>
+        </choice>
     </contents>
     <resources bg-scale="proportional" bg-align="bottomleft">
         <locale lang="en">
@@ -23,6 +29,8 @@
     </resources>
     <flags/>
     <item type="file">01subsonic.xml</item>
+    <item type="file">02ffmpeg.xml</item>
+    <item type="file">03lame.xml</item>
     <mod>properties.title</mod>
     <mod>properties.customizeOption</mod>
     <mod>description</mod>

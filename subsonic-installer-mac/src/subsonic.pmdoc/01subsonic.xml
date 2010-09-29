@@ -18,10 +18,10 @@
         <mod>includeRoot</mod>
         <mod>installTo.isRelativeType</mod>
         <mod>installTo.isAbsoluteType</mod>
-        <mod>version</mod>
-        <mod>parent</mod>
-        <mod>installFrom.isRelativeType</mod>
         <mod>scripts.preinstall.isRelativeType</mod>
+        <mod>parent</mod>
+        <mod>version</mod>
+        <mod>installFrom.isRelativeType</mod>
         <mod>requireAuthorization</mod>
         <mod>relocatable</mod>
         <mod>identifier</mod>
