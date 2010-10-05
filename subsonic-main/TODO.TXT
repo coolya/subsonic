@@ -11,6 +11,8 @@ TODO IN ANDROID 1.8
 -------------------
 Skipping problem
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=15260#15260
+Disk-full patch from Chad
+  https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12b7985fd3a052ac
 Improve behaviour when SD card is mounted.
 New ImageLoader
   http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html
@@ -57,6 +59,7 @@ Include statically linked ffmpeg, lame from einstein2x.
   o Uninstaller should remove ffmpeg, lame?
 Add one-liner intro in web page, a la http://www.rogueamoeba.com/nicecast/
   o No monthly fees, no uploading.
+Fix readlink (verify patch)
 Discogs broken?
 Change icons all around.
 Deprecate current cover art method.  Make new which takes song/album ID.
