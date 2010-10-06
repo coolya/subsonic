@@ -32,34 +32,5 @@
     For more information, please visit <a href="http://subsonic.org/">subsonic.org</a>
 </p>
 
-<h2 style="margin-bottom:0.1em">Where did you learn about Subsonic?</h2>
-
-<form method="post" action="http://poll.pollcode.com/va10">
-    <table style="border:0">
-        <tr style="border:0">
-            <td style="border:0"><input id="friend" type="radio" name="answer" value="1"></td>
-            <td style="border:0"><label for="friend">Friend or colleague</label></td>
-        </tr>
-        <tr style="border:0">
-            <td style="border:0"><input id="ad" type="radio" name="answer" value="2"></td>
-            <td style="border:0"><label for="ad">Advertisement</label></td>
-        </tr>
-        <tr style="border:0">
-            <td style="border:0"><input id="search" type="radio" name="answer" value="3"></td>
-            <td style="border:0"><label for="search">Search engine</label></td>
-        </tr>
-        <tr style="border:0">
-            <td style="border:0"><input id="web" type="radio" name="answer" value="4"></td>
-            <td style="border:0"><label for="web">Web site</label></td>
-        </tr>
-
-        <tr style="border:0">
-            <td colspan="2" style="border:0">
-                <input type="submit" value="Vote">&nbsp;&nbsp;<input type="submit" name="view" value="View">
-            </td>
-        </tr>
-    </table>
-</form>
-
 </body>
 </html>
