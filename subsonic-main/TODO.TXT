@@ -70,6 +70,10 @@ JSON support in REST API?
 Add "append" parameter to createPlaylist REST method.
 Modify port number and memory on Mac.
 
+DONE IN 4.2
+--------------
+Updated German translation, courtesy of deejay2302
+
 Funtonia integration
 REST API for Now playing
   https://mail.google.com/a/activeobjects.no/?tab=cm#inbox/129f7bc0659df6cf
