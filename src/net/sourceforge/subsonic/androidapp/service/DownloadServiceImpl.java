@@ -345,6 +345,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             if (playerState == IDLE || playerState == DOWNLOADING || playerState == PREPARING) {
                 return 0;
             }
+//            Log.i(TAG, "Player pos: " + mediaPlayer.getCurrentPosition() + " of " + mediaPlayer.getDuration());
             return mediaPlayer.getCurrentPosition();
         } catch (Exception x) {
             handleError(x);
@@ -400,7 +401,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private synchronized void bufferAndPlay() {
         reset();
 
-        fileSizeAtLastResume = 0;
         bufferTask = new BufferTask(currentPlaying, 0);
         bufferTask.start();
     }
@@ -451,7 +451,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                 mediaPlayer.seekTo(position);
             }
 
-            fileSizeAtLastResume = downloadFile.getPartialFile().length();
             mediaPlayer.start();
             setPlayerState(STARTED);
 
@@ -584,8 +583,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
     }
 
-    private long fileSizeAtLastResume;
-
     private class BufferTask extends CancellableTask {
 
         private static final int BUFFER_LENGTH_SECONDS = 5;
@@ -608,7 +605,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             long byteCount = Math.max(100000, bitRate * 1024 / 8 * BUFFER_LENGTH_SECONDS);
 
             // Find out how large the file should grow before resuming playback.
-            expectedFileSize = fileSizeAtLastResume + byteCount;
+            expectedFileSize = partialFile.length() + byteCount;
         }
 
         @Override
@@ -616,7 +613,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             setPlayerState(DOWNLOADING);
 
             while (!bufferComplete()) {
-                Log.i(TAG, "Buffering " + partialFile + " (" + partialFile.length() + ")");
                 Util.sleepQuietly(1000L);
                 if (isCancelled()) {
                     return;
@@ -626,7 +622,11 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
 
         private boolean bufferComplete() {
-            return downloadFile.isCompleteFileAvailable() || partialFile.length() >= expectedFileSize;
+            boolean completeFileAvailable = downloadFile.isCompleteFileAvailable();
+            long size = partialFile.length();
+
+            Log.i(TAG, "Buffering " + partialFile + " (" + size + "/" + expectedFileSize + ", " + completeFileAvailable + ")");
+            return completeFileAvailable || size >= expectedFileSize;
         }
     }
 }
