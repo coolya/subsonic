@@ -6,9 +6,11 @@ DONE IN ANDROID 1.8
 -------------------
 Added refresh button to artist list.
 Misc minor bug fixes.
+Handle voice action
 
 TODO IN ANDROID 1.8
 -------------------
+Voice search
 Skipping problem
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=15260#15260
 Problem playing "Skål" downsampled.
