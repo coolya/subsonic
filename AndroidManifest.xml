@@ -60,6 +60,14 @@
                   a:label="@string/help.label"
                   a:launchMode="singleTask"/>
 
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.PlayFromSearchActivity"
+                  a:launchMode="singleTask">
+            <intent-filter>
+                <action a:name="android.media.action.MEDIA_PLAY_FROM_SEARCH" />
+                <category a:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <service a:name="net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl"
                  a:label="Subsonic Download Service"/>
 
