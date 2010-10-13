@@ -89,7 +89,7 @@ public class SettingsService {
     private static final String KEY_LICENSE_EMAIL = "LicenseEmail";
     private static final String KEY_LICENSE_CODE = "LicenseCode";
     private static final String KEY_LICENSE_DATE = "LicenseDate";
-    private static final String KEY_DOWNSAMPLING_COMMAND = "DownsamplingCommand";
+    private static final String KEY_DOWNSAMPLING_COMMAND = "DownsamplingCommand2";
     private static final String KEY_REWRITE_URL = "RewriteUrl";
     private static final String KEY_LDAP_ENABLED = "LdapEnabled";
     private static final String KEY_LDAP_URL = "LdapUrl";
@@ -145,7 +145,7 @@ public class SettingsService {
     private static final String DEFAULT_LICENSE_EMAIL = null;
     private static final String DEFAULT_LICENSE_CODE = null;
     private static final String DEFAULT_LICENSE_DATE = null;
-    private static final String DEFAULT_DOWNSAMPLING_COMMAND = "lame -S -h -b %b %s -";
+    private static final String DEFAULT_DOWNSAMPLING_COMMAND = "lame -S -h --resample 44.1 -b %b --tt %t --ta %a --tl %l %s -";
     private static final boolean DEFAULT_REWRITE_URL = true;
     private static final boolean DEFAULT_LDAP_ENABLED = false;
     private static final String DEFAULT_LDAP_URL = "ldap://host.domain.com:389/cn=Users,dc=domain,dc=com";
@@ -166,7 +166,7 @@ public class SettingsService {
     private static final long DEFAULT_SETTINGS_CHANGED = 0L;
 
     // Array of obsolete keys.  Used to clean property file.
-    private static final List<String> OBSOLETE_KEYS = Arrays.asList("PortForwardingPublicPort", "PortForwardingLocalPort");
+    private static final List<String> OBSOLETE_KEYS = Arrays.asList("PortForwardingPublicPort", "PortForwardingLocalPort", "DownsamplingCommand");
 
     private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
     private static final String THEMES_FILE = "/net/sourceforge/subsonic/theme/themes.txt";

@@ -82,16 +82,16 @@ public class Schema28 extends Schema {
                              "step3 varchar," +
                              "enabled boolean not null)");
 
-            template.execute("insert into transcoding values(null,'wav > mp3','wav','mp3','lame -b %b -S %s -',null,null,true)");
-            template.execute("insert into transcoding values(null,'flac > mp3','flac','mp3','ffmpeg -i %s -f wav -','lame -b %b - -',null,true)");
-            template.execute("insert into transcoding values(null,'ogg > mp3' ,'ogg' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b - -',null,true)");
-            template.execute("insert into transcoding values(null,'wma > mp3' ,'wma' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b - -',null,true)");
-            template.execute("insert into transcoding values(null,'m4a > mp3' ,'m4a' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b - -',null,false)");
-            template.execute("insert into transcoding values(null,'aac > mp3' ,'aac' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b - -',null,false)");
-            template.execute("insert into transcoding values(null,'ape > mp3' ,'ape' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b - -',null,true)");
-            template.execute("insert into transcoding values(null,'mpc > mp3' ,'mpc' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b - -',null,true)");
-            template.execute("insert into transcoding values(null,'mv > mp3'  ,'mv'  ,'mp3','ffmpeg -i %s -f wav -','lame -b %b - -',null,true)");
-            template.execute("insert into transcoding values(null,'shn > mp3' ,'shn' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b - -',null,true)");
+            template.execute("insert into transcoding values(null,'wav > mp3','wav','mp3','lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 %s -',null,null,true)");
+            template.execute("insert into transcoding values(null,'flac > mp3','flac','mp3','ffmpeg -i %s -f wav -','lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -',null,true)");
+            template.execute("insert into transcoding values(null,'ogg > mp3' ,'ogg' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -',null,true)");
+            template.execute("insert into transcoding values(null,'wma > mp3' ,'wma' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -',null,true)");
+            template.execute("insert into transcoding values(null,'m4a > mp3' ,'m4a' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -',null,false)");
+            template.execute("insert into transcoding values(null,'aac > mp3' ,'aac' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -',null,false)");
+            template.execute("insert into transcoding values(null,'ape > mp3' ,'ape' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -',null,true)");
+            template.execute("insert into transcoding values(null,'mpc > mp3' ,'mpc' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -',null,true)");
+            template.execute("insert into transcoding values(null,'mv > mp3'  ,'mv'  ,'mp3','ffmpeg -i %s -f wav -','lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -',null,true)");
+            template.execute("insert into transcoding values(null,'shn > mp3' ,'shn' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -',null,true)");
 
             LOG.info("Database table 'transcoding' was created successfully.");
         }

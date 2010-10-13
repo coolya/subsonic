@@ -86,62 +86,62 @@
                 <tr class="table-altrow">
                     <td class="transcoding">wav</td>
                     <td class="transcoding">mp3</td>
-                    <td class="transcoding">lame -b %b -S %s -</td>
+                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 %s -</td>
                     <td class="transcoding"></td>
                 </tr>
                 <tr>
                     <td class="transcoding">ogg</td>
                     <td class="transcoding">mp3</td>
                     <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b - -</td>
+                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
                 </tr>
                 <tr class="table-altrow">
                     <td class="transcoding">wma</td>
                     <td class="transcoding">mp3</td>
                     <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b - -</td>
+                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
                 </tr>
                 <tr>
                     <td class="transcoding">flac</td>
                     <td class="transcoding">mp3</td>
                     <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b - -</td>
+                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
                 </tr>
                 <tr class="table-altrow">
                     <td class="transcoding">ape</td>
                     <td class="transcoding">mp3</td>
                     <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b - -</td>
+                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
                 </tr>
                 <tr>
                     <td class="transcoding">m4a</td>
                     <td class="transcoding">mp3</td>
                     <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b - -</td>
+                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
                 </tr>
                 <tr class="table-altrow">
                     <td class="transcoding">aac</td>
                     <td class="transcoding">mp3</td>
                     <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b - -</td>
+                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
                 </tr>
                 <tr>
                     <td class="transcoding">mpc</td>
                     <td class="transcoding">mp3</td>
                     <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b - -</td>
+                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
                 </tr>
                 <tr class="table-altrow">
                     <td class="transcoding">wv</td>
                     <td class="transcoding">mp3</td>
                     <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b - -</td>
+                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
                 </tr>
                 <tr>
                     <td class="transcoding">shn</td>
                     <td class="transcoding">mp3</td>
                     <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b - -</td>
+                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
                 </tr>
             </table>
 

@@ -244,18 +244,35 @@ public class TranscodingService {
      * <ul>
      * <li>Splitting the command line string to an array.</li>
      * <li>Replacing occurrences of "%s" with the path of the given music file.</li>
+     * <li>Replacing occurrences of "%t" with the title of the given music file.</li>
+     * <li>Replacing occurrences of "%l" with the album name of the given music file.</li>
+     * <li>Replacing occurrences of "%a" with the artist name of the given music file.</li>
      * <li>Replacing occurrcences of "%b" with the max bitrate from the transcode scheme.</li>
      * <li>Prepending the path of the transcoder directory if the transcoder is found there.</li>
      * </ul>
      *
      * @param command         The command line string.
      * @param transcodeScheme The transcoding (resampling) scheme. May be <code>null</code>.
-     * @param musicFile       The music file to use when replacing "%s".  May be <code>null</code>.
+     * @param musicFile       The music file to use when replacing "%s" etc.  May be <code>null</code>.
      * @return The prepared command array.
      */
     private String[] createCommand(String command, TranscodeScheme transcodeScheme, MusicFile musicFile) {
         if (musicFile != null) {
             command = command.replace("%s", '"' + musicFile.getFile().getAbsolutePath() + '"');
+
+            String title = StringUtils.replaceChars(musicFile.getTitle(), "\"", "");
+            String album = StringUtils.replaceChars(musicFile.getMetaData().getAlbum(), "\"", "");
+            String artist = StringUtils.replaceChars(musicFile.getMetaData().getArtist(), "\"", "");
+
+            if (title != null) {
+                command = command.replace("%t", '"' + title + '"');
+            }
+            if (album != null) {
+                command = command.replace("%l", '"' + album + '"');
+            }
+            if (artist != null) {
+                command = command.replace("%a", '"' + artist + '"');
+            }
         }
 
         // If no transcoding scheme is specified, use 128 Kbps.
