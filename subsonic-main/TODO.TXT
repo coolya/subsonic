@@ -5,7 +5,9 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 DONE IN ANDROID 1.8
 -------------------
 Added refresh button to artist list.
-Misc minor bug fixes.
+Misc minor bug fixes (NPE in SongView).
+Fixed buffering bug which caused song to start over again.
+
 Handle voice action
 
 TODO IN ANDROID 1.8
@@ -17,6 +19,8 @@ Problem playing "Skål" downsampled.
 Disk-full patch from Chad
   https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12b7985fd3a052ac
 Improve behaviour when SD card is mounted.
+Voice Action
+  http://android-developers.blogspot.com/2010/09/supporting-new-music-voice-action.html
 New ImageLoader
   http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html
 Detect Bluetooth disconnect
@@ -57,11 +61,16 @@ Colors: http://www.androidtapp.com/opentable/
 
 TODO IN 4.2
 -----------------
+Update LAME command
+  o Both downsample and transcode
+  o Make it work for existing installs.
+  o --resample 44.1
+  o ID3 tags
 Include statically linked ffmpeg, lame from einstein2x.
   o Update documentation
   o Uninstaller should remove ffmpeg, lame?
 Add one-liner intro in web page, a la http://www.rogueamoeba.com/nicecast/
-  o No monthly fees, no uploading.
+  o No monthly fees, no uploading, no syncing
 Fix readlink (verify patch)
 Discogs broken?
 Change icons all around.

@@ -542,7 +542,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             licenseValid = result.getSecond();
 
             boolean playAll = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_PLAY_ALL, false);
-            if (playAll) {
+            if (playAll && songCount > 0) {
                 selectAll(true);
                 download(false, false, true);
                 selectAll(false);
