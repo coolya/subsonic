@@ -11,6 +11,7 @@ TODO IN ANDROID 1.8
 -------------------
 Skipping problem
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=15260#15260
+Problem playing "Skål" downsampled.
 Disk-full patch from Chad
   https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12b7985fd3a052ac
 Improve behaviour when SD card is mounted.
@@ -519,7 +520,7 @@ HOW TO RELEASE TO ANDROID MARKET
 ================================
 Build against Android 1.5
 Update versionCode and versionName in AndroidManifest.xml
-Update version.html and MultiController
+Commit
 cd subsonic-android
 ant clean
 ant release
@@ -533,11 +534,11 @@ Update
     https://myapps.developer.motorola.com/
     https://slideme.org/application/subsonic
     http://www.camangimarket.com/index.html
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.7.1 -m "Tagging Android 1.7.1"
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.7.2 -m "Tagging Android 1.7.2"
 Create new directory in FRS
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.7.1/subsonic-1.7.1.apk
+  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.7.2/subsonic-1.7.2.apk
 
 
 HOW TO RELEASE TRANSCODING PACK
