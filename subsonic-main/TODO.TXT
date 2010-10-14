@@ -12,6 +12,8 @@ Handle voice action
 
 TODO IN ANDROID 1.8
 -------------------
+Proper search interface
+  http://developer.android.com/guide/topics/search/index.html
 Voice search
 Skipping problem
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=15260#15260
