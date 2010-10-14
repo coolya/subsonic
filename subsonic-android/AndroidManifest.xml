@@ -14,7 +14,7 @@
 
     <supports-screens a:anyDensity="true" a:largeScreens="true" a:normalScreens="true" a:smallScreens="true"/>
 
-    <application a:label="Subsonic" a:icon="@drawable/launch" a:theme="@android:style/Theme.Light">
+    <application a:label="@string/common.appname" a:icon="@drawable/launch" a:theme="@android:style/Theme.Light">
 
         <activity a:name="net.sourceforge.subsonic.androidapp.activity.MainActivity"
                   a:label="Subsonic"
@@ -60,12 +60,20 @@
                   a:label="@string/help.label"
                   a:launchMode="singleTask"/>
 
-        <activity a:name="net.sourceforge.subsonic.androidapp.activity.PlayFromSearchActivity"
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.VoiceQueryReceiverActivity"
                   a:launchMode="singleTask">
             <intent-filter>
                 <action a:name="android.media.action.MEDIA_PLAY_FROM_SEARCH" />
                 <category a:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.QueryReceiverActivity"
+                  a:launchMode="singleTask">
+            <intent-filter>
+                <action a:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data a:name="android.app.searchable" a:resource="@xml/searchable"/>
         </activity>
 
         <service a:name="net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl"
@@ -76,6 +84,12 @@
                 <action a:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
+
+        <provider a:name="net.sourceforge.subsonic.androidapp.provider.SearchSuggestionProvider"
+                  a:authorities="net.sourceforge.subsonic.androidapp.provider.SearchSuggestionProvider"/>
+
+        <meta-data a:name="android.app.default_searchable"
+                   a:value="net.sourceforge.subsonic.androidapp.activity.QueryReceiverActivity"/>
 
     </application>
 

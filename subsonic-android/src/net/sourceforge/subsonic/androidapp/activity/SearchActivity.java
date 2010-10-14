@@ -19,14 +19,8 @@
 
 package net.sourceforge.subsonic.androidapp.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.util.Constants;
-import net.sourceforge.subsonic.androidapp.util.Util;
 
 public class SearchActivity extends SubsonicTabActivity {
 
@@ -35,18 +29,6 @@ public class SearchActivity extends SubsonicTabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
 
-        final Button searchViewButton = (Button) findViewById(R.id.search_search);
-        final TextView queryTextView = (TextView) findViewById(R.id.search_query);
-        searchViewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String query = Util.trimToNull(String.valueOf(queryTextView.getText()));
-                if (query != null) {
-                    Intent intent = new Intent(SearchActivity.this, SelectAlbumActivity.class);
-                    intent.putExtra(Constants.INTENT_EXTRA_NAME_QUERY, query);
-                    Util.startActivityWithoutTransition(SearchActivity.this, intent);
-                }
-            }
-        });
+        onSearchRequested();
     }
 }

@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
@@ -144,16 +143,6 @@ public class SubsonicTabActivity extends Activity {
 
     public boolean isDestroyed() {
         return destroyed;
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-            Intent intent = new Intent(SubsonicTabActivity.this, SearchActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            Util.startActivityWithoutTransition(SubsonicTabActivity.this, intent);
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
     private void updateButtonVisibility() {
