@@ -23,20 +23,17 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.SearchRecentSuggestions;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.provider.SearchSuggestionProvider;
 
 /**
- * Handles voice queries.
- *
- * http://android-developers.blogspot.com/2010/09/supporting-new-music-voice-action.html
+ * Receives search queries and forwards to the SelectAlbumActivity.
  *
  * @author Sindre Mehus
  */
-public class PlayFromSearchActivity extends Activity {
-
-    private static final String TAG = PlayFromSearchActivity.class.getSimpleName();
+public class QueryReceiverActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,11 +42,13 @@ public class PlayFromSearchActivity extends Activity {
         String query = getIntent().getStringExtra(SearchManager.QUERY);
 
         if (query != null) {
-            Log.i(TAG, "Got query: " + query);
-            Intent intent = new Intent(PlayFromSearchActivity.this, SelectAlbumActivity.class);
+            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this, SearchSuggestionProvider.AUTHORITY,
+                                                                              SearchSuggestionProvider.MODE);
+            suggestions.saveRecentQuery(query, null);
+            
+            Intent intent = new Intent(QueryReceiverActivity.this, SelectAlbumActivity.class);
             intent.putExtra(Constants.INTENT_EXTRA_NAME_QUERY, query);
-            intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAY_ALL, true);
-            Util.startActivityWithoutTransition(PlayFromSearchActivity.this, intent);
+            Util.startActivityWithoutTransition(QueryReceiverActivity.this, intent);
         }
         finish();
         Util.disablePendingTransition(this);
