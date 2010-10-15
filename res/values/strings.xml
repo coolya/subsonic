@@ -129,6 +129,8 @@
     <string name="settings.cache_size_10000">10 GB</string>
     <string name="settings.cache_size_20000">20 GB</string>
     <string name="settings.cache_size_unlimited">Unlimited</string>
+    <string name="settings.clear_search_history">Clear search history</string>
+    <string name="settings.search_history_cleared">Search history cleared</string>
 
     <string name="music_service.retry">A network error occurred. Retrying %d of %d.</string>
 
