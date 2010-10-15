@@ -4,18 +4,11 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 DONE IN ANDROID 1.8
 -------------------
-Added refresh button to artist list.
-Misc minor bug fixes (NPE in SongView).
-Fixed buffering bug which caused song to start over again.
-
+Improved search interface
 Handle voice action
 
 TODO IN ANDROID 1.8
 -------------------
-Proper search interface
-  http://developer.android.com/guide/topics/search/index.html
-  Clean up search.xml, strings.xml
-  Test with rotation
 Shuffle play turned back on when rotating phone.
 Voice search
 Skipping problem

@@ -20,6 +20,8 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import net.sourceforge.subsonic.androidapp.R;
 
 public class SearchActivity extends SubsonicTabActivity {
@@ -30,5 +32,13 @@ public class SearchActivity extends SubsonicTabActivity {
         setContentView(R.layout.search);
 
         onSearchRequested();
+
+        Button searchButton = (Button) findViewById(R.id.search_search);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSearchRequested();
+            }
+        });
     }
 }

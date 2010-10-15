@@ -4,41 +4,26 @@
               a:layout_width="fill_parent"
               a:layout_height="fill_parent">
 
-    <View a:layout_height="0dip"
-          a:layout_width="fill_parent"
-          a:layout_weight="1"/>
+    <LinearLayout a:orientation="horizontal"
+                  a:layout_weight="1"
+                  a:layout_width="fill_parent"
+                  a:layout_height="0dp">
 
-    <!--<LinearLayout a:orientation="horizontal"-->
-                  <!--a:layout_weight="1"-->
-                  <!--a:layout_width="fill_parent"-->
-                  <!--a:layout_height="0dp">-->
+        <Button
+                a:id="@+id/search_search"
+                a:text="@string/search.search"
+                a:drawableLeft="@drawable/search"
+                a:drawablePadding="10dip"
+                a:paddingLeft="20dip"
+                a:paddingRight="20dip"
+                a:layout_marginLeft="30dip"
+                a:layout_marginRight="30dip"
+                a:layout_marginTop="10dip"
+                a:layout_gravity="top"
+                a:layout_width="fill_parent"
+                a:layout_height="wrap_content"/>
 
-        <!--<EditText-->
-                <!--a:id="@+id/search_query"-->
-                <!--a:layout_gravity="center_vertical"-->
-                <!--a:layout_width="200dip"-->
-                <!--a:layout_height="wrap_content"-->
-                <!--a:layout_weight="1"-->
-                <!--a:layout_margin="6dip"-->
-                <!--a:hint="@string/search.title"-->
-                <!--a:imeOptions="actionSearch"-->
-                <!--a:inputType="text"-->
-                <!--a:singleLine="true"/>-->
-
-        <!--<Button-->
-                <!--a:id="@+id/search_search"-->
-                <!--a:drawableLeft="@drawable/search"-->
-                <!--a:layout_gravity="center_vertical"-->
-                <!--a:layout_width="wrap_content"-->
-                <!--a:layout_height="wrap_content"-->
-                <!--a:layout_marginRight="6dip"/>-->
-
-    <!--</LinearLayout>-->
-
-    <!--<TextView-->
-            <!--a:layout_width="fill_parent"-->
-            <!--a:layout_height="0dp"-->
-            <!--a:layout_weight="1"/>-->
+    </LinearLayout>
 
     <include layout="@layout/button_bar"/>
 
