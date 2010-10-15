@@ -31,6 +31,7 @@
 
     <string name="search.label">Search</string>
     <string name="search.title">Music search</string>
+    <string name="search.search">Click to search</string>
 
     <string name="progress.wait">Please wait...</string>
 
