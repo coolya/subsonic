@@ -15,7 +15,6 @@ TODO IN ANDROID 1.8
 Proper search interface
   http://developer.android.com/guide/topics/search/index.html
   Clean up search.xml, strings.xml
-  Option to clear search history
   Test with rotation
 Shuffle play turned back on when rotating phone.
 Voice search
@@ -551,11 +550,11 @@ Update
     https://myapps.developer.motorola.com/
     https://slideme.org/application/subsonic
     http://www.camangimarket.com/index.html
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.7.2 -m "Tagging Android 1.7.2"
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.7.3 -m "Tagging Android 1.7.3"
 Create new directory in FRS
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.7.2/subsonic-1.7.2.apk
+  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.7.3/subsonic-1.7.3.apk
 
 
 HOW TO RELEASE TRANSCODING PACK

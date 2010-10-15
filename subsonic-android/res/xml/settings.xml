@@ -151,6 +151,11 @@
                 a:entryValues="@array/preloadCountValues"
                 a:entries="@array/preloadCountNames"/>
 
+        <Preference
+                a:key="clearSearchHistory"
+                a:title="@string/settings.clear_search_history"
+                a:persistent="false"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>
