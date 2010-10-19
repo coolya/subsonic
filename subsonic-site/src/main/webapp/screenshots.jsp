@@ -34,26 +34,17 @@
 
             <script type="text/javascript" src="inc/js/swfobject.js"></script>
 
-            <a name="video"><div id="mediaspace"></div></a>
+            <div class="bottomspace"></div>
 
-            <%
-                URL url = new URL(request.getRequestURL().toString());
-                String host = url.getHost();
-                if (url.getPort() != 80 && url.getPort() != -1) {
-                    host += ":" + url.getPort();
-                }
-            %>
-            <script type="text/javascript">
-                var so = new SWFObject("inc/flash/player.swf","mpl","640","360","9");
-                so.addParam("allowfullscreen","true");
-                so.addParam("allowscriptaccess","always");
-                so.addParam("wmode","opaque");
-                so.addVariable("duration","162");
-                so.addVariable("file","http://<%=host%>/pages/inc/video/subsonic-medium.m4v");
-                so.addVariable("image","http://<%=host%>/pages/inc/video/subsonic-medium.jpg");
-                so.addVariable("stretching","none");
-                so.write("mediaspace");
-            </script>
+            <a name="video"><div></div></a>
+
+            <object width="640" height="385"><param name="movie" value="http://www.youtube.com/v/EBDrdWxd95k?fs=1&amp;hl=en_GB"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/EBDrdWxd95k?fs=1&amp;hl=en_GB" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="640" height="385"></embed></object>        
+            <div class="bottomspace"></div>
+            <object width="640" height="385"><param name="movie" value="http://www.youtube.com/v/xhgK9ShSpWg?fs=1&amp;hl=en_GB"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/xhgK9ShSpWg?fs=1&amp;hl=en_GB" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="640" height="385"></embed></object>
+            <div class="bottomspace"></div>
+            <object width="640" height="385"><param name="movie" value="http://www.youtube.com/v/PvsQk3IoOt4?fs=1&amp;hl=en_GB"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/PvsQk3IoOt4?fs=1&amp;hl=en_GB" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="640" height="385"></embed></object>
+            <div class="bottomspace"></div>
+            <object width="640" height="385"><param name="movie" value="http://www.youtube.com/v/UNqLjV10sTA?fs=1&amp;hl=en_GB"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/UNqLjV10sTA?fs=1&amp;hl=en_GB" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="640" height="385"></embed></object>
         </div>
 
 
