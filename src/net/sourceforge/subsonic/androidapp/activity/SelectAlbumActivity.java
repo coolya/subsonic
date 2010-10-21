@@ -493,8 +493,9 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                 } else {
                     view = new SongView(SelectAlbumActivity.this);
                 }
-                view.setDownloadFile(getDownloadService().forSong(entry), getDownloadService(), true);
-
+                if (getDownloadService() != null) {
+                    view.setDownloadFile(getDownloadService().forSong(entry), getDownloadService(), true);
+                }
                 return view;
             }
         }
