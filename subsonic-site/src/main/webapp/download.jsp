@@ -130,9 +130,12 @@
                 which works immediately out-of-the-box, from GigaPros.  <a href="hosting.jsp">Read more about their Subsonic hosting offer</a>.
             </p>
 
-            <p class="margin20-t">
+            <h1>Terms of use</h1>
+            <p>
                 <a href="http://www.gnu.org/copyleft/gpl.html"><img class="img-left" alt="GPL" src="inc/img/gpl.png"/></a>
                 Subsonic is open-source software licensed under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</a>.
+                Please note that Subsonic is <em>not</em> a tool for illegal distribution of copyrighted material. Always pay attention to and
+                follow the relevant laws specific to your country.
             </p>
         </div>
 

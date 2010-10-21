@@ -59,6 +59,9 @@ Colors: http://www.androidtapp.com/opentable/
 
 TODO IN 4.2
 -----------------
+Add REST method to add license key.
+Subsonic Premium
+Lucene search.
 Update LAME command
   o Both downsample and transcode
   o Make it work for existing installs.
