@@ -42,6 +42,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.service.DownloadService;
+import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
+import net.sourceforge.subsonic.androidapp.provider.SubsonicAppWidgetProvider;
 import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
 import net.sourceforge.subsonic.androidapp.activity.ErrorActivity;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
@@ -535,6 +538,12 @@ public final class Util {
                 notificationManager.notify(Constants.NOTIFICATION_ID_PLAYING, notification);
             }
         });
+
+        // Update widget
+        DownloadService service = DownloadServiceImpl.getInstance();
+        if (service != null) {
+            SubsonicAppWidgetProvider.getInstance().notifyChange(context, service);
+        }
     }
 
     public static void hidePlayingNotification(final Context context, Handler handler) {
@@ -545,6 +554,12 @@ public final class Util {
                 notificationManager.cancel(Constants.NOTIFICATION_ID_PLAYING);
             }
         });
+
+        // Update widget
+        DownloadService service = DownloadServiceImpl.getInstance();
+        if (service != null) {
+            SubsonicAppWidgetProvider.getInstance().notifyChange(context, service);
+        }
     }
 
     public static void showErrorNotification(final Context context, Handler handler, String title, Exception error) {
