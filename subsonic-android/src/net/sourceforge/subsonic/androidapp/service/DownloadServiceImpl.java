@@ -379,13 +379,14 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private synchronized void setPlayerState(PlayerState playerState) {
         Log.i(TAG, this.playerState.name() + " -> " + playerState.name());
 
-        if (this.playerState == PAUSED && playerState == PlayerState.STARTED) {
+        boolean show = this.playerState == PAUSED && playerState == PlayerState.STARTED;
+        boolean hide = this.playerState == STARTED && playerState == PlayerState.PAUSED;
+        this.playerState = playerState;
+        if (show) {
             Util.showPlayingNotification(this, handler, currentPlaying.getSong());
-        } else if (this.playerState == STARTED && playerState == PlayerState.PAUSED) {
+        } else if (hide) {
             Util.hidePlayingNotification(this, handler);
         }
-
-        this.playerState = playerState;
     }
 
     @Override

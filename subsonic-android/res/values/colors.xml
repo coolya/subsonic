@@ -3,4 +3,5 @@
     <color name="mediaControlBackground">#909090</color>
     <color name="mediaControlForeground">#F0F0F0</color>
     <color name="dividerColor">#555555</color>
+    <color name="appwidget_text">#FFFFFF</color>
 </resources>

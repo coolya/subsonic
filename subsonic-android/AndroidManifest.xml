@@ -85,6 +85,13 @@
             </intent-filter>
         </receiver>
 
+        <receiver a:name="net.sourceforge.subsonic.androidapp.provider.SubsonicAppWidgetProvider" >
+            <intent-filter>
+                <action a:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data a:name="android.appwidget.provider" a:resource="@xml/appwidget_info"/>
+        </receiver>
+
         <provider a:name="net.sourceforge.subsonic.androidapp.provider.SearchSuggestionProvider"
                   a:authorities="net.sourceforge.subsonic.androidapp.provider.SearchSuggestionProvider"/>
 
