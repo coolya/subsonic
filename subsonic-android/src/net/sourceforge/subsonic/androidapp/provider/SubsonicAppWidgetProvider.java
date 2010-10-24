@@ -29,12 +29,10 @@ import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RemoteViews;
-import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
 import net.sourceforge.subsonic.androidapp.activity.MainActivity;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 
@@ -48,8 +46,6 @@ import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
  */
 public class SubsonicAppWidgetProvider extends AppWidgetProvider {
 
-    public static final String CMDAPPWIDGETUPDATE = "subsonic.appwidgetupdate";
-    private static final String TAG = SubsonicAppWidgetProvider.class.getSimpleName();
     private static SubsonicAppWidgetProvider instance;
 
     public static synchronized SubsonicAppWidgetProvider getInstance() {
@@ -62,15 +58,6 @@ public class SubsonicAppWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         defaultAppWidget(context, appWidgetIds);
-
-//        TODO
-        // Send broadcast intent to any running MediaPlaybackService so it can
-        // wrap around with an immediate update.
-//        Intent updateIntent = new Intent(MediaPlaybackService.SERVICECMD);
-//        updateIntent.putExtra(MediaPlaybackService.CMDNAME, CMDAPPWIDGETUPDATE);
-//        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-//        updateIntent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
-//        context.sendBroadcast(updateIntent);
     }
 
     /**
@@ -101,9 +88,9 @@ public class SubsonicAppWidgetProvider extends AppWidgetProvider {
     /**
      * Handle a change notification coming over from {@link DownloadService}
      */
-    public void notifyChange(Context context, DownloadService service) {
+    public void notifyChange(Context context, DownloadService service, boolean playing) {
         if (hasInstances(context)) {
-            performUpdate(context, service, null);
+            performUpdate(context, service, null, playing);
         }
     }
 
@@ -117,10 +104,9 @@ public class SubsonicAppWidgetProvider extends AppWidgetProvider {
     }
 
     /**
-     * TODO: Remove appWIdgetIds?
      * Update all active widget instances by pushing changes
      */
-    private void performUpdate(Context context, DownloadService service, int[] appWidgetIds) {
+    private void performUpdate(Context context, DownloadService service, int[] appWidgetIds, boolean playing) {
         final Resources res = context.getResources();
         final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.appwidget);
 
@@ -136,7 +122,7 @@ public class SubsonicAppWidgetProvider extends AppWidgetProvider {
             errorState = res.getText(R.string.widget_sdcard_busy);
         } else if (status.equals(Environment.MEDIA_REMOVED)) {
             errorState = res.getText(R.string.widget_sdcard_missing);
-        } else if (title == null) { // TODO, check for empty playlist?
+        } else if (currentPlaying == null) {
             errorState = res.getText(R.string.widget_initial_text);
         }
 
@@ -153,9 +139,6 @@ public class SubsonicAppWidgetProvider extends AppWidgetProvider {
         }
 
         // Set correct drawable for pause state
-        boolean playing = service.getPlayerState() == PlayerState.STARTED;
-        Log.i("XXXX", "" + service.getPlayerState());
-
         if (playing) {
             views.setImageViewResource(R.id.control_play, R.drawable.ic_appwidget_music_pause);
         } else {
@@ -163,7 +146,7 @@ public class SubsonicAppWidgetProvider extends AppWidgetProvider {
         }
 
         // Link actions buttons to intents
-        linkButtons(context, views, playing);
+        linkButtons(context, views, currentPlaying != null);
 
         pushUpdate(context, appWidgetIds, views);
     }

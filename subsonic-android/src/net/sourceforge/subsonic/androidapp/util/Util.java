@@ -542,7 +542,7 @@ public final class Util {
         // Update widget
         DownloadService service = DownloadServiceImpl.getInstance();
         if (service != null) {
-            SubsonicAppWidgetProvider.getInstance().notifyChange(context, service);
+            SubsonicAppWidgetProvider.getInstance().notifyChange(context, service, true);
         }
     }
 
@@ -558,7 +558,7 @@ public final class Util {
         // Update widget
         DownloadService service = DownloadServiceImpl.getInstance();
         if (service != null) {
-            SubsonicAppWidgetProvider.getInstance().notifyChange(context, service);
+            SubsonicAppWidgetProvider.getInstance().notifyChange(context, service, false);
         }
     }
 

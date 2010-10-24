@@ -9,7 +9,9 @@ Handle voice action
 
 TODO IN ANDROID 1.8
 -------------------
-Add 192, 256kbps downsampling option.
+Widget
+Show artist name in album lists.
+Add 192, 256kbps downsampling option. 
 Shuffle play turned back on when rotating phone.
 Voice search
 Skipping problem
