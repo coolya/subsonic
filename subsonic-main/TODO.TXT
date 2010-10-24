@@ -4,14 +4,12 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 DONE IN ANDROID 1.8
 -------------------
-Improved search interface
-Handle voice action
+Widget
 
 TODO IN ANDROID 1.8
 -------------------
-Widget
 Show artist name in album lists.
-Add 192, 256kbps downsampling option. 
+Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone.
 Voice search
 Skipping problem
@@ -59,17 +57,20 @@ Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Colors: http://www.androidtapp.com/opentable/
 
+DONE IN 4.2
+----------------
+Update LAME command
+  o Both downsample and transcode
+  o Make it work for existing installs.
+  o --resample 44.1
+  o ID3 tags
+Include artist attribute in REST API.
 
 TODO IN 4.2
 -----------------
 Add REST method to add license key.
 Subsonic Premium
 Lucene search.
-Update LAME command
-  o Both downsample and transcode
-  o Make it work for existing installs.
-  o --resample 44.1
-  o ID3 tags
 Include statically linked ffmpeg, lame from einstein2x.
   o Update documentation
   o Uninstaller should remove ffmpeg, lame?

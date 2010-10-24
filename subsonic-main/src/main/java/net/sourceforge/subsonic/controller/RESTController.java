@@ -613,9 +613,28 @@ public class RESTController extends MultiActionController {
             if (childCoverArt != null) {
                 attributes.add(new Attribute("coverArt", StringUtil.utf8HexEncode(childCoverArt.getPath())));
             }
+
+            String artist = resolveArtist(musicFile);
+            if (artist != null) {
+                attributes.add(new Attribute("artist", artist));
+            }
+
         }
         return attributes;
     }
+
+    private String resolveArtist(MusicFile file) throws IOException {
+
+        // If directory, find  title and artist from metadata in child.
+        if (file.isDirectory()) {
+            file = file.getFirstChild();
+            if (file == null) {
+                return null;
+            }
+        }
+        return file.getMetaData().getArtist();
+    }
+
 
     private String getRelativePath(MusicFile musicFile) {
 
