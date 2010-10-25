@@ -534,7 +534,7 @@ Upgrade Subsonic backend: CHANGE DATE BELOW
 
 HOW TO RELEASE TO ANDROID MARKET
 ================================
-Build against Android 1.5
+Build against Android 1.5 (default.properties, set API level to 3)
 Update versionCode and versionName in AndroidManifest.xml
 Commit
 cd subsonic-android
