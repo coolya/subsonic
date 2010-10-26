@@ -2,16 +2,11 @@ TODO IN BACKEND
 ---------------
 If trying to assign an expired web address used by someone else, don't show "Expired..." message.
 
-DONE IN ANDROID 1.8
--------------------
-Widget
-
-TODO IN ANDROID 1.8
+TODO IN ANDROID 1.9
 -------------------
 Show artist name in album lists.
 Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone.
-Voice search
 Skipping problem
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=15260#15260
 Problem playing "Skål" downsampled.
@@ -57,6 +52,53 @@ Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Colors: http://www.androidtapp.com/opentable/
 
+SEARCH
+------
+Implement Lucene search index creation (on top of current impl).
+Implement Lucene search prototype.
+Create development branch
+Create schemas for artist/album/song tables (tmp and master)
+Populate with some dummy data.
+Extract SearchService interface.
+Populate master tables from music_file_info.
+Remove music_file_info table.
+Make ID columns count 1, 2, 3,...
+Implement algorithm for updating tmp-tables on scan.
+Lucene lock file unlocking on startup?
+
+_artist_
+id
+path
+name
+created
+last_modified
+comment
+
+_album_
+id
+path
+name
+artist
+created
+last_modified
+comment
+play_count
+last_played
+
+_song_
+id
+path
+title
+album
+artist
+year
+genre
+created
+last_modified
+play_count
+last_played
+
+
 DONE IN 4.2
 ----------------
 Update LAME command
@@ -65,9 +107,11 @@ Update LAME command
   o --resample 44.1
   o ID3 tags
 Include artist attribute in REST API.
+Updated German translation, courtesy of deejay2302
 
 TODO IN 4.2
 -----------------
+Make Discogs work again.
 Add REST method to add license key.
 Subsonic Premium
 Lucene search.
@@ -77,7 +121,6 @@ Include statically linked ffmpeg, lame from einstein2x.
 Add one-liner intro in web page, a la http://www.rogueamoeba.com/nicecast/
   o No monthly fees, no uploading, no syncing
 Fix readlink (verify patch)
-Discogs broken?
 Change icons all around.
 Deprecate current cover art method.  Make new which takes song/album ID.
 Add trialExpires to REST API.
@@ -86,10 +129,6 @@ Change font in logo?
 JSON support in REST API?
 Add "append" parameter to createPlaylist REST method.
 Modify port number and memory on Mac.
-
-DONE IN 4.2
---------------
-Updated German translation, courtesy of deejay2302
 
 Funtonia integration
 REST API for Now playing
@@ -217,7 +256,6 @@ Run agent as admin in Windows 7. http://www.activeobjects.no/subsonic/forum/view
 Does subsonic_exclude.txt work for indexing? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1965
 Dynamic playlists,  Message from zeekay.
 Personal playlists http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7538#7538
-Lucene
 User registration.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1931
 Further search improvements, e.g., "search all". http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1839
 Improve year range in random playlist generator.  Maybe provide to and from fields.
