@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+              a:orientation="vertical"
+              a:layout_width="fill_parent"
+              a:layout_height="fill_parent">
+
+    <LinearLayout a:orientation="horizontal"
+                  a:layout_weight="1"
+                  a:layout_width="fill_parent"
+                  a:layout_height="0dp">
+
+        <Button
+                a:id="@+id/search_search"
+                a:text="@string/search.search"
+                a:drawableLeft="@drawable/search"
+                a:drawablePadding="10dip"
+                a:paddingLeft="20dip"
+                a:paddingRight="20dip"
+                a:layout_marginLeft="30dip"
+                a:layout_marginRight="30dip"
+                a:layout_marginTop="10dip"
+                a:layout_gravity="top"
+                a:layout_width="fill_parent"
+                a:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/button_bar"/>
+
+</LinearLayout>
+

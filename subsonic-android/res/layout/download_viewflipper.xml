@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<net.sourceforge.subsonic.androidapp.util.MyViewFlipper xmlns:a="http://schemas.android.com/apk/res/android"
+             a:id="@+id/download_flipper"
+             a:layout_width="fill_parent"
+             a:layout_height="fill_parent"
+             a:layout_weight="1">
+
+    <FrameLayout
+                  a:layout_width="fill_parent"
+                  a:layout_height="fill_parent"
+                  a:layout_weight="1">
+        <ImageView
+                a:id="@+id/download_album_art_image"
+                a:src="@drawable/unknown_album_large"
+                a:background="@android:color/black"
+                a:layout_width="fill_parent"
+                a:layout_height="fill_parent"
+                a:scaleType="centerCrop"/>
+
+        <TextView
+                a:id="@+id/download_album_art_text"
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content"
+                a:layout_marginBottom="10dip"
+                a:layout_gravity="center_horizontal|bottom"
+                a:padding="2dip"
+                a:background="#66000000"
+                a:singleLine="true"
+                a:ellipsize="end"
+                a:textAppearance="?android:attr/textAppearanceMedium"
+                a:textSize="14dp"
+                a:textStyle="bold"
+                a:textColor="@color/mediaControlForeground"/>
+
+    </FrameLayout>
+
+    <LinearLayout a:orientation="vertical"
+                  a:layout_width="fill_parent"
+                  a:layout_height="fill_parent"
+                  a:layout_weight="1">
+
+        <TextView
+                a:id="@+id/download_empty"
+                a:text="@string/download.empty"
+                a:layout_width="fill_parent"
+                a:layout_height="wrap_content"
+                a:padding="10dip"/>
+
+        <ListView
+                a:id="@+id/download_list"
+                a:layout_width="fill_parent"
+                a:layout_height="fill_parent"
+                a:layout_weight="1"
+                a:cacheColorHint="#00000000"/>
+
+    </LinearLayout>
+
+</net.sourceforge.subsonic.androidapp.util.MyViewFlipper>
+
+
