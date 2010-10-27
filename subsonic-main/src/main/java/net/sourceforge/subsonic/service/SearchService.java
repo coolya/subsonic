@@ -696,7 +696,7 @@ public class SearchService {
          */
         static final String SEPARATOR = " ixYxi ";
 
-        private boolean isFile;
+        public boolean isFile;
         private boolean isAlbum;
         private boolean isDirectory;
         private long created;
@@ -705,7 +705,7 @@ public class SearchService {
         private long length;
         private String artist;
         private String album;
-        private String title;
+        public String title;
         private String year;
         private String genre;
 
