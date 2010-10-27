@@ -37,7 +37,9 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -96,11 +98,16 @@ public class LuceneSearchService {
 
         Searcher searcher = new IndexSearcher(reader);
         Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_CURRENT);
-        QueryParser parser = new QueryParser(Version.LUCENE_CURRENT, FIELD_ALL, analyzer);
+//        QueryParser parser = new QueryParser(Version.LUCENE_CURRENT, FIELD_TITLE, analyzer);
+        String[] fields = {FIELD_TITLE, FIELD_ARTIST};
+        BooleanClause.Occur[] flags = {BooleanClause.Occur.MUST,
+                                       BooleanClause.Occur.SHOULD};
+//        MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_CURRENT, fields, analyzer);
 
         // TODO: trim
-        Query query = parser.parse(criteria.getTitle());
-        System.out.println("Searching for: " + query.toString(FIELD_ALL));
+//        Query query = parser.parse(criteria.getTitle());
+        Query query = MultiFieldQueryParser.parse(Version.LUCENE_CURRENT, criteria.getTitle(), fields, flags, analyzer);
+        System.out.println("Searching for: " + query);
 
         // TODO: paging
         TopDocs topDocs = searcher.search(query, null, 10);
@@ -117,6 +124,8 @@ public class LuceneSearchService {
             Document doc = searcher.doc(scoreDoc.doc);
             System.out.println(doc.get(FIELD_TITLE) + "  -  " + doc.get(FIELD_ALBUM) + "  -  " + doc.get(FIELD_ARTIST));
         }
+
+        reader.close();
     }
 
     private Document createDocumentForSong(SearchService.Line song) {
@@ -140,12 +149,15 @@ public class LuceneSearchService {
             builder.append(song.title);
         }
         if (builder.length() > 0) {
+            // TODO: REMOVE
             doc.add(new Field(FIELD_ALL, builder.toString().trim(), Field.Store.YES, Field.Index.ANALYZED));
         }
 
         // return the document
         return doc;
     }
+
+    // TODO: Fuzzy
 
     public static void main(String[] args) throws Exception {
         LuceneSearchService service = new LuceneSearchService();
