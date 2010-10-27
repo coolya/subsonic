@@ -699,12 +699,12 @@ public class SearchService {
         public boolean isFile;
         private boolean isAlbum;
         private boolean isDirectory;
-        private long created;
+        public long created;
         private long lastModified;
-        private File file;
+        public File file;
         private long length;
-        private String artist;
-        private String album;
+        public String artist;
+        public String album;
         public String title;
         private String year;
         private String genre;
