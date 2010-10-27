@@ -19,6 +19,8 @@
 package net.sourceforge.subsonic.service;
 
 import net.sourceforge.subsonic.domain.SearchCriteria;
+import net.sourceforge.subsonic.domain.SearchResult;
+import net.sourceforge.subsonic.domain.MusicFile;
 import org.apache.commons.io.IOUtils;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
@@ -57,11 +59,11 @@ import java.util.List;
 public class LuceneSearchService {
 
     private static final File INDEX_DIR = new File("/tmp/subsonic-lucene-index");
+    private static final String FIELD_PATH = "path";
     private static final String FIELD_TITLE = "title";
-    private static final String FIELD_CREATED = "created";
     private static final String FIELD_ALBUM = "album";
     private static final String FIELD_ARTIST = "artist";
-    private static final String FIELD_PATH = "path";
+    private static final String FIELD_ALL = "all";
 
     /**
      * Creates a search index for the given list of songs.
@@ -94,18 +96,26 @@ public class LuceneSearchService {
 
         Searcher searcher = new IndexSearcher(reader);
         Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_CURRENT);
-        QueryParser parser = new QueryParser(Version.LUCENE_CURRENT, FIELD_TITLE, analyzer);
+        QueryParser parser = new QueryParser(Version.LUCENE_CURRENT, FIELD_ALL, analyzer);
 
         // TODO: trim
         Query query = parser.parse(criteria.getTitle());
-        System.out.println("Searching for: " + query.toString(FIELD_TITLE));
+        System.out.println("Searching for: " + query.toString(FIELD_ALL));
 
         // TODO: paging
         TopDocs topDocs = searcher.search(query, null, 10);
+
+        SearchResult result = new SearchResult();
+        List<MusicFile> musicFiles = new ArrayList<MusicFile>();
+        int offset = criteria.getOffset();
+        int count = criteria.getCount();
+        result.setOffset(offset);
+        result.setMusicFiles(musicFiles);
+
         System.out.println("Total hits: " + topDocs.totalHits);
         for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
             Document doc = searcher.doc(scoreDoc.doc);
-            System.out.println(doc.get(FIELD_TITLE));
+            System.out.println(doc.get(FIELD_TITLE) + "  -  " + doc.get(FIELD_ALBUM) + "  -  " + doc.get(FIELD_ARTIST));
         }
     }
 
@@ -115,34 +125,23 @@ public class LuceneSearchService {
         Document doc = new Document();
         doc.add(new Field(FIELD_PATH, song.file.getPath(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
 
+        StringBuilder builder = new StringBuilder();
+
         if (song.artist != null) {
             doc.add(new Field(FIELD_ARTIST, song.artist, Field.Store.YES, Field.Index.ANALYZED));
+            builder.append(song.artist).append(" ");
         }
         if (song.album != null) {
             doc.add(new Field(FIELD_ALBUM, song.album, Field.Store.YES, Field.Index.ANALYZED));
+            builder.append(song.album).append(" ");
         }
         if (song.title != null) {
             doc.add(new Field(FIELD_TITLE, song.title, Field.Store.YES, Field.Index.ANALYZED));
+            builder.append(song.title);
         }
-        doc.add(new Field(FIELD_CREATED, DateTools.timeToString(song.created, DateTools.Resolution.DAY),
-                          Field.Store.YES, Field.Index.NOT_ANALYZED));
-
-//        // Add the path of the file as a field named "path".  Use a field that is
-//        // indexed (i.e. searchable), but don't tokenize the field into words.
-//        doc.add(new Field("path", f.getPath(), Field.Store.YES, Field.Index.NOT_ANALYZED));
-//
-//        // Add the last modified date of the file a field named "modified".  Use
-//        // a field that is indexed (i.e. searchable), but don't tokenize the field
-//        // into words.
-//        doc.add(new Field("modified",
-//                          DateTools.timeToString(f.lastModified(), DateTools.Resolution.MINUTE),
-//                          Field.Store.YES, Field.Index.NOT_ANALYZED));
-//
-//        // Add the contents of the file to a field named "contents".  Specify a Reader,
-//        // so that the text of the file is tokenized and indexed, but not stored.
-//        // Note that FileReader expects the file to be in the system's default encoding.
-//        // If that's not the case searching for special characters will fail.
-//        doc.add(new Field("contents", new FileReader(f)));
+        if (builder.length() > 0) {
+            doc.add(new Field(FIELD_ALL, builder.toString().trim(), Field.Store.YES, Field.Index.ANALYZED));
+        }
 
         // return the document
         return doc;
