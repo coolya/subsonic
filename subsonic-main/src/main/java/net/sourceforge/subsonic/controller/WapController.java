@@ -217,7 +217,7 @@ public class WapController extends MultiActionController {
 
     private List<MusicFile> search(String query) throws IOException {
         SearchCriteria criteria = new SearchCriteria();
-        criteria.setTitle(query);
+        criteria.setAny(query);
         criteria.setOffset(0);
         criteria.setCount(50);
 

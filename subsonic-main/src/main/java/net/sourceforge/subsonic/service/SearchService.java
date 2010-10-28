@@ -18,6 +18,18 @@
  */
 package net.sourceforge.subsonic.service;
 
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.MediaLibraryStatistics;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.MusicFileInfo;
+import net.sourceforge.subsonic.domain.MusicFolder;
+import net.sourceforge.subsonic.domain.RandomSearchCriteria;
+import net.sourceforge.subsonic.domain.SearchCriteria;
+import net.sourceforge.subsonic.domain.SearchResult;
+import static net.sourceforge.subsonic.service.LuceneSearchService.IndexType.*;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -39,18 +51,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
 import java.util.TreeSet;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.domain.MediaLibraryStatistics;
-import net.sourceforge.subsonic.domain.MusicFile;
-import net.sourceforge.subsonic.domain.MusicFileInfo;
-import net.sourceforge.subsonic.domain.MusicFolder;
-import net.sourceforge.subsonic.domain.RandomSearchCriteria;
-import net.sourceforge.subsonic.domain.SearchCriteria;
-import net.sourceforge.subsonic.domain.SearchResult;
 
 /**
  * Provides services for searching for music.
@@ -156,9 +156,10 @@ public class SearchService {
             cleanMusicFileInfo();
 
             // Update Lucene search index.
-            luceneSearchService.createIndex(LuceneSearchService.IndexType.SONG, cachedSongs);
-            luceneSearchService.createIndex(LuceneSearchService.IndexType.ALBUM, cachedAlbums);
-            luceneSearchService.createIndex(LuceneSearchService.IndexType.ARTIST, cachedArtists);
+            LOG.info("Updating Lucene search index.");
+            luceneSearchService.createIndex(SONG, cachedSongs);
+            luceneSearchService.createIndex(ALBUM, cachedAlbums);
+            luceneSearchService.createIndex(ARTIST, cachedArtists);
 
             // Don't need this any longer.
             cachedArtists.clear();
@@ -269,79 +270,17 @@ public class SearchService {
      * @return The search result.
      * @throws IOException If an I/O error occurs.
      */
+    @Deprecated
     public synchronized SearchResult search(SearchCriteria searchCriteria) throws IOException {
 
-        List<MusicFile> musicFiles = new ArrayList<MusicFile>();
-        SearchResult result = new SearchResult();
-        int offset = searchCriteria.getOffset();
-        int count = searchCriteria.getCount();
-        result.setOffset(offset);
-        result.setMusicFiles(musicFiles);
-
         if (!isIndexCreated() || isIndexBeingCreated()) {
-            return result;
+            SearchResult empty = new SearchResult();
+            empty.setOffset(searchCriteria.getOffset());
+            empty.setMusicFiles(Collections.<MusicFile>emptyList());
+            return empty;
         }
 
-        // Convert query to upper case for slightly better performance.
-        String any = StringUtils.upperCase(searchCriteria.getAny());
-        String title = StringUtils.upperCase(searchCriteria.getTitle());
-        String album = StringUtils.upperCase(searchCriteria.getAlbum());
-        String artist = StringUtils.upperCase(searchCriteria.getArtist());
-
-        long newerThanTime = searchCriteria.getNewerThan() == null ? 0 : searchCriteria.getNewerThan().getTime();
-
-        // TODO: Iterate over cachedSongs instead.
-        Map<File, Line> index = getIndex();
-
-        int hits = 0;
-        for (Line line : index.values()) {
-            try {
-
-                if (!line.isFile || line.created < newerThanTime) {
-                    continue;
-                }
-                if (title != null && !StringUtils.contains(line.title, title)) {
-                    continue;
-                }
-                if (album != null && !StringUtils.contains(line.album, album)) {
-                    continue;
-                }
-                if (artist != null && !StringUtils.contains(line.artist, artist)) {
-                    continue;
-                }
-                if (any != null &&
-                        !StringUtils.contains(line.title, any) &&
-                        !StringUtils.contains(line.album, any) &&
-                        !StringUtils.contains(line.artist, any)) {
-                    continue;
-                }
-
-                hits++;
-                if (hits > offset && hits <= offset + count) {
-                    MusicFile musicFile = getMusicFileForLine(line);
-                    if (musicFile != null) {
-                        musicFiles.add(musicFile);
-                    }
-                }
-
-            } catch (Exception x) {
-                LOG.error("An error occurred while searching '" + line + "'.", x);
-            }
-        }
-
-        result.setTotalHits(hits);
-        return result;
-    }
-
-    private MusicFile getMusicFileForLine(Line line) {
-        if (!line.file.exists()) {
-            return null;
-        }
-        try {
-            return musicFileService.getMusicFile(line.file);
-        } catch (SecurityException x) {
-            return null;
-        }
+        return luceneSearchService.search(searchCriteria, SONG);
     }
 
     /**
@@ -766,9 +705,9 @@ public class SearchService {
         /**
          * Creates a line instance representing the given music file.
          *
-         * @param file  The music file.
-         * @param index The existing search index. Used to avoid parsing metadata if the file has not changed
-         *              since the last time the search index was created.
+         * @param file         The music file.
+         * @param index        The existing search index. Used to avoid parsing metadata if the file has not changed
+         *                     since the last time the search index was created.
          * @param musicFolders The set of configured music folders.
          * @return A line instance representing the given music file.
          */
@@ -809,7 +748,7 @@ public class SearchService {
                 resolveArtistAndAlbum(file, line);
             } else if (line.isArtist) {
                 line.artist = StringUtils.upperCase(file.getName());
-            } 
+            }
 
             return line;
         }

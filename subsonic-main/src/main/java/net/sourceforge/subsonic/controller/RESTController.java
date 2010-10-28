@@ -226,22 +226,35 @@ public class RESTController extends MultiActionController {
         response.getWriter().print(builder);
     }
 
+    @Deprecated
     public void search(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         XMLBuilder builder = createXMLBuilder(response, true);
         Player player = playerService.getPlayer(request, response);
 
+        String any = request.getParameter("any");
+        String artist = request.getParameter("artist");
+        String album = request.getParameter("album");
+        String title = request.getParameter("title");
+
+        StringBuilder query = new StringBuilder();
+        if (any != null) {
+            query.append(any).append(" ");
+        }
+        if (artist != null) {
+            query.append(artist).append(" ");
+        }
+        if (album != null) {
+            query.append(album).append(" ");
+        }
+        if (title != null) {
+            query.append(title);
+        }
+
         SearchCriteria criteria = new SearchCriteria();
-        criteria.setArtist(request.getParameter("artist"));
-        criteria.setAlbum(request.getParameter("album"));
-        criteria.setTitle(request.getParameter("title"));
-        criteria.setAny(request.getParameter("any"));
+        criteria.setAny(query.toString().trim());
         criteria.setCount(ServletRequestUtils.getIntParameter(request, "count", 20));
         criteria.setOffset(ServletRequestUtils.getIntParameter(request, "offset", 0));
-        Long newerThan = ServletRequestUtils.getLongParameter(request, "newerThan");
-        if (newerThan != null) {
-            criteria.setNewerThan(new Date(newerThan));
-        }
 
         SearchResult result = searchService.search(criteria);
         builder.add("searchResult", false,

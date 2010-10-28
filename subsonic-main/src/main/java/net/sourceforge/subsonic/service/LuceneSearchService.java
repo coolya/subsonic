@@ -44,6 +44,7 @@ import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.SearchCriteria;
 import net.sourceforge.subsonic.domain.SearchResult;
 import net.sourceforge.subsonic.util.FileUtil;
+import static net.sourceforge.subsonic.service.SearchService.Line;
 
 /**
  * Performs Lucene-based searching and indexing.
@@ -147,7 +148,7 @@ public class LuceneSearchService {
                 new BooleanClause.Occur[]{BooleanClause.Occur.MUST, BooleanClause.Occur.SHOULD}) {
 
             @Override
-            public Document createDocument(SearchService.Line line) {
+            public Document createDocument(Line line) {
                 Document doc = new Document();
                 doc.add(new Field(FIELD_PATH, line.file.getPath(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
 
@@ -166,7 +167,7 @@ public class LuceneSearchService {
                 new BooleanClause.Occur[]{BooleanClause.Occur.MUST, BooleanClause.Occur.SHOULD}) {
 
             @Override
-            public Document createDocument(SearchService.Line line) {
+            public Document createDocument(Line line) {
                 Document doc = new Document();
                 doc.add(new Field(FIELD_PATH, line.file.getPath(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
 
@@ -185,7 +186,7 @@ public class LuceneSearchService {
                 new BooleanClause.Occur[]{BooleanClause.Occur.MUST}) {
 
             @Override
-            public Document createDocument(SearchService.Line line) {
+            public Document createDocument(Line line) {
                 Document doc = new Document();
                 doc.add(new Field(FIELD_PATH, line.file.getPath(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
 
@@ -213,8 +214,8 @@ public class LuceneSearchService {
             return flags;
         }
 
-        public abstract Document createDocument(SearchService.Line line);
+        public abstract Document createDocument(Line line);
     }
 }
-    
+
 
