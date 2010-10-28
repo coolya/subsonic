@@ -30,63 +30,18 @@ import java.util.*;
  */
 public class SearchCommand {
 
-    private String any;
-    private String title;
-    private String album;
-    private String artist;
-    private String time = "0";
-
-    private int offset;
-    private int count;
-
-    private int firstHit;
-    private int lastHit;
-    private int totalHits;
-    private int hitsPerPage;
-
-    private List<Match> matches;
+    private String query;
+    private List<MusicFile> matches;
     private boolean isIndexBeingCreated;
     private User user;
     private boolean partyModeEnabled;
 
-    public String getAny() {
-        return any;
+    public String getQuery() {
+        return query;
     }
 
-    public void setAny(String any) {
-        this.any = any;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(String album) {
-        this.album = album;
-    }
-
-    public String getArtist() {
-        return artist;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setQuery(String query) {
+        this.query = query;
     }
 
     public boolean isIndexBeingCreated() {
@@ -97,59 +52,11 @@ public class SearchCommand {
         isIndexBeingCreated = indexBeingCreated;
     }
 
-    public int getOffset() {
-        return offset;
-    }
-
-    public void setOffset(int offset) {
-        this.offset = offset;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public int getFirstHit() {
-        return firstHit;
-    }
-
-    public void setFirstHit(int firstHit) {
-        this.firstHit = firstHit;
-    }
-
-    public int getLastHit() {
-        return lastHit;
-    }
-
-    public void setLastHit(int lastHit) {
-        this.lastHit = lastHit;
-    }
-
-    public int getTotalHits() {
-        return totalHits;
-    }
-
-    public void setTotalHits(int totalHits) {
-        this.totalHits = totalHits;
-    }
-
-    public int getHitsPerPage() {
-        return hitsPerPage;
-    }
-
-    public void setHitsPerPage(int hitsPerPage) {
-        this.hitsPerPage = hitsPerPage;
-    }
-
-    public List<Match> getMatches() {
+    public List<MusicFile> getMatches() {
         return matches;
     }
 
-    public void setMatches(List<Match> matches) {
+    public void setMatches(List<MusicFile> matches) {
         this.matches = matches;
     }
 

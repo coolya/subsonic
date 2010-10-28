@@ -55,6 +55,7 @@ Colors: http://www.androidtapp.com/opentable/
 SEARCH
 ------
 Implement Lucene search index creation (on top of current impl).
+Remove unused resource bundles.
 Implement Lucene search prototype.
 Create development branch
 Create schemas for artist/album/song tables (tmp and master)
