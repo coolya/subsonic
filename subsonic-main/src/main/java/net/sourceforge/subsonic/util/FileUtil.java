@@ -20,9 +20,11 @@ package net.sourceforge.subsonic.util;
 
 import net.sourceforge.subsonic.Logger;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -95,5 +97,20 @@ public final class FileUtil {
             return file.getName();
         }
         return parent.getName() + File.separator + file.getName();
+    }
+
+    /**
+     * Closes the "closable", ignoring any excepetions.
+     * @param closeable The Closable to close, may be {@code null}.
+     */
+    public static void closeQuietly(Closeable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (IOException e) {
+                // Ignored
+            }
+        }
+
     }
 }

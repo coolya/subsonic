@@ -625,7 +625,7 @@ public class RESTController extends MultiActionController {
 
     private String resolveArtist(MusicFile file) throws IOException {
 
-        // If directory, find  title and artist from metadata in child.
+        // If directory, find artist from metadata in child.
         if (file.isDirectory()) {
             file = file.getFirstChild();
             if (file == null) {

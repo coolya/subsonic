@@ -81,7 +81,10 @@
         <property name="musicFileService" ref="musicFileService"/>
         <property name="musicInfoService" ref="musicInfoService"/>
         <property name="coverArtBatchService" ref="coverArtBatchService"/>
+        <property name="luceneSearchService" ref="luceneSearchService"/>
     </bean>
+
+    <bean id="luceneSearchService" class="net.sourceforge.subsonic.service.LuceneSearchService"/>
 
     <bean id="networkService" class="net.sourceforge.subsonic.service.NetworkService" init-method="init">
         <property name="settingsService" ref="settingsService"/>

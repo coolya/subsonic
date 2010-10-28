@@ -73,7 +73,7 @@ public class SearchServiceTestCase extends TestCase {
             }
         };
 
-        SearchService.Line line = SearchService.Line.forFile(file, new HashMap<File,SearchService.Line>());
+        SearchService.Line line = SearchService.Line.forFile(file, Collections.<File, SearchService.Line>emptyMap(), Collections.<File>emptySet());
         String yearString = year == null ? "" : year;
         String expected = 'F' + SearchService.Line.SEPARATOR +
                           lastModified + SearchService.Line.SEPARATOR +
@@ -87,7 +87,7 @@ public class SearchServiceTestCase extends TestCase {
                           StringUtils.capitalize(genre);
 
         assertEquals("Error in toString().", expected, line.toString());
-        assertEquals("Error in forFile().",  expected, SearchService.Line.forFile(file, new HashMap<File, SearchService.Line>()).toString());
+        assertEquals("Error in forFile().",  expected, SearchService.Line.forFile(file, Collections.<File, SearchService.Line>emptyMap(), Collections.<File>emptySet()).toString());
         assertEquals("Error in parse().",    expected, SearchService.Line.parse(expected).toString());
     }
 }

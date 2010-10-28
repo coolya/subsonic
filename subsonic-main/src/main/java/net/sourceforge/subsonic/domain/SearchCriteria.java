@@ -47,34 +47,42 @@ public class SearchCriteria {
         return any;
     }
 
+    @Deprecated
     public String getTitle() {
         return title;
     }
 
+    @Deprecated
     public void setTitle(String title) {
         this.title = title;
     }
 
+    @Deprecated
     public String getAlbum() {
         return album;
     }
 
+    @Deprecated
     public void setAlbum(String album) {
         this.album = album;
     }
 
+    @Deprecated
     public String getArtist() {
         return artist;
     }
 
+    @Deprecated
     public void setArtist(String artist) {
         this.artist = artist;
     }
 
+    @Deprecated
     public Date getNewerThan() {
         return newerThan;
     }
 
+    @Deprecated
     public void setNewerThan(Date newerThan) {
         this.newerThan = newerThan;
     }
