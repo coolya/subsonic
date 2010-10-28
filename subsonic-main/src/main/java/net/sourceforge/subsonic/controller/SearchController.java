@@ -34,6 +34,7 @@ import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.LuceneSearchService;
 
 /**
  * Controller for the search page.
@@ -73,10 +74,16 @@ public class SearchController extends SimpleFormController {
 
                 SearchCriteria criteria = new SearchCriteria();
                 criteria.setCount(MATCH_COUNT);
-                criteria.setAny(any);
+                criteria.setQuery(any);
 
-                SearchResult result = searchService.search(criteria);
-                command.setMatches(result.getMusicFiles());
+                SearchResult artists = searchService.search(criteria, LuceneSearchService.IndexType.ARTIST);
+                command.setArtists(artists.getMusicFiles());
+
+                SearchResult albums = searchService.search(criteria, LuceneSearchService.IndexType.ALBUM);
+                command.setAlbums(albums.getMusicFiles());
+
+                SearchResult songs = searchService.search(criteria, LuceneSearchService.IndexType.SONG);
+                command.setSongs(songs.getMusicFiles());
             }
         }
 

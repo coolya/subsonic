@@ -18,8 +18,6 @@
  */
 package net.sourceforge.subsonic.domain;
 
-import java.util.Date;
-
 import net.sourceforge.subsonic.service.SearchService;
 
 /**
@@ -30,61 +28,16 @@ import net.sourceforge.subsonic.service.SearchService;
  */
 public class SearchCriteria {
 
-    private String any;
-    private String title;
-    private String album;
-    private String artist;
-
-    private Date newerThan;
+    private String query;
     private int offset;
     private int count;
 
-    public void setAny(String any) {
-        this.any = any;
+    public void setQuery(String query) {
+        this.query = query;
     }
 
-    public String getAny() {
-        return any;
-    }
-
-    @Deprecated
-    public String getTitle() {
-        return title;
-    }
-
-    @Deprecated
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    @Deprecated
-    public String getAlbum() {
-        return album;
-    }
-
-    @Deprecated
-    public void setAlbum(String album) {
-        this.album = album;
-    }
-
-    @Deprecated
-    public String getArtist() {
-        return artist;
-    }
-
-    @Deprecated
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
-
-    @Deprecated
-    public Date getNewerThan() {
-        return newerThan;
-    }
-
-    @Deprecated
-    public void setNewerThan(Date newerThan) {
-        this.newerThan = newerThan;
+    public String getQuery() {
+        return query;
     }
 
     public int getOffset() {

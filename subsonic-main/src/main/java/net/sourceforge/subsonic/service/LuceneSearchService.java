@@ -98,7 +98,7 @@ public class LuceneSearchService {
             Searcher searcher = new IndexSearcher(reader);
             Analyzer analyzer = new StandardAnalyzer(LUCENE_VERSION);
 
-            Query query = MultiFieldQueryParser.parse(LUCENE_VERSION, criteria.getAny(), indexType.getFields(), indexType.getFlags(), analyzer);
+            Query query = MultiFieldQueryParser.parse(LUCENE_VERSION, criteria.getQuery(), indexType.getFields(), indexType.getFlags(), analyzer);
             LOG.debug("Searching '" + indexType + "' for: " + query);
 
             TopDocs topDocs = searcher.search(query, null, offset + count);

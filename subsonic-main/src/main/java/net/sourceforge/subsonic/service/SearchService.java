@@ -263,24 +263,23 @@ public class SearchService {
     }
 
     /**
-     * Search for music files fulfilling the given search criteria. Only songs (files, not directories)
-     * are returned.
+     * Search for music files fulfilling the given search criteria.
      *
-     * @param searchCriteria The search criteria.
+     * @param criteria The search criteria.
+     * @param indexType The search index to use.
      * @return The search result.
      * @throws IOException If an I/O error occurs.
      */
-    @Deprecated
-    public synchronized SearchResult search(SearchCriteria searchCriteria) throws IOException {
+    public synchronized SearchResult search(SearchCriteria criteria, LuceneSearchService.IndexType indexType) throws IOException {
 
         if (!isIndexCreated() || isIndexBeingCreated()) {
             SearchResult empty = new SearchResult();
-            empty.setOffset(searchCriteria.getOffset());
+            empty.setOffset(criteria.getOffset());
             empty.setMusicFiles(Collections.<MusicFile>emptyList());
             return empty;
         }
 
-        return luceneSearchService.search(searchCriteria, SONG);
+        return luceneSearchService.search(criteria, indexType);
     }
 
     /**

@@ -31,7 +31,9 @@ import java.util.*;
 public class SearchCommand {
 
     private String query;
-    private List<MusicFile> matches;
+    private List<MusicFile> artists;
+    private List<MusicFile> albums;
+    private List<MusicFile> songs;
     private boolean isIndexBeingCreated;
     private User user;
     private boolean partyModeEnabled;
@@ -52,12 +54,28 @@ public class SearchCommand {
         isIndexBeingCreated = indexBeingCreated;
     }
 
-    public List<MusicFile> getMatches() {
-        return matches;
+    public List<MusicFile> getArtists() {
+        return artists;
     }
 
-    public void setMatches(List<MusicFile> matches) {
-        this.matches = matches;
+    public void setArtists(List<MusicFile> artists) {
+        this.artists = artists;
+    }
+
+    public List<MusicFile> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(List<MusicFile> albums) {
+        this.albums = albums;
+    }
+
+    public List<MusicFile> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(List<MusicFile> songs) {
+        this.songs = songs;
     }
 
     public User getUser() {

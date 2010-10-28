@@ -69,7 +69,7 @@ public class LuceneSearchServiceTest {
                 SearchCriteria criteria = new SearchCriteria();
                 criteria.setOffset(0);
                 criteria.setCount(5);
-                criteria.setAny(query);
+                criteria.setQuery(query);
                 LuceneSearchService.IndexType[] types = LuceneSearchService.IndexType.values();
                 for (LuceneSearchService.IndexType indexType : types) {
                     System.out.println("\n" + indexType);
@@ -99,5 +99,5 @@ public class LuceneSearchServiceTest {
         }
     }
 }
-    
+
 

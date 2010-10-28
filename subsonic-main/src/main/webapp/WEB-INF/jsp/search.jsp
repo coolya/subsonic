@@ -42,12 +42,12 @@
     <p class="warning"><fmt:message key="search.index"/></p>
 </c:if>
 
-<c:if test="${empty command.matches}">
+<c:if test="${empty command.songs}">
     <p class="warning"><fmt:message key="search.hits.none"/></p>
 </c:if>
 
 <table style="border-collapse:collapse">
-    <c:forEach items="${command.matches}" var="match" varStatus="loopStatus">
+    <c:forEach items="${command.songs}" var="match" varStatus="loopStatus">
 
         <sub:url value="/main.view" var="mainUrl">
             <sub:param name="path" value="${match.parent.path}"/>

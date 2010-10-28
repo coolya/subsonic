@@ -18,7 +18,6 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import java.io.InputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +30,6 @@ import java.util.SortedSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -52,6 +50,7 @@ import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.VersionService;
+import net.sourceforge.subsonic.service.LuceneSearchService;
 import net.sourceforge.subsonic.util.StringUtil;
 
 /**
@@ -217,11 +216,11 @@ public class WapController extends MultiActionController {
 
     private List<MusicFile> search(String query) throws IOException {
         SearchCriteria criteria = new SearchCriteria();
-        criteria.setAny(query);
+        criteria.setQuery(query);
         criteria.setOffset(0);
         criteria.setCount(50);
 
-        SearchResult result = searchService.search(criteria);
+        SearchResult result = searchService.search(criteria, LuceneSearchService.IndexType.SONG);
         return result.getMusicFiles();
     }
 

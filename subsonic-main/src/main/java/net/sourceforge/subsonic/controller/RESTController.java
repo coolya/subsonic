@@ -65,6 +65,7 @@ import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.service.TranscodingService;
+import net.sourceforge.subsonic.service.LuceneSearchService;
 import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.util.XMLBuilder;
 
@@ -252,11 +253,11 @@ public class RESTController extends MultiActionController {
         }
 
         SearchCriteria criteria = new SearchCriteria();
-        criteria.setAny(query.toString().trim());
+        criteria.setQuery(query.toString().trim());
         criteria.setCount(ServletRequestUtils.getIntParameter(request, "count", 20));
         criteria.setOffset(ServletRequestUtils.getIntParameter(request, "offset", 0));
 
-        SearchResult result = searchService.search(criteria);
+        SearchResult result = searchService.search(criteria, LuceneSearchService.IndexType.SONG);
         builder.add("searchResult", false,
                 new Attribute("offset", result.getOffset()),
                 new Attribute("totalHits", result.getTotalHits()));
