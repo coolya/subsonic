@@ -6,9 +6,11 @@ import java.util.*;
 public class MissingTranslations  {
 
     public static void main(String[] args) throws IOException {
-        diff("en", "da");
-//        diff("no", "en");
-//        diff("en", "mk");
+        String[] locales = {"da", "de", "es", "fi", "fr", "is", "it", "ja_JP", "mk", "nl", "no", "pl", "ru", "sl", "sv", "zh_CN", "zh_TW"};
+
+        for (String locale : locales) {
+            diff(locale, "en");
+        }
     }
 
     private static void diff(String locale1, String locale2) throws IOException {

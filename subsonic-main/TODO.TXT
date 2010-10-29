@@ -55,7 +55,6 @@ Colors: http://www.androidtapp.com/opentable/
 SEARCH
 ------
 Implement Lucene search index creation (on top of current impl).
-Remove unused resource bundles.
 Implement Lucene search prototype.
 Fuzzy search?
 Clear whole lucene directory before indexing.
