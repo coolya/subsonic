@@ -84,7 +84,9 @@
         <property name="luceneSearchService" ref="luceneSearchService"/>
     </bean>
 
-    <bean id="luceneSearchService" class="net.sourceforge.subsonic.service.LuceneSearchService"/>
+    <bean id="luceneSearchService" class="net.sourceforge.subsonic.service.LuceneSearchService">
+        <property name="musicFileService" ref="musicFileService"/>
+    </bean>
 
     <bean id="networkService" class="net.sourceforge.subsonic.service.NetworkService" init-method="init">
         <property name="settingsService" ref="settingsService"/>

@@ -63,6 +63,8 @@ public class LuceneSearchService {
     private static final String FIELD_ARTIST = "artist";
     private static final Version LUCENE_VERSION = Version.LUCENE_30;
 
+    private MusicFileService musicFileService;
+
     /**
      * Creates a search index of the given type.
      *
@@ -111,8 +113,7 @@ public class LuceneSearchService {
             int end = Math.min(start + count, topDocs.totalHits);
             for (int i = start; i < end; i++) {
                 Document doc = searcher.doc(topDocs.scoreDocs[i].doc);
-                // TODO
-                musicFiles.add(new MusicFile(new File(doc.getField(FIELD_PATH).stringValue())));
+                musicFiles.add(musicFileService.getMusicFile(doc.getField(FIELD_PATH).stringValue()));
                 System.out.println(doc.get(FIELD_TITLE) + "  -  " + doc.get(FIELD_ALBUM) + "  -  " + doc.get(FIELD_ARTIST));
             }
 
@@ -138,9 +139,9 @@ public class LuceneSearchService {
         return new File(SettingsService.getSubsonicHome(), "lucene");
     }
 
-    // TODO: Fuzzy?
-    // TODO: Clear whole lucene directory before indexing.
-
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
+    }
 
     public static enum IndexType {
 

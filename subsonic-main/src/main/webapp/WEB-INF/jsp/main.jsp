@@ -334,8 +334,7 @@
         <sub:url value="main.view" var="nextUrl">
             <sub:param name="path" value="${model.nextAlbum.path}"/>
         </sub:url>
-        <td><div class="forward"
-                ><a href="${nextUrl}" title="${model.nextAlbum.name}">
+        <td><div class="forward"><a href="${nextUrl}" title="${model.nextAlbum.name}">
             <str:truncateNicely upper="30">${fn:escapeXml(model.nextAlbum.name)}</str:truncateNicely>
         </a></div></td>
     </c:if>
