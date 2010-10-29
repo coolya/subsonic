@@ -36,6 +36,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Searcher;
 import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
@@ -64,6 +65,10 @@ public class LuceneSearchService {
     private static final Version LUCENE_VERSION = Version.LUCENE_30;
 
     private MusicFileService musicFileService;
+
+    public LuceneSearchService() {
+        removeLocks();
+    }
 
     /**
      * Creates a search index of the given type.
@@ -126,17 +131,38 @@ public class LuceneSearchService {
     }
 
     private IndexWriter createIndexWriter(IndexType indexType) throws IOException {
-        File dir = new File(getIndexRootDirectory(), indexType.toString().toLowerCase());
+        File dir = getIndexDirectory(indexType);
         return new IndexWriter(FSDirectory.open(dir), new StandardAnalyzer(LUCENE_VERSION), true, new IndexWriter.MaxFieldLength(10));
     }
 
     private IndexReader createIndexReader(IndexType indexType) throws IOException {
-        File dir = new File(getIndexRootDirectory(), indexType.toString().toLowerCase());
+        File dir = getIndexDirectory(indexType);
         return IndexReader.open(FSDirectory.open(dir), true);
     }
 
     private File getIndexRootDirectory() {
         return new File(SettingsService.getSubsonicHome(), "lucene");
+    }
+
+    private File getIndexDirectory(IndexType indexType) {
+        return new File(getIndexRootDirectory(), indexType.toString().toLowerCase());
+    }
+
+    private void removeLocks() {
+        for (IndexType indexType : IndexType.values()) {
+            Directory dir = null;
+            try {
+                dir = FSDirectory.open(getIndexDirectory(indexType));
+                if (IndexWriter.isLocked(dir)) {
+                    IndexWriter.unlock(dir);
+                    LOG.info("Removed Lucene lock file in " + dir);
+                }
+            } catch (Exception x) {
+                LOG.warn("Failed to remove Lucene lock file in " + dir, x);
+            } finally {
+                FileUtil.closeQuietly(dir);
+            }
+        }
     }
 
     public void setMusicFileService(MusicFileService musicFileService) {

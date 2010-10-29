@@ -57,8 +57,6 @@ SEARCH
 Implement Lucene search index creation (on top of current impl).
 Implement Lucene search prototype.
 Fuzzy search?
-Clear whole lucene directory before indexing.
-Unlock Lucene lock file
 Create development branch
 Create schemas for artist/album/song tables (tmp and master)
 Populate with some dummy data.
