@@ -185,6 +185,10 @@
         <td>4.1</td>
         <td>1.3.0</td>
     </tr>
+    <tr class="table-altrow">
+        <td>4.2</td>
+        <td>1.4.0</td>
+    </tr>
 </table>
 <p>
     Note that a Subsonic server is backward compatible with a REST client if and only if the major version is the same,
@@ -331,6 +335,7 @@
 <p>
     <code>http://your-server/rest/search.view</code>
     <br>Since <a href="#versions">1.0.0</a>
+    <br>Deprecated since <a href="#versions">1.4.0</a>, use <code>search2</code> instead.
 </p>
 
 <p>
@@ -388,6 +393,71 @@
 </table>
 <p>
     Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;searchResult&gt;</code>
+    element on success.
+</p>
+
+<h2 class="div">search2</h2>
+
+<p>
+    <code>http://your-server/rest/search2.view</code>
+    <br>Since <a href="#versions">1.4.0</a>
+</p>
+
+<p>
+    Returns albums, artists and songs matching the given search criteria. Supports paging through the result.
+</p>
+<table width="100%" class="bottomspace">
+    <tr>
+        <th class="param-heading">Parameter</th>
+        <th class="param-heading">Required</th>
+        <th class="param-heading">Default</th>
+        <th class="param-heading">Comment</th>
+    </tr>
+    <tr class="table-altrow">
+        <td><code>query</code></td>
+        <td>Yes</td>
+        <td></td>
+        <td>Search query.</td>
+    </tr>
+    <tr>
+        <td><code>artistCount</code></td>
+        <td>No</td>
+        <td>20</td>
+        <td>Maximum number of artists to return.</td>
+    </tr>
+    <tr class="table-altrow">
+        <td><code>artistOffset</code></td>
+        <td>No</td>
+        <td>0</td>
+        <td>Search result offset for artists. Used for paging.</td>
+    </tr>
+    <tr>
+        <td><code>albumCount</code></td>
+        <td>No</td>
+        <td>20</td>
+        <td>Maximum number of albums to return.</td>
+    </tr>
+    <tr class="table-altrow">
+        <td><code>albumOffset</code></td>
+        <td>No</td>
+        <td>0</td>
+        <td>Search result offset for albums. Used for paging.</td>
+    </tr>
+    <tr>
+        <td><code>songCount</code></td>
+        <td>No</td>
+        <td>20</td>
+        <td>Maximum number of songs to return.</td>
+    </tr>
+    <tr class="table-altrow">
+        <td><code>songOffset</code></td>
+        <td>No</td>
+        <td>0</td>
+        <td>Search result offset for songs. Used for paging.</td>
+    </tr>
+</table>
+<p>
+    Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;searchResult2&gt;</code>
     element on success.
 </p>
 

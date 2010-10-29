@@ -54,8 +54,9 @@ Colors: http://www.androidtapp.com/opentable/
 
 SEARCH
 ------
-Implement Lucene search index creation (on top of current impl).
-Implement Lucene search prototype.
+Calculate artist/album count from cachedArtists/cachedAlbums.
+Replace isFile, isAlbum, isDirectory with one char.
+Test paging.
 Fuzzy search?
 Create development branch
 Create schemas for artist/album/song tables (tmp and master)
@@ -65,7 +66,6 @@ Populate master tables from music_file_info.
 Remove music_file_info table.
 Make ID columns count 1, 2, 3,...
 Implement algorithm for updating tmp-tables on scan.
-Lucene lock file unlocking on startup?
 
 _artist_
 id
@@ -102,6 +102,7 @@ last_played
 
 DONE IN 4.2
 ----------------
+Lucene search engine.
 Update LAME command
   o Both downsample and transcode
   o Make it work for existing installs.
@@ -109,6 +110,7 @@ Update LAME command
   o ID3 tags
 Include artist attribute in REST API.
 Updated German translation, courtesy of deejay2302
+
 
 TODO IN 4.2
 -----------------
@@ -147,7 +149,6 @@ Change documentation of subsonic_home.  Use popup?
 Make maven build from root work.
 Java silent installation: http://java.sun.com/javase/6/webnotes/install/jre/silent.html
 WiX: https://sourceforge.net/projects/wix/
-REST album/artist search.
 Add track count REST.
 Use AAC rather than MP3 for transcoding.
 Create album table (or reuse music_file_info), reimplement related services in SearchService.

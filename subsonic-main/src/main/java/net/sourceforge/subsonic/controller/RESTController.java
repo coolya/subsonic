@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -267,6 +268,46 @@ public class RESTController extends MultiActionController {
             List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
             builder.add("match", attributes, true);
         }
+        builder.endAll();
+        response.getWriter().print(builder);
+    }
+    
+    public void search2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        XMLBuilder builder = createXMLBuilder(response, true);
+        Player player = playerService.getPlayer(request, response);
+
+        builder.add("searchResult2", false);
+
+        String query = request.getParameter("query");        
+        SearchCriteria criteria = new SearchCriteria();
+        criteria.setQuery(StringUtils.trimToEmpty(query));
+        criteria.setCount(ServletRequestUtils.getIntParameter(request, "artistCount", 20));
+        criteria.setOffset(ServletRequestUtils.getIntParameter(request, "artistOffset", 0));
+        SearchResult artists = searchService.search(criteria, LuceneSearchService.IndexType.ARTIST);
+        for (MusicFile musicFile : artists.getMusicFiles()) {
+            builder.add("artist", true,
+                    new Attribute("name", musicFile.getName()),
+                    new Attribute("id", StringUtil.utf8HexEncode(musicFile.getPath())));
+        }
+        
+        criteria.setCount(ServletRequestUtils.getIntParameter(request, "albumCount", 20));
+        criteria.setOffset(ServletRequestUtils.getIntParameter(request, "albumOffset", 0));
+        SearchResult albums = searchService.search(criteria, LuceneSearchService.IndexType.ALBUM);
+        for (MusicFile musicFile : albums.getMusicFiles()) {
+            List<Attribute> attributes = createAttributesForMusicFile(player, null, musicFile);
+            builder.add("album", attributes, true);
+        }
+        
+        criteria.setCount(ServletRequestUtils.getIntParameter(request, "songCount", 20));
+        criteria.setOffset(ServletRequestUtils.getIntParameter(request, "songOffset", 0));
+        SearchResult songs = searchService.search(criteria, LuceneSearchService.IndexType.SONG);
+        for (MusicFile musicFile : songs.getMusicFiles()) {
+            File coverArt = musicFileService.getCoverArt(musicFile.getParent());
+            List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
+            builder.add("song", attributes, true);
+        }
+        
         builder.endAll();
         response.getWriter().print(builder);
     }

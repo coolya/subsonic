@@ -4,7 +4,7 @@
            targetNamespace="http://subsonic.org/restapi"
            attributeFormDefault="unqualified"
            elementFormDefault="qualified"
-           version="1.3.0">
+           version="1.4.0">
 
     <xs:element name="subsonic-response" type="sub:Response"/>
 
@@ -15,6 +15,7 @@
             <xs:element name="directory" type="sub:Directory" minOccurs="1" maxOccurs="1"/>
             <xs:element name="nowPlaying" type="sub:NowPlaying" minOccurs="1" maxOccurs="1"/>
             <xs:element name="searchResult" type="sub:SearchResult" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="searchResult2" type="sub:SearchResult2" minOccurs="1" maxOccurs="1"/>
             <xs:element name="playlists" type="sub:Playlists" minOccurs="1" maxOccurs="1"/>
             <xs:element name="playlist" type="sub:Playlist" minOccurs="1" maxOccurs="1"/>
             <xs:element name="jukeboxPlaylist" type="sub:JukeboxPlaylist" minOccurs="1" maxOccurs="1"/>
@@ -119,12 +120,21 @@
         </xs:complexContent>
     </xs:complexType>
 
+    <!--Deprecated-->
     <xs:complexType name="SearchResult">
         <xs:sequence>
             <xs:element name="match" type="sub:Child" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="offset" type="xs:int" use="required"/>
         <xs:attribute name="totalHits" type="xs:int" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="SearchResult2">
+        <xs:sequence>
+            <xs:element name="artist" type="sub:Artist" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="album" type="sub:Child" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="song" type="sub:Child" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="Playlists">

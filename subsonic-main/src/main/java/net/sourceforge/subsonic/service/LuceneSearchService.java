@@ -109,21 +109,17 @@ public class LuceneSearchService {
             LOG.debug("Searching '" + indexType + "' for: " + query);
 
             TopDocs topDocs = searcher.search(query, null, offset + count);
-
             result.setTotalHits(topDocs.totalHits);
-
-            System.out.println("Hits: " + topDocs.totalHits);
 
             int start = Math.min(offset, topDocs.totalHits);
             int end = Math.min(start + count, topDocs.totalHits);
             for (int i = start; i < end; i++) {
                 Document doc = searcher.doc(topDocs.scoreDocs[i].doc);
                 musicFiles.add(musicFileService.getMusicFile(doc.getField(FIELD_PATH).stringValue()));
-                System.out.println(doc.get(FIELD_TITLE) + "  -  " + doc.get(FIELD_ALBUM) + "  -  " + doc.get(FIELD_ARTIST));
             }
 
         } catch (Throwable x) {
-            LOG.error("Failed to perform Lucene search.", x);
+            LOG.error("Failed to execute Lucene search.", x);
         } finally {
             FileUtil.closeQuietly(reader);
         }
