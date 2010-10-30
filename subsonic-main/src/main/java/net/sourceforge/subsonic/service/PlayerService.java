@@ -41,7 +41,7 @@ import java.util.List;
  */
 public class PlayerService {
 
-    private static final Logger LOG = Logger.getLogger(TranscodingService.class);
+    private static final Logger LOG = Logger.getLogger(PlayerService.class);
     private static final String COOKIE_NAME = "player";
     private static final int COOKIE_EXPIRY = 365 * 24 * 3600; // One year
 
@@ -101,9 +101,9 @@ public class PlayerService {
         if (player == null) {
             player = new Player();
             createPlayer(player);
-            LOG.debug("Created player " + player.getId() + " (remoteControlEnabled: " + remoteControlEnabled +
-                      ", isStreamRequest: " + isStreamRequest + ", username: " + username +
-                      ", ip: " + request.getRemoteAddr() + ").");
+//            LOG.debug("Created player " + player.getId() + " (remoteControlEnabled: " + remoteControlEnabled +
+//                      ", isStreamRequest: " + isStreamRequest + ", username: " + username +
+//                      ", ip: " + request.getRemoteAddr() + ").");
         }
 
         // Update player data.

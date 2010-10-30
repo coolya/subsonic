@@ -110,20 +110,18 @@ Update LAME command
   o ID3 tags
 Include artist attribute in REST API.
 Updated German translation, courtesy of deejay2302
-
+Fixed bug in startup script in standalone Subsonic (readlink)
 
 TODO IN 4.2
 -----------------
 Make Discogs work again.
 Add REST method to add license key.
 Subsonic Premium
-Lucene search.
 Include statically linked ffmpeg, lame from einstein2x.
   o Update documentation
   o Uninstaller should remove ffmpeg, lame?
 Add one-liner intro in web page, a la http://www.rogueamoeba.com/nicecast/
   o No monthly fees, no uploading, no syncing
-Fix readlink (verify patch)
 Change icons all around.
 Deprecate current cover art method.  Make new which takes song/album ID.
 Add trialExpires to REST API.
