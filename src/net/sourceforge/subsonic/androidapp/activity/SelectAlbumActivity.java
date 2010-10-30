@@ -42,6 +42,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.domain.SearchResult;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
@@ -226,7 +227,12 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         new LoadTask() {
             @Override
             protected MusicDirectory load(MusicService service) throws Exception {
-                return service.search(query, SelectAlbumActivity.this, this);
+                SearchResult searchResult = service.search(query, SelectAlbumActivity.this, this);
+                MusicDirectory dir = new MusicDirectory();
+                for (MusicDirectory.Entry song : searchResult.getSongs()) {
+                    dir.addChild(song);
+                }
+                return dir;
             }
 
             @Override

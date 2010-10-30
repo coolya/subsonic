@@ -29,7 +29,7 @@ import java.io.Reader;
 /**
  * @author Sindre Mehus
  */
-public class RandomSongsParser extends MusicDirectoryParser {
+public class RandomSongsParser extends MusicDirectoryEntryParser {
 
     public RandomSongsParser(Context context) {
         super(context);

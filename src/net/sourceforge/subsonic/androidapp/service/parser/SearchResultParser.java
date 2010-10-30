@@ -21,32 +21,37 @@ package net.sourceforge.subsonic.androidapp.service.parser;
 import android.content.Context;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.domain.SearchResult;
+import net.sourceforge.subsonic.androidapp.domain.Artist;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import org.xmlpull.v1.XmlPullParser;
 
 import java.io.Reader;
+import java.util.Collections;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * @author Sindre Mehus
  */
-public class SearchResultParser extends MusicDirectoryParser {
+public class SearchResultParser extends MusicDirectoryEntryParser {
 
     public SearchResultParser(Context context) {
         super(context);
     }
 
-    public MusicDirectory parse(Reader reader, ProgressListener progressListener) throws Exception {
+    public SearchResult parse(Reader reader, ProgressListener progressListener) throws Exception {
         updateProgress(progressListener, R.string.parser_reading);
         init(reader);
 
-        MusicDirectory dir = new MusicDirectory();
+        List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>();
         int eventType;
         do {
             eventType = nextParseEvent();
             if (eventType == XmlPullParser.START_TAG) {
                 String name = getElementName();
                 if ("match".equals(name)) {
-                    dir.addChild(parseEntry());
+                    songs.add(parseEntry());
                 } else if ("error".equals(name)) {
                     handleError();
                 }
@@ -56,7 +61,7 @@ public class SearchResultParser extends MusicDirectoryParser {
         validate();
         updateProgress(progressListener, R.string.parser_reading_done);
 
-        return dir;
+        return new SearchResult(Collections.<Artist>emptyList(), Collections.<MusicDirectory.Entry>emptyList(), songs);
     }
 
 }
