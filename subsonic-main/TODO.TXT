@@ -4,7 +4,23 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.9
 -------------------
-Use search2 when available.  New search result interface.
+New search result interface.
+  o Use search2 when available.
+  o update SackOfViewsAdapter, use MergeAdapter instead in MainActivity.
+  o detect server version in isLicenseValid.
+  o implement More... buttons.  Consolidate wimp
+  o design More... buttons.
+  o merge SearchActivity and SearchResultActivity?
+  o make voice search work
+  o remove query functionality from SelectAlbumActivity.
+  o show message when no results
+  o remove tick mark from songs.
+  o click on artist to go to artist.
+  o click on album to go to artist.
+  o click on song to append song to playlist and play it.
+  o long-click on song to do misc stuff.
+  o add count parameters to search method.
+
 Show artist name in album lists.
 Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone.
@@ -115,6 +131,7 @@ Fixed bug in startup script in standalone Subsonic (readlink)
 
 TODO IN 4.2
 -----------------
+Search for "David Bowie" fails.
 Make Discogs work again.
 Add REST method to add license key.
 Subsonic Premium

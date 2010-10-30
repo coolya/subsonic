@@ -32,9 +32,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -49,9 +47,9 @@ import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.Pair;
-import net.sourceforge.subsonic.androidapp.util.SongView;
 import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.EntryAdapter;
 
 public class SelectAlbumActivity extends SubsonicTabActivity {
 
@@ -472,41 +470,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         builder.create().show();
     }
 
-    private class EntryAdapter extends ArrayAdapter<MusicDirectory.Entry> {
-        public EntryAdapter(List<MusicDirectory.Entry> entries) {
-            super(SelectAlbumActivity.this, android.R.layout.simple_list_item_1, entries);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            MusicDirectory.Entry entry = getItem(position);
-
-            if (entry.isDirectory()) {
-                TextView view;
-                view = (TextView) LayoutInflater.from(SelectAlbumActivity.this).inflate(
-                        android.R.layout.simple_list_item_1, parent, false);
-
-                view.setCompoundDrawablePadding(10);
-                imageLoader.loadImage(view, entry, false);
-                view.setText(entry.getTitle());
-
-                return view;
-
-            } else {
-                SongView view;
-                if (convertView != null && convertView instanceof SongView) {
-                    view = (SongView) convertView;
-                } else {
-                    view = new SongView(SelectAlbumActivity.this);
-                }
-                if (getDownloadService() != null) {
-                    view.setDownloadFile(getDownloadService().forSong(entry), getDownloadService(), true);
-                }
-                return view;
-            }
-        }
-    }
-
     private abstract class LoadTask extends TabActivityBackgroundTask<Pair<MusicDirectory, Boolean>> {
 
         public LoadTask() {
@@ -545,7 +508,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             }
 
             emptyView.setVisibility(entries.isEmpty() ? View.VISIBLE : View.GONE);
-            entryList.setAdapter(new EntryAdapter(entries));
+            entryList.setAdapter(new EntryAdapter(SelectAlbumActivity.this, imageLoader, entries));
             licenseValid = result.getSecond();
 
             boolean playAll = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_PLAY_ALL, false);
