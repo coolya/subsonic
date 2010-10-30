@@ -20,18 +20,14 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SectionIndexer;
 import android.widget.Button;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Artist;
@@ -42,6 +38,7 @@ import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.ArtistAdapter;
 
 public class SelectArtistActivity extends SubsonicTabActivity implements AdapterView.OnItemClickListener {
 
@@ -94,7 +91,7 @@ public class SelectArtistActivity extends SubsonicTabActivity implements Adapter
                 List<Artist> artists = new ArrayList<Artist>(result.getShortcuts().size() + result.getArtists().size());
                 artists.addAll(result.getShortcuts());
                 artists.addAll(result.getArtists());
-                artistList.setAdapter(new ArtistAdapter(artists));
+                artistList.setAdapter(new ArtistAdapter(SelectArtistActivity.this, artists));
             }
         };
         task.execute();
@@ -111,47 +108,4 @@ public class SelectArtistActivity extends SubsonicTabActivity implements Adapter
         }
     }
 
-    public class ArtistAdapter extends ArrayAdapter<Artist> implements SectionIndexer {
-
-        // Both arrays are indexed by section ID.
-        private final Object[] sections;
-        private final Integer[] positions;
-
-        public ArtistAdapter(List<Artist> artists) {
-            super(SelectArtistActivity.this, R.layout.artist_list_item, artists);
-
-            Set<String> sectionSet = new LinkedHashSet<String>(30);
-            List<Integer> positionList = new ArrayList<Integer>(30);
-            for (int i = 0; i < artists.size(); i++) {
-                Artist artist = artists.get(i);
-                String index = artist.getIndex();
-                if (!sectionSet.contains(index)) {
-                    sectionSet.add(index);
-                    positionList.add(i);
-                }
-            }
-            sections = sectionSet.toArray(new Object[sectionSet.size()]);
-            positions = positionList.toArray(new Integer[positionList.size()]);
-        }
-
-        @Override
-        public Object[] getSections() {
-            return sections;
-        }
-
-        @Override
-        public int getPositionForSection(int section) {
-            return positions[section];
-        }
-
-        @Override
-        public int getSectionForPosition(int pos) {
-            for (int i = 0; i < sections.length - 1; i++) {
-                if (pos < positions[i + 1]) {
-                    return i;
-                }
-            }
-            return sections.length - 1;
-        }
-    }
 }

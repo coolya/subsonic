@@ -33,6 +33,11 @@
     <string name="search.title">Music search</string>
     <string name="search.search">Click to search</string>
 
+    <string name="search_result.artists">Artists</string>
+    <string name="search_result.albums">Albums</string>
+    <string name="search_result.songs">Songs</string>
+    <string name="search_result.more">More</string>
+
     <string name="progress.wait">Please wait...</string>
 
     <string name="music_library.label">Music library</string>

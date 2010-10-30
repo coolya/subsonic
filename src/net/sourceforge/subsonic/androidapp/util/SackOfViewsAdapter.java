@@ -71,7 +71,7 @@ public class SackOfViewsAdapter extends BaseAdapter {
      */
     public SackOfViewsAdapter(List<View> views) {
         for (View view : views) {
-            view.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.FILL_PARENT, ListView.LayoutParams.WRAP_CONTENT));
+            view.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
         this.views = views;
     }

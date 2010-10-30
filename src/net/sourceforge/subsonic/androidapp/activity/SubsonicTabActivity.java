@@ -105,7 +105,7 @@ public class SubsonicTabActivity extends Activity {
             homeButton.setEnabled(false);
         } else if (this instanceof SelectAlbumActivity || this instanceof SelectArtistActivity) {
             musicButton.setEnabled(false);
-        } else if (this instanceof SearchActivity) {
+        } else if (this instanceof SearchActivity || this instanceof SearchResultActivity) {
             searchButton.setEnabled(false);
         } else if (this instanceof SelectPlaylistActivity) {
             playlistButton.setEnabled(false);
@@ -165,7 +165,7 @@ public class SubsonicTabActivity extends Activity {
         }
     }
 
-    protected DownloadService getDownloadService() {
+    public DownloadService getDownloadService() {
         return DownloadServiceImpl.getInstance();
     }
 
