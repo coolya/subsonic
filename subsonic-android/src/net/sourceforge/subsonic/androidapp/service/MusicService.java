@@ -24,6 +24,7 @@ import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.domain.Version;
+import net.sourceforge.subsonic.androidapp.domain.SearchResult;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import org.apache.http.HttpResponse;
@@ -43,7 +44,7 @@ public interface MusicService {
 
     MusicDirectory getMusicDirectory(String id, Context context, ProgressListener progressListener) throws Exception;
 
-    MusicDirectory search(String query, Context context, ProgressListener progressListener) throws Exception;
+    SearchResult search(String query, Context context, ProgressListener progressListener) throws Exception;
 
     MusicDirectory getPlaylist(String id, Context context, ProgressListener progressListener) throws Exception;
 

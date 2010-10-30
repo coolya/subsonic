@@ -30,7 +30,7 @@ import java.io.Reader;
 /**
  * @author Sindre Mehus
  */
-public class MusicDirectoryParser extends AbstractParser {
+public class MusicDirectoryParser extends MusicDirectoryEntryParser {
 
     private static final String TAG = MusicDirectoryParser.class.getSimpleName();
 
@@ -67,30 +67,5 @@ public class MusicDirectoryParser extends AbstractParser {
         Log.d(TAG, "Got music directory in " + (t1 - t0) + "ms.");
 
         return dir;
-    }
-
-    protected MusicDirectory.Entry parseEntry() {
-        MusicDirectory.Entry entry = new MusicDirectory.Entry();
-        entry.setId(get("id"));
-        entry.setTitle(get("title"));
-        entry.setDirectory(getBoolean("isDir"));
-        entry.setCoverArt(get("coverArt"));
-
-        if (!entry.isDirectory()) {
-            entry.setAlbum(get("album"));
-            entry.setTrack(getInteger("track"));
-            entry.setYear(getInteger("year"));
-            entry.setGenre(get("genre"));
-            entry.setArtist(get("artist"));
-            entry.setContentType(get("contentType"));
-            entry.setSuffix(get("suffix"));
-            entry.setTranscodedContentType(get("transcodedContentType"));
-            entry.setTranscodedSuffix(get("transcodedSuffix"));
-            entry.setSize(getLong("size"));
-            entry.setDuration(getInteger("duration"));
-            entry.setBitRate(getInteger("bitRate"));
-            entry.setPath(get("path"));
-        }
-        return entry;
     }
 }
