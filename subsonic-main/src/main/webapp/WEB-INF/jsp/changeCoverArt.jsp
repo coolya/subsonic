@@ -74,7 +74,7 @@
 <table><tr>
     <input id="path" type="hidden" name="path" value="${model.path}"/>
     <td><label for="url"><fmt:message key="changecoverart.address"/></label></td>
-    <td><input type="text" name="url" size="40" id="url" value="http://"/></td>
+    <td><input type="text" name="url" size="40" id="url" value="http://" onclick="select()"/></td>
     <td><input type='submit' value='<fmt:message key="common.ok"/>' onclick="setImage(dwr.util.getValue('url'))"></td>
 </tr></table>
 
