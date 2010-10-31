@@ -6,7 +6,6 @@ TODO IN ANDROID 1.9
 -------------------
 New search result interface.
   o Use search2 when available.
-  o update SackOfViewsAdapter, use MergeAdapter instead in MainActivity.
   o detect server version in isLicenseValid.
   o implement More... buttons.  Consolidate wimp
   o design More... buttons.
