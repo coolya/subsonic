@@ -26,6 +26,7 @@ import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.domain.SearchResult;
+import net.sourceforge.subsonic.androidapp.domain.SearchCritera;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
@@ -130,7 +131,7 @@ public class OfflineMusicService extends RESTMusicService {
     }
 
     @Override
-    public SearchResult search(String query, Context context, ProgressListener progressListener) throws Exception {
+    public SearchResult search(SearchCritera criteria, Context context, ProgressListener progressListener) throws Exception {
         throw new RuntimeException("Search not available in offline mode");
     }
 

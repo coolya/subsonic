@@ -20,26 +20,20 @@
 package net.sourceforge.subsonic.androidapp.activity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.view.LayoutInflater;
-import android.widget.Button;
+import android.view.View;
 import android.widget.ListView;
 import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.util.Pair;
-import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.domain.SearchCritera;
+import net.sourceforge.subsonic.androidapp.domain.SearchResult;
+import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
+import net.sourceforge.subsonic.androidapp.util.ArtistAdapter;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
-import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
-import net.sourceforge.subsonic.androidapp.util.MergeAdapter;
+import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.EntryAdapter;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
-import net.sourceforge.subsonic.androidapp.util.ArtistAdapter;
-import net.sourceforge.subsonic.androidapp.service.MusicService;
-import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
-import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.domain.SearchResult;
-import net.sourceforge.subsonic.androidapp.domain.Playlist;
-
-import java.util.List;
+import net.sourceforge.subsonic.androidapp.util.MergeAdapter;
+import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
 
 /**
  * Performs search and displays the matching artists, albums and songs.
@@ -68,7 +62,8 @@ public class SearchResultActivity extends SubsonicTabActivity {
         BackgroundTask<SearchResult> task = new TabActivityBackgroundTask<SearchResult>(this) {
             @Override
             protected SearchResult doInBackground() throws Throwable {
-                return MusicServiceFactory.getMusicService(SearchResultActivity.this).search(query, SearchResultActivity.this, this);
+                SearchCritera criteria = new SearchCritera(query, 10, 10, 30);
+                return MusicServiceFactory.getMusicService(SearchResultActivity.this).search(criteria, SearchResultActivity.this, this);
             }
 
             @Override
