@@ -23,6 +23,7 @@ import android.widget.ListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 /**
  * Adapter that merges multiple child adapters and views
@@ -55,14 +56,19 @@ public class MergeAdapter extends BaseAdapter {
         adapter.registerDataSetObserver(new CascadeDataSetObserver());
     }
 
+    public void removeAdapter(ListAdapter adapter) {
+        pieces.remove(adapter);
+        notifyDataSetChanged();
+    }
+    
     /**
-     * Adds a new View to the roster of things to appear
-     * in the aggregate list.
-     *
-     * @param view Single view to add
-     */
-    public void addView(View view) {
-        addView(view, false);
+    * Adds a new View to the roster of things to appear
+    * in the aggregate list.
+    *
+    * @param view Single view to add
+    */
+    public ListAdapter addView(View view) {
+        return addView(view, false);
     }
 
     /**
@@ -72,12 +78,8 @@ public class MergeAdapter extends BaseAdapter {
      * @param view    Single view to add
      * @param enabled false if views are disabled, true if enabled
      */
-    public void addView(View view, boolean enabled) {
-        ArrayList<View> list = new ArrayList<View>(1);
-
-        list.add(view);
-
-        addViews(list, enabled);
+    public ListAdapter addView(View view, boolean enabled) {
+        return addViews(Arrays.asList(view), enabled);
     }
 
     /**
@@ -86,8 +88,8 @@ public class MergeAdapter extends BaseAdapter {
      *
      * @param views List of views to add
      */
-    public void addViews(List<View> views) {
-        addViews(views, false);
+    public ListAdapter addViews(List<View> views) {
+        return addViews(views, false);
     }
 
     /**
@@ -97,12 +99,10 @@ public class MergeAdapter extends BaseAdapter {
      * @param views   List of views to add
      * @param enabled false if views are disabled, true if enabled
      */
-    public void addViews(List<View> views, boolean enabled) {
-        if (enabled) {
-            addAdapter(new EnabledSackAdapter(views));
-        } else {
-            addAdapter(new SackOfViewsAdapter(views));
-        }
+    public ListAdapter addViews(List<View> views, boolean enabled) {
+        ListAdapter adapter = enabled ? new EnabledSackAdapter(views) : new SackOfViewsAdapter(views);
+        addAdapter(adapter);
+        return adapter;
     }
 
     /**

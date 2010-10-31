@@ -58,5 +58,14 @@
             a:gravity="center_vertical"
             a:paddingLeft="6dp"/>
 
+    <TextView
+            a:id="@+id/search_result_more_songs"
+            a:text="@string/search_result.more"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:textAppearance="?android:attr/textAppearanceSmall"
+            a:gravity="center_vertical"
+            a:paddingLeft="6dp"/>
+
 </LinearLayout>
 
