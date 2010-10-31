@@ -27,18 +27,17 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
-import net.sourceforge.subsonic.androidapp.util.SackOfViewsAdapter;
-import net.sourceforge.subsonic.androidapp.util.Util;
 import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.MergeAdapter;
+import net.sourceforge.subsonic.androidapp.util.Util;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends SubsonicTabActivity {
 
@@ -53,8 +52,8 @@ public class MainActivity extends SubsonicTabActivity {
     private static boolean infoDialogDisplayed;
 
     /**
-    * Called when the activity is first created.
-    */
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,20 +85,14 @@ public class MainActivity extends SubsonicTabActivity {
 
         ListView list = (ListView) findViewById(R.id.main_list);
 
-        List<View> views;
+        MergeAdapter adapter = new MergeAdapter();
         if (Util.isOffline(this)) {
-            views = Arrays.asList(serverButton, settingsButton);
+            adapter.addViews(Arrays.asList(serverButton, settingsButton), true);
         } else {
-            views = Arrays.asList(serverButton, shuffleButton, settingsButton, albumsTitle,
-                    albumsNewestButton, albumsRandomButton, albumsHighestButton, albumsRecentButton, albumsFrequentButton);
+            adapter.addViews(Arrays.asList(serverButton, shuffleButton, settingsButton), true);
+            adapter.addView(albumsTitle, false);
+            adapter.addViews(Arrays.asList(albumsNewestButton, albumsRandomButton, albumsHighestButton, albumsRecentButton, albumsFrequentButton), true);
         }
-        final int albumTitlePosition = views.indexOf(albumsTitle);
-        SackOfViewsAdapter adapter = new SackOfViewsAdapter(views) {
-            @Override
-            public boolean isEnabled(int position) {
-                return position != albumTitlePosition;
-            }
-        };
         list.setAdapter(adapter);
         registerForContextMenu(dummyView);
 
