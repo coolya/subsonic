@@ -27,6 +27,7 @@ import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.SearchCritera;
 import net.sourceforge.subsonic.androidapp.domain.SearchResult;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
+import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.util.ArtistAdapter;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
@@ -63,7 +64,10 @@ public class SearchResultActivity extends SubsonicTabActivity {
             @Override
             protected SearchResult doInBackground() throws Throwable {
                 SearchCritera criteria = new SearchCritera(query, 10, 10, 30);
-                return MusicServiceFactory.getMusicService(SearchResultActivity.this).search(criteria, SearchResultActivity.this, this);
+                MusicService service = MusicServiceFactory.getMusicService(SearchResultActivity.this);
+                // TODO: Call isLicenseValid to ensure the server's REST version is read.
+                service.isLicenseValid(SearchResultActivity.this, this);
+                return service.search(criteria, SearchResultActivity.this, this);
             }
 
             @Override

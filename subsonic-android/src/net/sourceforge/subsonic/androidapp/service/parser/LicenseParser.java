@@ -23,6 +23,9 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.io.Reader;
 
+import net.sourceforge.subsonic.androidapp.domain.ServerInfo;
+import net.sourceforge.subsonic.androidapp.domain.Version;
+
 /**
  * @author Sindre Mehus
  */
@@ -32,15 +35,20 @@ public class LicenseParser extends AbstractParser {
         super(context);
     }
 
-    public boolean parse(Reader reader) throws Exception {
+    public ServerInfo parse(Reader reader) throws Exception {
+
         init(reader);
+
+        ServerInfo serverInfo = new ServerInfo();
         int eventType;
         do {
             eventType = nextParseEvent();
             if (eventType == XmlPullParser.START_TAG) {
                 String name = getElementName();
-                if ("license".equals(name)) {
-                    return getBoolean("valid");
+                if ("subsonic-response".equals(name)) {
+                    serverInfo.setRestVersion(new Version(get("version")));
+                } else if ("license".equals(name)) {
+                    serverInfo.setLicenseValid(getBoolean("valid"));
                 } else if ("error".equals(name)) {
                     handleError();
                 }
@@ -49,6 +57,6 @@ public class LicenseParser extends AbstractParser {
 
         validate();
 
-        return false;
+        return serverInfo;
     }
 }
