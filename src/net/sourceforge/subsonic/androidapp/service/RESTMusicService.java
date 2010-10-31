@@ -66,6 +66,7 @@ import net.sourceforge.subsonic.androidapp.domain.Version;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.domain.SearchResult;
 import net.sourceforge.subsonic.androidapp.domain.SearchCritera;
+import net.sourceforge.subsonic.androidapp.domain.ServerInfo;
 import net.sourceforge.subsonic.androidapp.service.parser.ErrorParser;
 import net.sourceforge.subsonic.androidapp.service.parser.IndexesParser;
 import net.sourceforge.subsonic.androidapp.service.parser.LicenseParser;
@@ -76,6 +77,7 @@ import net.sourceforge.subsonic.androidapp.service.parser.RandomSongsParser;
 import net.sourceforge.subsonic.androidapp.service.parser.SearchResultParser;
 import net.sourceforge.subsonic.androidapp.service.parser.VersionParser;
 import net.sourceforge.subsonic.androidapp.service.parser.AlbumListParser;
+import net.sourceforge.subsonic.androidapp.service.parser.SearchResult2Parser;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
@@ -116,6 +118,7 @@ public class RESTMusicService implements MusicService {
     private String redirectFrom;
     private String redirectTo;
     private final ThreadSafeClientConnManager connManager;
+    private Version serverRestVersion;
 
     public RESTMusicService() {
 
@@ -156,7 +159,9 @@ public class RESTMusicService implements MusicService {
     public boolean isLicenseValid(Context context, ProgressListener progressListener) throws Exception {
         Reader reader = getReader(context, progressListener, "getLicense", null);
         try {
-            return new LicenseParser(context).parse(reader);
+            ServerInfo serverInfo = new LicenseParser(context).parse(reader);
+            serverRestVersion = serverInfo.getRestVersion();
+            return serverInfo.isLicenseValid();
         } finally {
             Util.close(reader);
         }
@@ -211,11 +216,46 @@ public class RESTMusicService implements MusicService {
 
     @Override
     public SearchResult search(SearchCritera critera, Context context, ProgressListener progressListener) throws Exception {
+        // Ensure backward compatibility with REST 1.3.
+        if (isServer14()) {
+            return searchNew(critera, context, progressListener);
+        } else {
+            return searchOld(critera, context, progressListener);
+        }
+    }
+
+    private boolean isServer14() {
+        if (serverRestVersion == null) {
+            return false;
+        }
+        Version version14 = new Version("1.4");
+        return serverRestVersion.compareTo(version14) >= 0;
+    }
+
+    /**
+     * Search using the "search" REST method.
+     */
+    private SearchResult searchOld(SearchCritera critera, Context context, ProgressListener progressListener) throws Exception {
         List<String> parameterNames = Arrays.asList("any", "songCount");
-        List<Object> parameterValues = Arrays.asList(critera.getQuery(), (Object) critera.getSongCount());
+        List<Object> parameterValues = Arrays.<Object>asList(critera.getQuery(), critera.getSongCount());
         Reader reader = getReader(context, progressListener, "search", null, parameterNames, parameterValues);
         try {
             return new SearchResultParser(context).parse(reader, progressListener);
+        } finally {
+            Util.close(reader);
+        }
+    }
+
+    /**
+     * Search using the "search2" REST method, available in 1.4.0 and later.
+     */
+    private SearchResult searchNew(SearchCritera critera, Context context, ProgressListener progressListener) throws Exception {
+        List<String> parameterNames = Arrays.asList("query", "artistCount", "albumCount", "songCount");
+        List<Object> parameterValues = Arrays.<Object>asList(critera.getQuery(), critera.getArtistCount(),
+                                                             critera.getAlbumCount(), critera.getSongCount());
+        Reader reader = getReader(context, progressListener, "search2", null, parameterNames, parameterValues);
+        try {
+            return new SearchResult2Parser(context).parse(reader, progressListener);
         } finally {
             Util.close(reader);
         }
