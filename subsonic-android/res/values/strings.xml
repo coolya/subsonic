@@ -36,7 +36,7 @@
     <string name="search_result.artists">Artists</string>
     <string name="search_result.albums">Albums</string>
     <string name="search_result.songs">Songs</string>
-    <string name="search_result.more">More</string>
+    <string name="search_result.more">Show more</string>
 
     <string name="progress.wait">Please wait...</string>
 
