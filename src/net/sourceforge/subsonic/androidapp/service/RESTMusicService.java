@@ -65,6 +65,7 @@ import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.Version;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.domain.SearchResult;
+import net.sourceforge.subsonic.androidapp.domain.SearchCritera;
 import net.sourceforge.subsonic.androidapp.service.parser.ErrorParser;
 import net.sourceforge.subsonic.androidapp.service.parser.IndexesParser;
 import net.sourceforge.subsonic.androidapp.service.parser.LicenseParser;
@@ -209,8 +210,10 @@ public class RESTMusicService implements MusicService {
     }
 
     @Override
-    public SearchResult search(String query, Context context, ProgressListener progressListener) throws Exception {
-        Reader reader = getReader(context, progressListener, "search", null, "any", query);
+    public SearchResult search(SearchCritera critera, Context context, ProgressListener progressListener) throws Exception {
+        List<String> parameterNames = Arrays.asList("any", "songCount");
+        List<Object> parameterValues = Arrays.asList(critera.getQuery(), (Object) critera.getSongCount());
+        Reader reader = getReader(context, progressListener, "search", null, parameterNames, parameterValues);
         try {
             return new SearchResultParser(context).parse(reader, progressListener);
         } finally {
