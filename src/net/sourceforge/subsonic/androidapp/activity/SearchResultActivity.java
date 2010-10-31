@@ -22,17 +22,16 @@ package net.sourceforge.subsonic.androidapp.activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ListAdapter;
-import android.widget.AdapterView;
-import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.domain.SearchCritera;
-import net.sourceforge.subsonic.androidapp.domain.SearchResult;
 import net.sourceforge.subsonic.androidapp.domain.Artist;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
+import net.sourceforge.subsonic.androidapp.domain.SearchCritera;
+import net.sourceforge.subsonic.androidapp.domain.SearchResult;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
+import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.ArtistAdapter;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
@@ -41,8 +40,8 @@ import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.MergeAdapter;
 import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Performs search and displays the matching artists, albums and songs.
@@ -60,6 +59,22 @@ public class SearchResultActivity extends SubsonicTabActivity {
     private static final int MAX_ARTISTS = 10;
     private static final int MAX_ALBUMS = 20;
     private static final int MAX_SONGS = 25;
+    private ListView list;
+
+    private View artistsHeading;
+    private View albumsHeading;
+    private View songsHeading;
+    private View moreArtistsButton;
+    private View moreAlbumsButton;
+    private View moreSongsButton;
+    private SearchResult searchResult;
+    private MergeAdapter mergeAdapter;
+    private ArtistAdapter artistAdapter;
+    private ListAdapter moreArtistsAdapter;
+    private EntryAdapter albumAdapter;
+    private ListAdapter moreAlbumsAdapter;
+    private ListAdapter moreSongsAdapter;
+    private EntryAdapter songAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,114 +83,39 @@ public class SearchResultActivity extends SubsonicTabActivity {
 
         imageLoader = new ImageLoader(this);
 
+        View buttons = LayoutInflater.from(this).inflate(R.layout.search_result_buttons, null);
+
+        artistsHeading = buttons.findViewById(R.id.search_result_artists);
+        albumsHeading = buttons.findViewById(R.id.search_result_albums);
+        songsHeading = buttons.findViewById(R.id.search_result_songs);
+
+        moreArtistsButton = buttons.findViewById(R.id.search_result_more_artists);
+        moreAlbumsButton = buttons.findViewById(R.id.search_result_more_albums);
+        moreSongsButton = buttons.findViewById(R.id.search_result_more_songs);
+
+        mergeAdapter = new MergeAdapter();
+        list = (ListView) findViewById(R.id.search_result_list);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (view == moreArtistsButton) {
+                    expandArtists();
+                } else if (view == moreAlbumsButton) {
+                    expandAlbums();
+                } else if (view == moreSongsButton) {
+                    expandSongs();
+                }
+            }
+        });
+
         String query = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_QUERY);
         if (query != null) {
             search(query);
         }
     }
 
-    private void processSearchResult(SearchResult result) {
-
-        View buttons = LayoutInflater.from(this).inflate(R.layout.search_result_buttons, null);
-        final View moreArtistsButton = buttons.findViewById(R.id.search_result_more_artists);
-        final View moreAlbumsButton = buttons.findViewById(R.id.search_result_more_albums);
-        final View moreSongsButton = buttons.findViewById(R.id.search_result_more_songs);
-
-        final MergeAdapter mergeAdapter = new MergeAdapter();
-
-        final List<Artist> artists = result.getArtists();
-        if (!artists.isEmpty()) {
-            mergeAdapter.addView(buttons.findViewById(R.id.search_result_artists));
-            List<Artist> firstArtists = new ArrayList<Artist>(artists.subList(0, Math.min(DEFAULT_ARTISTS, artists.size())));
-            final ArtistAdapter artistAdapter = new ArtistAdapter(this, firstArtists);
-            mergeAdapter.addAdapter(artistAdapter);
-            if (artists.size() > DEFAULT_ARTISTS) {
-                final ListAdapter moreAdapter = mergeAdapter.addView(moreArtistsButton, true);
-                moreArtistsButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        artistAdapter.clear();
-                        for (Artist artist : artists) {
-                            artistAdapter.add(artist);
-                        }
-                        artistAdapter.notifyDataSetChanged();
-                        mergeAdapter.removeAdapter(moreAdapter);
-                    }
-                });
-            }
-        }
-
-        final List<MusicDirectory.Entry> albums = result.getAlbums();
-        if (!albums.isEmpty()) {
-            mergeAdapter.addView(buttons.findViewById(R.id.search_result_albums));
-            List<MusicDirectory.Entry> firstAlbums = new ArrayList<MusicDirectory.Entry>(albums.subList(0, Math.min(DEFAULT_ALBUMS, albums.size())));
-            final EntryAdapter albumAdapter = new EntryAdapter(this, imageLoader, firstAlbums);
-            mergeAdapter.addAdapter(albumAdapter);
-            if (albums.size() > DEFAULT_ALBUMS) {
-                final ListAdapter moreAlbumsAdapter = mergeAdapter.addView(moreAlbumsButton, true);
-                moreAlbumsButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        albumAdapter.clear();
-                        for (MusicDirectory.Entry album : albums) {
-                            albumAdapter.add(album);
-                        }
-                        albumAdapter.notifyDataSetChanged();
-                        mergeAdapter.removeAdapter(moreAlbumsAdapter);
-                    }
-                });
-            }
-        }
-
-        final List<MusicDirectory.Entry> songs = result.getSongs();
-        if (!songs.isEmpty()) {
-            mergeAdapter.addView(buttons.findViewById(R.id.search_result_songs));
-            List<MusicDirectory.Entry> firstSongs = new ArrayList<MusicDirectory.Entry>(songs.subList(0, Math.min(DEFAULT_SONGS, songs.size())));
-            final EntryAdapter songAdapter = new EntryAdapter(this, imageLoader, firstSongs);
-            mergeAdapter.addAdapter(songAdapter);
-            if (songs.size() > DEFAULT_SONGS) {
-                final ListAdapter moreSongsAdapter = mergeAdapter.addView(moreSongsButton, true);
-                moreSongsButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        songAdapter.clear();
-                        for (MusicDirectory.Entry song : songs) {
-                            songAdapter.add(song);
-                        }
-                        songAdapter.notifyDataSetChanged();
-                        mergeAdapter.removeAdapter(moreSongsAdapter);
-                    }
-                });
-            }
-        }
-
-//        if (!result.getAlbums().isEmpty()) {
-//            mergeAdapter.addView(buttons.findViewById(R.id.search_result_albums));
-//            mergeAdapter.addAdapter(new EntryAdapter(this, imageLoader, result.getAlbums()));
-//            mergeAdapter.addView(buttons.findViewById(R.id.search_result_more_albums), true);
-//        }
-//
-//        if (!result.getSongs().isEmpty()) {
-//            mergeAdapter.addView(buttons.findViewById(R.id.search_result_songs));
-//            mergeAdapter.addAdapter(new EntryAdapter(this, imageLoader, result.getSongs()));
-//        }
-
-        ListView list = (ListView) findViewById(R.id.search_result_list);
-        list.setAdapter(mergeAdapter);
-
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (view == moreArtistsButton) {
-
-                }
-
-            }
-        });
-    }
-
     private void search(final String query) {
-//        setTitle(R.string.select_album_searching);
         BackgroundTask<SearchResult> task = new TabActivityBackgroundTask<SearchResult>(this) {
             @Override
             protected SearchResult doInBackground() throws Throwable {
@@ -188,12 +128,77 @@ public class SearchResultActivity extends SubsonicTabActivity {
 
             @Override
             protected void done(SearchResult result) {
-//                setTitle(R.string.select_album_0_search_result);
-                processSearchResult(result);
-//                emptyTextView.setVisibility(result.isEmpty() ? View.VISIBLE : View.GONE);
+                searchResult = result;
+                populateList();
             }
         };
         task.execute();
     }
 
+    private void populateList() {
+        List<Artist> artists = searchResult.getArtists();
+        if (!artists.isEmpty()) {
+            mergeAdapter.addView(artistsHeading);
+            List<Artist> displayedArtists = new ArrayList<Artist>(artists.subList(0, Math.min(DEFAULT_ARTISTS, artists.size())));
+            artistAdapter = new ArtistAdapter(this, displayedArtists);
+            mergeAdapter.addAdapter(artistAdapter);
+            if (artists.size() > DEFAULT_ARTISTS) {
+                moreArtistsAdapter = mergeAdapter.addView(moreArtistsButton, true);
+            }
+        }
+
+        List<MusicDirectory.Entry> albums = searchResult.getAlbums();
+        if (!albums.isEmpty()) {
+            mergeAdapter.addView(albumsHeading);
+            List<MusicDirectory.Entry> displayedAlbums = new ArrayList<MusicDirectory.Entry>(albums.subList(0, Math.min(DEFAULT_ALBUMS, albums.size())));
+            albumAdapter = new EntryAdapter(this, imageLoader, displayedAlbums);
+            mergeAdapter.addAdapter(albumAdapter);
+            if (albums.size() > DEFAULT_ALBUMS) {
+                moreAlbumsAdapter = mergeAdapter.addView(moreAlbumsButton, true);
+            }
+        }
+
+        List<MusicDirectory.Entry> songs = searchResult.getSongs();
+        if (!songs.isEmpty()) {
+            mergeAdapter.addView(songsHeading);
+            List<MusicDirectory.Entry> displayedSongs = new ArrayList<MusicDirectory.Entry>(songs.subList(0, Math.min(DEFAULT_SONGS, songs.size())));
+            songAdapter = new EntryAdapter(this, imageLoader, displayedSongs);
+            mergeAdapter.addAdapter(songAdapter);
+            if (songs.size() > DEFAULT_SONGS) {
+                moreSongsAdapter = mergeAdapter.addView(moreSongsButton, true);
+            }
+        }
+
+        list.setAdapter(mergeAdapter);
+    }
+
+    private void expandArtists() {
+        artistAdapter.clear();
+        for (Artist artist : searchResult.getArtists()) {
+            artistAdapter.add(artist);
+        }
+        artistAdapter.notifyDataSetChanged();
+        mergeAdapter.removeAdapter(moreArtistsAdapter);
+        mergeAdapter.notifyDataSetChanged();
+    }
+
+    private void expandAlbums() {
+        albumAdapter.clear();
+        for (MusicDirectory.Entry album : searchResult.getAlbums()) {
+            albumAdapter.add(album);
+        }
+        albumAdapter.notifyDataSetChanged();
+        mergeAdapter.removeAdapter(moreAlbumsAdapter);
+        mergeAdapter.notifyDataSetChanged();
+    }
+
+    private void expandSongs() {
+        songAdapter.clear();
+        for (MusicDirectory.Entry song : searchResult.getSongs()) {
+            songAdapter.add(song);
+        }
+        songAdapter.notifyDataSetChanged();
+        mergeAdapter.removeAdapter(moreSongsAdapter);
+        mergeAdapter.notifyDataSetChanged();
+    }
 }

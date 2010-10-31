@@ -36,6 +36,7 @@ import java.util.Arrays;
  */
 public class MergeAdapter extends BaseAdapter {
 
+    private final CascadeDataSetObserver observer = new CascadeDataSetObserver();
     private final ArrayList<ListAdapter> pieces = new ArrayList<ListAdapter>();
 
     /**
@@ -53,14 +54,14 @@ public class MergeAdapter extends BaseAdapter {
      */
     public void addAdapter(ListAdapter adapter) {
         pieces.add(adapter);
-        adapter.registerDataSetObserver(new CascadeDataSetObserver());
+        adapter.registerDataSetObserver(observer);
     }
 
     public void removeAdapter(ListAdapter adapter) {
+        adapter.unregisterDataSetObserver(observer);
         pieces.remove(adapter);
-        notifyDataSetChanged();
     }
-    
+
     /**
     * Adds a new View to the roster of things to appear
     * in the aggregate list.
