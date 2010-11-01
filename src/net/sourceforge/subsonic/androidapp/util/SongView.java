@@ -36,7 +36,7 @@ import java.io.File;
 import java.util.WeakHashMap;
 
 /**
- * Used to display songs in a {@code ListView}. 
+ * Used to display songs in a {@code ListView}.
  *
  * @author Sindre Mehus
  */
@@ -46,11 +46,10 @@ public class SongView extends LinearLayout implements Checkable {
     private static final WeakHashMap<SongView, ?> INSTANCES = new WeakHashMap<SongView, Object>();
 
     private CheckedTextView checkedTextView;
-    private TextView textView1;
-    private TextView textView2;
-    private TextView textView3;
-    private TextView imageView1; // TODO: Remove
-    private TextView imageView2;
+    private TextView titleTextView;
+    private TextView artistTextView;
+    private TextView durationTextView;
+    private TextView statusTextView;
     private DownloadFile downloadFile;
     private DownloadService downloadService;
     private static Handler handler;
@@ -60,11 +59,10 @@ public class SongView extends LinearLayout implements Checkable {
         LayoutInflater.from(context).inflate(R.layout.song_list_item, this, true);
 
         checkedTextView = (CheckedTextView) findViewById(R.id.song_check);
-        textView1 = (TextView) findViewById(R.id.song_text1);
-        textView2 = (TextView) findViewById(R.id.song_text2);
-        textView3 = (TextView) findViewById(R.id.song_text3);
-        imageView1 = (TextView) findViewById(R.id.song_image1);
-        imageView2 = (TextView) findViewById(R.id.song_image2);
+        titleTextView = (TextView) findViewById(R.id.song_title);
+        artistTextView = (TextView) findViewById(R.id.song_artist);
+        durationTextView = (TextView) findViewById(R.id.song_duration);
+        statusTextView = (TextView) findViewById(R.id.song_status);
 
         INSTANCES.put(this, null);
         int instanceCount = INSTANCES.size();
@@ -79,20 +77,20 @@ public class SongView extends LinearLayout implements Checkable {
         this.downloadService = downloadService;
         MusicDirectory.Entry song = downloadFile.getSong();
 
-        StringBuilder text = new StringBuilder(40);
-        text.append(song.getArtist()).append(" (");
+        StringBuilder artist = new StringBuilder(40);
+        artist.append(song.getArtist()).append(" (");
         if (song.getBitRate() != null) {
-            text.append(song.getBitRate()).append("k ");
+            artist.append(song.getBitRate()).append("k ");
         }
-        text.append(song.getSuffix());
+        artist.append(song.getSuffix());
         if (song.getTranscodedSuffix() != null && !song.getTranscodedSuffix().equals(song.getSuffix())) {
-            text.append(" > ").append(song.getTranscodedSuffix());
+            artist.append(" > ").append(song.getTranscodedSuffix());
         }
-        text.append(")");
+        artist.append(")");
 
-        textView1.setText(song.getTitle());
-        textView2.setText(text);
-        textView3.setText(Util.formatDuration(song.getDuration()));
+        titleTextView.setText(song.getTitle());
+        artistTextView.setText(artist);
+        durationTextView.setText(Util.formatDuration(song.getDuration()));
         checkedTextView.setVisibility(checkable ? View.VISIBLE : View.GONE);
 
         update();
@@ -110,18 +108,18 @@ public class SongView extends LinearLayout implements Checkable {
         }
 
         if (downloadFile.isDownloading() && !downloadFile.isDownloadCancelled() && partialFile.exists()) {
-            imageView2.setText(Util.formatBytes(partialFile.length()));
+            statusTextView.setText(Util.formatBytes(partialFile.length()));
             rightImage = R.drawable.downloading;
         } else {
-            imageView2.setText(null);
+            statusTextView.setText(null);
         }
-        imageView2.setCompoundDrawablesWithIntrinsicBounds(leftImage, 0, rightImage, 0);
+        statusTextView.setCompoundDrawablesWithIntrinsicBounds(leftImage, 0, rightImage, 0);
 
         boolean playing = downloadService != null && downloadService.getCurrentPlaying() == downloadFile;
         if (playing) {
-            textView1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.stat_notify_playing, 0, 0, 0);
+            titleTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.stat_notify_playing, 0, 0, 0);
         } else {
-            textView1.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            titleTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
     }
 

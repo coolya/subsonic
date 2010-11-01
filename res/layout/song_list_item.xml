@@ -4,34 +4,18 @@
                 a:layout_width="fill_parent"
                 a:layout_height="?android:attr/listPreferredItemHeight">>
 
-    <LinearLayout
-            a:id="@+id/song_left"
-            a:orientation="horizontal"
+    <CheckedTextView
+            a:id="@+id/song_check"
             a:layout_width="wrap_content"
             a:layout_height="fill_parent"
             a:layout_alignParentLeft="true"
             a:gravity="center_vertical"
             a:checkMark="?android:attr/textCheckMark"
             a:paddingLeft="3dip"
-            a:paddingRight="6dip">
-
-        <CheckedTextView
-                a:id="@+id/song_check"
-                a:layout_width="fill_parent"
-                a:layout_height="fill_parent"
-                a:gravity="center_vertical"
-                a:checkMark="?android:attr/textCheckMark"/>
-
-        <TextView
-                a:id="@+id/song_image1"
-                a:layout_width="fill_parent"
-                a:layout_height="fill_parent"
-                a:visibility="gone"/>
-
-    </LinearLayout>
+            a:paddingRight="6dip"/>
 
     <TextView
-            a:id="@+id/song_image2"
+            a:id="@+id/song_status"
             a:layout_width="wrap_content"
             a:layout_height="wrap_content"
             a:layout_alignParentRight="true"
@@ -41,12 +25,12 @@
             a:paddingRight="6dip"/>
 
     <TextView
-            a:id="@+id/song_text1"
+            a:id="@+id/song_title"
             a:layout_width="wrap_content"
             a:layout_height="wrap_content"
             a:layout_alignParentTop="true"
-            a:layout_toRightOf="@id/song_left"
-            a:layout_toLeftOf="@id/song_image2"
+            a:layout_toRightOf="@id/song_check"
+            a:layout_toLeftOf="@id/song_status"
             a:gravity="left|top"
             a:textAppearance="?android:attr/textAppearanceMedium"
             a:singleLine="true"
@@ -56,12 +40,12 @@
             a:paddingRight="6dip"/>
 
     <TextView
-            a:id="@+id/song_text3"
+            a:id="@+id/song_duration"
             a:layout_width="wrap_content"
             a:layout_height="wrap_content"
             a:layout_alignParentBottom="true"
             a:layout_alignParentRight="true"
-            a:layout_below="@id/song_image2"
+            a:layout_below="@id/song_status"
             a:gravity="right|bottom"
             a:textAppearance="?android:attr/textAppearanceSmall"
             a:singleLine="true"
@@ -70,13 +54,13 @@
             a:paddingRight="9dip"/>
 
     <TextView
-            a:id="@+id/song_text2"
+            a:id="@+id/song_artist"
             a:layout_width="wrap_content"
             a:layout_height="wrap_content"
             a:layout_alignParentBottom="true"
-            a:layout_toRightOf="@id/song_left"
-            a:layout_toLeftOf="@id/song_text3"
-            a:layout_below="@id/song_text1"
+            a:layout_toRightOf="@id/song_check"
+            a:layout_toLeftOf="@id/song_duration"
+            a:layout_below="@id/song_title"
             a:gravity="left|bottom"
             a:textAppearance="?android:attr/textAppearanceSmall"
             a:singleLine="true"
