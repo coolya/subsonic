@@ -21,6 +21,7 @@ package net.sourceforge.subsonic.androidapp.activity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import net.sourceforge.subsonic.androidapp.domain.SearchCritera;
 import net.sourceforge.subsonic.androidapp.domain.SearchResult;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
+import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.util.ArtistAdapter;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
@@ -118,7 +120,10 @@ public class SearchActivity extends SubsonicTabActivity {
                         MusicDirectory.Entry entry = (MusicDirectory.Entry) item;
                         if (entry.isDirectory()) {
                             onAlbumSelected(entry);
+                        } else {
+                            onSongSelected(entry);
                         }
+
                     }
                 }
             }
@@ -246,5 +251,14 @@ public class SearchActivity extends SubsonicTabActivity {
         intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, album.getId());
         intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, album.getTitle());
         Util.startActivityWithoutTransition(SearchActivity.this, intent);
+    }
+
+    private void onSongSelected(MusicDirectory.Entry song) {
+        DownloadService downloadService = getDownloadService();
+        if (downloadService != null) {
+            downloadService.download(Arrays.asList(song), false, false);
+            downloadService.play(downloadService.size() - 1);
+            Util.toast(SearchActivity.this, getResources().getQuantityString(R.plurals.select_album_n_songs_added, 1, 1));
+        }
     }
 }
