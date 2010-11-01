@@ -12,7 +12,6 @@ New search result interface.
   o remove query functionality from SelectAlbumActivity.
   o show message when no results
   o remove tick mark from songs.
-  o click on album to go to artist.
   o click on song to append song to playlist and play it.
   o long-click on song to do misc stuff.
   o improve way server REST version is read.

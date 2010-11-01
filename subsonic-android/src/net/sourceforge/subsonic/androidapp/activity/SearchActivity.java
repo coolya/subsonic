@@ -114,6 +114,11 @@ public class SearchActivity extends SubsonicTabActivity {
                     Object item = parent.getItemAtPosition(position);
                     if (item instanceof Artist) {
                         onArtistSelected((Artist) item);
+                    } else if (item instanceof MusicDirectory.Entry) {
+                        MusicDirectory.Entry entry = (MusicDirectory.Entry) item;
+                        if (entry.isDirectory()) {
+                            onAlbumSelected(entry);
+                        }
                     }
                 }
             }
@@ -234,5 +239,12 @@ public class SearchActivity extends SubsonicTabActivity {
         intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, artist.getId());
         intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, artist.getName());
         Util.startActivityWithoutTransition(this, intent);
+    }
+
+    private void onAlbumSelected(MusicDirectory.Entry album) {
+        Intent intent = new Intent(SearchActivity.this, SelectAlbumActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, album.getId());
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, album.getTitle());
+        Util.startActivityWithoutTransition(SearchActivity.this, intent);
     }
 }
