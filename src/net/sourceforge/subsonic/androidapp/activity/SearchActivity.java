@@ -119,7 +119,7 @@ public class SearchActivity extends SubsonicTabActivity {
                     } else if (item instanceof MusicDirectory.Entry) {
                         MusicDirectory.Entry entry = (MusicDirectory.Entry) item;
                         if (entry.isDirectory()) {
-                            onAlbumSelected(entry);
+                            onAlbumSelected(entry, false);
                         } else {
                             onSongSelected(entry);
                         }
@@ -147,7 +147,7 @@ public class SearchActivity extends SubsonicTabActivity {
         }
     }
 
-    private void search(final String query, boolean autoplay) {
+    private void search(final String query, final boolean autoplay) {
         BackgroundTask<SearchResult> task = new TabActivityBackgroundTask<SearchResult>(this) {
             @Override
             protected SearchResult doInBackground() throws Throwable {
@@ -162,6 +162,10 @@ public class SearchActivity extends SubsonicTabActivity {
             protected void done(SearchResult result) {
                 searchResult = result;
                 populateList();
+                if (autoplay) {
+                    autoplay();
+                }
+
             }
         };
         task.execute();
@@ -246,10 +250,11 @@ public class SearchActivity extends SubsonicTabActivity {
         Util.startActivityWithoutTransition(this, intent);
     }
 
-    private void onAlbumSelected(MusicDirectory.Entry album) {
+    private void onAlbumSelected(MusicDirectory.Entry album, boolean autoplay) {
         Intent intent = new Intent(SearchActivity.this, SelectAlbumActivity.class);
         intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, album.getId());
         intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, album.getTitle());
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, autoplay);
         Util.startActivityWithoutTransition(SearchActivity.this, intent);
     }
 
@@ -259,6 +264,14 @@ public class SearchActivity extends SubsonicTabActivity {
             downloadService.download(Arrays.asList(song), false, false);
             downloadService.play(downloadService.size() - 1);
             Util.toast(SearchActivity.this, getResources().getQuantityString(R.plurals.select_album_n_songs_added, 1, 1));
+        }
+    }
+
+    private void autoplay() {
+        if (!searchResult.getSongs().isEmpty()) {
+            onSongSelected(searchResult.getSongs().get(0));
+        } else if (!searchResult.getAlbums().isEmpty()) {
+            onAlbumSelected(searchResult.getAlbums().get(0), true);
         }
     }
 }
