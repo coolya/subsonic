@@ -46,8 +46,9 @@
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:textAppearance="?android:attr/textAppearanceSmall"
-            a:gravity="center_vertical"
-            a:paddingLeft="6dp"/>
+            a:gravity="center"
+            a:paddingTop="8dp"
+            a:paddingBottom="8dp"/>
 
     <TextView
             a:id="@+id/search_result_more_albums"
@@ -55,8 +56,9 @@
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:textAppearance="?android:attr/textAppearanceSmall"
-            a:gravity="center_vertical"
-            a:paddingLeft="6dp"/>
+            a:gravity="center"
+            a:paddingTop="8dp"
+            a:paddingBottom="8dp"/>
 
     <TextView
             a:id="@+id/search_result_more_songs"
@@ -64,8 +66,9 @@
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:textAppearance="?android:attr/textAppearanceSmall"
-            a:gravity="center_vertical"
-            a:paddingLeft="6dp"/>
+            a:gravity="center"
+            a:paddingTop="8dp"
+            a:paddingBottom="8dp"/>
 
 </LinearLayout>
 
