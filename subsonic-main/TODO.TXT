@@ -5,13 +5,11 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 TODO IN ANDROID 1.9
 -------------------
 New search result interface.
-  o implement More... buttons.  Consolidate wimp
-  o make search result expansion retain scroll position.
-  o design More... buttons.
   o merge SearchActivity and SearchResultActivity?
   o make voice search work
   o remove query functionality from SelectAlbumActivity.
   o show message when no results
+  o add button to search again
   o remove tick mark from songs.
   o click on artist to go to artist.
   o click on album to go to artist.
