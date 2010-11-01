@@ -5,8 +5,8 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 TODO IN ANDROID 1.9
 -------------------
 New search result interface.
-  o merge SearchActivity and SearchResultActivity?
   o make voice search work
+  o make it work when canceling the search input dialog.
   o remove query functionality from SelectAlbumActivity.
   o show message when no results
   o add button to search again

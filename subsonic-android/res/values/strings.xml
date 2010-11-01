@@ -31,12 +31,11 @@
 
     <string name="search.label">Search</string>
     <string name="search.title">Music search</string>
-    <string name="search.search">Click to search</string>
-
-    <string name="search_result.artists">Artists</string>
-    <string name="search_result.albums">Albums</string>
-    <string name="search_result.songs">Songs</string>
-    <string name="search_result.more">Show more</string>
+    <string name="search.search">Click to search again</string>
+    <string name="search.artists">Artists</string>
+    <string name="search.albums">Albums</string>
+    <string name="search.songs">Songs</string>
+    <string name="search.more">Show more</string>
 
     <string name="progress.wait">Please wait...</string>
 
@@ -59,8 +58,8 @@
     <string name="select_album.donate_dialog_message">Get unlimited downloads by donating to Subsonic.</string>
     <string name="select_album.donate_dialog_now">Now</string>
     <string name="select_album.donate_dialog_later">Later</string>
-    <string name="select_album.search_result">Search results</string>
-    <string name="select_album.0_search_result">Search results - No matches found</string>
+    <string name="select_album.search">Search results</string>
+    <string name="select_album.0_search">Search results - No matches found</string>
     <string name="select_album.donate_dialog_0_trial_days_left">Trial period is over</string>
 
     <string name="select_playlist.empty">No saved playlists on server</string>
@@ -175,7 +174,7 @@
         <item quantity="one">One song added to play queue.</item>
         <item quantity="other">%d songs added to play queue.</item>
     </plurals>
-    <plurals name="select_album_n_search_result">
+    <plurals name="select_album_n_search">
         <item quantity="zero">Search results - No matches found</item>
         <item quantity="one">Search results - One match</item>
         <item quantity="other">Search results - %d matches</item>

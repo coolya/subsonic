@@ -38,10 +38,6 @@
                   a:configChanges="orientation|keyboardHidden"
                   a:launchMode="standard"/>
 
-        <activity a:name="net.sourceforge.subsonic.androidapp.activity.SearchResultActivity"
-                  a:configChanges="orientation|keyboardHidden"
-                  a:launchMode="standard"/>
-
         <activity a:name="net.sourceforge.subsonic.androidapp.activity.SelectPlaylistActivity"
                   a:label="@string/playlist.label"
                   a:configChanges="orientation|keyboardHidden"
