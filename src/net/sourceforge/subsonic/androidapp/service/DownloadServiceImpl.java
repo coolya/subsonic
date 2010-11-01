@@ -167,13 +167,13 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     @Override
-    public synchronized DownloadFile forSong(MusicDirectory.Entry song) {
+    public synchronized DownloadFile forSong(MusicDirectory.Entry song, boolean createIfMissing) {
         for (DownloadFile downloadFile : downloadList) {
             if (downloadFile.getSong() == song) {
                 return downloadFile;
             }
         }
-        return new DownloadFile(this, song, false);
+        return createIfMissing ? new DownloadFile(this, song, false) : null;
     }
 
     @Override
@@ -217,7 +217,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     @Override
     public synchronized void delete(List<MusicDirectory.Entry> songs) {
         for (MusicDirectory.Entry song : songs) {
-            forSong(song).delete();
+            forSong(song, true).delete();
         }
     }
 

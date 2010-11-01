@@ -545,7 +545,7 @@ public class DownloadActivity extends SubsonicTabActivity {
                 view = new SongView(DownloadActivity.this);
             }
             DownloadFile downloadFile = getItem(position);
-            view.setDownloadFile(downloadFile, getDownloadService(), false);
+            view.setSong(downloadFile.getSong(), false);
             return view;
         }
     }

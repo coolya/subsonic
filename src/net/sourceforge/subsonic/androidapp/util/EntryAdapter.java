@@ -25,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import net.sourceforge.subsonic.androidapp.activity.SubsonicTabActivity;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.service.DownloadService;
 
 /**
  * @author Sindre Mehus
@@ -64,10 +63,7 @@ public class EntryAdapter extends ArrayAdapter<MusicDirectory.Entry> {
             } else {
                 view = new SongView(activity);
             }
-            DownloadService service = activity.getDownloadService();
-            if (service != null) {
-                view.setDownloadFile(service.forSong(entry), service, checkable);
-            }
+            view.setSong(entry, checkable);
             return view;
         }
     }

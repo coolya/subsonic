@@ -315,7 +315,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         boolean deleteEnabled = false;
 
         for (MusicDirectory.Entry song : selection) {
-            DownloadFile downloadFile = getDownloadService().forSong(song);
+            DownloadFile downloadFile = getDownloadService().forSong(song, true);
             if (downloadFile.getCompleteFile().exists()) {
                 deleteEnabled = true;
                 break;

@@ -20,7 +20,6 @@ package net.sourceforge.subsonic.androidapp.service;
 
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
-import net.sourceforge.subsonic.androidapp.domain.Playlist;
 
 import java.util.List;
 
@@ -76,7 +75,7 @@ public interface DownloadService {
 
     void delete(List<MusicDirectory.Entry> songs);
 
-    DownloadFile forSong(MusicDirectory.Entry song);
+    DownloadFile forSong(MusicDirectory.Entry song, boolean createIfMissing);
 
     long getDownloadListUpdateRevision();
 
