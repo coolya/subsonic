@@ -29,7 +29,7 @@ import net.sourceforge.subsonic.androidapp.util.Util;
 import net.sourceforge.subsonic.androidapp.provider.SearchSuggestionProvider;
 
 /**
- * Receives voice search queries and forwards to the SelectAlbumActivity.
+ * Receives voice search queries and forwards to the SearchActivity.
  *
  * http://android-developers.blogspot.com/2010/09/supporting-new-music-voice-action.html
  *
@@ -48,7 +48,7 @@ public class VoiceQueryReceiverActivity extends Activity {
                                                                               SearchSuggestionProvider.MODE);
             suggestions.saveRecentQuery(query, null);
 
-            Intent intent = new Intent(VoiceQueryReceiverActivity.this, SelectAlbumActivity.class);
+            Intent intent = new Intent(VoiceQueryReceiverActivity.this, SearchActivity.class);
             intent.putExtra(Constants.INTENT_EXTRA_NAME_QUERY, query);
             intent.putExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, true);
             Util.startActivityWithoutTransition(VoiceQueryReceiverActivity.this, intent);
