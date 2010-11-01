@@ -34,7 +34,7 @@ public final class Constants {
     // Names for intent extras.
     public static final String INTENT_EXTRA_NAME_ID = "subsonic.id";
     public static final String INTENT_EXTRA_NAME_NAME = "subsonic.name";
-    public static final String INTENT_EXTRA_NAME_PLAY_ALL = "subsonic.playall";
+    public static final String INTENT_EXTRA_NAME_AUTOPLAY = "subsonic.playall";
     public static final String INTENT_EXTRA_NAME_ERROR = "subsonic.error";
     public static final String INTENT_EXTRA_NAME_QUERY = "subsonic.query";
     public static final String INTENT_EXTRA_NAME_PLAYLIST_ID = "subsonic.playlist.id";
