@@ -36,6 +36,8 @@ import java.io.File;
 import java.util.WeakHashMap;
 
 /**
+ * Used to display songs in a {@code ListView}. 
+ *
  * @author Sindre Mehus
  */
 public class SongView extends LinearLayout implements Checkable {
