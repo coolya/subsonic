@@ -78,7 +78,6 @@ public class SubsonicTabActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SubsonicTabActivity.this, SearchActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 Util.startActivityWithoutTransition(SubsonicTabActivity.this, intent);
             }
         });

@@ -36,7 +36,7 @@
         <activity a:name="net.sourceforge.subsonic.androidapp.activity.SearchActivity"
                   a:label="@string/search.label"
                   a:configChanges="orientation|keyboardHidden"
-                  a:launchMode="standard"/>
+                  a:launchMode="singleTask"/>
 
         <activity a:name="net.sourceforge.subsonic.androidapp.activity.SelectPlaylistActivity"
                   a:label="@string/playlist.label"
