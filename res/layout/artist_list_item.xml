@@ -5,7 +5,7 @@
           a:drawablePadding="6dip"
           a:layout_width="fill_parent"
           a:layout_height="wrap_content"
-          a:textAppearance="?android:attr/textAppearanceLarge"
+          a:textAppearance="?android:attr/textAppearanceMedium"
           a:gravity="center_vertical"
           a:paddingLeft="6dip"
           a:paddingRight="6dip"
