@@ -42,8 +42,6 @@
             a:layout_width="wrap_content"
             a:layout_height="wrap_content"
             a:layout_gravity="right|center_vertical"
-            a:paddingRight="6dip"
-
-            />
+            a:paddingRight="6dip"/>
 
 </LinearLayout>
