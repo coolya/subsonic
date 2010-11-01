@@ -34,11 +34,13 @@ public class EntryAdapter extends ArrayAdapter<MusicDirectory.Entry> {
 
     private final SubsonicTabActivity activity;
     private final ImageLoader imageLoader;
+    private final boolean checkable;
 
-    public EntryAdapter(SubsonicTabActivity activity, ImageLoader imageLoader, List<MusicDirectory.Entry> entries) {
+    public EntryAdapter(SubsonicTabActivity activity, ImageLoader imageLoader, List<MusicDirectory.Entry> entries, boolean checkable) {
         super(activity, android.R.layout.simple_list_item_1, entries);
         this.activity = activity;
         this.imageLoader = imageLoader;
+        this.checkable = checkable;
     }
 
     @Override
@@ -64,7 +66,7 @@ public class EntryAdapter extends ArrayAdapter<MusicDirectory.Entry> {
             }
             DownloadService service = activity.getDownloadService();
             if (service != null) {
-                view.setDownloadFile(service.forSong(entry), service, true);
+                view.setDownloadFile(service.forSong(entry), service, checkable);
             }
             return view;
         }

@@ -182,7 +182,7 @@ public class SearchActivity extends SubsonicTabActivity {
             if (!albums.isEmpty()) {
                 mergeAdapter.addView(albumsHeading);
                 List<MusicDirectory.Entry> displayedAlbums = new ArrayList<MusicDirectory.Entry>(albums.subList(0, Math.min(DEFAULT_ALBUMS, albums.size())));
-                albumAdapter = new EntryAdapter(this, imageLoader, displayedAlbums);
+                albumAdapter = new EntryAdapter(this, imageLoader, displayedAlbums, false);
                 mergeAdapter.addAdapter(albumAdapter);
                 if (albums.size() > DEFAULT_ALBUMS) {
                     moreAlbumsAdapter = mergeAdapter.addView(moreAlbumsButton, true);
@@ -193,7 +193,7 @@ public class SearchActivity extends SubsonicTabActivity {
             if (!songs.isEmpty()) {
                 mergeAdapter.addView(songsHeading);
                 List<MusicDirectory.Entry> displayedSongs = new ArrayList<MusicDirectory.Entry>(songs.subList(0, Math.min(DEFAULT_SONGS, songs.size())));
-                songAdapter = new EntryAdapter(this, imageLoader, displayedSongs);
+                songAdapter = new EntryAdapter(this, imageLoader, displayedSongs, false);
                 mergeAdapter.addAdapter(songAdapter);
                 if (songs.size() > DEFAULT_SONGS) {
                     moreSongsAdapter = mergeAdapter.addView(moreSongsButton, true);
