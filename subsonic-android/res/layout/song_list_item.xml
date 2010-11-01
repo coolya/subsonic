@@ -48,7 +48,7 @@
             a:layout_toRightOf="@id/song_left"
             a:layout_toLeftOf="@id/song_image2"
             a:gravity="left|top"
-            a:textAppearance="?android:attr/textAppearanceLarge"
+            a:textAppearance="?android:attr/textAppearanceMedium"
             a:singleLine="true"
             a:ellipsize="marquee"
             a:drawablePadding="6dip"

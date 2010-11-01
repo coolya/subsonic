@@ -5,7 +5,11 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 TODO IN ANDROID 1.9
 -------------------
 New search result interface.
+  o Remove title from SearchActivity
+  o Replace "Refresh" button with textview?
+  o Make SongView and AlbumView layouts consistent.
   o make voice search work
+  o Use gray color for in AlbumView, SongView.
   o remove query functionality from SelectAlbumActivity.
   o show message when no results
   o remove tick mark from songs.
@@ -14,10 +18,7 @@ New search result interface.
   o click on song to append song to playlist and play it.
   o long-click on song to do misc stuff.
   o improve way server REST version is read.
-  o Smaller fonts, ala wimp
 
-
-Show artist name in album lists.
 Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone.
 Skipping problem
