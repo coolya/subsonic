@@ -18,9 +18,6 @@
  */
 package net.sourceforge.subsonic.androidapp.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,17 +37,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.domain.SearchResult;
-import net.sourceforge.subsonic.androidapp.domain.SearchCritera;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.EntryAdapter;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
-import net.sourceforge.subsonic.androidapp.util.EntryAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SelectAlbumActivity extends SubsonicTabActivity {
 
@@ -168,16 +166,13 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
         String id = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ID);
         String name = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME);
-        String query = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_QUERY);
         String playlistId = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_ID);
         String playlistName = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME);
         String albumListType = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE);
         int albumListSize = getIntent().getIntExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_SIZE, 0);
         int albumListOffset = getIntent().getIntExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET, 0);
 
-        if (query != null) {
-            search(query);
-        } else if (playlistId != null) {
+        if (playlistId != null) {
             getPlaylist(playlistId, playlistName);
         } else if (albumListType != null) {
             getAlbumList(albumListType, albumListSize, albumListOffset);
@@ -217,34 +212,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             @Override
             protected MusicDirectory load(MusicService service) throws Exception {
                 return service.getMusicDirectory(id, SelectAlbumActivity.this, this);
-            }
-        }.execute();
-    }
-
-    private void search(final String query) {
-        setTitle(R.string.select_album_searching);
-        new LoadTask() {
-            @Override
-            protected MusicDirectory load(MusicService service) throws Exception {
-                SearchCritera critera = new SearchCritera(query, 0, 0, 20);
-                SearchResult searchResult = service.search(critera, SelectAlbumActivity.this, this);
-                MusicDirectory dir = new MusicDirectory();
-                for (MusicDirectory.Entry song : searchResult.getSongs()) {
-                    dir.addChild(song);
-                }
-                return dir;
-            }
-
-            @Override
-            protected void done(Pair<MusicDirectory, Boolean> result) {
-                super.done(result);
-                int n = result.getFirst().getChildren().size();
-                if (n == 0) {
-                    setTitle(R.string.select_album_0_search);
-                } else {
-                    setTitle(getResources().getQuantityString(R.plurals.select_album_n_search, n, n));
-                }
-                headerText1.setText(R.string.select_album_search);
             }
         }.execute();
     }
