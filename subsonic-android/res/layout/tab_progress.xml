@@ -2,6 +2,7 @@
 <LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
               a:id="@+id/tab_progress"
               a:orientation="horizontal"
+              a:visibility="gone"
               a:padding="10dp"
               a:layout_gravity="top"
               a:layout_width="fill_parent"
