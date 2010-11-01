@@ -510,7 +510,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             }
 
             emptyView.setVisibility(entries.isEmpty() ? View.VISIBLE : View.GONE);
-            entryList.setAdapter(new EntryAdapter(SelectAlbumActivity.this, imageLoader, entries));
+            entryList.setAdapter(new EntryAdapter(SelectAlbumActivity.this, imageLoader, entries, true));
             licenseValid = result.getSecond();
 
             boolean playAll = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, false);
