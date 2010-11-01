@@ -50,7 +50,7 @@ public class VoiceQueryReceiverActivity extends Activity {
 
             Intent intent = new Intent(VoiceQueryReceiverActivity.this, SelectAlbumActivity.class);
             intent.putExtra(Constants.INTENT_EXTRA_NAME_QUERY, query);
-            intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAY_ALL, true);
+            intent.putExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, true);
             Util.startActivityWithoutTransition(VoiceQueryReceiverActivity.this, intent);
         }
         finish();

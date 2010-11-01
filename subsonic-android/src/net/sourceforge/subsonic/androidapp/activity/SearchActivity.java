@@ -43,6 +43,7 @@ import net.sourceforge.subsonic.androidapp.util.EntryAdapter;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.MergeAdapter;
 import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
+import net.sourceforge.subsonic.androidapp.util.Util;
 
 /**
  * Performs searches and displays the matching artists, albums and songs.
@@ -109,6 +110,11 @@ public class SearchActivity extends SubsonicTabActivity {
                     expandAlbums();
                 } else if (view == moreSongsButton) {
                     expandSongs();
+                } else {
+                    Object item = parent.getItemAtPosition(position);
+                    if (item instanceof Artist) {
+                        onArtistSelected((Artist) item);
+                    }
                 }
             }
         });
@@ -120,17 +126,18 @@ public class SearchActivity extends SubsonicTabActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String query = intent.getStringExtra(Constants.INTENT_EXTRA_NAME_QUERY);
+        boolean autoplay = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, false);
 
         if (query != null) {
             mergeAdapter = new MergeAdapter();
             list.setAdapter(mergeAdapter);
-            search(query);
+            search(query, autoplay);
         } else {
             populateList();
         }
     }
 
-    private void search(final String query) {
+    private void search(final String query, boolean autoplay) {
         BackgroundTask<SearchResult> task = new TabActivityBackgroundTask<SearchResult>(this) {
             @Override
             protected SearchResult doInBackground() throws Throwable {
@@ -220,5 +227,12 @@ public class SearchActivity extends SubsonicTabActivity {
         songAdapter.notifyDataSetChanged();
         mergeAdapter.removeAdapter(moreSongsAdapter);
         mergeAdapter.notifyDataSetChanged();
+    }
+
+    private void onArtistSelected(Artist artist) {
+        Intent intent = new Intent(this, SelectAlbumActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, artist.getId());
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, artist.getName());
+        Util.startActivityWithoutTransition(this, intent);
     }
 }

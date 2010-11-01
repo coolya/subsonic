@@ -409,7 +409,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         Intent intent = new Intent(SelectAlbumActivity.this, SelectAlbumActivity.class);
         intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, entry.getId());
         intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getTitle());
-        intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAY_ALL, true);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, true);
         Util.startActivityWithoutTransition(SelectAlbumActivity.this, intent);
     }
 
@@ -513,7 +513,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             entryList.setAdapter(new EntryAdapter(SelectAlbumActivity.this, imageLoader, entries));
             licenseValid = result.getSecond();
 
-            boolean playAll = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_PLAY_ALL, false);
+            boolean playAll = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, false);
             if (playAll && songCount > 0) {
                 selectAll(true);
                 download(false, false, true);
