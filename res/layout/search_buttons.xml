@@ -45,13 +45,11 @@
             a:text="@string/search.search"
             a:layout_width="wrap_content"
             a:layout_height="wrap_content"
-            a:drawablePadding="10dp"
+            a:drawablePadding="0dp"
             a:drawableLeft="@drawable/search"
             a:textAppearance="?android:attr/textAppearanceMedium"
-            a:gravity="left"
-            a:paddingLeft="10dp"
-            a:paddingTop="12dp"
-            a:paddingBottom="12dp"/>
+            a:gravity="center"
+            a:padding="12dp"/>
 
     <TextView
             a:id="@+id/search_more_artists"
