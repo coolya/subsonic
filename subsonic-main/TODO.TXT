@@ -5,7 +5,6 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 TODO IN ANDROID 1.9
 -------------------
 New search result interface.
-  o Songs in search result and music library don't show updated download status.
   o Remove title from SearchActivity
   o Replace "Refresh" button with textview?
   o make voice search work

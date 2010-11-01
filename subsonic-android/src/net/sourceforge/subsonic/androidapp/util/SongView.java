@@ -29,8 +29,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
+import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
+import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 
 import java.io.File;
 import java.util.WeakHashMap;
@@ -44,15 +45,15 @@ public class SongView extends LinearLayout implements Checkable {
 
     private static final String TAG = SongView.class.getSimpleName();
     private static final WeakHashMap<SongView, ?> INSTANCES = new WeakHashMap<SongView, Object>();
+    private static Handler handler;
 
     private CheckedTextView checkedTextView;
     private TextView titleTextView;
     private TextView artistTextView;
     private TextView durationTextView;
     private TextView statusTextView;
-    private DownloadFile downloadFile;
-    private DownloadService downloadService;
-    private static Handler handler;
+    private MusicDirectory.Entry song;
+    private DownloadFile nominalDownloadFile;
 
     public SongView(Context context) {
         super(context);
@@ -72,11 +73,8 @@ public class SongView extends LinearLayout implements Checkable {
         startUpdater();
     }
 
-    public void setDownloadFile(DownloadFile downloadFile, DownloadService downloadService, boolean checkable) {
-        this.downloadFile = downloadFile;
-        this.downloadService = downloadService;
-        MusicDirectory.Entry song = downloadFile.getSong();
-
+    public void setSong(MusicDirectory.Entry song, boolean checkable) {
+        this.song = song;
         StringBuilder artist = new StringBuilder(40);
         artist.append(song.getArtist()).append(" (");
         if (song.getBitRate() != null) {
@@ -97,6 +95,12 @@ public class SongView extends LinearLayout implements Checkable {
     }
 
     private void update() {
+        DownloadService downloadService = DownloadServiceImpl.getInstance();
+        if (downloadService == null) {
+            return;
+        }
+
+        DownloadFile downloadFile = resolveDownloadFile(downloadService);
         File completeFile = downloadFile.getCompleteFile();
         File partialFile = downloadFile.getPartialFile();
 
@@ -115,12 +119,24 @@ public class SongView extends LinearLayout implements Checkable {
         }
         statusTextView.setCompoundDrawablesWithIntrinsicBounds(leftImage, 0, rightImage, 0);
 
-        boolean playing = downloadService != null && downloadService.getCurrentPlaying() == downloadFile;
+        boolean playing = downloadService.getCurrentPlaying() == downloadFile;
         if (playing) {
             titleTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.stat_notify_playing, 0, 0, 0);
         } else {
             titleTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
+    }
+
+    private DownloadFile resolveDownloadFile(DownloadService downloadService) {
+        DownloadFile existingDownloadFile = downloadService.forSong(song, false);
+        if (existingDownloadFile != null) {
+            return existingDownloadFile;
+        }
+
+        if (nominalDownloadFile == null) {
+            nominalDownloadFile = downloadService.forSong(song, true);
+        }
+        return nominalDownloadFile;
     }
 
     private static synchronized void startUpdater() {
