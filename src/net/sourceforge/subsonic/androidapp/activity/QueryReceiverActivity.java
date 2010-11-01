@@ -46,7 +46,7 @@ public class QueryReceiverActivity extends Activity {
                                                                               SearchSuggestionProvider.MODE);
             suggestions.saveRecentQuery(query, null);
 
-            Intent intent = new Intent(QueryReceiverActivity.this, SearchResultActivity.class);
+            Intent intent = new Intent(QueryReceiverActivity.this, SearchActivity.class);
             intent.putExtra(Constants.INTENT_EXTRA_NAME_QUERY, query);
             Util.startActivityWithoutTransition(QueryReceiverActivity.this, intent);
         }

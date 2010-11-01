@@ -5,8 +5,8 @@
               a:layout_height="wrap_content">
 
     <TextView
-            a:id="@+id/search_result_artists"
-            a:text="@string/search_result.artists"
+            a:id="@+id/search_artists"
+            a:text="@string/search.artists"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:textAppearance="?android:attr/textAppearanceSmall"
@@ -17,8 +17,8 @@
             a:paddingLeft="4dp"/>
 
     <TextView
-            a:id="@+id/search_result_albums"
-            a:text="@string/search_result.albums"
+            a:id="@+id/search_albums"
+            a:text="@string/search.albums"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:textAppearance="?android:attr/textAppearanceSmall"
@@ -29,8 +29,8 @@
             a:paddingLeft="4dp"/>
 
     <TextView
-            a:id="@+id/search_result_songs"
-            a:text="@string/search_result.songs"
+            a:id="@+id/search_songs"
+            a:text="@string/search.songs"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:textAppearance="?android:attr/textAppearanceSmall"
@@ -41,8 +41,8 @@
             a:paddingLeft="4dp"/>
 
     <TextView
-            a:id="@+id/search_result_more_artists"
-            a:text="@string/search_result.more"
+            a:id="@+id/search_search"
+            a:text="@string/search.search"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:textAppearance="?android:attr/textAppearanceSmall"
@@ -51,8 +51,8 @@
             a:paddingBottom="8dp"/>
 
     <TextView
-            a:id="@+id/search_result_more_albums"
-            a:text="@string/search_result.more"
+            a:id="@+id/search_more_artists"
+            a:text="@string/search.more"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:textAppearance="?android:attr/textAppearanceSmall"
@@ -61,8 +61,18 @@
             a:paddingBottom="8dp"/>
 
     <TextView
-            a:id="@+id/search_result_more_songs"
-            a:text="@string/search_result.more"
+            a:id="@+id/search_more_albums"
+            a:text="@string/search.more"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:textAppearance="?android:attr/textAppearanceSmall"
+            a:gravity="center"
+            a:paddingTop="8dp"
+            a:paddingBottom="8dp"/>
+
+    <TextView
+            a:id="@+id/search_more_songs"
+            a:text="@string/search.more"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
             a:textAppearance="?android:attr/textAppearanceSmall"

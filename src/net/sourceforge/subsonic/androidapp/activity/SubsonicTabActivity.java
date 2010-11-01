@@ -105,7 +105,7 @@ public class SubsonicTabActivity extends Activity {
             homeButton.setEnabled(false);
         } else if (this instanceof SelectAlbumActivity || this instanceof SelectArtistActivity) {
             musicButton.setEnabled(false);
-        } else if (this instanceof SearchActivity || this instanceof SearchResultActivity) {
+        } else if (this instanceof SearchActivity) {
             searchButton.setEnabled(false);
         } else if (this instanceof SelectPlaylistActivity) {
             playlistButton.setEnabled(false);

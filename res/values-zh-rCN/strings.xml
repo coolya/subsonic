@@ -29,7 +29,7 @@
     <string name="select_album.donate_dialog_message">通过捐赠，获得 Subsonic 无限下载。</string>
     <string name="select_album.donate_dialog_now">现在</string>
     <string name="select_album.donate_dialog_later">稍后</string>
-    <string name="select_album.0_search_result">搜索结果 - 没有找到匹配</string>
+    <string name="select_album.0_search">搜索结果 - 没有找到匹配</string>
     <string name="select_album.donate_dialog_0_trial_days_left">试用期结束</string>
 
     <string name="download.playerstate_downloading">下载 - %s</string>
@@ -81,7 +81,7 @@
         <item quantity="one">一首歌曲添加到播放队列。</item>
         <item quantity="other">%d 歌曲添加到播放列表</item>
     </plurals>
-    <plurals name="select_album_n_search_result">
+    <plurals name="select_album_n_search">
         <item quantity="zero">搜索结果 - 没有找到匹配</item>
         <item quantity="one">搜索结果 - 一个匹配</item>
         <item quantity="other">搜索结果 - %d 匹配</item>

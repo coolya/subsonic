@@ -240,11 +240,11 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                 super.done(result);
                 int n = result.getFirst().getChildren().size();
                 if (n == 0) {
-                    setTitle(R.string.select_album_0_search_result);
+                    setTitle(R.string.select_album_0_search);
                 } else {
-                    setTitle(getResources().getQuantityString(R.plurals.select_album_n_search_result, n, n));
+                    setTitle(getResources().getQuantityString(R.plurals.select_album_n_search, n, n));
                 }
-                headerText1.setText(R.string.select_album_search_result);
+                headerText1.setText(R.string.select_album_search);
             }
         }.execute();
     }
