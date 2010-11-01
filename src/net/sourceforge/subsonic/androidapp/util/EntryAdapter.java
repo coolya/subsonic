@@ -18,20 +18,18 @@
  */
 package net.sourceforge.subsonic.androidapp.util;
 
-import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.activity.SubsonicTabActivity;
-import net.sourceforge.subsonic.androidapp.service.DownloadService;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import java.util.List;
+
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.LayoutInflater;
-
-import java.util.List;
+import android.widget.ArrayAdapter;
+import net.sourceforge.subsonic.androidapp.activity.SubsonicTabActivity;
+import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.service.DownloadService;
 
 /**
  * @author Sindre Mehus
-*/
+ */
 public class EntryAdapter extends ArrayAdapter<MusicDirectory.Entry> {
 
     private final SubsonicTabActivity activity;
@@ -48,14 +46,13 @@ public class EntryAdapter extends ArrayAdapter<MusicDirectory.Entry> {
         MusicDirectory.Entry entry = getItem(position);
 
         if (entry.isDirectory()) {
-            TextView view;
-            view = (TextView) LayoutInflater.from(activity).inflate(
-                    android.R.layout.simple_list_item_1, parent, false);
-
-            view.setCompoundDrawablePadding(10);
-            imageLoader.loadImage(view, entry, false);
-            view.setText(entry.getTitle());
-
+            AlbumView view;
+            if (convertView != null && convertView instanceof AlbumView) {
+                view = (AlbumView) convertView;
+            } else {
+                view = new AlbumView(activity);
+            }
+            view.setAlbum(entry, imageLoader);
             return view;
 
         } else {
