@@ -30,6 +30,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Artist;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
@@ -68,7 +69,7 @@ public class SearchActivity extends SubsonicTabActivity {
     private View artistsHeading;
     private View albumsHeading;
     private View songsHeading;
-    private View searchButton;
+    private TextView searchButton;
     private View moreArtistsButton;
     private View moreAlbumsButton;
     private View moreSongsButton;
@@ -94,7 +95,7 @@ public class SearchActivity extends SubsonicTabActivity {
         albumsHeading = buttons.findViewById(R.id.search_albums);
         songsHeading = buttons.findViewById(R.id.search_songs);
 
-        searchButton = buttons.findViewById(R.id.search_search);
+        searchButton = (TextView) buttons.findViewById(R.id.search_search);
         moreArtistsButton = buttons.findViewById(R.id.search_more_artists);
         moreAlbumsButton = buttons.findViewById(R.id.search_more_albums);
         moreSongsButton = buttons.findViewById(R.id.search_more_songs);
@@ -208,6 +209,9 @@ public class SearchActivity extends SubsonicTabActivity {
                     moreSongsAdapter = mergeAdapter.addView(moreSongsButton, true);
                 }
             }
+
+            boolean empty = searchResult.getArtists().isEmpty() && searchResult.getAlbums().isEmpty() && searchResult.getSongs().isEmpty();
+            searchButton.setText(empty ? R.string.search_no_match : R.string.search_search);
         }
 
         list.setAdapter(mergeAdapter);

@@ -32,6 +32,7 @@
     <string name="search.label">Search</string>
     <string name="search.title">Music search</string>
     <string name="search.search">Click to search</string>
+    <string name="search.no_match">No matches, please try again</string>
     <string name="search.artists">Artists</string>
     <string name="search.albums">Albums</string>
     <string name="search.songs">Songs</string>
