@@ -7,7 +7,6 @@ TODO IN ANDROID 1.9
 New search result interface.
   o Remove title from SearchActivity
   o Replace "Refresh" button with textview?
-  o Make SongView and AlbumView layouts consistent.
   o make voice search work
   o Use gray color for in AlbumView, SongView.
   o remove query functionality from SelectAlbumActivity.
