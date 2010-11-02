@@ -5,6 +5,7 @@
     <script type="text/javascript" src="<c:url value="/dwr/interface/coverArtService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
     <script type="text/javascript" language="javascript">
@@ -21,10 +22,6 @@
             $("error").style.display = "none";
             $("errorDetails").style.display = "none";
             $("noImagesFound").style.display = "none";
-
-            var artist = dwr.util.getValue("artist");
-            var album = dwr.util.getValue("album");
-            coverArtService.getCoverArtImages(service, artist, album, getImagesCallback);
         }
 
         function getImagesCallback(imageUrls) {
@@ -36,7 +33,7 @@
 
             $("wait").style.display = "none";
             if (imageUrls.length > 0) {
-                $("images").style.display = "inline";
+//                $("images").style.display = "inline";
             } else {
                 $("noImagesFound").style.display = "inline";
             }
@@ -44,7 +41,7 @@
 
         function setImage(imageUrl) {
             $("wait").style.display = "inline";
-            $("images").style.display = "none";
+//            $("images").style.display = "none";
             $("success").style.display = "none";
             $("error").style.display = "none";
             $("errorDetails").style.display = "none";
@@ -66,13 +63,12 @@
 
         function searchComplete() {
 
-            alert(imageSearch.results.length);
             // Check that we got results
             if (imageSearch.results && imageSearch.results.length > 0) {
 
                 // Grab our content div, clear it.
-                var contentDiv = document.getElementById("images");
-                contentDiv.innerHTML = '';
+                var images = document.getElementById("images");
+                images.innerHTML = '';
 
                 // Loop through our results, printing them to the page.
                 var results = imageSearch.results;
@@ -80,11 +76,15 @@
                     // For each result write it's title and image to the screen
                     var result = results[i];
 
-                    // clone the .html node from the result
-                    var node = result.html.cloneNode(true);
+
+                    var node = $("template").cloneNode(true);
+                    var thumbnail = node.getElementsByClassName("thumbnail")[0];
+                    thumbnail.src = result.tbUrl;
+                    thumbnail.onclick = "setImage('" + result.url + "');";
+                    node.show();
 
                     // attach the node into my dom
-                    contentDiv.appendChild(node);
+                    images.appendChild(node);
 
 
 
@@ -101,14 +101,42 @@
                 }
 
                 // Now add links to additional pages of search results.
-//            addPaginationLinks(imageSearch);
+                addPaginationLinks(imageSearch);
             }
         }
 
+        function addPaginationLinks() {
+
+            // To paginate search results, use the cursor function.
+            var cursor = imageSearch.cursor;
+            var curPage = cursor.currentPageIndex; // check what page the app is on
+            var pagesDiv = document.createElement('div');
+            for (var i = 0; i < cursor.pages.length; i++) {
+                var page = cursor.pages[i];
+                if (curPage == i) {
+
+                    // If we are on the current page, then don't make a link.
+                    var label = document.createTextNode(' ' + page.label + ' ');
+                    pagesDiv.appendChild(label);
+                } else {
+
+                    // Create links to other pages using gotoPage() on the searcher.
+                    var link = document.createElement('a');
+                    link.href = 'javascript:imageSearch.gotoPage('+i+');';
+                    link.innerHTML = page.label;
+                    link.style.marginRight = '2px';
+                    pagesDiv.appendChild(link);
+                }
+            }
+
+            var pages = document.getElementById('pages');
+            pages.appendChild(pagesDiv);
+        }
+
+
         function search() {
-            var artist = dwr.util.getValue("artist");
-            var album = dwr.util.getValue("album");
-            imageSearch.execute(artist + " " + album);
+            var query = dwr.util.getValue("query");
+            imageSearch.execute(query);
         }
 
         function onLoad() {
@@ -116,17 +144,17 @@
             // Create an Image Search instance.
             imageSearch = new google.search.ImageSearch();
 
-          // Set searchComplete as the callback function when a search is
-          // complete.  The imageSearch object will have results in it.
-          imageSearch.setSearchCompleteCallback(this, searchComplete, null);
+            // Set searchComplete as the callback function when a search is
+            // complete.  The imageSearch object will have results in it.
+            imageSearch.setSearchCompleteCallback(this, searchComplete, null);
+            imageSearch.setNoHtmlGeneration();
+            imageSearch.setResultSetSize(8);
 
-          // Find me a beautiful car.
-//          imageSearch.execute("Subaru STI");
 
           // Include the required Google branding
-//          google.search.Search.getBranding('branding');
+          google.search.Search.getBranding('branding');
 
-            // tell the searcher to draw itself and tell it where to attach
+            $("template").hide();
         }
         google.setOnLoadCallback(onLoad);
 
@@ -136,11 +164,8 @@
 <body class="mainframe bgcolor1">
 <h1><fmt:message key="changecoverart.title"/></h1>
 <table class="indent"><tr>
-    <td><fmt:message key="changecoverart.artist"/></td>
-    <td><input id="artist" name="artist" type="text" value="${model.artist}"/></td>
-    <td style="padding-left:0.25em"><fmt:message key="changecoverart.album"/></td>
-    <td><input id="album" name="album" type="text" value="${model.album}"/></td>
-    <td style="padding-left:0.5em"><input type="submit" value="<fmt:message key="changecoverart.searchdiscogs"/>" onclick="search()"/></td>
+    <td><input id="query" name="query" size="50" type="text" value="${model.artist} ${model.album}" onclick="select()"/></td>
+    <td style="padding-left:0.5em"><input type="submit" value="<fmt:message key="changecoverart.search"/>" onclick="search()"/></td>
 </tr></table>
 
 <table><tr>
@@ -162,7 +187,21 @@
 <div id="errorDetails" class="warning" style="display:none">
 </div>
 
-<div id="images">
+
+<div id="images" style="border:1px solid black;width:100%">
+</div>
+
+<div id="pages" style="border:1px solid blue">
+</div>
+
+<div id="branding">
+</div>
+
+<div id="template" style="float:left; height:200px; width:200px;padding:1em;border:1px solid green">
+    <img class="thumbnail" src="">
+    <div class="title"></div>
+    <div class="dimension"></div>
+    <div class="url"></div>
 </div>
 
 </body></html>

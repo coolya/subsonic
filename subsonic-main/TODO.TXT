@@ -1,3 +1,15 @@
+GOOGLE IMAGE SEARCH
+--------------------
+Collapse into one query text field.
+Start search automatically.
+Rename button to "Google Image Search"
+Add branding
+Remove DiscogsService and batch service
+Clean up jsp
+Nice formatting of search results.
+Paging.
+Make Search button default when pressing Enter.
+
 TODO IN BACKEND
 ---------------
 If trying to assign an expired web address used by someone else, don't show "Expired..." message.
