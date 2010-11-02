@@ -113,23 +113,23 @@
             var pagesDiv = document.createElement('div');
             for (var i = 0; i < cursor.pages.length; i++) {
                 var page = cursor.pages[i];
+                var label;
                 if (curPage == i) {
-
                     // If we are on the current page, then don't make a link.
-                    var label = document.createTextNode(' ' + page.label + ' ');
-                    pagesDiv.appendChild(label);
+                    label = document.createElement("b");
                 } else {
 
                     // Create links to other pages using gotoPage() on the searcher.
-                    var link = document.createElement('a');
-                    link.href = 'javascript:imageSearch.gotoPage('+i+');';
-                    link.innerHTML = page.label;
-                    link.style.marginRight = '2px';
-                    pagesDiv.appendChild(link);
+                    label = document.createElement("a");
+                    label.href = 'javascript:imageSearch.gotoPage('+i+');';
                 }
+                label.innerHTML = page.label;
+                label.style.marginRight = "1em";
+                pagesDiv.appendChild(label);
             }
 
-            var pages = document.getElementById('pages');
+            var pages = $("pages");
+            pages.innerHTML = "";
             pages.appendChild(pagesDiv);
         }
 
@@ -188,20 +188,23 @@
 </div>
 
 
-<div id="images" style="border:1px solid black;width:100%">
+<div id="images" style="width:100%">
 </div>
 
-<div id="pages" style="border:1px solid blue">
+<div style="clear:both;">
 </div>
 
-<div id="branding">
+<div id="pages" style="float:left;padding-left:1em; padding-bottom:2em">
 </div>
 
-<div id="template" style="float:left; height:200px; width:200px;padding:1em;border:1px solid green">
+<div id="branding" style="float:right;padding-right:1em; padding-bottom:2em">
+</div>
+
+<div id="template" style="float:left; height:200px; width:150px;padding:1em">
     <img class="thumbnail" src="">
-    <div class="title"></div>
-    <div class="dimension"></div>
-    <div class="url"></div>
+    <div class="title">My title</div>
+    <div class="dimension">My dimension</div>
+    <div class="url">My url</div>
 </div>
 
 </body></html>

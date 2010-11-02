@@ -1,13 +1,9 @@
 GOOGLE IMAGE SEARCH
 --------------------
-Collapse into one query text field.
 Start search automatically.
-Rename button to "Google Image Search"
-Add branding
 Remove DiscogsService and batch service
 Clean up jsp
 Nice formatting of search results.
-Paging.
 Make Search button default when pressing Enter.
 
 TODO IN BACKEND
@@ -17,15 +13,11 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 TODO IN ANDROID 1.9
 -------------------
 New search result interface.
-  o Remove title from SearchActivity
-  o Replace "Refresh" button with textview?
   o make voice search work
-  o Use gray color for in AlbumView, SongView.
   o long-click on song to do misc stuff.
-  o improve way server REST version is read.
 
 Add 192, 256kbps downsampling option.
-Shuffle play turned back on when rotating phone.
+Shuffle play turned back on when rotating phone. (onNewIntent?)
 Skipping problem
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=15260#15260
 Problem playing "Skål" downsampled.
