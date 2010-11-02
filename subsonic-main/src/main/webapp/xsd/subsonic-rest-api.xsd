@@ -80,11 +80,13 @@
             <xs:element name="child" type="sub:Child" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="parent" type="xs:string" use="optional"/>
         <xs:attribute name="name" type="xs:string" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="Child">
         <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="parent" type="xs:string" use="required"/>
         <xs:attribute name="isDir" type="xs:boolean" use="required"/>
         <xs:attribute name="title" type="xs:string" use="required"/>
         <xs:attribute name="album" type="xs:string" use="optional"/>

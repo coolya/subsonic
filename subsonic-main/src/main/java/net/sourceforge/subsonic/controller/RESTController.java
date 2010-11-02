@@ -611,6 +611,7 @@ public class RESTController extends MultiActionController {
     private List<Attribute> createAttributesForMusicFile(Player player, File coverArt, MusicFile musicFile) throws IOException {
         List<Attribute> attributes = new ArrayList<Attribute>();
         attributes.add(new Attribute("id", StringUtil.utf8HexEncode(musicFile.getPath())));
+        attributes.add(new Attribute("parent", StringUtil.utf8HexEncode(musicFile.getParent().getPath())));
         attributes.add(new Attribute("title", musicFile.getTitle()));
         attributes.add(new Attribute("isDir", musicFile.isDirectory()));
 
