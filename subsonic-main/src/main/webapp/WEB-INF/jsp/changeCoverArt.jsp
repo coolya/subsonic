@@ -78,9 +78,21 @@
 
 
                     var node = $("template").cloneNode(true);
+
                     var thumbnail = node.getElementsByClassName("thumbnail")[0];
                     thumbnail.src = result.tbUrl;
                     thumbnail.onclick = "setImage('" + result.url + "');";
+
+                    var title = node.getElementsByClassName("title")[0];
+                    title.innerHTML = result.contentNoFormatting;
+
+                    var dimension = node.getElementsByClassName("dimension")[0];
+                    dimension.innerHTML = result.width + " × " + result.height;
+
+                    var url = node.getElementsByClassName("url")[0];
+                    url.innerHTML = result.visibleUrl;
+
+
                     node.show();
 
                     // attach the node into my dom
@@ -194,17 +206,19 @@
 <div style="clear:both;">
 </div>
 
-<div id="pages" style="float:left;padding-left:1em; padding-bottom:2em">
+<div id="pages" style="float:left;padding-left:0.5em; padding-bottom:2em; padding-top:2em">
 </div>
 
-<div id="branding" style="float:right;padding-right:1em; padding-bottom:2em">
+<div id="branding" style="float:right;padding-right:1em; padding-bottom:2em; padding-top:2em">
 </div>
 
-<div id="template" style="float:left; height:200px; width:150px;padding:1em">
-    <img class="thumbnail" src="">
-    <div class="title">My title</div>
-    <div class="dimension">My dimension</div>
-    <div class="url">My url</div>
+<div id="template" style="float:left; height:190px; width:220px;padding:0.5em;position:relative">
+    <div style="position:absolute;bottom:0">
+        <img class="thumbnail" src="">
+        <div class="title"></div>
+        <div class="dimension detail"></div>
+        <div class="url detail"></div>
+    </div>
 </div>
 
 </body></html>

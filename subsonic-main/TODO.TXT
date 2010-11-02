@@ -5,6 +5,7 @@ Remove DiscogsService and batch service
 Clean up jsp
 Nice formatting of search results.
 Make Search button default when pressing Enter.
+Add pagination "Next" button.
 
 TODO IN BACKEND
 ---------------
