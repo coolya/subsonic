@@ -121,7 +121,6 @@ Fixed bug in startup script in standalone Subsonic (readlink)
 
 TODO IN 4.2
 -----------------
-Search for "David Bowie" fails.
 Make Discogs work again.
 Add REST method to add license key.
 Subsonic Premium

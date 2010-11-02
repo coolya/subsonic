@@ -726,12 +726,15 @@ public class SearchService {
             line.isFile = file.isFile();
             line.isDirectory = file.isDirectory();
             if (line.isDirectory) {
-                try {
-                    line.isAlbum = file.isAlbum();
-                } catch (Exception x) {
-                    LOG.warn("Failed to determine if " + file + " is an album.", x);
+                if (musicFolders.contains(file.getFile().getParentFile())) {
+                    line.isArtist = true;
+                } else {
+                    try {
+                        line.isAlbum = file.isAlbum();
+                    } catch (Exception x) {
+                        LOG.warn("Failed to determine if " + file + " is an album.", x);
+                    }
                 }
-                line.isArtist = musicFolders.contains(file.getFile().getParentFile());
             }
             line.lastModified = file.lastModified();
             line.created = existingLine != null ? existingLine.created : line.lastModified;
