@@ -154,7 +154,7 @@
     <string name="parser.not_authenticated">Wrong username or password.</string>
     <string name="parser.artist_count">Got %d artists.</string>
 
-    <string name="select_artist.refresh">Refresh</string>
+    <string name="select_artist.refresh">Click to refresh</string>
 
     <string name="widget.initial_text">Touch to select music</string>
     <string name="widget.sdcard_busy">SD card unavailable</string>

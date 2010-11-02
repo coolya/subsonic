@@ -57,14 +57,6 @@ public class SelectArtistActivity extends SubsonicTabActivity implements Adapter
 
         View header = LayoutInflater.from(this).inflate(R.layout.select_artist_header, artistList, false);
         artistList.addHeaderView(header);
-        Button refreshButton = (Button) header.findViewById(R.id.select_artist_refresh);
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                refresh();
-            }
-        });
-
         setTitle(Util.isOffline(this) ? R.string.music_library_label_offline : R.string.music_library_label);
 
         load();
@@ -99,7 +91,9 @@ public class SelectArtistActivity extends SubsonicTabActivity implements Adapter
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position >= 0) {
+        if (position == 0) {
+            refresh();
+        } else {
             Artist artist = (Artist) parent.getItemAtPosition(position);
             Intent intent = new Intent(this, SelectAlbumActivity.class);
             intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, artist.getId());
