@@ -137,7 +137,7 @@ public class SearchActivity extends SubsonicTabActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String query = intent.getStringExtra(Constants.INTENT_EXTRA_NAME_QUERY);
-        boolean autoplay = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, false);
+        boolean autoplay = intent.getBooleanExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, false);
 
         if (query != null) {
             mergeAdapter = new MergeAdapter();
@@ -154,7 +154,7 @@ public class SearchActivity extends SubsonicTabActivity {
             protected SearchResult doInBackground() throws Throwable {
                 SearchCritera criteria = new SearchCritera(query, MAX_ARTISTS, MAX_ALBUMS, MAX_SONGS);
                 MusicService service = MusicServiceFactory.getMusicService(SearchActivity.this);
-                // TODO: Call isLicenseValid to ensure the server's REST version is read.
+                // Call isLicenseValid to ensure the server's REST version is read.
                 service.isLicenseValid(SearchActivity.this, this);
                 return service.search(criteria, SearchActivity.this, this);
             }
