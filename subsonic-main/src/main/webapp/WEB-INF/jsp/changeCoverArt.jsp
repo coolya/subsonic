@@ -5,14 +5,18 @@
     <script type="text/javascript" src="<c:url value="/dwr/interface/coverArtService.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/engine.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
     <script type="text/javascript" language="javascript">
 
         dwr.engine.setErrorHandler(null);
+        google.load('search', '1');
+
+        var imageSearch;
 
         function getImages(service) {
             $("wait").style.display = "inline";
-            $("images").style.display = "none";
+//            $("images").style.display = "none";
             $("success").style.display = "none";
             $("error").style.display = "none";
             $("errorDetails").style.display = "none";
@@ -59,6 +63,74 @@
                 $("success").style.display = "inline";
             }
         }
+
+        function searchComplete() {
+
+            alert(imageSearch.results.length);
+            // Check that we got results
+            if (imageSearch.results && imageSearch.results.length > 0) {
+
+                // Grab our content div, clear it.
+                var contentDiv = document.getElementById("images");
+                contentDiv.innerHTML = '';
+
+                // Loop through our results, printing them to the page.
+                var results = imageSearch.results;
+                for (var i = 0; i < results.length; i++) {
+                    // For each result write it's title and image to the screen
+                    var result = results[i];
+
+                    // clone the .html node from the result
+                    var node = result.html.cloneNode(true);
+
+                    // attach the node into my dom
+                    contentDiv.appendChild(node);
+
+
+
+
+                    //              var imgContainer = document.createElement('div');
+//              var title = document.createElement('div');
+//
+//              // We use titleNoFormatting so that no HTML tags are left in the
+//              // title
+//              title.innerHTML = result.titleNoFormatting;
+//                    var image = document.createElement('img');
+//                    image.src = result.url;
+//                    contentDiv.appendChild(image);
+                }
+
+                // Now add links to additional pages of search results.
+//            addPaginationLinks(imageSearch);
+            }
+        }
+
+        function search() {
+            var artist = dwr.util.getValue("artist");
+            var album = dwr.util.getValue("album");
+            imageSearch.execute(artist + " " + album);
+        }
+
+        function onLoad() {
+
+            // Create an Image Search instance.
+            imageSearch = new google.search.ImageSearch();
+
+          // Set searchComplete as the callback function when a search is
+          // complete.  The imageSearch object will have results in it.
+          imageSearch.setSearchCompleteCallback(this, searchComplete, null);
+
+          // Find me a beautiful car.
+//          imageSearch.execute("Subaru STI");
+
+          // Include the required Google branding
+//          google.search.Search.getBranding('branding');
+
+            // tell the searcher to draw itself and tell it where to attach
+        }
+        google.setOnLoadCallback(onLoad);
+
+
     </script>
 </head>
 <body class="mainframe bgcolor1">
@@ -68,7 +140,7 @@
     <td><input id="artist" name="artist" type="text" value="${model.artist}"/></td>
     <td style="padding-left:0.25em"><fmt:message key="changecoverart.album"/></td>
     <td><input id="album" name="album" type="text" value="${model.album}"/></td>
-    <td style="padding-left:0.5em"><input type="submit" value="<fmt:message key="changecoverart.searchdiscogs"/>" onclick="getImages('discogs')"/></td>
+    <td style="padding-left:0.5em"><input type="submit" value="<fmt:message key="changecoverart.searchdiscogs"/>" onclick="search()"/></td>
 </tr></table>
 
 <table><tr>
@@ -89,7 +161,8 @@
 <h2 id="error" style="display:none"><fmt:message key="changecoverart.error"/></h2>
 <div id="errorDetails" class="warning" style="display:none">
 </div>
-<div id="images" style="display:none;">
+
+<div id="images">
 </div>
 
 </body></html>

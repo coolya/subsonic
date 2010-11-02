@@ -121,6 +121,7 @@ Fixed bug in startup script in standalone Subsonic (readlink)
 
 TODO IN 4.2
 -----------------
+Use Google Image Search API
 Make Discogs work again.
 Add REST method to add license key.
 Subsonic Premium
