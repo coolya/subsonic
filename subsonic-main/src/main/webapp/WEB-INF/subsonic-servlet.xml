@@ -179,13 +179,6 @@
         <property name="settingsService" ref="settingsService"/>
         <property name="searchService" ref="searchService"/>
     </bean>
-    <bean id="coverArtSettingsController" class="net.sourceforge.subsonic.controller.CoverArtSettingsController">
-        <property name="commandClass" value="net.sourceforge.subsonic.command.CoverArtSettingsCommand"/>
-        <property name="successView" value="coverArtSettings"/>
-        <property name="formView" value="coverArtSettings"/>
-        <property name="settingsService" ref="settingsService"/>
-        <property name="coverArtBatchService" ref="coverArtBatchService"/>
-    </bean>
     <bean id="generalSettingsController" class="net.sourceforge.subsonic.controller.GeneralSettingsController">
         <property name="commandClass" value="net.sourceforge.subsonic.command.GeneralSettingsCommand"/>
         <property name="successView" value="generalSettings"/>
@@ -392,7 +385,6 @@
                 <prop key="/transcodingSettings.view">transcodingSettingsController</prop>
                 <prop key="/internetRadioSettings.view">internetRadioSettingsController</prop>
                 <prop key="/searchSettings.view">searchSettingsController</prop>
-                <prop key="/coverArtSettings.view">coverArtSettingsController</prop>
                 <prop key="/podcastSettings.view">podcastSettingsController</prop>
                 <prop key="/generalSettings.view">generalSettingsController</prop>
                 <prop key="/advancedSettings.view">advancedSettingsController</prop>

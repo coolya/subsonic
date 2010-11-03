@@ -97,7 +97,6 @@ public class SettingsService {
     private static final String KEY_LDAP_MANAGER_PASSWORD = "LdapManagerPassword";
     private static final String KEY_LDAP_SEARCH_FILTER = "LdapSearchFilter";
     private static final String KEY_LDAP_AUTO_SHADOWING = "LdapAutoShadowing";
-    private static final String KEY_AUTO_COVER_BATCH = "AutoCoverBatch";
     private static final String KEY_GETTING_STARTED_ENABLED = "GettingStartedEnabled";
     private static final String KEY_PORT_FORWARDING_ENABLED = "PortForwardingEnabled";
     private static final String KEY_PORT = "Port";
@@ -153,7 +152,6 @@ public class SettingsService {
     private static final String DEFAULT_LDAP_MANAGER_PASSWORD = null;
     private static final String DEFAULT_LDAP_SEARCH_FILTER = "(sAMAccountName={0})";
     private static final boolean DEFAULT_LDAP_AUTO_SHADOWING = false;
-    private static final boolean DEFAULT_AUTO_COVER_BATCH = false;
     private static final boolean DEFAULT_PORT_FORWARDING_ENABLED = false;
     private static final boolean DEFAULT_GETTING_STARTED_ENABLED = true;
     private static final int DEFAULT_PORT = 80;
@@ -166,7 +164,7 @@ public class SettingsService {
     private static final long DEFAULT_SETTINGS_CHANGED = 0L;
 
     // Array of obsolete keys.  Used to clean property file.
-    private static final List<String> OBSOLETE_KEYS = Arrays.asList("PortForwardingPublicPort", "PortForwardingLocalPort", "DownsamplingCommand");
+    private static final List<String> OBSOLETE_KEYS = Arrays.asList("PortForwardingPublicPort", "PortForwardingLocalPort", "DownsamplingCommand", "AutoCoverBatch");
 
     private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
     private static final String THEMES_FILE = "/net/sourceforge/subsonic/theme/themes.txt";
@@ -657,14 +655,6 @@ public class SettingsService {
 
     public void setLdapAutoShadowing(boolean ldapAutoShadowing) {
         properties.setProperty(KEY_LDAP_AUTO_SHADOWING, String.valueOf(ldapAutoShadowing));
-    }
-
-    public boolean isAutoCoverBatch() {
-        return Boolean.valueOf(properties.getProperty(KEY_AUTO_COVER_BATCH, String.valueOf(DEFAULT_AUTO_COVER_BATCH)));
-    }
-
-    public void setAutoCoverBatch(boolean isAutoCoverBatch) {
-        setProperty(KEY_AUTO_COVER_BATCH, String.valueOf(isAutoCoverBatch));
     }
 
     public boolean isGettingStartedEnabled() {

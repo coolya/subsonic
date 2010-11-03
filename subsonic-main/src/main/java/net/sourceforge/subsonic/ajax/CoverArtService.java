@@ -18,31 +18,24 @@
  */
 package net.sourceforge.subsonic.ajax;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
-import javax.servlet.http.HttpServletRequest;
-
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.util.StringUtil;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.HttpResponse;
-import org.directwebremoting.WebContextFactory;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.domain.MusicFile;
-import net.sourceforge.subsonic.service.DiscogsSearchService;
-import net.sourceforge.subsonic.service.MusicFileService;
-import net.sourceforge.subsonic.service.SecurityService;
-import net.sourceforge.subsonic.util.StringUtil;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 /**
- * Provides AJAX-enabled services for retrieving cover art images.
+ * Provides AJAX-enabled services for changing cover art images.
  * <p/>
  * This class is used by the DWR framework (http://getahead.ltd.uk/dwr/).
  *
@@ -52,49 +45,8 @@ public class CoverArtService {
 
     private static final Logger LOG = Logger.getLogger(CoverArtService.class);
 
-    private DiscogsSearchService discogsSearchService;
     private SecurityService securityService;
     private MusicFileService musicFileService;
-
-    /**
-     * Returns a list of URLs of cover art images for the given artist and album.
-     *
-     * @param service Where to search for images. Supported values are: "discogs".
-     * @param artist  The artist to search for.
-     * @param album   The album to search for.
-     * @return A possibly empty array of URLs of cover art images.
-     */
-    public CoverArtInfo[] getCoverArtImages(String service, String artist, String album) {
-        if ("discogs".equals(service)) {
-            return getDiscogsCoverArtImages(artist, album);
-        }
-
-        LOG.warn("Unsupported cover art service: " + service);
-        return new CoverArtInfo[0];
-    }
-
-    private CoverArtInfo[] getDiscogsCoverArtImages(String artist, String album) {
-        try {
-            String[] urls = discogsSearchService.getCoverArtImages(artist, album);
-            CoverArtInfo[] result = new CoverArtInfo[urls.length];
-            for (int i = 0; i < urls.length; i++) {
-                // Must fetch Discogs images thru proxy, since Discogs doesn't allow the
-                // HTTP "referer" request header.
-                result[i] = new CoverArtInfo(toProxyURL(urls[i]), urls[i]);
-            }
-            return result;
-        } catch (Exception x) {
-            LOG.warn("Failed to search for images at Discogs.", x);
-            return new CoverArtInfo[0];
-        }
-    }
-
-    private String toProxyURL(String url) throws UnsupportedEncodingException {
-        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
-        String requestUrl = request.getRequestURL().toString();
-        String proxyUrl = requestUrl.replaceFirst("/dwr/.*", "/proxy.view?url=");
-        return proxyUrl + URLEncoder.encode(url, StringUtil.ENCODING_UTF8);
-    }
 
     /**
      * Downloads and saves the cover art at the given URL.
@@ -184,9 +136,5 @@ public class CoverArtService {
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
-    }
-
-    public void setDiscogsSearchService(DiscogsSearchService discogsSearchService) {
-        this.discogsSearchService = discogsSearchService;
     }
 }

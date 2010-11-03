@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1" %>
 <%@ include file="include.jsp" %>
 
-<c:set var="categories" value="${param.restricted ? 'personal password player' : 'musicFolder general advanced personal user player network transcoding internetRadio podcast search coverArt'}"/>
+<c:set var="categories" value="${param.restricted ? 'personal password player' : 'musicFolder general advanced personal user player network transcoding internetRadio podcast search'}"/>
 <h1>
     <img src="<spring:theme code="settingsImage"/>" alt=""/>
     <fmt:message key="settingsheader.title"/>

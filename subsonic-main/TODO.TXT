@@ -1,7 +1,5 @@
 GOOGLE IMAGE SEARCH
 --------------------
-Remove DiscogsService and batch service
-Rename css classes to something less generic.
 After downloading an image, go back to album automatically.
 Test with other browsers.
 

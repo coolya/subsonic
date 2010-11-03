@@ -50,19 +50,19 @@
                     var result = results[i];
                     var node = $("template").cloneNode(true);
 
-                    var link = node.getElementsByClassName("link")[0];
+                    var link = node.getElementsByClassName("search-result-link")[0];
                     link.href = "javascript:setImage('" + result.url + "');";
 
-                    var thumbnail = node.getElementsByClassName("thumbnail")[0];
+                    var thumbnail = node.getElementsByClassName("search-result-thumbnail")[0];
                     thumbnail.src = result.tbUrl;
 
-                    var title = node.getElementsByClassName("title")[0];
+                    var title = node.getElementsByClassName("search-result-title")[0];
                     title.innerHTML = result.contentNoFormatting.truncate(30);
 
-                    var dimension = node.getElementsByClassName("dimension")[0];
+                    var dimension = node.getElementsByClassName("search-result-dimension")[0];
                     dimension.innerHTML = result.width + " × " + result.height;
 
-                    var url = node.getElementsByClassName("url")[0];
+                    var url = node.getElementsByClassName("search-result-url")[0];
                     url.innerHTML = result.visibleUrl;
 
                     node.show();
@@ -196,10 +196,10 @@
 
 <div id="template" style="float:left; height:190px; width:220px;padding:0.5em;position:relative">
     <div style="position:absolute;bottom:0">
-        <a class="link"><img class="thumbnail" style="padding:1px; border:1px solid #021a40; background-color:white;"></a>
-        <div class="title"></div>
-        <div class="dimension detail"></div>
-        <div class="url detail"></div>
+        <a class="search-result-link"><img class="search-result-thumbnail" style="padding:1px; border:1px solid #021a40; background-color:white;"></a>
+        <div class="search-result-title"></div>
+        <div class="search-result-dimension detail"></div>
+        <div class="search-result-url detail"></div>
     </div>
 </div>
 
