@@ -53,7 +53,6 @@ public class SongView extends LinearLayout implements Checkable {
     private TextView durationTextView;
     private TextView statusTextView;
     private MusicDirectory.Entry song;
-    private DownloadFile nominalDownloadFile;
 
     public SongView(Context context) {
         super(context);
@@ -100,7 +99,7 @@ public class SongView extends LinearLayout implements Checkable {
             return;
         }
 
-        DownloadFile downloadFile = resolveDownloadFile(downloadService);
+        DownloadFile downloadFile = downloadService.forSong(song);
         File completeFile = downloadFile.getCompleteFile();
         File partialFile = downloadFile.getPartialFile();
 
@@ -125,18 +124,6 @@ public class SongView extends LinearLayout implements Checkable {
         } else {
             titleTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
-    }
-
-    private DownloadFile resolveDownloadFile(DownloadService downloadService) {
-        DownloadFile existingDownloadFile = downloadService.forSong(song, false);
-        if (existingDownloadFile != null) {
-            return existingDownloadFile;
-        }
-
-        if (nominalDownloadFile == null) {
-            nominalDownloadFile = downloadService.forSong(song, true);
-        }
-        return nominalDownloadFile;
     }
 
     private static synchronized void startUpdater() {

@@ -216,6 +216,24 @@ public class MusicDirectory {
         }
 
         @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+
+            Entry entry = (Entry) o;
+            return id.equals(entry.id);
+        }
+
+        @Override
+        public int hashCode() {
+            return id.hashCode();
+        }
+
+        @Override
         public String toString() {
             return title;
         }
