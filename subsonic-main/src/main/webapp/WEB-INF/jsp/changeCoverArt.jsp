@@ -163,10 +163,12 @@
             imageSearch.setResultSetSize(8);
 
 
-          // Include the required Google branding
-          google.search.Search.getBranding('branding');
+            // Include the required Google branding
+            google.search.Search.getBranding('branding');
 
             $("template").hide();
+
+            search();
         }
         google.setOnLoadCallback(onLoad);
 
@@ -175,18 +177,21 @@
 </head>
 <body class="mainframe bgcolor1">
 <h1><fmt:message key="changecoverart.title"/></h1>
-<table class="indent"><tr>
-    <td><input id="query" name="query" size="50" type="text" value="${model.artist} ${model.album}" onclick="select()"/></td>
-    <td style="padding-left:0.5em"><input type="submit" value="<fmt:message key="changecoverart.search"/>" onclick="search()"/></td>
-</tr></table>
+<form action="javascript:search()">
+    <table class="indent"><tr>
+        <td><input id="query" name="query" size="70" type="text" value="${model.artist} ${model.album}" onclick="select()"/></td>
+        <td style="padding-left:0.5em"><input type="submit" value="<fmt:message key="changecoverart.search"/>"/></td>
+    </tr></table>
+</form>
 
-<table><tr>
-    <input id="path" type="hidden" name="path" value="${model.path}"/>
-    <td><label for="url"><fmt:message key="changecoverart.address"/></label></td>
-    <td><input type="text" name="url" size="40" id="url" value="http://" onclick="select()"/></td>
-    <td><input type='submit' value='<fmt:message key="common.ok"/>' onclick="setImage(dwr.util.getValue('url'))"></td>
-</tr></table>
-
+<form action="javascript:setImage(dwr.util.getValue('url'))">
+    <table><tr>
+        <input id="path" type="hidden" name="path" value="${model.path}"/>
+        <td><label for="url"><fmt:message key="changecoverart.address"/></label></td>
+        <td style="padding-left:0.5em"><input type="text" name="url" size="50" id="url" value="http://" onclick="select()"/></td>
+        <td style="padding-left:0.5em"><input type="submit" value="<fmt:message key="common.ok"/>"></td>
+    </tr></table>
+</form>
 <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.path}"/></sub:url>
 <div style="padding-top:0.5em;padding-bottom:0.5em">
     <div class="back"><a href="${backUrl}"><fmt:message key="common.back"/></a></div>

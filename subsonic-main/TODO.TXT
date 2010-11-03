@@ -1,11 +1,14 @@
 GOOGLE IMAGE SEARCH
 --------------------
-Start search automatically.
 Remove DiscogsService and batch service
 Clean up jsp
 Nice formatting of search results.
-Make Search button default when pressing Enter.
 Add pagination "Next" button.
+Trim title
+After downloading an image, go back to album automatically.
+Use href in image.
+Test with other browsers.
+Frame images.
 
 TODO IN BACKEND
 ---------------
@@ -16,6 +19,7 @@ TODO IN ANDROID 1.9
 New search result interface.
   o make voice search work
   o long-click on song to do misc stuff.
+  o Bug with "Scorpions > Live in Spain"
 
 Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone. (onNewIntent?)
