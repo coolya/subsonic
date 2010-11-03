@@ -12,71 +12,42 @@
 
         dwr.engine.setErrorHandler(null);
         google.load('search', '1');
-
         var imageSearch;
 
-        function getImages(service) {
-            $("wait").style.display = "inline";
-//            $("images").style.display = "none";
-            $("success").style.display = "none";
-            $("error").style.display = "none";
-            $("errorDetails").style.display = "none";
-            $("noImagesFound").style.display = "none";
-        }
-
-        function getImagesCallback(imageUrls) {
-            var html = "";
-            for (var i = 0; i < imageUrls.length; i++) {
-                html += "<a href=\"javascript:setImage('" + imageUrls[i].imageDownloadUrl + "')\"><img src='" + imageUrls[i].imagePreviewUrl + "' style='padding:5pt' alt=''/></a>";
-            }
-            dwr.util.setValue("images", html, { escapeHtml:false });
-
-            $("wait").style.display = "none";
-            if (imageUrls.length > 0) {
-//                $("images").style.display = "inline";
-            } else {
-                $("noImagesFound").style.display = "inline";
-            }
-        }
-
         function setImage(imageUrl) {
-            $("wait").style.display = "inline";
-//            $("images").style.display = "none";
-            $("success").style.display = "none";
-            $("error").style.display = "none";
-            $("errorDetails").style.display = "none";
-            $("noImagesFound").style.display = "none";
+            $("wait").show();
+            $("result").hide();
+            $("success").hide();
+            $("error").hide();
+            $("errorDetails").hide();
+            $("noImagesFound").hide();
             var path = dwr.util.getValue("path");
-            coverArtService.setCoverArtImage(path, imageUrl, setImageCallback);
+            coverArtService.setCoverArtImage(path, imageUrl, setImageComplete);
         }
 
-        function setImageCallback(errorDetails) {
-            $("wait").style.display = "none";
+        function setImageComplete(errorDetails) {
+            $("wait").hide();
             if (errorDetails != null) {
                 dwr.util.setValue("errorDetails", "<br/>" + errorDetails, { escapeHtml:false });
-                $("error").style.display = "inline";
-                $("errorDetails").style.display = "inline";
+                $("error").show();
+                $("errorDetails").show();
             } else {
-                $("success").style.display = "inline";
+                $("success").show();
             }
         }
 
         function searchComplete() {
 
-            // Check that we got results
+            $("wait").hide();
+
             if (imageSearch.results && imageSearch.results.length > 0) {
 
-                // Grab our content div, clear it.
-                var images = document.getElementById("images");
-                images.innerHTML = '';
+                var images = $("images");
+                images.innerHTML = "";
 
-                // Loop through our results, printing them to the page.
                 var results = imageSearch.results;
                 for (var i = 0; i < results.length; i++) {
-                    // For each result write it's title and image to the screen
                     var result = results[i];
-
-
                     var node = $("template").cloneNode(true);
 
                     var thumbnail = node.getElementsByClassName("thumbnail")[0];
@@ -92,28 +63,16 @@
                     var url = node.getElementsByClassName("url")[0];
                     url.innerHTML = result.visibleUrl;
 
-
                     node.show();
-
-                    // attach the node into my dom
                     images.appendChild(node);
-
-
-
-
-                    //              var imgContainer = document.createElement('div');
-//              var title = document.createElement('div');
-//
-//              // We use titleNoFormatting so that no HTML tags are left in the
-//              // title
-//              title.innerHTML = result.titleNoFormatting;
-//                    var image = document.createElement('img');
-//                    image.src = result.url;
-//                    contentDiv.appendChild(image);
                 }
 
-                // Now add links to additional pages of search results.
+                $("result").show();
+
                 addPaginationLinks(imageSearch);
+
+            } else {
+                $("noImagesFound").show();
             }
         }
 
@@ -122,22 +81,31 @@
             // To paginate search results, use the cursor function.
             var cursor = imageSearch.cursor;
             var curPage = cursor.currentPageIndex; // check what page the app is on
-            var pagesDiv = document.createElement('div');
+            var pagesDiv = document.createElement("div");
             for (var i = 0; i < cursor.pages.length; i++) {
                 var page = cursor.pages[i];
                 var label;
                 if (curPage == i) {
-                    // If we are on the current page, then don't make a link.
+                    // If we are on the current page, then don"t make a link.
                     label = document.createElement("b");
                 } else {
 
                     // Create links to other pages using gotoPage() on the searcher.
                     label = document.createElement("a");
-                    label.href = 'javascript:imageSearch.gotoPage('+i+');';
+                    label.href = "javascript:imageSearch.gotoPage(" + i + ");";
                 }
                 label.innerHTML = page.label;
                 label.style.marginRight = "1em";
                 pagesDiv.appendChild(label);
+            }
+
+            // Create link to next page.
+            if (curPage < cursor.pages.length - 1) {
+                var next = document.createElement("a");
+                next.href = "javascript:imageSearch.gotoPage(" + (curPage + 1) + ");";
+                next.innerHTML = "<fmt:message key="common.next"/>";
+                next.style.marginLeft = "1em";
+                pagesDiv.appendChild(next);
             }
 
             var pages = $("pages");
@@ -145,26 +113,27 @@
             pages.appendChild(pagesDiv);
         }
 
-
         function search() {
+
+            $("wait").show();
+            $("result").hide();
+            $("success").hide();
+            $("error").hide();
+            $("errorDetails").hide();
+            $("noImagesFound").hide();
+
             var query = dwr.util.getValue("query");
             imageSearch.execute(query);
         }
 
         function onLoad() {
 
-            // Create an Image Search instance.
             imageSearch = new google.search.ImageSearch();
-
-            // Set searchComplete as the callback function when a search is
-            // complete.  The imageSearch object will have results in it.
             imageSearch.setSearchCompleteCallback(this, searchComplete, null);
             imageSearch.setNoHtmlGeneration();
             imageSearch.setResultSetSize(8);
 
-
-            // Include the required Google branding
-            google.search.Search.getBranding('branding');
+            google.search.Search.getBranding("branding");
 
             $("template").hide();
 
@@ -204,17 +173,23 @@
 <div id="errorDetails" class="warning" style="display:none">
 </div>
 
+<div id="result">
 
-<div id="images" style="width:100%">
-</div>
+    <div id="pages" style="float:left;padding-left:0.5em;padding-top:0.5em">
+    </div>
 
-<div style="clear:both;">
-</div>
+    <div id="branding" style="float:right;padding-right:1em;padding-top:0.5em">
+    </div>
 
-<div id="pages" style="float:left;padding-left:0.5em; padding-bottom:2em; padding-top:2em">
-</div>
+    <div style="clear:both;">
+    </div>
 
-<div id="branding" style="float:right;padding-right:1em; padding-bottom:2em; padding-top:2em">
+    <div id="images" style="width:100%;padding-bottom:2em">
+    </div>
+
+    <div style="clear:both;">
+    </div>
+
 </div>
 
 <div id="template" style="float:left; height:190px; width:220px;padding:0.5em;position:relative">

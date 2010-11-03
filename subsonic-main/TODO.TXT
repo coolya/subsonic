@@ -1,9 +1,7 @@
 GOOGLE IMAGE SEARCH
 --------------------
 Remove DiscogsService and batch service
-Clean up jsp
 Nice formatting of search results.
-Add pagination "Next" button.
 Trim title
 After downloading an image, go back to album automatically.
 Use href in image.
