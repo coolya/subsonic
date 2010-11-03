@@ -57,7 +57,7 @@
                     thumbnail.src = result.tbUrl;
 
                     var title = node.getElementsByClassName("title")[0];
-                    title.innerHTML = result.contentNoFormatting;
+                    title.innerHTML = result.contentNoFormatting.truncate(30);
 
                     var dimension = node.getElementsByClassName("dimension")[0];
                     dimension.innerHTML = result.width + " × " + result.height;

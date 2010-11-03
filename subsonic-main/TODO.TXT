@@ -1,9 +1,7 @@
 GOOGLE IMAGE SEARCH
 --------------------
 Remove DiscogsService and batch service
-Nice formatting of search results.
 Rename css classes to something less generic.
-Trim title
 After downloading an image, go back to album automatically.
 Test with other browsers.
 
