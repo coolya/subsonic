@@ -9,6 +9,7 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.9
 -------------------
+Nicer icon for music library.
 New search result interface.
   o make voice search work
   o long-click on song to do misc stuff.
@@ -112,6 +113,7 @@ last_played
 DONE IN 4.2
 ----------------
 Lucene search engine.
+Google image search.
 Update LAME command
   o Both downsample and transcode
   o Make it work for existing installs.
@@ -123,8 +125,6 @@ Fixed bug in startup script in standalone Subsonic (readlink)
 
 TODO IN 4.2
 -----------------
-Use Google Image Search API
-Make Discogs work again.
 Add REST method to add license key.
 Subsonic Premium
 Include statically linked ffmpeg, lame from einstein2x.

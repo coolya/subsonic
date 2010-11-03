@@ -41,6 +41,7 @@ import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.ShufflePlayBuffer;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.LRUCache;
 
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 
@@ -58,6 +59,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private final DownloadServiceLifecycleSupport lifecycleSupport = new DownloadServiceLifecycleSupport(this);
     private final ShufflePlayBuffer shufflePlayBuffer = new ShufflePlayBuffer(this);
 
+    private final LRUCache<MusicDirectory.Entry, DownloadFile> downloadFileCache = new LRUCache<MusicDirectory.Entry, DownloadFile>(100);
     private final List<DownloadFile> cleanupCandidates = new ArrayList<DownloadFile>();
     private DownloadFile currentPlaying;
     private DownloadFile currentDownloading;
@@ -167,13 +169,19 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     @Override
-    public synchronized DownloadFile forSong(MusicDirectory.Entry song, boolean createIfMissing) {
+    public synchronized DownloadFile forSong(MusicDirectory.Entry song) {
         for (DownloadFile downloadFile : downloadList) {
-            if (downloadFile.getSong() == song) {
+            if (downloadFile.getSong().equals(song)) {
                 return downloadFile;
             }
         }
-        return createIfMissing ? new DownloadFile(this, song, false) : null;
+
+        DownloadFile downloadFile = downloadFileCache.get(song);
+        if (downloadFile == null) {
+            downloadFile = new DownloadFile(this, song, false);
+            downloadFileCache.put(song, downloadFile);
+        }
+        return downloadFile;
     }
 
     @Override
@@ -217,7 +225,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     @Override
     public synchronized void delete(List<MusicDirectory.Entry> songs) {
         for (MusicDirectory.Entry song : songs) {
-            forSong(song, true).delete();
+            forSong(song).delete();
         }
     }
 
