@@ -50,9 +50,11 @@
                     var result = results[i];
                     var node = $("template").cloneNode(true);
 
+                    var link = node.getElementsByClassName("link")[0];
+                    link.href = "javascript:setImage('" + result.url + "');";
+
                     var thumbnail = node.getElementsByClassName("thumbnail")[0];
                     thumbnail.src = result.tbUrl;
-                    thumbnail.onclick = "setImage('" + result.url + "');";
 
                     var title = node.getElementsByClassName("title")[0];
                     title.innerHTML = result.contentNoFormatting;
@@ -194,7 +196,7 @@
 
 <div id="template" style="float:left; height:190px; width:220px;padding:0.5em;position:relative">
     <div style="position:absolute;bottom:0">
-        <img class="thumbnail" src="">
+        <a class="link"><img class="thumbnail" style="padding:1px; border:1px solid #021a40; background-color:white;"></a>
         <div class="title"></div>
         <div class="dimension detail"></div>
         <div class="url detail"></div>
