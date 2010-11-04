@@ -16,6 +16,17 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="4.2.beta1"><h2 class="div">Subsonic 4.2.beta1 - Nov 4, 2010</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>New &amp; improved search engine based on <a href="http://lucene.apache.org/">Lucene</a>.</li>
+    <li><span class="bugid">New: </span>New &amp; improved cover art search based on Google Image Search.</li>
+    <li><span class="bugid">New: </span>Mac installer now includes transcoders, courtesy of einstein2x.</li>
+    <li><span class="bugid">New: </span>Updated German translation, courtesy of deejay2302.</li>
+    <li><span class="bugid">New: </span>Improved LAME integration (preserve ID3 tags, avoid skipping in Android client).</li>
+    <li><span class="bugid">New: </span>Added new REST API method for searching.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed bug in startup script in standalone Subsonic (readlink).</li>
+</ul>
+
 <a name="4.1"><h2 class="div">Subsonic 4.1 - Sep 10, 2010</h2></a>
 <ul>
     <li><span class="bugid">New: </span>Updated Danish translation, courtesy of Morten Hartvich.</li>
@@ -740,6 +751,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#4.2.beta1">Subsonic 4.2.beta1</a></li>
             <li><a href="#4.1">Subsonic 4.1</a></li>
             <li><a href="#4.1.beta1">Subsonic 4.1.beta1</a></li>
             <li><a href="#4.0.1">Subsonic 4.0.1</a></li>

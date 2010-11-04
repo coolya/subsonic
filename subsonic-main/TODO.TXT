@@ -115,24 +115,11 @@ last_played
 
 DONE IN 4.2
 ----------------
-Lucene search engine.
-Google image search.
-Update LAME command
-  o Both downsample and transcode
-  o Make it work for existing installs.
-  o --resample 44.1
-  o ID3 tags
-Include artist attribute in REST API.
-Updated German translation, courtesy of deejay2302
-Fixed bug in startup script in standalone Subsonic (readlink)
 
 TODO IN 4.2
 -----------------
 Add REST method to add license key.
 Subsonic Premium
-Include statically linked ffmpeg, lame from einstein2x.
-  o Update documentation
-  o Uninstaller should remove ffmpeg, lame?
 Add one-liner intro in web page, a la http://www.rogueamoeba.com/nicecast/
   o No monthly fees, no uploading, no syncing
 Change icons all around.
@@ -547,9 +534,9 @@ Deploy
 Check that correct local version is displayed.
 Commit
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.1/
-  rsync -avP -e ssh subsonic-assembly/target/subsonic* sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.1/
-  rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg subsonic-installer-debian/target/subsonic*.deb subsonic-installer-rpm/target/subsonic*.rpm sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.1/
+  rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.2.beta1/
+  rsync -avP -e ssh subsonic-assembly/target/subsonic* sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.2.beta1/
+  rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg subsonic-installer-debian/target/subsonic*.deb subsonic-installer-rpm/target/subsonic*.rpm sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.2.beta1/
 
 Modify FRS properties
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
@@ -561,7 +548,7 @@ Upload site (NEW): CHANGE DATE BELOW
   rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-09-10/pages/
   rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps/pages/
 
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-4.1 -m "Tagging 4.1."
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-4.2.beta1 -m "Tagging 4.2.beta1."
 Register at freshmeat.
 Post message on forum.
 Update version number in pom.xml etc.
@@ -601,11 +588,11 @@ Update
     https://myapps.developer.motorola.com/
     https://slideme.org/application/subsonic
     http://www.camangimarket.com/index.html
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.7.4 -m "Tagging Android 1.7.4"
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.8.1 -m "Tagging Android 1.8.1"
 Create new directory in FRS
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.7.4/subsonic-1.7.4.apk
+  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.8.1/subsonic-1.8.1.apk
 
 
 HOW TO RELEASE TRANSCODING PACK

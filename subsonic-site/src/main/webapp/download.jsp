@@ -5,7 +5,7 @@
 <%!
     String current = "download";
     String stable = "4.1";
-    String beta = null; // Set to null if no beta is available.
+    String beta = "4.2.beta1"; // Set to null if no beta is available.
 %>
 <%@ include file="header.jsp" %>
 
@@ -25,7 +25,7 @@
                     <th></th>
                     <th class="featurename">Latest stable release &ndash; Subsonic <%=stable%></th>
                     <th><a href="changelog.jsp#<%=stable%>">What's new?</a></th>
-                    <th><a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3284">Discuss</a></th>
+                    <th></th>
                 </tr>
                 <tr class="table-altrow">
                     <td><img src="inc/img/download-windows.png" alt="" height="16" width="16"/></td>
@@ -77,7 +77,7 @@
                     <th></th>
                     <th class="featurename">Latest beta release &ndash; Subsonic <%=beta%></th>
                     <th><a href="changelog.jsp#<%=beta%>">What's new?</a></th>
-                    <th><a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4024">Discuss</a></th>
+                    <th></th>
                 </tr>
                 <tr class="table-altrow">
                     <td><img src="inc/img/download-windows.png" alt="" height="16" width="16"/></td>
