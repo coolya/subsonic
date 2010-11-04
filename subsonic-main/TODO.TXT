@@ -9,6 +9,9 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.9
 -------------------
+Cover art images loaded incorrectly.
+Reuse AlbumViews (in EntryAdapter)
+Cooler button in slider (polished steel)
 Nicer icon for music library.
 New search result interface.
   o make voice search work
