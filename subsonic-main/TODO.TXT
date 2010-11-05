@@ -1,3 +1,15 @@
+[2010-11-05 07:27:14,413] ERROR org.apache.catalina.core.ContainerBase.[Catalina].[localhost].[/demo].[dwr-invoker] - Servlet.service() for servlet dwr-invoker threw exception
+java.lang.NoClassDefFoundError: com/yahoo/platform/yui/compressor/JavaScriptCompressor
+        at org.directwebremoting.impl.YahooJSCompressor.compressJavaScript(YahooJSCompressor.java:62)
+        at org.directwebremoting.servlet.JavaScriptHandler.generateCachableContent(JavaScriptHandler.java:57)
+        at org.directwebremoting.servlet.CachingHandler.handle(CachingHandler.java:73)
+        at org.directwebremoting.servlet.UrlProcessor.handle(UrlProcessor.java:120)
+        at org.directwebremoting.servlet.DwrServlet.doPost(DwrServlet.java:141)
+        at org.directwebremoting.servlet.DwrServlet.doGet(DwrServlet.java:127)
+        at javax.servlet.http.HttpServlet.service(HttpServlet.java:627)
+        at javax.servlet.http.HttpServlet.service(HttpServlet.java:729)
+
+
 GOOGLE IMAGE SEARCH
 --------------------
 After downloading an image, go back to album automatically.
@@ -545,7 +557,7 @@ Upload site (OLD):
  rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
 
 Upload site (NEW): CHANGE DATE BELOW
-  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-09-10/pages/
+  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-11-05/pages/
   rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps/pages/
 
 svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-4.2.beta1 -m "Tagging 4.2.beta1."
@@ -558,15 +570,14 @@ Upgrade Subsonic backend: CHANGE DATE BELOW
   Backup backend database.
   cd subsonic-backend
   mvn clean install
-  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-09-10/ROOT.war
-  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-09-10/demo.war
+  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-11-05/ROOT.war
+  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-11-05/demo.war
   ssh sindremehus@subsonic.org
   su
   /etc/init.d/tomcat55 stop
   rm webapps
-  ln -s webapps-2010-09-10 webapps
-  rm -rf work
-  rm logs/*
+  ln -s webapps-2010-11-05 webapps
+  rm -rf work logs/*
   /etc/init.d/tomcat55 start
 
 
