@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="subsonic" default="build">
+
+    <!--todo-->
+    <!--<property file="local.properties" />-->
+
+    <property name="jde.home" location="c:\progs\Eclipse\plugins\net.rim.ejde.componentpack5.0.0_5.0.0.25/components"/>
+
+    <taskdef resource="bb-ant-defs.xml"
+             classpath="c:\progs\bb-ant-tools-1.2.9\bb-ant-tools.jar" />
+
+    <target name="init">
+        <mkdir dir="target"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="target"/>
+    </target>
+
+    <target name="build" depends="init">
+        <rapc output="target/HelloWorldApp" srcdir="src" jdehome="${jde.home}" />
+    </target>
+
+
+     <!--<target name="deploy">-->
+        <!--<copydir src="${dest.dir}" dest="${sim.dir}" />-->
+    <!--</target>-->
+
+    <!--<target name="build_and_deploy" depends="test">-->
+        <!--<copydir src="${dest.dir}" dest="${sim.dir}" />-->
+    <!--</target>-->
+
+    <!--<target name="launch_simulator">-->
+        <!--<exec dir="${sim.dir}" executable="cmd">-->
+            <!--<arg value="/c"/>-->
+            <!--<arg value="8520.bat"/>-->
+            <!--<arg value="-p"/>-->
+        <!--</exec>-->
+    <!--</target>-->
+
+    <!--<target name="deploy_and_launch_simulator" depends="deploy, launch_simulator">-->
+    <!--</target>-->
+
+    <!--<target name="build_deploy_and_launch_simulator" depends="build_and_deploy, launch_simulator">-->
+    <!--</target>-->
+
+</project>
