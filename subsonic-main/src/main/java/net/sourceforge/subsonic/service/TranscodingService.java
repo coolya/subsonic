@@ -253,39 +253,47 @@ public class TranscodingService {
      *
      * @param command         The command line string.
      * @param transcodeScheme The transcoding (resampling) scheme. May be <code>null</code>.
-     * @param musicFile       The music file to use when replacing "%s" etc.  May be <code>null</code>.
+     * @param musicFile       The music file to use when replacing "%s" etc.
      * @return The prepared command array.
      */
     private String[] createCommand(String command, TranscodeScheme transcodeScheme, MusicFile musicFile) {
-        if (musicFile != null) {
-            command = command.replace("%s", '"' + musicFile.getFile().getAbsolutePath() + '"');
-
-            String title = StringUtils.replaceChars(musicFile.getTitle(), "\"", "");
-            String album = StringUtils.replaceChars(musicFile.getMetaData().getAlbum(), "\"", "");
-            String artist = StringUtils.replaceChars(musicFile.getMetaData().getArtist(), "\"", "");
-
-            if (title == null) {
-                title = "Unknown Song";
-            }
-            if (album == null) {
-                title = "Unknown Album";
-            }
-            if (artist == null) {
-                title = "Unknown Artist";
-            }
-            command = command.replace("%t", '"' + title + '"');
-            command = command.replace("%l", '"' + album + '"');
-            command = command.replace("%a", '"' + artist + '"');
-        }
+        String path = musicFile.getFile().getAbsolutePath();
 
         // If no transcoding scheme is specified, use 128 Kbps.
         if (transcodeScheme == null || transcodeScheme == TranscodeScheme.OFF) {
             transcodeScheme = TranscodeScheme.MAX_128;
         }
-        command = command.replace("%b", String.valueOf(transcodeScheme.getMaxBitRate()));
+
+        String title = musicFile.getMetaData().getTitle();
+        String album = musicFile.getMetaData().getAlbum();
+        String artist = musicFile.getMetaData().getArtist();
+
+        if (title == null) {
+            title = "Unknown Song";
+        }
+        if (album == null) {
+            title = "Unknown Album";
+        }
+        if (artist == null) {
+            title = "Unknown Artist";
+        }
 
         String[] result = StringUtil.split(command);
         result[0] = getTranscodeDirectory().getPath() + File.separatorChar + result[0];
+
+        for (int i = 1; i < result.length; i++) {
+            if ("%s".equals(result[i])) {
+                result[i] = path;
+            } else if ("%b".equals(result[i])) {
+                result[i] = String.valueOf(transcodeScheme.getMaxBitRate());
+            } else if ("%t".equals(result[i])) {
+                result[i] = title;
+            } else if ("%l".equals(result[i])) {
+                result[i] = album;
+            } else if ("%a".equals(result[i])) {
+                result[i] = artist;
+            }
+        }
 
         return result;
     }

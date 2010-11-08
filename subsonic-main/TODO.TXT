@@ -64,6 +64,7 @@ Colors: http://www.androidtapp.com/opentable/
 DONE IN 4.2
 ----------------
 Bugfix: Set ID3 tags when transcoding.
+Bugfix: Handle downsampling/transcoding files with double quotes in filename.
 
 TODO IN 4.2
 -----------------
