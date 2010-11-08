@@ -229,11 +229,11 @@ public class TranscodingService {
         TranscodeInputStream in = new TranscodeInputStream(createCommand(transcoding.getStep1(), transcodeScheme, musicFile), null);
 
         if (transcoding.getStep2() != null) {
-            in = new TranscodeInputStream(createCommand(transcoding.getStep2(), transcodeScheme, null), in);
+            in = new TranscodeInputStream(createCommand(transcoding.getStep2(), transcodeScheme, musicFile), in);
         }
 
         if (transcoding.getStep3() != null) {
-            in = new TranscodeInputStream(createCommand(transcoding.getStep3(), transcodeScheme, null), in);
+            in = new TranscodeInputStream(createCommand(transcoding.getStep3(), transcodeScheme, musicFile), in);
         }
 
         return in;
@@ -264,15 +264,18 @@ public class TranscodingService {
             String album = StringUtils.replaceChars(musicFile.getMetaData().getAlbum(), "\"", "");
             String artist = StringUtils.replaceChars(musicFile.getMetaData().getArtist(), "\"", "");
 
-            if (title != null) {
-                command = command.replace("%t", '"' + title + '"');
+            if (title == null) {
+                title = "Unknown Song";
             }
-            if (album != null) {
-                command = command.replace("%l", '"' + album + '"');
+            if (album == null) {
+                title = "Unknown Album";
             }
-            if (artist != null) {
-                command = command.replace("%a", '"' + artist + '"');
+            if (artist == null) {
+                title = "Unknown Artist";
             }
+            command = command.replace("%t", '"' + title + '"');
+            command = command.replace("%l", '"' + album + '"');
+            command = command.replace("%a", '"' + artist + '"');
         }
 
         // If no transcoding scheme is specified, use 128 Kbps.
