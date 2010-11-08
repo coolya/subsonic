@@ -8,7 +8,9 @@ public class HelloWorld extends UiApplication {
 
     public void start() {
         MainScreen main = new MainScreen();
-        LabelField label = new LabelField("Hello world");
+        LabelField label = new LabelField("Halloen world II");
+        System.out.println("This is system out");
+        System.err.println("This is system err");
         main.add(label);
 
         UiApplication app = UiApplication.getUiApplication();
