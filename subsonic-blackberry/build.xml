@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="subsonic" default="build">
 
-    <!--todo-->
-    <!--<property file="local.properties" />-->
+    <property file="local.properties"/>
 
-    <property name="jde.home" location="c:\progs\Eclipse\plugins\net.rim.ejde.componentpack5.0.0_5.0.0.25\components"/>
-    <property name="sim.dir"  location="c:\progs\Eclipse\plugins\net.rim.ejde.componentpack5.0.0_5.0.0.25\components\simulator"/>
-
-    <taskdef resource="bb-ant-defs.xml" classpath="c:\progs\bb-ant-tools-1.2.9\bb-ant-tools.jar"/>
+    <taskdef resource="bb-ant-defs.xml" classpath="${bb-ant-tools.classpath}"/>
 
     <target name="init">
         <mkdir dir="target"/>
