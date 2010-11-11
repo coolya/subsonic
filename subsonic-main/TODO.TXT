@@ -7,6 +7,7 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 TODO IN ANDROID 1.9
 -------------------
+Support self-signed certs
 Cover art images loaded incorrectly.
 Reuse AlbumViews (in EntryAdapter)
 Cooler button in slider (polished steel)
@@ -67,6 +68,8 @@ DONE IN 4.2
 ----------------
 Bugfix: Set ID3 tags when transcoding.
 Bugfix: Handle downsampling/transcoding files with double quotes in filename.
+Improve artist resolution (if directory and not album, then artist)
+
 
 TODO IN 4.2
 -----------------
@@ -74,7 +77,8 @@ Does album, artist, title get replaced in transcoding
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=16622#16622
 Transcoding fails if filename contains colons or quotes.
   https://mail.google.com/a/activeobjects.no/#inbox/12c1d386b04629d3
-Improve artist resolution (if directory and not album, then artist)
+Transcoding/lame fails if non-ascii chars
+
 
 Add REST method to add license key.
 Subsonic Premium
