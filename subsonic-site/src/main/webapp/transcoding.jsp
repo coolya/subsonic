@@ -16,7 +16,9 @@
             <h1>Transcoding</h1>
             <p>
                 Transcoding is the process of converting music from one format to another. Subsonic's transcoding engine allows for streaming of
-                media that would normally not be streamable, for instance lossless formats. The transcoding is performed on-the-fly and doesn't require any disk usage.
+                media that would normally not be streamable, for instance lossless formats, such as the ones you'll hear on your
+                <a href="http://shop.o2.co.uk/update/iphone.html">I phone 4</a> via iTunes or high-quality rips from CDs.
+                The transcoding is performed on-the-fly and doesn't require any disk usage.
             </p>
 
             <p>
