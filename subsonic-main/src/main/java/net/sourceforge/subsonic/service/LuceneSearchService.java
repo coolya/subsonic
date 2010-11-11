@@ -22,7 +22,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -31,7 +33,6 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
-import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Searcher;
@@ -105,7 +106,8 @@ public class LuceneSearchService {
             Searcher searcher = new IndexSearcher(reader);
             Analyzer analyzer = new StandardAnalyzer(LUCENE_VERSION);
 
-            Query query = MultiFieldQueryParser.parse(LUCENE_VERSION, criteria.getQuery(), indexType.getFields(), indexType.getFlags(), analyzer);
+            MultiFieldQueryParser queryParser = new MultiFieldQueryParser(LUCENE_VERSION, indexType.getFields(), analyzer, indexType.getBoosts());
+            Query query = queryParser.parse(criteria.getQuery());
             LOG.debug("Searching '" + indexType + "' for: " + query);
 
             TopDocs topDocs = searcher.search(query, null, offset + count);
@@ -167,8 +169,7 @@ public class LuceneSearchService {
 
     public static enum IndexType {
 
-        SONG(new String[]{FIELD_TITLE, FIELD_ARTIST},
-                new BooleanClause.Occur[]{BooleanClause.Occur.MUST, BooleanClause.Occur.SHOULD}) {
+        SONG(new String[]{FIELD_TITLE, FIELD_ARTIST}, FIELD_TITLE) {
 
             @Override
             public Document createDocument(Line line) {
@@ -186,8 +187,7 @@ public class LuceneSearchService {
             }
         },
 
-        ALBUM(new String[]{FIELD_ALBUM, FIELD_ARTIST},
-                new BooleanClause.Occur[]{BooleanClause.Occur.MUST, BooleanClause.Occur.SHOULD}) {
+        ALBUM(new String[]{FIELD_ALBUM, FIELD_ARTIST}, FIELD_ALBUM) {
 
             @Override
             public Document createDocument(Line line) {
@@ -205,8 +205,7 @@ public class LuceneSearchService {
             }
         },
 
-        ARTIST(new String[]{FIELD_ARTIST},
-                new BooleanClause.Occur[]{BooleanClause.Occur.MUST}) {
+        ARTIST(new String[]{FIELD_ARTIST}, null) {
 
             @Override
             public Document createDocument(Line line) {
@@ -222,22 +221,27 @@ public class LuceneSearchService {
         };
 
         private final String[] fields;
-        private final BooleanClause.Occur[] flags;
+        private final Map<String, Float> boosts;
 
-        private IndexType(String[] fields, BooleanClause.Occur[] flags) {
+        private IndexType(String[] fields, String boostedField) {
             this.fields = fields;
-            this.flags = flags;
+            boosts = new HashMap<String, Float>();
+            if (boostedField != null) {
+                boosts.put(boostedField, 2.0F);
+            }
         }
 
         public String[] getFields() {
             return fields;
         }
 
-        public BooleanClause.Occur[] getFlags() {
-            return flags;
+        public abstract Document createDocument(Line line);
+
+        public Map<String, Float> getBoosts() {
+            return boosts;
         }
 
-        public abstract Document createDocument(Line line);
+
     }
 }
 
