@@ -73,12 +73,10 @@ Improve search field boosting.
 
 TODO IN 4.2
 -----------------
-Does album, artist, title get replaced in transcoding
-   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=16622#16622
 Transcoding fails if filename contains colons or quotes.
   https://mail.google.com/a/activeobjects.no/#inbox/12c1d386b04629d3
 Transcoding/lame fails if non-ascii chars
-
+http://code.google.com/p/subtunes/
 
 Add REST method to add license key.
 Subsonic Premium
