@@ -72,9 +72,11 @@ Bugfix: Handle downsampling/transcoding files with double quotes in filename.
 Improve artist resolution (if directory and not album, then artist)
 Improve search field boosting.
 New: Updated Italian translation, courtesy of Luca Perri.
+last.fm scrobbling
 
 TODO IN 4.2
 -----------------
+Disable scrobbling while downloading; Add new scrobble command?
 Select wrong player when clicking "Settings" in playlist frame.
 Transcoding fails if filename contains colons or quotes.
   https://mail.google.com/a/activeobjects.no/#inbox/12c1d386b04629d3
