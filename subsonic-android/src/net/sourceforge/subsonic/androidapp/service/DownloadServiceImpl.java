@@ -599,7 +599,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         private final DownloadFile downloadFile;
         private final int position;
         private final long expectedFileSize;
-        private File partialFile;
+        private final File partialFile;
 
         public BufferTask(DownloadFile downloadFile, int position) {
             this.downloadFile = downloadFile;

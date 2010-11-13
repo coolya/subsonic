@@ -8,6 +8,7 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 TODO IN ANDROID 1.9
 -------------------
 Support self-signed certs
+Unnecessary initial pause when starting partially downloaded songs.
 Cover art images loaded incorrectly.
 Reuse AlbumViews (in EntryAdapter)
 Cooler button in slider (polished steel)
@@ -73,6 +74,7 @@ Improve search field boosting.
 
 TODO IN 4.2
 -----------------
+Select wrong player when clicking "Settings" in playlist frame.
 Transcoding fails if filename contains colons or quotes.
   https://mail.google.com/a/activeobjects.no/#inbox/12c1d386b04629d3
 Transcoding/lame fails if non-ascii chars
@@ -546,11 +548,11 @@ Update
     https://myapps.developer.motorola.com/
     https://slideme.org/application/subsonic
     http://www.camangimarket.com/index.html
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.8.1 -m "Tagging Android 1.8.1"
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.8.2 -m "Tagging Android 1.8.2"
 Create new directory in FRS
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.8.1/subsonic-1.8.1.apk
+  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.8.2/subsonic-1.8.2.apk
 
 
 HOW TO RELEASE TRANSCODING PACK

@@ -150,7 +150,7 @@ public class RESTMusicService implements MusicService {
     private SocketFactory createSSLSocketFactory() {
         try {
             return new SSLSocketFactory(new TrustSelfSignedStrategy(), SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-        } catch (Exception x) {
+        } catch (Throwable x) {
             Log.e(TAG, "Failed to create custom SSL socket factory, using default.", x);
             return org.apache.http.conn.ssl.SSLSocketFactory.getSocketFactory();
         }
