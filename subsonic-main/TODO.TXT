@@ -71,6 +71,7 @@ Bugfix: Set ID3 tags when transcoding.
 Bugfix: Handle downsampling/transcoding files with double quotes in filename.
 Improve artist resolution (if directory and not album, then artist)
 Improve search field boosting.
+New: Updated Italian translation, courtesy of Luca Perri.
 
 TODO IN 4.2
 -----------------
