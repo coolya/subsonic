@@ -19,6 +19,9 @@
 package net.sourceforge.subsonic.util;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.json.XML;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -59,6 +62,22 @@ public class XMLBuilder {
 
     private final Writer writer = new StringWriter();
     private final Stack<String> elementStack = new Stack<String>();
+    private final boolean json;
+
+    /**
+     * Equivalent to <code>this(false)</code>.
+     */
+    public XMLBuilder() {
+        this(false);
+    }
+
+    /**
+     * Creates a new instance.
+     * @param json Whether to produce JSON rather than XML.
+     */
+    public XMLBuilder(boolean json) {
+        this.json = json;
+    }
 
     /**
      * Adds an XML preamble, with the given encoding. The preamble will typically
@@ -189,7 +208,16 @@ public class XMLBuilder {
      */
     @Override
     public String toString() {
-        return writer.toString();
+        String xml = writer.toString();
+        if (!json) {
+            return xml;
+        }
+        try {
+            JSONObject jsonObject = XML.toJSONObject(xml);
+            return jsonObject.toString(1);
+        } catch (JSONException x) {
+            throw new RuntimeException("Failed to convert from XML to JSON.", x);
+        }
     }
 
     private void indent() throws IOException {

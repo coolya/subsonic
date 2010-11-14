@@ -30,6 +30,7 @@ import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.providers.ProviderManager;
 import org.acegisecurity.providers.UsernamePasswordAuthenticationToken;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.web.bind.ServletRequestUtils;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -123,7 +124,7 @@ public class RESTRequestParameterProcessingFilter implements Filter {
             LOG.info("Authentication failed for user " + username);
 
             SecurityContextHolder.getContext().setAuthentication(null);
-            sendErrorXml(httpResponse, errorCode);
+            sendErrorXml(httpRequest, httpResponse, errorCode);
         }
     }
 
@@ -192,11 +193,14 @@ public class RESTRequestParameterProcessingFilter implements Filter {
         }
     }
 
-    private void sendErrorXml(HttpServletResponse response, RESTController.ErrorCode errorCode) throws IOException {
-        response.setContentType("text/xml");
+    private void sendErrorXml(HttpServletRequest request, HttpServletResponse response, RESTController.ErrorCode errorCode) throws IOException {
+        String format = ServletRequestUtils.getStringParameter(request, "f", "xml");
+        boolean json = "json".equals(format);
+
+        response.setContentType(json ? "application/json" : "text/xml");
         response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
 
-        XMLBuilder builder = new XMLBuilder();
+        XMLBuilder builder = new XMLBuilder(json);
         builder.preamble(StringUtil.ENCODING_UTF8);
         builder.add("subsonic-response", false,
                     new XMLBuilder.Attribute("xmlns", "http://subsonic.org/restapi"),

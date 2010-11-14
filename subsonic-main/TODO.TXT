@@ -76,6 +76,7 @@ last.fm scrobbling
 
 TODO IN 4.2
 -----------------
+JSON support in REST.
 Disable scrobbling while downloading; Add new scrobble command?
 Select wrong player when clicking "Settings" in playlist frame.
 Transcoding fails if filename contains colons or quotes.

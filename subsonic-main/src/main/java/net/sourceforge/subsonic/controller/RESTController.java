@@ -103,13 +103,13 @@ public class RESTController extends MultiActionController {
     private JukeboxService jukeboxService;
 
     public void ping(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        XMLBuilder builder = createXMLBuilder(response, true).endAll();
+        XMLBuilder builder = createXMLBuilder(request, response, true).endAll();
         response.getWriter().print(builder);
     }
 
     public void getLicense(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        XMLBuilder builder = createXMLBuilder(response, true);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
 
         String email = settingsService.getLicenseEmail();
         String key = settingsService.getLicenseCode();
@@ -131,7 +131,7 @@ public class RESTController extends MultiActionController {
 
     public void getMusicFolders(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        XMLBuilder builder = createXMLBuilder(response, true);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
         builder.add("musicFolders", false);
 
         for (MusicFolder musicFolder : settingsService.getAllMusicFolders()) {
@@ -148,7 +148,7 @@ public class RESTController extends MultiActionController {
 
     public void getIndexes(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        XMLBuilder builder = createXMLBuilder(response, true);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
 
         long ifModifiedSince = ServletRequestUtils.getLongParameter(request, "ifModifiedSince", 0L);
         long lastModified = leftController.getLastModified(request);
@@ -209,11 +209,11 @@ public class RESTController extends MultiActionController {
             dir = musicFileService.getMusicFile(path);
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, getErrorMessage(x));
+            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
             return;
         }
 
-        XMLBuilder builder = createXMLBuilder(response, true);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
         builder.add("directory", false,
                 new Attribute("id", StringUtil.utf8HexEncode(dir.getPath())),
                 new Attribute("name", dir.getName()));
@@ -231,7 +231,7 @@ public class RESTController extends MultiActionController {
     @Deprecated
     public void search(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        XMLBuilder builder = createXMLBuilder(response, true);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
         Player player = playerService.getPlayer(request, response);
 
         String any = request.getParameter("any");
@@ -271,15 +271,15 @@ public class RESTController extends MultiActionController {
         builder.endAll();
         response.getWriter().print(builder);
     }
-    
+
     public void search2(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        XMLBuilder builder = createXMLBuilder(response, true);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
         Player player = playerService.getPlayer(request, response);
 
         builder.add("searchResult2", false);
 
-        String query = request.getParameter("query");        
+        String query = request.getParameter("query");
         SearchCriteria criteria = new SearchCriteria();
         criteria.setQuery(StringUtils.trimToEmpty(query));
         criteria.setCount(ServletRequestUtils.getIntParameter(request, "artistCount", 20));
@@ -290,7 +290,7 @@ public class RESTController extends MultiActionController {
                     new Attribute("name", musicFile.getName()),
                     new Attribute("id", StringUtil.utf8HexEncode(musicFile.getPath())));
         }
-        
+
         criteria.setCount(ServletRequestUtils.getIntParameter(request, "albumCount", 20));
         criteria.setOffset(ServletRequestUtils.getIntParameter(request, "albumOffset", 0));
         SearchResult albums = searchService.search(criteria, LuceneSearchService.IndexType.ALBUM);
@@ -298,7 +298,7 @@ public class RESTController extends MultiActionController {
             List<Attribute> attributes = createAttributesForMusicFile(player, null, musicFile);
             builder.add("album", attributes, true);
         }
-        
+
         criteria.setCount(ServletRequestUtils.getIntParameter(request, "songCount", 20));
         criteria.setOffset(ServletRequestUtils.getIntParameter(request, "songOffset", 0));
         SearchResult songs = searchService.search(criteria, LuceneSearchService.IndexType.SONG);
@@ -307,14 +307,14 @@ public class RESTController extends MultiActionController {
             List<Attribute> attributes = createAttributesForMusicFile(player, coverArt, musicFile);
             builder.add("song", attributes, true);
         }
-        
+
         builder.endAll();
         response.getWriter().print(builder);
     }
 
     public void getPlaylists(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        XMLBuilder builder = createXMLBuilder(response, true);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
 
         builder.add("playlists", false);
 
@@ -331,7 +331,7 @@ public class RESTController extends MultiActionController {
         request = wrapRequest(request);
         Player player = playerService.getPlayer(request, response);
 
-        XMLBuilder builder = createXMLBuilder(response, true);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
 
         try {
             String id = StringUtil.utf8HexDecode(ServletRequestUtils.getRequiredStringParameter(request, "id"));
@@ -352,10 +352,10 @@ public class RESTController extends MultiActionController {
             builder.endAll();
             response.getWriter().print(builder);
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+            error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, getErrorMessage(x));
+            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
         }
     }
 
@@ -364,7 +364,7 @@ public class RESTController extends MultiActionController {
 
         User user = securityService.getCurrentUser(request);
         if (!user.isJukeboxRole()) {
-            error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to use jukebox.");
+            error(request, response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to use jukebox.");
             return;
         }
 
@@ -399,7 +399,7 @@ public class RESTController extends MultiActionController {
                 returnPlaylist = true;
             }
 
-            XMLBuilder builder = createXMLBuilder(response, true);
+            XMLBuilder builder = createXMLBuilder(request, response, true);
 
             if (returnPlaylist) {
 
@@ -420,10 +420,10 @@ public class RESTController extends MultiActionController {
             response.getWriter().print(builder);
 
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+            error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, getErrorMessage(x));
+            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
         }
     }
 
@@ -432,7 +432,7 @@ public class RESTController extends MultiActionController {
 
         User user = securityService.getCurrentUser(request);
         if (!user.isPlaylistRole()) {
-            error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to create playlists.");
+            error(request, response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to create playlists.");
             return;
         }
 
@@ -441,7 +441,7 @@ public class RESTController extends MultiActionController {
             String playlistId = request.getParameter("playlistId");
             String name = request.getParameter("name");
             if (playlistId == null && name == null) {
-                error(response, ErrorCode.MISSING_PARAMETER, "Playlist ID or name must be specified.");
+                error(request, response, ErrorCode.MISSING_PARAMETER, "Playlist ID or name must be specified.");
                 return;
             }
 
@@ -454,15 +454,15 @@ public class RESTController extends MultiActionController {
             }
             playlistService.savePlaylist(playlist);
 
-            XMLBuilder builder = createXMLBuilder(response, true);
+            XMLBuilder builder = createXMLBuilder(request, response, true);
             builder.endAll();
             response.getWriter().print(builder);
 
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+            error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, getErrorMessage(x));
+            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
         }
     }
 
@@ -471,7 +471,7 @@ public class RESTController extends MultiActionController {
 
         User user = securityService.getCurrentUser(request);
         if (!user.isPlaylistRole()) {
-            error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to delete playlists.");
+            error(request, response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to delete playlists.");
             return;
         }
 
@@ -479,15 +479,15 @@ public class RESTController extends MultiActionController {
             String id = StringUtil.utf8HexDecode(ServletRequestUtils.getRequiredStringParameter(request, "id"));
             playlistService.deletePlaylist(id);
 
-            XMLBuilder builder = createXMLBuilder(response, true);
+            XMLBuilder builder = createXMLBuilder(request, response, true);
             builder.endAll();
             response.getWriter().print(builder);
 
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+            error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, getErrorMessage(x));
+            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
         }
     }
 
@@ -495,7 +495,7 @@ public class RESTController extends MultiActionController {
         request = wrapRequest(request);
         Player player = playerService.getPlayer(request, response);
 
-        XMLBuilder builder = createXMLBuilder(response, true);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
         builder.add("albumList", false);
 
         try {
@@ -532,10 +532,10 @@ public class RESTController extends MultiActionController {
             builder.endAll();
             response.getWriter().print(builder);
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+            error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, getErrorMessage(x));
+            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
         }
     }
 
@@ -543,7 +543,7 @@ public class RESTController extends MultiActionController {
         request = wrapRequest(request);
         Player player = playerService.getPlayer(request, response);
 
-        XMLBuilder builder = createXMLBuilder(response, true);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
         builder.add("randomSongs", false);
 
         try {
@@ -563,16 +563,16 @@ public class RESTController extends MultiActionController {
             builder.endAll();
             response.getWriter().print(builder);
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+            error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, getErrorMessage(x));
+            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
         }
     }
 
     public void getNowPlaying(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        XMLBuilder builder = createXMLBuilder(response, true);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
         builder.add("nowPlaying", false);
 
         for (TransferStatus status : statusService.getAllStreamStatuses()) {
@@ -720,7 +720,7 @@ public class RESTController extends MultiActionController {
         request = wrapRequest(request);
         User user = securityService.getCurrentUser(request);
         if (!user.isDownloadRole()) {
-            error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to download files.");
+            error(request, response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to download files.");
             return null;
         }
 
@@ -731,7 +731,7 @@ public class RESTController extends MultiActionController {
         request = wrapRequest(request);
         User user = securityService.getCurrentUser(request);
         if (!user.isStreamRole()) {
-            error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to play files.");
+            error(request, response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to play files.");
             return null;
         }
 
@@ -772,7 +772,7 @@ public class RESTController extends MultiActionController {
 
             User authUser = securityService.getCurrentUser(request);
             if (!authUser.isAdminRole() && !username.equals(authUser.getUsername())) {
-                error(response, ErrorCode.NOT_AUTHORIZED, authUser.getUsername() + " is not authorized to change password for " + username);
+                error(request, response, ErrorCode.NOT_AUTHORIZED, authUser.getUsername() + " is not authorized to change password for " + username);
                 return;
             }
 
@@ -780,13 +780,13 @@ public class RESTController extends MultiActionController {
             user.setPassword(password);
             securityService.updateUser(user);
 
-            XMLBuilder builder = createXMLBuilder(response, true).endAll();
+            XMLBuilder builder = createXMLBuilder(request, response, true).endAll();
             response.getWriter().print(builder);
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+            error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, getErrorMessage(x));
+            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
         }
     }
 
@@ -797,23 +797,23 @@ public class RESTController extends MultiActionController {
         try {
             username = ServletRequestUtils.getRequiredStringParameter(request, "username");
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+            error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
             return;
         }
 
         User currentUser = securityService.getCurrentUser(request);
         if (!username.equals(currentUser.getUsername()) && !currentUser.isAdminRole()) {
-            error(response, ErrorCode.NOT_AUTHORIZED, currentUser.getUsername() + " is not authorized to get details for other users.");
+            error(request, response, ErrorCode.NOT_AUTHORIZED, currentUser.getUsername() + " is not authorized to get details for other users.");
             return;
         }
 
         User requestedUser = securityService.getUserByName(username);
         if (requestedUser == null) {
-            error(response, ErrorCode.NOT_FOUND, "No such user: " + username);
+            error(request, response, ErrorCode.NOT_FOUND, "No such user: " + username);
             return;
         }
 
-        XMLBuilder builder = createXMLBuilder(response, true);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
         List<Attribute> attributes = Arrays.asList(
                 new Attribute("username", requestedUser.getUsername()),
                 new Attribute("adminRole", requestedUser.isAdminRole()),
@@ -837,7 +837,7 @@ public class RESTController extends MultiActionController {
         request = wrapRequest(request);
         User user = securityService.getCurrentUser(request);
         if (!user.isAdminRole()) {
-            error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to create new users.");
+            error(request, response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to create new users.");
             return;
         }
 
@@ -859,14 +859,14 @@ public class RESTController extends MultiActionController {
             command.setTranscodeSchemeName(ServletRequestUtils.getStringParameter(request, "transcodeScheme", TranscodeScheme.OFF.name()));
 
             userSettingsController.createUser(command);
-            XMLBuilder builder = createXMLBuilder(response, true).endAll();
+            XMLBuilder builder = createXMLBuilder(request, response, true).endAll();
             response.getWriter().print(builder);
 
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+            error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, getErrorMessage(x));
+            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
         }
     }
 
@@ -874,7 +874,7 @@ public class RESTController extends MultiActionController {
         request = wrapRequest(request);
         User user = securityService.getCurrentUser(request);
         if (!user.isAdminRole()) {
-            error(response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to delete users.");
+            error(request, response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to delete users.");
             return;
         }
 
@@ -882,20 +882,20 @@ public class RESTController extends MultiActionController {
             String username = ServletRequestUtils.getRequiredStringParameter(request, "username");
             securityService.deleteUser(username);
 
-            XMLBuilder builder = createXMLBuilder(response, true).endAll();
+            XMLBuilder builder = createXMLBuilder(request, response, true).endAll();
             response.getWriter().print(builder);
 
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+            error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
-            error(response, ErrorCode.GENERIC, getErrorMessage(x));
+            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
         }
     }
 
     public void getChatMessages(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        XMLBuilder builder = createXMLBuilder(response, true);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
 
         long since = ServletRequestUtils.getLongParameter(request, "since", 0L);
 
@@ -916,10 +916,10 @@ public class RESTController extends MultiActionController {
         request = wrapRequest(request);
         try {
             chatService.doAddMessage(ServletRequestUtils.getRequiredStringParameter(request, "message"), request);
-            XMLBuilder builder = createXMLBuilder(response, true).endAll();
+            XMLBuilder builder = createXMLBuilder(request, response, true).endAll();
             response.getWriter().print(builder);
         } catch (ServletRequestBindingException x) {
-            error(response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+            error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         }
     }
 
@@ -929,7 +929,7 @@ public class RESTController extends MultiActionController {
         String title = request.getParameter("title");
         LyricsInfo lyrics = lyricsService.getLyrics(artist, title);
 
-        XMLBuilder builder = createXMLBuilder(response, true);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
         List<Attribute> attributes = new ArrayList<Attribute>();
         if (lyrics.getArtist() != null) {
             attributes.add(new Attribute("artist", lyrics.getArtist()));
@@ -982,8 +982,8 @@ public class RESTController extends MultiActionController {
         return x.getClass().getSimpleName();
     }
 
-    private void error(HttpServletResponse response, ErrorCode code, String message) throws IOException {
-        XMLBuilder builder = createXMLBuilder(response, false);
+    private void error(HttpServletRequest request, HttpServletResponse response, ErrorCode code, String message) throws IOException {
+        XMLBuilder builder = createXMLBuilder(request, response, false);
         builder.add("error", true,
                 new XMLBuilder.Attribute("code", code.getCode()),
                 new XMLBuilder.Attribute("message", message));
@@ -991,16 +991,19 @@ public class RESTController extends MultiActionController {
         response.getWriter().print(builder);
     }
 
-    private XMLBuilder createXMLBuilder(HttpServletResponse response, boolean ok) throws IOException {
-        response.setContentType("text/xml");
+    private XMLBuilder createXMLBuilder(HttpServletRequest request, HttpServletResponse response, boolean ok) throws IOException {
+        String format = ServletRequestUtils.getStringParameter(request, "f", "xml");
+        boolean json = "json".equals(format);
+
+        response.setContentType(json ? "application/json" : "text/xml");
         response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
 
-        XMLBuilder builder = new XMLBuilder();
+        XMLBuilder builder = new XMLBuilder(json);
         builder.preamble(StringUtil.ENCODING_UTF8);
         builder.add("subsonic-response", false,
-                new Attribute("xmlns", "http://subsonic.org/restapi"),
-                new Attribute("status", ok ? "ok" : "failed"),
-                new Attribute("version", StringUtil.getRESTProtocolVersion()));
+                    new Attribute("xmlns", "http://subsonic.org/restapi"),
+                    new Attribute("status", ok ? "ok" : "failed"),
+                    new Attribute("version", StringUtil.getRESTProtocolVersion()));
         return builder;
     }
 
