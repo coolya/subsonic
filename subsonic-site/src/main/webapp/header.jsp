@@ -10,7 +10,7 @@
     <script type="text/javascript" language="javascript" src="inc/js/FancyZoom.js"></script>
     <script type="text/javascript" language="javascript" src="inc/js/FancyZoomHTML.js"></script>
 
-    <%@ include file="adwords.jsp" %>
+    <%@ include file="tracking.jsp" %>
 
     <!--[if lte IE 6]>
      <link rel="stylesheet" type="text/css" href="inc/css/pngfix.css" />
