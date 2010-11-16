@@ -52,15 +52,14 @@
         <td align="center" style="padding-left:1em"><input name="enabled" checked type="checkbox" class="checkbox"/></td>
         <td/>
     </tr>
-
-    <tr>
-        <td colspan="9" style="padding-top:1.5em;padding-bottom:1.5em">
-            <input type="submit" value="<fmt:message key="common.save"/>" style="margin-right:0.3em">
-            <input type="button" value="<fmt:message key="common.cancel"/>" onclick="location.href='nowPlaying.view'">
-        </td>
-    </tr>
-
 </table>
+
+    <p style="padding-top:0.75em">
+        <input type="submit" value="<fmt:message key="common.save"/>" style="margin-right:0.3em">
+        <input type="button" value="<fmt:message key="common.cancel"/>" onclick="location.href='nowPlaying.view'" style="margin-right:1.3em">
+        <a href="http://www.subsonic.org/pages/transcoding.jsp" target="_blank"><fmt:message key="transcodingsettings.recommended"/></a>
+    </p>
+
 </form>
 
 <c:if test="${not empty model.error}">
