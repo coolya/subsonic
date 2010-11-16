@@ -39,26 +39,27 @@ public class TranscodeInputStream extends InputStream {
     private Process process;
 
     /**
-     * Creates a transcoded input stream by executing the given command. If <code>in</code> is not null,
+     * Creates a transcoded input stream by executing an external process. If <code>in</code> is not null,
      * data from it is copied to the command.
-     * @param command The command to execute.
+     *
+     * @param processBuilder Used to create the external process.
      * @param in Data to feed to the command.  May be <code>null</code>.
      * @throws IOException If an I/O error occurs.
      */
-    public TranscodeInputStream(String[] command, final InputStream in) throws IOException {
+    public TranscodeInputStream(ProcessBuilder processBuilder, final InputStream in) throws IOException {
 
         StringBuffer buf = new StringBuffer("Starting transcoder: ");
-        for (String s : command) {
+        for (String s : processBuilder.command()) {
             buf.append('[').append(s).append("] ");
         }
         LOG.debug(buf);
 
-        process = Runtime.getRuntime().exec(command);
+        process = processBuilder.start();
         processOutputStream = process.getOutputStream();
         processInputStream = process.getInputStream();
 
         // Must read stderr from the process, otherwise it may block.
-        final String name = command[0];
+        final String name = processBuilder.command().get(0);
         new InputStreamReaderThread(process.getErrorStream(), name, true).start();
 
         // Copy data in a separate thread

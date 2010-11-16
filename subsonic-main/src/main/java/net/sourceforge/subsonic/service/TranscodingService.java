@@ -254,9 +254,9 @@ public class TranscodingService {
      * @param command         The command line string.
      * @param transcodeScheme The transcoding (resampling) scheme. May be <code>null</code>.
      * @param musicFile       The music file to use when replacing "%s" etc.
-     * @return The prepared command array.
+     * @return The prepared command array as a ProcessBuilder.
      */
-    private String[] createCommand(String command, TranscodeScheme transcodeScheme, MusicFile musicFile) {
+    private ProcessBuilder createCommand(String command, TranscodeScheme transcodeScheme, MusicFile musicFile) {
         String path = musicFile.getFile().getAbsolutePath();
 
         // If no transcoding scheme is specified, use 128 Kbps.
@@ -295,7 +295,7 @@ public class TranscodingService {
             }
         }
 
-        return result;
+        return new ProcessBuilder(result);
     }
 
     /**
