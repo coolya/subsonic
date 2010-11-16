@@ -108,7 +108,6 @@ public class LuceneSearchService {
 
             MultiFieldQueryParser queryParser = new MultiFieldQueryParser(LUCENE_VERSION, indexType.getFields(), analyzer, indexType.getBoosts());
             Query query = queryParser.parse(criteria.getQuery());
-            LOG.debug("Searching '" + indexType + "' for: " + query);
 
             TopDocs topDocs = searcher.search(query, null, offset + count);
             result.setTotalHits(topDocs.totalHits);

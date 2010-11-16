@@ -76,7 +76,9 @@ last.fm scrobbling
 
 TODO IN 4.2
 -----------------
-Don't debug log so much from NetworkService.
+For transcoded files, display both source and target formats in gui.
+REST method supporting "Play random", or shuffle for a sub-tree
+Simplify wav transcoding config
 JSON support in REST.
 Change wav transcoding definition.
 Disable scrobbling while downloading; Add new scrobble command?

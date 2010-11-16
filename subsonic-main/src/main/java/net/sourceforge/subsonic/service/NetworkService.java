@@ -293,14 +293,10 @@ public class NetworkService {
     private abstract class Task implements Runnable {
         public void run() {
             String name = getClass().getSimpleName();
-            LOG.debug("Starting " + name);
-
             try {
                 execute();
             } catch (Throwable x) {
                 LOG.error("Error executing " + name + ": " + x.getMessage(), x);
-            } finally {
-                LOG.debug("Completed " + name);
             }
         }
 
