@@ -27,6 +27,8 @@ import net.sourceforge.subsonic.domain.Transcoding;
 import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.io.TranscodeInputStream;
 import net.sourceforge.subsonic.util.StringUtil;
+import net.sourceforge.subsonic.util.Util;
+
 import org.apache.commons.io.filefilter.PrefixFileFilter;
 import org.apache.commons.lang.StringUtils;
 
@@ -35,6 +37,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -278,24 +282,34 @@ public class TranscodingService {
             title = "Unknown Artist";
         }
 
-        String[] result = StringUtil.split(command);
-        result[0] = getTranscodeDirectory().getPath() + File.separatorChar + result[0];
+        LinkedList<String> result = new LinkedList<String>(Arrays.asList(StringUtil.split(command)));
+        result.set(0, getTranscodeDirectory().getPath() + File.separatorChar + result.get(0));
 
-        for (int i = 1; i < result.length; i++) {
-            if ("%s".equals(result[i])) {
-                result[i] = path;
-            } else if ("%b".equals(result[i])) {
-                result[i] = String.valueOf(transcodeScheme.getMaxBitRate());
-            } else if ("%t".equals(result[i])) {
-                result[i] = title;
-            } else if ("%l".equals(result[i])) {
-                result[i] = album;
-            } else if ("%a".equals(result[i])) {
-                result[i] = artist;
+        boolean windows = Util.isWindows();
+
+        for (int i = 1; i < result.size(); i++) {
+            if ("%s".equals(result.get(i))) {
+                result.set(i, windows ? "%TRANSCODING_SOURCE%" : path);
+            } else if ("%b".equals(result.get(i))) {
+                result.set(i, String.valueOf(transcodeScheme.getMaxBitRate()));
+            } else if ("%t".equals(result.get(i))) {
+                result.set(i, title);
+            } else if ("%l".equals(result.get(i))) {
+                result.set(i, album);
+            } else if ("%a".equals(result.get(i))) {
+                result.set(i, artist);
             }
         }
 
-        return new ProcessBuilder(result);
+        // Send path as an environment variable to overcome some filename character encoding problems.
+        ProcessBuilder processBuilder = new ProcessBuilder(result);
+        if (windows) {
+            result.addFirst("/C");
+            result.addFirst("cmd");
+            processBuilder.environment().put("TRANSCODING_SOURCE", path);
+        }
+
+        return processBuilder;
     }
 
     /**
