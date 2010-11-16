@@ -82,7 +82,7 @@ public class Schema28 extends Schema {
                              "step3 varchar," +
                              "enabled boolean not null)");
 
-            template.execute("insert into transcoding values(null,'wav > mp3','wav','mp3','lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 %s -',null,null,true)");
+            template.execute("insert into transcoding values(null,'wav > mp3', 'wav', 'mp3','ffmpeg -i %s -f wav -','lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -',null,true)");
             template.execute("insert into transcoding values(null,'flac > mp3','flac','mp3','ffmpeg -i %s -f wav -','lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -',null,true)");
             template.execute("insert into transcoding values(null,'ogg > mp3' ,'ogg' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -',null,true)");
             template.execute("insert into transcoding values(null,'wma > mp3' ,'wma' ,'mp3','ffmpeg -i %s -f wav -','lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -',null,true)");

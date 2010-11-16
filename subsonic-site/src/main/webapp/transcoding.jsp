@@ -80,16 +80,16 @@
             </p>
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="bottomspace">
                 <tr>
-                    <th class="transcoding-heading">Convert from</th>
-                    <th class="transcoding-heading">Convert to</th>
+                    <th class="transcoding-heading">Convert&nbsp;from</th>
+                    <th class="transcoding-heading">Convert&nbsp;to</th>
                     <th class="transcoding-heading">Step 1</th>
                     <th class="transcoding-heading">Step 2</th>
                 </tr>
                 <tr class="table-altrow">
                     <td class="transcoding">wav</td>
                     <td class="transcoding">mp3</td>
-                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 %s -</td>
-                    <td class="transcoding"></td>
+                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
+                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
                 </tr>
                 <tr>
                     <td class="transcoding">ogg</td>
