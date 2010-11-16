@@ -62,14 +62,20 @@
         <td>Yes</td>
         <td></td>
         <td>The protocol version implemented by the client, i.e., the version of the
-            <code>subsonic-rest-api.xsd</code> schema used (see below).
-        </td>
+            <code>subsonic-rest-api.xsd</code> schema used (see below).</td>
     </tr>
     <tr>
         <td><code>c</code></td>
         <td>Yes</td>
         <td></td>
         <td>A unique string identifying the client application.</td>
+    </tr>
+    <tr class="table-altrow">
+        <td><code>f</code></td>
+        <td>No</td>
+        <td>xml</td>
+        <td>Request data to be returned in this format. Supported values are "xml" and "json".
+            (Since <a href="#versions">1.4.0</a>)</td>
     </tr>
 </table>
 
