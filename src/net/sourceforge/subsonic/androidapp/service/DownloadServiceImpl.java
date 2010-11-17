@@ -200,6 +200,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         revision++;
         if (currentDownloading != null) {
             currentDownloading.cancelDownload();
+            currentDownloading = null;
         }
         setCurrentPlaying(null, false);
 
@@ -212,6 +213,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     public synchronized void remove(DownloadFile downloadFile) {
         if (downloadFile == currentDownloading) {
             currentDownloading.cancelDownload();
+            currentDownloading = null;
         }
         if (downloadFile == currentPlaying) {
             reset();
