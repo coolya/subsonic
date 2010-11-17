@@ -16,6 +16,9 @@ fr
 # Spanish
 es
 
+# Portuguese
+pt
+
 # German
 de
 

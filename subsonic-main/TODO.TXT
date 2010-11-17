@@ -68,6 +68,7 @@ Colors: http://www.androidtapp.com/opentable/
 DONE IN 4.2
 ----------------
 Bugfix: Set ID3 tags when transcoding.
+New: Added Portuguese translation, courtesy of Miguel Fonseca.
 Bugfix: Handle downsampling/transcoding files with double quotes in filename.
 Improve artist resolution (if directory and not album, then artist)
 Improve search field boosting.

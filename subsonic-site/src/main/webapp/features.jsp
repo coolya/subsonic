@@ -104,6 +104,7 @@
                         <tr><td>&#149; English </td><td>(by Sindre Mehus)</td></tr>
                         <tr><td>&#149; French </td><td>(by JohnDillinger)</td></tr>
                         <tr><td>&#149; Spanish </td><td>(by Jorge Bueno Magdalena)</td></tr>
+                        <tr><td>&#149; Portuguese </td><td>(by Miguel Fonseca)</td></tr>
                         <tr><td>&#149; German </td><td>(by Harald Weiss and J&ouml;rg Frommann)</td></tr>
                         <tr><td>&#149; Italian </td><td>(by Michele Petrecca)</td></tr>
                         <tr><td>&#149; Russian </td><td>(by Iaroslav Andrusiak)</td></tr>
