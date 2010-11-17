@@ -12,8 +12,11 @@ DONE IN ANDROID 1.9
 
 TODO IN ANDROID 1.9
 -------------------
+Loops first song
+   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4423
 Unnecessary initial pause when starting partially downloaded songs.
 Cover art images loaded incorrectly.
+  http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html
 Reuse AlbumViews (in EntryAdapter)
 Cooler button in slider (polished steel)
 Nicer icon for music library.

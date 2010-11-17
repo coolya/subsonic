@@ -76,12 +76,12 @@
             <p>
                 This is the default transcoding configuration for the Windows transcoding pack.
                 Note that "%s" is substituted with the path of the original file at run-time, and "%b" is substituted with
-                the max bitrate of the player.
+                the max bitrate of the player. "%t", "%a" and "%l" are substituted with the song's title, artist and album.
             </p>
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="bottomspace">
                 <tr>
-                    <th class="transcoding-heading">Convert&nbsp;from</th>
-                    <th class="transcoding-heading">Convert&nbsp;to</th>
+                    <th class="transcoding-heading">From</th>
+                    <th class="transcoding-heading">To</th>
                     <th class="transcoding-heading">Step 1</th>
                     <th class="transcoding-heading">Step 2</th>
                 </tr>

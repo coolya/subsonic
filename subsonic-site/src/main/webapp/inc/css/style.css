@@ -262,9 +262,11 @@ td.featurename {
 /* ---------- Transcoding Table ----------- */
 th.transcoding-heading {
     text-align: left !important;
+    padding-right:2em;
 }
 td.transcoding {
     white-space:nowrap;
+    padding-right:2em;
 }
 
 /* ---------- API Parameter Table ----------- */
