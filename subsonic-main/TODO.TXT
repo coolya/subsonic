@@ -68,6 +68,7 @@ Colors: http://www.androidtapp.com/opentable/
 DONE IN 4.2
 ----------------
 Bugfix: Set ID3 tags when transcoding.
+Bugfix: Fixed problem with transcoding/downsampling failing for files with non-Latin characters.  
 New: Added Portuguese translation, courtesy of Miguel Fonseca.
 Bugfix: Handle downsampling/transcoding files with double quotes in filename.
 Improve artist resolution (if directory and not album, then artist)
@@ -77,6 +78,7 @@ last.fm scrobbling
 
 TODO IN 4.2
 -----------------
+Test non-ascii transcoding on mac, linux.
 For transcoded files, display both source and target formats in gui.
 REST method supporting "Play random", or shuffle for a sub-tree
 Disable scrobbling while downloading; Add new scrobble command?

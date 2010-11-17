@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.io;
 
 import net.sourceforge.subsonic.*;
+
 import org.apache.commons.io.*;
 
 import java.io.*;
@@ -37,16 +38,19 @@ public class TranscodeInputStream extends InputStream {
     private InputStream processInputStream;
     private OutputStream processOutputStream;
     private Process process;
+    private final File tmpFile;
 
     /**
      * Creates a transcoded input stream by executing an external process. If <code>in</code> is not null,
      * data from it is copied to the command.
      *
      * @param processBuilder Used to create the external process.
-     * @param in Data to feed to the command.  May be <code>null</code>.
+     * @param in Data to feed to the process.  May be {@code null}.
+     * @param tmpFile Temporary file to delete when this stream is closed.  May be {@code null}.
      * @throws IOException If an I/O error occurs.
      */
-    public TranscodeInputStream(ProcessBuilder processBuilder, final InputStream in) throws IOException {
+    public TranscodeInputStream(ProcessBuilder processBuilder, final InputStream in, File tmpFile) throws IOException {
+        this.tmpFile = tmpFile;
 
         StringBuffer buf = new StringBuffer("Starting transcoder: ");
         for (String s : processBuilder.command()) {
@@ -111,6 +115,10 @@ public class TranscodeInputStream extends InputStream {
             process.destroy();
         }
 
-
+        if (tmpFile != null) {
+            if (!tmpFile.delete()) {
+                LOG.warn("Failed to delete tmp file: " + tmpFile);
+            }
+        }
     }
 }

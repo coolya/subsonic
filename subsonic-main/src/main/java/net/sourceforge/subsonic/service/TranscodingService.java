@@ -29,6 +29,8 @@ import net.sourceforge.subsonic.io.TranscodeInputStream;
 import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.util.Util;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.PrefixFileFilter;
 import org.apache.commons.lang.StringUtils;
 
@@ -230,21 +232,22 @@ public class TranscodingService {
      */
     private InputStream getTranscodedInputStream(MusicFile musicFile, Transcoding transcoding, TranscodeScheme transcodeScheme)
             throws IOException {
-        TranscodeInputStream in = new TranscodeInputStream(createCommand(transcoding.getStep1(), transcodeScheme, musicFile), null);
+        TranscodeInputStream in = createTranscodeInputStream(transcoding.getStep1(), transcodeScheme, musicFile, null);
 
         if (transcoding.getStep2() != null) {
-            in = new TranscodeInputStream(createCommand(transcoding.getStep2(), transcodeScheme, musicFile), in);
+            in = createTranscodeInputStream(transcoding.getStep2(), transcodeScheme, musicFile, in);
         }
 
         if (transcoding.getStep3() != null) {
-            in = new TranscodeInputStream(createCommand(transcoding.getStep3(), transcodeScheme, musicFile), in);
+            in = createTranscodeInputStream(transcoding.getStep3(), transcodeScheme, musicFile, in);
         }
 
         return in;
     }
 
     /**
-     * Prepares the given command line string. This includes the following:
+     * Creates a transcoded input stream by interpreting the given command line string.
+     * This includes the following:
      * <ul>
      * <li>Splitting the command line string to an array.</li>
      * <li>Replacing occurrences of "%s" with the path of the given music file.</li>
@@ -256,11 +259,12 @@ public class TranscodingService {
      * </ul>
      *
      * @param command         The command line string.
-     * @param transcodeScheme The transcoding (resampling) scheme. May be <code>null</code>.
+     * @param transcodeScheme The transcoding (resampling) scheme. May be {@code null}.
      * @param musicFile       The music file to use when replacing "%s" etc.
-     * @return The prepared command array as a ProcessBuilder.
+     * @param in              Data to feed to the process.  May be {@code null}.
+     * @return The newly created input stream.
      */
-    private ProcessBuilder createCommand(String command, TranscodeScheme transcodeScheme, MusicFile musicFile) {
+    private TranscodeInputStream createTranscodeInputStream(String command, TranscodeScheme transcodeScheme, MusicFile musicFile, InputStream in) throws IOException {
         String path = musicFile.getFile().getAbsolutePath();
 
         // If no transcoding scheme is specified, use 128 Kbps.
@@ -282,34 +286,37 @@ public class TranscodingService {
             title = "Unknown Artist";
         }
 
-        LinkedList<String> result = new LinkedList<String>(Arrays.asList(StringUtil.split(command)));
+        List<String> result = new LinkedList<String>(Arrays.asList(StringUtil.split(command)));
         result.set(0, getTranscodeDirectory().getPath() + File.separatorChar + result.get(0));
 
-        boolean windows = Util.isWindows();
+        File tmpFile = null;
 
         for (int i = 1; i < result.size(); i++) {
-            if ("%s".equals(result.get(i))) {
-                result.set(i, windows ? "%TRANSCODING_SOURCE%" : path);
-            } else if ("%b".equals(result.get(i))) {
+            String cmd = result.get(i);
+            if ("%s".equals(cmd)) {
+
+                // Work-around for filename character encoding problem on Windows.
+                // Create temporary file, and feed this to the transcoder.
+                if (Util.isWindows() && !StringUtils.isAsciiPrintable(path)) {
+                    tmpFile = File.createTempFile("subsonic", "." + FilenameUtils.getExtension(path));
+                    tmpFile.deleteOnExit();
+                    FileUtils.copyFile(new File(path), tmpFile);
+                    LOG.debug("Created tmp file: " + tmpFile);
+                    path = tmpFile.getPath();
+                }
+
+                result.set(i, path);
+            } else if ("%b".equals(cmd)) {
                 result.set(i, String.valueOf(transcodeScheme.getMaxBitRate()));
-            } else if ("%t".equals(result.get(i))) {
+            } else if ("%t".equals(cmd)) {
                 result.set(i, title);
-            } else if ("%l".equals(result.get(i))) {
+            } else if ("%l".equals(cmd)) {
                 result.set(i, album);
-            } else if ("%a".equals(result.get(i))) {
+            } else if ("%a".equals(cmd)) {
                 result.set(i, artist);
             }
         }
-
-        // Send path as an environment variable to overcome some filename character encoding problems.
-        ProcessBuilder processBuilder = new ProcessBuilder(result);
-        if (windows) {
-            result.addFirst("/C");
-            result.addFirst("cmd");
-            processBuilder.environment().put("TRANSCODING_SOURCE", path);
-        }
-
-        return processBuilder;
+        return new TranscodeInputStream(new ProcessBuilder(result), in, tmpFile);
     }
 
     /**
@@ -336,7 +343,7 @@ public class TranscodingService {
      */
     private InputStream getDownsampledInputStream(MusicFile musicFile, TranscodeScheme transcodeScheme) throws IOException {
         String command = settingsService.getDownsamplingCommand();
-        return new TranscodeInputStream(createCommand(command, transcodeScheme, musicFile), null);
+        return createTranscodeInputStream(command, transcodeScheme, musicFile, null);
     }
 
     /**
