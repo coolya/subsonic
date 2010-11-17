@@ -5,9 +5,13 @@ TODO IN BACKEND
 ---------------
 If trying to assign an expired web address used by someone else, don't show "Expired..." message.
 
+DONE IN ANDROID 1.9
+--------------------
+"Queue" and "Save on phone" sometimes don't kick off download.
+  o happens after cancelling an ongoing download.
+
 TODO IN ANDROID 1.9
 -------------------
-Support self-signed certs
 Unnecessary initial pause when starting partially downloaded songs.
 Cover art images loaded incorrectly.
 Reuse AlbumViews (in EntryAdapter)
@@ -68,7 +72,7 @@ Colors: http://www.androidtapp.com/opentable/
 DONE IN 4.2
 ----------------
 Bugfix: Set ID3 tags when transcoding.
-Bugfix: Fixed problem with transcoding/downsampling failing for files with non-Latin characters.  
+Bugfix: Fixed problem with transcoding/downsampling failing for files with non-Latin characters.
 New: Added Portuguese translation, courtesy of Miguel Fonseca.
 Bugfix: Handle downsampling/transcoding files with double quotes in filename.
 Improve artist resolution (if directory and not album, then artist)
