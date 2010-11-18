@@ -18,6 +18,7 @@
  */
 package net.sourceforge.subsonic.androidapp.util;
 
+import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,39 +83,20 @@ public class LRUCache<K,V>{
 
     private final class TimestampedValue {
 
-        private final V value;
+        private final SoftReference<V> value;
         private long timestamp;
 
         public TimestampedValue(V value) {
-            this.value = value;
+            this.value = new SoftReference<V>(value);
             updateTimestamp();
         }
 
         public V getValue() {
-            return value;
+            return value.get();
         }
 
         public long getTimestamp() {
             return timestamp;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-
-            TimestampedValue that = (TimestampedValue) o;
-            return value.equals(that.value);
-
-        }
-
-        @Override
-        public int hashCode() {
-            return value.hashCode();
         }
 
         public void updateTimestamp() {

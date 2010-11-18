@@ -7,8 +7,7 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 DONE IN ANDROID 1.9
 --------------------
-"Queue" and "Save on phone" sometimes don't kick off download.
-  o happens after cancelling an ongoing download.
+Improve caching, use less memory
 
 TODO IN ANDROID 1.9
 -------------------
