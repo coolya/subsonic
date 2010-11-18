@@ -45,7 +45,7 @@ import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 public class ImageLoader implements Runnable {
 
     private static final String TAG = ImageLoader.class.getSimpleName();
-    private static final int CONCURRENCY = 1;
+    private static final int CONCURRENCY = 5;
 
     private final LRUCache<String, Drawable> cache = new LRUCache<String, Drawable>(100);
     private final BlockingQueue<Task> queue;
