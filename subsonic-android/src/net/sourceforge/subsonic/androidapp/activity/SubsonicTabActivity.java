@@ -27,12 +27,15 @@ import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
+import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
 /**
  * @author Sindre Mehus
  */
 public class SubsonicTabActivity extends Activity {
+
+    private static ImageLoader IMAGE_LOADER; 
 
     private boolean destroyed;
     private View homeButton;
@@ -125,6 +128,7 @@ public class SubsonicTabActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         destroyed = true;
+        getImageLoader().clear();
     }
 
     @Override
@@ -174,5 +178,12 @@ public class SubsonicTabActivity extends Activity {
         } else if (!Util.isOffline(this) && !Util.isNetworkConnected(this)) {
             Util.toast(this, R.string.select_album_no_network);
         }
+    }
+
+    protected synchronized ImageLoader getImageLoader() {
+        if (IMAGE_LOADER == null) {
+            IMAGE_LOADER = new ImageLoader(this);
+        }
+        return IMAGE_LOADER;
     }
 }

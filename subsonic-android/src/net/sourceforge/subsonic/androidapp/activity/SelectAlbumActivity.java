@@ -42,7 +42,6 @@ import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.EntryAdapter;
-import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
@@ -55,7 +54,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
     private static final int MENU_ITEM_PLAY_ALL = 1;
 
-    private ImageLoader imageLoader;
     private ListView entryList;
     private View header;
     private View footer;
@@ -80,7 +78,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_album);
 
-        imageLoader = new ImageLoader(this);
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
         header = LayoutInflater.from(this).inflate(R.layout.select_album_header, entryList, false);
@@ -299,12 +296,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         enableButtons();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        imageLoader.cancel();
-    }
-
     private void enableButtons() {
         if (getDownloadService() == null) {
             return;
@@ -468,7 +459,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
             if (songCount > 0) {
                 headerText2.setText(getResources().getQuantityString(R.plurals.select_album_n_songs, songCount, songCount));
-                imageLoader.loadImage(coverArtView, entries.get(0), false);
+                getImageLoader().loadImage(coverArtView, entries.get(0), false);
                 entryList.addHeaderView(header);
                 entryList.addFooterView(footer);
                 selectButton.setVisibility(View.VISIBLE);
@@ -477,7 +468,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             }
 
             emptyView.setVisibility(entries.isEmpty() ? View.VISIBLE : View.GONE);
-            entryList.setAdapter(new EntryAdapter(SelectAlbumActivity.this, imageLoader, entries, true));
+            entryList.setAdapter(new EntryAdapter(SelectAlbumActivity.this, getImageLoader(), entries, true));
             licenseValid = result.getSecond();
 
             boolean playAll = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, false);

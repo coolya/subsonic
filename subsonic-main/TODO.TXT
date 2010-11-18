@@ -84,7 +84,8 @@ last.fm scrobbling
 
 TODO IN 4.2
 -----------------
-Test non-ascii transcoding on mac, linux.
+Fix link to allmusic.
+Test non-ascii transcoding on linux.
 For transcoded files, display both source and target formats in gui.
 REST method supporting "Play random", or shuffle for a sub-tree
 Disable scrobbling while downloading; Add new scrobble command?

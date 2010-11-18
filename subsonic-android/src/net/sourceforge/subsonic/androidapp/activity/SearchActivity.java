@@ -43,7 +43,6 @@ import net.sourceforge.subsonic.androidapp.util.ArtistAdapter;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.EntryAdapter;
-import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.MergeAdapter;
 import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
@@ -54,8 +53,6 @@ import net.sourceforge.subsonic.androidapp.util.Util;
  * @author Sindre Mehus
  */
 public class SearchActivity extends SubsonicTabActivity {
-
-    private ImageLoader imageLoader;
 
     private static final int DEFAULT_ARTISTS = 3;
     private static final int DEFAULT_ALBUMS = 5;
@@ -86,8 +83,6 @@ public class SearchActivity extends SubsonicTabActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
-
-        imageLoader = new ImageLoader(this);
 
         View buttons = LayoutInflater.from(this).inflate(R.layout.search_buttons, null);
 
@@ -192,7 +187,7 @@ public class SearchActivity extends SubsonicTabActivity {
             if (!albums.isEmpty()) {
                 mergeAdapter.addView(albumsHeading);
                 List<MusicDirectory.Entry> displayedAlbums = new ArrayList<MusicDirectory.Entry>(albums.subList(0, Math.min(DEFAULT_ALBUMS, albums.size())));
-                albumAdapter = new EntryAdapter(this, imageLoader, displayedAlbums, false);
+                albumAdapter = new EntryAdapter(this, getImageLoader(), displayedAlbums, false);
                 mergeAdapter.addAdapter(albumAdapter);
                 if (albums.size() > DEFAULT_ALBUMS) {
                     moreAlbumsAdapter = mergeAdapter.addView(moreAlbumsButton, true);
@@ -203,7 +198,7 @@ public class SearchActivity extends SubsonicTabActivity {
             if (!songs.isEmpty()) {
                 mergeAdapter.addView(songsHeading);
                 List<MusicDirectory.Entry> displayedSongs = new ArrayList<MusicDirectory.Entry>(songs.subList(0, Math.min(DEFAULT_SONGS, songs.size())));
-                songAdapter = new EntryAdapter(this, imageLoader, displayedSongs, false);
+                songAdapter = new EntryAdapter(this, getImageLoader(), displayedSongs, false);
                 mergeAdapter.addAdapter(songAdapter);
                 if (songs.size() > DEFAULT_SONGS) {
                     moreSongsAdapter = mergeAdapter.addView(moreSongsButton, true);

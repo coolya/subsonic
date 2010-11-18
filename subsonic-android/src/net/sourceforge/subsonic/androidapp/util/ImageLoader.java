@@ -22,8 +22,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -36,43 +36,43 @@ import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 
 /**
- * Intended for short-lived usage, typically one activity's onCreate() - onDestroy() lifecycle.
+ * Asynchronous loading of images, with caching.
+ * <p/>
+ * There should normally be only one instance of this class.
  *
  * @author Sindre Mehus
  */
 public class ImageLoader implements Runnable {
 
     private static final String TAG = ImageLoader.class.getSimpleName();
-    private static final LRUCache<String, Drawable> CACHE = new LRUCache<String, Drawable>(100);
-    private final Task POISON = new Task(null, null, 0);
+    private static final int CONCURRENCY = 1;
 
+    private final LRUCache<String, Drawable> cache = new LRUCache<String, Drawable>(100);
     private final BlockingQueue<Task> queue;
-    private final Thread thread;
     private final int imageSizeDefault;
     private final int imageSizeLarge;
-    private final Context context;
 
     public ImageLoader(Context context) {
-        this.context = context;
         queue = new LinkedBlockingQueue<Task>(500);
-        thread = new Thread(this, "ImageLoader");
-        thread.start();
 
         // Determine the density-dependent image sizes.
         imageSizeDefault = context.getResources().getDrawable(R.drawable.unknown_album).getIntrinsicHeight();
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         imageSizeLarge = Math.min(metrics.widthPixels, metrics.heightPixels);
+
+        for (int i = 0; i < CONCURRENCY; i++) {
+            new Thread(this, "ImageLoader").start();
+        }
     }
 
     public void loadImage(View view, MusicDirectory.Entry entry, boolean large) {
-
         if (entry == null || entry.getCoverArt() == null) {
             setUnknownImage(view, large);
             return;
         }
 
         int size = large ? imageSizeLarge : imageSizeDefault;
-        Drawable drawable = CACHE.get(getKey(entry.getCoverArt(), size));
+        Drawable drawable = cache.get(getKey(entry.getCoverArt(), size));
         if (drawable != null) {
             setImage(view, drawable);
             return;
@@ -104,30 +104,20 @@ public class ImageLoader implements Runnable {
         }
     }
 
-    public void cancel() {
+    public void clear() {
         queue.clear();
-        queue.offer(POISON);
-        thread.interrupt();
     }
 
     @Override
     public void run() {
-
-        Log.i(TAG, "Starting ImageLoader " + hashCode() % 100);
-        while (!Thread.interrupted()) {
+        while (true) {
             try {
                 Task task = queue.take();
-                if (task == POISON) {
-                    break;
-                }
-
                 task.execute();
-            } catch (InterruptedException x) {
-                break;
+            } catch (Throwable x) {
+                Log.e(TAG, "Unexpected exception in ImageLoader.", x);
             }
         }
-        Log.i(TAG, "Stopping ImageLoader " + hashCode() % 100);
-
     }
 
     private class Task {
@@ -144,11 +134,11 @@ public class ImageLoader implements Runnable {
         }
 
         public void execute() {
-            MusicService musicService = MusicServiceFactory.getMusicService(view.getContext());
             try {
+                MusicService musicService = MusicServiceFactory.getMusicService(view.getContext());
                 Bitmap bitmap = musicService.getCoverArt(view.getContext(), entry.getCoverArt(), size, null);
-                final Drawable drawable = Util.createDrawableFromBitmap(context, bitmap);
-                CACHE.put(getKey(entry.getCoverArt(), size), drawable);
+                final Drawable drawable = Util.createDrawableFromBitmap(view.getContext(), bitmap);
+                cache.put(getKey(entry.getCoverArt(), size), drawable);
 
                 handler.post(new Runnable() {
                     @Override
@@ -156,7 +146,7 @@ public class ImageLoader implements Runnable {
                         setImage(view, drawable);
                     }
                 });
-            } catch (Exception x) {
+            } catch (Throwable x) {
                 Log.e(TAG, "Failed to download album art.", x);
             }
         }
