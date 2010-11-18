@@ -54,7 +54,6 @@ import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.HorizontalSlider;
-import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.SilentBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.SongView;
 import net.sourceforge.subsonic.androidapp.util.Util;
@@ -69,7 +68,6 @@ public class DownloadActivity extends SubsonicTabActivity {
     private static final int MENU_ITEM_SAVE_PLAYLIST = 201;
     private static final int DIALOG_SAVE_PLAYLIST = 400;
 
-    private ImageLoader imageLoader;
     private ViewFlipper flipper;
     private TextView emptyTextView;
     private TextView albumArtTextView;
@@ -189,7 +187,6 @@ public class DownloadActivity extends SubsonicTabActivity {
         });
 
         registerForContextMenu(playlistView);
-        imageLoader = new ImageLoader(this);
 
         if (getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_SHUFFLE, false) && getDownloadService() != null) {
             warnIfNetworkOrStorageUnavailable();
@@ -454,10 +451,10 @@ public class DownloadActivity extends SubsonicTabActivity {
         if (currentPlaying != null) {
             MusicDirectory.Entry song = currentPlaying.getSong();
             albumArtTextView.setText(song.getTitle() + " - " + song.getArtist());
-            imageLoader.loadImage(albumArtImageView, song, true);
+            getImageLoader().loadImage(albumArtImageView, song, true);
         } else {
             albumArtTextView.setText(null);
-            imageLoader.loadImage(albumArtImageView, null, true);
+            getImageLoader().loadImage(albumArtImageView, null, true);
         }
     }
 
@@ -523,12 +520,6 @@ public class DownloadActivity extends SubsonicTabActivity {
                 startButton.setVisibility(View.VISIBLE);
                 break;
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        imageLoader.cancel();
     }
 
     private class SongListAdapter extends ArrayAdapter<DownloadFile> {
