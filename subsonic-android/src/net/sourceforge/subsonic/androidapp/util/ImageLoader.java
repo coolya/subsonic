@@ -18,9 +18,7 @@
  */
 package net.sourceforge.subsonic.androidapp.util;
 
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import android.content.Context;
@@ -45,9 +43,10 @@ import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 public class ImageLoader implements Runnable {
 
     private static final String TAG = ImageLoader.class.getSimpleName();
+    private static final LRUCache<String, Drawable> CACHE = new LRUCache<String, Drawable>(100);
     private final Task POISON = new Task(null, null, 0);
+
     private final BlockingQueue<Task> queue;
-    private final Map<String, Drawable> cache = new ConcurrentHashMap<String, Drawable>();
     private final Thread thread;
     private final int imageSizeDefault;
     private final int imageSizeLarge;
@@ -73,7 +72,7 @@ public class ImageLoader implements Runnable {
         }
 
         int size = large ? imageSizeLarge : imageSizeDefault;
-        Drawable drawable = cache.get(getKey(entry.getCoverArt(), size));
+        Drawable drawable = CACHE.get(getKey(entry.getCoverArt(), size));
         if (drawable != null) {
             setImage(view, drawable);
             return;
@@ -149,7 +148,7 @@ public class ImageLoader implements Runnable {
             try {
                 Bitmap bitmap = musicService.getCoverArt(view.getContext(), entry.getCoverArt(), size, null);
                 final Drawable drawable = Util.createDrawableFromBitmap(context, bitmap);
-                cache.put(getKey(entry.getCoverArt(), size), drawable);
+                CACHE.put(getKey(entry.getCoverArt(), size), drawable);
 
                 handler.post(new Runnable() {
                     @Override

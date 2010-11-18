@@ -22,14 +22,10 @@ import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.util.Log;
-
 /**
  * @author Sindre Mehus
  */
 public class LRUCache<K,V>{
-
-    private static final String TAG = LRUCache.class.getSimpleName();
 
     private final int capacity;
     private final Map<K, TimestampedValue> map;
@@ -41,15 +37,14 @@ public class LRUCache<K,V>{
 
     public synchronized V get(K key) {
         TimestampedValue value = map.get(key);
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "Cache " + (value == null ? "miss" : "hit") + " for " + key + ". Size is " + map.size());
-        }
 
+        V result = null;
         if (value != null) {
             value.updateTimestamp();
-            return value.getValue();
+            result = value.getValue();
         }
-        return null;
+
+        return result;
     }
 
     public synchronized void put(K key, V value) {

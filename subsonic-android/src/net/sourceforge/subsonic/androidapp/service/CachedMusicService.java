@@ -42,12 +42,10 @@ import java.util.concurrent.TimeUnit;
 public class CachedMusicService implements MusicService {
 
     private static final int MUSIC_DIR_CACHE_SIZE = 20;
-    private static final int COVER_ART_CACHE_SIZE = 10;
     private static final int TTL_MUSIC_DIR = 5 * 60; // Five minutes
 
     private final MusicService musicService;
     private final LRUCache<String, TimeLimitedCache<MusicDirectory>> cachedMusicDirectories;
-    private final LRUCache<String, Bitmap> cachedCoverArts;
     private final TimeLimitedCache<Boolean> cachedLicenseValid = new TimeLimitedCache<Boolean>(120, TimeUnit.SECONDS);
     private final TimeLimitedCache<Indexes> cachedIndexes = new TimeLimitedCache<Indexes>(60 * 60, TimeUnit.SECONDS);
     private final TimeLimitedCache<List<Playlist>> cachedPlaylists = new TimeLimitedCache<List<Playlist>>(60, TimeUnit.SECONDS);
@@ -56,7 +54,6 @@ public class CachedMusicService implements MusicService {
     public CachedMusicService(MusicService musicService) {
         this.musicService = musicService;
         cachedMusicDirectories = new LRUCache<String, TimeLimitedCache<MusicDirectory>>(MUSIC_DIR_CACHE_SIZE);
-        cachedCoverArts = new LRUCache<String, Bitmap>(COVER_ART_CACHE_SIZE);
     }
 
     @Override
@@ -139,14 +136,7 @@ public class CachedMusicService implements MusicService {
 
     @Override
     public Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
-        checkSettingsChanged(context);
-        String key = id + size;
-        Bitmap bitmap = cachedCoverArts.get(key);
-        if (bitmap == null) {
-            bitmap = musicService.getCoverArt(context, id, size, progressListener);
-            cachedCoverArts.put(key, bitmap);
-        }
-        return bitmap;
+        return musicService.getCoverArt(context, id, size, progressListener);
     }
 
     @Override
@@ -168,7 +158,6 @@ public class CachedMusicService implements MusicService {
         String newUrl = Util.getRestUrl(context, null);
         if (!Util.equals(newUrl, restUrl)) {
             cachedMusicDirectories.clear();
-            cachedCoverArts.clear();
             cachedLicenseValid.clear();
             cachedIndexes.clear();
             cachedPlaylists.clear();
