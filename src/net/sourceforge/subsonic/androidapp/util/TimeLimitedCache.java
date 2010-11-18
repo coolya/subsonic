@@ -18,6 +18,7 @@
  */
 package net.sourceforge.subsonic.androidapp.util;
 
+import java.lang.ref.SoftReference;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TimeLimitedCache<T> {
 
-    private T value;
+    private SoftReference<T> value;
     private final long ttlMillis;
     private long expires;
 
@@ -35,11 +36,11 @@ public class TimeLimitedCache<T> {
     }
 
     public T get() {
-        return System.currentTimeMillis() < expires ? value : null;
+        return System.currentTimeMillis() < expires ? value.get() : null;
     }
 
     public void set(T value) {
-        this.value = value;
+        this.value = new SoftReference<T>(value);
         expires = System.currentTimeMillis() + ttlMillis;
     }
 
