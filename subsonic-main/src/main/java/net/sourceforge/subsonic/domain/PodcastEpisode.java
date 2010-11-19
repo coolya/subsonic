@@ -20,6 +20,8 @@ package net.sourceforge.subsonic.domain;
 
 import java.util.Date;
 
+import net.sourceforge.subsonic.util.StringUtil;
+
 /**
  * A Podcast episode belonging to a channel.
  *
@@ -48,8 +50,8 @@ public class PodcastEpisode {
         this.channelId = channelId;
         this.url = url;
         this.path = path;
-        this.title = title;
-        this.description = description;
+        this.title = StringUtil.removeMarkup(title);
+        this.description = StringUtil.removeMarkup(description);
         this.publishDate = publishDate;
         this.duration = duration;
         this.bytesTotal = length;

@@ -147,8 +147,8 @@ public class StringUtilTestCase extends TestCase {
         doTestUtf8Hex("");
         doTestUtf8Hex("a");
         doTestUtf8Hex("abcdefg");
-        doTestUtf8Hex("abcæøåÆØÅ");
-        doTestUtf8Hex("NRK P3 – FK Fotball");
+        doTestUtf8Hex("abcï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+        doTestUtf8Hex("NRK P3 ï¿½ FK Fotball");
     }
 
     private void doTestUtf8Hex(String s) throws Exception {
@@ -218,5 +218,13 @@ public class StringUtilTestCase extends TestCase {
         LongRange actual = StringUtil.parseRange(range);
         assertEquals("Error in parseRange().", expectedFrom, actual.getMinimumLong());
         assertEquals("Error in parseRange().", expectedTo, actual.getMaximumLong());
+    }
+
+    public void testRemoveMarkup() {
+        assertEquals("Error in removeMarkup()", "foo", StringUtil.removeMarkup("<b>foo</b>"));
+        assertEquals("Error in removeMarkup()", "foobar", StringUtil.removeMarkup("<b>foo</b>bar"));
+        assertEquals("Error in removeMarkup()", "foo", StringUtil.removeMarkup("foo"));
+        assertEquals("Error in removeMarkup()", "foo", StringUtil.removeMarkup("<b>foo"));
+        assertEquals("Error in removeMarkup()", null, StringUtil.removeMarkup(null));
     }
 }

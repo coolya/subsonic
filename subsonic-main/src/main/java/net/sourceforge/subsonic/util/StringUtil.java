@@ -495,6 +495,13 @@ public final class StringUtil {
         return null;
     }
 
+    public static String removeMarkup(String s) {
+        if (s == null) {
+            return null;
+        }
+        return s.replaceAll("<.*?>", "");
+    }
+
     public static String getRESTProtocolVersion() {
         // TODO: Read from xsd.
         return "1.4.0";
