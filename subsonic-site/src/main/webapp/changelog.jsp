@@ -16,6 +16,18 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="4.2"><h2 class="div">Subsonic 4.2 - Nov 21, 2010</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>Added Portuguese translation, courtesy of Miguel Fonseca.</li>
+    <li><span class="bugid">New: </span>Updated Italian translation, courtesy of Luca Perri.</li>
+    <li><span class="bugid">Bugfix: </span>Improved searching.</li>
+    <li><span class="bugid">Bugfix: </span>Set ID3 tags when transcoding.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed problem with transcoding/downsampling failing for files with non-Latin characters.</li>
+    <li><span class="bugid">Bugfix: </span>Handle transcoding/downsampling files with double quotes in filename.</li>
+    <li><span class="bugid">Bugfix: </span>Remove html markup from podcast descriptions.</li>
+    <li><span class="bugid">Bugfix: </span>Fix broken link to allmusic.</li>
+</ul>
+
 <a name="4.2.beta1"><h2 class="div">Subsonic 4.2.beta1 - Nov 4, 2010</h2></a>
 <ul>
     <li><span class="bugid">New: </span>New &amp; improved search engine based on <a href="http://lucene.apache.org/">Lucene</a>.</li>
@@ -751,6 +763,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#4.2">Subsonic 4.2</a></li>
             <li><a href="#4.2.beta1">Subsonic 4.2.beta1</a></li>
             <li><a href="#4.1">Subsonic 4.1</a></li>
             <li><a href="#4.1.beta1">Subsonic 4.1.beta1</a></li>

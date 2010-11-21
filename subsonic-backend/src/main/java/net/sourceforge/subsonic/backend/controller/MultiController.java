@@ -45,9 +45,8 @@ public class MultiController extends MultiActionController {
 
     private static final Logger LOG = Logger.getLogger(RedirectionController.class);
 
-    private static final String SUBSONIC_VERSION = "4.1";
+    private static final String SUBSONIC_VERSION = "4.2";
     private static final String SUBSONIC_BETA_VERSION = "4.2.beta1";
-    private static final String SUBSONIC_ANDROID_VERSION = "1.7.1";
 
     private DaoHelper daoHelper;
 
@@ -61,7 +60,6 @@ public class MultiController extends MultiActionController {
         writer.println("SUBSONIC_VERSION_BEGIN" + SUBSONIC_VERSION + "SUBSONIC_VERSION_END");
         writer.println("SUBSONIC_FULL_VERSION_BEGIN" + SUBSONIC_VERSION + "SUBSONIC_FULL_VERSION_END");
         writer.println("SUBSONIC_BETA_VERSION_BEGIN" + SUBSONIC_BETA_VERSION + "SUBSONIC_BETA_VERSION_END");
-        writer.println("SUBSONIC_ANDROID_VERSION_BEGIN" + SUBSONIC_ANDROID_VERSION + "SUBSONIC_ANDROID_VERSION_END");
 
         return null;
     }

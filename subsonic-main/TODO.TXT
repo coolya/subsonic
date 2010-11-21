@@ -11,6 +11,8 @@ Improve caching, use less memory
 
 TODO IN ANDROID 1.9
 -------------------
+Remove colons.
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4137
 Loops first song
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4423
 Better handling of full SD card.
@@ -74,16 +76,6 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN 4.2
 ----------------
-Bugfix: Set ID3 tags when transcoding.
-Bugfix: Fix link to allmusic.
-Bugfix: Fixed problem with transcoding/downsampling failing for files with non-Latin characters.
-Bugfix: Remove html markup from podcast descriptions.
-New: Added Portuguese translation, courtesy of Miguel Fonseca.
-Bugfix: Handle downsampling/transcoding files with double quotes in filename.
-Improve artist resolution (if directory and not album, then artist)
-Improve search field boosting.
-New: Updated Italian translation, courtesy of Luca Perri.
-last.fm scrobbling
 
 TODO IN 4.2
 -----------------
@@ -106,7 +98,6 @@ Deprecate current cover art method.  Make new which takes song/album ID.
 Add trialExpires to REST API.
 Test getUser/deleteUser
 Change font in logo?
-JSON support in REST API?
 Add "append" parameter to createPlaylist REST method.
 Modify port number and memory on Mac.
 
@@ -511,9 +502,9 @@ Deploy
 Check that correct local version is displayed.
 Commit
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.2.beta1/
-  rsync -avP -e ssh subsonic-assembly/target/subsonic* sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.2.beta1/
-  rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg subsonic-installer-debian/target/subsonic*.deb subsonic-installer-rpm/target/subsonic*.rpm sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.2.beta1/
+  rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.2/
+  rsync -avP -e ssh subsonic-assembly/target/subsonic* sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.2/
+  rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg subsonic-installer-debian/target/subsonic*.deb subsonic-installer-rpm/target/subsonic*.rpm sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.2/
 
 Modify FRS properties
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
@@ -525,7 +516,7 @@ Upload site (NEW): CHANGE DATE BELOW
   rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-11-05/pages/
   rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps/pages/
 
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-4.2.beta1 -m "Tagging 4.2.beta1."
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-4.2 -m "Tagging 4.2."
 Register at freshmeat.
 Post message on forum.
 Update version number in pom.xml etc.

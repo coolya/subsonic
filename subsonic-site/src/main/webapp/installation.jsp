@@ -69,8 +69,8 @@
             <a href="inc/img/mac-installer.png"><img class="img-right" src="inc/img/mac-installer-small.png" alt="Mac Installer"/></a>
             <p>
                 Download the installation package and run it. This installs Subsonic.app in Applications. Start it by opening Applications and
-                click the Subsonic icon.  If you want Subsonic to start automatically when you log in, right-click on the Subsonic icon in the dock
-                and select "Open at Login".
+                click the Subsonic icon.  A small headset icon will appear in the menu bar. If you want Subsonic to start automatically when you log in, 
+                right-click on the Subsonic icon in the dock and select "Open at Login".
             </p>
             <p>
                 After installing and starting Subsonic, open the Subsonic web page on <a href="http://localhost:4040">http://localhost:4040</a>.
@@ -79,16 +79,6 @@
             <p>
                 To change the port number, Java memory settings or other startup parameters, edit <code style="white-space:nowrap;">/Application/Subsonic.app/Contents/Info.plist</code>.
             </p>
-            <p>
-                To make use of Subsonic's powerful <a href="transcoding.jsp">transcoding</a> feature, it's highly recommended to install some third-party
-                transcoders from <a href="http://www.macports.org/">MacPorts</a>:
-            </p>
-
-            <ul>
-                <li>If necessary, <a href="http://www.macports.org/install.php">install MacPorts</a>.</li>
-                <li>From the command line: <code>sudo port install lame</code> and <code>sudo port install ffmpeg</code>.</li>
-            </ul>
-
             <p><b>Troubleshooting</b></p>
             <p>
                 If Subsonic doesn't start properly you can troubleshoot it by starting it from the command line:
