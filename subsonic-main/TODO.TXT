@@ -1,5 +1,15 @@
-jSub
-  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4479
+VIDEO
+-----
+Rename "mask" to "file types" or something.
+Test with mp4.
+Video support.  FLV, MP4
+If video file, disable "Add" button, and make "Play" button open playlist in video mode.
+If video file, add "Show video" link in playlist which opens video in popup.
+Thumbnail support, for instance by using file name conventions.
+Show one thumbnail for each video file, using a generic if not found.
+Use ffmpeg to generate tags and cover art.
+By default, create music folder for video.
+
 
 TODO IN BACKEND
 ---------------
@@ -275,7 +285,6 @@ iPod/iPhone support.
    http://developer.apple.com/webapps
    http://developer.apple.com/internet/webcontent/bestwebdev.html
 Artist/Album level comments, ability to read from txt file, http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1587
-Include a ffmpeg binary in the transcoding pack. It can transcode most video formats to flv on the fly
 "External player" problem described by ghjames in http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=3866
 "Sign up" feature.
 Introduce "Default transcoding bitrate" instead of hardcoding it to 128 kbps.
@@ -482,18 +491,6 @@ Zip and unzip fails with accented characters.  Use commons vfs, or some other li
 Log when zipping individual files.
 Add online help to search index update.
 Vis "lignende" album.
-
-VIDEO
------
-Rename "mask" to "file types" or something.
-Test with mp4.
-Video support.  FLV, MP4
-If video file, disable "Add" button, and make "Play" button open playlist in video mode.
-If video file, add "Show video" link in playlist which opens video in popup.
-Thumbnail support, for instance by using file name conventions.
-Show one thumbnail for each video file, using a generic if not found.
-Use ffmpeg to generate tags and cover art.
-By default, create music folder for video.
 
 HOW TO RELEASE
 ===============================

@@ -33,13 +33,13 @@
             </td>
         </tr>
 
-        <%--<tr>--%>
-            <%--a<td><fmt:message key="generalsettings.videomask"/></td>--%>
-            <%--<td>--%>
-                <%--<form:input path="videoMask" size="70"/>--%>
-                <%--<c:import url="helpToolTip.jsp"><c:param name="topic" value="videomask"/></c:import>--%>
-            <%--</td>--%>
-        <%--</tr>--%>
+        <tr>
+            <td><fmt:message key="generalsettings.videomask"/></td>
+            <td>
+                <form:input path="videoMask" size="70"/>
+                <c:import url="helpToolTip.jsp"><c:param name="topic" value="videomask"/></c:import>
+            </td>
+        </tr>
 
         <tr>
             <td><fmt:message key="generalsettings.coverartmask"/></td>
