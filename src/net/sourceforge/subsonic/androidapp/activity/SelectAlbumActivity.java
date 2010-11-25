@@ -53,6 +53,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
     private static final int MENU_ITEM_PLAY_ALL = 1;
+    private static final int MENU_ITEM_QUEUE_ALL = 2;  // TODO
+    private static final int MENU_ITEM_SAVE_ALL = 3;   // TODO
 
     private ListView entryList;
     private View header;
@@ -179,6 +181,17 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     }
 
     @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
+        if (entry.isDirectory()) {
+            menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_all);
+        }
+    }
+
+    @Override
     public boolean onContextItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case MENU_ITEM_PLAY_ALL:
@@ -188,17 +201,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                 return super.onContextItemSelected(menuItem);
         }
         return true;
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, view, menuInfo);
-
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
-        if (entry.isDirectory()) {
-            menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_album);
-        }
     }
 
     private void getMusicDirectory(final String id, String name) {
@@ -361,14 +363,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
     private void playAll(MenuItem menuItem) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
-
         MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
-
-        Intent intent = new Intent(SelectAlbumActivity.this, SelectAlbumActivity.class);
-        intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, entry.getId());
-        intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getTitle());
-        intent.putExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, true);
-        Util.startActivityWithoutTransition(SelectAlbumActivity.this, intent);
+        playAll(entry.getId(), false, false, true);
     }
 
     private void delete() {
