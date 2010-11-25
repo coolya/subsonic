@@ -17,19 +17,18 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 
 DONE IN ANDROID 1.9
 --------------------
-Improve caching, use less memory
-Offline mode broken if files not stored in artist/album/song structure.
+"Save on phone" should ignore preload setting.
 
 TODO IN ANDROID 1.9
 -------------------
 Still problems with "Download" and "Queue" not triggering download?
 Sort alphabetically in offline mode.
+Add "Play all"
 Remove colons.
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4137
 Loops first song
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4423
 Better handling of full SD card.
-Add "Play all"
 Unnecessary initial pause when starting partially downloaded songs.
 Cover art images loaded incorrectly.
   http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html
@@ -88,11 +87,12 @@ Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Colors: http://www.androidtapp.com/opentable/
 
-DONE IN 4.2
+DONE IN 4.3
 ----------------
 
-TODO IN 4.2
+TODO IN 4.3
 -----------------
+Email forgotten password, using subsonic backend service.
 Complete getjar registration.
 Test non-ascii transcoding on linux.
 For transcoded files, display both source and target formats in gui.

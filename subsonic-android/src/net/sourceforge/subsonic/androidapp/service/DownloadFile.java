@@ -118,6 +118,10 @@ public class DownloadFile {
         return downloadTask != null && downloadTask.isCancelled();
     }
 
+    public boolean shouldSave() {
+        return save;
+    }
+
     public boolean isFailed() {
         return failed;
     }

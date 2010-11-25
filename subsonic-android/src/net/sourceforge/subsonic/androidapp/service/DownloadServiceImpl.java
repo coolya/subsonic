@@ -524,17 +524,14 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             do {
                 DownloadFile downloadFile = downloadList.get(i);
                 if (!downloadFile.isWorkDone()) {
-                    currentDownloading = downloadFile;
-                    currentDownloading.download();
-                    cleanupCandidates.add(currentDownloading);
-                    break;
-                } else if (!downloadFile.isSaved()) {
-                    if (currentPlaying != downloadFile) {
-                        preloaded++;
-                    }
-                    if (preloaded >= Util.getPreloadCount(this)) {
+                    if (downloadFile.shouldSave() || preloaded < Util.getPreloadCount(this)) {
+                        currentDownloading = downloadFile;
+                        currentDownloading.download();
+                        cleanupCandidates.add(currentDownloading);
                         break;
                     }
+                } else if (currentPlaying != downloadFile) {
+                    preloaded++;
                 }
 
                 i = (i + 1) % n;

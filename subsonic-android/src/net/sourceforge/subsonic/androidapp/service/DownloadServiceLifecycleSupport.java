@@ -63,7 +63,11 @@ public class DownloadServiceLifecycleSupport {
         Runnable downloadChecker = new Runnable() {
             @Override
             public void run() {
-                downloadService.checkDownloads();
+                try {
+                    downloadService.checkDownloads();
+                } catch (Throwable x) {
+                    Log.e(TAG, "checkDownloads() failed.", x);
+                }
             }
         };
 
