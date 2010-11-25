@@ -23,12 +23,13 @@ Support shuffle play in offline mode.
 TODO IN ANDROID 1.9
 -------------------
 Long-click:
-  Long-click artist -> Play all
-  Long-click album -> Play all
+  Long-click artist -> Play all, Queue all, Save all
+  Long-click album -> Play all, Queue all, Save all
   Long-click playlist -> Play all
   Long-click song -> Show album (only if parent is set)
   Ideally, use popup progress dialog (like "Test connection")
-
+  Use popup for voice search?
+  Simplify code in SelectAlbumActivity
 Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone. (onNewIntent?)
 Still problems with "Download" and "Queue" not triggering download?
@@ -100,6 +101,9 @@ DONE IN 4.3
 TODO IN 4.3
 -----------------
 Email forgotten password, using subsonic backend service.
+Bitrate isn't replaced properly in ffmpeg
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=17205#17205
+Change wording of "unlimited use".
 Complete getjar registration.
 Test non-ascii transcoding on linux.
 For transcoded files, display both source and target formats in gui.
@@ -521,7 +525,7 @@ Upload site (OLD):
  rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
 
 Upload site (NEW): CHANGE DATE BELOW
-  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-11-05/pages/
+  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-11-21/pages/
   rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps/pages/
 
 svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-4.2 -m "Tagging 4.2."
@@ -534,13 +538,13 @@ Upgrade Subsonic backend: CHANGE DATE BELOW
   Backup backend database.
   cd subsonic-backend
   mvn clean install
-  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-11-05/ROOT.war
-  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-11-05/demo.war
+  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-11-21/ROOT.war
+  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2010-11-21/demo.war
   ssh sindremehus@subsonic.org
   su
   /etc/init.d/tomcat55 stop
   rm webapps
-  ln -s webapps-2010-11-05 webapps
+  ln -s webapps-2010-11-21 webapps
   rm -rf work logs/*
   /etc/init.d/tomcat55 start
   tail -f logs/catalina.out

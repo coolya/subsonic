@@ -25,17 +25,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
+import net.sourceforge.subsonic.androidapp.service.MusicService;
+import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
+import net.sourceforge.subsonic.androidapp.util.ModalBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
+
+import java.util.List;
+import java.util.LinkedList;
 
 /**
  * @author Sindre Mehus
  */
 public class SubsonicTabActivity extends Activity {
 
-    private static ImageLoader IMAGE_LOADER; 
+    private static ImageLoader IMAGE_LOADER;
 
     private boolean destroyed;
     private View homeButton;
@@ -185,5 +192,50 @@ public class SubsonicTabActivity extends Activity {
             IMAGE_LOADER = new ImageLoader(this);
         }
         return IMAGE_LOADER;
+    }
+
+    protected void playAll(final String id, final boolean save, final boolean append, final boolean autoplay) {
+        ModalBackgroundTask<List<MusicDirectory.Entry>> task = new ModalBackgroundTask<List<MusicDirectory.Entry>>(this, false) {
+
+            private static final int MAX_SONGS = 500;
+
+            @Override
+            protected List<MusicDirectory.Entry> doInBackground() throws Throwable {
+                MusicService musicService = MusicServiceFactory.getMusicService(SubsonicTabActivity.this);
+                MusicDirectory root = musicService.getMusicDirectory(id, SubsonicTabActivity.this, this);
+                List<MusicDirectory.Entry> songs = new LinkedList<MusicDirectory.Entry>();
+                getSongsRecursively(root, songs);
+                return songs;
+            }
+
+            private void getSongsRecursively(MusicDirectory parent, List<MusicDirectory.Entry> songs) throws Exception {
+                if (songs.size() > MAX_SONGS) {
+                    return;
+                }
+
+                for (MusicDirectory.Entry song : parent.getChildren(false, true)) {
+                    songs.add(song);
+                }
+                for (MusicDirectory.Entry dir : parent.getChildren(true, false)) {
+                    MusicService musicService = MusicServiceFactory.getMusicService(SubsonicTabActivity.this);
+                    getSongsRecursively(musicService.getMusicDirectory(dir.getId(), SubsonicTabActivity.this, this), songs);
+                }
+            }
+
+            @Override
+            protected void done(List<MusicDirectory.Entry> songs) {
+                DownloadService downloadService = getDownloadService();
+                if (!songs.isEmpty() && downloadService != null) {
+                    if (!append) {
+                        downloadService.clear();
+                    }
+                    warnIfNetworkOrStorageUnavailable();
+                    downloadService.download(songs, save, autoplay);
+                    Util.startActivityWithoutTransition(SubsonicTabActivity.this, DownloadActivity.class);
+                }
+            }
+        };
+
+        task.execute();
     }
 }

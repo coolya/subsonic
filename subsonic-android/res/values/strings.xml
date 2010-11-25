@@ -48,7 +48,7 @@
     <string name="select_album.play">Play</string>
     <string name="select_album.queue">Queue</string>
     <string name="select_album.more">More</string>
-    <string name="select_album.play_album">Play album</string>
+    <string name="select_album.play_all">Play all</string>
     <string name="select_album.delete">Delete from phone</string>
     <string name="select_album.save">Save on phone</string>
     <string name="select_album.offline">Offline</string>

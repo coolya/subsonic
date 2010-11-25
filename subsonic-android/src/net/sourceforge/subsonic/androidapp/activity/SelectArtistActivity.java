@@ -19,29 +19,32 @@
 
 package net.sourceforge.subsonic.androidapp.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Button;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Artist;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
+import net.sourceforge.subsonic.androidapp.util.ArtistAdapter;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
-import net.sourceforge.subsonic.androidapp.util.ArtistAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SelectArtistActivity extends SubsonicTabActivity implements AdapterView.OnItemClickListener {
 
+    private static final int MENU_ITEM_PLAY_ALL = 1;
     private ListView artistList;
 
     /**
@@ -57,6 +60,8 @@ public class SelectArtistActivity extends SubsonicTabActivity implements Adapter
 
         View header = LayoutInflater.from(this).inflate(R.layout.select_artist_header, artistList, false);
         artistList.addHeaderView(header);
+        registerForContextMenu(artistList);
+
         setTitle(Util.isOffline(this) ? R.string.music_library_label_offline : R.string.music_library_label);
 
         load();
@@ -100,6 +105,30 @@ public class SelectArtistActivity extends SubsonicTabActivity implements Adapter
             intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, artist.getName());
             Util.startActivityWithoutTransition(this, intent);
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+        menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_all);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case MENU_ITEM_PLAY_ALL:
+                playAll(menuItem);
+                break;
+            default:
+                return super.onContextItemSelected(menuItem);
+        }
+        return true;
+    }
+
+    private void playAll(MenuItem menuItem) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
+        Artist artist = (Artist) artistList.getItemAtPosition(info.position);
+        playAll(artist.getId(), false, false, true);
     }
 
 }
