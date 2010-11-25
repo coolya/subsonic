@@ -86,10 +86,8 @@ public class MainActivity extends SubsonicTabActivity {
         ListView list = (ListView) findViewById(R.id.main_list);
 
         MergeAdapter adapter = new MergeAdapter();
-        if (Util.isOffline(this)) {
-            adapter.addViews(Arrays.asList(serverButton, settingsButton), true);
-        } else {
-            adapter.addViews(Arrays.asList(serverButton, shuffleButton, settingsButton), true);
+        adapter.addViews(Arrays.asList(serverButton, shuffleButton, settingsButton), true);
+        if (!Util.isOffline(this)) {
             adapter.addView(albumsTitle, false);
             adapter.addViews(Arrays.asList(albumsNewestButton, albumsRandomButton, albumsHighestButton, albumsRecentButton, albumsFrequentButton), true);
         }
@@ -181,24 +179,17 @@ public class MainActivity extends SubsonicTabActivity {
     @Override
     public boolean onContextItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
+            case MENU_ITEM_OFFLINE:
+                setActiveServer(0);
+                break;
             case MENU_ITEM_SERVER_1:
-                Util.setActiveServer(this, 1);
+                setActiveServer(1);
                 break;
             case MENU_ITEM_SERVER_2:
-                Util.setActiveServer(this, 2);
+                setActiveServer(2);
                 break;
             case MENU_ITEM_SERVER_3:
-                Util.setActiveServer(this, 3);
-                break;
-            case MENU_ITEM_OFFLINE:
-                if (Util.getActiveServer(this) != 0) {
-                    DownloadService service = getDownloadService();
-                    if (service != null) {
-                        service.clear();
-                        service.setShufflePlayEnabled(false);
-                    }
-                    Util.setActiveServer(this, 0);
-                }
+                setActiveServer(3);
                 break;
             default:
                 return super.onContextItemSelected(menuItem);
@@ -207,6 +198,16 @@ public class MainActivity extends SubsonicTabActivity {
         // Restart activity
         restart();
         return true;
+    }
+
+    private void setActiveServer(int instance) {
+        if (Util.getActiveServer(this) != instance) {
+            DownloadService service = getDownloadService();
+            if (service != null) {
+                service.clear();
+            }
+            Util.setActiveServer(this, instance);
+        }
     }
 
     private void restart() {

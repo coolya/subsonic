@@ -58,6 +58,8 @@ public class ShufflePlayBuffer {
     }
 
     public List<MusicDirectory.Entry> get(int size) {
+        clearBufferIfnecessary();
+
         List<MusicDirectory.Entry> result = new ArrayList<MusicDirectory.Entry>(size);
         synchronized (buffer) {
             while (!buffer.isEmpty() && result.size() < size) {
@@ -75,14 +77,9 @@ public class ShufflePlayBuffer {
     private void refill() {
 
         // Check if active server has changed.
-        if (currentServer != Util.getActiveServer(context)) {
-            currentServer = Util.getActiveServer(context);
-            synchronized (buffer) {
-                buffer.clear();
-            }
-        }
+        clearBufferIfnecessary();
 
-        if (buffer.size() > REFILL_THRESHOLD || Util.isOffline(context) || !Util.isNetworkConnected(context)) {
+        if (buffer.size() > REFILL_THRESHOLD || (!Util.isNetworkConnected(context) && !Util.isOffline(context))) {
             return;
         }
 
@@ -97,6 +94,15 @@ public class ShufflePlayBuffer {
             }
         } catch (Exception x) {
             Log.w(TAG, "Failed to refill shuffle play buffer.", x);
+        }
+    }
+
+    private void clearBufferIfnecessary() {
+        synchronized (buffer) {
+            if (currentServer != Util.getActiveServer(context)) {
+                currentServer = Util.getActiveServer(context);
+                buffer.clear();
+            }
         }
     }
 
