@@ -62,6 +62,7 @@ public class MusicDirectory {
 
     public static class Entry implements Serializable {
         private String id;
+        private String parent;
         private boolean directory;
         private String title;
         private String album;
@@ -85,6 +86,14 @@ public class MusicDirectory {
 
         public void setId(String id) {
             this.id = id;
+        }
+
+        public String getParent() {
+            return parent;
+        }
+
+        public void setParent(String parent) {
+            this.parent = parent;
         }
 
         public boolean isDirectory() {

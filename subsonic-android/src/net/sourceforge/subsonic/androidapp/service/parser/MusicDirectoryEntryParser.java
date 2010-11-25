@@ -33,6 +33,7 @@ public class MusicDirectoryEntryParser extends AbstractParser {
     protected MusicDirectory.Entry parseEntry() {
         MusicDirectory.Entry entry = new MusicDirectory.Entry();
         entry.setId(get("id"));
+        entry.setParent(get("parent"));
         entry.setTitle(get("title"));
         entry.setDirectory(getBoolean("isDir"));
         entry.setCoverArt(get("coverArt"));
