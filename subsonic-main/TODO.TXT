@@ -22,6 +22,13 @@ Support shuffle play in offline mode.
 
 TODO IN ANDROID 1.9
 -------------------
+Long-click:
+  Long-click artist -> Play all
+  Long-click album -> Play all
+  Long-click playlist -> Play all
+  Long-click song -> Show album (only if parent is set)
+  Ideally, use popup progress dialog (like "Test connection")
+
 Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone. (onNewIntent?)
 Still problems with "Download" and "Queue" not triggering download?
