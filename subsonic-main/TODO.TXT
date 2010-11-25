@@ -18,9 +18,12 @@ If trying to assign an expired web address used by someone else, don't show "Exp
 DONE IN ANDROID 1.9
 --------------------
 "Save on phone" should ignore preload setting.
+Support shuffle play in offline mode.
 
 TODO IN ANDROID 1.9
 -------------------
+Add 192, 256kbps downsampling option.
+Shuffle play turned back on when rotating phone. (onNewIntent?)
 Still problems with "Download" and "Queue" not triggering download?
 Sort alphabetically in offline mode.
 Add "Play all"
@@ -40,8 +43,6 @@ New search result interface.
   o long-click on song to do misc stuff.
   o Bug with "Scorpions > Live in Spain"
 
-Add 192, 256kbps downsampling option.
-Shuffle play turned back on when rotating phone. (onNewIntent?)
 Skipping problem
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=15260#15260
 Problem playing "Skål" downsampled.
@@ -63,7 +64,6 @@ Save coverart when caching music. (and reuse it rather than doing http)
   Go through caching logic.
   File load/save should be done in CachedMusicService.
 Fix crashes
-Support shuffle play in offline mode. (emulate rest method)
 Save/resume current playing and position.
 Optionally hide music from other players (.nomedia)
 Long-click download

@@ -38,7 +38,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -159,6 +161,30 @@ public class OfflineMusicService extends RESTMusicService {
 
     @Override
     public MusicDirectory getRandomSongs(int size, Context context, ProgressListener progressListener) throws Exception {
-        throw new RuntimeException("Random songs not available in offline mode");
+        File root = FileUtil.getMusicDirectory();
+        List<File> children = new LinkedList<File>();
+        listFilesRecursively(root, children);
+        MusicDirectory result = new MusicDirectory();
+
+        if (children.isEmpty()) {
+            return result;
+        }
+        Random random = new Random();
+        for (int i = 0; i < size; i++) {
+            File file = children.get(random.nextInt(children.size()));
+            result.addChild(createEntry(file, getName(file)));
+        }
+
+        return result;
+    }
+
+    private void listFilesRecursively(File parent, List<File> children) {
+        for (File file : FileUtil.listMusicFiles(parent)) {
+            if (file.isFile()) {
+                children.add(file);
+            } else {
+                listFilesRecursively(file, children);
+            }
+        }
     }
 }
