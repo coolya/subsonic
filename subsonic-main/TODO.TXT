@@ -23,10 +23,10 @@ Support shuffle play in offline mode.
 TODO IN ANDROID 1.9
 -------------------
 Long-click:
-  Long-click artist -> Play all, Queue all, Save all
+  Long-click artist -> Play all, Play random, Queue all, Save all
   Long-click album -> Play all, Queue all, Save all
-  Long-click playlist -> Play all
-  Long-click song -> Show album (only if parent is set)
+  Long-click playlist -> Play all,
+  Long-click song -> Shuffle, Show album (only if parent is set)
   Ideally, use popup progress dialog (like "Test connection")
   Use popup for voice search?
   Simplify code in SelectAlbumActivity

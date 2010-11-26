@@ -53,8 +53,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
     private static final int MENU_ITEM_PLAY_ALL = 1;
-    private static final int MENU_ITEM_QUEUE_ALL = 2;  // TODO
-    private static final int MENU_ITEM_SAVE_ALL = 3;   // TODO
+    private static final int MENU_ITEM_QUEUE_ALL = 2;
+    private static final int MENU_ITEM_SAVE_ALL = 3;
 
     private ListView entryList;
     private View header;
@@ -188,14 +188,24 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
         if (entry.isDirectory()) {
             menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_all);
+            menu.add(Menu.NONE, MENU_ITEM_QUEUE_ALL, MENU_ITEM_QUEUE_ALL, R.string.select_album_queue_all);
+            menu.add(Menu.NONE, MENU_ITEM_SAVE_ALL, MENU_ITEM_SAVE_ALL, R.string.select_album_save_all);
         }
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem menuItem) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
+        MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
         switch (menuItem.getItemId()) {
             case MENU_ITEM_PLAY_ALL:
-                playAll(menuItem);
+                downloadRecursively(entry.getId(), false, false, true);
+                break;
+            case MENU_ITEM_QUEUE_ALL:
+                downloadRecursively(entry.getId(), false, true, false);
+                break;
+            case MENU_ITEM_SAVE_ALL:
+                downloadRecursively(entry.getId(), true, true, false);
                 break;
             default:
                 return super.onContextItemSelected(menuItem);
@@ -359,12 +369,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         };
 
         checkLicenseAndTrialPeriod(onValid);
-    }
-
-    private void playAll(MenuItem menuItem) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
-        MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
-        playAll(entry.getId(), false, false, true);
     }
 
     private void delete() {

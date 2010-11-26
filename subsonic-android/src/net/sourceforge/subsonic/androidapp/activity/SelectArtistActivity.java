@@ -45,6 +45,9 @@ import java.util.List;
 public class SelectArtistActivity extends SubsonicTabActivity implements AdapterView.OnItemClickListener {
 
     private static final int MENU_ITEM_PLAY_ALL = 1;
+    private static final int MENU_ITEM_QUEUE_ALL = 2;
+    private static final int MENU_ITEM_SAVE_ALL = 3;
+
     private ListView artistList;
 
     /**
@@ -111,24 +114,28 @@ public class SelectArtistActivity extends SubsonicTabActivity implements Adapter
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
         menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_all);
+        menu.add(Menu.NONE, MENU_ITEM_QUEUE_ALL, MENU_ITEM_QUEUE_ALL, R.string.select_album_queue_all);
+        menu.add(Menu.NONE, MENU_ITEM_SAVE_ALL, MENU_ITEM_SAVE_ALL, R.string.select_album_save_all);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem menuItem) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
+        Artist artist = (Artist) artistList.getItemAtPosition(info.position);
+
         switch (menuItem.getItemId()) {
             case MENU_ITEM_PLAY_ALL:
-                playAll(menuItem);
+                downloadRecursively(artist.getId(), false, false, true);
+                break;
+            case MENU_ITEM_QUEUE_ALL:
+                downloadRecursively(artist.getId(), false, true, false);
+                break;
+            case MENU_ITEM_SAVE_ALL:
+                downloadRecursively(artist.getId(), true, true, false);
                 break;
             default:
                 return super.onContextItemSelected(menuItem);
         }
         return true;
     }
-
-    private void playAll(MenuItem menuItem) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
-        Artist artist = (Artist) artistList.getItemAtPosition(info.position);
-        playAll(artist.getId(), false, false, true);
-    }
-
 }

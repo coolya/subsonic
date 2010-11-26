@@ -194,7 +194,7 @@ public class SubsonicTabActivity extends Activity {
         return IMAGE_LOADER;
     }
 
-    protected void playAll(final String id, final boolean save, final boolean append, final boolean autoplay) {
+    protected void downloadRecursively(final String id, final boolean save, final boolean append, final boolean autoplay) {
         ModalBackgroundTask<List<MusicDirectory.Entry>> task = new ModalBackgroundTask<List<MusicDirectory.Entry>>(this, false) {
 
             private static final int MAX_SONGS = 500;
