@@ -21,12 +21,13 @@ package net.sourceforge.subsonic.androidapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
@@ -39,6 +40,8 @@ import java.util.List;
 
 public class SelectPlaylistActivity extends SubsonicTabActivity implements AdapterView.OnItemClickListener {
 
+    private static final int MENU_ITEM_PLAY_ALL = 1;
+
     private ListView list;
     private View emptyTextView;
 
@@ -49,6 +52,7 @@ public class SelectPlaylistActivity extends SubsonicTabActivity implements Adapt
         list = (ListView) findViewById(R.id.select_playlist_list);
         emptyTextView = findViewById(R.id.select_playlist_empty);
         list.setOnItemClickListener(this);
+        registerForContextMenu(list);
         load();
     }
 
@@ -66,6 +70,31 @@ public class SelectPlaylistActivity extends SubsonicTabActivity implements Adapt
             }
         };
         task.execute();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+        menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_all);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem menuItem) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
+        Playlist playlist = (Playlist) list.getItemAtPosition(info.position);
+
+        switch (menuItem.getItemId()) {
+            case MENU_ITEM_PLAY_ALL:
+                Intent intent = new Intent(SelectPlaylistActivity.this, SelectAlbumActivity.class);
+                intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_ID, playlist.getId());
+                intent.putExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME, playlist.getName());
+                intent.putExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, true);
+                Util.startActivityWithoutTransition(SelectPlaylistActivity.this, intent);
+                break;
+            default:
+                return super.onContextItemSelected(menuItem);
+        }
+        return true;
     }
 
     @Override
