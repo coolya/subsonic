@@ -23,12 +23,12 @@ Long-click support.
 
 TODO IN ANDROID 1.9
 -------------------
-Save+restore playlist broken.
-cachedMusicDirectories broken?
 Long-click:
+  Long click search results.
   Long-click artist -> Play random
-  Use popup for voice search?
+  Use popup for voice search
   Simplify code in SelectAlbumActivity
+
 Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone. (onNewIntent?)
 Still problems with "Download" and "Queue" not triggering download?
