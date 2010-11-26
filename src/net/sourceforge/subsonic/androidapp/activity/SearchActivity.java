@@ -25,7 +25,9 @@ import java.util.Arrays;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -53,6 +55,10 @@ import net.sourceforge.subsonic.androidapp.util.Util;
  * @author Sindre Mehus
  */
 public class SearchActivity extends SubsonicTabActivity {
+
+    private static final int MENU_ITEM_PLAY_ALL = 1;
+    private static final int MENU_ITEM_QUEUE_ALL = 2;
+    private static final int MENU_ITEM_SAVE_ALL = 3;
 
     private static final int DEFAULT_ARTISTS = 3;
     private static final int DEFAULT_ALBUMS = 5;
@@ -124,6 +130,7 @@ public class SearchActivity extends SubsonicTabActivity {
                 }
             }
         });
+        registerForContextMenu(list);
 
         onNewIntent(getIntent());
     }
@@ -141,6 +148,25 @@ public class SearchActivity extends SubsonicTabActivity {
         } else {
             populateList();
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        Object selectedItem = list.getItemAtPosition(info.position);
+
+        boolean isArtist = selectedItem instanceof Artist;
+        boolean isAlbum = selectedItem instanceof MusicDirectory.Entry && ((MusicDirectory.Entry) selectedItem).isDirectory();
+        boolean isSong = selectedItem instanceof MusicDirectory.Entry && (!((MusicDirectory.Entry) selectedItem).isDirectory());
+
+        if (isArtist || isAlbum) {
+            menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_all);
+            menu.add(Menu.NONE, MENU_ITEM_QUEUE_ALL, MENU_ITEM_QUEUE_ALL, R.string.select_album_queue_all);
+            menu.add(Menu.NONE, MENU_ITEM_SAVE_ALL, MENU_ITEM_SAVE_ALL, R.string.select_album_save_all);
+        }
+        // TODO: Make complete
     }
 
     private void search(final String query, final boolean autoplay) {
