@@ -29,6 +29,7 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -59,6 +60,9 @@ public class SearchActivity extends SubsonicTabActivity {
     private static final int MENU_ITEM_PLAY_ALL = 1;
     private static final int MENU_ITEM_QUEUE_ALL = 2;
     private static final int MENU_ITEM_SAVE_ALL = 3;
+    private static final int MENU_ITEM_PLAY = 4;
+    private static final int MENU_ITEM_QUEUE = 5;
+    private static final int MENU_ITEM_SAVE = 6;
 
     private static final int DEFAULT_ARTISTS = 3;
     private static final int DEFAULT_ALBUMS = 5;
@@ -123,7 +127,7 @@ public class SearchActivity extends SubsonicTabActivity {
                         if (entry.isDirectory()) {
                             onAlbumSelected(entry, false);
                         } else {
-                            onSongSelected(entry);
+                            onSongSelected(entry, false, true, true);
                         }
 
                     }
@@ -165,8 +169,45 @@ public class SearchActivity extends SubsonicTabActivity {
             menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_all);
             menu.add(Menu.NONE, MENU_ITEM_QUEUE_ALL, MENU_ITEM_QUEUE_ALL, R.string.select_album_queue_all);
             menu.add(Menu.NONE, MENU_ITEM_SAVE_ALL, MENU_ITEM_SAVE_ALL, R.string.select_album_save_all);
+        } else if (isSong) {
+            menu.add(Menu.NONE, MENU_ITEM_PLAY, MENU_ITEM_PLAY, R.string.select_album_play);
+            menu.add(Menu.NONE, MENU_ITEM_QUEUE, MENU_ITEM_QUEUE, R.string.select_album_queue);
+            menu.add(Menu.NONE, MENU_ITEM_SAVE, MENU_ITEM_SAVE, R.string.select_album_save);
         }
-        // TODO: Make complete
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem menuItem) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
+        Object selectedItem = list.getItemAtPosition(info.position);
+
+        Artist artist = selectedItem instanceof Artist ? (Artist) selectedItem : null;
+        MusicDirectory.Entry entry = selectedItem instanceof MusicDirectory.Entry ? (MusicDirectory.Entry) selectedItem : null;
+        String id = artist != null ? artist.getId() : entry.getId();
+
+        switch (menuItem.getItemId()) {
+            case MENU_ITEM_PLAY_ALL:
+                downloadRecursively(id, false, false, true);
+                break;
+            case MENU_ITEM_QUEUE_ALL:
+                downloadRecursively(id, false, true, false);
+                break;
+            case MENU_ITEM_SAVE_ALL:
+                downloadRecursively(id, true, true, false);
+                break;
+            case MENU_ITEM_PLAY:
+                onSongSelected(entry, false, false, true);
+                break;
+            case MENU_ITEM_QUEUE:
+                onSongSelected(entry, false, true, false);
+                break;
+            case MENU_ITEM_SAVE:
+                onSongSelected(entry, true, true, false);
+                break;
+            default:
+                return super.onContextItemSelected(menuItem);
+        }
+        return true;
     }
 
     private void search(final String query, final boolean autoplay) {
@@ -283,10 +324,13 @@ public class SearchActivity extends SubsonicTabActivity {
         Util.startActivityWithoutTransition(SearchActivity.this, intent);
     }
 
-    private void onSongSelected(MusicDirectory.Entry song) {
+    private void onSongSelected(MusicDirectory.Entry song, boolean save, boolean append, boolean autoplay) {
         DownloadService downloadService = getDownloadService();
         if (downloadService != null) {
-            downloadService.download(Arrays.asList(song), false, false);
+            if (!append) {
+                downloadService.clear();
+            }
+            downloadService.download(Arrays.asList(song), save, autoplay);
             downloadService.play(downloadService.size() - 1);
             Util.toast(SearchActivity.this, getResources().getQuantityString(R.plurals.select_album_n_songs_added, 1, 1));
         }
@@ -294,7 +338,7 @@ public class SearchActivity extends SubsonicTabActivity {
 
     private void autoplay() {
         if (!searchResult.getSongs().isEmpty()) {
-            onSongSelected(searchResult.getSongs().get(0));
+            onSongSelected(searchResult.getSongs().get(0), false, false, true);
         } else if (!searchResult.getAlbums().isEmpty()) {
             onAlbumSelected(searchResult.getAlbums().get(0), true);
         }

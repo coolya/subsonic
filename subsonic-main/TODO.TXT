@@ -24,7 +24,6 @@ Long-click support.
 TODO IN ANDROID 1.9
 -------------------
 Long-click:
-  Long click search results.
   Long-click artist -> Play random
   Use popup for voice search
   Simplify code in SelectAlbumActivity
