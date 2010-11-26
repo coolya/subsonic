@@ -71,8 +71,9 @@
     <string name="download.playerstate_playing">Playing</string>
     <string name="download.playerstate_playing_shuffle">Playing shuffle</string>
     <string name="download.playerstate_paused">Paused</string>
-    <string name="download.remove">Remove</string>
-    <string name="download.remove_all">Remove all</string>
+    <string name="download.menu_show_album">Show album</string>
+    <string name="download.menu_remove">Remove song</string>
+    <string name="download.menu_remove_all">Remove all</string>
     <string name="download.menu_shuffle">Shuffle</string>
     <string name="download.menu_save">Save playlist</string>
     <string name="download.menu_shuffle_notification">Playlist was shuffled</string>

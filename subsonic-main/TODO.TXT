@@ -19,15 +19,14 @@ DONE IN ANDROID 1.9
 --------------------
 "Save on phone" should ignore preload setting.
 Support shuffle play in offline mode.
+Long-click support.
 
 TODO IN ANDROID 1.9
 -------------------
+Save+restore playlist broken.
+cachedMusicDirectories broken?
 Long-click:
-  Long-click artist -> Play all, Play random, Queue all, Save all
-  Long-click album -> Play all, Queue all, Save all
-  Long-click playlist -> Play all,
-  Long-click song -> Shuffle, Show album (only if parent is set)
-  Ideally, use popup progress dialog (like "Test connection")
+  Long-click artist -> Play random
   Use popup for voice search?
   Simplify code in SelectAlbumActivity
 Add 192, 256kbps downsampling option.
