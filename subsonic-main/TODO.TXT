@@ -10,11 +10,6 @@ Show one thumbnail for each video file, using a generic if not found.
 Use ffmpeg to generate tags and cover art.
 By default, create music folder for video.
 
-
-TODO IN BACKEND
----------------
-If trying to assign an expired web address used by someone else, don't show "Expired..." message.
-
 DONE IN ANDROID 1.9
 --------------------
 "Save on phone" should ignore preload setting.
@@ -25,8 +20,9 @@ TODO IN ANDROID 1.9
 -------------------
 Long-click:
   Long-click artist -> Play random
-  Use popup for voice search
-  Simplify code in SelectAlbumActivity
+  Use popup for voice search?
+  Test voice search.
+  Simplify code in SelectAlbumActivity?
 
 Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone. (onNewIntent?)
@@ -99,6 +95,8 @@ DONE IN 4.3
 TODO IN 4.3
 -----------------
 Email forgotten password, using subsonic backend service.
+Estimate content-length for transcoded/downsampled files.
+maxBitRate in REST should override per-user settings.
 Bitrate isn't replaced properly in ffmpeg
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=17205#17205
 Change wording of "unlimited use".

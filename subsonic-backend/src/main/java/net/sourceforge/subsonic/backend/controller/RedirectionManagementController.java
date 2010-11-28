@@ -93,7 +93,7 @@ public class RedirectionManagementController extends MultiActionController {
         String contextPath = ServletRequestUtils.getRequiredStringParameter(request, "contextPath");
         boolean trial = ServletRequestUtils.getBooleanParameter(request, "trial", false);
 
-        Date lastUpdated = new Date();
+        Date now = new Date();
         Date trialExpires = null;
         if (trial) {
             trialExpires = new Date(ServletRequestUtils.getRequiredLongParameter(request, "trialExpires"));
@@ -125,7 +125,7 @@ public class RedirectionManagementController extends MultiActionController {
             // Delete other redirects for same server ID.
             redirectionDao.deleteRedirectionsByServerId(serverId);
 
-            redirection = new Redirection(0, licenseHolder, serverId, redirectFrom, redirectTo, localRedirectTo, trial, trialExpires, lastUpdated, null, 0);
+            redirection = new Redirection(0, licenseHolder, serverId, redirectFrom, redirectTo, localRedirectTo, trial, trialExpires, now, null, 0);
             redirectionDao.createRedirection(redirection);
             LOG.info("Created " + redirection);
 
@@ -134,7 +134,10 @@ public class RedirectionManagementController extends MultiActionController {
             boolean sameServerId = serverId.equals(redirection.getServerId());
             boolean sameLicenseHolder = licenseHolder != null && licenseHolder.equals(redirection.getLicenseHolder());
 
-            if (sameServerId || sameLicenseHolder) {
+            // Note: A licensed user can take over any expired trial domain.
+            boolean existingTrialExpired = redirection.getTrialExpires() != null && redirection.getTrialExpires().before(now);
+
+            if (sameServerId || sameLicenseHolder || (existingTrialExpired && !trial)) {
                 redirection.setLicenseHolder(licenseHolder);
                 redirection.setServerId(serverId);
                 redirection.setRedirectFrom(redirectFrom);
@@ -142,7 +145,7 @@ public class RedirectionManagementController extends MultiActionController {
                 redirection.setLocalRedirectTo(localRedirectTo);
                 redirection.setTrial(trial);
                 redirection.setTrialExpires(trialExpires);
-                redirection.setLastUpdated(lastUpdated);
+                redirection.setLastUpdated(now);
                 redirectionDao.updateRedirection(redirection);
                 LOG.info("Updated " + redirection);
             } else {
