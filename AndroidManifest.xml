@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:a="http://schemas.android.com/apk/res/android"
           package="net.sourceforge.subsonic.androidapp"
-          a:versionCode="22"
-          a:versionName="1.8.4">
+          a:versionCode="23"
+          a:versionName="1.9">
 
     <uses-permission a:name="android.permission.INTERNET"/>
     <uses-permission a:name="android.permission.READ_PHONE_STATE"/>
