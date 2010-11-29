@@ -330,8 +330,11 @@ public class SearchActivity extends SubsonicTabActivity {
             if (!append) {
                 downloadService.clear();
             }
-            downloadService.download(Arrays.asList(song), save, autoplay);
-            downloadService.play(downloadService.size() - 1);
+            downloadService.download(Arrays.asList(song), save, false);
+            if (autoplay) {
+                downloadService.play(downloadService.size() - 1);
+            }
+
             Util.toast(SearchActivity.this, getResources().getQuantityString(R.plurals.select_album_n_songs_added, 1, 1));
         }
     }
