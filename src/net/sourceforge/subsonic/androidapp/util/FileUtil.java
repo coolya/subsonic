@@ -67,14 +67,19 @@ public class FileUtil {
         return new File(dir, fileName.toString());
     }
 
-    private static File getAlbumDirectory(MusicDirectory.Entry song) {
+    public static File getAlbumArtFile(MusicDirectory.Entry entry) {
+        File dir = getAlbumDirectory(entry);
+        return new File(dir, Constants.ALBUM_ART_FILE);
+    }
+
+    private static File getAlbumDirectory(MusicDirectory.Entry entry) {
         File dir;
-        if (song.getPath() != null) {
-            File f = new File(song.getPath());
-            dir = new File(MUSIC_DIR.getPath() + "/" + f.getParent());
+        if (entry.getPath() != null) {
+            File f = new File(entry.getPath());
+            dir = new File(MUSIC_DIR.getPath() + "/" + (entry.isDirectory() ? f.getPath() : f.getParent()));
         } else {
-            String artist = fileSystemSafe(song.getArtist());
-            String album = fileSystemSafe(song.getAlbum());
+            String artist = fileSystemSafe(entry.getArtist());
+            String album = fileSystemSafe(entry.getAlbum());
             dir = new File(MUSIC_DIR.getPath() + "/" + artist + "/" + album);
         }
         return dir;

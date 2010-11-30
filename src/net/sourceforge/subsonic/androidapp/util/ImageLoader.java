@@ -79,7 +79,7 @@ public class ImageLoader implements Runnable {
         }
 
         setUnknownImage(view, large);
-        queue.offer(new Task(view, entry, size));
+        queue.offer(new Task(view, entry, size, large));
     }
 
     private String getKey(String coverArtId, int size) {
@@ -125,18 +125,20 @@ public class ImageLoader implements Runnable {
         private final MusicDirectory.Entry entry;
         private final Handler handler;
         private final int size;
+        private final boolean saveToFile;
 
-        public Task(View view, MusicDirectory.Entry entry, int size) {
+        public Task(View view, MusicDirectory.Entry entry, int size, boolean saveToFile) {
             this.view = view;
             this.entry = entry;
             this.size = size;
+            this.saveToFile = saveToFile;
             handler = new Handler();
         }
 
         public void execute() {
             try {
                 MusicService musicService = MusicServiceFactory.getMusicService(view.getContext());
-                Bitmap bitmap = musicService.getCoverArt(view.getContext(), entry.getCoverArt(), size, null);
+                Bitmap bitmap = musicService.getCoverArt(view.getContext(), entry, size, saveToFile, null);
                 final Drawable drawable = Util.createDrawableFromBitmap(view.getContext(), bitmap);
                 cache.put(getKey(entry.getCoverArt(), size), drawable);
 

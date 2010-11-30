@@ -108,7 +108,7 @@ public class OfflineMusicService extends RESTMusicService {
         entry.setParent(file.getParent());
         entry.setSize(file.length());
         String root = FileUtil.getMusicDirectory().getPath();
-        entry.setPath(file.getPath().replaceFirst("^" + root, ""));
+        entry.setPath(file.getPath().replaceFirst("^" + root + "/" , ""));
         if (file.isFile()) {
             entry.setArtist(file.getParentFile().getParentFile().getName());
             entry.setAlbum(file.getParentFile().getName());
@@ -116,7 +116,7 @@ public class OfflineMusicService extends RESTMusicService {
         entry.setTitle(name);
         entry.setSuffix(FileUtil.getExtension(file.getName().replace(".complete", "")));
 
-        File albumArt = new File(file.isDirectory() ? file : file.getParentFile(), Constants.ALBUM_ART_FILE);
+        File albumArt = FileUtil.getAlbumArtFile(entry);
         if (albumArt.exists()) {
             entry.setCoverArt(albumArt.getPath());
         }
@@ -124,8 +124,8 @@ public class OfflineMusicService extends RESTMusicService {
     }
 
     @Override
-    public Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
-        InputStream in = new FileInputStream(id);
+    public Bitmap getCoverArt(Context context, MusicDirectory.Entry entry, int size, boolean saveToFile, ProgressListener progressListener) throws Exception {
+        InputStream in = new FileInputStream(entry.getCoverArt());
         try {
             byte[] bytes = Util.toByteArray(in);
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
