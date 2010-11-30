@@ -18,9 +18,13 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -362,8 +366,23 @@ public class RESTMusicService implements MusicService {
     }
 
     @Override
-    public Bitmap getCoverArt(Context context, String id, int size, ProgressListener progressListener) throws Exception {
-        String url = Util.getRestUrl(context, "getCoverArt") + "&id=" + id + "&size=" + size;
+    public Bitmap getCoverArt(Context context, MusicDirectory.Entry entry, int size, boolean saveToFile, ProgressListener progressListener) throws Exception {
+
+        // Use cached file, if existing.
+        File albumArtFile = FileUtil.getAlbumArtFile(entry);
+        if (albumArtFile.exists()) {
+
+            InputStream in = new FileInputStream(entry.getCoverArt());
+            try {
+                byte[] bytes = Util.toByteArray(in);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                return Bitmap.createScaledBitmap(bitmap, size, size, true);
+            } finally {
+                Util.close(in);
+            }
+        }
+
+        String url = Util.getRestUrl(context, "getCoverArt") + "&id=" + entry.getCoverArt() + "&size=" + size;
 
         InputStream in = null;
         try {
@@ -378,6 +397,17 @@ public class RESTMusicService implements MusicService {
             }
 
             byte[] bytes = Util.toByteArray(in);
+
+            if (saveToFile) {
+                OutputStream out = null;
+                try {
+                    out = new FileOutputStream(albumArtFile);
+                    out.write(bytes);
+                } finally {
+                    Util.close(out);
+                }
+            }
+
             return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
         } finally {

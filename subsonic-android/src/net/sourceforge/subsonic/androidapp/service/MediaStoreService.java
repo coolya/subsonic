@@ -19,19 +19,16 @@
 package net.sourceforge.subsonic.androidapp.service;
 
 import java.io.File;
-import java.io.FileOutputStream;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
-import net.sourceforge.subsonic.androidapp.util.Constants;
-import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.FileUtil;
 
 /**
  * @author Sindre Mehus
@@ -97,47 +94,16 @@ public class MediaStoreService {
         if (!cursor.moveToFirst()) {
 
             // No album art found, add it.
-            File albumArtFile = downloadAlbumArt(downloadFile);
-            if (albumArtFile == null) {
-                return;
+            File albumArtFile = FileUtil.getAlbumArtFile(downloadFile.getSong());
+            if (albumArtFile.exists()) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Audio.AlbumColumns.ALBUM_ID, albumId);
+                values.put(MediaStore.MediaColumns.DATA, albumArtFile.getPath());
+                contentResolver.insert(ALBUM_ART_URI, values);
+                Log.i(TAG, "Added album art: " + albumArtFile);
             }
-
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Audio.AlbumColumns.ALBUM_ID, albumId);
-            values.put(MediaStore.MediaColumns.DATA, albumArtFile.getPath());
-            contentResolver.insert(ALBUM_ART_URI, values);
-            Log.i(TAG, "Added album art: " + albumArtFile);
         }
         cursor.close();
     }
 
-    private File downloadAlbumArt(DownloadFile downloadFile) {
-        MusicDirectory.Entry song = downloadFile.getSong();
-        if (song.getCoverArt() == null) {
-            return null;
-        }
-
-        FileOutputStream out = null;
-        File file = null;
-        try {
-            file = getAlbumArtFile(downloadFile);
-            out = new FileOutputStream(file);
-            MusicService musicService = MusicServiceFactory.getMusicService(context);
-            Bitmap bitmap = musicService.getCoverArt(context, song.getCoverArt(), 320, null);
-            if (!bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)) {
-                throw new Exception("Failed to save album art as JPEG.");
-            }
-        } catch (Exception e) {
-            Util.delete(file);
-            Log.e(TAG, "Failed to download album art.", e);
-        } finally {
-            Util.close(out);
-        }
-        return file;
-    }
-
-    private File getAlbumArtFile(DownloadFile downloadFile) {
-        File dir = downloadFile.getCompleteFile().getParentFile();
-        return new File(dir, Constants.ALBUM_ART_FILE);
-    }
 }

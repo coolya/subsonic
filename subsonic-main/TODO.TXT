@@ -10,14 +10,17 @@ Show one thumbnail for each video file, using a generic if not found.
 Use ffmpeg to generate tags and cover art.
 By default, create music folder for video.
 
-DONE IN ANDROID 1.9
+DONE IN ANDROID 2.0
 --------------------
-"Save on phone" should ignore preload setting.
-Support shuffle play in offline mode.
-Long-click support.
+Better cover art support in offline mode.
+Cache cover art on SD card.
 
 TODO IN ANDROID 1.9
 -------------------
+Cover art:
+  o Test with "Save on phone"
+  o Make DownloadServiceImpl download it?
+Reset shuffle play buffer when changing server.
 Long-click:
   Long-click artist -> Play random
   Use popup for voice search?
@@ -564,11 +567,11 @@ Update
     https://myapps.developer.motorola.com/
     https://slideme.org/application/subsonic
     http://www.camangimarket.com/index.html
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.9 -m "Tagging Android 1.9"
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-1.8.4 -m "Tagging Android 1.8.4"
 Create new directory in FRS
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.9/subsonic-1.9.apk
+  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/1.8.4/subsonic-1.8.4.apk
 
 
 HOW TO RELEASE TRANSCODING PACK
