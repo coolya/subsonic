@@ -56,67 +56,16 @@ public class VideoPlayerController extends ParameterizableViewController {
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ModelAndView result = handleCommand(request, response);
-        if (result != null) {
-            return result;
-        }
 
         Map<String, Object> map = new HashMap<String, Object>();
         String path = request.getParameter("path");
         map.put("video", musicFileService.getMusicFile(path));
-        map.put("processedVideos", videoService.getProcessedVideos(path));
-        map.put("qualities", videoService.getVideoQualities());
 
-        result = super.handleRequestInternal(request, response);
+        ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
     }
 
-    private ModelAndView handleCommand(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String action = request.getParameter("action");
-        if ("create".equals(action)) {
-            return handleCreateCommand(request, response);
-        }
-        if ("delete".equals(action)) {
-            return handleDeleteCommand(request, response);
-        }
-        return null;
-    }
-
-    private ModelAndView handleCreateCommand(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String path = ServletRequestUtils.getRequiredStringParameter(request, "path");
-        String quality = ServletRequestUtils.getRequiredStringParameter(request, "quality");
-
-        boolean exists = false;
-        for (ProcessedVideo processedVideo : videoService.getProcessedVideos(path)) {
-            if (processedVideo.getQuality().equals(quality)) {
-                exists = true;
-                break;
-            }
-        }
-
-        if (exists) {
-            LOG.warn("The video '" + path + "' already exists in quality '" + quality + "'.");
-        } else {
-            videoService.processVideo(path, quality);
-        }
-
-        return createRedirectView(path);
-    }
-
-    private ModelAndView handleDeleteCommand(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        int id = ServletRequestUtils.getRequiredIntParameter(request, "id");
-        ProcessedVideo video = videoService.getProcessedVideo(id);
-        if (video == null) {
-            return null;
-        }
-        videoService.cancelVideoProcessing(id);
-        return createRedirectView(video.getSourcePath());
-    }
-
-    private ModelAndView createRedirectView(String path) {
-        return new ModelAndView(new RedirectView("videoPlayer.view?path" + ParameterDecodingFilter.PARAM_SUFFIX + "=" + StringUtil.utf8HexEncode(path)));
-    }
 
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
