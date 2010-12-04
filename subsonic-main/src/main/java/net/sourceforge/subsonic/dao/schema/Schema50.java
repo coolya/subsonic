@@ -22,6 +22,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import net.sourceforge.subsonic.Logger;
 
+import java.util.Arrays;
+
 /**
  * Used for creating and evolving the database schema.
  * This class implements the database schema for Subsonic version 5.0.
@@ -38,23 +40,11 @@ public class Schema50 extends Schema {
         if (template.queryForInt("select count(*) from version where version = 16") == 0) {
             LOG.info("Updating database schema to version 16.");
             template.execute("insert into version values (16)");
-        }
 
-        if (!tableExists(template, "processed_video")) {
-            LOG.info("Database table 'processed_video' not found.  Creating it.");
-            template.execute("create table processed_video (" +
-                             "id identity," +
-                             "path varchar not null," +
-                             "source_path varchar not null," +
-                             "log_path varchar not null," +
-                             "quality varchar not null," +
-                             "status varchar not null," +
-                             "bit_rate int not null," +
-                             "size bigint not null)");
-
-            template.execute("create index idx_processed_video_source_path on processed_video(source_path)");
-
-            LOG.info("Database table 'processed_video' was created successfully.");
+            for (String format : Arrays.asList("avi", "mpg", "mpeg", "mp4", "m4v", "mkv", "mov", "wmv")) {
+                template.execute("insert into transcoding values(null,'" + format + " > flv' ,'" + format + "' ,'flv','ffmpeg -i %s -ar 44100 -sameq -deinterlace -v 0 -f flv -',null,null,true,true)");
+            }
+            LOG.info("Created video transcoding configuration.");
         }
     }
 }

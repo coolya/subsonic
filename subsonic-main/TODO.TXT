@@ -10,12 +10,8 @@ Thumbnail support, for instance by using file name conventions.
 Show one thumbnail for each video file, using a generic if not found.
 Use ffmpeg to generate tags and cover art.
 Should never downsample videos (lame)
-Add "Back" link.
 Add suffix, player etc to stream url
-Add header to videoPlayer.jsp
-Set up transcodings
 Never add video files to playlist.
-Add "-v 0" as ffmpeg arg
 Remove old code
 
 DONE IN ANDROID 2.0
