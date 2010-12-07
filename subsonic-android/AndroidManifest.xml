@@ -14,7 +14,7 @@
 
     <supports-screens a:anyDensity="true" a:largeScreens="true" a:normalScreens="true" a:smallScreens="true"/>
 
-    <application a:label="@string/common.appname" a:icon="@drawable/launch" a:theme="@android:style/Theme.Light">
+    <application a:label="@string/common.appname" a:icon="@drawable/launch" a:theme="@style/Wheat">
 
         <activity a:name="net.sourceforge.subsonic.androidapp.activity.MainActivity"
                   a:label="Subsonic"

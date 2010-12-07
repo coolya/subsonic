@@ -18,6 +18,7 @@ DONE IN ANDROID 2.0
 --------------------
 Better cover art support in offline mode.
 Cache cover art on SD card.
+New theme "Wheat".
 
 TODO IN ANDROID 1.9
 -------------------
@@ -103,6 +104,8 @@ DONE IN 4.3
 TODO IN 4.3
 -----------------
 Test in Tomcat 7.
+Always set headless mode.
+According to Petter, overriding SUBSONIC_HOME doesn't work in Debian.
 Improve paypal-landing. Mention spam folder.
 Email forgotten password, using subsonic backend service.
 Estimate content-length for transcoded/downsampled files.
