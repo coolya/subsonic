@@ -17,7 +17,6 @@
     <ul>
         <li><a href="index.jsp" class="<%=current.equals("home") ? "open" : ""%>"><span>Home</span></a></li>
         <li><a href="download.jsp" class="<%=current.equals("download") ? "open" : ""%>"><span>Download</span></a></li>
-        <li><a href="hosting.jsp" class="<%=current.equals("hosting") ? "open" : ""%>"><span>Hosting</span></a></li>
         <li><a href="documentation.jsp" class="<%=current.equals("documentation") ? "open" : ""%>"><span>Documentation</span></a></li>
         <li><a href="features.jsp" class="<%=current.equals("features") ? "open" : ""%>"><span>Features</span></a></li>
         <li><a href="apps.jsp" class="<%=current.equals("apps") ? "open" : ""%>"><span>Apps</span></a></li>
