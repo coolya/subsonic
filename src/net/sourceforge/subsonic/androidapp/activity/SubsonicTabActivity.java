@@ -148,6 +148,8 @@ public class SubsonicTabActivity extends Activity {
         String theme = Util.getTheme(this);
         if ("dark".equals(theme)) {
             setTheme(android.R.style.Theme);
+        } else if ("light".equals(theme)) {
+            setTheme(android.R.style.Theme_Light);
         }
     }
 

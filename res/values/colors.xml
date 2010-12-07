@@ -4,4 +4,8 @@
     <color name="mediaControlForeground">#F0F0F0</color>
     <color name="dividerColor">#555555</color>
     <color name="appwidget_text">#FFFFFF</color>
+
+    <color name="wheatBackground">#F1F0E6</color>
+    <color name="wheatForeground1">#494B26</color>
+    <color name="wheatForeground2">#830009</color>
 </resources>
