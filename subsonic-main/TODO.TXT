@@ -27,10 +27,11 @@ Cover art:
 Reset shuffle play buffer when changing server.
 Long-click:
   Long-click artist -> Play random
+  Lyrics
   Use popup for voice search?
   Test voice search.
   Simplify code in SelectAlbumActivity?
-
+AIDL interface.
 Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone. (onNewIntent?)
 Still problems with "Download" and "Queue" not triggering download?

@@ -26,6 +26,9 @@
                 <li><b><a href="faq.jsp">FAQ</a></b><br>
                     Frequently asked questions.
                 </li>
+                <li><b><a href="http://monroeworld.com/android/subsonic/">A practical guide to installing and configuring Subsonic</a></b><br>
+                    By Shane R. Monroe, Monroeworld.com.
+                </li>
                 <li><b><a href="forum.jsp">Forum</a></b><br>
                     Discuss and ask questions to fellow users. Roughly 30 new posts per day.
                 </li>
