@@ -195,7 +195,7 @@ public class TranscodingService {
 
             TranscodeScheme transcodeScheme = getTranscodeScheme(player);
             if (transcodeScheme != TranscodeScheme.OFF) {
-                boolean supported = isDownsamplingSupported();
+                boolean supported = isDownsamplingSupported(musicFile);
                 Integer bitRate = musicFile.getMetaData().getBitRate();
                 if (supported && bitRate != null && bitRate > transcodeScheme.getMaxBitRate()) {
                     return getDownsampledInputStream(musicFile, transcodeScheme);
@@ -350,8 +350,16 @@ public class TranscodingService {
      * Returns whether downsampling is supported (i.e., whether LAME is installed or not.)
      *
      * @return Whether downsampling is supported.
+     * @param musicFile If not null, returns whether downsampling is supported for this file.
      */
-    public boolean isDownsamplingSupported() {
+    public boolean isDownsamplingSupported(MusicFile musicFile) {
+        if (musicFile != null) {
+            boolean isMp3 = "mp3".equalsIgnoreCase(musicFile.getSuffix());
+            if (!isMp3) {
+                return false;
+            }
+        }
+
         String commandLine = settingsService.getDownsamplingCommand();
         return isTranscodingStepInstalled(commandLine);
     }

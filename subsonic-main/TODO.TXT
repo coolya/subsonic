@@ -9,18 +9,14 @@ Rename "mask" to "file types" or something.
 Thumbnail support, for instance by using file name conventions.
 Show one thumbnail for each video file, using a generic if not found.
 Use ffmpeg to generate tags and cover art.
-Should never downsample videos (lame)
 Add suffix, player etc to stream url
 Never add video files to playlist.
 Remove old code
 
-DONE IN ANDROID 2.0
+DONE IN ANDROID 2.1
 --------------------
-Better cover art support in offline mode.
-Cache cover art on SD card.
-New theme "Wheat".
 
-TODO IN ANDROID 1.9
+TODO IN ANDROID 2.1
 -------------------
 Reset shuffle play buffer when changing server.
 Long-click:
@@ -576,7 +572,7 @@ Update
     http://www.camangimarket.com/index.html
 svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-2.0 -m "Tagging Android 2.0"
 Create new directory in FRS
-  https://sourceforge.net/project/admin/explorer.php?group_id=126265
+  https://sourceforge.net/projects/subsonic/files/android/
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
   rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/2.0/subsonic-2.0.apk
 
