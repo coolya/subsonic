@@ -279,6 +279,7 @@
     <bean id="videoPlayerController" class="net.sourceforge.subsonic.controller.VideoPlayerController">
         <property name="viewName" value="videoPlayer"/>
         <property name="musicFileService" ref="musicFileService"/>
+        <property name="settingsService" ref="settingsService"/>
     </bean>
     <bean id="downloadController" class="net.sourceforge.subsonic.controller.DownloadController">
         <property name="playerService" ref="playerService"/>

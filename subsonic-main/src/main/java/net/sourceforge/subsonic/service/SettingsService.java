@@ -105,6 +105,7 @@ public class SettingsService {
     private static final String KEY_URL_REDIRECT_TRIAL_EXPIRES = "UrlRedirectTrialExpires";
     private static final String KEY_URL_REDIRECT_CONTEXT_PATH = "UrlRedirectContextPath";
     private static final String KEY_REST_TRIAL_EXPIRES = "RestTrialExpires-";
+    private static final String KEY_VIDEO_TRIAL_EXPIRES = "VideoTrialExpires";
     private static final String KEY_SERVER_ID = "ServerId";
     private static final String KEY_SETTINGS_CHANGED = "SettingsChanged";
 
@@ -160,6 +161,7 @@ public class SettingsService {
     private static final String DEFAULT_URL_REDIRECT_TRIAL_EXPIRES = null;
     private static final String DEFAULT_URL_REDIRECT_CONTEXT_PATH = null;
     private static final String DEFAULT_REST_TRIAL_EXPIRES = null;
+    private static final String DEFAULT_VIDEO_TRIAL_EXPIRES = null;
     private static final String DEFAULT_SERVER_ID = null;
     private static final long DEFAULT_SETTINGS_CHANGED = 0L;
 
@@ -705,6 +707,16 @@ public class SettingsService {
     public void setUrlRedirectTrialExpires(Date date) {
         String value = (date == null ? null : String.valueOf(date.getTime()));
         setProperty(KEY_URL_REDIRECT_TRIAL_EXPIRES, value);
+    }
+
+    public Date getVideoTrialExpires() {
+        String value = properties.getProperty(KEY_VIDEO_TRIAL_EXPIRES, DEFAULT_VIDEO_TRIAL_EXPIRES);
+        return value == null ? null : new Date(Long.parseLong(value));
+    }
+
+    public void setVideoTrialExpires(Date date) {
+        String value = (date == null ? null : String.valueOf(date.getTime()));
+        setProperty(KEY_VIDEO_TRIAL_EXPIRES, value);
     }
 
     public String getUrlRedirectContextPath() {

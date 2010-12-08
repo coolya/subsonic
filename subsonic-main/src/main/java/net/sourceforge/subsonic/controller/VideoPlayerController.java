@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.SettingsService;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
 
 /**
  * Controller for the page used to play videos.
@@ -37,8 +39,10 @@ public class VideoPlayerController extends ParameterizableViewController {
 
     private static final int DEFAULT_BIT_RATE = 1000;
     private static final int[] BIT_RATES = {300, 400, 500, 750, 1000, 1500, 2000};
+    private static final long TRIAL_DAYS = 30L;
 
     private MusicFileService musicFileService;
+    private SettingsService settingsService;
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -49,6 +53,16 @@ public class VideoPlayerController extends ParameterizableViewController {
         map.put("maxBitRate", ServletRequestUtils.getIntParameter(request, "maxBitRate", DEFAULT_BIT_RATE));
         map.put("bitRates", BIT_RATES);
 
+        if (!settingsService.isLicenseValid() && settingsService.getVideoTrialExpires() == null) {
+            Date expiryDate = new Date(System.currentTimeMillis() + TRIAL_DAYS * 24L * 3600L * 1000L);
+            settingsService.setVideoTrialExpires(expiryDate);
+            settingsService.save();
+        }
+        Date trialExpires = settingsService.getVideoTrialExpires();
+        map.put("trialExpires", trialExpires);
+        map.put("trialExpired", trialExpires != null && trialExpires.before(new Date()));
+        map.put("trial", trialExpires != null && !settingsService.isLicenseValid());
+
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
@@ -56,5 +70,9 @@ public class VideoPlayerController extends ParameterizableViewController {
 
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
+    }
+
+    public void setSettingsService(SettingsService settingsService) {
+        this.settingsService = settingsService;
     }
 }

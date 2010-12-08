@@ -12,6 +12,10 @@ Add suffix, player etc to stream url
 Never return video files when getting random songs.
 Remove old code
 Update recommended settings
+Remove transcoding step 3?
+Android support.
+REST support.
+Premium feature: Update doc
 
 DONE IN ANDROID 2.1
 --------------------

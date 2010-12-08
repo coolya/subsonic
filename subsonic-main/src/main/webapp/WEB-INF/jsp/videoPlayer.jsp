@@ -16,7 +16,9 @@
 
             var flashvars = {
                 id:"player1",
+                <c:if test="${not (model.trial and model.trialExpired)}">
                 file:"${streamUrl}%26maxBitRate=${model.maxBitRate}",
+                </c:if>
                 duration:"${model.video.metaData.duration}",
                 autostart:"true",
                 backcolor:"<spring:theme code="backgroundColor"/>",
@@ -40,6 +42,23 @@
 
 <body class="mainframe bgcolor1" onload="init();">
 <h1>${model.video.title}</h1>
+
+<c:if test="${model.trial}">
+    <fmt:formatDate value="${model.trialExpires}" dateStyle="long" var="expiryDate"/>
+
+    <p class="warning" style="padding-top:1em">
+        <c:choose>
+            <c:when test="${model.trialExpired}">
+                <fmt:message key="networksettings.trialexpired"><fmt:param>${expiryDate}</fmt:param></fmt:message>
+            </c:when>
+            <c:otherwise>
+                <fmt:message
+                        key="networksettings.trialnotexpired"><fmt:param>${expiryDate}</fmt:param></fmt:message>
+            </c:otherwise>
+        </c:choose>
+    </p>
+</c:if>
+
 
 <div id="wrapper" style="padding-top:1em">
     <div id="placeholder1"></div>
