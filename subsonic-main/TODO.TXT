@@ -10,7 +10,7 @@ Thumbnail support, for instance by using file name conventions.
 Show one thumbnail for each video file, using a generic if not found.
 Use ffmpeg to generate tags and cover art.
 Add suffix, player etc to stream url
-Never add video files to playlist.
+Never return video files when getting random songs.
 Remove old code
 
 DONE IN ANDROID 2.1

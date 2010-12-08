@@ -21,6 +21,7 @@ package net.sourceforge.subsonic.ajax;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Arrays;
@@ -110,7 +111,9 @@ public class PlaylistService {
 
         Player player = getCurrentPlayer(request, response);
         MusicFile file = musicFileService.getMusicFile(path);
-        player.getPlaylist().addFiles(false, file);
+        List<MusicFile> files = file.getDescendants(false, true);
+        removeVideoFiles(files);
+        player.getPlaylist().addFiles(false, files);
         player.getPlaylist().setRandomSearchCriteria(null);
         return convert(request, player, true);
     }
@@ -137,8 +140,9 @@ public class PlaylistService {
         Player player = getCurrentPlayer(request, response);
         List<MusicFile> files = new ArrayList<MusicFile>(paths.size());
         for (String path : paths) {
-            files.add(musicFileService.getMusicFile(path));
+            files.addAll(musicFileService.getMusicFile(path).getDescendants(false, true));
         }
+        removeVideoFiles(files);
         player.getPlaylist().addFiles(true, files);
         player.getPlaylist().setRandomSearchCriteria(null);
         return convert(request, player, false);
@@ -254,11 +258,23 @@ public class PlaylistService {
 
     private List<MusicFile> getRandomChildren(MusicFile file, int count) throws IOException {
         List<MusicFile> children = file.getDescendants(false, false);
+        removeVideoFiles(children);
+
         if (children.isEmpty()) {
             return children;
         }
         Collections.shuffle(children);
         return children.subList(0, Math.min(count, children.size()));
+    }
+
+    private void removeVideoFiles(List<MusicFile> files) {
+        Iterator<MusicFile> iterator = files.iterator();
+        while (iterator.hasNext()) {
+            MusicFile file = iterator.next();
+            if (file.isVideo()) {
+                iterator.remove();
+            }
+        }
     }
 
     private PlaylistInfo convert(HttpServletRequest request, Player player, boolean sendM3U) throws Exception {
