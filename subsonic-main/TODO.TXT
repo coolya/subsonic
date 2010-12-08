@@ -22,9 +22,6 @@ New theme "Wheat".
 
 TODO IN ANDROID 1.9
 -------------------
-Cover art:
-  o Test with "Save on phone"
-  o Make DownloadServiceImpl download it?
 Reset shuffle play buffer when changing server.
 Long-click:
   Long-click artist -> Play random

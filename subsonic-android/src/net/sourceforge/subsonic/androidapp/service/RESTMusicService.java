@@ -368,50 +368,54 @@ public class RESTMusicService implements MusicService {
     @Override
     public Bitmap getCoverArt(Context context, MusicDirectory.Entry entry, int size, boolean saveToFile, ProgressListener progressListener) throws Exception {
 
-        // Use cached file, if existing.
-        File albumArtFile = FileUtil.getAlbumArtFile(entry);
-        if (albumArtFile.exists()) {
+        // Synchronize on the entry so that we don't download concurrently for the same song.
+        synchronized (entry) {
 
-            InputStream in = new FileInputStream(entry.getCoverArt());
-            try {
-                byte[] bytes = Util.toByteArray(in);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                return Bitmap.createScaledBitmap(bitmap, size, size, true);
-            } finally {
-                Util.close(in);
-            }
-        }
+            // Use cached file, if existing.
+            File albumArtFile = FileUtil.getAlbumArtFile(entry);
+            if (albumArtFile.exists()) {
 
-        String url = Util.getRestUrl(context, "getCoverArt") + "&id=" + entry.getCoverArt() + "&size=" + size;
-
-        InputStream in = null;
-        try {
-            HttpEntity entity = getEntityForURL(context, url, null, progressListener);
-            in = entity.getContent();
-
-            // If content type is XML, an error occured.  Get it.
-            String contentType = Util.getContentType(entity);
-            if (contentType != null && contentType.startsWith("text/xml")) {
-                new ErrorParser(context).parse(new InputStreamReader(in, Constants.UTF_8));
-                return null; // Never reached.
-            }
-
-            byte[] bytes = Util.toByteArray(in);
-
-            if (saveToFile) {
-                OutputStream out = null;
+                InputStream in = new FileInputStream(albumArtFile);
                 try {
-                    out = new FileOutputStream(albumArtFile);
-                    out.write(bytes);
+                    byte[] bytes = Util.toByteArray(in);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    return Bitmap.createScaledBitmap(bitmap, size, size, true);
                 } finally {
-                    Util.close(out);
+                    Util.close(in);
                 }
             }
 
-            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            String url = Util.getRestUrl(context, "getCoverArt") + "&id=" + entry.getCoverArt() + "&size=" + size;
 
-        } finally {
-            Util.close(in);
+            InputStream in = null;
+            try {
+                HttpEntity entity = getEntityForURL(context, url, null, progressListener);
+                in = entity.getContent();
+
+                // If content type is XML, an error occured.  Get it.
+                String contentType = Util.getContentType(entity);
+                if (contentType != null && contentType.startsWith("text/xml")) {
+                    new ErrorParser(context).parse(new InputStreamReader(in, Constants.UTF_8));
+                    return null; // Never reached.
+                }
+
+                byte[] bytes = Util.toByteArray(in);
+
+                if (saveToFile) {
+                    OutputStream out = null;
+                    try {
+                        out = new FileOutputStream(albumArtFile);
+                        out.write(bytes);
+                    } finally {
+                        Util.close(out);
+                    }
+                }
+
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+            } finally {
+                Util.close(in);
+            }
         }
     }
 

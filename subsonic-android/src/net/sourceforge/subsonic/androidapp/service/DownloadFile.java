@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
@@ -208,6 +209,8 @@ public class DownloadFile {
                     throw new Exception("Download of '" + song + "' was cancelled");
                 }
 
+                downloadAndSaveCoverArt(musicService);
+
                 if (save) {
                     Util.atomicCopy(partialFile, saveFile);
                     mediaStoreService.saveInMediaStore(DownloadFile.this);
@@ -229,6 +232,12 @@ public class DownloadFile {
                 Util.close(out);
             }
 
+        }
+
+        private void downloadAndSaveCoverArt(MusicService musicService) throws Exception {
+            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+            int size = Math.min(metrics.widthPixels, metrics.heightPixels);
+            musicService.getCoverArt(context, song, size, true, null);
         }
 
         private long copy(final InputStream in, OutputStream out) throws IOException, InterruptedException {
