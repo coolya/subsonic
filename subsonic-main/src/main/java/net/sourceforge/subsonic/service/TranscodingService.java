@@ -139,23 +139,34 @@ public class TranscodingService {
     }
 
     /**
-     * Returns whether transcoding and/or downsampling is required for the given music file and player combination.
+     * Returns whether transcoding is required for the given music file and player combination.
      *
      * @param musicFile The music file.
      * @param player    The player.
-     * @return Whether transcoding and/or downsampling will be performed if invoking the
-     *         {@link #getTranscodedInputStream(MusicFile,Player)} method with the same arguments.
+     * @return Whether transcoding  will be performed if invoking the
+     *         {@link #getTranscodedInputStream} method with the same arguments.
      */
     public boolean isTranscodingRequired(MusicFile musicFile, Player player) {
-        if (getTranscoding(musicFile, player) != null) {
-            return true;
-        }
+        return getTranscoding(musicFile, player) != null;
+    }
 
+    /**
+     * Returns whether downsampling is required for the given music file and player combination.
+     *
+     * @param musicFile The music file.
+     * @param player    The player.
+     * @param maxBitRate The bitrate limit override. May be {@code null}.
+     * @return Whether downsampling will be performed if invoking the
+     *         {@link #getTranscodedInputStream} method with the same arguments.
+     */
+    public boolean isDownsamplingRequired(MusicFile musicFile, Player player, Integer maxBitRate) {
         TranscodeScheme transcodeScheme = getTranscodeScheme(player);
-        boolean downsample = transcodeScheme != TranscodeScheme.OFF;
+        if (maxBitRate == null && transcodeScheme != TranscodeScheme.OFF) {
+            maxBitRate = transcodeScheme.getMaxBitRate();
+        }
         Integer bitRate = musicFile.getMetaData().getBitRate();
 
-        return downsample && bitRate != null && bitRate > transcodeScheme.getMaxBitRate();
+        return maxBitRate != null && bitRate != null && bitRate > maxBitRate;
     }
 
     /**
@@ -183,22 +194,27 @@ public class TranscodingService {
      *
      * @param musicFile The music file.
      * @param player    The player.
+     * @param maxBitRate Overrides the per-player and per-user bitrate limit. May be {@code null}.
      * @return A possible transcoded or downsampled input stream.
      * @throws IOException If an I/O error occurs.
      */
-    public InputStream getTranscodedInputStream(MusicFile musicFile, Player player) throws IOException {
+    public InputStream getTranscodedInputStream(MusicFile musicFile, Player player, Integer maxBitRate) throws IOException {
         try {
-            Transcoding transcoding = getTranscoding(musicFile, player);
-            if (transcoding != null) {
-                return getTranscodedInputStream(musicFile, transcoding, getTranscodeScheme(player));
+            TranscodeScheme transcodeScheme = getTranscodeScheme(player);
+            if (maxBitRate == null && transcodeScheme != TranscodeScheme.OFF) {
+                maxBitRate = transcodeScheme.getMaxBitRate();
             }
 
-            TranscodeScheme transcodeScheme = getTranscodeScheme(player);
-            if (transcodeScheme != TranscodeScheme.OFF) {
+            Transcoding transcoding = getTranscoding(musicFile, player);
+            if (transcoding != null) {
+                return getTranscodedInputStream(musicFile, transcoding, maxBitRate);
+            }
+
+            if (maxBitRate != null) {
                 boolean supported = isDownsamplingSupported(musicFile);
                 Integer bitRate = musicFile.getMetaData().getBitRate();
-                if (supported && bitRate != null && bitRate > transcodeScheme.getMaxBitRate()) {
-                    return getDownsampledInputStream(musicFile, transcodeScheme);
+                if (supported && bitRate != null && bitRate > maxBitRate) {
+                    return getDownsampledInputStream(musicFile, maxBitRate);
                 }
             }
         } catch (Exception x) {
@@ -226,20 +242,20 @@ public class TranscodingService {
      *
      * @param musicFile       The music file.
      * @param transcoding     The transcoding to apply.
-     * @param transcodeScheme The transcoding (resampling) scheme. May be <code>null</code>.
+     * @param maxBitRate      The bitrate limit. May be {@code null}.
      * @return The transcoded input stream.
      * @throws IOException If an I/O error occurs.
      */
-    private InputStream getTranscodedInputStream(MusicFile musicFile, Transcoding transcoding, TranscodeScheme transcodeScheme)
+    private InputStream getTranscodedInputStream(MusicFile musicFile, Transcoding transcoding, Integer maxBitRate)
             throws IOException {
-        TranscodeInputStream in = createTranscodeInputStream(transcoding.getStep1(), transcodeScheme, musicFile, null);
+        TranscodeInputStream in = createTranscodeInputStream(transcoding.getStep1(), maxBitRate, musicFile, null);
 
         if (transcoding.getStep2() != null) {
-            in = createTranscodeInputStream(transcoding.getStep2(), transcodeScheme, musicFile, in);
+            in = createTranscodeInputStream(transcoding.getStep2(), maxBitRate, musicFile, in);
         }
 
         if (transcoding.getStep3() != null) {
-            in = createTranscodeInputStream(transcoding.getStep3(), transcodeScheme, musicFile, in);
+            in = createTranscodeInputStream(transcoding.getStep3(), maxBitRate, musicFile, in);
         }
 
         return in;
@@ -259,17 +275,17 @@ public class TranscodingService {
      * </ul>
      *
      * @param command         The command line string.
-     * @param transcodeScheme The transcoding (resampling) scheme. May be {@code null}.
+     * @param maxBitRate      The maximum bitrate to use. May be {@code null}.
      * @param musicFile       The music file to use when replacing "%s" etc.
      * @param in              Data to feed to the process.  May be {@code null}.
      * @return The newly created input stream.
      */
-    private TranscodeInputStream createTranscodeInputStream(String command, TranscodeScheme transcodeScheme, MusicFile musicFile, InputStream in) throws IOException {
+    private TranscodeInputStream createTranscodeInputStream(String command, Integer maxBitRate, MusicFile musicFile, InputStream in) throws IOException {
         String path = musicFile.getFile().getAbsolutePath();
 
-        // If no transcoding scheme is specified, use 128 Kbps.
-        if (transcodeScheme == null || transcodeScheme == TranscodeScheme.OFF) {
-            transcodeScheme = TranscodeScheme.MAX_128;
+        // If no bit rate limit is specified, use 128 Kbps.
+        if (maxBitRate == null) {
+            maxBitRate = 128;
         }
 
         String title = musicFile.getMetaData().getTitle();
@@ -307,7 +323,7 @@ public class TranscodingService {
 
                 result.set(i, path);
             } else if ("%b".equals(cmd)) {
-                result.set(i, String.valueOf(transcodeScheme.getMaxBitRate()));
+                result.set(i, String.valueOf(maxBitRate));
             } else if ("%t".equals(cmd)) {
                 result.set(i, title);
             } else if ("%l".equals(cmd)) {
@@ -337,13 +353,13 @@ public class TranscodingService {
     /**
      * Returns a downsampled input stream to the music file.
      *
-     * @param transcodeScheme Contains the bitrate to downsample to.
+     * @param maxBitRate Contains the bitrate to downsample to.
      * @return An input stream to the downsampled music file.
      * @throws IOException If an I/O error occurs.
      */
-    private InputStream getDownsampledInputStream(MusicFile musicFile, TranscodeScheme transcodeScheme) throws IOException {
+    private InputStream getDownsampledInputStream(MusicFile musicFile, Integer maxBitRate) throws IOException {
         String command = settingsService.getDownsamplingCommand();
-        return createTranscodeInputStream(command, transcodeScheme, musicFile, null);
+        return createTranscodeInputStream(command, maxBitRate, musicFile, null);
     }
 
     /**

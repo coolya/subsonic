@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.math.LongRange;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -80,6 +81,11 @@ public class StreamController implements Controller {
         Player player = playerService.getPlayer(request, response, false, true);
         User user = securityService.getUserByName(player.getUsername());
 
+        Integer maxBitRate = ServletRequestUtils.getIntParameter(request, "maxBitRate");
+        if (maxBitRate != null && maxBitRate == 0) {
+            maxBitRate = Integer.MAX_VALUE;
+        }
+
         try {
 
             if (!user.isStreamRole()) {
@@ -130,7 +136,8 @@ public class StreamController implements Controller {
                 }
 
                 boolean transcodingRequired = transcodingService.isTranscodingRequired(file, player);
-                if (!transcodingRequired) {
+                boolean downsamplingRequired = transcodingService.isDownsamplingRequired(file, player, maxBitRate);
+                if (!transcodingRequired && !downsamplingRequired) {
                     Util.setContentLength(response, contentLength);
                 }
 
@@ -151,7 +158,7 @@ public class StreamController implements Controller {
 
             status = statusService.createStreamStatus(player);
 
-            in = new PlaylistInputStream(player, status, transcodingService, musicInfoService, audioScrobblerService, searchService);
+            in = new PlaylistInputStream(player, status, maxBitRate, transcodingService, musicInfoService, audioScrobblerService, searchService);
             OutputStream out = RangeOutputStream.wrap(response.getOutputStream(), range);
 
             // Enabled SHOUTcast, if requested.

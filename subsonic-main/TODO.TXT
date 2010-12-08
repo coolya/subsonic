@@ -12,6 +12,7 @@ Use ffmpeg to generate tags and cover art.
 Add suffix, player etc to stream url
 Never return video files when getting random songs.
 Remove old code
+Support %b without space around.
 
 DONE IN ANDROID 2.1
 --------------------

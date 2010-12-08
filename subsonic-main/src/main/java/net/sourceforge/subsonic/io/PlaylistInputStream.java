@@ -44,6 +44,7 @@ public class PlaylistInputStream extends InputStream {
 
     private final Player player;
     private final TransferStatus status;
+    private final Integer maxBitRate;
     private final SearchService searchService;
     private final TranscodingService transcodingService;
     private final MusicInfoService musicInfoService;
@@ -52,14 +53,15 @@ public class PlaylistInputStream extends InputStream {
     private MusicFile currentFile;
     private InputStream currentInputStream;
 
-    public PlaylistInputStream(Player player, TransferStatus status, TranscodingService transcodingService,
-                               MusicInfoService musicInfoService, AudioScrobblerService audioScrobblerService,
-                               SearchService searchService) {
+    public PlaylistInputStream(Player player, TransferStatus status, Integer maxBitRate, TranscodingService transcodingService,
+            MusicInfoService musicInfoService, AudioScrobblerService audioScrobblerService,
+            SearchService searchService) {
+        this.player = player;
+        this.status = status;
+        this.maxBitRate = maxBitRate;
         this.transcodingService = transcodingService;
         this.musicInfoService = musicInfoService;
         this.audioScrobblerService = audioScrobblerService;
-        this.player = player;
-        this.status = status;
         this.searchService = searchService;
     }
 
@@ -121,7 +123,7 @@ public class PlaylistInputStream extends InputStream {
             updateStatistics(file);
             audioScrobblerService.register(file, player.getUsername(), false);
 
-            currentInputStream = transcodingService.getTranscodedInputStream(file, player);
+            currentInputStream = transcodingService.getTranscodedInputStream(file, player, maxBitRate);
             currentFile = file;
             status.setFile(currentFile.getFile());
         }
