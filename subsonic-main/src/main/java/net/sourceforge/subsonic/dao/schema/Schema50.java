@@ -42,7 +42,8 @@ public class Schema50 extends Schema {
             template.execute("insert into version values (16)");
 
             for (String format : Arrays.asList("avi", "mpg", "mpeg", "mp4", "m4v", "mkv", "mov", "wmv")) {
-                template.execute("insert into transcoding values(null,'" + format + " > flv' ,'" + format + "' ,'flv','ffmpeg -i %s -ar 44100 -sameq -deinterlace -v 0 -f flv -',null,null,true,true)");
+                template.execute("insert into transcoding values(null,'" + format + " > flv' ,'" + format + "' ,'flv','ffmpeg -i %s -b %bk -ar 44100 -deinterlace -v 0 -f flv -',null,null,true,true)");
+                template.execute("insert into player_transcoding select p.id as player_id, t.id as transaction_id from player p, transcoding t where t.name = '" + format + " > flv'");
             }
             LOG.info("Created video transcoding configuration.");
         }

@@ -270,7 +270,7 @@ public class TranscodingService {
      * <li>Replacing occurrences of "%t" with the title of the given music file.</li>
      * <li>Replacing occurrences of "%l" with the album name of the given music file.</li>
      * <li>Replacing occurrences of "%a" with the artist name of the given music file.</li>
-     * <li>Replacing occurrcences of "%b" with the max bitrate from the transcode scheme.</li>
+     * <li>Replacing occurrcences of "%b" with the max bitrate.</li>
      * <li>Prepending the path of the transcoder directory if the transcoder is found there.</li>
      * </ul>
      *
@@ -309,7 +309,7 @@ public class TranscodingService {
 
         for (int i = 1; i < result.size(); i++) {
             String cmd = result.get(i);
-            if ("%s".equals(cmd)) {
+            if (cmd.contains("%s")) {
 
                 // Work-around for filename character encoding problem on Windows.
                 // Create temporary file, and feed this to the transcoder.
@@ -318,18 +318,18 @@ public class TranscodingService {
                     tmpFile.deleteOnExit();
                     FileUtils.copyFile(new File(path), tmpFile);
                     LOG.debug("Created tmp file: " + tmpFile);
-                    path = tmpFile.getPath();
+                    path = cmd.replace("%s", tmpFile.getPath());
                 }
 
                 result.set(i, path);
-            } else if ("%b".equals(cmd)) {
-                result.set(i, String.valueOf(maxBitRate));
-            } else if ("%t".equals(cmd)) {
-                result.set(i, title);
-            } else if ("%l".equals(cmd)) {
-                result.set(i, album);
-            } else if ("%a".equals(cmd)) {
-                result.set(i, artist);
+            } else if (cmd.contains("%b")) {
+                result.set(i, cmd.replace("%b", String.valueOf(maxBitRate)));
+            } else if (cmd.contains("%t")) {
+                result.set(i, cmd.replace("%t", title));
+            } else if (cmd.contains("%l")) {
+                result.set(i, cmd.replace("%l", album));
+            } else if (cmd.contains("%a")) {
+                result.set(i, cmd.replace("%a", artist));
             }
         }
         return new TranscodeInputStream(new ProcessBuilder(result), in, tmpFile);

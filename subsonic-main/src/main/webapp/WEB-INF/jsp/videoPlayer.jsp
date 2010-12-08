@@ -3,19 +3,20 @@
 <html>
 <head>
     <%@ include file="head.jsp" %>
+
+    <sub:url value="/stream" var="streamUrl">
+        <sub:param name="path" value="${model.video.path}"/>
+    </sub:url>
+
     <script type="text/javascript" src="<c:url value="/script/swfobject.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
     <script type="text/javascript" language="javascript">
 
         function init() {
 
-        <sub:url value="/stream" var="streamUrl">
-        <sub:param name="path" value="${model.video.path}"/>
-        </sub:url>
-
             var flashvars = {
                 id:"player1",
-                file:"${streamUrl}",
+                file:"${streamUrl}%26maxBitRate=${model.maxBitRate}",
                 duration:"${model.video.metaData.duration}",
                 autostart:"true",
                 backcolor:"<spring:theme code="backgroundColor"/>",
@@ -45,7 +46,24 @@
 </div>
 
 <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.video.parent.path}"/></sub:url>
-<div style="padding-top:0.5em;padding-bottom:0.5em">
+
+<div class="detail" style="padding-top:0.7em;padding-bottom:0.7em">
+    <span style="padding-right:0.5em"><fmt:message key="videoplayer.bitrate"/></span>
+    <c:forEach items="${model.bitRates}" var="bitRate">
+        <span style="padding-right:0.5em">
+            <sub:url value="/videoPlayer.view" var="videoUrl">
+                <sub:param name="path" value="${model.video.path}"/>
+                <sub:param name="maxBitRate" value="${bitRate}"/>
+            </sub:url>
+            <c:choose>
+                <c:when test="${bitRate eq model.maxBitRate}"><b>${bitRate}</b></c:when>
+                <c:otherwise><a href="${videoUrl}">${bitRate}</a></c:otherwise>
+            </c:choose>
+        </span>
+    </c:forEach>
+</div>
+
+<div style="padding-bottom:0.5em">
     <div class="back"><a href="${backUrl}"><fmt:message key="common.back"/></a></div>
 </div>
 

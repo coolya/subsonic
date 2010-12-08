@@ -18,26 +18,15 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import net.sourceforge.subsonic.service.MusicFileService;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.web.servlet.mvc.ParameterizableViewController;
-
-import net.sourceforge.subsonic.service.MusicFileService;
-import net.sourceforge.subsonic.service.SecurityService;
-import net.sourceforge.subsonic.service.SettingsService;
-import net.sourceforge.subsonic.service.TranscodingService;
-import net.sourceforge.subsonic.service.VideoService;
-import net.sourceforge.subsonic.domain.ProcessedVideo;
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.util.StringUtil;
-import net.sourceforge.subsonic.filter.ParameterDecodingFilter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller for the page used to play videos.
@@ -46,13 +35,10 @@ import net.sourceforge.subsonic.filter.ParameterDecodingFilter;
  */
 public class VideoPlayerController extends ParameterizableViewController {
 
-    private static final Logger LOG = Logger.getLogger(StreamController.class);
+    private static final int DEFAULT_BIT_RATE = 1000;
+    private static final int[] BIT_RATES = {300, 400, 500, 750, 1000, 1500, 2000};
 
-    private SecurityService securityService;
-    private SettingsService settingsService;
-    private TranscodingService transcodingService;
     private MusicFileService musicFileService;
-    private VideoService videoService;
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -60,30 +46,15 @@ public class VideoPlayerController extends ParameterizableViewController {
         Map<String, Object> map = new HashMap<String, Object>();
         String path = request.getParameter("path");
         map.put("video", musicFileService.getMusicFile(path));
+        map.put("maxBitRate", ServletRequestUtils.getIntParameter(request, "maxBitRate", DEFAULT_BIT_RATE));
+        map.put("bitRates", BIT_RATES);
 
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
     }
 
-
-    public void setSecurityService(SecurityService securityService) {
-        this.securityService = securityService;
-    }
-
-    public void setSettingsService(SettingsService settingsService) {
-        this.settingsService = settingsService;
-    }
-
-    public void setTranscodingService(TranscodingService transcodingService) {
-        this.transcodingService = transcodingService;
-    }
-
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
-    }
-
-    public void setVideoService(VideoService videoService) {
-        this.videoService = videoService;
     }
 }
