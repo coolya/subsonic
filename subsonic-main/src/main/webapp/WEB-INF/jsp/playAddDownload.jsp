@@ -25,7 +25,7 @@ PARAMETERS
             <sub:url value="/videoPlayer.view" var="videoUrl">
                 <sub:param name="path" value="${param.path}"/>
             </sub:url>
-            <a href="${videoUrl}">
+            <a href="${videoUrl}" target="main">
                 <img src="<spring:theme code="playImage"/>" alt="<fmt:message key="common.play"/>" title="<fmt:message key="common.play"/>"></a>
         </c:when>
         <c:otherwise>

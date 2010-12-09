@@ -104,6 +104,7 @@
                 <c:param name="playEnabled" value="${model.user.streamRole and not model.partyMode}"/>
                 <c:param name="addEnabled" value="${model.user.streamRole}"/>
                 <c:param name="downloadEnabled" value="${model.user.downloadRole and not model.partyMode}"/>
+                <c:param name="video" value="${song.video}"/>
             </c:import>
             <str:truncateNicely upper="${model.captionCutoff}">${song.title}</str:truncateNicely>
         </span>

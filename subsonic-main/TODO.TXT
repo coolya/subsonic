@@ -16,6 +16,7 @@ Remove transcoding step 3?
 Android support.
 REST support.
 Premium feature: Update doc
+Support DVD images
 
 DONE IN ANDROID 2.1
 --------------------

@@ -3,9 +3,9 @@
 
 <html><head>
     <%@ include file="head.jsp" %>
-    <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/dwr/util.js"/>"></script>
+    <script type="text/javascript" src="<c:url value='/script/scripts.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/script/prototype.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/dwr/util.js'/>"></script>
 
     <script type="text/javascript">
         function more(rowSelector, moreId) {
@@ -61,7 +61,6 @@
                     <c:param name="downloadEnabled" value="${command.user.downloadRole and not command.partyModeEnabled}"/>
                     <c:param name="asTable" value="true"/>
                 </c:import>
-
                 <td ${loopStatus.count % 2 == 1 ? "class='bgcolor2'" : ""} style="padding-left:0.25em;padding-right:1.25em">
                     <a href="${mainUrl}">${match.name}</a>
                 </td>
@@ -124,6 +123,7 @@
                     <c:param name="playEnabled" value="${command.user.streamRole and not command.partyModeEnabled}"/>
                     <c:param name="addEnabled" value="${command.user.streamRole and (not command.partyModeEnabled or not match.directory)}"/>
                     <c:param name="downloadEnabled" value="${command.user.downloadRole and not command.partyModeEnabled}"/>
+                    <c:param name="video" value="${match.video}"/>
                     <c:param name="asTable" value="true"/>
                 </c:import>
 
