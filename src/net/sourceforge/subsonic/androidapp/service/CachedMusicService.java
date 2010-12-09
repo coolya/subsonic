@@ -154,6 +154,11 @@ public class CachedMusicService implements MusicService {
         return musicService.getLatestVersion(context, progressListener);
     }
 
+    @Override
+    public String getVideoUrl(Context context, String id) {
+        return musicService.getVideoUrl(context, id);
+    }
+
     private void checkSettingsChanged(Context context) {
         String newUrl = Util.getRestUrl(context, null);
         if (!Util.equals(newUrl, restUrl)) {

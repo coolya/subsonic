@@ -452,6 +452,17 @@ public class RESTMusicService implements MusicService {
         return response;
     }
 
+    @Override
+    public String getVideoUrl(Context context, String id) {
+        StringBuilder url = new StringBuilder();
+        url.append(Util.getRestUrl(context, null).replaceAll("/rest/.*", "/videoPlayer.view?"));
+        url.append("pathUtf8Hex=").append(id);
+        url.append("&maxBitRate=500");
+        url.append("&autoplay=false");
+
+        return url.toString();
+    }
+
     private Reader getReader(Context context, ProgressListener progressListener, String method, HttpParams requestParams) throws Exception {
         return getReader(context, progressListener, method, requestParams, Collections.<String>emptyList(), Collections.emptyList());
     }

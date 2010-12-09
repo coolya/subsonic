@@ -95,6 +95,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                         intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, entry.getId());
                         intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getTitle());
                         Util.startActivityWithoutTransition(SelectAlbumActivity.this, intent);
+                    } else if (entry.isVideo()) {
+                        playVideo(entry);
                     } else {
                         enableButtons();
                     }
@@ -377,6 +379,12 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         }
 
         getDownloadService().delete(getSelectedSongs());
+    }
+
+    private void playVideo(MusicDirectory.Entry entry) {
+        Intent intent = new Intent(this, PlayVideoActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, entry.getId());
+        startActivity(intent);
     }
 
     private void checkLicenseAndTrialPeriod(Runnable onValid) {

@@ -88,7 +88,7 @@ public class SongView extends LinearLayout implements Checkable {
         titleTextView.setText(song.getTitle());
         artistTextView.setText(artist);
         durationTextView.setText(Util.formatDuration(song.getDuration()));
-        checkedTextView.setVisibility(checkable ? View.VISIBLE : View.GONE);
+        checkedTextView.setVisibility(checkable && !song.isVideo() ? View.VISIBLE : View.GONE);
 
         update();
     }
