@@ -1,7 +1,6 @@
 VIDEO
 -----
 http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4689
-Upgrade JW Player
 Use jwembedder?
   http://www.longtailvideo.com/support/jw-player/jw-player-for-flash-v5/12538/supported-player-embed-methods#jwembedder
 Rename "mask" to "file types" or something.
