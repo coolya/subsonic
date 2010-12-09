@@ -16,9 +16,13 @@ Remove/hide transcoding step 3?
 Android support.
 Premium feature: Update doc
 Support DVD images
-Create separate videoPlayerView for Android.
-Add videoPlayer parameter for autoplay on/off.
-
+Android
+  Create separate videoPlayerView for Android (androidVideoPlayer.view?id=xxxxx).  Should resolve player.
+  Add video icon for videos.
+  Or REST method for producing the URL.
+  Never put videos in playlist.
+  Add videoPlayer parameter for autoplay on/off.
+-deinterlace necessary?
 
 DONE IN ANDROID 2.1
 --------------------
