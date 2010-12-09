@@ -8,7 +8,9 @@ Rename "mask" to "file types" or something.
 Thumbnail support, for instance by using file name conventions.
 Show one thumbnail for each video file, using a generic if not found.
 Use ffmpeg to generate tags and cover art.
-Add suffix, player etc to stream url
+    c:/subsonic/transcode/ffmpeg -itsoffset -4 -i Constellation\ 480p.wmv -vcodec mjpeg -vframes 1 -an -f rawvideo -s 320x240 test.jpg
+    c:/subsonic/transcode/ffmpeg -itsoffset -4 -i Constellation\ 480p.wmv -vframes 1 -an -f mjpeg -s 320x240 test.jpg
+    c:/subsonic/transcode/ffmpeg -itsoffset -4 -i Constellation\ 480p.wmv -vframes 1 -an -f mjpeg test.jpg
 Never return video files when getting random songs.
 Remove old code
 Update recommended settings
@@ -17,6 +19,7 @@ Android support.
 REST support.
 Premium feature: Update doc
 Support DVD images
+
 
 DONE IN ANDROID 2.1
 --------------------

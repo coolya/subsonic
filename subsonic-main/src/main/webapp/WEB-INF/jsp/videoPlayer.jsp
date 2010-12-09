@@ -17,7 +17,7 @@
             var flashvars = {
                 id:"player1",
                 <c:if test="${not (model.trial and model.trialExpired)}">
-                file:"${streamUrl}%26maxBitRate=${model.maxBitRate}",
+                file:"${streamUrl}%26maxBitRate=${model.maxBitRate}%26player=${model.player}%26suffix=.flv",
                 </c:if>
                 duration:"${model.video.metaData.duration}",
                 autostart:"true",

@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SettingsService;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -43,6 +44,7 @@ public class VideoPlayerController extends ParameterizableViewController {
 
     private MusicFileService musicFileService;
     private SettingsService settingsService;
+    private PlayerService playerService;
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -50,6 +52,7 @@ public class VideoPlayerController extends ParameterizableViewController {
         Map<String, Object> map = new HashMap<String, Object>();
         String path = request.getParameter("path");
         map.put("video", musicFileService.getMusicFile(path));
+        map.put("player", playerService.getPlayer(request, response).getId());
         map.put("maxBitRate", ServletRequestUtils.getIntParameter(request, "maxBitRate", DEFAULT_BIT_RATE));
         map.put("bitRates", BIT_RATES);
 
@@ -74,5 +77,9 @@ public class VideoPlayerController extends ParameterizableViewController {
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
+    }
+
+    public void setPlayerService(PlayerService playerService) {
+        this.playerService = playerService;
     }
 }
