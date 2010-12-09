@@ -126,6 +126,8 @@ public class SearchActivity extends SubsonicTabActivity {
                         MusicDirectory.Entry entry = (MusicDirectory.Entry) item;
                         if (entry.isDirectory()) {
                             onAlbumSelected(entry, false);
+                        } else if (entry.isVideo()) {
+                            onVideoSelected(entry);
                         } else {
                             onSongSelected(entry, false, true, true);
                         }
@@ -337,6 +339,12 @@ public class SearchActivity extends SubsonicTabActivity {
 
             Util.toast(SearchActivity.this, getResources().getQuantityString(R.plurals.select_album_n_songs_added, 1, 1));
         }
+    }
+
+    private void onVideoSelected(MusicDirectory.Entry entry) {
+        Intent intent = new Intent(this, PlayVideoActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, entry.getId());
+        startActivity(intent);
     }
 
     private void autoplay() {
