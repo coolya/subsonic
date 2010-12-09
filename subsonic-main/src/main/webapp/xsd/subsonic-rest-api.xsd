@@ -4,7 +4,7 @@
            targetNamespace="http://subsonic.org/restapi"
            attributeFormDefault="unqualified"
            elementFormDefault="qualified"
-           version="1.4.0">
+           version="1.4.1">
 
     <xs:element name="subsonic-response" type="sub:Response"/>
 
@@ -103,6 +103,7 @@
         <xs:attribute name="duration" type="xs:int" use="optional"/>
         <xs:attribute name="bitRate" type="xs:int" use="optional"/>
         <xs:attribute name="path" type="xs:string" use="optional"/>
+        <xs:attribute name="isVideo" type="xs:boolean" use="optional"/>  <!-- Added in 1.4.1 -->
     </xs:complexType>
 
     <xs:complexType name="NowPlaying">

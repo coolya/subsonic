@@ -14,9 +14,9 @@ Never return video files when getting random songs.
 Update recommended settings
 Remove/hide transcoding step 3?
 Android support.
-REST support.
 Premium feature: Update doc
 Support DVD images
+Add videoPlayer parameter for autoplay on/off.
 
 
 DONE IN ANDROID 2.1

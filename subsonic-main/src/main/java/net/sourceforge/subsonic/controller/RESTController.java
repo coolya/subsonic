@@ -647,6 +647,7 @@ public class RESTController extends MultiActionController {
             String suffix = musicFile.getSuffix();
             attributes.add(new Attribute("suffix", suffix));
             attributes.add(new Attribute("contentType", StringUtil.getMimeType(suffix)));
+            attributes.add(new Attribute("isVideo", musicFile.isVideo()));
 
             if (coverArt != null) {
                 attributes.add(new Attribute("coverArt", StringUtil.utf8HexEncode(coverArt.getPath())));
