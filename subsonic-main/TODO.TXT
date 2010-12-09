@@ -16,6 +16,7 @@ Remove/hide transcoding step 3?
 Android support.
 Premium feature: Update doc
 Support DVD images
+Create separate videoPlayerView for Android.
 Add videoPlayer parameter for autoplay on/off.
 
 
@@ -24,6 +25,7 @@ DONE IN ANDROID 2.1
 
 TODO IN ANDROID 2.1
 -------------------
+Add music folder filter on top of artist list.
 Reset shuffle play buffer when changing server.
 Long-click:
   Long-click artist -> Play random

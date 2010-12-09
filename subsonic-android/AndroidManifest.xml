@@ -60,6 +60,9 @@
                   a:label="@string/help.label"
                   a:launchMode="singleTask"/>
 
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.PlayVideoActivity"
+                  a:launchMode="singleTask"/>
+
         <activity a:name="net.sourceforge.subsonic.androidapp.activity.VoiceQueryReceiverActivity"
                   a:launchMode="singleTask">
             <intent-filter>

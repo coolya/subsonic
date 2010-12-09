@@ -64,4 +64,6 @@ public interface MusicService {
     Version getLocalVersion(Context context) throws Exception;
 
     Version getLatestVersion(Context context, ProgressListener progressListener) throws Exception;
+
+    String getVideoUrl(Context context, String id);
 }

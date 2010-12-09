@@ -161,6 +161,11 @@ public class OfflineMusicService extends RESTMusicService {
     }
 
     @Override
+    public String getVideoUrl(Context context, String id) {
+        throw new RuntimeException("Video playback not available in offline mode");
+    }
+
+    @Override
     public MusicDirectory getRandomSongs(int size, Context context, ProgressListener progressListener) throws Exception {
         File root = FileUtil.getMusicDirectory();
         List<File> children = new LinkedList<File>();

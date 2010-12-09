@@ -79,6 +79,7 @@ public class MusicDirectory {
         private Integer duration;
         private Integer bitRate;
         private String path;
+        private boolean video;
 
         public String getId() {
             return id;
@@ -222,6 +223,14 @@ public class MusicDirectory {
 
         public void setPath(String path) {
             this.path = path;
+        }
+
+        public boolean isVideo() {
+            return video;
+        }
+
+        public void setVideo(boolean video) {
+            this.video = video;
         }
 
         @Override

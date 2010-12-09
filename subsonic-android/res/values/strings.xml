@@ -29,6 +29,8 @@
     <string name="help.url">file:///android_asset/html/en/index.html</string>
     <string name="help.loading">Loading...</string>
 
+    <string name="play_video.loading">Loading video...</string>
+
     <string name="search.label">Search</string>
     <string name="search.title">Music search</string>
     <string name="search.search">Click to search</string>

@@ -97,9 +97,12 @@
 
                 /login.view=IS_AUTHENTICATED_ANONYMOUSLY
                 /accessDenied.view=IS_AUTHENTICATED_ANONYMOUSLY
+                /videoPlayer.view=IS_AUTHENTICATED_ANONYMOUSLY
                 /stream/**=IS_AUTHENTICATED_ANONYMOUSLY
                 /style/**=IS_AUTHENTICATED_ANONYMOUSLY
                 /icons/**=IS_AUTHENTICATED_ANONYMOUSLY
+                /flash/**=IS_AUTHENTICATED_ANONYMOUSLY
+                /script/**=IS_AUTHENTICATED_ANONYMOUSLY
 
                 /personalSettings.view=ROLE_SETTINGS
                 /passwordSettings.view=ROLE_SETTINGS
