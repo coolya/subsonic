@@ -17,7 +17,6 @@ Android support.
 Premium feature: Update doc
 Support DVD images
 Android
-  Create separate videoPlayerView for Android (androidVideoPlayer.view?id=xxxxx).  Should resolve player.
   Add video icon for videos.
   Or REST method for producing the URL.
   Never put videos in playlist.
@@ -30,6 +29,7 @@ DONE IN ANDROID 2.1
 TODO IN ANDROID 2.1
 -------------------
 Add music folder filter on top of artist list.
+Option to control media button behaviour (always, never, only when active)
 Reset shuffle play buffer when changing server.
 Long-click:
   Long-click artist -> Play random

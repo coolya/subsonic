@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
@@ -740,6 +741,27 @@ public class RESTController extends MultiActionController {
         return null;
     }
 
+    public ModelAndView videoPlayer(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+
+        String path = request.getParameter("path");
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", request.getParameter("id"));
+        map.put("u", request.getParameter("u"));
+        map.put("p", request.getParameter("p"));
+        map.put("c", request.getParameter("c"));
+        map.put("v", request.getParameter("v"));
+        map.put("video", musicFileService.getMusicFile(path));
+        map.put("maxBitRate", ServletRequestUtils.getIntParameter(request, "maxBitRate", VideoPlayerController.DEFAULT_BIT_RATE));
+        map.put("autoplay", ServletRequestUtils.getBooleanParameter(request, "autoplay", true));
+        map.put("bitRates", VideoPlayerController.BIT_RATES);
+
+        ModelAndView result = new ModelAndView("rest/videoPlayer");
+        result.addObject("model", map);
+        return result;
+    }
+
     public ModelAndView getCoverArt(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
         return coverArtController.handleRequest(request, response);
@@ -747,7 +769,7 @@ public class RESTController extends MultiActionController {
 
     public void changePassword(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        try {
+        try { 
 
             String username = ServletRequestUtils.getRequiredStringParameter(request, "username");
             String password = ServletRequestUtils.getRequiredStringParameter(request, "password");
