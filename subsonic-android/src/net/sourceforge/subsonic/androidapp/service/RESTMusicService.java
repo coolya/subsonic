@@ -454,16 +454,14 @@ public class RESTMusicService implements MusicService {
 
     @Override
     public String getVideoUrl(Context context, String id) {
-        StringBuilder url = new StringBuilder(Util.getRestUrl(context, "videoPlayer"));
-        url.append("&id=").append(id);
-        url.append("&maxBitRate=500");
-        url.append("&autoplay=false");
+        StringBuilder builder = new StringBuilder(Util.getRestUrl(context, "videoPlayer"));
+        builder.append("&id=").append(id);
+        builder.append("&maxBitRate=500");
+        builder.append("&autoplay=false");
 
-        url = rewriteUrlWithRedirect(context, url);
-
-        Log.i("Using video URL: " + url);
-
-        return url.toString();
+        String url = rewriteUrlWithRedirect(context, builder.toString());
+        Log.i(TAG, "Using video URL: " + url); 
+        return url;
     }
 
     private Reader getReader(Context context, ProgressListener progressListener, String method, HttpParams requestParams) throws Exception {
@@ -601,7 +599,7 @@ public class RESTMusicService implements MusicService {
         redirectionNetworkType = getCurrentNetworkType(context);
     }
 
-    private String rewriteUrlWithRedirect(Context context, String url) throws IOException {
+    private String rewriteUrlWithRedirect(Context context, String url)  {
 
         // Is it a subsonic.org address?
         int index = url.indexOf(".subsonic.org");
