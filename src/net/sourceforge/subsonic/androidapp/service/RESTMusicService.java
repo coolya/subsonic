@@ -66,6 +66,7 @@ import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.domain.MusicFolder;
 import net.sourceforge.subsonic.androidapp.domain.Version;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.domain.SearchResult;
@@ -75,6 +76,7 @@ import net.sourceforge.subsonic.androidapp.service.parser.ErrorParser;
 import net.sourceforge.subsonic.androidapp.service.parser.IndexesParser;
 import net.sourceforge.subsonic.androidapp.service.parser.LicenseParser;
 import net.sourceforge.subsonic.androidapp.service.parser.MusicDirectoryParser;
+import net.sourceforge.subsonic.androidapp.service.parser.MusicFoldersParser;
 import net.sourceforge.subsonic.androidapp.service.parser.PlaylistParser;
 import net.sourceforge.subsonic.androidapp.service.parser.PlaylistsParser;
 import net.sourceforge.subsonic.androidapp.service.parser.RandomSongsParser;
@@ -177,6 +179,15 @@ public class RESTMusicService implements MusicService {
             ServerInfo serverInfo = new LicenseParser(context).parse(reader);
             serverRestVersion = serverInfo.getRestVersion();
             return serverInfo.isLicenseValid();
+        } finally {
+            Util.close(reader);
+        }
+    }
+
+    public List<MusicFolder> getMusicFolders(Context context, ProgressListener progressListener) throws Exception {
+        Reader reader = getReader(context, progressListener, "getMusicFolders", null);
+        try {
+            return new MusicFoldersParser(context).parse(reader, progressListener);
         } finally {
             Util.close(reader);
         }

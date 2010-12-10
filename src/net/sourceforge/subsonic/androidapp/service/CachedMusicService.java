@@ -22,6 +22,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.domain.MusicFolder;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.domain.Version;
 import net.sourceforge.subsonic.androidapp.domain.SearchResult;
@@ -49,6 +50,7 @@ public class CachedMusicService implements MusicService {
     private final TimeLimitedCache<Boolean> cachedLicenseValid = new TimeLimitedCache<Boolean>(120, TimeUnit.SECONDS);
     private final TimeLimitedCache<Indexes> cachedIndexes = new TimeLimitedCache<Indexes>(60 * 60, TimeUnit.SECONDS);
     private final TimeLimitedCache<List<Playlist>> cachedPlaylists = new TimeLimitedCache<List<Playlist>>(60, TimeUnit.SECONDS);
+    private final TimeLimitedCache<List<MusicFolder>> cachedMusicFolders = new TimeLimitedCache<List<MusicFolder>>(10, TimeUnit.HOURS);
     private String restUrl;
 
     public CachedMusicService(MusicService musicService) {
@@ -74,9 +76,24 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
+    public List<MusicFolder> getMusicFolders(Context context, ProgressListener progressListener) throws Exception {
+        checkSettingsChanged(context);
+        List<MusicFolder> result = cachedMusicFolders.get();
+        if (result == null) {
+            result = musicService.getMusicFolders(context, progressListener);
+            cachedMusicFolders.set(result);
+        }
+        return result;
+    }
+
+    @Override
     public Indexes getIndexes(boolean refresh, Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
-        Indexes result = refresh ? null : cachedIndexes.get();
+        if (refresh) {
+            cachedIndexes.clear();
+            cachedMusicFolders.clear();
+        }
+        Indexes result = cachedIndexes.get();
         if (result == null) {
             result = musicService.getIndexes(refresh, context, progressListener);
             cachedIndexes.set(result);
@@ -166,6 +183,7 @@ public class CachedMusicService implements MusicService {
             cachedLicenseValid.clear();
             cachedIndexes.clear();
             cachedPlaylists.clear();
+            cachedMusicDirectories.clear();
             restUrl = newUrl;
         }
     }
