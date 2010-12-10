@@ -18,40 +18,42 @@
  */
 package net.sourceforge.subsonic.androidapp.service.parser;
 
-import android.content.Context;
-import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.domain.Playlist;
-import net.sourceforge.subsonic.androidapp.util.ProgressListener;
-import org.xmlpull.v1.XmlPullParser;
-
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.xmlpull.v1.XmlPullParser;
+
+import android.content.Context;
+import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.domain.MusicFolder;
+import net.sourceforge.subsonic.androidapp.domain.Playlist;
+import net.sourceforge.subsonic.androidapp.util.ProgressListener;
+
 /**
  * @author Sindre Mehus
  */
-public class PlaylistsParser extends AbstractParser {
+public class MusicFoldersParser extends AbstractParser {
 
-    public PlaylistsParser(Context context) {
+    public MusicFoldersParser(Context context) {
         super(context);
     }
 
-    public List<Playlist> parse(Reader reader, ProgressListener progressListener) throws Exception {
+    public List<MusicFolder> parse(Reader reader, ProgressListener progressListener) throws Exception {
 
         updateProgress(progressListener, R.string.parser_reading);
         init(reader);
 
-        List<Playlist> result = new ArrayList<Playlist>();
+        List<MusicFolder> result = new ArrayList<MusicFolder>();
         int eventType;
         do {
             eventType = nextParseEvent();
             if (eventType == XmlPullParser.START_TAG) {
                 String tag = getElementName();
-                if ("playlist".equals(tag)) {
+                if ("musicFolder".equals(tag)) {
                     String id = get("id");
                     String name = get("name");
-                    result.add(new Playlist(id, name));
+                    result.add(new MusicFolder(id, name));
                 } else if ("error".equals(tag)) {
                     handleError();
                 }

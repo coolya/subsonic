@@ -22,6 +22,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.domain.MusicFolder;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.domain.Version;
 import net.sourceforge.subsonic.androidapp.domain.SearchResult;
@@ -40,6 +41,8 @@ public interface MusicService {
     void ping(Context context, ProgressListener progressListener) throws Exception;
 
     boolean isLicenseValid(Context context, ProgressListener progressListener) throws Exception;
+
+    List<MusicFolder> getMusicFolders(Context context, ProgressListener progressListener) throws Exception;
 
     Indexes getIndexes(boolean refresh, Context context, ProgressListener progressListener) throws Exception;
 

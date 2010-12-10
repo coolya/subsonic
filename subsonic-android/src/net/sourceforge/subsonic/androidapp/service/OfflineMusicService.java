@@ -24,6 +24,7 @@ import android.graphics.BitmapFactory;
 import net.sourceforge.subsonic.androidapp.domain.Artist;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
+import net.sourceforge.subsonic.androidapp.domain.MusicFolder;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.domain.SearchResult;
 import net.sourceforge.subsonic.androidapp.domain.SearchCritera;
@@ -133,6 +134,11 @@ public class OfflineMusicService extends RESTMusicService {
         } finally {
             Util.close(in);
         }
+    }
+
+    @Override
+    public List<MusicFolder> getMusicFolders(Context context, ProgressListener progressListener) throws Exception {
+        throw new RuntimeException("Music folders not available in offline mode");
     }
 
     @Override
