@@ -454,11 +454,14 @@ public class RESTMusicService implements MusicService {
 
     @Override
     public String getVideoUrl(Context context, String id) {
-        StringBuilder url = new StringBuilder();
-        url.append(Util.getRestUrl(context, null).replaceAll("/rest/.*", "/videoPlayer.view?"));
-        url.append("pathUtf8Hex=").append(id);
+        StringBuilder url = new StringBuilder(Util.getRestUrl(context, "videoPlayer"));
+        url.append("&id=").append(id);
         url.append("&maxBitRate=500");
         url.append("&autoplay=false");
+
+        url = rewriteUrlWithRedirect(context, url);
+
+        Log.i("Using video URL: " + url);
 
         return url.toString();
     }
