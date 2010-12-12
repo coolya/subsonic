@@ -87,7 +87,7 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
-    public Indexes getIndexes(boolean refresh, Context context, ProgressListener progressListener) throws Exception {
+    public Indexes getIndexes(String musicFolderId, boolean refresh, Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
         if (refresh) {
             cachedIndexes.clear();
@@ -95,7 +95,7 @@ public class CachedMusicService implements MusicService {
         }
         Indexes result = cachedIndexes.get();
         if (result == null) {
-            result = musicService.getIndexes(refresh, context, progressListener);
+            result = musicService.getIndexes(musicFolderId, refresh, context, progressListener);
             cachedIndexes.set(result);
         }
         return result;

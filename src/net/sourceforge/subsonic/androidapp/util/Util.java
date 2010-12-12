@@ -107,6 +107,20 @@ public final class Util {
         return prefs.getString(Constants.PREFERENCES_KEY_SERVER_NAME + instance, null);
     }
 
+    public static void setSelectedMusicFolderId(Context context, String musicFolderId) {
+        int instance = getActiveServer(context);
+        SharedPreferences prefs = getPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(Constants.PREFERENCES_KEY_MUSIC_FOLDER_ID + instance, musicFolderId);
+        editor.commit();
+    }
+
+    public static String getSelectedMusicFolderId(Context context) {
+        SharedPreferences prefs = getPreferences(context);
+        int instance = getActiveServer(context);
+        return prefs.getString(Constants.PREFERENCES_KEY_MUSIC_FOLDER_ID + instance, null);
+    }
+
     public static String getTheme(Context context) {
         SharedPreferences prefs = getPreferences(context);
         return prefs.getString(Constants.PREFERENCES_KEY_THEME, null);

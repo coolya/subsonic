@@ -44,7 +44,7 @@ public interface MusicService {
 
     List<MusicFolder> getMusicFolders(Context context, ProgressListener progressListener) throws Exception;
 
-    Indexes getIndexes(boolean refresh, Context context, ProgressListener progressListener) throws Exception;
+    Indexes getIndexes(String musicFolderId, boolean refresh, Context context, ProgressListener progressListener) throws Exception;
 
     MusicDirectory getMusicDirectory(String id, Context context, ProgressListener progressListener) throws Exception;
 

@@ -48,6 +48,9 @@ public final class PlayVideoActivity extends Activity {
 
         webView = (WebView) findViewById(R.id.play_video_contents);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setPluginsEnabled(true);
+        webView.getSettings().setAllowFileAccess(true);
+
         webView.setWebViewClient(new Client());
         if (bundle != null) {
             webView.restoreState(bundle);

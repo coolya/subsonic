@@ -55,7 +55,7 @@ public class OfflineMusicService extends RESTMusicService {
     }
 
     @Override
-    public Indexes getIndexes(boolean refresh, Context context, ProgressListener progressListener) throws Exception {
+    public Indexes getIndexes(String musicFolderId, boolean refresh, Context context, ProgressListener progressListener) throws Exception {
         List<Artist> artists = new ArrayList<Artist>();
         File root = FileUtil.getMusicDirectory();
         for (File file : FileUtil.listFiles(root)) {

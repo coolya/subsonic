@@ -54,6 +54,7 @@ public final class Constants {
     public static final String PREFERENCES_KEY_SERVER_INSTANCE = "serverInstanceId";
     public static final String PREFERENCES_KEY_SERVER_NAME = "serverName";
     public static final String PREFERENCES_KEY_SERVER_URL = "serverUrl";
+    public static final String PREFERENCES_KEY_MUSIC_FOLDER_ID = "musicFolderId";
     public static final String PREFERENCES_KEY_USERNAME = "username";
     public static final String PREFERENCES_KEY_PASSWORD = "password";
     public static final String PREFERENCES_KEY_INSTALL_TIME = "installTime";
