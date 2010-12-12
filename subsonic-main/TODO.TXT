@@ -13,13 +13,10 @@ Use ffmpeg to generate tags and cover art.
 Never return video files when getting random songs.
 Update recommended settings
 Remove/hide transcoding step 3?
-Android support.
 Premium feature: Update doc
 Support DVD images
 Android
-  Create separate videoPlayerView for Android (androidVideoPlayer.view?id=xxxxx).
-     Should resolve player.
-     Should show smaller video size and a Fullscreen button.
+  Use different JW Player skin with larger controls.
   Add video icon for videos.
   Or REST method for producing the URL.
   Never put videos in playlist.
@@ -30,12 +27,11 @@ Add text to Flash placeholder
 
 DONE IN ANDROID 2.1
 --------------------
-Download stops, according to market comments.  See DownloadSerciceImpl rev 1950.
+Add music folder filter on top of artist list.
+Improved artist caching.
 
 TODO IN ANDROID 2.1
 -------------------
-Cache all server/musicfolder combinations to disk, using separate files. Hash?
-Add music folder filter on top of artist list.
 Option to control media button behaviour (always, never, only when active)
 Reset shuffle play buffer when changing server.
 Long-click:

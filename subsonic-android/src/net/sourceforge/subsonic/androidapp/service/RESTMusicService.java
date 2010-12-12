@@ -88,7 +88,6 @@ import net.sourceforge.subsonic.androidapp.service.ssl.SSLSocketFactory;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
-import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import net.sourceforge.subsonic.androidapp.service.ssl.TrustSelfSignedStrategy;
 import net.sourceforge.subsonic.androidapp.util.Util;
@@ -116,11 +115,8 @@ public class RESTMusicService implements MusicService {
 
     private static final int HTTP_REQUEST_MAX_ATTEMPTS = 5;
     private static final long REDIRECTION_CHECK_INTERVAL_MILLIS = 60L * 60L * 1000L;
-    private static final String FILENAME_INDEXES_SER = "indexes.ser";
 
     private final DefaultHttpClient httpClient;
-    private Pair<String, Indexes> cachedIndexesPair;
-
     private long redirectionLastChecked;
     private int redirectionNetworkType = -1;
     private String redirectFrom;
@@ -223,22 +219,18 @@ public class RESTMusicService implements MusicService {
     }
 
     private Indexes readCachedIndexes(Context context, String musicFolderId) {
-        String key = Util.getRestUrl(context, null) + musicFolderId;
-        if (cachedIndexesPair == null) {
-            cachedIndexesPair = FileUtil.deserialize(context, FILENAME_INDEXES_SER);
-        }
-
-        if (cachedIndexesPair != null && key.equals(cachedIndexesPair.getFirst())) {
-            return cachedIndexesPair.getSecond();
-        }
-
-        return null;
+        String filename = getCachedIndexesFilename(context, musicFolderId);
+        return FileUtil.deserialize(context, filename);
     }
 
     private void writeCachedIndexes(Context context, Indexes indexes, String musicFolderId) {
-        String key = Util.getRestUrl(context, null) + musicFolderId;
-        cachedIndexesPair = new Pair<String, Indexes>(key, indexes);
-        FileUtil.serialize(context, cachedIndexesPair, FILENAME_INDEXES_SER);
+        String filename = getCachedIndexesFilename(context, musicFolderId);
+        FileUtil.serialize(context, indexes, filename);
+    }
+
+    private String getCachedIndexesFilename(Context context, String musicFolderId) {
+        String s = Util.getRestUrl(context, null) + musicFolderId;
+        return "indexes-" + Math.abs(s.hashCode()) + ".ser";
     }
 
     @Override
