@@ -17,14 +17,20 @@ Android support.
 Premium feature: Update doc
 Support DVD images
 Android
+  Create separate videoPlayerView for Android (androidVideoPlayer.view?id=xxxxx).
+     Should resolve player.
+     Should show smaller video size and a Fullscreen button.
   Add video icon for videos.
   Or REST method for producing the URL.
   Never put videos in playlist.
   Add videoPlayer parameter for autoplay on/off.
+  Remove PlayVideoActivity
 -deinterlace necessary?
+Add text to Flash placeholder
 
 DONE IN ANDROID 2.1
 --------------------
+Download stops, according to market comments.  See DownloadSerciceImpl rev 1950.
 
 TODO IN ANDROID 2.1
 -------------------
