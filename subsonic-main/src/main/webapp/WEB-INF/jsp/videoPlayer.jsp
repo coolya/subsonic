@@ -19,6 +19,9 @@
                 <c:if test="${not (model.trial and model.trialExpired)}">
                 file:"${streamUrl}%26maxBitRate=${model.maxBitRate}%26player=${model.player}%26suffix=.flv",
                 </c:if>
+                skin:"<c:url value="/flash/whotube.zip"/>",
+                screencolor:"000000",
+                controlbar:"over",
                 duration:"${model.video.metaData.duration}",
                 autostart:"true",
                 backcolor:"<spring:theme code="backgroundColor"/>",

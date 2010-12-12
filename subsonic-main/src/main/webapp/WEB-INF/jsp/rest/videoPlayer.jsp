@@ -25,12 +25,14 @@
             var flashvars = {
                 id:"player1",
                 file:"<str:replace replace="&" with="%26">${streamUrl}</str:replace>",
+                skin:"<c:url value="/flash/whotube.zip"/>",
+                screencolor:"000000",
                 duration:"${model.video.metaData.duration}",
                 autostart:"${model.autoplay}",
                 backcolor:"<spring:theme code="backgroundColor"/>",
                 frontcolor:"<spring:theme code="textColor"/>",
                 provider:"video"
-            }; 
+            };
             var params = {
                 allowfullscreen:"true",
                 allowscriptaccess:"always"
