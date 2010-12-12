@@ -16,5 +16,16 @@
             a:gravity="center"
             a:padding="12dp"/>
 
+    <TextView
+            a:id="@+id/select_artist_folder"
+            a:text="@string/select_artist.folder"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:drawablePadding="0dp"
+            a:drawableLeft="@drawable/refresh"
+            a:textAppearance="?android:attr/textAppearanceMedium"
+            a:gravity="center"
+            a:padding="12dp"/>
+
 </LinearLayout>
 

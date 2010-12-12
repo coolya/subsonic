@@ -34,6 +34,7 @@ Download stops, according to market comments.  See DownloadSerciceImpl rev 1950.
 
 TODO IN ANDROID 2.1
 -------------------
+Cache all server/musicfolder combinations to disk, using separate files. Hash?
 Add music folder filter on top of artist list.
 Option to control media button behaviour (always, never, only when active)
 Reset shuffle play buffer when changing server.

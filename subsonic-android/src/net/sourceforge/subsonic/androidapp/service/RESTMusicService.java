@@ -194,15 +194,26 @@ public class RESTMusicService implements MusicService {
     }
 
     @Override
-    public Indexes getIndexes(boolean refresh, Context context, ProgressListener progressListener) throws Exception {
-        Indexes cachedIndexes = readCachedIndexes(context);
+    public Indexes getIndexes(String musicFolderId, boolean refresh, Context context, ProgressListener progressListener) throws Exception {
+        Indexes cachedIndexes = readCachedIndexes(context, musicFolderId);
         long lastModified = cachedIndexes == null ? 0L : cachedIndexes.getLastModified();
 
-        Reader reader = getReader(context, progressListener, "getIndexes", null, "ifModifiedSince", lastModified);
+        List<String> parameterNames = new ArrayList<String>();
+        List<Object> parameterValues = new ArrayList<Object>();
+
+        parameterNames.add("ifModifiedSince");
+        parameterValues.add(lastModified);
+
+        if (musicFolderId != null) {
+            parameterNames.add("musicFolderId");
+            parameterValues.add(musicFolderId);
+        }
+
+        Reader reader = getReader(context, progressListener, "getIndexes", null, parameterNames, parameterValues);
         try {
             Indexes indexes = new IndexesParser(context).parse(reader, progressListener);
             if (indexes != null) {
-                writeCachedIndexes(context, indexes);
+                writeCachedIndexes(context, indexes, musicFolderId);
                 return indexes;
             }
             return cachedIndexes;
@@ -211,8 +222,8 @@ public class RESTMusicService implements MusicService {
         }
     }
 
-    private Indexes readCachedIndexes(Context context) {
-        String key = Util.getRestUrl(context, null);
+    private Indexes readCachedIndexes(Context context, String musicFolderId) {
+        String key = Util.getRestUrl(context, null) + musicFolderId;
         if (cachedIndexesPair == null) {
             cachedIndexesPair = FileUtil.deserialize(context, FILENAME_INDEXES_SER);
         }
@@ -224,8 +235,8 @@ public class RESTMusicService implements MusicService {
         return null;
     }
 
-    private void writeCachedIndexes(Context context, Indexes indexes) {
-        String key = Util.getRestUrl(context, null);
+    private void writeCachedIndexes(Context context, Indexes indexes, String musicFolderId) {
+        String key = Util.getRestUrl(context, null) + musicFolderId;
         cachedIndexesPair = new Pair<String, Indexes>(key, indexes);
         FileUtil.serialize(context, cachedIndexesPair, FILENAME_INDEXES_SER);
     }
@@ -471,7 +482,7 @@ public class RESTMusicService implements MusicService {
         builder.append("&autoplay=false");
 
         String url = rewriteUrlWithRedirect(context, builder.toString());
-        Log.i(TAG, "Using video URL: " + url); 
+        Log.i(TAG, "Using video URL: " + url);
         return url;
     }
 
