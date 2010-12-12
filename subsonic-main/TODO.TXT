@@ -24,7 +24,6 @@ Android
   Add videoPlayer parameter for autoplay on/off.
   Remove PlayVideoActivity
 -deinterlace necessary?
-Add text to Flash placeholder
 
 DONE IN ANDROID 2.1
 --------------------

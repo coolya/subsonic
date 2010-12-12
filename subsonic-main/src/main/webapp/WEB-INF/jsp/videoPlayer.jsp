@@ -64,7 +64,7 @@
 
 
 <div id="wrapper" style="padding-top:1em">
-    <div id="placeholder1"></div>
+    <div id="placeholder1"><a href="http://www.adobe.com/go/getflashplayer" target="_blank"><fmt:message key="playlist.getflash"/></a></div>
 </div>
 
 <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.video.parent.path}"/></sub:url>
