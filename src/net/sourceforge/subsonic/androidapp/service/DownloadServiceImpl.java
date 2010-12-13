@@ -387,7 +387,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     private synchronized void setPlayerState(PlayerState playerState) {
-        Log.i(TAG, this.playerState.name() + " -> " + playerState.name());
+        Log.i(TAG, this.playerState.name() + " -> " + playerState.name() + " (" + currentPlaying + ")");
 
         boolean show = this.playerState == PAUSED && playerState == PlayerState.STARTED;
         boolean hide = this.playerState == STARTED && playerState == PlayerState.PAUSED;
@@ -450,6 +450,19 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                     // If file is not completely downloaded, restart the playback from the current position.
                     int pos = mediaPlayer.getCurrentPosition();
                     synchronized (DownloadServiceImpl.this) {
+
+                        // Work-around for apparent bug on certain phones: If close (less than ten seconds) to the end
+                        // of the song, skip to the next rather than restarting it.
+                        Integer duration = downloadFile.getSong().getDuration() == null ? null : downloadFile.getSong().getDuration() * 1000;
+                        if (duration != null) {
+                            if (Math.abs(duration - pos) < 10000) {
+                                Log.i(TAG, "Skipping restart from " + pos  + " of " + duration);
+                                next();
+                                return;
+                            }
+                        }
+
+                        Log.i(TAG, "Requesting restart from " + pos  + " of " + duration);
                         reset();
                         bufferTask = new BufferTask(downloadFile, pos);
                         bufferTask.start();
@@ -635,6 +648,11 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
             Log.i(TAG, "Buffering " + partialFile + " (" + size + "/" + expectedFileSize + ", " + completeFileAvailable + ")");
             return completeFileAvailable || size >= expectedFileSize;
+        }
+
+        @Override
+        public String toString() {
+            return "BufferTask (" + downloadFile + ")";
         }
     }
 }
