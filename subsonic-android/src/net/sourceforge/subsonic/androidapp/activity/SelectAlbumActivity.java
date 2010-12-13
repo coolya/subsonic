@@ -382,9 +382,12 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     }
 
     private void playVideo(MusicDirectory.Entry entry) {
-        String url = MusicServiceFactory.getMusicService(this).getVideoUrl(this, entry.getId());
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url));
+//        String url = MusicServiceFactory.getMusicService(this).getVideoUrl(this, entry.getId());
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        intent.setData(Uri.parse(url));
+        Intent intent = new Intent(this, PlayVideoActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, entry.getId());
+
         startActivity(intent);
     }
 

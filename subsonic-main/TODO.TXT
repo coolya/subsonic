@@ -1,5 +1,7 @@
 VIDEO
 -----
+Don't go back in browser.
+Don't dim screen.
 Buy new JW license
 http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4689
 Use jwembedder?
@@ -17,7 +19,9 @@ Remove/hide transcoding step 3?
 Premium feature: Update doc
 Support DVD images
 Android
-  Use different JW Player skin with larger controls.
+  Set JW Player size to 100%
+  Stop Flash plugin when finishing activity.
+    http://stackoverflow.com/questions/3431351/how-do-i-pause-flash-content-in-an-android-webview-when-my-activity-isnt-visible
   Add video icon for videos.
   Or REST method for producing the URL.
   Never put videos in playlist.
@@ -32,6 +36,8 @@ Improved artist caching.
 
 TODO IN ANDROID 2.1
 -------------------
+First track repeat.
+  https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12cdb8c3d7b52f57
 Option to control media button behaviour (always, never, only when active)
 Reset shuffle play buffer when changing server.
 Long-click:
@@ -111,6 +117,8 @@ DONE IN 4.3
 
 TODO IN 4.3
 -----------------
+Build ffmpeg for x86 on Mac
+  https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12cb55940868506d
 Test in Tomcat 7.
 Always set headless mode.
 According to Petter, overriding SUBSONIC_HOME doesn't work in Debian.
