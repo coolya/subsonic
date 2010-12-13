@@ -645,7 +645,6 @@ public final class Util {
             Method method = Activity.class.getMethod("overridePendingTransition", int.class, int.class);
             method.invoke(activity, 0, 0);
         } catch (Throwable x) {
-            Log.w(TAG, "Failed to disable activity transition.", x);
             // Ignored
         }
     }

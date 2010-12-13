@@ -61,6 +61,7 @@
                   a:launchMode="singleTask"/>
 
         <activity a:name="net.sourceforge.subsonic.androidapp.activity.PlayVideoActivity"
+                  a:configChanges="orientation|keyboardHidden"
                   a:launchMode="singleTask"/>
 
         <activity a:name="net.sourceforge.subsonic.androidapp.activity.VoiceQueryReceiverActivity"

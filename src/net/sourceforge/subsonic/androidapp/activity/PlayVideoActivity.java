@@ -69,16 +69,16 @@ public final class PlayVideoActivity extends Activity {
         webView.saveState(state);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (webView.canGoBack()) {
-                webView.goBack();
-                return true;
-            }
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            if (webView.canGoBack()) {
+//                webView.goBack();
+//                return true;
+//            }
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
     private final class Client extends WebViewClient {
         @Override
