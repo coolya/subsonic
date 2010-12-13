@@ -19,9 +19,11 @@
 
 package net.sourceforge.subsonic.androidapp.activity;
 
+import java.lang.reflect.Method;
+
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.util.Log;
 import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -37,12 +39,13 @@ import net.sourceforge.subsonic.androidapp.util.Util;
  */
 public final class PlayVideoActivity extends Activity {
 
+    private static final String TAG = PlayVideoActivity.class.getSimpleName();
     private WebView webView;
 
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.play_video);
 
@@ -59,6 +62,18 @@ public final class PlayVideoActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        callHiddenWebViewMethod("onPause");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        callHiddenWebViewMethod("onResume");
+    }
+
     private String getVideoUrl() {
         String id = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ID);
         return MusicServiceFactory.getMusicService(this).getVideoUrl(this, id);
@@ -69,31 +84,18 @@ public final class PlayVideoActivity extends Activity {
         webView.saveState(state);
     }
 
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            if (webView.canGoBack()) {
-//                webView.goBack();
-//                return true;
-//            }
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
+    private void callHiddenWebViewMethod(String name){
+        if( webView != null ){
+            try {
+                Method method = WebView.class.getMethod(name);
+                method.invoke(webView);
+            } catch (Throwable x) {
+                Log.e(TAG, "Failed to invoke " + name, x);
+            }
+        }
+    }
 
     private final class Client extends WebViewClient {
-        @Override
-        public void onLoadResource(WebView webView, String url) {
-            setProgressBarIndeterminateVisibility(true);
-            setTitle(getResources().getString(R.string.play_video_loading));
-            super.onLoadResource(webView, url);
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            setProgressBarIndeterminateVisibility(false);
-            setTitle(view.getTitle());
-        }
-
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             Util.toast(PlayVideoActivity.this, description);

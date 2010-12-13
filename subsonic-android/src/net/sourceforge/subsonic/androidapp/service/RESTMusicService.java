@@ -471,7 +471,7 @@ public class RESTMusicService implements MusicService {
         StringBuilder builder = new StringBuilder(Util.getRestUrl(context, "videoPlayer"));
         builder.append("&id=").append(id);
         builder.append("&maxBitRate=500");
-        builder.append("&autoplay=false");
+        builder.append("&autoplay=true");
 
         String url = rewriteUrlWithRedirect(context, builder.toString());
         Log.i(TAG, "Using video URL: " + url);
