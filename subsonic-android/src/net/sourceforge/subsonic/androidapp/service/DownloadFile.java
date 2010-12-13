@@ -162,12 +162,12 @@ public class DownloadFile {
         }
     }
 
-    private class DownloadTask extends CancellableTask {
+    @Override
+    public String toString() {
+        return "DownloadFile (" + song + ")";
+    }
 
-        @Override
-        public String toString() {
-            return "DownloadTask (" + song + ")";
-        }
+    private class DownloadTask extends CancellableTask {
 
         @Override
         public void execute() {
@@ -232,6 +232,11 @@ public class DownloadFile {
                 Util.close(out);
             }
 
+        }
+
+        @Override
+        public String toString() {
+            return "DownloadTask (" + song + ")";
         }
 
         private void downloadAndSaveCoverArt(MusicService musicService) throws Exception {
