@@ -30,6 +30,7 @@
     <string name="help.loading">Loading...</string>
 
     <string name="play_video.loading">Loading video...</string>
+    <string name="play_video.noplugin">Please install Flash Player from Android Market</string>
 
     <string name="search.label">Search</string>
     <string name="search.title">Music search</string>

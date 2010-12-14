@@ -27,6 +27,8 @@ import android.util.Log;
 import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.Constants;
@@ -59,6 +61,13 @@ public final class PlayVideoActivity extends Activity {
             webView.restoreState(bundle);
         } else {
             webView.loadUrl(getVideoUrl());
+        }
+
+        // Show warning if Flash plugin is not installed.
+        if (isFlashPluginInstalled()) {
+            Util.toast(this, R.string.play_video_loading, false);
+        } else {
+            Util.toast(this, R.string.play_video_noplugin, false);
         }
     }
 
@@ -95,10 +104,20 @@ public final class PlayVideoActivity extends Activity {
         }
     }
 
+    private boolean isFlashPluginInstalled() {
+        try {
+            PackageInfo packageInfo = getPackageManager().getPackageInfo("com.adobe.flashplayer", 0);
+            return packageInfo != null;
+        } catch (PackageManager.NameNotFoundException x) {
+            return false;
+        }
+    }
+
     private final class Client extends WebViewClient {
-        @Override
-        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-            Util.toast(PlayVideoActivity.this, description);
+
+    @Override
+    public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+        Util.toast(PlayVideoActivity.this, description);
         }
     }
 }
