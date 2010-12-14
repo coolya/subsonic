@@ -35,7 +35,6 @@ Bugfix: First track repeat.
 
 TODO IN ANDROID 2.1
 -------------------
-Left-align Refresh/Folder buttons.
 Option to control media button behaviour (always, never, only when active)
 Reset shuffle play buffer when changing server.
 Long-click:
