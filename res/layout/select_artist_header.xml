@@ -10,10 +10,10 @@
             a:text="@string/select_artist.refresh"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
-            a:drawablePadding="0dp"
+            a:drawablePadding="12dp"
             a:drawableLeft="@drawable/refresh"
             a:textAppearance="?android:attr/textAppearanceMedium"
-            a:gravity="center"
+            a:gravity="left|center_vertical"
             a:padding="12dp"/>
 
     <TextView
@@ -21,10 +21,10 @@
             a:text="@string/select_artist.folder"
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
-            a:drawablePadding="0dp"
+            a:drawablePadding="12dp"
             a:drawableLeft="@drawable/select_artist_folder"
             a:textAppearance="?android:attr/textAppearanceMedium"
-            a:gravity="center"
+            a:gravity="left|center_vertical"
             a:padding="12dp"/>
 
 </LinearLayout>
