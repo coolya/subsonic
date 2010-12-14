@@ -18,16 +18,11 @@ Update recommended settings
 Remove/hide transcoding step 3?
 Premium feature: Update doc
 Support DVD images
+Upgrade JW Player.
 Android
   Try to uninstall Flash plugin.
-  Set JW Player size to 100%
-  Stop Flash plugin when finishing activity.
-    http://stackoverflow.com/questions/3431351/how-do-i-pause-flash-content-in-an-android-webview-when-my-activity-isnt-visible
   Add video icon for videos.
-  Or REST method for producing the URL.
   Never put videos in playlist.
-  Add videoPlayer parameter for autoplay on/off.
-  Remove PlayVideoActivity
 -deinterlace necessary?
 
 DONE IN ANDROID 2.1
@@ -40,6 +35,7 @@ Bugfix: First track repeat.
 
 TODO IN ANDROID 2.1
 -------------------
+Left-align Refresh/Folder buttons.
 Option to control media button behaviour (always, never, only when active)
 Reset shuffle play buffer when changing server.
 Long-click:

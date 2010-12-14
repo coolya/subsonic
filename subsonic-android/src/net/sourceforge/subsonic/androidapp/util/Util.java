@@ -28,8 +28,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -304,7 +302,11 @@ public final class Util {
     }
 
     public static void toast(Context context, int messageId) {
-        Toast.makeText(context, messageId, Toast.LENGTH_SHORT).show();
+        toast(context, messageId, true);
+    }
+
+    public static void toast(Context context, int messageId, boolean shortDuration) {
+        Toast.makeText(context, messageId, shortDuration ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -606,18 +608,6 @@ public final class Util {
                 notificationManager.notify(Constants.NOTIFICATION_ID_ERROR, notification);
             }
         });
-    }
-
-    public static String getVersion(Context context) {
-        try {
-            PackageInfo packageInfo = context.getPackageManager().getPackageInfo("net.sourceforge.subsonic.androidapp", 0);
-            if (packageInfo != null) {
-                return packageInfo.versionName;
-            }
-        } catch (PackageManager.NameNotFoundException x) {
-            Log.w(TAG, "Failed to resolve application version name.", x);
-        }
-        return null;
     }
 
     public static void sleepQuietly(long millis) {

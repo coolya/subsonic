@@ -52,7 +52,7 @@
 <h1>${model.video.title}</h1>
 
 <div id="wrapper" style="padding-top:1em">
-    <div id="placeholder1"><a href="http://www.adobe.com/go/getflashplayer" target="_blank"><fmt:message key="playlist.getflash"/></a></div>
+    <div id="placeholder1"><span class="warning"><fmt:message key="playlist.getflash"/></span></div>
 </div>
 
 <div style="padding-top:0.7em;padding-bottom:0.7em">
