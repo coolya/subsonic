@@ -109,6 +109,7 @@ DONE IN 4.3
 
 TODO IN 4.3
 -----------------
+Include WP7 in all documentation.
 Build ffmpeg for x86 on Mac
   https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12cb55940868506d
 Test in Tomcat 7.

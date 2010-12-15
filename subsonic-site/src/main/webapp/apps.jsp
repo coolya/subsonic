@@ -23,11 +23,12 @@
             <div class="floatcontainer margin10-t margin10-b">
                 <ul class="stars column-left">
                     <li><a href="#android">Subsonic</a> for Android</li>
+                    <li><a href="#winphone">Subsonic</a> for Windows Phone 7</li>
                     <li><a href="#subair">SubAir</a> for desktops</li>
                 </ul>
                 <ul class="stars column-right">
-                    <li><a href="#zsubsonic">Z-Subsonic</a> for iPhone</li>
                     <li><a href="#isub">iSub</a> for iPhone</li>
+                    <li><a href="#zsubsonic">Z-Subsonic</a> for iPhone</li>
                 </ul>
             </div>
 
@@ -65,9 +66,9 @@
                             listened to is cached on the phone. An offline mode is also available for when you are outside 3G/Wi-Fi coverage.
                         </p>
 
-                        <a href="inc/img/screenshots/screen12.png"><img src="inc/img/screenshots/thumb12.png" alt="" style="padding:3px"/></a>
-                        <a href="inc/img/screenshots/screen13.png"><img src="inc/img/screenshots/thumb13.png" alt="" style="padding:3px"/></a>
-                        <a href="inc/img/screenshots/screen14.png"><img src="inc/img/screenshots/thumb14.png" alt="" style="padding:3px"/></a>
+                        <a href="inc/img/screenshots/screen12.png"><img src="inc/img/screenshots/thumb12.png" alt="" style="padding:3px;padding-left:40px;padding-right:20px"/></a>
+                        <a href="inc/img/screenshots/screen13.png"><img src="inc/img/screenshots/thumb13.png" alt="" style="padding:3px;padding-right:20px"/></a>
+                        <a href="inc/img/screenshots/screen14.png"><img src="inc/img/screenshots/thumb14.png" alt="" style="padding:3px;padding-right:20px"/></a>
                         <a href="inc/img/screenshots/screen15.png"><img src="inc/img/screenshots/thumb15.png" alt="" style="padding:3px"/></a>
 
                         <p>
@@ -78,21 +79,38 @@
             </div>
 
             <div class="featureitem">
-                <a name="subair"></a>
+                <a name="isub"></a>
 
-                <div class="heading">SubAir <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
+                <div class="heading">iSub <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
                 <div class="content">
                     <div class="wide-content">
                         <p>
-                            <img src="inc/img/air.png" alt="Adobe AIR" class="img-left"/>
-                            <a href="http://www.nonpixel.com/subair/">SubAir</a> is a rich desktop application for Subsonic implemented with Adobe&copy; AIR.
-                            Works with Windows, Mac and Linux.
+                            <img src="inc/img/appstore.png" alt="App Store" class="img-left"/>
+                            <a href="http://einsteinx2.com/projects/isub/">iSub</a> is an iPhone app developed by Ben Baron, and is
+                            available for purchase on the <a href="http://itunes.apple.com/us/app/isub-music-streamer/id362920532?mt=8">App&nbsp;Store</a>.
                         </p>
-                        <a href="inc/img/screenshots/screen16.png"><img src="inc/img/screenshots/thumb16.png" alt="" class="img-center"/></a>
+                        <a href="inc/img/screenshots/screen20.png"><img src="inc/img/screenshots/thumb20.png" alt="" style="padding:15px;padding-left:80px"/></a>
+                        <a href="inc/img/screenshots/screen21.png"><img src="inc/img/screenshots/thumb21.png" alt="" style="padding:15px"/></a>
+                        <a href="inc/img/screenshots/screen22.png"><img src="inc/img/screenshots/thumb22.png" alt="" style="padding:15px"/></a>
+
+                        <ul class="list">
+                            <li>iPod app style browsing.</li>
+                            <li>Artist search.</li>
+                            <li>Browsing multilevel directories.</li>
+                            <li>Caching of all browsed directories for speedy browsing.</li>
+                            <li>Album art while browsing.</li>
+                            <li>Full size album art in player view.</li>
+                            <li>Resuming music when interrupted by a call or text or when closing the app using the home button while a song is playing.</li>
+                            <li>Each music folder is a playlist automatically so when you select a track from an album it will continue to play the rest of the tracks in that album.</li>
+                            <li>Shuffle, Repeat 1, and Repeat All when playing an album.</li>
+                            <li>Detailed track information by tapping the cover art.</li>
+                            <li>Skipping through tracks.</li>
+                        </ul>
                         <p>
-                            Developed and maintained by <a href="http://www.nonpixel.com/">Jim Resnowski</a>, and
-                            <a href="http://www.nonpixel.com/subair/">provided free or charge</a>.
+                            Support: <a href="mailto:support@einsteinx2.com">support@einsteinx2.com</a>
                         </p>
+                        <a href="http://itunes.apple.com/us/app/isub-music-streamer/id362920532?mt=8"><img src="inc/img/available_on_appstore.png" alt="" class="img-center"/></a>
+
                     </div>
                 </div>
             </div>
@@ -141,38 +159,66 @@
             </div>
 
             <div class="featureitem">
-                <a name="isub"></a>
+                <a name="winphone"></a>
 
-                <div class="heading">iSub <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
+                <div class="heading">Subsonic for Windows Phone 7 <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
                 <div class="content">
                     <div class="wide-content">
                         <p>
-                            <img src="inc/img/appstore.png" alt="App Store" class="img-left"/>
-                            <a href="http://einsteinx2.com/projects/isub/">iSub</a> is an iPhone app developed by Ben Baron, and is
-                            available for purchase on the <a href="http://itunes.apple.com/us/app/isub-music-streamer/id362920532?mt=8">App&nbsp;Store</a>.
+                            <img src="inc/img/windows-marketplace.png" alt="Windows Marketplace" class="img-left"/>
+                            <a href="http://www.avzuylen.com/subsonic-music-streamer.aspx">Subsonic Music Streamer</a> is a Windows Phone 7 app developed by Anton Van Zuylen, and is
+                            available for purchase in the Windows Marketplace.
                         </p>
-                        <a href="inc/img/screenshots/screen20.png"><img src="inc/img/screenshots/thumb20.png" alt="" style="margin-left:40px;padding:15px"/></a>
-                        <a href="inc/img/screenshots/screen21.png"><img src="inc/img/screenshots/thumb21.png" alt="" style="padding:15px"/></a>
-                        <a href="inc/img/screenshots/screen22.png"><img src="inc/img/screenshots/thumb22.png" alt="" style="padding:15px"/></a>
+                            <a href="inc/img/screenshots/screen23.png"><img src="inc/img/screenshots/thumb23.png" alt="" style="margin-left:30px;padding:3px"/></a>
+                        <a href="inc/img/screenshots/screen24.png"><img src="inc/img/screenshots/thumb24.png" alt="" style="padding:3px"/></a>
+                        <a href="inc/img/screenshots/screen25.png"><img src="inc/img/screenshots/thumb25.png" alt="" style="padding:3px"/></a>
 
                         <ul class="list">
-                            <li>iPod app style browsing.</li>
-                            <li>Artist search.</li>
-                            <li>Browsing multilevel directories.</li>
-                            <li>Caching of all browsed directories for speedy browsing.</li>
-                            <li>Album art while browsing.</li>
-                            <li>Full size album art in player view.</li>
-                            <li>Resuming music when interrupted by a call or text or when closing the app using the home button while a song is playing.</li>
-                            <li>Each music folder is a playlist automatically so when you select a track from an album it will continue to play the rest of the tracks in that album.</li>
-                            <li>Shuffle, Repeat 1, and Repeat All when playing an album.</li>
-                            <li>Detailed track information by tapping the cover art.</li>
-                            <li>Skipping through tracks.</li>
+                            <li>Always have access to your entire music collection without the need for any third party server or subscription.</li>
+                            <li>Supports all popular formats (WMA, FLAC, MP3, AAC, OCG etc).</li>
+                            <li>Keep listening when you have no cellular coverage due to full local storage including cover art, lyrics and info.</li>
+                            <li>Manage your local stored music in a convenient way.</li>
+                            <li>Control the quality of the music by controlling the streaming bit-rate.</li>
+                            <li>Create playlists on the device which can contain songs from different servers simultaneously.</li>
+                            <li>Add easily your 'newest music', your 'recently played albums', or your 'frequently played albums'.</li>
+                            <li>Add random albums.</li>
+                            <li>Full search support.</li>
+                            <li>Keep playing behind locked screen.</li>
+                            <li>Full integration with the Music and Video hub.</li>
+                            <li>Automatic storage management of local stored songs.</li>
+                            <li>Allowing to lock specific local songs.</li>
                         </ul>
-                        <p>
-                            Support: <a href="mailto:support@einsteinx2.com">support@einsteinx2.com</a>
-                        </p>
-                        <a href="http://itunes.apple.com/us/app/isub-music-streamer/id362920532?mt=8"><img src="inc/img/available_on_appstore.png" alt="" class="img-center"/></a>
 
+                        <p>
+                            This application focuses on fast and easy handling with two main pages:
+                            "Now playing" where you see and control all what is currently playing including cover art and lyrics; and
+                            "Add to now playing" providing different methods for adding albums and songs to your playlist.
+                            Start the application and the music is playing (just one click)!
+                        </p>
+                        <p>
+                            Support: <a href="mailto:anton@avzuylen.com">anton@avzuylen.com</a>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="featureitem">
+                <a name="subair"></a>
+
+                <div class="heading">SubAir <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
+                <div class="content">
+                    <div class="wide-content">
+                        <p>
+                            <img src="inc/img/air.png" alt="Adobe AIR" class="img-left"/>
+                            <a href="http://www.nonpixel.com/subair/">SubAir</a> is a rich desktop application for Subsonic implemented with Adobe&copy; AIR.
+                            Works with Windows, Mac and Linux.
+                        </p>
+                        <a href="inc/img/screenshots/screen16.png"><img src="inc/img/screenshots/thumb16.png" alt="" class="img-center"/></a>
+                        <p>
+                            Developed and maintained by <a href="http://www.nonpixel.com/">Jim Resnowski</a>, and
+                            <a href="http://www.nonpixel.com/subair/">provided free or charge</a>.
+                        </p>
                     </div>
                 </div>
             </div>
