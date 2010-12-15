@@ -303,7 +303,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         int count = entryList.getCount();
         for (int i = 0; i < count; i++) {
             MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(i);
-            if (entry != null && !entry.isDirectory()) {
+            if (entry != null && !entry.isDirectory() && !entry.isVideo()) {
                 entryList.setItemChecked(i, selected);
             }
         }
@@ -382,9 +382,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     }
 
     private void playVideo(MusicDirectory.Entry entry) {
-//        String url = MusicServiceFactory.getMusicService(this).getVideoUrl(this, entry.getId());
-//        Intent intent = new Intent(Intent.ACTION_VIEW);
-//        intent.setData(Uri.parse(url));
         Intent intent = new Intent(this, PlayVideoActivity.class);
         intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, entry.getId());
 
