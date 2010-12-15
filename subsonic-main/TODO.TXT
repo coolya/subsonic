@@ -13,7 +13,6 @@ Use ffmpeg to generate tags and cover art.
     c:/subsonic/transcode/ffmpeg -itsoffset -4 -i Constellation\ 480p.wmv -vcodec mjpeg -vframes 1 -an -f rawvideo -s 320x240 test.jpg
     c:/subsonic/transcode/ffmpeg -itsoffset -4 -i Constellation\ 480p.wmv -vframes 1 -an -f mjpeg -s 320x240 test.jpg
     c:/subsonic/transcode/ffmpeg -itsoffset -4 -i Constellation\ 480p.wmv -vframes 1 -an -f mjpeg test.jpg
-Never return video files when getting random songs.
 Update recommended settings
 Remove/hide transcoding step 3?
 Premium feature: Update doc

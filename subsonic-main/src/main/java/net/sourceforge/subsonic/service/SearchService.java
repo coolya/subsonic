@@ -375,7 +375,7 @@ public class SearchService {
 
             if (file.exists() && securityService.isReadAllowed(file)) {
                 MusicFile musicFile = musicFileService.getMusicFile(file);
-                if (!result.contains(musicFile)) {
+                if (!result.contains(musicFile) && !musicFile.isVideo()) {
                     result.add(musicFile);
 
                     // Enough songs found?
