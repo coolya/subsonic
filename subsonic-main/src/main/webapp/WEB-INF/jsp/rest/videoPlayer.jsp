@@ -42,7 +42,7 @@
                 name:"player1"
             };
 
-            swfobject.embedSWF("<c:url value="/flash/jw-player-5.3.swf"/>", "placeholder1", "360", "240", "9.0.0", false, flashvars, params, attributes);
+            swfobject.embedSWF("<c:url value="/flash/jw-player-5.4.swf"/>", "placeholder1", "360", "240", "9.0.0", false, flashvars, params, attributes);
         }
 
     </script>

@@ -18,10 +18,6 @@ Update recommended settings
 Remove/hide transcoding step 3?
 Premium feature: Update doc
 Support DVD images
-Upgrade JW Player.
-Android
-  Add video icon for videos.
-    SelectAlbumActivity, SearchActivity
 -deinterlace necessary?
 
 DONE IN ANDROID 2.2
