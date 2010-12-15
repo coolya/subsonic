@@ -165,7 +165,8 @@ public class SearchActivity extends SubsonicTabActivity {
 
         boolean isArtist = selectedItem instanceof Artist;
         boolean isAlbum = selectedItem instanceof MusicDirectory.Entry && ((MusicDirectory.Entry) selectedItem).isDirectory();
-        boolean isSong = selectedItem instanceof MusicDirectory.Entry && (!((MusicDirectory.Entry) selectedItem).isDirectory());
+        boolean isSong = selectedItem instanceof MusicDirectory.Entry && (!((MusicDirectory.Entry) selectedItem).isDirectory())
+                && (!((MusicDirectory.Entry) selectedItem).isVideo());
 
         if (isArtist || isAlbum) {
             menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_all);

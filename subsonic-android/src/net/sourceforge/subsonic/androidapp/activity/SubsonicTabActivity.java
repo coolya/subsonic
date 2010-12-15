@@ -216,7 +216,9 @@ public class SubsonicTabActivity extends Activity {
                 }
 
                 for (MusicDirectory.Entry song : parent.getChildren(false, true)) {
-                    songs.add(song);
+                    if (!song.isVideo()) {
+                        songs.add(song);
+                    }
                 }
                 for (MusicDirectory.Entry dir : parent.getChildren(true, false)) {
                     MusicService musicService = MusicServiceFactory.getMusicService(SubsonicTabActivity.this);

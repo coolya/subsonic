@@ -21,7 +21,7 @@ Support DVD images
 Upgrade JW Player.
 Android
   Add video icon for videos.
-  Never put videos in playlist.
+    SelectAlbumActivity, SearchActivity
 -deinterlace necessary?
 
 DONE IN ANDROID 2.2
