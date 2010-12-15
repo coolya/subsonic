@@ -22,6 +22,7 @@ package net.sourceforge.subsonic.androidapp.activity;
 import java.lang.reflect.Method;
 
 import android.app.Activity;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
@@ -48,6 +49,7 @@ public final class PlayVideoActivity extends Activity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         setContentView(R.layout.play_video);
 

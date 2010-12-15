@@ -20,20 +20,15 @@ Premium feature: Update doc
 Support DVD images
 Upgrade JW Player.
 Android
-  Try to uninstall Flash plugin.
   Add video icon for videos.
   Never put videos in playlist.
 -deinterlace necessary?
 
-DONE IN ANDROID 2.1
+DONE IN ANDROID 2.2
 --------------------
-Add music folder filter on top of artist list.
-Improved artist caching.
-Bugfix: First track repeat.
-  https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12cdb8c3d7b52f57
 
 
-TODO IN ANDROID 2.1
+TODO IN ANDROID 2.2
 -------------------
 Option to control media button behaviour (always, never, only when active)
 Reset shuffle play buffer when changing server.
