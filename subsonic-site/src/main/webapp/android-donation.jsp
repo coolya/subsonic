@@ -20,7 +20,7 @@
     As a donor you get the following benefits:
 </p>
 <ul>
-    <li>Unlimited streaming and downloading with the Subsonic Android, iPhone and AIR apps.</li>
+    <li>Stream music to Android, iPhone and Windows Phone 7.</li>
     <li>A personal web address for your Subsonic server (<em>yourname</em>.subsonic.org).</li>
     <li>No ads in the Subsonic web interface.</li>
     <li>Free access to new premium features.</li>

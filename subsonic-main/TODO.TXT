@@ -16,8 +16,9 @@ Use ffmpeg to generate tags and cover art.
 Update recommended settings
 Remove/hide transcoding step 3?
 Premium feature: Update doc
-Support DVD images
+Support DVD images (.vob)
 -deinterlace necessary?
+sub-mada2.sample.vob broken 	
 
 DONE IN ANDROID 2.2
 --------------------

@@ -20,7 +20,7 @@
         <ul class="stars column-left">
             <li>Listen to your music wherever you are. Share your collection with family and friends.</li>
             <li>Browse and manage your music collection with the user-friendly web interface, or use the <a href="apps.jsp">AIR desktop app</a>.</li>
-            <li>Stream music to <a href="apps.jsp">iPhone</a> or <a href="apps.jsp">Android</a>.</li>
+            <li>Stream music to <a href="apps.jsp">Android</a>, <a href="apps.jsp">iPhone</a> and <a href="apps.jsp">Windows Phone&nbsp;7</a>.</li>
             <li>Convert and stream lossless music on the fly.</li>
         </ul>
         <ul class="stars column-right">

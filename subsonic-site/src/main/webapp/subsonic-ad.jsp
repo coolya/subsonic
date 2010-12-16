@@ -23,13 +23,13 @@
             <img src="inc/img/donate.png" alt="Subsonic" class="img-center">
         <h2 style="padding-top:5px">Love Subsonic?</h2>
         <p>
-            Please support continued development and maintenance by giving a donation.
+            Please support continued development and maintenance by giving a donation. 
         </p>
         <p>
             Donors get access to premium features like:
         </p>
         <p>
-            o Subsonic on Android, iPhone and AIR.<br>
+            o Stream music to your mobile phone.<br>
             o Your personal server address: <em>you</em>.subsonic.org<br>
             o No ads.<br>
         </p>

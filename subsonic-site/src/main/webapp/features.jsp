@@ -50,9 +50,9 @@
         </div>
         <div class="description">
             <ul class="list">
-                <li>Stream or download music directly to your Android mobile phone, using the <a href="apps.jsp">Subsonic Android app</a>.</li>
-                <li>Two iPhone apps are also available: <a href="apps.jsp">Z-Subsonic</a> and <a href="apps.jsp">iSub</a>.</li>
-                <li>Or use the AIR desktop application, <a href="apps.jsp">SubAir</a>.</li>
+                <li>Stream or download music directly to your phone. Apps available for <a href="apps.jsp">Android</a>,
+                    <a href="apps.jsp">iPhone</a> and <a href="apps.jsp">Windows Phone&nbsp;7</a></li>
+                <li>Use the AIR desktop application, <a href="apps.jsp">SubAir</a>.</li>
                 <li>Control Subsonic from any mobile phone or PDA, using the WAP interface.</li>
                 <li>Supports multiple simultaneous players. Manage any player from any location.</li>
                 <li>Upload and download files to/from Subsonic, with automatic zipping and unzipping.</li>
