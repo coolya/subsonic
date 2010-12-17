@@ -179,11 +179,11 @@ public class CachedMusicService implements MusicService {
     private void checkSettingsChanged(Context context) {
         String newUrl = Util.getRestUrl(context, null);
         if (!Util.equals(newUrl, restUrl)) {
+            cachedMusicFolders.clear();
             cachedMusicDirectories.clear();
             cachedLicenseValid.clear();
             cachedIndexes.clear();
             cachedPlaylists.clear();
-            cachedMusicDirectories.clear();
             restUrl = newUrl;
         }
     }
