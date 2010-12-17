@@ -5,25 +5,12 @@ Slideshow
 
 VIDEO
 -----
-Don't go back in browser.
-Don't dim screen.
-Buy new JW license
-http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4689
-Use jwembedder?
-  http://www.longtailvideo.com/support/jw-player/jw-player-for-flash-v5/12538/supported-player-embed-methods#jwembedder
-Rename "mask" to "file types" or something.
-Thumbnail support, for instance by using file name conventions.
-Show one thumbnail for each video file, using a generic if not found.
-Use ffmpeg to generate tags and cover art.
-    c:/subsonic/transcode/ffmpeg -itsoffset -4 -i Constellation\ 480p.wmv -vcodec mjpeg -vframes 1 -an -f rawvideo -s 320x240 test.jpg
-    c:/subsonic/transcode/ffmpeg -itsoffset -4 -i Constellation\ 480p.wmv -vframes 1 -an -f mjpeg -s 320x240 test.jpg
-    c:/subsonic/transcode/ffmpeg -itsoffset -4 -i Constellation\ 480p.wmv -vframes 1 -an -f mjpeg test.jpg
-Update recommended settings
-Remove/hide transcoding step 3?
-Premium feature: Update doc
 Support DVD images (.vob)
 -deinterlace necessary?
-sub-mada2.sample.vob broken 	
+Buy new JW license
+Update recommended settings
+Premium feature: Update doc
+http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4689
 
 DONE IN ANDROID 2.2
 --------------------
@@ -107,14 +94,13 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN 4.3
 ----------------
+Always set headless mode.
 
 TODO IN 4.3
 -----------------
-Remove APE support.
 Build ffmpeg for x86 on Mac
   https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12cb55940868506d
 Test in Tomcat 7.
-Always set headless mode.
 According to Petter, overriding SUBSONIC_HOME doesn't work in Debian.
 Improve paypal-landing. Mention spam folder.
 Email forgotten password, using subsonic backend service.
