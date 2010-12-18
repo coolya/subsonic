@@ -100,9 +100,11 @@ TODO IN 4.3
 -----------------
 Build ffmpeg for x86 on Mac
   https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12cb55940868506d
+  ./configure --disable-shared --disable-mmx --arch=x86_64
+  ./configure --arch=ppc --enable-altivec --extra-cflags="-arch ppc" --extra-ldflags="-arch ppc" --enable-cross-compile --target-os=darwin
+
 Test in Tomcat 7.
 According to Petter, overriding SUBSONIC_HOME doesn't work in Debian.
-Improve paypal-landing. Mention spam folder.
 Email forgotten password, using subsonic backend service.
 Estimate content-length for transcoded/downsampled files.
 maxBitRate in REST should override per-user settings.

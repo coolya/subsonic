@@ -18,7 +18,7 @@
 </p>
 
 <p>
-    If you haven't received the email within an hour, remember to check you spam folder. Feel free to
+    If you haven't received the email within an hour, <b>remember to check you spam folder</b>. Feel free to
     <a href="mailto:sindre@activeobjects.no">take contact</a> if you have any questions or issues
     regarding the payment or the Subsonic license key.
 </p>
