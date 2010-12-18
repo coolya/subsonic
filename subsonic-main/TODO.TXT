@@ -94,7 +94,11 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN 4.3
 ----------------
+Video support
 Always set headless mode.
+maxBitRate in REST should override per-user settings.
+Bitrate isn't replaced properly in ffmpeg
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=17205#17205
 
 TODO IN 4.3
 -----------------
@@ -102,21 +106,18 @@ Build ffmpeg for x86 on Mac
   https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12cb55940868506d
   ./configure --disable-shared --disable-mmx --arch=x86_64
   ./configure --arch=ppc --enable-altivec --extra-cflags="-arch ppc" --extra-ldflags="-arch ppc" --enable-cross-compile --target-os=darwin
+Add email address to user
 
-Test in Tomcat 7.
 According to Petter, overriding SUBSONIC_HOME doesn't work in Debian.
 Email forgotten password, using subsonic backend service.
 Estimate content-length for transcoded/downsampled files.
-maxBitRate in REST should override per-user settings.
-Bitrate isn't replaced properly in ffmpeg
-  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=17205#17205
-Change wording of "unlimited use".
 Complete getjar registration.
 Test non-ascii transcoding on linux.
 For transcoded files, display both source and target formats in gui.
 REST method supporting "Play random", or shuffle for a sub-tree
 Disable scrobbling while downloading; Add new scrobble command?
 Select wrong player when clicking "Settings" in playlist frame.
+Upgrade DWR to 3.0rc2 when in becomes available (to make it work with Tomcat 7)
 Transcoding fails if filename contains colons or quotes.
   https://mail.google.com/a/activeobjects.no/#inbox/12c1d386b04629d3
 HTML5/iPad
@@ -128,9 +129,7 @@ Subsonic Premium
 Add one-liner intro in web page, a la http://www.rogueamoeba.com/nicecast/
   o No monthly fees, no uploading, no syncing
 Change icons all around.
-Deprecate current cover art method.  Make new which takes song/album ID.
 Add trialExpires to REST API.
-Test getUser/deleteUser
 Change font in logo?
 Add "append" parameter to createPlaylist REST method.
 Modify port number and memory on Mac.

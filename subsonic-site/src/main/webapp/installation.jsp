@@ -69,7 +69,7 @@
             <a href="inc/img/mac-installer.png"><img class="img-right" src="inc/img/mac-installer-small.png" alt="Mac Installer"/></a>
             <p>
                 Download the installation package and run it. This installs Subsonic.app in Applications. Start it by opening Applications and
-                click the Subsonic icon.  A small headset icon will appear in the menu bar. If you want Subsonic to start automatically when you log in, 
+                click the Subsonic icon.  A small headset icon will appear in the menu bar. If you want Subsonic to start automatically when you log in,
                 right-click on the Subsonic icon in the dock and select "Open at Login".
             </p>
             <p>
@@ -202,6 +202,7 @@
                 Use this option if you want to deploy Subsonic in an external server, such as Tomcat, Jetty, GlassFish or Geronimo. Subsonic comes
                 packaged as a standard Java web application, <code>subsonic.war</code>, which can be easily deployed in any compatible servlet container.
                 The most commonly used server is Tomcat, and the rest of this section describes how to install or upgrade Subsonic on a Tomcat server.
+                (Please note that Subsonic currently doesn't work with Tomcat&nbsp;7.)
             </p>
 
             <ul>
