@@ -22,6 +22,7 @@ import java.io.PrintWriter;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,6 +36,7 @@ import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.dao.DataAccessException;
 import net.sourceforge.subsonic.backend.dao.DaoHelper;
 import net.sourceforge.subsonic.backend.Util;
+import net.sourceforge.subsonic.backend.service.EmailSession;
 
 /**
  * Multi-controller used for simple pages.
@@ -60,6 +62,20 @@ public class MultiController extends MultiActionController {
         writer.println("SUBSONIC_VERSION_BEGIN" + SUBSONIC_VERSION + "SUBSONIC_VERSION_END");
         writer.println("SUBSONIC_FULL_VERSION_BEGIN" + SUBSONIC_VERSION + "SUBSONIC_FULL_VERSION_END");
         writer.println("SUBSONIC_BETA_VERSION_BEGIN" + SUBSONIC_BETA_VERSION + "SUBSONIC_BETA_VERSION_END");
+
+        return null;
+    }
+
+    public ModelAndView sendMail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String from = request.getParameter("from");
+        String to = request.getParameter("to");
+        String subject = request.getParameter("subject");
+        String text = request.getParameter("text");
+
+        EmailSession session = new EmailSession();
+        session.sendMessage(from, Arrays.asList(to), null, null, null, subject, text);
+
+        LOG.info("Sent email on behalf of " + request.getRemoteAddr() + " to " + to + " with subject '" + subject + "'");
 
         return null;
     }
