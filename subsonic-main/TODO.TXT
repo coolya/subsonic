@@ -5,6 +5,20 @@ Slideshow
 
 VIDEO
 -----
+Add .divx
+Support time offset in LAME commands.
+  Make progress bar react to it.
+Select inital bitrate based on network type.
+Use 96kbps audio
+  Specify max width/height (640x480)
+  The suggested bitrates for streaming are*:
+  Low – 96 Kbps video, 64 Kbps audio
+  Medium – 256 Kbps video, 64 Kbps audio
+  High – 800 Kbps video, 64 Kbps audio
+  The iPhone screen size is: 480×320
+  128, 256, 384, 512, 768, 1024, 1280, 1536, 2048, 2560
+  http://www.longtailvideo.com/support/jw-player/26/web-video-compression#Delivering_Video_Files
+Set video size.
 Support DVD images (.vob)
 -deinterlace necessary?
 Buy new JW license
