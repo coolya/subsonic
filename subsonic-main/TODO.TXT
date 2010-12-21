@@ -40,7 +40,8 @@ Long-click:
   Use popup for voice search?
   Test voice search.
   Simplify code in SelectAlbumActivity?
-AIDL interface.
+Improve horizontal layout, move tab buttons to the right.
+Increase font size of song title.
 Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone. (onNewIntent?)
 Still problems with "Download" and "Queue" not triggering download?
