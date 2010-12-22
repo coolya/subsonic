@@ -57,7 +57,7 @@
 </div>
 
 <div style="padding-top:0.7em;padding-bottom:0.7em">
-    <form action="rest/videoPlayer.view" method="post" name="videoForm">
+    <form action="videoPlayer.view" method="post" name="videoForm">
     <input type="hidden" name="id" value="${model.id}">
     <input type="hidden" name="u" value="${model.u}">
     <input type="hidden" name="p" value="${model.p}">
