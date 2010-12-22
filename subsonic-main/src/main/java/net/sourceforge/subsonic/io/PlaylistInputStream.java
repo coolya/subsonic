@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.io;
 
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.VideoTranscodingSettings;
 import net.sourceforge.subsonic.util.FileUtil;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
@@ -45,20 +46,22 @@ public class PlaylistInputStream extends InputStream {
     private final Player player;
     private final TransferStatus status;
     private final Integer maxBitRate;
+    private final VideoTranscodingSettings videoTranscodingSettings;
     private final SearchService searchService;
     private final TranscodingService transcodingService;
     private final MusicInfoService musicInfoService;
-    private final AudioScrobblerService audioScrobblerService;
 
+    private final AudioScrobblerService audioScrobblerService;
     private MusicFile currentFile;
     private InputStream currentInputStream;
 
-    public PlaylistInputStream(Player player, TransferStatus status, Integer maxBitRate, TranscodingService transcodingService,
+    public PlaylistInputStream(Player player, TransferStatus status, Integer maxBitRate, VideoTranscodingSettings videoTranscodingSettings, TranscodingService transcodingService,
             MusicInfoService musicInfoService, AudioScrobblerService audioScrobblerService,
             SearchService searchService) {
         this.player = player;
         this.status = status;
         this.maxBitRate = maxBitRate;
+        this.videoTranscodingSettings = videoTranscodingSettings;
         this.transcodingService = transcodingService;
         this.musicInfoService = musicInfoService;
         this.audioScrobblerService = audioScrobblerService;
@@ -123,7 +126,7 @@ public class PlaylistInputStream extends InputStream {
             updateStatistics(file);
             audioScrobblerService.register(file, player.getUsername(), false);
 
-            currentInputStream = transcodingService.getTranscodedInputStream(file, player, maxBitRate);
+            currentInputStream = transcodingService.getTranscodedInputStream(file, player, maxBitRate, videoTranscodingSettings);
             currentFile = file;
             status.setFile(currentFile.getFile());
         }

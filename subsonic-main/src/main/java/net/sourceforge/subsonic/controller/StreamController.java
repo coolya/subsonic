@@ -18,6 +18,7 @@
  */
 package net.sourceforge.subsonic.controller;
 
+import java.awt.Dimension;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.math.LongRange;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
@@ -37,6 +39,7 @@ import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.domain.TransferStatus;
 import net.sourceforge.subsonic.domain.User;
+import net.sourceforge.subsonic.domain.VideoTranscodingSettings;
 import net.sourceforge.subsonic.io.PlaylistInputStream;
 import net.sourceforge.subsonic.io.RangeOutputStream;
 import net.sourceforge.subsonic.io.ShoutCastOutputStream;
@@ -81,11 +84,6 @@ public class StreamController implements Controller {
         Player player = playerService.getPlayer(request, response, false, true);
         User user = securityService.getUserByName(player.getUsername());
 
-        Integer maxBitRate = ServletRequestUtils.getIntParameter(request, "maxBitRate");
-        if (maxBitRate != null && maxBitRate == 0) {
-            maxBitRate = Integer.MAX_VALUE;
-        }
-
         try {
 
             if (!user.isStreamRole()) {
@@ -107,6 +105,12 @@ public class StreamController implements Controller {
 
             String contentType = StringUtil.getMimeType(request.getParameter("suffix"));
             response.setContentType(contentType);
+
+            Integer maxBitRate = ServletRequestUtils.getIntParameter(request, "maxBitRate");
+            if (maxBitRate != null && maxBitRate == 0) {
+                maxBitRate = Integer.MAX_VALUE;
+            }
+            VideoTranscodingSettings videoTranscodingSettings = null;
 
             // If "path" request parameter is set, this is a request for a single file
             // (typically from the embedded Flash player). In that case, create a separate
@@ -143,6 +147,10 @@ public class StreamController implements Controller {
 
                 String transcodedSuffix = transcodingService.getSuffix(player, file);
                 response.setContentType(StringUtil.getMimeType(transcodedSuffix));
+
+                if (file.isVideo()) {
+                    videoTranscodingSettings = createVideoTranscodingSettings(file, request);
+                }
             }
 
             Playlist playlist = player.getPlaylist();
@@ -158,7 +166,7 @@ public class StreamController implements Controller {
 
             status = statusService.createStreamStatus(player);
 
-            in = new PlaylistInputStream(player, status, maxBitRate, transcodingService, musicInfoService, audioScrobblerService, searchService);
+            in = new PlaylistInputStream(player, status, maxBitRate, videoTranscodingSettings, transcodingService, musicInfoService, audioScrobblerService, searchService);
             OutputStream out = RangeOutputStream.wrap(response.getOutputStream(), range);
 
             // Enabled SHOUTcast, if requested.
@@ -253,6 +261,42 @@ public class StreamController implements Controller {
             LOG.error("Failed to parse and convert time offset: " + offsetSeconds, x);
             return null;
         }
+    }
+
+    private VideoTranscodingSettings createVideoTranscodingSettings(MusicFile file, HttpServletRequest request) throws ServletRequestBindingException {
+        Integer existingWidth = file.getMetaData().getWidth();
+        Integer existingHeight = file.getMetaData().getHeight();
+        Integer maxBitRate = ServletRequestUtils.getIntParameter(request, "maxBitRate");
+        int timeOffset = ServletRequestUtils.getIntParameter(request, "timeOffset", 0);
+        Dimension dim = getSuitableVideoSize(existingWidth, existingHeight, maxBitRate);
+
+        return new VideoTranscodingSettings(dim.width, dim.height, timeOffset);
+    }
+
+    protected Dimension getSuitableVideoSize(Integer existingWidth, Integer existingHeight, Integer maxBitRate) {
+        if (maxBitRate == null) {
+            return new Dimension(320, 240);
+        }
+
+        int w, h;
+        if (maxBitRate <= 600) {
+            w = 320; h = 240;
+        } else if (maxBitRate <= 1000) {
+            w = 480; h = 360;
+        } else {
+            w = 640; h = 480;
+        }
+
+        if (existingWidth == null || existingHeight == null) {
+            return new Dimension(w, h);
+        }
+
+        if (existingWidth < w || existingHeight < h) {
+            return new Dimension(existingWidth, existingHeight);
+        }
+
+        double aspectRate = existingWidth.doubleValue() / existingHeight.doubleValue();
+        return new Dimension((int) Math.round(h * aspectRate), h);
     }
 
     /**

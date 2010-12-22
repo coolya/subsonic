@@ -28,7 +28,7 @@
         var updateNowPlaying = true;
     </script>
 </c:if>
-
+ 
 <h1>
     <img src="<spring:theme code="nowPlayingImage"/>" alt="">
 
@@ -258,7 +258,10 @@
                                 <td ${class} style="padding-right:0.25em">
                                     <span class="detail">
                                         <c:if test="${not empty child.metaData.bitRate}">
-                                ${child.metaData.bitRate} Kbps ${child.metaData.variableBitRate ? "vbr" : ""}
+                                            ${child.metaData.bitRate} Kbps ${child.metaData.variableBitRate ? "vbr" : ""}
+                                        </c:if>
+                                        <c:if test="${child.video and not empty child.metaData.width and not empty child.metaData.height}">
+                                            (${child.metaData.width}x${child.metaData.height})
                                         </c:if>
                                     </span>
                                 </td>

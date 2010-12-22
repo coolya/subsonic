@@ -39,7 +39,7 @@ import java.util.Date;
 public class VideoPlayerController extends ParameterizableViewController {
 
     public static final int DEFAULT_BIT_RATE = 1000;
-    public static final int[] BIT_RATES = {300, 400, 500, 750, 1000, 1500, 2000};
+    public static final int[] BIT_RATES = {300, 400, 500, 700, 1000, 1500, 2000};
     private static final long TRIAL_DAYS = 30L;
 
     private MusicFileService musicFileService;

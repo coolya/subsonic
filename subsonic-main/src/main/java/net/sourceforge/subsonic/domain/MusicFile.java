@@ -503,6 +503,8 @@ public class MusicFile implements Serializable {
         private Integer duration;
         private String format;
         private Long fileSize;
+        private Integer width;
+        private Integer height;
 
         public Integer getDiscNumber() {
             return discNumber;
@@ -640,6 +642,22 @@ public class MusicFile implements Serializable {
 
         public void setFileSize(Long fileSize) {
             this.fileSize = fileSize;
+        }
+
+        public Integer getWidth() {
+            return width;
+        }
+
+        public void setWidth(Integer width) {
+            this.width = width;
+        }
+
+        public Integer getHeight() {
+            return height;
+        }
+
+        public void setHeight(Integer height) {
+            this.height = height;
         }
     }
 

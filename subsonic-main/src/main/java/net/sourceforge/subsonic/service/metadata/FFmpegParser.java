@@ -34,7 +34,7 @@ import net.sourceforge.subsonic.util.StringUtil;
 /**
  * Parses meta data from video files using FFmpeg (http://ffmpeg.org/).
  * <p/>
- * Currently, only duration and bitrate is supported.
+ * Currently duration, bitrate and dimension are supported.
  *
  * @author Sindre Mehus
  */
@@ -43,6 +43,7 @@ public class FFmpegParser extends MetaDataParser {
     private static final Logger LOG = Logger.getLogger(FFmpegParser.class);
     private static final Pattern METADATA_PATTERN = Pattern.compile("Duration: (.*), .*, bitrate: (.*) kb/s.*");
     private static final Pattern DURATION_PATTERN = Pattern.compile("(\\d+):(\\d+):(\\d+).(\\d+)");
+    private static final Pattern DIMENSION_PATTERN = Pattern.compile(".*Video.*?, (\\d+)x(\\d+), .*");
 
     private TranscodingService transcodingService;
 
@@ -84,6 +85,14 @@ public class FFmpegParser extends MetaDataParser {
 
                     metaData.setDuration(parseDuration(duration));
                     metaData.setBitRate(Integer.valueOf(bitrate));
+                } else {
+                    matcher = DIMENSION_PATTERN.matcher(line);
+                    if (matcher.matches()) {
+                        metaData.setWidth(Integer.valueOf(matcher.group(1)));
+                        metaData.setHeight(Integer.valueOf(matcher.group(2)));
+
+                        System.out.println(metaData.getWidth() + "x" + metaData.getHeight());
+                    }
                 }
             }
         } catch (Throwable x) {

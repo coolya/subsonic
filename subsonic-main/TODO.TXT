@@ -6,10 +6,11 @@ Slideshow
 VIDEO
 -----
 Add .divx
-Support time offset in LAME commands.
+Support time offset in ffmpeg commands.
   Make progress bar react to it.
+  Android: Create "Jump" button.
 Select inital bitrate based on network type.
-Use 96kbps audio
+Use 96kbps audio, aac?
   Specify max width/height (640x480)
   The suggested bitrates for streaming are*:
   Low – 96 Kbps video, 64 Kbps audio
@@ -32,7 +33,9 @@ DONE IN ANDROID 2.2
 
 TODO IN ANDROID 2.2
 -------------------
+Refresh should clear list of music folders etc.
 Option to control media button behaviour (always, never, only when active)
+  "React to media button"
 Reset shuffle play buffer when changing server.
 Long-click:
   Long-click artist -> Play random
@@ -122,7 +125,7 @@ Build ffmpeg for x86 on Mac
   ./configure --disable-shared --disable-mmx --arch=x86_64
   ./configure --arch=ppc --enable-altivec --extra-cflags="-arch ppc" --extra-ldflags="-arch ppc" --enable-cross-compile --target-os=darwin
 Add email address to user
-
+REST support for disabling scrobbling.
 According to Petter, overriding SUBSONIC_HOME doesn't work in Debian.
 Email forgotten password, using subsonic backend service.
 Estimate content-length for transcoded/downsampled files.

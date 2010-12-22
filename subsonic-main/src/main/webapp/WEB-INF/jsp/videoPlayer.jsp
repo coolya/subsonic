@@ -20,6 +20,7 @@
                 file:"${streamUrl}%26maxBitRate=${model.maxBitRate}%26player=${model.player}%26suffix=.flv",
                 </c:if>
                 skin:"<c:url value="/flash/whotube.zip"/>",
+//                plugins:"metaviewer-1",
                 screencolor:"000000",
                 controlbar:"over",
                 duration:"${model.video.metaData.duration}",
