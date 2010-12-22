@@ -92,6 +92,7 @@ public class CachedMusicService implements MusicService {
         if (refresh) {
             cachedIndexes.clear();
             cachedMusicFolders.clear();
+            cachedMusicDirectories.clear();
         }
         Indexes result = cachedIndexes.get();
         if (result == null) {

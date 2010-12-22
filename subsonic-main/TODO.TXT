@@ -5,6 +5,7 @@ Slideshow
 
 VIDEO
 -----
+Support .ogv
 Add .divx
   Android: Create "Jump" button.
   When switching bit rate, also jump to correct time offset(?)
@@ -24,7 +25,6 @@ DONE IN ANDROID 2.2
 
 TODO IN ANDROID 2.2
 -------------------
-Refresh should clear list of music folders etc.
 Option to control media button behaviour (always, never, only when active)
   "React to media button"
 Reset shuffle play buffer when changing server.
