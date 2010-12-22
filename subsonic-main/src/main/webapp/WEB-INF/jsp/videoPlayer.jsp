@@ -68,9 +68,7 @@
     <div id="placeholder1"><a href="http://www.adobe.com/go/getflashplayer" target="_blank"><fmt:message key="playlist.getflash"/></a></div>
 </div>
 
-<sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.video.parent.path}"/></sub:url>
-
-<div class="detail" style="padding-top:0.7em;padding-bottom:0.7em">
+<div style="padding-top:0.7em;padding-bottom:0.7em">
 
 <form action="videoPlayer.view" method="post" name="videoForm">
     <input type="hidden" name="path" value="${model.video.path}">
@@ -99,10 +97,12 @@
                 </c:otherwise>
             </c:choose>
         </c:forEach>
-    </select></form>
+    </select>
+</form>
 </div>
 
 <div style="padding-bottom:0.5em">
+    <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.video.parent.path}"/></sub:url>
     <div class="back"><a href="${backUrl}"><fmt:message key="common.back"/></a></div>
 </div>
 

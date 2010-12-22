@@ -89,7 +89,7 @@ public class VideoPlayerController extends ParameterizableViewController {
         return result;
     }
 
-    private Map<String, Integer> createSkipOffsets(int durationSeconds) {
+    public static Map<String, Integer> createSkipOffsets(int durationSeconds) {
         LinkedHashMap<String, Integer> result = new LinkedHashMap<String, Integer>();
         for (int i = 0; i < durationSeconds; i += 60) {
             result.put(StringUtil.formatDuration(i), i);

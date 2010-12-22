@@ -744,18 +744,30 @@ public class RESTController extends MultiActionController {
     public ModelAndView videoPlayer(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
 
-        String path = request.getParameter("path");
-
         Map<String, Object> map = new HashMap<String, Object>();
+        String path = request.getParameter("path");
+        MusicFile file = musicFileService.getMusicFile(path);
+
+        int timeOffset = ServletRequestUtils.getIntParameter(request, "timeOffset", 0);
+        timeOffset = Math.max(0, timeOffset);
+        Integer duration = file.getMetaData().getDuration();
+        if (duration != null) {
+            map.put("skipOffsets", VideoPlayerController.createSkipOffsets(duration));
+            timeOffset = Math.min(duration, timeOffset);
+            duration -= timeOffset;
+        }
+
         map.put("id", request.getParameter("id"));
         map.put("u", request.getParameter("u"));
         map.put("p", request.getParameter("p"));
         map.put("c", request.getParameter("c"));
         map.put("v", request.getParameter("v"));
-        map.put("video", musicFileService.getMusicFile(path));
+        map.put("video", file);
         map.put("maxBitRate", ServletRequestUtils.getIntParameter(request, "maxBitRate", VideoPlayerController.DEFAULT_BIT_RATE));
-        map.put("autoplay", ServletRequestUtils.getBooleanParameter(request, "autoplay", true));
+        map.put("duration", duration);
+        map.put("timeOffset", timeOffset);
         map.put("bitRates", VideoPlayerController.BIT_RATES);
+        map.put("autoplay", ServletRequestUtils.getBooleanParameter(request, "autoplay", true));
 
         ModelAndView result = new ModelAndView("rest/videoPlayer");
         result.addObject("model", map);
