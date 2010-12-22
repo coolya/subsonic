@@ -17,13 +17,13 @@
             var flashvars = {
                 id:"player1",
                 <c:if test="${not (model.trial and model.trialExpired)}">
-                file:"${streamUrl}%26maxBitRate=${model.maxBitRate}%26player=${model.player}%26suffix=.flv",
+                file:"${streamUrl}%26maxBitRate=${model.maxBitRate}%26timeOffset=${model.timeOffset}%26player=${model.player}%26suffix=.flv",
                 </c:if>
                 skin:"<c:url value="/flash/whotube.zip"/>",
 //                plugins:"metaviewer-1",
                 screencolor:"000000",
                 controlbar:"over",
-                duration:"${model.video.metaData.duration}",
+                duration:"${model.duration}",
                 autostart:"true",
                 backcolor:"<spring:theme code="backgroundColor"/>",
                 frontcolor:"<spring:theme code="textColor"/>",
@@ -71,19 +71,35 @@
 <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.video.parent.path}"/></sub:url>
 
 <div class="detail" style="padding-top:0.7em;padding-bottom:0.7em">
-    <span style="padding-right:0.5em"><fmt:message key="videoplayer.bitrate"/></span>
-    <c:forEach items="${model.bitRates}" var="bitRate">
-        <span style="padding-right:0.5em">
-            <sub:url value="/videoPlayer.view" var="videoUrl">
-                <sub:param name="path" value="${model.video.path}"/>
-                <sub:param name="maxBitRate" value="${bitRate}"/>
-            </sub:url>
+
+<form action="videoPlayer.view" method="post" name="videoForm">
+    <input type="hidden" name="path" value="${model.video.path}">
+
+    <select name="timeOffset" onchange="document.videoForm.submit()" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em">
+        <c:forEach items="${model.skipOffsets}" var="skipOffset">
             <c:choose>
-                <c:when test="${bitRate eq model.maxBitRate}"><b>${bitRate}</b></c:when>
-                <c:otherwise><a href="${videoUrl}">${bitRate}</a></c:otherwise>
+                <c:when test="${skipOffset.value eq model.timeOffset}">
+                    <option selected="selected" value="${skipOffset.value}">${skipOffset.key}</option>
+                </c:when>
+                <c:otherwise>
+                    <option value="${skipOffset.value}">${skipOffset.key}</option>
+                </c:otherwise>
             </c:choose>
-        </span>
-    </c:forEach>
+        </c:forEach>
+    </select>
+
+    <select name="maxBitRate" onchange="document.videoForm.submit()" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em">
+        <c:forEach items="${model.bitRates}" var="bitRate">
+            <c:choose>
+                <c:when test="${bitRate eq model.maxBitRate}">
+                    <option selected="selected" value="${bitRate}">${bitRate} Kbps</option>
+                </c:when>
+                <c:otherwise>
+                    <option value="${bitRate}">${bitRate} Kbps</option>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </select></form>
 </div>
 
 <div style="padding-bottom:0.5em">

@@ -212,6 +212,28 @@ public final class StringUtil {
     }
 
     /**
+     * Formats a duration with hours, minutes and seconds, e.g., "1:23:45"
+     */
+    public static String formatDuration(int seconds) {
+        int hours = seconds / 3600;
+        seconds -= hours * 3600;
+        int minutes = seconds / 60;
+        int secs = seconds % 60;
+
+        StringBuilder builder = new StringBuilder(8);
+        builder.append(hours).append(":");
+        if (minutes < 10) {
+            builder.append("0");
+        }
+        builder.append(minutes).append(":");
+        if (secs < 10) {
+            builder.append("0");
+        }
+        builder.append(secs);
+        return builder.toString();
+    }
+
+    /**
      * Splits the input string. White space is interpreted as separator token. Double quotes
      * are interpreted as grouping operator. <br/>
      * For instance, the input <code>"u2 rem "greatest hits""</code> will return an array with

@@ -90,8 +90,6 @@ public class FFmpegParser extends MetaDataParser {
                     if (matcher.matches()) {
                         metaData.setWidth(Integer.valueOf(matcher.group(1)));
                         metaData.setHeight(Integer.valueOf(matcher.group(2)));
-
-                        System.out.println(metaData.getWidth() + "x" + metaData.getHeight());
                     }
                 }
             }
