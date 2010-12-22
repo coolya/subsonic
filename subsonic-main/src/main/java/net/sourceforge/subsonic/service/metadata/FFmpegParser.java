@@ -43,7 +43,7 @@ public class FFmpegParser extends MetaDataParser {
     private static final Logger LOG = Logger.getLogger(FFmpegParser.class);
     private static final Pattern METADATA_PATTERN = Pattern.compile("Duration: (.*), .*, bitrate: (.*) kb/s.*");
     private static final Pattern DURATION_PATTERN = Pattern.compile("(\\d+):(\\d+):(\\d+).(\\d+)");
-    private static final Pattern DIMENSION_PATTERN = Pattern.compile(".*Video.*?, (\\d+)x(\\d+), .*");
+    private static final Pattern DIMENSION_PATTERN = Pattern.compile(".*Video.*?, (\\d+)x(\\d+).*");
 
     private TranscodingService transcodingService;
 
