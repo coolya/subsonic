@@ -17,7 +17,7 @@
             var flashvars = {
                 id:"player1",
                 <c:if test="${not (model.trial and model.trialExpired)}">
-                file:"${streamUrl}%26maxBitRate=${model.maxBitRate}%26timeOffset=${model.timeOffset}%26player=${model.player}%26suffix=.flv",
+                file:"${streamUrl}%26maxBitRate=${model.maxBitRate}%26timeOffset=${model.timeOffset}%26player=${model.player}",
                 </c:if>
                 skin:"<c:url value="/flash/whotube.zip"/>",
 //                plugins:"metaviewer-1",

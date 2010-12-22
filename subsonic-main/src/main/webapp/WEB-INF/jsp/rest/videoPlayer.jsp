@@ -15,7 +15,6 @@
         <c:param name="id" value="${model.id}"/>
         <c:param name="maxBitRate" value="${model.maxBitRate}"/>
         <c:param name="timeOffset" value="${model.timeOffset}"/>
-        <c:param name="suffix" value=".flv"/>
     </c:url>
 
     <script type="text/javascript" src="<c:url value="/script/swfobject.js"/>"></script>

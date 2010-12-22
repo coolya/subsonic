@@ -5,15 +5,13 @@ Slideshow
 
 VIDEO
 -----
+Zoomable android player.
+Improve usability of bitrate/skip selectors
 Support .ogv
 Add .divx
-  Android: Create "Jump" button.
-  When switching bit rate, also jump to correct time offset(?)
+When switching bit rate, also jump to correct time offset(?)
 Select inital bitrate based on network type.
-Don't hardcode .flv suffix in videoPlayer.jsp
 Use 96kbps audio, aac?
-Support DVD images (.vob)
--deinterlace necessary?
 Buy new JW license
 Update recommended settings
 Premium feature: Update doc
