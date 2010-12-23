@@ -3,8 +3,15 @@ SITE
 Add badges (SourceForge, AppCircus)
 Slideshow
 
+"crm" year report (country, day of week, time of day)
+
 VIDEO
 -----
+Don't apply "copy non-ascii" trick on videos.
+Wrong aspect-rate, silent witness.
+Show current, true position.
+Hide slider.
+Android video player often doesn't load.
 Zoomable android player.
 Improve usability of bitrate/skip selectors
 Support .ogv
