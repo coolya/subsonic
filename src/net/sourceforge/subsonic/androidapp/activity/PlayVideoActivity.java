@@ -22,6 +22,7 @@ package net.sourceforge.subsonic.androidapp.activity;
 import java.lang.reflect.Method;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,6 +58,8 @@ public final class PlayVideoActivity extends Activity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setPluginsEnabled(true);
         webView.getSettings().setAllowFileAccess(true);
+        webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setBuiltInZoomControls(true);
 
         webView.setWebViewClient(new Client());
         if (bundle != null) {
@@ -117,9 +120,28 @@ public final class PlayVideoActivity extends Activity {
 
     private final class Client extends WebViewClient {
 
-    @Override
-    public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-        Util.toast(PlayVideoActivity.this, description);
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            Util.toast(PlayVideoActivity.this, description);
+            Log.e(TAG, "Error: " + description);
+        }
+
+        @Override
+        public void onLoadResource(WebView view, String url) {
+            super.onLoadResource(view, url);
+            Log.d(TAG, "onLoadResource: " + url);
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            Log.d(TAG, "onPageStarted: " + url);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            Log.d(TAG, "onPageFinished: " + url);
         }
     }
 }
