@@ -12,6 +12,9 @@
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
     <script type="text/javascript" language="javascript">
 
+        var player;
+        var position;
+
         function init() {
 
             var flashvars = {
@@ -39,6 +42,33 @@
             };
 
             swfobject.embedSWF("<c:url value="/flash/jw-player-5.4.swf"/>", "placeholder1", "600", "360", "9.0.0", false, flashvars, params, attributes);
+        }
+
+        function playerReady(thePlayer) {
+            player = $("player1");
+            player.addModelListener("TIME", "timeListener");
+        }
+
+        function timeListener(obj) {
+            var newPosition = Math.round(obj.position);
+            if (newPosition != position) {
+                position = newPosition;
+                updatePosition();
+            }
+        }
+
+        function updatePosition() {
+            var pos = ${model.timeOffset} + position;
+
+            var minutes = Math.round(pos / 60);
+            var seconds = pos % 60;
+
+            var result = minutes + ":";
+            if (seconds < 10) {
+                result += "0";
+            }
+            result += seconds;
+            $("position").innerHTML = result;
         }
 
     </script>
@@ -73,6 +103,7 @@
 <form action="videoPlayer.view" method="post" name="videoForm">
     <input type="hidden" name="path" value="${model.video.path}">
 
+    <span id="position" style="padding-right:0.5em">0:00</span>
     <select name="timeOffset" onchange="document.videoForm.submit()" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em">
         <c:forEach items="${model.skipOffsets}" var="skipOffset">
             <c:choose>

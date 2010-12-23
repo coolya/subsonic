@@ -7,13 +7,12 @@ Slideshow
 
 VIDEO
 -----
+Longer buffer (bufferlength flashvar)
 Don't apply "copy non-ascii" trick on videos.
 Wrong aspect-rate, silent witness.
-Show current, true position.
 Hide slider.
 Android video player often doesn't load.
 Zoomable android player.
-Improve usability of bitrate/skip selectors
 Support .ogv
 Add .divx
 When switching bit rate, also jump to correct time offset(?)

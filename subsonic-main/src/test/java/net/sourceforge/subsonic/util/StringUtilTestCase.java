@@ -88,16 +88,16 @@ public class StringUtilTestCase extends TestCase {
     }
 
     public void testFormatDuration() {
-        assertEquals("Error in formatDuration().", "0:00:00", StringUtil.formatDuration(0));
-        assertEquals("Error in formatDuration().", "0:00:05", StringUtil.formatDuration(5));
-        assertEquals("Error in formatDuration().", "0:00:10", StringUtil.formatDuration(10));
-        assertEquals("Error in formatDuration().", "0:00:59", StringUtil.formatDuration(59));
-        assertEquals("Error in formatDuration().", "0:01:00", StringUtil.formatDuration(60));
-        assertEquals("Error in formatDuration().", "0:01:01", StringUtil.formatDuration(61));
-        assertEquals("Error in formatDuration().", "0:01:10", StringUtil.formatDuration(70));
-        assertEquals("Error in formatDuration().", "0:10:00", StringUtil.formatDuration(600));
-        assertEquals("Error in formatDuration().", "0:45:50", StringUtil.formatDuration(2750));
-        assertEquals("Error in formatDuration().", "1:23:45", StringUtil.formatDuration(5025));
+        assertEquals("Error in formatDuration().", "00:00", StringUtil.formatDuration(0));
+        assertEquals("Error in formatDuration().", "00:05", StringUtil.formatDuration(5));
+        assertEquals("Error in formatDuration().", "00:10", StringUtil.formatDuration(10));
+        assertEquals("Error in formatDuration().", "00:59", StringUtil.formatDuration(59));
+        assertEquals("Error in formatDuration().", "01:00", StringUtil.formatDuration(60));
+        assertEquals("Error in formatDuration().", "01:01", StringUtil.formatDuration(61));
+        assertEquals("Error in formatDuration().", "01:10", StringUtil.formatDuration(70));
+        assertEquals("Error in formatDuration().", "10:00", StringUtil.formatDuration(600));
+        assertEquals("Error in formatDuration().", "45:50", StringUtil.formatDuration(2750));
+        assertEquals("Error in formatDuration().", "83:45", StringUtil.formatDuration(5025));
     }
 
     public void testSplit() {
