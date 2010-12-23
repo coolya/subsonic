@@ -1,3 +1,11 @@
+7820125 [btpool0-131] ERROR org.mortbay.log - /statusChart.view
+org.jfree.data.general.SeriesException: You are attempting to add an observation for the time period Thu Dec 23 12:31:06 CET 2010 but the series already contains an observation for that time period. Duplicates are not permitted.  Try using the addOrUpdate() method.
+	at org.jfree.data.time.TimeSeries.add(TimeSeries.java:529)
+	at org.jfree.data.time.TimeSeries.add(TimeSeries.java:572)
+	at org.jfree.data.time.TimeSeries.add(TimeSeries.java:558)
+	at net.sourceforge.subsonic.controller.StatusChartController.handleRequest(StatusChartController.java:83)
+	at org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter.handle(SimpleControllerHandlerAdapter.java:48)
+
 SITE
 ----
 Add badges (SourceForge, AppCircus)

@@ -80,7 +80,7 @@ public class StatusChartController extends AbstractChartController {
                 long bytesStreamed = Math.max(0L, sample.getBytesTransfered() - previous.getBytesTransfered());
 
                 double kbps = (8.0 * bytesStreamed / 1024.0) / (elapsedTimeMilis / 1000.0);
-                series.add(new Millisecond(new Date(sample.getTimestamp())), kbps);
+                series.addOrUpdate(new Millisecond(new Date(sample.getTimestamp())), kbps);
 
                 previous = sample;
             }
