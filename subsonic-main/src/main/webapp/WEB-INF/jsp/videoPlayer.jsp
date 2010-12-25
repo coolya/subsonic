@@ -14,20 +14,18 @@
 
         var player;
         var position;
+        var timeOffset = ${model.timeOffset};
+        var maxBitRate = ${model.maxBitRate};
 
         function init() {
 
             var flashvars = {
                 id:"player1",
-                <c:if test="${not (model.trial and model.trialExpired)}">
-                file:"${streamUrl}%26maxBitRate=${model.maxBitRate}%26timeOffset=${model.timeOffset}%26player=${model.player}",
-                </c:if>
                 skin:"<c:url value="/flash/whotube.zip"/>",
 //                plugins:"metaviewer-1",
                 screencolor:"000000",
                 controlbar:"over",
-                duration:"${model.duration}",
-                autostart:"true",
+                autostart:"false",
                 backcolor:"<spring:theme code="backgroundColor"/>",
                 frontcolor:"<spring:theme code="textColor"/>",
                 provider:"video"
@@ -44,9 +42,24 @@
             swfobject.embedSWF("<c:url value="/flash/jw-player-5.4.swf"/>", "placeholder1", "600", "360", "9.0.0", false, flashvars, params, attributes);
         }
 
+        function play() {
+            var list = new Array();
+            list[0] = {
+                file:"${streamUrl}&maxBitRate=" + maxBitRate + "&timeOffset=" + timeOffset + "&player=${model.player}",
+                duration:"${model.duration}",
+                provider:"video"
+            };
+            player.sendEvent("LOAD", list);
+            player.sendEvent("PLAY");
+        }
+
         function playerReady(thePlayer) {
             player = $("player1");
             player.addModelListener("TIME", "timeListener");
+
+        <c:if test="${not (model.trial and model.trialExpired)}">
+            play();
+        </c:if>
         }
 
         function timeListener(obj) {
@@ -58,7 +71,7 @@
         }
 
         function updatePosition() {
-            var pos = ${model.timeOffset} + position;
+            var pos = parseInt(timeOffset) + parseInt(position);
 
             var minutes = Math.round(pos / 60);
             var seconds = pos % 60;
@@ -69,6 +82,12 @@
             }
             result += seconds;
             $("position").innerHTML = result;
+        }
+
+        function changeBitRateAndOffset() {
+            maxBitRate = $("maxBitRate").getValue();
+            timeOffset = $("timeOffset").getValue();
+            play();
         }
 
     </script>
@@ -100,11 +119,8 @@
 
 <div style="padding-top:0.7em;padding-bottom:0.7em">
 
-<form action="videoPlayer.view" method="post" name="videoForm">
-    <input type="hidden" name="path" value="${model.video.path}">
-
     <span id="position" style="padding-right:0.5em">0:00</span>
-    <select name="timeOffset" onchange="document.videoForm.submit()" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em">
+    <select id="timeOffset" onchange="changeBitRateAndOffset();" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em">
         <c:forEach items="${model.skipOffsets}" var="skipOffset">
             <c:choose>
                 <c:when test="${skipOffset.value eq model.timeOffset}">
@@ -117,7 +133,7 @@
         </c:forEach>
     </select>
 
-    <select name="maxBitRate" onchange="document.videoForm.submit()" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em">
+    <select id="maxBitRate" onchange="changeBitRateAndOffset();" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em">
         <c:forEach items="${model.bitRates}" var="bitRate">
             <c:choose>
                 <c:when test="${bitRate eq model.maxBitRate}">
@@ -129,7 +145,6 @@
             </c:choose>
         </c:forEach>
     </select>
-</form>
 </div>
 
 <div style="padding-bottom:0.5em">
