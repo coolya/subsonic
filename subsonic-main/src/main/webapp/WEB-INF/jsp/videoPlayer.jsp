@@ -14,8 +14,8 @@
 
         var player;
         var position;
-        var timeOffset = ${model.timeOffset};
         var maxBitRate = ${model.maxBitRate};
+        var timeOffset = ${model.timeOffset};
 
         function init() {
 
@@ -42,17 +42,6 @@
             swfobject.embedSWF("<c:url value="/flash/jw-player-5.4.swf"/>", "placeholder1", "600", "360", "9.0.0", false, flashvars, params, attributes);
         }
 
-        function play() {
-            var list = new Array();
-            list[0] = {
-                file:"${streamUrl}&maxBitRate=" + maxBitRate + "&timeOffset=" + timeOffset + "&player=${model.player}",
-                duration:"${model.duration}",
-                provider:"video"
-            };
-            player.sendEvent("LOAD", list);
-            player.sendEvent("PLAY");
-        }
-
         function playerReady(thePlayer) {
             player = $("player1");
             player.addModelListener("TIME", "timeListener");
@@ -60,6 +49,17 @@
         <c:if test="${not (model.trial and model.trialExpired)}">
             play();
         </c:if>
+        }
+
+        function play() {
+            var list = new Array();
+            list[0] = {
+                file:"${streamUrl}&maxBitRate=" + maxBitRate + "&timeOffset=" + timeOffset + "&player=${model.player}",
+                duration:${model.duration} - timeOffset,
+                provider:"video"
+            };
+            player.sendEvent("LOAD", list);
+            player.sendEvent("PLAY");
         }
 
         function timeListener(obj) {

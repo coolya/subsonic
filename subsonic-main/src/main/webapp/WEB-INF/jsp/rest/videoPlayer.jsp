@@ -13,8 +13,6 @@
         <c:param name="c" value="${model.c}"/>
         <c:param name="v" value="${model.v}"/>
         <c:param name="id" value="${model.id}"/>
-        <c:param name="maxBitRate" value="${model.maxBitRate}"/>
-        <c:param name="timeOffset" value="${model.timeOffset}"/>
     </c:url>
 
     <script type="text/javascript" src="<c:url value="/script/swfobject.js"/>"></script>
@@ -23,15 +21,15 @@
 
         var player;
         var position;
+        var maxBitRate = ${model.maxBitRate};
+        var timeOffset = ${model.timeOffset};
 
         function init() {
             var flashvars = {
                 id:"player1",
-                file:"<str:replace replace="&" with="%26">${streamUrl}</str:replace>",
                 skin:"<c:url value="/flash/whotube.zip"/>",
                 screencolor:"000000",
-                duration:"${model.duration}",
-                autostart:"${model.autoplay}",
+                autostart:false,
                 backcolor:"<spring:theme code="backgroundColor"/>",
                 frontcolor:"<spring:theme code="textColor"/>",
                 provider:"video"
@@ -51,6 +49,21 @@
         function playerReady(thePlayer) {
             player = $("player1");
             player.addModelListener("TIME", "timeListener");
+
+        <c:if test="${model.autoplay}">
+            play();
+        </c:if>
+        }
+
+        function play() {
+            var list = new Array();
+            list[0] = {
+                file:"${streamUrl}&maxBitRate=" + maxBitRate + "&timeOffset=" + timeOffset,
+                duration:${model.duration} - timeOffset,
+                provider:"video"
+            };
+            player.sendEvent("LOAD", list);
+            player.sendEvent("PLAY");
         }
 
         function timeListener(obj) {
@@ -62,7 +75,7 @@
         }
 
         function updatePosition() {
-            var pos = ${model.timeOffset} + position;
+            var pos = parseInt(timeOffset) + parseInt(position);
 
             var minutes = Math.round(pos / 60);
             var seconds = pos % 60;
@@ -73,6 +86,12 @@
             }
             result += seconds;
             $("position").innerHTML = result;
+        }
+
+        function changeBitRateAndOffset() {
+            maxBitRate = $("maxBitRate").getValue();
+            timeOffset = $("timeOffset").getValue();
+            play();
         }
 
     </script>
@@ -86,40 +105,33 @@
 </div>
 
 <div style="padding-top:1.3em;padding-bottom:0.7em;font-size:16px">
-    <form action="videoPlayer.view" method="post" name="videoForm">
-        <input type="hidden" name="id" value="${model.id}">
-        <input type="hidden" name="u" value="${model.u}">
-        <input type="hidden" name="p" value="${model.p}">
-        <input type="hidden" name="c" value="${model.c}">
-        <input type="hidden" name="v" value="${model.v}">
 
-        <span id="position" style="padding-right:0.5em">0:00</span>
-        <select name="timeOffset" onchange="document.videoForm.submit()" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em;font-size:16px">
-            <c:forEach items="${model.skipOffsets}" var="skipOffset">
-                <c:choose>
-                    <c:when test="${skipOffset.value eq model.timeOffset}">
-                        <option selected="selected" value="${skipOffset.value}">${skipOffset.key}</option>
-                    </c:when>
-                    <c:otherwise>
-                        <option value="${skipOffset.value}">${skipOffset.key}</option>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-        </select>
+    <span id="position" style="padding-right:0.5em">0:00</span>
+    <select id="timeOffset" onchange="changeBitRateAndOffset();" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em;font-size:16px">
+        <c:forEach items="${model.skipOffsets}" var="skipOffset">
+            <c:choose>
+                <c:when test="${skipOffset.value eq model.timeOffset}">
+                    <option selected="selected" value="${skipOffset.value}">${skipOffset.key}</option>
+                </c:when>
+                <c:otherwise>
+                    <option value="${skipOffset.value}">${skipOffset.key}</option>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </select>
 
-        <select name="maxBitRate" onchange="document.videoForm.submit()" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em;font-size:16px">
-            <c:forEach items="${model.bitRates}" var="bitRate">
-                <c:choose>
-                    <c:when test="${bitRate eq model.maxBitRate}">
-                        <option selected="selected" value="${bitRate}">${bitRate} Kbps</option>
-                    </c:when>
-                    <c:otherwise>
-                        <option value="${bitRate}">${bitRate} Kbps</option>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-        </select>
-    </form>
+    <select id="maxBitRate" onchange="changeBitRateAndOffset();" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em;font-size:16px">
+        <c:forEach items="${model.bitRates}" var="bitRate">
+            <c:choose>
+                <c:when test="${bitRate eq model.maxBitRate}">
+                    <option selected="selected" value="${bitRate}">${bitRate} Kbps</option>
+                </c:when>
+                <c:otherwise>
+                    <option value="${bitRate}">${bitRate} Kbps</option>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </select>
 </div>
 
 </body>

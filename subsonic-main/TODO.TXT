@@ -15,10 +15,8 @@ Slideshow
 
 VIDEO
 -----
-Don't reload videoPlayer.jsp when changing bitrate/offset.
 Longer buffer (bufferlength flashvar)
 Don't apply "copy non-ascii" trick on videos.
-Wrong aspect-rate, silent witness.
 Hide slider.
 Android video player often doesn't load.
 Zoomable android player.
