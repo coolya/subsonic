@@ -40,8 +40,8 @@ import java.util.regex.Pattern;
 public class FFmpegParser extends MetaDataParser {
 
     private static final Logger LOG = Logger.getLogger(FFmpegParser.class);
-    private static final Pattern METADATA_PATTERN = Pattern.compile("Duration: (.*), .*, bitrate: (.*) kb/s");
-    private static final Pattern DURATION_PATTERN = Pattern.compile("(\\d+):(\\d+):(\\d+).(\\d+)");
+    private static final Pattern DURATION_PATTERN = Pattern.compile("Duration: (\\d+):(\\d+):(\\d+).(\\d+)");
+    private static final Pattern BITRATE_PATTERN = Pattern.compile("bitrate: (\\d+) kb/s");
     private static final Pattern DIMENSION_PATTERN = Pattern.compile("Video.*?, (\\d+)x(\\d+)");
     private static final Pattern PAR_PATTERN = Pattern.compile("PAR (\\d+):(\\d+)");
 
@@ -81,14 +81,18 @@ public class FFmpegParser extends MetaDataParser {
             Integer height = null;
             Double par = 1.0;
             for (String line : lines) {
-                Matcher matcher = METADATA_PATTERN.matcher(line);
 
+                Matcher matcher = DURATION_PATTERN.matcher(line);
                 if (matcher.find()) {
-                    String duration = matcher.group(1);
-                    String bitrate = matcher.group(2);
+                    int hours = Integer.parseInt(matcher.group(1));
+                    int minutes = Integer.parseInt(matcher.group(2));
+                    int seconds = Integer.parseInt(matcher.group(3));
+                    metaData.setDuration(hours * 3600 + minutes * 60 + seconds);
+                }
 
-                    metaData.setDuration(parseDuration(duration));
-                    metaData.setBitRate(Integer.valueOf(bitrate));
+                matcher = BITRATE_PATTERN.matcher(line);
+                if (matcher.find()) {
+                    metaData.setBitRate(Integer.valueOf(matcher.group(1)));
                 }
 
                 matcher = DIMENSION_PATTERN.matcher(line);
@@ -170,7 +174,7 @@ public class FFmpegParser extends MetaDataParser {
                extension.equals("mp4") ||
                extension.equals("m4v") ||
                extension.equals("mkv") ||
-               extension.equals("mov") || 
+               extension.equals("mov") ||
                extension.equals("wmv") ||
                extension.equals("ogv") ;
     }
