@@ -8,8 +8,6 @@
     <link rel="shortcut icon" href="../<spring:theme code="faviconImage"/>">
 
     <c:url value="/rest/stream.view" var="streamUrl">
-        <c:param name="u" value="${model.u}"/>
-        <c:param name="p" value="${model.p}"/>
         <c:param name="c" value="${model.c}"/>
         <c:param name="v" value="${model.v}"/>
         <c:param name="id" value="${model.id}"/>
@@ -58,7 +56,7 @@
         function play() {
             var list = new Array();
             list[0] = {
-                file:"${streamUrl}&maxBitRate=" + maxBitRate + "&timeOffset=" + timeOffset,
+                file:"${streamUrl}&maxBitRate=" + maxBitRate + "&timeOffset=" + timeOffset + "&p=${model.p}" + "&u=${model.u}",
                 duration:${model.duration} - timeOffset,
                 provider:"video"
             };

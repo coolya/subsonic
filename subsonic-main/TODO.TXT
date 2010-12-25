@@ -1,11 +1,3 @@
-7820125 [btpool0-131] ERROR org.mortbay.log - /statusChart.view
-org.jfree.data.general.SeriesException: You are attempting to add an observation for the time period Thu Dec 23 12:31:06 CET 2010 but the series already contains an observation for that time period. Duplicates are not permitted.  Try using the addOrUpdate() method.
-	at org.jfree.data.time.TimeSeries.add(TimeSeries.java:529)
-	at org.jfree.data.time.TimeSeries.add(TimeSeries.java:572)
-	at org.jfree.data.time.TimeSeries.add(TimeSeries.java:558)
-	at net.sourceforge.subsonic.controller.StatusChartController.handleRequest(StatusChartController.java:83)
-	at org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter.handle(SimpleControllerHandlerAdapter.java:48)
-
 SITE
 ----
 Add badges (SourceForge, AppCircus)
@@ -18,8 +10,6 @@ VIDEO
 Hide timeOffset if duration unknown.
 Longer buffer (bufferlength flashvar)
 Hide slider.
-Android video player often doesn't load.
-Zoomable android player.
 Add .divx
 When switching bit rate, also jump to correct time offset(?)
 Select inital bitrate based on network type.
@@ -50,11 +40,8 @@ Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone. (onNewIntent?)
 Still problems with "Download" and "Queue" not triggering download?
 Sort alphabetically in offline mode.
-Add "Play all"
 Remove colons.
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4137
-Loops first song
-   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4423
 Better handling of full SD card.
 Unnecessary initial pause when starting partially downloaded songs.
 Cover art images loaded incorrectly.
@@ -65,18 +52,12 @@ Nicer icon for music library.
 New search result interface.
   o make voice search work
   o long-click on song to do misc stuff.
-  o Bug with "Scorpions > Live in Spain"
 
 Skipping problem
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=15260#15260
-Problem playing "Skål" downsampled.
 Disk-full patch from Chad
   https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12b7985fd3a052ac
 Improve behaviour when SD card is mounted.
-Voice Action
-  http://android-developers.blogspot.com/2010/09/supporting-new-music-voice-action.html
-New ImageLoader
-  http://android-developers.blogspot.com/2010/07/multithreading-for-performance.html
 Detect Bluetooth disconnect
   android.bluetooth.intent.action.HEADSET_STATE_CHANGED
   android.bluetooth.intent.HEADSET_STATE
