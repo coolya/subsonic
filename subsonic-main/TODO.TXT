@@ -15,8 +15,8 @@ Slideshow
 
 VIDEO
 -----
+Hide timeOffset if duration unknown.
 Longer buffer (bufferlength flashvar)
-Don't apply "copy non-ascii" trick on videos.
 Hide slider.
 Android video player often doesn't load.
 Zoomable android player.

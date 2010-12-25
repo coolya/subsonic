@@ -342,7 +342,7 @@ public class TranscodingService {
                 // Work-around for filename character encoding problem on Windows.
                 // Create temporary file, and feed this to the transcoder.
                 String path = musicFile.getFile().getAbsolutePath();
-                if (Util.isWindows() && !StringUtils.isAsciiPrintable(path)) {
+                if (Util.isWindows() && !musicFile.isVideo() && !StringUtils.isAsciiPrintable(path)) {
                     tmpFile = File.createTempFile("subsonic", "." + FilenameUtils.getExtension(path));
                     tmpFile.deleteOnExit();
                     FileUtils.copyFile(new File(path), tmpFile);
