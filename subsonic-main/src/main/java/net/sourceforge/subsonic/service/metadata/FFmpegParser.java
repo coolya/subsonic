@@ -170,8 +170,9 @@ public class FFmpegParser extends MetaDataParser {
                extension.equals("mp4") ||
                extension.equals("m4v") ||
                extension.equals("mkv") ||
-               extension.equals("mov") ||
-               extension.equals("wmv");
+               extension.equals("mov") || 
+               extension.equals("wmv") ||
+               extension.equals("ogv") ;
     }
 
     public void setTranscodingService(TranscodingService transcodingService) {

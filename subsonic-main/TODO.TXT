@@ -20,7 +20,6 @@ Don't apply "copy non-ascii" trick on videos.
 Hide slider.
 Android video player often doesn't load.
 Zoomable android player.
-Support .ogv
 Add .divx
 When switching bit rate, also jump to correct time offset(?)
 Select inital bitrate based on network type.

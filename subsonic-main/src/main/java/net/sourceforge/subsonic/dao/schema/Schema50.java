@@ -41,7 +41,7 @@ public class Schema50 extends Schema {
             LOG.info("Updating database schema to version 16.");
             template.execute("insert into version values (16)");
 
-            for (String format : Arrays.asList("avi", "mpg", "mpeg", "mp4", "m4v", "mkv", "mov", "wmv")) {
+            for (String format : Arrays.asList("avi", "mpg", "mpeg", "mp4", "m4v", "mkv", "mov", "wmv", "ogv")) {
                 template.execute("insert into transcoding values(null,'" + format + " > flv' ,'" + format + "' ,'flv','ffmpeg -ss %o -i %s -b %bk -s %wx%h -ar 44100 -ac 2 -v 0 -f flv -',null,null,true,true)");
                 template.execute("insert into player_transcoding select p.id as player_id, t.id as transaction_id from player p, transcoding t where t.name = '" + format + " > flv'");
             }
