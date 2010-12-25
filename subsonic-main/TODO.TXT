@@ -15,6 +15,7 @@ Slideshow
 
 VIDEO
 -----
+Don't reload videoPlayer.jsp when changing bitrate/offset.
 Longer buffer (bufferlength flashvar)
 Don't apply "copy non-ascii" trick on videos.
 Wrong aspect-rate, silent witness.

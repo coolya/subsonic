@@ -18,18 +18,17 @@
  */
 package net.sourceforge.subsonic.service.metadata;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.commons.io.FilenameUtils;
-
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.io.InputStreamReaderThread;
 import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.util.StringUtil;
+import org.apache.commons.io.FilenameUtils;
+
+import java.io.File;
+import java.io.InputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Parses meta data from video files using FFmpeg (http://ffmpeg.org/).
@@ -41,9 +40,10 @@ import net.sourceforge.subsonic.util.StringUtil;
 public class FFmpegParser extends MetaDataParser {
 
     private static final Logger LOG = Logger.getLogger(FFmpegParser.class);
-    private static final Pattern METADATA_PATTERN = Pattern.compile("Duration: (.*), .*, bitrate: (.*) kb/s.*");
+    private static final Pattern METADATA_PATTERN = Pattern.compile("Duration: (.*), .*, bitrate: (.*) kb/s");
     private static final Pattern DURATION_PATTERN = Pattern.compile("(\\d+):(\\d+):(\\d+).(\\d+)");
-    private static final Pattern DIMENSION_PATTERN = Pattern.compile(".*Video.*?, (\\d+)x(\\d+).*");
+    private static final Pattern DIMENSION_PATTERN = Pattern.compile("Video.*?, (\\d+)x(\\d+)");
+    private static final Pattern PAR_PATTERN = Pattern.compile("PAR (\\d+):(\\d+)");
 
     private TranscodingService transcodingService;
 
@@ -77,22 +77,42 @@ public class FFmpegParser extends MetaDataParser {
             //     Stream #0.1: Audio: pcm_s16le, 44100 Hz, 2 channels, s16, 1411 kb/s
             String[] lines = StringUtil.readLines(stderr);
 
+            Integer width = null;
+            Integer height = null;
+            Double par = 1.0;
             for (String line : lines) {
                 Matcher matcher = METADATA_PATTERN.matcher(line);
-                if (matcher.matches()) {
+
+                if (matcher.find()) {
                     String duration = matcher.group(1);
                     String bitrate = matcher.group(2);
 
                     metaData.setDuration(parseDuration(duration));
                     metaData.setBitRate(Integer.valueOf(bitrate));
-                } else {
-                    matcher = DIMENSION_PATTERN.matcher(line);
-                    if (matcher.matches()) {
-                        metaData.setWidth(Integer.valueOf(matcher.group(1)));
-                        metaData.setHeight(Integer.valueOf(matcher.group(2)));
-                    }
+                }
+
+                matcher = DIMENSION_PATTERN.matcher(line);
+                if (matcher.find()) {
+                    width = Integer.valueOf(matcher.group(1));
+                    height = Integer.valueOf(matcher.group(2));
+                }
+
+                // PAR = Pixel Aspect Rate
+                matcher = PAR_PATTERN.matcher(line);
+                if (matcher.find()) {
+                    Double a = Double.valueOf(matcher.group(1));
+                    Double b = Double.valueOf(matcher.group(2));
+                    par = a / b;
                 }
             }
+
+            if (width != null && height != null) {
+                width = (int) Math.round(width.doubleValue() * par);
+                metaData.setWidth(width);
+                metaData.setHeight(height);
+            }
+
+
         } catch (Throwable x) {
             LOG.warn("Error when parsing metadata in " + file, x);
         }
@@ -144,14 +164,14 @@ public class FFmpegParser extends MetaDataParser {
 
         String extension = FilenameUtils.getExtension(file.getName()).toLowerCase();
         return extension.equals("avi") ||
-                extension.equals("mpg") ||
-                extension.equals("mpeg") ||
-                extension.equals("flv") ||
-                extension.equals("mp4") ||
-                extension.equals("m4v") ||
-                extension.equals("mkv") ||
-                extension.equals("mov") ||
-                extension.equals("wmv");
+               extension.equals("mpg") ||
+               extension.equals("mpeg") ||
+               extension.equals("flv") ||
+               extension.equals("mp4") ||
+               extension.equals("m4v") ||
+               extension.equals("mkv") ||
+               extension.equals("mov") ||
+               extension.equals("wmv");
     }
 
     public void setTranscodingService(TranscodingService transcodingService) {
