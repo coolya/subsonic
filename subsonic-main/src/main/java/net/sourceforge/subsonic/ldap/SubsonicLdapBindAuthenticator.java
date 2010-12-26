@@ -74,7 +74,7 @@ public class SubsonicLdapBindAuthenticator implements LdapAuthenticator {
                 LOG.info("User '" + username + "' successfully authenticated in LDAP. DN: " + details.getDn());
 
                 if (user == null) {
-                    User newUser = new User(username, "", true, 0L, 0L, 0L);
+                    User newUser = new User(username, "", null, true, 0L, 0L, 0L);
                     newUser.setStreamRole(true);
                     newUser.setSettingsRole(true);
                     securityService.createUser(newUser);

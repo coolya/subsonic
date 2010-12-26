@@ -2,6 +2,7 @@ SITE
 ----
 Add badges (SourceForge, AppCircus)
 Slideshow
+Android Market promo graphics (http://www.tutorial9.net/tutorials/photoshop-tutorials/create-a-3d-glossy-box-logo/)
 
 "crm" year report (country, day of week, time of day)
 

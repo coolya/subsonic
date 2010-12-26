@@ -6,7 +6,7 @@
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
 </head>
 
-<body class="mainframe bgcolor1" onload="enablePasswordChangeFields()">
+<body class="mainframe bgcolor1" onload="enablePasswordChangeFields();">
 <script type="text/javascript" src="<c:url value="/script/wz_tooltip.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/script/tip_balloon.js"/>"></script>
 
@@ -146,6 +146,11 @@
                     <td class="warning"><form:errors path="username"/></td>
                 </tr>
                 <tr>
+                    <td><fmt:message key="usersettings.email"/></td>
+                    <td><form:input path="email"/></td>
+                    <td class="warning"><form:errors path="email"/></td>
+                </tr>
+                <tr>
                     <td><fmt:message key="usersettings.password"/></td>
                     <td><form:password path="password"/></td>
                     <td class="warning"><form:errors path="password"/></td>
@@ -161,7 +166,7 @@
         <c:otherwise>
             <table id="passwordChangeCheckboxTable">
                 <tr>
-                    <td><form:checkbox path="passwordChange" id="passwordChange" onclick="javascript:enablePasswordChangeFields()" cssClass="checkbox"/></td>
+                    <td><form:checkbox path="passwordChange" id="passwordChange" onclick="enablePasswordChangeFields();" cssClass="checkbox"/></td>
                     <td><label for="passwordChange"><fmt:message key="usersettings.changepassword"/></label></td>
                 </tr>
             </table>
@@ -176,6 +181,14 @@
                     <td><fmt:message key="usersettings.confirmpassword"/></td>
                     <td><form:password path="confirmPassword" id="confirmPassword"/></td>
                     <td/>
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <td><fmt:message key="usersettings.email"/></td>
+                    <td><form:input path="email"/></td>
+                    <td class="warning"><form:errors path="email"/></td>
                 </tr>
             </table>
         </c:otherwise>

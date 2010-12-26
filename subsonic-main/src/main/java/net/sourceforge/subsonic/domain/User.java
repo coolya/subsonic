@@ -27,8 +27,9 @@ public class User {
 
     public static final String USERNAME_ADMIN = "admin";
 
-    private String username;
+    private final String username;
     private String password;
+    private String email;
     private boolean ldapAuthenticated;
     private long bytesStreamed;
     private long bytesDownloaded;
@@ -45,18 +46,19 @@ public class User {
     private boolean isStreamRole;
     private boolean isJukeboxRole;
 
-    public User(String username, String password, boolean ldapAuthenticated,
+    public User(String username, String password, String email, boolean ldapAuthenticated,
                 long bytesStreamed, long bytesDownloaded, long bytesUploaded) {
         this.username = username;
         this.password = password;
+        this.email = email;
         this.ldapAuthenticated = ldapAuthenticated;
         this.bytesStreamed = bytesStreamed;
         this.bytesDownloaded = bytesDownloaded;
         this.bytesUploaded = bytesUploaded;
     }
 
-    public User(String username, String password) {
-        this(username, password, false, 0, 0, 0);
+    public User(String username, String password, String email) {
+        this(username, password, email, false, 0, 0, 0);
     }
 
     public String getUsername() {
@@ -69,6 +71,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public boolean isLdapAuthenticated() {

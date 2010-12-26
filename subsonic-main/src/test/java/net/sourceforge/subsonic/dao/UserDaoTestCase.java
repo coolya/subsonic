@@ -26,7 +26,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
     }
 
     public void testCreateUser() {
-        User user = new User("sindre", "secret", false, 1000L, 2000L, 3000L);
+        User user = new User("sindre", "secret", "sindre@activeobjects.no", false, 1000L, 2000L, 3000L);
         user.setAdminRole(true);
         user.setCommentRole(true);
         user.setCoverArtRole(true);
@@ -44,7 +44,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
     }
 
     public void testUpdateUser() {
-        User user = new User("sindre", "secret");
+        User user = new User("sindre", "secret", null);
         user.setAdminRole(true);
         user.setCommentRole(true);
         user.setCoverArtRole(true);
@@ -58,6 +58,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         userDao.createUser(user);
 
         user.setPassword("foo");
+        user.setEmail("sindre@foo.bar");
         user.setLdapAuthenticated(true);
         user.setBytesStreamed(1);
         user.setBytesDownloaded(2);
@@ -82,7 +83,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
     }
 
     public void testGetUserByName() {
-        User user = new User("sindre", "secret");
+        User user = new User("sindre", "secret", null);
         userDao.createUser(user);
 
         User newUser = userDao.getUserByName("sindre");
@@ -99,10 +100,10 @@ public class UserDaoTestCase extends DaoTestCaseBase {
     public void testDeleteUser() {
         assertEquals("Wrong number of users.", 0, userDao.getAllUsers().size());
 
-        userDao.createUser(new User("sindre", "secret"));
+        userDao.createUser(new User("sindre", "secret", null));
         assertEquals("Wrong number of users.", 1, userDao.getAllUsers().size());
 
-        userDao.createUser(new User("bente", "secret"));
+        userDao.createUser(new User("bente", "secret", null));
         assertEquals("Wrong number of users.", 2, userDao.getAllUsers().size());
 
         userDao.deleteUser("sindre");
@@ -113,7 +114,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
     }
 
     public void testGetRolesForUser() {
-        User user = new User("sindre", "secret");
+        User user = new User("sindre", "secret", null);
         user.setAdminRole(true);
         user.setCommentRole(true);
         user.setPodcastRole(true);
@@ -139,7 +140,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
         } catch (DataIntegrityViolationException x) {
         }
 
-        userDao.createUser(new User("sindre", "secret"));
+        userDao.createUser(new User("sindre", "secret", null));
         assertNull("Error in getUserSettings.", userDao.getUserSettings("sindre"));
 
         userDao.updateUserSettings(new UserSettings("sindre"));
@@ -210,6 +211,7 @@ public class UserDaoTestCase extends DaoTestCaseBase {
     private void assertUserEquals(User expected, User actual) {
         assertEquals("Wrong name.", expected.getUsername(), actual.getUsername());
         assertEquals("Wrong password.", expected.getPassword(), actual.getPassword());
+        assertEquals("Wrong email.", expected.getEmail(), actual.getEmail());
         assertEquals("Wrong LDAP auth.", expected.isLdapAuthenticated(), actual.isLdapAuthenticated());
         assertEquals("Wrong bytes streamed.", expected.getBytesStreamed(), actual.getBytesStreamed());
         assertEquals("Wrong bytes downloaded.", expected.getBytesDownloaded(), actual.getBytesDownloaded());

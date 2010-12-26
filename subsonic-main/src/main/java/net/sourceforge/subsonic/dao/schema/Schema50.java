@@ -47,5 +47,12 @@ public class Schema50 extends Schema {
             }
             LOG.info("Created video transcoding configuration.");
         }
+
+        if (!columnExists(template, "email", "user")) {
+            LOG.info("Database column 'user.email' not found.  Creating it.");
+            template.execute("alter table user add email varchar");
+            LOG.info("Database column 'user.email' was added successfully.");
+        }
+
     }
 }

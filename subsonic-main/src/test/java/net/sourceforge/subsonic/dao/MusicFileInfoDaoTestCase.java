@@ -54,7 +54,7 @@ public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
     }
 
     public void testGetHighestRated() {
-        userDao.createUser(new User("sindre", "secret"));
+        userDao.createUser(new User("sindre", "secret", null));
 
         musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "a", null, 0, new Date()));
         musicFileInfoDao.createMusicFileInfo(new MusicFileInfo(null, "b", null, 0, new Date()));
@@ -232,8 +232,8 @@ public class MusicFileInfoDaoTestCase extends DaoTestCaseBase {
         } catch (DataAccessException x) {
         }
 
-        userDao.createUser(new User("sindre", "secret"));
-        userDao.createUser(new User("bente", "secret"));
+        userDao.createUser(new User("sindre", "secret", null));
+        userDao.createUser(new User("bente", "secret", null));
 
         musicFileInfoDao.setRatingForUser("sindre", musicFile, 1);
         assertEquals("Error in getAverageRating().", 1.0D, musicFileInfoDao.getAverageRating(musicFile));

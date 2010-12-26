@@ -26,6 +26,7 @@ import net.sourceforge.subsonic.domain.*;
 import net.sourceforge.subsonic.command.*;
 import org.springframework.web.servlet.mvc.*;
 import org.springframework.web.bind.*;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.*;
 
@@ -47,6 +48,7 @@ public class UserSettingsController extends SimpleFormController {
         User user = getUser(request);
         if (user != null) {
             command.setUser(user);
+            command.setEmail(user.getEmail());
             command.setAdmin(User.USERNAME_ADMIN.equals(user.getUsername()));
             UserSettings userSettings = settingsService.getUserSettings(user.getUsername());
             command.setTranscodeSchemeName(userSettings.getTranscodeScheme().name());
@@ -96,7 +98,7 @@ public class UserSettingsController extends SimpleFormController {
     }
 
     public void createUser(UserSettingsCommand command) {
-        User user = new User(command.getUsername(), command.getPassword());
+        User user = new User(command.getUsername(), command.getPassword(), StringUtils.trimToNull(command.getEmail()));
         user.setLdapAuthenticated(command.isLdapAuthenticated());
         securityService.createUser(user);
         updateUser(command);
@@ -104,6 +106,7 @@ public class UserSettingsController extends SimpleFormController {
 
     private void updateUser(UserSettingsCommand command) {
         User user = securityService.getUserByName(command.getUsername());
+        user.setEmail(StringUtils.trimToNull(command.getEmail()));
         user.setLdapAuthenticated(command.isLdapAuthenticated());
         user.setAdminRole(command.isAdminRole());
         user.setDownloadRole(command.isDownloadRole());
@@ -138,6 +141,7 @@ public class UserSettingsController extends SimpleFormController {
         command.setSettingsRole(true);
         command.setPassword(null);
         command.setConfirmPassword(null);
+        command.setEmail(null);
         command.setTranscodeSchemeName(null);
     }
 

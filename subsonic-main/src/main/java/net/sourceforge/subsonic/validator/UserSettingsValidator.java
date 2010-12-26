@@ -49,6 +49,7 @@ public class UserSettingsValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         UserSettingsCommand command = (UserSettingsCommand) obj;
         String username = command.getUsername();
+        String email = StringUtils.trimToNull(command.getEmail());
         String password = StringUtils.trimToNull(command.getPassword());
         String confirmPassword = command.getConfirmPassword();
 
@@ -57,6 +58,8 @@ public class UserSettingsValidator implements Validator {
                 errors.rejectValue("username", "usersettings.nousername");
             } else if (securityService.getUserByName(username) != null) {
                 errors.rejectValue("username", "usersettings.useralreadyexists");
+            } else if (email == null) {
+                errors.rejectValue("email", "usersettings.noemail");
             } else if (command.isLdapAuthenticated() && !settingsService.isLdapEnabled()) {
                 errors.rejectValue("password", "usersettings.ldapdisabled");
             } else if (command.isLdapAuthenticated() && password != null) {

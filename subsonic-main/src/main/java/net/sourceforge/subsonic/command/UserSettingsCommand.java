@@ -48,6 +48,7 @@ public class UserSettingsCommand {
     private boolean isDelete;
     private String password;
     private String confirmPassword;
+    private String email;
     private boolean isLdapAuthenticated;
     private boolean isLdapEnabled;
 
@@ -198,6 +199,14 @@ public class UserSettingsCommand {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public boolean isLdapAuthenticated() {
