@@ -72,6 +72,7 @@ import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.domain.SearchResult;
 import net.sourceforge.subsonic.androidapp.domain.SearchCritera;
 import net.sourceforge.subsonic.androidapp.domain.ServerInfo;
+import net.sourceforge.subsonic.androidapp.domain.Lyrics;
 import net.sourceforge.subsonic.androidapp.service.parser.ErrorParser;
 import net.sourceforge.subsonic.androidapp.service.parser.IndexesParser;
 import net.sourceforge.subsonic.androidapp.service.parser.LicenseParser;
@@ -84,6 +85,7 @@ import net.sourceforge.subsonic.androidapp.service.parser.SearchResultParser;
 import net.sourceforge.subsonic.androidapp.service.parser.VersionParser;
 import net.sourceforge.subsonic.androidapp.service.parser.AlbumListParser;
 import net.sourceforge.subsonic.androidapp.service.parser.SearchResult2Parser;
+import net.sourceforge.subsonic.androidapp.service.parser.LyricsParser;
 import net.sourceforge.subsonic.androidapp.service.ssl.SSLSocketFactory;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
@@ -334,6 +336,16 @@ public class RESTMusicService implements MusicService {
         Reader reader = getReader(context, progressListener, "createPlaylist", null, parameterNames, parameterValues);
         try {
             new ErrorParser(context).parse(reader);
+        } finally {
+            Util.close(reader);
+        }
+    }
+
+    @Override
+    public Lyrics getLyrics(String artist, String title, Context context, ProgressListener progressListener) throws Exception {
+        Reader reader = getReader(context, progressListener, "getLyrics", null, Arrays.asList("artist", "title"), Arrays.<Object>asList(artist, title));
+        try {
+            return new LyricsParser(context).parse(reader, progressListener);
         } finally {
             Util.close(reader);
         }

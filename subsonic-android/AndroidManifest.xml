@@ -60,7 +60,7 @@
                   a:label="@string/help.label"
                   a:launchMode="singleTask"/>
 
-        <activity a:name="net.sourceforge.subsonic.androidapp.activity.PlayVideoActivity"
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.LyricsActivity"
                   a:configChanges="orientation|keyboardHidden"
                   a:launchMode="singleTask"/>
 

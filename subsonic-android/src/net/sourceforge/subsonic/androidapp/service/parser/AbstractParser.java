@@ -76,6 +76,10 @@ public abstract class AbstractParser {
         }
     }
 
+    protected String getText() {
+        return parser.getText();
+    }
+
     protected String get(String name) {
         return parser.getAttributeValue(null, name);
     }

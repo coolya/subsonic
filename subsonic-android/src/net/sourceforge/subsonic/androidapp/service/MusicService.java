@@ -27,6 +27,7 @@ import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.domain.Version;
 import net.sourceforge.subsonic.androidapp.domain.SearchResult;
 import net.sourceforge.subsonic.androidapp.domain.SearchCritera;
+import net.sourceforge.subsonic.androidapp.domain.Lyrics;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
 import org.apache.http.HttpResponse;
@@ -55,6 +56,8 @@ public interface MusicService {
     List<Playlist> getPlaylists(Context context, ProgressListener progressListener) throws Exception;
 
     void createPlaylist(String id, String name, List<MusicDirectory.Entry> entries, Context context, ProgressListener progressListener) throws Exception;
+
+    Lyrics getLyrics(String artist, String title, Context context, ProgressListener progressListener) throws Exception;
 
     MusicDirectory getAlbumList(String type, int size, int offset, Context context, ProgressListener progressListener) throws Exception;
 

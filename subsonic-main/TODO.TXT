@@ -100,6 +100,7 @@ Always set headless mode.
 maxBitRate in REST should override per-user settings.
 Bitrate isn't replaced properly in ffmpeg
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=17205#17205
+Updated French translation, courtesy of Yoann Spicher.
 
 TODO IN 4.3
 -----------------

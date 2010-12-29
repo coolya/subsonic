@@ -27,6 +27,7 @@ import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.domain.Version;
 import net.sourceforge.subsonic.androidapp.domain.SearchResult;
 import net.sourceforge.subsonic.androidapp.domain.SearchCritera;
+import net.sourceforge.subsonic.androidapp.domain.Lyrics;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.LRUCache;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
@@ -140,6 +141,11 @@ public class CachedMusicService implements MusicService {
     @Override
     public void createPlaylist(String id, String name, List<MusicDirectory.Entry> entries, Context context, ProgressListener progressListener) throws Exception {
         musicService.createPlaylist(id, name, entries, context, progressListener);
+    }
+
+    @Override
+    public Lyrics getLyrics(String artist, String title, Context context, ProgressListener progressListener) throws Exception {
+        return musicService.getLyrics(artist, title, context, progressListener);
     }
 
     @Override

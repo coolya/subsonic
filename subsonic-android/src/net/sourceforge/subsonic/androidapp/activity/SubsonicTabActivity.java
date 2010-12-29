@@ -118,7 +118,7 @@ public class SubsonicTabActivity extends Activity {
             searchButton.setEnabled(false);
         } else if (this instanceof SelectPlaylistActivity) {
             playlistButton.setEnabled(false);
-        } else if (this instanceof DownloadActivity) {
+        } else if (this instanceof DownloadActivity || this instanceof LyricsActivity) {
             nowPlayingButton.setEnabled(false);
         }
 
