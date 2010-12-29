@@ -75,6 +75,7 @@
     <string name="download.playerstate_playing_shuffle">Playing shuffle</string>
     <string name="download.playerstate_paused">Paused</string>
     <string name="download.menu_show_album">Show album</string>
+    <string name="download.menu_lyrics">Lyrics</string>
     <string name="download.menu_remove">Remove song</string>
     <string name="download.menu_remove_all">Remove all</string>
     <string name="download.menu_shuffle">Shuffle</string>
@@ -87,6 +88,8 @@
     <string name="download.playlist_saving">Saving playlist \"%s\"...</string>
     <string name="download.playlist_done">Playlist was successfully saved.</string>
     <string name="download.playlist_error">Failed to save playlist, please try later.</string>
+
+    <string name="lyrics.nomatch">No lyrics found</string>
 
     <string name="error.label">Error</string>
 

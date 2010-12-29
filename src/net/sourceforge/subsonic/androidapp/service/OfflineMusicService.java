@@ -28,6 +28,7 @@ import net.sourceforge.subsonic.androidapp.domain.MusicFolder;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.domain.SearchResult;
 import net.sourceforge.subsonic.androidapp.domain.SearchCritera;
+import net.sourceforge.subsonic.androidapp.domain.Lyrics;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.ProgressListener;
@@ -159,6 +160,11 @@ public class OfflineMusicService extends RESTMusicService {
     @Override
     public void createPlaylist(String id, String name, List<MusicDirectory.Entry> entries, Context context, ProgressListener progressListener) throws Exception {
         throw new RuntimeException("Playlists not available in offline mode");
+    }
+
+    @Override
+    public Lyrics getLyrics(String artist, String title, Context context, ProgressListener progressListener) throws Exception {
+        throw new RuntimeException("Lyrics not available in offline mode");
     }
 
     @Override

@@ -64,10 +64,11 @@ import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 public class DownloadActivity extends SubsonicTabActivity {
 
     private static final int MENU_ITEM_SHOW_ALBUM = 1;
-    private static final int MENU_ITEM_REMOVE = 2;
-    private static final int MENU_ITEM_REMOVE_ALL = 3;
-    private static final int MENU_ITEM_SHUFFLE = 4;
-    private static final int MENU_ITEM_SAVE_PLAYLIST = 5;
+    private static final int MENU_ITEM_LYRICS = 2;
+    private static final int MENU_ITEM_REMOVE = 3;
+    private static final int MENU_ITEM_REMOVE_ALL = 4;
+    private static final int MENU_ITEM_SHUFFLE = 5;
+    private static final int MENU_ITEM_SAVE_PLAYLIST = 6;
 
     private static final int DIALOG_SAVE_PLAYLIST = 100;
 
@@ -327,6 +328,9 @@ public class DownloadActivity extends SubsonicTabActivity {
             if (downloadFile.getSong().getParent() != null) {
                 menu.add(Menu.NONE, MENU_ITEM_SHOW_ALBUM, MENU_ITEM_SHOW_ALBUM, R.string.download_menu_show_album);
             }
+            if (!Util.isOffline(this)) {
+                menu.add(Menu.NONE, MENU_ITEM_LYRICS, MENU_ITEM_LYRICS, R.string.download_menu_lyrics);
+            }
             menu.add(Menu.NONE, MENU_ITEM_REMOVE, MENU_ITEM_REMOVE, R.string.download_menu_remove);
             menu.add(Menu.NONE, MENU_ITEM_REMOVE_ALL, MENU_ITEM_REMOVE_ALL, R.string.download_menu_remove_all);
             menu.add(Menu.NONE, MENU_ITEM_SHUFFLE, MENU_ITEM_SHUFFLE, R.string.download_menu_shuffle);
@@ -352,6 +356,12 @@ public class DownloadActivity extends SubsonicTabActivity {
                 Intent intent = new Intent(this, SelectAlbumActivity.class);
                 intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, song.getSong().getParent());
                 intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, song.getSong().getAlbum());
+                Util.startActivityWithoutTransition(this, intent);
+                return true;
+            case MENU_ITEM_LYRICS:
+                intent = new Intent(this, LyricsActivity.class);
+                intent.putExtra(Constants.INTENT_EXTRA_NAME_ARTIST, song.getSong().getArtist());
+                intent.putExtra(Constants.INTENT_EXTRA_NAME_TITLE, song.getSong().getTitle());
                 Util.startActivityWithoutTransition(this, intent);
                 return true;
             case MENU_ITEM_REMOVE:
