@@ -108,7 +108,7 @@
                             <li>(Coming soon) Jukebox mode support to use your device as a remote control for Subsonic for listening to music around the house.</li>
                         </ul>
                         <p>
-                            Support: <a href="mailto:support@einsteinx2.com">support@einsteinx2.com</a>
+                            Support: <a href="mailto:support@isubapp.com">support@isubapp.com</a>
                         </p>
                         <a href="http://itunes.apple.com/us/app/isub-music-streamer/id362920532?mt=8"><img src="inc/img/available_on_appstore.png" alt="" class="img-center"/></a>
 
