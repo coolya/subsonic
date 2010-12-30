@@ -3,8 +3,6 @@
 
 <html><head>
     <%@ include file="head.jsp" %>
-    <link href="<c:url value="/style/shadow.css"/>" rel="stylesheet">
-
     <script type="text/javascript">
         if (window != window.top) {
             top.location.href = location.href;

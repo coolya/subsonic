@@ -113,6 +113,7 @@
                         <tr><td>&#149; Polish </td><td>(by Micha&#322; Kotas)</td></tr>
                         <tr><td>&#149; Chinese </td><td>(by Neil Gao)</td></tr>
                         <tr><td>&#149; Japanese </td><td>(by Takahiro Suzuki)</td></tr>
+                        <tr><td>&#149; Korean </td><td>(by Choi Jong-seok)</td></tr>
                         <tr><td>&#149; Dutch </td><td>(by Ronald Knot)</td></tr>
                         <tr><td>&#149; Norwegian </td><td>(by Sindre Mehus and jigsaw)</td></tr>
                         <tr><td>&#149; Swedish </td><td>(by J&ouml;rgen Sj&ouml;berg)</td></tr>

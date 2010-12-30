@@ -95,6 +95,7 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN 4.3
 ----------------
+Added Korean translation, courtesy of Choi Jong-seok.
 Video support
 Always set headless mode.
 maxBitRate in REST should override per-user settings.
@@ -104,6 +105,7 @@ Updated French translation, courtesy of Yoann Spicher.
 
 TODO IN 4.3
 -----------------
+Add link to Flash player download.
 Build ffmpeg for x86 on Mac
   https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12cb55940868506d
   ./configure --disable-shared --disable-mmx --arch=x86_64
