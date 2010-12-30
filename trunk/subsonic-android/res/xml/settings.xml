@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:a="http://schemas.android.com/apk/res/android"
+                  a:title="@string/settings.title">
+
+    <PreferenceCategory
+            a:title="@string/settings.servers_title">
+
+        <PreferenceScreen
+                a:key="server1">
+
+            <EditTextPreference
+                    a:key="serverName1"
+                    a:title="@string/settings.server_name"
+                    a:defaultValue="Subsonic demo"/>
+
+            <EditTextPreference
+                    a:key="serverUrl1"
+                    a:title="@string/settings.server_address"
+                    a:defaultValue="http://demo.subsonic.org"
+                    a:inputType="textUri"/>
+
+            <EditTextPreference
+                    a:key="username1"
+                    a:title="@string/settings.server_username"
+                    a:defaultValue="android-guest"/>
+
+            <EditTextPreference
+                    a:key="password1"
+                    a:title="@string/settings.server_password"
+                    a:password="true"
+                    a:defaultValue="guest"
+                    a:summary="****"/>
+
+            <Preference
+                    a:key="testConnection1"
+                    a:title="@string/settings.test_connection_title"
+                    a:persistent="false"/>
+
+        </PreferenceScreen>
+
+        <PreferenceScreen
+                a:key="server2">
+
+            <EditTextPreference
+                    a:key="serverName2"
+                    a:title="@string/settings.server_name"
+                    a:defaultValue="@string/settings.server_unused1"/>
+
+            <EditTextPreference
+                    a:key="serverUrl2"
+                    a:title="@string/settings.server_address"
+                    a:defaultValue="http://yourhost"
+                    a:inputType="textUri"/>
+
+            <EditTextPreference
+                    a:key="username2"
+                    a:title="@string/settings.server_username"/>
+
+            <EditTextPreference
+                    a:key="password2"
+                    a:title="@string/settings.server_password"
+                    a:password="true"
+                    a:summary="****"/>
+
+            <Preference
+                    a:key="testConnection2"
+                    a:title="@string/settings.test_connection_title"
+                    a:persistent="false"/>
+
+        </PreferenceScreen>
+
+        <PreferenceScreen
+                a:key="server3">
+
+            <EditTextPreference
+                    a:key="serverName3"
+                    a:title="@string/settings.server_name"
+                    a:defaultValue="@string/settings.server_unused2"/>
+
+            <EditTextPreference
+                    a:key="serverUrl3"
+                    a:title="@string/settings.server_address"
+                    a:defaultValue="http://yourhost"
+                    a:inputType="textUri"/>
+
+            <EditTextPreference
+                    a:key="username3"
+                    a:title="@string/settings.server_username"/>
+
+            <EditTextPreference
+                    a:key="password3"
+                    a:title="@string/settings.server_password"
+                    a:password="true"
+                    a:summary="****"/>
+
+            <Preference
+                    a:key="testConnection3"
+                    a:title="@string/settings.test_connection_title"
+                    a:persistent="false"/>
+
+        </PreferenceScreen>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            a:title="@string/settings.appearance_title">
+
+        <ListPreference
+                a:title="@string/settings.theme_title"
+                a:key="theme"
+                a:defaultValue="wheat"
+                a:entryValues="@array/themeValues"
+                a:entries="@array/themeNames"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            a:title="@string/settings.network_title">
+
+        <ListPreference
+                a:title="@string/settings.max_bitrate_wifi"
+                a:key="maxBitrateWifi"
+                a:defaultValue="0"
+                a:entryValues="@array/maxBitrateValues"
+                a:entries="@array/maxBitrateNames"/>
+
+        <ListPreference
+                a:title="@string/settings.max_bitrate_mobile"
+                a:key="maxBitrateMobile"
+                a:defaultValue="0"
+                a:entryValues="@array/maxBitrateValues"
+                a:entries="@array/maxBitrateNames"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            a:title="@string/settings.cache_title">
+
+        <ListPreference
+                a:title="@string/settings.cache_size"
+                a:key="cacheSize"
+                a:defaultValue="500"
+                a:entryValues="@array/cacheSizeValues"
+                a:entries="@array/cacheSizeNames"/>
+
+        <ListPreference
+                a:title="@string/settings.preload"
+                a:key="preloadCount"
+                a:defaultValue="3"
+                a:entryValues="@array/preloadCountValues"
+                a:entries="@array/preloadCountNames"/>
+
+        <Preference
+                a:key="clearSearchHistory"
+                a:title="@string/settings.clear_search_history"
+                a:persistent="false"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
