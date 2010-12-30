@@ -48,7 +48,7 @@ public class MultiController extends MultiActionController {
     private static final Logger LOG = Logger.getLogger(RedirectionController.class);
 
     private static final String SUBSONIC_VERSION = "4.2";
-    private static final String SUBSONIC_BETA_VERSION = "4.2.beta1";
+    private static final String SUBSONIC_BETA_VERSION = "4.3.beta1";
 
     private DaoHelper daoHelper;
 

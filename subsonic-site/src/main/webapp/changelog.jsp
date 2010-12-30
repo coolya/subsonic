@@ -16,6 +16,13 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="4.3.beta1"><h2 class="div">Subsonic 4.3.beta1 - Dec 30, 2010</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>Video support! Stream video to browsers and Android 2.2+ phones.</li>
+    <li><span class="bugid">New: </span>Added Korean translation, courtesy of Choi Jong-seok.</li>
+    <li><span class="bugid">New: </span>Updated French translation, courtesy of Yoann Spicher.</li>
+</ul>
+
 <a name="4.2"><h2 class="div">Subsonic 4.2 - Nov 21, 2010</h2></a>
 <ul>
     <li><span class="bugid">New: </span>Added Portuguese translation, courtesy of Miguel Fonseca.</li>
@@ -763,6 +770,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#4.3.beta1">Subsonic 4.3.beta1</a></li>
             <li><a href="#4.2">Subsonic 4.2</a></li>
             <li><a href="#4.2.beta1">Subsonic 4.2.beta1</a></li>
             <li><a href="#4.1">Subsonic 4.1</a></li>
