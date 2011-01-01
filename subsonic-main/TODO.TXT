@@ -8,7 +8,6 @@ Android Market promo graphics (http://www.tutorial9.net/tutorials/photoshop-tuto
 
 VIDEO
 -----
-Premium feature: Update doc
 Hide timeOffset if duration unknown.
 Longer buffer (bufferlength flashvar)
 Update recommended settings

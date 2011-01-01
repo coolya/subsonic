@@ -6,8 +6,9 @@
     <p>
         Donors get access to premium features like:
     </p>
-    <ul> 
+    <ul>
         <li>Stream music to Android, iPhone and Windows Phone&nbsp;7*.</li>
+        <li>Video streaming.</li>
         <li>Your personal server address: <em>yourname</em>.subsonic.org</li>
         <li>No ads in the web interface.</li>
     </ul>
@@ -21,5 +22,5 @@
     </p>
     <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8QD3YWR7LMDKU"><img src="inc/img/paypal.gif" alt="Donate" class="img-center"/></a>
 
-    <div style="padding-top:10px;font-size:9px;">* Some <a href="apps.jsp">apps</a> are sold by third-party developers.</div> 
+    <div style="padding-top:10px;font-size:9px;">* Some <a href="apps.jsp">apps</a> are sold by third-party developers.</div>
 </div>
