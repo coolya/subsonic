@@ -17,13 +17,17 @@
             <p>
                 Transcoding is the process of converting music from one format to another. Subsonic's transcoding engine allows for streaming of
                 media that would normally not be streamable, for instance lossless formats, such as the ones you'll hear on your
-                <a href="http://shop.o2.co.uk/update/iphone.html">I phone 4</a> via iTunes or high-quality rips from CDs.
+                <a href="http://shop.o2.co.uk/update/iphone.html">iPhone 4</a> via iTunes or high-quality rips from CDs.
                 The transcoding is performed on-the-fly and doesn't require any disk usage.
             </p>
 
             <p>
-                The actual transcoding is done by third-party command line programs which must be installed in <code>c:\subsonic\transcode</code> (on Windows), or
-                <code>/var/subsonic/transcode</code> (other operating systems).
+                The actual transcoding is done by third-party command line programs which are installed in:
+            </p>
+            <p>
+                <b>Windows</b>&nbsp;&nbsp;<code>c:\subsonic\transcode</code><br/>
+                <b>Mac</b>&nbsp;&nbsp;<code>/Library/Application Support/Subsonic/transcode</code><br/>
+                <b>Linux</b>&nbsp;&nbsp;<code>/var/subsonic/transcode</code>
             </p>
 
             <p>
@@ -31,36 +35,27 @@
                 and chain it with a WAV to MP3 encoder.
             </p>
 
-            <div class="featureitem">
-                <div class="heading">Transcoding pack for Windows</div>
-                <div class="content">
-                    <div class="wide-content">
+            <h2 class="div">Recommended configuration</h2>
+            <p>
+                The recommended settings for audio transcoding is:
+            </p>
+            <p>
+                <b>Step 1</b>&nbsp;&nbsp;<code>ffmpeg -i %s -f wav -</code><br/>
+                <b>Step 2</b>&nbsp;&nbsp;<code>lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</code>
+            </p>
 
-                        <p>
-                            A transcoding pack for Windows with a selection of codecs can be
-                            <a href="http://prdownloads.sourceforge.net/subsonic/transcoding-windows-1.1.zip"><b>downloaded here</b></a>.
-                            The list of supported media types includes:
-                        </p>
+            <p>
+                The recommended settings for video transcoding is:
+            </p>
+            <p>
+                <b>Step 1</b>&nbsp;&nbsp;<code>ffmpeg -ss %o -i %s -b %bk -s %wx%h -ar 44100 -ac 2 -v 0 -f flv -</code><br/>
+            </p>
 
-                        <div class="floatcontainer margin10-t margin10-b">
-                            <ul class="stars column-left">
-                                <li>Ogg Vorbis</li>
-                                <li>FLAC (Free Lossless Audio Codec)</li>
-                                <li>AAC/MP4</li>
-                                <li>WMA</li>
-                                <li>WAV</li>
-                            </ul>
-                            <ul class="stars column-right">
-                                <li>APE (Monkey's Audio)</li>
-                                <li>MPC (Musepack)</li>
-                                <li>WavPack</li>
-                                <li>SHN (Shorten)</li>
-                            </ul>
-                        </div>
+            <p>
+                Note that "%s" is substituted with the path of the original file at run-time, and "%b" is substituted with
+                the max bitrate of the player. "%t", "%a" and "%l" are substituted with the song's title, artist and album.
+            </p>
 
-                    </div>
-                </div>
-            </div>
 
             <h2 class="div">Adding custom transcoders</h2>
             <p>
@@ -71,81 +66,6 @@
                 <li>It must be able to send output to stdout.</li>
                 <li>If used in transcoding step 2 or 3, it must be able to read input from stdin.</li>
             </ul>
-
-            <h2 class="div">Sample configuration</h2>
-            <p>
-                This is the default transcoding configuration for the Windows transcoding pack.
-                Note that "%s" is substituted with the path of the original file at run-time, and "%b" is substituted with
-                the max bitrate of the player. "%t", "%a" and "%l" are substituted with the song's title, artist and album.
-            </p>
-            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="bottomspace">
-                <tr>
-                    <th class="transcoding-heading">From</th>
-                    <th class="transcoding-heading">To</th>
-                    <th class="transcoding-heading">Step 1</th>
-                    <th class="transcoding-heading">Step 2</th>
-                </tr>
-                <tr class="table-altrow">
-                    <td class="transcoding">wav</td>
-                    <td class="transcoding">mp3</td>
-                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
-                </tr>
-                <tr>
-                    <td class="transcoding">ogg</td>
-                    <td class="transcoding">mp3</td>
-                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
-                </tr>
-                <tr class="table-altrow">
-                    <td class="transcoding">wma</td>
-                    <td class="transcoding">mp3</td>
-                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
-                </tr>
-                <tr>
-                    <td class="transcoding">flac</td>
-                    <td class="transcoding">mp3</td>
-                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
-                </tr>
-                <tr class="table-altrow">
-                    <td class="transcoding">ape</td>
-                    <td class="transcoding">mp3</td>
-                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
-                </tr>
-                <tr>
-                    <td class="transcoding">m4a</td>
-                    <td class="transcoding">mp3</td>
-                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
-                </tr>
-                <tr class="table-altrow">
-                    <td class="transcoding">aac</td>
-                    <td class="transcoding">mp3</td>
-                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
-                </tr>
-                <tr>
-                    <td class="transcoding">mpc</td>
-                    <td class="transcoding">mp3</td>
-                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
-                </tr>
-                <tr class="table-altrow">
-                    <td class="transcoding">wv</td>
-                    <td class="transcoding">mp3</td>
-                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
-                </tr>
-                <tr>
-                    <td class="transcoding">shn</td>
-                    <td class="transcoding">mp3</td>
-                    <td class="transcoding">ffmpeg -i %s -f wav -</td>
-                    <td class="transcoding">lame -b %b --tt %t --ta %a --tl %l -S --resample 44.1 - -</td>
-                </tr>
-            </table>
 
             <h2 class="div">Troubleshooting</h2>
             <ul class="list">
