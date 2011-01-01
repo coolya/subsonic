@@ -86,9 +86,14 @@
             $("position").innerHTML = result;
         }
 
-        function changeBitRateAndOffset() {
-            maxBitRate = $("maxBitRate").getValue();
+        function changeTimeOffset() {
             timeOffset = $("timeOffset").getValue();
+            play();
+        }
+
+        function changeBitRate() {
+            maxBitRate = $("maxBitRate").getValue();
+            timeOffset = parseInt(timeOffset) + parseInt(position);
             play();
         }
 
@@ -105,7 +110,7 @@
 <div style="padding-top:1.3em;padding-bottom:0.7em;font-size:16px">
 
     <span id="position" style="padding-right:0.5em">0:00</span>
-    <select id="timeOffset" onchange="changeBitRateAndOffset();" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em;font-size:16px">
+    <select id="timeOffset" onchange="changeTimeOffset();" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em;font-size:16px">
         <c:forEach items="${model.skipOffsets}" var="skipOffset">
             <c:choose>
                 <c:when test="${skipOffset.value eq model.timeOffset}">
@@ -118,7 +123,7 @@
         </c:forEach>
     </select>
 
-    <select id="maxBitRate" onchange="changeBitRateAndOffset();" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em;font-size:16px">
+    <select id="maxBitRate" onchange="changeBitRate();" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em;font-size:16px">
         <c:forEach items="${model.bitRates}" var="bitRate">
             <c:choose>
                 <c:when test="${bitRate eq model.maxBitRate}">
