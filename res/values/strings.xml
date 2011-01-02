@@ -145,6 +145,12 @@
     <string name="settings.cache_size_unlimited">Unlimited</string>
     <string name="settings.clear_search_history">Clear search history</string>
     <string name="settings.search_history_cleared">Search history cleared</string>
+    <string name="settings.other_title">Other settings</string>
+    <string name="settings.hide_media_title">Hide from other</string>
+    <string name="settings.hide_media_summary">Hide music files and album art from other apps (Gallery, Music etc)</string>
+    <string name="settings.hide_media_toast">Takes effect next time Android scans your phone for media.</string>
+    <string name="settings.media_button_title">Media buttons</string>
+    <string name="settings.media_button_summary">Respond to phone, headset and Bluetooth media buttons</string>
 
     <string name="music_service.retry">A network error occurred. Retrying %d of %d.</string>
 
