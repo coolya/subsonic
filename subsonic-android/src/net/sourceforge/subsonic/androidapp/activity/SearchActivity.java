@@ -34,6 +34,7 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.net.Uri;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Artist;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
@@ -343,8 +344,8 @@ public class SearchActivity extends SubsonicTabActivity {
     }
 
     private void onVideoSelected(MusicDirectory.Entry entry) {
-        Intent intent = new Intent(this, PlayVideoActivity.class);
-        intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, entry.getId());
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(MusicServiceFactory.getMusicService(this).getVideoUrl(this, entry.getId())));
         startActivity(intent);
     }
 

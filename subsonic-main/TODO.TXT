@@ -15,6 +15,7 @@ Buy new JW license
 
 DONE IN ANDROID 2.2
 --------------------
+Fix video bug in SearchActivity.java:346
 
 
 TODO IN ANDROID 2.2
