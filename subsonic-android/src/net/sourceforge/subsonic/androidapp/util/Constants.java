@@ -65,6 +65,8 @@ public final class Constants {
     public static final String PREFERENCES_KEY_MAX_BITRATE_MOBILE = "maxBitrateMobile";
     public static final String PREFERENCES_KEY_CACHE_SIZE = "cacheSize";
     public static final String PREFERENCES_KEY_PRELOAD_COUNT = "preloadCount";
+    public static final String PREFERENCES_KEY_HIDE_MEDIA = "hideMedia";
+    public static final String PREFERENCES_KEY_MEDIA_BUTTONS = "mediaButtons";
 
     // Name of the preferences file.
     public static final String PREFERENCES_FILE_NAME = "net.sourceforge.subsonic.androidapp_preferences";

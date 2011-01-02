@@ -158,4 +158,21 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+            a:title="@string/settings.other_title">
+
+        <CheckBoxPreference
+                a:title="@string/settings.hide_media_title"
+                a:summary="@string/settings.hide_media_summary"
+                a:key="hideMedia"
+                a:defaultValue="false"/>
+
+        <CheckBoxPreference
+                a:title="@string/settings.media_button_title"
+                a:summary="@string/settings.media_button_summary"
+                a:key="mediaButtons"
+                a:defaultValue="true"/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

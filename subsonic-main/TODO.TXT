@@ -13,16 +13,15 @@ Add .divx
 Select inital bitrate based on network type.
 Buy new JW license
 
-DONE IN ANDROID 2.2
+DONE IN ANDROID 2.4
 --------------------
 Fix video bug in SearchActivity.java:346
+New settings: "Hide from other"
+New settings: "Media buttons"
 
-
-TODO IN ANDROID 2.2
+TODO IN ANDROID 2.3
 -------------------
-Make images not show up in Gallery (e.g., rename to folder.jpg, .folder.jpg) or something.
-Option to control media button behaviour (always, never, only when active)
-  "React to media button"
+Experiment with AudioManager.requestAudioFocus()
 Reset shuffle play buffer when changing server.
 Long-click:
   Long-click artist -> Play random

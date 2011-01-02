@@ -21,6 +21,7 @@ package net.sourceforge.subsonic.androidapp.activity;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.io.File;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.ErrorDialog;
 import net.sourceforge.subsonic.androidapp.util.ModalBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.FileUtil;
 
 public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -119,6 +121,13 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         Log.d(TAG, "Preference changed: " + key);
         update();
+
+        if (Constants.PREFERENCES_KEY_HIDE_MEDIA.equals(key)) {
+            setHideMedia(sharedPreferences.getBoolean(Constants.PREFERENCES_KEY_HIDE_MEDIA, false));
+        }
+        else if (Constants.PREFERENCES_KEY_MEDIA_BUTTONS.equals(key)) {
+            setMediaButtonsEnabled(sharedPreferences.getBoolean(Constants.PREFERENCES_KEY_MEDIA_BUTTONS, true));
+        }
     }
 
     private void update() {
@@ -133,6 +142,28 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         preloadCount.setSummary(preloadCount.getEntry());
         for (ServerSettings ss : serverSettings.values()) {
             ss.update();
+        }
+    }
+
+    private void setHideMedia(boolean hide) {
+        File nomediaDir = new File(FileUtil.getSubsonicDirectory(), ".nomedia");
+        if (hide && !nomediaDir.exists()) {
+            if (!nomediaDir.mkdir()) {
+                Log.w(TAG, "Failed to create " + nomediaDir);
+            }
+        } else if (nomediaDir.exists()) {
+            if (!nomediaDir.delete()) {
+                Log.w(TAG, "Failed to delete " + nomediaDir);
+            }
+        }
+        Util.toast(this, R.string.settings_hide_media_toast, false);
+    }
+
+    private void setMediaButtonsEnabled(boolean enabled) {
+        if (enabled) {
+            Util.registerMediaButtonEventReceiver(this);
+        } else {
+            Util.unregisterMediaButtonEventReceiver(this);
         }
     }
 

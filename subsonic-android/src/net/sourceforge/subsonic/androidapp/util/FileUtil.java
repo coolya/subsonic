@@ -95,12 +95,15 @@ public class FileUtil {
     }
 
     private static File createDirectory(String name) {
-        File subsonicDir = new File(Environment.getExternalStorageDirectory(), "subsonic");
-        File dir = new File(subsonicDir, name);
+        File dir = new File(getSubsonicDirectory(), name);
         if (!dir.exists() && !dir.mkdirs()) {
             Log.e(TAG, "Failed to create " + name);
         }
         return dir;
+    }
+
+    public static File getSubsonicDirectory() {
+        return new File(Environment.getExternalStorageDirectory(), "subsonic");
     }
 
     public static File getMusicDirectory() {
