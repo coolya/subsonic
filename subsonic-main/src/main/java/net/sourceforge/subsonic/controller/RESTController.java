@@ -447,9 +447,9 @@ public class RESTController extends MultiActionController {
             }
 
             Playlist playlist = new Playlist();
-            playlist.setName(playlistId != null ? playlistId : name);
+            playlist.setName(playlistId != null ? StringUtil.utf8HexDecode(playlistId) : name);
 
-            String[] ids = ServletRequestUtils.getRequiredStringParameters(request, "songId");
+            String[] ids = ServletRequestUtils.getStringParameters(request, "songId");
             for (String id : ids) {
                 playlist.addFiles(true, musicFileService.getMusicFile(StringUtil.utf8HexDecode(id)));
             }
@@ -781,7 +781,7 @@ public class RESTController extends MultiActionController {
 
     public void changePassword(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
-        try { 
+        try {
 
             String username = ServletRequestUtils.getRequiredStringParameter(request, "username");
             String password = ServletRequestUtils.getRequiredStringParameter(request, "password");
