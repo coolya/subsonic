@@ -60,7 +60,8 @@ public class DownloadFile {
         this.save = save;
         saveFile = FileUtil.getSongFile(song);
         bitrate = Util.getMaxBitrate(context);
-        partialFile = new File(saveFile.getPath() + "." + bitrate + ".partial");
+        partialFile = new File(saveFile.getParent(), FileUtil.getBaseName(saveFile.getName()) +
+                "." + bitrate + ".partial." + FileUtil.getExtension(saveFile.getName()));
         completeFile = new File(saveFile.getParent(), FileUtil.getBaseName(saveFile.getName()) +
                 ".complete." + FileUtil.getExtension(saveFile.getName()));
         mediaStoreService = new MediaStoreService(context);

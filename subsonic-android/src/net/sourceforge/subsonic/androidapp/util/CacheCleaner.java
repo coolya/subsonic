@@ -83,7 +83,7 @@ public class CacheCleaner {
         Log.i(TAG, "Cache size before: " + Util.formatBytes(bytesUsed));
 
         for (File file : files) {
-            if (bytesUsed > cacheSizeBytes || file.getName().endsWith(".partial")) {
+            if (bytesUsed > cacheSizeBytes || file.getName().endsWith(".partial") || file.getName().contains(".partial.")) {
                 if (!undeletable.contains(file)) {
                     long size = file.length();
                     if (Util.delete(file)) {
@@ -99,7 +99,7 @@ public class CacheCleaner {
     private void findCandidatesForDeletion(File file, List<File> files, List<File> dirs) {
         if (file.isFile()) {
             String name = file.getName();
-            boolean isCacheFile = name.endsWith(".partial") || name.endsWith(".complete") || name.contains(".complete.");
+            boolean isCacheFile = name.endsWith(".partial") || name.contains(".partial.") || name.endsWith(".complete") || name.contains(".complete.");
             if (isCacheFile) {
                 files.add(file);
             }

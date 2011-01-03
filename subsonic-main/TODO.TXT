@@ -13,17 +13,14 @@ Add .divx
 Select inital bitrate based on network type.
 Buy new JW license
 
-DONE IN ANDROID 2.4
+DONE IN ANDROID 2.5
 --------------------
-Fix video bug in SearchActivity.java:346
-New settings: "Hide from other"
-New settings: "Media buttons"
-
-TODO IN ANDROID 2.3
--------------------
 Support native OGG streaming
-  Use naming scheme foo.partial.mp3?
+  Use naming scheme foo.partial.mp3
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3681&start=15
+
+TODO IN ANDROID 2.5
+-------------------
 Reset shuffle play buffer when changing server.
 Long-click:
   Long-click artist -> Play random
