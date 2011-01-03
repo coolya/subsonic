@@ -119,7 +119,6 @@ public class DownloadServiceLifecycleSupport {
         serializeDownloadQueue();
         downloadService.clear(false);
         downloadService.unregisterReceiver(headsetEventReceiver);
-//        Util.unregisterMediaButtonEventReceiver(downloadService);
 
         TelephonyManager telephonyManager = (TelephonyManager) downloadService.getSystemService(Context.TELEPHONY_SERVICE);
         telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
