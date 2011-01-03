@@ -21,7 +21,6 @@ New settings: "Media buttons"
 
 TODO IN ANDROID 2.3
 -------------------
-Experiment with AudioManager.requestAudioFocus()
 Reset shuffle play buffer when changing server.
 Long-click:
   Long-click artist -> Play random
