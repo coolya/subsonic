@@ -11,6 +11,7 @@
 
 <div id="container">
 <%@ include file="menu.jsp" %>
+<%@ include file="banner.jsp" %>
 
 <div id="content">
 <div id="main-col">

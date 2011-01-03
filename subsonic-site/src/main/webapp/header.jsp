@@ -3,6 +3,7 @@
     <title>Subsonic &raquo; Free Music Streamer</title>
 
     <link rel="stylesheet" type="text/css" href="inc/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="inc/css/banners.css"/>
     <link rel="shortcut icon" href="favicon.ico"/>
 
     <script type="text/javascript" language="javascript" src="inc/js/prototype.js"></script>

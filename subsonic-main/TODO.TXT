@@ -1,8 +1,9 @@
 SITE
 ----
 Add badges (SourceForge, AppCircus)
-Slideshow
 Android Market promo graphics (http://www.tutorial9.net/tutorials/photoshop-tutorials/create-a-3d-glossy-box-logo/)
+Slideshow
+  Quotes broken
 
 VIDEO
 -----
