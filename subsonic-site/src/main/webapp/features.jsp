@@ -5,7 +5,7 @@
 <%! String current = "features"; %>
 <%@ include file="header.jsp" %>
 
-<body class="page-features">
+<body>
 
 <a name="top"/>
 

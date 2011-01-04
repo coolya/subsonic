@@ -3,7 +3,7 @@ body {
 	width: 100%;
 	margin: 0;
 	padding: 0 0 20px 0;
-	background: #111 url('../img/body-bg.gif') top left repeat-x;
+	background: white;
 	font-size: 0.8em;
 	color: #444;
 	font-family: Arial, Helvetica, sans-serif;
@@ -107,8 +107,9 @@ ol {
 	z-index: 99;
 }
 #content {
-	width: 900px;
+	width: 898px;
 	background: #fff url('../img/content-bg.gif') 0px 0px no-repeat;
+    border: 1px solid #cbcedc;
 	line-height: 1.4em;
 }
 #main-col {
@@ -129,13 +130,6 @@ ol {
 }
 #wide-col {
 	padding: 15px 20px 15px 20px;
-}
-body.page-features #side-col {
-	float: left;
-	margin-left: 20px;
-}
-body.page-features #main-col {
-	float: right;
 }
 /* ---------- Nav ----------- */
 #nav {
