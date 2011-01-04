@@ -95,6 +95,7 @@ Colors: http://www.androidtapp.com/opentable/
 DONE IN 4.3
 ----------------
 When switching bit rate, also jump to correct time offset
+Bugfix: When converting videos, always use a width that is a multiple of two.
 Fixed bug in REST method createPlaylist.
 
 TODO IN 4.3

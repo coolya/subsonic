@@ -296,7 +296,14 @@ public class StreamController implements Controller {
         }
 
         double aspectRate = existingWidth.doubleValue() / existingHeight.doubleValue();
-        return new Dimension((int) Math.round(h * aspectRate), h);
+        w = (int) Math.round(h * aspectRate);
+
+        // Make sure it's a multiple of two, as some versions of ffmpeg require it.
+        if (w % 2 == 1) {
+            w++;
+        }
+
+        return new Dimension(w, h);
     }
 
     /**
