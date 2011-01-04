@@ -32,42 +32,42 @@
                     <td class="featurename" style="padding-left:0">Windows installer</td>
                     <td style="white-space:nowrap;"><a href="download2.jsp?target=subsonic-<%=stable%>-setup.exe"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
-                    <td style="white-space:nowrap;"><a href="installation.jsp#windows"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#windows"><img src="inc/img/star.png" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
                 <tr>
                     <td><img src="inc/img/download-mac.png" alt="" height="16" width="16"/></td>
                     <td class="featurename" style="padding-left:0">Mac OS X 10.5+ installer</td>
                     <td style="white-space:nowrap;"><a href="download2.jsp?target=subsonic-<%=stable%>.pkg"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
-                    <td style="white-space:nowrap;"><a href="installation.jsp#mac"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#mac"><img src="inc/img/star.png" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
                 <tr class="table-altrow">
                     <td><img src="inc/img/download-ubuntu.png" alt="" height="16" width="16"/></td>
                     <td class="featurename" style="padding-left:0">Debian/Ubuntu installer</td>
                     <td style="white-space:nowrap;"><a href="download2.jsp?target=subsonic-<%=stable%>.deb"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
-                    <td style="white-space:nowrap;"><a href="installation.jsp#debian"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#debian"><img src="inc/img/star.png" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
                 <tr>
                     <td><img src="inc/img/download-fedora.png" alt="" height="16" width="16"/></td>
                     <td class="featurename" style="padding-left:0">Red Hat/Fedora installer</td>
                     <td style="white-space:nowrap;"><a href="download2.jsp?target=subsonic-<%=stable%>.rpm"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
-                    <td style="white-space:nowrap;"><a href="installation.jsp#rpm"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#rpm"><img src="inc/img/star.png" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
                 <tr class="table-altrow">
                     <td></td>
                     <td class="featurename" style="padding-left:0">Stand-alone version (all platforms)</td>
                     <td style="white-space:nowrap;"><a href="download2.jsp?target=subsonic-<%=stable%>-standalone.tar.gz"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
-                    <td style="white-space:nowrap;"><a href="installation.jsp#standalone"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#standalone"><img src="inc/img/star.png" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td class="featurename" style="padding-left:0"> WAR version (all platforms)</td>
                     <td style="white-space:nowrap;"><a href="download2.jsp?target=subsonic-<%=stable%>-war.zip"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
-                    <td style="white-space:nowrap;"><a href="installation.jsp#war"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#war"><img src="inc/img/star.png" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
             </table>
 
@@ -84,42 +84,42 @@
                     <td class="featurename" style="padding-left:0">Windows installer</td>
                     <td style="white-space:nowrap;"><a href="download2.jsp?target=subsonic-<%=beta%>-setup.exe"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
-                    <td style="white-space:nowrap;"><a href="installation.jsp#windows"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#windows"><img src="inc/img/star.png" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
                 <tr>
                     <td><img src="inc/img/download-mac.png" alt="" height="16" width="16"/></td>
                     <td class="featurename" style="padding-left:0">Mac OS X 10.5+ installer</td>
                     <td style="white-space:nowrap;"><a href="download2.jsp?target=subsonic-<%=beta%>.pkg"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
-                    <td style="white-space:nowrap;"><a href="installation.jsp#mac"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#mac"><img src="inc/img/star.png" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
                 <tr class="table-altrow">
                     <td><img src="inc/img/download-ubuntu.png" alt="" height="16" width="16"/></td>
                     <td class="featurename" style="padding-left:0">Debian/Ubuntu installer</td>
                     <td style="white-space:nowrap;"><a href="download2.jsp?target=subsonic-<%=beta%>.deb"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
-                    <td style="white-space:nowrap;"><a href="installation.jsp#debian"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#debian"><img src="inc/img/star.png" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
                 <tr>
                     <td><img src="inc/img/download-fedora.png" alt="" height="16" width="16"/></td>
                     <td class="featurename" style="padding-left:0">Red Hat/Fedora installer</td>
                     <td style="white-space:nowrap;"><a href="download2.jsp?target=subsonic-<%=beta%>.rpm"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
-                    <td style="white-space:nowrap;"><a href="installation.jsp#rpm"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#rpm"><img src="inc/img/star.png" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
                 <tr class="table-altrow">
                     <td></td>
                     <td class="featurename" style="padding-left:0">Stand-alone version (all platforms)</td>
                     <td style="white-space:nowrap;"><a href="download2.jsp?target=subsonic-<%=beta%>-standalone.tar.gz"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
-                    <td style="white-space:nowrap;"><a href="installation.jsp#standalone"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#standalone"><img src="inc/img/star.png" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td class="featurename" style="padding-left:0"> WAR version (all platforms)</td>
                     <td style="white-space:nowrap;"><a href="download2.jsp?target=subsonic-<%=beta%>-war.zip"><img
                             src="inc/img/download_small.gif" alt="Download" height="11" width="11"/>&nbsp;Download</a></td>
-                    <td style="white-space:nowrap;"><a href="installation.jsp#war"><img src="inc/img/star.gif" alt="Instructions" height="14" width="14"/> Instructions</a></td>
+                    <td style="white-space:nowrap;"><a href="installation.jsp#war"><img src="inc/img/star.png" alt="Instructions" height="14" width="14"/> Instructions</a></td>
                 </tr>
             </table>
             <% } %>

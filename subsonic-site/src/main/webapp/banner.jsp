@@ -12,15 +12,15 @@
             }
             slidePosition = currentSlide * 900;
             $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1000});
-//            setTimeout(function() {slideTo(currentSlide + 1)}, 4000);
+            setTimeout(function() {slideTo(currentSlide + 1);}, 10000);
         }
-        slideTo(1);
+        slideTo(0);
     });
 </script>
 
 <hr/>
 <div id="banner-full">
-    
+
     <div id="bannercontent">
         <div class="slide1 slide">
             <div class="slidecontent">
@@ -28,69 +28,57 @@
 
                 <div class="title">
                     <div class="large">The soundtrack of your life</div>
-                    <div class="small">Non-stop streaming.  Don't leave your music behind.</div>
+                    <div class="small">Non-stop music and video streaming.</div>
                 </div>
-                <%--<div class="text">Manage small to very large collections of audio files and playlists (50,000+), whether--%>
-                    <%--on a hard drive, network, or CDs. Rip CDs, download podcasts, lookup missing information and album--%>
-                    <%--art online, tag almost any audio format, and automatically rename/re-organize tracks on your hard--%>
-                    <%--drive.--%>
-                <%--</div>--%>
             </div>
         </div>
         <div class="slide2 slide">
             <div class="slidecontent">
-                <img src="inc/img/banner/banner-01.jpg" alt="" class="screenshot"/>
+                <img src="inc/img/banner/wp7.png" alt="" class="screenshot"/>
 
                 <div class="title">
-                    <div class="large">The soundtrack of your life</div>
-                    <div class="small"><a href="apps.jsp">Apps</a> available for Android, iPhone and Windows Phone&nbsp;7.</div>
+                    <div class="large">Don't leave home without it</div>
+                    <div class="small"><a href="apps.jsp">Apps</a> available for Android, iPhone and Windows&nbsp;Phone&nbsp;7.</div>
                 </div>
-                <%--<div class="text">Manage small to very large collections of audio files and playlists (50,000+), whether--%>
-                    <%--on a hard drive, network, or CDs. Rip CDs, download podcasts, lookup missing information and album--%>
-                    <%--art online, tag almost any audio format, and automatically rename/re-organize tracks on your hard--%>
-                    <%--drive.--%>
-                <%--</div>--%>
             </div>
         </div>
 
         <div class="slide3 slide">
             <div class="slidecontent">
-                <img src="/_inc/img/slides/touchsync.jpg" alt="Screenshot" class="screenshot"/>
+                <img src="inc/img/banner/banner-01.jpg" alt="" class="screenshot"/>
 
                 <div class="title">
-                    <div class="large">Sync</div>
-                    <div class="small">MediaMonkey: The Universal Music Manager</div>
+                    <div class="large">The most complete personal streaming system</div>
+                    <div class="small">Subsonic comes packed with features.</div>
                 </div>
-                <div class="text">Sync music and playlists to your iPod, iPhone, iPad, Android device, or most any other
-                    MP3 player, and let MediaMonkey convert unsupported formats and normalize volume levels on the fly.
+                <div class="text">
+                    Podcast receiver, jukebox mode, on-the-fly downsampling and conversion,
+                    multiple frontends, highly configurable, full support for tags, lyrics and album art, open API
+                    and <a href="features.jsp">much more</a>.
                 </div>
             </div>
         </div>
         <div class="slide4 slide">
             <div class="slidecontent">
-                <img src="/_inc/img/slides/play.gif" alt="Screenshot" class="screenshot"/>
+                <img src="inc/img/banner/wp7.png" alt="" class="screenshot"/>
 
                 <div class="title">
-                    <div class="large">Play</div>
-                    <div class="small">MediaMonkey: Liven up your events</div>
-                </div>
-                <div class="text">You or your guests can choose music, while MediaMonkey's Jukebox secures your
-                    collection, normalizes volume levels, and kicks in automatically with music and playlists based on
-                    your criteria.
+                    <div class="large">No strings attached</div>
+                    <div class="small">Relax to your favourite tunes no matter where you are.</div>
                 </div>
             </div>
         </div>
         <div class="slide5 slide">
             <div class="slidecontent">
-                <img src="/_inc/img/slides/customize.jpg" alt="Screenshot" class="screenshot"/>
+                <img src="inc/img/banner/video.png" alt="" class="screenshot"/>
 
                 <div class="title">
-                    <div class="large">Customize</div>
-                    <div class="small">MediaMonkey: For Uncompromising Collectors</div>
+                    <div class="large">Coming soon</div>
+                    <div class="small">Stream your flicks too!</div>
                 </div>
-                <div class="text">Customize with Skins, plugins, visualizations, and hundreds of user-written scripts
-                    that extend MediaMonkey's functionality.
-                </div>
+                <%--<div class="text">Customize with Skins, plugins, visualizations, and hundreds of user-written scripts--%>
+                    <%--that extend MediaMonkey's functionality.--%>
+                <%--</div>--%>
             </div>
         </div>
     </div>

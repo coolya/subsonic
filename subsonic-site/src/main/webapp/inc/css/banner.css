@@ -34,8 +34,11 @@
 	width: 380px;
 	height: 65px;
 	position: absolute;
-	top: 60px;
+	top: 80px;
 	left: 515px;
+}
+#banner-full .slide5 .title {
+	left: 575px;
 }
 #banner-full .slide .title .large {
 	font-size: 24px;
@@ -51,8 +54,8 @@
 }
 #banner-full .slide .text {
 	position: absolute;
-	top: 95px;
-	left: 475px;
+	top: 185px;
+	left: 515px;
 	width: 380px;
 	line-height: 1.4em;
 	color: #aaa;
