@@ -93,6 +93,7 @@ Fixed bug in REST method createPlaylist.
 
 TODO IN 4.3
 -----------------
+Investigate mapped network drives.
 New playlist REST methods?
 
 html multiple file upload.

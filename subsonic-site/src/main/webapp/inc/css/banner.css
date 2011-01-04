@@ -2,7 +2,7 @@
 #banner-full {
 	width: 900px;
 	height: 199px;
-	background: url('../img/banner/banner-bg.gif') 0px 0px no-repeat;
+	background: url('../img/banner/banner-bg.gif') 0 0 no-repeat;
 	overflow: hidden;
 	position: relative;
 	border-top: 1px solid #5c5c5c;
@@ -11,17 +11,9 @@
 #bannercontent {
 	z-index: 100;
 }
-#newversion {
-	width: 90px;
-	height: 90px;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	z-index: 5000;
-}
 #bannercontent {
 	position: absolute;
-	left: 0px;
+	left: 0;
 }
 #banner-full .slide {
 	width: 900px;
@@ -35,7 +27,7 @@
 }
 #banner-full .slide1 .screenshot {
 	position: absolute;
-	bottom: 0px;
+	bottom: 0;
 	left: 10px;
 }
 #banner-full .slide1 .title {
@@ -63,22 +55,22 @@
 }
 #banner-full .slide2 .screenshot {
 	position: absolute;
-	top: 0px;
+	top: 0;
 	left: 20px;
 }
 #banner-full .slide3 .screenshot {
 	position: absolute;
-	top: 0px;
+	top: 0;
 	left: 40px;
 }
 #banner-full .slide4 .screenshot {
 	position: absolute;
-	top: 0px;
+	top: 0;
 	left: 20px;
 }
 #banner-full .slide5 .screenshot {
 	position: absolute;
-	top: 0px;
+	top: 0;
 	left: 10px;
 }
 #banner-full .slide2 .title,
@@ -119,36 +111,8 @@
 	line-height: 1.4em;
 	color: #aaa;
 }
-/* ----------- Banner ---------- */
-#bannernavigation {
-	z-index: 10000;
-	position: absolute;
-	bottom: 10px;
-	right: 10px;
-	width: 120px;
-	height: 24px;
-	display: none;
-}
-#bannernavigation #banner-prev {
-	width: 55px;
-	height: 24px;
-	background: url('../img/banner/button-prev.gif') 0px -24px;
-	text-indent: -99999px;
-	float: left;
-	cursor: pointer;
-}
-#bannernavigation #banner-next {
-	width: 55px;
-	height: 24px;
-	background: url('../img/banner/button-next.gif') 0px -24px;
-	text-indent: -99999px;
-	float: right;
-	cursor: pointer;
-}
-#bannernavigation .hover {
-	background-position: 0px 0px !important;
-}
-#bannercontent .slide1 {left:0px;}
+
+#bannercontent .slide1 {left:0;}
 #bannercontent .slide2 {left:900px;}
 #bannercontent .slide3 {left:1800px;}
 #bannercontent .slide4 {left:2700px;}

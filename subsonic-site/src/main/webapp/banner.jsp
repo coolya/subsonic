@@ -1,84 +1,26 @@
 <script type="text/javascript" language="javascript" src="inc/js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" language="javascript">
 
-$(document).ready(function() {
+    $(document).ready(function() {
+        var currentSlide = 0;
+        var numberSlides = $('#bannercontent div.slide').length - 1;
 
-	/* ---------- Banner Control/Animation ---------- */
-
-	 $('#bannernavigation').show();
-
-	currentSlide = 0;
-	numberSlides = $('#bannercontent div.slide').length;
-
-	numberSlides--; // making the numbers work!
-
-	function slideTo(slideNumber) {
-		currentSlide = slideNumber;
-		if(currentSlide>numberSlides) {
-			currentSlide = 0;
-			slideNumber = 0;
-		}
-		if(currentSlide==0) {
-			$('#banner-prev').hide();
-		} else {
-			$('#banner-prev').show();
-		}
-		if(currentSlide==numberSlides) {
-			$('#banner-next').hide();
-		} else {
-			$('#banner-next').show();
-		}
-
-		slidePosition = slideNumber*900;
-		$('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1000,complete:bannerLoop});
-	}
-
-	slideTo(0);
-
-	$('#banner-full').prepend('<div id="slideprogress"><div></div></div>');
-	$('#slideprogress').css({width:'100px',height:'2px',right:'4px',bottom:'4px',border:'1px solid #fff',position:'absolute'}).fadeTo(1,.3);
-	$('#slideprogress div').css({width:'0px',height:'2px',backgroundColor:'#ccc'});
-
-	function bannerLoop() {
-//todo
-        //        $('#slideprogress div').animate({width:'100%'},{duration:10000,easing:'linear',complete:bannerLoop2});
-        $('#slideprogress div').animate({width:'100%'},{duration:4000,easing:'linear',complete:bannerLoop2});
-	}
-
-	function bannerLoop2() {
-		slideTo(currentSlide+1);
-		$('#slideprogress div').animate({width:'0px'},{duration:500});
-	}
-
-	$('#banner-next').click(function() {
-		slideTo(currentSlide+1);
-	});
-
-	$('#banner-prev').click(function() {
-		slideTo(currentSlide-1);
-	});
-
-	$('#banner-next').hover(function() {
-		$(this).addClass('hover');
-	}, function() {
-		$(this).removeClass('hover');
-	});
-
-	$('#banner-prev').hover(function() {
-		$(this).addClass('hover');
-	}, function() {
-		$(this).removeClass('hover');
-	});
-});
+        function slideTo(slideNumber) {
+            currentSlide = slideNumber;
+            if(currentSlide > numberSlides) {
+                currentSlide = 0;
+            }
+            slidePosition = currentSlide * 900;
+            $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1000});
+            setTimeout(function() {slideTo(currentSlide + 1)}, 4000);
+        }
+        slideTo(0);
+    });
 </script>
 
 <hr/>
 <div id="banner-full">
-    <div id="bannernavigation">
-        <div id="banner-prev">Previous</div>
-        <div id="banner-next">Next</div>
-    </div>
-    <div id="newversion"><a href="/download/"><img src="/_inc/img/newversion.png" alt="New Version 3"/></a></div>
+    
     <div id="bannercontent">
         <div class="slide1 slide">
             <div class="slidecontent">
