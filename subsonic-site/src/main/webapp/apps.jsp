@@ -89,7 +89,6 @@
                             <a href="http://isubapp.com/">iSub</a> is an iPhone app developed by Ben Baron, and is
                             available for purchase on the <a href="http://itunes.apple.com/us/app/isub-music-streamer/id362920532?mt=8">App&nbsp;Store</a>.
                         </p>
-                        <p><b>LIMITED TIME ONLY</b>: Two week Holiday SALE! 20% off the regular price until January 3rd 2011! Get it while it lasts!!</p>
                         <a href="inc/img/screenshots/screen20.png"><img src="inc/img/screenshots/thumb20.png" alt="" style="padding:15px;padding-left:80px"/></a>
                         <a href="inc/img/screenshots/screen21.png"><img src="inc/img/screenshots/thumb21.png" alt="" style="padding:15px"/></a>
                         <a href="inc/img/screenshots/screen22.png"><img src="inc/img/screenshots/thumb22.png" alt="" style="padding:15px"/></a>

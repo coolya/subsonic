@@ -1,8 +1,8 @@
-/* ---------- Banner ----------- */
+
 #banner-full {
 	width: 900px;
-	height: 199px;
-	background: url('../img/banner/banner-bg.gif') 0 0 no-repeat;
+	height: 299px;
+	background-color: #282828;
 	overflow: hidden;
 	position: relative;
 	border-top: 1px solid #5c5c5c;
@@ -17,93 +17,39 @@
 }
 #banner-full .slide {
 	width: 900px;
-	height: 201px;
+	height: 301px;
 	position: absolute;
 }
 #banner-full .slidecontent {
 	position: relative;
 	width: 900px;
-	height: 201px;
+	height: 301px;
 }
-#banner-full .slide1 .screenshot {
+#banner-full .slide .screenshot {
 	position: absolute;
 	bottom: 0;
-	left: 10px;
+	left: 0;
 }
-#banner-full .slide1 .title {
-	position: absolute;
-	top: 20px;
-	right: 20px;
-}
-#banner-full .slide1 .getgold {
-	position: absolute;
-	top: 103px;
-	right: 16px;
-}
-#banner-full .slide1 .downloadnow {
-	position: absolute;
-	top: 103px;
-	right: 123px;
-}
-#banner-full .slide1 .text {
-	position: absolute;
-	top: 20px;
-	left: 330px;
-	width: 310px;
-	line-height: 1.4em;
-	color: #aaa;
-}
-#banner-full .slide2 .screenshot {
-	position: absolute;
-	top: 0;
-	left: 20px;
-}
-#banner-full .slide3 .screenshot {
-	position: absolute;
-	top: 0;
-	left: 40px;
-}
-#banner-full .slide4 .screenshot {
-	position: absolute;
-	top: 0;
-	left: 20px;
-}
-#banner-full .slide5 .screenshot {
-	position: absolute;
-	top: 0;
-	left: 10px;
-}
-#banner-full .slide2 .title,
-#banner-full .slide3 .title,
-#banner-full .slide4 .title,
-#banner-full .slide5 .title {
+#banner-full .slide .title {
 	width: 380px;
 	height: 65px;
 	position: absolute;
-	top: 20px;
-	left: 475px;
+	top: 60px;
+	left: 515px;
 }
-#banner-full .slide2 .title .large,
-#banner-full .slide3 .title .large,
-#banner-full .slide4 .title .large,
-#banner-full .slide5 .title .large {
-	font-size: 34px;
+#banner-full .slide .title .large {
+	font-size: 24px;
 	font-weight: bold;
 	line-height: normal;
 	color: #fff;
+    margin-bottom:10px;
 }
-#banner-full .slide2 .title .small,
-#banner-full .slide3 .title .small,
-#banner-full .slide4 .title .small,
-#banner-full .slide5 .title .small {
-	font-size: 14px;
-	font-style: italic;
+#banner-full .slide .title .small {
+	font-size: 16px;
+	font-style: normal;
 	color: #ddd;
 }
-#banner-full .slide2 .text,
-#banner-full .slide3 .text,
-#banner-full .slide4 .text,
-#banner-full .slide5 .text {
+#banner-full .slide .text {
 	position: absolute;
 	top: 95px;
 	left: 475px;
@@ -117,8 +63,3 @@
 #bannercontent .slide3 {left:1800px;}
 #bannercontent .slide4 {left:2700px;}
 #bannercontent .slide5 {left:3600px;}
-#bannercontent .slide6 {left:4500px;}
-#bannercontent .slide7 {left:5400px;}
-#bannercontent .slide8 {left:6300px;}
-#bannercontent .slide9 {left:7200px;}
-#bannercontent .slide10 {left:8100px;}

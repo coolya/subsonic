@@ -2,8 +2,14 @@ SITE
 ----
 Add badges (SourceForge, AppCircus)
 Android Market promo graphics (http://www.tutorial9.net/tutorials/photoshop-tutorials/create-a-3d-glossy-box-logo/)
+White background
 Slideshow
-  Quotes broken
+  Person with headphones. "The soundtrack of your life", "Non-stop streaming music and video",
+  Normal screenshot. "Subsonic comes packed with features, "Podcast receiver, jukebox mode, on-the-fly conversion, ..."
+  Android + iPhone + WP7 screenshots ("Apps available for Android, iPhone and Windows Phone 7".
+  With Bluetooth car stereo. "No strings attached", "Relax to your favourite tunes no matter where you are."
+  Video (android or screenshot?) "New: Now you can stream your flicks too!"
+Quotes broken
 
 VIDEO
 -----

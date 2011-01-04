@@ -12,9 +12,9 @@
             }
             slidePosition = currentSlide * 900;
             $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1000});
-            setTimeout(function() {slideTo(currentSlide + 1)}, 4000);
+//            setTimeout(function() {slideTo(currentSlide + 1)}, 4000);
         }
-        slideTo(0);
+        slideTo(1);
     });
 </script>
 
@@ -24,33 +24,35 @@
     <div id="bannercontent">
         <div class="slide1 slide">
             <div class="slidecontent">
-                <img src="/_inc/img/slides/messycds.jpg" alt="Screenshot" class="screenshot"/>
-                <img src="/_inc/img/slides/slogan.gif" title="MediaMonkey: Get your music collection in order!"
-                     alt="MediaMonkey: Get your music collection in order!" class="title"/>
-                <a href="/download/" class="downloadnow"><img src="/_inc/img/slides/downloadnow.gif"
-                                                              alt="Download Now"/></a>
-                <a href="/download/" class="getgold"><img src="/_inc/img/slides/getgold.gif" alt="Get Gold"/></a>
+                <img src="inc/img/banner/banner-01.jpg" alt="" class="screenshot"/>
 
-                <div class="text">Is your music library a mess? <br/> Missing Album Art and other information? <br/>
-                    Scattered across various locations? <br/> Full of duplicates? <br/><em><strong>Get MediaMonkey and
-                        get organized.</strong></em></div>
+                <div class="title">
+                    <div class="large">The soundtrack of your life</div>
+                    <div class="small">Non-stop streaming.  Don't leave your music behind.</div>
+                </div>
+                <%--<div class="text">Manage small to very large collections of audio files and playlists (50,000+), whether--%>
+                    <%--on a hard drive, network, or CDs. Rip CDs, download podcasts, lookup missing information and album--%>
+                    <%--art online, tag almost any audio format, and automatically rename/re-organize tracks on your hard--%>
+                    <%--drive.--%>
+                <%--</div>--%>
             </div>
         </div>
         <div class="slide2 slide">
             <div class="slidecontent">
-                <img src="/_inc/img/slides/organise.jpg" alt="Screenshot" class="screenshot"/>
+                <img src="inc/img/banner/banner-01.jpg" alt="" class="screenshot"/>
 
                 <div class="title">
-                    <div class="large">Organize</div>
-                    <div class="small">MediaMonkey: The Music Organizer for Serious Collectors</div>
+                    <div class="large">The soundtrack of your life</div>
+                    <div class="small"><a href="apps.jsp">Apps</a> available for Android, iPhone and Windows Phone&nbsp;7.</div>
                 </div>
-                <div class="text">Manage small to very large collections of audio files and playlists (50,000+), whether
-                    on a hard drive, network, or CDs. Rip CDs, download podcasts, lookup missing information and album
-                    art online, tag almost any audio format, and automatically rename/re-organize tracks on your hard
-                    drive.
-                </div>
+                <%--<div class="text">Manage small to very large collections of audio files and playlists (50,000+), whether--%>
+                    <%--on a hard drive, network, or CDs. Rip CDs, download podcasts, lookup missing information and album--%>
+                    <%--art online, tag almost any audio format, and automatically rename/re-organize tracks on your hard--%>
+                    <%--drive.--%>
+                <%--</div>--%>
             </div>
         </div>
+
         <div class="slide3 slide">
             <div class="slidecontent">
                 <img src="/_inc/img/slides/touchsync.jpg" alt="Screenshot" class="screenshot"/>
