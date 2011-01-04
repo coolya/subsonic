@@ -97,6 +97,8 @@
         </div>
     </div>
 
+    <a href="http://sourceforge.net/projects/subsonic/"><img src="http://sourceforge.net/sflogo.php?group_id=126265&type=4" alt="SourceForge.net" /></a>
+    <a href="http://appcircus.com/apps/subsonic-music-streamer"><img src="inc/img/mpa-nominee.png" alt="MPA Nominee" /></a>
 </div>
 
 <div id="side-col">
@@ -104,9 +106,6 @@
     <%@ include file="download-subsonic.jsp" %>
     <%@ include file="quotes.jsp" %>
     <%@ include file="donate.jsp" %>
-    <div class="bottomspace">
-        <a href="http://sourceforge.net/projects/subsonic/"><img src="http://sourceforge.net/sflogo.php?group_id=126265&type=4" alt="SourceForge.net" class="img-center"/></a>
-    </div>
 </div>
 <div class="clear">
 </div>

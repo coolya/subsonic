@@ -74,7 +74,7 @@
 
                 <div class="title">
                     <div class="large">Coming soon</div>
-                    <div class="small">Stream your flicks too!</div>
+                    <div class="small">Stream all your movies too!</div>
                 </div>
                 <%--<div class="text">Customize with Skins, plugins, visualizations, and hundreds of user-written scripts--%>
                     <%--that extend MediaMonkey's functionality.--%>
