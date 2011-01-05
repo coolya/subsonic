@@ -20,11 +20,11 @@ DONE IN ANDROID 2.5
 --------------------
 Bugfix: Failed to start videos from search results.
 Support native OGG streaming
-  Use naming scheme foo.partial.mp3
-  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3681&start=15
+Request media button focues when connected to Bluetooth
 
 TODO IN ANDROID 2.5
 -------------------
+Pause when disconnecting Bluetooth.
 Reset shuffle play buffer when changing server.
 Long-click:
   Long-click artist -> Play random

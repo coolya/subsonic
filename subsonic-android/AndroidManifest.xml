@@ -89,6 +89,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver a:name="net.sourceforge.subsonic.androidapp.receiver.BluetoothIntentReceiver">
+            <intent-filter>
+                <action a:name="android.bluetooth.a2dp.action.SINK_STATE_CHANGED"/>
+            </intent-filter>
+        </receiver>
+
         <receiver a:name="net.sourceforge.subsonic.androidapp.provider.SubsonicAppWidgetProvider" >
             <intent-filter>
                 <action a:name="android.appwidget.action.APPWIDGET_UPDATE"/>
