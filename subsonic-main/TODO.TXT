@@ -4,10 +4,10 @@ Android Market promo graphics (http://www.tutorial9.net/tutorials/photoshop-tuto
 Slideshow
   With Bluetooth car stereo. "No strings attached", "Relax to your favourite tunes no matter where you are."
   How it works, slide from presentation ("Stream music straight from your home computer")
-Quotes broken
+  Use fading rather than sliding.
+  Add nav buttons
 
 VIDEO
-
 -----
 Hide timeOffset if duration unknown.
 Longer buffer (bufferlength flashvar)

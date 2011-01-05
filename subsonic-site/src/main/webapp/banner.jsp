@@ -1,4 +1,3 @@
-<script type="text/javascript" language="javascript" src="inc/js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" language="javascript">
 
     $(document).ready(function() {

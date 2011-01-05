@@ -30,15 +30,15 @@
     authors[i++] = "Chug";
 
     function hideQuote() {
-        new Effect.Opacity("quote", { from: 1.0, to: 0.0, duration: 1.5 });
+        $('#quote').animate({opacity: 0.0},{duration:1500});
         setTimeout(showQuote, 1700);
     }
 
     function showQuote() {
-        $("quote").update('"' + quotes[quoteIndex] + '"&nbsp;&nbsp;&nbsp;&ndash;&nbsp;' + authors[quoteIndex ]);
+        $("#quote").html('<span>"' + quotes[quoteIndex] + '"&nbsp;&nbsp;&nbsp;&ndash;&nbsp;' + authors[quoteIndex ] + '</span>');
         quoteIndex = (quoteIndex + 1) % quotes.length;
 
-        new Effect.Opacity("quote", { from: 0.0, to: 1.0, duration: 1.5 });
+        $('#quote').animate({opacity: 1.0},{duration:1500});
         setTimeout(hideQuote, 4000);
     }
 

@@ -35,8 +35,6 @@
             <a href="inc/img/screenshots/screen24.png" title="Subsonic app for Windows Phone 7"><img src="inc/img/screenshots/thumb24.png" alt="" style="padding:3px;padding-right:10px"/></a>
             <a href="inc/img/screenshots/screen25.png" title="Subsonic app for Windows Phone 7"><img src="inc/img/screenshots/thumb25.png" alt="" style="padding:3px"/></a>
 
-            <script type="text/javascript" src="inc/js/swfobject.js"></script>
-
             <div class="bottomspace"></div>
 
             <a name="video"><div></div></a>
