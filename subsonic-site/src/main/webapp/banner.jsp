@@ -1,32 +1,49 @@
 <script type="text/javascript" language="javascript">
 
-    $(document).ready(function() {
-        var currentSlide = 0;
-        var numberSlides = $('#bannercontent div.slide').length - 1;
+    var currentSlide = 0;
+    var numberSlides = 0;
 
-        function slideTo(slideNumber) {
-            currentSlide = slideNumber;
-            if(currentSlide > numberSlides) {
-                currentSlide = 0;
-            }
-
-            slidePosition = currentSlide * 900;
-
-            if (currentSlide == 0) {
-                $('#bannercontent').animate({opacity: 0.0},{duration:500});
-                $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1});
-                $('#bannercontent').animate({opacity: 1.0},{duration:500});
-            } else {
-                $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1000});
-            } 
-            setTimeout(function() {slideTo(currentSlide + 1);}, 10000);
+    function slideTo(slideNumber, manual) {
+        currentSlide = slideNumber;
+        if (currentSlide > numberSlides) {
+            currentSlide = 0;
+        } else if (currentSlide < 0) {
+            currentSlide = numberSlides;
         }
-        slideTo(0);
+        slidePosition = currentSlide * 900;
+
+        if (currentSlide == 0 || manual) {
+            $('#bannercontent').animate({opacity: 0.0},{duration:500});
+            $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1});
+            $('#bannercontent').animate({opacity: 1.0},{duration:500});
+        } else {
+            $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1000});
+        }
+        if (!manual) {
+            setTimeout(function() {slideTo(currentSlide + 1, false);}, 10000);
+        }
+    }
+
+    function prevSlide() {
+        slideTo(currentSlide - 1, true);
+    }
+
+    function nextSlide() {
+        slideTo(currentSlide + 1, true);
+    }
+
+    $(document).ready(function() {
+        numberSlides = $('#bannercontent div.slide').length - 1;
+        slideTo(0, false);
     });
+
 </script>
 
 <hr/>
 <div id="banner-full">
+
+    <div id="slide-prev"><a href="javascript:prevSlide();"><img src="inc/img/banner/prev.png" alt="<"></a></div>
+    <div id="slide-next"><a href="javascript:nextSlide();"><img src="inc/img/banner/next.png" alt=">"></a></div>
 
     <div id="bannercontent">
         <div class="slide1 slide">
@@ -72,7 +89,7 @@
                 <div class="title">
                     <div class="large">Coming soon</div>
                     <div class="small">Stream all your movies too!</div>
-                    <img src="inc/img/banner/android-video.png" alt="" style="margin-top:30px;margin-left:90px;"/>
+                    <img src="inc/img/banner/android-video.png" alt="" style="margin-top:20px;margin-left:90px;"/>
                 </div>
             </div>
         </div>

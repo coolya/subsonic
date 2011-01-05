@@ -8,12 +8,24 @@
 	border-top: 1px solid #5c5c5c;
 	border-bottom: 1px solid #4e4e4e;
 }
-#bannercontent {
-	z-index: 100;
+#slide-prev {
+    color:white;
+	position: absolute;
+    left: 815px;
+	top: 260px;
+    z-index: 200;
+}
+#slide-next {
+    color:white;
+	position: absolute;
+	left: 860px;
+	top: 260px;
+    z-index: 200;
 }
 #bannercontent {
 	position: absolute;
-	left: 0;
+    left: 0;
+    z-index: 100;
 }
 #banner-full .slide {
 	width: 900px;

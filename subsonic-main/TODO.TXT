@@ -4,8 +4,6 @@ Android Market promo graphics (http://www.tutorial9.net/tutorials/photoshop-tuto
 Slideshow
   With Bluetooth car stereo. "No strings attached", "Relax to your favourite tunes no matter where you are."
   How it works, slide from presentation ("Stream music straight from your home computer")
-  Use fading rather than sliding.
-  Add nav buttons
 
 VIDEO
 -----
@@ -18,9 +16,7 @@ Buy new JW license
 
 DONE IN ANDROID 2.5
 --------------------
-Bugfix: Failed to start videos from search results.
-Support native OGG streaming
-Request media button focues when connected to Bluetooth
+
 
 TODO IN ANDROID 2.5
 -------------------
