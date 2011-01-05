@@ -15,7 +15,7 @@
 <hr/>
 <div id="nav">
     <ul>
-        <li><a href="index.jsp" class="<%=current.equals("home") ? "open" : ""%>"><span>Home</span></a></li>
+        <li id="menu-home" ><a href="index.jsp" class="<%=current.equals("home") ? "open" : ""%>"><span>Home</span></a></li>
         <li><a href="download.jsp" class="<%=current.equals("download") ? "open" : ""%>"><span>Download</span></a></li>
         <li><a href="documentation.jsp" class="<%=current.equals("documentation") ? "open" : ""%>"><span>Documentation</span></a></li>
         <li><a href="features.jsp" class="<%=current.equals("features") ? "open" : ""%>"><span>Features</span></a></li>
