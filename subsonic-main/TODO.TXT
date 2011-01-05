@@ -1,9 +1,7 @@
 SITE
 ----
-New logo
 Add badges (SourceForge, AppCircus)
 Android Market promo graphics (http://www.tutorial9.net/tutorials/photoshop-tutorials/create-a-3d-glossy-box-logo/)
-White background
 Slideshow
   With Bluetooth car stereo. "No strings attached", "Relax to your favourite tunes no matter where you are."
   Video (android or screenshot?) "Coming soon: Stream your flicks too!"

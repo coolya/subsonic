@@ -1,9 +1,9 @@
-*,h1,h2,h3,h4,h5,h6,h7,h8,p,div,body,html,ul,li,ol,img,a{margin:0;padding:0;}
+*,h1,h2,h3,h4,h5,h6,p,div,body,html,ul,li,ol,img,a{margin:0;padding:0;}
 body {
 	width: 100%;
 	margin: 0;
 	padding: 0 0 20px 0;
-	background: white;
+    background: #fff url('../img/content-bg.gif') 0px 0px repeat-x;
 	font-size: 0.8em;
 	color: #444;
 	font-family: Arial, Helvetica, sans-serif;
@@ -100,15 +100,13 @@ ol {
 }
 #logo {
 	position: absolute;
-	left: 20px;
-	top: 28px;
-	width: 451px;
-	height: 82px;
+	left: -40px;
+	top: 0;
 	z-index: 99;
 }
 #content {
 	width: 898px;
-	background: #fff url('../img/content-bg.gif') 0px 0px no-repeat;
+	background: #fff url('../img/content-bg.gif') 0px 0px repeat-x;
     border: 1px solid #cbcedc;
 	line-height: 1.4em;
 }
@@ -314,9 +312,8 @@ th.param-heading {
 /* ---------- Search form ---------- */
 #search {
 	position: absolute;
-	top: 65px;
-	right: 20px;
-    /*color: white;*/
+	top: 55px;
+	right: 0;
 }
 
 /* ---------- Content ---------- */
