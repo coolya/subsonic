@@ -12,9 +12,9 @@
             }
             slidePosition = currentSlide * 900;
             $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1000});
-            setTimeout(function() {slideTo(currentSlide + 1);}, 10000);
+//            setTimeout(function() {slideTo(currentSlide + 1);}, 10000);
         }
-        slideTo(0);
+        slideTo(1);
     });
 </script>
 
@@ -34,7 +34,7 @@
         </div>
         <div class="slide2 slide">
             <div class="slidecontent">
-                <img src="inc/img/banner/wp7.png" alt="" class="screenshot"/>
+                <img src="inc/img/banner/apps.png" alt="" class="screenshot"/>
 
                 <div class="title">
                     <div class="large">Don't leave home without it</div>
