@@ -12,9 +12,9 @@
             }
             slidePosition = currentSlide * 900;
             $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1000});
-//            setTimeout(function() {slideTo(currentSlide + 1);}, 10000);
+            setTimeout(function() {slideTo(currentSlide + 1);}, 10000);
         }
-        slideTo(1);
+        slideTo(0);
     });
 </script>
 
@@ -45,7 +45,7 @@
 
         <div class="slide3 slide">
             <div class="slidecontent">
-                <img src="inc/img/banner/banner-01.jpg" alt="" class="screenshot"/>
+                <img src="inc/img/banner/screenshot.png" alt="" class="screenshot"/>
 
                 <div class="title">
                     <div class="large">The most complete personal streaming system</div>
