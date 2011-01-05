@@ -12,9 +12,9 @@
             }
             slidePosition = currentSlide * 900;
             $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1000});
-            setTimeout(function() {slideTo(currentSlide + 1);}, 10000);
+//            setTimeout(function() {slideTo(currentSlide + 1);}, 10000);
         }
-        slideTo(0);
+        slideTo(4);
     });
 </script>
 
@@ -75,8 +75,9 @@
                 <div class="title">
                     <div class="large">Coming soon</div>
                     <div class="small">Stream all your movies too!</div>
+                    <img src="inc/img/banner/android-video.png" alt="" style="margin-top:30px;margin-left:90px;"/>
                 </div>
-                <%--<div class="text">Customize with Skins, plugins, visualizations, and hundreds of user-written scripts--%>
+            <%--<div class="text">Customize with Skins, plugins, visualizations, and hundreds of user-written scripts--%>
                     <%--that extend MediaMonkey's functionality.--%>
                 <%--</div>--%>
             </div>
