@@ -12,9 +12,9 @@
             }
             slidePosition = currentSlide * 900;
             $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1000});
-//            setTimeout(function() {slideTo(currentSlide + 1);}, 10000);
+            setTimeout(function() {slideTo(currentSlide + 1);}, 10000);
         }
-        slideTo(4);
+        slideTo(0);
     });
 </script>
 
@@ -60,16 +60,6 @@
         </div>
         <div class="slide4 slide">
             <div class="slidecontent">
-                <img src="inc/img/banner/wp7.png" alt="" class="screenshot"/>
-
-                <div class="title">
-                    <div class="large">No strings attached</div>
-                    <div class="small">Relax to your favourite tunes no matter where you are.</div>
-                </div>
-            </div>
-        </div>
-        <div class="slide5 slide">
-            <div class="slidecontent">
                 <img src="inc/img/banner/video.png" alt="" class="screenshot"/>
 
                 <div class="title">
@@ -77,11 +67,18 @@
                     <div class="small">Stream all your movies too!</div>
                     <img src="inc/img/banner/android-video.png" alt="" style="margin-top:30px;margin-left:90px;"/>
                 </div>
-            <%--<div class="text">Customize with Skins, plugins, visualizations, and hundreds of user-written scripts--%>
-                    <%--that extend MediaMonkey's functionality.--%>
-                <%--</div>--%>
             </div>
         </div>
+        <%--<div class="slide5 slide">--%>
+            <%--<div class="slidecontent">--%>
+                <%--<img src="inc/img/banner/wp7.png" alt="" class="screenshot"/>--%>
+
+                <%--<div class="title">--%>
+                    <%--<div class="large">No strings attached</div>--%>
+                    <%--<div class="small">Relax to your favourite tunes no matter where you are.</div>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
     </div>
 </div>
 <hr/>
