@@ -9,8 +9,16 @@
             if(currentSlide > numberSlides) {
                 currentSlide = 0;
             }
+
             slidePosition = currentSlide * 900;
-            $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1000});
+
+            if (currentSlide == 0) {
+                $('#bannercontent').animate({opacity: 0.0},{duration:500});
+                $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1});
+                $('#bannercontent').animate({opacity: 1.0},{duration:500});
+            } else {
+                $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1000});
+            } 
             setTimeout(function() {slideTo(currentSlide + 1);}, 10000);
         }
         slideTo(0);
