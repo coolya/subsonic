@@ -1,13 +1,14 @@
 SITE
 ----
 Tutorial, windows shared folders.
-Android Market promo graphics (http://www.tutorial9.net/tutorials/photoshop-tutorials/create-a-3d-glossy-box-logo/)
 Slideshow
   With Bluetooth car stereo. "No strings attached", "Relax to your favourite tunes no matter where you are."
+  Photo with mac & iPal.
   How it works, slide from presentation ("Stream music straight from your home computer")
 
 VIDEO
 -----
+Investigate audio sync issue.
 Hide timeOffset if duration unknown.
 Longer buffer (bufferlength flashvar)
 Hide slider.

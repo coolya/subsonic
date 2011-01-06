@@ -35,7 +35,7 @@ import net.sourceforge.subsonic.dao.schema.Schema36;
 import net.sourceforge.subsonic.dao.schema.Schema37;
 import net.sourceforge.subsonic.dao.schema.Schema38;
 import net.sourceforge.subsonic.dao.schema.Schema40;
-import net.sourceforge.subsonic.dao.schema.Schema50;
+import net.sourceforge.subsonic.dao.schema.Schema43;
 import net.sourceforge.subsonic.service.SettingsService;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -55,7 +55,7 @@ public class DaoHelper {
     private Schema[] schemas = {new Schema25(), new Schema26(), new Schema27(), new Schema28(), new Schema29(),
                                 new Schema30(), new Schema31(), new Schema32(), new Schema33(), new Schema34(),
                                 new Schema35(), new Schema36(), new Schema37(), new Schema38(), new Schema40(),
-                                new Schema50()};
+                                new Schema43()};
     private DataSource dataSource;
     private static boolean shutdownHookAdded;
 

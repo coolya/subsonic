@@ -26,24 +26,30 @@ import java.util.Arrays;
 
 /**
  * Used for creating and evolving the database schema.
- * This class implements the database schema for Subsonic version 5.0.
+ * This class implements the database schema for Subsonic version 4.3.
  *
  * @author Sindre Mehus
  */
-public class Schema50 extends Schema {
+public class Schema43 extends Schema {
 
-    private static final Logger LOG = Logger.getLogger(Schema50.class);
+    private static final Logger LOG = Logger.getLogger(Schema43.class);
 
     @Override
     public void execute(JdbcTemplate template) {
 
+        // version 16 was used for 4.3.beta1
         if (template.queryForInt("select count(*) from version where version = 16") == 0) {
             LOG.info("Updating database schema to version 16.");
             template.execute("insert into version values (16)");
+        }
+
+        if (template.queryForInt("select count(*) from version where version = 17") == 0) {
+            LOG.info("Updating database schema to version 17.");
+            template.execute("insert into version values (17)");
 
             for (String format : Arrays.asList("avi", "mpg", "mpeg", "mp4", "m4v", "mkv", "mov", "wmv", "ogv")) {
                 template.update("delete from transcoding where source_format=? and target_format=?", new Object[] {format, "flv"});
-                template.execute("insert into transcoding values(null,'" + format + " > flv' ,'" + format + "' ,'flv','ffmpeg -ss %o -i %s -b %bk -s %wx%h -ar 44100 -ac 2 -v 0 -f flv -',null,null,true,true)");
+                template.execute("insert into transcoding values(null,'" + format + " > flv' ,'" + format + "' ,'flv','ffmpeg -ss %o -i %s -async 1 -b %bk -s %wx%h -ar 44100 -ac 2 -v 0 -f flv -',null,null,true,true)");
                 template.execute("insert into player_transcoding select p.id as player_id, t.id as transaction_id from player p, transcoding t where t.name = '" + format + " > flv'");
             }
             LOG.info("Created video transcoding configuration.");
