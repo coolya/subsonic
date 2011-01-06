@@ -9,18 +9,34 @@
 	border-bottom: 1px solid #4e4e4e;
 }
 #slide-prev {
-    color:white;
 	position: absolute;
     left: 815px;
 	top: 260px;
     z-index: 200;
+    width:32px;
+    height:32px;
+    margin: 0;
+    padding: 0;
+    background: url('../img/banner/prev.png') no-repeat;
 }
 #slide-next {
-    color:white;
 	position: absolute;
 	left: 860px;
 	top: 260px;
     z-index: 200;
+    width:32px;
+    height:32px;
+    margin: 0;
+    padding: 0;
+    background: url('../img/banner/next.png') no-repeat;
+}
+#slide-prev:hover
+{
+    background: url('../img/banner/prev-hover.png') no-repeat;
+}
+#slide-next:hover
+{
+    background: url('../img/banner/next-hover.png') no-repeat;
 }
 #bannercontent {
 	position: absolute;

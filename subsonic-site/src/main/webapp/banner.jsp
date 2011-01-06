@@ -42,8 +42,8 @@
 <hr/>
 <div id="banner-full">
 
-    <div id="slide-prev"><a href="javascript:prevSlide();"><img src="inc/img/banner/prev.png" alt="<"></a></div>
-    <div id="slide-next"><a href="javascript:nextSlide();"><img src="inc/img/banner/next.png" alt=">"></a></div>
+    <a id="slide-prev" href="javascript:prevSlide();"></a>
+    <a id="slide-next" href="javascript:nextSlide();"></a>
 
     <div id="bannercontent">
         <div class="slide1 slide">
