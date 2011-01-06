@@ -10,15 +10,10 @@
         } else if (currentSlide < 0) {
             currentSlide = numberSlides;
         }
-        slidePosition = currentSlide * 900;
+        var slidePosition = currentSlide * 900;
 
-        if (currentSlide == 0 || manual) {
-            $('#bannercontent').animate({opacity: 0.0},{duration:500});
-            $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1});
-            $('#bannercontent').animate({opacity: 1.0},{duration:500});
-        } else {
-            $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:1000});
-        }
+        var dur = (currentSlide == 0 || manual) ? 0 : 1000;
+        $('#bannercontent').animate({left: '-'+slidePosition+'px'},{duration:dur});
         if (!manual) {
             setTimeout(function() {slideTo(currentSlide + 1, false);}, 10000);
         }
