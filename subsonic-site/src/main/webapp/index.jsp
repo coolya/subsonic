@@ -103,7 +103,7 @@
     <%@ include file="download-subsonic.jsp" %>
     <%@ include file="quotes.jsp" %>
     <%@ include file="donate.jsp" %>
-   <div class="bottomspace">
+    <div class="bottomspace">
         <a href="http://sourceforge.net/projects/subsonic/"><img src="http://sourceforge.net/sflogo.php?group_id=126265&type=4" alt="SourceForge.net" class="img-center"/></a>
     </div>
 </div>

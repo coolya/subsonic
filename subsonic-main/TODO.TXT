@@ -1,5 +1,6 @@
 SITE
 ----
+Tutorial, windows shared folders.
 Android Market promo graphics (http://www.tutorial9.net/tutorials/photoshop-tutorials/create-a-3d-glossy-box-logo/)
 Slideshow
   With Bluetooth car stereo. "No strings attached", "Relax to your favourite tunes no matter where you are."
@@ -16,10 +17,11 @@ Buy new JW license
 
 DONE IN ANDROID 2.5
 --------------------
-
+Glowing buttons, cover art background, ala http://powerampapp.com/wp-content/themes/poweramp/images/big/theme-matte-metal-1.jpg
 
 TODO IN ANDROID 2.5
 -------------------
+Avoid more than one instance.
 Pause when disconnecting Bluetooth.
 Reset shuffle play buffer when changing server.
 Long-click:
@@ -633,6 +635,7 @@ last_played
 
 MISCELLANEOUS
 =============
+Photos: http://www.123rf.com
 http://www.famfamfam.com/lab/icons/silk/previews/index_abc.png
 http://iconfactory.com/freeware
 openclipart.org
