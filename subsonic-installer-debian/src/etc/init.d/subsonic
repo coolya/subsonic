@@ -31,6 +31,12 @@ SCRIPTNAME=/etc/init.d/$NAME
 # Read configuration variable file if it is present
 [ -r /etc/default/$NAME ] && . /etc/default/$NAME
 
+# Make sure Subsonic is started with system locale
+if [ -r /etc/default/locale ]; then
+    . /etc/default/locale 
+    export LANG
+fi
+
 # Load the VERBOSE setting and other rcS variables
 . /lib/init/vars.sh
 

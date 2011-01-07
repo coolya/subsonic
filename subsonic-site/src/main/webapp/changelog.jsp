@@ -22,6 +22,7 @@
     <li><span class="bugid">Bugfix: </span>Fixed problem with audio getting out-of-sync with video.</li>
     <li><span class="bugid">Bugfix: </span>When converting videos, always use a width that is a multiple of two.</li>
     <li><span class="bugid">Bugfix: </span>Fixed bug in REST method createPlaylist.</li>
+    <li><span class="bugid">Bugfix: </span>Use language settings in /etc/default/locale on Ubuntu/Debian.</li>
 </ul>
 
 <a name="4.3.beta1"><h2 class="div">Subsonic 4.3.beta1 - Dec 30, 2010</h2></a>
