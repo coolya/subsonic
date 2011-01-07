@@ -88,13 +88,10 @@ Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Colors: http://www.androidtapp.com/opentable/
 
-DONE IN 4.3
+DONE IN 4.4
 ----------------
-When switching bit rate, also jump to correct time offset
-Bugfix: When converting videos, always use a width that is a multiple of two.
-Fixed bug in REST method createPlaylist.
 
-TODO IN 4.3
+TODO IN 4.4
 -----------------
 Investigate mapped network drives.
 New playlist REST methods?

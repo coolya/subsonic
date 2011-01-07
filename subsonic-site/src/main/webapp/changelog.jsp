@@ -16,6 +16,14 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="4.3"><h2 class="div">Subsonic 4.3 - Jan 7, 2011</h2></a>
+<ul>
+    <li><span class="bugid">Bugfix: </span>When switching bit rate, also jump to correct time offset.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed problem with audio getting out-of-sync with video.</li>
+    <li><span class="bugid">Bugfix: </span>When converting videos, always use a width that is a multiple of two.</li>
+    <li><span class="bugid">Bugfix: </span>Fixed bug in REST method createPlaylist.</li>
+</ul>
+
 <a name="4.3.beta1"><h2 class="div">Subsonic 4.3.beta1 - Dec 30, 2010</h2></a>
 <ul>
     <li><span class="bugid">New: </span>Video support! Stream video to browsers and Android 2.2+ phones.</li>
@@ -770,6 +778,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#4.3">Subsonic 4.3</a></li>
             <li><a href="#4.3.beta1">Subsonic 4.3.beta1</a></li>
             <li><a href="#4.2">Subsonic 4.2</a></li>
             <li><a href="#4.2.beta1">Subsonic 4.2.beta1</a></li>
