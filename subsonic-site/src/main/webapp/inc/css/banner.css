@@ -68,6 +68,10 @@
 #banner-full .slide4 .title {
 	left: 575px;
 }
+#banner-full .slide5 .title {
+	left: 575px;
+    width: 300px;
+}
 #banner-full .slide .title .large {
 	font-size: 24px;
 	font-weight: bold;

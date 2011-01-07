@@ -2,7 +2,6 @@ SITE
 ----
 Tutorial, windows shared folders.
 Slideshow
-  With Bluetooth car stereo. "No strings attached", "Relax to your favourite tunes no matter where you are."
   Photo with mac & iPal.
   How it works, slide from presentation ("Stream music straight from your home computer")
 

@@ -88,16 +88,16 @@
                 </div>
             </div>
         </div>
-        <%--<div class="slide5 slide">--%>
-            <%--<div class="slidecontent">--%>
-                <%--<img src="inc/img/banner/wp7.png" alt="" class="screenshot"/>--%>
+        <div class="slide5 slide">
+            <div class="slidecontent">
+                <img src="inc/img/banner/car.png" alt="" class="screenshot"/>
 
-                <%--<div class="title">--%>
-                    <%--<div class="large">No strings attached</div>--%>
-                    <%--<div class="small">Relax to your favourite tunes no matter where you are.</div>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
+                <div class="title">
+                    <div class="large">No strings attached</div>
+                    <div class="small">Relax to your favourite tunes no matter where you are.</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <hr/>
