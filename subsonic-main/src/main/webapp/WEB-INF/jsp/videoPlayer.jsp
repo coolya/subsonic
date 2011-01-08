@@ -4,12 +4,15 @@
 <head>
     <%@ include file="head.jsp" %>
 
+    <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.video.parent.path}"/></sub:url>
+
     <sub:url value="/stream" var="streamUrl">
         <sub:param name="path" value="${model.video.path}"/>
     </sub:url>
 
     <script type="text/javascript" src="<c:url value="/script/swfobject.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
     <script type="text/javascript" language="javascript">
 
         var player;
@@ -39,7 +42,9 @@
                 name:"player1"
             };
 
-            swfobject.embedSWF("<c:url value="/flash/jw-player-5.4.swf"/>", "placeholder1", "600", "360", "9.0.0", false, flashvars, params, attributes);
+            var width = "${model.popout ? '100%' : '600'}";
+            var height = "${model.popout ? '85%' : '360'}";
+            swfobject.embedSWF("<c:url value="/flash/jw-player-5.4.swf"/>", "placeholder1", width, height, "9.0.0", false, flashvars, params, attributes);
         }
 
         function playerReady(thePlayer) {
@@ -95,11 +100,20 @@
             play();
         }
 
+        function popout() {
+            var pos = parseInt(timeOffset) + parseInt(position);
+            var url = document.URL + "&maxBitRate=" + maxBitRate + "&timeOffset=" + pos + "&popout=true";
+            popupSize(url, "video", 600, 400);
+            window.location.href = "${backUrl}";
+        }
+
     </script>
 </head>
 
 <body class="mainframe bgcolor1" onload="init();">
-<h1>${model.video.title}</h1>
+<c:if test="${not model.popout}">
+    <h1>${model.video.title}</h1>
+</c:if>
 
 <c:if test="${model.trial}">
     <fmt:formatDate value="${model.trialExpires}" dateStyle="long" var="expiryDate"/>
@@ -128,7 +142,7 @@
     <select id="timeOffset" onchange="changeTimeOffset();" style="padding-left:0.25em;padding-right:0.25em;margin-right:0.5em">
         <c:forEach items="${model.skipOffsets}" var="skipOffset">
             <c:choose>
-                <c:when test="${skipOffset.value eq model.timeOffset}">
+                <c:when test="${skipOffset.value - skipOffset.value mod 60 eq model.timeOffset - model.timeOffset mod 60}">
                     <option selected="selected" value="${skipOffset.value}">${skipOffset.key}</option>
                 </c:when>
                 <c:otherwise>
@@ -152,10 +166,16 @@
     </select>
 </div>
 
-<div style="padding-bottom:0.5em">
-    <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.video.parent.path}"/></sub:url>
-    <div class="back"><a href="${backUrl}"><fmt:message key="common.back"/></a></div>
-</div>
+<c:if test="${not model.popout}">
+    <div style="padding-bottom:0.5em;">
+        <div>
+            <div class="back" style="float:left;padding-right:2em"><a href="${backUrl}"><fmt:message key="common.back"/></a></div>
+        </div>
+        <div>
+            <div class="forward" style="float:left;"><a href="javascript:popout();"><fmt:message key="videoPlayer.popout"/></a></div>
+        </div>
+    </div>
+</c:if>
 
 </body>
 </html>

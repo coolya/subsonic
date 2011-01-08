@@ -70,6 +70,7 @@ public class VideoPlayerController extends ParameterizableViewController {
         map.put("video", file);
         map.put("player", playerService.getPlayer(request, response).getId());
         map.put("maxBitRate", ServletRequestUtils.getIntParameter(request, "maxBitRate", DEFAULT_BIT_RATE));
+        map.put("popout", ServletRequestUtils.getBooleanParameter(request, "popout", false));
         map.put("duration", duration);
         map.put("timeOffset", timeOffset);
         map.put("bitRates", BIT_RATES);

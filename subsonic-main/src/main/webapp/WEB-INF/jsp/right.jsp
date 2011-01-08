@@ -49,7 +49,7 @@
                 html += "<tr><td class='detail' style='padding-right:1em'>" +
                         "<a title='" + nowPlaying[i].tooltip + "' target='main' href='" + nowPlaying[i].albumUrl + "'><em>" +
                         nowPlaying[i].artist + "</em><br/>" + nowPlaying[i].title + "</a><br/>" +
-                        "<span class='forward'><a href='" + nowPlaying[i].lyricsUrl + "' onclick=\"return popupSize(this, 'help', 430, 550)\">" +
+                        "<span class='forward'><a href='" + nowPlaying[i].lyricsUrl + "' onclick=\"return popupSize(this, 'lyrics', 430, 550)\">" +
                         "<fmt:message key="main.lyrics"/>" + "</a></span></td><td style='padding-top:1em'>";
 
                 if (nowPlaying[i].coverArtUrl != null) {
