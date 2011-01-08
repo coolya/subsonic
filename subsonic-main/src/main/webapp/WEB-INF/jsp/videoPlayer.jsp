@@ -4,6 +4,7 @@
 <head>
     <%@ include file="head.jsp" %>
 
+    <sub:url value="videoPlayer.view" var="baseUrl"><sub:param name="path" value="${model.video.path}"/></sub:url>
     <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.video.parent.path}"/></sub:url>
 
     <sub:url value="/stream" var="streamUrl">
@@ -76,7 +77,7 @@
         }
 
         function updatePosition() {
-            var pos = parseInt(timeOffset) + parseInt(position);
+            var pos = getPosition();
 
             var minutes = Math.round(pos / 60);
             var seconds = pos % 60;
@@ -96,21 +97,29 @@
 
         function changeBitRate() {
             maxBitRate = $("maxBitRate").getValue();
-            timeOffset = parseInt(timeOffset) + parseInt(position);
+            timeOffset = getPosition();
             play();
         }
 
         function popout() {
-            var pos = parseInt(timeOffset) + parseInt(position);
-            var url = document.URL + "&maxBitRate=" + maxBitRate + "&timeOffset=" + pos + "&popout=true";
+            var url = "${baseUrl}&maxBitRate=" + maxBitRate + "&timeOffset=" + getPosition() + "&popout=true";
             popupSize(url, "video", 600, 400);
             window.location.href = "${backUrl}";
+        }
+
+        function popin() {
+            window.opener.location.href = "${baseUrl}&maxBitRate=" + maxBitRate + "&timeOffset=" + getPosition();
+            window.close();
+        }
+
+        function getPosition() {
+            return parseInt(timeOffset) + parseInt(position);
         }
 
     </script>
 </head>
 
-<body class="mainframe bgcolor1" onload="init();">
+<body class="mainframe bgcolor1" style="padding-bottom:0.5em" onload="init();">
 <c:if test="${not model.popout}">
     <h1>${model.video.title}</h1>
 </c:if>
@@ -166,16 +175,15 @@
     </select>
 </div>
 
-<c:if test="${not model.popout}">
-    <div style="padding-bottom:0.5em;">
-        <div>
-            <div class="back" style="float:left;padding-right:2em"><a href="${backUrl}"><fmt:message key="common.back"/></a></div>
-        </div>
-        <div>
-            <div class="forward" style="float:left;"><a href="javascript:popout();"><fmt:message key="videoPlayer.popout"/></a></div>
-        </div>
-    </div>
-</c:if>
+<c:choose>
+    <c:when test="${model.popout}">
+        <div class="back"><a href="javascript:popin();"><fmt:message key="common.back"/></a></div>
+    </c:when>
+    <c:otherwise>
+        <div class="back" style="float:left;padding-right:2em"><a href="${backUrl}"><fmt:message key="common.back"/></a></div>
+        <div class="forward" style="float:left;"><a href="javascript:popout();"><fmt:message key="videoPlayer.popout"/></a></div>
+    </c:otherwise>
+</c:choose>
 
 </body>
 </html>
