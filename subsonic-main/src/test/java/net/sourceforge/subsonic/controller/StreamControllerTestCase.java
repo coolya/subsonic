@@ -79,6 +79,10 @@ public class StreamControllerTestCase extends TestCase {
         doTestGetSuitableVideoSize(720, null, 1200, 640, 480);
         doTestGetSuitableVideoSize(null, 540, 1500, 640, 480);
         doTestGetSuitableVideoSize(null, null, 2000, 640, 480);
+
+        // Odd original size.
+        doTestGetSuitableVideoSize(853, 464, 1500, 854, 464);
+        doTestGetSuitableVideoSize(464, 853, 1500, 464, 854);
     }
 
     private void doTestGetSuitableVideoSize(Integer existingWidth, Integer existingHeight, Integer maxBitRate, int expectedWidth, int expectedHeight) {

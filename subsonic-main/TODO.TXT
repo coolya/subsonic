@@ -94,7 +94,8 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN 4.4
 ----------------
-Video: Pop-out to resizable window. 
+Video: Pop-out to resizable window.
+Bugfix: When converting videos, always use a width that is a multiple of two (again).
 
 TODO IN 4.4
 -----------------

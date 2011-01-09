@@ -292,18 +292,18 @@ public class StreamController implements Controller {
         }
 
         if (existingWidth < w || existingHeight < h) {
-            return new Dimension(existingWidth, existingHeight);
+            return new Dimension(even(existingWidth), even(existingHeight));
         }
 
         double aspectRate = existingWidth.doubleValue() / existingHeight.doubleValue();
         w = (int) Math.round(h * aspectRate);
 
-        // Make sure it's a multiple of two, as some versions of ffmpeg require it.
-        if (w % 2 == 1) {
-            w++;
-        }
+        return new Dimension(even(w), even(h));
+    }
 
-        return new Dimension(w, h);
+    // Make sure width and height are multiples of two, as some versions of ffmpeg require it.
+    private int even(int size) {
+        return size + (size % 2);
     }
 
     /**
