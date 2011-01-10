@@ -94,6 +94,10 @@ Better support for searching with accented characters (e.g., searching for "bart
 
 TODO IN 4.4
 -----------------
+Never scrobble videos.
+Optionally scrobble REST streaming.
+"Access denied to file" error message on Android
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4791
 Lucene: keep IndexReader and IndexSearcher open. Measure.
 Investigate mapped network drives.
 New playlist REST methods?
