@@ -20,14 +20,21 @@ package net.sourceforge.subsonic.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.lucene.analysis.ASCIIFoldingFilter;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.LowerCaseFilter;
+import org.apache.lucene.analysis.StopFilter;
+import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.standard.StandardFilter;
+import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexReader;
@@ -46,6 +53,7 @@ import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.SearchCriteria;
 import net.sourceforge.subsonic.domain.SearchResult;
 import net.sourceforge.subsonic.util.FileUtil;
+
 import static net.sourceforge.subsonic.service.SearchService.Line;
 
 /**
@@ -104,7 +112,7 @@ public class LuceneSearchService {
         try {
             reader = createIndexReader(indexType);
             Searcher searcher = new IndexSearcher(reader);
-            Analyzer analyzer = new StandardAnalyzer(LUCENE_VERSION);
+            Analyzer analyzer = new SubsonicAnalyzer();
 
             MultiFieldQueryParser queryParser = new MultiFieldQueryParser(LUCENE_VERSION, indexType.getFields(), analyzer, indexType.getBoosts());
             Query query = queryParser.parse(criteria.getQuery());
@@ -129,7 +137,7 @@ public class LuceneSearchService {
 
     private IndexWriter createIndexWriter(IndexType indexType) throws IOException {
         File dir = getIndexDirectory(indexType);
-        return new IndexWriter(FSDirectory.open(dir), new StandardAnalyzer(LUCENE_VERSION), true, new IndexWriter.MaxFieldLength(10));
+        return new IndexWriter(FSDirectory.open(dir), new SubsonicAnalyzer(), true, new IndexWriter.MaxFieldLength(10));
     }
 
     private IndexReader createIndexReader(IndexType indexType) throws IOException {
@@ -239,8 +247,42 @@ public class LuceneSearchService {
         public Map<String, Float> getBoosts() {
             return boosts;
         }
+    }
 
+    private class SubsonicAnalyzer extends StandardAnalyzer {
+        private SubsonicAnalyzer() {
+            super(LUCENE_VERSION);
+        }
 
+        @Override
+        public TokenStream tokenStream(String fieldName, Reader reader) {
+            TokenStream result = super.tokenStream(fieldName, reader);
+            return new ASCIIFoldingFilter(result);
+        }
+
+        @Override
+        public TokenStream reusableTokenStream(String fieldName, Reader reader) throws IOException {
+            class SavedStreams {
+                StandardTokenizer tokenStream;
+                TokenStream filteredTokenStream;
+            }
+
+            SavedStreams streams = (SavedStreams) getPreviousTokenStream();
+            if (streams == null) {
+                streams = new SavedStreams();
+                setPreviousTokenStream(streams);
+                streams.tokenStream = new StandardTokenizer(LUCENE_VERSION, reader);
+                streams.filteredTokenStream = new StandardFilter(streams.tokenStream);
+                streams.filteredTokenStream = new LowerCaseFilter(streams.filteredTokenStream);
+                streams.filteredTokenStream = new StopFilter(true, streams.filteredTokenStream, STOP_WORDS_SET);
+                streams.filteredTokenStream = new ASCIIFoldingFilter(streams.filteredTokenStream);
+            } else {
+                streams.tokenStream.reset(reader);
+            }
+            streams.tokenStream.setMaxTokenLength(DEFAULT_MAX_TOKEN_LENGTH);
+
+            return streams.filteredTokenStream;
+        }
     }
 }
 

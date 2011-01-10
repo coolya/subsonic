@@ -1,17 +1,11 @@
 SITE
 ----
-Update appcircus!
 Tutorial, windows shared folders.
 Slideshow
-  Photo with mac & iPal.
   How it works, slide from presentation ("Stream music straight from your home computer")
-  http://www.123rf.com/photo_3700089_the-girl-with-headphones-against-park-and-the-sky.html
 
 VIDEO
 -----
-Set timeoffset combobox to closest whole minute when timeOffset is given.
-"Popin"
-Vide popout
 Hide timeOffset if duration unknown.
 Longer buffer (bufferlength flashvar)
 Hide slider.
@@ -21,10 +15,10 @@ Buy new JW license
 
 DONE IN ANDROID 2.5
 --------------------
-Glowing buttons, cover art background, ala http://powerampapp.com/wp-content/themes/poweramp/images/big/theme-matte-metal-1.jpg
 
 TODO IN ANDROID 2.5
 -------------------
+Glowing buttons, cover art background, ala http://powerampapp.com/wp-content/themes/poweramp/images/big/theme-matte-metal-1.jpg
 Option to keep screen lit.
 Avoid more than one instance.
 Pause when disconnecting Bluetooth.
@@ -96,9 +90,11 @@ DONE IN 4.4
 ----------------
 Video: Pop-out to resizable window.
 Bugfix: When converting videos, always use a width that is a multiple of two (again).
+Better support for searching with accented characters (e.g., searching for "bartok" will match "bartók").
 
 TODO IN 4.4
 -----------------
+Lucene: keep IndexReader and IndexSearcher open. Measure.
 Investigate mapped network drives.
 New playlist REST methods?
 
