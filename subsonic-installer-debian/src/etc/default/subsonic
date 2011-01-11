@@ -8,9 +8,10 @@
 # Type "subsonic --help" on the command line to read an
 # explanation of the different options.
 #
-# For example, to specify that Subsonic should use port 7070
-# and use a Java memory heap size of 80 MB, use the following:
+# For example, to specify that Subsonic should use port 80 (for http)
+# and 443 (for https), and use a Java memory heap size of 120 MB, use
+# the following:
 #
-# SUBSONIC_ARGS="--port=7070 --max-memory=80"
+# SUBSONIC_ARGS="--port=80 --ssl-port=443 --max-memory=120"
 
 SUBSONIC_ARGS="--max-memory=100"

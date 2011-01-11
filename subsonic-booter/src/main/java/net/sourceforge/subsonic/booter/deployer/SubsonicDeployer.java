@@ -13,6 +13,7 @@ import java.util.zip.ZipEntry;
 
 import org.apache.commons.io.IOUtils;
 import org.mortbay.jetty.Server;
+import org.mortbay.jetty.security.SslSocketConnector;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
 
@@ -24,6 +25,7 @@ import org.mortbay.jetty.webapp.WebAppContext;
  * <ul>
  * <li><code>subsonic.contextPath</code> - The context path at which Subsonic is deployed.  Default "/".</li>
  * <li><code>subsonic.port</code> - The port Subsonic will listen to.  Default 80.</li>
+ * <li><code>subsonic.sslPort</code> - The port Subsonic will listen to for HTTPS.  Default 0, which disables HTTPS.</li>
  * <li><code>subsonic.war</code> - Subsonic WAR file, or exploded directory.  Default "subsonic.war".</li>
  * <li><code>subsonic.createLinkFile</code> - If set to "true", a Subsonic.url file is created in the working directory.</li>
  * </ul>
@@ -34,6 +36,7 @@ public class SubsonicDeployer implements SubsonicDeployerService {
 
     public static final String DEFAULT_HOST = "0.0.0.0";
     public static final int DEFAULT_PORT = 80;
+    public static final int DEFAULT_SSL_PORT = 0;
     public static final int DEFAULT_MEMORY_LIMIT = 100;
     public static final String DEFAULT_CONTEXT_PATH = "/";
     public static final String DEFAULT_WAR = "subsonic.war";
@@ -65,7 +68,7 @@ public class SubsonicDeployer implements SubsonicDeployerService {
                 writer = new FileWriter("subsonic.url");
                 writer.append("[InternetShortcut]");
                 writer.append(System.getProperty("line.separator"));
-                writer.append("URL=").append(getURL());
+                writer.append("URL=").append(getUrl());
                 writer.flush();
             } catch (Throwable x) {
                 System.err.println("Failed to create subsonic.url.");
@@ -92,6 +95,17 @@ public class SubsonicDeployer implements SubsonicDeployerService {
             connector.setPort(getPort());
             server.addConnector(connector);
 
+            if (isSslEnabled()) {
+                SslSocketConnector sslConnector = new SslSocketConnector();
+                sslConnector.setMaxIdleTime(MAX_IDLE_TIME_MILLIS);
+                sslConnector.setHeaderBufferSize(HEADER_BUFFER_SIZE);
+                sslConnector.setHost(getHost());
+                sslConnector.setPort(getSslPort());
+                sslConnector.setKeystore(getClass().getResource("/keystore").toExternalForm());
+                sslConnector.setPassword("subsonic");
+                server.addConnector(sslConnector);
+            }
+
             WebAppContext context = new WebAppContext();
             context.setTempDirectory(getJettyDirectory());
             context.setContextPath(getContextPath());
@@ -100,7 +114,11 @@ public class SubsonicDeployer implements SubsonicDeployerService {
             server.addHandler(context);
             server.start();
 
-            System.err.println("Subsonic running on " + getURL());
+            System.err.println("Subsonic running on: " + getUrl());
+            if (isSslEnabled()) {
+                System.err.println("                and: " + getHttpsUrl());
+            }
+
         } catch (Throwable x) {
             x.printStackTrace();
             exception = x;
@@ -182,6 +200,20 @@ public class SubsonicDeployer implements SubsonicDeployerService {
         return port;
     }
 
+    private int getSslPort() {
+        int port = DEFAULT_SSL_PORT;
+
+        String portString = System.getProperty("subsonic.sslPort");
+        if (portString != null) {
+            port = Integer.parseInt(portString);
+        }
+        return port;
+    }
+
+    private boolean isSslEnabled() {
+        return getSslPort() > 0;
+    }
+
     public String getErrorMessage() {
         if (exception == null) {
             return null;
@@ -204,12 +236,25 @@ public class SubsonicDeployer implements SubsonicDeployerService {
         return (int) Math.round(usedBytes / 1024.0 / 1024.0);
     }
 
-    private String getURL() {
-
+    private String getUrl() {
         String host = DEFAULT_HOST.equals(getHost()) ? "localhost" : getHost();
         StringBuffer url = new StringBuffer("http://").append(host);
         if (getPort() != 80) {
             url.append(":").append(getPort());
+        }
+        url.append(getContextPath());
+        return url.toString();
+    }
+
+    private String getHttpsUrl() {
+        if (!isSslEnabled()) {
+            return null;
+        }
+
+        String host = DEFAULT_HOST.equals(getHost()) ? "localhost" : getHost();
+        StringBuffer url = new StringBuffer("https://").append(host);
+        if (getSslPort() != 443) {
+            url.append(":").append(getSslPort());
         }
         url.append(getContextPath());
         return url.toString();
@@ -256,6 +301,6 @@ public class SubsonicDeployer implements SubsonicDeployerService {
     }
 
     public DeploymentStatus getDeploymentInfo() {
-        return new DeploymentStatus(startTime, getURL(), getMemoryUsed(), getErrorMessage());
+        return new DeploymentStatus(startTime, getUrl(), getHttpsUrl(), getMemoryUsed(), getErrorMessage());
     }
 }

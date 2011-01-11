@@ -68,6 +68,7 @@
                                             <javaproperty name="subsonic.defaultPodcastFolder" value="/Users/Shared/Podcasts"/>
                                             <javaproperty name="subsonic.defaultPlaylistFolder" value="/Users/Shared/Playlists"/>
                                             <javaproperty name="subsonic.port" value="4040"/>
+                                            <javaproperty name="subsonic.sslPort" value="0"/>
                                             <javaproperty name="subsonic.contextPath" value="/"/>
                                         </jarbundler>
                                         <exec executable="/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker">
