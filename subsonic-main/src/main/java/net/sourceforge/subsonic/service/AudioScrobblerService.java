@@ -101,7 +101,7 @@ public class AudioScrobblerService {
      */
     private RegistrationData createRegistrationData(MusicFile musicFile, String username, boolean submission) {
 
-        if (musicFile == null) {
+        if (musicFile == null || musicFile.isVideo()) {
             return null;
         }
 
