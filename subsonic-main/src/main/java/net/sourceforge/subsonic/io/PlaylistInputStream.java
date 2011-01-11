@@ -50,8 +50,8 @@ public class PlaylistInputStream extends InputStream {
     private final SearchService searchService;
     private final TranscodingService transcodingService;
     private final MusicInfoService musicInfoService;
-
     private final AudioScrobblerService audioScrobblerService;
+
     private MusicFile currentFile;
     private InputStream currentInputStream;
 
@@ -124,8 +124,9 @@ public class PlaylistInputStream extends InputStream {
             close();
             LOG.info(player.getUsername() + " listening to \"" + FileUtil.getShortPath(file.getFile()) + "\"");
             updateStatistics(file);
-            audioScrobblerService.register(file, player.getUsername(), false);
-
+            if (player.getClientId() == null) {  // Don't scrobble REST players.
+                audioScrobblerService.register(file, player.getUsername(), false);
+            }
             currentInputStream = transcodingService.getTranscodedInputStream(file, player, maxBitRate, videoTranscodingSettings);
             currentFile = file;
             status.setFile(currentFile.getFile());
@@ -160,7 +161,9 @@ public class PlaylistInputStream extends InputStream {
                 currentInputStream.close();
             }
         } finally {
-            audioScrobblerService.register(currentFile, player.getUsername(), true);
+            if (player.getClientId() == null) {  // Don't scrobble REST players.
+                audioScrobblerService.register(currentFile, player.getUsername(), true);
+            }
             currentInputStream = null;
             currentFile = null;
         }

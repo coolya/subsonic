@@ -106,16 +106,17 @@ Bugfix: When converting videos, always use a width that is a multiple of two (ag
 Bugfix: Handle invalid pixel aspect rates (PAR) reported by ffmpeg.
 Better support for searching with accented characters (e.g., searching for "bartok" will match "bartók").
 Bugfix: Don't scrobble videos to last.fm.
+Don't scrobble for REST playback.
 
 TODO IN 4.4
 -----------------
+REST support for scrobbling, separate method.
 Parse movie title etc using ffmpeg?
 Subsonic desktop application
    http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2671
 jSub
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4479
 Maven 3
-REST support for disabling scrobbling.
 "Access denied to file" error message on Android
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4791
 Investigate mapped network drives.
