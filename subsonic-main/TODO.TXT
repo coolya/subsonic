@@ -1,8 +1,20 @@
+PLAYLIST
+--------
+Save playlists in database?  Access rights.
+More prominent display.
+Automatically import iTunes playlists.
+Dynamic playlists,  Message from zeekay.
+Personal playlists http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7538#7538
+Playlist summary. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1833
+New playlist REST methods?
+WiMP
+
 SITE
 ----
 Tutorial, windows shared folders.
 Slideshow
   How it works, slide from presentation ("Stream music straight from your home computer")
+  Update video slide.
 
 VIDEO
 -----
@@ -90,17 +102,23 @@ DONE IN 4.4
 ----------------
 Video: Pop-out to resizable window.
 Bugfix: When converting videos, always use a width that is a multiple of two (again).
+Bugfix: Handle invalid pixel aspect rates (PAR) reported by ffmpeg.
 Better support for searching with accented characters (e.g., searching for "bartok" will match "bartók").
 
 TODO IN 4.4
 -----------------
+Support invalid PAR (Stream #0.0: Video: mpeg4, yuv420p, 576x320 [PAR 0:1 DAR 0:1], 25.00 tb(r))
+Subsonic desktop application
+   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2671
+jSub
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4479
+Maven 3
 Never scrobble videos.
 Optionally scrobble REST streaming.
 "Access denied to file" error message on Android
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4791
 Lucene: keep IndexReader and IndexSearcher open. Measure.
 Investigate mapped network drives.
-New playlist REST methods?
 
 html multiple file upload.
 Build ffmpeg for x86 on Mac
@@ -237,7 +255,6 @@ Show song title in Browser Title Bar, http://www.activeobjects.no/subsonic/forum
 Next to Lyrics link, add "Share" link with permalink? (link.subsonic.org/iksj)
 auto-detect links in chat.
 Chat broken on Safari
-Automatically import iTunes playlists.
 Add "Copy settings from user" option.
 Improve menus in web pages.  Make sub menus.
 Add FLAC>WAV transcoding
@@ -255,8 +272,6 @@ Mention Amahi in web pages.
 Contact Amahi
 Run agent as admin in Windows 7. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1479
 Does subsonic_exclude.txt work for indexing? http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1965
-Dynamic playlists,  Message from zeekay.
-Personal playlists http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=7538#7538
 User registration.  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1931
 Further search improvements, e.g., "search all". http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1839
 Improve year range in random playlist generator.  Maybe provide to and from fields.
@@ -271,7 +286,6 @@ Create Jing screencast.
 Specify upload directory per user. Option to delete files?  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1710
 Coverflow, http://imageflow.finnrudolph.de/, http://sockso.pu-gh.com
 Problems with player resolution for guest users when behind proxy. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1815&postdays=0&postorder=asc&start=0
-Playlist summary. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1833
 Use SoundManager 2 to implement inline song preview.
 Somehow indicate player type in playlist.
 Make contiuous random mode work in jukebox mode.
@@ -316,7 +330,6 @@ Remove RipServer support.
 More > Random playlist doesn't autostart in Flash player.
 Log when people log in.
 Precompile JSPs in Jetty mode. http://www.j2eegeek.com/blog/2004/05/03/a-different-twist-on-pre-compiling-jsps/
-Shared playlists - http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1605
 Show name of currently playing song in Flash player.
 Upgrade to latest JW player?
 Wrong duration in transcoded wma. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1461&start=15
@@ -404,7 +417,6 @@ Better IE support in playlist checkbox stuff. Instead of disabling (which isn't 
 Test playlist checkbox stuff, in particular download auth.
 Move "logout" under search search field.
 Reformat all java code.
-Save playlists in database?  Access rights.
 Check out non-Latin ID3 problem (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=527)
 Track titles that begin with numbers (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=170) (For instance "13 humler")
 Fault-tolerant transcoding FLAC>MP3 (http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=545)

@@ -104,9 +104,11 @@ public class FFmpegParser extends MetaDataParser {
                 // PAR = Pixel Aspect Rate
                 matcher = PAR_PATTERN.matcher(line);
                 if (matcher.find()) {
-                    Double a = Double.valueOf(matcher.group(1));
-                    Double b = Double.valueOf(matcher.group(2));
-                    par = a / b;
+                    int a = Integer.parseInt(matcher.group(1));
+                    int b = Integer.parseInt(matcher.group(2));
+                    if (a > 0 && b > 0) {
+                        par = (double) a / (double) b;
+                    }
                 }
             }
 
@@ -122,18 +124,6 @@ public class FFmpegParser extends MetaDataParser {
         }
 
         return metaData;
-    }
-
-    private Integer parseDuration(String duration) {
-        Matcher matcher = DURATION_PATTERN.matcher(duration);
-        if (matcher.matches()) {
-            int hours = Integer.parseInt(matcher.group(1));
-            int minutes = Integer.parseInt(matcher.group(2));
-            int seconds = Integer.parseInt(matcher.group(3));
-
-            return hours * 3600 + minutes * 60 + seconds;
-        }
-        return null;
     }
 
     /**
