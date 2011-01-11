@@ -68,6 +68,7 @@ import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.service.LuceneSearchService;
+import net.sourceforge.subsonic.service.AudioScrobblerService;
 import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.util.XMLBuilder;
 
@@ -102,6 +103,7 @@ public class RESTController extends MultiActionController {
     private LyricsService lyricsService;
     private net.sourceforge.subsonic.ajax.PlaylistService playlistControlService;
     private JukeboxService jukeboxService;
+    private AudioScrobblerService audioScrobblerService;
 
     public void ping(HttpServletRequest request, HttpServletResponse response) throws Exception {
         XMLBuilder builder = createXMLBuilder(request, response, true).endAll();
@@ -741,6 +743,28 @@ public class RESTController extends MultiActionController {
         return null;
     }
 
+    public void scrobble(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
+
+        Player player = playerService.getPlayer(request, response);
+
+        MusicFile file;
+        try {
+            String path = StringUtil.utf8HexDecode(ServletRequestUtils.getRequiredStringParameter(request, "id"));
+            file = musicFileService.getMusicFile(path);
+            boolean submission = ServletRequestUtils.getBooleanParameter(request, "submission", true);
+            audioScrobblerService.register(file, player.getUsername(), submission);
+        } catch (Exception x) {
+            LOG.warn("Error in REST API.", x);
+            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
+            return;
+        }
+
+        builder.endAll();
+        response.getWriter().print(builder);
+    }
+
     public ModelAndView videoPlayer(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
 
@@ -1118,6 +1142,10 @@ public class RESTController extends MultiActionController {
 
     public void setJukeboxService(JukeboxService jukeboxService) {
         this.jukeboxService = jukeboxService;
+    }
+
+    public void setAudioScrobblerService(AudioScrobblerService audioScrobblerService) {
+        this.audioScrobblerService = audioScrobblerService;
     }
 
     public static enum ErrorCode {

@@ -319,6 +319,7 @@
         <property name="statusService" ref="statusService"/>
         <property name="searchService" ref="searchService"/>
         <property name="jukeboxService" ref="jukeboxService"/>
+        <property name="audioScrobblerService" ref="audioScrobblerService"/>
         <property name="playlistService" ref="playlistService"/>
         <property name="playlistControlService" ref="ajaxPlaylistService"/>
         <property name="chatService" ref="ajaxChatService"/>
