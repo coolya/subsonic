@@ -32,6 +32,10 @@ DONE IN ANDROID 2.5
 
 TODO IN ANDROID 2.5
 -------------------
+Downloads stops when screen turns off.
+Save/resume current playing and position. (maybe resume position only when file is complete?)
+Persist playlist after shuffle.
+Next/prev buttons should work also when current is null.
 Use same button background as Music.app
 Glowing buttons, cover art background, ala http://powerampapp.com/wp-content/themes/poweramp/images/big/theme-matte-metal-1.jpg
 Option to keep screen lit.
@@ -79,7 +83,6 @@ Save coverart when caching music. (and reuse it rather than doing http)
   Go through caching logic.
   File load/save should be done in CachedMusicService.
 Fix crashes
-Save/resume current playing and position.
 Optionally hide music from other players (.nomedia)
 Long-click download
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=2651&start=105
@@ -108,6 +111,7 @@ Bugfix: Handle invalid pixel aspect rates (PAR) reported by ffmpeg.
 Better support for searching with accented characters (e.g., searching for "bartok" will match "bartók").
 Bugfix: Don't scrobble videos to last.fm.
 Don't scrobble for REST playback.
+New: https support.
 
 TODO IN 4.4
 -----------------
