@@ -114,8 +114,8 @@ TODO IN 4.4
 SSL support in Jetty
   Add site doc.
   Make it work with redirect service.
-  Make it UPnP port forwarding.
   Don't use port 443 by default?
+  Testing
 Rename album lists, use same as iTunes (Top rated, Recently added, Recently played, Most played)
 Create unit test for comparing StringUtil.getRESTProtocolVersion() with the actual xsd version.
 REST support for scrobbling, separate method.

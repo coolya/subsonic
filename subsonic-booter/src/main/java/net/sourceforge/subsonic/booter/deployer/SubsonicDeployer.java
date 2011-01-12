@@ -213,6 +213,10 @@ public class SubsonicDeployer implements SubsonicDeployerService {
         if (portString != null) {
             port = Integer.parseInt(portString);
         }
+
+        // Also set it so that the webapp can read it.
+        System.setProperty("subsonic.port", String.valueOf(port));
+
         return port;
     }
 
@@ -223,6 +227,10 @@ public class SubsonicDeployer implements SubsonicDeployerService {
         if (portString != null) {
             port = Integer.parseInt(portString);
         }
+
+        // Also set it so that the webapp can read it.
+        System.setProperty("subsonic.httpsPort", String.valueOf(port));
+
         return port;
     }
 

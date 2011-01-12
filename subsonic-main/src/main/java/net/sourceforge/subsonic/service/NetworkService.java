@@ -138,16 +138,24 @@ public class NetworkService {
                 portForwardingStatus.setText("Router found.");
 
                 int port = settingsService.getPort();
+                int httpsPort = settingsService.getHttpsPort();
 
                 // Create new NAT entry.
                 if (enabled) {
                     try {
                         router.addPortMapping(port, port, 0);
-                        String message = "Successfully forwarding port " + port + ".";
+                        String message = "Successfully forwarding port " + port;
+
+                        if (httpsPort != 0 && httpsPort != port) {
+                            router.addPortMapping(httpsPort, httpsPort, 0);
+                            message += " and port " + httpsPort;
+                        }
+                        message += ".";
+
                         LOG.info(message);
                         portForwardingStatus.setText(message);
                     } catch (Throwable x) {
-                        String message = "Failed to create port forwarding for port " + port + ".";
+                        String message = "Failed to create port forwarding.";
                         LOG.warn(message, x);
                         portForwardingStatus.setText(message + " See log for details.");
                     }
@@ -158,8 +166,12 @@ public class NetworkService {
                     try {
                         router.deletePortMapping(port, port);
                         LOG.info("Deleted port mapping for port " + port);
+                        if (httpsPort != 0 && httpsPort != port) {
+                            router.deletePortMapping(httpsPort, httpsPort);
+                            LOG.info("Deleted port mapping for port " + httpsPort);
+                        }
                     } catch (Throwable x) {
-                        LOG.warn("Failed to delete port mapping for port " + port, x);
+                        LOG.warn("Failed to delete port mapping.", x);
                     }
                     portForwardingStatus.setText("Port forwarding disabled.");
                 }

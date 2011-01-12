@@ -100,6 +100,7 @@ public class SettingsService {
     private static final String KEY_GETTING_STARTED_ENABLED = "GettingStartedEnabled";
     private static final String KEY_PORT_FORWARDING_ENABLED = "PortForwardingEnabled";
     private static final String KEY_PORT = "Port";
+    private static final String KEY_HTTPS_PORT = "HttpsPort";
     private static final String KEY_URL_REDIRECTION_ENABLED = "UrlRedirectionEnabled";
     private static final String KEY_URL_REDIRECT_FROM = "UrlRedirectFrom";
     private static final String KEY_URL_REDIRECT_TRIAL_EXPIRES = "UrlRedirectTrialExpires";
@@ -156,6 +157,7 @@ public class SettingsService {
     private static final boolean DEFAULT_PORT_FORWARDING_ENABLED = false;
     private static final boolean DEFAULT_GETTING_STARTED_ENABLED = true;
     private static final int DEFAULT_PORT = 80;
+    private static final int DEFAULT_HTTPS_PORT = 0;
     private static final boolean DEFAULT_URL_REDIRECTION_ENABLED = false;
     private static final String DEFAULT_URL_REDIRECT_FROM = "yourname";
     private static final String DEFAULT_URL_REDIRECT_TRIAL_EXPIRES = null;
@@ -681,6 +683,14 @@ public class SettingsService {
 
     public void setPort(int port) {
         setProperty(KEY_PORT, String.valueOf(port));
+    }
+
+    public int getHttpsPort() {
+        return Integer.valueOf(properties.getProperty(KEY_HTTPS_PORT, String.valueOf(DEFAULT_HTTPS_PORT)));
+    }
+
+    public void setHttpsPort(int httpsPort) {
+        setProperty(KEY_HTTPS_PORT, String.valueOf(httpsPort));
     }
 
     public boolean isUrlRedirectionEnabled() {

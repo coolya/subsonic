@@ -100,10 +100,18 @@ public class MultiController extends MultiActionController {
     }
 
     private void updatePortAndContextPath(HttpServletRequest request) {
-        int localPort = request.getLocalPort();
+
+        int port = Integer.parseInt(System.getProperty("subsonic.port", String.valueOf(request.getLocalPort())));
+        int httpsPort = Integer.parseInt(System.getProperty("subsonic.httpsPort", "0"));
+
         String contextPath = request.getContextPath().replace("/", "");
-        if (settingsService.getPort() != localPort) {
-            settingsService.setPort(localPort);
+
+        if (settingsService.getPort() != port) {
+            settingsService.setPort(port);
+            settingsService.save();
+        }
+        if (settingsService.getHttpsPort() != httpsPort) {
+            settingsService.setHttpsPort(httpsPort);
             settingsService.save();
         }
         if (!ObjectUtils.equals(settingsService.getUrlRedirectContextPath(), contextPath)) {
