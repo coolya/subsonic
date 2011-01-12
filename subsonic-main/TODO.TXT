@@ -113,7 +113,6 @@ TODO IN 4.4
 -----------------
 SSL support in Jetty
   Add site doc.
-  Make it work with redirect service.
   Don't use port 443 by default?
   Testing
 Rename album lists, use same as iTunes (Top rated, Recently added, Recently played, Most played)
@@ -596,6 +595,7 @@ Update
     https://slideme.org/application/subsonic
     http://www.camangimarket.com/index.html
 svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-2.4 -m "Tagging Android 2.4"
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/branches/android-xmoby -m "Creating branch for xmoby"
 Create new directory in FRS
   https://sourceforge.net/projects/subsonic/files/android/
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).

@@ -29,6 +29,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.net.ssl.SSLPeerUnverifiedException;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -201,6 +202,10 @@ public class RedirectionManagementController extends MultiActionController {
                 writer.print(msg);
                 LOG.info(msg);
             }
+        } catch (SSLPeerUnverifiedException x) {
+            String msg = webAddress + " responded successfully, but could not authenticate it.";
+            writer.print(msg);
+            LOG.info(msg);
 
         } catch (Throwable x) {
             String msg = webAddress + " is registered, but could not connect to it. (" + x.getClass().getSimpleName() + ")";
