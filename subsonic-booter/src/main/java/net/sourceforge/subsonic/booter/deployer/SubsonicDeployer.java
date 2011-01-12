@@ -13,6 +13,8 @@ import java.util.zip.ZipEntry;
 
 import org.apache.commons.io.IOUtils;
 import org.mortbay.jetty.Server;
+import org.mortbay.jetty.security.Constraint;
+import org.mortbay.jetty.security.ConstraintMapping;
 import org.mortbay.jetty.security.SslSocketConnector;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
@@ -93,6 +95,9 @@ public class SubsonicDeployer implements SubsonicDeployerService {
             connector.setHeaderBufferSize(HEADER_BUFFER_SIZE);
             connector.setHost(getHost());
             connector.setPort(getPort());
+            if (isSslEnabled()) {
+                connector.setConfidentialPort(getSslPort());
+            }
             server.addConnector(connector);
 
             if (isSslEnabled()) {
@@ -110,6 +115,15 @@ public class SubsonicDeployer implements SubsonicDeployerService {
             context.setTempDirectory(getJettyDirectory());
             context.setContextPath(getContextPath());
             context.setWar(getWar());
+
+            if (isSslEnabled()) {
+                ConstraintMapping constraintMapping = new ConstraintMapping();
+                Constraint constraint = new Constraint();
+                constraint.setDataConstraint(Constraint.DC_CONFIDENTIAL);
+                constraintMapping.setPathSpec("/");
+                constraintMapping.setConstraint(constraint);
+                context.getSecurityHandler().setConstraintMappings(new ConstraintMapping[]{constraintMapping});
+            } 
 
             server.addHandler(context);
             server.start();
