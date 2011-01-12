@@ -195,13 +195,16 @@
         <td>4.2</td>
         <td>1.4.0</td>
     </tr>
+    <tr>
+        <td>4.3.1</td>
+        <td>1.5.0</td>
+    </tr>
 </table>
 <p>
     Note that a Subsonic server is backward compatible with a REST client if and only if the major version is the same,
     and the minor version of the client is less than or equal to the server's. For example, if the server has
     REST API version 2.2, it supports client versions 2.0, 2.1 and 2.2, but not versions 1.x, 2.3+ or 3.x. The third
-    part
-    of the version number is not used to determine compatibility.
+    part of the version number is not used to determine compatibility.
 </p>
 
 <h2 class="div">ping</h2>
@@ -680,6 +683,42 @@
 </table>
 <p>
     Returns binary data on success, or an XML document on error (in which case the HTTP content type will start with "text/xml").
+</p>
+
+
+<h2 class="div">scrobble</h2>
+
+<p>
+    <code>http://your-server/rest/scrobble.view</code>
+    <br>Since <a href="#versions">1.5.0</a>
+</p>
+
+<p>
+    "Scrobbles" a given music file on last.fm. Requires that the user has configured his/her last.fm
+    credentials on the Subsonic server (Settings &gt; Personal).
+</p>
+<table width="100%" class="bottomspace">
+    <tr>
+        <th class="param-heading">Parameter</th>
+        <th class="param-heading">Required</th>
+        <th class="param-heading">Default</th>
+        <th class="param-heading">Comment</th>
+    </tr>
+    <tr class="table-altrow">
+        <td><code>id</code></td>
+        <td>Yes</td>
+        <td></td>
+        <td>A string which uniquely identifies the file to scrobble.</td>
+    </tr>
+    <tr>
+        <td><code>submission</code></td>
+        <td>No</td>
+        <td>True</td>
+        <td>Whether this is a "submission" or a "now playing" notification.</td>
+    </tr>
+</table>
+<p>
+    Returns an empty <code>&lt;subsonic-response&gt;</code> element on success.
 </p>
 
 <h2 class="div">changePassword</h2>

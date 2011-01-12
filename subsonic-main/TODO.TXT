@@ -116,6 +116,7 @@ SSL support in Jetty
   Re-generate key store
   Add site doc.
   Add config support in windows control panel.
+Support Sonos, Squeezebox?
 Rename album lists, use same as iTunes (Top rated, Recently added, Recently played, Most played)
 Create unit test for comparing StringUtil.getRESTProtocolVersion() with the actual xsd version.
 REST support for scrobbling, separate method.
