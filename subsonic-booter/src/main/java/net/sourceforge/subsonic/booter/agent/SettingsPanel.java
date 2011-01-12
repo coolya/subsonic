@@ -61,11 +61,11 @@ public class SettingsPanel extends JPanel implements SubsonicListener {
 
     private int getHttpsPortFromOptionsFile() {
         try {
-            String s = grep("-Dsubsonic.sslPort=(\\d+)");
+            String s = grep("-Dsubsonic.httpsPort=(\\d+)");
             return Integer.parseInt(s);
         } catch (Exception x) {
             x.printStackTrace();
-            return SubsonicDeployer.DEFAULT_SSL_PORT;
+            return SubsonicDeployer.DEFAULT_HTTPS_PORT;
         }
     }
 
@@ -234,8 +234,8 @@ public class SettingsPanel extends JPanel implements SubsonicListener {
             } else if (line.startsWith("-Dsubsonic.port=")) {
                 newLines.add("-Dsubsonic.port=" + port);
                 portAdded = true;
-            } else if (line.startsWith("-Dsubsonic.sslPort=")) {
-                newLines.add("-Dsubsonic.sslPort=" + httpsPort);
+            } else if (line.startsWith("-Dsubsonic.httpsPort=")) {
+                newLines.add("-Dsubsonic.httpsPort=" + httpsPort);
                 httpsPortAdded = true;
             } else if (line.startsWith("-Dsubsonic.contextPath=")) {
                 newLines.add("-Dsubsonic.contextPath=" + contextPath);
@@ -252,7 +252,7 @@ public class SettingsPanel extends JPanel implements SubsonicListener {
             newLines.add("-Dsubsonic.port=" + port);
         }
         if (!httpsPortAdded) {
-            newLines.add("-Dsubsonic.sslPort=" + httpsPort);
+            newLines.add("-Dsubsonic.httpsPort=" + httpsPort);
         }
         if (!contextPathAdded) {
             newLines.add("-Dsubsonic.contextPath=" + contextPath);

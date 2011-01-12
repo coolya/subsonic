@@ -9,7 +9,7 @@
 SUBSONIC_HOME=/var/subsonic
 SUBSONIC_HOST=0.0.0.0
 SUBSONIC_PORT=4040
-SUBSONIC_SSL_PORT=0
+SUBSONIC_HTTPS_PORT=0
 SUBSONIC_CONTEXT_PATH=/
 SUBSONIC_MAX_MEMORY=100
 SUBSONIC_PIDFILE=
@@ -30,7 +30,7 @@ usage() {
     echo "                       will bind Subsonic to all available network interfaces. Default: 0.0.0.0"
     echo "  --port=PORT          The port on which Subsonic will listen for"
     echo "                       incoming HTTP traffic. Default: 4040"
-    echo "  --ssl-port=PORT      The port on which Subsonic will listen for"
+    echo "  --https-port=PORT    The port on which Subsonic will listen for"
     echo "                       incoming HTTPS traffic. Default: 0 (disabled)"
     echo "  --context-path=PATH  The context path, i.e., the last part of the Subsonic"
     echo "                       URL. Typically '/' or '/subsonic'. Default '/'"
@@ -62,8 +62,8 @@ while [ $# -ge 1 ]; do
         --port=?*)
             SUBSONIC_PORT=${1#--port=}
             ;;
-        --ssl-port=?*)
-            SUBSONIC_SSL_PORT=${1#--ssl-port=}
+        --https-port=?*)
+            SUBSONIC_HTTPS_PORT=${1#--https-port=}
             ;;
         --context-path=?*)
             SUBSONIC_CONTEXT_PATH=${1#--context-path=}
@@ -114,7 +114,7 @@ ${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m \
   -Dsubsonic.home=${SUBSONIC_HOME} \
   -Dsubsonic.host=${SUBSONIC_HOST} \
   -Dsubsonic.port=${SUBSONIC_PORT} \
-  -Dsubsonic.sslPort=${SUBSONIC_SSL_PORT} \
+  -Dsubsonic.httpsPort=${SUBSONIC_HTTPS_PORT} \
   -Dsubsonic.contextPath=${SUBSONIC_CONTEXT_PATH} \
   -Dsubsonic.defaultMusicFolder=${SUBSONIC_DEFAULT_MUSIC_FOLDER} \
   -Dsubsonic.defaultPodcastFolder=${SUBSONIC_DEFAULT_PODCAST_FOLDER} \

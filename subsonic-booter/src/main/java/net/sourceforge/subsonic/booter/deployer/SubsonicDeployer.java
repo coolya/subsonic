@@ -27,7 +27,7 @@ import org.mortbay.jetty.webapp.WebAppContext;
  * <ul>
  * <li><code>subsonic.contextPath</code> - The context path at which Subsonic is deployed.  Default "/".</li>
  * <li><code>subsonic.port</code> - The port Subsonic will listen to.  Default 80.</li>
- * <li><code>subsonic.sslPort</code> - The port Subsonic will listen to for HTTPS.  Default 0, which disables HTTPS.</li>
+ * <li><code>subsonic.httpsPort</code> - The port Subsonic will listen to for HTTPS.  Default 0, which disables HTTPS.</li>
  * <li><code>subsonic.war</code> - Subsonic WAR file, or exploded directory.  Default "subsonic.war".</li>
  * <li><code>subsonic.createLinkFile</code> - If set to "true", a Subsonic.url file is created in the working directory.</li>
  * </ul>
@@ -38,7 +38,7 @@ public class SubsonicDeployer implements SubsonicDeployerService {
 
     public static final String DEFAULT_HOST = "0.0.0.0";
     public static final int DEFAULT_PORT = 80;
-    public static final int DEFAULT_SSL_PORT = 0;
+    public static final int DEFAULT_HTTPS_PORT = 0;
     public static final int DEFAULT_MEMORY_LIMIT = 100;
     public static final String DEFAULT_CONTEXT_PATH = "/";
     public static final String DEFAULT_WAR = "subsonic.war";
@@ -95,17 +95,17 @@ public class SubsonicDeployer implements SubsonicDeployerService {
             connector.setHeaderBufferSize(HEADER_BUFFER_SIZE);
             connector.setHost(getHost());
             connector.setPort(getPort());
-            if (isSslEnabled()) {
-                connector.setConfidentialPort(getSslPort());
+            if (isHttpsEnabled()) {
+                connector.setConfidentialPort(getHttpsPort());
             }
             server.addConnector(connector);
 
-            if (isSslEnabled()) {
+            if (isHttpsEnabled()) {
                 SslSocketConnector sslConnector = new SslSocketConnector();
                 sslConnector.setMaxIdleTime(MAX_IDLE_TIME_MILLIS);
                 sslConnector.setHeaderBufferSize(HEADER_BUFFER_SIZE);
                 sslConnector.setHost(getHost());
-                sslConnector.setPort(getSslPort());
+                sslConnector.setPort(getHttpsPort());
                 sslConnector.setKeystore(getClass().getResource("/keystore").toExternalForm());
                 sslConnector.setPassword("subsonic");
                 server.addConnector(sslConnector);
@@ -116,7 +116,7 @@ public class SubsonicDeployer implements SubsonicDeployerService {
             context.setContextPath(getContextPath());
             context.setWar(getWar());
 
-            if (isSslEnabled()) {
+            if (isHttpsEnabled()) {
                 ConstraintMapping constraintMapping = new ConstraintMapping();
                 Constraint constraint = new Constraint();
                 constraint.setDataConstraint(Constraint.DC_CONFIDENTIAL);
@@ -129,7 +129,7 @@ public class SubsonicDeployer implements SubsonicDeployerService {
             server.start();
 
             System.err.println("Subsonic running on: " + getUrl());
-            if (isSslEnabled()) {
+            if (isHttpsEnabled()) {
                 System.err.println("                and: " + getHttpsUrl());
             }
 
@@ -214,18 +214,18 @@ public class SubsonicDeployer implements SubsonicDeployerService {
         return port;
     }
 
-    private int getSslPort() {
-        int port = DEFAULT_SSL_PORT;
+    private int getHttpsPort() {
+        int port = DEFAULT_HTTPS_PORT;
 
-        String portString = System.getProperty("subsonic.sslPort");
+        String portString = System.getProperty("subsonic.httpsPort");
         if (portString != null) {
             port = Integer.parseInt(portString);
         }
         return port;
     }
 
-    private boolean isSslEnabled() {
-        return getSslPort() > 0;
+    private boolean isHttpsEnabled() {
+        return getHttpsPort() > 0;
     }
 
     public String getErrorMessage() {
@@ -261,14 +261,14 @@ public class SubsonicDeployer implements SubsonicDeployerService {
     }
 
     private String getHttpsUrl() {
-        if (!isSslEnabled()) {
+        if (!isHttpsEnabled()) {
             return null;
         }
 
         String host = DEFAULT_HOST.equals(getHost()) ? "localhost" : getHost();
         StringBuffer url = new StringBuffer("https://").append(host);
-        if (getSslPort() != 443) {
-            url.append(":").append(getSslPort());
+        if (getHttpsPort() != 443) {
+            url.append(":").append(getHttpsPort());
         }
         url.append(getContextPath());
         return url.toString();

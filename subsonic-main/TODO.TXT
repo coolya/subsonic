@@ -115,7 +115,6 @@ SSL support in Jetty
   Add hook for private keystore
   Re-generate key store (and rename to subsonic.keystore)
   Add site doc.
-  Rename ssl -> https
   Make it work with redirect service.
   Make it UPnP port forwarding.
 Rename album lists, use same as iTunes (Top rated, Recently added, Recently played, Most played)

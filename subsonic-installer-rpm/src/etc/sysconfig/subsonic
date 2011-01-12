@@ -12,6 +12,6 @@
 # and 443 (for https), and use a Java memory heap size of 120 MB, use
 # the following:
 #
-# SUBSONIC_ARGS="--port=80 --ssl-port=443 --max-memory=120"
+# SUBSONIC_ARGS="--port=80 --https-port=443 --max-memory=120"
 
 SUBSONIC_ARGS="--max-memory=100"

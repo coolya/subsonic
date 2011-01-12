@@ -12,7 +12,7 @@ REM  The port on which Subsonic will listen for incoming HTTP traffic.
 set SUBSONIC_PORT=4040
 
 REM  The port on which Subsonic will listen for incoming HTTPS traffic (0 to disable).
-set SUBSONIC_SSL_PORT=0
+set SUBSONIC_HTTPS_PORT=0
 
 REM  The context path (i.e., the last part of the Subsonic URL).  Typically "/" or "/subsonic".
 set SUBSONIC_CONTEXT_PATH=/
@@ -20,5 +20,5 @@ set SUBSONIC_CONTEXT_PATH=/
 REM  The memory limit (max Java heap size) in megabytes.
 set MAX_MEMORY=100
 
-java -Xmx%MAX_MEMORY%m  -Dsubsonic.home=%SUBSONIC_HOME% -Dsubsonic.host=%SUBSONIC_HOST% -Dsubsonic.port=%SUBSONIC_PORT%  -Dsubsonic.sslPort=%SUBSONIC_SSL_PORT% -Dsubsonic.contextPath=%SUBSONIC_CONTEXT_PATH% -jar subsonic-booter-jar-with-dependencies.jar
+java -Xmx%MAX_MEMORY%m  -Dsubsonic.home=%SUBSONIC_HOME% -Dsubsonic.host=%SUBSONIC_HOST% -Dsubsonic.port=%SUBSONIC_PORT%  -Dsubsonic.httpsPort=%SUBSONIC_HTTPS_PORT% -Dsubsonic.contextPath=%SUBSONIC_CONTEXT_PATH% -jar subsonic-booter-jar-with-dependencies.jar
 
