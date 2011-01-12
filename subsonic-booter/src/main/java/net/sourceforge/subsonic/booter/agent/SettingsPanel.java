@@ -32,6 +32,8 @@ import java.util.regex.Pattern;
 public class SettingsPanel extends JPanel implements SubsonicListener {
 
     private JTextField portTextField;
+    private JCheckBox httpsPortCheckBox;
+    private JTextField httpsPortTextField;
     private JComboBox contextPathComboBox;
     private JTextField memoryTextField;
     private JButton defaultButton;
@@ -50,6 +52,21 @@ public class SettingsPanel extends JPanel implements SubsonicListener {
         portTextField.setText(String.valueOf(getPortFromOptionsFile()));
         memoryTextField.setText(String.valueOf(getMemoryLimitFromOptionsFile()));
         contextPathComboBox.setSelectedItem(getContextPathFromOptionsFile());
+        int httpsPort = getHttpsPortFromOptionsFile();
+        boolean httpsEnabled = httpsPort != 0;
+        httpsPortTextField.setText(String.valueOf(httpsEnabled ? httpsPort : 443));
+        httpsPortTextField.setEnabled(httpsEnabled);
+        httpsPortCheckBox.setSelected(httpsEnabled);
+    }
+
+    private int getHttpsPortFromOptionsFile() {
+        try {
+            String s = grep("-Dsubsonic.sslPort=(\\d+)");
+            return Integer.parseInt(s);
+        } catch (Exception x) {
+            x.printStackTrace();
+            return SubsonicDeployer.DEFAULT_SSL_PORT;
+        }
     }
 
     private int getPortFromOptionsFile() {
@@ -87,6 +104,8 @@ public class SettingsPanel extends JPanel implements SubsonicListener {
 
     private void createComponents() {
         portTextField = new JTextField();
+        httpsPortTextField = new JTextField();
+        httpsPortCheckBox = new JCheckBox("Enable https on port");
         contextPathComboBox = new JComboBox();
         memoryTextField = new JTextField();
         defaultButton = new JButton("Restore defaults");
@@ -101,9 +120,10 @@ public class SettingsPanel extends JPanel implements SubsonicListener {
     }
 
     private void layoutComponents() {
-        FormLayout layout = new FormLayout("right:d, 6dlu, max(d;30dlu):grow");
+        FormLayout layout = new FormLayout("d, 6dlu, max(d;30dlu):grow");
         DefaultFormBuilder builder = new DefaultFormBuilder(layout);
         builder.append("Port number", portTextField);
+        builder.append(httpsPortCheckBox, httpsPortTextField);
         builder.append("Memory limit (MB)", memoryTextField);
         builder.append("Context path", contextPathComboBox);
 
@@ -118,7 +138,7 @@ public class SettingsPanel extends JPanel implements SubsonicListener {
         saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    saveSettings(getMemoryLimit(), getPort(), getContextPath());
+                    saveSettings(getMemoryLimit(), getPort(), getHttpsPort(), getContextPath());
 
                     JOptionPane.showMessageDialog(SettingsPanel.this,
                                                   "Please restart Subsonic for the new settings to take effect.",
@@ -135,6 +155,12 @@ public class SettingsPanel extends JPanel implements SubsonicListener {
                 portTextField.setText(String.valueOf(SubsonicDeployer.DEFAULT_PORT));
                 memoryTextField.setText(String.valueOf(SubsonicDeployer.DEFAULT_MEMORY_LIMIT));
                 contextPathComboBox.setSelectedItem(SubsonicDeployer.DEFAULT_CONTEXT_PATH);
+            }
+        });
+
+        httpsPortCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                httpsPortTextField.setEnabled(httpsPortCheckBox.isSelected());
             }
         });
     }
@@ -173,7 +199,24 @@ public class SettingsPanel extends JPanel implements SubsonicListener {
         return port;
     }
 
-    private void saveSettings(int memoryLimit, int port, String contextPath) throws SettingsException {
+    private int getHttpsPort() throws SettingsException {
+        if (!httpsPortCheckBox.isSelected()) {
+            return 0;
+        }
+
+        int port;
+        try {
+            port = Integer.parseInt(httpsPortTextField.getText().trim());
+            if (port < 1 || port > 65535) {
+                throw new Exception();
+            }
+        } catch (Exception x) {
+            throw new SettingsException("Please specify a valid https port number.", x);
+        }
+        return port;
+    }
+
+    private void saveSettings(int memoryLimit, int port, int httpsPort, String contextPath) throws SettingsException {
         File file = getOptionsFile();
 
         java.util.List<String> lines = readLines(file);
@@ -181,6 +224,7 @@ public class SettingsPanel extends JPanel implements SubsonicListener {
 
         boolean memoryLimitAdded = false;
         boolean portAdded = false;
+        boolean httpsPortAdded = false;
         boolean contextPathAdded = false;
 
         for (String line : lines) {
@@ -190,6 +234,9 @@ public class SettingsPanel extends JPanel implements SubsonicListener {
             } else if (line.startsWith("-Dsubsonic.port=")) {
                 newLines.add("-Dsubsonic.port=" + port);
                 portAdded = true;
+            } else if (line.startsWith("-Dsubsonic.sslPort=")) {
+                newLines.add("-Dsubsonic.sslPort=" + httpsPort);
+                httpsPortAdded = true;
             } else if (line.startsWith("-Dsubsonic.contextPath=")) {
                 newLines.add("-Dsubsonic.contextPath=" + contextPath);
                 contextPathAdded = true;
@@ -203,6 +250,9 @@ public class SettingsPanel extends JPanel implements SubsonicListener {
         }
         if (!portAdded) {
             newLines.add("-Dsubsonic.port=" + port);
+        }
+        if (!httpsPortAdded) {
+            newLines.add("-Dsubsonic.sslPort=" + httpsPort);
         }
         if (!contextPathAdded) {
             newLines.add("-Dsubsonic.contextPath=" + contextPath);
