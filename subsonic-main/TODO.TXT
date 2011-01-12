@@ -112,7 +112,6 @@ Don't scrobble for REST playback.
 TODO IN 4.4
 -----------------
 SSL support in Jetty
-  Fix "Restore defaults"
   Add hook for private keystore and password.
   Add site doc.
   Make it work with redirect service.
