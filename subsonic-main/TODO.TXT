@@ -112,8 +112,8 @@ Don't scrobble for REST playback.
 TODO IN 4.4
 -----------------
 SSL support in Jetty
-  Add hook for private keystore
-  Re-generate key store (and rename to subsonic.keystore)
+  Fix "Restore defaults"
+  Add hook for private keystore and password.
   Add site doc.
   Make it work with redirect service.
   Make it UPnP port forwarding.

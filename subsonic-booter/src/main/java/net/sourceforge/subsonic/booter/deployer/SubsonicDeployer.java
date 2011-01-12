@@ -106,7 +106,7 @@ public class SubsonicDeployer implements SubsonicDeployerService {
                 sslConnector.setHeaderBufferSize(HEADER_BUFFER_SIZE);
                 sslConnector.setHost(getHost());
                 sslConnector.setPort(getHttpsPort());
-                sslConnector.setKeystore(getClass().getResource("/keystore").toExternalForm());
+                sslConnector.setKeystore(getClass().getResource("/subsonic.keystore").toExternalForm());
                 sslConnector.setPassword("subsonic");
                 server.addConnector(sslConnector);
             }
