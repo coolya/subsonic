@@ -30,6 +30,8 @@ import org.mortbay.jetty.webapp.WebAppContext;
  * <li><code>subsonic.httpsPort</code> - The port Subsonic will listen to for HTTPS.  Default 0, which disables HTTPS.</li>
  * <li><code>subsonic.war</code> - Subsonic WAR file, or exploded directory.  Default "subsonic.war".</li>
  * <li><code>subsonic.createLinkFile</code> - If set to "true", a Subsonic.url file is created in the working directory.</li>
+ * <li><code>subsonic.ssl.keystore</code> - Path to an alternate SSL keystore.</li>
+ * <li><code>subsonic.ssl.password</code> - Password of the alternate SSL keystore.</li>
  * </ul>
  *
  * @author Sindre Mehus
@@ -106,8 +108,8 @@ public class SubsonicDeployer implements SubsonicDeployerService {
                 sslConnector.setHeaderBufferSize(HEADER_BUFFER_SIZE);
                 sslConnector.setHost(getHost());
                 sslConnector.setPort(getHttpsPort());
-                sslConnector.setKeystore(getClass().getResource("/subsonic.keystore").toExternalForm());
-                sslConnector.setPassword("subsonic");
+                sslConnector.setKeystore(System.getProperty("subsonic.ssl.keystore", getClass().getResource("/subsonic.keystore").toExternalForm()));
+                sslConnector.setPassword(System.getProperty("subsonic.ssl.password", "subsonic"));
                 server.addConnector(sslConnector);
             }
 
@@ -237,10 +239,6 @@ public class SubsonicDeployer implements SubsonicDeployerService {
         }
 
         return exception.toString();
-    }
-
-    public Date getStartTime() {
-        return startTime;
     }
 
     public int getMemoryUsed() {
