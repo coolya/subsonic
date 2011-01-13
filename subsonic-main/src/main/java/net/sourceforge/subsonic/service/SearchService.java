@@ -59,7 +59,7 @@ import java.util.TreeSet;
  */
 public class SearchService {
 
-    private static final int INDEX_VERSION = 12;
+    private static final int INDEX_VERSION = 13;
     private static final Random RANDOM = new Random(System.currentTimeMillis());
     private static final Logger LOG = Logger.getLogger(SearchService.class);
 
@@ -717,15 +717,13 @@ public class SearchService {
             MusicFile.MetaData metaData = file.getMetaData();
             line.isFile = file.isFile();
             line.isDirectory = file.isDirectory();
-            if (line.isDirectory) {
+            if (line.isDirectory && !musicFolders.contains(file.getFile())) {
                 try {
                     line.isAlbum = file.isAlbum();
                 } catch (Exception x) {
                     LOG.warn("Failed to determine if " + file + " is an album.", x);
                 }
-                if (!line.isAlbum) {
-                    line.isArtist = !musicFolders.contains(file.getFile());
-                }
+                line.isArtist = !line.isAlbum;
             }
             line.lastModified = file.lastModified();
             line.created = existingLine != null ? existingLine.created : line.lastModified;
