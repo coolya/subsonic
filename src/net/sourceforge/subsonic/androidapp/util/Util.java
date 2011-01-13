@@ -76,6 +76,11 @@ public final class Util {
     private static final DecimalFormat MEGA_BYTE_FORMAT = new DecimalFormat("0.00 MB");
     private static final DecimalFormat KILO_BYTE_FORMAT = new DecimalFormat("0 KB");
 
+    private static DecimalFormat GIGA_BYTE_LOCALIZED_FORMAT = null;
+    private static DecimalFormat MEGA_BYTE_LOCALIZED_FORMAT = null;
+    private static DecimalFormat KILO_BYTE_LOCALIZED_FORMAT = null;
+    private static DecimalFormat BYTE_LOCALIZED_FORMAT = null;
+
     public static final String EVENT_META_CHANGED = "net.sourceforge.subsonic.androidapp.EVENT_META_CHANGED";
     public static final String EVENT_PLAYSTATE_CHANGED = "net.sourceforge.subsonic.androidapp.EVENT_PLAYSTATE_CHANGED";
 
@@ -322,6 +327,7 @@ public final class Util {
      * <li><code>format(1238476)</code> returns <em>"1.2 MB"</em>.</li>
      * </ul>
      * This method assumes that 1 KB is 1024 bytes.
+     * To get a localized string, please use formatLocalizedBytes instead.
      *
      * @param byteCount The number of bytes.
      * @return The formatted string.
@@ -349,6 +355,52 @@ public final class Util {
         return byteCount + " B";
     }
 
+    /**
+     * Converts a byte-count to a formatted string suitable for display to the user.
+     * For instance:
+     * <ul>
+     * <li><code>format(918)</code> returns <em>"918 B"</em>.</li>
+     * <li><code>format(98765)</code> returns <em>"96 KB"</em>.</li>
+     * <li><code>format(1238476)</code> returns <em>"1.2 MB"</em>.</li>
+     * </ul>
+     * This method assumes that 1 KB is 1024 bytes.
+     * This version of the method returns a localized string.
+     *
+     * @param byteCount The number of bytes.
+     * @return The formatted string.
+     */
+    public static synchronized String formatLocalizedBytes(long byteCount, Context context) {
+
+        // More than 1 GB?
+        if (byteCount >= 1024 * 1024 * 1024) {
+        	if (GIGA_BYTE_LOCALIZED_FORMAT == null)
+        		GIGA_BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_gigabyte));        	
+        	
+            return GIGA_BYTE_LOCALIZED_FORMAT.format((double) byteCount / (1024 * 1024 * 1024));
+        }
+
+        // More than 1 MB?
+        if (byteCount >= 1024 * 1024) {
+        	if (MEGA_BYTE_LOCALIZED_FORMAT == null)
+        		MEGA_BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_megabyte));        	
+        	
+            return MEGA_BYTE_LOCALIZED_FORMAT.format((double) byteCount / (1024 * 1024));
+        }
+
+        // More than 1 KB?
+        if (byteCount >= 1024) {
+        	if (KILO_BYTE_LOCALIZED_FORMAT == null)
+        		KILO_BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_kilobyte));
+        	
+            return KILO_BYTE_LOCALIZED_FORMAT.format((double) byteCount / 1024);
+        }
+
+    	if (BYTE_LOCALIZED_FORMAT == null)
+    		BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_byte));        	
+    	
+        return BYTE_LOCALIZED_FORMAT.format((double) byteCount);
+    }
+    
     public static String formatDuration(Integer seconds) {
         if (seconds == null) {
             return null;
@@ -700,7 +752,7 @@ public final class Util {
     		intent.putExtra("album", song.getAlbum());
     		
             File albumArtFile = FileUtil.getAlbumArtFile(song);
-    		intent.putExtra("coverart", albumArtFile.getAbsolutePath()/* song.getCoverArt()*/);
+    		intent.putExtra("coverart", albumArtFile.getAbsolutePath());
 		} else {
     		intent.putExtra("title", "");
     		intent.putExtra("artist", "");

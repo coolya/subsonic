@@ -34,7 +34,7 @@
                 a:layout_marginRight="3dp"
                 a:layout_weight="1"
                 a:layout_width="0dp"
-                a:layout_height="wrap_content"/>
+                a:layout_height="fill_parent"/>
 
         <Button a:id="@+id/select_album_play"
                 a:text="@string/select_album.play"
@@ -44,7 +44,7 @@
                 a:layout_marginRight="3dp"
                 a:layout_weight="1"
                 a:layout_width="0dp"
-                a:layout_height="wrap_content"/>
+                a:layout_height="fill_parent"/>
 
         <Button a:id="@+id/select_album_queue"
                 a:text="@string/select_album.queue"
@@ -54,7 +54,7 @@
                 a:layout_marginRight="6dp"
                 a:layout_weight="1"
                 a:layout_width="0dp"
-                a:layout_height="wrap_content"/>
+                a:layout_height="fill_parent"/>
 
     </LinearLayout>
 

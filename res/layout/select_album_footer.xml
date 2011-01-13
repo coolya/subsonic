@@ -14,7 +14,7 @@
                 a:layout_marginRight="3dp"
                 a:layout_weight="1"
                 a:layout_width="0dp"
-                a:layout_height="wrap_content"/>
+                a:layout_height="fill_parent"/>
 
         <Button a:id="@+id/select_album_delete"
                 a:text="@string/select_album.delete"
@@ -23,7 +23,7 @@
                 a:layout_marginRight="6dp"
                 a:layout_weight="1"
                 a:layout_width="0dp"
-                a:layout_height="wrap_content"/>
+                a:layout_height="fill_parent"/>
 
         <Button a:id="@+id/select_album_more"
                 a:text="@string/select_album.more"
@@ -33,7 +33,7 @@
                 a:layout_marginRight="6dp"
                 a:layout_weight="1"
                 a:layout_width="0dp"
-                a:layout_height="wrap_content"/>
+                a:layout_height="fill_parent"/>
 
 </LinearLayout>
 

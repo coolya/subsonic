@@ -513,7 +513,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         switch (playerState) {
             case DOWNLOADING:
                 long bytes = currentPlaying.getPartialFile().length();
-                statusTextView.setText(getResources().getString(R.string.download_playerstate_downloading, Util.formatBytes(bytes)));
+                statusTextView.setText(getResources().getString(R.string.download_playerstate_downloading, Util.formatLocalizedBytes(bytes, this)));
                 break;
             case PREPARING:
                 statusTextView.setText(R.string.download_playerstate_buffering);

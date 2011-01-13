@@ -75,15 +75,22 @@ public class SongView extends LinearLayout implements Checkable {
     public void setSong(MusicDirectory.Entry song, boolean checkable) {
         this.song = song;
         StringBuilder artist = new StringBuilder(40);
-        artist.append(song.getArtist()).append(" (");
+
+        String bitRate = null;
         if (song.getBitRate() != null) {
-            artist.append(song.getBitRate()).append(" kbps ");
+        	bitRate = String.format(getContext().getString(R.string.song_details_kbps), song.getBitRate());
         }
-        artist.append(song.getSuffix());
+        
+        String fileFormat = null;
         if (song.getTranscodedSuffix() != null && !song.getTranscodedSuffix().equals(song.getSuffix())) {
-            artist.append(" > ").append(song.getTranscodedSuffix());
+        	fileFormat = String.format("%s > %s", song.getSuffix(), song.getTranscodedSuffix());
+    	} else {
+            fileFormat = song.getSuffix();
         }
-        artist.append(")");
+
+        artist.append(song.getArtist()).append(" (")
+              .append(String.format(getContext().getString(R.string.song_details_all), bitRate == null ? "" : bitRate, fileFormat))
+              .append(")");
 
         titleTextView.setText(song.getTitle());
         artistTextView.setText(artist);
@@ -111,7 +118,7 @@ public class SongView extends LinearLayout implements Checkable {
         }
 
         if (downloadFile.isDownloading() && !downloadFile.isDownloadCancelled() && partialFile.exists()) {
-            statusTextView.setText(Util.formatBytes(partialFile.length()));
+            statusTextView.setText(Util.formatLocalizedBytes(partialFile.length(), getContext()));
             rightImage = R.drawable.downloading;
         } else {
             statusTextView.setText(null);
