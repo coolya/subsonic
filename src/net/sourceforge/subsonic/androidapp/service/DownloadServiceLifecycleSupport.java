@@ -36,8 +36,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.STARTED;
 import net.sourceforge.subsonic.androidapp.util.CacheCleaner;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Util;
@@ -150,23 +148,11 @@ public class DownloadServiceLifecycleSupport {
         if (event.getAction() != KeyEvent.ACTION_DOWN || event.getRepeatCount() > 0) {
             return;
         }
-        PlayerState state = downloadService.getPlayerState();
+
         switch (event.getKeyCode()) {
             case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
             case KeyEvent.KEYCODE_HEADSETHOOK:
-                if (state == PAUSED || state == COMPLETED) {
-                    downloadService.start();
-                } else if (state == STOPPED || state == IDLE) {
-                    int current = downloadService.getCurrentPlayingIndex();
-                    if (current == -1) {
-                        downloadService.play(0);
-                    } else {
-                        downloadService.play(current);
-                    }
-                } else if (state == STARTED) {
-                    downloadService.pause();
-                }
-
+            	downloadService.togglePlayPause();
                 break;
             case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
                 downloadService.previous();
