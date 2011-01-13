@@ -26,8 +26,10 @@ import java.util.Collections;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
@@ -52,6 +54,14 @@ import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 public class DownloadServiceImpl extends Service implements DownloadService {
 
     private static final String TAG = DownloadServiceImpl.class.getSimpleName();
+    
+    public static final String CMD_PLAY = "net.sourceforge.subsonic.androidapp.CMD_PLAY";
+    public static final String CMD_TOGGLEPAUSE = "net.sourceforge.subsonic.androidapp.CMD_TOGGLEPAUSE";
+    public static final String CMD_PAUSE = "net.sourceforge.subsonic.androidapp.CMD_PAUSE";
+    public static final String CMD_STOP = "net.sourceforge.subsonic.androidapp.CMD_STOP";
+    public static final String CMD_PREVIOUS = "net.sourceforge.subsonic.androidapp.CMD_PREVIOUS";
+    public static final String CMD_NEXT = "net.sourceforge.subsonic.androidapp.CMD_NEXT";
+    
     private final IBinder binder = new SimpleServiceBinder<DownloadService>(this);
     private MediaPlayer mediaPlayer;
     private final List<DownloadFile> downloadList = new CopyOnWriteArrayList<DownloadFile>();
@@ -71,6 +81,32 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private String suggestedPlaylistName;
     private PowerManager.WakeLock wakeLock;
 
+    /**
+     * This receiver manages the intent that could come from other applications.
+     */
+    private BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            String cmd = intent.getStringExtra("command");
+            Log.i(TAG, "mIntentReceiver.onReceive " + action + " / " + cmd);
+            if (CMD_PLAY.equals(action)) {
+                play();
+            } else if (CMD_NEXT.equals(action)) {
+                next();
+            } else if (CMD_PREVIOUS.equals(action)) {
+                previous();
+            } else if (CMD_TOGGLEPAUSE.equals(action)) {
+                togglePlayPause();
+            } else if (CMD_PAUSE.equals(action)) {
+                pause();
+            } else if (CMD_STOP.equals(cmd)) {
+                pause();
+                seekTo(0);
+            }
+        }
+    };
+ 
     @Override
     public void onCreate() {
         super.onCreate();
@@ -86,6 +122,16 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             }
         });
 
+        // Register the handler for outside intents.
+        IntentFilter commandFilter = new IntentFilter();
+        commandFilter.addAction(CMD_PLAY);
+        commandFilter.addAction(CMD_TOGGLEPAUSE);
+        commandFilter.addAction(CMD_PAUSE);
+        commandFilter.addAction(CMD_STOP);
+        commandFilter.addAction(CMD_PREVIOUS);
+        commandFilter.addAction(CMD_NEXT);
+        registerReceiver(mIntentReceiver, commandFilter);
+ 
         PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, this.getClass().getName());
         wakeLock.setReferenceCounted(false);
@@ -104,6 +150,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     public void onDestroy() {
         super.onDestroy();
         lifecycleSupport.onDestroy();
+        unregisterReceiver(mIntentReceiver);
         mediaPlayer.release();
         shufflePlayBuffer.shutdown();
         instance = null;
@@ -234,6 +281,12 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private synchronized void setCurrentPlaying(DownloadFile currentPlaying, boolean showNotification) {
         this.currentPlaying = currentPlaying;
 
+        if (currentPlaying != null) {
+        	Util.broadcastNewTrackInfo(this, currentPlaying.getSong());
+        } else {
+            Util.broadcastNewTrackInfo(this, null);
+        }        
+
         if (currentPlaying != null && showNotification) {
             Util.showPlayingNotification(this, handler, currentPlaying.getSong());
         } else {
@@ -261,6 +314,17 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         return new ArrayList<DownloadFile>(downloadList);
     }
 
+    /** Plays either the current song (resume) or the first/next one in queue. */
+    public synchronized void play()
+    {
+        int current = getCurrentPlayingIndex();
+        if (current == -1) {
+            play(0);
+        } else {
+            play(current);
+        }
+    }
+
     @Override
     public synchronized void play(DownloadFile file) {
         play(downloadList.indexOf(file));
@@ -283,7 +347,19 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             }
         }
     }
-
+    
+    /** Plays or resumes the playback, depending on the current player state. */
+    public synchronized void togglePlayPause()
+    {
+        if (playerState == PAUSED || playerState == COMPLETED) {
+            start();
+        } else if (playerState == STOPPED || playerState == IDLE) {
+        	play();
+        } else if (playerState == STARTED) {
+            pause();
+        }
+    }
+    
     @Override
     public synchronized void seekTo(int position) {
         try {
@@ -391,6 +467,8 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
         boolean show = this.playerState == PAUSED && playerState == PlayerState.STARTED;
         boolean hide = this.playerState == STARTED && playerState == PlayerState.PAUSED;
+        Util.broadcastPlaybackStatusChange(this, playerState);
+
         this.playerState = playerState;
         if (show) {
             Util.showPlayingNotification(this, handler, currentPlaying.getSong());

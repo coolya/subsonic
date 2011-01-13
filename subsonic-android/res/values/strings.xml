@@ -88,6 +88,9 @@
     <string name="download.playlist_saving">Saving playlist \"%s\"...</string>
     <string name="download.playlist_done">Playlist was successfully saved.</string>
     <string name="download.playlist_error">Failed to save playlist, please try later.</string>
+    
+    <string name="song_details.all">%1$s %2$s</string>
+    <string name="song_details.kbps">%d kbps</string>
 
     <string name="lyrics.nomatch">No lyrics found</string>
 
@@ -152,7 +155,7 @@
     <string name="settings.media_button_title">Media buttons</string>
     <string name="settings.media_button_summary">Respond to phone, headset and Bluetooth media buttons</string>
 
-    <string name="music_service.retry">A network error occurred. Retrying %d of %d.</string>
+    <string name="music_service.retry">A network error occurred. Retrying %1$d of %2$d.</string>
 
     <string name="background_task.wait">Please wait...</string>
     <string name="background_task.loading">Loading.</string>
@@ -177,6 +180,11 @@
     <string name="widget.initial_text">Touch to select music</string>
     <string name="widget.sdcard_busy">SD card unavailable</string>
     <string name="widget.sdcard_missing">No SD card</string>
+    
+    <string name="util.bytes_format.gigabyte">0.00 GB</string>
+    <string name="util.bytes_format.megabyte">0.00 MB</string>
+    <string name="util.bytes_format.kilobyte">0 KB</string>
+    <string name="util.bytes_format.byte">0 B</string>
 
     <plurals name="select_album_n_songs">
         <item quantity="zero">No songs</item>
