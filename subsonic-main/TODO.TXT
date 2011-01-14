@@ -29,10 +29,15 @@ Buy new JW license
 
 DONE IN ANDROID 2.5
 --------------------
+Changes from xmoby (support his widget + French)
+New setting "Keep screen on". Keeping the screen on when downloading may improve download speed
 
 TODO IN ANDROID 2.5
 -------------------
+Pause when disconnecting Bluetooth.
+Use new intents in widget.
 Downloads stops when screen turns off.
+Add Repeat.
 Save/resume current playing and position. (maybe resume position only when file is complete?)
 Persist playlist after shuffle.
 Next/prev buttons should work also when current is null.
@@ -40,7 +45,6 @@ Use same button background as Music.app
 Glowing buttons, cover art background, ala http://powerampapp.com/wp-content/themes/poweramp/images/big/theme-matte-metal-1.jpg
 Option to keep screen lit.
 Avoid more than one instance.
-Pause when disconnecting Bluetooth.
 Reset shuffle play buffer when changing server.
 Long-click:
   Long-click artist -> Play random
