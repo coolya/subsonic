@@ -94,6 +94,11 @@ public final class Util {
         return getActiveServer(context) == 0;
     }
 
+    public static boolean isScreenLitOnDownload(Context context) {
+        SharedPreferences prefs = getPreferences(context);
+        return prefs.getBoolean(Constants.PREFERENCES_KEY_SCREEN_LIT_ON_DOWNLOAD, false);
+    }
+
     public static void setActiveServer(Context context, int instance) {
         SharedPreferences prefs = getPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();

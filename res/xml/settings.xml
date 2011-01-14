@@ -173,6 +173,12 @@
                 a:key="mediaButtons"
                 a:defaultValue="true"/>
 
+        <CheckBoxPreference
+                a:title="@string/settings.screen_lit_title"
+                a:summary="@string/settings.screen_lit_summary"
+                a:key="screenLitOnDownload"
+                a:defaultValue="false"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

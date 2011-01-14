@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import android.content.Context;
+import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
@@ -175,7 +176,15 @@ public class DownloadFile {
 
             InputStream in = null;
             FileOutputStream out = null;
+            PowerManager.WakeLock wakeLock = null;
             try {
+
+                if (Util.isScreenLitOnDownload(context)) {
+                    PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+                    wakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, toString());
+                    wakeLock.acquire();
+                    Log.i(TAG, "Acquired wake lock " + wakeLock);
+                }
 
                 if (saveFile.exists()) {
                     Log.i(TAG, saveFile + " already exists. Skipping.");
@@ -231,8 +240,11 @@ public class DownloadFile {
             } finally {
                 Util.close(in);
                 Util.close(out);
+                if (wakeLock != null) {
+                    wakeLock.release();
+                    Log.i(TAG, "Released wake lock " + wakeLock);
+                }
             }
-
         }
 
         @Override
