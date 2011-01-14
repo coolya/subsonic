@@ -81,32 +81,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private String suggestedPlaylistName;
     private PowerManager.WakeLock wakeLock;
 
-    /**
-     * This receiver manages the intent that could come from other applications.
-     */
-    private BroadcastReceiver intentReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            String cmd = intent.getStringExtra("command");
-            Log.i(TAG, "intentReceiver.onReceive " + action + " / " + cmd);
-            if (CMD_PLAY.equals(action)) {
-                play();
-            } else if (CMD_NEXT.equals(action)) {
-                next();
-            } else if (CMD_PREVIOUS.equals(action)) {
-                previous();
-            } else if (CMD_TOGGLEPAUSE.equals(action)) {
-                togglePlayPause();
-            } else if (CMD_PAUSE.equals(action)) {
-                pause();
-            } else if (CMD_STOP.equals(cmd)) {
-                pause();
-                seekTo(0);
-            }
-        }
-    };
- 
     @Override
     public void onCreate() {
         super.onCreate();
@@ -122,16 +96,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             }
         });
 
-        // Register the handler for outside intents.
-        IntentFilter commandFilter = new IntentFilter();
-        commandFilter.addAction(CMD_PLAY);
-        commandFilter.addAction(CMD_TOGGLEPAUSE);
-        commandFilter.addAction(CMD_PAUSE);
-        commandFilter.addAction(CMD_STOP);
-        commandFilter.addAction(CMD_PREVIOUS);
-        commandFilter.addAction(CMD_NEXT);
-        registerReceiver(intentReceiver, commandFilter);
- 
         PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, this.getClass().getName());
         wakeLock.setReferenceCounted(false);
@@ -150,7 +114,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     public void onDestroy() {
         super.onDestroy();
         lifecycleSupport.onDestroy();
-        unregisterReceiver(intentReceiver);
         mediaPlayer.release();
         shufflePlayBuffer.shutdown();
         instance = null;
