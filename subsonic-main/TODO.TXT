@@ -35,6 +35,7 @@ Pause when disconnecting Bluetooth.
 
 TODO IN ANDROID 2.5
 -------------------
+Error when using foo:3030 as server url.
 Test: Pause when disconnecting Bluetooth.
 Use new intents in widget.
 Downloads stops when screen turns off.

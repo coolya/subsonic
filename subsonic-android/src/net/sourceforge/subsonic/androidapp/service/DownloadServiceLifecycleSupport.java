@@ -53,6 +53,33 @@ public class DownloadServiceLifecycleSupport {
     private BroadcastReceiver headsetEventReceiver;
     private PhoneStateListener phoneStateListener;
 
+    /**
+     * This receiver manages the intent that could come from other applications.
+     */
+    private BroadcastReceiver intentReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            String cmd = intent.getStringExtra("command");
+            Log.i(TAG, "intentReceiver.onReceive " + action + " / " + cmd);
+            if (DownloadServiceImpl.CMD_PLAY.equals(action)) {
+                downloadService.play();
+            } else if (DownloadServiceImpl.CMD_NEXT.equals(action)) {
+                downloadService.next();
+            } else if (DownloadServiceImpl.CMD_PREVIOUS.equals(action)) {
+                downloadService.previous();
+            } else if (DownloadServiceImpl.CMD_TOGGLEPAUSE.equals(action)) {
+                downloadService.togglePlayPause();
+            } else if (DownloadServiceImpl.CMD_PAUSE.equals(action)) {
+                downloadService.pause();
+            } else if (DownloadServiceImpl.CMD_STOP.equals(cmd)) {
+                downloadService.pause();
+                downloadService.seekTo(0);
+            }
+        }
+    };
+
+
     public DownloadServiceLifecycleSupport(DownloadServiceImpl downloadService) {
         this.downloadService = downloadService;
     }
@@ -100,6 +127,16 @@ public class DownloadServiceLifecycleSupport {
         TelephonyManager telephonyManager = (TelephonyManager) downloadService.getSystemService(Context.TELEPHONY_SERVICE);
         telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
 
+        // Register the handler for outside intents.
+        IntentFilter commandFilter = new IntentFilter();
+        commandFilter.addAction(DownloadServiceImpl.CMD_PLAY);
+        commandFilter.addAction(DownloadServiceImpl.CMD_TOGGLEPAUSE);
+        commandFilter.addAction(DownloadServiceImpl.CMD_PAUSE);
+        commandFilter.addAction(DownloadServiceImpl.CMD_STOP);
+        commandFilter.addAction(DownloadServiceImpl.CMD_PREVIOUS);
+        commandFilter.addAction(DownloadServiceImpl.CMD_NEXT);
+        downloadService.registerReceiver(intentReceiver, commandFilter);
+
         deserializeDownloadQueue();
     }
 
@@ -117,6 +154,7 @@ public class DownloadServiceLifecycleSupport {
         serializeDownloadQueue();
         downloadService.clear(false);
         downloadService.unregisterReceiver(headsetEventReceiver);
+        downloadService.unregisterReceiver(intentReceiver);
 
         TelephonyManager telephonyManager = (TelephonyManager) downloadService.getSystemService(Context.TELEPHONY_SERVICE);
         telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
