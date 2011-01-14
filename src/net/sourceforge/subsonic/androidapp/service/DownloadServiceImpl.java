@@ -84,12 +84,12 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     /**
      * This receiver manages the intent that could come from other applications.
      */
-    private BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver intentReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             String cmd = intent.getStringExtra("command");
-            Log.i(TAG, "mIntentReceiver.onReceive " + action + " / " + cmd);
+            Log.i(TAG, "intentReceiver.onReceive " + action + " / " + cmd);
             if (CMD_PLAY.equals(action)) {
                 play();
             } else if (CMD_NEXT.equals(action)) {
@@ -130,7 +130,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         commandFilter.addAction(CMD_STOP);
         commandFilter.addAction(CMD_PREVIOUS);
         commandFilter.addAction(CMD_NEXT);
-        registerReceiver(mIntentReceiver, commandFilter);
+        registerReceiver(intentReceiver, commandFilter);
  
         PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, this.getClass().getName());
@@ -150,7 +150,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     public void onDestroy() {
         super.onDestroy();
         lifecycleSupport.onDestroy();
-        unregisterReceiver(mIntentReceiver);
+        unregisterReceiver(intentReceiver);
         mediaPlayer.release();
         shufflePlayBuffer.shutdown();
         instance = null;
