@@ -32,6 +32,7 @@ DONE IN ANDROID 2.5
 Changes from xmoby (support his widget + French)
 New setting "Keep screen on". Keeping the screen on when downloading may improve download speed
 Pause when disconnecting Bluetooth.
+Remember current song and position when app is restarted.
 
 TODO IN ANDROID 2.5
 -------------------
@@ -39,7 +40,6 @@ Error when using foo:3030 as server url.
 Test: Pause when disconnecting Bluetooth.
 Use new intents in widget.
 Add Repeat.
-Save/resume current playing and position. (maybe resume position only when file is complete?)
 Persist playlist after shuffle.
 Next/prev buttons should work also when current is null.
 Use same button background as Music.app
@@ -122,6 +122,8 @@ Bugfix: "Access denied to file" error message on Android
 
 TODO IN 4.4
 -----------------
+Keep .vmoptions file when installing.
+Add longer video bufferlength
 SSL support in Jetty
   Add site doc.
   Don't use port 443 by default?

@@ -26,10 +26,8 @@ import java.util.Collections;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
@@ -54,14 +52,14 @@ import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 public class DownloadServiceImpl extends Service implements DownloadService {
 
     private static final String TAG = DownloadServiceImpl.class.getSimpleName();
-    
+
     public static final String CMD_PLAY = "net.sourceforge.subsonic.androidapp.CMD_PLAY";
     public static final String CMD_TOGGLEPAUSE = "net.sourceforge.subsonic.androidapp.CMD_TOGGLEPAUSE";
     public static final String CMD_PAUSE = "net.sourceforge.subsonic.androidapp.CMD_PAUSE";
     public static final String CMD_STOP = "net.sourceforge.subsonic.androidapp.CMD_STOP";
     public static final String CMD_PREVIOUS = "net.sourceforge.subsonic.androidapp.CMD_PREVIOUS";
     public static final String CMD_NEXT = "net.sourceforge.subsonic.androidapp.CMD_NEXT";
-    
+
     private final IBinder binder = new SimpleServiceBinder<DownloadService>(this);
     private MediaPlayer mediaPlayer;
     private final List<DownloadFile> downloadList = new CopyOnWriteArrayList<DownloadFile>();
@@ -148,6 +146,16 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             checkDownloads();
         }
         lifecycleSupport.serializeDownloadQueue();
+    }
+
+    public void restore(List<MusicDirectory.Entry> songs, int currentPlayingIndex, int currentPlayingPosition) {
+        download(songs, false, false);
+        if (currentPlayingIndex != -1) {
+            play(currentPlayingIndex, false);
+            if (currentPlaying.isCompleteFileAvailable()) {
+                doPlay(currentPlaying, currentPlayingPosition, false);
+            }
+        }
     }
 
     @Override
@@ -248,7 +256,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         	Util.broadcastNewTrackInfo(this, currentPlaying.getSong());
         } else {
             Util.broadcastNewTrackInfo(this, null);
-        }        
+        }
 
         if (currentPlaying != null && showNotification) {
             Util.showPlayingNotification(this, handler, currentPlaying.getSong());
@@ -310,7 +318,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             }
         }
     }
-    
+
     /** Plays or resumes the playback, depending on the current player state. */
     public synchronized void togglePlayPause()
     {
@@ -322,7 +330,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             pause();
         }
     }
-    
+
     @Override
     public synchronized void seekTo(int position) {
         try {
@@ -457,7 +465,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         bufferTask.start();
     }
 
-    private synchronized void doPlay(final DownloadFile downloadFile, int position) {
+    private synchronized void doPlay(final DownloadFile downloadFile, int position, boolean start) {
         try {
             final File file = downloadFile.isCompleteFileAvailable() ? downloadFile.getCompleteFile() : downloadFile.getPartialFile();
             downloadFile.updateModificationDate();
@@ -516,8 +524,12 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                 mediaPlayer.seekTo(position);
             }
 
-            mediaPlayer.start();
-            setPlayerState(STARTED);
+            if (start) {
+                mediaPlayer.start();
+                setPlayerState(STARTED);
+            } else {
+                setPlayerState(PAUSED);
+            }
 
         } catch (Exception x) {
             handleError(x);
@@ -680,7 +692,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                     return;
                 }
             }
-            doPlay(downloadFile, position);
+            doPlay(downloadFile, position, true);
         }
 
         private boolean bufferComplete() {
