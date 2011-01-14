@@ -449,6 +449,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         } else if (state == STOPPED || state == IDLE) {
             warnIfNetworkOrStorageUnavailable();
             int current = service.getCurrentPlayingIndex();
+            // TODO: Use play() method.
             if (current == -1) {
                 service.play(0);
             } else {

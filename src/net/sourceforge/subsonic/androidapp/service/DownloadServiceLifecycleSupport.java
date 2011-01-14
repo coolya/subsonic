@@ -178,11 +178,7 @@ public class DownloadServiceLifecycleSupport {
             return;
         }
         Log.i(TAG, "Deserialized currentPlayingIndex: " + state.currentPlayingIndex + ", currentPlayingPosition: " + state.currentPlayingPosition);
-        downloadService.download(state.songs, false, false);
-        if (state.currentPlayingIndex != -1) {
-            downloadService.play(state.currentPlayingIndex, false);
-            downloadService.seekTo(state.currentPlayingPosition);
-        }
+        downloadService.restore(state.songs, state.currentPlayingIndex, state.currentPlayingPosition);
     }
 
     private void handleKeyEvent(KeyEvent event) {
