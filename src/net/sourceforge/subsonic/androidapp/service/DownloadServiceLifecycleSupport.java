@@ -168,6 +168,7 @@ public class DownloadServiceLifecycleSupport {
         state.currentPlayingIndex = downloadService.getCurrentPlayingIndex();
         state.currentPlayingPosition = downloadService.getPlayerPosition();
 
+        Log.i(TAG, "Serialized currentPlayingIndex: " + state.currentPlayingIndex + ", currentPlayingPosition: " + state.currentPlayingPosition);
         FileUtil.serialize(downloadService, state, FILENAME_DOWNLOADS_SER);
     }
 
@@ -176,9 +177,11 @@ public class DownloadServiceLifecycleSupport {
         if (state == null) {
             return;
         }
+        Log.i(TAG, "Deserialized currentPlayingIndex: " + state.currentPlayingIndex + ", currentPlayingPosition: " + state.currentPlayingPosition);
         downloadService.download(state.songs, false, false);
         if (state.currentPlayingIndex != -1) {
             downloadService.play(state.currentPlayingIndex, false);
+            downloadService.seekTo(state.currentPlayingPosition);
         }
     }
 
