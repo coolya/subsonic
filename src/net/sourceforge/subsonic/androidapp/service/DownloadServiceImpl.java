@@ -366,8 +366,10 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     @Override
     public synchronized void pause() {
         try {
-            mediaPlayer.pause();
-            setPlayerState(PAUSED);
+            if (playerState == STARTED) {
+                mediaPlayer.pause();
+                setPlayerState(PAUSED);
+            }
         } catch (Exception x) {
             handleError(x);
         }

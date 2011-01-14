@@ -37,18 +37,17 @@ public class BluetoothIntentReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         int state = intent.getIntExtra("android.bluetooth.a2dp.extra.SINK_STATE", -1);
+        Log.i(TAG, "android.bluetooth.a2dp.extra.SINK_STATE, state = " + state);
         boolean connected = state == 2;  // android.bluetooth.BluetoothA2dp.STATE_CONNECTED
         if (connected) {
             Log.i(TAG, "Connected to Bluetooth A2DP, requesting media button focus.");
             Util.registerMediaButtonEventReceiver(context);
         }
 
-        boolean disconnecting = state == 3; // android.bluetooth.BluetoothA2dp.STATE_DISCONNECTING
-        if (disconnecting) {
-            Log.i(TAG, "Disconnecting from Bluetooth A2DP, requesting pause.");
-            Intent pauseIntent = new Intent();
-            pauseIntent.putExtra("command", DownloadServiceImpl.CMD_PAUSE);
-            context.sendBroadcast(pauseIntent);
+        boolean disconnected = state == 0; // android.bluetooth.BluetoothA2dp.STATE_DISCONNECTED
+        if (disconnected) {
+            Log.i(TAG, "Disconnected from Bluetooth A2DP, requesting pause.");
+            context.sendBroadcast(new Intent(DownloadServiceImpl.CMD_PAUSE));
         }
     }
 }
