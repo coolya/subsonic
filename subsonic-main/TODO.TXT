@@ -31,13 +31,12 @@ DONE IN ANDROID 2.5
 --------------------
 Changes from xmoby (support his widget + French)
 New setting "Keep screen on". Keeping the screen on when downloading may improve download speed
-Pause when disconnecting Bluetooth.
 Remember current song and position when app is restarted.
+Pause when disconnecting Bluetooth.
 
 TODO IN ANDROID 2.5
 -------------------
 Error when using foo:3030 as server url.
-Test: Pause when disconnecting Bluetooth.
 Use new intents in widget.
 Add Repeat.
 Persist playlist after shuffle.

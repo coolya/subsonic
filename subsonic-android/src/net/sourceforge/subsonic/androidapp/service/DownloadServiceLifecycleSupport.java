@@ -60,8 +60,7 @@ public class DownloadServiceLifecycleSupport {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            String cmd = intent.getStringExtra("command");
-            Log.i(TAG, "intentReceiver.onReceive " + action + " / " + cmd);
+            Log.i(TAG, "intentReceiver.onReceive: " + action);
             if (DownloadServiceImpl.CMD_PLAY.equals(action)) {
                 downloadService.play();
             } else if (DownloadServiceImpl.CMD_NEXT.equals(action)) {
@@ -72,7 +71,7 @@ public class DownloadServiceLifecycleSupport {
                 downloadService.togglePlayPause();
             } else if (DownloadServiceImpl.CMD_PAUSE.equals(action)) {
                 downloadService.pause();
-            } else if (DownloadServiceImpl.CMD_STOP.equals(cmd)) {
+            } else if (DownloadServiceImpl.CMD_STOP.equals(action)) {
                 downloadService.pause();
                 downloadService.seekTo(0);
             }
@@ -112,7 +111,7 @@ public class DownloadServiceLifecycleSupport {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Log.i(TAG, "Headset event for: " + intent.getExtras().get("name"));
-                if (intent.getExtras().getInt("state") == 0 && downloadService.getPlayerState() == PlayerState.STARTED) {
+                if (intent.getExtras().getInt("state") == 0) {
                     downloadService.pause();
                 }
             }
