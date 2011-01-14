@@ -22,6 +22,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
 /**
@@ -40,6 +41,14 @@ public class BluetoothIntentReceiver extends BroadcastReceiver {
         if (connected) {
             Log.i(TAG, "Connected to Bluetooth A2DP, requesting media button focus.");
             Util.registerMediaButtonEventReceiver(context);
+        }
+
+        boolean disconnecting = state == 3; // android.bluetooth.BluetoothA2dp.STATE_DISCONNECTING
+        if (disconnecting) {
+            Log.i(TAG, "Disconnecting from Bluetooth A2DP, requesting pause.");
+            Intent pauseIntent = new Intent();
+            pauseIntent.putExtra("command", DownloadServiceImpl.CMD_PAUSE);
+            context.sendBroadcast(pauseIntent);
         }
     }
 }
