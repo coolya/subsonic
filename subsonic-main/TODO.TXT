@@ -118,10 +118,10 @@ Don't scrobble for REST playback.
 New: https support.
 Bugfix: "Access denied to file" error message on Android
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4791
+Bugfix: Remember port number and memory settings when reinstalling on Windows
 
 TODO IN 4.4
 -----------------
-Keep .vmoptions file when installing.
 Add longer video bufferlength
 SSL support in Jetty
   Add site doc.

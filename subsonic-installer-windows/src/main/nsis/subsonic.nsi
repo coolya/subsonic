@@ -48,6 +48,9 @@ Section "Subsonic"
   # Install for all users
   SetShellVarContext "all"
 
+  # Take backup of existing subsonic-service.exe.vmoptions
+  CopyFiles /SILENT $INSTDIR\subsonic-service.exe.vmoptions $TEMP\subsonic-service.exe.vmoptions
+
   # Silently uninstall existing version.
   ExecWait '"$INSTDIR\uninstall.exe" /S _?=$INSTDIR'
 
@@ -79,6 +82,10 @@ Section "Subsonic"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Subsonic" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Subsonic" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
+
+  # Restore subsonic-service.exe.vmoptions
+  CopyFiles /SILENT  $TEMP\subsonic-service.exe.vmoptions $INSTDIR\subsonic-service.exe.vmoptions
+  Delete $TEMP\subsonic-service.exe.vmoptions
 
   # Write transcoding pack files.
   SetOutPath "c:\subsonic\transcode"
