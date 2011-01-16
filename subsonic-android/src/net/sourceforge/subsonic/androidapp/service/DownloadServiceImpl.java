@@ -184,6 +184,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             downloadList.add(0, currentPlaying);
         }
         revision++;
+        lifecycleSupport.serializeDownloadQueue();
     }
 
     @Override
