@@ -44,7 +44,6 @@ Configurable music root.
 Next/prev buttons should work also when current is null.
 Use same button background as Music.app
 Glowing buttons, cover art background, ala http://powerampapp.com/wp-content/themes/poweramp/images/big/theme-matte-metal-1.jpg
-Option to keep screen lit.
 Avoid more than one instance.
 Reset shuffle play buffer when changing server.
 Long-click:
@@ -57,8 +56,6 @@ Improve horizontal layout, move tab buttons to the right.
 Increase font size of song title.
 Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone. (onNewIntent?)
-Still problems with "Download" and "Queue" not triggering download?
-Sort alphabetically in offline mode.
 Remove colons.
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4137
 Better handling of full SD card.
@@ -68,9 +65,6 @@ Cover art images loaded incorrectly.
 Reuse AlbumViews (in EntryAdapter)
 Cooler button in slider (polished steel)
 Nicer icon for music library.
-New search result interface.
-  o make voice search work
-  o long-click on song to do misc stuff.
 
 Skipping problem
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=15260#15260
