@@ -91,8 +91,20 @@
             a:paddingRight="6dip"
             a:minHeight="50dip"/>
     <TextView
-            a:id="@+id/main_albums_random"
-            a:text="@string/main.albums_random"
+            a:id="@+id/main_albums_recent"
+            a:text="@string/main.albums_recent"
+            a:drawableRight="@drawable/list_item_artist"
+            a:drawablePadding="6dip"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"
+            a:textAppearance="?android:attr/textAppearanceMedium"
+            a:gravity="center_vertical"
+            a:paddingLeft="6dip"
+            a:paddingRight="6dip"
+            a:minHeight="50dip"/>
+    <TextView
+            a:id="@+id/main_albums_frequent"
+            a:text="@string/main.albums_frequent"
             a:drawableRight="@drawable/list_item_artist"
             a:drawablePadding="6dip"
             a:layout_width="fill_parent"
@@ -115,20 +127,8 @@
             a:paddingRight="6dip"
             a:minHeight="50dip"/>
     <TextView
-            a:id="@+id/main_albums_recent"
-            a:text="@string/main.albums_recent"
-            a:drawableRight="@drawable/list_item_artist"
-            a:drawablePadding="6dip"
-            a:layout_width="fill_parent"
-            a:layout_height="wrap_content"
-            a:textAppearance="?android:attr/textAppearanceMedium"
-            a:gravity="center_vertical"
-            a:paddingLeft="6dip"
-            a:paddingRight="6dip"
-            a:minHeight="50dip"/>
-    <TextView
-            a:id="@+id/main_albums_frequent"
-            a:text="@string/main.albums_frequent"
+            a:id="@+id/main_albums_random"
+            a:text="@string/main.albums_random"
             a:drawableRight="@drawable/list_item_artist"
             a:drawablePadding="6dip"
             a:layout_width="fill_parent"

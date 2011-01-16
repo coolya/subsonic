@@ -39,6 +39,7 @@ TODO IN ANDROID 2.5
 Error when using foo:3030 as server url.
 Use new intents in widget.
 Add Repeat.
+Configurable music root.
 Persist playlist after shuffle.
 Next/prev buttons should work also when current is null.
 Use same button background as Music.app
@@ -122,12 +123,13 @@ Bugfix: Remember port number and memory settings when reinstalling on Windows
 
 TODO IN 4.4
 -----------------
+Flowplayer
+  http://flowplayer.org/plugins/streaming/pseudostreaming.html
 Add longer video bufferlength
 SSL support in Jetty
   Add site doc.
   Don't use port 443 by default?
   Testing
-Rename album lists, use same as iTunes (Top rated, Recently added, Recently played, Most played)
 Create unit test for comparing StringUtil.getRESTProtocolVersion() with the actual xsd version.
 REST support for scrobbling, separate method.
 jSub
