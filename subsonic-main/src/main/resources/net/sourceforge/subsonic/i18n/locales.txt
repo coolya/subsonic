@@ -25,6 +25,9 @@ de
 # Italian
 it
 
+# Greek
+el
+
 # Russian
 ru
 

@@ -22,6 +22,7 @@
     <li><span class="bugid">New: </span>Added option to open video in resizable window.</li>
     <li><span class="bugid">New: </span>Improved search with accented characters (e.g., searching for "bartok" will match "bart&oacute;k").</li>
     <li><span class="bugid">New: </span>Added REST API method for scrobbling to last.fm.</li>
+    <li><span class="bugid">New: </span>Added Greek translation, courtesy of Constantine Samaklis.</li>
     <li><span class="bugid">Bugfix: </span>When converting videos, always use a width that is a multiple of two.</li>
     <li><span class="bugid">Bugfix: </span>Handle invalid pixel aspect rates (PAR) reported by ffmpeg.</li>
     <li><span class="bugid">Bugfix: </span>Don't scrobble videos to last.fm.</li>

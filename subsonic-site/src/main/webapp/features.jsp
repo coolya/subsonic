@@ -107,6 +107,7 @@
                         <tr><td>&#149; Portuguese </td><td>(by Miguel Fonseca)</td></tr>
                         <tr><td>&#149; German </td><td>(by Harald Weiss and J&ouml;rg Frommann)</td></tr>
                         <tr><td>&#149; Italian </td><td>(by Michele Petrecca)</td></tr>
+                        <tr><td>&#149; Greek </td><td>(by Constantine Samaklis)</td></tr>
                         <tr><td>&#149; Russian </td><td>(by Iaroslav Andrusiak)</td></tr>
                         <tr><td>&#149; Slovenian </td><td>(by Andrej &#381;i&#382;mond)</td></tr>
                         <tr><td>&#149; Macedonian </td><td>(by Stefan Ivanovski)</td></tr>
