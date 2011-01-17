@@ -16,6 +16,19 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="4.4.beta1"><h2 class="div">Subsonic 4.4.beta1 - Jan 20, 2011</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>Added https support.</li>
+    <li><span class="bugid">New: </span>Added option to open video in resizable window.</li>
+    <li><span class="bugid">New: </span>Improved search with accented characters (e.g., searching for "bartok" will match "bart&oacute;k").</li>
+    <li><span class="bugid">New: </span>Added REST API method for scrobbling to last.fm.</li>
+    <li><span class="bugid">Bugfix: </span>When converting videos, always use a width that is a multiple of two.</li>
+    <li><span class="bugid">Bugfix: </span>Handle invalid pixel aspect rates (PAR) reported by ffmpeg.</li>
+    <li><span class="bugid">Bugfix: </span>Don't scrobble videos to last.fm.</li>
+    <li><span class="bugid">Bugfix: </span>Remember port number and memory settings when reinstalling on Windows.</li>
+    <li><span class="bugid">Bugfix: </span>Accessing "Newest" album list from Android sometimes caused an error.</li>
+</ul>
+
 <a name="4.3"><h2 class="div">Subsonic 4.3 - Jan 7, 2011</h2></a>
 <ul>
     <li><span class="bugid">Bugfix: </span>When switching bit rate, also jump to correct time offset.</li>
@@ -779,6 +792,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#4.4.beta1">Subsonic 4.4.beta1</a></li>
             <li><a href="#4.3">Subsonic 4.3</a></li>
             <li><a href="#4.3.beta1">Subsonic 4.3.beta1</a></li>
             <li><a href="#4.2">Subsonic 4.2</a></li>

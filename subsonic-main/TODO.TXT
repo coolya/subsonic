@@ -106,27 +106,16 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN 4.4
 ----------------
-Video: Pop-out to resizable window.
-Bugfix: When converting videos, always use a width that is a multiple of two (again).
-Bugfix: Handle invalid pixel aspect rates (PAR) reported by ffmpeg.
-Better support for searching with accented characters (e.g., searching for "bartok" will match "bartók").
-Bugfix: Don't scrobble videos to last.fm.
-Don't scrobble for REST playback.
-REST support for scrobbling, separate method.
-New: https support.
-Bugfix: "Access denied to file" error message on Android
-  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4791
-Bugfix: Remember port number and memory settings when reinstalling on Windows
 
 TODO IN 4.4
 -----------------
-Flowplayer
-  http://flowplayer.org/plugins/streaming/pseudostreaming.html
 Add longer video bufferlength
 SSL support in Jetty
   Add site doc.
   Don't use port 443 by default?
   Testing
+Flowplayer
+  http://flowplayer.org/plugins/streaming/pseudostreaming.html
 Create unit test for comparing StringUtil.getRESTProtocolVersion() with the actual xsd version.
 jSub
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4479
