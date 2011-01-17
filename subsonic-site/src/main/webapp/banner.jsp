@@ -82,7 +82,7 @@
                 <img src="inc/img/banner/video.png" alt="" class="screenshot"/>
 
                 <div class="title">
-                    <div class="large">Coming soon</div>
+                    <div class="large">New in Subsonic 4.3</div>
                     <div class="small">Stream all your movies too!</div>
                     <img src="inc/img/banner/android-video.png" alt="" style="margin-top:20px;margin-left:90px;"/>
                 </div>

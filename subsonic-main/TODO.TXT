@@ -1,5 +1,7 @@
 PLAYLIST
 --------
+Show playlists in left column.
+Checkbox in main.jsp + combobox with options.
 Save playlists in database?  Access rights.
 More prominent display.
 Automatically import iTunes playlists.
