@@ -13,7 +13,6 @@ WiMP, iTunes
 
 SITE
 ----
-Add link to wiki.
 Tutorial, windows shared folders.
 Slideshow
   How it works, slide from presentation ("Stream music straight from your home computer")

@@ -27,7 +27,10 @@
                     Frequently asked questions.
                 </li>
                 <li><b><a href="http://monroeworld.com/android/subsonic/">A practical guide to installing and configuring Subsonic</a></b><br>
-                    By Shane R. Monroe, Monroeworld.com.
+                By Shane R. Monroe, Monroeworld.com.
+                </li>
+                <li><b><a href="https://sourceforge.net/apps/mediawiki/subsonic/index.php?title=Subsonic">Wiki</a></b><br>
+                    Wiki pages contributed by your fellow Subsonic users.
                 </li>
                 <li><b><a href="forum.jsp">Forum</a></b><br>
                     Discuss and ask questions to fellow users. Roughly 30 new posts per day.
