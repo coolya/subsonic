@@ -28,6 +28,7 @@
                 skin:"<c:url value="/flash/whotube.zip"/>",
                 screencolor:"000000",
                 autostart:false,
+                bufferlength:4,
                 backcolor:"<spring:theme code="backgroundColor"/>",
                 frontcolor:"<spring:theme code="textColor"/>",
                 provider:"video"

@@ -109,7 +109,6 @@ DONE IN 4.4
 
 TODO IN 4.4
 -----------------
-Add longer video bufferlength
 SSL support in Jetty
   Add site doc.
   Don't use port 443 by default?

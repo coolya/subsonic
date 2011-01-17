@@ -30,6 +30,7 @@
                 screencolor:"000000",
                 controlbar:"over",
                 autostart:"false",
+                bufferlength:3,
                 backcolor:"<spring:theme code="backgroundColor"/>",
                 frontcolor:"<spring:theme code="textColor"/>",
                 provider:"video"
