@@ -115,7 +115,6 @@ SSL support in Jetty
   Testing
 Flowplayer
   http://flowplayer.org/plugins/streaming/pseudostreaming.html
-Create unit test for comparing StringUtil.getRESTProtocolVersion() with the actual xsd version.
 jSub
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4479
 Maven 3

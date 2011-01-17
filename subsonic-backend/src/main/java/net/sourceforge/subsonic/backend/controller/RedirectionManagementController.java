@@ -162,6 +162,29 @@ public class RedirectionManagementController extends MultiActionController {
         }
     }
 
+    public void get(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String redirectFrom = StringUtils.lowerCase(ServletRequestUtils.getRequiredStringParameter(request, "redirectFrom"));
+
+        Redirection redirection = redirectionDao.getRedirection(redirectFrom);
+        if (redirection == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Web address " + redirectFrom + ".subsonic.org not registered.");
+            return;
+        }
+
+        PrintWriter writer = response.getWriter();
+        String url = redirection.getRedirectTo();
+        if (!url.endsWith("/")) {
+            url += "/";
+        }
+        writer.println(url);
+
+        url = redirection.getLocalRedirectTo();
+        if (!url.endsWith("/")) {
+            url += "/";
+        }
+        writer.println(url);
+    }
+
     public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String redirectFrom = StringUtils.lowerCase(ServletRequestUtils.getRequiredStringParameter(request, "redirectFrom"));
         PrintWriter writer = response.getWriter();
