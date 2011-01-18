@@ -535,9 +535,9 @@ Deploy
 Check that correct local version is displayed.
 Commit
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.3/
-  rsync -avP -e ssh subsonic-assembly/target/subsonic* sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.3/
-  rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg subsonic-installer-debian/target/subsonic*.deb subsonic-installer-rpm/target/subsonic*.rpm sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.3/
+  rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.4.beta1/
+  rsync -avP -e ssh subsonic-assembly/target/subsonic* sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.4.beta1/
+  rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg subsonic-installer-debian/target/subsonic*.deb subsonic-installer-rpm/target/subsonic*.rpm sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.4.beta1/
 
 Modify FRS properties
   https://sourceforge.net/project/admin/explorer.php?group_id=126265
@@ -546,10 +546,10 @@ Upload site (OLD):
  rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
 
 Upload site (NEW): CHANGE DATE BELOW
-  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2011-01-07/pages/
+  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2011-01-18/pages/
   rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps/pages/
 
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-4.3 -m "Tagging 4.3."
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-4.4.beta1 -m "Tagging 4.4.beta1."
 Register at freshmeat.
 Post message on forum.
 Update version number in pom.xml etc.
@@ -561,8 +561,8 @@ Upgrade Subsonic backend: CHANGE DATE BELOW
     tar cvf db-backup-2011-01-07.tar db
   cd subsonic-backend
   mvn clean install
-  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2011-01-07/ROOT.war
-  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2011-01-07/demo.war
+  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2011-01-18/ROOT.war
+  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2011-01-18/demo.war
   ssh sindremehus@subsonic.org
   su
   /etc/init.d/tomcat55 stop
@@ -591,12 +591,11 @@ Update
     https://myapps.developer.motorola.com/
     https://slideme.org/application/subsonic
     http://www.camangimarket.com/index.html
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-2.4 -m "Tagging Android 2.4"
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/branches/android-xmoby -m "Creating branch for xmoby"
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-2.5 -m "Tagging Android 2.5"
 Create new directory in FRS
   https://sourceforge.net/projects/subsonic/files/android/
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/2.4/subsonic-2.4.apk
+  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/2.5/subsonic-2.5.apk
 
 
 HOW TO RELEASE TRANSCODING PACK
