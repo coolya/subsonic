@@ -533,6 +533,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             } else {
                 setPlayerState(PAUSED);
             }
+            lifecycleSupport.serializeDownloadQueue();
 
         } catch (Exception x) {
             handleError(x);
