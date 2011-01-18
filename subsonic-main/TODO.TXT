@@ -38,16 +38,16 @@ Persist playlist after shuffle.
 
 TODO IN ANDROID 2.5
 -------------------
-Resume position doesn't work when killing app.
-Next/prev buttons should work also when current is null.
-Error when using foo:3030 as server url.
+Fancier player controls
+  Make prototype in svg
+  http://powerampapp.com/wp-content/themes/poweramp/images/big/theme-matte-metal-1.jpg
+  http://development.piratemedia.tv/2010-07-19-music-mod-1-8-froyo-only/
+  http://www.clker.com/clipart-play-audio-button-set.html
+  Error when using foo:3030 as server url.
 Use new intents in widget.
 Add Repeat.
 Configurable music root.
-Glowing buttons, cover art background,
-  http://powerampapp.com/wp-content/themes/poweramp/images/big/theme-matte-metal-1.jpg
-  http://www.clker.com/clipart-play-audio-button-set.html
-  http://www.clker.com/clipart-play-audio-button-set.html
+Next/prev buttons should work also when current is null.
 Avoid more than one instance.
 Reset shuffle play buffer when changing server.
 Long-click:
