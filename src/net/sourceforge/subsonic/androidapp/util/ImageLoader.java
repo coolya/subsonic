@@ -23,6 +23,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.LinearGradient;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -58,7 +65,7 @@ public class ImageLoader implements Runnable {
         // Determine the density-dependent image sizes.
         imageSizeDefault = context.getResources().getDrawable(R.drawable.unknown_album).getIntrinsicHeight();
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        imageSizeLarge = Math.min(metrics.widthPixels, metrics.heightPixels);
+        imageSizeLarge = Math.min(metrics.widthPixels, metrics.heightPixels) / 2;
 
         for (int i = 0; i < CONCURRENCY; i++) {
             new Thread(this, "ImageLoader").start();
@@ -79,7 +86,7 @@ public class ImageLoader implements Runnable {
         }
 
         setUnknownImage(view, large);
-        queue.offer(new Task(view, entry, size, large));
+        queue.offer(new Task(view, entry, size, large, large));
     }
 
     private String getKey(String coverArtId, int size) {
@@ -120,17 +127,71 @@ public class ImageLoader implements Runnable {
         }
     }
 
+    private Bitmap createReflection(Bitmap originalImage) {
+
+        int width = originalImage.getWidth();
+        int height = originalImage.getHeight();
+
+        // The gap we want between the reflection and the original image
+        final int reflectionGap = 4;
+
+        // This will not scale but will flip on the Y axis
+        Matrix matrix = new Matrix();
+        matrix.preScale(1, -1);
+
+        // Create a Bitmap with the flip matix applied to it.
+        // We only want the bottom half of the image
+        Bitmap reflectionImage = Bitmap.createBitmap(originalImage, 0, height / 2, width, height / 2, matrix, false);
+
+
+        // Create a new bitmap with same width but taller to fit reflection
+        Bitmap bitmapWithReflection = Bitmap.createBitmap(width, (height + height / 2), Bitmap.Config.ARGB_8888);
+
+        // Create a new Canvas with the bitmap that's big enough for
+        // the image plus gap plus reflection
+        Canvas canvas = new Canvas(bitmapWithReflection);
+
+        // Draw in the original image
+        canvas.drawBitmap(originalImage, 0, 0, null);
+
+        // Draw in the gap
+        Paint deafaultPaint = new Paint();
+        canvas.drawRect(0, height, width, height + reflectionGap, deafaultPaint);
+
+        // Draw in the reflection
+        canvas.drawBitmap(reflectionImage, 0, height + reflectionGap, null);
+
+        // Create a shader that is a linear gradient that covers the reflection
+        Paint paint = new Paint();
+        LinearGradient shader = new LinearGradient(0, originalImage.getHeight(), 0,
+                bitmapWithReflection.getHeight() + reflectionGap, 0x70ffffff, 0x00ffffff,
+                Shader.TileMode.CLAMP);
+
+        // Set the paint to use this shader (linear gradient)
+        paint.setShader(shader);
+
+        // Set the Transfer mode to be porter duff and destination in
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+
+        // Draw a rectangle using the paint with our linear gradient
+        canvas.drawRect(0, height, width, bitmapWithReflection.getHeight() + reflectionGap, paint);
+
+        return bitmapWithReflection;
+    }
+
     private class Task {
         private final View view;
         private final MusicDirectory.Entry entry;
         private final Handler handler;
         private final int size;
+        private final boolean reflection;
         private final boolean saveToFile;
 
-        public Task(View view, MusicDirectory.Entry entry, int size, boolean saveToFile) {
+        public Task(View view, MusicDirectory.Entry entry, int size, boolean reflection, boolean saveToFile) {
             this.view = view;
             this.entry = entry;
             this.size = size;
+            this.reflection = reflection;
             this.saveToFile = saveToFile;
             handler = new Handler();
         }
@@ -139,6 +200,11 @@ public class ImageLoader implements Runnable {
             try {
                 MusicService musicService = MusicServiceFactory.getMusicService(view.getContext());
                 Bitmap bitmap = musicService.getCoverArt(view.getContext(), entry, size, saveToFile, null);
+
+                if (reflection) {
+                    bitmap = createReflection(bitmap);
+                }
+
                 final Drawable drawable = Util.createDrawableFromBitmap(view.getContext(), bitmap);
                 cache.put(getKey(entry.getCoverArt(), size), drawable);
 

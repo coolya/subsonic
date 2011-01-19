@@ -71,9 +71,6 @@
     <string name="download.empty">Playlist is empty</string>
     <string name="download.playerstate_downloading">Downloading - %s</string>
     <string name="download.playerstate_buffering">Buffering</string>
-    <string name="download.playerstate_playing">Playing</string>
-    <string name="download.playerstate_playing_shuffle">Playing shuffle</string>
-    <string name="download.playerstate_paused">Paused</string>
     <string name="download.menu_show_album">Show album</string>
     <string name="download.menu_lyrics">Lyrics</string>
     <string name="download.menu_remove">Remove song</string>

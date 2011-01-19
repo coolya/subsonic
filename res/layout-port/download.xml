@@ -13,51 +13,56 @@
                   a:background="@color/mediaControlBackground"
                   a:paddingTop="4dip"
                   a:gravity="center_horizontal">
-        <Button
+        <ImageView
+                a:id="@+id/download_shuffle"
+                a:src="@drawable/media_toggle_list"
+                a:layout_width="wrap_content"
+                a:layout_height="fill_parent"/>
+        <View
+                a:layout_width="0dip"
+                a:layout_height="fill_parent"
+                a:layout_weight="1"/>
+        <ImageView
                 a:id="@+id/download_previous"
-                a:drawableLeft="@drawable/media_backward"
-                a:paddingLeft="18dp"
-                a:paddingRight="18dp"
+                a:src="@drawable/media_backward"
                 a:layout_width="wrap_content"
-                a:layout_height="fill_parent"/>
-        <Button
+                a:layout_height="wrap_content"/>
+        <ImageView
                 a:id="@+id/download_pause"
-                a:drawableLeft="@drawable/media_pause"
-                a:paddingLeft="18dp"
-                a:paddingRight="18dp"
+                a:src="@drawable/media_pause"
+                a:paddingLeft="12dip"
+                a:paddingRight="12dip"
                 a:layout_width="wrap_content"
-                a:layout_height="fill_parent"/>
-        <Button
+                a:layout_height="wrap_content"/>
+        <ImageView
                 a:id="@+id/download_stop"
-                a:drawableLeft="@drawable/media_stop"
-                a:paddingLeft="18dp"
-                a:paddingRight="18dp"
+                a:src="@drawable/media_stop"
+                a:paddingLeft="12dip"
+                a:paddingRight="12dip"
                 a:layout_width="wrap_content"
-                a:layout_height="fill_parent"/>
-        <Button
+                a:layout_height="wrap_content"/>
+        <ImageView
                 a:id="@+id/download_start"
-                a:drawableLeft="@drawable/media_start"
-                a:paddingLeft="18dp"
-                a:paddingRight="18dp"
+                a:src="@drawable/media_start"
+                a:paddingLeft="12dip"
+                a:paddingRight="12dip"
                 a:layout_width="wrap_content"
-                a:layout_height="fill_parent"/>
-        <Button
+                a:layout_height="wrap_content"/>
+        <ImageView
                 a:id="@+id/download_next"
-                a:drawableLeft="@drawable/media_forward"
-                a:paddingLeft="18dp"
-                a:paddingRight="18dp"
+                a:src="@drawable/media_forward"
                 a:layout_width="wrap_content"
-                a:layout_height="fill_parent"/>
-        <Button
+                a:layout_height="wrap_content"/>
+        <View
+                a:layout_width="0dip"
+                a:layout_height="fill_parent"
+                a:layout_weight="1"/>
+        <ImageView
                 a:id="@+id/download_toggle_list"
-                a:drawableLeft="@drawable/media_toggle_list"
-                a:paddingLeft="18dp"
-                a:paddingRight="18dp"
+                a:src="@drawable/media_toggle_list"
                 a:layout_width="wrap_content"
-                a:layout_height="fill_parent"/>
+                a:layout_height="wrap_content"/>
     </LinearLayout>
-
-    <include layout="@layout/download_status"/>
 
     <include layout="@layout/download_slider"/>
 
