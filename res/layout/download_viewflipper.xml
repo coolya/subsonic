@@ -18,6 +18,8 @@
                 a:layout_gravity="center_horizontal"
                 a:layout_alignParentTop="true"
                 a:layout_centerHorizontal="true"
+                a:layout_marginLeft="8dip"
+                a:layout_marginRight="8dip"
                 a:layout_marginTop="12dip"
                 a:layout_marginBottom="12dip"
                 a:singleLine="true"
@@ -40,6 +42,8 @@
                 a:layout_height="wrap_content"
                 a:layout_above="@+id/download_album"
                 a:layout_centerHorizontal="true"
+                a:layout_marginLeft="8dip"
+                a:layout_marginRight="8dip"
                 a:singleLine="true"
                 a:ellipsize="end"
                 a:textAppearance="?android:attr/textAppearanceMedium"
@@ -51,6 +55,8 @@
                 a:layout_height="wrap_content"
                 a:layout_above="@+id/download_status"
                 a:layout_centerHorizontal="true"
+                a:layout_marginLeft="8dip"
+                a:layout_marginRight="8dip"
                 a:singleLine="true"
                 a:ellipsize="end"
                 a:textAppearance="?android:attr/textAppearanceSmall"
@@ -67,7 +73,6 @@
                 a:ellipsize="end"
                 a:textAppearance="?android:attr/textAppearanceSmall"
                 a:textColor="@color/mediaControlForeground"/>
-
 
     </RelativeLayout>
 

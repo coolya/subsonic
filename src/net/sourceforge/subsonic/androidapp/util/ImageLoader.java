@@ -65,7 +65,7 @@ public class ImageLoader implements Runnable {
         // Determine the density-dependent image sizes.
         imageSizeDefault = context.getResources().getDrawable(R.drawable.unknown_album).getIntrinsicHeight();
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        imageSizeLarge = (int) Math.round(Math.min(metrics.widthPixels, metrics.heightPixels) * 0.65);
+        imageSizeLarge = (int) Math.round(Math.min(metrics.widthPixels, metrics.heightPixels) * 0.60);
 
         for (int i = 0; i < CONCURRENCY; i++) {
             new Thread(this, "ImageLoader").start();
