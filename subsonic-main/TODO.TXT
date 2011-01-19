@@ -42,6 +42,10 @@ Fancier player controls
   Reduce large image size in ImageLoader
   Create reflection
     http://www.inter-fuser.com/2009/12/android-reflections-with-bitmaps.html
+    http://www.jhlabs.com/java/java2d/reflections/index.html
+    http://stackoverflow.com/questions/2928101/android-using-linear-gradient-as-background-looks-banded
+  Avoid color banding
+    http://stuffthathappens.com/blog/2010/06/04/android-color-banding/
   Make prototype in svg
   http://powerampapp.com/wp-content/themes/poweramp/images/big/theme-matte-metal-1.jpg
   http://development.piratemedia.tv/2010-07-19-music-mod-1-8-froyo-only/
@@ -573,7 +577,7 @@ Upgrade Subsonic backend: CHANGE DATE BELOW
   su
   /etc/init.d/tomcat55 stop
   rm webapps
-  ln -s webapps-2011-01-07 webapps
+  ln -s webapps-2011-01-18 webapps
   rm -rf work logs/*
   /etc/init.d/tomcat55 start
   tail -f logs/catalina.out

@@ -18,6 +18,10 @@
                 a:layout_gravity="center_horizontal"
                 a:layout_alignParentTop="true"
                 a:layout_centerHorizontal="true"
+                a:layout_marginTop="12dip"
+                a:layout_marginBottom="12dip"
+                a:singleLine="true"
+                a:ellipsize="end"
                 a:textAppearance="?android:attr/textAppearanceMedium"
                 a:textColor="@color/mediaControlForeground"/>
 
@@ -26,7 +30,8 @@
                 a:src="@drawable/unknown_album_large"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
-                a:layout_centerInParent="true"
+                a:layout_centerHorizontal="true"
+                a:layout_below="@+id/download_song_title"
                 a:scaleType="center"/>
 
         <TextView
@@ -35,6 +40,8 @@
                 a:layout_height="wrap_content"
                 a:layout_above="@+id/download_album"
                 a:layout_centerHorizontal="true"
+                a:singleLine="true"
+                a:ellipsize="end"
                 a:textAppearance="?android:attr/textAppearanceMedium"
                 a:textColor="@color/mediaControlForeground"/>
 
@@ -44,7 +51,9 @@
                 a:layout_height="wrap_content"
                 a:layout_above="@+id/download_status"
                 a:layout_centerHorizontal="true"
-                a:textAppearance="?android:attr/textAppearanceMedium"
+                a:singleLine="true"
+                a:ellipsize="end"
+                a:textAppearance="?android:attr/textAppearanceSmall"
                 a:textColor="@color/mediaControlForeground"/>
 
         <TextView
@@ -54,7 +63,9 @@
                 a:layout_marginBottom="10dip"
                 a:layout_alignParentBottom="true"
                 a:layout_centerHorizontal="true"
-                a:textAppearance="?android:attr/textAppearanceMedium"
+                a:singleLine="true"
+                a:ellipsize="end"
+                a:textAppearance="?android:attr/textAppearanceSmall"
                 a:textColor="@color/mediaControlForeground"/>
 
 

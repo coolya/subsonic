@@ -91,10 +91,11 @@ public class DownloadActivity extends SubsonicTabActivity {
     private DownloadFile currentPlaying;
     private long currentRevision;
     private EditText playlistNameView;
+    private View buttonBar;
 
     /**
-     * Called when the activity is first created.
-     */
+    * Called when the activity is first created.
+    */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,10 +118,12 @@ public class DownloadActivity extends SubsonicTabActivity {
         stopButton = findViewById(R.id.download_stop);
         startButton = findViewById(R.id.download_start);
         toggleListButton = findViewById(R.id.download_toggle_list);
+        buttonBar = findViewById(R.id.button_bar);
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            albumArtImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        }
+        // TODO
+//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            albumArtImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+//        }
 
         albumArtImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,6 +223,8 @@ public class DownloadActivity extends SubsonicTabActivity {
 
         if (getDownloadService() == null || getDownloadService().getCurrentPlaying() == null) {
             flipper.setDisplayedChild(1);
+        } else {
+            buttonBar.setVisibility(View.GONE);
         }
 
         onDownloadListChanged();
@@ -434,10 +439,12 @@ public class DownloadActivity extends SubsonicTabActivity {
             flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_in));
             flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_out));
             flipper.setDisplayedChild(0);
+            buttonBar.setVisibility(View.GONE);
         } else {
             flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_up_in));
             flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_up_out));
             flipper.setDisplayedChild(1);
+            buttonBar.setVisibility(View.VISIBLE);
         }
     }
 
