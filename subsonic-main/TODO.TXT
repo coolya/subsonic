@@ -39,11 +39,15 @@ Persist playlist after shuffle.
 TODO IN ANDROID 2.5
 -------------------
 Fancier player controls
+  Reduce large image size in ImageLoader
+  Create reflection
+    http://www.inter-fuser.com/2009/12/android-reflections-with-bitmaps.html
   Make prototype in svg
   http://powerampapp.com/wp-content/themes/poweramp/images/big/theme-matte-metal-1.jpg
   http://development.piratemedia.tv/2010-07-19-music-mod-1-8-froyo-only/
   http://www.clker.com/clipart-play-audio-button-set.html
-  Error when using foo:3030 as server url.
+
+Error when using foo:3030 as server url.
 Use new intents in widget.
 Add Repeat.
 Configurable music root.
@@ -112,6 +116,7 @@ Updated Greek translation, courtesy of Constantine Samaklis
 
 TODO IN 4.4
 -----------------
+Persist playlist when player state changes?
 SSL support in Jetty
   Add site doc.
   Don't use port 443 by default?

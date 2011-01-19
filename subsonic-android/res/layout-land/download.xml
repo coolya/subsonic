@@ -66,8 +66,6 @@
     </LinearLayout>
 
 
-    <include layout="@layout/download_status"/>
-
     <include layout="@layout/download_slider"/>
 
     <include layout="@layout/button_bar"/>

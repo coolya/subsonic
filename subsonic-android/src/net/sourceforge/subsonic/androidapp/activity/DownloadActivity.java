@@ -74,11 +74,11 @@ public class DownloadActivity extends SubsonicTabActivity {
 
     private ViewFlipper flipper;
     private TextView emptyTextView;
-    private TextView albumArtTextView;
+    private TextView songTitleTextView;
+    private TextView albumTextView;
+    private TextView artistTextView;
     private ImageView albumArtImageView;
     private ListView playlistView;
-    private TextView positionTextView;
-    private TextView durationTextView;
     private TextView statusTextView;
     private HorizontalSlider progressBar;
     private View previousButton;
@@ -104,10 +104,10 @@ public class DownloadActivity extends SubsonicTabActivity {
 
         flipper = (ViewFlipper) findViewById(R.id.download_flipper);
         emptyTextView = (TextView) findViewById(R.id.download_empty);
-        albumArtTextView = (TextView) findViewById(R.id.download_album_art_text);
+        songTitleTextView = (TextView) findViewById(R.id.download_song_title);
+        albumTextView = (TextView) findViewById(R.id.download_album);
+        artistTextView = (TextView) findViewById(R.id.download_artist);
         albumArtImageView = (ImageView) findViewById(R.id.download_album_art_image);
-        positionTextView = (TextView) findViewById(R.id.download_position);
-        durationTextView = (TextView) findViewById(R.id.download_duration);
         statusTextView = (TextView) findViewById(R.id.download_status);
         progressBar = (HorizontalSlider) findViewById(R.id.download_progress_bar);
         playlistView = (ListView) findViewById(R.id.download_list);
@@ -478,10 +478,14 @@ public class DownloadActivity extends SubsonicTabActivity {
         currentPlaying = getDownloadService().getCurrentPlaying();
         if (currentPlaying != null) {
             MusicDirectory.Entry song = currentPlaying.getSong();
-            albumArtTextView.setText(song.getTitle() + " - " + song.getArtist());
+            songTitleTextView.setText(song.getTitle());
+            albumTextView.setText(song.getAlbum());
+            artistTextView.setText(song.getArtist());
             getImageLoader().loadImage(albumArtImageView, song, true);
         } else {
-            albumArtTextView.setText(null);
+            songTitleTextView.setText(null);
+            albumTextView.setText(null);
+            artistTextView.setText(null);
             getImageLoader().loadImage(albumArtImageView, null, true);
         }
     }
@@ -491,20 +495,20 @@ public class DownloadActivity extends SubsonicTabActivity {
             return;
         }
 
+        String positionString = null;
+        String durationString = null;
         if (currentPlaying != null) {
 
             int millisPlayed = Math.max(0, getDownloadService().getPlayerPosition());
             Integer duration = getDownloadService().getPlayerDuration();
             int millisTotal = duration == null ? 0 : duration;
 
-            positionTextView.setText(Util.formatDuration(millisPlayed / 1000));
-            durationTextView.setText(Util.formatDuration(millisTotal / 1000));
+            positionString = Util.formatDuration(millisPlayed / 1000);
+            durationString = Util.formatDuration(millisTotal / 1000);
             progressBar.setMax(millisTotal == 0 ? 100 : millisTotal); // Work-around for apparent bug.
             progressBar.setProgress(millisPlayed);
             progressBar.setSlidingEnabled(currentPlaying.isCompleteFileAvailable());
         } else {
-            positionTextView.setText("0:00");
-            durationTextView.setText("-:--");
             progressBar.setProgress(0);
             progressBar.setSlidingEnabled(false);
         }
@@ -519,14 +523,12 @@ public class DownloadActivity extends SubsonicTabActivity {
             case PREPARING:
                 statusTextView.setText(R.string.download_playerstate_buffering);
                 break;
-            case STARTED:
-                statusTextView.setText(getDownloadService().isShufflePlayEnabled() ? R.string.download_playerstate_playing_shuffle : R.string.download_playerstate_playing);
-                break;
-            case PAUSED:
-                statusTextView.setText(R.string.download_playerstate_paused);
-                break;
             default:
-                statusTextView.setText(null);
+                if (positionString != null) {
+                    statusTextView.setText(positionString + " / " + durationString);
+                } else {
+                    statusTextView.setText(null);
+                }
                 break;
         }
 
