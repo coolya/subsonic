@@ -11,7 +11,7 @@
                   a:layout_height="wrap_content"
                   a:layout_marginTop="0dip"
                   a:background="@color/mediaControlBackground"
-                  a:paddingTop="4dip"
+                  a:paddingTop="12dip"
                   a:paddingBottom="12dip">
         <ImageView
                 a:id="@+id/download_shuffle"
@@ -26,36 +26,32 @@
         <ImageView
                 a:id="@+id/download_previous"
                 a:src="@drawable/media_backward"
+                a:paddingRight="16dip"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:layout_gravity="center_vertical"/>
         <ImageView
                 a:id="@+id/download_pause"
                 a:src="@drawable/media_pause"
-                a:paddingLeft="12dip"
-                a:paddingRight="12dip"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:layout_gravity="center_vertical"/>
         <ImageView
                 a:id="@+id/download_stop"
                 a:src="@drawable/media_stop"
-                a:paddingLeft="12dip"
-                a:paddingRight="12dip"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:layout_gravity="center_vertical"/>
         <ImageView
                 a:id="@+id/download_start"
                 a:src="@drawable/media_start"
-                a:paddingLeft="12dip"
-                a:paddingRight="12dip"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:layout_gravity="center_vertical"/>
         <ImageView
                 a:id="@+id/download_next"
                 a:src="@drawable/media_forward"
+                a:paddingLeft="16dip"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:layout_gravity="center_vertical"/>
