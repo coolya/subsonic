@@ -5,7 +5,7 @@
              a:layout_height="fill_parent"
              a:layout_weight="1">
 
-    <LinearLayout a:orientation="vertical"
+    <RelativeLayout a:orientation="vertical"
                   a:layout_width="fill_parent"
                   a:layout_height="fill_parent"
                   a:layout_weight="1"
@@ -15,8 +15,9 @@
                 a:id="@+id/download_song_title"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
-                a:layout_marginBottom="10dip"
                 a:layout_gravity="center_horizontal"
+                a:layout_alignParentTop="true"
+                a:layout_centerHorizontal="true"
                 a:textAppearance="?android:attr/textAppearanceMedium"
                 a:textColor="@color/mediaControlForeground"/>
 
@@ -25,15 +26,15 @@
                 a:src="@drawable/unknown_album_large"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
-                a:layout_gravity="center"
+                a:layout_centerInParent="true"
                 a:scaleType="center"/>
 
         <TextView
                 a:id="@+id/download_artist"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
-                a:layout_marginBottom="10dip"
-                a:layout_gravity="center_horizontal"
+                a:layout_above="@+id/download_album"
+                a:layout_centerHorizontal="true"
                 a:textAppearance="?android:attr/textAppearanceMedium"
                 a:textColor="@color/mediaControlForeground"/>
 
@@ -41,8 +42,8 @@
                 a:id="@+id/download_album"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
-                a:layout_marginBottom="10dip"
-                a:layout_gravity="center_horizontal"
+                a:layout_above="@+id/download_status"
+                a:layout_centerHorizontal="true"
                 a:textAppearance="?android:attr/textAppearanceMedium"
                 a:textColor="@color/mediaControlForeground"/>
 
@@ -51,12 +52,13 @@
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:layout_marginBottom="10dip"
-                a:layout_gravity="center_horizontal"
+                a:layout_alignParentBottom="true"
+                a:layout_centerHorizontal="true"
                 a:textAppearance="?android:attr/textAppearanceMedium"
                 a:textColor="@color/mediaControlForeground"/>
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout a:orientation="vertical"
                   a:layout_width="fill_parent"
