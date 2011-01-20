@@ -13,9 +13,10 @@
                   a:background="@color/mediaControlBackground"
                   a:paddingTop="12dip"
                   a:paddingBottom="12dip">
-        <ImageView
+        <ImageButton
                 a:id="@+id/download_shuffle"
                 a:src="@drawable/media_shuffle"
+                a:background="@android:color/transparent"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"
                 a:layout_gravity="center_vertical"/>
@@ -23,34 +24,39 @@
                 a:layout_width="0dip"
                 a:layout_height="fill_parent"
                 a:layout_weight="1"/>
-        <ImageView
+        <ImageButton
                 a:id="@+id/download_previous"
                 a:src="@drawable/media_backward"
+                a:background="@android:color/transparent"
                 a:paddingRight="16dip"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:layout_gravity="center_vertical"/>
-        <ImageView
+        <ImageButton
                 a:id="@+id/download_pause"
                 a:src="@drawable/media_pause"
+                a:background="@android:color/transparent"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:layout_gravity="center_vertical"/>
-        <ImageView
+        <ImageButton
                 a:id="@+id/download_stop"
                 a:src="@drawable/media_stop"
+                a:background="@android:color/transparent"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:layout_gravity="center_vertical"/>
-        <ImageView
+        <ImageButton
                 a:id="@+id/download_start"
                 a:src="@drawable/media_start"
+                a:background="@android:color/transparent"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:layout_gravity="center_vertical"/>
-        <ImageView
+        <ImageButton
                 a:id="@+id/download_next"
                 a:src="@drawable/media_forward"
+                a:background="@android:color/transparent"
                 a:paddingLeft="16dip"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
@@ -59,9 +65,10 @@
                 a:layout_width="0dip"
                 a:layout_height="fill_parent"
                 a:layout_weight="1"/>
-        <ImageView
+        <ImageButton
                 a:id="@+id/download_toggle_list"
                 a:src="@drawable/media_toggle_list"
+                a:background="@android:color/transparent"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:layout_gravity="center_vertical"/>
