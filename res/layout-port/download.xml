@@ -15,7 +15,7 @@
                   a:paddingBottom="12dip">
         <ImageView
                 a:id="@+id/download_shuffle"
-                a:src="@drawable/media_toggle_list"
+                a:src="@drawable/media_shuffle"
                 a:layout_width="wrap_content"
                 a:layout_height="fill_parent"
                 a:layout_gravity="center_vertical"/>
@@ -69,7 +69,19 @@
 
     <include layout="@layout/download_slider"/>
 
-    <include layout="@layout/button_bar"/>
+    <net.sourceforge.subsonic.androidapp.util.MyViewFlipper
+            a:id="@+id/download_button_bar_flipper"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content">
+
+        <TextView
+                a:layout_width="fill_parent"
+                a:layout_height="wrap_content"
+                a:text="Hei sveis"/>
+
+        <include layout="@layout/button_bar"/>
+
+    </net.sourceforge.subsonic.androidapp.util.MyViewFlipper>
 
 </LinearLayout>
 

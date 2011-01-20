@@ -28,7 +28,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.ContextMenu;
@@ -72,7 +71,8 @@ public class DownloadActivity extends SubsonicTabActivity {
 
     private static final int DIALOG_SAVE_PLAYLIST = 100;
 
-    private ViewFlipper flipper;
+    private ViewFlipper playlistFlipper;
+    private ViewFlipper buttonBarFlipper;
     private TextView emptyTextView;
     private TextView songTitleTextView;
     private TextView albumTextView;
@@ -91,7 +91,6 @@ public class DownloadActivity extends SubsonicTabActivity {
     private DownloadFile currentPlaying;
     private long currentRevision;
     private EditText playlistNameView;
-    private View buttonBar;
 
     /**
     * Called when the activity is first created.
@@ -103,7 +102,8 @@ public class DownloadActivity extends SubsonicTabActivity {
 
         setContentView(R.layout.download);
 
-        flipper = (ViewFlipper) findViewById(R.id.download_flipper);
+        playlistFlipper = (ViewFlipper) findViewById(R.id.download_flipper);
+        buttonBarFlipper = (ViewFlipper) findViewById(R.id.download_button_bar_flipper);
         emptyTextView = (TextView) findViewById(R.id.download_empty);
         songTitleTextView = (TextView) findViewById(R.id.download_song_title);
         albumTextView = (TextView) findViewById(R.id.download_album);
@@ -118,7 +118,6 @@ public class DownloadActivity extends SubsonicTabActivity {
         stopButton = findViewById(R.id.download_stop);
         startButton = findViewById(R.id.download_start);
         toggleListButton = findViewById(R.id.download_toggle_list);
-        buttonBar = findViewById(R.id.button_bar);
 
         // TODO
 //        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -222,9 +221,8 @@ public class DownloadActivity extends SubsonicTabActivity {
         executorService.scheduleWithFixedDelay(runnable, 0L, 1000L, TimeUnit.MILLISECONDS);
 
         if (getDownloadService() == null || getDownloadService().getCurrentPlaying() == null) {
-            flipper.setDisplayedChild(1);
-        } else {
-            buttonBar.setVisibility(View.GONE);
+            playlistFlipper.setDisplayedChild(1);
+            buttonBarFlipper.setDisplayedChild(1);
         }
 
         onDownloadListChanged();
@@ -435,16 +433,22 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void toggleFullscreenAlbumArt() {
-        if (flipper.getDisplayedChild() == 1) {
-            flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_in));
-            flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_out));
-            flipper.setDisplayedChild(0);
-            buttonBar.setVisibility(View.GONE);
+        if (playlistFlipper.getDisplayedChild() == 1) {
+            playlistFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_in));
+            playlistFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_out));
+            playlistFlipper.setDisplayedChild(0);
+            buttonBarFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_in));
+            buttonBarFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_out));
+            buttonBarFlipper.setDisplayedChild(0);
+
+
         } else {
-            flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_up_in));
-            flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_up_out));
-            flipper.setDisplayedChild(1);
-            buttonBar.setVisibility(View.VISIBLE);
+            playlistFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_up_in));
+            playlistFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_up_out));
+            playlistFlipper.setDisplayedChild(1);
+            buttonBarFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_up_in));
+            buttonBarFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_up_out));
+            buttonBarFlipper.setDisplayedChild(1);
         }
     }
 
