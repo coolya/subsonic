@@ -44,7 +44,9 @@ Fancier player controls
   Create button images for selected and focused.
   Shuffle button
   Animation
+  Play buttons in widget and selectalbumactivity broken.
   Nice background image behind album art.
+  Wrong cover art size
   Create reflection
     http://www.inter-fuser.com/2009/12/android-reflections-with-bitmaps.html
     http://www.jhlabs.com/java/java2d/reflections/index.html
