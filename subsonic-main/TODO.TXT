@@ -44,6 +44,7 @@ Fancier player controls
   Create button images for selected and focused.
   Shuffle button
   Animation
+  Nice background image behind album art.
   Create reflection
     http://www.inter-fuser.com/2009/12/android-reflections-with-bitmaps.html
     http://www.jhlabs.com/java/java2d/reflections/index.html
