@@ -20,8 +20,8 @@
                 a:layout_centerHorizontal="true"
                 a:layout_marginLeft="8dip"
                 a:layout_marginRight="8dip"
-                a:layout_marginTop="12dip"
-                a:layout_marginBottom="12dip"
+                a:layout_marginTop="16dip"
+                a:layout_marginBottom="16dip"
                 a:singleLine="true"
                 a:ellipsize="end"
                 a:textAppearance="?android:attr/textAppearanceMedium"
@@ -35,32 +35,6 @@
                 a:layout_centerHorizontal="true"
                 a:layout_below="@+id/download_song_title"
                 a:scaleType="center"/>
-
-        <TextView
-                a:id="@+id/download_artist"
-                a:layout_width="wrap_content"
-                a:layout_height="wrap_content"
-                a:layout_above="@+id/download_album"
-                a:layout_centerHorizontal="true"
-                a:layout_marginLeft="8dip"
-                a:layout_marginRight="8dip"
-                a:singleLine="true"
-                a:ellipsize="end"
-                a:textAppearance="?android:attr/textAppearanceMedium"
-                a:textColor="@color/mediaControlForeground"/>
-
-        <TextView
-                a:id="@+id/download_album"
-                a:layout_width="wrap_content"
-                a:layout_height="wrap_content"
-                a:layout_above="@+id/download_status"
-                a:layout_centerHorizontal="true"
-                a:layout_marginLeft="8dip"
-                a:layout_marginRight="8dip"
-                a:singleLine="true"
-                a:ellipsize="end"
-                a:textAppearance="?android:attr/textAppearanceSmall"
-                a:textColor="@color/mediaControlForeground"/>
 
         <TextView
                 a:id="@+id/download_status"
