@@ -539,7 +539,11 @@ public class DownloadActivity extends SubsonicTabActivity {
                 statusTextView.setText(R.string.download_playerstate_buffering);
                 break;
             case STARTED:
-                statusTextView.setText(getDownloadService().isShufflePlayEnabled() ? R.string.download_playerstate_playing_shuffle : 0);
+                if (getDownloadService().isShufflePlayEnabled()) {
+                    statusTextView.setText(R.string.download_playerstate_playing_shuffle);
+                } else {
+                    statusTextView.setText(null);
+                }
                 break;
             default:
                 statusTextView.setText(null);

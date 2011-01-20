@@ -9,7 +9,7 @@
                   a:layout_width="fill_parent"
                   a:layout_height="fill_parent"
                   a:layout_weight="1"
-                  a:background="@android:color/black">
+                  a:background="@drawable/album_art_background">
 
         <TextView
                 a:id="@+id/download_song_title"
