@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="New document 1">
+  <defs
+     id="defs4">
+    <radialGradient
+       spreadMethod="pad"
+       gradientUnits="objectBoundingBox"
+       r="0.71423900"
+       fy="0.48700377"
+       fx="0.49386612"
+       cy="0.48700377"
+       cx="0.49386612"
+       id="radialGradient489"
+       xlink:href="#linearGradient496" />
+    <radialGradient
+       spreadMethod="pad"
+       gradientUnits="objectBoundingBox"
+       r="0.43075046"
+       fy="0.78906250"
+       fx="0.20155039"
+       cy="0.57031250"
+       cx="0.41860467"
+       id="radialGradient484"
+       xlink:href="#linearGradient485" />
+    <radialGradient
+       spreadMethod="pad"
+       gradientUnits="objectBoundingBox"
+       r="0.66683644"
+       fy="0.50000000"
+       fx="0.53846157"
+       cy="0.50000000"
+       cx="0.53846157"
+       id="radialGradient480"
+       xlink:href="#linearGradient477" />
+    <linearGradient
+       id="linearGradient477">
+      <stop
+         id="stop478"
+         offset="0"
+         style="stop-color:#b6b6b6;stop-opacity:1;" />
+      <stop
+         id="stop479"
+         offset="1"
+         style="stop-color:#000000;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient485">
+      <stop
+         id="stop486"
+         offset="0.000000"
+         style="stop-color:#ff5200;stop-opacity:1;" />
+      <stop
+         id="stop487"
+         offset="1.000000"
+         style="stop-color:#720000;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient496">
+      <stop
+         id="stop497"
+         offset="0.000000"
+         style="stop-color:#ffff7f;stop-opacity:0.658824;" />
+      <stop
+         id="stop498"
+         offset="1.000000"
+         style="stop-color:#ffff7f;stop-opacity:0;" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient477"
+       id="radialGradient3929"
+       cx="336.71359"
+       cy="408.95966"
+       fx="336.71359"
+       fy="408.95966"
+       r="305.71429"
+       gradientTransform="matrix(0.98479166,-0.01293889,0.01263645,0.97649146,39.748551,111.67277)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="566.57083"
+     inkscape:cy="494.49248"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1257"
+     inkscape:window-height="789"
+     inkscape:window-x="2208"
+     inkscape:window-y="250"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:url(#radialGradient3929);fill-opacity:1;fill-rule:evenodd;stroke:none"
+       id="rect3153"
+       width="611.42859"
+       height="591.75055"
+       x="70.304573"
+       y="211.78787"
+       inkscape:export-filename="I:\projects\subsonic\subsonic-android\res\drawable\album_art_background.png"
+       inkscape:export-xdpi="70.650002"
+       inkscape:export-ydpi="70.650002" />
+  </g>
+</svg>
