@@ -39,20 +39,12 @@ Persist playlist after shuffle.
 TODO IN ANDROID 2.5
 -------------------
 Fancier player controls
-  Improve button images
+  Create hdpi images
+  Automatically show album art when clicking on a song row.
   Use margin or whatever to make clickable button area bigger.
-  Create button images for selected and focused.
-  Shuffle button
-  Animation
+  Make Shuffle button work
   Play buttons in widget and selectalbumactivity broken.
-  Nice background image behind album art.
-  Wrong cover art size
-  Create reflection
-    http://www.inter-fuser.com/2009/12/android-reflections-with-bitmaps.html
-    http://www.jhlabs.com/java/java2d/reflections/index.html
-    http://stackoverflow.com/questions/2928101/android-using-linear-gradient-as-background-looks-banded
-  Avoid color banding
-    http://stuffthathappens.com/blog/2010/06/04/android-color-banding/
+  Wrong default cover art size
   http://powerampapp.com/wp-content/themes/poweramp/images/big/theme-matte-metal-1.jpg
   http://development.piratemedia.tv/2010-07-19-music-mod-1-8-froyo-only/
   http://www.clker.com/clipart-play-audio-button-set.html

@@ -123,7 +123,7 @@
                     a:singleLine="true"
                     a:ellipsize="end"
                     a:textAppearance="?android:attr/textAppearanceSmall"
-                    a:textColor="@color/mediaControlForeground"/>
+                    a:textColor="#c0c0c0"/>
             <TextView
                     a:id="@+id/download_album"
                     a:layout_width="wrap_content"
@@ -133,7 +133,7 @@
                     a:singleLine="true"
                     a:ellipsize="end"
                     a:textAppearance="?android:attr/textAppearanceSmall"
-                    a:textColor="@color/mediaControlForeground"/>
+                    a:textColor="#c0c0c0"/>
         </RelativeLayout>
 
         <include layout="@layout/button_bar"/>

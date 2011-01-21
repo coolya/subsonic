@@ -28,6 +28,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.ContextMenu;
@@ -235,8 +236,14 @@ public class DownloadActivity extends SubsonicTabActivity {
         scrollToCurrent();
     }
 
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Window window = getWindow();
+        window.setFormat(PixelFormat.RGBA_8888);
+    }
+    
     // Scroll to current playing/downloading.
-
     private void scrollToCurrent() {
         if (getDownloadService() == null) {
             return;
