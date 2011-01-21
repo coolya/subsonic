@@ -11,41 +11,39 @@
                   a:layout_weight="1"
                   a:background="@drawable/album_art_background">
 
-        <TextView
-                a:id="@+id/download_song_title"
-                a:layout_width="wrap_content"
-                a:layout_height="wrap_content"
-                a:layout_gravity="center_horizontal"
-                a:layout_alignParentTop="true"
-                a:layout_centerHorizontal="true"
-                a:layout_marginLeft="8dip"
-                a:layout_marginRight="8dip"
-                a:layout_marginTop="10dip"
-                a:layout_marginBottom="10dip"
-                a:singleLine="true"
-                a:ellipsize="end"
-                a:textAppearance="?android:attr/textAppearanceMedium"
-                a:textColor="@color/mediaControlForeground"/>
-
         <ImageView
                 a:id="@+id/download_album_art_image"
                 a:src="@drawable/unknown_album_large"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:layout_centerHorizontal="true"
-                a:layout_below="@+id/download_song_title"
+                a:layout_alignParentTop="true"
+                a:layout_marginTop="24dip"
                 a:scaleType="center"/>
 
         <TextView
                 a:id="@+id/download_status"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
-                a:layout_marginBottom="10dip"
                 a:layout_alignParentBottom="true"
                 a:layout_centerHorizontal="true"
                 a:singleLine="true"
                 a:ellipsize="end"
                 a:textAppearance="?android:attr/textAppearanceSmall"
+                a:textColor="@color/mediaControlForeground"/>
+
+        <TextView
+                a:id="@+id/download_song_title"
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content"
+                a:layout_gravity="center_horizontal"
+                a:layout_above="@+id/download_status"
+                a:layout_centerHorizontal="true"
+                a:layout_marginLeft="16dip"
+                a:layout_marginRight="16dip"
+                a:singleLine="true"
+                a:ellipsize="end"
+                a:textAppearance="?android:attr/textAppearanceMedium"
                 a:textColor="@color/mediaControlForeground"/>
 
     </RelativeLayout>
