@@ -39,9 +39,10 @@ Persist playlist after shuffle.
 TODO IN ANDROID 2.5
 -------------------
 Fancier player controls
-  Create hdpi images
   Automatically show album art when clicking on a song row.
   Use margin or whatever to make clickable button area bigger.
+  Test on small screens (create separate icons if necessary)
+  Landscape mode.
   Make Shuffle button work
   Play buttons in widget and selectalbumactivity broken.
   Wrong default cover art size

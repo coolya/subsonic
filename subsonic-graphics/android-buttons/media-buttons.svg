@@ -14,7 +14,7 @@
    height="50.308388"
    id="svg9553"
    sodipodi:version="0.32"
-   inkscape:version="0.47 r22583"
+   inkscape:version="0.48.0 r9654"
    version="1.0"
    sodipodi:docname="media-buttons.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
@@ -3029,15 +3029,15 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="254.63983"
-     inkscape:cy="88.825933"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="337.32435"
+     inkscape:cy="-36.425562"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     inkscape:window-width="1440"
-     inkscape:window-height="852"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1174"
+     inkscape:window-x="1916"
+     inkscape:window-y="-4"
      showgrid="false"
      inkscape:window-maximized="1" />
   <metadata
@@ -3062,8 +3062,8 @@
        id="rect5294"
        width="530.38153"
        height="309.6069"
-       x="-169.02467"
-       y="194.86761"
+       x="-180.68065"
+       y="190.25595"
        ry="11.152792" />
     <g
        id="Play"
@@ -3281,7 +3281,7 @@
     </g>
     <g
        id="g7411"
-       transform="translate(-139.62963,-45.31008)">
+       transform="translate(194.12477,-294.21167)">
       <g
          transform="translate(0,-50)"
          style="opacity:0.5"
@@ -3341,8 +3341,8 @@
          sodipodi:type="inkscape:offset" />
     </g>
     <image
-       y="-190.51971"
-       x="-186.19116"
+       y="-365.8822"
+       x="79.680984"
        id="image7139"
        xlink:href="data:image/png;base64,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 "
        height="72"
@@ -3350,9 +3350,9 @@
     <g
        id="g4851"
        transform="translate(-1.3137085,1.06066)"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_shuffle_normal.png"
-       inkscape:export-xdpi="39.509998"
-       inkscape:export-ydpi="39.509998">
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_shuffle_normal.png"
+       inkscape:export-xdpi="59.27"
+       inkscape:export-ydpi="59.27">
       <g
          inkscape:export-ydpi="43.58292"
          inkscape:export-xdpi="43.58292"
@@ -3381,9 +3381,9 @@
     <g
        id="g4840"
        transform="translate(-80.180194,-125.99569)"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_toggle_list_normal.png"
-       inkscape:export-xdpi="39.509998"
-       inkscape:export-ydpi="39.509998">
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_toggle_list_normal.png"
+       inkscape:export-xdpi="59.268303"
+       inkscape:export-ydpi="59.268303">
       <rect
          inkscape:export-ydpi="58.551075"
          inkscape:export-xdpi="58.551075"
@@ -3426,13 +3426,13 @@
        x="24.216793"
        y="-137.45193"
        ry="0"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_shuffle_normal.png"
-       inkscape:export-xdpi="39.509998"
-       inkscape:export-ydpi="39.509998" />
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_shuffle_normal.png"
+       inkscape:export-xdpi="59.27"
+       inkscape:export-ydpi="59.27" />
     <rect
-       inkscape:export-ydpi="39.509998"
-       inkscape:export-xdpi="39.509998"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_toggle_list_normal.png"
+       inkscape:export-ydpi="59.268303"
+       inkscape:export-xdpi="59.268303"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_toggle_list_normal.png"
        ry="0"
        y="-264.95193"
        x="26.216797"
@@ -3441,9 +3441,9 @@
        id="rect4894"
        style="fill:none;stroke:#000000;stroke-width:1.04934024999999997;stroke-opacity:1" />
     <g
-       inkscape:export-ydpi="39.509998"
-       inkscape:export-xdpi="39.509998"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_shuffle_pressed.png"
+       inkscape:export-ydpi="59.27"
+       inkscape:export-xdpi="59.27"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_shuffle_pressed.png"
        transform="translate(132.85817,2.43934)"
        id="g6625"
        style="fill:#3fffff;fill-opacity:1">
@@ -3473,9 +3473,9 @@
       </g>
     </g>
     <rect
-       inkscape:export-ydpi="39.509998"
-       inkscape:export-xdpi="39.509998"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_shuffle_pressed.png"
+       inkscape:export-ydpi="59.27"
+       inkscape:export-xdpi="59.27"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_shuffle_pressed.png"
        ry="0"
        y="-136.07326"
        x="158.38867"
@@ -3580,9 +3580,9 @@
       </g>
     </g>
     <g
-       inkscape:export-ydpi="39.509998"
-       inkscape:export-xdpi="39.509998"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_toggle_list_pressed.png"
+       inkscape:export-ydpi="59.268291"
+       inkscape:export-xdpi="59.268291"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_toggle_list_pressed.png"
        transform="translate(51.31981,-130.49569)"
        id="g7159"
        style="fill:#3fffff;fill-opacity:1">
@@ -3628,9 +3628,9 @@
        x="157.7168"
        y="-269.45193"
        ry="0"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_toggle_list_pressed.png"
-       inkscape:export-xdpi="39.509998"
-       inkscape:export-ydpi="39.509998" />
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_toggle_list_pressed.png"
+       inkscape:export-xdpi="59.268291"
+       inkscape:export-ydpi="59.268291" />
     <g
        style="fill:#3fffff;fill-opacity:1;filter:url(#filter7199)"
        id="g7175"
@@ -3854,7 +3854,7 @@
        sodipodi:end="6.2625697"
        sodipodi:start="0"
        transform="matrix(0.75550452,0,0,0.75422299,-518.8634,138.50097)"
-       d="m 566.74606,-39.409218 a 35.708893,35.708893 0 1 1 -0.008,-0.736108"
+       d="m 566.74606,-39.409218 c 0,19.721477 -15.98741,35.708893 -35.70889,35.708893 -19.72148,0 -35.70889,-15.987416 -35.70889,-35.708893 0,-19.721477 15.98741,-35.708893 35.70889,-35.708893 19.4346,0 35.30068,15.542316 35.70131,34.972785"
        sodipodi:ry="35.708893"
        sodipodi:rx="35.708893"
        sodipodi:cy="-39.409218"
@@ -3866,9 +3866,9 @@
        inkscape:label="Play"
        transform="matrix(0.6775498,0,0,0.6764005,-443.66465,220.16858)"
        id="g4168"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_start_normal.png"
-       inkscape:export-xdpi="116.34"
-       inkscape:export-ydpi="116.34">
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_start_normal.png"
+       inkscape:export-xdpi="174.50999"
+       inkscape:export-ydpi="174.50999">
       <path
          sodipodi:type="arc"
          style="fill:url(#radialGradient4190);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient4192);stroke-width:2.95431924;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
@@ -3917,9 +3917,9 @@
        x="-152.02974"
        y="74.410309"
        ry="0"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_start_normal.png"
-       inkscape:export-xdpi="116.34"
-       inkscape:export-ydpi="116.34" />
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_start_normal.png"
+       inkscape:export-xdpi="174.50999"
+       inkscape:export-ydpi="174.50999" />
     <path
        sodipodi:type="arc"
        style="fill:#ccffff;fill-opacity:1;fill-rule:nonzero;stroke:none;filter:url(#filter4298)"
@@ -3928,15 +3928,15 @@
        sodipodi:cy="-39.409218"
        sodipodi:rx="35.708893"
        sodipodi:ry="35.708893"
-       d="m 566.74606,-39.409218 a 35.708893,35.708893 0 1 1 -0.008,-0.736108"
+       d="m 566.74606,-39.409218 c 0,19.721477 -15.98741,35.708893 -35.70889,35.708893 -19.72148,0 -35.70889,-15.987416 -35.70889,-35.708893 0,-19.721477 15.98741,-35.708893 35.70889,-35.708893 19.4346,0 35.30068,15.542316 35.70131,34.972785"
        transform="matrix(0.84843717,0,0,0.846998,-567.50698,227.36353)"
        sodipodi:start="0"
        sodipodi:end="6.2625697"
        sodipodi:open="true" />
     <g
-       inkscape:export-ydpi="116.34"
-       inkscape:export-xdpi="116.34"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_start_pressed.png"
+       inkscape:export-ydpi="174.50999"
+       inkscape:export-xdpi="174.50999"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_start_pressed.png"
        id="g4230"
        transform="matrix(0.6775498,0,0,0.6764005,-442.95754,305.37494)"
        inkscape:label="Play">
@@ -3981,9 +3981,9 @@
          style="fill:url(#linearGradient4252);fill-opacity:1;fill-rule:nonzero;stroke:none" />
     </g>
     <rect
-       inkscape:export-ydpi="116.34"
-       inkscape:export-xdpi="116.34"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_start_pressed.png"
+       inkscape:export-ydpi="174.50999"
+       inkscape:export-xdpi="174.50999"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_start_pressed.png"
        ry="0"
        y="159.61667"
        x="-151.32262"
@@ -3992,9 +3992,9 @@
        id="rect4244"
        style="fill:none;stroke:#000000;stroke-width:0.89098752;stroke-opacity:1" />
     <rect
-       inkscape:export-ydpi="116.34"
-       inkscape:export-xdpi="116.34"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_start_normal.png"
+       inkscape:export-ydpi="174.50999"
+       inkscape:export-xdpi="174.50999"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_start_normal.png"
        ry="0"
        y="74.410309"
        x="-152.02974"
@@ -4010,15 +4010,15 @@
        sodipodi:cy="-39.409218"
        sodipodi:rx="35.708893"
        sodipodi:ry="35.708893"
-       d="m 566.74606,-39.409218 a 35.708893,35.708893 0 1 1 -0.008,-0.736108"
+       d="m 566.74606,-39.409218 c 0,19.721477 -15.98741,35.708893 -35.70889,35.708893 -19.72148,0 -35.70889,-15.987416 -35.70889,-35.708893 0,-19.721477 15.98741,-35.708893 35.70889,-35.708893 19.4346,0 35.30068,15.542316 35.70131,34.972785"
        transform="matrix(0.75550452,0,0,0.75422299,-190.43211,129.79387)"
        sodipodi:start="0"
        sodipodi:end="6.2625697"
        sodipodi:open="true" />
     <rect
-       inkscape:export-ydpi="90.480003"
-       inkscape:export-xdpi="90.480003"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_forward_normal.png"
+       inkscape:export-ydpi="116.34"
+       inkscape:export-xdpi="116.34"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_forward_normal.png"
        ry="0"
        y="65.703201"
        x="176.40157"
@@ -4034,14 +4034,14 @@
        x="176.40157"
        y="65.703201"
        ry="0"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_forward_normal.png"
-       inkscape:export-xdpi="90.480003"
-       inkscape:export-ydpi="90.480003" />
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_forward_normal.png"
+       inkscape:export-xdpi="116.34"
+       inkscape:export-ydpi="116.34" />
     <g
        inkscape:label="Next"
-       inkscape:export-ydpi="90.480003"
-       inkscape:export-xdpi="90.480003"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_forward_normal.png"
+       inkscape:export-ydpi="116.34"
+       inkscape:export-xdpi="116.34"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_forward_normal.png"
        transform="matrix(1.4667816,0,0,1.4667816,94.727336,-22.321813)"
        id="g4302">
       <path
@@ -4083,7 +4083,7 @@
        sodipodi:end="6.2625697"
        sodipodi:start="0"
        transform="matrix(0.84843717,0,0,0.846998,-239.40943,226.4346)"
-       d="m 566.74606,-39.409218 a 35.708893,35.708893 0 1 1 -0.008,-0.736108"
+       d="m 566.74606,-39.409218 c 0,19.721477 -15.98741,35.708893 -35.70889,35.708893 -19.72148,0 -35.70889,-15.987416 -35.70889,-35.708893 0,-19.721477 15.98741,-35.708893 35.70889,-35.708893 19.4346,0 35.30068,15.542316 35.70131,34.972785"
        sodipodi:ry="35.708893"
        sodipodi:rx="35.708893"
        sodipodi:cy="-39.409218"
@@ -4099,15 +4099,15 @@
        x="176.77492"
        y="158.68773"
        ry="0"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_forward_pressed.png"
-       inkscape:export-xdpi="90.480003"
-       inkscape:export-ydpi="90.480003" />
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_forward_pressed.png"
+       inkscape:export-xdpi="116.34"
+       inkscape:export-ydpi="116.34" />
     <g
        id="g4472"
        transform="matrix(1.4667816,0,0,1.4667816,95.100716,70.662724)"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_forward_pressed.png"
-       inkscape:export-xdpi="90.480003"
-       inkscape:export-ydpi="90.480003"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_forward_pressed.png"
+       inkscape:export-xdpi="116.34"
+       inkscape:export-ydpi="116.34"
        inkscape:label="Next">
       <path
          sodipodi:type="arc"
@@ -4147,7 +4147,7 @@
        xml:space="preserve"
        id="flowRoot4492"
        style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
-       transform="translate(306.92393,-213.29466)"><flowRegion
+       transform="translate(-479.37881,-316.53225)"><flowRegion
          id="flowRegion4494"><rect
            id="rect4496"
            width="346.4823"
@@ -4156,9 +4156,9 @@
            y="93.441902"
            style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans" /></flowRegion><flowPara
          id="flowPara4548">Only select content within black square when exporting bitmaps.</flowPara><flowPara
-         id="flowPara4514">shuffle, toggle: 36x36 (mdpi)</flowPara><flowPara
-         id="flowPara4560">start, stop, pause:  90x90 (mdpi)</flowPara><flowPara
-         id="flowPara4556">backward, forward: 60x60 (mdpi)</flowPara></flowRoot>    <flowRoot
+         id="flowPara4514">shuffle, toggle: 36x36 (mdpi), 54x54 (hdpi)</flowPara><flowPara
+         id="flowPara4560">start, stop, pause:  90x90 (mdpi), 135x135 (hdpi)</flowPara><flowPara
+         id="flowPara4556">backward, forward: 60x60 (mdpi), 90x90 (hdpi)</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4500"
        style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:40px"><flowRegion
@@ -4168,7 +4168,7 @@
            height="62.932503"
            x="128.69344"
            y="107.58404" /></flowRegion><flowPara
-         id="flowPara4506"></flowPara></flowRoot>    <text
+         id="flowPara4506" /></flowRoot>    <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
        x="707.8139"
@@ -4176,13 +4176,13 @@
        id="text4542"
        transform="translate(-152.69548,-4.5768367)"><tspan
          sodipodi:role="line"
-         id="tspan4544"></tspan></text>
+         id="tspan4544" /></text>
     <path
        sodipodi:open="true"
        sodipodi:end="6.2625697"
        sodipodi:start="0"
        transform="matrix(0.75550452,0,0,0.75422299,-94.125866,125.96113)"
-       d="m 566.74606,-39.409218 a 35.708893,35.708893 0 1 1 -0.008,-0.736108"
+       d="m 566.74606,-39.409218 c 0,19.721477 -15.98741,35.708893 -35.70889,35.708893 -19.72148,0 -35.70889,-15.987416 -35.70889,-35.708893 0,-19.721477 15.98741,-35.708893 35.70889,-35.708893 19.4346,0 35.30068,15.542316 35.70131,34.972785"
        sodipodi:ry="35.708893"
        sodipodi:rx="35.708893"
        sodipodi:cy="-39.409218"
@@ -4198,13 +4198,13 @@
        x="272.70779"
        y="61.870461"
        ry="0"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_backward_normal.png"
-       inkscape:export-xdpi="77.809998"
-       inkscape:export-ydpi="77.809998" />
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_backward_normal.png"
+       inkscape:export-xdpi="116.34"
+       inkscape:export-ydpi="116.34" />
     <rect
-       inkscape:export-ydpi="77.809998"
-       inkscape:export-xdpi="77.809998"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_backward_normal.png"
+       inkscape:export-ydpi="116.34"
+       inkscape:export-xdpi="116.34"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_backward_normal.png"
        ry="0"
        y="61.870461"
        x="272.70779"
@@ -4220,7 +4220,7 @@
        sodipodi:cy="-39.409218"
        sodipodi:rx="35.708893"
        sodipodi:ry="35.708893"
-       d="m 566.74606,-39.409218 a 35.708893,35.708893 0 1 1 -0.008,-0.736108"
+       d="m 566.74606,-39.409218 c 0,19.721477 -15.98741,35.708893 -35.70889,35.708893 -19.72148,0 -35.70889,-15.987416 -35.70889,-35.708893 0,-19.721477 15.98741,-35.708893 35.70889,-35.708893 19.4346,0 35.30068,15.542316 35.70131,34.972785"
        transform="matrix(0.84843717,0,0,0.846998,-147.0121,226.49095)"
        sodipodi:start="0"
        sodipodi:end="6.2625697"
@@ -4229,9 +4229,9 @@
        inkscape:export-xdpi="69.589996"
        inkscape:export-ydpi="69.589996" />
     <rect
-       inkscape:export-ydpi="69.589996"
-       inkscape:export-xdpi="69.589996"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_backward_pressed.png"
+       inkscape:export-ydpi="116.34"
+       inkscape:export-xdpi="116.34"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_backward_pressed.png"
        ry="0"
        y="158.74408"
        x="269.17227"
@@ -4241,9 +4241,9 @@
        style="fill:none;stroke:#000000;stroke-width:0.89098752;stroke-opacity:1" />
     <g
        inkscape:label="Previous"
-       inkscape:export-ydpi="77.809998"
-       inkscape:export-xdpi="77.809998"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_backward_normal.png"
+       inkscape:export-ydpi="116.34"
+       inkscape:export-xdpi="116.34"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_backward_normal.png"
        transform="matrix(1.4667816,0,0,1.4667816,191.03359,-26.154554)"
        id="g4751">
       <path
@@ -4282,9 +4282,9 @@
     <g
        id="g4772"
        transform="matrix(1.4667816,0,0,1.4667816,187.49806,70.719075)"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_backward_pressed.png"
-       inkscape:export-xdpi="69.589996"
-       inkscape:export-ydpi="69.589996"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_backward_pressed.png"
+       inkscape:export-xdpi="116.34"
+       inkscape:export-ydpi="116.34"
        inkscape:label="Previous">
       <path
          sodipodi:type="arc"
@@ -4327,15 +4327,15 @@
        sodipodi:cy="-39.409218"
        sodipodi:rx="35.708893"
        sodipodi:ry="35.708893"
-       d="m 566.74606,-39.409218 a 35.708893,35.708893 0 1 1 -0.008,-0.736108"
+       d="m 566.74606,-39.409218 c 0,19.721477 -15.98741,35.708893 -35.70889,35.708893 -19.72148,0 -35.70889,-15.987416 -35.70889,-35.708893 0,-19.721477 15.98741,-35.708893 35.70889,-35.708893 19.4346,0 35.30068,15.542316 35.70131,34.972785"
        transform="matrix(0.75550452,0,0,0.75422299,-407.19005,135.15351)"
        sodipodi:start="0"
        sodipodi:end="6.2625697"
        sodipodi:open="true" />
     <rect
-       inkscape:export-ydpi="116.34"
-       inkscape:export-xdpi="116.34"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_pause_normal.png"
+       inkscape:export-ydpi="174.50999"
+       inkscape:export-xdpi="174.50999"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_pause_normal.png"
        ry="0"
        y="71.062843"
        x="-40.356388"
@@ -4348,7 +4348,7 @@
        sodipodi:end="6.2625697"
        sodipodi:start="0"
        transform="matrix(0.84843717,0,0,0.846998,-455.12653,226.49094)"
-       d="m 566.74606,-39.409218 a 35.708893,35.708893 0 1 1 -0.008,-0.736108"
+       d="m 566.74606,-39.409218 c 0,19.721477 -15.98741,35.708893 -35.70889,35.708893 -19.72148,0 -35.70889,-15.987416 -35.70889,-35.708893 0,-19.721477 15.98741,-35.708893 35.70889,-35.708893 19.4346,0 35.30068,15.542316 35.70131,34.972785"
        sodipodi:ry="35.708893"
        sodipodi:rx="35.708893"
        sodipodi:cy="-39.409218"
@@ -4364,9 +4364,9 @@
        x="-38.942181"
        y="158.74408"
        ry="0"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_pause_pressed.png"
-       inkscape:export-xdpi="116.34"
-       inkscape:export-ydpi="116.34" />
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_pause_pressed.png"
+       inkscape:export-xdpi="174.50999"
+       inkscape:export-ydpi="174.50999" />
     <rect
        style="fill:none;stroke:#000000;stroke-width:0.89098752;stroke-opacity:1"
        id="rect4828"
@@ -4375,16 +4375,16 @@
        x="-40.356388"
        y="71.062843"
        ry="0"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_pause_normal.png"
-       inkscape:export-xdpi="116.34"
-       inkscape:export-ydpi="116.34" />
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_pause_normal.png"
+       inkscape:export-xdpi="174.50999"
+       inkscape:export-ydpi="174.50999" />
     <g
        inkscape:label="Pause"
        transform="matrix(1.1267673,0,0,1.1286805,-613.84863,317.9845)"
        id="g4887"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_pause_normal.png"
-       inkscape:export-xdpi="116.34"
-       inkscape:export-ydpi="116.34">
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_pause_normal.png"
+       inkscape:export-xdpi="174.50999"
+       inkscape:export-ydpi="174.50999">
       <path
          sodipodi:open="true"
          sodipodi:end="6.2625697"
@@ -4427,9 +4427,9 @@
        id="g4907"
        transform="matrix(1.1267673,0,0,1.1286805,-612.43442,405.66574)"
        inkscape:label="Pause"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_pause_pressed.png"
-       inkscape:export-xdpi="116.34"
-       inkscape:export-ydpi="116.34">
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_pause_pressed.png"
+       inkscape:export-xdpi="174.50999"
+       inkscape:export-ydpi="174.50999">
       <path
          sodipodi:type="arc"
          style="fill:url(#radialGradient4919);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient4921);stroke-width:2.95674324;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
@@ -4476,15 +4476,15 @@
        sodipodi:cy="-39.409218"
        sodipodi:rx="35.708893"
        sodipodi:ry="35.708893"
-       d="m 566.74606,-39.409218 a 35.708893,35.708893 0 1 1 -0.008,-0.736108"
+       d="m 566.74606,-39.409218 c 0,19.721477 -15.98741,35.708893 -35.70889,35.708893 -19.72148,0 -35.70889,-15.987416 -35.70889,-35.708893 0,-19.721477 15.98741,-35.708893 35.70889,-35.708893 19.4346,0 35.30068,15.542316 35.70131,34.972785"
        transform="matrix(0.75550452,0,0,0.75422299,-295.02156,134.44641)"
        sodipodi:start="0"
        sodipodi:end="6.2625697"
        sodipodi:open="true" />
     <rect
-       inkscape:export-ydpi="116.34"
-       inkscape:export-xdpi="116.34"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_stop_normal.png"
+       inkscape:export-ydpi="174.50999"
+       inkscape:export-xdpi="174.50999"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_stop_normal.png"
        ry="0"
        y="70.355743"
        x="71.812096"
@@ -4497,7 +4497,7 @@
        sodipodi:end="6.2625697"
        sodipodi:start="0"
        transform="matrix(0.84843717,0,0,0.846998,-343.66515,220.83409)"
-       d="m 566.74606,-39.409218 a 35.708893,35.708893 0 1 1 -0.008,-0.736108"
+       d="m 566.74606,-39.409218 c 0,19.721477 -15.98741,35.708893 -35.70889,35.708893 -19.72148,0 -35.70889,-15.987416 -35.70889,-35.708893 0,-19.721477 15.98741,-35.708893 35.70889,-35.708893 19.4346,0 35.30068,15.542316 35.70131,34.972785"
        sodipodi:ry="35.708893"
        sodipodi:rx="35.708893"
        sodipodi:cy="-39.409218"
@@ -4513,9 +4513,9 @@
        x="72.519211"
        y="153.08723"
        ry="0"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_stop_pressed.png"
-       inkscape:export-xdpi="116.34"
-       inkscape:export-ydpi="116.34" />
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_stop_pressed.png"
+       inkscape:export-xdpi="174.50999"
+       inkscape:export-ydpi="174.50999" />
     <rect
        style="fill:none;stroke:#000000;stroke-width:0.89098752;stroke-opacity:1"
        id="rect4963"
@@ -4524,14 +4524,14 @@
        x="71.812096"
        y="70.355743"
        ry="0"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_stop_normal.png"
-       inkscape:export-xdpi="116.34"
-       inkscape:export-ydpi="116.34" />
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_stop_normal.png"
+       inkscape:export-xdpi="174.50999"
+       inkscape:export-ydpi="174.50999" />
     <g
        inkscape:label="Stop"
-       inkscape:export-ydpi="116.34"
-       inkscape:export-xdpi="116.34"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_stop_pressed.png"
+       inkscape:export-ydpi="174.50999"
+       inkscape:export-xdpi="174.50999"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_stop_pressed.png"
        transform="matrix(1.4667816,0,0,1.4667816,-307.83949,65.47251)"
        id="g4981">
       <path
@@ -4577,9 +4577,9 @@
     <g
        id="g4993"
        transform="matrix(1.4667816,0,0,1.4667816,-308.5466,-17.258983)"
-       inkscape:export-filename="/Users/sindre/Projects/subsonic/subsonic-android/res/drawable/media_stop_normal.png"
-       inkscape:export-xdpi="116.34"
-       inkscape:export-ydpi="116.34"
+       inkscape:export-filename="i:/Projects/subsonic/subsonic-android/res/drawable-hdpi-v4/media_stop_normal.png"
+       inkscape:export-xdpi="174.50999"
+       inkscape:export-ydpi="174.50999"
        inkscape:label="Stop">
       <path
          sodipodi:type="arc"
