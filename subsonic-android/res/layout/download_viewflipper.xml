@@ -5,11 +5,13 @@
              a:layout_height="0dip"
              a:layout_weight="1">
 
-    <RelativeLayout a:orientation="vertical"
-                  a:layout_width="fill_parent"
-                  a:layout_height="fill_parent"
-                  a:layout_weight="1"
-                  a:background="@drawable/album_art_background">
+    <RelativeLayout
+            a:id="@+id/download_album_art_layout"
+            a:orientation="vertical"
+            a:layout_width="fill_parent"
+            a:layout_height="fill_parent"
+            a:layout_weight="1"
+            a:background="@drawable/album_art_background">
 
         <ImageView
                 a:id="@+id/download_album_art_image"

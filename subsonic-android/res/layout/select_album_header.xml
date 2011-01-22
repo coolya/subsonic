@@ -53,7 +53,8 @@
 
         <ImageButton
                 a:id="@+id/select_album_play_all"
-                a:src="@drawable/media_start"
+                a:src="@drawable/select_album_play_all"
+                a:background="@android:color/transparent"
                 a:layout_gravity="center_vertical"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"/>

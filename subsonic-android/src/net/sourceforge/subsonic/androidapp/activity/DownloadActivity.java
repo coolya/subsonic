@@ -18,19 +18,15 @@
  */
 package net.sourceforge.subsonic.androidapp.activity;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,6 +45,7 @@ import android.widget.ViewFlipper;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
@@ -59,7 +56,11 @@ import net.sourceforge.subsonic.androidapp.util.SilentBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.SongView;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class DownloadActivity extends SubsonicTabActivity {
 
@@ -96,8 +97,8 @@ public class DownloadActivity extends SubsonicTabActivity {
     private EditText playlistNameView;
 
     /**
-    * Called when the activity is first created.
-    */
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +124,12 @@ public class DownloadActivity extends SubsonicTabActivity {
         stopButton = findViewById(R.id.download_stop);
         startButton = findViewById(R.id.download_start);
         toggleListButton = findViewById(R.id.download_toggle_list);
+
+        // Adjust gradient radius according to screen size.
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        View layout = findViewById(R.id.download_album_art_layout);
+        GradientDrawable gradient = (GradientDrawable) layout.getBackground();
+        gradient.setGradientRadius(metrics.widthPixels * 0.5f);
 
         // TODO
 //        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -240,9 +247,11 @@ public class DownloadActivity extends SubsonicTabActivity {
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
         Window window = getWindow();
+
+        // Eliminates color banding
         window.setFormat(PixelFormat.RGBA_8888);
     }
-    
+
     // Scroll to current playing/downloading.
     private void scrollToCurrent() {
         if (getDownloadService() == null) {
@@ -338,7 +347,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         if (view == playlistView) {
 
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            DownloadFile downloadFile  = (DownloadFile) playlistView.getItemAtPosition(info.position);
+            DownloadFile downloadFile = (DownloadFile) playlistView.getItemAtPosition(info.position);
             if (downloadFile.getSong().getParent() != null) {
                 menu.add(Menu.NONE, MENU_ITEM_SHOW_ALBUM, MENU_ITEM_SHOW_ALBUM, R.string.download_menu_show_album);
             }
