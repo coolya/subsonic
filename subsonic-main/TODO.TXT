@@ -43,14 +43,13 @@ Fancier player controls
   Play buttons in selectalbumactivity broken.  Use -normal and -pressed.
   Wrong default cover art size
   Automatically show album art when clicking on a song row.
-  Use margin or whatever to make clickable button area bigger.
   Test on small screens (create separate icons if necessary)
   Landscape mode.
   Make Shuffle button work.  Move toast up.
   http://powerampapp.com/wp-content/themes/poweramp/images/big/theme-matte-metal-1.jpg
   http://development.piratemedia.tv/2010-07-19-music-mod-1-8-froyo-only/
   http://www.clker.com/clipart-play-audio-button-set.html
-
+Twitter, facebook integration.
 Error when using foo:3030 as server url.
 Use new intents in widget.
 Add Repeat.
@@ -121,6 +120,8 @@ Updated Greek translation, courtesy of Constantine Samaklis
 TODO IN 4.4
 -----------------
 Persist playlist when player state changes?
+Singleton jukebox (at least in REST)
+  https://mail.google.com/a/activeobjects.no/#inbox/12d9a0b7bd4858af
 SSL support in Jetty
   Add site doc.
   Don't use port 443 by default?
