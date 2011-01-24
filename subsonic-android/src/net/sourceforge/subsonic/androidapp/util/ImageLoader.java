@@ -31,6 +31,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -58,6 +59,7 @@ public class ImageLoader implements Runnable {
     private final BlockingQueue<Task> queue;
     private final int imageSizeDefault;
     private final int imageSizeLarge;
+    private Drawable largeUnknownImage;
 
     public ImageLoader(Context context) {
         queue = new LinkedBlockingQueue<Task>(500);
@@ -65,11 +67,20 @@ public class ImageLoader implements Runnable {
         // Determine the density-dependent image sizes.
         imageSizeDefault = context.getResources().getDrawable(R.drawable.unknown_album).getIntrinsicHeight();
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        imageSizeLarge = (int) Math.round(Math.min(metrics.widthPixels, metrics.heightPixels) * 0.65);
+        imageSizeLarge = (int) Math.round(Math.min(metrics.widthPixels, metrics.heightPixels) * 0.6);
 
         for (int i = 0; i < CONCURRENCY; i++) {
             new Thread(this, "ImageLoader").start();
         }
+
+        createLargeUnknownImage(context);
+    }
+
+    private void createLargeUnknownImage(Context context) {
+        BitmapDrawable drawable = (BitmapDrawable) context.getResources().getDrawable(R.drawable.unknown_album_large);
+        Bitmap bitmap = Bitmap.createScaledBitmap(drawable.getBitmap(), imageSizeLarge, imageSizeLarge, true);
+        bitmap = createReflection(bitmap);
+        largeUnknownImage = new BitmapDrawable(bitmap);
     }
 
     public void loadImage(View view, MusicDirectory.Entry entry, boolean large) {
@@ -102,12 +113,14 @@ public class ImageLoader implements Runnable {
     }
 
     private void setUnknownImage(View view, boolean large) {
-        int imageResource = large ? R.drawable.unknown_album_large : R.drawable.unknown_album;
-
-        if (view instanceof TextView) {
-            ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(imageResource, 0, 0, 0);
-        } else if (view instanceof ImageView) {
-            ((ImageView) view).setImageResource(imageResource);
+        if (large) {
+            setImage(view, largeUnknownImage);
+        } else {
+            if (view instanceof TextView) {
+                ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(R.drawable.unknown_album, 0, 0, 0);
+            } else if (view instanceof ImageView) {
+                ((ImageView) view).setImageResource(R.drawable.unknown_album);
+            }
         }
     }
 
@@ -143,7 +156,6 @@ public class ImageLoader implements Runnable {
         // We only want the bottom half of the image
         Bitmap reflectionImage = Bitmap.createBitmap(originalImage, 0, height / 2, width, height / 2, matrix, false);
 
-
         // Create a new bitmap with same width but taller to fit reflection
         Bitmap bitmapWithReflection = Bitmap.createBitmap(width, (height + height / 2), Bitmap.Config.ARGB_8888);
 
@@ -155,8 +167,8 @@ public class ImageLoader implements Runnable {
         canvas.drawBitmap(originalImage, 0, 0, null);
 
         // Draw in the gap
-        Paint deafaultPaint = new Paint();
-        canvas.drawRect(0, height, width, height + reflectionGap, deafaultPaint);
+        Paint defaultPaint = new Paint();
+        canvas.drawRect(0, height, width, height + reflectionGap, defaultPaint);
 
         // Draw in the reflection
         canvas.drawBitmap(reflectionImage, 0, height + reflectionGap, null);
