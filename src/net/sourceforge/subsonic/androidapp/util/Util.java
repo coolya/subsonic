@@ -39,6 +39,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
+import android.view.Gravity;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
@@ -320,7 +321,9 @@ public final class Util {
     }
 
     public static void toast(Context context, int messageId, boolean shortDuration) {
-        Toast.makeText(context, messageId, shortDuration ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
+        Toast toast = Toast.makeText(context, messageId, shortDuration ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     /**
@@ -379,16 +382,16 @@ public final class Util {
         // More than 1 GB?
         if (byteCount >= 1024 * 1024 * 1024) {
         	if (GIGA_BYTE_LOCALIZED_FORMAT == null)
-        		GIGA_BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_gigabyte));        	
-        	
+        		GIGA_BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_gigabyte));
+
             return GIGA_BYTE_LOCALIZED_FORMAT.format((double) byteCount / (1024 * 1024 * 1024));
         }
 
         // More than 1 MB?
         if (byteCount >= 1024 * 1024) {
         	if (MEGA_BYTE_LOCALIZED_FORMAT == null)
-        		MEGA_BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_megabyte));        	
-        	
+        		MEGA_BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_megabyte));
+
             return MEGA_BYTE_LOCALIZED_FORMAT.format((double) byteCount / (1024 * 1024));
         }
 
@@ -396,16 +399,16 @@ public final class Util {
         if (byteCount >= 1024) {
         	if (KILO_BYTE_LOCALIZED_FORMAT == null)
         		KILO_BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_kilobyte));
-        	
+
             return KILO_BYTE_LOCALIZED_FORMAT.format((double) byteCount / 1024);
         }
 
     	if (BYTE_LOCALIZED_FORMAT == null)
-    		BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_byte));        	
-    	
+    		BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_byte));
+
         return BYTE_LOCALIZED_FORMAT.format((double) byteCount);
     }
-    
+
     public static String formatDuration(Integer seconds) {
         if (seconds == null) {
             return null;
@@ -744,18 +747,18 @@ public final class Util {
             // Ignored.
         }
     }
-    
+
     /**
      * <p>Broadcasts the given song info as the new song being played.</p>
      */
     public static void broadcastNewTrackInfo(Context context, MusicDirectory.Entry song) {
 		Intent intent = new Intent(EVENT_META_CHANGED);
-		
+
 		if (song != null) {
     		intent.putExtra("title", song.getTitle());
     		intent.putExtra("artist", song.getArtist());
     		intent.putExtra("album", song.getAlbum());
-    		
+
             File albumArtFile = FileUtil.getAlbumArtFile(song);
     		intent.putExtra("coverart", albumArtFile.getAbsolutePath());
 		} else {
@@ -767,13 +770,13 @@ public final class Util {
 
 		context.sendBroadcast(intent);
     }
-    
+
     /**
      * <p>Broadcasts the given player state as the one being set.</p>
      */
     public static void broadcastPlaybackStatusChange(Context context, PlayerState state) {
 		Intent intent = new Intent(EVENT_PLAYSTATE_CHANGED);
-		
+
 		switch (state) {
 		case STARTED:
 			intent.putExtra("state", "play");
@@ -790,7 +793,7 @@ public final class Util {
 		default:
 			return; // No need to broadcast.
 		}
-		
+
 		context.sendBroadcast(intent);
     }
 }
