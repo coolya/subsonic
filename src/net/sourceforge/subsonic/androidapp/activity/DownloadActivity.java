@@ -23,10 +23,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PixelFormat;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -125,17 +123,6 @@ public class DownloadActivity extends SubsonicTabActivity {
         stopButton = findViewById(R.id.download_stop);
         startButton = findViewById(R.id.download_start);
         toggleListButton = findViewById(R.id.download_toggle_list);
-
-        // Adjust gradient radius according to screen size.
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        View layout = findViewById(R.id.download_album_art_layout);
-        GradientDrawable gradient = (GradientDrawable) layout.getBackground();
-        gradient.setGradientRadius(metrics.widthPixels * 0.5f);
-
-        // TODO
-//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            albumArtImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-//        }
 
         albumArtImageView.setOnClickListener(new View.OnClickListener() {
             @Override
