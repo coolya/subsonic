@@ -27,6 +27,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -106,7 +107,7 @@ public class DownloadActivity extends SubsonicTabActivity {
 
         setContentView(R.layout.download);
 
-        playlistFlipper = (ViewFlipper) findViewById(R.id.download_flipper);
+        playlistFlipper = (ViewFlipper) findViewById(R.id.download_playlist_flipper);
         buttonBarFlipper = (ViewFlipper) findViewById(R.id.download_button_bar_flipper);
         emptyTextView = (TextView) findViewById(R.id.download_empty);
         songTitleTextView = (TextView) findViewById(R.id.download_song_title);
@@ -250,6 +251,15 @@ public class DownloadActivity extends SubsonicTabActivity {
 
         // Eliminates color banding
         window.setFormat(PixelFormat.RGBA_8888);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle bundle) {
+        super.onPostCreate(bundle);
+
+        View layout = findViewById(R.id.download_album_art_layout);
+        Log.i("XXXX", layout.getWidth() + " x " + layout.getHeight());
+
     }
 
     // Scroll to current playing/downloading.
