@@ -79,6 +79,7 @@
                     a:layout_height="wrap_content"
                     a:layout_alignParentBottom="true"
                     a:layout_centerHorizontal="true"
+                    a:layout_marginBottom="8dip"
                     a:singleLine="true"
                     a:ellipsize="end"
                     a:textAppearance="?android:attr/textAppearanceSmall"
@@ -147,7 +148,7 @@
                         a:layout_height="wrap_content"
                         a:layout_gravity="center"
                         a:layout_marginTop="20dip"
-                        a:scaleType="center"/>
+                        a:scaleType="fitCenter"/>
             </FrameLayout>
 
             <include layout="@layout/download_playlist"/>
