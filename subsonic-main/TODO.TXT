@@ -42,8 +42,6 @@ Fancier player controls
   Repaint buttons after click.
   Automatically show album art when clicking on a song row.
   Test on small screens (create separate icons if necessary)
-  Landscape mode.
-  Make Shuffle button work.  Move toast up.
   Retest widget.
   http://powerampapp.com/wp-content/themes/poweramp/images/big/theme-matte-metal-1.jpg
   http://development.piratemedia.tv/2010-07-19-music-mod-1-8-froyo-only/

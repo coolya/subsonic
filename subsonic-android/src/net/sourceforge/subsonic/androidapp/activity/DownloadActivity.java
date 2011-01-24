@@ -89,6 +89,7 @@ public class DownloadActivity extends SubsonicTabActivity {
     private View pauseButton;
     private View stopButton;
     private View startButton;
+    private View shuffleButton;
     private View toggleListButton;
     private ScheduledExecutorService executorService;
     private DownloadFile currentPlaying;
@@ -122,6 +123,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         pauseButton = findViewById(R.id.download_pause);
         stopButton = findViewById(R.id.download_stop);
         startButton = findViewById(R.id.download_start);
+        shuffleButton = findViewById(R.id.download_shuffle);
         toggleListButton = findViewById(R.id.download_toggle_list);
 
         albumArtImageView.setOnClickListener(new View.OnClickListener() {
@@ -168,6 +170,14 @@ public class DownloadActivity extends SubsonicTabActivity {
             public void onClick(View view) {
                 warnIfNetworkOrStorageUnavailable();
                 start();
+            }
+        });
+
+        shuffleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getDownloadService().shuffle();
+                Util.toast(DownloadActivity.this, R.string.download_menu_shuffle_notification);
             }
         });
 
@@ -229,15 +239,6 @@ public class DownloadActivity extends SubsonicTabActivity {
         onCurrentChanged();
         onProgressChanged();
         scrollToCurrent();
-    }
-
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        Window window = getWindow();
-
-        // Eliminates color banding
-        window.setFormat(PixelFormat.RGBA_8888);
     }
 
     @Override
