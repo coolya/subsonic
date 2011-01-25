@@ -80,7 +80,7 @@ public class ImageLoader implements Runnable {
         BitmapDrawable drawable = (BitmapDrawable) context.getResources().getDrawable(R.drawable.unknown_album_large);
         Bitmap bitmap = Bitmap.createScaledBitmap(drawable.getBitmap(), imageSizeLarge, imageSizeLarge, true);
         bitmap = createReflection(bitmap);
-        largeUnknownImage = new BitmapDrawable(bitmap);
+        largeUnknownImage = Util.createDrawableFromBitmap(context, bitmap);
     }
 
     public void loadImage(View view, MusicDirectory.Entry entry, boolean large) {
