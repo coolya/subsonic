@@ -71,9 +71,7 @@
     <string name="download.empty">Playlist vide</string>
     <string name="download.playerstate_downloading">Téléchargement - %s</string>
     <string name="download.playerstate_buffering">Mise en tampon</string>
-    <string name="download.playerstate_playing">En jeu</string>
     <string name="download.playerstate_playing_shuffle">En jeu aléatoire</string>
-    <string name="download.playerstate_paused">En pause</string>
     <string name="download.menu_show_album">Afficher l\'album</string>
     <string name="download.menu_lyrics">Paroles</string>
     <string name="download.menu_remove">Retirer la pièce</string>
