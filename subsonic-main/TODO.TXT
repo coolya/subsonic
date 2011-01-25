@@ -39,8 +39,6 @@ Persist playlist after shuffle.
 TODO IN ANDROID 2.5
 -------------------
 Fancier player controls
-  Unknown image too small.
-  Test on small screens (create separate icons if necessary)
   Retest widget.
   http://powerampapp.com/wp-content/themes/poweramp/images/big/theme-matte-metal-1.jpg
   http://development.piratemedia.tv/2010-07-19-music-mod-1-8-froyo-only/
