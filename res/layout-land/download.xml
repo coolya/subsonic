@@ -92,9 +92,9 @@
                     a:layout_gravity="center_horizontal"
                     a:layout_above="@+id/download_status"
                     a:layout_centerHorizontal="true"
-                    a:layout_marginLeft="16dip"
-                    a:layout_marginRight="16dip"
-                    a:singleLine="true"
+                    a:layout_marginLeft="12dip"
+                    a:layout_marginRight="12dip"
+                    a:maxLines="2"
                     a:ellipsize="end"
                     a:gravity="center_horizontal"
                     a:textAppearance="?android:attr/textAppearanceMedium"
@@ -105,8 +105,7 @@
                     a:layout_width="wrap_content"
                     a:layout_height="wrap_content"
                     a:layout_centerHorizontal="true"
-                    a:layout_above="@+id/download_song_title"
-                    a:layout_marginBottom="20dip">
+                    a:layout_centerVertical="true">
 
                 <ImageButton
                         a:id="@+id/download_shuffle"
@@ -114,7 +113,7 @@
                         a:background="@android:color/transparent"
                         a:layout_width="wrap_content"
                         a:layout_height="wrap_content"
-                        a:layout_marginRight="16dip"
+                        a:padding="16dip"
                         />
                 <ImageButton
                         a:id="@+id/download_toggle_list"
@@ -122,7 +121,7 @@
                         a:background="@android:color/transparent"
                         a:layout_width="wrap_content"
                         a:layout_height="wrap_content"
-                        a:layout_marginLeft="16dip"
+                        a:padding="16dip"
                         />
             </LinearLayout>
 

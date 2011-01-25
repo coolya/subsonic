@@ -18,11 +18,16 @@
  */
 package net.sourceforge.subsonic.androidapp.activity;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -44,7 +49,6 @@ import android.widget.ViewFlipper;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
-import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
@@ -55,11 +59,7 @@ import net.sourceforge.subsonic.androidapp.util.SilentBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.SongView;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 
 public class DownloadActivity extends SubsonicTabActivity {
 
@@ -138,6 +138,8 @@ public class DownloadActivity extends SubsonicTabActivity {
             public void onClick(View view) {
                 warnIfNetworkOrStorageUnavailable();
                 getDownloadService().previous();
+                onCurrentChanged();
+                onProgressChanged();
             }
         });
 
@@ -147,6 +149,8 @@ public class DownloadActivity extends SubsonicTabActivity {
                 warnIfNetworkOrStorageUnavailable();
                 if (getDownloadService().getCurrentPlayingIndex() < getDownloadService().size() - 1) {
                     getDownloadService().next();
+                    onCurrentChanged();
+                    onProgressChanged();
                 }
             }
         });
@@ -155,6 +159,8 @@ public class DownloadActivity extends SubsonicTabActivity {
             @Override
             public void onClick(View view) {
                 getDownloadService().pause();
+                onCurrentChanged();
+                onProgressChanged();
             }
         });
 
@@ -162,6 +168,8 @@ public class DownloadActivity extends SubsonicTabActivity {
             @Override
             public void onClick(View view) {
                 getDownloadService().reset();
+                onCurrentChanged();
+                onProgressChanged();
             }
         });
 
@@ -170,6 +178,8 @@ public class DownloadActivity extends SubsonicTabActivity {
             public void onClick(View view) {
                 warnIfNetworkOrStorageUnavailable();
                 start();
+                onCurrentChanged();
+                onProgressChanged();
             }
         });
 
@@ -192,6 +202,7 @@ public class DownloadActivity extends SubsonicTabActivity {
             @Override
             public void onSliderChanged(View view, int position) {
                 getDownloadService().seekTo(position);
+                onProgressChanged();
             }
         });
         playlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -199,6 +210,8 @@ public class DownloadActivity extends SubsonicTabActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 warnIfNetworkOrStorageUnavailable();
                 getDownloadService().play(position);
+                onCurrentChanged();
+                onProgressChanged();
             }
         });
 
