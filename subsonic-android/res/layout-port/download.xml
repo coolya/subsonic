@@ -49,9 +49,10 @@
                     a:layout_marginLeft="16dip"
                     a:layout_marginRight="16dip"
                     a:singleLine="true"
-                    a:ellipsize="end"
-                    a:textAppearance="?android:attr/textAppearanceLarge"
-                    a:textColor="@color/mediaControlForeground"/>
+                    a:textColor="@color/mediaControlForeground"
+                    a:textStyle="bold"
+                    a:textSize="18sp"
+                    a:ellipsize="end"/>
 
         </RelativeLayout>
 

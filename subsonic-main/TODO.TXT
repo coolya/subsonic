@@ -28,20 +28,11 @@ Add .divx
 Select inital bitrate based on network type.
 Buy new JW license
 
-DONE IN ANDROID 2.5
+DONE IN ANDROID 2.7
 --------------------
-Added French translation (courtesy of xmoby).
-New setting "Keep screen on". Keeping the screen on when downloading may improve download speed.
-Pause when disconnecting from Bluetooth headset.
-Remember current song and position when app is restarted.
-Persist playlist after shuffle.
 
-TODO IN ANDROID 2.5
+TODO IN ANDROID 2.7
 -------------------
-Fancier player controls
-  Retest widget.
-  http://powerampapp.com/wp-content/themes/poweramp/images/big/theme-matte-metal-1.jpg
-  http://development.piratemedia.tv/2010-07-19-music-mod-1-8-froyo-only/
 Persist playlist when player state changes?
 Twitter, facebook integration.
 
