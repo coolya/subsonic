@@ -30,7 +30,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -252,15 +251,6 @@ public class DownloadActivity extends SubsonicTabActivity {
         onCurrentChanged();
         onProgressChanged();
         scrollToCurrent();
-    }
-
-    @Override
-    protected void onPostCreate(Bundle bundle) {
-        super.onPostCreate(bundle);
-
-        View layout = findViewById(R.id.download_album_art_layout);
-        Log.i("XXXX", layout.getWidth() + " x " + layout.getHeight());
-
     }
 
     // Scroll to current playing/downloading.

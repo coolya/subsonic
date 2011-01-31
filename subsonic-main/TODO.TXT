@@ -105,6 +105,7 @@ Updated Greek translation, courtesy of Constantine Samaklis
 
 TODO IN 4.4
 -----------------
+Rename "mask" to "file types". (And change implementation to handle missing periods.)
 Subsonic Premium
 Singleton jukebox (at least in REST)
   https://mail.google.com/a/activeobjects.no/#inbox/12d9a0b7bd4858af
