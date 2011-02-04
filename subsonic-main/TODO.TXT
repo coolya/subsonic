@@ -119,7 +119,37 @@ jSub
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4479
 Maven 3
 Investigate mapped network drives.
+Show recommended songs, based on last.fm
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3211
+  https://mail.google.com/a/activeobjects.no/#inbox/12ddbfe26940f6cc
+Handle non-square cover art
+  https://mail.google.com/a/activeobjects.no/#inbox/12debb505054d33a
+Cover arts not always aligned in grid
+  https://mail.google.com/a/activeobjects.no/#inbox/12defd71c5d9e916
+Sharing feature
+  Direct link with no login.
+  Premium feature.
+  Facebook 
+  https://mail.google.com/a/activeobjects.no/#inbox/12ded75e94256283
 
+
+Suggestions from Gary:
+1) Many users suggest, and I concur, that making the drop down for the number of albums displayed, “sticky” so that it
+   remembers your last selection.  Many users ask how to change the default from 10.
+
+2) Auto update of album art.  This seems to be declining in interest, but was an issue a while ago.  Not a problem for me
+   personally, but I do visit sites that are missing quite a bit of artwork.  I know, and use a 3rd party program to do
+   library updates, but I’m sure there are many users who would like to see an auto select for missing album art.
+
+3) Folder permissions for users.  This has been pretty big recently.  I know I use public and private sites to segregate
+   material, but I too could eliminate one site if I could control which users had access to which folders.
+
+4) Personal suggestion – make Internet TV/Radio section in the left hand column collapsible.  Maybe not a bad idea for
+   the letter sections as well.
+
+5) Photo Album section.  This would make SS the complete home media front end if it could handle a photo library,
+   perhaps with slideshow capability.
+   
 html multiple file upload.
 Build ffmpeg for x86 on Mac
   https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12cb55940868506d
