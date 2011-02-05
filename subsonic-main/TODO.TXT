@@ -102,6 +102,7 @@ Colors: http://www.androidtapp.com/opentable/
 DONE IN 4.4
 ----------------
 Updated Greek translation, courtesy of Constantine Samaklis
+Updated Slovenian translation, courtesy of Jan Jamsek and Marko Kastelic.
 
 TODO IN 4.4
 -----------------

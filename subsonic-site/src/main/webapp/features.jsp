@@ -109,7 +109,7 @@
                         <tr><td>&#149; Italian </td><td>(by Michele Petrecca)</td></tr>
                         <tr><td>&#149; Greek </td><td>(by Constantine Samaklis)</td></tr>
                         <tr><td>&#149; Russian </td><td>(by Iaroslav Andrusiak)</td></tr>
-                        <tr><td>&#149; Slovenian </td><td>(by Andrej &#381;i&#382;mond)</td></tr>
+                        <tr><td>&#149; Slovenian </td><td>(by Andrej &#381;i&#382;mond, Jan Jamsek and Marko Kastelic)</td></tr>
                         <tr><td>&#149; Macedonian </td><td>(by Stefan Ivanovski)</td></tr>
                         <tr><td>&#149; Polish </td><td>(by Micha&#322; Kotas)</td></tr>
                         <tr><td>&#149; Chinese </td><td>(by Neil Gao)</td></tr>
