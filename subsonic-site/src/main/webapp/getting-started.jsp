@@ -126,6 +126,13 @@
 
             <a href="inc/img/gettingstarted/license.png"><img src="inc/img/gettingstarted/license_thumb.png" alt=""/></a>
 
+            <a name="4"><h2>4 Using https</h2></a>
+            <p>For improved security you can turn on https encryption.  On Windows, open the Subsonic Control Panel by clicking
+                on the Subsonic tray icon, then enable https on the specified port (default 443).</p>
+            <p> On Linux, add <code>--https-port=4443</code> (or any other port) to SUBSONIC_ARGS in
+                <code>/etc/default/subsonic</code> (Ubuntu/Debian) or <code>/etc/sysconfig/subsonic</code> (Fedora/RPM).
+            </p>
+
         </div>
 
         <div id="side-col">
@@ -143,6 +150,7 @@
                         <li><a href="#2.3">2.4 Troubleshooting</a></li>
                     </ul>
                     <li><a href="#3">3 Registering your license key</a></li>
+                    <li><a href="#4">4 Using https</a></li>
                 </ul>
             </div>
         </div>

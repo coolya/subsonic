@@ -110,10 +110,6 @@ Rename "mask" to "file types". (And change implementation to handle missing peri
 Subsonic Premium
 Singleton jukebox (at least in REST)
   https://mail.google.com/a/activeobjects.no/#inbox/12d9a0b7bd4858af
-SSL support in Jetty
-  Add site doc.
-  Don't use port 443 by default?
-  Testing
 Flowplayer
   http://flowplayer.org/plugins/streaming/pseudostreaming.html
 jSub
@@ -130,9 +126,10 @@ Cover arts not always aligned in grid
 Sharing feature
   Direct link with no login.
   Premium feature.
-  Facebook 
+  Facebook
+    http://www.kimwoodbridge.com/how-to-create-your-one-facebook-share-url/
+  Twitter
   https://mail.google.com/a/activeobjects.no/#inbox/12ded75e94256283
-
 
 Suggestions from Gary:
 1) Many users suggest, and I concur, that making the drop down for the number of albums displayed, “sticky” so that it
@@ -150,7 +147,7 @@ Suggestions from Gary:
 
 5) Photo Album section.  This would make SS the complete home media front end if it could handle a photo library,
    perhaps with slideshow capability.
-   
+
 html multiple file upload.
 Build ffmpeg for x86 on Mac
   https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12cb55940868506d
