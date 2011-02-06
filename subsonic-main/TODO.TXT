@@ -101,8 +101,6 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN 4.4
 ----------------
-Updated Greek translation, courtesy of Constantine Samaklis
-Updated Slovenian translation, courtesy of Jan Jamsek and Marko Kastelic.
 
 TODO IN 4.4
 -----------------
@@ -130,6 +128,7 @@ Sharing feature
     http://www.kimwoodbridge.com/how-to-create-your-one-facebook-share-url/
   Twitter
   https://mail.google.com/a/activeobjects.no/#inbox/12ded75e94256283
+Upgrade ffmpeg and support wtv.
 
 Suggestions from Gary:
 1) Many users suggest, and I concur, that making the drop down for the number of albums displayed, “sticky” so that it

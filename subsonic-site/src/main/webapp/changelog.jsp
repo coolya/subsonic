@@ -16,6 +16,12 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="4.4"><h2 class="div">Subsonic 4.4 - Feb 06, 2011</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>Updated Greek translation, courtesy of Constantine Samaklis.</li>
+    <li><span class="bugid">New: </span>Updated Slovenian translation, courtesy of Jan Jamsek and Marko Kastelic.</li>
+</ul>
+
 <a name="4.4.beta1"><h2 class="div">Subsonic 4.4.beta1 - Jan 20, 2011</h2></a>
 <ul>
     <li><span class="bugid">New: </span>Added https support.</li>
@@ -793,6 +799,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#4.4">Subsonic 4.4</a></li>
             <li><a href="#4.4.beta1">Subsonic 4.4.beta1</a></li>
             <li><a href="#4.3">Subsonic 4.3</a></li>
             <li><a href="#4.3.beta1">Subsonic 4.3.beta1</a></li>
