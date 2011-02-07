@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="iso-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%--@elvariable id="model" type="java.util.Map"--%>
 
 <html><head>
     <%@ include file="head.jsp" %>
@@ -13,7 +14,7 @@
     <script type="text/javascript" src="<c:url value="/script/scripts.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoom.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoomHTML.js"/>"></script>
-</head><body class="mainframe bgcolor1" onload="init()">
+</head><body class="mainframe bgcolor1" onload="init();">
 
 <script type="text/javascript" language="javascript">
     function init() {
@@ -66,9 +67,9 @@
 
     <c:if test="${model.user.streamRole}">
         <c:if test="${needSep}">|</c:if>
-        <a href="javascript:noop()" onclick="top.playlist.onPlay('${path}')"><fmt:message key="main.playall"/></a> |
-        <a href="javascript:noop()" onclick="top.playlist.onPlayRandom('${path}', 10)"><fmt:message key="main.playrandom"/></a> |
-        <a href="javascript:noop()" onclick="top.playlist.onAdd('${path}')"><fmt:message key="main.addall"/></a>
+        <a href="javascript:noop()" onclick="top.playlist.onPlay('${path}');"><fmt:message key="main.playall"/></a> |
+        <a href="javascript:noop()" onclick="top.playlist.onPlayRandom('${path}', 10);"><fmt:message key="main.playrandom"/></a> |
+        <a href="javascript:noop()" onclick="top.playlist.onAdd('${path}');"><fmt:message key="main.addall"/></a>
         <c:set var="needSep" value="true"/>
     </c:if>
 

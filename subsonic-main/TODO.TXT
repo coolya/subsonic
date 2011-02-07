@@ -17,12 +17,17 @@ Create for whole album first.
 Bring up separate page.
 Facebook, Twitter, link
   http://www.kimwoodbridge.com/how-to-create-your-one-facebook-share-url/
+  http://dev.twitter.com/pages/tweet_button
   https://mail.google.com/a/activeobjects.no/#inbox/12ded75e94256283
 Only if using a subsonic.org address.
 Warn about legal stuff.
 bit.ly url shortening
 Create separate security role?
 Direct link with no login.
+Internal URL shortening support, maybe make it generic.
+http://code.google.com/apis/urlshortener/
+http://code.google.com/p/google-api-java-client/
+
 
 SITE
 ----
