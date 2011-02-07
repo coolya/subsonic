@@ -28,7 +28,7 @@
         var updateNowPlaying = true;
     </script>
 </c:if>
- 
+
 <h1>
     <img src="<spring:theme code="nowPlayingImage"/>" alt="">
 
@@ -103,21 +103,22 @@
 
 <c:if test="${model.dir.album}">
 
-    <c:if test="${model.user.commentRole}">
-        <c:import url="rating.jsp">
-            <c:param name="path" value="${model.dir.path}"/>
-            <c:param name="readonly" value="false"/>
-            <c:param name="rating" value="${model.userRating}"/>
-        </c:import>
-    </c:if>
-
-    <span class="detail">
-        <fmt:message key="main.playcount"><fmt:param value="${model.playCount}"/></fmt:message>
-        <c:if test="${not empty model.lastPlayed}">
-            <fmt:message key="main.lastplayed">
-                <fmt:param><fmt:formatDate type="date" dateStyle="long" value="${model.lastPlayed}"/></fmt:param>
-            </fmt:message>
+    <div class="detail">
+        <c:if test="${model.user.commentRole}">
+            <c:import url="rating.jsp">
+                <c:param name="path" value="${model.dir.path}"/>
+                <c:param name="readonly" value="false"/>
+                <c:param name="rating" value="${model.userRating}"/>
+            </c:import>
         </c:if>
+
+        <sub:url value="share.view" var="shareUrl">
+            <sub:param name="path" value="${model.dir.path}"/>
+        </sub:url>
+
+        <a href="${shareUrl}"><img src="<spring:theme code="shareFacebookImage"/>" alt=""></a>
+        <a href="${shareUrl}"><img src="<spring:theme code="shareTwitterImage"/>" alt=""></a>
+        <a href="${shareUrl}"><span class="detail"><fmt:message key="main.sharealbum"/></span></a> |
 
         <c:set var="artist" value="${model.children[0].metaData.artist}"/>
         <c:set var="album" value="${model.children[0].metaData.album}"/>
@@ -141,7 +142,16 @@
             <a target="_blank" href="${allmusicUrl}">allmusic</a> |
             <a target="_blank" href="${lastFmUrl}">Last.fm</a>
         </c:if>
-    </span>
+    </div>
+    <div class="detail" style="padding-top:0.2em">
+        <fmt:message key="main.playcount"><fmt:param value="${model.playCount}"/></fmt:message>
+        <c:if test="${not empty model.lastPlayed}">
+            <fmt:message key="main.lastplayed">
+                <fmt:param><fmt:formatDate type="date" dateStyle="long" value="${model.lastPlayed}"/></fmt:param>
+            </fmt:message>
+        </c:if>
+    </div>
+
 </c:if>
 
 <div id="comment" class="albumComment"><sub:wiki text="${model.comment}"/></div>
@@ -324,24 +334,24 @@
 </tr>
 </table>
 
-<table>
+<div>
     <c:if test="${not empty model.previousAlbum}">
         <sub:url value="main.view" var="previousUrl">
             <sub:param name="path" value="${model.previousAlbum.path}"/>
         </sub:url>
-        <td style="padding-right:10pt"><div class="back"><a href="${previousUrl}" title="${model.previousAlbum.name}">
+        <div class="back" style="float:left;padding-right:10pt"><a href="${previousUrl}" title="${model.previousAlbum.name}">
             <str:truncateNicely upper="30">${fn:escapeXml(model.previousAlbum.name)}</str:truncateNicely>
-        </a></div></td>
+        </a></div>
     </c:if>
     <c:if test="${not empty model.nextAlbum}">
         <sub:url value="main.view" var="nextUrl">
             <sub:param name="path" value="${model.nextAlbum.path}"/>
         </sub:url>
-        <td><div class="forward"><a href="${nextUrl}" title="${model.nextAlbum.name}">
+        <div class="forward" style="float:left"><a href="${nextUrl}" title="${model.nextAlbum.name}">
             <str:truncateNicely upper="30">${fn:escapeXml(model.nextAlbum.name)}</str:truncateNicely>
-        </a></div></td>
+        </a></div>
     </c:if>
-</table>
+</div>
 
 </body>
 </html>

@@ -11,6 +11,19 @@ Playlist summary. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=183
 New playlist REST methods?
 WiMP, iTunes
 
+SHARE
+-----
+Create for whole album first.
+Bring up separate page.
+Facebook, Twitter, link
+  http://www.kimwoodbridge.com/how-to-create-your-one-facebook-share-url/
+  https://mail.google.com/a/activeobjects.no/#inbox/12ded75e94256283
+Only if using a subsonic.org address.
+Warn about legal stuff.
+bit.ly url shortening
+Create separate security role?
+Direct link with no login.
+
 SITE
 ----
 Tutorial, windows shared folders.
@@ -121,15 +134,9 @@ Handle non-square cover art
   https://mail.google.com/a/activeobjects.no/#inbox/12debb505054d33a
 Cover arts not always aligned in grid
   https://mail.google.com/a/activeobjects.no/#inbox/12defd71c5d9e916
-Sharing feature
-  Direct link with no login.
-  Premium feature.
-  Facebook
-    http://www.kimwoodbridge.com/how-to-create-your-one-facebook-share-url/
-  Twitter
-  https://mail.google.com/a/activeobjects.no/#inbox/12ded75e94256283
 Upgrade ffmpeg and support wtv.
-
+Run Subsonic on Dreamplug
+  http://www.globalscaletechnologies.com/p-41-dreamplug-devkit.aspx
 Suggestions from Gary:
 1) Many users suggest, and I concur, that making the drop down for the number of albums displayed, “sticky” so that it
    remembers your last selection.  Many users ask how to change the default from 10.
@@ -553,28 +560,30 @@ HOW TO RELEASE
 ===============================
 Update version number in pom.xml, version.html, MultiController.java etc.
 Update changelog.jsp, download.jsp
-mvn clean install -P full
-cd subsonic-assembly
-mvn assembly:assembly
+Commit
+mvn clean -P full
+mvn install -P full
+cd subsonic-backend; mvn install
+cd ../subsonic-installer-mac; mvn install
+cd ../subsonic-assembly; mvn assembly:assembly
 Deploy
 Check that correct local version is displayed.
-Commit
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.4.beta1/
-  rsync -avP -e ssh subsonic-assembly/target/subsonic* sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.4.beta1/
-  rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg subsonic-installer-debian/target/subsonic*.deb subsonic-installer-rpm/target/subsonic*.rpm sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.4.beta1/
+  rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.4/
+  rsync -avP -e ssh subsonic-assembly/target/subsonic* sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.4/
+  rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg subsonic-installer-debian/target/subsonic*.deb subsonic-installer-rpm/target/subsonic*.rpm sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.4/
 
 Modify FRS properties
-  https://sourceforge.net/project/admin/explorer.php?group_id=126265
+  https://sourceforge.net/projects/subsonic/files/subsonic/
 
 Upload site (OLD):
  rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
 
 Upload site (NEW): CHANGE DATE BELOW
-  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2011-01-18/pages/
+  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2011-02-06/pages/
   rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps/pages/
 
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-4.4.beta1 -m "Tagging 4.4.beta1."
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-4.4 -m "Tagging 4.4."
 Register at freshmeat.
 Post message on forum.
 Update version number in pom.xml etc.
@@ -583,16 +592,16 @@ Take backup of forum.
 Upgrade Subsonic backend: CHANGE DATE BELOW
   Backup backend database.
     cd /var/subsonic-backend
-    tar cvf db-backup-2011-01-07.tar db
+    tar cvf db-backup-2011-02-06.tar db
   cd subsonic-backend
   mvn clean install
-  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2011-01-18/ROOT.war
-  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2011-01-18/demo.war
+  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2011-02-06/ROOT.war
+  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2011-02-06/demo.war
   ssh sindremehus@subsonic.org
   su
   /etc/init.d/tomcat55 stop
   rm webapps
-  ln -s webapps-2011-01-18 webapps
+  ln -s webapps-2011-02-06 webapps
   rm -rf work logs/*
   /etc/init.d/tomcat55 start
   tail -f logs/catalina.out
