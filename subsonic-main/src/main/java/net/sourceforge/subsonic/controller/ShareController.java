@@ -37,17 +37,26 @@ import java.util.HashMap;
  */
 public class ShareController extends ParameterizableViewController {
 
+    private final UrlShortenerService urlShortenerService = new UrlShortenerService();
     private MusicFileService musicFileService;
     private SettingsService settingsService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String path = request.getParameter("path");
 
+        String playUrl = "http://" + settingsService.getUrlRedirectFrom() + ".subsonic.org/playExternal.view?pathUtf8Hex=" + StringUtil.utf8HexEncode(path);
+
+        try {
+            playUrl = urlShortenerService.shorten(playUrl);
+        } catch (Exception e) {
+// TODO: Log
+        }
+
         MusicFile file = musicFileService.getMusicFile(path);
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("file", file);
-        map.put("redirectFrom", settingsService.getUrlRedirectFrom());
+        map.put("playUrl", playUrl);
 
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
