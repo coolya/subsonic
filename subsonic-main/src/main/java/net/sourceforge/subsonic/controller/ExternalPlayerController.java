@@ -18,50 +18,44 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
-import net.sourceforge.subsonic.util.*;
-import net.sourceforge.subsonic.filter.ParameterDecodingFilter;
-import org.springframework.web.servlet.*;
-import org.springframework.web.servlet.view.*;
-import org.springframework.web.servlet.mvc.*;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.service.SettingsService;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
-import javax.servlet.http.*;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.Map;
+import java.io.File;
 
 /**
- * Controller for sharing music on Twitter, Facebook etc.
+ * Controller for the page used to play shared music (Twitter, Facebook etc).
  *
  * @author Sindre Mehus
  */
-public class ShareController extends ParameterizableViewController {
+public class ExternalPlayerController extends ParameterizableViewController {
 
-    private final UrlShortenerService urlShortenerService = new UrlShortenerService();
     private MusicFileService musicFileService;
     private SettingsService settingsService;
+    private PlayerService playerService;
 
+    @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String path = request.getParameter("path");
-
-        String playUrl = "http://" + settingsService.getUrlRedirectFrom() + ".subsonic.org/externalPlayer.view?pathUtf8Hex=" + StringUtil.utf8HexEncode(path);
-
-        try {
-            playUrl = urlShortenerService.shorten(playUrl);
-        } catch (Exception e) {
-// TODO: Log
-        }
-
-        MusicFile file = musicFileService.getMusicFile(path);
 
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("file", file);
-        map.put("playUrl", playUrl);
+        String path = request.getParameter("path");
+        MusicFile dir = musicFileService.getMusicFile(path);
+
+        map.put("dir", dir);
+        map.put("coverArt", musicFileService.getCoverArt(dir));
+        map.put("redirectFrom", settingsService.getUrlRedirectFrom());
 
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
-
     }
 
     public void setMusicFileService(MusicFileService musicFileService) {
@@ -70,5 +64,9 @@ public class ShareController extends ParameterizableViewController {
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
+    }
+
+    public void setPlayerService(PlayerService playerService) {
+        this.playerService = playerService;
     }
 }

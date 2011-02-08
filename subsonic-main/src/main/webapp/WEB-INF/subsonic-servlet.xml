@@ -287,6 +287,12 @@
         <property name="settingsService" ref="settingsService"/>
         <property name="playerService" ref="playerService"/>
     </bean>
+    <bean id="externalPlayerController" class="net.sourceforge.subsonic.controller.ExternalPlayerController">
+        <property name="viewName" value="externalPlayer"/>
+        <property name="musicFileService" ref="musicFileService"/>
+        <property name="settingsService" ref="settingsService"/>
+        <property name="playerService" ref="playerService"/>
+    </bean>
     <bean id="downloadController" class="net.sourceforge.subsonic.controller.DownloadController">
         <property name="playerService" ref="playerService"/>
         <property name="statusService" ref="statusService"/>
@@ -381,6 +387,7 @@
                 <prop key="/gettingStarted.view">multiController</prop>
                 <prop key="/index.view">multiController</prop>
                 <prop key="/videoPlayer.view">videoPlayerController</prop>
+                <prop key="/externalPlayer.view">externalPlayerController</prop>
                 <prop key="/nowPlaying.view">nowPlayingController</prop>
                 <prop key="/search.view">searchController</prop>
                 <prop key="/settings.view">settingsController</prop>
