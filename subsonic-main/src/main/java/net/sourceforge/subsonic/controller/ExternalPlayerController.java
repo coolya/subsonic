@@ -18,18 +18,22 @@
  */
 package net.sourceforge.subsonic.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
+
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SettingsService;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.ParameterizableViewController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
-import java.io.File;
 
 /**
  * Controller for the page used to play shared music (Twitter, Facebook etc).
@@ -46,15 +50,34 @@ public class ExternalPlayerController extends ParameterizableViewController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Map<String, Object> map = new HashMap<String, Object>();
-        String path = request.getParameter("path");
-        MusicFile dir = musicFileService.getMusicFile(path);
 
-        map.put("dir", dir);
-        map.put("coverArt", musicFileService.getCoverArt(dir));
+        List<MusicFile> songs = getSongs(request);
+
+        map.put("songs", songs);
+        if (!songs.isEmpty()) {
+            map.put("coverArt", musicFileService.getCoverArt(songs.get(0)));
+        } 
         map.put("redirectFrom", settingsService.getUrlRedirectFrom());
 
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
+        return result;
+    }
+
+    private List<MusicFile> getSongs(HttpServletRequest request) throws IOException {
+        String dir = request.getParameter("dir");
+        if (dir != null) {
+            MusicFile file = musicFileService.getMusicFile(dir);
+            return file.getChildren(true, false, true);
+        }
+
+        List<MusicFile> result = new ArrayList<MusicFile>();
+        String[] files = request.getParameterValues("file");
+        if (files != null) {
+            for (String file : files) {
+                result.add(musicFileService.getMusicFile(file));
+            }
+        }
         return result;
     }
 

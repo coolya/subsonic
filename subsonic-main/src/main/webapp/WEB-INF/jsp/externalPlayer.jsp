@@ -23,7 +23,8 @@
 </head>
 
 <body class="mainframe bgcolor1" style="padding-bottom:0.5em" onload="init();">
-<h1>Heisann!</h1>
+<h1>${model.songs[0].metaData.artist}</h1>
+<h2>${model.songs[0].metaData.album}</h2>
 
 <p>
 

@@ -44,10 +44,10 @@ public class ShareController extends ParameterizableViewController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String path = request.getParameter("path");
 
-        String playUrl = "http://" + settingsService.getUrlRedirectFrom() + ".subsonic.org/externalPlayer.view?pathUtf8Hex=" + StringUtil.utf8HexEncode(path);
+        String playUrl = "http://" + settingsService.getUrlRedirectFrom() + ".subsonic.org/externalPlayer.view?dirUtf8Hex=" + StringUtil.utf8HexEncode(path);
 
         try {
-            playUrl = urlShortenerService.shorten(playUrl);
+//            playUrl = urlShortenerService.shorten(playUrl);
         } catch (Exception e) {
 // TODO: Log
         }
