@@ -40,6 +40,7 @@ public class UserSettingsCommand {
     private boolean isStreamRole;
     private boolean isJukeboxRole;
     private boolean isSettingsRole;
+    private boolean isShareRole;
 
     private List<User> users;
     private boolean isAdmin;
@@ -143,6 +144,14 @@ public class UserSettingsCommand {
 
     public void setSettingsRole(boolean settingsRole) {
         isSettingsRole = settingsRole;
+    }
+
+    public boolean isShareRole() {
+        return isShareRole;
+    }
+
+    public void setShareRole(boolean shareRole) {
+        isShareRole = shareRole;
     }
 
     public List<User> getUsers() {
@@ -273,6 +282,7 @@ public class UserSettingsCommand {
         isStreamRole = user != null && user.isStreamRole();
         isJukeboxRole = user != null && user.isJukeboxRole();
         isSettingsRole = user != null && user.isSettingsRole();
+        isShareRole = user != null && user.isShareRole();
         isLdapAuthenticated = user != null && user.isLdapAuthenticated();
     }
 }

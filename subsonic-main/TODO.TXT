@@ -22,8 +22,7 @@ Facebook, Twitter, link
   https://mail.google.com/a/activeobjects.no/#inbox/12ded75e94256283
 Only if using a subsonic.org address.
 Warn about legal stuff.
-bit.ly url shortening
-Create separate security role?
+x Create separate security role?
 Direct link with no login.
 Internal URL shortening support, maybe make it generic.
 http://code.google.com/apis/urlshortener/
@@ -123,6 +122,8 @@ DONE IN 4.4
 
 TODO IN 4.4
 -----------------
+Initial delay when playing in JW Player.
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=5560
 Rename "mask" to "file types". (And change implementation to handle missing periods.)
 Subsonic Premium
 Singleton jukebox (at least in REST)

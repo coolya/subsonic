@@ -18,17 +18,19 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.domain.*;
-import net.sourceforge.subsonic.service.*;
-import net.sourceforge.subsonic.util.*;
-import net.sourceforge.subsonic.filter.ParameterDecodingFilter;
-import org.springframework.web.servlet.*;
-import org.springframework.web.servlet.view.*;
-import org.springframework.web.servlet.mvc.*;
+import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.UrlShortenerService;
+import net.sourceforge.subsonic.util.StringUtil;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
-import javax.servlet.http.*;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller for sharing music on Twitter, Facebook etc.
@@ -37,24 +39,27 @@ import java.util.HashMap;
  */
 public class ShareController extends ParameterizableViewController {
 
+    private static final Logger LOG = Logger.getLogger(ShareController.class);
+
     private final UrlShortenerService urlShortenerService = new UrlShortenerService();
     private MusicFileService musicFileService;
     private SettingsService settingsService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String path = request.getParameter("path");
+        String path = request.getParameter("dir");
 
         String playUrl = "http://" + settingsService.getUrlRedirectFrom() + ".subsonic.org/externalPlayer.view?dirUtf8Hex=" + StringUtil.utf8HexEncode(path);
 
         try {
             playUrl = urlShortenerService.shorten(playUrl);
-        } catch (Exception e) {
-// TODO: Log
+        } catch (Exception x) {
+            LOG.warn("Failed to shorten URL.", x);
         }
 
         MusicFile file = musicFileService.getMusicFile(path);
 
         Map<String, Object> map = new HashMap<String, Object>();
+        map.put("urlRedirectionEnabled", settingsService.isUrlRedirectionEnabled());
         map.put("file", file);
         map.put("playUrl", playUrl);
 

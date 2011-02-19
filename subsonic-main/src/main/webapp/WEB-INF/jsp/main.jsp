@@ -20,6 +20,30 @@
     function init() {
         setupZoom('<c:url value="/"/>');
     }
+
+    <!-- actionSelected() is invoked when the users selects from the "More actions..." combo box. -->
+    function actionSelected(id) {
+
+        if (id == "top") {
+            return;
+        } else if (id == "share") {
+            alert("x");
+            parent.frames.main.location.href = "share.view?" + getSelectedIndexes();
+        }
+        $("moreActions").selectedIndex = 0;
+    }
+
+    function getSelectedIndexes() {
+        alert("a");
+        var result = "";
+        for (var i = 0; i < ${fn:length(model.children)}; i++) {
+            if ($("songIndex" + i).checked) {
+                result += "i=" + i + "&";
+            }
+        }
+        alert(result);
+        return result;
+    }
 </script>
 
 <c:if test="${model.updateNowPlaying}">
@@ -113,13 +137,15 @@
             </c:import>
         </c:if>
 
-        <sub:url value="share.view" var="shareUrl">
-            <sub:param name="path" value="${model.dir.path}"/>
-        </sub:url>
+        <c:if test="${model.user.shareRole}">
+            <sub:url value="share.view" var="shareUrl">
+                <sub:param name="path" value="${model.dir.path}"/>
+            </sub:url>
 
-        <a href="${shareUrl}"><img src="<spring:theme code="shareFacebookImage"/>" alt=""></a>
-        <a href="${shareUrl}"><img src="<spring:theme code="shareTwitterImage"/>" alt=""></a>
-        <a href="${shareUrl}"><span class="detail"><fmt:message key="main.sharealbum"/></span></a> |
+            <a href="${shareUrl}"><img src="<spring:theme code="shareFacebookImage"/>" alt=""></a>
+            <a href="${shareUrl}"><img src="<spring:theme code="shareTwitterImage"/>" alt=""></a>
+            <a href="${shareUrl}"><span class="detail"><fmt:message key="main.sharealbum"/></span></a> |
+        </c:if>
 
         <c:set var="artist" value="${model.children[0].metaData.artist}"/>
         <c:set var="album" value="${model.children[0].metaData.album}"/>
@@ -211,7 +237,7 @@
                         </c:when>
 
                         <c:otherwise>
-                            <td ${class} style="padding-left:0.25em"></td>
+                            <td ${class} style="padding-left:0.25em"><input type="checkbox" class="checkbox" id="songIndex${loopStatus.count - 1}"></td>
 
                             <c:if test="${model.visibility.trackNumberVisible}">
                                 <td ${class} style="padding-right:0.5em;text-align:right">
@@ -334,6 +360,15 @@
     </td>
 </tr>
 </table>
+
+<c:if test="${model.dir.album}">
+    <select id="moreActions" onchange="actionSelected(this.options[selectedIndex].id);">
+        <option id="top" selected="selected"><fmt:message key="main.more"/></option>
+        <c:if test="${model.user.shareRole}">
+            <option id="share"><fmt:message key="main.sharesongs"/></option>
+        </c:if>
+    </select>
+</c:if>
 
 <div>
     <c:if test="${not empty model.previousAlbum}">

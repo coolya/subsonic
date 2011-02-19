@@ -74,12 +74,16 @@
                 <td><label for="jukebox"><fmt:message key="usersettings.jukebox"/></label></td>
             </tr>
             <tr>
-            <td><form:checkbox path="downloadRole" id="download" cssClass="checkbox"/></td>
-            <td><label for="download"><fmt:message key="usersettings.download"/></label></td>
+                <td><form:checkbox path="downloadRole" id="download" cssClass="checkbox"/></td>
+                <td><label for="download"><fmt:message key="usersettings.download"/></label></td>
             </tr>
             <tr>
                 <td><form:checkbox path="uploadRole" id="upload" cssClass="checkbox"/></td>
                 <td><label for="upload"><fmt:message key="usersettings.upload"/></label></td>
+            </tr>
+            <tr>
+                <td><form:checkbox path="shareRole" id="share" cssClass="checkbox"/></td>
+                <td><label for="share"><fmt:message key="usersettings.share"/></label></td>
             </tr>
             <tr>
                 <td style="padding-top:1em"><form:checkbox path="playlistRole" id="playlist" cssClass="checkbox"/></td>
