@@ -257,7 +257,7 @@
         <table>
             <tr>
                 <td><fmt:message key="podcastreceiver.subscribe"/></td>
-                <td><input type="text" name="add" value="http://" style="width:15em" onclick="select()"/></td>
+                <td><input type="text" name="add" value="http://" style="width:30em" onclick="select()"/></td>
                 <td><input type="submit" value="<fmt:message key="common.ok"/>"/></td>
             </tr>
         </table>

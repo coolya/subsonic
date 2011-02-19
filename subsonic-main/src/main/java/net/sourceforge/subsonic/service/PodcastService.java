@@ -143,10 +143,15 @@ public class PodcastService {
      * @param url The URL of the Podcast channel.
      */
     public void createChannel(String url) {
+        url = sanitizeUrl(url);
         PodcastChannel channel = new PodcastChannel(url);
         int channelId = podcastDao.createChannel(channel);
 
         refreshChannels(Arrays.asList(getChannel(channelId)), true);
+    }
+
+    private String sanitizeUrl(String url) {
+        return url.replace(" ", "%20");
     }
 
     private PodcastChannel getChannel(int channelId) {
@@ -305,6 +310,7 @@ public class PodcastService {
             }
 
             String url = enclosure.getAttributeValue("url");
+            url = sanitizeUrl(url);
             if (url == null) {
                 LOG.debug("No enclosure URL found for episode " + title);
                 continue;
