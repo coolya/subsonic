@@ -147,6 +147,8 @@
     <string name="settings.clear_search_history">Clear search history</string>
     <string name="settings.search_history_cleared">Search history cleared</string>
     <string name="settings.other_title">Other settings</string>
+    <string name="settings.scrobble_title">Scrobble to Last.fm</string>
+    <string name="settings.scrobble_summary">Remember to set up your Last.fm user and password on the Subsonic server</string>
     <string name="settings.hide_media_title">Hide from other</string>
     <string name="settings.hide_media_summary">Hide music files and album art from other apps (Gallery, Music etc)</string>
     <string name="settings.hide_media_toast">Takes effect next time Android scans your phone for media.</string>

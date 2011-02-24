@@ -68,6 +68,7 @@ public final class Constants {
     public static final String PREFERENCES_KEY_HIDE_MEDIA = "hideMedia";
     public static final String PREFERENCES_KEY_MEDIA_BUTTONS = "mediaButtons";
     public static final String PREFERENCES_KEY_SCREEN_LIT_ON_DOWNLOAD = "screenLitOnDownload";
+    public static final String PREFERENCES_KEY_SCROBBLE = "scrobble";
 
     // Name of the preferences file.
     public static final String PREFERENCES_FILE_NAME = "net.sourceforge.subsonic.androidapp_preferences";

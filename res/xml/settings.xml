@@ -162,6 +162,12 @@
             a:title="@string/settings.other_title">
 
         <CheckBoxPreference
+                a:title="@string/settings.scrobble_title"
+                a:summary="@string/settings.scrobble_summary"
+                a:key="scrobble"
+                a:defaultValue="false"/>
+
+        <CheckBoxPreference
                 a:title="@string/settings.hide_media_title"
                 a:summary="@string/settings.hide_media_summary"
                 a:key="hideMedia"
