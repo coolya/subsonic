@@ -49,13 +49,13 @@ Buy new JW license
 DONE IN ANDROID 2.7
 --------------------
 Serialize queue when pausing.
+Play queue now always has a "current" song.
 
 TODO IN ANDROID 2.7
 -------------------
 Persist playlist when player state changes?
 Twitter, facebook integration.
 Offline shuffle broken?
-Next/prev buttons should work also when current is null.
 
 Error when using foo:3030 as server url.
 Use new intents in widget.
