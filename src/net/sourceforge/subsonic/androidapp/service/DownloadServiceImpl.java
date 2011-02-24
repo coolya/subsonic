@@ -439,6 +439,10 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private synchronized void setPlayerState(PlayerState playerState) {
         Log.i(TAG, this.playerState.name() + " -> " + playerState.name() + " (" + currentPlaying + ")");
 
+        if (playerState == PAUSED) {
+            lifecycleSupport.serializeDownloadQueue();
+        }
+
         boolean show = this.playerState == PAUSED && playerState == PlayerState.STARTED;
         boolean hide = this.playerState == STARTED && playerState == PlayerState.PAUSED;
         Util.broadcastPlaybackStatusChange(this, playerState);
