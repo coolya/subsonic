@@ -48,17 +48,18 @@ Buy new JW license
 
 DONE IN ANDROID 2.7
 --------------------
+Serialize queue when pausing.
 
 TODO IN ANDROID 2.7
 -------------------
 Persist playlist when player state changes?
 Twitter, facebook integration.
+Offline shuffle broken?
+Next/prev buttons should work also when current is null.
 
 Error when using foo:3030 as server url.
 Use new intents in widget.
 Add Repeat.
-Configurable music root.
-Next/prev buttons should work also when current is null.
 Avoid more than one instance.
 Reset shuffle play buffer when changing server.
 Long-click:
@@ -123,6 +124,8 @@ Handle whitespace in podcast urls.
 
 TODO IN 4.5
 -----------------
+Add link to ReadyNAS add-on
+  http://www.readynas.com/forum/viewtopic.php?f=48&t=45661
 Initial delay when playing in JW Player.
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=5560
 Rename "mask" to "file types". (And change implementation to handle missing periods.)
