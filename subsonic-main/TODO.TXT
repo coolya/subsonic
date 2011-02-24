@@ -54,13 +54,13 @@ last.fm support (requires Subsonic 4.4 or later)
 
 TODO IN ANDROID 2.7
 -------------------
+Add Repeat. 
 Twitter, facebook integration.
 Offline shuffle broken?
 
 Error when using foo:3030 as server url.
-Use new intents in widget.
-Add Repeat.
 Avoid more than one instance.
+Use new intents in widget.
 Reset shuffle play buffer when changing server.
 Long-click:
   Long-click artist -> Play random
