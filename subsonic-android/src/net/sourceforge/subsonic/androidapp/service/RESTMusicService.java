@@ -248,19 +248,26 @@ public class RESTMusicService implements MusicService {
     @Override
     public SearchResult search(SearchCritera critera, Context context, ProgressListener progressListener) throws Exception {
         // Ensure backward compatibility with REST 1.3.
-        if (isServer14()) {
+        if (isServerAtLeast14()) {
             return searchNew(critera, context, progressListener);
         } else {
             return searchOld(critera, context, progressListener);
         }
     }
 
-    private boolean isServer14() {
+    private boolean isServerAtLeast14() {
+        return isServerAtLeast("1.4");
+    }
+
+    private boolean isServerAtLeast15() {
+        return isServerAtLeast("1.5");
+    }
+
+    private boolean isServerAtLeast(String version) {
         if (serverRestVersion == null) {
             return false;
         }
-        Version version14 = new Version("1.4");
-        return serverRestVersion.compareTo(version14) >= 0;
+        return serverRestVersion.compareTo(new Version(version)) >= 0;
     }
 
     /**
@@ -346,6 +353,21 @@ public class RESTMusicService implements MusicService {
         Reader reader = getReader(context, progressListener, "getLyrics", null, Arrays.asList("artist", "title"), Arrays.<Object>asList(artist, title));
         try {
             return new LyricsParser(context).parse(reader, progressListener);
+        } finally {
+            Util.close(reader);
+        }
+    }
+
+    @Override
+    public void scrobble(String id, boolean submission, Context context, ProgressListener progressListener) throws Exception {
+
+        if (!isServerAtLeast15()) {
+            throw new Exception("Scrobbling not supported, server version is too old.");
+        }
+
+        Reader reader = getReader(context, progressListener, "scrobble", null, Arrays.asList("id", "submission"), Arrays.<Object>asList(id, submission));
+        try {
+            new ErrorParser(context).parse(reader);
         } finally {
             Util.close(reader);
         }

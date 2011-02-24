@@ -50,10 +50,10 @@ DONE IN ANDROID 2.7
 --------------------
 Serialize queue when pausing.
 Play queue now always has a "current" song.
+last.fm support (requires Subsonic 4.4 or later)
 
 TODO IN ANDROID 2.7
 -------------------
-Persist playlist when player state changes?
 Twitter, facebook integration.
 Offline shuffle broken?
 
@@ -69,7 +69,6 @@ Long-click:
   Test voice search.
   Simplify code in SelectAlbumActivity?
 Improve horizontal layout, move tab buttons to the right.
-Increase font size of song title.
 Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone. (onNewIntent?)
 Remove colons.
@@ -124,6 +123,7 @@ Handle whitespace in podcast urls.
 
 TODO IN 4.5
 -----------------
+Add example XMLs to API doc.
 Add link to ReadyNAS add-on
   http://www.readynas.com/forum/viewtopic.php?f=48&t=45661
 Initial delay when playing in JW Player.

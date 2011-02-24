@@ -69,6 +69,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     private final LRUCache<MusicDirectory.Entry, DownloadFile> downloadFileCache = new LRUCache<MusicDirectory.Entry, DownloadFile>(100);
     private final List<DownloadFile> cleanupCandidates = new ArrayList<DownloadFile>();
+    private final Scrobbler scrobbler = new Scrobbler();
     private DownloadFile currentPlaying;
     private DownloadFile currentDownloading;
     private CancellableTask bufferTask;
@@ -455,6 +456,12 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             Util.showPlayingNotification(this, handler, currentPlaying.getSong());
         } else if (hide) {
             Util.hidePlayingNotification(this, handler);
+        }
+
+        if (playerState == STARTED) {
+            scrobbler.scrobble(this, currentPlaying, false);
+        } else if (playerState == COMPLETED) {
+            scrobbler.scrobble(this, currentPlaying, true);
         }
     }
 

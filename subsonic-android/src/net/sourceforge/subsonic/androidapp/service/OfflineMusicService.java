@@ -168,6 +168,11 @@ public class OfflineMusicService extends RESTMusicService {
     }
 
     @Override
+    public void scrobble(String id, boolean submission, Context context, ProgressListener progressListener) throws Exception {
+        throw new RuntimeException("Scrobbling not available in offline mode");
+    }
+
+    @Override
     public MusicDirectory getAlbumList(String type, int size, int offset, Context context, ProgressListener progressListener) throws Exception {
         throw new RuntimeException("Album lists not available in offline mode");
     }

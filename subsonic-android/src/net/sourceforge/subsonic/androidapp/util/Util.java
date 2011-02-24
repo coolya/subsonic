@@ -100,6 +100,14 @@ public final class Util {
         return prefs.getBoolean(Constants.PREFERENCES_KEY_SCREEN_LIT_ON_DOWNLOAD, false);
     }
 
+    public static boolean isScrobblingEnabled(Context context) {
+        if (isOffline(context)) {
+            return false;
+        }
+        SharedPreferences prefs = getPreferences(context);
+        return prefs.getBoolean(Constants.PREFERENCES_KEY_SCROBBLE, false);
+    }
+
     public static void setActiveServer(Context context, int instance) {
         SharedPreferences prefs = getPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
