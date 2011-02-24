@@ -143,6 +143,9 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         if (autoplay) {
             play(0);
         } else {
+            if (currentPlaying == null) {
+                currentPlaying = downloadList.get(0);
+            } 
             checkDownloads();
         }
         lifecycleSupport.serializeDownloadQueue();
