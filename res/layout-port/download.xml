@@ -18,6 +18,16 @@
                 a:layout_weight="1"
                 a:background="@drawable/album_art_background">
 
+            <ImageButton
+                    a:id="@+id/download_repeat"
+                    a:src="@drawable/media_repeat_off"
+                    a:background="@android:color/transparent"
+                    a:layout_width="wrap_content"
+                    a:layout_height="wrap_content"
+                    a:layout_gravity="top|right"
+                    a:paddingTop="24dip"
+                    a:paddingLeft="4dip"/>
+
             <ImageView
                     a:id="@+id/download_album_art_image"
                     a:src="@drawable/unknown_album_large"
