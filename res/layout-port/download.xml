@@ -26,7 +26,7 @@
                     a:layout_height="wrap_content"
                     a:layout_gravity="top|right"
                     a:paddingTop="24dip"
-                    a:paddingLeft="4dip"/>
+                    a:paddingLeft="8dip"/>
 
             <ImageView
                     a:id="@+id/download_album_art_image"
