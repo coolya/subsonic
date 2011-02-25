@@ -41,6 +41,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -89,6 +90,7 @@ public class DownloadActivity extends SubsonicTabActivity {
     private View stopButton;
     private View startButton;
     private View shuffleButton;
+    private ImageButton repeatButton;
     private View toggleListButton;
     private ScheduledExecutorService executorService;
     private DownloadFile currentPlaying;
@@ -123,6 +125,7 @@ public class DownloadActivity extends SubsonicTabActivity {
         stopButton = findViewById(R.id.download_stop);
         startButton = findViewById(R.id.download_start);
         shuffleButton = findViewById(R.id.download_shuffle);
+        repeatButton = (ImageButton) findViewById(R.id.download_repeat);
         toggleListButton = findViewById(R.id.download_toggle_list);
 
         albumArtImageView.setOnClickListener(new View.OnClickListener() {
@@ -187,6 +190,14 @@ public class DownloadActivity extends SubsonicTabActivity {
             public void onClick(View view) {
                 getDownloadService().shuffle();
                 Util.toast(DownloadActivity.this, R.string.download_menu_shuffle_notification);
+            }
+        });
+
+        repeatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getDownloadService().setRepeatMode(getDownloadService().getRepeatMode().next());
+                onDownloadListChanged();
             }
         });
 
@@ -491,15 +502,30 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void onDownloadListChanged() {
-        if (getDownloadService() == null) {
+        DownloadService downloadService = getDownloadService();
+        if (downloadService == null) {
             return;
         }
 
-        List<DownloadFile> list = getDownloadService().getDownloads();
+        List<DownloadFile> list = downloadService.getDownloads();
 
         playlistView.setAdapter(new SongListAdapter(list));
         emptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
-        currentRevision = getDownloadService().getDownloadListUpdateRevision();
+        currentRevision = downloadService.getDownloadListUpdateRevision();
+
+        switch (downloadService.getRepeatMode()) {
+            case OFF:
+                repeatButton.setImageResource(R.drawable.media_repeat_off);
+                break;
+            case ALL:
+                repeatButton.setImageResource(R.drawable.media_repeat_all);
+                break;
+            case SINGLE:
+                repeatButton.setImageResource(R.drawable.media_repeat_single);
+                break;
+            default:
+                break;
+        }
     }
 
     private void onCurrentChanged() {

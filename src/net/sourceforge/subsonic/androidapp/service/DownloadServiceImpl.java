@@ -37,6 +37,7 @@ import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
+import net.sourceforge.subsonic.androidapp.domain.RepeatMode;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.ShufflePlayBuffer;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
@@ -79,6 +80,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private static DownloadService instance;
     private String suggestedPlaylistName;
     private PowerManager.WakeLock wakeLock;
+    private RepeatMode repeatMode = RepeatMode.OFF;
 
     @Override
     public void onCreate() {
@@ -189,6 +191,16 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
         revision++;
         lifecycleSupport.serializeDownloadQueue();
+    }
+
+    @Override
+    public RepeatMode getRepeatMode() {
+        return repeatMode;
+    }
+
+    @Override
+    public void setRepeatMode(RepeatMode repeatMode) {
+        this.repeatMode = repeatMode;
     }
 
     @Override

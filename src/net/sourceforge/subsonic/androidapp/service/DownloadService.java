@@ -20,6 +20,7 @@ package net.sourceforge.subsonic.androidapp.service;
 
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
+import net.sourceforge.subsonic.androidapp.domain.RepeatMode;
 
 import java.util.List;
 
@@ -36,6 +37,10 @@ public interface DownloadService {
     boolean isShufflePlayEnabled();
 
     void shuffle();
+
+    RepeatMode getRepeatMode();
+
+    void setRepeatMode(RepeatMode repeatMode);
 
     void clear();
 
