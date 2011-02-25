@@ -380,6 +380,25 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
     }
 
+    private void onSongCompleted() {
+        int index = getCurrentPlayingIndex();
+        if (index != -1) {
+            switch (repeatMode) {
+                case OFF:
+                    play(index + 1);
+                    break;
+                case ALL:
+                    play((index + 1) % size());
+                    break;
+                case SINGLE:
+                    play(index);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     @Override
     public synchronized void pause() {
         try {
@@ -521,7 +540,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                     // If COMPLETED and not playing partial file, we are *really" finished
                     // with the song and can move on to the next.
                     if (!file.equals(downloadFile.getPartialFile())) {
-                        next();
+                        onSongCompleted();
                         return;
                     }
 
@@ -535,7 +554,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                         if (duration != null) {
                             if (Math.abs(duration - pos) < 10000) {
                                 Log.i(TAG, "Skipping restart from " + pos  + " of " + duration);
-                                next();
+                                onSongCompleted();
                                 return;
                             }
                         }
