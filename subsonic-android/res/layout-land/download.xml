@@ -113,16 +113,21 @@
                         a:background="@android:color/transparent"
                         a:layout_width="wrap_content"
                         a:layout_height="wrap_content"
-                        a:padding="16dip"
-                        />
+                        a:padding="9dip"/>
+                <ImageButton
+                        a:id="@+id/download_repeat"
+                        a:src="@drawable/media_repeat_off"
+                        a:background="@android:color/transparent"
+                        a:layout_width="wrap_content"
+                        a:layout_height="wrap_content"
+                        a:padding="9dip"/>
                 <ImageButton
                         a:id="@+id/download_toggle_list"
                         a:src="@drawable/media_toggle_list"
                         a:background="@android:color/transparent"
                         a:layout_width="wrap_content"
                         a:layout_height="wrap_content"
-                        a:padding="16dip"
-                        />
+                        a:padding="9dip"/>
             </LinearLayout>
 
         </RelativeLayout>

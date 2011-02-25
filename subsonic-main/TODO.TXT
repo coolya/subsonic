@@ -51,12 +51,10 @@ DONE IN ANDROID 2.7
 Serialize queue when pausing.
 Play queue now always has a "current" song.
 last.fm support (requires Subsonic 4.4 or later)
+Added repeat button.
 
 TODO IN ANDROID 2.7
 -------------------
-Add Repeat.
-  Left padding
-  Landscape mode
 Twitter, facebook integration.
 Offline shuffle broken?
 
