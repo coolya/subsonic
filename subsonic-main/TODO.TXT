@@ -120,9 +120,16 @@ Colors: http://www.androidtapp.com/opentable/
 DONE IN 4.5
 ----------------
 Handle whitespace in podcast urls.
+Updated Norwegian translation, courtesy of Tommy Karlsen.
 
 TODO IN 4.5
 -----------------
+Avoid icon in mac dock.
+  https://mail.google.com/a/activeobjects.no/#starred/12e6a2c9d3184976
+Linux locale issue
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=22386#22386
+Use POST for createPlaylist REST method.
+Amahi
 Add example XMLs to API doc.
 Add link to ReadyNAS add-on
   http://www.readynas.com/forum/viewtopic.php?f=48&t=45661
@@ -180,6 +187,7 @@ REST method supporting "Play random", or shuffle for a sub-tree
 Disable scrobbling while downloading; Add new scrobble command?
 Select wrong player when clicking "Settings" in playlist frame.
 Upgrade DWR to 3.0rc2 when in becomes available (to make it work with Tomcat 7)
+Keyboard shortcuts.
 Transcoding fails if filename contains colons or quotes.
   https://mail.google.com/a/activeobjects.no/#inbox/12c1d386b04629d3
 HTML5/iPad
