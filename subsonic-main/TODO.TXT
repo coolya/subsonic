@@ -46,14 +46,10 @@ Add .divx
 Select inital bitrate based on network type.
 Buy new JW license
 
-DONE IN ANDROID 2.7
+DONE IN ANDROID 2.8
 --------------------
-Serialize queue when pausing.
-Play queue now always has a "current" song.
-last.fm support (requires Subsonic 4.4 or later)
-Added repeat button.
 
-TODO IN ANDROID 2.7
+TODO IN ANDROID 2.8
 -------------------
 Twitter, facebook integration.
 Offline shuffle broken?
