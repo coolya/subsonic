@@ -57,6 +57,9 @@ TODO IN ANDROID 2.7
 -------------------
 Twitter, facebook integration.
 Offline shuffle broken?
+Does repeat button work in landscape mode?
+DownloadServiceImpl: ignore a mysterious MediaPlayer error
+  https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12eff38d39be7a3c
 
 Error when using foo:3030 as server url.
 Avoid more than one instance.
@@ -124,11 +127,13 @@ Updated Norwegian translation, courtesy of Tommy Karlsen.
 
 TODO IN 4.5
 -----------------
+Backend: When redirecting POST's, extract parameters.
 Avoid icon in mac dock.
   https://mail.google.com/a/activeobjects.no/#starred/12e6a2c9d3184976
 Linux locale issue
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=22386#22386
 Use POST for createPlaylist REST method.
+REST method for rating.
 Amahi
 Add example XMLs to API doc.
 Add link to ReadyNAS add-on
