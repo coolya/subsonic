@@ -31,7 +31,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Date;
+import java.util.Enumeration;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Redirects vanity URLs (such as http://sindre.subsonic.org).
@@ -105,11 +108,20 @@ public class RedirectionController implements Controller {
         return request.getParameter("c") != null;
     }
 
-    private String getFullRequestURL(HttpServletRequest request) {
+    private String getFullRequestURL(HttpServletRequest request) throws UnsupportedEncodingException {
         StringBuilder builder = new StringBuilder(request.getRequestURL());
-        if (request.getQueryString() != null) {
-            builder.append("?").append(request.getQueryString());
+        builder.append("?");
+
+        Enumeration<?> paramNames = request.getParameterNames();
+        while (paramNames.hasMoreElements()) {
+            String paramName = (String) paramNames.nextElement();
+            String[] paramValues = request.getParameterValues(paramName);
+            for (String paramValue : paramValues) {
+                String p = URLEncoder.encode(paramValue, "UTF-8");
+                builder.append(paramName).append("=").append(p).append("&");
+            }
         }
+
         return builder.toString();
     }
 
