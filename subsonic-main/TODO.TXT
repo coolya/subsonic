@@ -120,10 +120,19 @@ DONE IN 4.5
 ----------------
 Handle whitespace in podcast urls.
 Updated Norwegian translation, courtesy of Tommy Karlsen.
+Document "timeOffset" in stream REST method.
 
 TODO IN 4.5
 -----------------
+Sharing (facebook, twitter++)
 Backend: When redirecting POST's, extract parameters.
+  - url-encode params
+  - test
+  - document on api page
+Add example XMLs to API doc.
+  - update urls
+Subsonic TV / Roku
+  http://subsonictv.com/
 Avoid icon in mac dock.
   https://mail.google.com/a/activeobjects.no/#starred/12e6a2c9d3184976
 Linux locale issue
@@ -131,7 +140,6 @@ Linux locale issue
 Use POST for createPlaylist REST method.
 REST method for rating.
 Amahi
-Add example XMLs to API doc.
 Add link to ReadyNAS add-on
   http://www.readynas.com/forum/viewtopic.php?f=48&t=45661
 Initial delay when playing in JW Player.
@@ -204,10 +212,6 @@ Add trialExpires to REST API.
 Change font in logo?
 Add "append" parameter to createPlaylist REST method.
 Modify port number and memory on Mac.
-
-Funtonia integration
-REST API for Now playing
-  https://mail.google.com/a/activeobjects.no/?tab=cm#inbox/129f7bc0659df6cf
 Make port 4040 the default on Windows installations not 80
 Write tip in Google group about subsonic.org redirect optimization.
 Update Getting Started, http://docs.google.com/Doc?docid=0ASOhs01fcWMXZGY2eDc0amZfMzJnZDUyaHJocw&hl=en
@@ -241,12 +245,7 @@ Android: Fix bugs reported by Market.
 Android: Suggest switching to offline mode if network error.
 Android: Make offline mode more visible.
 Android: Reorder playlist
-Android: Lyrics.
 Android: Queue Next + Queue Last
-Android: Menu option to exit.
-Android: Avoid stutter
-Android: Pause on Bluetooth disconnect.
-Android: Long-click on folder to play recursive.
 Android: Download error notification is nagging.
 Swipe album art to go to prev/next track.
 Seeking fails when playing partial file.  seekTo() should test if playing from partial.
@@ -261,9 +260,7 @@ Use Droid-Fu?
 Android: Long-click on song list.
 Android: Option to auto-sync certain directories or playlists.
 Android: Option to tag certain directories as favorite.
-Is there a more generic broadcast event to listen to when the media collection changes?
 Fix encoding problems in Subsonic Demo files.
-Use weak references in image cache?
 Must resolve content type in StreamController, even if "suffix" is not given.
 
 VIDEO
@@ -645,7 +642,7 @@ Update
     https://myapps.developer.motorola.com/
     https://slideme.org/application/subsonic
     http://www.camangimarket.com/index.html
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-2.6 -m "Tagging Android 2.6"
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-2.7 -m "Tagging Android 2.7"
 Create new directory in FRS
   https://sourceforge.net/projects/subsonic/files/android/
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).

@@ -207,6 +207,8 @@
     part of the version number is not used to determine compatibility.
 </p>
 
+<h1>List of API methods</h1>
+
 <h2 class="div">ping</h2>
 
 <p>
@@ -219,7 +221,7 @@
 </p>
 
 <p>
-    Returns an empty <code>&lt;subsonic-response&gt;</code> element on success.
+    Returns an empty <code>&lt;subsonic-response&gt;</code> element on success. <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/ping_example_1.xml?view=markup">Example</a>.
 </p>
 
 <h2 class="div">getLicense</h2>
@@ -237,7 +239,7 @@
 
 <p>
     Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;license&gt;</code>
-    element on success.
+    element on success. <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/license_example_1.xml?view=markup">Example</a>.
 </p>
 
 <h2 class="div">getMusicFolders</h2>
@@ -248,12 +250,12 @@
 </p>
 
 <p>
-    Returns all configured music folders. Takes no extra parameters.
+    Returns all configured top-level music folders. Takes no extra parameters.
 </p>
 
 <p>
     Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;musicFolders&gt;</code>
-    element on success.
+    element on success. <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/musicFolders_example_1.xml?view=markup">Example</a>.
 </p>
 
 <h2 class="div">getNowPlaying</h2>
@@ -269,7 +271,7 @@
 
 <p>
     Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;nowPlaying&gt;</code>
-    element on success.
+    element on success.  <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/nowPlaying_example_1.xml?view=markup">Example</a>.
 </p>
 
 <h2 class="div">getIndexes</h2>
@@ -305,7 +307,7 @@
 </table>
 <p>
     Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;indexes&gt;</code>
-    element on success.
+    element on success. <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/indexes_example_1.xml?view=markup">Example</a>.
 </p>
 
 <h2 class="div">getMusicDirectory</h2>
@@ -337,6 +339,8 @@
 <p>
     Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;directory&gt;</code>
     element on success.
+    <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/directory_example_1.xml?view=markup">Example 1</a>.
+    <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/directory_example_2.xml?view=markup">Example 2</a>.
 </p>
 
 <h2 class="div">search</h2>
@@ -402,7 +406,7 @@
 </table>
 <p>
     Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;searchResult&gt;</code>
-    element on success.
+    element on success. <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/searchResult_example_1.xml?view=markup">Example</a>.
 </p>
 
 <h2 class="div">search2</h2>
@@ -467,7 +471,7 @@
 </table>
 <p>
     Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;searchResult2&gt;</code>
-    element on success.
+    element on success.  <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/searchResult2_example_1.xml?view=markup">Example</a>.
 </p>
 
 <h2 class="div">getPlaylists</h2>
@@ -483,7 +487,7 @@
 
 <p>
     Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;playlists&gt;</code>
-    element on success.
+    element on success. <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/playlists_example_1.xml?view=markup">Example</a>.
 </p>
 
 <h2 class="div">getPlaylist</h2>
@@ -512,7 +516,7 @@
 </table>
 <p>
     Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;playlist&gt;</code>
-    element on success.
+    element on success. <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/playlist_example_1.xml?view=markup">Example</a>.
 </p>
 
 <h2 class="div">createPlaylist</h2>
@@ -524,8 +528,7 @@
 
 <p>
     Creates or updates a saved playlist. Note: The user must be authorized to create playlists (see Settings &gt; Users
-    &gt;
-    User is allowed to create and delete playlists).
+    &gt; User is allowed to create and delete playlists).
 </p>
 <table width="100%" class="bottomspace">
     <tr>
@@ -645,7 +648,13 @@
             0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256 and 320.
         </td>
     </tr>
-</table>
+    <tr class="table-altrow">
+        <td><code>timeOffset</code></td>
+        <td>No</td>
+        <td></td>
+        <td>Only applicable for video streaming. If specified, start streaming at the given offset (in seconds) into the video.
+            Typically used to implement video skipping.</td>
+    </tr></table>
 <p>
     Returns binary data on success, or an XML document on error (in which case the HTTP content type will start with "text/xml").
 </p>
@@ -784,7 +793,7 @@
 </table>
 <p>
     Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;user&gt;</code>
-    element on success.
+    element on success. <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/user_example_1.xml?view=markup">Example</a>.
 </p>
 
 <h2 class="div">createUser</h2>
@@ -942,7 +951,7 @@
 </table>
 <p>
     Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;chatMessages&gt;</code>
-    element on success.
+    element on success. <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/chatMessages_example_1.xml?view=markup">Example</a>.
 </p>
 
 <h2 class="div">addChatMessage</h2>
@@ -1015,7 +1024,7 @@
 </table>
 <p>
     Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;albumList&gt;</code>
-    element on success.
+    element on success. <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/albumList_example_1.xml?view=markup">Example</a>.
 </p>
 
 <h2 class="div">getRandomSongs</h2>
@@ -1068,7 +1077,7 @@
 </table>
 <p>
     Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;randomSongs&gt;</code>
-    element on success.
+    element on success. <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/randomSongs_example_1.xml?view=markup">Example</a>.
 </p>
 
 <h2 class="div">getLyrics</h2>
@@ -1104,6 +1113,7 @@
 <p>
     Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;lyrics&gt;</code>
     element on success. The <code>&lt;lyrics&gt;</code> element is empty if no matching lyrics was found.
+    <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/lyrics_example_1.xml?view=markup">Example</a>.
 </p>
 
 <h2 class="div">jukeboxControl</h2>
@@ -1156,6 +1166,7 @@
 <p>
     Returns an empty <code>&lt;subsonic-response&gt;</code> element on success, unless the <code>get</code>
     action is used, in which case a nested <code>&lt;jukeboxPlaylist&gt;</code> element is returned.
+    <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/jukeboxPlaylist_example_1.xml?view=markup">Example</a>.
 </p>
 
 </div>
