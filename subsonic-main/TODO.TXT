@@ -48,6 +48,7 @@ Buy new JW license
 
 DONE IN ANDROID 2.8
 --------------------
+Use HTTP POST instead of GET.
 
 TODO IN ANDROID 2.8
 -------------------
@@ -137,7 +138,6 @@ Avoid icon in mac dock.
   https://mail.google.com/a/activeobjects.no/#starred/12e6a2c9d3184976
 Linux locale issue
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=22386#22386
-Use POST for createPlaylist REST method.
 REST method for rating.
 Amahi
 Add link to ReadyNAS add-on
