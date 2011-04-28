@@ -57,7 +57,7 @@ Offline shuffle broken?
 Does repeat button work in landscape mode?
 DownloadServiceImpl: ignore a mysterious MediaPlayer error
   https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12eff38d39be7a3c
-
+Remove option to save playlist when in offline mode.
 Error when using foo:3030 as server url.
 Avoid more than one instance.
 Use new intents in widget.
@@ -122,18 +122,28 @@ DONE IN 4.5
 Handle whitespace in podcast urls.
 Updated Norwegian translation, courtesy of Tommy Karlsen.
 Document "timeOffset" in stream REST method.
+Add example XMLs to API doc.
 
 TODO IN 4.5
 -----------------
+Support video in external player
+  https://mail.google.com/a/activeobjects.no/#inbox/12f50fffffd6fecf
+Support higher video bitrates. 3000 and 5000
+Playing only first three seconds of podcast
+  http://mail.google.com/a/activeobjects.no/#inbox/12e341aeae9535eb
+GPU-accellerated ffmpeg
+  https://mail.google.com/a/activeobjects.no/#inbox/12f50fffffd6fecf
 Sharing (facebook, twitter++)
 Backend: When redirecting POST's, extract parameters.
   - url-encode params
   - test
   - document on api page
-Add example XMLs to API doc.
-  - update urls
+Can't stop/start service on Win7.  Need elevated rights?  Run service as user?
+Mac installer: make transcode dir executable.
+  https://mail.google.com/a/activeobjects.no/#inbox/12f6141978f47948
 Subsonic TV / Roku
   http://subsonictv.com/
+REST support for podcasts.
 Avoid icon in mac dock.
   https://mail.google.com/a/activeobjects.no/#starred/12e6a2c9d3184976
 Linux locale issue
@@ -164,6 +174,7 @@ Cover arts not always aligned in grid
 Upgrade ffmpeg and support wtv.
 Run Subsonic on Dreamplug
   http://www.globalscaletechnologies.com/p-41-dreamplug-devkit.aspx
+  Invoice: https://www.globalscaletechnologies.com/receipt.aspx?ordernumber=113837
 Suggestions from Gary:
 1) Many users suggest, and I concur, that making the drop down for the number of albums displayed, “sticky” so that it
    remembers your last selection.  Many users ask how to change the default from 10.
