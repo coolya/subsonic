@@ -635,6 +635,16 @@ Upgrade Subsonic backend: CHANGE DATE BELOW
   tail -f logs/catalina.out
 
 
+subsonic.canaca.com
+====================
+cpanel: https://subsonic.canaca.com:2087/
+/usr/local/jakarta/tomcat
+/scripts/restartsrv_tomcat
+/usr/sbin/starttomcat
+/usr/sbin/stoptomcat
+#Create scripts in /etc/xinet.d as per http://www.centos.org/modules/newbb/viewtopic.php?viewmode=flat&topic_id=9623&forum=31
+
+
 HOW TO RELEASE TO ANDROID MARKET
 ================================
 Build against Android 1.5 (default.properties, set API level to 3)
