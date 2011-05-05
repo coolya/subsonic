@@ -126,6 +126,7 @@ Add example XMLs to API doc.
 
 TODO IN 4.5
 -----------------
+Don't include podcasts when generating random songs.
 Support video in external player
   https://mail.google.com/a/activeobjects.no/#inbox/12f50fffffd6fecf
 Support higher video bitrates. 3000 and 5000
@@ -620,7 +621,7 @@ Take backup of forum.
 Upgrade Subsonic backend: CHANGE DATE BELOW
   Backup backend database.
     cd /var/subsonic-backend
-    tar cvf db-backup-2011-02-06.tar db
+    tar cvf db-backup-2011-05-05.tar db
   cd subsonic-backend
   mvn clean install
   scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2011-02-06/ROOT.war
@@ -642,8 +643,13 @@ cpanel: https://subsonic.canaca.com:2087/
 /scripts/restartsrv_tomcat
 /usr/sbin/starttomcat
 /usr/sbin/stoptomcat
-#Create scripts in /etc/xinet.d as per http://www.centos.org/modules/newbb/viewtopic.php?viewmode=flat&topic_id=9623&forum=31
 
+rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  root@subsonic.canaca.com:/usr/local/jakarta/tomcat/webapps/pages/
+scp subsonic-backend/target/subsonic-backend-*.war root@subsonic.canaca.com:/usr/local/jakarta/tomcat/webapps/ROOT.war
+
+- update backend db.
+- update dns
+- test redirect (put subsonic.org and sindre.subsonic.org in /etc/hosts for testing.)
 
 HOW TO RELEASE TO ANDROID MARKET
 ================================
