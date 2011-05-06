@@ -651,6 +651,20 @@ scp subsonic-backend/target/subsonic-backend-*.war root@subsonic.canaca.com:/usr
 godaddy ip: 97.74.125.134
 cancaca ip: 66.49.215.227
 
+Dreamplug
+===========
+The Access Point uap0 is set to 192.168.1.1. If your router already uses this set of IP address, you will run into a conflict and the internet connection will go.
+Two things you can do.
+  change the default ip address in /root/init_setup.sh
+  and you can take down the AP if you are purely not interested in it.
+ifconfig uap0 down
+and comment out the call to the init_setup.sh in /etc/rc.local
+(http://www.newit.co.uk/forum/index.php?topic=1078.15)
+
+Login : root
+Password: nosoup4u
+
+type wlan.sh command to switch from WLAN AP to client mode.
 
 HOW TO RELEASE TO ANDROID MARKET
 ================================
