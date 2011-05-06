@@ -40,6 +40,9 @@ mk
 # Polish
 pl
 
+# Bulgarian
+bg
+
 # Simplified Chinese
 zh_CN
 

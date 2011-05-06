@@ -112,6 +112,7 @@
                         <tr><td>&#149; Slovenian </td><td>(by Andrej &#381;i&#382;mond, Jan Jamsek and Marko Kastelic)</td></tr>
                         <tr><td>&#149; Macedonian </td><td>(by Stefan Ivanovski)</td></tr>
                         <tr><td>&#149; Polish </td><td>(by Micha&#322; Kotas)</td></tr>
+                        <tr><td>&#149; Bulgarian </td><td>(by Ivan Achev)</td></tr>
                         <tr><td>&#149; Chinese </td><td>(by Neil Gao)</td></tr>
                         <tr><td>&#149; Japanese </td><td>(by Takahiro Suzuki)</td></tr>
                         <tr><td>&#149; Korean </td><td>(by Choi Jong-seok)</td></tr>
