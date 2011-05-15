@@ -25,6 +25,7 @@
                     <li><a href="#android">Subsonic</a> for Android</li>
                     <li><a href="#winphone">Subsonic</a> for Windows Phone 7</li>
                     <li><a href="#subair">SubAir</a> for desktops</li>
+                    <li><a href="#thumper">Thumper</a> for Mac</li>
                 </ul>
                 <ul class="stars column-right">
                     <li><a href="#isub">iSub</a> for iPhone</li>
@@ -220,6 +221,39 @@
                         <p>
                             Developed and maintained by <a href="http://www.nonpixel.com/">Jim Resnowski</a>, and
                             <a href="http://www.nonpixel.com/subair/">provided free or charge</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="featureitem">
+                <a name="thumper"></a>
+
+                <div class="heading">Thumper <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
+                <div class="content">
+                    <div class="wide-content">
+                        <p>
+                            <a href="http://thumperapp.com/">Thumper</a> is a native Subsonic client for Mac.
+                        </p>
+                        <a href="inc/img/screenshots/screen27.png"><img src="inc/img/screenshots/thumb27.png" alt="" class="img-center"/></a>
+
+                        <ul class="list">
+                            <li>A Native Mac Application - designed on the Mac, for the Mac</li>
+                            <li>Local Caching of Library Information, Audio, and Album Art</li>
+                            <li>Browse Artists, Albums, and Songs</li>
+                            <li>Quick Artist Filter</li>
+                            <li>Playlists</li>
+                            <li>Search</li>
+                            <li>Current Playlist Persistence</li>
+                            <li>Mac Media Key Integration</li>
+                            <li>Keyboard Shortcuts</li>
+                            <li>Last.fm Integration</li>
+                        </ul>
+                        <p>
+                            Requires Mac OS X 10.6 or greater. Does not support Subsonic's downsampling (reducing the audio bitrate).
+                        </p>
+                        <p>
+                            Available from <a href="http://thumperapp.com/">thumberapp.com</a>.
                         </p>
                     </div>
                 </div>

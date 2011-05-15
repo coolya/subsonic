@@ -128,7 +128,11 @@ Updated German translation, courtesy of deejay2302.
 
 TODO IN 4.5
 -----------------
+AdMob
+Add runtime flag for verbose gc log.
 Backend: Fix problem with http forwarder
+Show library statistics for video.
+Canaca ads.
 Don't include podcasts when generating random songs.
 Support video in external player
   https://mail.google.com/a/activeobjects.no/#inbox/12f50fffffd6fecf
@@ -647,7 +651,7 @@ cpanel: https://subsonic.canaca.com:2087/
 /usr/sbin/starttomcat
 /usr/sbin/stoptomcat
 
-rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  root@subsonic.canaca.com:/usr/local/jakarta/tomcat/webapps/pages/
+rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  root@subsonic.org:/usr/local/jakarta/tomcat/webapps/pages
 scp subsonic-backend/target/subsonic-backend-*.war root@subsonic.canaca.com:/usr/local/jakarta/tomcat/webapps/ROOT.war
 
 godaddy ip: 97.74.125.134
