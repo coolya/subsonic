@@ -16,6 +16,10 @@
     <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoomHTML.js"/>"></script>
 </head><body class="mainframe bgcolor1" onload="init();">
 
+<sub:url value="share.view" var="shareUrl">
+    <sub:param name="dir" value="${model.dir.path}"/>
+</sub:url>
+
 <script type="text/javascript" language="javascript">
     function init() {
         setupZoom('<c:url value="/"/>');
@@ -27,21 +31,18 @@
         if (id == "top") {
             return;
         } else if (id == "share") {
-            alert("x");
-            parent.frames.main.location.href = "share.view?" + getSelectedIndexes();
+            parent.frames.main.location.href = "${shareUrl}&" + getSelectedIndexes();
         }
         $("moreActions").selectedIndex = 0;
     }
 
     function getSelectedIndexes() {
-        alert("a");
         var result = "";
         for (var i = 0; i < ${fn:length(model.children)}; i++) {
             if ($("songIndex" + i).checked) {
                 result += "i=" + i + "&";
             }
         }
-        alert(result);
         return result;
     }
 </script>
@@ -138,10 +139,6 @@
         </c:if>
 
         <c:if test="${model.user.shareRole}">
-            <sub:url value="share.view" var="shareUrl">
-                <sub:param name="path" value="${model.dir.path}"/>
-            </sub:url>
-
             <a href="${shareUrl}"><img src="<spring:theme code="shareFacebookImage"/>" alt=""></a>
             <a href="${shareUrl}"><img src="<spring:theme code="shareTwitterImage"/>" alt=""></a>
             <a href="${shareUrl}"><span class="detail"><fmt:message key="main.sharealbum"/></span></a> |

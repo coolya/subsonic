@@ -135,6 +135,7 @@ TODO IN 4.5
 AdMob
 Backend: Fix problem with http forwarder
 Show library statistics for video.
+Write hosting.jsp
 Canaca ads.
 Support video in external player
   https://mail.google.com/a/activeobjects.no/#inbox/12f50fffffd6fecf
