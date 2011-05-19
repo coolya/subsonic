@@ -110,6 +110,15 @@ public class RedirectionController implements Controller {
 
     private String getFullRequestURL(HttpServletRequest request) throws UnsupportedEncodingException {
         StringBuilder builder = new StringBuilder(request.getRequestURL());
+
+        // For backwards compatibility; return query parameters in exact same sequence.
+        if ("GET".equalsIgnoreCase(request.getMethod())) {
+            if (request.getQueryString() != null) {
+                builder.append("?").append(request.getQueryString());
+            }
+            return builder.toString();
+        }
+
         builder.append("?");
 
         Enumeration<?> paramNames = request.getParameterNames();

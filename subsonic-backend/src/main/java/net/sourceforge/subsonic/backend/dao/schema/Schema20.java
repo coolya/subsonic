@@ -52,7 +52,6 @@ public class Schema20 extends Schema {
                              "last_updated datetime," +
                              "unique(transaction_id))");
             template.execute("create index idx_payment_transaction_id on payment(transaction_id)");
-            template.execute("create index idx_payment_transaction_id on payment(transaction_id)");
             template.execute("create index idx_payment_created on payment(created)");
 
             LOG.info("Database table 'payment' was created successfully.");
