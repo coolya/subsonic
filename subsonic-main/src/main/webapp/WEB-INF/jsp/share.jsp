@@ -38,7 +38,7 @@
     </c:otherwise>
 </c:choose>
 
-<sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.file.path}"/></sub:url>
+<sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.dir.path}"/></sub:url>
 <div class="back"><a href="${backUrl}"><fmt:message key="common.back"/></a></div>
 
 </body>

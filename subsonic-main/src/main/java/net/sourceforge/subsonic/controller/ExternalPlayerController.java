@@ -56,7 +56,7 @@ public class ExternalPlayerController extends ParameterizableViewController {
         map.put("songs", songs);
         if (!songs.isEmpty()) {
             map.put("coverArt", musicFileService.getCoverArt(songs.get(0)));
-        } 
+        }
         map.put("redirectFrom", settingsService.getUrlRedirectFrom());
 
         ModelAndView result = super.handleRequestInternal(request, response);
@@ -65,17 +65,13 @@ public class ExternalPlayerController extends ParameterizableViewController {
     }
 
     private List<MusicFile> getSongs(HttpServletRequest request) throws IOException {
-        String dir = request.getParameter("dir");
-        if (dir != null) {
-            MusicFile file = musicFileService.getMusicFile(dir);
-            return file.getChildren(true, false, true);
-        }
-
         List<MusicFile> result = new ArrayList<MusicFile>();
-        String[] files = request.getParameterValues("file");
-        if (files != null) {
-            for (String file : files) {
-                result.add(musicFileService.getMusicFile(file));
+        for (String path : request.getParameterValues("path")) {
+            MusicFile file = musicFileService.getMusicFile(path);
+            if (file.isDirectory()) {
+                result.addAll(file.getChildren(true, false, true));
+            } else {
+                result.add(file);
             }
         }
         return result;
