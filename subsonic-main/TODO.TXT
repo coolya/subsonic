@@ -126,6 +126,7 @@ Add example XMLs to API doc.
 Added Bulgarian translation, courtesy of Ivan Achev.
 Updated German translation, courtesy of deejay2302.
 Add runtime flag for verbose gc log.
+Support higher video bitrates. 3000 and 5000
 
 TODO IN 4.5
 -----------------
@@ -136,7 +137,6 @@ Canaca ads.
 Don't include podcasts when generating random songs.
 Support video in external player
   https://mail.google.com/a/activeobjects.no/#inbox/12f50fffffd6fecf
-Support higher video bitrates. 3000 and 5000
 Playing only first three seconds of podcast
   http://mail.google.com/a/activeobjects.no/#inbox/12e341aeae9535eb
 GPU-accellerated ffmpeg
