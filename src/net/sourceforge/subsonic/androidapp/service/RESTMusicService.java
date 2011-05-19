@@ -645,9 +645,8 @@ public class RESTMusicService implements MusicService {
         HttpHost host = (HttpHost) httpContext.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
         String redirectedUrl = host.toURI() + request.getURI();
 
-        String path = Util.substringAfter(originalUrl, ".subsonic.org");
-        redirectFrom = originalUrl.replace(path, "");
-        redirectTo = redirectedUrl.replace(path, "");
+        redirectFrom = originalUrl.substring(0, originalUrl.indexOf("/rest/"));
+        redirectTo = redirectedUrl.substring(0, redirectedUrl.indexOf("/rest/"));
 
         Log.i(TAG, redirectFrom + " redirects to " + redirectTo);
         redirectionLastChecked = System.currentTimeMillis();
