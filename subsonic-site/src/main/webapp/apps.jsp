@@ -253,7 +253,8 @@
                             Requires Mac OS X 10.6 or greater. Does not support Subsonic's downsampling (reducing the audio bitrate).
                         </p>
                         <p>
-                            Available from <a href="http://thumperapp.com/">thumberapp.com</a>.
+                            <a href="http://itunes.apple.com/us/app/thumper/id436422990?mt=12&uo=4"><img class="img-center" 
+                                    src="inc/img/mac-appstore.jpg" alt="Thumper"/></a>
                         </p>
                     </div>
                 </div>
