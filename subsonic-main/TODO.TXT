@@ -125,11 +125,11 @@ Document "timeOffset" in stream REST method.
 Add example XMLs to API doc.
 Added Bulgarian translation, courtesy of Ivan Achev.
 Updated German translation, courtesy of deejay2302.
+Add runtime flag for verbose gc log.
 
 TODO IN 4.5
 -----------------
 AdMob
-Add runtime flag for verbose gc log.
 Backend: Fix problem with http forwarder
 Show library statistics for video.
 Canaca ads.
