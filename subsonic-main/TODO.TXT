@@ -127,6 +127,7 @@ Added Bulgarian translation, courtesy of Ivan Achev.
 Updated German translation, courtesy of deejay2302.
 Add runtime flag for verbose gc log.
 Support higher video bitrates. 3000 and 5000
+Don't include podcasts when generating random songs.
 
 TODO IN 4.5
 -----------------
@@ -134,7 +135,6 @@ AdMob
 Backend: Fix problem with http forwarder
 Show library statistics for video.
 Canaca ads.
-Don't include podcasts when generating random songs.
 Support video in external player
   https://mail.google.com/a/activeobjects.no/#inbox/12f50fffffd6fecf
 Playing only first three seconds of podcast

@@ -325,43 +325,44 @@ public class SearchService {
             musicFolderPath = musicFolder.getPath().getPath().toUpperCase() + File.separator;
         }
 
-        // Filter by genre, year and music folder, if required.
-        List<Line> songs = cachedSongs;
-        if (genre != null || fromYear != null || musicFolderPath != null) {
-            songs = new ArrayList<Line>();
+        // Filter by genre, year and music folder.
+        List<Line> songs = new ArrayList<Line>(cachedSongs.size());
+        String fromYearString = fromYear == null ? null : String.valueOf(fromYear);
+        String toYearString = toYear == null ? null : String.valueOf(toYear);
 
-            String fromYearString = fromYear == null ? null : String.valueOf(fromYear);
-            String toYearString = toYear == null ? null : String.valueOf(toYear);
+        for (Line song : cachedSongs) {
 
-            for (Line song : cachedSongs) {
+            // Skip if wrong genre.
+            if (genre != null && !genre.equalsIgnoreCase(song.genre)) {
+                continue;
+            }
 
-                // Skip if wrong genre.
-                if (genre != null && !genre.equalsIgnoreCase(song.genre)) {
+            // Skip podcasts if no genre is given.
+            if (genre == null && "podcast".equalsIgnoreCase(song.genre)) {
+                continue;
+            }
+
+            // Skip if wrong year.
+            if (fromYearString != null) {
+                if (song.year == null || song.year.compareTo(fromYearString) < 0) {
                     continue;
                 }
-
-                // Skip if wrong year.
-                if (fromYearString != null) {
-                    if (song.year == null || song.year.compareTo(fromYearString) < 0) {
-                        continue;
-                    }
-                }
-                if (toYearString != null) {
-                    if (song.year == null || song.year.compareTo(toYearString) > 0) {
-                        continue;
-                    }
-                }
-
-                // Skip if wrong music folder.
-                if (musicFolderPath != null) {
-                    String filePath = song.file.getPath().toUpperCase();
-                    if (!filePath.startsWith(musicFolderPath)) {
-                        continue;
-                    }
-                }
-
-                songs.add(song);
             }
+            if (toYearString != null) {
+                if (song.year == null || song.year.compareTo(toYearString) > 0) {
+                    continue;
+                }
+            }
+
+            // Skip if wrong music folder.
+            if (musicFolderPath != null) {
+                String filePath = song.file.getPath().toUpperCase();
+                if (!filePath.startsWith(musicFolderPath)) {
+                    continue;
+                }
+            }
+
+            songs.add(song);
         }
 
         if (songs.isEmpty()) {
