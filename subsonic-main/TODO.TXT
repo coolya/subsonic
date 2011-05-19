@@ -128,6 +128,7 @@ Updated German translation, courtesy of deejay2302.
 Add runtime flag for verbose gc log.
 Support higher video bitrates. 3000 and 5000
 Don't include podcasts when generating random songs.
+Mac installer: make transcode dir executable.
 
 TODO IN 4.5
 -----------------
@@ -147,8 +148,6 @@ Backend: When redirecting POST's, extract parameters.
   - test
   - document on api page
 Can't stop/start service on Win7.  Need elevated rights?  Run service as user?
-Mac installer: make transcode dir executable.
-  https://mail.google.com/a/activeobjects.no/#inbox/12f6141978f47948
 Subsonic TV / Roku
   http://subsonictv.com/
 REST support for podcasts.
