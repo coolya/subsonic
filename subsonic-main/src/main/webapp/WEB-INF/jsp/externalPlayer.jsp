@@ -48,11 +48,11 @@
         <c:forEach items="${model.songs}" var="song" varStatus="loopStatus">
         <sub:url value="/stream" var="streamUrl">
         <sub:param name="path" value="${song.path}"/>
+        </sub:url>
 
 //            TODO: Escape song title
-        </sub:url>
             list[${loopStatus.count-1}] = {
-                file: "${streamUrl}",
+                file: "${streamUrl}&player=${model.player}",
                 title: "${song.title}",
                 provider:"sound",
                 description: "${song.metaData.artist}"

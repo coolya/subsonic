@@ -58,7 +58,7 @@ public class ExternalPlayerController extends ParameterizableViewController {
             map.put("coverArt", musicFileService.getCoverArt(songs.get(0)));
         }
         map.put("redirectFrom", settingsService.getUrlRedirectFrom());
-
+        map.put("player", request.getParameter("player"));
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;

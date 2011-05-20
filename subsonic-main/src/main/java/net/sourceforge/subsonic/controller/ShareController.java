@@ -21,6 +21,7 @@ package net.sourceforge.subsonic.controller;
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.UrlShortenerService;
 import net.sourceforge.subsonic.util.StringUtil;
@@ -49,12 +50,14 @@ public class ShareController extends ParameterizableViewController {
     private final UrlShortenerService urlShortenerService = new UrlShortenerService();
     private MusicFileService musicFileService;
     private SettingsService settingsService;
+    private PlayerService playerService;
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String dir = request.getParameter("dir");
 
         StringBuilder builder = new StringBuilder();
         builder.append("http://").append(settingsService.getUrlRedirectFrom()).append(".subsonic.org/externalPlayer.view?");
+        builder.append("player=").append(playerService.getPlayer(request, response).getId()).append("&");
 
         List<MusicFile> files = getMusicFiles(request);
         for (MusicFile file : files) {
@@ -95,5 +98,9 @@ public class ShareController extends ParameterizableViewController {
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
+    }
+
+    public void setPlayerService(PlayerService playerService) {
+        this.playerService = playerService;
     }
 }
