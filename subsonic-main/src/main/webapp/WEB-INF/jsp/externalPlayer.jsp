@@ -24,9 +24,9 @@
         function init() {
             var flashvars = {
                 id:"player1",
+                screencolor:"000000",
+                frontcolor:"<spring:theme code="textColor"/>",
                 backcolor:"<spring:theme code="backgroundColor"/>",
-                <%--screencolor:"<spring:theme code="backgroundColor"/>",--%>
-                <%--frontcolor:"<spring:theme code="textColor"/>",--%>
                 "playlist.position": "bottom",
                 "playlist.size": 200
             };
@@ -55,7 +55,8 @@
                 file: "${streamUrl}&player=${model.player}",
                 image: "${coverArtUrl}&size=277",
                 title: "${song.title}",
-                provider:"sound",
+                provider: "${song.video ? "video" : "sound"}",
+                <%--stretching: "${song.video ? "uniform" : "none"}",--%>
                 description: "${song.metaData.artist}"
             };
 
