@@ -55,7 +55,7 @@ public class ExternalPlayerController extends ParameterizableViewController {
 
         map.put("songs", songs);
         if (!songs.isEmpty()) {
-            map.put("coverArt", musicFileService.getCoverArt(songs.get(0)));
+            map.put("coverArt", musicFileService.getCoverArt(songs.get(0).getParent()));
         }
         map.put("redirectFrom", settingsService.getUrlRedirectFrom());
         map.put("player", request.getParameter("player"));
