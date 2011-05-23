@@ -89,7 +89,7 @@
 </p>
 
 <p>
-    Starting with API version 1.2.0 it is deprecated to send the username and password as part of the URL.
+    Starting with API version 1.2.0 it is no longer recommended to send the username and password as part of the URL.
     Instead, HTTP <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">Basic</a> authentication should be
     used.
     (Only <em>preemptive</em> authentication is supported, meaning that the credentials should be supplied by the client
@@ -198,6 +198,10 @@
     <tr>
         <td>4.3.1</td>
         <td>1.5.0</td>
+    </tr>
+    <tr class="table-altrow">
+        <td>4.5</td>
+        <td>1.6.0</td>
     </tr>
 </table>
 <p>
@@ -1167,6 +1171,22 @@
     Returns an empty <code>&lt;subsonic-response&gt;</code> element on success, unless the <code>get</code>
     action is used, in which case a nested <code>&lt;jukeboxPlaylist&gt;</code> element is returned.
     <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/jukeboxPlaylist_example_1.xml?view=markup">Example</a>.
+</p>
+
+<h2 class="div">getPodcasts</h2>
+
+<p>
+    <code>http://your-server/rest/getPodcasts.view</code>
+    <br>Since <a href="#versions">1.6.0</a>
+</p>
+
+<p>
+    Returns all podcast channels the server subscribes to and their episodes. Takes no extra parameters.
+</p>
+
+<p>
+    Returns a <code>&lt;subsonic-response&gt;</code> element with a nested <code>&lt;podcasts&gt;</code>
+    element on success. <a href="http://subsonic.svn.sourceforge.net/viewvc/subsonic/trunk/subsonic-main/src/main/webapp/xsd/podcasts_example_1.xml?view=markup">Example</a>.
 </p>
 
 </div>

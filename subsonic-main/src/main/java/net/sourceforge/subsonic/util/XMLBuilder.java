@@ -29,6 +29,8 @@ import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Stack;
+import java.util.Map;
+import java.util.LinkedHashMap;
 
 
 /**
@@ -244,6 +246,14 @@ public class XMLBuilder {
             this.value = value;
         }
 
+        public String getKey() {
+            return key;
+        }
+
+        public Object getValue() {
+            return value;
+        }
+
         private void append(Writer writer) throws IOException {
             if (key != null && value != null) {
                 writer.write(key);
@@ -253,4 +263,31 @@ public class XMLBuilder {
             }
         }
     }
+
+    /**
+     * A set of attributes.
+     */
+    public static class AttributeSet implements Iterable<Attribute> {
+
+        private final Map<String, Attribute> attributes = new LinkedHashMap<String, Attribute>();
+
+        public void add(Attribute attribute) {
+            attributes.put(attribute.getKey(), attribute);
+        }
+
+        public void add(String key, Object value) {
+            add(new Attribute(key, value));
+        }
+
+        public void addAll(Iterable<Attribute> attributes) {
+            for (Attribute attribute : attributes) {
+                add(attribute);
+            }
+        }
+
+        public Iterator<Attribute> iterator() {
+            return attributes.values().iterator();
+        }
+    }
+
 }

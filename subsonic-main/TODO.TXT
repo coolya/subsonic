@@ -52,6 +52,8 @@ Use HTTP POST instead of GET.
 
 TODO IN ANDROID 2.8
 -------------------
+Remember repeat mode
+  https://mail.google.com/mail/?shva=1#inbox/1301dfb08775df81
 Twitter, facebook integration.
 Offline shuffle broken?
 Does repeat button work in landscape mode?
@@ -129,6 +131,7 @@ Add runtime flag for verbose gc log.
 Support higher video bitrates. 3000 and 5000
 Don't include podcasts when generating random songs.
 Mac installer: make transcode dir executable.
+REST support for podcasts.
 
 TODO IN 4.5
 -----------------
@@ -152,7 +155,6 @@ Can't stop/start service on Win7.  Need elevated rights?  Run service as user?
 Subsonic TV / Roku
   http://subsonictv.com/
 Subsonic for Boxee
-REST support for podcasts.
 Avoid icon in mac dock.
   https://mail.google.com/a/activeobjects.no/#starred/12e6a2c9d3184976
 Linux locale issue

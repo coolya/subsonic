@@ -4,7 +4,7 @@
            targetNamespace="http://subsonic.org/restapi"
            attributeFormDefault="unqualified"
            elementFormDefault="qualified"
-           version="1.5.0">
+           version="1.6.0">
 
     <xs:element name="subsonic-response" type="sub:Response"/>
 
@@ -25,6 +25,7 @@
             <xs:element name="albumList" type="sub:AlbumList" minOccurs="1" maxOccurs="1"/>
             <xs:element name="randomSongs" type="sub:RandomSongs" minOccurs="1" maxOccurs="1"/>
             <xs:element name="lyrics" type="sub:Lyrics" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="podcasts" type="sub:Podcasts" minOccurs="1" maxOccurs="1"/>
             <xs:element name="error" type="sub:Error" minOccurs="1" maxOccurs="1"/>
         </xs:choice>
         <xs:attribute name="status" type="sub:ResponseStatus" use="required"/>
@@ -197,6 +198,46 @@
         <xs:attribute name="artist" type="xs:string" use="optional"/>
         <xs:attribute name="title" type="xs:string" use="optional"/>
     </xs:complexType>
+
+    <xs:complexType name="Podcasts">
+        <xs:sequence>
+            <xs:element name="channel" type="sub:PodcastChannel" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PodcastChannel">
+        <xs:sequence>
+            <xs:element name="episode" type="sub:PodcastEpisode" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="url" type="xs:string" use="required"/>
+        <xs:attribute name="title" type="xs:string" use="optional"/>
+        <xs:attribute name="description" type="xs:string" use="optional"/>
+        <xs:attribute name="status" type="sub:PodcastStatus" use="required"/>
+        <xs:attribute name="errorMessage" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="PodcastEpisode">
+        <xs:complexContent>
+            <xs:extension base="sub:Child">
+                <xs:attribute name="streamId" type="xs:string" use="optional"/> <!-- Use this ID for streaming the podcast. -->
+                <xs:attribute name="description" type="xs:string" use="optional"/>
+                <xs:attribute name="status" type="sub:PodcastStatus" use="required"/>
+                <xs:attribute name="publishDate" type="xs:dateTime" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:simpleType name="PodcastStatus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="new"/>
+            <xs:enumeration value="downloading"/>
+            <xs:enumeration value="completed"/>
+            <xs:enumeration value="error"/>
+            <xs:enumeration value="deleted"/>
+            <xs:enumeration value="skipped"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="License">
         <xs:attribute name="valid" type="xs:boolean" use="required"/>
