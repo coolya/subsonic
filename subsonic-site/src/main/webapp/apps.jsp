@@ -28,8 +28,8 @@
                     <li><a href="#thumper">Thumper</a> for Mac</li>
                 </ul>
                 <ul class="stars column-right">
-                    <li><a href="#isub">iSub</a> for iPhone</li>
-                    <li><a href="#zsubsonic">Z-Subsonic</a> for iPhone</li>
+                    <li><a href="#isub">iSub</a> for iPhone/iPad</li>
+                    <li><a href="#zsubsonic">Z-Subsonic</a> for iPhone/iPad</li>
                     <li><a href="#subgadget">SubGadget</a> for Windows</li>
                 </ul>
             </div>
@@ -83,12 +83,12 @@
             <div class="featureitem">
                 <a name="isub"></a>
 
-                <div class="heading">iSub for iPhone <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
+                <div class="heading">iSub for iPhone/iPad <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
                 <div class="content">
                     <div class="wide-content">
                         <p>
                             <img src="inc/img/appstore.png" alt="App Store" class="img-left"/>
-                            <a href="http://isubapp.com/">iSub</a> is an iPhone app developed by Ben Baron, and is
+                            <a href="http://isubapp.com/">iSub</a> is an iPhone/iPad app developed by Ben Baron, and is
                             available for purchase on the <a href="http://itunes.apple.com/us/app/isub-music-streamer/id362920532?mt=8">App&nbsp;Store</a>.
                         </p>
                         <a href="inc/img/screenshots/screen20.png"><img src="inc/img/screenshots/thumb20.png" alt="" style="padding:15px;padding-left:80px"/></a>
@@ -106,7 +106,7 @@
                             <li>Each music folder is a playlist automatically so when you select a track from an album it will continue to play the rest of the tracks in that album.</li>
                             <li>Shuffle, Repeat 1, and Repeat All when playing an album.</li>
                             <li>Detailed track information by tapping the cover art.</li>
-                            <li>(Coming soon) Jukebox mode support to use your device as a remote control for Subsonic for listening to music around the house.</li>
+                            <li>Jukebox mode to use your device as a remote control for Subsonic for listening to music around the house.</li>
                         </ul>
                         <p>
                             Support: <a href="mailto:support@isubapp.com">support@isubapp.com</a>
@@ -120,33 +120,37 @@
             <div class="featureitem">
                 <a name="zsubsonic"></a>
 
-                <div class="heading">Z-Subsonic for iPhone <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
+                <div class="heading">Z-Subsonic for iPhone/iPad <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
                 <div class="content">
                     <div class="wide-content">
                         <p>
                             <img src="inc/img/appstore.png" alt="App Store" class="img-left"/>
-                            <a href="http://z-subsonic.com/">Z-Subsonic</a> is an iPhone app developed by Olusola Abiodun, and is
+                            <a href="http://z-subsonic.com/">Z-Subsonic</a> is an iPhone/iPad app developed by Olusola Abiodun, and is
                             available for purchase on the <a href="http://itunes.apple.com/us/app/z-subsonic/id358344265?mt=8">App Store</a>.
                         </p>
-                            <a href="inc/img/screenshots/screen17.png"><img src="inc/img/screenshots/thumb17.png" alt="" style="margin-left:30px;padding:3px"/></a>
-                            <a href="inc/img/screenshots/screen18.png"><img src="inc/img/screenshots/thumb18.png" alt="" style="padding:3px"/></a>
-                            <a href="inc/img/screenshots/screen19.png"><img src="inc/img/screenshots/thumb19.png" alt="" style="padding:3px"/></a>
+                        <a href="inc/img/screenshots/screen17.png"><img src="inc/img/screenshots/thumb17.png" alt="" style="margin-left:30px;padding:3px"/></a>
+                        <a href="inc/img/screenshots/screen18.png"><img src="inc/img/screenshots/thumb18.png" alt="" style="padding:3px"/></a>
+                        <a href="inc/img/screenshots/screen19.png"><img src="inc/img/screenshots/thumb19.png" alt="" style="padding:3px"/></a>
 
                         <ul class="list">
-                            <li>Access your entire music library from anywhere on your iPhone or iPod regardless of the size of your music collection.</li>
-                            <li>Play song formats that the iPhone/iPod will not normally play e.g. wma, flac, ogg.</li>
-                            <li>Delete or change song priority on the Now Playing list while songs are playing.</li>
-                            <li>Songs start with little or no delay.</li>
-                            <li>Queue the same song multiple times.</li>
-                            <li>Load playlists stored on the Subsonic server.</li>
-                            <li>Easily select any of 5 Subsonic server connections.</li>
-                            <li>SSL support.</li>
-                            <li>Favorites.</li>
-                            <li>Complete artist, album and song info caching.</li>
+                            <li> Access your entire music library from anywhere on your iPhone or iPod regardless of the size of your music collection.</li>
+                            <li> Play song formats that the iPhone/iPod will not normally play e.g. wma, flac, ogg.</li>
+                            <li> Caches all queued songs as quickly as possible once Wi-fi connection is detected.</li>
+                            <li> Browse and manage cached songs by artist/album. Delete entire artist/album from cache at once.</li>
+                            <li> Delete or change song priority on the Now Playing list while songs are playing.</li>
+                            <li> Double buffering: upcoming song starts to download before the currently playing song finishes.</li>
+                            <li> Seeking for fully cached songs.</li>
+                            <li> Load playlists stored on the Subsonic server.</li>
+                            <li> Multiple server configuration.</li>
+                            <li> Random playlist generation using entire song collection.</li>
+                            <li> Repeat/shuffle/skip songs.</li>
+                            <li> SSL support with prompt to authorize self-signed certificates.</li>
+                            <li> Full caching. Z-Subsonic can be used fully disconnected with previously streamed music.</li>
+                            <li> Favorites.
                         </ul>
 
                         <p>
-                           See the <a href="http://www.youtube.com/watch?v=yFzM7-rfINM">video on YouTube</a>.
+                            See the <a href="http://www.youtube.com/watch?v=yFzM7-rfINM">video on YouTube</a>.
                         </p>
 
                         <p>
