@@ -25,8 +25,10 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
@@ -49,10 +51,27 @@ public class SelectPlaylistActivity extends SubsonicTabActivity implements Adapt
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_playlist);
+
         list = (ListView) findViewById(R.id.select_playlist_list);
         emptyTextView = findViewById(R.id.select_playlist_empty);
         list.setOnItemClickListener(this);
         registerForContextMenu(list);
+		
+		// Button 1: gone
+		findViewById(R.id.action_button_1).setVisibility(View.GONE);
+
+        // Button 2: search
+        final ImageButton actionSearchButton = (ImageButton)findViewById(R.id.action_button_2);
+        actionSearchButton.setImageResource(R.drawable.action_search);
+        actionSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            	Intent intent = new Intent(SelectPlaylistActivity.this, SearchActivity.class);
+            	intent.putExtra(Constants.INTENT_EXTRA_REQUEST_SEARCH, true);
+                Util.startActivityWithoutTransition(SelectPlaylistActivity.this, intent);
+            }
+        });
+
         load();
     }
 

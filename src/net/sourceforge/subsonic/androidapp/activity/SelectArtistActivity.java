@@ -19,16 +19,9 @@
 
 package net.sourceforge.subsonic.androidapp.activity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Artist;
 import net.sourceforge.subsonic.androidapp.domain.Indexes;
@@ -40,158 +33,210 @@ import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
+public class SelectArtistActivity extends SubsonicTabActivity implements
+		AdapterView.OnItemClickListener {
 
-public class SelectArtistActivity extends SubsonicTabActivity implements AdapterView.OnItemClickListener {
+	private static final int MENU_GROUP_MUSIC_FOLDER = 10;
 
-    private static final int MENU_ITEM_PLAY_ALL = 1;
-    private static final int MENU_ITEM_QUEUE_ALL = 2;
-    private static final int MENU_ITEM_SAVE_ALL = 3;
-    private static final int MENU_GROUP_MUSIC_FOLDER = 10;
+	private ListView artistList;
 
-    private ListView artistList;
-    private View refreshButton;
+	private View folderButton;
+	private TextView folderName;
+	private List<MusicFolder> musicFolders;
 
-    private View folderButton;
-    private List<MusicFolder> musicFolders;
+	/**
+	 * Called when the activity is first created.
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.select_artist);
 
-    /**
-    * Called when the activity is first created.
-    */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.select_artist);
+		artistList = (ListView) findViewById(R.id.select_artist_list);
+		artistList.setOnItemClickListener(this);
 
-        artistList = (ListView) findViewById(R.id.select_artist_list);
-        artistList.setOnItemClickListener(this);
+		folderButton = LayoutInflater.from(this).inflate(
+				R.layout.select_artist_header, artistList, false);
+		folderName = (TextView) folderButton
+				.findViewById(R.id.select_artist_folder_2);
 
-        View header = LayoutInflater.from(this).inflate(R.layout.select_artist_header, artistList, false);
-        refreshButton = header.findViewById(R.id.select_artist_refresh);
-        refreshButton.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        artistList.addHeaderView(refreshButton);
+		if (!Util.isOffline(this)) {
+			artistList.addHeaderView(folderButton);
+		}
 
-        if (!Util.isOffline(this)) {
-            folderButton = header.findViewById(R.id.select_artist_folder);
-            folderButton.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            artistList.addHeaderView(folderButton);
-        }
+		registerForContextMenu(artistList);
 
-        registerForContextMenu(artistList);
+		setTitle(Util.isOffline(this) ? R.string.music_library_label_offline
+				: R.string.music_library_label);
 
-        setTitle(Util.isOffline(this) ? R.string.music_library_label_offline : R.string.music_library_label);
+		// Button 1: gone
+		findViewById(R.id.action_button_1).setVisibility(View.GONE);
 
-        musicFolders = null;
-        load();
-    }
+		// Button 2: refresh
+		final ImageButton refreshButton = (ImageButton) findViewById(R.id.action_button_2);
+		refreshButton.setImageResource(R.drawable.action_refresh);
+		refreshButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				refresh();
+			}
+		});
 
-    private void refresh() {
-        finish();
-        Intent intent = new Intent(this, SelectArtistActivity.class);
-        intent.putExtra(Constants.INTENT_EXTRA_NAME_REFRESH, true);
-        Util.startActivityWithoutTransition(this, intent);
-    }
+		musicFolders = null;
+		load();
+	}
 
-    private void selectFolder() {
-        folderButton.showContextMenu();
-    }
+	private void refresh() {
+		finish();
+		Intent intent = new Intent(this, SelectArtistActivity.class);
+		intent.putExtra(Constants.INTENT_EXTRA_NAME_REFRESH, true);
+		Util.startActivityWithoutTransition(this, intent);
+	}
 
-    private void load() {
-        BackgroundTask<Indexes> task = new TabActivityBackgroundTask<Indexes>(this) {
-            @Override
-            protected Indexes doInBackground() throws Throwable {
-                boolean refresh = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_REFRESH, false);
-                MusicService musicService = MusicServiceFactory.getMusicService(SelectArtistActivity.this);
-                if (!Util.isOffline(SelectArtistActivity.this)) {
-                    musicFolders = musicService.getMusicFolders(SelectArtistActivity.this, this);
-                }
-                String musicFolderId = Util.getSelectedMusicFolderId(SelectArtistActivity.this);
-                return musicService.getIndexes(musicFolderId, refresh, SelectArtistActivity.this, this);
-            }
+	private void selectFolder() {
+		folderButton.showContextMenu();
+	}
 
-            @Override
-            protected void done(Indexes result) {
-                List<Artist> artists = new ArrayList<Artist>(result.getShortcuts().size() + result.getArtists().size());
-                artists.addAll(result.getShortcuts());
-                artists.addAll(result.getArtists());
-                artistList.setAdapter(new ArtistAdapter(SelectArtistActivity.this, artists));
-            }
-        };
-        task.execute();
-    }
+	private void load() {
+		BackgroundTask<Indexes> task = new TabActivityBackgroundTask<Indexes>(
+				this) {
+			@Override
+			protected Indexes doInBackground() throws Throwable {
+				boolean refresh = getIntent().getBooleanExtra(
+						Constants.INTENT_EXTRA_NAME_REFRESH, false);
+				MusicService musicService = MusicServiceFactory
+						.getMusicService(SelectArtistActivity.this);
+				if (!Util.isOffline(SelectArtistActivity.this)) {
+					musicFolders = musicService.getMusicFolders(
+							SelectArtistActivity.this, this);
+				}
+				String musicFolderId = Util
+						.getSelectedMusicFolderId(SelectArtistActivity.this);
+				return musicService.getIndexes(musicFolderId, refresh,
+						SelectArtistActivity.this, this);
+			}
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (view == refreshButton) {
-            refresh();
-        } else if (view == folderButton) {
-            selectFolder();
-        } else {
-            Artist artist = (Artist) parent.getItemAtPosition(position);
-            Intent intent = new Intent(this, SelectAlbumActivity.class);
-            intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, artist.getId());
-            intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, artist.getName());
-            Util.startActivityWithoutTransition(this, intent);
-        }
-    }
+			@Override
+			protected void done(Indexes result) {
+				List<Artist> artists = new ArrayList<Artist>(result
+						.getShortcuts().size() + result.getArtists().size());
+				artists.addAll(result.getShortcuts());
+				artists.addAll(result.getArtists());
+				artistList.setAdapter(new ArtistAdapter(
+						SelectArtistActivity.this, artists));
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, view, menuInfo);
+				// Display selected music folder
+				if (musicFolders != null) {
+					String musicFolderId = Util
+							.getSelectedMusicFolderId(SelectArtistActivity.this);
+					if (musicFolderId == null) {
+						folderName.setText(R.string.select_artist_all_folders);
+					} else {
+						for (int i = 0; i < musicFolders.size(); i++) {
+							MusicFolder musicFolder = musicFolders.get(i);
+							if (musicFolder.getId().equals(musicFolderId)) {
+								folderName.setText(musicFolder.getName());
+								break;
+							}
+						}
+					}
+				}
+			}
+		};
+		task.execute();
+	}
 
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		if (view == folderButton) {
+			selectFolder();
+		} else {
+			Artist artist = (Artist) parent.getItemAtPosition(position);
+			Intent intent = new Intent(this, SelectAlbumActivity.class);
+			intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, artist.getId());
+			intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, artist.getName());
+			Util.startActivityWithoutTransition(this, intent);
+		}
+	}
 
-        if (artistList.getItemAtPosition(info.position) instanceof Artist) {
-            menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_all);
-            menu.add(Menu.NONE, MENU_ITEM_QUEUE_ALL, MENU_ITEM_QUEUE_ALL, R.string.select_album_queue_all);
-            menu.add(Menu.NONE, MENU_ITEM_SAVE_ALL, MENU_ITEM_SAVE_ALL, R.string.select_album_save_all);
-        } else if (info.position == 1) {
-            String musicFolderId = Util.getSelectedMusicFolderId(this);
-            MenuItem menuItem = menu.add(MENU_GROUP_MUSIC_FOLDER, -1, 0, R.string.select_artist_all_folders);
-            if (musicFolderId == null) {
-                menuItem.setChecked(true);
-            }
-            if (musicFolders != null) {
-                for (int i = 0; i < musicFolders.size(); i++) {
-                    MusicFolder musicFolder = musicFolders.get(i);
-                    menuItem = menu.add(MENU_GROUP_MUSIC_FOLDER, i, i + 1, musicFolder.getName());
-                    if (musicFolder.getId().equals(musicFolderId)) {
-                        menuItem.setChecked(true);
-                    }
-                }
-            }
-            menu.setGroupCheckable(MENU_GROUP_MUSIC_FOLDER, true, true);
-        } 
-    }
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View view,
+			ContextMenu.ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, view, menuInfo);
 
-    @Override
-    public boolean onContextItemSelected(MenuItem menuItem) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
-        Artist artist = (Artist) artistList.getItemAtPosition(info.position);
+		if (artistList.getItemAtPosition(info.position) instanceof Artist) {
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.select_artist_context, menu);
+		} else if (info.position == 0) {
+			String musicFolderId = Util.getSelectedMusicFolderId(this);
+			MenuItem menuItem = menu.add(MENU_GROUP_MUSIC_FOLDER, -1, 0,
+					R.string.select_artist_all_folders);
+			if (musicFolderId == null) {
+				menuItem.setChecked(true);
+			}
+			if (musicFolders != null) {
+				for (int i = 0; i < musicFolders.size(); i++) {
+					MusicFolder musicFolder = musicFolders.get(i);
+					menuItem = menu.add(MENU_GROUP_MUSIC_FOLDER, i, i + 1,
+							musicFolder.getName());
+					if (musicFolder.getId().equals(musicFolderId)) {
+						menuItem.setChecked(true);
+					}
+				}
+			}
+			menu.setGroupCheckable(MENU_GROUP_MUSIC_FOLDER, true, true);
+		}
+	}
 
-        if (artist != null) {
-            switch (menuItem.getItemId()) {
-                case MENU_ITEM_PLAY_ALL:
-                    downloadRecursively(artist.getId(), false, false, true);
-                    break;
-                case MENU_ITEM_QUEUE_ALL:
-                    downloadRecursively(artist.getId(), false, true, false);
-                    break;
-                case MENU_ITEM_SAVE_ALL:
-                    downloadRecursively(artist.getId(), true, true, false);
-                    break;
-                default:
-                    return super.onContextItemSelected(menuItem);
-            }
-        } else if (info.position == 1) {
-            String musicFolderId = menuItem.getItemId() == -1 ? null : musicFolders.get(menuItem.getItemId()).getId();
-            Util.setSelectedMusicFolderId(this, musicFolderId);
-            refresh();
-        }
+	@Override
+	public boolean onContextItemSelected(MenuItem menuItem) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem
+				.getMenuInfo();
 
-        return true;
-    }
+		Artist artist = (Artist) artistList.getItemAtPosition(info.position);
+
+		if (artist != null) {
+			switch (menuItem.getItemId()) {
+			case R.id.menu_play_all:
+				downloadRecursively(artist.getId(), false, false, true);
+				break;
+			case R.id.menu_queue_all:
+				downloadRecursively(artist.getId(), false, true, false);
+				break;
+			case R.id.menu_save_all:
+				downloadRecursively(artist.getId(), true, true, false);
+				break;
+			default:
+				return super.onContextItemSelected(menuItem);
+			}
+		} else if (info.position == 0) {
+			MusicFolder selectedFolder = menuItem.getItemId() == -1 ? null
+					: musicFolders.get(menuItem.getItemId());
+			String musicFolderId = selectedFolder == null ? null
+					: selectedFolder.getId();
+			String musicFolderName = selectedFolder == null ? getString(R.string.select_artist_all_folders)
+					: selectedFolder.getName();
+			Util.setSelectedMusicFolderId(this, musicFolderId);
+			folderName.setText(musicFolderName);
+			refresh();
+		}
+
+		return true;
+	}
 }

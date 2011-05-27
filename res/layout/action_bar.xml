@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+        a:orientation="horizontal"
+        a:layout_width="fill_parent"
+        a:layout_height="45dp"
+        a:background="@drawable/menubar_button_disabled">
+
+    <ImageButton
+            a:id="@+id/actionbar_home_icon"
+            a:src="@drawable/main_header_icon"
+            a:layout_width="wrap_content"
+            a:layout_height="fill_parent"
+            a:layout_gravity="center_vertical"
+            a:paddingLeft="8dip"
+            a:paddingRight="4dip"
+            a:background="@drawable/actionbar_home_button"
+            />
+
+    <ImageView
+            a:id="@+id/actionbar_title_image"
+            a:src="@drawable/main_header_title"
+            a:layout_width="wrap_content"
+            a:layout_height="wrap_content"
+            a:layout_gravity="center_vertical"
+            a:paddingLeft="4dip"
+            a:background="@null"
+            />
+
+    <TextView
+            a:id="@+id/actionbar_title_text"
+            a:text="Offline Music"
+            a:layout_width="wrap_content"
+            a:layout_height="fill_parent"
+            a:gravity="center_vertical"
+            a:textColor="#FFFFFF"
+            a:textSize="18sp"
+            a:paddingTop="5dp"
+            a:paddingLeft="4dip"
+            a:textStyle="bold"
+            a:visibility="gone"
+            />
+
+    <View
+            a:layout_width="0dip"
+            a:layout_height="fill_parent"
+            a:layout_weight="1"/>
+
+    <ImageButton
+            a:id="@+id/action_button_1"
+            a:src="@drawable/action_shuffle"
+            a:layout_width="wrap_content"
+            a:layout_height="fill_parent"
+            a:scaleType="center"
+            a:padding="5dp"
+            a:background="@drawable/actionbar_button"
+            />
+
+    <ImageButton
+            a:id="@+id/action_button_2"
+            a:src="@drawable/action_search"
+            a:layout_width="wrap_content"
+            a:layout_height="fill_parent"
+            a:scaleType="center"
+            a:padding="5dp"
+            a:background="@drawable/actionbar_button"
+            />
+
+</LinearLayout>

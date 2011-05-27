@@ -27,8 +27,10 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -52,9 +54,6 @@ import java.util.List;
 public class SelectAlbumActivity extends SubsonicTabActivity {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
-    private static final int MENU_ITEM_PLAY_ALL = 1;
-    private static final int MENU_ITEM_QUEUE_ALL = 2;
-    private static final int MENU_ITEM_SAVE_ALL = 3;
 
     private ListView entryList;
     private View header;
@@ -180,6 +179,30 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         } else {
             getMusicDirectory(id, name);
         }
+        
+        // Button 1: play all
+        final ImageButton actionPlayAllButton = (ImageButton)findViewById(R.id.action_button_1);
+        actionPlayAllButton.setImageResource(R.drawable.action_play_all);
+        actionPlayAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectAll(true);
+                download(false, false, true);
+                selectAll(false);
+            }
+        });
+
+        // Button 2: search
+        final ImageButton actionSearchButton = (ImageButton)findViewById(R.id.action_button_2);
+        actionSearchButton.setImageResource(R.drawable.action_search);
+        actionSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            	Intent intent = new Intent(SelectAlbumActivity.this, SearchActivity.class);
+            	intent.putExtra(Constants.INTENT_EXTRA_REQUEST_SEARCH, true);
+                Util.startActivityWithoutTransition(SelectAlbumActivity.this, intent);
+            }
+        });
     }
 
     @Override
@@ -189,9 +212,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
         if (entry.isDirectory()) {
-            menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_all);
-            menu.add(Menu.NONE, MENU_ITEM_QUEUE_ALL, MENU_ITEM_QUEUE_ALL, R.string.select_album_queue_all);
-            menu.add(Menu.NONE, MENU_ITEM_SAVE_ALL, MENU_ITEM_SAVE_ALL, R.string.select_album_save_all);
+    		MenuInflater inflater = getMenuInflater();
+    		inflater.inflate(R.menu.select_album_context, menu);
         }
     }
 
@@ -200,13 +222,13 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
         MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
         switch (menuItem.getItemId()) {
-            case MENU_ITEM_PLAY_ALL:
+            case R.id.menu_play_all:
                 downloadRecursively(entry.getId(), false, false, true);
                 break;
-            case MENU_ITEM_QUEUE_ALL:
+            case R.id.menu_queue_all:
                 downloadRecursively(entry.getId(), false, true, false);
                 break;
-            case MENU_ITEM_SAVE_ALL:
+            case R.id.menu_save_all:
                 downloadRecursively(entry.getId(), true, true, false);
                 break;
             default:
