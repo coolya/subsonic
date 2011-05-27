@@ -664,6 +664,7 @@ public final class Util {
 
         // Set the icon, scrolling text and timestamp
         final Notification notification = new Notification(android.R.drawable.stat_sys_warning, title, System.currentTimeMillis());
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
         // The PendingIntent to launch our activity if the user selects this notification
         Intent intent = new Intent(context, ErrorActivity.class);
