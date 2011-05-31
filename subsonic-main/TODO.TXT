@@ -11,24 +11,6 @@ Playlist summary. http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=183
 New playlist REST methods?
 WiMP, iTunes
 
-SHARE
------
-Create for whole album first.
-Bring up separate page.
-Facebook, Twitter, link
-  http://www.kimwoodbridge.com/how-to-create-your-one-facebook-share-url/
-  http://developers.facebook.com/docs/opengraph/
-  http://dev.twitter.com/pages/tweet_button
-  https://mail.google.com/a/activeobjects.no/#inbox/12ded75e94256283
-Only if using a subsonic.org address.
-Warn about legal stuff.
-x Create separate security role?
-Direct link with no login.
-Internal URL shortening support, maybe make it generic.
-http://code.google.com/apis/urlshortener/
-http://code.google.com/p/google-api-java-client/
-
-
 SITE
 ----
 Tutorial, windows shared folders.
@@ -135,6 +117,8 @@ REST support for podcasts.
 
 TODO IN 4.5
 -----------------
+IE9 - Cover Art Only Displays for a Second, Then Disappears
+  https://mail.google.com/mail/?ui=2&shva=1#inbox/1304333c98bc97f3
 AdMob
 Backend: Fix problem with http forwarder
 Show library statistics for video.
@@ -147,6 +131,14 @@ Playing only first three seconds of podcast
 GPU-accellerated ffmpeg
   https://mail.google.com/a/activeobjects.no/#inbox/12f50fffffd6fecf
 Sharing (facebook, twitter++)
+  todos in externalplayer.jsp
+  Make it work if no songs are selected
+  http://www.kimwoodbridge.com/how-to-create-your-one-facebook-share-url/
+  http://developers.facebook.com/docs/opengraph/
+  http://dev.twitter.com/pages/tweet_button
+  https://mail.google.com/a/activeobjects.no/#inbox/12ded75e94256283
+Add to playlist from main.jsp
+
 Backend: When redirecting POST's, extract parameters.
   - url-encode params
   - test

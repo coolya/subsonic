@@ -216,7 +216,7 @@
                 <tr style="margin:0;padding:0;border:0">
                     <c:import url="playAddDownload.jsp">
                         <c:param name="path" value="${child.path}"/>
-                        <c:param name="video" value="${child.video}"/>
+                        <c:param name="video" value="${child.video and model.player.web}"/>
                         <c:param name="playEnabled" value="${model.user.streamRole and not model.partyMode}"/>
                         <c:param name="addEnabled" value="${model.user.streamRole and (not model.partyMode or not child.directory)}"/>
                         <c:param name="downloadEnabled" value="${model.user.downloadRole and not model.partyMode}"/>
@@ -358,8 +358,8 @@
 </tr>
 </table>
 
-<c:if test="${model.dir.album}">
-    <select id="moreActions" onchange="actionSelected(this.options[selectedIndex].id);">
+<c:if test="${model.dir.album and model.user.shareRole}">
+    <select id="moreActions" onchange="actionSelected(this.options[selectedIndex].id);" style="margin-bottom:1.0em">
         <option id="top" selected="selected"><fmt:message key="main.more"/></option>
         <c:if test="${model.user.shareRole}">
             <option id="share"><fmt:message key="main.sharesongs"/></option>

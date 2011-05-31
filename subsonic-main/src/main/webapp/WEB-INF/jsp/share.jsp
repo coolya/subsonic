@@ -11,29 +11,27 @@
 <c:choose>
     <c:when test="${model.urlRedirectionEnabled}">
 
-        <p>
-            Play fair - don't share copyrighted material in any way that violates your local laws.
-        </p>
+        <fmt:message key="share.warning"/>
+
         <p>
             <img src="<spring:theme code="shareFacebookImage"/>" alt="">&nbsp;<a
-                href="http://www.facebook.com/sharer.php?u=${model.playUrl}" target="_blank">Share on Facebook</a>
+                href="http://www.facebook.com/sharer.php?u=${model.playUrl}" target="_blank"><fmt:message key="share.facebook"/></a>
         </p>
 
         <p>
             <img src="<spring:theme code="shareTwitterImage"/>" alt="">&nbsp;<a
-                href="http://twitter.com/?status=Listening to ${model.playUrl}" target="_blank">Share on Twitter</a>
+                href="http://twitter.com/?status=Listening to ${model.playUrl}" target="_blank"><fmt:message key="share.twitter"/></a>
         </p>
 
         <p>
-            Share this album with someone by sending them this link:
-            <a href="${model.playUrl}" target="_blank">${model.playUrl}</a>
+            <fmt:message key="share.link">
+                <fmt:param>${model.playUrl}</fmt:param>
+            </fmt:message>
         </p>
     </c:when>
     <c:otherwise>
         <p>
-            To share your music with someone you must first register your own <em>subsonic.org</em> address.<br>
-            Please go to <a href="/networkSettings.view"><b>Settings &gt; Network</b></a> (administrative
-            rights required).
+            <fmt:message key="share.disabled"/>
         </p>
     </c:otherwise>
 </c:choose>

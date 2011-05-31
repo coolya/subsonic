@@ -8,17 +8,16 @@
     <script type="text/javascript" src="<c:url value="/script/prototype.js"/>"></script>
 
     <sub:url value="/coverArt.view" var="coverArtUrl">
-        <%--<sub:param name="size" value="120"/>--%>
         <c:if test="${not empty model.coverArt}">
             <sub:param name="path" value="${model.coverArt.path}"/>
         </c:if>
     </sub:url>
 
     <%--todo--%>
-    <meta name="og:title" content="${model.songs[0].metaData.artist} - ${model.songs[0].metaData.album}" />
-    <%--<meta property="og:description" content="Electra at JPS Bristol 22nd October, 2010" />--%>
+    <meta name="og:title" content="${fn:escapeXml(model.songs[0].metaData.artist)} &mdash; ${fn:escapeXml(model.songs[0].metaData.album)}"/>
+    <%--<meta property="og:description" content="Electra at JPS Bristol 22nd October, 2010" />--%> 
     <meta name="og:type" content="album"/>
-    <meta name="og:image" content="http://${model.redirectFrom}.subsonic.org/${coverArtUrl}"/>
+    <meta name="og:image" content="http://${model.redirectFrom}.subsonic.org/${coverArtUrl}&size=200"/>
 
     <script type="text/javascript">
         function init() {
@@ -50,14 +49,15 @@
         <sub:param name="path" value="${song.path}"/>
         </sub:url>
 
-//            TODO: Escape song title
+            // TODO: Use video provider for aac, m4a
+            // TODO: stretching
             list[${loopStatus.count-1}] = {
                 file: "${streamUrl}&player=${model.player}",
                 image: "${coverArtUrl}&size=277",
-                title: "${song.title}",
+                title: "${fn:escapeXml(song.title)}",
                 provider: "${song.video ? "video" : "sound"}",
                 <%--stretching: "${song.video ? "uniform" : "none"}",--%>
-                description: "${song.metaData.artist}"
+                description: "${fn:escapeXml(song.metaData.artist)}"
             };
 
         <c:if test="${not empty song.metaData.duration}">
@@ -66,8 +66,6 @@
 
         </c:forEach>
 
-
-//            TODO: Replace
             player.sendEvent("LOAD", list);
             player.sendEvent("PLAY");
         }
@@ -89,6 +87,6 @@
             <a href="http://www.adobe.com/go/getflashplayer" target="_blank"><fmt:message key="playlist.getflash"/></a>
         </div>
     </div>
-
+</div>
 </body>
 </html>
