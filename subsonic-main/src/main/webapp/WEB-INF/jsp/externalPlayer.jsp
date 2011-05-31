@@ -19,6 +19,8 @@
     <meta name="og:type" content="album"/>
     <meta name="og:image" content="http://${model.redirectFrom}.subsonic.org/${coverArtUrl}&size=200"/>
 
+    <%-- TODO: stretching--%>
+
     <script type="text/javascript">
         function init() {
             var flashvars = {
@@ -26,6 +28,7 @@
                 screencolor:"000000",
                 frontcolor:"<spring:theme code="textColor"/>",
                 backcolor:"<spring:theme code="backgroundColor"/>",
+                stretching: "fill",
                 "playlist.position": "bottom",
                 "playlist.size": 200
             };
@@ -50,13 +53,11 @@
         </sub:url>
 
             // TODO: Use video provider for aac, m4a
-            // TODO: stretching
             list[${loopStatus.count-1}] = {
                 file: "${streamUrl}&player=${model.player}",
                 image: "${coverArtUrl}&size=277",
                 title: "${fn:escapeXml(song.title)}",
                 provider: "${song.video ? "video" : "sound"}",
-                <%--stretching: "${song.video ? "uniform" : "none"}",--%>
                 description: "${fn:escapeXml(song.metaData.artist)}"
             };
 
