@@ -921,6 +921,7 @@ public class RESTController extends MultiActionController {
         XMLBuilder builder = createXMLBuilder(request, response, true);
         List<Attribute> attributes = Arrays.asList(
                 new Attribute("username", requestedUser.getUsername()),
+                new Attribute("email", requestedUser.getEmail()),
                 new Attribute("adminRole", requestedUser.isAdminRole()),
                 new Attribute("settingsRole", requestedUser.isSettingsRole()),
                 new Attribute("downloadRole", requestedUser.isDownloadRole()),
@@ -950,6 +951,7 @@ public class RESTController extends MultiActionController {
             UserSettingsCommand command = new UserSettingsCommand();
             command.setUsername(ServletRequestUtils.getRequiredStringParameter(request, "username"));
             command.setPassword(ServletRequestUtils.getRequiredStringParameter(request, "password"));
+            command.setEmail(ServletRequestUtils.getRequiredStringParameter(request, "email"));
             command.setLdapAuthenticated(ServletRequestUtils.getBooleanParameter(request, "ldapAuthenticated", false));
             command.setAdminRole(ServletRequestUtils.getBooleanParameter(request, "adminRole", false));
             command.setCommentRole(ServletRequestUtils.getBooleanParameter(request, "commentRole", false));

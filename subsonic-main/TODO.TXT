@@ -114,9 +114,12 @@ Support higher video bitrates. 3000 and 5000
 Don't include podcasts when generating random songs.
 Mac installer: make transcode dir executable.
 REST support for podcasts.
+Add email to user in REST.
 
 TODO IN 4.5
 -----------------
+Add browser notification
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=5434&highlight=
 IE9 - Cover Art Only Displays for a Second, Then Disappears
   https://mail.google.com/mail/?ui=2&shva=1#inbox/1304333c98bc97f3
 AdMob
@@ -625,13 +628,13 @@ Upgrade Subsonic backend: CHANGE DATE BELOW
     tar cvf db-backup-2011-05-05.tar db
   cd subsonic-backend
   mvn clean install
-  scp subsonic-backend/target/subsonic-backend-*.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2011-02-06/ROOT.war
-  scp subsonic-main/target/subsonic.war sindremehus@subsonic.org:/usr/java/tomcat-5.5/webapps-2011-02-06/demo.war
-  ssh sindremehus@subsonic.org
-  su
-  /etc/init.d/tomcat55 stop
-  rm webapps
-  ln -s webapps-2011-02-06 webapps
+  scp subsonic-backend/target/subsonic-backend-*.war root@subsonic.org:/usr/local/jakarta/tomcat/webapps/ROOT.war.2011-06-01
+  scp subsonic-main/target/subsonic.war root@subsonic.org:/usr/local/jakarta/tomcat/webapps/demo.war.2011-06-01
+  ssh root@subsonic.org
+  ps -elf | grep jsvc
+  /usr/sbin/stoptomcat
+  ln -s ROOT.war.2011-06-01 ROOT.war
+  /usr/sbin/starttomcat
   rm -rf work logs/*
   /etc/init.d/tomcat55 start
   tail -f logs/catalina.out
