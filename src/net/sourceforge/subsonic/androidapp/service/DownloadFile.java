@@ -32,6 +32,7 @@ import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.util.CancellableTask;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.CacheCleaner;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -244,6 +245,7 @@ public class DownloadFile {
                     wakeLock.release();
                     Log.i(TAG, "Released wake lock " + wakeLock);
                 }
+                new CacheCleaner(context, DownloadServiceImpl.getInstance()).clean();
             }
         }
 
