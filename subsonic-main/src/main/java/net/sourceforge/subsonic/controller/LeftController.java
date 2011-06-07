@@ -48,6 +48,7 @@ import net.sourceforge.subsonic.domain.MusicIndex;
 import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.MusicIndexService;
+import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
@@ -68,6 +69,7 @@ public class LeftController extends ParameterizableViewController implements Las
     private SecurityService securityService;
     private MusicFileService musicFileService;
     private MusicIndexService musicIndexService;
+    private PlayerService playerService;
     private Ehcache musicFolderCache;
 
     /**
@@ -128,6 +130,7 @@ public class LeftController extends ParameterizableViewController implements Las
 
         MusicFolderCacheEntry cacheEntry = getCacheEntry(musicFoldersToUse, getLastModified(request));
 
+        map.put("player", playerService.getPlayer(request, response));
         map.put("musicFolders", allMusicFolders);
         map.put("selectedMusicFolder", selectedMusicFolder);
         map.put("radios", settingsService.getAllInternetRadios());
@@ -244,6 +247,10 @@ public class LeftController extends ParameterizableViewController implements Las
 
     public void setMusicFolderCache(Ehcache musicFolderCache) {
         this.musicFolderCache = musicFolderCache;
+    }
+
+    public void setPlayerService(PlayerService playerService) {
+        this.playerService = playerService;
     }
 
     public static class MusicFolderCacheEntry implements Serializable {

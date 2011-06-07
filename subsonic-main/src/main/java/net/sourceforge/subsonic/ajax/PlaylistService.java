@@ -112,7 +112,9 @@ public class PlaylistService {
         Player player = getCurrentPlayer(request, response);
         MusicFile file = musicFileService.getMusicFile(path);
         List<MusicFile> files = file.getDescendants(false, true);
-        removeVideoFiles(files);
+        if (player.isWeb()) {
+            removeVideoFiles(files);
+        }
         player.getPlaylist().addFiles(false, files);
         player.getPlaylist().setRandomSearchCriteria(null);
         return convert(request, player, true);
@@ -142,7 +144,9 @@ public class PlaylistService {
         for (String path : paths) {
             files.addAll(musicFileService.getMusicFile(path).getDescendants(false, true));
         }
-        removeVideoFiles(files);
+        if (player.isWeb()) {
+            removeVideoFiles(files);
+        }
         player.getPlaylist().addFiles(true, files);
         player.getPlaylist().setRandomSearchCriteria(null);
         return convert(request, player, false);

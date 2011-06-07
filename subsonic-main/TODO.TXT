@@ -118,6 +118,8 @@ REST support for podcasts.
 Add email to user in REST.
 Updated expired ssl cert
 Bug: encoded passwords are not decoded in REST createUser, changePassword
+Support video in external player
+  https://mail.google.com/a/activeobjects.no/#inbox/12f50fffffd6fecf
 
 TODO IN 4.5
 -----------------
@@ -132,8 +134,6 @@ Backend: Fix problem with http forwarder
 Show library statistics for video.
 Write hosting.jsp
 Canaca ads.
-Support video in external player
-  https://mail.google.com/a/activeobjects.no/#inbox/12f50fffffd6fecf
 Playing only first three seconds of podcast
   http://mail.google.com/a/activeobjects.no/#inbox/12e341aeae9535eb
 GPU-accellerated ffmpeg

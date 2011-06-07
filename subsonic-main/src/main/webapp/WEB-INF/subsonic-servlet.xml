@@ -11,6 +11,7 @@
         <property name="settingsService" ref="settingsService"/>
         <property name="musicFileService" ref="musicFileService"/>
         <property name="musicIndexService" ref="musicIndexService"/>
+        <property name="playerService" ref="playerService"/>
         <property name="musicFolderCache" ref="musicFolderCache"/>
     </bean>
     <bean id="rightController" class="net.sourceforge.subsonic.controller.RightController">
@@ -138,6 +139,7 @@
         <property name="searchService" ref="searchService"/>
         <property name="securityService" ref="securityService"/>
         <property name="settingsService" ref="settingsService"/>
+        <property name="playerService" ref="playerService"/>
     </bean>
     <bean id="settingsController" class="net.sourceforge.subsonic.controller.SettingsController">
         <property name="securityService" ref="securityService"/>

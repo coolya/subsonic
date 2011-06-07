@@ -31,6 +31,7 @@ import net.sourceforge.subsonic.domain.SearchCriteria;
 import net.sourceforge.subsonic.domain.SearchResult;
 import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.domain.UserSettings;
+import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
@@ -48,6 +49,7 @@ public class SearchController extends SimpleFormController {
     private SearchService searchService;
     private SecurityService securityService;
     private SettingsService settingsService;
+    private PlayerService playerService;
 
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
@@ -84,6 +86,8 @@ public class SearchController extends SimpleFormController {
 
                 SearchResult songs = searchService.search(criteria, LuceneSearchService.IndexType.SONG);
                 command.setSongs(songs.getMusicFiles());
+
+                command.setPlayer(playerService.getPlayer(request, response));
             }
         }
 
@@ -100,5 +104,9 @@ public class SearchController extends SimpleFormController {
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
+    }
+
+    public void setPlayerService(PlayerService playerService) {
+        this.playerService = playerService;
     }
 }

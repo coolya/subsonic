@@ -123,7 +123,7 @@
                     <c:param name="playEnabled" value="${command.user.streamRole and not command.partyModeEnabled}"/>
                     <c:param name="addEnabled" value="${command.user.streamRole and (not command.partyModeEnabled or not match.directory)}"/>
                     <c:param name="downloadEnabled" value="${command.user.downloadRole and not command.partyModeEnabled}"/>
-                    <c:param name="video" value="${match.video}"/>
+                    <c:param name="video" value="${match.video and command.player.web}"/>
                     <c:param name="asTable" value="true"/>
                 </c:import>
 

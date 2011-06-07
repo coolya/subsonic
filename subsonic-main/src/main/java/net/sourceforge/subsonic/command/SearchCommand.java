@@ -37,6 +37,7 @@ public class SearchCommand {
     private boolean isIndexBeingCreated;
     private User user;
     private boolean partyModeEnabled;
+    private Player player;
 
     public String getQuery() {
         return query;
@@ -92,6 +93,14 @@ public class SearchCommand {
 
     public void setPartyModeEnabled(boolean partyModeEnabled) {
         this.partyModeEnabled = partyModeEnabled;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public static class Match {
