@@ -80,7 +80,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private static DownloadService instance;
     private String suggestedPlaylistName;
     private PowerManager.WakeLock wakeLock;
-    private RepeatMode repeatMode = RepeatMode.OFF;
 
     @Override
     public void onCreate() {
@@ -195,12 +194,12 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     @Override
     public RepeatMode getRepeatMode() {
-        return repeatMode;
+        return Util.getRepeatMode(this);
     }
 
     @Override
     public void setRepeatMode(RepeatMode repeatMode) {
-        this.repeatMode = repeatMode;
+        Util.setRepeatMode(this, repeatMode);
     }
 
     @Override
@@ -383,7 +382,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private void onSongCompleted() {
         int index = getCurrentPlayingIndex();
         if (index != -1) {
-            switch (repeatMode) {
+            switch (getRepeatMode()) {
                 case OFF:
                     play(index + 1);
                     break;
