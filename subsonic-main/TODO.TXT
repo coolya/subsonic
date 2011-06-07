@@ -36,6 +36,7 @@ Handle colons in paths.
 
 TODO IN ANDROID 2.8
 -------------------
+Run cache cleaning after downloading a song, or if its settings change.
 Remember repeat mode
   https://mail.google.com/mail/?shva=1#inbox/1301dfb08775df81
 Twitter, facebook integration.
@@ -116,10 +117,10 @@ Mac installer: make transcode dir executable.
 REST support for podcasts.
 Add email to user in REST.
 Updated expired ssl cert
+Bug: encoded passwords are not decoded in REST createUser, changePassword
 
 TODO IN 4.5
 -----------------
-Bug: encoded passwords are not decoded in REST createUser, changePassword
 Add "format" and "size" parameters to stream REST method.
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=26935#26935
 Add browser notification

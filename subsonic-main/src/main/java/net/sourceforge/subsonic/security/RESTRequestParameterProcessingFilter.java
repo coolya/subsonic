@@ -179,7 +179,7 @@ public class RESTRequestParameterProcessingFilter implements Filter {
         return null;
     }
 
-    private String decrypt(String s) {
+    public static String decrypt(String s) {
         if (s == null) {
             return null;
         }

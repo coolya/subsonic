@@ -60,6 +60,7 @@ import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.domain.PodcastChannel;
 import net.sourceforge.subsonic.domain.PodcastEpisode;
+import net.sourceforge.subsonic.security.RESTRequestParameterProcessingFilter;
 import net.sourceforge.subsonic.service.JukeboxService;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
@@ -75,6 +76,7 @@ import net.sourceforge.subsonic.service.PodcastService;
 import net.sourceforge.subsonic.util.StringUtil;
 import net.sourceforge.subsonic.util.XMLBuilder;
 
+import static net.sourceforge.subsonic.security.RESTRequestParameterProcessingFilter.decrypt;
 import static net.sourceforge.subsonic.util.XMLBuilder.Attribute;
 import static net.sourceforge.subsonic.util.XMLBuilder.AttributeSet;
 
@@ -873,7 +875,7 @@ public class RESTController extends MultiActionController {
         try {
 
             String username = ServletRequestUtils.getRequiredStringParameter(request, "username");
-            String password = ServletRequestUtils.getRequiredStringParameter(request, "password");
+            String password = decrypt(ServletRequestUtils.getRequiredStringParameter(request, "password"));
 
             User authUser = securityService.getCurrentUser(request);
             if (!authUser.isAdminRole() && !username.equals(authUser.getUsername())) {
@@ -950,7 +952,7 @@ public class RESTController extends MultiActionController {
         try {
             UserSettingsCommand command = new UserSettingsCommand();
             command.setUsername(ServletRequestUtils.getRequiredStringParameter(request, "username"));
-            command.setPassword(ServletRequestUtils.getRequiredStringParameter(request, "password"));
+            command.setPassword(decrypt(ServletRequestUtils.getRequiredStringParameter(request, "password")));
             command.setEmail(ServletRequestUtils.getRequiredStringParameter(request, "email"));
             command.setLdapAuthenticated(ServletRequestUtils.getBooleanParameter(request, "ldapAuthenticated", false));
             command.setAdminRole(ServletRequestUtils.getBooleanParameter(request, "adminRole", false));
