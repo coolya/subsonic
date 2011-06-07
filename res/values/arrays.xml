@@ -63,6 +63,8 @@
         <item>112</item>
         <item>128</item>
         <item>160</item>
+        <item>192</item>
+        <item>256</item>
         <item>320</item>
         <item>0</item>
     </string-array>
@@ -75,6 +77,8 @@
         <item>@string/settings.max_bitrate_112</item>
         <item>@string/settings.max_bitrate_128</item>
         <item>@string/settings.max_bitrate_160</item>
+        <item>@string/settings.max_bitrate_192</item>
+        <item>@string/settings.max_bitrate_256</item>
         <item>@string/settings.max_bitrate_320</item>
         <item>@string/settings.max_bitrate_unlimited</item>
     </string-array>

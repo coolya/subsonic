@@ -127,6 +127,8 @@
     <string name="settings.max_bitrate_112">112 Kbps</string>
     <string name="settings.max_bitrate_128">128 Kbps</string>
     <string name="settings.max_bitrate_160">160 Kbps</string>
+    <string name="settings.max_bitrate_192">192 Kbps</string>
+    <string name="settings.max_bitrate_256">256 Kbps</string>
     <string name="settings.max_bitrate_320">320 Kbps</string>
     <string name="settings.max_bitrate_unlimited">Unlimited</string>
     <string name="settings.preload_1">1 song</string>
