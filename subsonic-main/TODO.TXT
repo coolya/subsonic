@@ -31,6 +31,8 @@ Buy new JW license
 DONE IN ANDROID 2.8
 --------------------
 Use HTTP POST instead of GET.
+Handle colons in paths.
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4137
 
 TODO IN ANDROID 2.8
 -------------------
@@ -55,8 +57,6 @@ Long-click:
 Improve horizontal layout, move tab buttons to the right.
 Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone. (onNewIntent?)
-Remove colons.
-  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4137
 Better handling of full SD card.
 Unnecessary initial pause when starting partially downloaded songs.
 Cover art images loaded incorrectly.
@@ -120,7 +120,8 @@ Updated expired ssl cert
 TODO IN 4.5
 -----------------
 Bug: encoded passwords are not decoded in REST createUser, changePassword
-Add "format" parameter to stream REST method.
+Add "format" and "size" parameters to stream REST method.
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=26935#26935
 Add browser notification
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=5434&highlight=
 IE9 - Cover Art Only Displays for a Second, Then Disappears
