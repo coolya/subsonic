@@ -115,9 +115,12 @@ Don't include podcasts when generating random songs.
 Mac installer: make transcode dir executable.
 REST support for podcasts.
 Add email to user in REST.
+Updated expired ssl cert
 
 TODO IN 4.5
 -----------------
+Bug: encoded passwords are not decoded in REST createUser, changePassword
+Add "format" parameter to stream REST method.
 Add browser notification
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=5434&highlight=
 IE9 - Cover Art Only Displays for a Second, Then Disappears
@@ -688,7 +691,10 @@ HOW TO RELEASE TRANSCODING PACK
 Create transcode_windows.zip and release it in SourceForge FRS.
   rsync -avP -e ssh transcoding-windows-1.1.zip  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/transcoding/1.1/
 
-
+HOW TO CREATE subsonic.keystore
+================================
+keytool -genkey -v -keystore subsonic.keystore -alias subsonic -storepass subsonic -keyalg RSA -validity 100000 -dname "CN=subsonic.org, O=Subsonic"
+keytool -list -v -keystore subsonic.keystore -storepass subsonic
 
 SEARCH
 ------
