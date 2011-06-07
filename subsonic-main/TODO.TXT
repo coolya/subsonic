@@ -35,10 +35,10 @@ Handle colons in paths.
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4137
 Remember repeat mode
   https://mail.google.com/mail/?shva=1#inbox/1301dfb08775df81
+Run cache cleaning after downloading a song.
 
 TODO IN ANDROID 2.8
 -------------------
-Run cache cleaning after downloading a song, or if its settings change.
 Twitter, facebook integration.
 Offline shuffle broken?
 Does repeat button work in landscape mode?
@@ -129,7 +129,7 @@ Add browser notification
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=5434&highlight=
 IE9 - Cover Art Only Displays for a Second, Then Disappears
   https://mail.google.com/mail/?ui=2&shva=1#inbox/1304333c98bc97f3
-AdMob
+ AdMob
 Show library statistics for video.
 Write hosting.jsp
 Canaca ads.
