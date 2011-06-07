@@ -128,9 +128,17 @@
 
             <a name="4"><h2>4 Using https</h2></a>
             <p>For improved security you can turn on https encryption.  On Windows, open the Subsonic Control Panel by clicking
-                on the Subsonic tray icon, then enable https on the specified port (default 443).</p>
+                on the Subsonic tray icon, then enable https on the specified port (default 443).
+            </p>
             <p> On Linux, add <code>--https-port=4443</code> (or any other port) to SUBSONIC_ARGS in
                 <code>/etc/default/subsonic</code> (Ubuntu/Debian) or <code>/etc/sysconfig/subsonic</code> (Fedora/RPM).
+            </p>
+            <p>
+                Note that Subsonic uses a self-signed https certificate by default. This provides encryption but not
+                proper authentication.  To use your own certificate you must put it in a Java keystore, then specify the
+                following Java system properties: <em>subsonic.ssl.keystore</em> &ndash; (Path to an alternate SSL keystore), and
+                <em>subsonic.ssl.password</em> &ndash; (Password of the alternate SSL keystore). On Windows, you can set these system
+                properties in <code>C:\Program Files\Subsonic\subsonic-service.exe.vmoptions</code>.
             </p>
 
         </div>
