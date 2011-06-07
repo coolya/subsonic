@@ -36,6 +36,7 @@ Handle colons in paths.
 Remember repeat mode
   https://mail.google.com/mail/?shva=1#inbox/1301dfb08775df81
 Run cache cleaning after downloading a song.
+Add 192, 256kbps downsampling option.
 
 TODO IN ANDROID 2.8
 -------------------
@@ -56,7 +57,6 @@ Long-click:
   Test voice search.
   Simplify code in SelectAlbumActivity?
 Improve horizontal layout, move tab buttons to the right.
-Add 192, 256kbps downsampling option.
 Shuffle play turned back on when rotating phone. (onNewIntent?)
 Better handling of full SD card.
 Unnecessary initial pause when starting partially downloaded songs.
