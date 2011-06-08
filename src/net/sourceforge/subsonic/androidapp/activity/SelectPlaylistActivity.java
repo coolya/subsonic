@@ -57,11 +57,11 @@ public class SelectPlaylistActivity extends SubsonicTabActivity implements Adapt
         list.setOnItemClickListener(this);
         registerForContextMenu(list);
 		
-		// Button 1: gone
-		findViewById(R.id.action_button_1).setVisibility(View.GONE);
+        // Title: Playlists
+        setTitle(R.string.playlist_label);
 
-        // Button 2: search
-        final ImageButton actionSearchButton = (ImageButton)findViewById(R.id.action_button_2);
+        // Button 1: search
+        final ImageButton actionSearchButton = (ImageButton)findViewById(R.id.action_button_1);
         actionSearchButton.setImageResource(R.drawable.action_search);
         actionSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,8 +72,25 @@ public class SelectPlaylistActivity extends SubsonicTabActivity implements Adapt
             }
         });
 
+		// Button 2: refresh
+		final ImageButton refreshButton = (ImageButton) findViewById(R.id.action_button_2);
+		refreshButton.setImageResource(R.drawable.action_refresh);
+		refreshButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				refresh();
+			}
+		});
+
         load();
     }
+
+	private void refresh() {
+		finish();
+		Intent intent = new Intent(this, SelectPlaylistActivity.class);
+		intent.putExtra(Constants.INTENT_EXTRA_NAME_REFRESH, true);
+		Util.startActivityWithoutTransition(this, intent);
+	}
 
     private void load() {
         BackgroundTask<List<Playlist>> task = new TabActivityBackgroundTask<List<Playlist>>(this) {

@@ -101,7 +101,7 @@ public class SelectArtistActivity extends SubsonicTabActivity implements
 
 	private void refresh() {
 		finish();
-		Intent intent = new Intent(this, SelectArtistActivity.class);
+		Intent intent = getIntent();
 		intent.putExtra(Constants.INTENT_EXTRA_NAME_REFRESH, true);
 		Util.startActivityWithoutTransition(this, intent);
 	}

@@ -56,7 +56,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
 
     private ListView entryList;
-    private View header;
     private View footer;
     private View emptyView;
     private Button selectButton;
@@ -66,9 +65,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     private Button deleteButton;
     private Button moreButton;
     private ImageView coverArtView;
-    private TextView headerText1;
-    private TextView headerText2;
-    private ImageButton playAllButton;
     private boolean licenseValid;
 
     /**
@@ -81,7 +77,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
-        header = LayoutInflater.from(this).inflate(R.layout.select_album_header, entryList, false);
         footer = LayoutInflater.from(this).inflate(R.layout.select_album_footer, entryList, false);
         entryList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         entryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -103,10 +98,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             }
         });
 
-        coverArtView = (ImageView) header.findViewById(R.id.select_album_cover_art);
-        headerText1 = (TextView) header.findViewById(R.id.select_album_text1);
-        headerText2 = (TextView) header.findViewById(R.id.select_album_text2);
-        playAllButton = (ImageButton) header.findViewById(R.id.select_album_play_all);
+        coverArtView = (ImageView) findViewById(R.id.actionbar_home_icon);
 
         selectButton = (Button) findViewById(R.id.select_album_select);
         playButton = (Button) findViewById(R.id.select_album_play);
@@ -151,15 +143,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             }
         });
 
-        playAllButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectAll(true);
-                download(false, false, true);
-                selectAll(false);
-            }
-        });
-
         registerForContextMenu(entryList);
 
         enableButtons();
@@ -192,18 +175,23 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             }
         });
 
-        // Button 2: search
-        final ImageButton actionSearchButton = (ImageButton)findViewById(R.id.action_button_2);
-        actionSearchButton.setImageResource(R.drawable.action_search);
-        actionSearchButton.setOnClickListener(new View.OnClickListener() {
+        // Button 2: refresh
+        final ImageButton actionRefreshButton = (ImageButton)findViewById(R.id.action_button_2);
+        actionRefreshButton.setImageResource(R.drawable.action_refresh);
+        actionRefreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            	Intent intent = new Intent(SelectAlbumActivity.this, SearchActivity.class);
-            	intent.putExtra(Constants.INTENT_EXTRA_REQUEST_SEARCH, true);
-                Util.startActivityWithoutTransition(SelectAlbumActivity.this, intent);
+				refresh();
             }
         });
     }
+
+	private void refresh() {
+		finish();
+		Intent intent = getIntent();
+		intent.putExtra(Constants.INTENT_EXTRA_NAME_REFRESH, true);
+		Util.startActivityWithoutTransition(this, intent);
+	}
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
@@ -238,8 +226,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     }
 
     private void getMusicDirectory(final String id, String name) {
-        headerText1.setText(name);
-        setTitle(Util.isOffline(this) ? R.string.music_library_label_offline : R.string.music_library_label);
+        setTitle(name);
 
         new LoadTask() {
             @Override
@@ -251,7 +238,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
     private void getPlaylist(final String playlistId, String playlistName) {
         setTitle(playlistName);
-        headerText1.setText(playlistName);
 
         new LoadTask() {
             @Override
@@ -404,8 +390,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     }
 
     private void playVideo(MusicDirectory.Entry entry) {
-//        Intent intent = new Intent(this, PlayVideoActivity.class);
-//        intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, entry.getId());
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(MusicServiceFactory.getMusicService(this).getVideoUrl(this, entry.getId())));
 
@@ -491,9 +475,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             }
 
             if (songCount > 0) {
-                headerText2.setText(getResources().getQuantityString(R.plurals.select_album_n_songs, songCount, songCount));
+            	selectButton.setText("All " + songCount);
                 getImageLoader().loadImage(coverArtView, entries.get(0), false);
-                entryList.addHeaderView(header);
                 entryList.addFooterView(footer);
                 selectButton.setVisibility(View.VISIBLE);
                 playButton.setVisibility(View.VISIBLE);

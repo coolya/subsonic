@@ -20,6 +20,7 @@ package net.sourceforge.subsonic.androidapp.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -191,8 +192,12 @@ public class SubsonicTabActivity extends Activity {
 
     @Override
 	public void setTitle(CharSequence title) {
-    	findViewById(R.id.actionbar_title_image).setVisibility(View.GONE);
+		// Set the font of the temperature readout to digital
+		Typeface tf = Typeface
+				.createFromAsset(getAssets(), "fonts/Advert-Regular.ttf");
+
     	TextView text = (TextView)findViewById(R.id.actionbar_title_text);
+		text.setTypeface(tf);
     	text.setVisibility(View.VISIBLE);
     	text.setText(title);
 	}

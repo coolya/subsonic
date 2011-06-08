@@ -97,6 +97,8 @@ public class SearchActivity extends SubsonicTabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
 
+        setTitle(R.string.common_appname);
+        
         View buttons = LayoutInflater.from(this).inflate(R.layout.search_buttons, null);
 
         artistsHeading = buttons.findViewById(R.id.search_artists);

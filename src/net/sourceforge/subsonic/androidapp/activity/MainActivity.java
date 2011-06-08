@@ -27,6 +27,7 @@ import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.MergeAdapter;
 import net.sourceforge.subsonic.androidapp.util.Util;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.ContextMenu;
@@ -109,6 +110,9 @@ public class MainActivity extends SubsonicTabActivity {
             }
         });
         
+        // Title: Subsonic
+        setTitle(R.string.common_appname);
+
         // Button 1: shuffle
         final ImageButton actionShuffleButton = (ImageButton)findViewById(R.id.action_button_1);
         actionShuffleButton.setImageResource(R.drawable.action_shuffle);
