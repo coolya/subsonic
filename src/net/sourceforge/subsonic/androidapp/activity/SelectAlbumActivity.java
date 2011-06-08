@@ -21,6 +21,7 @@ package net.sourceforge.subsonic.androidapp.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,138 +54,151 @@ import java.util.List;
 
 public class SelectAlbumActivity extends SubsonicTabActivity {
 
-    private static final String TAG = SelectAlbumActivity.class.getSimpleName();
+	private static final String TAG = SelectAlbumActivity.class.getSimpleName();
 
-    private ListView entryList;
-    private View footer;
-    private View emptyView;
-    private Button selectButton;
-    private Button playButton;
-    private Button queueButton;
-    private Button saveButton;
-    private Button deleteButton;
-    private Button moreButton;
-    private ImageView coverArtView;
-    private boolean licenseValid;
+	private ListView entryList;
+	private View footer;
+	private View emptyView;
+	private Button selectButton;
+	private Button playButton;
+	private Button queueButton;
+	private Button saveButton;
+	private Button deleteButton;
+	private Button moreButton;
+	private ImageView coverArtView;
+	private boolean licenseValid;
 
-    /**
-     * Called when the activity is first created.
-     */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.select_album);
+	/**
+	 * Called when the activity is first created.
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.select_album);
 
-        entryList = (ListView) findViewById(R.id.select_album_entries);
+		entryList = (ListView) findViewById(R.id.select_album_entries);
 
-        footer = LayoutInflater.from(this).inflate(R.layout.select_album_footer, entryList, false);
-        entryList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        entryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position >= 0) {
-                    MusicDirectory.Entry entry = (MusicDirectory.Entry) parent.getItemAtPosition(position);
-                    if (entry.isDirectory()) {
-                        Intent intent = new Intent(SelectAlbumActivity.this, SelectAlbumActivity.class);
-                        intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, entry.getId());
-                        intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, entry.getTitle());
-                        Util.startActivityWithoutTransition(SelectAlbumActivity.this, intent);
-                    } else if (entry.isVideo()) {
-                        playVideo(entry);
-                    } else {
-                        enableButtons();
-                    }
-                }
-            }
-        });
+		footer = LayoutInflater.from(this).inflate(
+				R.layout.select_album_footer, entryList, false);
+		entryList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		entryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				if (position >= 0) {
+					MusicDirectory.Entry entry = (MusicDirectory.Entry) parent
+							.getItemAtPosition(position);
+					if (entry.isDirectory()) {
+						Intent intent = new Intent(SelectAlbumActivity.this,
+								SelectAlbumActivity.class);
+						intent.putExtra(Constants.INTENT_EXTRA_NAME_ID,
+								entry.getId());
+						intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME,
+								entry.getTitle());
+						Util.startActivityWithoutTransition(
+								SelectAlbumActivity.this, intent);
+					} else if (entry.isVideo()) {
+						playVideo(entry);
+					} else {
+						enableButtons();
+					}
+				}
+			}
+		});
 
-        coverArtView = (ImageView) findViewById(R.id.actionbar_home_icon);
+		coverArtView = (ImageView) findViewById(R.id.actionbar_home_icon);
 
-        selectButton = (Button) findViewById(R.id.select_album_select);
-        playButton = (Button) findViewById(R.id.select_album_play);
-        queueButton = (Button) findViewById(R.id.select_album_queue);
-        saveButton = (Button) footer.findViewById(R.id.select_album_save);
-        deleteButton = (Button) footer.findViewById(R.id.select_album_delete);
-        moreButton = (Button) footer.findViewById(R.id.select_album_more);
-        emptyView = findViewById(R.id.select_album_empty);
+		selectButton = (Button) findViewById(R.id.select_album_select);
+		playButton = (Button) findViewById(R.id.select_album_play);
+		queueButton = (Button) findViewById(R.id.select_album_queue);
+		saveButton = (Button) footer.findViewById(R.id.select_album_save);
+		deleteButton = (Button) footer.findViewById(R.id.select_album_delete);
+		moreButton = (Button) footer.findViewById(R.id.select_album_more);
+		emptyView = findViewById(R.id.select_album_empty);
 
-        selectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectAllOrNone();
-            }
-        });
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                download(false, false, true);
-                selectAll(false);
-            }
-        });
-        queueButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                download(true, false, false);
-                selectAll(false);
-            }
-        });
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                download(true, true, false);
-                selectAll(false);
-            }
-        });
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                delete();
-                selectAll(false);
-            }
-        });
+		selectButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				selectAllOrNone();
+			}
+		});
+		playButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				download(false, false, true);
+				selectAll(false);
+			}
+		});
+		queueButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				download(true, false, false);
+				selectAll(false);
+			}
+		});
+		saveButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				download(true, true, false);
+				selectAll(false);
+			}
+		});
+		deleteButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				delete();
+				selectAll(false);
+			}
+		});
 
-        registerForContextMenu(entryList);
+		registerForContextMenu(entryList);
 
-        enableButtons();
+		enableButtons();
 
-        String id = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ID);
-        String name = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_NAME);
-        String playlistId = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_ID);
-        String playlistName = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME);
-        String albumListType = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE);
-        int albumListSize = getIntent().getIntExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_SIZE, 0);
-        int albumListOffset = getIntent().getIntExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET, 0);
+		String id = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ID);
+		String name = getIntent().getStringExtra(
+				Constants.INTENT_EXTRA_NAME_NAME);
+		String playlistId = getIntent().getStringExtra(
+				Constants.INTENT_EXTRA_NAME_PLAYLIST_ID);
+		String playlistName = getIntent().getStringExtra(
+				Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME);
+		String albumListType = getIntent().getStringExtra(
+				Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE);
+		int albumListSize = getIntent().getIntExtra(
+				Constants.INTENT_EXTRA_NAME_ALBUM_LIST_SIZE, 0);
+		int albumListOffset = getIntent().getIntExtra(
+				Constants.INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET, 0);
 
-        if (playlistId != null) {
-            getPlaylist(playlistId, playlistName);
-        } else if (albumListType != null) {
-            getAlbumList(albumListType, albumListSize, albumListOffset);
-        } else {
-            getMusicDirectory(id, name);
-        }
-        
-        // Button 1: play all
-        final ImageButton actionPlayAllButton = (ImageButton)findViewById(R.id.action_button_1);
-        actionPlayAllButton.setImageResource(R.drawable.action_play_all);
-        actionPlayAllButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectAll(true);
-                download(false, false, true);
-                selectAll(false);
-            }
-        });
+		if (playlistId != null) {
+			getPlaylist(playlistId, playlistName);
+		} else if (albumListType != null) {
+			getAlbumList(albumListType, albumListSize, albumListOffset);
+		} else {
+			getMusicDirectory(id, name);
+		}
 
-        // Button 2: refresh
-        final ImageButton actionRefreshButton = (ImageButton)findViewById(R.id.action_button_2);
-        actionRefreshButton.setImageResource(R.drawable.action_refresh);
-        actionRefreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+		// Button 1: play all
+		final ImageButton actionPlayAllButton = (ImageButton) findViewById(R.id.action_button_1);
+		actionPlayAllButton.setImageResource(R.drawable.action_play_all);
+		actionPlayAllButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				selectAll(true);
+				download(false, false, true);
+				selectAll(false);
+			}
+		});
+
+		// Button 2: refresh
+		final ImageButton actionRefreshButton = (ImageButton) findViewById(R.id.action_button_2);
+		actionRefreshButton.setImageResource(R.drawable.action_refresh);
+		actionRefreshButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
 				refresh();
-            }
-        });
-    }
+			}
+		});
+	}
 
 	private void refresh() {
 		finish();
@@ -193,306 +207,377 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 		Util.startActivityWithoutTransition(this, intent);
 	}
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, view, menuInfo);
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View view,
+			ContextMenu.ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, view, menuInfo);
 
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
-        if (entry.isDirectory()) {
-    		MenuInflater inflater = getMenuInflater();
-    		inflater.inflate(R.menu.select_album_context, menu);
-        }
-    }
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+		MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList
+				.getItemAtPosition(info.position);
+		if (entry.isDirectory()) {
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.select_album_context, menu);
+		}
+	}
 
-    @Override
-    public boolean onContextItemSelected(MenuItem menuItem) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
-        MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
-        switch (menuItem.getItemId()) {
-            case R.id.menu_play_all:
-                downloadRecursively(entry.getId(), false, false, true);
-                break;
-            case R.id.menu_queue_all:
-                downloadRecursively(entry.getId(), false, true, false);
-                break;
-            case R.id.menu_save_all:
-                downloadRecursively(entry.getId(), true, true, false);
-                break;
-            default:
-                return super.onContextItemSelected(menuItem);
-        }
-        return true;
-    }
+	@Override
+	public boolean onContextItemSelected(MenuItem menuItem) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem
+				.getMenuInfo();
+		MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList
+				.getItemAtPosition(info.position);
+		switch (menuItem.getItemId()) {
+		case R.id.menu_play_all:
+			downloadRecursively(entry.getId(), false, false, true);
+			break;
+		case R.id.menu_queue_all:
+			downloadRecursively(entry.getId(), false, true, false);
+			break;
+		case R.id.menu_save_all:
+			downloadRecursively(entry.getId(), true, true, false);
+			break;
+		default:
+			return super.onContextItemSelected(menuItem);
+		}
+		return true;
+	}
 
-    private void getMusicDirectory(final String id, String name) {
-        setTitle(name);
+	private void getMusicDirectory(final String id, String name) {
+		setTitle(name);
 
-        new LoadTask() {
-            @Override
-            protected MusicDirectory load(MusicService service) throws Exception {
-                return service.getMusicDirectory(id, SelectAlbumActivity.this, this);
-            }
-        }.execute();
-    }
+		new LoadTask() {
+			@Override
+			protected MusicDirectory load(MusicService service)
+					throws Exception {
+				return service.getMusicDirectory(id, SelectAlbumActivity.this,
+						this);
+			}
+		}.execute();
+	}
 
-    private void getPlaylist(final String playlistId, String playlistName) {
-        setTitle(playlistName);
+	private void getPlaylist(final String playlistId, String playlistName) {
+		setTitle(playlistName);
 
-        new LoadTask() {
-            @Override
-            protected MusicDirectory load(MusicService service) throws Exception {
-                return service.getPlaylist(playlistId, SelectAlbumActivity.this, this);
-            }
-        }.execute();
-    }
+		new LoadTask() {
+			@Override
+			protected MusicDirectory load(MusicService service)
+					throws Exception {
+				return service.getPlaylist(playlistId,
+						SelectAlbumActivity.this, this);
+			}
+		}.execute();
+	}
 
-    private void getAlbumList(final String albumListType, final int size, final int offset) {
+	private void getAlbumList(final String albumListType, final int size,
+			final int offset) {
 
-        if ("newest".equals(albumListType)) {
-            setTitle(R.string.main_albums_newest);
-        } else if ("random".equals(albumListType)) {
-            setTitle(R.string.main_albums_random);
-        } else if ("highest".equals(albumListType)) {
-            setTitle(R.string.main_albums_highest);
-        } else if ("recent".equals(albumListType)) {
-            setTitle(R.string.main_albums_recent);
-        } else if ("frequent".equals(albumListType)) {
-            setTitle(R.string.main_albums_frequent);
-        }
+		if ("newest".equals(albumListType)) {
+			setTitle(R.string.main_albums_newest);
+		} else if ("random".equals(albumListType)) {
+			setTitle(R.string.main_albums_random);
+		} else if ("highest".equals(albumListType)) {
+			setTitle(R.string.main_albums_highest);
+		} else if ("recent".equals(albumListType)) {
+			setTitle(R.string.main_albums_recent);
+		} else if ("frequent".equals(albumListType)) {
+			setTitle(R.string.main_albums_frequent);
+		}
 
-        new LoadTask() {
-            @Override
-            protected MusicDirectory load(MusicService service) throws Exception {
-                return service.getAlbumList(albumListType, size, offset, SelectAlbumActivity.this, this);
-            }
+		new LoadTask() {
+			@Override
+			protected MusicDirectory load(MusicService service)
+					throws Exception {
+				return service.getAlbumList(albumListType, size, offset,
+						SelectAlbumActivity.this, this);
+			}
 
-            @Override
-            protected void done(Pair<MusicDirectory, Boolean> result) {
-                if (!result.getFirst().getChildren().isEmpty()) {
-                    saveButton.setVisibility(View.GONE);
-                    deleteButton.setVisibility(View.GONE);
-                    moreButton.setVisibility(View.VISIBLE);
-                    entryList.addFooterView(footer);
+			@Override
+			protected void done(Pair<MusicDirectory, Boolean> result) {
+				if (!result.getFirst().getChildren().isEmpty()) {
+					saveButton.setVisibility(View.GONE);
+					deleteButton.setVisibility(View.GONE);
+					moreButton.setVisibility(View.VISIBLE);
+					entryList.addFooterView(footer);
 
-                    moreButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(SelectAlbumActivity.this, SelectAlbumActivity.class);
-                            String type = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE);
-                            int size = getIntent().getIntExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_SIZE, 0);
-                            int offset = getIntent().getIntExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET, 0) + size;
+					moreButton.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							Intent intent = new Intent(
+									SelectAlbumActivity.this,
+									SelectAlbumActivity.class);
+							String type = getIntent()
+									.getStringExtra(
+											Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE);
+							int size = getIntent()
+									.getIntExtra(
+											Constants.INTENT_EXTRA_NAME_ALBUM_LIST_SIZE,
+											0);
+							int offset = getIntent()
+									.getIntExtra(
+											Constants.INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET,
+											0)
+									+ size;
 
-                            intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE, type);
-                            intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_SIZE, size);
-                            intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET, offset);
-                            Util.startActivityWithoutTransition(SelectAlbumActivity.this, intent);
-                        }
-                    });
-                }
-                super.done(result);
-            }
-        }.execute();
-    }
+							intent.putExtra(
+									Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE,
+									type);
+							intent.putExtra(
+									Constants.INTENT_EXTRA_NAME_ALBUM_LIST_SIZE,
+									size);
+							intent.putExtra(
+									Constants.INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET,
+									offset);
+							Util.startActivityWithoutTransition(
+									SelectAlbumActivity.this, intent);
+						}
+					});
+				}
+				super.done(result);
+			}
+		}.execute();
+	}
 
-    private void selectAllOrNone() {
-        boolean someUnselected = false;
-        int count = entryList.getCount();
-        for (int i = 0; i < count; i++) {
-            if (!entryList.isItemChecked(i) && entryList.getItemAtPosition(i) instanceof MusicDirectory.Entry) {
-                someUnselected = true;
-                break;
-            }
-        }
-        selectAll(someUnselected);
-    }
+	private boolean areSomeUnselected() {
+		boolean someUnselected = false;
+		int count = entryList.getCount();
+		for (int i = 0; i < count; i++) {
+			if (!entryList.isItemChecked(i)
+					&& entryList.getItemAtPosition(i) instanceof MusicDirectory.Entry) {
+				someUnselected = true;
+				break;
+			}
+		}
+		return someUnselected;
+	}
 
-    private void selectAll(boolean selected) {
-        int count = entryList.getCount();
-        for (int i = 0; i < count; i++) {
-            MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(i);
-            if (entry != null && !entry.isDirectory() && !entry.isVideo()) {
-                entryList.setItemChecked(i, selected);
-            }
-        }
-        enableButtons();
-    }
+	private void selectAllOrNone() {
+		selectAll(areSomeUnselected());
+	}
 
-    private void enableButtons() {
-        if (getDownloadService() == null) {
-            return;
-        }
+	private void selectAll(boolean selected) {
+		int count = entryList.getCount();
+		for (int i = 0; i < count; i++) {
+			MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList
+					.getItemAtPosition(i);
+			if (entry != null && !entry.isDirectory() && !entry.isVideo()) {
+				entryList.setItemChecked(i, selected);
+			}
+		}
+		enableButtons();
+	}
 
-        List<MusicDirectory.Entry> selection = getSelectedSongs();
-        boolean enabled = !selection.isEmpty();
-        boolean deleteEnabled = false;
+	private void enableButtons() {
+		if (getDownloadService() == null) {
+			return;
+		}
 
-        for (MusicDirectory.Entry song : selection) {
-            DownloadFile downloadFile = getDownloadService().forSong(song);
-            if (downloadFile.getCompleteFile().exists()) {
-                deleteEnabled = true;
-                break;
-            }
-        }
+		List<MusicDirectory.Entry> selection = getSelectedSongs();
+		boolean enabled = !selection.isEmpty();
+		boolean deleteEnabled = false;
 
-        playButton.setEnabled(enabled);
-        queueButton.setEnabled(enabled);
-        saveButton.setEnabled(enabled && !Util.isOffline(this));
-        deleteButton.setEnabled(deleteEnabled);
-    }
+		for (MusicDirectory.Entry song : selection) {
+			DownloadFile downloadFile = getDownloadService().forSong(song);
+			if (downloadFile.getCompleteFile().exists()) {
+				deleteEnabled = true;
+				break;
+			}
+		}
 
-    private List<MusicDirectory.Entry> getSelectedSongs() {
-        List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>(10);
-        int count = entryList.getCount();
-        for (int i = 0; i < count; i++) {
-            if (entryList.isItemChecked(i)) {
-                songs.add((MusicDirectory.Entry) entryList.getItemAtPosition(i));
-            }
-        }
-        return songs;
-    }
+		selectButton
+		.setCompoundDrawablesWithIntrinsicBounds(
+				areSomeUnselected() ? R.drawable.btn_check_buttonless_off
+						: R.drawable.btn_check_buttonless_on,
+				0, 0, 0);
+		playButton.setEnabled(enabled);
+		queueButton.setEnabled(enabled);
+		saveButton.setEnabled(enabled && !Util.isOffline(this));
+		deleteButton.setEnabled(deleteEnabled);
+	}
 
-    private void download(final boolean append, final boolean save, final boolean autoplay) {
-        if (getDownloadService() == null) {
-            return;
-        }
+	private List<MusicDirectory.Entry> getSelectedSongs() {
+		List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>(
+				10);
+		int count = entryList.getCount();
+		for (int i = 0; i < count; i++) {
+			if (entryList.isItemChecked(i)) {
+				songs.add((MusicDirectory.Entry) entryList.getItemAtPosition(i));
+			}
+		}
+		return songs;
+	}
 
-        final List<MusicDirectory.Entry> songs = getSelectedSongs();
-        Runnable onValid = new Runnable() {
-            @Override
-            public void run() {
-                if (!append) {
-                    getDownloadService().clear();
-                }
+	private void download(final boolean append, final boolean save,
+			final boolean autoplay) {
+		if (getDownloadService() == null) {
+			return;
+		}
 
-                warnIfNetworkOrStorageUnavailable();
-                getDownloadService().download(songs, save, autoplay);
-                getDownloadService().setSuggestedPlaylistName(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME));
-                if (autoplay) {
-                    Util.startActivityWithoutTransition(SelectAlbumActivity.this, DownloadActivity.class);
-                } else if (save) {
-                    Util.toast(SelectAlbumActivity.this, getResources().getQuantityString(R.plurals.select_album_n_songs_downloading, songs.size(), songs.size()));
-                } else if (append) {
-                    Util.toast(SelectAlbumActivity.this, getResources().getQuantityString(R.plurals.select_album_n_songs_added, songs.size(), songs.size()));
-                }
-            }
-        };
+		final List<MusicDirectory.Entry> songs = getSelectedSongs();
+		Runnable onValid = new Runnable() {
+			@Override
+			public void run() {
+				if (!append) {
+					getDownloadService().clear();
+				}
 
-        checkLicenseAndTrialPeriod(onValid);
-    }
+				warnIfNetworkOrStorageUnavailable();
+				getDownloadService().download(songs, save, autoplay);
+				getDownloadService().setSuggestedPlaylistName(
+						getIntent().getStringExtra(
+								Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME));
+				if (autoplay) {
+					Util.startActivityWithoutTransition(
+							SelectAlbumActivity.this, DownloadActivity.class);
+				} else if (save) {
+					Util.toast(
+							SelectAlbumActivity.this,
+							getResources().getQuantityString(
+									R.plurals.select_album_n_songs_downloading,
+									songs.size(), songs.size()));
+				} else if (append) {
+					Util.toast(
+							SelectAlbumActivity.this,
+							getResources().getQuantityString(
+									R.plurals.select_album_n_songs_added,
+									songs.size(), songs.size()));
+				}
+			}
+		};
 
-    private void delete() {
-        if (getDownloadService() == null) {
-            return;
-        }
+		checkLicenseAndTrialPeriod(onValid);
+	}
 
-        getDownloadService().delete(getSelectedSongs());
-    }
+	private void delete() {
+		if (getDownloadService() == null) {
+			return;
+		}
 
-    private void playVideo(MusicDirectory.Entry entry) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(MusicServiceFactory.getMusicService(this).getVideoUrl(this, entry.getId())));
+		getDownloadService().delete(getSelectedSongs());
+	}
 
-        startActivity(intent);
-    }
+	private void playVideo(MusicDirectory.Entry entry) {
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.setData(Uri.parse(MusicServiceFactory.getMusicService(this)
+				.getVideoUrl(this, entry.getId())));
 
-    private void checkLicenseAndTrialPeriod(Runnable onValid) {
-        if (licenseValid) {
-            onValid.run();
-            return;
-        }
+		startActivity(intent);
+	}
 
-        int trialDaysLeft = Util.getRemainingTrialDays(this);
-        Log.i(TAG, trialDaysLeft + " trial days left.");
+	private void checkLicenseAndTrialPeriod(Runnable onValid) {
+		if (licenseValid) {
+			onValid.run();
+			return;
+		}
 
-        if (trialDaysLeft == 0) {
-            showDonationDialog(trialDaysLeft, null);
-        } else if (trialDaysLeft < Constants.FREE_TRIAL_DAYS / 2) {
-            showDonationDialog(trialDaysLeft, onValid);
-        } else {
-            Util.toast(this, getResources().getString(R.string.select_album_not_licensed, trialDaysLeft));
-            onValid.run();
-        }
-    }
+		int trialDaysLeft = Util.getRemainingTrialDays(this);
+		Log.i(TAG, trialDaysLeft + " trial days left.");
 
-    private void showDonationDialog(int trialDaysLeft, final Runnable onValid) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setIcon(android.R.drawable.ic_dialog_info);
+		if (trialDaysLeft == 0) {
+			showDonationDialog(trialDaysLeft, null);
+		} else if (trialDaysLeft < Constants.FREE_TRIAL_DAYS / 2) {
+			showDonationDialog(trialDaysLeft, onValid);
+		} else {
+			Util.toast(
+					this,
+					getResources().getString(
+							R.string.select_album_not_licensed, trialDaysLeft));
+			onValid.run();
+		}
+	}
 
-        if (trialDaysLeft == 0) {
-            builder.setTitle(R.string.select_album_donate_dialog_0_trial_days_left);
-        } else {
-            builder.setTitle(getResources().getQuantityString(R.plurals.select_album_donate_dialog_n_trial_days_left, trialDaysLeft, trialDaysLeft));
-        }
+	private void showDonationDialog(int trialDaysLeft, final Runnable onValid) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setIcon(android.R.drawable.ic_dialog_info);
 
-        builder.setMessage(R.string.select_album_donate_dialog_message);
+		if (trialDaysLeft == 0) {
+			builder.setTitle(R.string.select_album_donate_dialog_0_trial_days_left);
+		} else {
+			builder.setTitle(getResources().getQuantityString(
+					R.plurals.select_album_donate_dialog_n_trial_days_left,
+					trialDaysLeft, trialDaysLeft));
+		}
 
-        builder.setPositiveButton(R.string.select_album_donate_dialog_now, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.DONATION_URL)));
-            }
-        });
+		builder.setMessage(R.string.select_album_donate_dialog_message);
 
-        builder.setNegativeButton(R.string.select_album_donate_dialog_later, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-                if (onValid != null) {
-                    onValid.run();
-                }
-            }
-        });
+		builder.setPositiveButton(R.string.select_album_donate_dialog_now,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialogInterface, int i) {
+						startActivity(new Intent(Intent.ACTION_VIEW, Uri
+								.parse(Constants.DONATION_URL)));
+					}
+				});
 
-        builder.create().show();
-    }
+		builder.setNegativeButton(R.string.select_album_donate_dialog_later,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialogInterface, int i) {
+						dialogInterface.dismiss();
+						if (onValid != null) {
+							onValid.run();
+						}
+					}
+				});
 
-    private abstract class LoadTask extends TabActivityBackgroundTask<Pair<MusicDirectory, Boolean>> {
+		builder.create().show();
+	}
 
-        public LoadTask() {
-            super(SelectAlbumActivity.this);
-        }
+	private abstract class LoadTask extends
+			TabActivityBackgroundTask<Pair<MusicDirectory, Boolean>> {
 
-        protected abstract MusicDirectory load(MusicService service) throws Exception;
+		public LoadTask() {
+			super(SelectAlbumActivity.this);
+		}
 
-        @Override
-        protected Pair<MusicDirectory, Boolean> doInBackground() throws Throwable {
-            MusicService musicService = MusicServiceFactory.getMusicService(SelectAlbumActivity.this);
-            MusicDirectory dir = load(musicService);
-            boolean valid = musicService.isLicenseValid(SelectAlbumActivity.this, this);
-            return new Pair<MusicDirectory, Boolean>(dir, valid);
-        }
+		protected abstract MusicDirectory load(MusicService service)
+				throws Exception;
 
-        @Override
-        protected void done(Pair<MusicDirectory, Boolean> result) {
-            List<MusicDirectory.Entry> entries = result.getFirst().getChildren();
+		@Override
+		protected Pair<MusicDirectory, Boolean> doInBackground()
+				throws Throwable {
+			MusicService musicService = MusicServiceFactory
+					.getMusicService(SelectAlbumActivity.this);
+			MusicDirectory dir = load(musicService);
+			boolean valid = musicService.isLicenseValid(
+					SelectAlbumActivity.this, this);
+			return new Pair<MusicDirectory, Boolean>(dir, valid);
+		}
 
-            int songCount = 0;
-            for (MusicDirectory.Entry entry : entries) {
-                if (!entry.isDirectory()) {
-                    songCount++;
-                }
-            }
+		@Override
+		protected void done(Pair<MusicDirectory, Boolean> result) {
+			List<MusicDirectory.Entry> entries = result.getFirst()
+					.getChildren();
 
-            if (songCount > 0) {
-            	selectButton.setText("All " + songCount);
-                getImageLoader().loadImage(coverArtView, entries.get(0), false);
-                entryList.addFooterView(footer);
-                selectButton.setVisibility(View.VISIBLE);
-                playButton.setVisibility(View.VISIBLE);
-                queueButton.setVisibility(View.VISIBLE);
-            }
+			int songCount = 0;
+			for (MusicDirectory.Entry entry : entries) {
+				if (!entry.isDirectory()) {
+					songCount++;
+				}
+			}
 
-            emptyView.setVisibility(entries.isEmpty() ? View.VISIBLE : View.GONE);
-            entryList.setAdapter(new EntryAdapter(SelectAlbumActivity.this, getImageLoader(), entries, true));
-            licenseValid = result.getSecond();
+			if (songCount > 0) {
+				getImageLoader().loadImage(coverArtView, entries.get(0), false);
+				entryList.addFooterView(footer);
+				selectButton.setText("(" + songCount + ")");
+				selectButton.setVisibility(View.VISIBLE);
+				playButton.setVisibility(View.VISIBLE);
+				queueButton.setVisibility(View.VISIBLE);
+			}
 
-            boolean playAll = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, false);
-            if (playAll && songCount > 0) {
-                selectAll(true);
-                download(false, false, true);
-                selectAll(false);
-            }
-        }
-    }
+			emptyView.setVisibility(entries.isEmpty() ? View.VISIBLE
+					: View.GONE);
+			entryList.setAdapter(new EntryAdapter(SelectAlbumActivity.this,
+					getImageLoader(), entries, true));
+			licenseValid = result.getSecond();
+
+			boolean playAll = getIntent().getBooleanExtra(
+					Constants.INTENT_EXTRA_NAME_AUTOPLAY, false);
+			if (playAll && songCount > 0) {
+				selectAll(true);
+				download(false, false, true);
+				selectAll(false);
+			}
+		}
+	}
 }
