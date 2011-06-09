@@ -28,6 +28,34 @@ import junit.framework.TestCase;
  */
 public class StreamControllerTestCase extends TestCase {
 
+    public void testGetRequestedVideoSize() {
+        StreamController controller = new StreamController();
+
+        // Valid spec.
+        assertEquals("Wrong size.", new Dimension(123, 456), controller.getRequestedVideoSize("123x456"));
+        assertEquals("Wrong size.", new Dimension(456, 123), controller.getRequestedVideoSize("456x123"));
+        assertEquals("Wrong size.", new Dimension(1, 1), controller.getRequestedVideoSize("1x1"));
+
+        // Missing spec.
+        assertNull("Wrong size.", controller.getRequestedVideoSize(null));
+
+        // Invalid spec.
+        assertNull("Wrong size.", controller.getRequestedVideoSize("123"));
+        assertNull("Wrong size.", controller.getRequestedVideoSize("123x"));
+        assertNull("Wrong size.", controller.getRequestedVideoSize("x123"));
+        assertNull("Wrong size.", controller.getRequestedVideoSize("x"));
+        assertNull("Wrong size.", controller.getRequestedVideoSize("foo123x456bar"));
+        assertNull("Wrong size.", controller.getRequestedVideoSize("foo123x456"));
+        assertNull("Wrong size.", controller.getRequestedVideoSize("123x456bar"));
+        assertNull("Wrong size.", controller.getRequestedVideoSize("fooxbar"));
+        assertNull("Wrong size.", controller.getRequestedVideoSize("-1x1"));
+        assertNull("Wrong size.", controller.getRequestedVideoSize("1x-1"));
+
+        // Too large.
+        assertNull("Wrong size.", controller.getRequestedVideoSize("3000x100"));
+        assertNull("Wrong size.", controller.getRequestedVideoSize("100x3000"));
+    }
+
     public void testGetSuitableVideoSize() {
 
         // 4:3 aspect rate

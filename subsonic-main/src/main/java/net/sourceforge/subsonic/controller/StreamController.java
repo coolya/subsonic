@@ -22,6 +22,8 @@ import java.awt.Dimension;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -268,9 +270,30 @@ public class StreamController implements Controller {
         Integer existingHeight = file.getMetaData().getHeight();
         Integer maxBitRate = ServletRequestUtils.getIntParameter(request, "maxBitRate");
         int timeOffset = ServletRequestUtils.getIntParameter(request, "timeOffset", 0);
-        Dimension dim = getSuitableVideoSize(existingWidth, existingHeight, maxBitRate);
+
+        Dimension dim = getRequestedVideoSize(request.getParameter("size"));
+        if (dim == null) {
+            dim = getSuitableVideoSize(existingWidth, existingHeight, maxBitRate);
+        }
 
         return new VideoTranscodingSettings(dim.width, dim.height, timeOffset);
+    }
+
+    protected Dimension getRequestedVideoSize(String sizeSpec) {
+        if (sizeSpec == null) {
+            return null;
+        }
+
+        Pattern pattern = Pattern.compile("^(\\d+)x(\\d+)$");
+        Matcher matcher = pattern.matcher(sizeSpec);
+        if (matcher.find()) {
+            int w = Integer.parseInt(matcher.group(1));
+            int h = Integer.parseInt(matcher.group(2));
+            if (w >= 0 && h >= 0 && w <= 2000 && h <= 2000) {
+                return new Dimension(w, h);
+            }
+        }
+        return null;
     }
 
     protected Dimension getSuitableVideoSize(Integer existingWidth, Integer existingHeight, Integer maxBitRate) {
