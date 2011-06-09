@@ -38,16 +38,17 @@ Remember repeat mode
 Run cache cleaning after downloading a song.
 Add 192, 256kbps downsampling option.
 Position/duration overwritten by long song title.
+Remove option to save playlist when in offline mode.
 
 TODO IN ANDROID 2.8
 -------------------
+When going to offline mode, retain all items in playlists that are present offline.
 Merge in changes from Doug.
 Twitter, facebook integration.
 Offline shuffle broken?
 Does repeat button work in landscape mode?
 DownloadServiceImpl: ignore a mysterious MediaPlayer error
   https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12eff38d39be7a3c
-Remove option to save playlist when in offline mode.
 Error when using foo:3030 as server url.
 Avoid more than one instance.
 Use new intents in widget.
