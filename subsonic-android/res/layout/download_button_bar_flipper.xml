@@ -37,6 +37,8 @@
                 a:id="@+id/download_artist"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
+                a:layout_toRightOf="@+id/download_position"
+                a:layout_toLeftOf="@+id/download_duration"
                 a:layout_centerHorizontal="true"
                 a:layout_alignParentTop="true"
                 a:singleLine="true"

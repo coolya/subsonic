@@ -37,9 +37,11 @@ Remember repeat mode
   https://mail.google.com/mail/?shva=1#inbox/1301dfb08775df81
 Run cache cleaning after downloading a song.
 Add 192, 256kbps downsampling option.
+Position/duration overwritten by long song title.
 
 TODO IN ANDROID 2.8
 -------------------
+Merge in changes from Doug.
 Twitter, facebook integration.
 Offline shuffle broken?
 Does repeat button work in landscape mode?
@@ -125,12 +127,18 @@ TODO IN 4.5
 -----------------
 Add "format" and "size" parameters to stream REST method.
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=26935#26935
+Handle non-square cover art
+  https://mail.google.com/a/activeobjects.no/#inbox/12debb505054d33a
+Cover arts not always aligned in grid
+  https://mail.google.com/a/activeobjects.no/#inbox/12defd71c5d9e916
+Upgrade ffmpeg and support wtv.
 Add browser notification
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=5434&highlight=
 IE9 - Cover Art Only Displays for a Second, Then Disappears
   https://mail.google.com/mail/?ui=2&shva=1#inbox/1304333c98bc97f3
  AdMob
 Show library statistics for video.
+Create more compact transcoding settings.
 Write hosting.jsp
 Canaca ads.
 Playing only first three seconds of podcast
@@ -173,11 +181,6 @@ Investigate mapped network drives.
 Show recommended songs, based on last.fm
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3211
   https://mail.google.com/a/activeobjects.no/#inbox/12ddbfe26940f6cc
-Handle non-square cover art
-  https://mail.google.com/a/activeobjects.no/#inbox/12debb505054d33a
-Cover arts not always aligned in grid
-  https://mail.google.com/a/activeobjects.no/#inbox/12defd71c5d9e916
-Upgrade ffmpeg and support wtv.
 Run Subsonic on Dreamplug
   http://www.globalscaletechnologies.com/p-41-dreamplug-devkit.aspx
   Invoice: https://www.globalscaletechnologies.com/receipt.aspx?ordernumber=113837
