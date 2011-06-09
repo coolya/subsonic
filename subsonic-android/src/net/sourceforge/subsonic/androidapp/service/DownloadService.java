@@ -44,6 +44,8 @@ public interface DownloadService {
 
     void clear();
 
+    void clearIncomplete();
+
     int size();
 
     void remove(DownloadFile downloadFile);

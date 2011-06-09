@@ -39,10 +39,10 @@ Run cache cleaning after downloading a song.
 Add 192, 256kbps downsampling option.
 Position/duration overwritten by long song title.
 Remove option to save playlist when in offline mode.
+When going to offline mode or switching servers, retain all items in playlists that are present offline.
 
 TODO IN ANDROID 2.8
 -------------------
-When going to offline mode, retain all items in playlists that are present offline.
 Merge in changes from Doug.
 Twitter, facebook integration.
 Offline shuffle broken?
