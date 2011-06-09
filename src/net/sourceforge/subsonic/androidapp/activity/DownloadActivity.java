@@ -369,7 +369,9 @@ public class DownloadActivity extends SubsonicTabActivity {
             menu.add(Menu.NONE, MENU_ITEM_REMOVE, MENU_ITEM_REMOVE, R.string.download_menu_remove);
             menu.add(Menu.NONE, MENU_ITEM_REMOVE_ALL, MENU_ITEM_REMOVE_ALL, R.string.download_menu_remove_all);
             menu.add(Menu.NONE, MENU_ITEM_SHUFFLE, MENU_ITEM_SHUFFLE, R.string.download_menu_shuffle);
-            menu.add(Menu.NONE, MENU_ITEM_SAVE_PLAYLIST, MENU_ITEM_SAVE_PLAYLIST, R.string.download_menu_save);
+            if (!Util.isOffline(this)) {
+                menu.add(Menu.NONE, MENU_ITEM_SAVE_PLAYLIST, MENU_ITEM_SAVE_PLAYLIST, R.string.download_menu_save);
+            }
         }
     }
 
