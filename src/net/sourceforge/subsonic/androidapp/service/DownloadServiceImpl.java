@@ -63,7 +63,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     private final IBinder binder = new SimpleServiceBinder<DownloadService>(this);
     private MediaPlayer mediaPlayer;
-    private final List<DownloadFile> downloadList = new CopyOnWriteArrayList<DownloadFile>();
+    private final List<DownloadFile> downloadList = new ArrayList<DownloadFile>();
     private final Handler handler = new Handler();
     private final DownloadServiceLifecycleSupport lifecycleSupport = new DownloadServiceLifecycleSupport(this);
     private final ShufflePlayBuffer shufflePlayBuffer = new ShufflePlayBuffer(this);
@@ -147,7 +147,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         } else {
             if (currentPlaying == null) {
                 currentPlaying = downloadList.get(0);
-            } 
+            }
             checkDownloads();
         }
         lifecycleSupport.serializeDownloadQueue();
@@ -221,6 +221,19 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     @Override
     public synchronized void clear() {
         clear(true);
+    }
+
+    @Override
+    public synchronized void clearIncomplete() {
+        reset();
+        Iterator<DownloadFile> iterator = downloadList.iterator();
+        while (iterator.hasNext()) {
+            DownloadFile downloadFile = iterator.next();
+            if (!downloadFile.isCompleteFileAvailable()) {
+                iterator.remove();
+            }
+        }
+        lifecycleSupport.serializeDownloadQueue();
     }
 
     @Override

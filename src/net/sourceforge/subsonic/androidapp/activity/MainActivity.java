@@ -204,7 +204,7 @@ public class MainActivity extends SubsonicTabActivity {
         if (Util.getActiveServer(this) != instance) {
             DownloadService service = getDownloadService();
             if (service != null) {
-                service.clear();
+                service.clearIncomplete();
             }
             Util.setActiveServer(this, instance);
         }
