@@ -44,7 +44,7 @@ When going to offline mode or switching servers, retain all items in playlists t
 TODO IN ANDROID 2.8
 -------------------
 Merge in changes from Doug.
-Twitter, facebook integration.
+Sharing support.
 Podcast support.
 
 Offline shuffle broken?
@@ -130,6 +130,8 @@ Added "format" and "size" parameters to stream REST method.
 
 TODO IN 4.5
 -----------------
+REST method for sharing.
+Add "append" parameter to createPlaylist REST method.
 Handle non-square cover art
   https://mail.google.com/a/activeobjects.no/#inbox/12debb505054d33a
 Cover arts not always aligned in grid

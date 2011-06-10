@@ -831,6 +831,27 @@ public class RESTController extends MultiActionController {
         response.getWriter().print(builder);
     }
 
+    public void getShareUrl(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
+
+//        todo
+//        MusicFile file;
+//        try {
+//            String path = StringUtil.utf8HexDecode(ServletRequestUtils.getRequiredStringParameter(request, "id"));
+//            file = musicFileService.getMusicFile(path);
+//            boolean submission = ServletRequestUtils.getBooleanParameter(request, "submission", true);
+//            audioScrobblerService.register(file, player.getUsername(), submission);
+//        } catch (Exception x) {
+//            LOG.warn("Error in REST API.", x);
+//            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
+//            return;
+//        }
+
+        builder.endAll();
+        response.getWriter().print(builder);
+    }
+
     public ModelAndView videoPlayer(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
 
