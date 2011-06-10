@@ -345,6 +345,7 @@
         <property name="userSettingsController" ref="userSettingsController"/>
         <property name="leftController" ref="leftController"/>
         <property name="homeController" ref="homeController"/>
+        <property name="shareController" ref="shareController"/>
     </bean>
     <bean id="dbController" class="net.sourceforge.subsonic.controller.DBController">
         <property name="viewName" value="db"/>

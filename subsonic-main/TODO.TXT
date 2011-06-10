@@ -127,10 +127,10 @@ Support video in external player
   https://mail.google.com/a/activeobjects.no/#inbox/12f50fffffd6fecf
 Added "format" and "size" parameters to stream REST method.
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=26935#26935
+REST method for sharing.
 
 TODO IN 4.5
 -----------------
-REST method for sharing.
 Add "append" parameter to createPlaylist REST method.
 Handle non-square cover art
   https://mail.google.com/a/activeobjects.no/#inbox/12debb505054d33a

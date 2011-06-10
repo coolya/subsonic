@@ -102,6 +102,7 @@ public class RESTController extends MultiActionController {
     private HomeController homeController;
     private StatusService statusService;
     private StreamController streamController;
+    private ShareController shareController;
     private SearchService searchService;
     private PlaylistService playlistService;
     private ChatService chatService;
@@ -833,23 +834,40 @@ public class RESTController extends MultiActionController {
 
     public void getShareUrl(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
+
+        User user = securityService.getCurrentUser(request);
+        if (!user.isShareRole()) {
+            error(request, response, ErrorCode.NOT_AUTHORIZED, user.getUsername() + " is not authorized to share media.");
+            return;
+        }
+
+        if (!settingsService.isUrlRedirectionEnabled()) {
+            error(request, response, ErrorCode.GENERIC, "Sharing is only supported for *.subsonic.org domain names.");
+        }
+
         XMLBuilder builder = createXMLBuilder(request, response, true);
 
-//        todo
-//        MusicFile file;
-//        try {
-//            String path = StringUtil.utf8HexDecode(ServletRequestUtils.getRequiredStringParameter(request, "id"));
-//            file = musicFileService.getMusicFile(path);
-//            boolean submission = ServletRequestUtils.getBooleanParameter(request, "submission", true);
-//            audioScrobblerService.register(file, player.getUsername(), submission);
-//        } catch (Exception x) {
-//            LOG.warn("Error in REST API.", x);
-//            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
-//            return;
-//        }
+        try {
 
-        builder.endAll();
-        response.getWriter().print(builder);
+            Player player = playerService.getPlayer(request, response);
+            List<MusicFile> files = new ArrayList<MusicFile>();
+            for (String id : ServletRequestUtils.getRequiredStringParameters(request, "id")) {
+                MusicFile file = musicFileService.getMusicFile(StringUtil.utf8HexDecode(id));
+                files.add(file);
+            }
+
+            String shareUrl = shareController.getShareUrl(player, files);
+
+            builder.add("shareUrl", (Iterable<Attribute>) null, shareUrl, true);
+            builder.endAll();
+            response.getWriter().print(builder);
+
+        } catch (ServletRequestBindingException x) {
+            error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+        } catch (Exception x) {
+            LOG.warn("Error in REST API.", x);
+            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
+        }
     }
 
     public ModelAndView videoPlayer(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -1066,10 +1084,7 @@ public class RESTController extends MultiActionController {
         if (lyrics.getTitle() != null) {
             attributes.add("title", lyrics.getTitle());
         }
-        builder.add("lyrics", attributes, false);
-        if (lyrics.getLyrics() != null) {
-            builder.addText(lyrics.getLyrics() + "\n");
-        }
+        builder.add("lyrics", attributes, lyrics.getLyrics(), true);
 
         builder.endAll();
         response.getWriter().print(builder);
@@ -1239,6 +1254,10 @@ public class RESTController extends MultiActionController {
 
     public void setPodcastService(PodcastService podcastService) {
         this.podcastService = podcastService;
+    }
+
+    public void setShareController(ShareController shareController) {
+        this.shareController = shareController;
     }
 
     public static enum ErrorCode {

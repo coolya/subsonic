@@ -1223,7 +1223,7 @@
         <td><code>id</code></td>
         <td>Yes</td>
         <td></td>
-        <td>ID of a song/video/album to share. Use one <code>id</code> parameter for each entry to share.</td>
+        <td>ID of a song or video to share. Use one <code>id</code> parameter for each entry to share.</td>
     </tr>
 </table>
 

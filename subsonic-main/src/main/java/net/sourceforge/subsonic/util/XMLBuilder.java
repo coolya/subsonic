@@ -19,18 +19,19 @@
 package net.sourceforge.subsonic.util;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.json.XML;
-import org.json.JSONObject;
 import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.XML;
 
 import java.io.IOException;
-import java.io.Writer;
 import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Stack;
-import java.util.Map;
 import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Stack;
+import java.util.Collections;
 
 
 /**
@@ -75,6 +76,7 @@ public class XMLBuilder {
 
     /**
      * Creates a new instance.
+     *
      * @param json Whether to produce JSON rather than XML.
      */
     public XMLBuilder(boolean json) {
@@ -132,10 +134,27 @@ public class XMLBuilder {
      * @return A reference to this object.
      */
     public XMLBuilder add(String element, Iterable<Attribute> attributes, boolean close) throws IOException {
+        return add(element, attributes, null, close);
+    }
+
+    /**
+     * Adds an element with the given name, attributes and character data.
+     *
+     * @param element    The element name.
+     * @param attributes The element attributes.
+     * @param text       The character data.
+     * @param close      Whether to close the element.
+     * @return A reference to this object.
+     */
+    public XMLBuilder add(String element, Iterable<Attribute> attributes, String text, boolean close) throws IOException {
         indent();
         elementStack.push(element);
         writer.write('<');
         writer.write(element);
+
+        if (attributes == null) {
+            attributes = Collections.emptyList();
+        }
 
         Iterator<Attribute> iterator = attributes.iterator();
 
@@ -150,27 +169,26 @@ public class XMLBuilder {
             }
         }
 
-        if (close) {
+        if (close && text == null) {
             elementStack.pop();
             writer.write("/>");
         } else {
             writer.write('>');
         }
 
+        if (text != null) {
+            writer.write(text);
+
+            if (close) {
+                elementStack.pop();
+                writer.write("</");
+                writer.write(element);
+                writer.write('>');
+            }
+        }
+
         newline();
         return this;
-    }
-
-    /**
-     * Adds character data.
-     *
-     * @param text The character data.
-     * @throws IOException
-     */
-    public void addText(String text) throws IOException {
-        if (text != null) {
-            writer.write(StringEscapeUtils.escapeXml(text));
-        }
     }
 
     /**

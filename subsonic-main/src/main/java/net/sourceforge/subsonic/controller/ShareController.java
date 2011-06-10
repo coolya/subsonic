@@ -20,6 +20,7 @@ package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SettingsService;
@@ -55,25 +56,28 @@ public class ShareController extends ParameterizableViewController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String dir = request.getParameter("dir");
 
-        StringBuilder builder = new StringBuilder();
-        builder.append("http://").append(settingsService.getUrlRedirectFrom()).append(".subsonic.org/externalPlayer.view?");
-        builder.append("player=").append(playerService.getPlayer(request, response).getId()).append("&");
-
+        Player player = playerService.getPlayer(request, response);
         List<MusicFile> files = getMusicFiles(request);
-        for (MusicFile file : files) {
-            builder.append("pathUtf8Hex=").append(StringUtil.utf8HexEncode(file.getPath())).append("&");
-        }
-
-        String playUrl = urlShortenerService.shorten(builder.toString());
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("urlRedirectionEnabled", settingsService.isUrlRedirectionEnabled());
         map.put("dir", musicFileService.getMusicFile(dir));
-        map.put("playUrl", playUrl);
+        map.put("playUrl", getShareUrl(player, files));
 
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
+    }
+
+    public String getShareUrl(Player player, List<MusicFile> files) throws Exception {
+        StringBuilder builder = new StringBuilder();
+        builder.append("http://").append(settingsService.getUrlRedirectFrom()).append(".subsonic.org/externalPlayer.view?");
+        builder.append("player=").append(player.getId()).append("&");
+        for (MusicFile file : files) {
+            builder.append("pathUtf8Hex=").append(StringUtil.utf8HexEncode(file.getPath())).append("&");
+        }
+
+        return urlShortenerService.shorten(builder.toString());
     }
 
     private List<MusicFile> getMusicFiles(HttpServletRequest request) throws IOException {
