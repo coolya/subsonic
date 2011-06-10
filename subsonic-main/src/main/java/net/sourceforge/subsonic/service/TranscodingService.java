@@ -148,7 +148,7 @@ public class TranscodingService {
      *         {@link #getTranscodedInputStream} method with the same arguments.
      */
     public boolean isTranscodingRequired(MusicFile musicFile, Player player) {
-        return getTranscoding(musicFile, player) != null;
+        return getTranscoding(musicFile, player, null) != null;
     }
 
     /**
@@ -173,12 +173,13 @@ public class TranscodingService {
     /**
      * Returns the suffix for the given player and music file, taking transcodings into account.
      *
-     * @param player The player in question.
-     * @param file   The music player.
+     * @param player                The player in question.
+     * @param file                  The music player.
+     * @param preferredTargetFormat Used to select among multiple applicable transcodings. May be {@code null}.
      * @return The file suffix, e.g., "mp3".
      */
-    public String getSuffix(Player player, MusicFile file) {
-        Transcoding transcoding = getTranscoding(file, player);
+    public String getSuffix(Player player, MusicFile file, String preferredTargetFormat) {
+        Transcoding transcoding = getTranscoding(file, player, preferredTargetFormat);
         return transcoding != null ? transcoding.getTargetFormat() : file.getSuffix();
     }
 
@@ -196,18 +197,20 @@ public class TranscodingService {
      * @param musicFile                The music file.
      * @param player                   The player.
      * @param maxBitRate               Overrides the per-player and per-user bitrate limit. May be {@code null}.
+     * @param preferredTargetFormat    Used to select among multiple applicable transcodings. May be {@code null}.
      * @param videoTranscodingSettings Parameters used when transcoding video. May be {@code null}.
      * @return A possible transcoded or downsampled input stream.
      * @throws IOException If an I/O error occurs.
      */
-    public InputStream getTranscodedInputStream(MusicFile musicFile, Player player, Integer maxBitRate, VideoTranscodingSettings videoTranscodingSettings) throws IOException {
+    public InputStream getTranscodedInputStream(MusicFile musicFile, Player player, Integer maxBitRate,
+            String preferredTargetFormat, VideoTranscodingSettings videoTranscodingSettings) throws IOException {
         try {
             TranscodeScheme transcodeScheme = getTranscodeScheme(player);
             if (maxBitRate == null && transcodeScheme != TranscodeScheme.OFF) {
                 maxBitRate = transcodeScheme.getMaxBitRate();
             }
 
-            Transcoding transcoding = getTranscoding(musicFile, player);
+            Transcoding transcoding = getTranscoding(musicFile, player, preferredTargetFormat);
             if (transcoding != null) {
                 return getTranscodedInputStream(musicFile, transcoding, maxBitRate, videoTranscodingSettings);
             }
@@ -362,15 +365,29 @@ public class TranscodingService {
      * Returns an applicable transcoding for the given file and player, or <code>null</code> if no
      * transcoding should be done.
      */
-    private Transcoding getTranscoding(MusicFile musicFile, Player player) {
+    private Transcoding getTranscoding(MusicFile musicFile, Player player, String preferredTargetFormat) {
+
+        List<Transcoding> applicableTranscodings = new LinkedList<Transcoding>();
+
         for (Transcoding transcoding : getTranscodingsForPlayer(player)) {
             if (transcoding.getSourceFormat().equalsIgnoreCase(musicFile.getSuffix())) {
                 if (isTranscodingInstalled(transcoding)) {
-                    return transcoding;
+                    applicableTranscodings.add(transcoding);
                 }
             }
         }
-        return null;
+
+        if (applicableTranscodings.isEmpty()) {
+            return null;
+        }
+
+        for (Transcoding transcoding : applicableTranscodings) {
+            if (transcoding.getTargetFormat().equalsIgnoreCase(preferredTargetFormat)) {
+                return transcoding;
+            }
+        }
+
+        return applicableTranscodings.get(0);
     }
 
     /**

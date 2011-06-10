@@ -125,13 +125,11 @@ Updated expired ssl cert
 Bug: encoded passwords are not decoded in REST createUser, changePassword
 Support video in external player
   https://mail.google.com/a/activeobjects.no/#inbox/12f50fffffd6fecf
-Added "size" parameter to stream REST method.
+Added "format" and "size" parameters to stream REST method.
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=26935#26935
 
 TODO IN 4.5
 -----------------
-Add "format" and "size" parameters to stream REST method.
-  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=26935#26935
-  Remember doc.
 Handle non-square cover art
   https://mail.google.com/a/activeobjects.no/#inbox/12debb505054d33a
 Cover arts not always aligned in grid

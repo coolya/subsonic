@@ -600,7 +600,7 @@
 </p>
 
 <p>
-    Downloads a given music file.
+    Downloads a given media file.
 </p>
 <table width="100%" class="bottomspace">
     <tr>
@@ -628,7 +628,7 @@
 </p>
 
 <p>
-    Streams a given music file.
+    Streams a given media file.
 </p>
 <table width="100%" class="bottomspace">
     <tr>
@@ -648,17 +648,28 @@
         <td>No</td>
         <td></td>
         <td>(Since <a href="#versions">1.2.0</a>) If specified, the server will attempt to limit the bitrate
-            to this value, in kilobits per second. If set to zero, no limit is imposed. Legal values are:
-            0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256 and 320.
-        </td>
+            to this value, in kilobits per second. If set to zero, no limit is imposed.</td>
     </tr>
     <tr class="table-altrow">
+        <td><code>format</code></td>
+        <td>No</td>
+        <td></td>
+        <td>(Since <a href="#versions">1.6.0</a>) Specifies the preferred target format (e.g., "mp3" or "flv") in case there are multiple applicable transcodings.</td>
+    </tr>
+    <tr>
         <td><code>timeOffset</code></td>
         <td>No</td>
         <td></td>
-        <td>Only applicable for video streaming. If specified, start streaming at the given offset (in seconds) into the video.
+        <td>Only applicable to video streaming. If specified, start streaming at the given offset (in seconds) into the video.
             Typically used to implement video skipping.</td>
-    </tr></table>
+    </tr>
+    <tr class="table-altrow">
+        <td><code>size</code></td>
+        <td>No</td>
+        <td></td>
+        <td>(Since <a href="#versions">1.6.0</a>) Only applicable to video streaming. Requested video size specified as WxH, for instance "640x480".</td>
+    </tr>
+</table>
 <p>
     Returns binary data on success, or an XML document on error (in which case the HTTP content type will start with "text/xml").
 </p>

@@ -108,6 +108,7 @@ public class StreamController implements Controller {
             String contentType = StringUtil.getMimeType(request.getParameter("suffix"));
             response.setContentType(contentType);
 
+            String preferredTargetFormat = request.getParameter("format");
             Integer maxBitRate = ServletRequestUtils.getIntParameter(request, "maxBitRate");
             if (maxBitRate != null && maxBitRate == 0) {
                 maxBitRate = Integer.MAX_VALUE;
@@ -147,7 +148,7 @@ public class StreamController implements Controller {
                     Util.setContentLength(response, contentLength);
                 }
 
-                String transcodedSuffix = transcodingService.getSuffix(player, file);
+                String transcodedSuffix = transcodingService.getSuffix(player, file, preferredTargetFormat);
                 response.setContentType(StringUtil.getMimeType(transcodedSuffix));
 
                 if (file.isVideo()) {
@@ -168,7 +169,8 @@ public class StreamController implements Controller {
 
             status = statusService.createStreamStatus(player);
 
-            in = new PlaylistInputStream(player, status, maxBitRate, videoTranscodingSettings, transcodingService, musicInfoService, audioScrobblerService, searchService);
+            in = new PlaylistInputStream(player, status, maxBitRate, preferredTargetFormat, videoTranscodingSettings, transcodingService,
+                    musicInfoService, audioScrobblerService, searchService);
             OutputStream out = RangeOutputStream.wrap(response.getOutputStream(), range);
 
             // Enabled SHOUTcast, if requested.

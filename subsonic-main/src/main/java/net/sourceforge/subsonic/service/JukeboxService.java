@@ -133,7 +133,7 @@ public class JukeboxService {
         public JuxeboxPlayer(Player subsonicPlayer) {
             this.subsonicPlayer = subsonicPlayer;
             status = statusService.createStreamStatus(subsonicPlayer);
-            in = new BufferedInputStream(new PlaylistInputStream(subsonicPlayer, status, null, null, transcodingService, musicInfoService, audioScrobblerService, searchService));
+            in = new BufferedInputStream(new PlaylistInputStream(subsonicPlayer, status, null, null, null, transcodingService, musicInfoService, audioScrobblerService, searchService));
 
             basicPlayer = new BasicPlayer() {
                 /**

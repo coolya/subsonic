@@ -16,6 +16,9 @@
         <div id="main-col">
             <h1 class="bottomspace">Frequently Asked Questions</h1>
 
+            <h3>Are there other payment options than PayPal?</h3>
+            <p>Yes. You can make a payment to subsonic_donation@activeobjects.no on <a href="http://www.moneybookers.com/" target="_blank">Moneybookers</a>.</p>
+
             <h3>How long does it take to get the license after I have donated?</h3>
             <p>Normally no more than ten minutes.  If it should take longer, please <a href="mailto:sindre@activeobjects.no">take contact</a>,
                 but please check your spam filter first.</p>

@@ -60,7 +60,6 @@ import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.domain.UserSettings;
 import net.sourceforge.subsonic.domain.PodcastChannel;
 import net.sourceforge.subsonic.domain.PodcastEpisode;
-import net.sourceforge.subsonic.security.RESTRequestParameterProcessingFilter;
 import net.sourceforge.subsonic.service.JukeboxService;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
@@ -668,7 +667,7 @@ public class RESTController extends MultiActionController {
             }
 
             if (transcodingService.isTranscodingRequired(musicFile, player)) {
-                String transcodedSuffix = transcodingService.getSuffix(player, musicFile);
+                String transcodedSuffix = transcodingService.getSuffix(player, musicFile, null);
                 attributes.add("transcodedSuffix", transcodedSuffix);
                 attributes.add("transcodedContentType", StringUtil.getMimeType(transcodedSuffix));
             }

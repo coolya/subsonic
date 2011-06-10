@@ -328,7 +328,7 @@ public class PlaylistService {
     }
 
     private String formatFormat(Player player, MusicFile file) {
-        return transcodingService.getSuffix(player, file);
+        return transcodingService.getSuffix(player, file, null);
     }
 
     private String formatContentType(String format) {

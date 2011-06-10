@@ -46,21 +46,23 @@ public class PlaylistInputStream extends InputStream {
     private final Player player;
     private final TransferStatus status;
     private final Integer maxBitRate;
+    private final String preferredTargetFormat;
     private final VideoTranscodingSettings videoTranscodingSettings;
     private final SearchService searchService;
     private final TranscodingService transcodingService;
     private final MusicInfoService musicInfoService;
-    private final AudioScrobblerService audioScrobblerService;
 
+    private final AudioScrobblerService audioScrobblerService;
     private MusicFile currentFile;
     private InputStream currentInputStream;
 
-    public PlaylistInputStream(Player player, TransferStatus status, Integer maxBitRate, VideoTranscodingSettings videoTranscodingSettings, TranscodingService transcodingService,
-            MusicInfoService musicInfoService, AudioScrobblerService audioScrobblerService,
-            SearchService searchService) {
+    public PlaylistInputStream(Player player, TransferStatus status, Integer maxBitRate, String preferredTargetFormat,
+            VideoTranscodingSettings videoTranscodingSettings, TranscodingService transcodingService,
+            MusicInfoService musicInfoService, AudioScrobblerService audioScrobblerService, SearchService searchService) {
         this.player = player;
         this.status = status;
         this.maxBitRate = maxBitRate;
+        this.preferredTargetFormat = preferredTargetFormat;
         this.videoTranscodingSettings = videoTranscodingSettings;
         this.transcodingService = transcodingService;
         this.musicInfoService = musicInfoService;
@@ -127,7 +129,7 @@ public class PlaylistInputStream extends InputStream {
             if (player.getClientId() == null) {  // Don't scrobble REST players.
                 audioScrobblerService.register(file, player.getUsername(), false);
             }
-            currentInputStream = transcodingService.getTranscodedInputStream(file, player, maxBitRate, videoTranscodingSettings);
+            currentInputStream = transcodingService.getTranscodedInputStream(file, player, maxBitRate, preferredTargetFormat, videoTranscodingSettings);
             currentFile = file;
             status.setFile(currentFile.getFile());
         }
