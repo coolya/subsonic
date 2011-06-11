@@ -16,6 +16,29 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="4.5.beta1"><h2 class="div">Subsonic 4.5.beta1 - Jun 12, 2011</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>Twitter/Facebook integration.</li>
+    <li><span class="bugid">New: </span>Share songs and videos by sending someone a link.</li>
+    <li><span class="bugid">New: </span>Support video in external player.</li>
+    <li><span class="bugid">New: </span>Support higher video bitrates, 3000 and 5000 kbps.</li>
+    <li><span class="bugid">New: </span>Added Bulgarian translation, courtesy of Ivan Achev.</li>
+    <li><span class="bugid">New: </span>Updated Norwegian translation, courtesy of Tommy Karlsen.</li>
+    <li><span class="bugid">New: </span>Updated German translation, courtesy of deejay2302.</li>
+    <li><span class="bugid">New: </span>Support http header "Content-Range" when streaming.</li>
+    <li><span class="bugid">New: </span>Ignore "@eaDir" folders on Synology devices.</li>
+    <li><span class="bugid">API: </span>Added REST method getPodcasts.</li>
+    <li><span class="bugid">API: </span>Added REST method getShareUrl.</li>
+    <li><span class="bugid">API: </span>Added user email to REST API.</li>
+    <li><span class="bugid">API: </span>Added example XMLs to API documentation.</li>
+    <li><span class="bugid">API: </span>Encoded passwords were not decoded correctly in REST methods createUser and changePassword.</li>
+    <li><span class="bugid">API: </span>Added "format" and "size" parameters to REST method stream.</li>
+    <li><span class="bugid">Bugfix: </span>Don't include podcasts when generating random songs.</li>
+    <li><span class="bugid">Bugfix: </span>Handle whitespace in podcast urls.</li>
+    <li><span class="bugid">Bugfix: </span>Updated expired ssl cert.</li>
+    <li><span class="bugid">Bugfix: </span>Mac installer: make transcode dir executable.</li>
+</ul>
+
 <a name="4.4"><h2 class="div">Subsonic 4.4 - Feb 06, 2011</h2></a>
 <ul>
     <li><span class="bugid">New: </span>Updated Greek translation, courtesy of Constantine Samaklis.</li>
@@ -799,6 +822,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#4.5.beta1">Subsonic 4.5.beta1</a></li>
             <li><a href="#4.4">Subsonic 4.4</a></li>
             <li><a href="#4.4.beta1">Subsonic 4.4.beta1</a></li>
             <li><a href="#4.3">Subsonic 4.3</a></li>

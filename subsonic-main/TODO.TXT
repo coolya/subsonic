@@ -109,27 +109,6 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN 4.5
 ----------------
-Handle whitespace in podcast urls.
-Updated Norwegian translation, courtesy of Tommy Karlsen.
-Document "timeOffset" in stream REST method.
-Add example XMLs to API doc.
-Added Bulgarian translation, courtesy of Ivan Achev.
-Updated German translation, courtesy of deejay2302.
-Add runtime flag for verbose gc log.
-Support higher video bitrates. 3000 and 5000
-Don't include podcasts when generating random songs.
-Mac installer: make transcode dir executable.
-REST support for podcasts.
-Add email to user in REST.
-Updated expired ssl cert
-Bug: encoded passwords are not decoded in REST createUser, changePassword
-Support video in external player
-  https://mail.google.com/a/activeobjects.no/#inbox/12f50fffffd6fecf
-Added "format" and "size" parameters to stream REST method.
-  http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=26935#26935
-REST method for sharing.
-Support http "Content-Range"
-Ignore "@eaDir" folders on Synology devices.
 
 TODO IN 4.5
 -----------------
@@ -601,7 +580,7 @@ Vis "lignende" album.
 
 HOW TO RELEASE
 ===============================
-Update version number in pom.xml, version.html, MultiController.java etc.
+Update version number in pom.xml, version.html, MultiController.java.
 Update changelog.jsp, download.jsp
 Commit
 mvn clean -P full
