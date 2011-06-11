@@ -128,6 +128,7 @@ Support video in external player
 Added "format" and "size" parameters to stream REST method.
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=26935#26935
 REST method for sharing.
+Support http "Content-Range"
 
 TODO IN 4.5
 -----------------

@@ -146,6 +146,12 @@ public class StreamController implements Controller {
                 boolean downsamplingRequired = transcodingService.isDownsamplingRequired(file, player, maxBitRate);
                 if (!transcodingRequired && !downsamplingRequired) {
                     Util.setContentLength(response, contentLength);
+                    if (range != null) {
+                        long entityLength = file.length();
+                        long firstBytePos = range.getMinimumLong();
+                        long lastBytePos = entityLength - 1;
+                        response.setHeader("Content-Range", "bytes " + firstBytePos + "-" + lastBytePos + "/" + entityLength);
+                    }
                 }
 
                 String transcodedSuffix = transcodingService.getSuffix(player, file, preferredTargetFormat);
