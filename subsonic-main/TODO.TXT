@@ -133,7 +133,17 @@ Ignore "@eaDir" folders on Synology devices.
 
 TODO IN 4.5
 -----------------
-Add "append" parameter to createPlaylist REST method.
+Sharing (facebook, twitter++)
+  Test video sharing
+  todos in externalplayer.jsp
+  Make it work if no songs are selected
+  http://www.kimwoodbridge.com/how-to-create-your-one-facebook-share-url/
+  http://developers.facebook.com/docs/opengraph/
+  http://dev.twitter.com/pages/tweet_button
+  https://mail.google.com/a/activeobjects.no/#inbox/12ded75e94256283
+Write hosting.jsp
+Canaca ads.
+Add "append" parameter to createPlaylist REST method. (or create appendPlaylist method)
 Handle non-square cover art
   https://mail.google.com/a/activeobjects.no/#inbox/12debb505054d33a
 Cover arts not always aligned in grid
@@ -146,19 +156,10 @@ IE9 - Cover Art Only Displays for a Second, Then Disappears
  AdMob
 Show library statistics for video.
 Create more compact transcoding settings.
-Write hosting.jsp
-Canaca ads.
 Playing only first three seconds of podcast
   http://mail.google.com/a/activeobjects.no/#inbox/12e341aeae9535eb
 GPU-accellerated ffmpeg
   https://mail.google.com/a/activeobjects.no/#inbox/12f50fffffd6fecf
-Sharing (facebook, twitter++)
-  todos in externalplayer.jsp
-  Make it work if no songs are selected
-  http://www.kimwoodbridge.com/how-to-create-your-one-facebook-share-url/
-  http://developers.facebook.com/docs/opengraph/
-  http://dev.twitter.com/pages/tweet_button
-  https://mail.google.com/a/activeobjects.no/#inbox/12ded75e94256283
 Add to playlist from main.jsp
 
 Can't stop/start service on Win7.  Need elevated rights?  Run service as user?

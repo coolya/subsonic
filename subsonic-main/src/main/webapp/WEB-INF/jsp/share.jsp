@@ -6,13 +6,11 @@
 </head>
 <body class="mainframe bgcolor1">
 
-<h1 style="padding-bottom:1em"><fmt:message key="share.title"/></h1>
+<h1><fmt:message key="share.title"/></h1>
 
 <c:choose>
     <c:when test="${model.urlRedirectionEnabled}">
-
         <fmt:message key="share.warning"/>
-
         <p>
             <img src="<spring:theme code="shareFacebookImage"/>" alt="">&nbsp;<a
                 href="http://www.facebook.com/sharer.php?u=${model.playUrl}" target="_blank"><fmt:message key="share.facebook"/></a>
