@@ -129,6 +129,7 @@ Added "format" and "size" parameters to stream REST method.
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=26935#26935
 REST method for sharing.
 Support http "Content-Range"
+Ignore "@eaDir" folders on Synology devices.
 
 TODO IN 4.5
 -----------------
@@ -223,8 +224,6 @@ Disable scrobbling while downloading; Add new scrobble command?
 Select wrong player when clicking "Settings" in playlist frame.
 Upgrade DWR to 3.0rc2 when in becomes available (to make it work with Tomcat 7)
 Keyboard shortcuts.
-Transcoding fails if filename contains colons or quotes.
-  https://mail.google.com/a/activeobjects.no/#inbox/12c1d386b04629d3
 HTML5/iPad
   http://code.google.com/p/subtunes/
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3310

@@ -424,8 +424,8 @@ public class MusicFile implements Serializable {
      */
     public boolean isExcluded(File file) throws IOException {
 
-        // Exclude all hidden files starting with a "."
-        if (file.getName().startsWith(".")) {
+        // Exclude all hidden files starting with a "." or "@eaDir" (thumbnail dir created on Synology devices).
+        if (file.getName().startsWith(".") || file.getName().startsWith("@eaDir")) {
             return true;
         }
 
