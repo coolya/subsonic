@@ -18,26 +18,9 @@
  */
 package net.sourceforge.subsonic.androidapp.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
@@ -48,9 +31,23 @@ import net.sourceforge.subsonic.androidapp.util.EntryAdapter;
 import net.sourceforge.subsonic.androidapp.util.Pair;
 import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 public class SelectAlbumActivity extends SubsonicTabActivity {
 
@@ -338,7 +335,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 		}.execute();
 	}
 
-	private boolean areSomeUnselected() {
+	private void selectAllOrNone() {
 		boolean someUnselected = false;
 		int count = entryList.getCount();
 		for (int i = 0; i < count; i++) {
@@ -348,11 +345,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 				break;
 			}
 		}
-		return someUnselected;
-	}
-
-	private void selectAllOrNone() {
-		selectAll(areSomeUnselected());
+		selectAll(someUnselected);
 	}
 
 	private void selectAll(boolean selected) {
@@ -364,6 +357,13 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 				entryList.setItemChecked(i, selected);
 			}
 		}
+
+		// Display toast: N tracks selected / N tracks unselected
+		int toastResId = selected ? R.string.select_album_n_selected
+				: R.string.select_album_n_unselected;
+		Toast.makeText(this, getString(toastResId, count), Toast.LENGTH_SHORT)
+				.show();
+
 		enableButtons();
 	}
 
@@ -384,11 +384,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 			}
 		}
 
-		selectButton
-		.setCompoundDrawablesWithIntrinsicBounds(
-				areSomeUnselected() ? R.drawable.btn_check_buttonless_off
-						: R.drawable.btn_check_buttonless_on,
-				0, 0, 0);
 		playButton.setEnabled(enabled);
 		queueButton.setEnabled(enabled);
 		saveButton.setEnabled(enabled && !Util.isOffline(this));
@@ -559,7 +554,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 			if (songCount > 0) {
 				getImageLoader().loadImage(coverArtView, entries.get(0), false);
 				entryList.addFooterView(footer);
-				selectButton.setText("(" + songCount + ")");
 				selectButton.setVisibility(View.VISIBLE);
 				playButton.setVisibility(View.VISIBLE);
 				queueButton.setVisibility(View.VISIBLE);
