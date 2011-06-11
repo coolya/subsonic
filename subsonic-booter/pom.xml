@@ -73,8 +73,6 @@
 
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <!--Version 2.1 doesn't work with dependencies of type 'pom'.-->
-                <version>2.2-beta-1</version>
                 <configuration>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>

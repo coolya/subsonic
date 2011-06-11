@@ -47,7 +47,7 @@
                             <execution>
                                 <phase>compile</phase>
                                 <configuration>
-                                    <tasks>
+                                    <target>
                                         <taskdef name="jarbundler" classname="net.sourceforge.jarbundler.JarBundler"/>
                                         <mkdir dir="${project.build.directory}"/>
                                         <jarbundler dir="target"
@@ -81,7 +81,7 @@
                                             <arg value="${project.build.directory}/subsonic-${project.version}.pkg"/>
                                             <arg value="--verbose"/>
                                         </exec>
-                                    </tasks>
+                                    </target>
                                 </configuration>
                                 <goals>
                                     <goal>run</goal>

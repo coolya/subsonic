@@ -46,9 +46,9 @@
                     <execution>
                         <phase>validate</phase>
                         <configuration>
-                            <tasks>
+                            <target>
                                 <mkdir dir="target"/>
-                            </tasks>
+                            </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>

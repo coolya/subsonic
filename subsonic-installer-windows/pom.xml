@@ -54,7 +54,7 @@
                                 <id>exe4j</id>
                                 <phase>compile</phase>
                                 <configuration>
-                                    <tasks>
+                                    <target>
                                         <echo>Compiling exe4j...</echo>
                                         <copy file="${basedir}/src/main/exe4j/subsonic-agent.exe.vmoptions" todir="${project.build.directory}"/>
                                         <copy file="${basedir}/src/main/exe4j/subsonic-service.exe.vmoptions" todir="${project.build.directory}"/>
@@ -67,7 +67,7 @@
                                         <exec executable="${exe4j.home}/bin/exe4jc">
                                             <arg value="${basedir}/src/main/exe4j/subsonic-service.exe4j"/>
                                         </exec>
-                                    </tasks>
+                                    </target>
                                 </configuration>
                                 <goals>
                                     <goal>run</goal>
@@ -78,14 +78,14 @@
                                 <id>nsis</id>
                                 <phase>compile</phase>
                                 <configuration>
-                                    <tasks>
+                                    <target>
                                         <echo>Compiling NSIS script...</echo>
                                         <mkdir dir="${project.build.directory}"/>
                                         <exec executable="${nsis.home}/makensis">
                                             <arg value="${basedir}/src/main/nsis/subsonic.nsi"/>
                                             <arg value="-XOutFile ${project.build.directory}/subsonic-${project.version}-setup.exe"/>
                                         </exec>
-                                    </tasks>
+                                    </target>
                                 </configuration>
                                 <goals>
                                     <goal>run</goal>

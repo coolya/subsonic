@@ -49,7 +49,7 @@
                                 <id>rpm</id>
                                 <phase>compile</phase>
                                 <configuration>
-                                    <tasks>
+                                    <target>
                                         <echo>Creating RPM package...</echo>
 
                                         <copy file="${basedir}/src/subsonic.spec"
@@ -99,7 +99,7 @@
                                         <exec executable="rpmlint">
                                             <arg value="${project.build.directory}/subsonic-${project.version}.rpm"/>
                                         </exec>
-                                    </tasks>
+                                    </target>
                                 </configuration>
                                 <goals>
                                     <goal>run</goal>
