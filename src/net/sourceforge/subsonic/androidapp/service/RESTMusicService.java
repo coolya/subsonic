@@ -237,7 +237,7 @@ public class RESTMusicService implements MusicService {
     }
 
     @Override
-    public MusicDirectory getMusicDirectory(String id, Context context, ProgressListener progressListener) throws Exception {
+    public MusicDirectory getMusicDirectory(String id, boolean refresh, Context context, ProgressListener progressListener) throws Exception {
         Reader reader = getReader(context, progressListener, "getMusicDirectory", null, "id", id);
         try {
             return new MusicDirectoryParser(context).parse(reader, progressListener);

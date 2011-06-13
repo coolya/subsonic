@@ -255,7 +255,7 @@ public class SubsonicTabActivity extends Activity {
             @Override
             protected List<MusicDirectory.Entry> doInBackground() throws Throwable {
                 MusicService musicService = MusicServiceFactory.getMusicService(SubsonicTabActivity.this);
-                MusicDirectory root = musicService.getMusicDirectory(id, SubsonicTabActivity.this, this);
+                MusicDirectory root = musicService.getMusicDirectory(id, false, SubsonicTabActivity.this, this);
                 List<MusicDirectory.Entry> songs = new LinkedList<MusicDirectory.Entry>();
                 getSongsRecursively(root, songs);
                 return songs;
@@ -273,7 +273,7 @@ public class SubsonicTabActivity extends Activity {
                 }
                 for (MusicDirectory.Entry dir : parent.getChildren(true, false)) {
                     MusicService musicService = MusicServiceFactory.getMusicService(SubsonicTabActivity.this);
-                    getSongsRecursively(musicService.getMusicDirectory(dir.getId(), SubsonicTabActivity.this, this), songs);
+                    getSongsRecursively(musicService.getMusicDirectory(dir.getId(), false, SubsonicTabActivity.this, this), songs);
                 }
             }
 

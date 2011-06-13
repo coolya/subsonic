@@ -227,9 +227,9 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
         new LoadTask() {
             @Override
-            protected MusicDirectory load(MusicService service)
-                    throws Exception {
-                return service.getMusicDirectory(id, SelectAlbumActivity.this, this);
+            protected MusicDirectory load(MusicService service) throws Exception {
+                boolean refresh = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_REFRESH, false);
+                return service.getMusicDirectory(id, refresh, SelectAlbumActivity.this, this);
             }
         }.execute();
     }
