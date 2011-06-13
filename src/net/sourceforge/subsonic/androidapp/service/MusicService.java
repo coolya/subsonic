@@ -53,7 +53,7 @@ public interface MusicService {
 
     MusicDirectory getPlaylist(String id, Context context, ProgressListener progressListener) throws Exception;
 
-    List<Playlist> getPlaylists(Context context, ProgressListener progressListener) throws Exception;
+    List<Playlist> getPlaylists(boolean refresh, Context context, ProgressListener progressListener) throws Exception;
 
     void createPlaylist(String id, String name, List<MusicDirectory.Entry> entries, Context context, ProgressListener progressListener) throws Exception;
 

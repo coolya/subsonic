@@ -25,7 +25,6 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -33,6 +32,7 @@ import android.widget.ListView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
+import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
@@ -56,7 +56,7 @@ public class SelectPlaylistActivity extends SubsonicTabActivity implements Adapt
         emptyTextView = findViewById(R.id.select_playlist_empty);
         list.setOnItemClickListener(this);
         registerForContextMenu(list);
-		
+
         // Title: Playlists
         setTitle(R.string.playlist_label);
 
@@ -96,7 +96,9 @@ public class SelectPlaylistActivity extends SubsonicTabActivity implements Adapt
         BackgroundTask<List<Playlist>> task = new TabActivityBackgroundTask<List<Playlist>>(this) {
             @Override
             protected List<Playlist> doInBackground() throws Throwable {
-                return MusicServiceFactory.getMusicService(SelectPlaylistActivity.this).getPlaylists(SelectPlaylistActivity.this, this);
+                MusicService musicService = MusicServiceFactory.getMusicService(SelectPlaylistActivity.this);
+                boolean refresh = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_REFRESH, false);
+                return musicService.getPlaylists(refresh, SelectPlaylistActivity.this, this);
             }
 
             @Override

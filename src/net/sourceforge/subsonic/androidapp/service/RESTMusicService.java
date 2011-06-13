@@ -314,7 +314,7 @@ public class RESTMusicService implements MusicService {
     }
 
     @Override
-    public List<Playlist> getPlaylists(Context context, ProgressListener progressListener) throws Exception {
+    public List<Playlist> getPlaylists(boolean refresh, Context context, ProgressListener progressListener) throws Exception {
         Reader reader = getReader(context, progressListener, "getPlaylists", null);
         try {
             return new PlaylistsParser(context).parse(reader, progressListener);

@@ -128,11 +128,11 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
-    public List<Playlist> getPlaylists(Context context, ProgressListener progressListener) throws Exception {
+    public List<Playlist> getPlaylists(boolean refresh, Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
-        List<Playlist> result = cachedPlaylists.get();
+        List<Playlist> result = refresh ? null : cachedPlaylists.get();
         if (result == null) {
-            result = musicService.getPlaylists(context, progressListener);
+            result = musicService.getPlaylists(refresh, context, progressListener);
             cachedPlaylists.set(result);
         }
         return result;

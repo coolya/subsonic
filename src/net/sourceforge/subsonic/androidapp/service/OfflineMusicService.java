@@ -148,7 +148,7 @@ public class OfflineMusicService extends RESTMusicService {
     }
 
     @Override
-    public List<Playlist> getPlaylists(Context context, ProgressListener progressListener) throws Exception {
+    public List<Playlist> getPlaylists(boolean refresh, Context context, ProgressListener progressListener) throws Exception {
         throw new RuntimeException("Playlists not available in offline mode");
     }
 
