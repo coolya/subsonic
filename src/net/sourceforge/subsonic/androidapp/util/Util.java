@@ -321,7 +321,9 @@ public final class Util {
     }
 
     public static void toast(Context context, String message) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     public static void toast(Context context, int messageId) {

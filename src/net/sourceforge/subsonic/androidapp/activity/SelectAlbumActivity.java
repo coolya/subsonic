@@ -47,7 +47,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class SelectAlbumActivity extends SubsonicTabActivity {
 
@@ -123,28 +122,28 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 			@Override
 			public void onClick(View view) {
 				download(false, false, true);
-				selectAll(false);
+				selectAll(false, false);
 			}
 		});
 		queueButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				download(true, false, false);
-				selectAll(false);
+				selectAll(false, false);
 			}
 		});
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				download(true, true, false);
-				selectAll(false);
+				selectAll(false, false);
 			}
 		});
 		deleteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				delete();
-				selectAll(false);
+				selectAll(false, false);
 			}
 		});
 
@@ -180,9 +179,10 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 		actionPlayAllButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				selectAll(true);
+                // TODO: What to do with sub-albums here?
+				selectAll(true, false);
 				download(false, false, true);
-				selectAll(false);
+				selectAll(false, false);
 			}
 		});
 
@@ -345,26 +345,28 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 				break;
 			}
 		}
-		selectAll(someUnselected);
+		selectAll(someUnselected, true);
 	}
 
-	private void selectAll(boolean selected) {
+	private void selectAll(boolean selected, boolean toast) {
 		int count = entryList.getCount();
+        int selectedCount = 0;
 		for (int i = 0; i < count; i++) {
-			MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList
-					.getItemAtPosition(i);
+			MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(i);
 			if (entry != null && !entry.isDirectory() && !entry.isVideo()) {
 				entryList.setItemChecked(i, selected);
+                selectedCount++;
 			}
 		}
 
-		// Display toast: N tracks selected / N tracks unselected
-		int toastResId = selected ? R.string.select_album_n_selected
-				: R.string.select_album_n_unselected;
-		Toast.makeText(this, getString(toastResId, count), Toast.LENGTH_SHORT)
-				.show();
+        // Display toast: N tracks selected / N tracks unselected
+        if (toast) {
+            int toastResId = selected ? R.string.select_album_n_selected
+                                      : R.string.select_album_n_unselected;
+            Util.toast(this, getString(toastResId, selectedCount));
+        }
 
-		enableButtons();
+        enableButtons();
 	}
 
 	private void enableButtons() {
@@ -402,8 +404,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 		return songs;
 	}
 
-	private void download(final boolean append, final boolean save,
-			final boolean autoplay) {
+	private void download(final boolean append, final boolean save, final boolean autoplay) {
 		if (getDownloadService() == null) {
 			return;
 		}
@@ -568,9 +569,9 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 			boolean playAll = getIntent().getBooleanExtra(
 					Constants.INTENT_EXTRA_NAME_AUTOPLAY, false);
 			if (playAll && songCount > 0) {
-				selectAll(true);
+				selectAll(true, false);
 				download(false, false, true);
-				selectAll(false);
+				selectAll(false, false);
 			}
 		}
 	}
