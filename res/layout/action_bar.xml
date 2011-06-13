@@ -4,7 +4,7 @@
         a:layout_height="45dp"
         a:background="@drawable/menubar_button_disabled">
 
-    <ImageButton
+    <ImageView
             a:id="@+id/actionbar_home_icon"
             a:src="@drawable/main_header_icon"
             a:layout_width="wrap_content"
@@ -16,7 +16,6 @@
             a:paddingLeft="4dip"
             a:paddingRight="4dip"
             a:scaleType="centerInside"
-            a:background="@drawable/actionbar_home_button"
             />
 
     <ImageButton

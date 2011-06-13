@@ -28,7 +28,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
@@ -71,24 +70,15 @@ public class SubsonicTabActivity extends Activity {
     protected void onPostCreate(Bundle bundle) {
         super.onPostCreate(bundle);
 
-        // Home button listener, used 2 places
-		View.OnClickListener homeListener = new View.OnClickListener() {
+        homeButton = findViewById(R.id.button_bar_home);
+        homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SubsonicTabActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 Util.startActivityWithoutTransition(SubsonicTabActivity.this, intent);
             }
-        };
-
-        // ActionBar home button
-		final ImageButton actionHomeButton = (ImageButton) findViewById(R.id.actionbar_home_icon);
-		if (actionHomeButton != null)
-			actionHomeButton.setOnClickListener(homeListener);
-
-		// TabBar home button
-        homeButton = findViewById(R.id.button_bar_home);
-        homeButton.setOnClickListener(homeListener);
+        });
 
         musicButton = findViewById(R.id.button_bar_music);
         musicButton.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +158,7 @@ public class SubsonicTabActivity extends Activity {
 		case R.id.menu_settings:
             startActivity(new Intent(this, SettingsActivity.class));
 			return true;
-			
+
 		case R.id.menu_help:
             startActivity(new Intent(this, HelpActivity.class));
 			return true;
