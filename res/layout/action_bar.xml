@@ -13,7 +13,8 @@
             a:layout_alignParentTop="true"
             a:layout_alignParentLeft="true"
             a:layout_alignParentBottom="true"
-            a:padding="4dip"
+            a:paddingLeft="4dip"
+            a:paddingRight="4dip"
             a:scaleType="centerInside"
             a:background="@drawable/actionbar_home_button"
             />
