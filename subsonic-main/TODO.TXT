@@ -44,9 +44,16 @@ When going to offline mode or switching servers, retain all items in playlists t
 TODO IN ANDROID 2.8
 -------------------
 Merge in changes from Doug.
+  Make Exit menu option work.
+  Make Play button work recursively.
+  Remove Search button from Playlist activity.
+  Add Shuffle play to SelectArtist activity.
+  Merge main trunk.
+Avoid banding.
 Sharing support.
 Podcast support.
 
+Keep all album art in a single directory.
 Offline shuffle broken?
 Does repeat button work in landscape mode?
 DownloadServiceImpl: ignore a mysterious MediaPlayer error
@@ -114,6 +121,7 @@ TODO IN 4.5
 -----------------
 Sharing (facebook, twitter++)
   Test video sharing
+  Add some space towards bottom of main.jsp
   todos in externalplayer.jsp
   Make it work if no songs are selected
   http://www.kimwoodbridge.com/how-to-create-your-one-facebook-share-url/
@@ -140,6 +148,7 @@ Playing only first three seconds of podcast
 GPU-accellerated ffmpeg
   https://mail.google.com/a/activeobjects.no/#inbox/12f50fffffd6fecf
 Add to playlist from main.jsp
+Sencha Touch
 
 Can't stop/start service on Win7.  Need elevated rights?  Run service as user?
 Subsonic TV / Roku
