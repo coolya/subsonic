@@ -130,6 +130,11 @@ public class SubsonicTabActivity extends Activity {
             nowPlayingButton.setEnabled(false);
         }
 
+        // Set the font of title in the action bar.
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Advert-Regular.ttf");
+        TextView text = (TextView) findViewById(R.id.actionbar_title_text);
+        text.setTypeface(typeface);
+
         updateButtonVisibility();
     }
 
@@ -182,13 +187,7 @@ public class SubsonicTabActivity extends Activity {
 
     @Override
 	public void setTitle(CharSequence title) {
-		// Set the font of the temperature readout to digital
-		Typeface tf = Typeface
-				.createFromAsset(getAssets(), "fonts/Advert-Regular.ttf");
-
-    	TextView text = (TextView)findViewById(R.id.actionbar_title_text);
-		text.setTypeface(tf);
-    	text.setVisibility(View.VISIBLE);
+    	TextView text = (TextView) findViewById(R.id.actionbar_title_text);
     	text.setText(title);
 	}
 

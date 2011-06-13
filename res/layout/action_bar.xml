@@ -15,6 +15,8 @@
             a:layout_alignParentBottom="true"
             a:paddingLeft="4dip"
             a:paddingRight="4dip"
+            a:paddingTop="2dip"
+            a:paddingBottom="2dip"
             a:scaleType="centerInside"
             />
 
@@ -57,10 +59,9 @@
             a:textColor="#FFFFFF"
             a:textSize="18sp"
             a:textStyle="bold"
-            a:visibility="visible"
+            a:lineSpacingMultiplier="0.85"
             a:ellipsize="middle"
             a:inputType="none"
-            a:layout_marginTop="3dp"
             />
 
 </RelativeLayout>
