@@ -60,20 +60,12 @@ public class SelectPlaylistActivity extends SubsonicTabActivity implements Adapt
         // Title: Playlists
         setTitle(R.string.playlist_label);
 
-        // Button 1: search
-        final ImageButton actionSearchButton = (ImageButton)findViewById(R.id.action_button_1);
-        actionSearchButton.setImageResource(R.drawable.action_search);
-        actionSearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            	Intent intent = new Intent(SelectPlaylistActivity.this, SearchActivity.class);
-            	intent.putExtra(Constants.INTENT_EXTRA_REQUEST_SEARCH, true);
-                Util.startActivityWithoutTransition(SelectPlaylistActivity.this, intent);
-            }
-        });
+        // Button 1: gone
+        ImageButton searchButton = (ImageButton)findViewById(R.id.action_button_1);
+        searchButton.setVisibility(View.GONE);
 
 		// Button 2: refresh
-		final ImageButton refreshButton = (ImageButton) findViewById(R.id.action_button_2);
+        ImageButton refreshButton = (ImageButton) findViewById(R.id.action_button_2);
 		refreshButton.setImageResource(R.drawable.action_refresh);
 		refreshButton.setOnClickListener(new View.OnClickListener() {
 			@Override
