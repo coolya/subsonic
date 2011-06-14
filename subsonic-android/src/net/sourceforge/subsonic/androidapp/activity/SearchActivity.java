@@ -97,8 +97,8 @@ public class SearchActivity extends SubsonicTabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
 
-        setTitle(R.string.common_appname);
-        
+        setTitle(R.string.search_title);
+
         View buttons = LayoutInflater.from(this).inflate(R.layout.search_buttons, null);
 
         artistsHeading = buttons.findViewById(R.id.search_artists);
@@ -142,7 +142,7 @@ public class SearchActivity extends SubsonicTabActivity {
             }
         });
         registerForContextMenu(list);
-		
+
 		// Button 1: gone
 		findViewById(R.id.action_button_1).setVisibility(View.GONE);
 
@@ -165,7 +165,7 @@ public class SearchActivity extends SubsonicTabActivity {
         String query = intent.getStringExtra(Constants.INTENT_EXTRA_NAME_QUERY);
         boolean autoplay = intent.getBooleanExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, false);
         boolean requestsearch = intent.getBooleanExtra(Constants.INTENT_EXTRA_REQUEST_SEARCH, false);
-        
+
         if (query != null) {
             mergeAdapter = new MergeAdapter();
             list.setAdapter(mergeAdapter);
@@ -173,7 +173,8 @@ public class SearchActivity extends SubsonicTabActivity {
         } else {
             populateList();
             if (requestsearch)
-            	onSearchRequested();        }
+                onSearchRequested();
+        }
     }
 
     @Override
