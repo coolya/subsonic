@@ -41,6 +41,7 @@ import android.util.Log;
 import android.widget.Toast;
 import android.view.Gravity;
 import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.domain.RepeatMode;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.provider.SubsonicAppWidgetProvider;
@@ -98,6 +99,18 @@ public final class Util {
     public static boolean isScreenLitOnDownload(Context context) {
         SharedPreferences prefs = getPreferences(context);
         return prefs.getBoolean(Constants.PREFERENCES_KEY_SCREEN_LIT_ON_DOWNLOAD, false);
+    }
+
+    public static RepeatMode getRepeatMode(Context context) {
+        SharedPreferences prefs = getPreferences(context);
+        return RepeatMode.valueOf(prefs.getString(Constants.PREFERENCES_KEY_REPEAT_MODE, RepeatMode.OFF.name()));
+    }
+
+    public static void setRepeatMode(Context context, RepeatMode repeatMode) {
+        SharedPreferences prefs = getPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(Constants.PREFERENCES_KEY_REPEAT_MODE, repeatMode.name());
+        editor.commit();
     }
 
     public static boolean isScrobblingEnabled(Context context) {

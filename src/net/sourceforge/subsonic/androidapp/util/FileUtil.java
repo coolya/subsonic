@@ -41,6 +41,7 @@ public class FileUtil {
 
     private static final String TAG = FileUtil.class.getSimpleName();
     private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", "..", ":", "\"", "?", "*", "<", ">"};
+    private static final String[] FILE_SYSTEM_UNSAFE_DIR = {"\\", "..", ":", "\"", "?", "*", "<", ">"};
     private static final List<String> MUSIC_FILE_EXTENSIONS = Arrays.asList("mp3", "ogg", "aac", "flac", "m4a", "wav", "wma");
     private static final File MUSIC_DIR = createDirectory("music");
 
@@ -75,7 +76,7 @@ public class FileUtil {
     private static File getAlbumDirectory(MusicDirectory.Entry entry) {
         File dir;
         if (entry.getPath() != null) {
-            File f = new File(entry.getPath());
+            File f = new File(fileSystemSafeDir(entry.getPath()));
             dir = new File(MUSIC_DIR.getPath() + "/" + (entry.isDirectory() ? f.getPath() : f.getParent()));
         } else {
             String artist = fileSystemSafe(entry.getArtist());
@@ -115,7 +116,7 @@ public class FileUtil {
      * with dashes ("-").
      *
      * @param filename The filename in question.
-     * @return The filename with special characters replaced by underscores.
+     * @return The filename with special characters replaced by hyphens.
      */
     private static String fileSystemSafe(String filename) {
         if (filename == null || filename.trim().length() == 0) {
@@ -126,6 +127,24 @@ public class FileUtil {
             filename = filename.replace(s, "-");
         }
         return filename;
+    }
+
+    /**
+     * Makes a given filename safe by replacing special characters like colons (":")
+     * with dashes ("-").
+     *
+     * @param path The path of the directory in question.
+     * @return The the directory name with special characters replaced by hyphens.
+     */
+    private static String fileSystemSafeDir(String path) {
+        if (path == null || path.trim().length() == 0) {
+            return "";
+        }
+
+        for (String s : FILE_SYSTEM_UNSAFE_DIR) {
+            path = path.replace(s, "-");
+        }
+        return path;
     }
 
     /**

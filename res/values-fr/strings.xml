@@ -133,6 +133,8 @@
     <string name="settings.max_bitrate_112">112 Kb/s</string>
     <string name="settings.max_bitrate_128">128 Kb/s</string>
     <string name="settings.max_bitrate_160">160 Kb/s</string>
+    <string name="settings.max_bitrate_192">192 Kb/s</string>
+    <string name="settings.max_bitrate_256">256 Kb/s</string>
     <string name="settings.max_bitrate_320">320 Kb/s</string>
     <string name="settings.max_bitrate_unlimited">Illimité</string>
     <string name="settings.preload_1">1 pièce</string>

@@ -63,7 +63,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     private final IBinder binder = new SimpleServiceBinder<DownloadService>(this);
     private MediaPlayer mediaPlayer;
-    private final List<DownloadFile> downloadList = new CopyOnWriteArrayList<DownloadFile>();
+    private final List<DownloadFile> downloadList = new ArrayList<DownloadFile>();
     private final Handler handler = new Handler();
     private final DownloadServiceLifecycleSupport lifecycleSupport = new DownloadServiceLifecycleSupport(this);
     private final ShufflePlayBuffer shufflePlayBuffer = new ShufflePlayBuffer(this);
@@ -80,7 +80,6 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private static DownloadService instance;
     private String suggestedPlaylistName;
     private PowerManager.WakeLock wakeLock;
-    private RepeatMode repeatMode = RepeatMode.OFF;
 
     @Override
     public void onCreate() {
@@ -148,7 +147,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         } else {
             if (currentPlaying == null) {
                 currentPlaying = downloadList.get(0);
-            } 
+            }
             checkDownloads();
         }
         lifecycleSupport.serializeDownloadQueue();
@@ -195,12 +194,12 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     @Override
     public RepeatMode getRepeatMode() {
-        return repeatMode;
+        return Util.getRepeatMode(this);
     }
 
     @Override
     public void setRepeatMode(RepeatMode repeatMode) {
-        this.repeatMode = repeatMode;
+        Util.setRepeatMode(this, repeatMode);
     }
 
     @Override
@@ -222,6 +221,19 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     @Override
     public synchronized void clear() {
         clear(true);
+    }
+
+    @Override
+    public synchronized void clearIncomplete() {
+        reset();
+        Iterator<DownloadFile> iterator = downloadList.iterator();
+        while (iterator.hasNext()) {
+            DownloadFile downloadFile = iterator.next();
+            if (!downloadFile.isCompleteFileAvailable()) {
+                iterator.remove();
+            }
+        }
+        lifecycleSupport.serializeDownloadQueue();
     }
 
     @Override
@@ -383,7 +395,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private void onSongCompleted() {
         int index = getCurrentPlayingIndex();
         if (index != -1) {
-            switch (repeatMode) {
+            switch (getRepeatMode()) {
                 case OFF:
                     play(index + 1);
                     break;

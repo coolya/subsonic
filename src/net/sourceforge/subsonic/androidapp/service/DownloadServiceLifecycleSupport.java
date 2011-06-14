@@ -36,7 +36,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
-import net.sourceforge.subsonic.androidapp.util.CacheCleaner;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
@@ -95,16 +94,9 @@ public class DownloadServiceLifecycleSupport {
             }
         };
 
-        Runnable cacheCleaner = new Runnable() {
-            @Override
-            public void run() {
-                new CacheCleaner(downloadService, downloadService).clean();
-            }
-        };
 
         executorService = Executors.newScheduledThreadPool(2);
         executorService.scheduleWithFixedDelay(downloadChecker, 5, 5, TimeUnit.SECONDS);
-        executorService.scheduleWithFixedDelay(cacheCleaner, 5 * 60, 60 * 60, TimeUnit.SECONDS);
 
         // Pause when headset is unplugged.
         headsetEventReceiver = new BroadcastReceiver() {

@@ -369,6 +369,7 @@ public class DownloadActivity extends SubsonicTabActivity {
             }
             if (Util.isOffline(this)) {
                 menu.findItem(R.id.menu_lyrics).setVisible(false);
+                menu.findItem(R.id.menu_save_playlist).setVisible(false);
             }
         }
     }

@@ -30,7 +30,14 @@ public class CacheCleaner {
     }
 
     public void clean() {
+
         Log.i(TAG, "Starting cache cleaning.");
+
+        if (downloadService == null) {
+            Log.e(TAG, "DownloadService not set. Aborting cache cleaning.");
+            return;
+        }
+
         try {
 
             List<File> files = new ArrayList<File>();
@@ -47,7 +54,6 @@ public class CacheCleaner {
 
         } catch (RuntimeException x) {
             Log.e(TAG, "Error in cache cleaning.", x);
-            throw x;
         }
     }
 
