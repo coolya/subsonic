@@ -47,10 +47,10 @@
 
     <string name="progress.wait">Please wait...</string>
 
-    <string name="music_library.label">Music library</string>
-    <string name="music_library.label_offline">Offline music</string>
+    <string name="music_library.label">Media library</string>
+    <string name="music_library.label_offline">Offline media</string>
 
-    <string name="select_album.empty">No music found</string>
+    <string name="select_album.empty">No media found</string>
     <string name="select_album.select">Select all</string>
     <string name="select_album.n_selected">%d tracks selected.</string>
     <string name="select_album.n_unselected">%d tracks unselected.</string>
@@ -109,7 +109,7 @@
     <string name="settings.server_address">Server address</string>
     <string name="settings.server_username">Username</string>
     <string name="settings.server_password">Password</string>
-    <string name="settings.cache_title">Music cache</string>
+    <string name="settings.cache_title">Media cache</string>
     <string name="settings.preload">Songs to preload</string>
     <string name="settings.cache_size">Cache size</string>
     <string name="settings.testing_connection">Testing connection...</string>
@@ -158,7 +158,7 @@
     <string name="settings.scrobble_title">Scrobble to Last.fm</string>
     <string name="settings.scrobble_summary">Remember to set up your Last.fm user and password on the Subsonic server</string>
     <string name="settings.hide_media_title">Hide from other</string>
-    <string name="settings.hide_media_summary">Hide music files and album art from other apps (Gallery, Music etc)</string>
+    <string name="settings.hide_media_summary">Hide media files and album art from other apps (Gallery, Music etc)</string>
     <string name="settings.hide_media_toast">Takes effect next time Android scans your phone for media.</string>
     <string name="settings.media_button_title">Media buttons</string>
     <string name="settings.media_button_summary">Respond to phone, headset and Bluetooth media buttons</string>
