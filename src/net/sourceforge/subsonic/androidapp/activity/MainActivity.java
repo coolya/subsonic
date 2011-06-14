@@ -19,6 +19,14 @@
 
 package net.sourceforge.subsonic.androidapp.activity;
 
+import java.util.Arrays;
+
+import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.service.DownloadService;
+import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
+import net.sourceforge.subsonic.androidapp.util.Constants;
+import net.sourceforge.subsonic.androidapp.util.MergeAdapter;
+import net.sourceforge.subsonic.androidapp.util.Util;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,18 +34,10 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.service.DownloadService;
-import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
-import net.sourceforge.subsonic.androidapp.util.Constants;
-import net.sourceforge.subsonic.androidapp.util.MergeAdapter;
-import net.sourceforge.subsonic.androidapp.util.Util;
-
-import java.util.Arrays;
 
 public class MainActivity extends SubsonicTabActivity {
 
@@ -57,27 +57,26 @@ public class MainActivity extends SubsonicTabActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (getIntent().hasExtra(Constants.INTENT_EXTRA_NAME_EXIT)) {
+            exit();
+        }
+        setContentView(R.layout.main);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
-
-        setContentView(R.layout.main);
 
         View buttons = LayoutInflater.from(this).inflate(R.layout.main_buttons, null);
 
         final View serverButton = buttons.findViewById(R.id.main_select_server);
-        final View shuffleButton = buttons.findViewById(R.id.main_shuffle);
-        final View settingsButton = buttons.findViewById(R.id.main_settings);
-        final View helpButton = findViewById(R.id.main_help);
-        final View exitButton = findViewById(R.id.main_exit);
-        final View dummyView = findViewById(R.id.main_dummy);
+        final TextView serverTextView = (TextView) serverButton.findViewById(R.id.main_select_server_2);
+
         final View albumsTitle = buttons.findViewById(R.id.main_albums);
         final View albumsNewestButton = buttons.findViewById(R.id.main_albums_newest);
         final View albumsRandomButton = buttons.findViewById(R.id.main_albums_random);
         final View albumsHighestButton = buttons.findViewById(R.id.main_albums_highest);
         final View albumsRecentButton = buttons.findViewById(R.id.main_albums_recent);
         final View albumsFrequentButton = buttons.findViewById(R.id.main_albums_frequent);
-        final TextView serverTextView = (TextView) serverButton.findViewById(R.id.main_select_server_2);
+
+        final View dummyView = findViewById(R.id.main_dummy);
 
         int instance = Util.getActiveServer(this);
         String name = Util.getServerName(this, instance);
@@ -86,7 +85,7 @@ public class MainActivity extends SubsonicTabActivity {
         ListView list = (ListView) findViewById(R.id.main_list);
 
         MergeAdapter adapter = new MergeAdapter();
-        adapter.addViews(Arrays.asList(serverButton, shuffleButton, settingsButton), true);
+        adapter.addViews(Arrays.asList(serverButton), true);
         if (!Util.isOffline(this)) {
             adapter.addView(albumsTitle, false);
             adapter.addViews(Arrays.asList(albumsNewestButton, albumsRandomButton, albumsHighestButton, albumsRecentButton, albumsFrequentButton), true);
@@ -99,12 +98,6 @@ public class MainActivity extends SubsonicTabActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (view == serverButton) {
                     dummyView.showContextMenu();
-                } else if (view == settingsButton) {
-                    startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-                } else if (view == shuffleButton) {
-                    Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
-                    intent.putExtra(Constants.INTENT_EXTRA_NAME_SHUFFLE, true);
-                    Util.startActivityWithoutTransition(MainActivity.this, intent);
                 } else if (view == albumsNewestButton) {
                     showAlbumList("newest");
                 } else if (view == albumsRandomButton) {
@@ -119,18 +112,30 @@ public class MainActivity extends SubsonicTabActivity {
             }
         });
 
-        helpButton.setOnClickListener(new View.OnClickListener() {
+        // Title: Subsonic
+        setTitle(R.string.common_appname);
+
+        // Button 1: shuffle
+        ImageButton actionShuffleButton = (ImageButton)findViewById(R.id.action_button_1);
+        actionShuffleButton.setImageResource(R.drawable.action_shuffle);
+        actionShuffleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, HelpActivity.class));
+                Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
+                intent.putExtra(Constants.INTENT_EXTRA_NAME_SHUFFLE, true);
+                Util.startActivityWithoutTransition(MainActivity.this, intent);
             }
         });
 
-        exitButton.setOnClickListener(new View.OnClickListener() {
+        // Button 2: search
+        ImageButton actionSearchButton = (ImageButton)findViewById(R.id.action_button_2);
+        actionSearchButton.setImageResource(R.drawable.action_search);
+        actionSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopService(new Intent(MainActivity.this, DownloadServiceImpl.class));
-                finish();
+            	Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            	intent.putExtra(Constants.INTENT_EXTRA_REQUEST_SEARCH, true);
+                Util.startActivityWithoutTransition(MainActivity.this, intent);
             }
         });
 
@@ -216,6 +221,11 @@ public class MainActivity extends SubsonicTabActivity {
         Util.startActivityWithoutTransition(this, intent);
     }
 
+    private void exit() {
+        stopService(new Intent(this, DownloadServiceImpl.class));
+        finish();
+    }
+
     private void showInfoDialog() {
         if (!infoDialogDisplayed) {
             infoDialogDisplayed = true;
@@ -230,6 +240,6 @@ public class MainActivity extends SubsonicTabActivity {
         intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE, type);
         intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_SIZE, 20);
         intent.putExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET, 0);
-        Util.startActivityWithoutTransition(this, intent);
-    }
+		Util.startActivityWithoutTransition(this, intent);
+	}
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:a="http://schemas.android.com/apk/res/android">
+
+    <item 
+        a:id="@+id/menu_play_all"
+        a:title="@string/select_album.play_all"
+        />
+
+    <item 
+        a:id="@+id/menu_queue_all"
+        a:title="@string/select_album.queue_all"
+        />
+
+    <item 
+        a:id="@+id/menu_save_all"
+        a:title="@string/select_album.save_all"
+        />
+        
+</menu>

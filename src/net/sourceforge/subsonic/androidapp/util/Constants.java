@@ -46,7 +46,8 @@ public final class Constants {
     public static final String INTENT_EXTRA_NAME_ALBUM_LIST_OFFSET = "subsonic.albumlistoffset";
     public static final String INTENT_EXTRA_NAME_SHUFFLE = "subsonic.shuffle";
     public static final String INTENT_EXTRA_NAME_REFRESH = "subsonic.refresh";
-
+    public static final String INTENT_EXTRA_REQUEST_SEARCH = "subsonic.requestsearch";
+    public static final String INTENT_EXTRA_NAME_EXIT = "subsonic.exit" ;
 
     // Notification IDs.
     public static final int NOTIFICATION_ID_PLAYING = 100;

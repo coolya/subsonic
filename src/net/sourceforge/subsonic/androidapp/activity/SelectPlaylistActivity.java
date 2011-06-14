@@ -27,10 +27,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.Playlist;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
+import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.util.BackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.TabActivityBackgroundTask;
@@ -49,18 +51,46 @@ public class SelectPlaylistActivity extends SubsonicTabActivity implements Adapt
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_playlist);
+
         list = (ListView) findViewById(R.id.select_playlist_list);
         emptyTextView = findViewById(R.id.select_playlist_empty);
         list.setOnItemClickListener(this);
         registerForContextMenu(list);
+
+        // Title: Playlists
+        setTitle(R.string.playlist_label);
+
+        // Button 1: gone
+        ImageButton searchButton = (ImageButton)findViewById(R.id.action_button_1);
+        searchButton.setVisibility(View.GONE);
+
+		// Button 2: refresh
+        ImageButton refreshButton = (ImageButton) findViewById(R.id.action_button_2);
+		refreshButton.setImageResource(R.drawable.action_refresh);
+		refreshButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				refresh();
+			}
+		});
+
         load();
     }
+
+	private void refresh() {
+		finish();
+		Intent intent = new Intent(this, SelectPlaylistActivity.class);
+		intent.putExtra(Constants.INTENT_EXTRA_NAME_REFRESH, true);
+		Util.startActivityWithoutTransition(this, intent);
+	}
 
     private void load() {
         BackgroundTask<List<Playlist>> task = new TabActivityBackgroundTask<List<Playlist>>(this) {
             @Override
             protected List<Playlist> doInBackground() throws Throwable {
-                return MusicServiceFactory.getMusicService(SelectPlaylistActivity.this).getPlaylists(SelectPlaylistActivity.this, this);
+                MusicService musicService = MusicServiceFactory.getMusicService(SelectPlaylistActivity.this);
+                boolean refresh = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_REFRESH, false);
+                return musicService.getPlaylists(refresh, SelectPlaylistActivity.this, this);
             }
 
             @Override

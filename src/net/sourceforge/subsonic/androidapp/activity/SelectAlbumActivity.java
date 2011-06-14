@@ -26,7 +26,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,7 +34,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
@@ -52,12 +51,8 @@ import java.util.List;
 public class SelectAlbumActivity extends SubsonicTabActivity {
 
     private static final String TAG = SelectAlbumActivity.class.getSimpleName();
-    private static final int MENU_ITEM_PLAY_ALL = 1;
-    private static final int MENU_ITEM_QUEUE_ALL = 2;
-    private static final int MENU_ITEM_SAVE_ALL = 3;
 
     private ListView entryList;
-    private View header;
     private View footer;
     private View emptyView;
     private Button selectButton;
@@ -67,9 +62,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     private Button deleteButton;
     private Button moreButton;
     private ImageView coverArtView;
-    private TextView headerText1;
-    private TextView headerText2;
-    private ImageButton playAllButton;
     private boolean licenseValid;
 
     /**
@@ -82,7 +74,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
         entryList = (ListView) findViewById(R.id.select_album_entries);
 
-        header = LayoutInflater.from(this).inflate(R.layout.select_album_header, entryList, false);
         footer = LayoutInflater.from(this).inflate(R.layout.select_album_footer, entryList, false);
         entryList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         entryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -104,11 +95,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             }
         });
 
-        coverArtView = (ImageView) header.findViewById(R.id.select_album_cover_art);
-        headerText1 = (TextView) header.findViewById(R.id.select_album_text1);
-        headerText2 = (TextView) header.findViewById(R.id.select_album_text2);
-        playAllButton = (ImageButton) header.findViewById(R.id.select_album_play_all);
-
+        coverArtView = (ImageView) findViewById(R.id.actionbar_home_icon);
         selectButton = (Button) findViewById(R.id.select_album_select);
         playButton = (Button) findViewById(R.id.select_album_play);
         queueButton = (Button) findViewById(R.id.select_album_queue);
@@ -127,37 +114,28 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             @Override
             public void onClick(View view) {
                 download(false, false, true);
-                selectAll(false);
+                selectAll(false, false);
             }
         });
         queueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 download(true, false, false);
-                selectAll(false);
+                selectAll(false, false);
             }
         });
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 download(true, true, false);
-                selectAll(false);
+                selectAll(false, false);
             }
         });
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 delete();
-                selectAll(false);
-            }
-        });
-
-        playAllButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectAll(true);
-                download(false, false, true);
-                selectAll(false);
+                selectAll(false, false);
             }
         });
 
@@ -180,6 +158,36 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         } else {
             getMusicDirectory(id, name);
         }
+
+        // Button 1: play all
+        final ImageButton actionPlayAllButton = (ImageButton) findViewById(R.id.action_button_1);
+        actionPlayAllButton.setImageResource(R.drawable.action_play_all);
+        actionPlayAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: What to do with sub-albums here?
+                selectAll(true, false);
+                download(false, false, true);
+                selectAll(false, false);
+            }
+        });
+
+        // Button 2: refresh
+        final ImageButton actionRefreshButton = (ImageButton) findViewById(R.id.action_button_2);
+        actionRefreshButton.setImageResource(R.drawable.action_refresh);
+        actionRefreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                refresh();
+            }
+        });
+    }
+
+    private void refresh() {
+        finish();
+        Intent intent = getIntent();
+        intent.putExtra(Constants.INTENT_EXTRA_NAME_REFRESH, true);
+        Util.startActivityWithoutTransition(this, intent);
     }
 
     @Override
@@ -189,9 +197,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
         if (entry.isDirectory()) {
-            menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_all);
-            menu.add(Menu.NONE, MENU_ITEM_QUEUE_ALL, MENU_ITEM_QUEUE_ALL, R.string.select_album_queue_all);
-            menu.add(Menu.NONE, MENU_ITEM_SAVE_ALL, MENU_ITEM_SAVE_ALL, R.string.select_album_save_all);
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.select_album_context, menu);
         }
     }
 
@@ -200,13 +207,13 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
         MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
         switch (menuItem.getItemId()) {
-            case MENU_ITEM_PLAY_ALL:
+            case R.id.menu_play_all:
                 downloadRecursively(entry.getId(), false, false, true);
                 break;
-            case MENU_ITEM_QUEUE_ALL:
+            case R.id.menu_queue_all:
                 downloadRecursively(entry.getId(), false, true, false);
                 break;
-            case MENU_ITEM_SAVE_ALL:
+            case R.id.menu_save_all:
                 downloadRecursively(entry.getId(), true, true, false);
                 break;
             default:
@@ -216,20 +223,19 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     }
 
     private void getMusicDirectory(final String id, String name) {
-        headerText1.setText(name);
-        setTitle(Util.isOffline(this) ? R.string.music_library_label_offline : R.string.music_library_label);
+        setTitle(name);
 
         new LoadTask() {
             @Override
             protected MusicDirectory load(MusicService service) throws Exception {
-                return service.getMusicDirectory(id, SelectAlbumActivity.this, this);
+                boolean refresh = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_REFRESH, false);
+                return service.getMusicDirectory(id, refresh, SelectAlbumActivity.this, this);
             }
         }.execute();
     }
 
     private void getPlaylist(final String playlistId, String playlistName) {
         setTitle(playlistName);
-        headerText1.setText(playlistName);
 
         new LoadTask() {
             @Override
@@ -296,17 +302,27 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                 break;
             }
         }
-        selectAll(someUnselected);
+        selectAll(someUnselected, true);
     }
 
-    private void selectAll(boolean selected) {
+    private void selectAll(boolean selected, boolean toast) {
         int count = entryList.getCount();
+        int selectedCount = 0;
         for (int i = 0; i < count; i++) {
             MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(i);
             if (entry != null && !entry.isDirectory() && !entry.isVideo()) {
                 entryList.setItemChecked(i, selected);
+                selectedCount++;
             }
         }
+
+        // Display toast: N tracks selected / N tracks unselected
+        if (toast) {
+            int toastResId = selected ? R.string.select_album_n_selected
+                                      : R.string.select_album_n_unselected;
+            Util.toast(this, getString(toastResId, selectedCount));
+        }
+
         enableButtons();
     }
 
@@ -363,9 +379,11 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                 if (autoplay) {
                     Util.startActivityWithoutTransition(SelectAlbumActivity.this, DownloadActivity.class);
                 } else if (save) {
-                    Util.toast(SelectAlbumActivity.this, getResources().getQuantityString(R.plurals.select_album_n_songs_downloading, songs.size(), songs.size()));
+                    Util.toast(SelectAlbumActivity.this,
+                               getResources().getQuantityString(R.plurals.select_album_n_songs_downloading, songs.size(), songs.size()));
                 } else if (append) {
-                    Util.toast(SelectAlbumActivity.this, getResources().getQuantityString(R.plurals.select_album_n_songs_added, songs.size(), songs.size()));
+                    Util.toast(SelectAlbumActivity.this,
+                               getResources().getQuantityString(R.plurals.select_album_n_songs_added, songs.size(), songs.size()));
                 }
             }
         };
@@ -382,8 +400,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     }
 
     private void playVideo(MusicDirectory.Entry entry) {
-//        Intent intent = new Intent(this, PlayVideoActivity.class);
-//        intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, entry.getId());
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(MusicServiceFactory.getMusicService(this).getVideoUrl(this, entry.getId())));
 
@@ -416,27 +432,30 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         if (trialDaysLeft == 0) {
             builder.setTitle(R.string.select_album_donate_dialog_0_trial_days_left);
         } else {
-            builder.setTitle(getResources().getQuantityString(R.plurals.select_album_donate_dialog_n_trial_days_left, trialDaysLeft, trialDaysLeft));
+            builder.setTitle(getResources().getQuantityString(R.plurals.select_album_donate_dialog_n_trial_days_left,
+                                                              trialDaysLeft, trialDaysLeft));
         }
 
         builder.setMessage(R.string.select_album_donate_dialog_message);
 
-        builder.setPositiveButton(R.string.select_album_donate_dialog_now, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.DONATION_URL)));
-            }
-        });
+        builder.setPositiveButton(R.string.select_album_donate_dialog_now,
+                                  new DialogInterface.OnClickListener() {
+                                      @Override
+                                      public void onClick(DialogInterface dialogInterface, int i) {
+                                          startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.DONATION_URL)));
+                                      }
+                                  });
 
-        builder.setNegativeButton(R.string.select_album_donate_dialog_later, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-                if (onValid != null) {
-                    onValid.run();
-                }
-            }
-        });
+        builder.setNegativeButton(R.string.select_album_donate_dialog_later,
+                                  new DialogInterface.OnClickListener() {
+                                      @Override
+                                      public void onClick(DialogInterface dialogInterface, int i) {
+                                          dialogInterface.dismiss();
+                                          if (onValid != null) {
+                                              onValid.run();
+                                          }
+                                      }
+                                  });
 
         builder.create().show();
     }
@@ -469,9 +488,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             }
 
             if (songCount > 0) {
-                headerText2.setText(getResources().getQuantityString(R.plurals.select_album_n_songs, songCount, songCount));
                 getImageLoader().loadImage(coverArtView, entries.get(0), false);
-                entryList.addHeaderView(header);
                 entryList.addFooterView(footer);
                 selectButton.setVisibility(View.VISIBLE);
                 playButton.setVisibility(View.VISIBLE);
@@ -484,9 +501,9 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
             boolean playAll = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, false);
             if (playAll && songCount > 0) {
-                selectAll(true);
+                selectAll(true, false);
                 download(false, false, true);
-                selectAll(false);
+                selectAll(false, false);
             }
         }
     }

@@ -4,43 +4,11 @@
               a:layout_width="fill_parent"
               a:layout_height="fill_parent">
 
-    <LinearLayout
-            a:orientation="horizontal"
+    <include 
+            layout="@layout/action_bar"
             a:layout_width="fill_parent"
-            a:layout_height="wrap_content"
-            a:background="@drawable/menubar_button_disabled">
-
-        <ImageView
-                a:src="@drawable/main_header"
-                a:layout_width="wrap_content"
-                a:layout_height="wrap_content"
-                a:paddingLeft ="10dip"
-                a:paddingTop="10dip"
-                a:paddingBottom="8dip"/>
-
-        <View
-                a:layout_width="0dip"
-                a:layout_height="fill_parent"
-                a:layout_weight="1"/>
-
-        <ImageView
-                a:id="@+id/main_exit"
-                a:src="@drawable/main_exit"
-                a:paddingTop="5dip"
-                a:paddingBottom="3dip"
-                a:layout_width="wrap_content"
-                a:layout_height="wrap_content"/>
-
-        <ImageView
-                a:id="@+id/main_help"
-                a:src="@drawable/main_help"
-                a:paddingTop="5dip"
-                a:paddingBottom="3dip"
-                a:paddingRight="5dip"
-                a:layout_width="wrap_content"
-                a:layout_height="wrap_content"/>
-
-    </LinearLayout>
+            a:layout_height="45dp"
+            />
 
     <View
             a:layout_width="fill_parent"
@@ -50,14 +18,17 @@
     <ListView
             a:id="@+id/main_list"
             a:layout_width="fill_parent"
-            a:layout_height="0dip"
-            a:layout_weight="1.0"/>
+            a:layout_height="0px"
+            a:layout_weight="1"/>
 
     <View a:id="@+id/main_dummy"
-          a:layout_width="0dip"
-          a:layout_height="0dip"/>
+          a:layout_width="0px"
+          a:layout_height="0px"/>
     
-    <include layout="@layout/button_bar"/>
+    <include 
+            layout="@layout/button_bar"
+            a:layout_width="fill_parent"
+            a:layout_height="wrap_content"/>
 
 </LinearLayout>
 

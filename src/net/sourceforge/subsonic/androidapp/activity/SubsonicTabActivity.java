@@ -20,9 +20,14 @@ package net.sourceforge.subsonic.androidapp.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
@@ -30,6 +35,7 @@ import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
+import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.ImageLoader;
 import net.sourceforge.subsonic.androidapp.util.ModalBackgroundTask;
 import net.sourceforge.subsonic.androidapp.util.Util;
@@ -55,6 +61,7 @@ public class SubsonicTabActivity extends Activity {
     protected void onCreate(Bundle bundle) {
         applyTheme();
         super.onCreate(bundle);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
         startService(new Intent(this, DownloadServiceImpl.class));
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
@@ -88,6 +95,7 @@ public class SubsonicTabActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SubsonicTabActivity.this, SearchActivity.class);
+                intent.putExtra(Constants.INTENT_EXTRA_REQUEST_SEARCH, true);
                 Util.startActivityWithoutTransition(SubsonicTabActivity.this, intent);
             }
         });
@@ -131,6 +139,36 @@ public class SubsonicTabActivity extends Activity {
         Util.registerMediaButtonEventReceiver(this);
     }
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+
+		case R.id.menu_exit:
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra(Constants.INTENT_EXTRA_NAME_EXIT, true);
+            Util.startActivityWithoutTransition(this, intent);
+			return true;
+
+		case R.id.menu_settings:
+            startActivity(new Intent(this, SettingsActivity.class));
+			return true;
+
+		case R.id.menu_help:
+            startActivity(new Intent(this, HelpActivity.class));
+			return true;
+		}
+
+		return false;
+	}
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -144,7 +182,22 @@ public class SubsonicTabActivity extends Activity {
         Util.disablePendingTransition(this);
     }
 
-    private void applyTheme() {
+    @Override
+	public void setTitle(CharSequence title) {
+        // Set the font of title in the action bar.
+        TextView text = (TextView) findViewById(R.id.actionbar_title_text);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Advert-Regular.ttf");
+        text.setTypeface(typeface);
+
+    	text.setText(title);
+	}
+
+	@Override
+	public void setTitle(int titleId) {
+		setTitle(getString(titleId));
+	}
+
+	private void applyTheme() {
         String theme = Util.getTheme(this);
         if ("dark".equals(theme)) {
             setTheme(android.R.style.Theme);
@@ -204,7 +257,7 @@ public class SubsonicTabActivity extends Activity {
             @Override
             protected List<MusicDirectory.Entry> doInBackground() throws Throwable {
                 MusicService musicService = MusicServiceFactory.getMusicService(SubsonicTabActivity.this);
-                MusicDirectory root = musicService.getMusicDirectory(id, SubsonicTabActivity.this, this);
+                MusicDirectory root = musicService.getMusicDirectory(id, false, SubsonicTabActivity.this, this);
                 List<MusicDirectory.Entry> songs = new LinkedList<MusicDirectory.Entry>();
                 getSongsRecursively(root, songs);
                 return songs;
@@ -222,7 +275,7 @@ public class SubsonicTabActivity extends Activity {
                 }
                 for (MusicDirectory.Entry dir : parent.getChildren(true, false)) {
                     MusicService musicService = MusicServiceFactory.getMusicService(SubsonicTabActivity.this);
-                    getSongsRecursively(musicService.getMusicDirectory(dir.getId(), SubsonicTabActivity.this, this), songs);
+                    getSongsRecursively(musicService.getMusicDirectory(dir.getId(), false, SubsonicTabActivity.this, this), songs);
                 }
             }
 

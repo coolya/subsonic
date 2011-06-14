@@ -33,6 +33,7 @@ import android.os.Handler;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
+import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.Constants;
@@ -63,12 +65,14 @@ import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 
 public class DownloadActivity extends SubsonicTabActivity {
 
+	/*
     private static final int MENU_ITEM_SHOW_ALBUM = 1;
     private static final int MENU_ITEM_LYRICS = 2;
     private static final int MENU_ITEM_REMOVE = 3;
     private static final int MENU_ITEM_REMOVE_ALL = 4;
     private static final int MENU_ITEM_SHUFFLE = 5;
     private static final int MENU_ITEM_SAVE_PLAYLIST = 6;
+    */
 
     private static final int DIALOG_SAVE_PLAYLIST = 100;
 
@@ -103,8 +107,6 @@ public class DownloadActivity extends SubsonicTabActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.download);
 
         playlistFlipper = (ViewFlipper) findViewById(R.id.download_playlist_flipper);
@@ -336,17 +338,16 @@ public class DownloadActivity extends SubsonicTabActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(Menu.NONE, MENU_ITEM_REMOVE_ALL, MENU_ITEM_REMOVE_ALL, R.string.download_menu_remove_all);
-        menu.add(Menu.NONE, MENU_ITEM_SHUFFLE, Menu.NONE, R.string.download_menu_shuffle);
-        menu.add(Menu.NONE, MENU_ITEM_SAVE_PLAYLIST, Menu.NONE, R.string.download_menu_save);
-        return true;
-    }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.nowplaying, menu);
+		return true;
+	}
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem savePlaylist = menu.findItem(MENU_ITEM_SAVE_PLAYLIST);
+        MenuItem savePlaylist = menu.findItem(R.id.menu_save_playlist);
         boolean savePlaylistEnabled = !Util.isOffline(this);
         savePlaylist.setEnabled(savePlaylistEnabled);
         savePlaylist.setVisible(savePlaylistEnabled);
@@ -357,20 +358,18 @@ public class DownloadActivity extends SubsonicTabActivity {
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
         if (view == playlistView) {
-
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
             DownloadFile downloadFile = (DownloadFile) playlistView.getItemAtPosition(info.position);
-            if (downloadFile.getSong().getParent() != null) {
-                menu.add(Menu.NONE, MENU_ITEM_SHOW_ALBUM, MENU_ITEM_SHOW_ALBUM, R.string.download_menu_show_album);
+
+            MenuInflater inflater = getMenuInflater();
+    		inflater.inflate(R.menu.nowplaying_context, menu);
+            
+            if (downloadFile.getSong().getParent() == null) {
+            	menu.findItem(R.id.menu_show_album).setVisible(false);
             }
-            if (!Util.isOffline(this)) {
-                menu.add(Menu.NONE, MENU_ITEM_LYRICS, MENU_ITEM_LYRICS, R.string.download_menu_lyrics);
-            }
-            menu.add(Menu.NONE, MENU_ITEM_REMOVE, MENU_ITEM_REMOVE, R.string.download_menu_remove);
-            menu.add(Menu.NONE, MENU_ITEM_REMOVE_ALL, MENU_ITEM_REMOVE_ALL, R.string.download_menu_remove_all);
-            menu.add(Menu.NONE, MENU_ITEM_SHUFFLE, MENU_ITEM_SHUFFLE, R.string.download_menu_shuffle);
-            if (!Util.isOffline(this)) {
-                menu.add(Menu.NONE, MENU_ITEM_SAVE_PLAYLIST, MENU_ITEM_SAVE_PLAYLIST, R.string.download_menu_save);
+            if (Util.isOffline(this)) {
+                menu.findItem(R.id.menu_lyrics).setVisible(false);
+                menu.findItem(R.id.menu_save_playlist).setVisible(false);
             }
         }
     }
@@ -389,32 +388,32 @@ public class DownloadActivity extends SubsonicTabActivity {
 
     private boolean menuItemSelected(int menuItemId, DownloadFile song) {
         switch (menuItemId) {
-            case MENU_ITEM_SHOW_ALBUM:
+            case R.id.menu_show_album:
                 Intent intent = new Intent(this, SelectAlbumActivity.class);
                 intent.putExtra(Constants.INTENT_EXTRA_NAME_ID, song.getSong().getParent());
                 intent.putExtra(Constants.INTENT_EXTRA_NAME_NAME, song.getSong().getAlbum());
                 Util.startActivityWithoutTransition(this, intent);
                 return true;
-            case MENU_ITEM_LYRICS:
+            case R.id.menu_lyrics:
                 intent = new Intent(this, LyricsActivity.class);
                 intent.putExtra(Constants.INTENT_EXTRA_NAME_ARTIST, song.getSong().getArtist());
                 intent.putExtra(Constants.INTENT_EXTRA_NAME_TITLE, song.getSong().getTitle());
                 Util.startActivityWithoutTransition(this, intent);
                 return true;
-            case MENU_ITEM_REMOVE:
+            case R.id.menu_remove:
                 getDownloadService().remove(song);
                 onDownloadListChanged();
                 return true;
-            case MENU_ITEM_REMOVE_ALL:
+            case R.id.menu_remove_all:
                 getDownloadService().setShufflePlayEnabled(false);
                 getDownloadService().clear();
                 onDownloadListChanged();
                 return true;
-            case MENU_ITEM_SHUFFLE:
+            case R.id.menu_shuffle:
                 getDownloadService().shuffle();
                 Util.toast(this, R.string.download_menu_shuffle_notification);
                 return true;
-            case MENU_ITEM_SAVE_PLAYLIST:
+            case R.id.menu_save_playlist:
                 showDialog(DIALOG_SAVE_PLAYLIST);
                 return true;
             default:
