@@ -63,6 +63,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     private Button moreButton;
     private ImageView coverArtView;
     private boolean licenseValid;
+    private ImageButton playAllButton;
 
     /**
      * Called when the activity is first created.
@@ -160,17 +161,15 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         }
 
         // Button 1: play all
-        ImageButton playAllButton = (ImageButton) findViewById(R.id.action_button_1);
+        playAllButton = (ImageButton) findViewById(R.id.action_button_1);
         playAllButton.setImageResource(R.drawable.action_play_all);
+        playAllButton.setVisibility(View.GONE);
         playAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 playAll();
             }
         });
-        if (albumListType != null) {
-            playAllButton.setVisibility(View.GONE);
-        }
 
         // Button 2: refresh
         ImageButton refreshButton = (ImageButton) findViewById(R.id.action_button_2);
@@ -515,7 +514,10 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                 queueButton.setVisibility(View.VISIBLE);
             }
 
+            boolean isAlbumList = getIntent().hasExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE);
+
             emptyView.setVisibility(entries.isEmpty() ? View.VISIBLE : View.GONE);
+            playAllButton.setVisibility(isAlbumList || entries.isEmpty() ? View.GONE : View.VISIBLE);
             entryList.setAdapter(new EntryAdapter(SelectAlbumActivity.this, getImageLoader(), entries, true));
             licenseValid = result.getSecond();
 
