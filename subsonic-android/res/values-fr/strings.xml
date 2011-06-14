@@ -20,6 +20,10 @@
     <string name="main.albums_recent">Récemment joués</string>
     <string name="main.albums_frequent">Fréquemment joués</string>
 
+    <!--<string name="menu.exit">TODO: Exit</string>-->
+    <!--<string name="menu.settings">TODO: Settings</string>-->
+    <!--<string name="menu.help">TODO: Help</string>-->
+
     <string name="playlist.label">Playlists</string>
 
     <string name="help.label">Aide</string>
@@ -48,6 +52,8 @@
 
     <string name="select_album.empty">Aucune musique trouvée</string>
     <string name="select_album.select">Tout sélectionner</string>
+    <!--<string name="select_album.n_selected">TODO: %d tracks selected.</string>-->
+    <!--<string name="select_album.n_unselected">TODO: %d tracks unselected.</string>-->
     <string name="select_album.play">Jouer</string>
     <string name="select_album.queue">Mettre en file</string>
     <string name="select_album.more">Plus</string>
@@ -149,11 +155,15 @@
     <string name="settings.clear_search_history">Effacer l\'historique des recherches</string>
     <string name="settings.search_history_cleared">Historique des recherches effacé</string>
     <string name="settings.other_title">Autres paramètres</string>
+    <!--<string name="settings.scrobble_title">TODO: Scrobble to Last.fm</string>-->
+    <!--<string name="settings.scrobble_summary">TODO: Remember to set up your Last.fm user and password on the Subsonic server</string>-->
     <string name="settings.hide_media_title">Masquer aux autres</string>
     <string name="settings.hide_media_summary">Masquer les fichiers musicaux et les couvertures d\'album aux autres applis (Gallerie, Musique, etc.)</string>
     <string name="settings.hide_media_toast">Prendra effet la prochaine fois qu\'Android recensera les médias disponibles sur l\'appareil.</string>
     <string name="settings.media_button_title">Boutons média</string>
     <string name="settings.media_button_summary">Répondre au boutons média de l\'appareil, du casque et du Bluetooth</string>
+    <!--<string name="settings.screen_lit_title">TODO: Keep screen on</string>-->
+    <!--<string name="settings.screen_lit_summary">TODO: Keeping the screen on when downloading may improve download speed</string>-->
 
     <string name="music_service.retry">Une erreur de réseau s\'est produite. Essai %1$d de %2$d.</string>
 

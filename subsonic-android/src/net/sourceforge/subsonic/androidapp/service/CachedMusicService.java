@@ -104,12 +104,12 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
-    public MusicDirectory getMusicDirectory(String id, Context context, ProgressListener progressListener) throws Exception {
+    public MusicDirectory getMusicDirectory(String id, boolean refresh, Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
-        TimeLimitedCache<MusicDirectory> cache = cachedMusicDirectories.get(id);
+        TimeLimitedCache<MusicDirectory> cache = refresh ? null : cachedMusicDirectories.get(id);
         MusicDirectory dir = cache == null ? null : cache.get();
         if (dir == null) {
-            dir = musicService.getMusicDirectory(id, context, progressListener);
+            dir = musicService.getMusicDirectory(id, refresh, context, progressListener);
             cache = new TimeLimitedCache<MusicDirectory>(TTL_MUSIC_DIR, TimeUnit.SECONDS);
             cache.set(dir);
             cachedMusicDirectories.put(id, cache);
@@ -128,11 +128,11 @@ public class CachedMusicService implements MusicService {
     }
 
     @Override
-    public List<Playlist> getPlaylists(Context context, ProgressListener progressListener) throws Exception {
+    public List<Playlist> getPlaylists(boolean refresh, Context context, ProgressListener progressListener) throws Exception {
         checkSettingsChanged(context);
-        List<Playlist> result = cachedPlaylists.get();
+        List<Playlist> result = refresh ? null : cachedPlaylists.get();
         if (result == null) {
-            result = musicService.getPlaylists(context, progressListener);
+            result = musicService.getPlaylists(refresh, context, progressListener);
             cachedPlaylists.set(result);
         }
         return result;

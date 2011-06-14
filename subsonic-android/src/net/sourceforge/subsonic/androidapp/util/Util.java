@@ -334,7 +334,9 @@ public final class Util {
     }
 
     public static void toast(Context context, String message) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     public static void toast(Context context, int messageId) {
@@ -677,6 +679,7 @@ public final class Util {
 
         // Set the icon, scrolling text and timestamp
         final Notification notification = new Notification(android.R.drawable.stat_sys_warning, title, System.currentTimeMillis());
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
         // The PendingIntent to launch our activity if the user selects this notification
         Intent intent = new Intent(context, ErrorActivity.class);

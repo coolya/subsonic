@@ -47,13 +47,13 @@ public interface MusicService {
 
     Indexes getIndexes(String musicFolderId, boolean refresh, Context context, ProgressListener progressListener) throws Exception;
 
-    MusicDirectory getMusicDirectory(String id, Context context, ProgressListener progressListener) throws Exception;
+    MusicDirectory getMusicDirectory(String id, boolean refresh, Context context, ProgressListener progressListener) throws Exception;
 
     SearchResult search(SearchCritera criteria, Context context, ProgressListener progressListener) throws Exception;
 
     MusicDirectory getPlaylist(String id, Context context, ProgressListener progressListener) throws Exception;
 
-    List<Playlist> getPlaylists(Context context, ProgressListener progressListener) throws Exception;
+    List<Playlist> getPlaylists(boolean refresh, Context context, ProgressListener progressListener) throws Exception;
 
     void createPlaylist(String id, String name, List<MusicDirectory.Entry> entries, Context context, ProgressListener progressListener) throws Exception;
 
