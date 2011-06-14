@@ -166,9 +166,11 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             @Override
             public void onClick(View view) {
                 playAll();
-
             }
         });
+        if (albumListType != null) {
+            playAllButton.setVisibility(View.GONE);
+        }
 
         // Button 2: refresh
         ImageButton refreshButton = (ImageButton) findViewById(R.id.action_button_2);
@@ -181,7 +183,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         });
     }
 
-    private void playAll() { 
+    private void playAll() {
         boolean hasSubFolders = false;
         for (int i = 0; i < entryList.getCount(); i++) {
             MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(i);
