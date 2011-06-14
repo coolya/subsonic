@@ -43,7 +43,7 @@ When going to offline mode or switching servers, retain all items in playlists t
 
 TODO IN ANDROID 2.8
 -------------------
-Separate button for offline.
+Test offline.
 Sharing support.
 Podcast support.
 Keep all album art in a single directory.

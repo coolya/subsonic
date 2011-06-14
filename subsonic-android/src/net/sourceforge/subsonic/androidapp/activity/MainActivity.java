@@ -164,6 +164,7 @@ public class MainActivity extends SubsonicTabActivity {
         MenuItem menuItem3 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_SERVER_3, MENU_ITEM_SERVER_3, Util.getServerName(this, 3));
         MenuItem menuItem4 = menu.add(MENU_GROUP_SERVER, MENU_ITEM_OFFLINE, MENU_ITEM_OFFLINE, Util.getServerName(this, 0));
         menu.setGroupCheckable(MENU_GROUP_SERVER, true, true);
+        menu.setHeaderTitle(R.string.main_select_server);
 
         switch (Util.getActiveServer(this)) {
             case 0:
