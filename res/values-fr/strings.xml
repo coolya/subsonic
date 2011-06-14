@@ -37,7 +37,7 @@
     <string name="play_video.noplugin">Veuillez installer Adobe Flash Player à partir du marché Android.</string>
 
     <string name="search.label">Recherche</string>
-    <string name="search.title">Recherche musicale</string>
+    <string name="search.title">Recherche</string>
     <string name="search.search">Cliquer pour rechercher</string>
     <string name="search.no_match">Aucun résultat, veuillez essayer à nouveau</string>
     <string name="search.artists">Artistes</string>
