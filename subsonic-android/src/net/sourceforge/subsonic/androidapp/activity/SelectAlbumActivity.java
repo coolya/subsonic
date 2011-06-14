@@ -160,27 +160,45 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         }
 
         // Button 1: play all
-        final ImageButton actionPlayAllButton = (ImageButton) findViewById(R.id.action_button_1);
-        actionPlayAllButton.setImageResource(R.drawable.action_play_all);
-        actionPlayAllButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton playAllButton = (ImageButton) findViewById(R.id.action_button_1);
+        playAllButton.setImageResource(R.drawable.action_play_all);
+        playAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: What to do with sub-albums here?
-                selectAll(true, false);
-                download(false, false, true);
-                selectAll(false, false);
+                playAll();
+
             }
         });
 
         // Button 2: refresh
-        final ImageButton actionRefreshButton = (ImageButton) findViewById(R.id.action_button_2);
-        actionRefreshButton.setImageResource(R.drawable.action_refresh);
-        actionRefreshButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton refreshButton = (ImageButton) findViewById(R.id.action_button_2);
+        refreshButton.setImageResource(R.drawable.action_refresh);
+        refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 refresh();
             }
         });
+    }
+
+    private void playAll() { 
+        boolean hasSubFolders = false;
+        for (int i = 0; i < entryList.getCount(); i++) {
+            MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(i);
+            if (entry != null && entry.isDirectory()) {
+                hasSubFolders = true;
+                break;
+            }
+        }
+
+        String id = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_ID);
+        if (hasSubFolders && id != null) {
+            downloadRecursively(id, false, false, true);
+        } else {
+            selectAll(true, false);
+            download(false, false, true);
+            selectAll(false, false);
+        }
     }
 
     private void refresh() {
@@ -501,9 +519,7 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
             boolean playAll = getIntent().getBooleanExtra(Constants.INTENT_EXTRA_NAME_AUTOPLAY, false);
             if (playAll && songCount > 0) {
-                selectAll(true, false);
-                download(false, false, true);
-                selectAll(false, false);
+                playAll();
             }
         }
     }

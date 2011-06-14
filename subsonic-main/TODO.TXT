@@ -44,15 +44,11 @@ When going to offline mode or switching servers, retain all items in playlists t
 TODO IN ANDROID 2.8
 -------------------
 Merge in changes from Doug.
-  Make Exit menu option work.
-  Make Play button work recursively.
-  Remove Search button from Playlist activity.
-  Add Shuffle play to SelectArtist activity.
-  Merge main trunk.
-Avoid banding.
+  Disable action bar buttons until loaded.
+  Disable Play All button in albumlist mode.
+Separate button for offline.
 Sharing support.
 Podcast support.
-
 Keep all album art in a single directory.
 Offline shuffle broken?
 Does repeat button work in landscape mode?
