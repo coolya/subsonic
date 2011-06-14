@@ -114,7 +114,7 @@ public class MainActivity extends SubsonicTabActivity {
         setTitle(R.string.common_appname);
 
         // Button 1: shuffle
-        final ImageButton actionShuffleButton = (ImageButton)findViewById(R.id.action_button_1);
+        ImageButton actionShuffleButton = (ImageButton)findViewById(R.id.action_button_1);
         actionShuffleButton.setImageResource(R.drawable.action_shuffle);
         actionShuffleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +126,7 @@ public class MainActivity extends SubsonicTabActivity {
         });
 
         // Button 2: search
-        final ImageButton actionSearchButton = (ImageButton)findViewById(R.id.action_button_2);
+        ImageButton actionSearchButton = (ImageButton)findViewById(R.id.action_button_2);
         actionSearchButton.setImageResource(R.drawable.action_search);
         actionSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
