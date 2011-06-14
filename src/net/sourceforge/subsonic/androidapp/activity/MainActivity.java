@@ -23,18 +23,17 @@ import java.util.Arrays;
 
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
+import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.MergeAdapter;
 import net.sourceforge.subsonic.androidapp.util.Util;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -58,6 +57,9 @@ public class MainActivity extends SubsonicTabActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getIntent().hasExtra(Constants.INTENT_EXTRA_NAME_EXIT)) {
+            exit();
+        }
         setContentView(R.layout.main);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
@@ -217,6 +219,11 @@ public class MainActivity extends SubsonicTabActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Util.startActivityWithoutTransition(this, intent);
+    }
+
+    private void exit() {
+        stopService(new Intent(this, DownloadServiceImpl.class));
+        finish();
     }
 
     private void showInfoDialog() {

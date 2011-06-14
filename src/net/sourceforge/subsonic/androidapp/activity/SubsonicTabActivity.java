@@ -151,8 +151,10 @@ public class SubsonicTabActivity extends Activity {
 		switch (item.getItemId()) {
 
 		case R.id.menu_exit:
-            stopService(new Intent(this, DownloadServiceImpl.class));
-            finish();
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra(Constants.INTENT_EXTRA_NAME_EXIT, true);
+            Util.startActivityWithoutTransition(this, intent);
 			return true;
 
 		case R.id.menu_settings:
