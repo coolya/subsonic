@@ -43,6 +43,7 @@
                 a:layout_alignParentTop="true"
                 a:singleLine="true"
                 a:ellipsize="end"
+                a:gravity="center_horizontal"
                 a:textAppearance="?android:attr/textAppearanceSmall"
                 a:textColor="#c0c0c0"/>
         <TextView
