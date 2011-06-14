@@ -45,7 +45,6 @@ TODO IN ANDROID 2.8
 -------------------
 Merge in changes from Doug.
   Disable action bar buttons until loaded.
-  Disable Play All button in albumlist mode.
 Separate button for offline.
 Sharing support.
 Podcast support.
