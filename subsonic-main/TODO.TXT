@@ -111,6 +111,7 @@ DONE IN 4.5
 
 TODO IN 4.5
 -----------------
+Regression test video playback.
 Sharing (facebook, twitter++)
   Test video sharing
   Add some space towards bottom of main.jsp
