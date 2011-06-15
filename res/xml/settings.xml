@@ -144,6 +144,10 @@
                 a:entryValues="@array/cacheSizeValues"
                 a:entries="@array/cacheSizeNames"/>
 
+        <EditTextPreference
+                a:title="@string/settings.cache_location"
+                a:key="cacheLocation"/>
+
         <ListPreference
                 a:title="@string/settings.preload"
                 a:key="preloadCount"

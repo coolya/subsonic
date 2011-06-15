@@ -58,7 +58,7 @@ public class OfflineMusicService extends RESTMusicService {
     @Override
     public Indexes getIndexes(String musicFolderId, boolean refresh, Context context, ProgressListener progressListener) throws Exception {
         List<Artist> artists = new ArrayList<Artist>();
-        File root = FileUtil.getMusicDirectory();
+        File root = FileUtil.getMusicDirectory(context);
         for (File file : FileUtil.listFiles(root)) {
             if (file.isDirectory()) {
                 Artist artist = new Artist();
@@ -109,7 +109,7 @@ public class OfflineMusicService extends RESTMusicService {
         entry.setId(file.getPath());
         entry.setParent(file.getParent());
         entry.setSize(file.length());
-        String root = FileUtil.getMusicDirectory().getPath();
+        String root = FileUtil.getMusicDirectory(context).getPath();
         entry.setPath(file.getPath().replaceFirst("^" + root + "/" , ""));
         if (file.isFile()) {
             entry.setArtist(file.getParentFile().getParentFile().getName());
@@ -184,7 +184,7 @@ public class OfflineMusicService extends RESTMusicService {
 
     @Override
     public MusicDirectory getRandomSongs(int size, Context context, ProgressListener progressListener) throws Exception {
-        File root = FileUtil.getMusicDirectory();
+        File root = FileUtil.getMusicDirectory(context);
         List<File> children = new LinkedList<File>();
         listFilesRecursively(root, children);
         MusicDirectory result = new MusicDirectory();

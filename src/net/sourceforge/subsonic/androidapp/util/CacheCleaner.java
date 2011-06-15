@@ -43,7 +43,7 @@ public class CacheCleaner {
             List<File> files = new ArrayList<File>();
             List<File> dirs = new ArrayList<File>();
 
-            findCandidatesForDeletion(FileUtil.getMusicDirectory(), files, dirs);
+            findCandidatesForDeletion(FileUtil.getMusicDirectory(context), files, dirs);
             sortByAscendingModificationTime(files);
 
             Set<File> undeletable = findUndeletableFiles();
@@ -141,7 +141,7 @@ public class CacheCleaner {
             undeletable.add(downloadFile.getCompleteFile());
         }
 
-        undeletable.add(FileUtil.getMusicDirectory());
+        undeletable.add(FileUtil.getMusicDirectory(context));
         return undeletable;
     }
 }
