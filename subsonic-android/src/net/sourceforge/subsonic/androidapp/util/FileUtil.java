@@ -43,7 +43,7 @@ public class FileUtil {
     private static final String[] FILE_SYSTEM_UNSAFE = {"/", "\\", "..", ":", "\"", "?", "*", "<", ">"};
     private static final String[] FILE_SYSTEM_UNSAFE_DIR = {"\\", "..", ":", "\"", "?", "*", "<", ">"};
     private static final List<String> MUSIC_FILE_EXTENSIONS = Arrays.asList("mp3", "ogg", "aac", "flac", "m4a", "wav", "wma");
-    private static final File MUSIC_DIR = createDirectory("music");
+    private static final File DEFAULT_MUSIC_DIR = createDirectory("music");
 
     public static File getSongFile(MusicDirectory.Entry song) {
         File dir = getAlbumDirectory(song);
@@ -77,11 +77,11 @@ public class FileUtil {
         File dir;
         if (entry.getPath() != null) {
             File f = new File(fileSystemSafeDir(entry.getPath()));
-            dir = new File(MUSIC_DIR.getPath() + "/" + (entry.isDirectory() ? f.getPath() : f.getParent()));
+            dir = new File(getMusicDirectory(context).getPath() + "/" + (entry.isDirectory() ? f.getPath() : f.getParent()));
         } else {
             String artist = fileSystemSafe(entry.getArtist());
             String album = fileSystemSafe(entry.getAlbum());
-            dir = new File(MUSIC_DIR.getPath() + "/" + artist + "/" + album);
+            dir = new File(getMusicDirectory(context).getPath() + "/" + artist + "/" + album);
         }
         return dir;
     }
@@ -107,8 +107,19 @@ public class FileUtil {
         return new File(Environment.getExternalStorageDirectory(), "subsonic");
     }
 
-    public static File getMusicDirectory() {
-        return MUSIC_DIR;
+    public static File getDefaultMusicDirectory() {
+        return DEFAULT_MUSIC_DIR;
+    }
+
+    public static File getMusicDirectory(Context context) {
+        // TODO
+
+        String path = Util.getPreferences(context).getString(Constants.PREFERENCES_KEY_CACHE_LOCATION, DEFAULT_MUSIC_DIR.getPath());
+        File dir = new File(path);
+
+
+        // TODO: Try to create it
+        return dir;
     }
 
     /**

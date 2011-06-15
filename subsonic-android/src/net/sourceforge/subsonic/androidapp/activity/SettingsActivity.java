@@ -51,6 +51,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     private ListPreference maxBitrateWifi;
     private ListPreference maxBitrateMobile;
     private ListPreference cacheSize;
+    private EditTextPreference cacheLocation;
     private ListPreference preloadCount;
 
     @Override
@@ -62,6 +63,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         maxBitrateWifi = (ListPreference) findPreference(Constants.PREFERENCES_KEY_MAX_BITRATE_WIFI);
         maxBitrateMobile = (ListPreference) findPreference(Constants.PREFERENCES_KEY_MAX_BITRATE_MOBILE);
         cacheSize = (ListPreference) findPreference(Constants.PREFERENCES_KEY_CACHE_SIZE);
+        cacheLocation = (EditTextPreference) findPreference(Constants.PREFERENCES_KEY_CACHE_LOCATION);
         preloadCount = (ListPreference) findPreference(Constants.PREFERENCES_KEY_PRELOAD_COUNT);
 
         findPreference("testConnection1").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -139,6 +141,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         maxBitrateWifi.setSummary(maxBitrateWifi.getEntry());
         maxBitrateMobile.setSummary(maxBitrateMobile.getEntry());
         cacheSize.setSummary(cacheSize.getEntry());
+        cacheLocation.setSummary(cacheLocation.getText());
         preloadCount.setSummary(preloadCount.getEntry());
         for (ServerSettings ss : serverSettings.values()) {
             ss.update();

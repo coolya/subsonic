@@ -27,7 +27,9 @@ import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.util.Constants;
 import net.sourceforge.subsonic.androidapp.util.MergeAdapter;
 import net.sourceforge.subsonic.androidapp.util.Util;
+import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.ContextMenu;
@@ -62,7 +64,7 @@ public class MainActivity extends SubsonicTabActivity {
         }
         setContentView(R.layout.main);
 
-        PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+        loadSettings();
 
         View buttons = LayoutInflater.from(this).inflate(R.layout.main_buttons, null);
 
@@ -143,6 +145,16 @@ public class MainActivity extends SubsonicTabActivity {
         theme = Util.getTheme(this);
 
         showInfoDialog();
+    }
+
+    private void loadSettings() {
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+        SharedPreferences prefs = Util.getPreferences(this);
+        if (!prefs.contains(Constants.PREFERENCES_KEY_CACHE_LOCATION)) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString(Constants.PREFERENCES_KEY_CACHE_LOCATION, FileUtil.getDefaultMusicDirectory().getPath());
+            editor.commit();
+        }
     }
 
     @Override

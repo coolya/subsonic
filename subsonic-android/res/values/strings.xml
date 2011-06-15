@@ -109,9 +109,10 @@
     <string name="settings.server_address">Server address</string>
     <string name="settings.server_username">Username</string>
     <string name="settings.server_password">Password</string>
-    <string name="settings.cache_title">Media cache</string>
+    <string name="settings.cache_title">Offline media</string>
     <string name="settings.preload">Songs to preload</string>
     <string name="settings.cache_size">Cache size</string>
+    <string name="settings.cache_location">Cache location</string>
     <string name="settings.testing_connection">Testing connection...</string>
     <string name="settings.testing_ok">Connection is OK</string>
     <string name="settings.testing_unlicensed">Connection is OK. Server unlicensed.</string>

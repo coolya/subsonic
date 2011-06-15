@@ -28,21 +28,12 @@ Add .divx
 Select inital bitrate based on network type.
 Buy new JW license
 
-DONE IN ANDROID 2.8
+DONE IN ANDROID 2.9
 --------------------
-Use HTTP POST instead of GET.
-Handle colons in paths.
-  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=4137
-Remember repeat mode
-  https://mail.google.com/mail/?shva=1#inbox/1301dfb08775df81
-Run cache cleaning after downloading a song.
-Add 192, 256kbps downsampling option.
-Position/duration overwritten by long song title.
-Remove option to save playlist when in offline mode.
-When going to offline mode or switching servers, retain all items in playlists that are present offline.
 
-TODO IN ANDROID 2.8
+TODO IN ANDROID 2.9
 -------------------
+Poor quality for generic album art.
 Enable honeycomb actionbar
 Access other music on phone.
   Make it possible to select multiple root folders.
@@ -69,7 +60,7 @@ Offline media
 
   Songs to preload
   3 songs
-    
+
 Change font?
 Sharing support.
 Podcast support.
@@ -695,11 +686,11 @@ Update
     https://myapps.developer.motorola.com/
     https://slideme.org/application/subsonic
     http://www.camangimarket.com/index.html
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-2.7 -m "Tagging Android 2.7"
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-2.8 -m "Tagging Android 2.8"
 Create new directory in FRS
   https://sourceforge.net/projects/subsonic/files/android/
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/2.6/subsonic-2.6.apk
+  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/2.8/subsonic-2.8.apk
 
 
 HOW TO RELEASE TRANSCODING PACK
