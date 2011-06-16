@@ -144,9 +144,9 @@
                 a:entryValues="@array/cacheSizeValues"
                 a:entries="@array/cacheSizeNames"/>
 
-        <!--<EditTextPreference-->
-                <!--a:title="@string/settings.cache_location"-->
-                <!--a:key="cacheLocation"/>-->
+        <EditTextPreference
+                a:title="@string/settings.cache_location"
+                a:key="cacheLocation"/>
 
         <ListPreference
                 a:title="@string/settings.preload"
@@ -154,11 +154,6 @@
                 a:defaultValue="3"
                 a:entryValues="@array/preloadCountValues"
                 a:entries="@array/preloadCountNames"/>
-
-        <Preference
-                a:key="clearSearchHistory"
-                a:title="@string/settings.clear_search_history"
-                a:persistent="false"/>
 
     </PreferenceCategory>
 
@@ -188,6 +183,11 @@
                 a:summary="@string/settings.screen_lit_summary"
                 a:key="screenLitOnDownload"
                 a:defaultValue="false"/>
+
+        <Preference
+                a:key="clearSearchHistory"
+                a:title="@string/settings.clear_search_history"
+                a:persistent="false"/>
 
     </PreferenceCategory>
 

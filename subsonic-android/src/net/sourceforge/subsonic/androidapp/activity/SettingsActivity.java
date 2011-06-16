@@ -34,6 +34,8 @@ import android.provider.SearchRecentSuggestions;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.provider.SearchSuggestionProvider;
+import net.sourceforge.subsonic.androidapp.service.DownloadService;
+import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.Constants;
@@ -125,10 +127,13 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         update();
 
         if (Constants.PREFERENCES_KEY_HIDE_MEDIA.equals(key)) {
-            setHideMedia(sharedPreferences.getBoolean(Constants.PREFERENCES_KEY_HIDE_MEDIA, false));
+            setHideMedia(sharedPreferences.getBoolean(key, false));
         }
         else if (Constants.PREFERENCES_KEY_MEDIA_BUTTONS.equals(key)) {
-            setMediaButtonsEnabled(sharedPreferences.getBoolean(Constants.PREFERENCES_KEY_MEDIA_BUTTONS, true));
+            setMediaButtonsEnabled(sharedPreferences.getBoolean(key, true));
+        }
+        else if (Constants.PREFERENCES_KEY_CACHE_LOCATION.equals(key)) {
+            setCacheLocation(sharedPreferences.getString(key, ""));
         }
     }
 
@@ -141,8 +146,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         maxBitrateWifi.setSummary(maxBitrateWifi.getEntry());
         maxBitrateMobile.setSummary(maxBitrateMobile.getEntry());
         cacheSize.setSummary(cacheSize.getEntry());
-        // TODO
-//        cacheLocation.setSummary(cacheLocation.getText());
+        cacheLocation.setSummary(cacheLocation.getText());
         preloadCount.setSummary(preloadCount.getEntry());
         for (ServerSettings ss : serverSettings.values()) {
             ss.update();
@@ -168,6 +172,28 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             Util.registerMediaButtonEventReceiver(this);
         } else {
             Util.unregisterMediaButtonEventReceiver(this);
+        }
+    }
+
+    private void setCacheLocation(String path) {
+        File dir = new File(path);
+        if (!FileUtil.ensureDirectoryExistsAndIsReadWritable(dir)) {
+            Util.toast(this, R.string.settings_cache_location_error, false);
+
+            // Reset it to the default.
+            String defaultPath = FileUtil.getDefaultMusicDirectory().getPath();
+            if (!defaultPath.equals(path)) {
+                SharedPreferences prefs = Util.getPreferences(this);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString(Constants.PREFERENCES_KEY_CACHE_LOCATION, defaultPath);
+                editor.commit();
+                cacheLocation.setSummary(defaultPath);
+                cacheLocation.setText(defaultPath);
+            }
+
+            // Clear download queue.
+            DownloadService downloadService = DownloadServiceImpl.getInstance();
+            downloadService.clear();
         }
     }
 

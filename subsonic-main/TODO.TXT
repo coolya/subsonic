@@ -30,6 +30,7 @@ Buy new JW license
 
 DONE IN ANDROID 2.9
 --------------------
+Can now specify directory for offline music.
 
 TODO IN ANDROID 2.9
 -------------------
