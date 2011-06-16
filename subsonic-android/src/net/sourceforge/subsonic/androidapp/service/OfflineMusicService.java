@@ -83,7 +83,7 @@ public class OfflineMusicService extends RESTMusicService {
             String name = getName(file);
             if (name != null & !names.contains(name)) {
                 names.add(name);
-                result.addChild(createEntry(file, name));
+                result.addChild(createEntry(context, file, name));
             }
         }
         return result;
@@ -103,7 +103,7 @@ public class OfflineMusicService extends RESTMusicService {
         return FileUtil.getBaseName(name);
     }
 
-    private MusicDirectory.Entry createEntry(File file, String name) {
+    private MusicDirectory.Entry createEntry(Context context, File file, String name) {
         MusicDirectory.Entry entry = new MusicDirectory.Entry();
         entry.setDirectory(file.isDirectory());
         entry.setId(file.getPath());
@@ -118,7 +118,7 @@ public class OfflineMusicService extends RESTMusicService {
         entry.setTitle(name);
         entry.setSuffix(FileUtil.getExtension(file.getName().replace(".complete", "")));
 
-        File albumArt = FileUtil.getAlbumArtFile(entry);
+        File albumArt = FileUtil.getAlbumArtFile(context, entry);
         if (albumArt.exists()) {
             entry.setCoverArt(albumArt.getPath());
         }
@@ -195,7 +195,7 @@ public class OfflineMusicService extends RESTMusicService {
         Random random = new Random();
         for (int i = 0; i < size; i++) {
             File file = children.get(random.nextInt(children.size()));
-            result.addChild(createEntry(file, getName(file)));
+            result.addChild(createEntry(context, file, getName(file)));
         }
 
         return result;

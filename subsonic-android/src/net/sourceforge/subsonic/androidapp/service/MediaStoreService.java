@@ -94,7 +94,7 @@ public class MediaStoreService {
         if (!cursor.moveToFirst()) {
 
             // No album art found, add it.
-            File albumArtFile = FileUtil.getAlbumArtFile(downloadFile.getSong());
+            File albumArtFile = FileUtil.getAlbumArtFile(context, downloadFile.getSong());
             if (albumArtFile.exists()) {
                 ContentValues values = new ContentValues();
                 values.put(MediaStore.Audio.AlbumColumns.ALBUM_ID, albumId);

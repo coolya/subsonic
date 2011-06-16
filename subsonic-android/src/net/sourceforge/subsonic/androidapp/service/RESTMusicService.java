@@ -421,7 +421,7 @@ public class RESTMusicService implements MusicService {
         synchronized (entry) {
 
             // Use cached file, if existing.
-            File albumArtFile = FileUtil.getAlbumArtFile(entry);
+            File albumArtFile = FileUtil.getAlbumArtFile(context, entry);
             if (albumArtFile.exists()) {
 
                 InputStream in = new FileInputStream(albumArtFile);
