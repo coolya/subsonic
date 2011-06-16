@@ -573,11 +573,11 @@ public class RESTMusicService implements MusicService {
             parameterValues = null;
         }
 
-        url = rewriteUrlWithRedirect(context, url);
-        return executeWithRetry(context, url, requestParams, parameterNames, parameterValues, headers, progressListener, task);
+        String rewrittenUrl = rewriteUrlWithRedirect(context, url);
+        return executeWithRetry(context, rewrittenUrl, url, requestParams, parameterNames, parameterValues, headers, progressListener, task);
     }
 
-    private HttpResponse executeWithRetry(Context context, String url, HttpParams requestParams,
+    private HttpResponse executeWithRetry(Context context, String url, String originalUrl, HttpParams requestParams,
                                           List<String> parameterNames, List<Object> parameterValues,
                                           List<Header> headers, ProgressListener progressListener, CancellableTask task) throws IOException {
         Log.i(TAG, "Using URL " + url);
@@ -621,7 +621,7 @@ public class RESTMusicService implements MusicService {
 
             try {
                 HttpResponse response = httpClient.execute(request, httpContext);
-                detectRedirect(url, context, httpContext);
+                detectRedirect(originalUrl, context, httpContext);
                 return response;
             } catch (IOException x) {
                 request.abort();
@@ -653,10 +653,6 @@ public class RESTMusicService implements MusicService {
     }
 
     private void detectRedirect(String originalUrl, Context context, HttpContext httpContext) {
-        if (!originalUrl.contains(".subsonic.org")) {
-            return;
-        }
-
         HttpUriRequest request = (HttpUriRequest) httpContext.getAttribute(ExecutionContext.HTTP_REQUEST);
         HttpHost host = (HttpHost) httpContext.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
         String redirectedUrl = host.toURI() + request.getURI();
@@ -670,12 +666,6 @@ public class RESTMusicService implements MusicService {
     }
 
     private String rewriteUrlWithRedirect(Context context, String url) {
-
-        // Is it a subsonic.org address?
-        int index = url.indexOf(".subsonic.org");
-        if (index <= 0) {
-            return url;
-        }
 
         // Only cache for a certain time.
         if (System.currentTimeMillis() - redirectionLastChecked > REDIRECTION_CHECK_INTERVAL_MILLIS) {
