@@ -783,7 +783,7 @@ public final class Util {
     		intent.putExtra("artist", song.getArtist());
     		intent.putExtra("album", song.getAlbum());
 
-            File albumArtFile = FileUtil.getAlbumArtFile(song);
+            File albumArtFile = FileUtil.getAlbumArtFile(context, song);
     		intent.putExtra("coverart", albumArtFile.getAbsolutePath());
 		} else {
     		intent.putExtra("title", "");

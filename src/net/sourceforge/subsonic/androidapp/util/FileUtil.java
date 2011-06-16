@@ -45,8 +45,8 @@ public class FileUtil {
     private static final List<String> MUSIC_FILE_EXTENSIONS = Arrays.asList("mp3", "ogg", "aac", "flac", "m4a", "wav", "wma");
     private static final File DEFAULT_MUSIC_DIR = createDirectory("music");
 
-    public static File getSongFile(MusicDirectory.Entry song) {
-        File dir = getAlbumDirectory(song);
+    public static File getSongFile(Context context, MusicDirectory.Entry song) {
+        File dir = getAlbumDirectory(context, song);
 
         StringBuilder fileName = new StringBuilder();
         Integer track = song.getTrack();
@@ -68,12 +68,12 @@ public class FileUtil {
         return new File(dir, fileName.toString());
     }
 
-    public static File getAlbumArtFile(MusicDirectory.Entry entry) {
-        File dir = getAlbumDirectory(entry);
+    public static File getAlbumArtFile(Context context, MusicDirectory.Entry entry) {
+        File dir = getAlbumDirectory(context, entry);
         return new File(dir, Constants.ALBUM_ART_FILE);
     }
 
-    private static File getAlbumDirectory(MusicDirectory.Entry entry) {
+    private static File getAlbumDirectory(Context context, MusicDirectory.Entry entry) {
         File dir;
         if (entry.getPath() != null) {
             File f = new File(fileSystemSafeDir(entry.getPath()));
@@ -112,14 +112,14 @@ public class FileUtil {
     }
 
     public static File getMusicDirectory(Context context) {
+        return getDefaultMusicDirectory();
+
         // TODO
 
-        String path = Util.getPreferences(context).getString(Constants.PREFERENCES_KEY_CACHE_LOCATION, DEFAULT_MUSIC_DIR.getPath());
-        File dir = new File(path);
-
-
+//        String path = Util.getPreferences(context).getString(Constants.PREFERENCES_KEY_CACHE_LOCATION, DEFAULT_MUSIC_DIR.getPath());
+//        File dir = new File(path);
         // TODO: Try to create it
-        return dir;
+//        return dir;
     }
 
     /**

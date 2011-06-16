@@ -60,7 +60,7 @@ public class DownloadFile {
         this.context = context;
         this.song = song;
         this.save = save;
-        saveFile = FileUtil.getSongFile(song);
+        saveFile = FileUtil.getSongFile(context, song);
         bitrate = Util.getMaxBitrate(context);
         partialFile = new File(saveFile.getParent(), FileUtil.getBaseName(saveFile.getName()) +
                 "." + bitrate + ".partial." + FileUtil.getExtension(saveFile.getName()));
