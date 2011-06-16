@@ -112,23 +112,49 @@ public class FileUtil {
     }
 
     public static File getMusicDirectory(Context context) {
-        return getDefaultMusicDirectory();
+        String path = Util.getPreferences(context).getString(Constants.PREFERENCES_KEY_CACHE_LOCATION, DEFAULT_MUSIC_DIR.getPath());
+        File dir = new File(path);
+        return ensureDirectoryExistsAndIsReadWritable(dir) ? dir : getDefaultMusicDirectory();
+    }
 
-        // TODO
+    public static boolean ensureDirectoryExistsAndIsReadWritable(File dir) {
+        if (dir == null) {
+            return false;
+        }
 
-//        String path = Util.getPreferences(context).getString(Constants.PREFERENCES_KEY_CACHE_LOCATION, DEFAULT_MUSIC_DIR.getPath());
-//        File dir = new File(path);
-        // TODO: Try to create it
-//        return dir;
+        if (dir.exists()) {
+            if (!dir.isDirectory()) {
+                Log.w(TAG, dir + " exists but is not a directory.");
+                return false;
+            }
+        } else {
+            if (dir.mkdirs()) {
+                Log.i(TAG, "Created directory " + dir);
+            } else {
+                Log.w(TAG, "Failed to create directory " + dir);
+                return false;
+            }
+        }
+
+        if (!dir.canRead()) {
+            Log.w(TAG, "No read permission for directory " + dir);
+            return false;
+        }
+
+        if (!dir.canWrite()) {
+            Log.w(TAG, "No write permission for directory " + dir);
+            return false;
+        }
+        return true;
     }
 
     /**
-     * Makes a given filename safe by replacing special characters like slashes ("/" and "\")
-     * with dashes ("-").
-     *
-     * @param filename The filename in question.
-     * @return The filename with special characters replaced by hyphens.
-     */
+    * Makes a given filename safe by replacing special characters like slashes ("/" and "\")
+    * with dashes ("-").
+    *
+    * @param filename The filename in question.
+    * @return The filename with special characters replaced by hyphens.
+    */
     private static String fileSystemSafe(String filename) {
         if (filename == null || filename.trim().length() == 0) {
             return "unnamed";
