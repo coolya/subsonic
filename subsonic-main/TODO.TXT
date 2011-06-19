@@ -131,6 +131,9 @@ DONE IN 4.5
 
 TODO IN 4.5
 -----------------
+More actions -> Download
+More actions -> Add to playlist
+New rest methods.
 Hide log for non-admin users?
 ffmpeg processes not stopped in opera.
 Regression test video playback.
@@ -139,9 +142,6 @@ Sharing (facebook, twitter++)
   Add some space towards bottom of main.jsp
   todos in externalplayer.jsp
   Make it work if no songs are selected
-  http://www.kimwoodbridge.com/how-to-create-your-one-facebook-share-url/
-  http://developers.facebook.com/docs/opengraph/
-  http://dev.twitter.com/pages/tweet_button
   https://mail.google.com/a/activeobjects.no/#inbox/12ded75e94256283
 Write hosting.jsp
 Add "append" parameter to createPlaylist REST method. (or create appendPlaylist method)

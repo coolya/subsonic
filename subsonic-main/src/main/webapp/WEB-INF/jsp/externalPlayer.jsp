@@ -13,13 +13,9 @@
         </c:if>
     </sub:url>
 
-    <%--todo--%>
     <meta name="og:title" content="${fn:escapeXml(model.songs[0].metaData.artist)} &mdash; ${fn:escapeXml(model.songs[0].metaData.album)}"/>
-    <%--<meta property="og:description" content="Electra at JPS Bristol 22nd October, 2010" />--%>
     <meta name="og:type" content="album"/>
     <meta name="og:image" content="http://${model.redirectFrom}.subsonic.org/${coverArtUrl}&size=200"/>
-
-    <%-- TODO: stretching--%>
 
     <script type="text/javascript">
         function init() {
