@@ -132,6 +132,7 @@ DONE IN 4.5
 TODO IN 4.5
 -----------------
 Hide log for non-admin users?
+ffmpeg processes not stopped in opera.
 Regression test video playback.
 Sharing (facebook, twitter++)
   Test video sharing
@@ -143,7 +144,6 @@ Sharing (facebook, twitter++)
   http://dev.twitter.com/pages/tweet_button
   https://mail.google.com/a/activeobjects.no/#inbox/12ded75e94256283
 Write hosting.jsp
-Canaca ads.
 Add "append" parameter to createPlaylist REST method. (or create appendPlaylist method)
 Handle non-square cover art
   https://mail.google.com/a/activeobjects.no/#inbox/12debb505054d33a

@@ -39,7 +39,8 @@
     function getSelectedIndexes() {
         var result = "";
         for (var i = 0; i < ${fn:length(model.children)}; i++) {
-            if ($("songIndex" + i).checked) {
+            var checkbox = $("songIndex" + i);
+            if (checkbox != null  && checkbox.checked) {
                 result += "i=" + i + "&";
             }
         }

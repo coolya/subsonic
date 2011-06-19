@@ -15,7 +15,7 @@
 
     <%--todo--%>
     <meta name="og:title" content="${fn:escapeXml(model.songs[0].metaData.artist)} &mdash; ${fn:escapeXml(model.songs[0].metaData.album)}"/>
-    <%--<meta property="og:description" content="Electra at JPS Bristol 22nd October, 2010" />--%> 
+    <%--<meta property="og:description" content="Electra at JPS Bristol 22nd October, 2010" />--%>
     <meta name="og:type" content="album"/>
     <meta name="og:image" content="http://${model.redirectFrom}.subsonic.org/${coverArtUrl}&size=200"/>
 
@@ -40,7 +40,7 @@
                 id:"player1",
                 name:"player1"
             };
-            swfobject.embedSWF("<c:url value="/flash/jw-player-5.4.swf"/>", "placeholder", "500", "500", "9.0.0", false, flashvars, params, attributes);
+            swfobject.embedSWF("<c:url value="/flash/jw-player-5.6.swf"/>", "placeholder", "500", "500", "9.0.0", false, flashvars, params, attributes);
         }
 
         function playerReady(thePlayer) {
