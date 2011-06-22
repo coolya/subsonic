@@ -1,0 +1,11 @@
+diff -rupN ../../../android-release-2.8/src/net/sourceforge/subsonic/androidapp/activity/DownloadActivity.java ./src/net/sourceforge/subsonic/androidapp/activity/DownloadActivity.java
+--- ../../../android-release-2.8/src/net/sourceforge/subsonic/androidapp/activity/DownloadActivity.java	2011-06-16 11:33:43.000000000 -0700
++++ ./src/net/sourceforge/subsonic/androidapp/activity/DownloadActivity.java	2011-06-17 10:40:40.000000000 -0700
+@@ -483,6 +483,7 @@ public class DownloadActivity extends Su
+     }
+ 
+     private void toggleFullscreenAlbumArt() {
++    	scrollToCurrent();
+         if (playlistFlipper.getDisplayedChild() == 1) {
+             playlistFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_in));
+             playlistFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_out));
