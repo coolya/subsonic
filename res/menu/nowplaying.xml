@@ -21,7 +21,7 @@
 
     <item
         a:id="@+id/menu_screen_on_off"
-        a:icon="@drawable/ic_menu_screen_option"
+        a:icon="@drawable/ic_menu_screen_on_off"
         a:title="@string/download.menu_screen_on"
         />
 </menu>
