@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Collections;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.app.Service;
 import android.content.Context;
@@ -80,6 +79,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private static DownloadService instance;
     private String suggestedPlaylistName;
     private PowerManager.WakeLock wakeLock;
+    private boolean keepScreenOn = false;
 
     @Override
     public void onCreate() {
@@ -129,18 +129,30 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     @Override
-    public synchronized void download(List<MusicDirectory.Entry> songs, boolean save, boolean autoplay) {
+    public synchronized void download(List<MusicDirectory.Entry> songs, boolean save, boolean autoplay, boolean playNext) {
         shufflePlay = false;
+        int offset = 1;
 
         if (songs.isEmpty()) {
             return;
         }
-
-        for (MusicDirectory.Entry song : songs) {
-            DownloadFile downloadFile = new DownloadFile(this, song, save);
-            downloadList.add(downloadFile);
+        if (playNext) {
+            if (autoplay && getCurrentPlayingIndex() >= 0) {
+                offset = 0;
+            }
+            for (MusicDirectory.Entry song : songs) {
+                DownloadFile downloadFile = new DownloadFile(this, song, save);
+                downloadList.add(getCurrentPlayingIndex() + offset, downloadFile);
+                offset++;
+            }
+            revision++;
+        } else {
+            for (MusicDirectory.Entry song : songs) {
+                DownloadFile downloadFile = new DownloadFile(this, song, save);
+                downloadList.add(downloadFile);
+            }
+            revision++;
         }
-        revision++;
 
         if (autoplay) {
             play(0);
@@ -154,7 +166,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     }
 
     public void restore(List<MusicDirectory.Entry> songs, int currentPlayingIndex, int currentPlayingPosition) {
-        download(songs, false, false);
+        download(songs, false, false, false);
         if (currentPlayingIndex != -1) {
             play(currentPlayingIndex, false);
             if (currentPlaying.isCompleteFileAvailable()) {
@@ -200,6 +212,16 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     @Override
     public void setRepeatMode(RepeatMode repeatMode) {
         Util.setRepeatMode(this, repeatMode);
+    }
+
+    @Override
+    public boolean getKeepScreenOn() {
+    	return keepScreenOn;
+    }
+
+    @Override
+    public void setKeepScreenOn(boolean keepScreenOn) {
+    	this.keepScreenOn = keepScreenOn;
     }
 
     @Override
