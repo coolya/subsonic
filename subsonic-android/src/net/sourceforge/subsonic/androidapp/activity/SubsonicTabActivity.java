@@ -287,7 +287,7 @@ public class SubsonicTabActivity extends Activity {
                         downloadService.clear();
                     }
                     warnIfNetworkOrStorageUnavailable();
-                    downloadService.download(songs, save, autoplay);
+                    downloadService.download(songs, save, autoplay, false);
                     Util.startActivityWithoutTransition(SubsonicTabActivity.this, DownloadActivity.class);
                 }
             }

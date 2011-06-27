@@ -30,7 +30,7 @@ import java.util.List;
  */
 public interface DownloadService {
 
-    void download(List<MusicDirectory.Entry> songs, boolean save, boolean autoplay);
+    void download(List<MusicDirectory.Entry> songs, boolean save, boolean autoplay, boolean playNext);
 
     void setShufflePlayEnabled(boolean enabled);
 
@@ -41,6 +41,10 @@ public interface DownloadService {
     RepeatMode getRepeatMode();
 
     void setRepeatMode(RepeatMode repeatMode);
+
+    boolean getKeepScreenOn();
+
+    void setKeepScreenOn(boolean screenOn);
 
     void clear();
 

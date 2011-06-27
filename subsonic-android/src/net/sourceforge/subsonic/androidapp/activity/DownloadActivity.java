@@ -31,13 +31,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.ContextMenu;
+import android.view.Display;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -52,7 +56,6 @@ import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
-import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 import net.sourceforge.subsonic.androidapp.service.MusicService;
 import net.sourceforge.subsonic.androidapp.service.MusicServiceFactory;
 import net.sourceforge.subsonic.androidapp.util.Constants;
@@ -63,18 +66,10 @@ import net.sourceforge.subsonic.androidapp.util.Util;
 
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 
-public class DownloadActivity extends SubsonicTabActivity {
-
-	/*
-    private static final int MENU_ITEM_SHOW_ALBUM = 1;
-    private static final int MENU_ITEM_LYRICS = 2;
-    private static final int MENU_ITEM_REMOVE = 3;
-    private static final int MENU_ITEM_REMOVE_ALL = 4;
-    private static final int MENU_ITEM_SHUFFLE = 5;
-    private static final int MENU_ITEM_SAVE_PLAYLIST = 6;
-    */
+public class DownloadActivity extends SubsonicTabActivity implements OnGestureListener {
 
     private static final int DIALOG_SAVE_PLAYLIST = 100;
+    private static final int PERCENTAGE_OF_SCREEN_FOR_SWIPE = 5;
 
     private ViewFlipper playlistFlipper;
     private ViewFlipper buttonBarFlipper;
@@ -100,6 +95,9 @@ public class DownloadActivity extends SubsonicTabActivity {
     private DownloadFile currentPlaying;
     private long currentRevision;
     private EditText playlistNameView;
+    private GestureDetector gestureScanner;
+    private int swipeDistance;
+    private int swipeVelocity;
 
     /**
      * Called when the activity is first created.
@@ -108,6 +106,12 @@ public class DownloadActivity extends SubsonicTabActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.download);
+
+        WindowManager w = getWindowManager();
+        Display d = w.getDefaultDisplay();
+        swipeDistance = (d.getWidth() + d.getHeight()) * PERCENTAGE_OF_SCREEN_FOR_SWIPE / 100;
+        swipeVelocity = (d.getWidth() + d.getHeight()) * PERCENTAGE_OF_SCREEN_FOR_SWIPE / 100;
+        gestureScanner = new GestureDetector(this);
 
         playlistFlipper = (ViewFlipper) findViewById(R.id.download_playlist_flipper);
         buttonBarFlipper = (ViewFlipper) findViewById(R.id.download_button_bar_flipper);
@@ -129,6 +133,20 @@ public class DownloadActivity extends SubsonicTabActivity {
         shuffleButton = findViewById(R.id.download_shuffle);
         repeatButton = (ImageButton) findViewById(R.id.download_repeat);
         toggleListButton = findViewById(R.id.download_toggle_list);
+
+        View.OnTouchListener touchListener = new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent me) {
+                return gestureScanner.onTouchEvent(me);
+            }
+        };
+        previousButton.setOnTouchListener(touchListener);
+        nextButton.setOnTouchListener(touchListener);
+        pauseButton.setOnTouchListener(touchListener);
+        stopButton.setOnTouchListener(touchListener);
+        startButton.setOnTouchListener(touchListener);
+        buttonBarFlipper.setOnTouchListener(touchListener);
+        emptyTextView.setOnTouchListener(touchListener);
+        albumArtImageView.setOnTouchListener(touchListener);
 
         albumArtImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,6 +282,11 @@ public class DownloadActivity extends SubsonicTabActivity {
         onCurrentChanged();
         onProgressChanged();
         scrollToCurrent();
+        if (getDownloadService().getKeepScreenOn()) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        } else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
     }
 
     // Scroll to current playing/downloading.
@@ -351,6 +374,12 @@ public class DownloadActivity extends SubsonicTabActivity {
         boolean savePlaylistEnabled = !Util.isOffline(this);
         savePlaylist.setEnabled(savePlaylistEnabled);
         savePlaylist.setVisible(savePlaylistEnabled);
+        MenuItem screenOption = menu.findItem(R.id.menu_screen_on_off);
+        if (getDownloadService().getKeepScreenOn()) {
+        	screenOption.setTitle(R.string.download_menu_screen_off);
+        } else {
+        	screenOption.setTitle(R.string.download_menu_screen_on);
+        }
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -363,7 +392,7 @@ public class DownloadActivity extends SubsonicTabActivity {
 
             MenuInflater inflater = getMenuInflater();
     		inflater.inflate(R.menu.nowplaying_context, menu);
-            
+
             if (downloadFile.getSong().getParent() == null) {
             	menu.findItem(R.id.menu_show_album).setVisible(false);
             }
@@ -408,6 +437,15 @@ public class DownloadActivity extends SubsonicTabActivity {
                 getDownloadService().setShufflePlayEnabled(false);
                 getDownloadService().clear();
                 onDownloadListChanged();
+                return true;
+            case R.id.menu_screen_on_off:
+                if (getDownloadService().getKeepScreenOn()) {
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            		getDownloadService().setKeepScreenOn(false);
+            	} else {
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            		getDownloadService().setKeepScreenOn(true);
+            	}
                 return true;
             case R.id.menu_shuffle:
                 getDownloadService().shuffle();
@@ -466,6 +504,7 @@ public class DownloadActivity extends SubsonicTabActivity {
     }
 
     private void toggleFullscreenAlbumArt() {
+    	scrollToCurrent();
         if (playlistFlipper.getDisplayedChild() == 1) {
             playlistFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_in));
             playlistFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_down_out));
@@ -632,4 +671,56 @@ public class DownloadActivity extends SubsonicTabActivity {
             return view;
         }
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent me) {
+        return gestureScanner.onTouchEvent(me);
+    }
+
+	@Override
+	public boolean onDown(MotionEvent me) {
+		return false;
+	}
+
+	@Override
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+		// Right to Left swipe
+		if (e1.getX() - e2.getX() > swipeDistance && Math.abs(velocityX) > swipeVelocity) {
+            warnIfNetworkOrStorageUnavailable();
+            getDownloadService().previous();
+            onCurrentChanged();
+            onProgressChanged();
+			return true;
+		}
+		// Left to Right swipe
+        if (e2.getX() - e1.getX() > swipeDistance && Math.abs(velocityX) > swipeVelocity) {
+            warnIfNetworkOrStorageUnavailable();
+            if (getDownloadService().getCurrentPlayingIndex() < getDownloadService().size() - 1) {
+                getDownloadService().next();
+                onCurrentChanged();
+                onProgressChanged();
+            }
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public void onLongPress(MotionEvent e) {
+	}
+
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+		return false;
+	}
+
+	@Override
+	public void onShowPress(MotionEvent e) {
+	}
+
+	@Override
+	public boolean onSingleTapUp(MotionEvent e) {
+		return false;
+	}
 }
