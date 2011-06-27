@@ -106,7 +106,23 @@
         <xs:attribute name="bitRate" type="xs:int" use="optional"/>
         <xs:attribute name="path" type="xs:string" use="optional"/>
         <xs:attribute name="isVideo" type="xs:boolean" use="optional"/>  <!-- Added in 1.4.1 -->
+        <xs:attribute name="userRating" type="sub:UserRating" use="optional"/>  <!-- Added in 1.6.0 -->
+        <xs:attribute name="averageRating" type="sub:AverageRating" use="optional"/>  <!-- Added in 1.6.0 -->
     </xs:complexType>
+
+    <xs:simpleType name="UserRating">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="5"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="AverageRating">
+        <xs:restriction base="xs:double">
+            <xs:minInclusive value="1.0"/>
+            <xs:maxInclusive value="5.0"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="NowPlaying">
         <xs:sequence>

@@ -62,6 +62,7 @@ import net.sourceforge.subsonic.domain.PodcastChannel;
 import net.sourceforge.subsonic.domain.PodcastEpisode;
 import net.sourceforge.subsonic.service.JukeboxService;
 import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.MusicInfoService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.PlaylistService;
 import net.sourceforge.subsonic.service.SearchService;
@@ -111,6 +112,7 @@ public class RESTController extends MultiActionController {
     private JukeboxService jukeboxService;
     private AudioScrobblerService audioScrobblerService;
     private PodcastService podcastService;
+    private MusicInfoService musicInfoService;
 
     public void ping(HttpServletRequest request, HttpServletResponse response) throws Exception {
         XMLBuilder builder = createXMLBuilder(request, response, true).endAll();
@@ -629,6 +631,18 @@ public class RESTController extends MultiActionController {
         attributes.add("title", musicFile.getTitle());
         attributes.add("isDir", musicFile.isDirectory());
 
+        String username = player.getUsername();
+        if (username != null) {
+            Integer rating = musicInfoService.getRatingForUser(username, musicFile);
+            if (rating != null) {
+                attributes.add("userRating", rating);
+            }
+            Double avgRating = musicInfoService.getAverageRating(musicFile);
+            if (avgRating != null) {
+                attributes.add("averageRating", avgRating);
+            }
+        }
+
         if (musicFile.isFile()) {
             MusicFile.MetaData metaData = musicFile.getMetaData();
             attributes.add("album", metaData.getAlbum());
@@ -1090,6 +1104,26 @@ public class RESTController extends MultiActionController {
         response.getWriter().print(builder);
     }
 
+    public void setRating(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+        try {
+            Integer rating = ServletRequestUtils.getRequiredIntParameter(request, "rating");
+            if (rating == 0) {
+                rating = null;
+            }
+
+            String path = StringUtil.utf8HexDecode(ServletRequestUtils.getRequiredStringParameter(request, "id"));
+            MusicFile musicFile = musicFileService.getMusicFile(path);
+            String username = securityService.getCurrentUsername(request);
+            musicInfoService.setRatingForUser(username, musicFile, rating);
+
+            XMLBuilder builder = createXMLBuilder(request, response, true).endAll();
+            response.getWriter().print(builder);
+        } catch (ServletRequestBindingException x) {
+            error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+        }
+    }
+
     private HttpServletRequest wrapRequest(HttpServletRequest request) {
         return wrapRequest(request, false);
     }
@@ -1258,6 +1292,10 @@ public class RESTController extends MultiActionController {
 
     public void setShareController(ShareController shareController) {
         this.shareController = shareController;
+    }
+
+    public void setMusicInfoService(MusicInfoService musicInfoService) {
+        this.musicInfoService = musicInfoService;
     }
 
     public static enum ErrorCode {

@@ -152,6 +152,10 @@ public class MusicFileInfoDao extends AbstractDao {
      * @param rating    The rating between 1 and 5, or <code>null</code> to remove the rating.
      */
     public void setRatingForUser(String username, MusicFile musicFile, Integer rating) {
+        if (rating != null && (rating < 1 || rating > 5)) {
+            return;
+        }
+
         update("delete from user_rating where username=? and path=?", username, musicFile.getPath());
         if (rating != null && rating > 0) {
             update("insert into user_rating values(?, ?, ?)", username, musicFile.getPath(), rating);

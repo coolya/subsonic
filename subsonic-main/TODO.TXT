@@ -131,9 +131,11 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN 4.5
 ----------------
+REST: Added rating.
 
 TODO IN 4.5
 -----------------
+test REST rating.
 Show lyrics in tags.
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1700
 More actions -> Download
