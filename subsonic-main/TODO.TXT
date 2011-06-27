@@ -33,6 +33,7 @@ DONE IN ANDROID 2.9
 Can now specify directory for offline music.
 Keep screen on, Queue next, Swiping.  Courtesy of nesvarbu.
 Added shadow to text in action bar.
+Ensure that file system never gets more than 95% full, irrespective of cache limit settings.
 
 TODO IN ANDROID 2.9
 -------------------

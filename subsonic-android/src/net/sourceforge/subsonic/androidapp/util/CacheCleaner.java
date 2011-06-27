@@ -10,6 +10,7 @@ import java.util.Set;
 
 import android.content.Context;
 import android.util.Log;
+import android.os.StatFs;
 import net.sourceforge.subsonic.androidapp.service.DownloadFile;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 
@@ -20,6 +21,7 @@ import net.sourceforge.subsonic.androidapp.service.DownloadService;
 public class CacheCleaner {
 
     private static final String TAG = CacheCleaner.class.getSimpleName();
+    private static final double MAX_FILE_SYSTEM_USAGE = 0.95;
 
     private final Context context;
     private final DownloadService downloadService;
@@ -78,28 +80,48 @@ public class CacheCleaner {
     }
 
     private void deleteFiles(List<File> files, Set<File> undeletable) {
-        long cacheSizeBytes = Util.getCacheSizeMB(context) * 1024L * 1024L;
 
-        long bytesUsed = 0L;
-        for (File file : files) {
-            bytesUsed += file.length();
+        if (files.isEmpty()) {
+            return;
         }
 
-        Log.i(TAG, "Cache size limit: " + Util.formatBytes(cacheSizeBytes));
-        Log.i(TAG, "Cache size before: " + Util.formatBytes(bytesUsed));
+        long cacheSizeBytes = Util.getCacheSizeMB(context) * 1024L * 1024L;
 
+        long bytesUsedBySubsonic = 0L;
         for (File file : files) {
-            if (bytesUsed > cacheSizeBytes || file.getName().endsWith(".partial") || file.getName().contains(".partial.")) {
+            bytesUsedBySubsonic += file.length();
+        }
+
+        // Ensure that file system is not more than 95% full.
+        StatFs stat = new StatFs(files.get(0).getPath());
+        long bytesTotalFs = (long) stat.getBlockCount() * (long) stat.getBlockSize();
+        long bytesAvailableFs = (long) stat.getAvailableBlocks() * (long) stat.getBlockSize();
+        long bytesUsedFs = bytesTotalFs - bytesAvailableFs;
+        long minFsAvailability = Math.round(MAX_FILE_SYSTEM_USAGE * (double) bytesTotalFs);
+
+        long bytesToDeleteCacheLimit = Math.max(bytesUsedBySubsonic - cacheSizeBytes, 0L);
+        long bytesToDeleteFsLimit = Math.max(bytesUsedFs - minFsAvailability, 0L);
+        long bytesToDelete = Math.max(bytesToDeleteCacheLimit, bytesToDeleteFsLimit);
+
+        Log.i(TAG, "File system       : " + Util.formatBytes(bytesAvailableFs) + " of " + Util.formatBytes(bytesTotalFs) + " available");
+        Log.i(TAG, "Cache limit       : " + Util.formatBytes(cacheSizeBytes));
+        Log.i(TAG, "Cache size before : " + Util.formatBytes(bytesUsedBySubsonic));
+        Log.i(TAG, "Minimum to delete : " + Util.formatBytes(bytesToDelete));
+
+        long bytesDeleted = 0L;
+        for (File file : files) {
+            if (bytesToDelete > bytesDeleted || file.getName().endsWith(".partial") || file.getName().contains(".partial.")) {
                 if (!undeletable.contains(file)) {
                     long size = file.length();
                     if (Util.delete(file)) {
-                        bytesUsed -= size;
+                        bytesDeleted += size;
                     }
                 }
             }
         }
 
-        Log.i(TAG, "Cache size after: " + Util.formatBytes(bytesUsed));
+        Log.i(TAG, "Deleted           : " + Util.formatBytes(bytesDeleted));
+        Log.i(TAG, "Cache size after  : " + Util.formatBytes(bytesUsedBySubsonic - bytesDeleted));
     }
 
     private void findCandidatesForDeletion(File file, List<File> files, List<File> dirs) {
