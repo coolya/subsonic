@@ -32,6 +32,7 @@ DONE IN ANDROID 2.9
 --------------------
 Can now specify directory for offline music.
 Keep screen on, Queue next, Swiping.  Courtesy of nesvarbu.
+Added shadow to text in action bar.
 
 TODO IN ANDROID 2.9
 -------------------
@@ -40,7 +41,6 @@ Misc patches from nesvarbu
   Use "play" and "queue" consistently.
   "Play now", "Play next", "Play last"
   Make screen on/off similar to repeat button?
-Experiment with title text shadow
 Poor quality for generic album art.
 Enable honeycomb actionbar
 Access other music on phone.
