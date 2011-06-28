@@ -72,7 +72,7 @@ public class FileUtil {
         File albumDir = getAlbumDirectory(context, entry);
         File albumArtDir = getAlbumArtDirectory();
 
-        return new File(albumArtDir, Util.md5Hex(albumDir.getPath()));
+        return new File(albumArtDir, Util.md5Hex(albumDir.getPath()) + ".jpeg");
     }
 
     private static File getAlbumArtDirectory() {

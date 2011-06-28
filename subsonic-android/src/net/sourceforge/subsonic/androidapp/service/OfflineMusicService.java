@@ -95,7 +95,7 @@ public class OfflineMusicService extends RESTMusicService {
             return name;
         }
 
-        if (name.endsWith(".partial") || name.equals(Constants.ALBUM_ART_FILE)) {
+        if (name.endsWith(".partial") || name.contains(".partial.") || name.equals(Constants.ALBUM_ART_FILE)) {
             return null;
         }
 
