@@ -63,6 +63,7 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -496,6 +497,25 @@ public final class Util {
             out[j++] = HEX_DIGITS[0x0F & data[i]];
         }
         return new String(out);
+    }
+
+    /**
+     * Calculates the MD5 digest and returns the value as a 32 character hex string.
+     *
+     * @param s Data to digest.
+     * @return MD5 digest as a hex string.
+     */
+    public static String md5Hex(String s) {
+        if (s == null) {
+            return null;
+        }
+
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            return hexEncode(md5.digest(s.getBytes(Constants.UTF_8)));
+        } catch (Exception x) {
+            throw new RuntimeException(x.getMessage(), x);
+        }
     }
 
     /**
