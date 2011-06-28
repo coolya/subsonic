@@ -69,8 +69,17 @@ public class FileUtil {
     }
 
     public static File getAlbumArtFile(Context context, MusicDirectory.Entry entry) {
-        File dir = getAlbumDirectory(context, entry);
-        return new File(dir, Constants.ALBUM_ART_FILE);
+        File albumDir = getAlbumDirectory(context, entry);
+        File albumArtDir = getAlbumArtDirectory();
+
+        return new File(albumArtDir, Util.md5Hex(albumDir.getPath()));
+    }
+
+    private static File getAlbumArtDirectory() {
+        File albumArtDir = new File(getSubsonicDirectory(), "artwork");
+        ensureDirectoryExistsAndIsReadWritable(albumArtDir);
+        ensureDirectoryExistsAndIsReadWritable(new File(albumArtDir, ".nomedia"));
+        return albumArtDir;
     }
 
     private static File getAlbumDirectory(Context context, MusicDirectory.Entry entry) {

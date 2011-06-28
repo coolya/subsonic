@@ -37,6 +37,11 @@ Ensure that file system never gets more than 95% full, irrespective of cache lim
 
 TODO IN ANDROID 2.9
 -------------------
+Keep all album art in a single directory.
+  net.sourceforge.subsonic.androidapp.util.FileUtil.getAlbumArtFile
+  net.sourceforge.subsonic.androidapp.util.Constants.ALBUM_ART_FILE
+  Move old albumart over to new folder.
+  Create .nomedia in artwork folder.
 Misc patches from nesvarbu
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=7024&highlight=
   Use "play" and "queue" consistently.
@@ -73,7 +78,6 @@ Offline media
 Change font?
 Sharing support.
 Podcast support.
-Keep all album art in a single directory.
 Offline shuffle broken?
 Does repeat button work in landscape mode?
 DownloadServiceImpl: ignore a mysterious MediaPlayer error
@@ -141,8 +145,12 @@ REST: Added rating.
 TODO IN 4.5
 -----------------
 Test REST rating.
-Rewrite share feature.  Add management.
+Rewrite share feature.
+  Add management.
+  TTL
+  Improve REST support. https://mail.google.com/mail/?ui=2&shva=1#inbox/130d4d719291c9f0
 Add share option to playlist combobox.
+REST: scrobble should increment the internal playcounters too. 
 Show lyrics in tags.
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1700
 More actions -> Download
