@@ -75,7 +75,7 @@ public class FileUtil {
         return new File(albumArtDir, Util.md5Hex(albumDir.getPath()) + ".jpeg");
     }
 
-    private static File getAlbumArtDirectory() {
+    public static File getAlbumArtDirectory() {
         File albumArtDir = new File(getSubsonicDirectory(), "artwork");
         ensureDirectoryExistsAndIsReadWritable(albumArtDir);
         ensureDirectoryExistsAndIsReadWritable(new File(albumArtDir, ".nomedia"));

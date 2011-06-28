@@ -38,6 +38,7 @@ Ensure that file system never gets more than 95% full, irrespective of cache lim
 TODO IN ANDROID 2.9
 -------------------
 Keep all album art in a single directory.
+  Run cache cleaning on service startup.
 Misc patches from nesvarbu
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=7024&highlight=
   Use "play" and "queue" consistently.
