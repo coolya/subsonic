@@ -70,8 +70,11 @@ public class FileUtil {
 
     public static File getAlbumArtFile(Context context, MusicDirectory.Entry entry) {
         File albumDir = getAlbumDirectory(context, entry);
-        File albumArtDir = getAlbumArtDirectory();
+        return getAlbumArtFile(albumDir);
+    }
 
+    public static File getAlbumArtFile(File albumDir) {
+        File albumArtDir = getAlbumArtDirectory();
         return new File(albumArtDir, Util.md5Hex(albumDir.getPath()) + ".jpeg");
     }
 

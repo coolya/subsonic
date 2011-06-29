@@ -65,17 +65,12 @@ public class CacheCleaner {
                 continue;
             }
 
-            // TODO: Delete album dir from cache.
-            // Delete album art if it's the only remaining file.
             File[] children = dir.listFiles();
-            if (children.length == 1 && Constants.ALBUM_ART_FILE.equals(children[0].getName())) {
-                Util.delete(children[0]);
-                children = dir.listFiles();
-            }
 
-            // Delete empty directory.
+            // Delete empty directory and associated album artwork.
             if (children.length == 0) {
                 Util.delete(dir);
+                Util.delete(FileUtil.getAlbumArtFile(dir));
             }
         }
     }
@@ -109,13 +104,12 @@ public class CacheCleaner {
         Log.i(TAG, "Cache size before : " + Util.formatBytes(bytesUsedBySubsonic));
         Log.i(TAG, "Minimum to delete : " + Util.formatBytes(bytesToDelete));
 
-        File albumArtDir = FileUtil.getAlbumArtDirectory();
         long bytesDeleted = 0L;
         for (File file : files) {
 
             if (file.getName().equals(Constants.ALBUM_ART_FILE)) {
                 // Move artwork to new folder.
-                file.renameTo(new File(albumArtDir, Util.md5Hex(file.getParent()) + ".jpeg"));
+                file.renameTo(FileUtil.getAlbumArtFile(file.getParentFile()));
 
             } else if (bytesToDelete > bytesDeleted || file.getName().endsWith(".partial") || file.getName().contains(".partial.")) {
                 if (!undeletable.contains(file)) {
