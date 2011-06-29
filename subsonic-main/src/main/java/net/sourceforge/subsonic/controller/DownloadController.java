@@ -41,6 +41,7 @@ import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipOutputStream;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
+import org.springframework.web.servlet.mvc.LastModified;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +63,7 @@ import java.util.zip.CRC32;
  *
  * @author Sindre Mehus
  */
-public class DownloadController implements Controller {
+public class DownloadController implements Controller, LastModified {
 
     private static final Logger LOG = Logger.getLogger(DownloadController.class);
 
@@ -71,6 +72,16 @@ public class DownloadController implements Controller {
     private SecurityService securityService;
     private PlaylistService playlistService;
     private SettingsService settingsService;
+
+    public long getLastModified(HttpServletRequest request) {
+        String path = request.getParameter("path");
+        if (StringUtils.isBlank(path)) {
+            return -1;
+        }
+
+        File file = new File(path);
+        return file.isFile() && file.exists() ? file.lastModified() : -1;
+    }
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
