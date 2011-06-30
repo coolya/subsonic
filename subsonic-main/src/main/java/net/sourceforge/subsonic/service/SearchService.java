@@ -26,15 +26,17 @@ import net.sourceforge.subsonic.domain.MusicFolder;
 import net.sourceforge.subsonic.domain.RandomSearchCriteria;
 import net.sourceforge.subsonic.domain.SearchCriteria;
 import net.sourceforge.subsonic.domain.SearchResult;
+import net.sourceforge.subsonic.util.StringUtil;
+
 import static net.sourceforge.subsonic.service.LuceneSearchService.IndexType.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,7 +61,7 @@ import java.util.TreeSet;
  */
 public class SearchService {
 
-    private static final int INDEX_VERSION = 13;
+    private static final int INDEX_VERSION = 14;
     private static final Random RANDOM = new Random(System.currentTimeMillis());
     private static final Logger LOG = Logger.getLogger(SearchService.class);
 
@@ -128,7 +130,7 @@ public class SearchService {
             // Get existing index.
             Map<File, Line> oldIndex = getIndex();
 
-            writer = new PrintWriter(new FileWriter(getIndexFile()));
+            writer = new PrintWriter(getIndexFile(), StringUtil.ENCODING_UTF8);
 
             // Create a scanner for visiting all music files.
             Scanner scanner = new Scanner(writer, oldIndex, settingsService.getAllMusicFolders());
@@ -537,7 +539,7 @@ public class SearchService {
             }
         });
 
-        BufferedReader reader = new BufferedReader(new FileReader(getIndexFile()));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(getIndexFile()), StringUtil.ENCODING_UTF8));
 
         // TODO: Calculate artist/album count from cachedArtists/cachedAlbums.
 

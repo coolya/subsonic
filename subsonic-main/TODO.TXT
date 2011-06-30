@@ -34,18 +34,18 @@ Can now specify directory for offline music.
 Keep screen on, Queue next, Swiping.  Courtesy of nesvarbu.
 Added shadow to text in action bar.
 Ensure that file system never gets more than 95% full, irrespective of cache limit settings.
+New setting: "Wi-Fi streaming only"
 
 TODO IN ANDROID 2.9
 -------------------
+Test: New setting: "Wi-Fi streaming only"
+test swiping
 Keep all album art in a single directory.
   Run cache cleaning on service startup.
 Misc patches from nesvarbu
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=7024&highlight=
   Use "play" and "queue" consistently.
   "Play now", "Play next", "Play last"
-New setting: "Only use wifi connection" and/or "Only use wifi connection for song download."
-   https://mail.google.com/mail/?ui=2&shva=1#inbox/130d661abafd825c
-   See wimp
 
 Poor quality for generic album art.
 Enable honeycomb actionbar
@@ -142,10 +142,13 @@ DONE IN 4.5
 ----------------
 REST: Added rating.
 DownloadController support LastModified.
+Use UTF-8 in search file.
 
 TODO IN 4.5
 -----------------
-Test REST rating.
+  https://mail.google.com/mail/?shva=1#inbox/130de0242c131e77
+Test: REST rating.
+Test: UTF-8 in SearchService
 Rewrite share feature.
   Add management.
   TTL
