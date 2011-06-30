@@ -132,6 +132,12 @@
                 a:entryValues="@array/maxBitrateValues"
                 a:entries="@array/maxBitrateNames"/>
 
+        <CheckBoxPreference
+                a:title="@string/settings.wifi_required_title"
+                a:summary="@string/settings.wifi_required_summary"
+                a:key="wifiRequiredForDownload"
+                a:defaultValue="false"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

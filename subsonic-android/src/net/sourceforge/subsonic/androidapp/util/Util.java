@@ -18,6 +18,23 @@
  */
 package net.sourceforge.subsonic.androidapp.util;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.security.MessageDigest;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
+import org.apache.http.HttpEntity;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Notification;
@@ -38,34 +55,18 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 import android.view.Gravity;
+import android.widget.Toast;
 import net.sourceforge.subsonic.androidapp.R;
-import net.sourceforge.subsonic.androidapp.domain.RepeatMode;
-import net.sourceforge.subsonic.androidapp.service.DownloadService;
-import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
-import net.sourceforge.subsonic.androidapp.provider.SubsonicAppWidgetProvider;
 import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
 import net.sourceforge.subsonic.androidapp.activity.ErrorActivity;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
+import net.sourceforge.subsonic.androidapp.domain.RepeatMode;
+import net.sourceforge.subsonic.androidapp.provider.SubsonicAppWidgetProvider;
 import net.sourceforge.subsonic.androidapp.receiver.MediaButtonIntentReceiver;
-import org.apache.http.HttpEntity;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.security.MessageDigest;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import net.sourceforge.subsonic.androidapp.service.DownloadService;
+import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 
 /**
  * @author Sindre Mehus
@@ -405,30 +406,34 @@ public final class Util {
 
         // More than 1 GB?
         if (byteCount >= 1024 * 1024 * 1024) {
-        	if (GIGA_BYTE_LOCALIZED_FORMAT == null)
-        		GIGA_BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_gigabyte));
+            if (GIGA_BYTE_LOCALIZED_FORMAT == null) {
+                GIGA_BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_gigabyte));
+            }
 
             return GIGA_BYTE_LOCALIZED_FORMAT.format((double) byteCount / (1024 * 1024 * 1024));
         }
 
         // More than 1 MB?
         if (byteCount >= 1024 * 1024) {
-        	if (MEGA_BYTE_LOCALIZED_FORMAT == null)
-        		MEGA_BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_megabyte));
+            if (MEGA_BYTE_LOCALIZED_FORMAT == null) {
+                MEGA_BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_megabyte));
+            }
 
             return MEGA_BYTE_LOCALIZED_FORMAT.format((double) byteCount / (1024 * 1024));
         }
 
         // More than 1 KB?
         if (byteCount >= 1024) {
-        	if (KILO_BYTE_LOCALIZED_FORMAT == null)
-        		KILO_BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_kilobyte));
+            if (KILO_BYTE_LOCALIZED_FORMAT == null) {
+                KILO_BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_kilobyte));
+            }
 
             return KILO_BYTE_LOCALIZED_FORMAT.format((double) byteCount / 1024);
         }
 
-    	if (BYTE_LOCALIZED_FORMAT == null)
-    		BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_byte));
+        if (BYTE_LOCALIZED_FORMAT == null) {
+            BYTE_LOCALIZED_FORMAT = new DecimalFormat(context.getResources().getString(R.string.util_bytes_format_byte));
+        }
 
         return BYTE_LOCALIZED_FORMAT.format((double) byteCount);
     }
@@ -585,15 +590,24 @@ public final class Util {
         return s.length() == 0 ? null : s;
     }
 
-
     public static boolean isNetworkConnected(Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
+        boolean connected = networkInfo != null && networkInfo.isConnected();
+
+        boolean wifiConnected = connected && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+        boolean wifiRequired = isWifiRequiredForDownload(context);
+
+        return connected && (!wifiRequired || wifiConnected);
     }
 
     public static boolean isExternalStoragePresent() {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+    }
+
+    private static boolean isWifiRequiredForDownload(Context context) {
+        SharedPreferences prefs = getPreferences(context);
+        return prefs.getBoolean(Constants.PREFERENCES_KEY_WIFI_REQUIRED_FOR_DOWNLOAD, false);
     }
 
     public static void error(Context context, int messageId) {
@@ -796,48 +810,48 @@ public final class Util {
      * <p>Broadcasts the given song info as the new song being played.</p>
      */
     public static void broadcastNewTrackInfo(Context context, MusicDirectory.Entry song) {
-		Intent intent = new Intent(EVENT_META_CHANGED);
+        Intent intent = new Intent(EVENT_META_CHANGED);
 
-		if (song != null) {
-    		intent.putExtra("title", song.getTitle());
-    		intent.putExtra("artist", song.getArtist());
-    		intent.putExtra("album", song.getAlbum());
+        if (song != null) {
+            intent.putExtra("title", song.getTitle());
+            intent.putExtra("artist", song.getArtist());
+            intent.putExtra("album", song.getAlbum());
 
             File albumArtFile = FileUtil.getAlbumArtFile(context, song);
-    		intent.putExtra("coverart", albumArtFile.getAbsolutePath());
-		} else {
-    		intent.putExtra("title", "");
-    		intent.putExtra("artist", "");
-    		intent.putExtra("album", "");
-    		intent.putExtra("coverart", "");
-		}
+            intent.putExtra("coverart", albumArtFile.getAbsolutePath());
+        } else {
+            intent.putExtra("title", "");
+            intent.putExtra("artist", "");
+            intent.putExtra("album", "");
+            intent.putExtra("coverart", "");
+        }
 
-		context.sendBroadcast(intent);
+        context.sendBroadcast(intent);
     }
 
     /**
      * <p>Broadcasts the given player state as the one being set.</p>
      */
     public static void broadcastPlaybackStatusChange(Context context, PlayerState state) {
-		Intent intent = new Intent(EVENT_PLAYSTATE_CHANGED);
+        Intent intent = new Intent(EVENT_PLAYSTATE_CHANGED);
 
-		switch (state) {
-		case STARTED:
-			intent.putExtra("state", "play");
-			break;
-		case STOPPED:
-			intent.putExtra("state", "stop");
-			break;
-		case PAUSED:
-			intent.putExtra("state", "pause");
-			break;
-		case COMPLETED:
-			intent.putExtra("state", "complete");
-			break;
-		default:
-			return; // No need to broadcast.
-		}
+        switch (state) {
+            case STARTED:
+                intent.putExtra("state", "play");
+                break;
+            case STOPPED:
+                intent.putExtra("state", "stop");
+                break;
+            case PAUSED:
+                intent.putExtra("state", "pause");
+                break;
+            case COMPLETED:
+                intent.putExtra("state", "complete");
+                break;
+            default:
+                return; // No need to broadcast.
+        }
 
-		context.sendBroadcast(intent);
+        context.sendBroadcast(intent);
     }
 }
