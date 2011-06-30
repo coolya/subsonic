@@ -36,6 +36,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
+import net.sourceforge.subsonic.androidapp.util.CacheCleaner;
 import net.sourceforge.subsonic.androidapp.util.FileUtil;
 import net.sourceforge.subsonic.androidapp.util.Util;
 
@@ -94,7 +95,6 @@ public class DownloadServiceLifecycleSupport {
             }
         };
 
-
         executorService = Executors.newScheduledThreadPool(2);
         executorService.scheduleWithFixedDelay(downloadChecker, 5, 5, TimeUnit.SECONDS);
 
@@ -129,6 +129,8 @@ public class DownloadServiceLifecycleSupport {
         downloadService.registerReceiver(intentReceiver, commandFilter);
 
         deserializeDownloadQueue();
+
+        new CacheCleaner(downloadService, downloadService).clean();
     }
 
     public void onStart(Intent intent) {
