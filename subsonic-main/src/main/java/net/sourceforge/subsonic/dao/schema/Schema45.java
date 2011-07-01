@@ -48,5 +48,29 @@ public class Schema45 extends Schema {
             LOG.info("Role 'share' was created successfully.");
         }
 
+        if (!tableExists(template, "share")) {
+            LOG.info("Table 'share' not found in database. Creating it.");
+            template.execute("create cached table share (" +
+                    "id identity," +
+                    "name varchar not null," +
+                    "description varchar," +
+                    "username varchar not null," +
+                    "created datetime not null," +
+                    "expires datetime," +
+                    "last_visited datetime," +
+                    "visit_count int default 0 not null," +
+                    "unique (name)," +
+                    "foreign key (username) references user(username) on delete cascade)");
+            template.execute("create index idx_share_name on share(name)");
+
+            LOG.info("Table 'share' was created successfully.");
+            LOG.info("Table 'share_file' not found in database. Creating it.");
+            template.execute("create cached table share_file (" +
+                    "id identity," +
+                    "share_id int not null," +
+                    "path varchar not null," +
+                    "foreign key (share_id) references share(id) on delete cascade)");
+            LOG.info("Table 'share_file' was created successfully.");
+        }
     }
 }
