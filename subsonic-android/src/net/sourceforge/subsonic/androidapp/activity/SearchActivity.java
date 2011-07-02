@@ -27,7 +27,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.AdapterView;
@@ -58,13 +58,6 @@ import net.sourceforge.subsonic.androidapp.util.Util;
  * @author Sindre Mehus
  */
 public class SearchActivity extends SubsonicTabActivity {
-
-    private static final int MENU_ITEM_PLAY_ALL = 1;
-    private static final int MENU_ITEM_QUEUE_ALL = 2;
-    private static final int MENU_ITEM_SAVE_ALL = 3;
-    private static final int MENU_ITEM_PLAY = 4;
-    private static final int MENU_ITEM_QUEUE = 5;
-    private static final int MENU_ITEM_SAVE = 6;
 
     private static final int DEFAULT_ARTISTS = 3;
     private static final int DEFAULT_ALBUMS = 5;
@@ -133,7 +126,7 @@ public class SearchActivity extends SubsonicTabActivity {
                         } else if (entry.isVideo()) {
                             onVideoSelected(entry);
                         } else {
-                            onSongSelected(entry, false, true, true);
+                            onSongSelected(entry, false, true, true, false);
                         }
 
                     }
@@ -189,13 +182,11 @@ public class SearchActivity extends SubsonicTabActivity {
                 && (!((MusicDirectory.Entry) selectedItem).isVideo());
 
         if (isArtist || isAlbum) {
-            menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.common_play_now);
-            menu.add(Menu.NONE, MENU_ITEM_QUEUE_ALL, MENU_ITEM_QUEUE_ALL, R.string.common_play_last);
-            menu.add(Menu.NONE, MENU_ITEM_SAVE_ALL, MENU_ITEM_SAVE_ALL, R.string.common_pin);
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.select_album_context, menu);
         } else if (isSong) {
-            menu.add(Menu.NONE, MENU_ITEM_PLAY, MENU_ITEM_PLAY, R.string.common_play_now);
-            menu.add(Menu.NONE, MENU_ITEM_QUEUE, MENU_ITEM_QUEUE, R.string.common_play_last);
-            menu.add(Menu.NONE, MENU_ITEM_SAVE, MENU_ITEM_SAVE, R.string.common_pin);
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.select_song_context, menu);
         }
     }
 
@@ -209,27 +200,28 @@ public class SearchActivity extends SubsonicTabActivity {
         String id = artist != null ? artist.getId() : entry.getId();
 
         switch (menuItem.getItemId()) {
-            case MENU_ITEM_PLAY_ALL:
+            case R.id.album_menu_play_now:
                 downloadRecursively(id, false, false, true);
                 break;
-            case MENU_ITEM_QUEUE_ALL:
+            case R.id.album_menu_play_last:
                 downloadRecursively(id, false, true, false);
                 break;
-            case MENU_ITEM_SAVE_ALL:
+            case R.id.album_menu_pin:
                 downloadRecursively(id, true, true, false);
                 break;
-            case MENU_ITEM_PLAY:
-                onSongSelected(entry, false, false, true);
+            case R.id.song_menu_play_now:
+                onSongSelected(entry, false, false, true, false);
                 break;
-            case MENU_ITEM_QUEUE:
-                onSongSelected(entry, false, true, false);
+            case R.id.song_menu_play_next:
+                onSongSelected(entry, false, true, false, true);
                 break;
-            case MENU_ITEM_SAVE:
-                onSongSelected(entry, true, true, false);
+            case R.id.song_menu_play_last:
+                onSongSelected(entry, false, true, false, false);
                 break;
             default:
                 return super.onContextItemSelected(menuItem);
         }
+
         return true;
     }
 
@@ -347,13 +339,13 @@ public class SearchActivity extends SubsonicTabActivity {
         Util.startActivityWithoutTransition(SearchActivity.this, intent);
     }
 
-    private void onSongSelected(MusicDirectory.Entry song, boolean save, boolean append, boolean autoplay) {
+    private void onSongSelected(MusicDirectory.Entry song, boolean save, boolean append, boolean autoplay, boolean playNext) {
         DownloadService downloadService = getDownloadService();
         if (downloadService != null) {
             if (!append) {
                 downloadService.clear();
             }
-            downloadService.download(Arrays.asList(song), save, false, false);
+            downloadService.download(Arrays.asList(song), save, false, playNext);
             if (autoplay) {
                 downloadService.play(downloadService.size() - 1);
             }
@@ -370,7 +362,7 @@ public class SearchActivity extends SubsonicTabActivity {
 
     private void autoplay() {
         if (!searchResult.getSongs().isEmpty()) {
-            onSongSelected(searchResult.getSongs().get(0), false, false, true);
+            onSongSelected(searchResult.getSongs().get(0), false, false, true, false);
         } else if (!searchResult.getAlbums().isEmpty()) {
             onAlbumSelected(searchResult.getAlbums().get(0), true);
         }

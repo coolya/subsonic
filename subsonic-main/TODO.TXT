@@ -43,7 +43,7 @@ test swiping
 Keep all album art in a single directory.
   Run cache cleaning on service startup.
 
-Change SearchActivity.onCreateContextMenu, use xml.  
+New Pin/unpin icons.
 
 Poor quality for generic album art.
 Enable honeycomb actionbar
