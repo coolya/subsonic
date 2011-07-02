@@ -103,7 +103,7 @@ public class RESTController extends MultiActionController {
     private HomeController homeController;
     private StatusService statusService;
     private StreamController streamController;
-    private ShareController shareController;
+    private ShareManagementController shareController;
     private SearchService searchService;
     private PlaylistService playlistService;
     private ChatService chatService;
@@ -1290,7 +1290,7 @@ public class RESTController extends MultiActionController {
         this.podcastService = podcastService;
     }
 
-    public void setShareController(ShareController shareController) {
+    public void setShareController(ShareManagementController shareController) {
         this.shareController = shareController;
     }
 

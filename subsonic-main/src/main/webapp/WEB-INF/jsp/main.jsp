@@ -16,7 +16,7 @@
     <script type="text/javascript" src="<c:url value="/script/fancyzoom/FancyZoomHTML.js"/>"></script>
 </head><body class="mainframe bgcolor1" onload="init();">
 
-<sub:url value="share.view" var="shareUrl">
+<sub:url value="createShare.view" var="shareUrl">
     <sub:param name="dir" value="${model.dir.path}"/>
 </sub:url>
 

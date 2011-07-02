@@ -44,6 +44,8 @@ Keep all album art in a single directory.
   Run cache cleaning on service startup.
 
 New Pin/unpin icons.
+Sharing support.
+Podcast support.
 
 Poor quality for generic album art.
 Enable honeycomb actionbar
@@ -59,23 +61,7 @@ Access other music on phone.
     Server 2
     Server 3
     Offline media
-
-Offline media
-  Cache size
-  5GB
-
-  Cache location
-  /sdcard/subsonic/music
-
-  Also show media in
-  /sdcard/Music
-
-  Songs to preload
-  3 songs
-
 Change font?
-Sharing support.
-Podcast support.
 Offline shuffle broken?
 Does repeat button work in landscape mode?
 DownloadServiceImpl: ignore a mysterious MediaPlayer error

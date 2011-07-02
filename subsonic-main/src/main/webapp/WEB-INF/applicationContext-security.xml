@@ -128,7 +128,7 @@
 
                 /upload.view=ROLE_UPLOAD
 
-                /share.view=ROLE_SHARE
+                /createShare.view=ROLE_SHARE
 
                 /changeCoverArt.view=ROLE_COVERART
                 /editTags.view=ROLE_COVERART

@@ -81,8 +81,7 @@
     <bean id="setMusicFileInfoController" class="net.sourceforge.subsonic.controller.SetMusicFileInfoController">
         <property name="musicInfoService" ref="musicInfoService"/>
     </bean>
-    <bean id="shareController" class="net.sourceforge.subsonic.controller.ShareController">
-        <property name="viewName" value="share"/>
+    <bean id="shareManagementController" class="net.sourceforge.subsonic.controller.ShareManagementController">
         <property name="settingsService" ref="settingsService"/>
         <property name="musicFileService" ref="musicFileService"/>
         <property name="playerService" ref="playerService"/>
@@ -346,7 +345,7 @@
         <property name="userSettingsController" ref="userSettingsController"/>
         <property name="leftController" ref="leftController"/>
         <property name="homeController" ref="homeController"/>
-        <property name="shareController" ref="shareController"/>
+        <property name="shareController" ref="shareManagementController"/>
     </bean>
     <bean id="dbController" class="net.sourceforge.subsonic.controller.DBController">
         <property name="viewName" value="db"/>
@@ -377,7 +376,7 @@
                 <prop key="/more.view">moreController</prop>
                 <prop key="/upload.view">uploadController</prop>
                 <prop key="/setMusicFileInfo.view">setMusicFileInfoController</prop>
-                <prop key="/share.view">shareController</prop>
+                <prop key="/createShare.view">shareManagementController</prop>
                 <prop key="/setRating.view">setRatingController</prop>
                 <prop key="/top.view">topController</prop>
                 <prop key="/randomPlaylist.view">randomPlaylistController</prop>

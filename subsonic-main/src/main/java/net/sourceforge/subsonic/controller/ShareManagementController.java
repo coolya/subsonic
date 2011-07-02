@@ -27,8 +27,8 @@ import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.UrlShortenerService;
 import net.sourceforge.subsonic.util.StringUtil;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.ParameterizableViewController;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,16 +44,16 @@ import java.io.IOException;
  *
  * @author Sindre Mehus
  */
-public class ShareController extends ParameterizableViewController {
+public class ShareManagementController extends MultiActionController {
 
-    private static final Logger LOG = Logger.getLogger(ShareController.class);
+    private static final Logger LOG = Logger.getLogger(ShareManagementController.class);
 
     private final UrlShortenerService urlShortenerService = new UrlShortenerService();
     private MusicFileService musicFileService;
     private SettingsService settingsService;
     private PlayerService playerService;
 
-    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView createShare(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String dir = request.getParameter("dir");
 
         Player player = playerService.getPlayer(request, response);
@@ -64,9 +64,7 @@ public class ShareController extends ParameterizableViewController {
         map.put("dir", musicFileService.getMusicFile(dir));
         map.put("playUrl", getShareUrl(player, files));
 
-        ModelAndView result = super.handleRequestInternal(request, response);
-        result.addObject("model", map);
-        return result;
+        return new ModelAndView("createShare", "model", map);
     }
 
     public String getShareUrl(Player player, List<MusicFile> files) throws Exception {
