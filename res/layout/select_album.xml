@@ -43,8 +43,8 @@
                 a:layout_width="0dp"
                 a:layout_height="fill_parent"/>
 
-        <Button a:id="@+id/select_album_play"
-                a:text="@string/select_album.play"
+        <Button a:id="@+id/select_album_play_now"
+                a:text="@string/common.play_now"
                 a:textAppearance="?android:attr/textAppearanceSmall"
                 a:visibility="gone"
                 a:layout_marginLeft="3dp"
@@ -53,8 +53,8 @@
                 a:layout_width="0dp"
                 a:layout_height="fill_parent"/>
 
-        <Button a:id="@+id/select_album_queue"
-                a:text="@string/select_album.queue"
+        <Button a:id="@+id/select_album_play_last"
+                a:text="@string/common.play_last"
                 a:textAppearance="?android:attr/textAppearanceSmall"
                 a:visibility="gone"
                 a:layout_marginLeft="3dp"

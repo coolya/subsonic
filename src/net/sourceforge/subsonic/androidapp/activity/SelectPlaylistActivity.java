@@ -105,7 +105,7 @@ public class SelectPlaylistActivity extends SubsonicTabActivity implements Adapt
     @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
-        menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_all);
+        menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.common_play_now);
     }
 
     @Override

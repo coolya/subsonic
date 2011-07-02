@@ -5,6 +5,11 @@
     <string name="common.ok">OK</string>
     <string name="common.save">Save</string>
     <string name="common.cancel">Cancel</string>
+    <string name="common.play_now">Play now</string>
+    <string name="common.play_next">Play next</string>
+    <string name="common.play_last">Play last</string>
+    <string name="common.pin">Pin</string>
+    <string name="common.unpin">Unpin</string>
 
     <string name="main.welcome_title">Welcome!</string>
     <string name="main.welcome_text">Welcome to Subsonic! The app is currently configured to use the Subsonic demo server. After you\'ve
@@ -54,14 +59,7 @@
     <string name="select_album.select">Select all</string>
     <string name="select_album.n_selected">%d tracks selected.</string>
     <string name="select_album.n_unselected">%d tracks unselected.</string>
-    <string name="select_album.play">Play</string>
-    <string name="select_album.queue">Queue</string>
     <string name="select_album.more">More</string>
-    <string name="select_album.play_all">Play all</string>
-    <string name="select_album.queue_all">Queue all</string>
-    <string name="select_album.save_all">Save all</string>
-    <string name="select_album.delete">Delete from phone</string>
-    <string name="select_album.save">Save on phone</string>
     <string name="select_album.offline">Offline</string>
     <string name="select_album.searching">Searching...</string>
     <string name="select_album.no_sdcard">Error: No SD card available.</string>
@@ -71,10 +69,6 @@
     <string name="select_album.donate_dialog_now">Now</string>
     <string name="select_album.donate_dialog_later">Later</string>
     <string name="select_album.donate_dialog_0_trial_days_left">Trial period is over</string>
-    <string name="select_song.play_now">Play song now</string>
-    <string name="select_song.play_next">Play song next</string>
-    <string name="select_song.play_last">Play song last</string>
-    <string name="queue_context.queue_next">Queue songs next</string>
 
     <string name="select_playlist.empty">No saved playlists on server</string>
 

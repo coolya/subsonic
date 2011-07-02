@@ -2,18 +2,18 @@
 <menu xmlns:a="http://schemas.android.com/apk/res/android">
 
     <item 
-        a:id="@+id/menu_play_all"
-        a:title="@string/select_album.play_all"
+        a:id="@+id/album_menu_play_now"
+        a:title="@string/common.play_now"
         />
 
     <item 
-        a:id="@+id/menu_queue_all"
-        a:title="@string/select_album.queue_all"
+        a:id="@+id/album_menu_play_last"
+        a:title="@string/common.play_last"
         />
 
     <item 
-        a:id="@+id/menu_save_all"
-        a:title="@string/select_album.save_all"
+        a:id="@+id/album_menu_pin"
+        a:title="@string/common.pin"
         />
         
 </menu>

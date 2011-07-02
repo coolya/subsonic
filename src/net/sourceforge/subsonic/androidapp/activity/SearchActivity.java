@@ -30,7 +30,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
@@ -190,13 +189,13 @@ public class SearchActivity extends SubsonicTabActivity {
                 && (!((MusicDirectory.Entry) selectedItem).isVideo());
 
         if (isArtist || isAlbum) {
-            menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.select_album_play_all);
-            menu.add(Menu.NONE, MENU_ITEM_QUEUE_ALL, MENU_ITEM_QUEUE_ALL, R.string.select_album_queue_all);
-            menu.add(Menu.NONE, MENU_ITEM_SAVE_ALL, MENU_ITEM_SAVE_ALL, R.string.select_album_save_all);
+            menu.add(Menu.NONE, MENU_ITEM_PLAY_ALL, MENU_ITEM_PLAY_ALL, R.string.common_play_now);
+            menu.add(Menu.NONE, MENU_ITEM_QUEUE_ALL, MENU_ITEM_QUEUE_ALL, R.string.common_play_last);
+            menu.add(Menu.NONE, MENU_ITEM_SAVE_ALL, MENU_ITEM_SAVE_ALL, R.string.common_pin);
         } else if (isSong) {
-            menu.add(Menu.NONE, MENU_ITEM_PLAY, MENU_ITEM_PLAY, R.string.select_album_play);
-            menu.add(Menu.NONE, MENU_ITEM_QUEUE, MENU_ITEM_QUEUE, R.string.select_album_queue);
-            menu.add(Menu.NONE, MENU_ITEM_SAVE, MENU_ITEM_SAVE, R.string.select_album_save);
+            menu.add(Menu.NONE, MENU_ITEM_PLAY, MENU_ITEM_PLAY, R.string.common_play_now);
+            menu.add(Menu.NONE, MENU_ITEM_QUEUE, MENU_ITEM_QUEUE, R.string.common_play_last);
+            menu.add(Menu.NONE, MENU_ITEM_SAVE, MENU_ITEM_SAVE, R.string.common_pin);
         }
     }
 
