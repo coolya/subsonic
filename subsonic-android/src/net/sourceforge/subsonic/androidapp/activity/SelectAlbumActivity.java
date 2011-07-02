@@ -98,10 +98,10 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
         coverArtView = (ImageView) findViewById(R.id.actionbar_home_icon);
         selectButton = (Button) findViewById(R.id.select_album_select);
-        playButton = (Button) findViewById(R.id.select_album_play);
-        queueButton = (Button) findViewById(R.id.select_album_queue);
-        saveButton = (Button) footer.findViewById(R.id.select_album_save);
-        deleteButton = (Button) footer.findViewById(R.id.select_album_delete);
+        playButton = (Button) findViewById(R.id.select_album_play_now);
+        queueButton = (Button) findViewById(R.id.select_album_play_last);
+        saveButton = (Button) footer.findViewById(R.id.select_album_pin);
+        deleteButton = (Button) footer.findViewById(R.id.select_album_unpin);
         moreButton = (Button) footer.findViewById(R.id.select_album_more);
         emptyView = findViewById(R.id.select_album_empty);
 
@@ -141,7 +141,6 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
         });
 
         registerForContextMenu(entryList);
-        registerForContextMenu(queueButton);
 
         enableButtons();
 
@@ -213,58 +212,48 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
-    	if (view == queueButton) {
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.queue_context, menu);
-    	} else {
-            AdapterView.AdapterContextMenuInfo info =
+        AdapterView.AdapterContextMenuInfo info =
                 (AdapterView.AdapterContextMenuInfo) menuInfo;
 
-            MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
+        MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
 
-            if (entry.isDirectory()) {
-                MenuInflater inflater = getMenuInflater();
-                inflater.inflate(R.menu.select_album_context, menu);
-            } else {
-                MenuInflater inflater = getMenuInflater();
-                inflater.inflate(R.menu.select_song_context, menu);
-            }
-    	}
+        if (entry.isDirectory()) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.select_album_context, menu);
+        } else {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.select_song_context, menu);
+        }
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem menuItem) {
-    	if (menuItem.getItemId() == R.id.menu_queue_next) {
-            download(true, false, false, true);
-            selectAll(false, false);
-    	} else {
-        	AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
-            MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
-            List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>(10);
-            songs.add((MusicDirectory.Entry) entryList.getItemAtPosition(info.position));
-            switch (menuItem.getItemId()) {
-                case R.id.menu_play_all:
-                    downloadRecursively(entry.getId(), false, false, true);
-                    break;
-                case R.id.menu_queue_all:
-                    downloadRecursively(entry.getId(), false, true, false);
-                    break;
-                case R.id.menu_save_all:
-                    downloadRecursively(entry.getId(), true, true, false);
-                    break;
-                case R.id.menu_play_now:
-                	getDownloadService().download(songs, false, true, true);
-                    break;
-                case R.id.menu_play_next:
-                	getDownloadService().download(songs, false, false, true);
-                    break;
-                case R.id.menu_play_last:
-                    getDownloadService().download(songs, false, false, false);
-                    break;
-                default:
-                    return super.onContextItemSelected(menuItem);
-            }
-    	}
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
+        MusicDirectory.Entry entry = (MusicDirectory.Entry) entryList.getItemAtPosition(info.position);
+        List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>(10);
+        songs.add((MusicDirectory.Entry) entryList.getItemAtPosition(info.position));
+        switch (menuItem.getItemId()) {
+            case R.id.album_menu_play_now:
+                downloadRecursively(entry.getId(), false, false, true);
+                break;
+            case R.id.album_menu_play_last:
+                downloadRecursively(entry.getId(), false, true, false);
+                break;
+            case R.id.album_menu_pin:
+                downloadRecursively(entry.getId(), true, true, false);
+                break;
+            case R.id.song_menu_play_now:
+                getDownloadService().download(songs, false, true, true);
+                break;
+            case R.id.song_menu_play_next:
+                getDownloadService().download(songs, false, false, true);
+                break;
+            case R.id.song_menu_play_last:
+                getDownloadService().download(songs, false, false, false);
+                break;
+            default:
+                return super.onContextItemSelected(menuItem);
+        }
         return true;
     }
 

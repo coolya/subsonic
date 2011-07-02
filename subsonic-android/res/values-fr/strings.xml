@@ -54,14 +54,7 @@
     <string name="select_album.select">Tout sélectionner</string>
     <!--<string name="select_album.n_selected">TODO: %d tracks selected.</string>-->
     <!--<string name="select_album.n_unselected">TODO: %d tracks unselected.</string>-->
-    <string name="select_album.play">Jouer</string>
-    <string name="select_album.queue">Mettre en file</string>
     <string name="select_album.more">Plus</string>
-    <string name="select_album.play_all">Jouer tout</string>
-    <string name="select_album.queue_all">Tout mettre en file</string>
-    <string name="select_album.save_all">Enregistrer tout</string>
-    <string name="select_album.delete">Effacer de l\'appareil</string>
-    <string name="select_album.save">Enregistrer sur l\'appareil</string>
     <string name="select_album.offline">Hors-ligne</string>
     <string name="select_album.searching">Recherche en cours...</string>
     <string name="select_album.no_sdcard">Erreur: Aucune carte SD disponible.</string>

@@ -31,7 +31,7 @@ Buy new JW license
 DONE IN ANDROID 2.9
 --------------------
 Can now specify directory for offline music.
-Keep screen on, Queue next, Swiping.  Courtesy of nesvarbu.
+Keep screen on, Play now/next/last, Swiping.  Courtesy of nesvarbu.
 Added shadow to text in action bar.
 Ensure that file system never gets more than 95% full, irrespective of cache limit settings.
 New setting: "Wi-Fi streaming only"
@@ -42,10 +42,8 @@ Test: New setting: "Wi-Fi streaming only"
 test swiping
 Keep all album art in a single directory.
   Run cache cleaning on service startup.
-Misc patches from nesvarbu
-  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=7024&highlight=
-  Use "play" and "queue" consistently.
-  "Play now", "Play next", "Play last"
+
+Change SearchActivity.onCreateContextMenu, use xml.  
 
 Poor quality for generic album art.
 Enable honeycomb actionbar
