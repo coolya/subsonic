@@ -236,7 +236,7 @@ public class FileUtil {
      */
     public static String getExtension(String name) {
         int index = name.lastIndexOf('.');
-        return index == -1 ? "" : name.substring(index + 1);
+        return index == -1 ? "" : name.substring(index + 1).toLowerCase();
     }
 
     /**
