@@ -35,7 +35,10 @@
 </c:choose>
 
 <sub:url value="main.view" var="backUrl"><sub:param name="path" value="${model.dir.path}"/></sub:url>
-<div class="back"><a href="${backUrl}"><fmt:message key="common.back"/></a></div>
 
+<div style="padding-top:1em">
+    <div class="back" style="float:left;padding-right:10pt"><a href="${backUrl}"><fmt:message key="common.back"/></a></div>
+    <div class="forward" style="float:left"><a href="shareSettings.view"><fmt:message key="share.manage"/></a></div>
+</div>
 </body>
 </html>

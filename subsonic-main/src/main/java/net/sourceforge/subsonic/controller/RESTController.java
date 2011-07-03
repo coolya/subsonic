@@ -870,7 +870,7 @@ public class RESTController extends MultiActionController {
                 files.add(file);
             }
 
-            String shareUrl = shareController.getShareUrl(player, files);
+            String shareUrl = shareController.getShareUrl(request, files);
 
             builder.add("shareUrl", (Iterable<Attribute>) null, shareUrl, true);
             builder.endAll();

@@ -101,6 +101,15 @@ public class ShareDao extends AbstractDao {
         return query("select path from share_file where share_id=?", shareFileRowMapper, shareId);
     }
 
+    /**
+     * Deletes the share with the given ID.
+     *
+     * @param id The ID of the share to delete.
+     */
+    public void deleteShare(Integer id) {
+        update("delete from share where id=?", id);
+    }
+
     private static class ShareRowMapper implements ParameterizedRowMapper<Share> {
         public Share mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Share(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getTimestamp(5),

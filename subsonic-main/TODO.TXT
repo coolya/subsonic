@@ -129,14 +129,13 @@ DownloadController support LastModified.
 Use UTF-8 in search file.
 Rewrite share feature.
   Use proper player/username.
+  Add settings page for management.
 
 TODO IN 4.5
 -----------------
 Test: REST rating.
 Test: UTF-8 in SearchService
 Rewrite share feature.
-  Add management.
-  TTL
   Improve REST support. https://mail.google.com/mail/?ui=2&shva=1#inbox/130d4d719291c9f0
   Add share option to playlist combobox.
 REST: scrobble should increment the internal playcounters too.

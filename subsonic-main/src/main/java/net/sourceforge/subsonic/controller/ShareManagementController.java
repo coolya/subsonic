@@ -21,10 +21,9 @@ package net.sourceforge.subsonic.controller;
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.ShareDao;
 import net.sourceforge.subsonic.domain.MusicFile;
-import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Share;
 import net.sourceforge.subsonic.service.MusicFileService;
-import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 
 import org.apache.commons.lang.RandomStringUtils;
@@ -54,29 +53,28 @@ public class ShareManagementController extends MultiActionController {
 
     private MusicFileService musicFileService;
     private SettingsService settingsService;
-    private PlayerService playerService;
     private ShareDao shareDao;
+    private SecurityService securityService;
 
     public ModelAndView createShare(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String dir = request.getParameter("dir");
 
-        Player player = playerService.getPlayer(request, response);
         List<MusicFile> files = getMusicFiles(request);
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("urlRedirectionEnabled", settingsService.isUrlRedirectionEnabled());
         map.put("dir", musicFileService.getMusicFile(dir));
-        map.put("playUrl", getShareUrl(player, files));
+        map.put("playUrl", getShareUrl(request, files));
 
         return new ModelAndView("createShare", "model", map);
     }
 
-    public String getShareUrl(Player player, List<MusicFile> files) throws Exception {
+    public String getShareUrl(HttpServletRequest request, List<MusicFile> files) throws Exception {
 
         Share share = new Share();
         share.setName(RandomStringUtils.random(5, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
         share.setCreated(new Date());
-        share.setUsername(player.getUsername());
+        share.setUsername(securityService.getCurrentUsername(request));
 
         int shareId = shareDao.createShare(share);
         for (MusicFile file : files) {
@@ -84,7 +82,11 @@ public class ShareManagementController extends MultiActionController {
         }
         LOG.info("Created share '" + share.getName() + "' with " + files.size() + " file(s).");
 
-        return "http://" + settingsService.getUrlRedirectFrom() + ".subsonic.org/share/" + share.getName();
+        return getShareBaseUrl() + share.getName();
+    }
+
+    public String getShareBaseUrl() {
+        return "http://" + settingsService.getUrlRedirectFrom() + ".subsonic.org/share/";
     }
 
     private List<MusicFile> getMusicFiles(HttpServletRequest request) throws IOException {
@@ -111,11 +113,11 @@ public class ShareManagementController extends MultiActionController {
         this.settingsService = settingsService;
     }
 
-    public void setPlayerService(PlayerService playerService) {
-        this.playerService = playerService;
-    }
-
     public void setShareDao(ShareDao shareDao) {
         this.shareDao = shareDao;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 }

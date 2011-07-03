@@ -83,8 +83,8 @@
     </bean>
     <bean id="shareManagementController" class="net.sourceforge.subsonic.controller.ShareManagementController">
         <property name="settingsService" ref="settingsService"/>
+        <property name="securityService" ref="securityService"/>
         <property name="musicFileService" ref="musicFileService"/>
-        <property name="playerService" ref="playerService"/>
         <property name="shareDao" ref="shareDao"/>
     </bean>
     <bean id="setRatingController" class="net.sourceforge.subsonic.controller.SetRatingController">
@@ -152,7 +152,14 @@
         <property name="securityService" ref="securityService"/>
         <property name="transcodingService" ref="transcodingService"/>
     </bean>
-    <bean id="musicFolderSettingsController" class="net.sourceforge.subsonic.controller.MusicFolderSettingsController">
+    <bean id="shareSettingsController" class="net.sourceforge.subsonic.controller.ShareSettingsController">
+        <property name="viewName" value="shareSettings"/>
+        <property name="shareManagementController" ref="shareManagementController"/>
+        <property name="shareDao" ref="shareDao"/>
+        <property name="musicFileService" ref="musicFileService"/>
+        <property name="securityService" ref="securityService"/>
+    </bean>
+     <bean id="musicFolderSettingsController" class="net.sourceforge.subsonic.controller.MusicFolderSettingsController">
         <property name="viewName" value="musicFolderSettings"/>
         <property name="settingsService" ref="settingsService"/>
     </bean>
@@ -399,6 +406,7 @@
                 <prop key="/search.view">searchController</prop>
                 <prop key="/settings.view">settingsController</prop>
                 <prop key="/playerSettings.view">playerSettingsController</prop>
+                <prop key="/shareSettings.view">shareSettingsController</prop>
                 <prop key="/musicFolderSettings.view">musicFolderSettingsController</prop>
                 <prop key="/networkSettings.view">networkSettingsController</prop>
                 <prop key="/transcodingSettings.view">transcodingSettingsController</prop>
