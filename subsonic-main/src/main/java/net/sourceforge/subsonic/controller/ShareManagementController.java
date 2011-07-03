@@ -19,19 +19,23 @@
 package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.Logger;
+import net.sourceforge.subsonic.dao.ShareDao;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.Share;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SettingsService;
-import net.sourceforge.subsonic.service.UrlShortenerService;
-import net.sourceforge.subsonic.util.StringUtil;
+
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -48,10 +52,10 @@ public class ShareManagementController extends MultiActionController {
 
     private static final Logger LOG = Logger.getLogger(ShareManagementController.class);
 
-    private final UrlShortenerService urlShortenerService = new UrlShortenerService();
     private MusicFileService musicFileService;
     private SettingsService settingsService;
     private PlayerService playerService;
+    private ShareDao shareDao;
 
     public ModelAndView createShare(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String dir = request.getParameter("dir");
@@ -68,14 +72,19 @@ public class ShareManagementController extends MultiActionController {
     }
 
     public String getShareUrl(Player player, List<MusicFile> files) throws Exception {
-        StringBuilder builder = new StringBuilder();
-        builder.append("http://").append(settingsService.getUrlRedirectFrom()).append(".subsonic.org/externalPlayer.view?");
-        builder.append("player=").append(player.getId()).append("&");
-        for (MusicFile file : files) {
-            builder.append("pathUtf8Hex=").append(StringUtil.utf8HexEncode(file.getPath())).append("&");
-        }
 
-        return urlShortenerService.shorten(builder.toString());
+        Share share = new Share();
+        share.setName(RandomStringUtils.random(5, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+        share.setCreated(new Date());
+        share.setUsername(player.getUsername());
+
+        int shareId = shareDao.createShare(share);
+        for (MusicFile file : files) {
+            shareDao.createSharedFiles(shareId, file.getPath());
+        }
+        LOG.info("Created share '" + share.getName() + "' with " + files.size() + " file(s).");
+
+        return "http://" + settingsService.getUrlRedirectFrom() + ".subsonic.org/share/" + share.getName();
     }
 
     private List<MusicFile> getMusicFiles(HttpServletRequest request) throws IOException {
@@ -104,5 +113,9 @@ public class ShareManagementController extends MultiActionController {
 
     public void setPlayerService(PlayerService playerService) {
         this.playerService = playerService;
+    }
+
+    public void setShareDao(ShareDao shareDao) {
+        this.shareDao = shareDao;
     }
 }

@@ -85,6 +85,7 @@
         <property name="settingsService" ref="settingsService"/>
         <property name="musicFileService" ref="musicFileService"/>
         <property name="playerService" ref="playerService"/>
+        <property name="shareDao" ref="shareDao"/>
     </bean>
     <bean id="setRatingController" class="net.sourceforge.subsonic.controller.SetRatingController">
         <property name="musicInfoService" ref="musicInfoService"/>
@@ -294,6 +295,7 @@
         <property name="musicFileService" ref="musicFileService"/>
         <property name="settingsService" ref="settingsService"/>
         <property name="playerService" ref="playerService"/>
+        <property name="shareDao" ref="shareDao"/>
     </bean>
     <bean id="downloadController" class="net.sourceforge.subsonic.controller.DownloadController">
         <property name="playerService" ref="playerService"/>
@@ -392,7 +394,6 @@
                 <prop key="/gettingStarted.view">multiController</prop>
                 <prop key="/index.view">multiController</prop>
                 <prop key="/videoPlayer.view">videoPlayerController</prop>
-                <prop key="/externalPlayer.view">externalPlayerController</prop>
                 <prop key="/nowPlaying.view">nowPlayingController</prop>
                 <prop key="/search.view">searchController</prop>
                 <prop key="/settings.view">settingsController</prop>
@@ -432,6 +433,7 @@
                 <prop key="/rest/**">restController</prop>
                 <prop key="/play.m3u">m3uController</prop>
                 <prop key="/stream/**">streamController</prop>
+                <prop key="/share/**">externalPlayerController</prop>
             </props>
         </property>
     </bean>

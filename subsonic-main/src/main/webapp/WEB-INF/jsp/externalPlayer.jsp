@@ -15,7 +15,7 @@
 
     <meta name="og:title" content="${fn:escapeXml(model.songs[0].metaData.artist)} &mdash; ${fn:escapeXml(model.songs[0].metaData.album)}"/>
     <meta name="og:type" content="album"/>
-    <meta name="og:image" content="http://${model.redirectFrom}.subsonic.org/${coverArtUrl}&size=200"/>
+    <meta name="og:image" content="http://${model.redirectFrom}.subsonic.org${coverArtUrl}&size=200"/>
 
     <script type="text/javascript">
         function init() {

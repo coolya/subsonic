@@ -42,27 +42,55 @@ public class Share {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getUsername() {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public Date getCreated() {
         return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
     public Date getExpires() {
         return expires;
     }
 
+    public void setExpires(Date expires) {
+        this.expires = expires;
+    }
+
     public Date getLastVisited() {
         return lastVisited;
     }
 
+    public void setLastVisited(Date lastVisited) {
+        this.lastVisited = lastVisited;
+    }
+
     public int getVisitCount() {
         return visitCount;
+    }
+
+    public void setVisitCount(int visitCount) {
+        this.visitCount = visitCount;
     }
 }

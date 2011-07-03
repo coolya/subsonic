@@ -62,6 +62,11 @@ public class ShareDao extends AbstractDao {
         return query(sql, shareRowMapper);
     }
 
+    public Share getShareByName(String shareName) {
+        String sql = "select " + COLUMNS + " from share where name=?";
+        return queryOne(sql, shareRowMapper, shareName);
+    }
+
     /**
      * Updates the given share.
      *
@@ -79,7 +84,7 @@ public class ShareDao extends AbstractDao {
      * @param shareId The share ID.
      * @param paths   Paths of the files to share.
      */
-    public void createSharedFiles(int shareId, List<String> paths) {
+    public void createSharedFiles(int shareId, String... paths) {
         String sql = "insert into share_file (share_id, path) values (?, ?)";
         for (String path : paths) {
             update(sql, shareId, path);

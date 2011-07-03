@@ -20,6 +20,7 @@ package net.sourceforge.subsonic.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +28,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
+import net.sourceforge.subsonic.dao.ShareDao;
 import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.Share;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SettingsService;
@@ -42,36 +47,69 @@ import net.sourceforge.subsonic.service.SettingsService;
  */
 public class ExternalPlayerController extends ParameterizableViewController {
 
+    private static final Log LOG = LogFactory.getLog(ExternalPlayerController.class);
+
     private MusicFileService musicFileService;
     private SettingsService settingsService;
     private PlayerService playerService;
+    private ShareDao shareDao;
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
-        List<MusicFile> songs = getSongs(request);
+        String pathInfo = request.getPathInfo();
+
+        if (pathInfo == null || !pathInfo.startsWith("/")) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return null;
+        }
+
+        Share share = shareDao.getShareByName(pathInfo.substring(1));
+        if (share == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return null;
+        }
+
+        if (share.getExpires() != null && share.getExpires().before(new Date())) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return null;
+        }
+
+        share.setLastVisited(new Date());
+        share.setVisitCount(share.getVisitCount() + 1);
+        shareDao.updateShare(share);
+
+        List<MusicFile> songs = getSongs(share);
 
         map.put("songs", songs);
         if (!songs.isEmpty()) {
             map.put("coverArt", musicFileService.getCoverArt(songs.get(0).getParent()));
         }
         map.put("redirectFrom", settingsService.getUrlRedirectFrom());
-        map.put("player", request.getParameter("player"));
+        // TODO
+//        map.put("player", request.getParameter("player"));
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
     }
 
-    private List<MusicFile> getSongs(HttpServletRequest request) throws IOException {
+    private List<MusicFile> getSongs(Share share) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>();
-        for (String path : request.getParameterValues("path")) {
-            MusicFile file = musicFileService.getMusicFile(path);
-            if (file.isDirectory()) {
-                result.addAll(file.getChildren(true, false, true));
-            } else {
-                result.add(file);
+
+        for (String path : shareDao.getSharedFiles(share.getId())) {
+            try {
+                MusicFile file = musicFileService.getMusicFile(path);
+                if (file.exists()) {
+                    if (file.isDirectory()) {
+                        result.addAll(file.getChildren(true, false, true));
+                    } else {
+                        result.add(file);
+                    }
+                }
+            } catch (Exception x) {
+                LOG.warn("Couldn't read file " + path);
             }
         }
         return result;
@@ -87,5 +125,9 @@ public class ExternalPlayerController extends ParameterizableViewController {
 
     public void setPlayerService(PlayerService playerService) {
         this.playerService = playerService;
+    }
+
+    public void setShareDao(ShareDao shareDao) {
+        this.shareDao = shareDao;
     }
 }

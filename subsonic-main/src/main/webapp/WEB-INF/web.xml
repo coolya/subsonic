@@ -59,6 +59,10 @@
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>subsonic</servlet-name>
+        <url-pattern>/share/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>dwr-invoker</servlet-name>
         <url-pattern>/dwr/*</url-pattern>
     </servlet-mapping>

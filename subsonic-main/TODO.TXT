@@ -130,14 +130,14 @@ Use UTF-8 in search file.
 
 TODO IN 4.5
 -----------------
-  https://mail.google.com/mail/?shva=1#inbox/130de0242c131e77
 Test: REST rating.
 Test: UTF-8 in SearchService
 Rewrite share feature.
   Add management.
+  Use proper player/username.
   TTL
   Improve REST support. https://mail.google.com/mail/?ui=2&shva=1#inbox/130d4d719291c9f0
-Add share option to playlist combobox.
+  Add share option to playlist combobox.
 REST: scrobble should increment the internal playcounters too.
 Show lyrics in tags.
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1700

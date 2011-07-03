@@ -38,6 +38,10 @@
         <property name="daoHelper" ref="daoHelper"/>
     </bean>
 
+    <bean id="shareDao" class="net.sourceforge.subsonic.dao.ShareDao">
+        <property name="daoHelper" ref="daoHelper"/>
+    </bean>
+
     <bean id="daoHelper" class="net.sourceforge.subsonic.dao.DaoHelper"/>
 
 
