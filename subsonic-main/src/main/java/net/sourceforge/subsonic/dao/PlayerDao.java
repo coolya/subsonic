@@ -67,7 +67,6 @@ public class PlayerDao extends AbstractDao {
      * @return All relevant players.
      */
     public List<Player> getPlayersForUserAndClientId(String username, String clientId) {
-        // TODO: Avoid if/else
         if (clientId != null) {
             String sql = "select " + COLUMNS + " from player where username=? and client_id=?";
             return query(sql, rowMapper, username,  clientId);

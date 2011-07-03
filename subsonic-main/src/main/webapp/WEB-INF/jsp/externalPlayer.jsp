@@ -51,7 +51,7 @@
             // TODO: Use video provider for aac, m4a
             list[${loopStatus.count-1}] = {
                 file: "${streamUrl}&player=${model.player}",
-                image: "${coverArtUrl}&size=277",
+                image: "${coverArtUrl}&size=500",
                 title: "${fn:escapeXml(song.title)}",
                 provider: "${song.video ? "video" : "sound"}",
                 description: "${fn:escapeXml(song.metaData.artist)}"

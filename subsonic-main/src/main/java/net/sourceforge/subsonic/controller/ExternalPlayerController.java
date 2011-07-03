@@ -28,6 +28,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,9 +36,12 @@ import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
 import net.sourceforge.subsonic.dao.ShareDao;
 import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Share;
+import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
+import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
 
 /**
@@ -48,9 +52,11 @@ import net.sourceforge.subsonic.service.SettingsService;
 public class ExternalPlayerController extends ParameterizableViewController {
 
     private static final Log LOG = LogFactory.getLog(ExternalPlayerController.class);
+    private static final String GUEST_USERNAME = "guest";
 
     private MusicFileService musicFileService;
     private SettingsService settingsService;
+    private SecurityService securityService;
     private PlayerService playerService;
     private ShareDao shareDao;
 
@@ -88,8 +94,8 @@ public class ExternalPlayerController extends ParameterizableViewController {
             map.put("coverArt", musicFileService.getCoverArt(songs.get(0).getParent()));
         }
         map.put("redirectFrom", settingsService.getUrlRedirectFrom());
-        // TODO
-//        map.put("player", request.getParameter("player"));
+        map.put("player", getPlayer(request).getId());
+
         ModelAndView result = super.handleRequestInternal(request, response);
         result.addObject("model", map);
         return result;
@@ -115,6 +121,31 @@ public class ExternalPlayerController extends ParameterizableViewController {
         return result;
     }
 
+    private Player getPlayer(HttpServletRequest request) {
+
+        // Create guest user if necessary.
+        User user = securityService.getUserByName(GUEST_USERNAME);
+        if (user == null) {
+            user = new User(GUEST_USERNAME, RandomStringUtils.randomAlphanumeric(30), null);
+            user.setStreamRole(true);
+            securityService.createUser(user);
+        }
+
+        // Look for existing player.
+        List<Player> players = playerService.getPlayersForUserAndClientId(GUEST_USERNAME, null);
+        if (!players.isEmpty()) {
+            return players.get(0);
+        }
+
+        // Create player if necessary.
+        Player player = new Player();
+        player.setIpAddress(request.getRemoteAddr());
+        player.setUsername(GUEST_USERNAME);
+        playerService.createPlayer(player);
+
+        return player;
+    }
+
     public void setMusicFileService(MusicFileService musicFileService) {
         this.musicFileService = musicFileService;
     }
@@ -129,5 +160,9 @@ public class ExternalPlayerController extends ParameterizableViewController {
 
     public void setShareDao(ShareDao shareDao) {
         this.shareDao = shareDao;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 }
