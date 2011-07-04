@@ -41,15 +41,15 @@ public class ShareDao extends AbstractDao {
     /**
      * Creates a new share.
      *
-     * @param share The share to create.
-     * @return The ID of the newly created share.
+     * @param share The share to create.  The ID of the share will be set by this method.
      */
-    public synchronized int createShare(Share share) {
+    public synchronized void createShare(Share share) {
         String sql = "insert into share (" + COLUMNS + ") values (" + questionMarks(COLUMNS) + ")";
         update(sql, null, share.getName(), share.getDescription(), share.getUsername(), share.getCreated(),
                 share.getExpires(), share.getLastVisited(), share.getVisitCount());
 
-        return getJdbcTemplate().queryForInt("select max(id) from share");
+        int id = getJdbcTemplate().queryForInt("select max(id) from share");
+        share.setId(id);
     }
 
     /**
@@ -65,6 +65,11 @@ public class ShareDao extends AbstractDao {
     public Share getShareByName(String shareName) {
         String sql = "select " + COLUMNS + " from share where name=?";
         return queryOne(sql, shareRowMapper, shareName);
+    }
+
+    public Share getShareById(int id) {
+        String sql = "select " + COLUMNS + " from share where id=?";
+        return queryOne(sql, shareRowMapper, id);
     }
 
     /**

@@ -121,6 +121,13 @@
         <property name="settingsService" ref="settingsService"/>
     </bean>
 
+    <bean id="shareService" class="net.sourceforge.subsonic.service.ShareService">
+        <property name="shareDao" ref="shareDao"/>
+        <property name="settingsService" ref="settingsService"/>
+        <property name="securityService" ref="securityService"/>
+        <property name="musicFileService" ref="musicFileService"/>
+    </bean>
+
     <bean id="podcastService" class="net.sourceforge.subsonic.service.PodcastService" init-method="init">
         <property name="podcastDao" ref="podcastDao"/>
         <property name="settingsService" ref="settingsService"/>

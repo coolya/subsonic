@@ -18,6 +18,7 @@
  */
 package net.sourceforge.subsonic.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,17 +27,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
-import net.sourceforge.subsonic.dao.ShareDao;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Share;
 import net.sourceforge.subsonic.domain.User;
-import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.SecurityService;
+import net.sourceforge.subsonic.service.ShareService;
 
 /**
  * Controller for the page used to administrate the set of shared media.
@@ -45,9 +44,7 @@ import net.sourceforge.subsonic.service.SecurityService;
  */
 public class ShareSettingsController extends ParameterizableViewController {
 
-    private ShareManagementController shareManagementController;
-    private ShareDao shareDao;
-    private MusicFileService musicFileService;
+    private ShareService shareService;
     private SecurityService securityService;
 
     @Override
@@ -61,7 +58,7 @@ public class ShareSettingsController extends ParameterizableViewController {
         }
 
         ModelAndView result = super.handleRequestInternal(request, response);
-        map.put("shareBaseUrl", shareManagementController.getShareBaseUrl());
+        map.put("shareBaseUrl", shareService.getShareBaseUrl());
         map.put("shareInfos", getShareInfos(request));
 
         result.addObject("model", map);
@@ -78,18 +75,18 @@ public class ShareSettingsController extends ParameterizableViewController {
     }
 
     private String handleParameters(HttpServletRequest request) {
-
-        for (Share share : getShares(request)) {
+        User user = securityService.getCurrentUser(request);
+        for (Share share : shareService.getSharesForUser(user)) {
             Integer id = share.getId();
 
             String description = getParameter(request, "description", id);
             boolean delete = getParameter(request, "delete", id) != null;
 
             if (delete) {
-                shareDao.deleteShare(id);
+                shareService.deleteShare(id);
             } else {
                 share.setDescription(description);
-                shareDao.updateShare(share);
+                shareService.updateShare(share);
             }
         }
 
@@ -98,34 +95,18 @@ public class ShareSettingsController extends ParameterizableViewController {
 
     
     private List<ShareInfo> getShareInfos(HttpServletRequest request) {
-        ArrayList<ShareInfo> result = new ArrayList<ShareInfo>();
-        
-        for (Share share : getShares(request)) {
-            MusicFile dir = null;
-            List<String> paths = shareDao.getSharedFiles(share.getId());
-            try {
-                if (!paths.isEmpty()) {
-                    MusicFile file = musicFileService.getMusicFile(paths.get(0));
-                    dir = file.isDirectory() ? file : file.getParent();
-                }
-            } catch (Exception x) {
-                // Ignored
-            }
-            result.add(new ShareInfo(share, dir));
-
-        }
-        return result;
-    }
-
-    private List<Share> getShares(HttpServletRequest request) {
+        List<ShareInfo> result = new ArrayList<ShareInfo>();
         User user = securityService.getCurrentUser(request);
-
-        List<Share> result = new ArrayList<Share>();
-        for (Share share : shareDao.getAllShares()) {
-            if (user.isAdminRole() || ObjectUtils.equals(user.getUsername(), share.getUsername())) {
-                result.add(share);
+        for (Share share : shareService.getSharesForUser(user)) {
+            List<MusicFile> files = shareService.getSharedFiles(share.getId());
+            if (!files.isEmpty()) {
+                MusicFile file = files.get(0);
+                try {
+                    result.add(new ShareInfo(share, file.isDirectory() ? file : file.getParent()));
+                } catch (IOException e) {
+                    // Ignored
+                }
             }
-
         }
         return result;
     }
@@ -134,20 +115,12 @@ public class ShareSettingsController extends ParameterizableViewController {
         return StringUtils.trimToNull(request.getParameter(name + "[" + id + "]"));
     }
 
-    public void setShareManagementController(ShareManagementController shareManagementController) {
-        this.shareManagementController = shareManagementController;
-    }
-
-    public void setShareDao(ShareDao shareDao) {
-        this.shareDao = shareDao;
-    }
-
-    public void setMusicFileService(MusicFileService musicFileService) {
-        this.musicFileService = musicFileService;
-    }
-
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
+    }
+
+    public void setShareService(ShareService shareService) {
+        this.shareService = shareService;
     }
 
     public static class ShareInfo {

@@ -133,6 +133,7 @@ Rewrite share feature.
 
 TODO IN 4.5
 -----------------
+Update api.jsp with new share methods.
 Test: REST rating.
 Test: UTF-8 in SearchService
 Rewrite share feature.

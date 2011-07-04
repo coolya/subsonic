@@ -54,6 +54,7 @@ import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.domain.RandomSearchCriteria;
 import net.sourceforge.subsonic.domain.SearchCriteria;
 import net.sourceforge.subsonic.domain.SearchResult;
+import net.sourceforge.subsonic.domain.Share;
 import net.sourceforge.subsonic.domain.TranscodeScheme;
 import net.sourceforge.subsonic.domain.TransferStatus;
 import net.sourceforge.subsonic.domain.User;
@@ -68,6 +69,7 @@ import net.sourceforge.subsonic.service.PlaylistService;
 import net.sourceforge.subsonic.service.SearchService;
 import net.sourceforge.subsonic.service.SecurityService;
 import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.ShareService;
 import net.sourceforge.subsonic.service.StatusService;
 import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.service.LuceneSearchService;
@@ -103,7 +105,7 @@ public class RESTController extends MultiActionController {
     private HomeController homeController;
     private StatusService statusService;
     private StreamController streamController;
-    private ShareManagementController shareController;
+    private ShareService shareService;
     private SearchService searchService;
     private PlaylistService playlistService;
     private ChatService chatService;
@@ -753,6 +755,18 @@ public class RESTController extends MultiActionController {
             return null;
         }
 
+        long ifModifiedSince = request.getDateHeader("If-Modified-Since");
+        long lastModified = downloadController.getLastModified(request);
+
+        if (ifModifiedSince != -1 && lastModified != -1 && lastModified <= ifModifiedSince) {
+            response.sendError(HttpServletResponse.SC_NOT_MODIFIED);
+            return null;
+        }
+
+        if (lastModified != -1) {
+            response.setDateHeader("Last-Modified", lastModified);
+        }
+
         return downloadController.handleRequest(request, response);
     }
 
@@ -846,7 +860,21 @@ public class RESTController extends MultiActionController {
         response.getWriter().print(builder);
     }
 
-    public void getShareUrl(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void getShares(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request = wrapRequest(request);
+
+        User user = securityService.getCurrentUser(request);
+        XMLBuilder builder = createXMLBuilder(request, response, true);
+
+        for (Share share : shareService.getSharesForUser(user)) {
+            builder.add("shares", false);
+            builder.add("share", createAttributesForShare(share), true);
+        }
+        builder.endAll();
+        response.getWriter().print(builder);
+    }
+
+    public void createShare(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
 
         User user = securityService.getCurrentUser(request);
@@ -857,22 +885,31 @@ public class RESTController extends MultiActionController {
 
         if (!settingsService.isUrlRedirectionEnabled()) {
             error(request, response, ErrorCode.GENERIC, "Sharing is only supported for *.subsonic.org domain names.");
+            return;
         }
 
         XMLBuilder builder = createXMLBuilder(request, response, true);
 
         try {
 
-            Player player = playerService.getPlayer(request, response);
             List<MusicFile> files = new ArrayList<MusicFile>();
             for (String id : ServletRequestUtils.getRequiredStringParameters(request, "id")) {
                 MusicFile file = musicFileService.getMusicFile(StringUtil.utf8HexDecode(id));
                 files.add(file);
             }
 
-            String shareUrl = shareController.getShareUrl(request, files);
+            // TODO: Update api.jsp
 
-            builder.add("shareUrl", (Iterable<Attribute>) null, shareUrl, true);
+            Share share = shareService.createShare(request, files);
+            share.setDescription(request.getParameter("description"));
+            long expires = ServletRequestUtils.getLongParameter(request, "expires", 0L);
+            if (expires != 0) {
+                share.setExpires(new Date(expires));
+            }
+            shareService.updateShare(share);
+
+            builder.add("shares", false);
+            builder.add("share", createAttributesForShare(share), true);
             builder.endAll();
             response.getWriter().print(builder);
 
@@ -882,6 +919,79 @@ public class RESTController extends MultiActionController {
             LOG.warn("Error in REST API.", x);
             error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
         }
+    }
+
+    public void deleteShare(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        try {
+            request = wrapRequest(request);
+            User user = securityService.getCurrentUser(request);
+            int id = ServletRequestUtils.getRequiredIntParameter(request, "id");
+
+            Share share = shareService.getShareById(id);
+            if (share == null) {
+                error(request, response, ErrorCode.NOT_FOUND, "Shared media not found.");
+                return;
+            }
+            if (!user.isAdminRole() && !share.getUsername().equals(user.getUsername())) {
+                error(request, response, ErrorCode.NOT_AUTHORIZED, "Not authorized to delete shared media.");
+                return;
+            }
+
+            shareService.deleteShare(id);
+            XMLBuilder builder = createXMLBuilder(request, response, true).endAll();
+            response.getWriter().print(builder);
+
+        } catch (ServletRequestBindingException x) {
+            error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+        } catch (Exception x) {
+            LOG.warn("Error in REST API.", x);
+            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
+        }
+    }
+
+    public void updateShare(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        try {
+            request = wrapRequest(request);
+            User user = securityService.getCurrentUser(request);
+            int id = ServletRequestUtils.getRequiredIntParameter(request, "id");
+
+            Share share = shareService.getShareById(id);
+            if (share == null) {
+                error(request, response, ErrorCode.NOT_FOUND, "Shared media not found.");
+                return;
+            }
+            if (!user.isAdminRole() && !share.getUsername().equals(user.getUsername())) {
+                error(request, response, ErrorCode.NOT_AUTHORIZED, "Not authorized to modify shared media.");
+                return;
+            }
+
+            share.setDescription(request.getParameter("description"));
+            long expires = ServletRequestUtils.getLongParameter(request, "expires", 0L);
+            if (expires != 0) {
+                share.setExpires(new Date(expires));
+            }
+            shareService.updateShare(share);
+            XMLBuilder builder = createXMLBuilder(request, response, true).endAll();
+            response.getWriter().print(builder);
+
+        } catch (ServletRequestBindingException x) {
+            error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
+        } catch (Exception x) {
+            LOG.warn("Error in REST API.", x);
+            error(request, response, ErrorCode.GENERIC, getErrorMessage(x));
+        }
+    }
+
+    private List<Attribute> createAttributesForShare(Share share) {
+        return Arrays.asList(
+                new Attribute("id", share.getId()),
+                new Attribute("url", shareService.getShareUrl(share)),
+                new Attribute("description", share.getDescription()),
+                new Attribute("username", share.getUsername()),
+                new Attribute("created", share.getCreated()),
+                new Attribute("expires", share.getExpires()),
+                new Attribute("lastVisited", share.getLastVisited()),
+                new Attribute("visitCount", share.getVisitCount()));
     }
 
     public ModelAndView videoPlayer(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -1290,12 +1400,12 @@ public class RESTController extends MultiActionController {
         this.podcastService = podcastService;
     }
 
-    public void setShareController(ShareManagementController shareController) {
-        this.shareController = shareController;
-    }
-
     public void setMusicInfoService(MusicInfoService musicInfoService) {
         this.musicInfoService = musicInfoService;
+    }
+
+    public void setShareService(ShareService shareService) {
+        this.shareService = shareService;
     }
 
     public static enum ErrorCode {

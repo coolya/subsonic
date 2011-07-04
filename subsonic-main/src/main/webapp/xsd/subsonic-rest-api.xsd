@@ -26,7 +26,7 @@
             <xs:element name="randomSongs" type="sub:RandomSongs" minOccurs="1" maxOccurs="1"/>
             <xs:element name="lyrics" type="sub:Lyrics" minOccurs="1" maxOccurs="1"/>
             <xs:element name="podcasts" type="sub:Podcasts" minOccurs="1" maxOccurs="1"/>
-            <xs:element name="shareUrl" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="shares" type="sub:Shares" minOccurs="1" maxOccurs="1"/>
             <xs:element name="error" type="sub:Error" minOccurs="1" maxOccurs="1"/>
         </xs:choice>
         <xs:attribute name="status" type="sub:ResponseStatus" use="required"/>
@@ -255,6 +255,23 @@
             <xs:enumeration value="skipped"/>
         </xs:restriction>
     </xs:simpleType>
+
+    <xs:complexType name="Shares">
+        <xs:sequence>
+            <xs:element name="share" type="sub:Share" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Share">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="url" type="xs:string" use="required"/>
+        <xs:attribute name="description" type="xs:string" use="optional"/>
+        <xs:attribute name="username" type="xs:string" use="required"/>
+        <xs:attribute name="created" type="xs:dateTime" use="required"/>
+        <xs:attribute name="expires" type="xs:dateTime" use="optional"/>
+        <xs:attribute name="lastVisited" type="xs:dateTime" use="optional"/>
+        <xs:attribute name="visitCount" type="xs:int" use="required"/>
+    </xs:complexType>
 
     <xs:complexType name="License">
         <xs:attribute name="valid" type="xs:boolean" use="required"/>

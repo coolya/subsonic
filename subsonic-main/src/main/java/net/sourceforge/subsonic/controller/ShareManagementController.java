@@ -18,29 +18,25 @@
  */
 package net.sourceforge.subsonic.controller;
 
-import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.dao.ShareDao;
-import net.sourceforge.subsonic.domain.MusicFile;
-import net.sourceforge.subsonic.domain.Share;
-import net.sourceforge.subsonic.service.MusicFileService;
-import net.sourceforge.subsonic.service.SecurityService;
-import net.sourceforge.subsonic.service.SettingsService;
-
-import org.apache.commons.lang.RandomStringUtils;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.io.IOException;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
+import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.Share;
+import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.SettingsService;
+import net.sourceforge.subsonic.service.ShareService;
 
 /**
  * Controller for sharing music on Twitter, Facebook etc.
@@ -49,12 +45,9 @@ import java.io.IOException;
  */
 public class ShareManagementController extends MultiActionController {
 
-    private static final Logger LOG = Logger.getLogger(ShareManagementController.class);
-
     private MusicFileService musicFileService;
     private SettingsService settingsService;
-    private ShareDao shareDao;
-    private SecurityService securityService;
+    private ShareService shareService;
 
     public ModelAndView createShare(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String dir = request.getParameter("dir");
@@ -64,29 +57,10 @@ public class ShareManagementController extends MultiActionController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("urlRedirectionEnabled", settingsService.isUrlRedirectionEnabled());
         map.put("dir", musicFileService.getMusicFile(dir));
-        map.put("playUrl", getShareUrl(request, files));
+        Share share = shareService.createShare(request, files);
+        map.put("playUrl", shareService.getShareUrl(share));
 
         return new ModelAndView("createShare", "model", map);
-    }
-
-    public String getShareUrl(HttpServletRequest request, List<MusicFile> files) throws Exception {
-
-        Share share = new Share();
-        share.setName(RandomStringUtils.random(5, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
-        share.setCreated(new Date());
-        share.setUsername(securityService.getCurrentUsername(request));
-
-        int shareId = shareDao.createShare(share);
-        for (MusicFile file : files) {
-            shareDao.createSharedFiles(shareId, file.getPath());
-        }
-        LOG.info("Created share '" + share.getName() + "' with " + files.size() + " file(s).");
-
-        return getShareBaseUrl() + share.getName();
-    }
-
-    public String getShareBaseUrl() {
-        return "http://" + settingsService.getUrlRedirectFrom() + ".subsonic.org/share/";
     }
 
     private List<MusicFile> getMusicFiles(HttpServletRequest request) throws IOException {
@@ -113,11 +87,7 @@ public class ShareManagementController extends MultiActionController {
         this.settingsService = settingsService;
     }
 
-    public void setShareDao(ShareDao shareDao) {
-        this.shareDao = shareDao;
-    }
-
-    public void setSecurityService(SecurityService securityService) {
-        this.securityService = securityService;
+    public void setShareService(ShareService shareService) {
+        this.shareService = shareService;
     }
 }

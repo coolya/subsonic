@@ -83,9 +83,8 @@
     </bean>
     <bean id="shareManagementController" class="net.sourceforge.subsonic.controller.ShareManagementController">
         <property name="settingsService" ref="settingsService"/>
-        <property name="securityService" ref="securityService"/>
         <property name="musicFileService" ref="musicFileService"/>
-        <property name="shareDao" ref="shareDao"/>
+        <property name="shareService" ref="shareService"/>
     </bean>
     <bean id="setRatingController" class="net.sourceforge.subsonic.controller.SetRatingController">
         <property name="musicInfoService" ref="musicInfoService"/>
@@ -154,9 +153,7 @@
     </bean>
     <bean id="shareSettingsController" class="net.sourceforge.subsonic.controller.ShareSettingsController">
         <property name="viewName" value="shareSettings"/>
-        <property name="shareManagementController" ref="shareManagementController"/>
-        <property name="shareDao" ref="shareDao"/>
-        <property name="musicFileService" ref="musicFileService"/>
+        <property name="shareService" ref="shareService"/>
         <property name="securityService" ref="securityService"/>
     </bean>
      <bean id="musicFolderSettingsController" class="net.sourceforge.subsonic.controller.MusicFolderSettingsController">
@@ -349,13 +346,13 @@
         <property name="chatService" ref="ajaxChatService"/>
         <property name="lyricsService" ref="ajaxLyricsService"/>
         <property name="podcastService" ref="podcastService"/>
+        <property name="shareService" ref="shareService"/>
         <property name="downloadController" ref="downloadController"/>
         <property name="streamController" ref="streamController"/>
         <property name="coverArtController" ref="coverArtController"/>
         <property name="userSettingsController" ref="userSettingsController"/>
         <property name="leftController" ref="leftController"/>
         <property name="homeController" ref="homeController"/>
-        <property name="shareController" ref="shareManagementController"/>
     </bean>
     <bean id="dbController" class="net.sourceforge.subsonic.controller.DBController">
         <property name="viewName" value="db"/>
