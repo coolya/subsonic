@@ -30,15 +30,22 @@ Buy new JW license
 
 DONE IN ANDROID 2.9
 --------------------
-Can now specify directory for offline music.
-Keep screen on, Play now/next/last, Swiping.  Courtesy of nesvarbu.
-Added shadow to text in action bar.
-Ensure that file system never gets more than 95% full, irrespective of cache limit settings.
+New setting: "Cache location"
 New setting: "Wi-Fi streaming only"
+Option to keep "Now playing" screen on. Courtesy of nesvarbu.
+Play now/next/last. Courtesy of nesvarbu.
+Swipe "Now playing" screen to skip to next/previous track. Courtesy of nesvarbu.
+Ensure that file system never gets more than 95% full, irrespective of cache limit settings.
 Allow app to be installed on SD card.
 
-TODO IN ANDROID 2.9
--------------------
+TODO IN ANDROID 3.0
+--------------------
+Equalizer.
+  android.media.audiofx.Equalizer
+  http://developer.android.com/resources/samples/ApiDemos/src/com/example/android/apis/media/AudioFxDemo.html
+Visualizer.
+Sharing support.
+Podcast support.
 Offline shuffle play broken.
 Test: New setting: "Wi-Fi streaming only"
 test swiping
@@ -46,8 +53,6 @@ Keep all album art in a single directory.
   Run cache cleaning on service startup.
 
 New Pin/unpin icons.
-Sharing support.
-Podcast support.
 
 Poor quality for generic album art.
 Enable honeycomb actionbar
@@ -64,7 +69,6 @@ Access other music on phone.
     Server 3
     Offline media
 Change font?
-Offline shuffle broken?
 Does repeat button work in landscape mode?
 DownloadServiceImpl: ignore a mysterious MediaPlayer error
   https://mail.google.com/a/activeobjects.no/?ui=2#inbox/12eff38d39be7a3c
@@ -701,11 +705,11 @@ Update
     https://myapps.developer.motorola.com/
     https://slideme.org/application/subsonic
     http://www.camangimarket.com/index.html
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-2.8 -m "Tagging Android 2.8"
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-2.9.beta1 -m "Tagging Android 2.9.beta1"
 Create new directory in FRS
   https://sourceforge.net/projects/subsonic/files/android/
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/2.8/subsonic-2.8.apk
+  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/2.9.beta1/subsonic-2.9.beta1.apk
 
 
 HOW TO RELEASE TRANSCODING PACK
