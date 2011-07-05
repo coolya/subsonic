@@ -38,6 +38,8 @@ New setting: "Wi-Fi streaming only"
 
 TODO IN ANDROID 2.9
 -------------------
+Allow move to sd
+Offline shuffle play broken.
 Test: New setting: "Wi-Fi streaming only"
 test swiping
 Keep all album art in a single directory.
@@ -133,7 +135,8 @@ Rewrite share feature.
 
 TODO IN 4.5
 -----------------
-Update api.jsp with new share methods.
+Add files to <share>
+Show share description in ext player.
 Test: REST rating.
 Test: UTF-8 in SearchService
 Rewrite share feature.
