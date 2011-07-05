@@ -11,7 +11,7 @@
     <uses-permission a:name="android.permission.WAKE_LOCK"/>
     <uses-permission a:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-    <uses-sdk a:minSdkVersion="3" a:targetSdkVersion="11"/>
+    <uses-sdk a:minSdkVersion="3" a:targetSdkVersion="12"/>
 
     <supports-screens a:anyDensity="true" a:xlargeScreens="true" a:largeScreens="true" a:normalScreens="true" a:smallScreens="true"/>
 
