@@ -2,8 +2,8 @@
 <manifest xmlns:a="http://schemas.android.com/apk/res/android"
           package="net.sourceforge.subsonic.androidapp"
           a:installLocation="auto"
-          a:versionCode="34"
-          a:versionName="2.8.1">
+          a:versionCode="35"
+          a:versionName="2.9.beta1">
 
     <uses-permission a:name="android.permission.INTERNET"/>
     <uses-permission a:name="android.permission.READ_PHONE_STATE"/>
@@ -13,7 +13,7 @@
 
     <uses-sdk a:minSdkVersion="3" a:targetSdkVersion="11"/>
 
-    <supports-screens a:anyDensity="true" a:largeScreens="true" a:normalScreens="true" a:smallScreens="true"/>
+    <supports-screens a:anyDensity="true" a:xlargeScreens="true" a:largeScreens="true" a:normalScreens="true" a:smallScreens="true"/>
 
     <application a:label="@string/common.appname" a:icon="@drawable/launch" a:theme="@style/Wheat">
 
