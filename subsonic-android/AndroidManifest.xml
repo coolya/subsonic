@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:a="http://schemas.android.com/apk/res/android"
           package="net.sourceforge.subsonic.androidapp"
+          a:installLocation="auto"
           a:versionCode="34"
           a:versionName="2.8.1">
 
@@ -10,7 +11,7 @@
     <uses-permission a:name="android.permission.WAKE_LOCK"/>
     <uses-permission a:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-    <uses-sdk a:minSdkVersion="3" a:targetSdkVersion="7"/>
+    <uses-sdk a:minSdkVersion="3" a:targetSdkVersion="11"/>
 
     <supports-screens a:anyDensity="true" a:largeScreens="true" a:normalScreens="true" a:smallScreens="true"/>
 

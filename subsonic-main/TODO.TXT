@@ -35,10 +35,10 @@ Keep screen on, Play now/next/last, Swiping.  Courtesy of nesvarbu.
 Added shadow to text in action bar.
 Ensure that file system never gets more than 95% full, irrespective of cache limit settings.
 New setting: "Wi-Fi streaming only"
+Allow app to be installed on SD card.
 
 TODO IN ANDROID 2.9
 -------------------
-Allow move to sd
 Offline shuffle play broken.
 Test: New setting: "Wi-Fi streaming only"
 test swiping
