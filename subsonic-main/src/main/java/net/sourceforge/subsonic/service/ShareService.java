@@ -26,9 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
+import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.ShareDao;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Share;
@@ -42,7 +41,7 @@ import net.sourceforge.subsonic.domain.User;
  */
 public class ShareService {
 
-    private static final Log LOG = LogFactory.getLog(ShareService.class);
+    private static final Logger LOG = Logger.getLogger(ShareService.class);
 
     private ShareDao shareDao;
     private SecurityService securityService;

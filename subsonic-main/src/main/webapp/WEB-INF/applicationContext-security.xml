@@ -105,6 +105,7 @@
                 /icons/**=IS_AUTHENTICATED_ANONYMOUSLY
                 /flash/**=IS_AUTHENTICATED_ANONYMOUSLY
                 /script/**=IS_AUTHENTICATED_ANONYMOUSLY
+                /crossdomain.xml=IS_AUTHENTICATED_ANONYMOUSLY
 
                 /personalSettings.view=ROLE_SETTINGS
                 /passwordSettings.view=ROLE_SETTINGS

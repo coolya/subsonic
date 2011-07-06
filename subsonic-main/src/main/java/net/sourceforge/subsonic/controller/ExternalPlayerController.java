@@ -29,11 +29,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
+import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.ShareDao;
 import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
@@ -51,7 +50,7 @@ import net.sourceforge.subsonic.service.SettingsService;
  */
 public class ExternalPlayerController extends ParameterizableViewController {
 
-    private static final Log LOG = LogFactory.getLog(ExternalPlayerController.class);
+    private static final Logger LOG = Logger.getLogger(ExternalPlayerController.class);
     private static final String GUEST_USERNAME = "guest";
 
     private MusicFileService musicFileService;
