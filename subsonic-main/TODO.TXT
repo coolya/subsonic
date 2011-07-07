@@ -30,19 +30,14 @@ Buy new JW license
 
 DONE IN ANDROID 2.9
 --------------------
-New setting: "Cache location"
-New setting: "Wi-Fi streaming only"
-Option to keep "Now playing" screen on. Courtesy of nesvarbu.
-Play now/next/last. Courtesy of nesvarbu.
-Swipe "Now playing" screen to skip to next/previous track. Courtesy of nesvarbu.
-Ensure that file system never gets more than 95% full, irrespective of cache limit settings.
-Allow app to be installed on SD card.
 
 TODO IN ANDROID 3.0
 --------------------
+Storopia font.
 Equalizer.
-  android.media.audiofx.Equalizer
-  http://developer.android.com/resources/samples/ApiDemos/src/com/example/android/apis/media/AudioFxDemo.html
+Update widget
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=7114
+Change swipe direction.
 Visualizer.
 Sharing support.
 Podcast support.
@@ -141,7 +136,6 @@ TODO IN 4.5
 -----------------
 Add files to <share>
 Subsonic Chumby
-  Add crossdomain.xml?
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=7154
   http://forum.chumby.com/viewtopic.php?id=6733
 Show share description in ext player.
@@ -712,11 +706,11 @@ Update
     https://myapps.developer.motorola.com/
     https://slideme.org/application/subsonic
     http://www.camangimarket.com/index.html
-svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-2.9.beta1 -m "Tagging Android 2.9.beta1"
+svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk/subsonic-android https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/android-release-2.9 -m "Tagging Android 2.9"
 Create new directory in FRS
   https://sourceforge.net/projects/subsonic/files/android/
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/2.9.beta1/subsonic-2.9.beta1.apk
+  rsync -avP -e ssh subsonic-android/bin/subsonic-release.apk  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/android/2.9/subsonic-2.9.apk
 
 
 HOW TO RELEASE TRANSCODING PACK

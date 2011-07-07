@@ -42,6 +42,7 @@ import net.sourceforge.subsonic.androidapp.util.ShufflePlayBuffer;
 import net.sourceforge.subsonic.androidapp.util.SimpleServiceBinder;
 import net.sourceforge.subsonic.androidapp.util.Util;
 import net.sourceforge.subsonic.androidapp.util.LRUCache;
+import net.sourceforge.subsonic.androidapp.audiofx.EqualizerController;
 
 import static net.sourceforge.subsonic.androidapp.domain.PlayerState.*;
 
@@ -81,6 +82,18 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private PowerManager.WakeLock wakeLock;
     private boolean keepScreenOn = false;
 
+    private static boolean equalizerAvailable;
+    private EqualizerController equalizerController;
+
+    static {
+        try {
+            EqualizerController.checkAvailable();
+            equalizerAvailable = true;
+        } catch (Throwable t) {
+            equalizerAvailable = false;
+        }
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -95,6 +108,15 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                 return false;
             }
         });
+
+        if (equalizerAvailable) {
+            equalizerController = new EqualizerController(this, mediaPlayer);
+            if (!equalizerController.isAvailable()) {
+                equalizerController = null;
+            } else {
+                equalizerController.loadSettings();
+            }
+        }
 
         PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, this.getClass().getName());
@@ -538,6 +560,11 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     @Override
     public String getSuggestedPlaylistName() {
         return suggestedPlaylistName;
+    }
+
+    @Override
+    public EqualizerController getEqualizerController() {
+        return equalizerController;
     }
 
     private synchronized void bufferAndPlay() {

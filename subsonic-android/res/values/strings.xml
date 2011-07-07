@@ -191,6 +191,10 @@
     <string name="select_artist.folder">Select folder</string>
     <string name="select_artist.all_folders">All folders</string>
 
+    <string name="equalizer.label">Equalizer</string>
+    <string name="equalizer.enabled">Enabled</string>
+    <string name="equalizer.preset">Select preset</string>
+
     <string name="widget.initial_text">Touch to select music</string>
     <string name="widget.sdcard_busy">SD card unavailable</string>
     <string name="widget.sdcard_missing">No SD card</string>

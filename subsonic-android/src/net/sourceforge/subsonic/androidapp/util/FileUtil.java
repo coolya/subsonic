@@ -23,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -251,7 +252,7 @@ public class FileUtil {
         return index == -1 ? name : name.substring(0, index);
     }
 
-    public static <T> boolean serialize(Context context, T obj, String fileName) {
+    public static <T extends Serializable> boolean serialize(Context context, T obj, String fileName) {
         File file = new File(context.getCacheDir(), fileName);
         ObjectOutputStream out = null;
         try {
@@ -267,7 +268,7 @@ public class FileUtil {
         }
     }
 
-    public static <T> T deserialize(Context context, String fileName) {
+    public static <T extends Serializable> T deserialize(Context context, String fileName) {
         File file = new File(context.getCacheDir(), fileName);
         if (!file.exists() || !file.isFile()) {
             return null;
