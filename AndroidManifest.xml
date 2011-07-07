@@ -10,6 +10,8 @@
     <uses-permission a:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission a:name="android.permission.WAKE_LOCK"/>
     <uses-permission a:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission a:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission a:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
 
     <uses-sdk a:minSdkVersion="3" a:targetSdkVersion="12"/>
 
@@ -62,6 +64,11 @@
                   a:launchMode="singleTask"/>
 
         <activity a:name="net.sourceforge.subsonic.androidapp.activity.LyricsActivity"
+                  a:configChanges="orientation|keyboardHidden"
+                  a:launchMode="singleTask"/>
+
+        <activity a:name="net.sourceforge.subsonic.androidapp.activity.EqualizerActivity"
+                  a:label="@string/equalizer.label"
                   a:configChanges="orientation|keyboardHidden"
                   a:launchMode="singleTask"/>
 

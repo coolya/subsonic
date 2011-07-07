@@ -21,6 +21,7 @@ package net.sourceforge.subsonic.androidapp.service;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import net.sourceforge.subsonic.androidapp.domain.RepeatMode;
+import net.sourceforge.subsonic.androidapp.audiofx.EqualizerController;
 
 import java.util.List;
 
@@ -93,4 +94,6 @@ public interface DownloadService {
     void setSuggestedPlaylistName(String name);
 
     String getSuggestedPlaylistName();
+
+    EqualizerController getEqualizerController();
 }

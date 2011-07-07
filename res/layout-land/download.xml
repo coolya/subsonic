@@ -28,13 +28,11 @@
                         a:id="@+id/download_previous"
                         a:src="@drawable/media_backward"
                         a:background="@android:color/transparent"
-                        a:visibility="gone"
                         a:padding="0dip"
                         a:layout_width="wrap_content"
                         a:layout_height="wrap_content"
                         a:layout_gravity="center_vertical"
                         />
-
                 <ImageButton
                         a:id="@+id/download_pause"
                         a:src="@drawable/media_pause"
@@ -128,6 +126,17 @@
                         a:layout_width="wrap_content"
                         a:layout_height="wrap_content"
                         a:padding="9dip"/>
+                <Button
+                        a:id="@+id/download_equalizer"
+                        a:text="EQ"
+                        a:textStyle="bold"
+                        a:textSize="22sp"
+                        a:background="@android:color/transparent"
+                        a:layout_width="wrap_content"
+                        a:layout_height="wrap_content"
+                        a:layout_marginTop="3dip"
+                        a:padding="9dip"
+                        />
             </LinearLayout>
 
         </RelativeLayout>

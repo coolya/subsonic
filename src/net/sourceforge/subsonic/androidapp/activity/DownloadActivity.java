@@ -28,6 +28,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.ContextMenu;
@@ -45,6 +47,7 @@ import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -90,6 +93,7 @@ public class DownloadActivity extends SubsonicTabActivity implements OnGestureLi
     private View startButton;
     private View shuffleButton;
     private ImageButton repeatButton;
+    private Button equalizerButton;
     private View toggleListButton;
     private ScheduledExecutorService executorService;
     private DownloadFile currentPlaying;
@@ -132,9 +136,11 @@ public class DownloadActivity extends SubsonicTabActivity implements OnGestureLi
         startButton = findViewById(R.id.download_start);
         shuffleButton = findViewById(R.id.download_shuffle);
         repeatButton = (ImageButton) findViewById(R.id.download_repeat);
+        equalizerButton = (Button) findViewById(R.id.download_equalizer);
         toggleListButton = findViewById(R.id.download_toggle_list);
 
         View.OnTouchListener touchListener = new View.OnTouchListener() {
+            @Override
             public boolean onTouch(View v, MotionEvent me) {
                 return gestureScanner.onTouchEvent(me);
             }
@@ -221,6 +227,13 @@ public class DownloadActivity extends SubsonicTabActivity implements OnGestureLi
             }
         });
 
+        equalizerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DownloadActivity.this, EqualizerActivity.class));
+            }
+        });
+
         toggleListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -251,6 +264,15 @@ public class DownloadActivity extends SubsonicTabActivity implements OnGestureLi
             warnIfNetworkOrStorageUnavailable();
             getDownloadService().setShufflePlayEnabled(true);
         }
+
+        if (getDownloadService() == null || getDownloadService().getEqualizerController() == null) {
+            equalizerButton.setVisibility(View.GONE);
+        }
+
+        // TODO: Extract to utility method and cache.
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Storopia.ttf");
+        equalizerButton.setTypeface(typeface);
+
     }
 
     @Override
@@ -282,11 +304,15 @@ public class DownloadActivity extends SubsonicTabActivity implements OnGestureLi
         onCurrentChanged();
         onProgressChanged();
         scrollToCurrent();
-        if (getDownloadService().getKeepScreenOn()) {
+        if (getDownloadService() != null && getDownloadService().getKeepScreenOn()) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
+
+        boolean enabled = getDownloadService() != null && getDownloadService().getEqualizerController() != null &&
+                getDownloadService().getEqualizerController().isEnabled();
+        equalizerButton.setTextColor(enabled ? Color.rgb(129, 201, 54) : Color.rgb(164, 166, 158));
     }
 
     // Scroll to current playing/downloading.
