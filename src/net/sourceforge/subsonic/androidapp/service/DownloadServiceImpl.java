@@ -34,6 +34,7 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.R;
+import net.sourceforge.subsonic.androidapp.audiofx.VisualizerController;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import net.sourceforge.subsonic.androidapp.domain.RepeatMode;
@@ -83,7 +84,10 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     private boolean keepScreenOn = false;
 
     private static boolean equalizerAvailable;
+    private static boolean visualizerAvailable;
     private EqualizerController equalizerController;
+    private VisualizerController visualizerController;
+    private boolean showVisualization;
 
     static {
         try {
@@ -91,6 +95,14 @@ public class DownloadServiceImpl extends Service implements DownloadService {
             equalizerAvailable = true;
         } catch (Throwable t) {
             equalizerAvailable = false;
+        }
+    }
+    static {
+        try {
+            VisualizerController.checkAvailable();
+            visualizerAvailable = true;
+        } catch (Throwable t) {
+            visualizerAvailable = false;
         }
     }
 
@@ -117,6 +129,12 @@ public class DownloadServiceImpl extends Service implements DownloadService {
                 equalizerController.loadSettings();
             }
         }
+        if (visualizerAvailable) {
+            visualizerController = new VisualizerController(this, mediaPlayer);
+            if (!visualizerController.isAvailable()) {
+                visualizerController = null;
+            }
+        }
 
         PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, this.getClass().getName());
@@ -138,6 +156,13 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         lifecycleSupport.onDestroy();
         mediaPlayer.release();
         shufflePlayBuffer.shutdown();
+        if (equalizerController != null) {
+            equalizerController.release();
+        }
+        if (visualizerController != null) {
+            visualizerController.release();
+        }
+
         instance = null;
     }
 
@@ -244,6 +269,16 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     @Override
     public void setKeepScreenOn(boolean keepScreenOn) {
     	this.keepScreenOn = keepScreenOn;
+    }
+
+    @Override
+    public boolean getShowVisualization() {
+        return showVisualization;
+    }
+
+    @Override
+    public void setShowVisualization(boolean showVisualization) {
+        this.showVisualization = showVisualization;
     }
 
     @Override
@@ -565,6 +600,11 @@ public class DownloadServiceImpl extends Service implements DownloadService {
     @Override
     public EqualizerController getEqualizerController() {
         return equalizerController;
+    }
+
+    @Override
+    public VisualizerController getVisualizerController() {
+        return visualizerController;
     }
 
     private synchronized void bufferAndPlay() {

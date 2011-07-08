@@ -2,21 +2,24 @@
 <menu xmlns:a="http://schemas.android.com/apk/res/android">
 
     <item 
-        a:id="@+id/menu_exit"
-        a:icon="@drawable/ic_menu_exit"
-        a:title="@string/menu.exit"
-        />
+            a:id="@+id/menu_exit"
+            a:icon="@drawable/ic_menu_exit"
+            a:title="@string/menu.exit"
+            a:showAsAction="ifRoom|withText"
+            />
 
     <item 
-        a:id="@+id/menu_settings"
-        a:icon="@drawable/ic_menu_settings"
-        a:title="@string/menu.settings"
-        />
+            a:id="@+id/menu_settings"
+            a:icon="@drawable/ic_menu_settings"
+            a:title="@string/menu.settings"
+            a:showAsAction="ifRoom|withText"
+            />
 
     <item 
-        a:id="@+id/menu_help"
-        a:icon="@drawable/ic_menu_help"
-        a:title="@string/menu.help"
-        />
-        
+            a:id="@+id/menu_help"
+            a:icon="@drawable/ic_menu_help"
+            a:title="@string/menu.help"
+            a:showAsAction="ifRoom|withText"
+            />
+
 </menu>
