@@ -28,17 +28,19 @@ Add .divx
 Select inital bitrate based on network type.
 Buy new JW license
 
-DONE IN ANDROID 2.9
---------------------
-
-TODO IN ANDROID 3.0
+DONE IN ANDROID 3.0
 --------------------
 Storopia font.
 Equalizer.
+
+TODO IN ANDROID 3.0
+--------------------
+Support API level > 10.  Show title bar if Honeycomb.
+Change Unpin behavior, add Delete.
+Visualizer.
 Update widget
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=7114
 Change swipe direction.
-Visualizer.
 Sharing support.
 Podcast support.
 Offline shuffle play broken.

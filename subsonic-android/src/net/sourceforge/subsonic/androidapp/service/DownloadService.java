@@ -18,6 +18,7 @@
  */
 package net.sourceforge.subsonic.androidapp.service;
 
+import net.sourceforge.subsonic.androidapp.audiofx.VisualizerController;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import net.sourceforge.subsonic.androidapp.domain.RepeatMode;
@@ -46,6 +47,10 @@ public interface DownloadService {
     boolean getKeepScreenOn();
 
     void setKeepScreenOn(boolean screenOn);
+
+    boolean getShowVisualization();
+
+    void setShowVisualization(boolean showVisualization);
 
     void clear();
 
@@ -96,4 +101,6 @@ public interface DownloadService {
     String getSuggestedPlaylistName();
 
     EqualizerController getEqualizerController();
+
+    VisualizerController getVisualizerController();
 }

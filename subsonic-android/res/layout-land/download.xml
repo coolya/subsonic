@@ -137,10 +137,21 @@
                         a:layout_marginTop="3dip"
                         a:padding="9dip"
                         />
+                <Button
+                        a:id="@+id/download_visualizer"
+                        a:text="VIS"
+                        a:textStyle="bold"
+                        a:textSize="22sp"
+                        a:visibility="gone"
+                        a:background="@android:color/transparent"
+                        a:layout_width="wrap_content"
+                        a:layout_height="wrap_content"
+                        a:layout_marginTop="3dip"
+                        a:padding="9dip"
+                        />
             </LinearLayout>
 
         </RelativeLayout>
-
 
         <net.sourceforge.subsonic.androidapp.util.MyViewFlipper
                 a:id="@+id/download_playlist_flipper"
@@ -163,6 +174,13 @@
                         a:layout_gravity="center"
                         a:layout_marginTop="20dip"
                         a:scaleType="fitCenter"/>
+                <net.sourceforge.subsonic.androidapp.view.VisualizerView
+                        a:id="@+id/download_visualizer_view"
+                        a:layout_width="fill_parent"
+                        a:layout_height="60dip"
+                        a:layout_marginLeft="60dip"
+                        a:layout_marginRight="60dip"
+                        a:layout_gravity="bottom|center_horizontal"/>
             </FrameLayout>
 
             <include layout="@layout/download_playlist"/>

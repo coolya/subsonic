@@ -42,6 +42,21 @@
                     a:paddingRight="16dip"
                     a:paddingBottom="12dip"/>
 
+            <Button
+                    a:id="@+id/download_visualizer"
+                    a:text="VIS"
+                    a:textStyle="bold"
+                    a:textSize="22sp"
+                    a:background="@android:color/transparent"
+                    a:layout_width="wrap_content"
+                    a:layout_height="wrap_content"
+                    a:layout_gravity="top|right"
+                    a:layout_alignParentRight="true"
+                    a:layout_below="@+id/download_equalizer"
+                    a:paddingTop="12dip"
+                    a:paddingRight="12dip"
+                    a:paddingBottom="12dip"/>
+
             <ImageView
                     a:id="@+id/download_album_art_image"
                     a:src="@drawable/unknown_album_large"
@@ -77,6 +92,15 @@
                     a:textStyle="bold"
                     a:textSize="18sp"
                     a:ellipsize="end"/>
+
+            <net.sourceforge.subsonic.androidapp.view.VisualizerView
+                    a:id="@+id/download_visualizer_view"
+                    a:layout_width="fill_parent"
+                    a:layout_height="60dip"
+                    a:layout_marginLeft="80dip"
+                    a:layout_marginRight="80dip"
+                    a:layout_gravity="center_horizontal"
+                    a:layout_above="@+id/download_song_title"/>
 
         </RelativeLayout>
 
