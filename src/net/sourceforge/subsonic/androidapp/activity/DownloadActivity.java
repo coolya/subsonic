@@ -749,19 +749,19 @@ public class DownloadActivity extends SubsonicTabActivity implements OnGestureLi
 		// Right to Left swipe
 		if (e1.getX() - e2.getX() > swipeDistance && Math.abs(velocityX) > swipeVelocity) {
             warnIfNetworkOrStorageUnavailable();
-            getDownloadService().previous();
-            onCurrentChanged();
-            onProgressChanged();
-			return true;
-		}
-		// Left to Right swipe
-        if (e2.getX() - e1.getX() > swipeDistance && Math.abs(velocityX) > swipeVelocity) {
-            warnIfNetworkOrStorageUnavailable();
             if (getDownloadService().getCurrentPlayingIndex() < getDownloadService().size() - 1) {
                 getDownloadService().next();
                 onCurrentChanged();
                 onProgressChanged();
             }
+			return true;
+		}
+		// Left to Right swipe
+        if (e2.getX() - e1.getX() > swipeDistance && Math.abs(velocityX) > swipeVelocity) {
+            warnIfNetworkOrStorageUnavailable();
+            getDownloadService().previous();
+            onCurrentChanged();
+            onProgressChanged();
 			return true;
 		}
 
