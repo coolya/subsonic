@@ -56,9 +56,10 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     private View footer;
     private View emptyView;
     private Button selectButton;
-    private Button playButton;
-    private Button queueButton;
-    private Button saveButton;
+    private Button playNowButton;
+    private Button playLastButton;
+    private Button pinButton;
+    private Button unpinButton;
     private Button deleteButton;
     private Button moreButton;
     private ImageView coverArtView;
@@ -98,10 +99,12 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
         coverArtView = (ImageView) findViewById(R.id.actionbar_home_icon);
         selectButton = (Button) findViewById(R.id.select_album_select);
-        playButton = (Button) findViewById(R.id.select_album_play_now);
-        queueButton = (Button) findViewById(R.id.select_album_play_last);
-        saveButton = (Button) footer.findViewById(R.id.select_album_pin);
-        deleteButton = (Button) footer.findViewById(R.id.select_album_unpin);
+        playNowButton = (Button) findViewById(R.id.select_album_play_now);
+        playLastButton = (Button) findViewById(R.id.select_album_play_last);
+        pinButton = (Button) footer.findViewById(R.id.select_album_pin);
+        unpinButton = (Button) footer.findViewById(R.id.select_album_unpin);
+        unpinButton = (Button) footer.findViewById(R.id.select_album_unpin);
+        deleteButton = (Button) footer.findViewById(R.id.select_album_delete);
         moreButton = (Button) footer.findViewById(R.id.select_album_more);
         emptyView = findViewById(R.id.select_album_empty);
 
@@ -111,24 +114,31 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                 selectAllOrNone();
             }
         });
-        playButton.setOnClickListener(new View.OnClickListener() {
+        playNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 download(false, false, true, false);
                 selectAll(false, false);
             }
         });
-        queueButton.setOnClickListener(new View.OnClickListener() {
+        playLastButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 download(true, false, false, false);
                 selectAll(false, false);
             }
         });
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        pinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 download(true, true, false, false);
+                selectAll(false, false);
+            }
+        });
+        unpinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                unpin();
                 selectAll(false, false);
             }
         });
@@ -303,7 +313,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
             @Override
             protected void done(Pair<MusicDirectory, Boolean> result) {
                 if (!result.getFirst().getChildren().isEmpty()) {
-                    saveButton.setVisibility(View.GONE);
+                    pinButton.setVisibility(View.GONE);
+                    unpinButton.setVisibility(View.GONE);
                     deleteButton.setVisibility(View.GONE);
                     moreButton.setVisibility(View.VISIBLE);
                     entryList.addFooterView(footer);
@@ -368,19 +379,23 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
         List<MusicDirectory.Entry> selection = getSelectedSongs();
         boolean enabled = !selection.isEmpty();
+        boolean unpinEnabled = false;
         boolean deleteEnabled = false;
 
         for (MusicDirectory.Entry song : selection) {
             DownloadFile downloadFile = getDownloadService().forSong(song);
-            if (downloadFile.getCompleteFile().exists()) {
+            if (downloadFile.isCompleteFileAvailable()) {
                 deleteEnabled = true;
-                break;
+            }
+            if (downloadFile.isSaved()) {
+                unpinEnabled = true;
             }
         }
 
-        playButton.setEnabled(enabled);
-        queueButton.setEnabled(enabled);
-        saveButton.setEnabled(enabled && !Util.isOffline(this));
+        playNowButton.setEnabled(enabled);
+        playLastButton.setEnabled(enabled);
+        pinButton.setEnabled(enabled && !Util.isOffline(this));
+        unpinButton.setEnabled(unpinEnabled);
         deleteButton.setEnabled(deleteEnabled);
     }
 
@@ -427,11 +442,15 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
     }
 
     private void delete() {
-        if (getDownloadService() == null) {
-            return;
+        if (getDownloadService() != null) {
+            getDownloadService().delete(getSelectedSongs());
         }
+    }
 
-        getDownloadService().delete(getSelectedSongs());
+    private void unpin() {
+        if (getDownloadService() != null) {
+            getDownloadService().unpin(getSelectedSongs());
+        }
     }
 
     private void playVideo(MusicDirectory.Entry entry) {
@@ -526,8 +545,8 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
                 getImageLoader().loadImage(coverArtView, entries.get(0), false);
                 entryList.addFooterView(footer);
                 selectButton.setVisibility(View.VISIBLE);
-                playButton.setVisibility(View.VISIBLE);
-                queueButton.setVisibility(View.VISIBLE);
+                playNowButton.setVisibility(View.VISIBLE);
+                playLastButton.setVisibility(View.VISIBLE);
             }
 
             boolean isAlbumList = getIntent().hasExtra(Constants.INTENT_EXTRA_NAME_ALBUM_LIST_TYPE);

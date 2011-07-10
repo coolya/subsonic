@@ -20,6 +20,15 @@
                 a:text="@string/common.unpin"
                 a:textAppearance="?android:attr/textAppearanceSmall"
                 a:layout_marginLeft="3dp"
+                a:layout_marginRight="3dp"
+                a:layout_weight="1"
+                a:layout_width="0dp"
+                a:layout_height="fill_parent"/>
+
+        <Button a:id="@+id/select_album_delete"
+                a:text="@string/common.delete"
+                a:textAppearance="?android:attr/textAppearanceSmall"
+                a:layout_marginLeft="3dp"
                 a:layout_marginRight="6dp"
                 a:layout_weight="1"
                 a:layout_width="0dp"

@@ -34,13 +34,17 @@ Storopia font.
 Equalizer.
 Visualizer.
 Change swipe direction.
+Change Unpin behavior, add Delete.
 
 TODO IN ANDROID 3.0
 --------------------
-Change Unpin behavior, add Delete.
+Graphic accelerate.
+Make Pin work if completefile exists, also if not online.
 Support API level > 10.  Show title bar if Honeycomb.
-Update widget
+Update widget and notification
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=7114
+  Async image loading.
+  Or only load image if already cached.
 Sharing support.
 Podcast support.
 Offline shuffle play broken.
@@ -136,11 +140,12 @@ Rewrite share feature.
 
 TODO IN 4.5
 -----------------
-Add files to <share>
+Test REST share methods.
 Subsonic Chumby
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=7154
   http://forum.chumby.com/viewtopic.php?id=6733
 Show share description in ext player.
+Expire share after one year, by default.
 When creating a share, support adding a description/expiration.
 Checkbox, combobox bg color
 

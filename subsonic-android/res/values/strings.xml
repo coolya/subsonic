@@ -10,6 +10,7 @@
     <string name="common.play_last">Play last</string>
     <string name="common.pin">Pin</string>
     <string name="common.unpin">Unpin</string>
+    <string name="common.delete">Delete</string>
 
     <string name="main.welcome_title">Welcome!</string>
     <string name="main.welcome_text">Welcome to Subsonic! The app is currently configured to use the Subsonic demo server. After you\'ve
