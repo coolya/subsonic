@@ -862,13 +862,22 @@ public class RESTController extends MultiActionController {
 
     public void getShares(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
+        Player player = playerService.getPlayer(request, response);
 
         User user = securityService.getCurrentUser(request);
         XMLBuilder builder = createXMLBuilder(request, response, true);
 
         for (Share share : shareService.getSharesForUser(user)) {
             builder.add("shares", false);
-            builder.add("share", createAttributesForShare(share), true);
+            builder.add("share", createAttributesForShare(share), false);
+
+            for (MusicFile musicFile : shareService.getSharedFiles(share.getId())) {
+                File coverArt = musicFileService.getCoverArt(musicFile.getParent());
+                AttributeSet attributes = createAttributesForMusicFile(player, coverArt, musicFile);
+                builder.add("entry", attributes, true);
+            }
+
+            builder.end();
         }
         builder.endAll();
         response.getWriter().print(builder);
@@ -876,6 +885,7 @@ public class RESTController extends MultiActionController {
 
     public void createShare(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request = wrapRequest(request);
+        Player player = playerService.getPlayer(request, response);
 
         User user = securityService.getCurrentUser(request);
         if (!user.isShareRole()) {
@@ -909,7 +919,14 @@ public class RESTController extends MultiActionController {
             shareService.updateShare(share);
 
             builder.add("shares", false);
-            builder.add("share", createAttributesForShare(share), true);
+            builder.add("share", createAttributesForShare(share), false);
+
+            for (MusicFile musicFile : shareService.getSharedFiles(share.getId())) {
+                File coverArt = musicFileService.getCoverArt(musicFile.getParent());
+                AttributeSet attributes = createAttributesForMusicFile(player, coverArt, musicFile);
+                builder.add("entry", attributes, true);
+            }
+
             builder.endAll();
             response.getWriter().print(builder);
 

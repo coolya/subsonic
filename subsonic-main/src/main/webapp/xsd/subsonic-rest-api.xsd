@@ -263,6 +263,9 @@
     </xs:complexType>
 
     <xs:complexType name="Share">
+        <xs:sequence>
+            <xs:element name="entry" type="sub:Child" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
         <xs:attribute name="id" type="xs:string" use="required"/>
         <xs:attribute name="url" type="xs:string" use="required"/>
         <xs:attribute name="description" type="xs:string" use="optional"/>
