@@ -138,6 +138,12 @@ public class DownloadFile {
         mediaStoreService.deleteFromMediaStore(this);
     }
 
+    public void unpin() {
+        if (saveFile.exists()) {
+            saveFile.renameTo(completeFile);
+        }
+    }
+
     public boolean cleanup() {
         boolean ok = true;
         if (completeFile.exists() || saveFile.exists()) {

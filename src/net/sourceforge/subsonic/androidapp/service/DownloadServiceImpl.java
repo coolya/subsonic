@@ -357,6 +357,13 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
     }
 
+    @Override
+    public synchronized void unpin(List<MusicDirectory.Entry> songs) {
+        for (MusicDirectory.Entry song : songs) {
+            forSong(song).unpin();
+        }
+    }
+
     private synchronized void setCurrentPlaying(DownloadFile currentPlaying, boolean showNotification) {
         this.currentPlaying = currentPlaying;
 
