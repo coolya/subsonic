@@ -31,6 +31,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
@@ -77,6 +79,15 @@ public class FileUtil {
     public static File getAlbumArtFile(File albumDir) {
         File albumArtDir = getAlbumArtDirectory();
         return new File(albumArtDir, Util.md5Hex(albumDir.getPath()) + ".jpeg");
+    }
+
+    public static Bitmap getAlbumArtBitmap(Context context, MusicDirectory.Entry entry, int size) {
+        File albumArtFile = getAlbumArtFile(context, entry);
+        if (albumArtFile.exists()) {
+            Bitmap bitmap = BitmapFactory.decodeFile(albumArtFile.getPath());
+            return bitmap == null ? null : Bitmap.createScaledBitmap(bitmap, size, size, true);
+        }
+        return null;
     }
 
     public static File getAlbumArtDirectory() {

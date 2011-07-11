@@ -30,11 +30,11 @@ Buy new JW license
 
 DONE IN ANDROID 3.0
 --------------------
-Storopia font.
-Equalizer.
-Visualizer.
-Change swipe direction.
-Change Unpin behavior, add Delete.
+Changed header font.
+Added equalizer.
+Added music visualization.
+Changed swipe direction.
+Changed Unpin behavior, added Delete.
 
 TODO IN ANDROID 3.0
 --------------------
@@ -50,9 +50,6 @@ Podcast support.
 Offline shuffle play broken.
 Test: New setting: "Wi-Fi streaming only"
 test swiping
-Keep all album art in a single directory.
-  Run cache cleaning on service startup.
-
 New Pin/unpin icons.
 
 Poor quality for generic album art.
