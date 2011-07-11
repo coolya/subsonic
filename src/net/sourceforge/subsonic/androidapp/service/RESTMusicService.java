@@ -422,17 +422,9 @@ public class RESTMusicService implements MusicService {
         synchronized (entry) {
 
             // Use cached file, if existing.
-            File albumArtFile = FileUtil.getAlbumArtFile(context, entry);
-            if (albumArtFile.exists()) {
-
-                InputStream in = new FileInputStream(albumArtFile);
-                try {
-                    byte[] bytes = Util.toByteArray(in);
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    return Bitmap.createScaledBitmap(bitmap, size, size, true);
-                } finally {
-                    Util.close(in);
-                }
+            Bitmap bitmap = FileUtil.getAlbumArtBitmap(context, entry, size);
+            if (bitmap != null) {
+                return bitmap;
             }
 
             String url = Util.getRestUrl(context, "getCoverArt");
@@ -456,7 +448,7 @@ public class RESTMusicService implements MusicService {
                 if (saveToFile) {
                     OutputStream out = null;
                     try {
-                        out = new FileOutputStream(albumArtFile);
+                        out = new FileOutputStream(FileUtil.getAlbumArtFile(context, entry));
                         out.write(bytes);
                     } finally {
                         Util.close(out);

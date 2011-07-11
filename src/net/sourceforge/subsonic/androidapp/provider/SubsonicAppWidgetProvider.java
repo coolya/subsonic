@@ -25,9 +25,17 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.Environment;
+import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.RemoteViews;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
@@ -35,6 +43,7 @@ import net.sourceforge.subsonic.androidapp.activity.MainActivity;
 import net.sourceforge.subsonic.androidapp.domain.MusicDirectory;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
 import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
+import net.sourceforge.subsonic.androidapp.util.FileUtil;
 
 /**
  * Simple widget to show currently playing album art along
@@ -47,6 +56,7 @@ import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
 public class SubsonicAppWidgetProvider extends AppWidgetProvider {
 
     private static SubsonicAppWidgetProvider instance;
+    private static final String TAG = SubsonicAppWidgetProvider.class.getSimpleName();
 
     public static synchronized SubsonicAppWidgetProvider getInstance() {
         if (instance == null) {
@@ -68,7 +78,6 @@ public class SubsonicAppWidgetProvider extends AppWidgetProvider {
         final Resources res = context.getResources();
         final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.appwidget);
 
-        views.setViewVisibility(R.id.title, View.GONE);
         views.setTextViewText(R.id.artist, res.getText(R.string.widget_initial_text));
 
         linkButtons(context, views, false);
@@ -128,12 +137,11 @@ public class SubsonicAppWidgetProvider extends AppWidgetProvider {
 
         if (errorState != null) {
             // Show error state to user
-            views.setViewVisibility(R.id.title, View.GONE);
+        	views.setTextViewText(R.id.title,null);
             views.setTextViewText(R.id.artist, errorState);
-
+            views.setImageViewResource(R.id.appwidget_coverart, R.drawable.appwidget_art_default);
         } else {
             // No error, so show normal titles
-            views.setViewVisibility(R.id.title, View.VISIBLE);
             views.setTextViewText(R.id.title, title);
             views.setTextViewText(R.id.artist, artist);
         }
@@ -145,10 +153,53 @@ public class SubsonicAppWidgetProvider extends AppWidgetProvider {
             views.setImageViewResource(R.id.control_play, R.drawable.ic_appwidget_music_play);
         }
 
+        // Set the cover art
+        try {
+            int size = context.getResources().getDrawable(R.drawable.appwidget_art_default).getIntrinsicHeight();
+            Bitmap bitmap = FileUtil.getAlbumArtBitmap(context, currentPlaying, size);
+
+            if (bitmap == null) {
+                // Set default cover art
+                views.setImageViewResource(R.id.appwidget_coverart, R.drawable.appwidget_art_unknown);
+            } else {
+                bitmap = getRoundedCornerBitmap(bitmap);
+                views.setImageViewBitmap(R.id.appwidget_coverart, bitmap);
+            }
+        } catch (Exception x) {
+            Log.e(TAG, "Failed to load cover art", x);
+            views.setImageViewResource(R.id.appwidget_coverart, R.drawable.appwidget_art_unknown);
+        }
+
         // Link actions buttons to intents
         linkButtons(context, views, currentPlaying != null);
 
         pushUpdate(context, appWidgetIds, views);
+    }
+    
+    /**
+     * Round the corners of a bitmap for the cover art image
+     */
+    private static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final float roundPx = 10;
+
+        // Add extra width to the rect so the right side wont be rounded.
+        final Rect rect = new Rect(0, 0, bitmap.getWidth() + (int) roundPx, bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+
+        return output;
     }
 
     /**
@@ -162,8 +213,9 @@ public class SubsonicAppWidgetProvider extends AppWidgetProvider {
 
         Intent intent = new Intent(context, playerActive ? DownloadActivity.class : MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        views.setOnClickPendingIntent(R.id.album_appwidget, pendingIntent);
-
+        views.setOnClickPendingIntent(R.id.appwidget_coverart, pendingIntent);
+        views.setOnClickPendingIntent(R.id.appwidget_top, pendingIntent);
+        
         // Emulate media button clicks.
         intent = new Intent("1");
         intent.setComponent(new ComponentName(context, DownloadServiceImpl.class));
@@ -176,5 +228,11 @@ public class SubsonicAppWidgetProvider extends AppWidgetProvider {
         intent.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_NEXT));
         pendingIntent = PendingIntent.getService(context, 0, intent, 0);
         views.setOnClickPendingIntent(R.id.control_next, pendingIntent);
+        
+        intent = new Intent("3");  // Use a unique action name to ensure a different PendingIntent to be created.
+        intent.setComponent(new ComponentName(context, DownloadServiceImpl.class));
+        intent.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PREVIOUS));
+        pendingIntent = PendingIntent.getService(context, 0, intent, 0);
+        views.setOnClickPendingIntent(R.id.control_previous, pendingIntent);
     }
 }

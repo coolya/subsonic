@@ -56,6 +56,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.activity.DownloadActivity;
@@ -656,16 +657,38 @@ public final class Util {
 
         // Use the same text for the ticker and the expanded notification
         String title = song.getTitle();
-
+        String text = song.getArtist();
+        
         // Set the icon, scrolling text and timestamp
         final Notification notification = new Notification(R.drawable.stat_notify_playing, title, System.currentTimeMillis());
         notification.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
 
-        // The PendingIntent to launch our activity if the user selects this notification
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(context, DownloadActivity.class), 0);
+        RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.notification);
 
-        String text = song.getArtist();
-        notification.setLatestEventInfo(context, title, text, contentIntent);
+        // Set the album art.
+		try {
+			int size = context.getResources().getDrawable(R.drawable.unknown_album).getIntrinsicHeight();
+            Bitmap bitmap = FileUtil.getAlbumArtBitmap(context, song, size);
+			if (bitmap == null) {
+				// set default album art
+				contentView.setImageViewResource(R.id.notification_image, R.drawable.unknown_album);
+			} else {
+				contentView.setImageViewBitmap(R.id.notification_image, bitmap);
+			}
+		} catch (Exception x) {
+			Log.w(TAG, "Failed to get notification cover art", x);
+			contentView.setImageViewResource(R.id.notification_image, R.drawable.unknown_album);
+		}
+
+		// set the text for the notifications
+        contentView.setTextViewText(R.id.notification_title, title);
+        contentView.setTextViewText(R.id.notification_artist, text);
+        
+        notification.contentView = contentView;  
+        
+        Intent notificationIntent = new Intent(context, DownloadActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+        notification.contentIntent = contentIntent;
 
         // Send the notification.
         handler.post(new Runnable() {
