@@ -93,8 +93,8 @@
                     a:textSize="18sp"
                     a:ellipsize="end"/>
 
-            <net.sourceforge.subsonic.androidapp.view.VisualizerView
-                    a:id="@+id/download_visualizer_view"
+            <LinearLayout
+                    a:id="@+id/download_visualizer_view_layout"
                     a:layout_width="fill_parent"
                     a:layout_height="60dip"
                     a:layout_marginLeft="80dip"

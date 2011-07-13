@@ -47,8 +47,8 @@ public class VisualizerView extends View {
     private float[] points;
     private boolean active;
 
-    public VisualizerView(Context context, AttributeSet attributeSet) {
-        super(context, attributeSet);
+    public VisualizerView(Context context) {
+        super(context);
 
         paint.setStrokeWidth(2f);
         paint.setAntiAlias(true);
