@@ -174,8 +174,8 @@
                         a:layout_gravity="center"
                         a:layout_marginTop="20dip"
                         a:scaleType="fitCenter"/>
-                <net.sourceforge.subsonic.androidapp.view.VisualizerView
-                        a:id="@+id/download_visualizer_view"
+                <LinearLayout
+                        a:id="@+id/download_visualizer_view_layout"
                         a:layout_width="fill_parent"
                         a:layout_height="60dip"
                         a:layout_marginLeft="60dip"
