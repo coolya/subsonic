@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.androidapp.util;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -295,20 +296,10 @@ public final class Util {
         }
     }
 
-    public static void close(InputStream in) {
+    public static void close(Closeable closeable) {
         try {
-            if (in != null) {
-                in.close();
-            }
-        } catch (Throwable x) {
-            // Ignored
-        }
-    }
-
-    public static void close(Reader reader) {
-        try {
-            if (reader != null) {
-                reader.close();
+            if (closeable != null) {
+                closeable.close();
             }
         } catch (Throwable x) {
             // Ignored
@@ -324,16 +315,6 @@ public final class Util {
             Log.i(TAG, "Deleted file " + file);
         }
         return true;
-    }
-
-    public static void close(OutputStream out) {
-        try {
-            if (out != null) {
-                out.close();
-            }
-        } catch (Throwable x) {
-            // Ignored
-        }
     }
 
     public static void toast(Context context, String message) {
