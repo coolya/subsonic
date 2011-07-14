@@ -2,8 +2,8 @@
 <manifest xmlns:a="http://schemas.android.com/apk/res/android"
           package="net.sourceforge.subsonic.androidapp"
           a:installLocation="auto"
-          a:versionCode="40"
-          a:versionName="3.0.beta2">
+          a:versionCode="41"
+          a:versionName="3.0">
 
     <uses-permission a:name="android.permission.INTERNET"/>
     <uses-permission a:name="android.permission.READ_PHONE_STATE"/>
