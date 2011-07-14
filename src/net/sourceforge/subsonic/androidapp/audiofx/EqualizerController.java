@@ -65,17 +65,25 @@ public class EqualizerController {
     }
 
     public void saveSettings() {
-        if (isAvailable()) {
-            FileUtil.serialize(context, new EqualizerSettings(equalizer), "equalizer.dat");
+        try {
+            if (isAvailable()) {
+                FileUtil.serialize(context, new EqualizerSettings(equalizer), "equalizer.dat");
+            }
+        } catch (Throwable x) {
+            Log.w(TAG, "Failed to save equalizer settings.", x);
         }
     }
 
     public void loadSettings() {
-        if (isAvailable()) {
-            EqualizerSettings settings = FileUtil.deserialize(context, "equalizer.dat");
-            if (settings != null) {
-                settings.apply(equalizer);
+        try {
+            if (isAvailable()) {
+                EqualizerSettings settings = FileUtil.deserialize(context, "equalizer.dat");
+                if (settings != null) {
+                    settings.apply(equalizer);
+                }
             }
+        } catch (Throwable x) {
+            Log.w(TAG, "Failed to load equalizer settings.", x);
         }
     }
 
@@ -104,12 +112,12 @@ public class EqualizerController {
         private final boolean enabled;
 
         public EqualizerSettings(Equalizer equalizer) {
+            enabled = equalizer.getEnabled();
             bandLevels = new short[equalizer.getNumberOfBands()];
             for (short i = 0; i < equalizer.getNumberOfBands(); i++) {
                 bandLevels[i] = equalizer.getBandLevel(i);
             }
             preset = equalizer.getCurrentPreset();
-            enabled = equalizer.getEnabled();
         }
 
         public void apply(Equalizer equalizer) {
