@@ -108,7 +108,7 @@ public class EqualizerController {
     private static class EqualizerSettings implements Serializable {
 
         private final short[] bandLevels;
-        private final short preset;
+        private short preset;
         private final boolean enabled;
 
         public EqualizerSettings(Equalizer equalizer) {
@@ -117,7 +117,11 @@ public class EqualizerController {
             for (short i = 0; i < equalizer.getNumberOfBands(); i++) {
                 bandLevels[i] = equalizer.getBandLevel(i);
             }
-            preset = equalizer.getCurrentPreset();
+            try {
+                preset = equalizer.getCurrentPreset();
+            } catch (Exception x) {
+                preset = -1;
+            }
         }
 
         public void apply(Equalizer equalizer) {

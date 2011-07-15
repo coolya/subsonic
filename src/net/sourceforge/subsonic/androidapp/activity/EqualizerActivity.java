@@ -89,7 +89,12 @@ public class EqualizerActivity extends Activity {
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
 
-        short currentPreset = equalizer.getCurrentPreset();
+        short currentPreset;
+        try {
+            currentPreset = equalizer.getCurrentPreset();
+        } catch (Exception x) {
+            currentPreset = -1;
+        }
 
         for (short preset = 0; preset < equalizer.getNumberOfPresets(); preset++) {
             MenuItem menuItem = menu.add(MENU_GROUP_PRESET, preset, preset, equalizer.getPresetName(preset));
