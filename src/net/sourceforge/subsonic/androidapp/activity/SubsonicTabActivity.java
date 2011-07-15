@@ -24,9 +24,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.graphics.Typeface;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -305,7 +308,7 @@ public class SubsonicTabActivity extends Activity {
     private void setUncaughtExceptionHandler() {
         Thread.UncaughtExceptionHandler handler = Thread.getDefaultUncaughtExceptionHandler();
         if (!(handler instanceof SubsonicUncaughtExceptionHandler)) {
-            Thread.setDefaultUncaughtExceptionHandler(new SubsonicUncaughtExceptionHandler());
+            Thread.setDefaultUncaughtExceptionHandler(new SubsonicUncaughtExceptionHandler(this));
         }
     }
 
@@ -315,8 +318,10 @@ public class SubsonicTabActivity extends Activity {
     private static class SubsonicUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 
         private final Thread.UncaughtExceptionHandler defaultHandler;
+        private final Context context;
 
-        private SubsonicUncaughtExceptionHandler() {
+        private SubsonicUncaughtExceptionHandler(Context context) {
+            this.context = context;
             defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         }
 
@@ -326,8 +331,13 @@ public class SubsonicTabActivity extends Activity {
             PrintWriter printWriter = null;
             try {
 
+                PackageInfo packageInfo = context.getPackageManager().getPackageInfo("net.sourceforge.subsonic.androidapp", 0);
                 file = new File(Environment.getExternalStorageDirectory(), "subsonic-stacktrace.txt");
                 printWriter = new PrintWriter(file);
+                printWriter.println("Android API level: " + Build.VERSION.SDK);
+                printWriter.println("Subsonic version name: " + packageInfo.versionName);
+                printWriter.println("Subsonic version code: " + packageInfo.versionCode);
+                printWriter.println();
                 throwable.printStackTrace(printWriter);
                 Log.i(TAG, "Stack trace written to " + file);
             } catch (Throwable x) {
