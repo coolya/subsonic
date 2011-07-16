@@ -848,7 +848,7 @@ public class RESTController extends MultiActionController {
                     episodeAttrs.add("description", episode.getDescription());
                 }
                 if (episode.getPublishDate() != null) {
-                    episodeAttrs.add("publishDate", StringUtil.toISO8601(episode.getPublishDate()));
+                    episodeAttrs.add("publishDate", episode.getPublishDate());
                 }
 
                 builder.add("episode", episodeAttrs, true);
@@ -867,8 +867,8 @@ public class RESTController extends MultiActionController {
         User user = securityService.getCurrentUser(request);
         XMLBuilder builder = createXMLBuilder(request, response, true);
 
+        builder.add("shares", false);
         for (Share share : shareService.getSharesForUser(user)) {
-            builder.add("shares", false);
             builder.add("share", createAttributesForShare(share), false);
 
             for (MusicFile musicFile : shareService.getSharedFiles(share.getId())) {
@@ -983,15 +983,16 @@ public class RESTController extends MultiActionController {
             }
 
             share.setDescription(request.getParameter("description"));
-            long expires = ServletRequestUtils.getLongParameter(request, "expires", 0L);
-            if (expires != 0) {
-                share.setExpires(new Date(expires));
+            String expiresString = request.getParameter("expires");
+            if (expiresString != null) {
+                long expires = Long.parseLong(expiresString);
+                share.setExpires(expires == 0L ? null : new Date(expires));
             }
             shareService.updateShare(share);
             XMLBuilder builder = createXMLBuilder(request, response, true).endAll();
             response.getWriter().print(builder);
 
-        } catch (ServletRequestBindingException x) {
+            } catch (ServletRequestBindingException x) {
             error(request, response, ErrorCode.MISSING_PARAMETER, getErrorMessage(x));
         } catch (Exception x) {
             LOG.warn("Error in REST API.", x);
@@ -1000,15 +1001,18 @@ public class RESTController extends MultiActionController {
     }
 
     private List<Attribute> createAttributesForShare(Share share) {
-        return Arrays.asList(
-                new Attribute("id", share.getId()),
-                new Attribute("url", shareService.getShareUrl(share)),
-                new Attribute("description", share.getDescription()),
-                new Attribute("username", share.getUsername()),
-                new Attribute("created", share.getCreated()),
-                new Attribute("expires", share.getExpires()),
-                new Attribute("lastVisited", share.getLastVisited()),
-                new Attribute("visitCount", share.getVisitCount()));
+        List<Attribute> attributes = new ArrayList<Attribute>();
+
+        attributes.add(new Attribute("id", share.getId()));
+        attributes.add(new Attribute("url", shareService.getShareUrl(share)));
+        attributes.add(new Attribute("username", share.getUsername()));
+        attributes.add(new Attribute("created", StringUtil.toISO8601(share.getCreated())));
+        attributes.add(new Attribute("visitCount", share.getVisitCount()));
+        attributes.add(new Attribute("description", share.getDescription()));
+        attributes.add(new Attribute("expires", StringUtil.toISO8601(share.getExpires())));
+        attributes.add(new Attribute("lastVisited", StringUtil.toISO8601(share.getLastVisited())));
+
+        return attributes;
     }
 
     public ModelAndView videoPlayer(HttpServletRequest request, HttpServletResponse response) throws Exception {

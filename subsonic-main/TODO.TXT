@@ -133,20 +133,22 @@ Rewrite share feature.
   Show share description in ext player.
   Expire share after one year, by default.
   When creating a share, support adding a description/expiration.
+Test: REST share methods.
+Test: REST rating.
 
 TODO IN 4.5
 -----------------
+Debian: Evaluation patch for not running as root.
+  https://mail.google.com/mail/?shva=1#inbox/1313343c98bd4715
+Add share option to playlist combobox.
 Does canaca allow outgoing port 4040?
 Share on Google+
 Recursive getFolders API method?
   https://mail.google.com/mail/?shva=1#inbox/13090cd32a9922bd
-Test REST share methods.
-Add share option to playlist combobox.
 Subsonic Chumby
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=7154
   http://forum.chumby.com/viewtopic.php?id=6733
 Checkbox, combobox bg color
-Test: REST rating.
 Test: UTF-8 in SearchService
 REST: scrobble should increment the internal playcounters too.
 Show lyrics in tags.

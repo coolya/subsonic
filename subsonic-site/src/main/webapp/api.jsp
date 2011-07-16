@@ -1286,7 +1286,7 @@
         <td><code>expires</code></td>
         <td>No</td>
         <td></td>
-        <td>The time at which the share expires. Given as milliseconds since 1970.</td>
+        <td>The time at which the share expires. Given as milliseconds since 1970, or zero to remove the expiration.</td>
     </tr>
 </table>
 <p>
