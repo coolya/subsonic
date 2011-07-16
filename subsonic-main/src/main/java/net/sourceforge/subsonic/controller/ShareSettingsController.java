@@ -20,6 +20,8 @@ package net.sourceforge.subsonic.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,14 +79,18 @@ public class ShareSettingsController extends ParameterizableViewController {
     private String handleParameters(HttpServletRequest request) {
         User user = securityService.getCurrentUser(request);
         for (Share share : shareService.getSharesForUser(user)) {
-            Integer id = share.getId();
+            int id = share.getId();
 
             String description = getParameter(request, "description", id);
             boolean delete = getParameter(request, "delete", id) != null;
+            String expireIn = getParameter(request, "expireIn", id);
 
             if (delete) {
                 shareService.deleteShare(id);
             } else {
+                if (expireIn != null) {
+                    share.setExpires(parseExpireIn(expireIn));
+                }
                 share.setDescription(description);
                 shareService.updateShare(share);
             }
@@ -93,7 +99,6 @@ public class ShareSettingsController extends ParameterizableViewController {
         return null;
     }
 
-    
     private List<ShareInfo> getShareInfos(HttpServletRequest request) {
         List<ShareInfo> result = new ArrayList<ShareInfo>();
         User user = securityService.getCurrentUser(request);
@@ -111,8 +116,20 @@ public class ShareSettingsController extends ParameterizableViewController {
         return result;
     }
 
-    private String getParameter(HttpServletRequest request, String name, Integer id) {
+
+    private String getParameter(HttpServletRequest request, String name, int id) {
         return StringUtils.trimToNull(request.getParameter(name + "[" + id + "]"));
+    }
+
+    private Date parseExpireIn(String expireIn) {
+        int days = Integer.parseInt(expireIn);
+        if (days == 0) {
+            return null;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, days);
+        return calendar.getTime();
     }
 
     public void setSecurityService(SecurityService securityService) {

@@ -84,6 +84,7 @@
             <a href="http://www.adobe.com/go/getflashplayer" target="_blank"><fmt:message key="playlist.getflash"/></a>
         </div>
     </div>
+    <div style="padding-top: 2em">${fn:escapeXml(model.share.description)}</div>
 </div>
 </body>
 </html>

@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -85,6 +86,10 @@ public class ShareService {
         share.setName(RandomStringUtils.random(5, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
         share.setCreated(new Date());
         share.setUsername(securityService.getCurrentUsername(request));
+
+        Calendar expires = Calendar.getInstance();
+        expires.add(Calendar.YEAR, 1);
+        share.setExpires(expires.getTime());
 
         shareDao.createShare(share);
         for (MusicFile file : files) {

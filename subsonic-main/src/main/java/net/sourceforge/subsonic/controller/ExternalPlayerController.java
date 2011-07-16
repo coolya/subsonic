@@ -88,6 +88,7 @@ public class ExternalPlayerController extends ParameterizableViewController {
 
         List<MusicFile> songs = getSongs(share);
 
+        map.put("share", share);
         map.put("songs", songs);
         if (!songs.isEmpty()) {
             map.put("coverArt", musicFileService.getCoverArt(songs.get(0).getParent()));
