@@ -5,6 +5,7 @@
 <%!
     String current = "hosting";
     String gigaProsUrl = "http://www.gigapros.com/affiliate/scripts/click.php?a_aid=subsonic&desturl=http://www.gigapros.com/portal/index.php/products-a-services/specialty-hosting/subsonic-server.html";
+    String zazeenUrl = "https://www.zazeen.com/OnlinePC.html";
 %>
 <%@ include file="header.jsp" %>
 
@@ -21,18 +22,52 @@
 
             <p>
                 An alternative to running the Subsonic on your own computer is to get a pre-installed Subsonic server from
-                our hosting partner <a href="<%=gigaProsUrl%>">GigaPros</a>.
-            </p>
-            <p>
-                Subsonic hosting servers are actually powerful Virtual Private Servers (VPS), which are highly optimized to run Subsonic.
-                These VPS'es have fully functional pre-installed Subsonic server and they behave exactly like your own Dedicated Server
-                with full root access.
+                one of our hosting partners.
             </p>
 
-            <p>
-                <b><a href="<%=gigaProsUrl%>">Check out GigaPros' server plans and prices.</a></b>
-            </p>
-            <a href="<%=gigaProsUrl%>"><img src="https://www.gigapros.com/portal/images/stories/pics/top_hosting_subsonic.jpg" alt=""/></a>
+            <div class="featureitem">
+                <div class="heading">Zazeen</div>
+                <div class="content">
+                    <div class="wide-content">
+
+                        <a href="<%=zazeenUrl%>" target="_blank"><img src="inc/img/zazeen.gif" alt="Zazeen" class="img-left"/></a>
+                        <p>
+                            Zazeen's <em>Online PC</em> comes with Ubuntu and a full range of applications and services, including
+                            a ready-to-use Subsonic server.
+                        </p>
+                        <p>
+                            Zazeen provides multiple 10Gbit fiber optic backbone and
+                            peering arrangements to most ISPs in North America and Europe.
+                        </p>
+
+                        <p>
+                            <b><a href="<%=zazeenUrl%>" target="_blank">Check out Zazeen's server plans and prices.</a></b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="featureitem">
+                <div class="heading">GigaPros</div>
+                <div class="content">
+                    <div class="wide-content">
+
+                        <a href="<%=gigaProsUrl%>" target="_blank"><img src="inc/img/gigapros.png" alt="GigaPros" class="img-left"/></a>
+                        <p>
+                            GigaPros' Subsonic hosting servers are actually powerful Virtual Private Servers (VPS), which are highly optimized to run Subsonic.
+                        </p>
+                        <p>
+                            These VPS'es have fully functional pre-installed Subsonic server and they behave exactly like your own Dedicated Server
+                            with full root access.
+                        </p>
+
+                        <p>
+                            <b><a href="<%=gigaProsUrl%>" target="_blank">Check out GigaPros' server plans and prices.</a></b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div id="side-col">

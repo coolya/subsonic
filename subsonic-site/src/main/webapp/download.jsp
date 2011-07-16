@@ -127,7 +127,7 @@
             <h1>Hosting</h1>
             <p>
                 If you don't want to install and configure Subsonic on your own computer you can get a pre-installed Subsonic server,
-                which works immediately out-of-the-box, from GigaPros.  <a href="hosting.jsp">Read more about their Subsonic hosting offer</a>.
+                which works immediately out-of-the-box, from one of our affiliated hosting providers. <a href="hosting.jsp">Read more about their Subsonic hosting offers</a>.
             </p>
 
             <h1>Terms of use</h1>
