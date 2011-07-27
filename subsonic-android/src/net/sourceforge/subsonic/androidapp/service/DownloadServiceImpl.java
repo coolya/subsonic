@@ -705,7 +705,7 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
     protected synchronized void checkDownloads() {
 
-        if (!Util.isNetworkConnected(this) || !Util.isExternalStoragePresent()) {
+        if (!Util.isNetworkConnected(this) || !Util.isExternalStoragePresent() || !lifecycleSupport.isExternalStorageAvailable()) {
             return;
         }
 

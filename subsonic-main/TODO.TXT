@@ -32,13 +32,19 @@ DONE IN ANDROID 3.0.1
 --------------------
 Avoid crash when selecting equalizer preset.
 Add app and android version to crash report.
+Behave better when SD card is unmounted.
 
 TODO IN ANDROID 3.1
 --------------------
+Fix other crashes.
+Change getDownloadService(). Wait for service to become ready.
+Avoid autoplay when unmounting.
+  https://mail.google.com/mail/?shva=1#inbox/131638c552b165d9
 Improve playlist mgmt.
   Use current date as default playlist name.
   Remember playlist name.
   https://mail.google.com/mail/?shva=1#inbox/1312a990fbe2d797
+In-app purchase.
 Graphic accelerate.
 Make Pin work if completefile exists, also if not online.
 Support API level > 10.  Show title bar if Honeycomb?
@@ -142,6 +148,7 @@ Debian: Evaluation patch for not running as root.
   https://mail.google.com/mail/?shva=1#inbox/1313343c98bd4715
 Add share option to playlist combobox.
 Does canaca allow outgoing port 4040?
+Upgrade ffmpeg
 Share on Google+
 Recursive getFolders API method?
   https://mail.google.com/mail/?shva=1#inbox/13090cd32a9922bd
@@ -155,10 +162,8 @@ Show lyrics in tags.
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1700
 More actions -> Download
 More actions -> Add to playlist
-New rest methods.
 Hide log for non-admin users?
 ffmpeg processes not stopped in opera.
-Regression test video playback.
 Sharing (facebook, twitter++)
   Test video sharing
   Add some space towards bottom of main.jsp

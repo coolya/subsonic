@@ -51,7 +51,9 @@ public class DownloadServiceLifecycleSupport {
     private final DownloadServiceImpl downloadService;
     private ScheduledExecutorService executorService;
     private BroadcastReceiver headsetEventReceiver;
+    private BroadcastReceiver ejectEventReceiver;
     private PhoneStateListener phoneStateListener;
+    private boolean externalStorageAvailable= true;
 
     /**
      * This receiver manages the intent that could come from other applications.
@@ -110,6 +112,24 @@ public class DownloadServiceLifecycleSupport {
         };
         downloadService.registerReceiver(headsetEventReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
 
+        // Stop when SD card is ejected.
+        ejectEventReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                externalStorageAvailable = Intent.ACTION_MEDIA_MOUNTED.equals(intent.getAction());
+                if (!externalStorageAvailable) {
+                    Log.i(TAG, "External media is ejecting. Stopping playback.");
+                    downloadService.reset();
+                } else {
+                    Log.i(TAG, "External media is available.");
+                }
+            }
+        };
+        IntentFilter ejectFilter = new IntentFilter(Intent.ACTION_MEDIA_EJECT);
+        ejectFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
+        ejectFilter.addDataScheme("file");
+        downloadService.registerReceiver(ejectEventReceiver, ejectFilter);
+
         // React to media buttons.
         Util.registerMediaButtonEventReceiver(downloadService);
 
@@ -146,11 +166,16 @@ public class DownloadServiceLifecycleSupport {
         executorService.shutdown();
         serializeDownloadQueue();
         downloadService.clear(false);
+        downloadService.unregisterReceiver(ejectEventReceiver);
         downloadService.unregisterReceiver(headsetEventReceiver);
         downloadService.unregisterReceiver(intentReceiver);
 
         TelephonyManager telephonyManager = (TelephonyManager) downloadService.getSystemService(Context.TELEPHONY_SERVICE);
         telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
+    }
+
+    public boolean isExternalStorageAvailable() {
+        return externalStorageAvailable;
     }
 
     public void serializeDownloadQueue() {
@@ -242,6 +267,8 @@ public class DownloadServiceLifecycleSupport {
 
 
     private static class State implements Serializable {
+        private static final long serialVersionUID = -6346438781062572270L;
+
         private List<MusicDirectory.Entry> songs = new ArrayList<MusicDirectory.Entry>();
         private int currentPlayingIndex;
         private int currentPlayingPosition;
