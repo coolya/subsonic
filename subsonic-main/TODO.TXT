@@ -33,11 +33,11 @@ DONE IN ANDROID 3.0.1
 Avoid crash when selecting equalizer preset.
 Add app and android version to crash report.
 Behave better when SD card is unmounted.
+Change getDownloadService(). Wait for service to become ready.
 
 TODO IN ANDROID 3.1
 --------------------
 Fix other crashes.
-Change getDownloadService(). Wait for service to become ready.
 Avoid autoplay when unmounting.
   https://mail.google.com/mail/?shva=1#inbox/131638c552b165d9
 Improve playlist mgmt.

@@ -240,6 +240,16 @@ public class SubsonicTabActivity extends Activity {
     }
 
     public DownloadService getDownloadService() {
+        // If service is not available, request it to start and wait for it.
+        for (int i = 0; i < 5; i++) {
+            DownloadService downloadService = DownloadServiceImpl.getInstance();
+            if (downloadService != null) {
+                return downloadService;
+            }
+            Log.w(TAG, "DownloadService not running. Attempting to start it.");
+            startService(new Intent(this, DownloadServiceImpl.class));
+            Util.sleepQuietly(50L);
+        }
         return DownloadServiceImpl.getInstance();
     }
 
