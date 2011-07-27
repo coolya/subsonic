@@ -81,7 +81,6 @@
     <string name="download.play_error">Erreur en jouant \"%s\"</string>
     <string name="download.playlist_title">Enregistrer la playlist</string>
     <string name="download.playlist_name">Saisissez le nom de la playlist:</string>
-    <string name="download.playlist_unnamed">Sans nom</string>
     <string name="download.playlist_saving">Enregistrement de la playlist \"%s\"...</string>
     <string name="download.playlist_done">Playlist enregistrée avec succès.</string>
     <string name="download.playlist_error">Échec de l\'enregistrement de la playlist, veuillez réessayer plus tard.</string>

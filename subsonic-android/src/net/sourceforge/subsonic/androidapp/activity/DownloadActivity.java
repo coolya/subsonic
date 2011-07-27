@@ -18,6 +18,9 @@
  */
 package net.sourceforge.subsonic.androidapp.activity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -434,7 +437,8 @@ public class DownloadActivity extends SubsonicTabActivity implements OnGestureLi
             if (playlistName != null) {
                 playlistNameView.setText(playlistName);
             } else {
-                playlistNameView.setText(R.string.download_playlist_unnamed);
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                playlistNameView.setText(dateFormat.format(new Date()));
             }
         }
     }

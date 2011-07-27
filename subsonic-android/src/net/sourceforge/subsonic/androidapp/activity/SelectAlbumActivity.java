@@ -425,7 +425,10 @@ public class SelectAlbumActivity extends SubsonicTabActivity {
 
                 warnIfNetworkOrStorageUnavailable();
                 getDownloadService().download(songs, save, autoplay, playNext);
-                getDownloadService().setSuggestedPlaylistName(getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME));
+                String playlistName = getIntent().getStringExtra(Constants.INTENT_EXTRA_NAME_PLAYLIST_NAME);
+                if (playlistName != null) {
+                    getDownloadService().setSuggestedPlaylistName(playlistName);
+                }
                 if (autoplay) {
                     Util.startActivityWithoutTransition(SelectAlbumActivity.this, DownloadActivity.class);
                 } else if (save) {

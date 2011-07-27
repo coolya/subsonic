@@ -89,7 +89,6 @@
     <string name="download.play_error">Error playing \"%s\"</string>
     <string name="download.playlist_title">Save playlist</string>
     <string name="download.playlist_name">Enter the playlist name:</string>
-    <string name="download.playlist_unnamed">Unnamed</string>
     <string name="download.playlist_saving">Saving playlist \"%s\"...</string>
     <string name="download.playlist_done">Playlist was successfully saved.</string>
     <string name="download.playlist_error">Failed to save playlist, please try later.</string>
