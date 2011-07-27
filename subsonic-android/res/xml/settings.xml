@@ -188,7 +188,7 @@
                 a:title="@string/settings.screen_lit_title"
                 a:summary="@string/settings.screen_lit_summary"
                 a:key="screenLitOnDownload"
-                a:defaultValue="false"/>
+                a:defaultValue="true"/>
 
         <Preference
                 a:key="clearSearchHistory"
