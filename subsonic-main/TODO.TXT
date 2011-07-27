@@ -136,11 +136,10 @@ Rewrite share feature.
   When creating a share, support adding a description/expiration.
 Test: REST share methods.
 Test: REST rating.
+Subsonic service no longer running as root on Debian/Ubuntu
 
 TODO IN 4.5
 -----------------
-Debian: Evaluation patch for not running as root.
-  https://mail.google.com/mail/?shva=1#inbox/1313343c98bd4715
 Add share option to playlist combobox.
 Album -> More actions -> Download
 Album -> More actions -> Add to playlist

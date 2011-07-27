@@ -18,6 +18,10 @@ chmod oug+rwx /var/subsonic
 # Clear jetty cache.
 rm -rf /var/subsonic/jetty
 
+# Change user and group to subsonic.
+chown -R subsonic:subsonic /var/subsonic
+chown -R subsonic:subsonic /tmp/subsonic
+
 # Configure Subsonic service.
 update-rc.d subsonic defaults 99
 

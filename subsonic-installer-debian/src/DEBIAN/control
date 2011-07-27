@@ -2,6 +2,7 @@ Package: subsonic
 Version: @VERSION@
 Section: Multimedia
 Priority: optional
+Depends: adduser
 Recommends: lame, flac, faad, vorbis-tools, ffmpeg
 Architecture: all
 Maintainer: Sindre Mehus <sindre@activeobjects.no>
