@@ -16,6 +16,18 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
+<a name="4.5.beta1"><h2 class="div">Subsonic 4.5.beta2 - Jul 28, 2011</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>Implemented management of shared media (expiration, removal, statistics, description).</li>
+    <li><span class="bugid">New: </span>Added more actions for selected songs in album view (Download, Add to playlist).</li>
+    <li><span class="bugid">New: </span>Added more actions for selected songs in playlist view (Share).</li>
+    <li><span class="bugid">New: </span>Subsonic service no longer running as root on Debian/Ubuntu</li>
+    <li><span class="bugid">API: </span>Added share management methods.</li>
+    <li><span class="bugid">API: </span>Added rating support.</li>
+    <li><span class="bugid">Bugfix: </span>Use guest user when streaming shared media.</li>
+    <li><span class="bugid">Bugfix: </span>Use UTF-8 in search index file.</li>
+</ul>
+
 <a name="4.5.beta1"><h2 class="div">Subsonic 4.5.beta1 - Jun 12, 2011</h2></a>
 <ul>
     <li><span class="bugid">New: </span>Twitter/Facebook integration.</li>
@@ -822,6 +834,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#4.5.beta2">Subsonic 4.5.beta2</a></li>
             <li><a href="#4.5.beta1">Subsonic 4.5.beta1</a></li>
             <li><a href="#4.4">Subsonic 4.4</a></li>
             <li><a href="#4.4.beta1">Subsonic 4.4.beta1</a></li>
