@@ -9,7 +9,7 @@
     <parent>
         <groupId>net.sourceforge.subsonic</groupId>
         <artifactId>subsonic</artifactId>
-        <version>4.5beta2</version>
+        <version>4.5.beta2</version>
     </parent>
 
     <dependencies>
