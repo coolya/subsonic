@@ -22,6 +22,9 @@
 <sub:url value="download.view" var="downloadUrl">
     <sub:param name="dir" value="${model.dir.path}"/>
 </sub:url>
+<sub:url value="appendPlaylist.view" var="appendPlaylistUrl">
+    <sub:param name="dir" value="${model.dir.path}"/>
+</sub:url>
 
 <script type="text/javascript" language="javascript">
     function init() {
@@ -37,6 +40,8 @@
             parent.frames.main.location.href = "${shareUrl}&" + getSelectedIndexes();
         } else if (id == "download") {
             location.href = "${downloadUrl}&" + getSelectedIndexes();
+        } else if (id == "appendPlaylist") {
+            parent.frames.main.location.href = "${appendPlaylistUrl}&" + getSelectedIndexes();
         }
         $("moreActions").selectedIndex = 0;
     }
@@ -373,6 +378,9 @@
         </c:if>
         <c:if test="${model.user.downloadRole}">
             <option id="download">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
+        </c:if>
+        <c:if test="${model.user.playlistRole}">
+            <option id="appendPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.append"/></option>
         </c:if>
     </select>
 </c:if>

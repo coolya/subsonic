@@ -378,7 +378,7 @@
         } else if (id == "download") {
             location.href = "download.view?player=${model.player.id}&" + getSelectedIndexes();
         } else if (id == "appendPlaylist") {
-            parent.frames.main.location.href = "appendPlaylist.view?" + getSelectedIndexes();
+            parent.frames.main.location.href = "appendPlaylist.view?player=${model.player.id}&" + getSelectedIndexes();
         }
         $("moreActions").selectedIndex = 0;
     }
