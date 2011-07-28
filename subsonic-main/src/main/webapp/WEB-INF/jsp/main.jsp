@@ -362,8 +362,9 @@
 <c:if test="${model.dir.album and model.user.shareRole}">
     <select id="moreActions" onchange="actionSelected(this.options[selectedIndex].id);" style="margin-bottom:1.0em">
         <option id="top" selected="selected"><fmt:message key="main.more"/></option>
+        <option style="color:blue;"><fmt:message key="main.more.selection"/></option>
         <c:if test="${model.user.shareRole}">
-            <option id="share"><fmt:message key="main.sharesongs"/></option>
+            <option id="share">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="main.more.share"/></option>
         </c:if>
     </select>
 </c:if>

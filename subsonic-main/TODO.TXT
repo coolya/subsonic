@@ -143,7 +143,6 @@ TODO IN 4.5
 Add share option to playlist combobox.
 Album -> More actions -> Download
 Album -> More actions -> Add to playlist
-Album -> More actions: Add blue submenus.
 
 Does canaca allow outgoing port 4040?
 Upgrade ffmpeg
