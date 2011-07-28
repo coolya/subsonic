@@ -25,6 +25,7 @@ import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.domain.TransferStatus;
 import net.sourceforge.subsonic.domain.User;
 import net.sourceforge.subsonic.io.RangeOutputStream;
+import net.sourceforge.subsonic.service.MusicFileService;
 import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.PlaylistService;
 import net.sourceforge.subsonic.service.SecurityService;
@@ -39,6 +40,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.LongRange;
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipOutputStream;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.mvc.LastModified;
@@ -72,6 +74,7 @@ public class DownloadController implements Controller, LastModified {
     private SecurityService securityService;
     private PlaylistService playlistService;
     private SettingsService settingsService;
+    private MusicFileService musicFileService;
 
     public long getLastModified(HttpServletRequest request) {
         String path = request.getParameter("path");
@@ -91,12 +94,16 @@ public class DownloadController implements Controller, LastModified {
             status = statusService.createDownloadStatus(playerService.getPlayer(request, response, false, false));
 
             String path = request.getParameter("path");
+            String dir = request.getParameter("dir");
             String playlistName = request.getParameter("playlist");
             String playerId = request.getParameter("player");
-            String indexes = request.getParameter("indexes");
+            int[] indexes = ServletRequestUtils.getIntParameters(request, "i");
 
-            response.setHeader("ETag", StringUtil.utf8HexEncode(path));
-            response.setHeader("Accept-Ranges", "bytes");
+            if (path != null) {
+                response.setHeader("ETag", StringUtil.utf8HexEncode(path));
+                response.setHeader("Accept-Ranges", "bytes");
+            }
+
             LongRange range = StringUtil.parseRange(request.getHeader("Range"));
             if (range != null) {
                 response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
@@ -115,6 +122,13 @@ public class DownloadController implements Controller, LastModified {
                 } else {
                     downloadDirectory(response, status, file, range);
                 }
+            } else if (dir != null) {
+                File file = new File(dir);
+                if (!securityService.isReadAllowed(file)) {
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN);
+                    return null;
+                }
+                downloadFiles(response, status, file, indexes);
 
             } else if (playlistName != null) {
                 Playlist playlist = new Playlist();
@@ -125,7 +139,7 @@ public class DownloadController implements Controller, LastModified {
                 Player player = playerService.getPlayerById(playerId);
                 Playlist playlist = player.getPlaylist();
                 playlist.setName("Playlist");
-                downloadPlaylist(response, status, playlist, parseIndexes(indexes), range);
+                downloadPlaylist(response, status, playlist, indexes.length == 0 ? null : indexes, range);
             }
 
 
@@ -138,19 +152,6 @@ public class DownloadController implements Controller, LastModified {
         }
 
         return null;
-    }
-
-    private int[] parseIndexes(String s) {
-        if (s == null) {
-            return null;
-        }
-
-        String[] strings = StringUtils.split(s);
-        int[] ints = new int[strings.length];
-        for (int i = 0; i < strings.length; i++) {
-            ints[i] = Integer.parseInt(strings[i]);
-        }
-        return ints;
     }
 
     /**
@@ -174,6 +175,40 @@ public class DownloadController implements Controller, LastModified {
 
         copyFileToStream(file, RangeOutputStream.wrap(response.getOutputStream(), range), status, range);
         LOG.info("Downloaded '" + FileUtil.getShortPath(file) + "' to " + status.getPlayer());
+    }
+
+    /**
+     * Downloads a collection of files within a directory.
+     *
+     * @param response The HTTP response.
+     * @param status   The download status.
+     * @param dir     The directory.
+     * @param indexes  Only download files with these indexes within the directory.
+     * @throws IOException If an I/O error occurs.
+     */
+    private void downloadFiles(HttpServletResponse response, TransferStatus status, File dir, int[] indexes) throws IOException {
+        String zipFileName = dir.getName() + ".zip";
+        LOG.info("Starting to download '" + zipFileName + "' to " + status.getPlayer());
+        status.setFile(dir);
+
+        response.setContentType("application/x-download");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + zipFileName + "\"");
+
+        ZipOutputStream out = new ZipOutputStream(response.getOutputStream());
+        out.setMethod(ZipOutputStream.STORED);  // No compression.
+
+        List<MusicFile> children = musicFileService.getMusicFile(dir).getChildren(true, true, true);
+        List<MusicFile> musicFiles = new ArrayList<MusicFile>();
+        for (int index : indexes) {
+            musicFiles.add(children.get(index));
+        }
+
+        for (MusicFile musicFile : musicFiles) {
+            zip(out, musicFile.getParent().getFile(), musicFile.getFile(), status, null);
+        }
+
+        out.close();
+        LOG.info("Downloaded '" + zipFileName + "' to " + status.getPlayer());
     }
 
     /**
@@ -201,7 +236,7 @@ public class DownloadController implements Controller, LastModified {
     }
 
     /**
-     * Downloads all files in a playlist.  The files are packed together in an
+     * Downloads files in a playlist.  The files are packed together in an
      * uncompressed zip-file.
      *
      * @param response The HTTP response.
@@ -399,5 +434,9 @@ public class DownloadController implements Controller, LastModified {
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
+    }
+
+    public void setMusicFileService(MusicFileService musicFileService) {
+        this.musicFileService = musicFileService;
     }
 }

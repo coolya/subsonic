@@ -376,9 +376,9 @@
         } else if (id == "removeSelected") {
             onRemoveSelected();
         } else if (id == "download") {
-            location.href = "download.view?player=${model.player.id}&indexes=" + getSelectedIndexes();
+            location.href = "download.view?player=${model.player.id}&" + getSelectedIndexes();
         } else if (id == "appendPlaylist") {
-            parent.frames.main.location.href = "appendPlaylist.view?indexes=" + getSelectedIndexes();
+            parent.frames.main.location.href = "appendPlaylist.view?" + getSelectedIndexes();
         }
         $("moreActions").selectedIndex = 0;
     }
@@ -387,7 +387,7 @@
         var result = "";
         for (var i = 0; i < songs.length; i++) {
             if ($("songIndex" + (i + 1)).checked) {
-                result += (i + " ");
+                result += "i=" + i + "&";
             }
         }
         return result;

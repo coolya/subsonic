@@ -19,6 +19,9 @@
 <sub:url value="createShare.view" var="shareUrl">
     <sub:param name="dir" value="${model.dir.path}"/>
 </sub:url>
+<sub:url value="download.view" var="downloadUrl">
+    <sub:param name="dir" value="${model.dir.path}"/>
+</sub:url>
 
 <script type="text/javascript" language="javascript">
     function init() {
@@ -32,6 +35,8 @@
             return;
         } else if (id == "share") {
             parent.frames.main.location.href = "${shareUrl}&" + getSelectedIndexes();
+        } else if (id == "download") {
+            location.href = "${downloadUrl}&" + getSelectedIndexes();
         }
         $("moreActions").selectedIndex = 0;
     }
@@ -366,10 +371,13 @@
         <c:if test="${model.user.shareRole}">
             <option id="share">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="main.more.share"/></option>
         </c:if>
+        <c:if test="${model.user.downloadRole}">
+            <option id="download">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
+        </c:if>
     </select>
 </c:if>
 
-<div>
+<div style="padding-bottom: 1em">
     <c:if test="${not empty model.previousAlbum}">
         <sub:url value="main.view" var="previousUrl">
             <sub:param name="path" value="${model.previousAlbum.path}"/>

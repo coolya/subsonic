@@ -137,12 +137,13 @@ Rewrite share feature.
 Test: REST share methods.
 Test: REST rating.
 Subsonic service no longer running as root on Debian/Ubuntu
+Album -> More actions -> Download
 
 TODO IN 4.5
 -----------------
 Add share option to playlist combobox.
-Album -> More actions -> Download
 Album -> More actions -> Add to playlist
+Album -> More actions -> (Un)select all
 
 Does canaca allow outgoing port 4040?
 Upgrade ffmpeg
