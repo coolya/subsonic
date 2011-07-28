@@ -21,6 +21,7 @@ package net.sourceforge.subsonic.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +34,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import net.sourceforge.subsonic.domain.MusicFile;
+import net.sourceforge.subsonic.domain.Player;
+import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.domain.Share;
 import net.sourceforge.subsonic.service.MusicFileService;
+import net.sourceforge.subsonic.service.PlayerService;
 import net.sourceforge.subsonic.service.SettingsService;
 import net.sourceforge.subsonic.service.ShareService;
 
@@ -48,15 +52,19 @@ public class ShareManagementController extends MultiActionController {
     private MusicFileService musicFileService;
     private SettingsService settingsService;
     private ShareService shareService;
+    private PlayerService playerService;
 
     public ModelAndView createShare(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String dir = request.getParameter("dir");
 
         List<MusicFile> files = getMusicFiles(request);
+        MusicFile dir = null;
+        if (!files.isEmpty()) {
+            dir = files.get(0).isAlbum() ? dir : files.get(0).getParent();
+        }
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("urlRedirectionEnabled", settingsService.isUrlRedirectionEnabled());
-        map.put("dir", musicFileService.getMusicFile(dir));
+        map.put("dir", dir);
         Share share = shareService.createShare(request, files);
         map.put("playUrl", shareService.getShareUrl(share));
 
@@ -64,16 +72,25 @@ public class ShareManagementController extends MultiActionController {
     }
 
     private List<MusicFile> getMusicFiles(HttpServletRequest request) throws IOException {
-        MusicFile dir = musicFileService.getMusicFile(request.getParameter("dir"));
-        int[] songIndexes = ServletRequestUtils.getIntParameters(request, "i");
-        if (songIndexes.length == 0) {
-            return Arrays.asList(dir);
-        }
+        String dir = request.getParameter("dir");
+        String playerId = request.getParameter("player");
 
-        List<MusicFile> children = dir.getChildren(true, true, true);
         List<MusicFile> result = new ArrayList<MusicFile>();
-        for (int songIndex : songIndexes) {
-            result.add(children.get(songIndex));
+
+        if (dir != null) {
+            MusicFile album = musicFileService.getMusicFile(dir);
+            int[] indexes = ServletRequestUtils.getIntParameters(request, "i");
+            if (indexes.length == 0) {
+                return Arrays.asList(album);
+            }
+            List<MusicFile> children = album.getChildren(true, true, true);
+            for (int index : indexes) {
+                result.add(children.get(index));
+            }
+        } else if (playerId != null) {
+            Player player = playerService.getPlayerById(playerId);
+            Playlist playlist = player.getPlaylist();
+            Collections.addAll(result, playlist.getFiles());
         }
 
         return result;
@@ -89,5 +106,9 @@ public class ShareManagementController extends MultiActionController {
 
     public void setShareService(ShareService shareService) {
         this.shareService = shareService;
+    }
+
+    public void setPlayerService(PlayerService playerService) {
+        this.playerService = playerService;
     }
 }

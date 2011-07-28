@@ -363,6 +363,8 @@
             parent.frames.main.location.href = "savePlaylist.view?";
         } else if (id == "downloadPlaylist") {
             location.href = "download.view?player=${model.player.id}";
+        } else if (id == "sharePlaylist") {
+            parent.frames.main.location.href = "createShare.view?player=${model.player.id}&" + getSelectedIndexes();
         } else if (id == "sortByTrack") {
             onSortByTrack();
         } else if (id == "sortByArtist") {
@@ -474,6 +476,9 @@
                 </c:if>
                 <c:if test="${model.user.downloadRole}">
                     <option id="downloadPlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="common.download"/></option>
+                </c:if>
+                <c:if test="${model.user.shareRole}">
+                    <option id="sharePlaylist">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="main.more.share"/></option>
                 </c:if>
                 <option id="sortByTrack">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.sortbytrack"/></option>
                 <option id="sortByAlbum">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="playlist.more.sortbyalbum"/></option>

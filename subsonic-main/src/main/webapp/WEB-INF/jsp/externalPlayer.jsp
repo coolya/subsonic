@@ -11,11 +11,12 @@
         <c:if test="${not empty model.coverArt}">
             <sub:param name="path" value="${model.coverArt.path}"/>
         </c:if>
+        <sub:param name="size" value="200"/>
     </sub:url>
 
     <meta name="og:title" content="${fn:escapeXml(model.songs[0].metaData.artist)} &mdash; ${fn:escapeXml(model.songs[0].metaData.album)}"/>
     <meta name="og:type" content="album"/>
-    <meta name="og:image" content="http://${model.redirectFrom}.subsonic.org${coverArtUrl}&size=200"/>
+    <meta name="og:image" content="http://${model.redirectFrom}.subsonic.org${coverArtUrl}"/>
 
     <script type="text/javascript">
         function init() {
@@ -45,13 +46,20 @@
 
         <c:forEach items="${model.songs}" var="song" varStatus="loopStatus">
         <sub:url value="/stream" var="streamUrl">
-        <sub:param name="path" value="${song.path}"/>
+            <sub:param name="path" value="${song.path}"/>
+            <sub:param name="player" value="${model.player}"/>
+        </sub:url>
+        <sub:url value="/coverArt.view" var="coverUrl">
+           <sub:param name="size" value="500"/>
+           <c:if test="${not empty model.coverArts[loopStatus.count - 1]}">
+              <sub:param name="path" value="${model.coverArts[loopStatus.count - 1].path}"/>
+           </c:if>
         </sub:url>
 
-            // TODO: Use video provider for aac, m4a
-            list[${loopStatus.count-1}] = {
-                file: "${streamUrl}&player=${model.player}",
-                image: "${coverArtUrl}&size=500",
+           <!-- TODO: Use video provider for aac, m4a -->
+            list[${loopStatus.count - 1}] = {
+                file: "${streamUrl}",
+                image: "${coverUrl}",
                 title: "${fn:escapeXml(song.title)}",
                 provider: "${song.video ? "video" : "sound"}",
                 description: "${fn:escapeXml(song.metaData.artist)}"

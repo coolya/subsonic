@@ -18,6 +18,7 @@
  */
 package net.sourceforge.subsonic.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,11 +88,14 @@ public class ExternalPlayerController extends ParameterizableViewController {
         shareDao.updateShare(share);
 
         List<MusicFile> songs = getSongs(share);
+        List<File> coverArts = getCoverArts(songs);
 
         map.put("share", share);
         map.put("songs", songs);
-        if (!songs.isEmpty()) {
-            map.put("coverArt", musicFileService.getCoverArt(songs.get(0).getParent()));
+        map.put("coverArts", coverArts);
+
+        if (!coverArts.isEmpty()) {
+            map.put("coverArt", coverArts.get(0));
         }
         map.put("redirectFrom", settingsService.getUrlRedirectFrom());
         map.put("player", getPlayer(request).getId());
@@ -120,6 +124,15 @@ public class ExternalPlayerController extends ParameterizableViewController {
         }
         return result;
     }
+
+    private List<File> getCoverArts(List<MusicFile> songs) throws IOException {
+        List<File> result = new ArrayList<File>();
+        for (MusicFile song : songs) {
+            result.add(musicFileService.getCoverArt(song.getParent()));
+        }
+        return result;
+    }
+
 
     private Player getPlayer(HttpServletRequest request) {
 
