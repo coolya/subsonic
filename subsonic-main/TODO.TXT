@@ -129,8 +129,6 @@ DONE IN 4.5
 
 TODO IN 4.5
 -----------------
-Can't resolve local version.
-
 Does canaca allow outgoing port 4040?
 Upgrade ffmpeg
 Share on Google+
@@ -613,10 +611,10 @@ HOW TO RELEASE
 Update version number in pom.xml, version.html, MultiController.java.
 Update changelog.jsp, download.jsp
 Commit
+svn up
 mvn clean -P full
 mvn install -P full
 cd subsonic-backend; mvn install
-cd ../subsonic-installer-mac; mvn install
 cd ../subsonic-assembly; mvn assembly:assembly
 Deploy
 Check that correct local version is displayed.
