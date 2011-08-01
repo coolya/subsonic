@@ -125,7 +125,7 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN 4.5
 ----------------
-
+Updated Korean translation, courtesy of Rhetor Choi.
 
 TODO IN 4.5
 -----------------
