@@ -129,8 +129,20 @@ DONE IN 4.5
 
 TODO IN 4.5
 -----------------
+Revert back to running as root in Debian.
 Does canaca allow outgoing port 4040?
+
 Upgrade ffmpeg
+  http://ffmpegmac.net/
+  http://ubuntuforums.org/showthread.php?t=786095
+
+configure
+  --enable-gpl --enable-nonfree --enable-postproc --enable-pthreads --enable-libfaac --enable-libmp3lame
+  --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid --enable-zlib --enable-libspeex
+  --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libvpx --enable-version3 --enable-bzlib
+  --enable-static --disable-shared --extra-libs=-static --extra-cflags=--static
+
+
 Share on Google+
 Recursive getFolders API method?
   https://mail.google.com/mail/?shva=1#inbox/13090cd32a9922bd
@@ -614,7 +626,7 @@ Commit
 svn up
 mvn clean -P full
 mvn install -P full
-cd subsonic-backend; mvn install
+cd subsonic-backend; mvn clean install
 cd ../subsonic-assembly; mvn assembly:assembly
 Deploy
 Check that correct local version is displayed.
@@ -644,28 +656,25 @@ Upgrade Subsonic backend: CHANGE DATE BELOW
     tar cvf db-backup-2011-05-05.tar db
   cd subsonic-backend
   mvn clean install
+
+  scp subsonic-backend/target/subsonic-backend-*.war root@subsonic.org:/usr/local/jakarta/tomcat/webapps-2011-07-28/ROOT.war
+  scp subsonic-main/target/subsonic.war              root@subsonic.org:/usr/local/jakarta/tomcat/webapps-2011-07-28/demo.war
+  rsync -rlptDvP -e ssh --exclude .svn subsonic-site/src/main/webapp/  root@subsonic.org:/usr/local/jakarta/tomcat/webapps-2011-07-28/pages
+
   scp subsonic-backend/target/subsonic-backend-*.war root@subsonic.org:/usr/local/jakarta/tomcat/webapps/ROOT.war.2011-06-01
   scp subsonic-main/target/subsonic.war root@subsonic.org:/usr/local/jakarta/tomcat/webapps/demo.war.2011-06-01
   ssh root@subsonic.org
   ps -elf | grep jsvc
   /usr/sbin/stoptomcat
+
+  ln -s webapps-2011-07-28 webapps
   ln -s ROOT.war.2011-06-01 ROOT.war
-  /usr/sbin/starttomcat
+
   rm -rf work logs/*
-  /etc/init.d/tomcat55 start
-  tail -f logs/catalina.out
+  /usr/sbin/starttomcat
 
 
-subsonic.canaca.com
-====================
-cpanel: https://subsonic.canaca.com:2087/
-/usr/local/jakarta/tomcat
-/scripts/restartsrv_tomcat
-/usr/sbin/starttomcat
-/usr/sbin/stoptomcat
-
-rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  root@subsonic.org:/usr/local/jakarta/tomcat/webapps/pages
-scp subsonic-backend/target/subsonic-backend-*.war root@subsonic.canaca.com:/usr/local/jakarta/tomcat/webapps/ROOT.war
+rsync -rlptDvP -e ssh --exclude .svn subsonic-site/src/main/webapp/  root@subsonic.org:/usr/local/jakarta/tomcat/webapps/pages
 
 godaddy ip: 97.74.125.134
 cancaca ip: 66.49.215.227
