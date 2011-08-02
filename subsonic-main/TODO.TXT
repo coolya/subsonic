@@ -131,6 +131,11 @@ Bugfix: Clear rating now works again.
 TODO IN 4.5
 -----------------
 Revert back to running as root in Debian.
+Go through tracker.
+Shouldn't be able to access shareSettings when user is not authorized to change settings.
+Shouldn't throw exception when accessing podcastSettings when user is not authorized to change settings.
+shareSettings.jsp shouldn't show links to other settings pages (if non-admin)
+
 Does canaca allow outgoing port 4040?
 
 Upgrade ffmpeg
