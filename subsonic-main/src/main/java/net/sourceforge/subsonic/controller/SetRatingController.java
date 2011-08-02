@@ -42,7 +42,10 @@ public class SetRatingController extends AbstractController {
 
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String path = request.getParameter("path");
-        int rating = ServletRequestUtils.getIntParameter(request, "rating");
+        Integer rating = ServletRequestUtils.getIntParameter(request, "rating");
+        if (rating == 0) {
+            rating = null;
+        }
 
         MusicFile musicFile = musicFileService.getMusicFile(path);
         String username = securityService.getCurrentUsername(request);

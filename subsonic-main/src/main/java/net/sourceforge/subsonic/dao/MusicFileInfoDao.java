@@ -157,7 +157,7 @@ public class MusicFileInfoDao extends AbstractDao {
         }
 
         update("delete from user_rating where username=? and path=?", username, musicFile.getPath());
-        if (rating != null && rating > 0) {
+        if (rating != null) {
             update("insert into user_rating values(?, ?, ?)", username, musicFile.getPath(), rating);
         }
 
