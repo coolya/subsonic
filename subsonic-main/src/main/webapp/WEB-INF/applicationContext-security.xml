@@ -110,6 +110,7 @@
                 /personalSettings.view=ROLE_SETTINGS
                 /passwordSettings.view=ROLE_SETTINGS
                 /playerSettings.view=ROLE_SETTINGS
+                /shareSettings.view=ROLE_SETTINGS
 
                 /generalSettings.view=ROLE_ADMIN
                 /advancedSettings.view=ROLE_ADMIN

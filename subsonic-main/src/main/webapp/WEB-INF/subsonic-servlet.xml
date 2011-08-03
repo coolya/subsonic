@@ -86,6 +86,7 @@
         <property name="musicFileService" ref="musicFileService"/>
         <property name="shareService" ref="shareService"/>
         <property name="playerService" ref="playerService"/>
+        <property name="securityService" ref="securityService"/>
     </bean>
     <bean id="setRatingController" class="net.sourceforge.subsonic.controller.SetRatingController">
         <property name="musicInfoService" ref="musicInfoService"/>

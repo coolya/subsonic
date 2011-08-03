@@ -8,6 +8,7 @@
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="share"/>
+    <c:param name="restricted" value="${not command.user.adminRole}"/>
 </c:import>
 
 <form method="post" action="shareSettings.view">
@@ -43,7 +44,7 @@
             <tr>
                 <td ${class} style="padding-left:1em"><a href="${model.shareBaseUrl}${share.name}" target="_blank">${share.name}</a></td>
                 <td ${class} style="padding-left:1em">${share.username}</td>
-                <td ${class} style="padding-left:1em"><input type="text" name="description[${share.id}]" size="60" value="${share.description}"/></td>
+                <td ${class} style="padding-left:1em"><input type="text" name="description[${share.id}]" size="40" value="${share.description}"/></td>
                 <td ${class} style="padding-left:1em"><fmt:formatDate value="${share.expires}" type="date" dateStyle="medium"/></td>
                 <td ${class} style="padding-left:1em"><fmt:formatDate value="${share.lastVisited}" type="date" dateStyle="medium"/></td>
                 <td ${class} style="padding-left:1em; text-align:right">${share.visitCount}</td>

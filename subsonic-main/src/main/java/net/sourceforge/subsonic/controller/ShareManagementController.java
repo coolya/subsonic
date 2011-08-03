@@ -29,6 +29,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.subsonic.service.*;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
@@ -37,10 +38,6 @@ import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Playlist;
 import net.sourceforge.subsonic.domain.Share;
-import net.sourceforge.subsonic.service.MusicFileService;
-import net.sourceforge.subsonic.service.PlayerService;
-import net.sourceforge.subsonic.service.SettingsService;
-import net.sourceforge.subsonic.service.ShareService;
 
 /**
  * Controller for sharing music on Twitter, Facebook etc.
@@ -53,18 +50,23 @@ public class ShareManagementController extends MultiActionController {
     private SettingsService settingsService;
     private ShareService shareService;
     private PlayerService playerService;
+    private SecurityService securityService;
 
     public ModelAndView createShare(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         List<MusicFile> files = getMusicFiles(request);
         MusicFile dir = null;
         if (!files.isEmpty()) {
-            dir = files.get(0).isAlbum() ? dir : files.get(0).getParent();
+            dir = files.get(0);
+            if (!dir.isAlbum()) {
+                dir = dir.getParent();
+            }
         }
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("urlRedirectionEnabled", settingsService.isUrlRedirectionEnabled());
         map.put("dir", dir);
+        map.put("user", securityService.getCurrentUser(request));
         Share share = shareService.createShare(request, files);
         map.put("playUrl", shareService.getShareUrl(share));
 
@@ -110,5 +112,9 @@ public class ShareManagementController extends MultiActionController {
 
     public void setPlayerService(PlayerService playerService) {
         this.playerService = playerService;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 }
