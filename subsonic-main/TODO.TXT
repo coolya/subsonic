@@ -127,10 +127,10 @@ DONE IN 4.5
 ----------------
 Updated Korean translation, courtesy of Rhetor Choi.
 Bugfix: Clear rating now works again.
+Revert back to running as root in Debian.
 
 TODO IN 4.5
 -----------------
-Revert back to running as root in Debian.
 Go through tracker.
 Shouldn't be able to access shareSettings when user is not authorized to change settings.
 Shouldn't throw exception when accessing podcastSettings when user is not authorized to change settings.

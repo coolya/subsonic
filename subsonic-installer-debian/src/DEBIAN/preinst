@@ -2,36 +2,7 @@
 
 set -e
 
-## Setup a subsonic user
-## Code found from mysql-server_3.23.49-8.15 source
-
-# is everything in place ?
-if [ ! -x "`which adduser`" ]; then 
-	echo "I need adduser(8) from the adduser.deb package !";
-	exit 1;
-fi
-if [ ! -x "`which addgroup`" ]; then 
-	echo "I need addgroup(8) from the adduser.deb package !";
-	exit 1;
-fi
-if [ ! -x "`which usermod`" ]; then
-	echo "I need usermod(8) from the passwd.deb package !";
-	exit 1;
-fi
-
 # Stop Subsonic service.
 if [ -e /etc/init.d/subsonic ]; then
   invoke-rc.d subsonic stop
-fi
-
-# creating group if it isn't already there
-if ! getent group subsonic >/dev/null; then
-	#echo Adding system group: subsonic.
-	addgroup subsonic >/dev/null
-fi
-
-# creating subsonic user it he isn't already there
-if ! getent passwd subsonic >/dev/null; then
-	#echo Adding system user: subsonic.
-	adduser --system --ingroup subsonic --home /var/subsonic subsonic  >/dev/null
 fi
