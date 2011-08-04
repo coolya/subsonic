@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.androidapp.service;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -60,6 +61,8 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -610,6 +613,14 @@ public class RESTMusicService implements MusicService {
                     request.addHeader(header);
                 }
             }
+
+            // Set credentials to get through apache proxies that require authentication.
+            SharedPreferences prefs = Util.getPreferences(context);
+            int instance = prefs.getInt(Constants.PREFERENCES_KEY_SERVER_INSTANCE, 1);
+            String username = prefs.getString(Constants.PREFERENCES_KEY_USERNAME + instance, null);
+            String password = prefs.getString(Constants.PREFERENCES_KEY_PASSWORD + instance, null);
+            httpClient.getCredentialsProvider().setCredentials(new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT),
+                    new UsernamePasswordCredentials(username, password));
 
             try {
                 HttpResponse response = httpClient.execute(request, httpContext);
