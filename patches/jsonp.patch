@@ -1,0 +1,89 @@
+ Index: trunk/subsonic-main/src/main/java/net/sourceforge/subsonic/security/RESTRequestParameterProcessingFilter.java
+ ===================================================================
+ --- trunk/subsonic-main/src/main/java/net/sourceforge/subsonic/security/RESTRequestParameterProcessingFilter.java      (revision 2363)
+ +++ trunk/subsonic-main/src/main/java/net/sourceforge/subsonic/security/RESTRequestParameterProcessingFilter.java      (working copy)
+ @@ -196,11 +196,20 @@
+     private void sendErrorXml(HttpServletRequest request, HttpServletResponse response, RESTController.ErrorCode errorCode) throws IOException {
+         String format = ServletRequestUtils.getStringParameter(request, "f", "xml");
+         boolean json = "json".equals(format);
+ +        boolean jsonp = "jsonp".equals(format);
+ +        String callback = ServletRequestUtils.getStringParameter(request, "callback", "");
+ +        XMLBuilder builder;
+
+ -        response.setContentType(json ? "application/json" : "text/ xml");
+         response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
+
+ -        XMLBuilder builder = new XMLBuilder(json);
+ +        if(!jsonp) {
+ +            response.setContentType(json ? "application/json" : "text/ xml");
+ +               builder = new XMLBuilder(json);
+ +        } else {
+ +            response.setContentType("text/javascript");
+ +               builder = new XMLBuilder(jsonp,callback);
+ +        }
+ +
+         builder.preamble(StringUtil.ENCODING_UTF8);
+         builder.add("subsonic-response", false, new XMLBuilder.Attribute("xmlns", "http:// subsonic.org/restapi"),
+ Index: trunk/subsonic-main/src/main/java/net/sourceforge/subsonic/controller/RESTController.java
+ ===================================================================
+ --- trunk/subsonic-main/src/main/java/net/sourceforge/subsonic/controller/RESTController.java  (revision 2363)
+ +++ trunk/subsonic-main/src/main/java/net/sourceforge/subsonic/controller/RESTController.java  (working copy)
+ @@ -1303,11 +1303,20 @@
+     private XMLBuilder createXMLBuilder(HttpServletRequest request, HttpServletResponse response, boolean ok) throws IOException {
+         String format = ServletRequestUtils.getStringParameter(request, "f", "xml");
+         boolean json = "json".equals(format);
+ +        boolean jsonp = "jsonp".equals(format);
+ +        String callback = ServletRequestUtils.getStringParameter(request, "callback", "");
+ +        XMLBuilder builder;
+
+ -        response.setContentType(json ? "application/json" : "text/ xml");
+         response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
+
+ -        XMLBuilder builder = new XMLBuilder(json);
+ +        if(!jsonp) {
+ +            response.setContentType(json ? "application/json" : "text/ xml");
+ +               builder = new XMLBuilder(json);
+ +        } else {
+ +            response.setContentType("text/javascript");
+ +               builder = new XMLBuilder(jsonp,callback);
+ +        }
+ +
+         builder.preamble(StringUtil.ENCODING_UTF8);
+         builder.add("subsonic-response", false, new Attribute("xmlns", "http://subsonic.org/ restapi"),
+ Index: trunk/subsonic-main/src/main/java/net/sourceforge/subsonic/util/XMLBuilder.java
+ ===================================================================
+ --- trunk/subsonic-main/src/main/java/net/sourceforge/subsonic/util/XMLBuilder.java (revision 2363)
+ +++ trunk/subsonic-main/src/main/java/net/sourceforge/subsonic/util/XMLBuilder.java (working copy)
+ @@ -66,6 +66,7 @@
+     private final Writer writer = new StringWriter();
+     private final Stack<String> elementStack = new Stack<String>();
+     private final boolean json;
+ +    private String callback = "";
+
+     /**
+      * Equivalent to <code>this(false)</code>.
+ @@ -82,6 +83,12 @@
+     public XMLBuilder(boolean json) {
+         this.json = json;
+     }
+ +
+ +    public XMLBuilder(boolean json, String cb) {
+ +       this(json);
+ +
+ +       this.callback = cb;
+ +    }
+
+     /**
+      * Adds an XML preamble, with the given encoding. The preamble will typically
+ @@ -234,6 +241,11 @@
+         }
+         try {
+             JSONObject jsonObject = XML.toJSONObject(xml);
+ +
+ +            if(callback != null && callback != "") {
+ +               return callback + "(" + jsonObject.toString(1) + ");";
+ +            }
+ +
+             return jsonObject.toString(1);
+         } catch (JSONException x) {
+             throw new RuntimeException("Failed to convert from XML to JSON.", x);
