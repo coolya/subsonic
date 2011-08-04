@@ -140,6 +140,11 @@ Does canaca allow outgoing port 4040?
 Upgrade ffmpeg
   http://ffmpegmac.net/
   http://ubuntuforums.org/showthread.php?t=786095
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=5466&highlight=
+  FFmpeg now accesses x264 presets via libx264. This extends functionality by introducing several new libx264 options including -preset, -tune, and -profile. You can read more detailed information about these options with "x264 --fullhelp".
+  The syntax has changed so be sure to update your commands. Example:
+  ffmpeg -i input -vcodec libx264 -preset fast -tune film -profile main -crf 22 -threads 0 output
+  http://mewiki.project357.com/wiki/X264_Settings
 
 configure
   --enable-gpl --enable-nonfree --enable-postproc --enable-pthreads --enable-libfaac --enable-libmp3lame

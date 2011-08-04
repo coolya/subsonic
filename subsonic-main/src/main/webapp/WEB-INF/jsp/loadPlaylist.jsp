@@ -46,7 +46,7 @@
                 <sub:url value="deletePlaylist.view" var="deleteUrl"><sub:param name="name" value="${playlist}"/></sub:url>
                 <sub:url value="download.view" var="downloadUrl"><sub:param name="playlist" value="${playlist}"/></sub:url>
                 <tr>
-                    <td class="ruleTableHeader">${fn:substringBefore(playlist,".")}</td>
+                    <td class="ruleTableHeader">${playlist}</td>
                     <td class="ruleTableCell">
                         <c:choose>
                             <c:when test="${model.load}">
