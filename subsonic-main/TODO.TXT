@@ -28,15 +28,10 @@ Add .divx
 Select inital bitrate based on network type.
 Buy new JW license
 
-DONE IN ANDROID 3.0.1
+DONE IN ANDROID 3.2
 --------------------
-Avoid crash when selecting equalizer preset.
-Add app and android version to crash report.
-Behave better when SD card is mounted/unmounted.
-Change getDownloadService(). Wait for service to become ready.
-Improve suggested name when saving playlists.
 
-TODO IN ANDROID 3.1
+TODO IN ANDROID 3.2
 --------------------
 Fix other crashes.
 In-app purchase.
@@ -126,6 +121,7 @@ Colors: http://www.androidtapp.com/opentable/
 DONE IN 4.5
 ----------------
 Updated Korean translation, courtesy of Rhetor Choi.
+Updated Danish translation, courtesy of Morten Hartvich.
 Bugfix: Clear rating now works again.
 Revert back to running as root in Debian.
 Shouldn't be able to access shareSettings when user is not authorized to change settings.
