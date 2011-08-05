@@ -32,7 +32,7 @@ DONE IN ANDROID 3.0.1
 --------------------
 Avoid crash when selecting equalizer preset.
 Add app and android version to crash report.
-Behave better when SD card is unmounted.
+Behave better when SD card is mounted/unmounted.
 Change getDownloadService(). Wait for service to become ready.
 Improve suggested name when saving playlists.
 
@@ -136,6 +136,7 @@ TODO IN 4.5
 Go through tracker.
 jsonp patch
 Does canaca allow outgoing port 4040?
+Backend service to email license keys on request.
 
 Upgrade ffmpeg
   http://ffmpegmac.net/
