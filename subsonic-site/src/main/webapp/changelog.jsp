@@ -16,7 +16,17 @@
 <div id="main-col">
 <h1 class="bottomspace">Subsonic Change Log</h1>
 
-<a name="4.5.beta1"><h2 class="div">Subsonic 4.5.beta2 - Jul 28, 2011</h2></a>
+<a name="4.5"><h2 class="div">Subsonic 4.5 - Aug 6, 2011</h2></a>
+<ul>
+    <li><span class="bugid">New: </span>Updated Korean translation, courtesy of Rhetor Choi.</li>
+    <li><span class="bugid">New: </span>Updated Danish translation, courtesy of Morten Hartvich.</li>
+    <li><span class="bugid">Bugfix: </span>Clear rating now works again.</li>
+    <li><span class="bugid">Bugfix: </span>Misc fixes to share settings page.</li>
+    <li><span class="bugid">Bugfix: </span>Revert back to running as root in Debian/Ubuntu.</li>
+    <li><span class="bugid">API: </span>JSONP support</li>
+</ul>
+
+<a name="4.5.beta2"><h2 class="div">Subsonic 4.5.beta2 - Jul 28, 2011</h2></a>
 <ul>
     <li><span class="bugid">New: </span>Implemented management of shared media (expiration, removal, statistics, description).</li>
     <li><span class="bugid">New: </span>Added more actions for selected songs in album view (Download, Add to playlist).</li>
@@ -834,6 +844,7 @@
     <div class="sidebox">
         <h2>Releases</h2>
         <ul class="list">
+            <li><a href="#4.5">Subsonic 4.5</a></li>
             <li><a href="#4.5.beta2">Subsonic 4.5.beta2</a></li>
             <li><a href="#4.5.beta1">Subsonic 4.5.beta1</a></li>
             <li><a href="#4.4">Subsonic 4.4</a></li>
