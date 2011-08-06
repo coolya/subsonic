@@ -27,11 +27,11 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Stack;
-import java.util.Collections;
 
 
 /**
@@ -40,7 +40,7 @@ import java.util.Collections;
  * <b>Example:</b><br/>
  * The following code:
  * <pre>
- * XMLBuilder builder = new XMLBuilder();
+ * XMLBuilder builder = XMLBuilder.createXMLBuilder();
  * builder.add("foo").add("bar");
  * builder.add("zonk", 42);
  * builder.end().end();
@@ -55,6 +55,8 @@ import java.util.Collections;
  * &lt;/foo&gt;
  * </pre>
  * This class is <em>not</em> thread safe.
+ * <p/>
+ * Also supports JSON and JSONP formats.
  *
  * @author Sindre Mehus
  */
@@ -66,21 +68,29 @@ public class XMLBuilder {
     private final Writer writer = new StringWriter();
     private final Stack<String> elementStack = new Stack<String>();
     private final boolean json;
+    private final String jsonpCallback;
 
-    /**
-     * Equivalent to <code>this(false)</code>.
-     */
-    public XMLBuilder() {
-        this(false);
+    public static XMLBuilder createXMLBuilder() {
+        return new XMLBuilder(false, null);
+    }
+
+    public static XMLBuilder createJSONBuilder() {
+        return new XMLBuilder(true, null);
+    }
+
+    public static XMLBuilder createJSONPBuilder(String callback) {
+        return new XMLBuilder(true, callback);
     }
 
     /**
      * Creates a new instance.
      *
-     * @param json Whether to produce JSON rather than XML.
+     * @param json          Whether to produce JSON rather than XML.
+     * @param jsonpCallback Name of javascript callback for JSONP.
      */
-    public XMLBuilder(boolean json) {
+    private XMLBuilder(boolean json, String jsonpCallback) {
         this.json = json;
+        this.jsonpCallback = jsonpCallback;
     }
 
     /**
@@ -234,6 +244,11 @@ public class XMLBuilder {
         }
         try {
             JSONObject jsonObject = XML.toJSONObject(xml);
+
+            if (jsonpCallback != null) {
+                return jsonpCallback + "(" + jsonObject.toString(1) + ");";
+            }
+
             return jsonObject.toString(1);
         } catch (JSONException x) {
             throw new RuntimeException("Failed to convert from XML to JSON.", x);

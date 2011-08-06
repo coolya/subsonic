@@ -1303,11 +1303,22 @@ public class RESTController extends MultiActionController {
     private XMLBuilder createXMLBuilder(HttpServletRequest request, HttpServletResponse response, boolean ok) throws IOException {
         String format = ServletRequestUtils.getStringParameter(request, "f", "xml");
         boolean json = "json".equals(format);
+        boolean jsonp = "jsonp".equals(format);
+        XMLBuilder builder;
 
-        response.setContentType(json ? "application/json" : "text/xml");
         response.setCharacterEncoding(StringUtil.ENCODING_UTF8);
 
-        XMLBuilder builder = new XMLBuilder(json);
+        if (json) {
+            builder = XMLBuilder.createJSONBuilder();
+            response.setContentType("application/json");
+        } else if (jsonp) {
+            builder = XMLBuilder.createJSONPBuilder(request.getParameter("callback"));
+            response.setContentType("text/javascript");
+        } else {
+        	builder = XMLBuilder.createXMLBuilder();
+            response.setContentType("text/xml");
+        }
+        
         builder.preamble(StringUtil.ENCODING_UTF8);
         builder.add("subsonic-response", false,
                     new Attribute("xmlns", "http://subsonic.org/restapi"),

@@ -74,8 +74,9 @@
         <td><code>f</code></td>
         <td>No</td>
         <td>xml</td>
-        <td>Request data to be returned in this format. Supported values are "xml" and "json".
-            (Since <a href="#versions">1.4.0</a>)</td>
+        <td>Request data to be returned in this format. Supported values are "xml", "json" (since <a href="#versions">1.4.0</a>)
+            and "jsonp" (since <a href="#versions">1.6.0</a>). If using jsonp, specify name of javascript callback function using
+            a <code>callback</code> parameter.</td>
     </tr>
 </table>
 
@@ -89,8 +90,8 @@
 </p>
 
 <p>
-    Starting with API version 1.2.0 it is no longer recommended to send the username and password as part of the URL.
-    Instead, HTTP <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">Basic</a> authentication should be
+    Starting with API version 1.2.0 it is no longer necessary to send the username and password as part of the URL.
+    Instead, HTTP <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">Basic</a> authentication could be
     used.
     (Only <em>preemptive</em> authentication is supported, meaning that the credentials should be supplied by the client
     without being challenged for it.)

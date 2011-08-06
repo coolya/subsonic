@@ -126,11 +126,11 @@ Bugfix: Clear rating now works again.
 Revert back to running as root in Debian.
 Shouldn't be able to access shareSettings when user is not authorized to change settings.
 shareSettings.jsp shouldn't show links to other settings pages (if non-admin)
+jsonp support
 
 TODO IN 4.5
 -----------------
 Go through tracker.
-jsonp patch
 Does canaca allow outgoing port 4040?
 Backend service to email license keys on request.
 
