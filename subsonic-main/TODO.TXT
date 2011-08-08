@@ -30,6 +30,7 @@ Buy new JW license
 
 DONE IN ANDROID 3.2
 --------------------
+Improved support for accessibility screen readers.
 
 TODO IN ANDROID 3.2
 --------------------
