@@ -34,6 +34,7 @@ Improved support for accessibility screen readers.
 
 TODO IN ANDROID 3.2
 --------------------
+Screen reader support for play, pause, etc
 Fix other crashes.
 In-app purchase.
 Graphic accelerate.
@@ -121,10 +122,10 @@ Colors: http://www.androidtapp.com/opentable/
 
 DONE IN 4.5
 ----------------
+Added SUBSONIC_USER to /etc/default/subsonic in Debian/Ubuntu. 
 
 TODO IN 4.5
 -----------------
-Debian opt-in run as root.
 Go through tracker.
 Does canaca allow outgoing port 4040?
 Backend service to email license keys on request.
@@ -136,7 +137,13 @@ Upgrade ffmpeg
   FFmpeg now accesses x264 presets via libx264. This extends functionality by introducing several new libx264 options including -preset, -tune, and -profile. You can read more detailed information about these options with "x264 --fullhelp".
   The syntax has changed so be sure to update your commands. Example:
   ffmpeg -i input -vcodec libx264 -preset fast -tune film -profile main -crf 22 -threads 0 output
+  Use baseline profile
+  ffmpeg -ss %o -i %s -async 1 -b %bk -s %wx%h -ar 44100 -ac 2 -v 0 -f flv -vcodec libx264 -preset fast -threads 0 -
+
   http://mewiki.project357.com/wiki/X264_Settings
+  One-step audio encoding without lame
+  More compact transcoding format.
+
 
 configure
   --enable-gpl --enable-nonfree --enable-postproc --enable-pthreads --enable-libfaac --enable-libmp3lame
