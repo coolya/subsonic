@@ -143,13 +143,53 @@ Upgrade ffmpeg
   http://mewiki.project357.com/wiki/X264_Settings
   One-step audio encoding without lame
   More compact transcoding format.
+  Create new transcoding packs.
+  Downsampling using only ffmpeg?
+  Test h264 with Android. 
+  Create universal binary for mac.
 
+BUILD FFMPEG - On Ubuntu 11.04
+------------------------------
+  http://ubuntuforums.org/showthread.php?t=786095
 
-configure
-  --enable-gpl --enable-nonfree --enable-postproc --enable-pthreads --enable-libfaac --enable-libmp3lame
-  --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid --enable-zlib --enable-libspeex
-  --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libvpx --enable-version3 --enable-bzlib
+sudo apt-get remove ffmpeg x264 libx264-dev
+sudo apt-get update
+sudo apt-get install build-essential checkinstall git libfaac-dev libjack-jackd2-dev \
+  libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libsdl1.2-dev libtheora-dev \
+  libva-dev libvdpau-dev libvorbis-dev libx11-dev libxfixes-dev libxvidcore-dev texi2html \
+  yasm zlib1g-dev
+
+cd
+cd projects
+git clone git://git.videolan.org/x264
+cd x264
+./configure --enable-static
+make
+sudo checkinstall --pkgname=x264 --pkgversion="3:$(./version.sh | awk -F'[" ]' '/POINT/{print $4"+git"$5}')" --backup=no --deldoc=yes --fstrans=no --default
+
+cd
+cd projects
+sudo apt-get remove libvpx-dev
+git clone git://review.webmproject.org/libvpx
+cd libvpx
+./configure
+make
+sudo checkinstall --pkgname=libvpx --pkgversion="1:$(date +%Y%m%d%H%M)-git" --backup=no --deldoc=yes --fstrans=no --default
+
+cd
+cd projects
+git clone git://git.videolan.org/ffmpeg
+cd ffmpeg
+./configure --disable-ffplay --disable-ffprobe --disable-ffserver --enable-gpl --enable-nonfree --enable-postproc \
+  --enable-pthreads --enable-libfaac --enable-libmp3lame --enable-libvpx --enable-libtheora --enable-libvorbis \
+  --enable-libx264 --enable-libxvid --enable-zlib --enable-libopencore-amrnb --enable-libopencore-amrwb \
+  --enable-libvpx --enable-version3 --enable-bzlib \
   --enable-static --disable-shared --extra-libs=-static --extra-cflags=--static
+make
+sudo checkinstall --pkgname=ffmpeg --pkgversion="5:$(date +%Y%m%d%H%M)-git" --backup=no --deldoc=yes --fstrans=no --default
+hash x264 ffmpeg
+
+
 
 
 Share on Google+
