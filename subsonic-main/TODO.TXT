@@ -130,6 +130,7 @@ Go through tracker.
 Does canaca allow outgoing port 4040?
 Backend service to email license keys on request.
 New transcoding framework.
+Have license key emailed to you in case you've lost it.
 
 Share on Google+
 Recursive getFolders API method?
@@ -619,7 +620,7 @@ cd ../subsonic-assembly; mvn assembly:assembly
 Deploy
 Check that correct local version is displayed.
 Upload files to SourceForge (in separate shell, REMEMBER TO CHANGE VERSION BELOW).
-  rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.5.beta2/
+  rsync -avP -e ssh subsonic-installer-windows/target/subsonic*-setup.exe  sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.5/
   rsync -avP -e ssh subsonic-assembly/target/subsonic* sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.5.beta2/
   rsync -avP -e ssh subsonic-installer-mac/target/subsonic*.pkg subsonic-installer-debian/target/subsonic*.deb subsonic-installer-rpm/target/subsonic*.rpm sindre_mehus,subsonic@frs.sourceforge.net:/home/frs/project/s/su/subsonic/subsonic/4.5.beta2/
 
@@ -641,21 +642,19 @@ Take backup of forum.
 Upgrade Subsonic backend: CHANGE DATE BELOW
   Backup backend database.
     cd /var/subsonic-backend
-    tar cvf db-backup-2011-05-05.tar db
+    tar cvf db-backup-2011-08-11.tar db
   cd subsonic-backend
   mvn clean install
 
-  scp subsonic-backend/target/subsonic-backend-*.war root@subsonic.org:/usr/local/jakarta/tomcat/webapps-2011-07-28/ROOT.war
-  scp subsonic-main/target/subsonic.war              root@subsonic.org:/usr/local/jakarta/tomcat/webapps-2011-07-28/demo.war
-  rsync -rlptDvP -e ssh --exclude .svn subsonic-site/src/main/webapp/  root@subsonic.org:/usr/local/jakarta/tomcat/webapps-2011-07-28/pages
+  scp subsonic-backend/target/subsonic-backend-*.war root@subsonic.org:/usr/local/jakarta/tomcat/webapps-2011-08-11/ROOT.war
+  scp subsonic-main/target/subsonic.war              root@subsonic.org:/usr/local/jakarta/tomcat/webapps-2011-08-11/demo.war
+  rsync -rlptDvP -e ssh --exclude .svn subsonic-site/src/main/webapp/  root@subsonic.org:/usr/local/jakarta/tomcat/webapps-2011-08-11/pages
 
-  scp subsonic-backend/target/subsonic-backend-*.war root@subsonic.org:/usr/local/jakarta/tomcat/webapps/ROOT.war.2011-06-01
-  scp subsonic-main/target/subsonic.war root@subsonic.org:/usr/local/jakarta/tomcat/webapps/demo.war.2011-06-01
   ssh root@subsonic.org
   ps -elf | grep jsvc
   /usr/sbin/stoptomcat
 
-  ln -s webapps-2011-07-28 webapps
+  ln -s webapps-2011-08-11 webapps
   ln -s ROOT.war.2011-06-01 ROOT.war
 
   rm -rf work logs/*
@@ -669,6 +668,20 @@ cancaca ip: 66.49.215.227
 - test https
 - add test videos (and ffmpeg, lame)
 - update transcodings
+
+NEW FORUM
+---------
+Styles:
+-Afterburner
+AZ Retro
+madevo
+proglass
+++prosilver special edition
+Redsilver
++Revolution
+SE Square
+staticblue
+subsilver2
 
 
 HOW TO RELEASE TO ANDROID MARKET
