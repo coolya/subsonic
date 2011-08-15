@@ -128,15 +128,19 @@ x Delete existing phpbb3 forum.
 x Create new phpbb3 installation.
 x Create index.php on forum.subsonic.org
 x Reboot
-  Disable forums.
-  Export sql.
-  Rewrite URLs in sql.
-  Update DNS.
-  Create php forwarding pages on activeobjects.no
-  Update links in subsonic.org pages.
+x Disable forums.
+x Export sql.
+x Rewrite URLs in sql.
+x Convert
+  Update search index.
+  Unlock forums.
   Change style.
   Change logo.
   Enable attachments.
+  Verify
+  Create php forwarding pages on activeobjects.no
+  Update links in subsonic.org pages.
+  Update DNS.
   Create announcement.
   Investigate backup.
 
