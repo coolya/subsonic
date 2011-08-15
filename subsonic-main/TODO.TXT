@@ -144,7 +144,10 @@ x Update DNS.
 x Create announcement.
   Investigate backup.
   Give courtesy to canaca.com
-  
+  Anti-spam tools
+    http://forum.subsonic.org/forum/viewtopic.php?f=9&t=7623
+x Search on subsonic.org
+
 DONE IN 4.5
 ----------------
 Added SUBSONIC_USER to /etc/default/subsonic in Debian/Ubuntu. 
@@ -153,6 +156,9 @@ TODO IN 4.5
 -----------------
 substream
   http://itunes.apple.com/us/app/substream/id389906706?mt=8
+minisub
+  http://forum.subsonic.org/forum/viewtopic.php?f=8&t=7553
+  
 Go through tracker.
 Does canaca allow outgoing port 4040?
 Backend service to email license keys on request.
