@@ -299,21 +299,21 @@
     <li><span class="bugid">New:</span> Removed frame borders.</li>
     <li><span class="bugid">New:</span> Don't show player username or IP address in playlist.</li>
     <li><span class="bugid">New:</span> Automatically trim text fields when entering email address and license key.</li>
-    <li><span class="bugid">New:</span> Added advanced option to bind Subsonic to a particular IP address. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1740 ">More</a>)</li>
+    <li><span class="bugid">New:</span> Added advanced option to bind Subsonic to a particular IP address. (<a href="http://forum.subsonic.org/forum/viewtopic.php?t=1740 ">More</a>)</li>
     <li><span class="bugid">New:</span> Improved subsonic.sh startup script.</li>
-    <li><span class="bugid">New:</span> Automatically add Windows Firewall exceptions during install. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=5188">More</a>)</li>
-    <li><span class="bugid">Performance:</span> Improved browser and server caching of artist list. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1558">More</a>)</li>
-    <li><span class="bugid">Performance:</span> Only poll for service status if Subsonic Control Panel is opened. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1612">More</a>)</li>
+    <li><span class="bugid">New:</span> Automatically add Windows Firewall exceptions during install. (<a href="http://forum.subsonic.org/forum/viewtopic.php?p=5188">More</a>)</li>
+    <li><span class="bugid">Performance:</span> Improved browser and server caching of artist list. (<a href="http://forum.subsonic.org/forum/viewtopic.php?t=1558">More</a>)</li>
+    <li><span class="bugid">Performance:</span> Only poll for service status if Subsonic Control Panel is opened. (<a href="http://forum.subsonic.org/forum/viewtopic.php?t=1612">More</a>)</li>
     <li><span class="bugid">Bugfix:</span> Web player now displays correct duration for transcoded tracks.</li>
     <li><span class="bugid">Bugfix:</span> Sticky artist index now works in IE.</li>
     <li><span class="bugid">Bugfix:</span> Discogs image retrieval now works again.</li>
-    <li><span class="bugid">Bugfix:</span> Now works behind SSL proxy. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1301">More</a>)</li>
-    <li><span class="bugid">Bugfix:</span> Missing album art for artists in multiple folders. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1626">More</a>)</li>
+    <li><span class="bugid">Bugfix:</span> Now works behind SSL proxy. (<a href="http://forum.subsonic.org/forum/viewtopic.php?t=1301">More</a>)</li>
+    <li><span class="bugid">Bugfix:</span> Missing album art for artists in multiple folders. (<a href="http://forum.subsonic.org/forum/viewtopic.php?t=1626">More</a>)</li>
     <li><span class="bugid">Bugfix:</span> Wrong player selected if different users access Subsonic from the same browser instance.</li>
     <li><span class="bugid">Bugfix:</span> Wrong repeat state displayed in playlist.</li>
     <li><span class="bugid">Bugfix:</span> Stop web player when playlist is cleared.</li>
     <li><span class="bugid">Bugfix:</span> Lyrics lookup working again.</li>
-    <li><span class="bugid">Bugfix:</span> Support quotes in Podcast names. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1734">More</a>)</li>
+    <li><span class="bugid">Bugfix:</span> Support quotes in Podcast names. (<a href="http://forum.subsonic.org/forum/viewtopic.php?t=1734">More</a>)</li>
     <li><span class="bugid">Bugfix:</span> Fixed IE layout problem in top frame.</li>
 </ul>
 
@@ -375,8 +375,8 @@
     <li><span class="bugid">New:</span> Added OS to about page.</li>
     <li><span class="bugid">New:</span> Changed license to Creative Commons Noncommercial.</li>
     <li><span class="bugid">Bugfix:</span> Added start menu item "Settings" as work-around for missing tray icon in Vista.</li>
-    <li><span class="bugid">Bugfix:</span> Fixed caching problem in Opera. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1334">More</a>)</li>
-    <li><span class="bugid">Bugfix:</span> Improved Windows installer. (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1291">More</a>)</li>
+    <li><span class="bugid">Bugfix:</span> Fixed caching problem in Opera. (<a href="http://forum.subsonic.org/forum/viewtopic.php?t=1334">More</a>)</li>
+    <li><span class="bugid">Bugfix:</span> Improved Windows installer. (<a href="http://forum.subsonic.org/forum/viewtopic.php?t=1291">More</a>)</li>
     <li><span class="bugid">Bugfix:</span> Fixed typos in several translations.</li>
 </ul>
 
@@ -401,30 +401,30 @@
 <a name="3.5.beta1"><h2 class="div">Subsonic 3.5.beta1 - Jul 10, 2008</h2></a>
 <ul>
     <li><span class="bugid">New:</span> Implemented music player for Java-enabled mobile phones.
-        (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1203">More</a>)
+        (<a href="http://forum.subsonic.org/forum/viewtopic.php?t=1203">More</a>)
     </li>
     <li><span class="bugid">New:</span> Support for personal images (avatars).</li>
     <li><span class="bugid">New:</span> Support "read-only" view.
-        (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2435">More</a>)
+        (<a href="http://forum.subsonic.org/forum/viewtopic.php?p=2435">More</a>)
     </li>
     <li><span class="bugid">New:</span> Simplified user interface in settings pages. Now only one "Save" button.</li>
     <li><span class="bugid">New:</span> Improved usability of coverart search page. Now also searches discogs.com.</li>
     <li><span class="bugid">New:</span> Merge artists with same name, but located in different music folders.</li>
     <li><span class="bugid">New:</span> Added option "Let others see what I am playing"</li>
     <li><span class="bugid">New:</span> Added option "Always use web player".
-        (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1077">More</a>)
+        (<a href="http://forum.subsonic.org/forum/viewtopic.php?t=1077">More</a>)
     </li>
     <li><span class="bugid">New:</span> Nicer controls in modern browsers (Opera 9.5, Firefox 3, IE 7).</li>
     <li><span class="bugid">Bugfix:</span> Lots of extra players are no longer created.</li>
     <li><span class="bugid">Bugfix:</span> Fix minor bug with letter appearing if only file (not directory) exists.
-        (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1023">More</a>)
+        (<a href="http://forum.subsonic.org/forum/viewtopic.php?t=1023">More</a>)
     </li>
     <li><span class="bugid">Bugfix:</span> Make standalone version work on Linux without X11 server.</li>
     <li><span class="bugid">Bugfix:</span> Make lyrics work again.
-        (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=2588">More</a>)
+        (<a href="http://forum.subsonic.org/forum/viewtopic.php?p=2588">More</a>)
     </li>
     <li><span class="bugid">Bugfix:</span> Proper sorting of "The" artists.
-        (<a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=1144">More</a>)
+        (<a href="http://forum.subsonic.org/forum/viewtopic.php?t=1144">More</a>)
     </li>
     <li><span class="bugid">Bugfix:</span> Make source release build.</li>
 </ul>

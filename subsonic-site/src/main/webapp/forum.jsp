@@ -1,3 +1,3 @@
 <%
-    response.sendRedirect("http://www.activeobjects.no/subsonic/forum");
+    response.sendRedirect("http://forum.subsonic.org/forum");
 %>

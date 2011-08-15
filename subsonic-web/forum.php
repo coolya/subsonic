@@ -1,4 +1,4 @@
 <?php
-    header('Location:http://www.subsonic.org/');
+    header('Location:http://forum.subsonic.org/');
     die();
 ?>

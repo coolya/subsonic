@@ -30,7 +30,7 @@
             <p>Please follow the guide in the <a href="getting-started.jsp#2">Getting Started</a> documentation.</p>
 
             <h3>I forgot my Subsonic password. Can it be retrieved?</h3>
-            <p>Yes. Please read <a href="http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=3770">this forum post</a>.</p>
+            <p>Yes. Please read <a href="http://forum.subsonic.org/forum/viewtopic.php?t=3770">this forum post</a>.</p>
 
             <%--TODO: Network shares--%>
         </div>
