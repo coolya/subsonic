@@ -120,6 +120,26 @@ Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Colors: http://www.androidtapp.com/opentable/
 
+
+FORUM UPGRADE
+---------------
+x Drop phpbb2 and phpbb3 databases.
+x Delete existing phpbb3 forum.
+x Create new phpbb3 installation.
+x Create index.php on forum.subsonic.org
+x Reboot
+  Disable forums.
+  Export sql.
+  Rewrite URLs in sql.
+  Update DNS.
+  Create php forwarding pages on activeobjects.no
+  Update links in subsonic.org pages.
+  Change style.
+  Change logo.
+  Enable attachments.
+  Create announcement.
+  Investigate backup.
+
 DONE IN 4.5
 ----------------
 Added SUBSONIC_USER to /etc/default/subsonic in Debian/Ubuntu. 
