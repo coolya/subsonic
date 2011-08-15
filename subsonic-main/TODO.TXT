@@ -148,11 +148,11 @@ x Create announcement.
     http://forum.subsonic.org/forum/viewtopic.php?f=9&t=7623
 x Search on subsonic.org
 
-DONE IN 4.5
+DONE IN 4.6
 ----------------
-Added SUBSONIC_USER to /etc/default/subsonic in Debian/Ubuntu. 
+Updated Dutch translation, courtesy of Muiz.
 
-TODO IN 4.5
+TODO IN 4.6
 -----------------
 substream
   http://itunes.apple.com/us/app/substream/id389906706?mt=8
