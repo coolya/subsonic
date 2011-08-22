@@ -34,6 +34,11 @@ Improved support for accessibility screen readers.
 
 TODO IN ANDROID 3.2
 --------------------
+Start process in foreground
+  http://forum.subsonic.org/forum/viewtopic.php?p=30103#p30103
+  http://android-developers.blogspot.com/2010/02/service-api-changes-starting-with.html
+  http://groups.google.com/group/android-developers/browse_thread/thread/422bf837cfdb61a1?pli=1
+  
 Screen reader support for play, pause, etc
 Fix other crashes.
 In-app purchase.
@@ -154,6 +159,7 @@ Updated Dutch translation, courtesy of Muiz.
 
 TODO IN 4.6
 -----------------
+Add rating attributes to <directory> in getMusicDirectory.
 substream
   http://itunes.apple.com/us/app/substream/id389906706?mt=8
 minisub
@@ -713,7 +719,7 @@ Redsilver
 +Revolution
 SE Square
 staticblue
-subsilver2
+subsilver3
 
 
 HOW TO RELEASE TO ANDROID MARKET
