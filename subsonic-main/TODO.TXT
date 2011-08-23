@@ -157,14 +157,23 @@ DONE IN 4.6
 ----------------
 Updated Dutch translation, courtesy of Muiz.
 
+
+1 stk frosta glass til skapdør på baderom: 296 x 305 x 4 mm
+
+2 stk klart glass til skapdør på kjøkken: 600 x 378 x 6 mm (eller tynnere).
+
 TODO IN 4.6
 -----------------
 Add rating attributes to <directory> in getMusicDirectory.
+Update description of Thumper.
+periscope player
+  http://www.periscopeplayer.com/
 substream
   http://itunes.apple.com/us/app/substream/id389906706?mt=8
 minisub
   http://forum.subsonic.org/forum/viewtopic.php?f=8&t=7553
-  
+.mts support
+
 Go through tracker.
 Does canaca allow outgoing port 4040?
 Backend service to email license keys on request.
