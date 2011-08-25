@@ -17,39 +17,30 @@
         <th><fmt:message key="transcodingsettings.targetformat"/></th>
         <th><fmt:message key="transcodingsettings.step1"/></th>
         <th><fmt:message key="transcodingsettings.step2"/></th>
-        <th><fmt:message key="transcodingsettings.step3"/></th>
-        <th style="padding-left:1em"><fmt:message key="transcodingsettings.defaultactive"/></th>
-        <th style="padding-left:1em"><fmt:message key="transcodingsettings.enabled"/></th>
         <th style="padding-left:1em"><fmt:message key="common.delete"/></th>
     </tr>
 
     <c:forEach items="${model.transcodings}" var="transcoding">
         <tr>
-            <td><input type="text" name="name[${transcoding.id}]" size="12" value="${transcoding.name}"/></td>
-            <td><input type="text" name="sourceFormat[${transcoding.id}]" size="12" value="${transcoding.sourceFormat}"/></td>
-            <td><input type="text" name="targetFormat[${transcoding.id}]" size="12" value="${transcoding.targetFormat}"/></td>
-            <td><input  style="font-family:monospace" type="text" name="step1[${transcoding.id}]" size="22" value="${transcoding.step1}"/></td>
-            <td><input  style="font-family:monospace" type="text" name="step2[${transcoding.id}]" size="22" value="${transcoding.step2}"/></td>
-            <td><input  style="font-family:monospace" type="text" name="step3[${transcoding.id}]" size="22" value="${transcoding.step3}"/></td>
-            <td align="center" style="padding-left:1em"><input type="checkbox" ${transcoding.defaultActive ? "checked" : ""} name="defaultActive[${transcoding.id}]" class="checkbox"/></td>
-            <td align="center" style="padding-left:1em"><input type="checkbox" ${transcoding.enabled ? "checked" : ""} name="enabled[${transcoding.id}]" class="checkbox"/></td>
+            <td><input style="font-family:monospace" type="text" name="name[${transcoding.id}]" size="10" value="${transcoding.name}"/></td>
+            <td><input style="font-family:monospace" type="text" name="sourceFormats[${transcoding.id}]" size="36" value="${transcoding.sourceFormats}"/></td>
+            <td><input style="font-family:monospace" type="text" name="targetFormat[${transcoding.id}]" size="10" value="${transcoding.targetFormat}"/></td>
+            <td><input style="font-family:monospace" type="text" name="step1[${transcoding.id}]" size="60" value="${transcoding.step1}"/></td>
+            <td><input style="font-family:monospace" type="text" name="step2[${transcoding.id}]" size="22" value="${transcoding.step2}"/></td>
             <td align="center" style="padding-left:1em"><input type="checkbox" name="delete[${transcoding.id}]" class="checkbox"/></td>
         </tr>
     </c:forEach>
 
     <tr>
-        <th colspan="9" align="left" style="padding-top:1em"><fmt:message key="transcodingsettings.add"/></th>
+        <th colspan="6" align="left" style="padding-top:1em"><fmt:message key="transcodingsettings.add"/></th>
     </tr>
 
     <tr>
-        <td><input type="text" name="name" size="12" value="${model.newTranscoding.name}"/></td>
-        <td><input type="text" name="sourceFormat" size="12" value="${model.newTranscoding.sourceFormat}"/></td>
-        <td><input type="text" name="targetFormat" size="12" value="${model.newTranscoding.targetFormat}"/></td>
-        <td><input  style="font-family:monospace" type="text" name="step1" size="22" value="${model.newTranscoding.step1}"/></td>
-        <td><input  style="font-family:monospace" type="text" name="step2" size="22" value="${model.newTranscoding.step2}"/></td>
-        <td><input  style="font-family:monospace" type="text" name="step3" size="22" value="${model.newTranscoding.step3}"/></td>
-        <td align="center" style="padding-left:1em"><input name="defaultActive" checked type="checkbox" class="checkbox"/></td>
-        <td align="center" style="padding-left:1em"><input name="enabled" checked type="checkbox" class="checkbox"/></td>
+        <td><input style="font-family:monospace" type="text" name="name" size="10" value="${model.newTranscoding.name}"/></td>
+        <td><input style="font-family:monospace" type="text" name="sourceFormats" size="36" value="${model.newTranscoding.sourceFormats}"/></td>
+        <td><input style="font-family:monospace" type="text" name="targetFormat" size="10" value="${model.newTranscoding.targetFormat}"/></td>
+        <td><input style="font-family:monospace" type="text" name="step1" size="60" value="${model.newTranscoding.step1}"/></td>
+        <td><input style="font-family:monospace" type="text" name="step2" size="22" value="${model.newTranscoding.step2}"/></td>
         <td/>
     </tr>
 </table>

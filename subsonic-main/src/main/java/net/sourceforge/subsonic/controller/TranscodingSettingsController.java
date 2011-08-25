@@ -50,7 +50,7 @@ public class TranscodingSettingsController extends ParameterizableViewController
         }
 
         ModelAndView result = super.handleRequestInternal(request, response);
-        map.put("transcodings", transcodingService.getAllTranscodings(true));
+        map.put("transcodings", transcodingService.getAllTranscodings());
         map.put("transcodeDirectory", transcodingService.getTranscodeDirectory());
         map.put("brand", settingsService.getBrand());
 
@@ -70,23 +70,20 @@ public class TranscodingSettingsController extends ParameterizableViewController
 
     private void handleParameters(HttpServletRequest request, Map<String, Object> map) {
 
-        for (Transcoding transcoding : transcodingService.getAllTranscodings(true)) {
+        for (Transcoding transcoding : transcodingService.getAllTranscodings()) {
             Integer id = transcoding.getId();
             String name = getParameter(request, "name", id);
-            String sourceFormat = getParameter(request, "sourceFormat", id);
+            String sourceFormats = getParameter(request, "sourceFormats", id);
             String targetFormat = getParameter(request, "targetFormat", id);
             String step1 = getParameter(request, "step1", id);
             String step2 = getParameter(request, "step2", id);
-            String step3 = getParameter(request, "step3", id);
-            boolean enabled = getParameter(request, "enabled", id) != null;
-            boolean defaultActive = getParameter(request, "defaultActive", id) != null;
             boolean delete = getParameter(request, "delete", id) != null;
 
             if (delete) {
                 transcodingService.deleteTranscoding(id);
             } else if (name == null) {
                 map.put("error", "transcodingsettings.noname");
-            } else if (sourceFormat == null) {
+            } else if (sourceFormats == null) {
                 map.put("error", "transcodingsettings.nosourceformat");
             } else if (targetFormat == null) {
                 map.put("error", "transcodingsettings.notargetformat");
@@ -94,31 +91,25 @@ public class TranscodingSettingsController extends ParameterizableViewController
                 map.put("error", "transcodingsettings.nostep1");
             } else {
                 transcoding.setName(name);
-                transcoding.setSourceFormat(sourceFormat);
+                transcoding.setSourceFormats(sourceFormats);
                 transcoding.setTargetFormat(targetFormat);
                 transcoding.setStep1(step1);
                 transcoding.setStep2(step2);
-                transcoding.setStep3(step3);
-                transcoding.setEnabled(enabled);
-                transcoding.setDefaultActive(defaultActive);
                 transcodingService.updateTranscoding(transcoding);
             }
         }
 
         String name = StringUtils.trimToNull(request.getParameter("name"));
-        String sourceFormat = StringUtils.trimToNull(request.getParameter("sourceFormat"));
+        String sourceFormats = StringUtils.trimToNull(request.getParameter("sourceFormats"));
         String targetFormat = StringUtils.trimToNull(request.getParameter("targetFormat"));
         String step1 = StringUtils.trimToNull(request.getParameter("step1"));
         String step2 = StringUtils.trimToNull(request.getParameter("step2"));
-        String step3 = StringUtils.trimToNull(request.getParameter("step3"));
-        boolean enabled = StringUtils.trimToNull(request.getParameter("enabled")) != null;
-        boolean defaultActive = StringUtils.trimToNull(request.getParameter("defaultActive")) != null;
 
-        if (name != null || sourceFormat != null || targetFormat != null || step1 != null || step2 != null || step3 != null) {
-            Transcoding transcoding = new Transcoding(null, name, sourceFormat, targetFormat, step1, step2, step3, enabled, defaultActive);
+        if (name != null || sourceFormats != null || targetFormat != null || step1 != null || step2 != null) {
+            Transcoding transcoding = new Transcoding(null, name, sourceFormats, targetFormat, step1, step2, null);
             if (name == null) {
                 map.put("error", "transcodingsettings.noname");
-            } else if (sourceFormat == null) {
+            } else if (sourceFormats == null) {
                 map.put("error", "transcodingsettings.nosourceformat");
             } else if (targetFormat == null) {
                 map.put("error", "transcodingsettings.notargetformat");

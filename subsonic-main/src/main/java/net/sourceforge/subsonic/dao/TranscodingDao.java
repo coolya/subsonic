@@ -35,7 +35,7 @@ import net.sourceforge.subsonic.domain.Transcoding;
 public class TranscodingDao extends AbstractDao {
 
     private static final Logger LOG = Logger.getLogger(TranscodingDao.class);
-    private static final String COLUMNS = "id, name, source_format, target_format, step1, step2, step3, enabled, default_active";
+    private static final String COLUMNS = "id, name, source_formats, target_format, step1, step2, step3";
     private TranscodingRowMapper rowMapper = new TranscodingRowMapper();
 
     /**
@@ -44,7 +44,7 @@ public class TranscodingDao extends AbstractDao {
      * @return Possibly empty list of all transcodings.
      */
     public List<Transcoding> getAllTranscodings() {
-        String sql = "select " + COLUMNS + " from transcoding";
+        String sql = "select " + COLUMNS + " from transcoding2";
         return query(sql, rowMapper);
     }
 
@@ -55,9 +55,9 @@ public class TranscodingDao extends AbstractDao {
      * @return All active transcodings for the player.
      */
     public List<Transcoding> getTranscodingsForPlayer(String playerId) {
-        String sql = "select " + COLUMNS + " from transcoding, player_transcoding " +
-                "where player_transcoding.player_id = ? " +
-                "and   player_transcoding.transcoding_id = transcoding.id";
+        String sql = "select " + COLUMNS + " from transcoding2, player_transcoding2 " +
+                "where player_transcoding2.player_id = ? " +
+                "and   player_transcoding2.transcoding_id = transcoding2.id";
         return query(sql, rowMapper, playerId);
     }
 
@@ -68,8 +68,8 @@ public class TranscodingDao extends AbstractDao {
      * @param transcodingIds ID's of the active transcodings.
      */
     public void setTranscodingsForPlayer(String playerId, int[] transcodingIds) {
-        update("delete from player_transcoding where player_id = ?", playerId);
-        String sql = "insert into player_transcoding(player_id, transcoding_id) values (?, ?)";
+        update("delete from player_transcoding2 where player_id = ?", playerId);
+        String sql = "insert into player_transcoding2(player_id, transcoding_id) values (?, ?)";
         for (int transcodingId : transcodingIds) {
             update(sql, playerId, transcodingId);
         }
@@ -81,11 +81,10 @@ public class TranscodingDao extends AbstractDao {
      * @param transcoding The transcoding to create.
      */
     public void createTranscoding(Transcoding transcoding) {
-        String sql = "insert into transcoding (" + COLUMNS + ") values (null, ?, ?, ?, ?, ?, ?, ?, ?)";
-        update(sql, transcoding.getName(), transcoding.getSourceFormat(),
+        String sql = "insert into transcoding2 (" + COLUMNS + ") values (" + questionMarks(COLUMNS) + ")";
+        update(sql, null, transcoding.getName(), transcoding.getSourceFormats(),
                 transcoding.getTargetFormat(), transcoding.getStep1(),
-                transcoding.getStep2(), transcoding.getStep3(),
-                transcoding.isEnabled(), transcoding.isDefaultActive());
+                transcoding.getStep2(), transcoding.getStep3());
         LOG.info("Created transcoding " + transcoding.getName());
     }
 
@@ -95,7 +94,7 @@ public class TranscodingDao extends AbstractDao {
      * @param id The transcoding ID.
      */
     public void deleteTranscoding(Integer id) {
-        String sql = "delete from transcoding where id=?";
+        String sql = "delete from transcoding2 where id=?";
         update(sql, id);
         LOG.info("Deleted transcoding with ID " + id);
     }
@@ -106,18 +105,17 @@ public class TranscodingDao extends AbstractDao {
      * @param transcoding The transcoding to update.
      */
     public void updateTranscoding(Transcoding transcoding) {
-        String sql = "update transcoding set name=?, source_format=?, target_format=?, " +
-                "step1=?, step2=?, step3=?, enabled=?, default_active=? where id=?";
-        update(sql, transcoding.getName(), transcoding.getSourceFormat(),
+        String sql = "update transcoding2 set name=?, source_formats=?, target_format=?, " +
+                "step1=?, step2=?, step3=? where id=?";
+        update(sql, transcoding.getName(), transcoding.getSourceFormats(),
                 transcoding.getTargetFormat(), transcoding.getStep1(), transcoding.getStep2(),
-                transcoding.getStep3(), transcoding.isEnabled(), transcoding.isDefaultActive(),
-                transcoding.getId());
+                transcoding.getStep3(), transcoding.getId());
     }
 
     private static class TranscodingRowMapper implements ParameterizedRowMapper<Transcoding> {
         public Transcoding mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Transcoding(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-                    rs.getString(6), rs.getString(7), rs.getBoolean(8), rs.getBoolean(9));
+                    rs.getString(6), rs.getString(7));
         }
     }
 }

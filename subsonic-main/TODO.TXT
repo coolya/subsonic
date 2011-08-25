@@ -9,6 +9,7 @@ Updated Dutch translation, courtesy of Muiz.
 TODO IN 4.6
 -----------------
 Rename "offsetSeconds" to "timeOffset" in StreamController, and update API doc.
+Add "byteOffset" parameter as well.
 Add rating attributes to <directory> in getMusicDirectory.
 Update description of Thumper.
 periscope player
@@ -183,15 +184,15 @@ TRANSCODING
 
 Name          Convert from                 Convert to     Step 1       Step 2
 mp3 audio     wav flac ogg wma m4a ...     mp3            ffmpeg ...   lame ....
-aac audio     wav flac ogg wma m4a ...     aac            ffmpeg ...   lame ....
-ogg audio     wav flac ogg wma m4a ...     ogg            ffmpeg ...   lame ....
-flv video     mpg mpeg mp4 m4v divx ...    flv            ffmpeg ...
+flv/h264 video     mpg mpeg mp4 m4v divx ...    flv            ffmpeg ...
 
 - Remove "Default" property.  Should implicit be true.
 - Remove "Enabled" property.  Can still be disabled per player.
 - When creating a new transcoding, automatically enable it for all existing players.
 - Change ".mp3" to "mp3" in Settings > General
 - Update documentation in Settings > Transcoding
+- Support %o for audio
+- Are ID3 tags preserved by ffmpeg?
 
 PLAYLIST
 --------

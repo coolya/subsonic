@@ -51,9 +51,7 @@ public class Schema46 extends Schema {
                              "step2 varchar," +
                              "step3 varchar)");
 
-            template.execute("insert into transcoding2 values(null,'mp3 audio', 'ogg aac flac m4a wav wma ape mpc mv shn', 'mp3', 'ffmpeg -ss %o -i %s -b %bk -v 0 -f mp3 -', null, null)");
-            template.execute("insert into transcoding2 values(null,'aac audio', 'ogg mp3 flac m4a wav wma ape mpc mv shn', 'aac', 'ffmpeg -ss %o -i %s -b %bk -v 0 -f aac -', null, null)");
-            template.execute("insert into transcoding2 values(null,'ogg audio', 'aac mp3 flac m4a wav wma ape mpc mv shn', 'ogg', 'ffmpeg -ss %o -i %s -b %bk -v 0 -f ogg -', null, null)");
+            template.execute("insert into transcoding2 values(null,'mp3 audio', 'ogg aac flac m4a wav wma ape mpc mv shn', 'mp3', 'ffmpeg -i %s -b %bk -v 0 -f mp3 -', null, null)");
 
             LOG.info("Database table 'transcoding2' was created successfully.");
         }
@@ -66,10 +64,11 @@ public class Schema46 extends Schema {
                              "primary key (player_id, transcoding_id)," +
                              "foreign key (player_id) references player(id) on delete cascade," +
                              "foreign key (transcoding_id) references transcoding2(id) on delete cascade)");
+
+            template.execute("insert into player_transcoding2(player_id, transcoding_id) " +
+                    "select distinct p.id, t.id from player p, transcoding2 t");
+
             LOG.info("Database table 'player_transcoding2' was created successfully.");
-
-
-            // TODO: Insert transcodings.
         }
     }
 

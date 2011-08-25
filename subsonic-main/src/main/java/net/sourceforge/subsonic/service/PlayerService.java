@@ -18,7 +18,6 @@
  */
 package net.sourceforge.subsonic.service;
 
-import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.PlayerDao;
 import net.sourceforge.subsonic.domain.Player;
 import net.sourceforge.subsonic.domain.Transcoding;
@@ -29,7 +28,6 @@ import org.apache.commons.lang.StringUtils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +39,6 @@ import java.util.List;
  */
 public class PlayerService {
 
-    private static final Logger LOG = Logger.getLogger(PlayerService.class);
     private static final String COOKIE_NAME = "player";
     private static final int COOKIE_EXPIRY = 365 * 24 * 3600; // One year
 
@@ -273,8 +270,7 @@ public class PlayerService {
     }
 
     /**
-     * Creates the given player, and activates all transcodings that
-     * are configured to be "default active".
+     * Creates the given player, and activates all transcodings.
      *
      * @param player The player to create.
      */
@@ -282,16 +278,10 @@ public class PlayerService {
         playerDao.createPlayer(player);
 
         List<Transcoding> transcodings = transcodingService.getAllTranscodings();
-        List<Transcoding> defaultTranscodings = new ArrayList<Transcoding>();
-        for (Transcoding transcoding : transcodings) {
-            if (transcoding.isDefaultActive()) {
-                defaultTranscodings.add(transcoding);
-            }
-        }
 
-        int[] transcodingIds = new int[defaultTranscodings.size()];
+        int[] transcodingIds = new int[transcodings.size()];
         for (int i = 0; i < transcodingIds.length; i++) {
-            transcodingIds[i] = defaultTranscodings.get(i).getId();
+            transcodingIds[i] = transcodings.get(i).getId();
         }
         transcodingService.setTranscodingsForPlayer(player, transcodingIds);
     }

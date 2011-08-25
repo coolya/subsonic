@@ -22,7 +22,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -60,29 +59,12 @@ public class TranscodingService {
     private SettingsService settingsService;
 
     /**
-     * Returns all transcodings. Disabled transcodings are not included.
+     * Returns all transcodings.
      *
      * @return Possibly empty list of all transcodings.
      */
     public List<Transcoding> getAllTranscodings() {
-        return getAllTranscodings(false);
-    }
-
-    /**
-     * Returns all transcodings.
-     *
-     * @param includeAll Whether disabled transcodings should be included.
-     * @return Possibly empty list of all transcodings.
-     */
-    public List<Transcoding> getAllTranscodings(boolean includeAll) {
-        List<Transcoding> all = transcodingDao.getAllTranscodings();
-        List<Transcoding> result = new ArrayList<Transcoding>(all.size());
-        for (Transcoding transcoding : all) {
-            if (includeAll || transcoding.isEnabled()) {
-                result.add(transcoding);
-            }
-        }
-        return result;
+        return transcodingDao.getAllTranscodings();
     }
 
     /**
@@ -92,14 +74,7 @@ public class TranscodingService {
      * @return All active transcodings for the player.
      */
     public List<Transcoding> getTranscodingsForPlayer(Player player) {
-        List<Transcoding> all = transcodingDao.getTranscodingsForPlayer(player.getId());
-        List<Transcoding> result = new ArrayList<Transcoding>(all.size());
-        for (Transcoding transcoding : all) {
-            if (transcoding.isEnabled()) {
-                result.add(transcoding);
-            }
-        }
-        return result;
+        return transcodingDao.getTranscodingsForPlayer(player.getId());
     }
 
     /**
@@ -368,11 +343,14 @@ public class TranscodingService {
     private Transcoding getTranscoding(MusicFile musicFile, Player player, String preferredTargetFormat) {
 
         List<Transcoding> applicableTranscodings = new LinkedList<Transcoding>();
+        String suffix = musicFile.getSuffix();
 
         for (Transcoding transcoding : getTranscodingsForPlayer(player)) {
-            if (transcoding.getSourceFormat().equalsIgnoreCase(musicFile.getSuffix())) {
-                if (isTranscodingInstalled(transcoding)) {
-                    applicableTranscodings.add(transcoding);
+            for (String sourceFormat : transcoding.getSourceFormatsAsArray()) {
+                if (sourceFormat.equalsIgnoreCase(suffix)) {
+                    if (isTranscodingInstalled(transcoding)) {
+                        applicableTranscodings.add(transcoding);
+                    }
                 }
             }
         }
