@@ -29,7 +29,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.AudioManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -229,7 +228,7 @@ public class DownloadServiceLifecycleSupport {
 
     /**
      * Logic taken from packages/apps/Music.  Will pause when an incoming
-     * call rings (volume > 0), or if a call (incoming or outgoing) is connected.
+     * call rings or if a call (incoming or outgoing) is connected.
      */
     private class MyPhoneStateListener extends PhoneStateListener {
         private boolean resumeAfterCall;
@@ -238,15 +237,6 @@ public class DownloadServiceLifecycleSupport {
         public void onCallStateChanged(int state, String incomingNumber) {
             switch (state) {
                 case TelephonyManager.CALL_STATE_RINGING:
-                    AudioManager am = (AudioManager) downloadService.getSystemService(Context.AUDIO_SERVICE);
-
-                    // Don't pause if the ringer isn't making any noise.
-                    int ringvol = am.getStreamVolume(AudioManager.STREAM_RING);
-                    if (ringvol <= 0) {
-                        break;
-                    }
-
-                    // Fall through...
                 case TelephonyManager.CALL_STATE_OFFHOOK:
                     if (downloadService.getPlayerState() == PlayerState.STARTED) {
                         resumeAfterCall = true;
@@ -264,7 +254,6 @@ public class DownloadServiceLifecycleSupport {
             }
         }
     }
-
 
     private static class State implements Serializable {
         private static final long serialVersionUID = -6346438781062572270L;

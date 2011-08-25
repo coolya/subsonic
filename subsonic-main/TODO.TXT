@@ -31,6 +31,7 @@ Buy new JW license
 DONE IN ANDROID 3.2
 --------------------
 Improved support for accessibility screen readers.
+Always pause playback on incoming/outgoing call 
 
 TODO IN ANDROID 3.2
 --------------------
@@ -38,7 +39,10 @@ Start process in foreground
   http://forum.subsonic.org/forum/viewtopic.php?p=30103#p30103
   http://android-developers.blogspot.com/2010/02/service-api-changes-starting-with.html
   http://groups.google.com/group/android-developers/browse_thread/thread/422bf837cfdb61a1?pli=1
-  
+EQ resets when switching between online/offline.
+  https://mail.google.com/mail/?shva=1#inbox/131e7e98173f0c97
+Don't stop playback when switching between online/offline.
+
 Screen reader support for play, pause, etc
 Fix other crashes.
 In-app purchase.
@@ -164,6 +168,7 @@ Updated Dutch translation, courtesy of Muiz.
 
 TODO IN 4.6
 -----------------
+Rename "offsetSeconds" to "timeOffset" in StreamController, and update API doc.
 Add rating attributes to <directory> in getMusicDirectory.
 Update description of Thumper.
 periscope player
@@ -172,7 +177,11 @@ substream
   http://itunes.apple.com/us/app/substream/id389906706?mt=8
 minisub
   http://forum.subsonic.org/forum/viewtopic.php?f=8&t=7553
+sonic air
+  https://mail.google.com/mail/?shva=1#inbox/131fe630bfa475a1
+  http://appworld.blackberry.com/webstore/content/55137?lang=en
 .mts support
+REST: include files in root folders.
 
 Go through tracker.
 Does canaca allow outgoing port 4040?
