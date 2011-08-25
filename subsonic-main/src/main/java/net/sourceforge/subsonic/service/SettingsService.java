@@ -115,7 +115,7 @@ public class SettingsService {
     private static final String DEFAULT_IGNORED_ARTICLES = "The El La Los Las Le Les";
     private static final String DEFAULT_SHORTCUTS = "New Incoming Podcast";
     private static final String DEFAULT_PLAYLIST_FOLDER = Util.getDefaultPlaylistFolder();
-    private static final String DEFAULT_MUSIC_MASK = ".mp3 .ogg .aac .flac .m4a .wav .wma";
+    private static final String DEFAULT_MUSIC_MASK = ".mp3 .ogg .aac .flac .m4a .wav .wma .ape .mpc .mv .shn";
     private static final String DEFAULT_VIDEO_MASK = ".avi .mpg .mpeg .flv .mp4 .m4v .mkv .mov .wmv .ogv";
     private static final String DEFAULT_COVER_ART_MASK = "cover.jpg folder.jpg .jpg .jpeg .gif .png";
     private static final int DEFAULT_COVER_ART_LIMIT = 30;
