@@ -51,7 +51,7 @@ public class Schema46 extends Schema {
                              "step2 varchar," +
                              "step3 varchar)");
 
-            template.execute("insert into transcoding2 values(null,'mp3 audio', 'ogg aac flac m4a wav wma ape mpc mv shn', 'mp3', 'ffmpeg -i %s -b %bk -v 0 -f mp3 -', null, null)");
+            template.execute("insert into transcoding2 values(null,'mp3 audio', 'ogg aac flac m4a wav wma ape mpc mv shn', 'mp3', 'ffmpeg -i %s -ab %bk -v 0 -f mp3 -', null, null)");
 
             LOG.info("Database table 'transcoding2' was created successfully.");
         }
