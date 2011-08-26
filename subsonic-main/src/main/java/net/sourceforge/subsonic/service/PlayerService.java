@@ -278,12 +278,7 @@ public class PlayerService {
         playerDao.createPlayer(player);
 
         List<Transcoding> transcodings = transcodingService.getAllTranscodings();
-
-        int[] transcodingIds = new int[transcodings.size()];
-        for (int i = 0; i < transcodingIds.length; i++) {
-            transcodingIds[i] = transcodings.get(i).getId();
-        }
-        transcodingService.setTranscodingsForPlayer(player, transcodingIds);
+        transcodingService.setTranscodingsForPlayer(player, transcodings);
     }
 
     public void setStatusService(StatusService statusService) {

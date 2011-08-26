@@ -119,6 +119,7 @@
     <bean id="transcodingService" class="net.sourceforge.subsonic.service.TranscodingService">
         <property name="transcodingDao" ref="transcodingDao"/>
         <property name="settingsService" ref="settingsService"/>
+        <property name="playerService" ref="playerService"/>
     </bean>
 
     <bean id="shareService" class="net.sourceforge.subsonic.service.ShareService">

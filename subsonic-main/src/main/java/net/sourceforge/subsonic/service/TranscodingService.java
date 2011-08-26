@@ -57,12 +57,13 @@ public class TranscodingService {
 
     private TranscodingDao transcodingDao;
     private SettingsService settingsService;
+    private PlayerService playerService;
 
     /**
-     * Returns all transcodings.
-     *
-     * @return Possibly empty list of all transcodings.
-     */
+    * Returns all transcodings.
+    *
+    * @return Possibly empty list of all transcodings.
+    */
     public List<Transcoding> getAllTranscodings() {
         return transcodingDao.getAllTranscodings();
     }
@@ -88,12 +89,34 @@ public class TranscodingService {
     }
 
     /**
+     * Sets the list of active transcodings for the given player.
+     *
+     * @param player        The player.
+     * @param transcodings  The active transcodings.
+     */
+    public void setTranscodingsForPlayer(Player player, List<Transcoding> transcodings) {
+        int[] transcodingIds = new int[transcodings.size()];
+        for (int i = 0; i < transcodingIds.length; i++) {
+            transcodingIds[i] = transcodings.get(i).getId();
+        }
+        setTranscodingsForPlayer(player, transcodingIds);
+    }
+
+
+    /**
      * Creates a new transcoding.
      *
      * @param transcoding The transcoding to create.
      */
     public void createTranscoding(Transcoding transcoding) {
         transcodingDao.createTranscoding(transcoding);
+
+        // Activate this transcoding for all players.
+        for (Player player : playerService.getAllPlayers()) {
+            List<Transcoding> transcodings = getTranscodingsForPlayer(player);
+            transcodings.add(transcoding);
+            setTranscodingsForPlayer(player, transcodings);
+        }
     }
 
     /**
@@ -437,5 +460,9 @@ public class TranscodingService {
 
     public void setSettingsService(SettingsService settingsService) {
         this.settingsService = settingsService;
+    }
+
+    public void setPlayerService(PlayerService playerService) {
+        this.playerService = playerService;
     }
 }
