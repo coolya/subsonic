@@ -190,6 +190,7 @@ flv/h264 video mpg mpeg mp4 m4v divx ...    flv            ffmpeg ...
 - Update documentation in Settings > Transcoding
 - Support %o for audio
 - Are ID3 tags preserved by ffmpeg?
+- Increase volume
 
 PLAYLIST
 --------
