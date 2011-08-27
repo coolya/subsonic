@@ -56,7 +56,7 @@ public class Schema46 extends Schema {
                     "'ffmpeg -i %s -ab %bk -v 0 -f mp3 -', null, null)");
 
             template.execute("insert into transcoding2 values(null,'flv/h264 video', " +
-                    "'avi mpg mpeg mp4 m4v mkv mov wmv ogv divx', 'flv', " +
+                    "'avi mpg mpeg mp4 m4v mkv mov wmv ogv divx m2ts', 'flv', " +
                     "'ffmpeg -ss %o -i %s -async 1 -b %bk -s %wx%h -ar 44100 -ac 2 -v 0 -f flv -vcodec libx264 -preset superfast -threads 0 -', null, null)");
 
             LOG.info("Database table 'transcoding2' was created successfully.");

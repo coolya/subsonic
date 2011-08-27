@@ -180,18 +180,24 @@ Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Colors: http://www.androidtapp.com/opentable/
 
-
 TRANSCODING
 -----------
-- Change ".mp3" to "mp3" in Settings > General
+- Change ".mp3" to "mp3" in Settings > General, also rename SettingsService.KEY_COVER_ART_MASK
 - Update documentation in Settings > Transcoding
 - Update installation instructions.
 - Support %o for audio ?
 - Are ID3 tags preserved by ffmpeg?
 - Increase volume? (-vol)
+- Use -async 30 rather than -async 1
 - Subtitle support  (-scodec copy ?)
 - Installers
 - .wtv   http://forum.subsonic.org/forum/viewtopic.php?f=2&t=7668
+- .m2ts, make metadata work
+- Remove -ac2 ?
+- Update StringUtil mime types.
+
+/var/subsonic/transcode/ffmpeg -ss 0 -i /Users/sindre/Movies/Test/Sample.wtv -async 1 -b 1000k -s 480x360 -ar 44100 -ac 2 -f flv -scodec copy -vcodec libx264 -preset veryfast -threads 0 foo.flv
+
 
 PLAYLIST
 --------
@@ -410,7 +416,7 @@ Improve menus in web pages.  Make sub menus.
 Add FLAC>WAV transcoding
 Add "Add random" to main.view and "Add to playlist" in more.view
 Use signed requests against Amazon.
-http://www.jthink.net/jaudiotagger/index.jsp]
+http://www.jthink.net/jaudiotagger/index.jsp
 Exclusion filter (*.svn, *.log, *.pun)
 Select music folder / playlist folder in Windows installer.
 Add links to Facebook group from home page and Help page.

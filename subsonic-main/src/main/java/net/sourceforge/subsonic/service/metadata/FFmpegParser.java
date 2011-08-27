@@ -23,7 +23,6 @@ import net.sourceforge.subsonic.domain.MusicFile;
 import net.sourceforge.subsonic.io.InputStreamReaderThread;
 import net.sourceforge.subsonic.service.TranscodingService;
 import net.sourceforge.subsonic.util.StringUtil;
-import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.InputStream;
@@ -152,21 +151,7 @@ public class FFmpegParser extends MetaDataParser {
      */
     @Override
     public boolean isApplicable(MusicFile file) {
-        if (!file.isFile()) {
-            return false;
-        }
-
-        String extension = FilenameUtils.getExtension(file.getName()).toLowerCase();
-        return extension.equals("avi") ||
-               extension.equals("mpg") ||
-               extension.equals("mpeg") ||
-               extension.equals("flv") ||
-               extension.equals("mp4") ||
-               extension.equals("m4v") ||
-               extension.equals("mkv") ||
-               extension.equals("mov") ||
-               extension.equals("wmv") ||
-               extension.equals("ogv") ;
+        return file.isVideo();
     }
 
     public void setTranscodingService(TranscodingService transcodingService) {
