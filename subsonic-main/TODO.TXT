@@ -1,6 +1,7 @@
 DONE IN 4.6
 ----------------
 Updated Dutch translation, courtesy of Muiz.
+REST: include files in root folders.
 
 
 1 stk frosta glass til skapdør på baderom: 296 x 305 x 4 mm
@@ -10,7 +11,6 @@ TODO IN 4.6
 -----------------
 Rename "offsetSeconds" to "timeOffset" in StreamController, and update API doc.
 Add "byteOffset" parameter as well.
-Upgrade to latest java installer.
 Test with java 7.
 Add rating attributes to <directory> in getMusicDirectory.
 Update description of Thumper.
@@ -24,7 +24,6 @@ sonic air
   https://mail.google.com/mail/?shva=1#inbox/131fe630bfa475a1
   http://appworld.blackberry.com/webstore/content/55137?lang=en
 .mts support
-REST: include files in root folders.
 REST: add method to get everything in search index (binary, compressed)?
 
 Go through tracker.
@@ -184,15 +183,13 @@ TRANSCODING
 -----------
 - Change ".mp3" to "mp3" in Settings > General, also rename SettingsService.KEY_COVER_ART_MASK
 - Update documentation in Settings > Transcoding
-- Update installation instructions.
 - Support %o for audio ?
 - Are ID3 tags preserved by ffmpeg?
 - Increase volume? (-vol)
-- Use -async 30 rather than -async 1
+- Use -async 30 rather than -async 1 ?
 - Subtitle support  (-scodec copy ?)
-- Installers
+    http://www.longtailvideo.com/support/addons/captions-plugin/14974/captions-plugin-reference-guide
 - .wtv   http://forum.subsonic.org/forum/viewtopic.php?f=2&t=7668
-- .m2ts, make metadata work
 - Remove -ac2 ?
 - Update StringUtil mime types.
 

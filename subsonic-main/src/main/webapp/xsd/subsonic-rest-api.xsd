@@ -4,7 +4,7 @@
            targetNamespace="http://subsonic.org/restapi"
            attributeFormDefault="unqualified"
            elementFormDefault="qualified"
-           version="1.6.0">
+           version="1.7.0">
 
     <xs:element name="subsonic-response" type="sub:Response"/>
 
@@ -61,6 +61,7 @@
         <xs:sequence>
             <xs:element name="shortcut" type="sub:Artist" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="index" type="sub:Index" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="child" type="sub:Child" minOccurs="0" maxOccurs="unbounded"/> <!-- Added in 1.7.0 -->
         </xs:sequence>
         <xs:attribute name="lastModified" type="xs:long" use="required"/>
     </xs:complexType>
@@ -88,7 +89,7 @@
 
     <xs:complexType name="Child">
         <xs:attribute name="id" type="xs:string" use="required"/>
-        <xs:attribute name="parent" type="xs:string" use="required"/>
+        <xs:attribute name="parent" type="xs:string" use="optional"/>
         <xs:attribute name="isDir" type="xs:boolean" use="required"/>
         <xs:attribute name="title" type="xs:string" use="required"/>
         <xs:attribute name="album" type="xs:string" use="optional"/>

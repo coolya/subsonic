@@ -209,6 +209,14 @@ public class RESTController extends MultiActionController {
             }
             builder.end();
         }
+
+        // TODO: Add children
+        Player player = playerService.getPlayer(request, response);
+        List<MusicFile> singleSongs = leftController.getSingleSongs(musicFolders);
+        for (MusicFile singleSong : singleSongs) {
+            builder.add("child", createAttributesForMusicFile(player, null, singleSong), true);
+        }
+
         builder.endAll();
         response.getWriter().print(builder);
     }
@@ -626,7 +634,9 @@ public class RESTController extends MultiActionController {
         AttributeSet attributes = new AttributeSet();
         attributes.add("id", StringUtil.utf8HexEncode(musicFile.getPath()));
         try {
-            attributes.add("parent", StringUtil.utf8HexEncode(musicFile.getParent().getPath()));
+            if (!musicFile.getParent().isRoot()) {
+                attributes.add("parent", StringUtil.utf8HexEncode(musicFile.getParent().getPath()));
+            }
         } catch (SecurityException x) {
             // Ignored.
         }

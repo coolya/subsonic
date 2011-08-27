@@ -179,7 +179,7 @@ public class LeftController extends ParameterizableViewController implements Las
         return settingsService.getMusicFolderById(musicFolderId);
     }
 
-    private List<MusicFile> getSingleSongs(List<MusicFolder> folders) throws IOException {
+    protected List<MusicFile> getSingleSongs(List<MusicFolder> folders) throws IOException {
         List<MusicFile> result = new ArrayList<MusicFile>();
         for (MusicFolder folder : folders) {
             MusicFile parent = musicFileService.getMusicFile(folder.getPath());
