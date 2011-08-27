@@ -10,6 +10,8 @@ TODO IN 4.6
 -----------------
 Rename "offsetSeconds" to "timeOffset" in StreamController, and update API doc.
 Add "byteOffset" parameter as well.
+Upgrade to latest java installer.
+Test with java 7.
 Add rating attributes to <directory> in getMusicDirectory.
 Update description of Thumper.
 periscope player
@@ -181,16 +183,14 @@ Colors: http://www.androidtapp.com/opentable/
 
 TRANSCODING
 -----------
-
-Name           Convert from                 Convert to     Step 1       Step 2
-mp3 audio      wav flac ogg wma m4a ...     mp3            ffmpeg ...   lame ....
-flv/h264 video mpg mpeg mp4 m4v divx ...    flv            ffmpeg ...
-
 - Change ".mp3" to "mp3" in Settings > General
 - Update documentation in Settings > Transcoding
-- Support %o for audio
+- Support %o for audio ?
 - Are ID3 tags preserved by ffmpeg?
-- Increase volume
+- Increase volume? (-vol)
+- Subtitle support  (-scodec copy ?)
+- Installers
+- .wtv   http://forum.subsonic.org/forum/viewtopic.php?f=2&t=7668
 
 PLAYLIST
 --------
