@@ -2,6 +2,7 @@ DONE IN 4.6
 ----------------
 Updated Dutch translation, courtesy of Muiz.
 REST: include files in root folders.
+Menu broken in "Settings > Shared media" when logged in as admin.
 
 
 1 stk frosta glass til skapdør på baderom: 296 x 305 x 4 mm
@@ -23,21 +24,18 @@ minisub
 sonic air
   https://mail.google.com/mail/?shva=1#inbox/131fe630bfa475a1
   http://appworld.blackberry.com/webstore/content/55137?lang=en
-.mts support
+Subsonic Chumby
+  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=7154
+  http://forum.chumby.com/viewtopic.php?id=6733
 REST: add method to get everything in search index (binary, compressed)?
 
 Go through tracker.
 Does canaca allow outgoing port 4040?
 Backend service to email license keys on request.
 New transcoding framework.
-Have license key emailed to you in case you've lost it.
-
 Share on Google+
 Recursive getFolders API method?
   https://mail.google.com/mail/?shva=1#inbox/13090cd32a9922bd
-Subsonic Chumby
-  http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=7154
-  http://forum.chumby.com/viewtopic.php?id=6733
 Checkbox, combobox bg color
 REST: scrobble should increment the internal playcounters too.
 Show lyrics in tags.
@@ -86,6 +84,7 @@ Always pause playback on incoming/outgoing call
 TODO IN ANDROID 3.2
 --------------------
 Start process in foreground
+  http://developer.android.com/guide/topics/media/index.html
   http://forum.subsonic.org/forum/viewtopic.php?p=30103#p30103
   http://android-developers.blogspot.com/2010/02/service-api-changes-starting-with.html
   http://groups.google.com/group/android-developers/browse_thread/thread/422bf837cfdb61a1?pli=1

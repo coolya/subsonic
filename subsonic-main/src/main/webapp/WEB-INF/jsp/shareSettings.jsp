@@ -8,7 +8,7 @@
 
 <c:import url="settingsHeader.jsp">
     <c:param name="cat" value="share"/>
-    <c:param name="restricted" value="${not command.user.adminRole}"/>
+    <c:param name="restricted" value="${not model.user.adminRole}"/>
 </c:import>
 
 <form method="post" action="shareSettings.view">
