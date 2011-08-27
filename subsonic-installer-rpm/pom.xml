@@ -78,6 +78,10 @@
                                               todir="${project.build.directory}/rpm/buildroot/usr/share/subsonic"/>
                                         <copy file="../subsonic-main/target/subsonic.war"
                                               todir="${project.build.directory}/rpm/buildroot/usr/share/subsonic"/>
+                                        <copy file="../subsonic-transcode/linux/ffmpeg"
+                                              todir="${project.build.directory}/rpm/buildroot/var/subsonic/transcode"/>
+                                        <copy file="../subsonic-transcode/linux/lame"
+                                              todir="${project.build.directory}/rpm/buildroot/var/subsonic/transcode"/>
 
                                         <exec executable="rpmbuild">
                                             <arg value="-bb"/>
@@ -86,12 +90,12 @@
                                             <arg value="--define"/>
                                             <arg value="_topdir ${project.build.directory}/rpm"/>
                                             <arg value="--target"/>
-                                            <arg value="noarch-pc-linux"/>
+                                            <arg value="i386"/>
                                             <arg value="${project.build.directory}/rpm/SPECS/subsonic.spec"/>
                                         </exec>
 
                                         <copy tofile="${project.build.directory}/subsonic-${project.version}.rpm">
-                                            <fileset dir="${project.build.directory}/rpm/RPMS/noarch">
+                                            <fileset dir="${project.build.directory}/rpm/RPMS/i386">
                                                 <include name="*.rpm"/>
                                             </fileset>
                                         </copy>

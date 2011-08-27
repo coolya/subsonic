@@ -108,12 +108,7 @@
                 Notice that the installer configures your system to start Subsonic automatically when booting.
                 After installing, open the Subsonic web page on <a href="http://localhost:4040">http://localhost:4040</a>.
             </p>
-            <p><b>Transcoders</b></p>
-            <p>
-                To make use of Subsonic's powerful <a href="transcoding.jsp">transcoding</a> feature, it's highly recommended to install some third-party
-                transcoders:
-                <code style="white-space:nowrap;">sudo apt-get install lame flac faad vorbis-tools ffmpeg</code>
-            </p>
+
             <p><b>Advanced configuration</b></p>
             <p>
                 To change the port number, Java memory settings or other startup parameters, edit the SUBSONIC_ARGS variable in
@@ -140,21 +135,13 @@
             <ul>
                 <li>First, install Java: <code>sudo yum install java-1.6.0-openjdk</code></li>
                 <li><a href="download.jsp">Download</a> the Subsonic .rpm installation package and install it: <code style="white-space:nowrap;">sudo yum install --nogpgcheck subsonic-x.x.rpm</code></li>
+                <li>If nothing happens, try to remove the old version first (all settings will be retained): <code style="white-space:nowrap;">sudo yum remove subsonic</code></li>
             </ul>
             <p>
                 Notice that the installer configures your system to start Subsonic automatically when booting.
                 After installing, open the Subsonic web page on <a href="http://localhost:4040">http://localhost:4040</a>.
             </p>
-            <p><b>Transcoders</b></p>
-            <p>
-                To make use of Subsonic's powerful <a href="transcoding.jsp">transcoding</a> feature, it's highly recommended to install some third-party
-                transcoders, available from <a href="http://rpmfusion.org/">RPM Fusion</a>:
-            </p>
-            <ul>
-                <li>If necessary, <a href="http://rpmfusion.org/Configuration">configure yum to use the RPM Fusion repository</a>.</li>
-                <li>From the command line: <code>sudo yum install lame flac faad2 vorbis-tools ffmpeg</code></li>
-            </ul>
-
+            
             <p><b>Advanced configuration</b></p>
             <p>
                 To change the port number, Java memory settings or other startup parameters, edit the SUBSONIC_ARGS variable in

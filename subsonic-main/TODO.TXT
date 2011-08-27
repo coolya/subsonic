@@ -185,6 +185,7 @@ TRANSCODING
 -----------
 - Change ".mp3" to "mp3" in Settings > General
 - Update documentation in Settings > Transcoding
+- Update installation instructions.
 - Support %o for audio ?
 - Are ID3 tags preserved by ffmpeg?
 - Increase volume? (-vol)
