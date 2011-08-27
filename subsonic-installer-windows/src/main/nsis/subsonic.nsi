@@ -171,7 +171,7 @@ Function CheckInstalledJRE
     InstallJRE:
       # Launch Java web installer.
       MessageBox MB_OK "Java 6 was not found and will now be installed."
-      File /oname=$TEMP\jre-setup.exe jre-6u18-windows-i586-iftw-rv.exe
+      File /oname=$TEMP\jre-setup.exe jre-6u27-windows-i586-iftw.exe
       ExecWait '"$TEMP\jre-setup.exe"' $0
       Delete "$TEMP\jre-setup.exe"
 
