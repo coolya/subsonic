@@ -26,7 +26,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -34,6 +33,7 @@ import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import android.app.Service;
 import org.apache.http.HttpEntity;
 
 import android.app.Activity;
@@ -634,7 +634,7 @@ public final class Util {
                 .show();
     }
 
-    public static void showPlayingNotification(final Context context, Handler handler, MusicDirectory.Entry song) {
+    public static void showPlayingNotification(final Context context, final DownloadServiceImpl downloadService, Handler handler, MusicDirectory.Entry song) {
 
         // Use the same text for the ticker and the expanded notification
         String title = song.getTitle();
@@ -668,39 +668,32 @@ public final class Util {
         notification.contentView = contentView;  
         
         Intent notificationIntent = new Intent(context, DownloadActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-        notification.contentIntent = contentIntent;
+        notification.contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
 
-        // Send the notification.
+        // Send the notification and put the service in the foreground.
         handler.post(new Runnable() {
             @Override
             public void run() {
-                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.notify(Constants.NOTIFICATION_ID_PLAYING, notification);
+                startForeground(downloadService, Constants.NOTIFICATION_ID_PLAYING, notification);
             }
         });
 
         // Update widget
-        DownloadService service = DownloadServiceImpl.getInstance();
-        if (service != null) {
-            SubsonicAppWidgetProvider.getInstance().notifyChange(context, service, true);
-        }
+        SubsonicAppWidgetProvider.getInstance().notifyChange(context, downloadService, true);
     }
 
-    public static void hidePlayingNotification(final Context context, Handler handler) {
+    public static void hidePlayingNotification(final Context context, final DownloadServiceImpl downloadService, Handler handler) {
+
+        // Remove notification and remove the service from the foreground
         handler.post(new Runnable() {
             @Override
             public void run() {
-                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.cancel(Constants.NOTIFICATION_ID_PLAYING);
+                stopForeground(downloadService, true);
             }
         });
 
         // Update widget
-        DownloadService service = DownloadServiceImpl.getInstance();
-        if (service != null) {
-            SubsonicAppWidgetProvider.getInstance().notifyChange(context, service, false);
-        }
+        SubsonicAppWidgetProvider.getInstance().notifyChange(context, downloadService, false);
     }
 
     public static void showErrorNotification(final Context context, Handler handler, String title, Exception error) {
@@ -807,6 +800,34 @@ public final class Util {
             method.invoke(audioManager, componentName);
         } catch (Throwable x) {
             // Ignored.
+        }
+    }
+
+    private static void startForeground(Service service, int notificationId, Notification notification) {
+        // Service.startForeground() was introduced in Android 2.0.
+        // Use reflection to maintain compatibility with 1.5.
+        try {
+            Method method = Service.class.getMethod("startForeground", int.class, Notification.class);
+            method.invoke(service, notificationId, notification);
+            Log.i(TAG, "Successfully invoked Service.startForeground()");
+        } catch (Throwable x) {
+            NotificationManager notificationManager = (NotificationManager) service.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(Constants.NOTIFICATION_ID_PLAYING, notification);
+            Log.i(TAG, "Service.startForeground() not available. Using work-around.");
+        }
+    }
+
+    private static void stopForeground(Service service, boolean removeNotification) {
+        // Service.stopForeground() was introduced in Android 2.0.
+        // Use reflection to maintain compatibility with 1.5.
+        try {
+            Method method = Service.class.getMethod("stopForeground", boolean.class);
+            method.invoke(service, removeNotification);
+            Log.i(TAG, "Successfully invoked Service.stopForeground()");
+        } catch (Throwable x) {
+            NotificationManager notificationManager = (NotificationManager) service.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.cancel(Constants.NOTIFICATION_ID_PLAYING);
+            Log.i(TAG, "Service.stopForeground() not available. Using work-around.");
         }
     }
 

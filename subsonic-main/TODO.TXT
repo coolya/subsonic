@@ -80,6 +80,7 @@ DONE IN ANDROID 3.2
 --------------------
 Improved support for accessibility screen readers.
 Always pause playback on incoming/outgoing call
+Keep service in foreground when playing music.
 
 TODO IN ANDROID 3.2
 --------------------

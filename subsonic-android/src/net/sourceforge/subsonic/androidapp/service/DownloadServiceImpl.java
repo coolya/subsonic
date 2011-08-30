@@ -374,9 +374,9 @@ public class DownloadServiceImpl extends Service implements DownloadService {
         }
 
         if (currentPlaying != null && showNotification) {
-            Util.showPlayingNotification(this, handler, currentPlaying.getSong());
+            Util.showPlayingNotification(this, this, handler, currentPlaying.getSong());
         } else {
-            Util.hidePlayingNotification(this, handler);
+            Util.hidePlayingNotification(this, this, handler);
         }
     }
 
@@ -582,9 +582,9 @@ public class DownloadServiceImpl extends Service implements DownloadService {
 
         this.playerState = playerState;
         if (show) {
-            Util.showPlayingNotification(this, handler, currentPlaying.getSong());
+            Util.showPlayingNotification(this, this, handler, currentPlaying.getSong());
         } else if (hide) {
-            Util.hidePlayingNotification(this, handler);
+            Util.hidePlayingNotification(this, this, handler);
         }
 
         if (playerState == STARTED) {
