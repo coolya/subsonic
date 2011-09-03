@@ -766,27 +766,50 @@ public class DownloadActivity extends SubsonicTabActivity implements OnGestureLi
 
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+        DownloadService downloadService = getDownloadService();
+        if (downloadService == null) {
+            return false;
+        }
+
 		// Right to Left swipe
 		if (e1.getX() - e2.getX() > swipeDistance && Math.abs(velocityX) > swipeVelocity) {
             warnIfNetworkOrStorageUnavailable();
-            if (getDownloadService().getCurrentPlayingIndex() < getDownloadService().size() - 1) {
-                getDownloadService().next();
+            if (downloadService.getCurrentPlayingIndex() < downloadService.size() - 1) {
+                downloadService.next();
                 onCurrentChanged();
                 onProgressChanged();
             }
 			return true;
 		}
+
 		// Left to Right swipe
         if (e2.getX() - e1.getX() > swipeDistance && Math.abs(velocityX) > swipeVelocity) {
             warnIfNetworkOrStorageUnavailable();
-            getDownloadService().previous();
+            downloadService.previous();
             onCurrentChanged();
             onProgressChanged();
 			return true;
 		}
 
-		return false;
-	}
+        // Top to Bottom swipe
+         if (e2.getY() - e1.getY() > swipeDistance && Math.abs(velocityY) > swipeVelocity) {
+             warnIfNetworkOrStorageUnavailable();
+             downloadService.seekTo(downloadService.getPlayerPosition() + 30000);
+             onProgressChanged();
+             return true;
+         }
+
+        // Bottom to Top swipe
+        if (e1.getY() - e2.getY() > swipeDistance && Math.abs(velocityY) > swipeVelocity) {
+            warnIfNetworkOrStorageUnavailable();
+            downloadService.seekTo(downloadService.getPlayerPosition() - 8000);
+            onProgressChanged();
+            return true;
+        }
+
+        return false;
+    }
 
 	@Override
 	public void onLongPress(MotionEvent e) {

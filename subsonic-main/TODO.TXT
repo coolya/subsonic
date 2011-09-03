@@ -81,14 +81,10 @@ DONE IN ANDROID 3.2
 Improved support for accessibility screen readers.
 Always pause playback on incoming/outgoing call
 Keep service in foreground when playing music.
+Swipe up to rewind 8 seconds, swipe down to fast forward 30 seconds.
 
 TODO IN ANDROID 3.2
 --------------------
-Start process in foreground
-  http://developer.android.com/guide/topics/media/index.html
-  http://forum.subsonic.org/forum/viewtopic.php?p=30103#p30103
-  http://android-developers.blogspot.com/2010/02/service-api-changes-starting-with.html
-  http://groups.google.com/group/android-developers/browse_thread/thread/422bf837cfdb61a1?pli=1
 EQ resets when switching between online/offline.
   https://mail.google.com/mail/?shva=1#inbox/131e7e98173f0c97
 Don't stop playback when switching between online/offline.
