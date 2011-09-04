@@ -31,6 +31,7 @@
                     <li><a href="#isub">iSub</a> for iPhone/iPad</li>
                     <li><a href="#zsubsonic">Z-Subsonic</a> for iPhone/iPad</li>
                     <li><a href="#subgadget">SubGadget</a> for Windows</li>
+                    <li><a href="#periscope">Periscope</a> for Windows</li>
                 </ul>
             </div>
 
@@ -73,9 +74,6 @@
                         <a href="inc/img/screenshots/screen14.png"><img src="inc/img/screenshots/thumb14.png" alt="" style="padding:3px;padding-right:20px"/></a>
                         <a href="inc/img/screenshots/screen15.png"><img src="inc/img/screenshots/thumb15.png" alt="" style="padding:3px"/></a>
 
-                        <p>
-                           Also check out the <a href="screenshots.jsp#video">video</a>!
-                        </p>
                     </div>
                 </div>
             </div>
@@ -281,6 +279,26 @@
                     </div>
                 </div>
             </div>
+
+            <div class="featureitem">
+                <a name="periscope"></a>
+
+                <div class="heading">Periscope Player<a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
+                <div class="content">
+                    <div class="wide-content">
+                        <p>
+                            <img src="inc/img/windows7.png" alt="Windows 7" class="img-left"/>
+                            <a href="http://periscopeplayer.com/">Periscope Player</a> is a Windows desktop application for Subsonic.
+                        </p>
+                        <a href="inc/img/screenshots/screen28.png"><img src="inc/img/screenshots/thumb28.png" alt="" class="img-center"/></a>
+                        <p>
+                            Developed and maintained by <a href="mailto:support@periscopeplayer.com">Matt Campanile</a>.  Free trial version, $1.99 for
+                            a lifetime license.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div id="side-col">
