@@ -15,8 +15,6 @@ Add "byteOffset" parameter as well.
 Test with java 7.
 Add rating attributes to <directory> in getMusicDirectory.
 Update description of Thumper.
-periscope player
-  http://www.periscopeplayer.com/
 substream
   http://itunes.apple.com/us/app/substream/id389906706?mt=8
 minisub
