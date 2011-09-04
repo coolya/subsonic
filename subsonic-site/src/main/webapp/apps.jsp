@@ -24,6 +24,7 @@
                 <ul class="stars column-left">
                     <li><a href="#android">Subsonic</a> for Android</li>
                     <li><a href="#winphone">Subsonic</a> for Windows Phone 7</li>
+                    <li><a href="#sonicair">SonicAir</a> for BlackBerry PlayBook</li>
                     <li><a href="#subair">SubAir</a> for desktops</li>
                     <li><a href="#thumper">Thumper</a> for Mac</li>
                 </ul>
@@ -195,7 +196,7 @@
                             <a href="http://www.avzuylen.com/subsonic-music-streamer.aspx">Subsonic Music Streamer</a> is a Windows Phone 7 app developed by Anton Van Zuylen, and is
                             available for purchase in the <a href="http://redirect.zune.net/redirect?type=phoneApp&id=2eb445a5-ca04-e011-9264-00237de2db9e&source=WP7applist">Windows Marketplace</a>.
                         </p>
-                            <a href="inc/img/screenshots/screen23.png"><img src="inc/img/screenshots/thumb23.png" alt="" style="margin-left:30px;padding:3px"/></a>
+                        <a href="inc/img/screenshots/screen23.png"><img src="inc/img/screenshots/thumb23.png" alt="" style="margin-left:30px;padding:3px"/></a>
                         <a href="inc/img/screenshots/screen24.png"><img src="inc/img/screenshots/thumb24.png" alt="" style="padding:3px"/></a>
                         <a href="inc/img/screenshots/screen25.png"><img src="inc/img/screenshots/thumb25.png" alt="" style="padding:3px"/></a>
 
@@ -245,6 +246,35 @@
                         <p>
                             Developed and maintained by <a href="http://www.nonpixel.com/">Jim Resnowski</a>, and
                             <a href="http://www.nonpixel.com/subair/">provided free or charge</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="featureitem">
+                <a name="sonicair"></a>
+
+                <div class="heading">SonicAir <a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
+                <div class="content">
+                    <div class="wide-content">
+                        <p>
+                            <img src="inc/img/blackberry.png" alt="BlackBerry" class="img-left"/>
+                            <a href="http://appworld.blackberry.com/webstore/content/55137?lang=en">SonicAir</a> is a Subsonic app for the BlackBerry PlayBook.  Play all sorts of video and audio, even high definition 720P MKV files.
+                        </p>
+
+                        <img src="inc/img/screenshots/screen32.png" alt="" class="img-center"/>
+
+                        <ul class="list">
+                            <li>Listen to music and watch videos.</li>
+                            <li>Control bitrate.</li>
+                            <li>Cache lists for offline use.</li>
+                            <li>Create and play playlists.</li>
+                            <li>Use quick list feature to create on-the-go playlists.</li>
+                            <li>Download songs for offline use later.</li>
+                        </ul>
+                        <p>
+                            Developed and maintained by Mir &amp; Windsor Design, it's sold for $2.99
+                            on <a href="http://appworld.blackberry.com/webstore/content/55137?lang=en">BlackBerry App World</a>.
                         </p>
                     </div>
                 </div>

@@ -15,13 +15,8 @@ Add "byteOffset" parameter as well.
 Test with java 7.
 Add rating attributes to <directory> in getMusicDirectory.
 Update description of Thumper.
-substream
-  http://itunes.apple.com/us/app/substream/id389906706?mt=8
 minisub
   http://forum.subsonic.org/forum/viewtopic.php?f=8&t=7553
-sonic air
-  https://mail.google.com/mail/?shva=1#inbox/131fe630bfa475a1
-  http://appworld.blackberry.com/webstore/content/55137?lang=en
 Subsonic Chumby
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?t=7154
   http://forum.chumby.com/viewtopic.php?id=6733
