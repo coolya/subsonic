@@ -71,10 +71,10 @@ Linux locale issue
 
 DONE IN ANDROID 3.2
 --------------------
-Improved support for accessibility screen readers.
-Always pause playback on incoming/outgoing call
-Keep service in foreground when playing music.
+Avoid app being killed by Android when playing music for a long period of time.
+Always pause playback on incoming/outgoing call.
 Swipe up to rewind 8 seconds, swipe down to fast forward 30 seconds.
+Improved support for accessibility screen readers.
 
 TODO IN ANDROID 3.2
 --------------------
