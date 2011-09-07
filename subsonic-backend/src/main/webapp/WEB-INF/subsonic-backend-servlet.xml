@@ -6,6 +6,7 @@
 
     <bean id="multiController" class="net.sourceforge.subsonic.backend.controller.MultiController">
         <property name="daoHelper" ref="daoHelper"/>
+        <property name="paymentDao" ref="paymentDao"/>
     </bean>
 
     <bean id="redirectionController" class="net.sourceforge.subsonic.backend.controller.RedirectionController">

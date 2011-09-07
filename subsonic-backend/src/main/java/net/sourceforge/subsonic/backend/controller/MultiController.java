@@ -27,6 +27,7 @@ import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.subsonic.backend.dao.PaymentDao;
 import org.apache.log4j.Logger;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,6 +52,7 @@ public class MultiController extends MultiActionController {
     private static final String SUBSONIC_BETA_VERSION = "4.5.beta2";
 
     private DaoHelper daoHelper;
+    private PaymentDao paymentDao;
 
     public ModelAndView version(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -62,6 +64,21 @@ public class MultiController extends MultiActionController {
         writer.println("SUBSONIC_VERSION_BEGIN" + SUBSONIC_VERSION + "SUBSONIC_VERSION_END");
         writer.println("SUBSONIC_FULL_VERSION_BEGIN" + SUBSONIC_VERSION + "SUBSONIC_FULL_VERSION_END");
         writer.println("SUBSONIC_BETA_VERSION_BEGIN" + SUBSONIC_BETA_VERSION + "SUBSONIC_BETA_VERSION_END");
+
+        return null;
+    }
+
+    public ModelAndView verifyLicense(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String email = request.getParameter("email");
+        LOG.info(request.getRemoteAddr() + " asked to verify license for " + email);
+
+        boolean valid = paymentDao.getPaymentByEmail(email) != null;
+
+        // TODO: Also check against whitelist.
+
+        PrintWriter writer = response.getWriter();
+        writer.println(valid);
 
         return null;
     }
@@ -108,5 +125,9 @@ public class MultiController extends MultiActionController {
 
     public void setDaoHelper(DaoHelper daoHelper) {
         this.daoHelper = daoHelper;
+    }
+
+    public void setPaymentDao(PaymentDao paymentDao) {
+        this.paymentDao = paymentDao;
     }
 }

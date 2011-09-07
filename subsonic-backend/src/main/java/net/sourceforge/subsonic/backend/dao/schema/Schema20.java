@@ -53,6 +53,7 @@ public class Schema20 extends Schema {
                              "unique(transaction_id))");
             template.execute("create index idx_payment_transaction_id on payment(transaction_id)");
             template.execute("create index idx_payment_created on payment(created)");
+            template.execute("create index idx_payment_payer_email on payment(payer_email)");
 
             LOG.info("Database table 'payment' was created successfully.");
         }

@@ -35,6 +35,20 @@ public class PaymentDao extends AbstractDao {
     }
 
     /**
+     * Returns the payment with the given payer email.
+     *
+     * @param email The payer email.
+     * @return The payment or <code>null</code> if not found.
+     */
+    public Payment getPaymentByEmail(String email) {
+        if (email == null) {
+            return null;
+        }
+        String sql = "select " + COLUMNS + " from payment where payer_email=?";
+        return queryOne(sql, rowMapper, email);
+    }
+
+    /**
      * Returns all payments with the given processing status.
      *
      * @param status The status.

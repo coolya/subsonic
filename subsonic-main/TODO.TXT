@@ -69,14 +69,10 @@ Avoid icon in mac dock.
 Linux locale issue
   http://www.activeobjects.no/subsonic/forum/viewtopic.php?p=22386#22386
 
-DONE IN ANDROID 3.2
+DONE IN ANDROID 3.3
 --------------------
-Avoid app being killed by Android when playing music for a long period of time.
-Always pause playback on incoming/outgoing call.
-Swipe up to rewind 8 seconds, swipe down to fast forward 30 seconds.
-Improved support for accessibility screen readers.
 
-TODO IN ANDROID 3.2
+TODO IN ANDROID 3.3
 --------------------
 EQ resets when switching between online/offline.
   https://mail.google.com/mail/?shva=1#inbox/131e7e98173f0c97
@@ -685,10 +681,10 @@ Modify FRS properties
   https://sourceforge.net/projects/subsonic/files/subsonic/
 
 Upload site (OLD):
- rsync -avP -e ssh --exclude .svn subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
+ rsync -avP -e ssh --exclude ".*" subsonic-web/  sindre_mehus,subsonic@web.sourceforge.net:htdocs/
 
 Upload site (NEW):
-  rsync -avP -e ssh --exclude .svn subsonic-site/src/main/webapp/  root@subsonic.org:/usr/local/jakarta/tomcat/webapps/pages/
+  rsync -avP -e ssh --exclude ".*" subsonic-site/src/main/webapp/  root@subsonic.org:/usr/local/jakarta/tomcat/webapps/pages/
 
 svn copy https://subsonic.svn.sourceforge.net/svnroot/subsonic/trunk https://subsonic.svn.sourceforge.net/svnroot/subsonic/tags/release-4.5 -m "Tagging 4.5."
 Register at freshmeat.
