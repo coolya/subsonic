@@ -66,14 +66,19 @@ public class LicenseGenerator {
                 throw new Exception("Missing email address.");
             }
 
-            if (isEligible(payment)) {
+            boolean eligible = isEligible(payment);
+            boolean ignorable = isIgnorable(payment);
+            if (eligible) {
                 sendLicenseTo(email, emailSession);
-                payment.setProcessingStatus(Payment.ProcessingStatus.COMPLETED);
-                payment.setLastUpdated(new Date());
-                paymentDao.updatePayment(payment);
                 LOG.info("Sent license key for " + payment);
             } else {
                 LOG.info("Payment not eligible for " + payment);
+            }
+
+            if (eligible || ignorable) {
+                payment.setProcessingStatus(Payment.ProcessingStatus.COMPLETED);
+                payment.setLastUpdated(new Date());
+                paymentDao.updatePayment(payment);
             }
 
         } catch (Throwable x) {
@@ -87,6 +92,13 @@ public class LicenseGenerator {
             return "Pending".equalsIgnoreCase(status) || "Completed".equalsIgnoreCase(status);
         }
         return "Completed".equalsIgnoreCase(status);
+    }
+
+    private boolean isIgnorable(Payment payment) {
+        String status = payment.getPaymentStatus();
+        return "Denied".equalsIgnoreCase(status) || 
+                "Reversed".equalsIgnoreCase(status) ||
+                "Refunded".equalsIgnoreCase(status);
     }
 
     public void sendLicenseTo(String to, EmailSession emailSession) throws MessagingException {
