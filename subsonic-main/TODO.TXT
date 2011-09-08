@@ -5,11 +5,10 @@ REST: include files in root folders.
 Menu broken in "Settings > Shared media" when logged in as admin.
 
 
-1 stk frosta glass til skapdør på baderom: 296 x 305 x 4 mm
-2 stk klart glass til skapdør på kjøkken: 600 x 378 x 6 mm (eller tynnere).
-
 TODO IN 4.6
 -----------------
+Stronger license check.  Verify asynch with backend.
+Backend should set payment rows to complete.
 Rename "offsetSeconds" to "timeOffset" in StreamController, and update API doc.
 Add "byteOffset" parameter as well.
 Test with java 7.
@@ -22,6 +21,8 @@ Subsonic Chumby
   http://forum.chumby.com/viewtopic.php?id=6733
 REST: add method to get everything in search index (binary, compressed)?
 
+Instant playlist
+  https://mail.google.com/mail/?ui=2&shva=1#inbox/1323fe922bb985af
 Go through tracker.
 Does canaca allow outgoing port 4040?
 Backend service to email license keys on request.
@@ -74,6 +75,7 @@ DONE IN ANDROID 3.3
 
 TODO IN ANDROID 3.3
 --------------------
+Handle files in root folder. 
 EQ resets when switching between online/offline.
   https://mail.google.com/mail/?shva=1#inbox/131e7e98173f0c97
 Don't stop playback when switching between online/offline.

@@ -2,7 +2,9 @@ package net.sourceforge.subsonic.backend.dao;
 
 import net.sourceforge.subsonic.backend.domain.Payment;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.simple.ParameterizedSingleColumnRowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +23,8 @@ public class PaymentDao extends AbstractDao {
                                           "payer_email, payer_first_name, payer_last_name, payer_country, " +
                                           "processing_status, created, last_updated";
 
-    private PaymentRowMapper rowMapper = new PaymentRowMapper();
+    private RowMapper paymentRowMapper = new PaymentRowMapper();
+    private RowMapper listRowMapper = new ParameterizedSingleColumnRowMapper<Integer>();
 
     /**
      * Returns the payment with the given transaction ID.
@@ -31,7 +34,7 @@ public class PaymentDao extends AbstractDao {
      */
     public Payment getPaymentByTransactionId(String transactionId) {
         String sql = "select " + COLUMNS + " from payment where transaction_id=?";
-        return queryOne(sql, rowMapper, transactionId);
+        return queryOne(sql, paymentRowMapper, transactionId);
     }
 
     /**
@@ -45,7 +48,7 @@ public class PaymentDao extends AbstractDao {
             return null;
         }
         String sql = "select " + COLUMNS + " from payment where payer_email=?";
-        return queryOne(sql, rowMapper, email);
+        return queryOne(sql, paymentRowMapper, email);
     }
 
     /**
@@ -55,7 +58,7 @@ public class PaymentDao extends AbstractDao {
      * @return List of payments.
      */
     public List<Payment> getPaymentsByProcessingStatus(Payment.ProcessingStatus status) {
-        return query("select " + COLUMNS + " from payment where processing_status=?", rowMapper, status.name());
+        return query("select " + COLUMNS + " from payment where processing_status=?", paymentRowMapper, status.name());
     }
 
     /**
@@ -86,6 +89,17 @@ public class PaymentDao extends AbstractDao {
                payment.getPayerLastName(), payment.getPayerCountry(), payment.getProcessingStatus().name(), payment.getCreated(),
                payment.getLastUpdated(), payment.getId());
         LOG.info("Updated " + payment);
+    }
+
+    public boolean isBlacklisted(String email) {
+        String sql = "select 1 from blacklist where email=?";
+        return queryOne(sql, listRowMapper, email) != null;
+
+    }
+
+    public boolean isWhitelisted(String email) {
+        String sql = "select 1 from whitelist where email=?";
+        return queryOne(sql, listRowMapper, email) != null;
     }
 
     private static class PaymentRowMapper implements ParameterizedRowMapper<Payment> {

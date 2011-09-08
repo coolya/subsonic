@@ -19,6 +19,7 @@
 package net.sourceforge.subsonic.backend.controller;
 
 import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +55,16 @@ public class MultiController extends MultiActionController {
     private DaoHelper daoHelper;
     private PaymentDao paymentDao;
 
+    private static final long LICENSE_DATE_THRESHOLD;
+    static {
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(Calendar.YEAR, 2010);
+        calendar.set(Calendar.MONTH, Calendar.JUNE);
+        calendar.set(Calendar.DAY_OF_MONTH, 19);
+        LICENSE_DATE_THRESHOLD = calendar.getTime().getTime();
+    }
+
     public ModelAndView version(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String localVersion = request.getParameter("v");
@@ -68,14 +79,13 @@ public class MultiController extends MultiActionController {
         return null;
     }
 
-    public ModelAndView verifyLicense(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView validateLicense(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String email = request.getParameter("email");
-        LOG.info(request.getRemoteAddr() + " asked to verify license for " + email);
+        Long date = ServletRequestUtils.getLongParameter(request, "date");
 
-        boolean valid = paymentDao.getPaymentByEmail(email) != null;
-
-        // TODO: Also check against whitelist.
+        boolean valid = isLicenseValid(email, date);
+        LOG.info(request.getRemoteAddr() + " asked to validate license for " + email + ". Result: " + valid);
 
         PrintWriter writer = response.getWriter();
         writer.println(valid);
@@ -121,6 +131,23 @@ public class MultiController extends MultiActionController {
         }
 
         return new ModelAndView("backend/db", "model", map);
+    }
+
+    private boolean isLicenseValid(String email, Long date) {
+        if (email == null || date == null) {
+            return false;
+        }
+
+        if (paymentDao.isBlacklisted(email)) {
+            return false;
+        }
+
+        // Always accept licenses that are older than 2010-06-19.
+        if (date < LICENSE_DATE_THRESHOLD) {
+            return true;
+        }
+
+        return paymentDao.getPaymentByEmail(email) != null || paymentDao.isWhitelisted(email);
     }
 
     public void setDaoHelper(DaoHelper daoHelper) {

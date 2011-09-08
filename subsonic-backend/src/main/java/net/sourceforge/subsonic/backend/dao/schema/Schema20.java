@@ -57,5 +57,25 @@ public class Schema20 extends Schema {
 
             LOG.info("Database table 'payment' was created successfully.");
         }
+
+        if (!tableExists(template, "whitelist")) {
+            LOG.info("Database table 'whitelist' not found.  Creating it.");
+            template.execute("create cached table whitelist (" +
+                             "id identity," +
+                             "email varchar not null)");
+            template.execute("create index idx_whitelist_email on whitelist(email)");
+
+            LOG.info("Database table 'whitelist' was created successfully.");
+        }
+
+        if (!tableExists(template, "blacklist")) {
+            LOG.info("Database table 'blacklist' not found.  Creating it.");
+            template.execute("create cached table blacklist (" +
+                             "id identity," +
+                             "email varchar not null)");
+            template.execute("create index idx_blacklist_email on blacklist(email)");
+
+            LOG.info("Database table 'blacklist' was created successfully.");
+        }
     }
 }
