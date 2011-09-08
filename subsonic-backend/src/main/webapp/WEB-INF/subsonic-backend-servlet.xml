@@ -28,6 +28,7 @@
                 <prop key="/backend/version.view">multiController</prop>
                 <prop key="/backend/db.view">multiController</prop>
                 <prop key="/backend/sendMail.view">multiController</prop>
+                <prop key="/backend/validateLicense.view">multiController</prop>
                 <prop key="/backend/ipn.view">ipnController</prop>
                 <prop key="/backend/redirect/register.view">redirectionManagementController</prop>
                 <prop key="/backend/redirect/unregister.view">redirectionManagementController</prop>

@@ -3,12 +3,11 @@ DONE IN 4.6
 Updated Dutch translation, courtesy of Muiz.
 REST: include files in root folders.
 Menu broken in "Settings > Shared media" when logged in as admin.
+Stronger license check.  Verify asynch with backend.
 
 
 TODO IN 4.6
 -----------------
-Stronger license check.  Verify asynch with backend.
-Backend should set payment rows to complete.
 Rename "offsetSeconds" to "timeOffset" in StreamController, and update API doc.
 Add "byteOffset" parameter as well.
 Test with java 7.
