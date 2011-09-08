@@ -35,6 +35,12 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
 
 import net.sourceforge.subsonic.Logger;
 import net.sourceforge.subsonic.dao.AvatarDao;
@@ -182,11 +188,14 @@ public class SettingsService {
     private MusicFolderDao musicFolderDao;
     private UserDao userDao;
     private AvatarDao avatarDao;
+    private VersionService versionService;
 
     private String[] cachedCoverArtMaskArray;
     private String[] cachedMusicMaskArray;
     private String[] cachedVideoMaskArray;
     private static File subsonicHome;
+
+    private boolean licenseValidated = true;
 
     public SettingsService() {
         File propertyFile = getPropertyFile();
@@ -221,6 +230,7 @@ public class SettingsService {
      */
     public void init() {
         ServiceLocator.setSettingsService(this);
+        validateLicenseAsync();
     }
 
     public void save() {
@@ -572,17 +582,13 @@ public class SettingsService {
     }
 
     public boolean isLicenseValid() {
-        return isLicenseValid(getLicenseEmail(), getLicenseCode());
+        return isLicenseValid(getLicenseEmail(), getLicenseCode()) && licenseValidated;
     }
 
     public boolean isLicenseValid(String email, String license) {
-
         if (email == null || license == null) {
             return false;
         }
-
-        // Little point in doing anything more fancy, since there are
-        // easier ways to disable the nag messages.
         return license.equalsIgnoreCase(StringUtil.md5Hex(email.toLowerCase()));
     }
 
@@ -1122,6 +1128,43 @@ public class SettingsService {
         return result.toArray(new String[result.size()]);
     }
 
+    private void validateLicense() {
+        String license = getLicenseCode();
+        Date date = getLicenseDate();
+
+        if (license == null || date == null) {
+            licenseValidated = false;
+            return;
+        }
+
+        licenseValidated = true;
+
+        HttpClient client = new DefaultHttpClient();
+        HttpConnectionParams.setConnectionTimeout(client.getParams(), 120000);
+        HttpConnectionParams.setSoTimeout(client.getParams(), 120000);
+        HttpGet method = new HttpGet("http://subsonic.org/backend/validateLicense.view" + "?license=" + license +
+                "&date=" + date.getTime() + "&version=" + versionService.getLocalVersion());
+        try {
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            String content = client.execute(method, responseHandler);
+            licenseValidated = content != null && content.contains("true");
+            LOG.debug("License validated: " + licenseValidated);
+        } catch (Throwable x) {
+            LOG.warn("Failed to validate license.", x);
+        } finally {
+            client.getConnectionManager().shutdown();
+        }
+    }
+
+    public void validateLicenseAsync() {
+        new Thread() {
+            @Override
+            public void run() {
+                validateLicense();
+            }
+        }.start();
+    }
+
     public void setInternetRadioDao(InternetRadioDao internetRadioDao) {
         this.internetRadioDao = internetRadioDao;
     }
@@ -1136,5 +1179,9 @@ public class SettingsService {
 
     public void setAvatarDao(AvatarDao avatarDao) {
         this.avatarDao = avatarDao;
+    }
+
+    public void setVersionService(VersionService versionService) {
+        this.versionService = versionService;
     }
 }

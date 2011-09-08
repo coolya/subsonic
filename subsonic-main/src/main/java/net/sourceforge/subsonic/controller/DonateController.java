@@ -58,6 +58,7 @@ public class DonateController extends SimpleFormController {
         settingsService.setLicenseEmail(command.getEmailAddress());
         settingsService.setLicenseDate(now);
         settingsService.save();
+        settingsService.validateLicenseAsync();
 
         // Reflect changes in view. The validator has already validated the license.
         command.setLicenseValid(true);

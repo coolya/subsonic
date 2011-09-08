@@ -66,6 +66,7 @@
         <property name="musicFolderDao" ref="musicFolderDao"/>
         <property name="userDao" ref="userDao"/>
         <property name="avatarDao" ref="avatarDao"/>
+        <property name="versionService" ref="versionService"/>
     </bean>
 
     <bean id="searchService" class="net.sourceforge.subsonic.service.SearchService" init-method="schedule" depends-on="metaDataParserFactory">
