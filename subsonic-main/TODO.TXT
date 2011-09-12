@@ -1,5 +1,23 @@
+TRANSCODING
+-----------
+- Change ".mp3" to "mp3" in Settings > General, also rename SettingsService.KEY_COVER_ART_MASK
+- Update documentation in Settings > Transcoding
+- Support %o for audio ?
+- Are ID3 tags preserved by ffmpeg?
+- Increase volume? (-vol)
+- Use -async 30 rather than -async 1 ?
+- Subtitle support  (-scodec copy ?)
+    http://www.longtailvideo.com/support/addons/captions-plugin/14974/captions-plugin-reference-guide
+- .wtv   http://forum.subsonic.org/forum/viewtopic.php?f=2&t=7668
+- Remove -ac2 ?
+- Update StringUtil mime types.
+
+/var/subsonic/transcode/ffmpeg -ss 0 -i /Users/sindre/Movies/Test/Sample.wtv -async 1 -b 1000k -s 480x360 -ar 44100 -ac 2 -f flv -scodec copy -vcodec libx264 -preset veryfast -threads 0 foo.flv
+
+
 DONE IN 4.6
 ----------------
+New transcoding framework.
 Updated Dutch translation, courtesy of Muiz.
 REST: include files in root folders.
 Menu broken in "Settings > Shared media" when logged in as admin.
@@ -8,11 +26,15 @@ Stronger license check.  Verify asynch with backend.
 
 TODO IN 4.6
 -----------------
+Support custom domain name in sharing (Settings > Advanced)
+Fix permission issue on Win7.
 Rename "offsetSeconds" to "timeOffset" in StreamController, and update API doc.
 Add "byteOffset" parameter as well.
 Test with java 7.
 Add rating attributes to <directory> in getMusicDirectory.
 Update description of Thumper.
+Perisonic
+  https://mail.google.com/mail/?shva=1#inbox/13252226af8e3b3f
 minisub
   http://forum.subsonic.org/forum/viewtopic.php?f=8&t=7553
 Subsonic Chumby
@@ -25,7 +47,6 @@ Instant playlist
 Go through tracker.
 Does canaca allow outgoing port 4040?
 Backend service to email license keys on request.
-New transcoding framework.
 Share on Google+
 Recursive getFolders API method?
   https://mail.google.com/mail/?shva=1#inbox/13090cd32a9922bd
@@ -75,6 +96,7 @@ DONE IN ANDROID 3.3
 TODO IN ANDROID 3.3
 --------------------
 Handle files in root folder. 
+Improve behavior on player error.
 EQ resets when switching between online/offline.
   https://mail.google.com/mail/?shva=1#inbox/131e7e98173f0c97
 Don't stop playback when switching between online/offline.
@@ -164,22 +186,6 @@ Add icons to server popup.
 Album art border, ala wimp
 Reuse list item views in SelectAlbumActivity?
 Colors: http://www.androidtapp.com/opentable/
-
-TRANSCODING
------------
-- Change ".mp3" to "mp3" in Settings > General, also rename SettingsService.KEY_COVER_ART_MASK
-- Update documentation in Settings > Transcoding
-- Support %o for audio ?
-- Are ID3 tags preserved by ffmpeg?
-- Increase volume? (-vol)
-- Use -async 30 rather than -async 1 ?
-- Subtitle support  (-scodec copy ?)
-    http://www.longtailvideo.com/support/addons/captions-plugin/14974/captions-plugin-reference-guide
-- .wtv   http://forum.subsonic.org/forum/viewtopic.php?f=2&t=7668
-- Remove -ac2 ?
-- Update StringUtil mime types.
-
-/var/subsonic/transcode/ffmpeg -ss 0 -i /Users/sindre/Movies/Test/Sample.wtv -async 1 -b 1000k -s 480x360 -ar 44100 -ac 2 -f flv -scodec copy -vcodec libx264 -preset veryfast -threads 0 foo.flv
 
 
 PLAYLIST
