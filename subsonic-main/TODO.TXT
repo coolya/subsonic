@@ -19,6 +19,7 @@ DONE IN 4.6
 ----------------
 New transcoding framework.
 Updated Dutch translation, courtesy of Muiz.
+Updated German translation, courtesy of deejay.
 REST: include files in root folders.
 Menu broken in "Settings > Shared media" when logged in as admin.
 Stronger license check.  Verify asynch with backend.
