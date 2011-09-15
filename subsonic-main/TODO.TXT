@@ -96,6 +96,8 @@ DONE IN ANDROID 3.3
 
 TODO IN ANDROID 3.3
 --------------------
+Fails on first search?
+  https://mail.google.com/mail/?shva=1#inbox/13268416e9af6b03
 Handle files in root folder. 
 Improve behavior on player error.
 EQ resets when switching between online/offline.
