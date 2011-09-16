@@ -1129,10 +1129,10 @@ public class SettingsService {
     }
 
     private void validateLicense() {
-        String license = getLicenseCode();
+        String email = getLicenseEmail();
         Date date = getLicenseDate();
 
-        if (license == null || date == null) {
+        if (email == null || date == null) {
             licenseValidated = false;
             return;
         }
@@ -1142,7 +1142,7 @@ public class SettingsService {
         HttpClient client = new DefaultHttpClient();
         HttpConnectionParams.setConnectionTimeout(client.getParams(), 120000);
         HttpConnectionParams.setSoTimeout(client.getParams(), 120000);
-        HttpGet method = new HttpGet("http://subsonic.org/backend/validateLicense.view" + "?license=" + license +
+        HttpGet method = new HttpGet("http://subsonic.org/backend/validateLicense.view" + "?email=" + email +
                 "&date=" + date.getTime() + "&version=" + versionService.getLocalVersion());
         try {
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
