@@ -3,6 +3,7 @@
 <html>
 <head>
     <%@ include file="head.jsp" %>
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 </head>
 <body class="mainframe bgcolor1">
 
@@ -12,15 +13,17 @@
     <c:when test="${model.urlRedirectionEnabled}">
         <fmt:message key="share.warning"/>
         <p>
-            <img src="<spring:theme code="shareFacebookImage"/>" alt="">&nbsp;<a
-                href="http://www.facebook.com/sharer.php?u=${model.playUrl}" target="_blank"><fmt:message key="share.facebook"/></a>
+            <a href="http://www.facebook.com/sharer.php?u=${model.playUrl}" target="_blank"><img src="<spring:theme code="shareFacebookImage"/>" alt=""></a>&nbsp;
+            <a href="http://www.facebook.com/sharer.php?u=${model.playUrl}" target="_blank"><fmt:message key="share.facebook"/></a>
         </p>
 
         <p>
-            <img src="<spring:theme code="shareTwitterImage"/>" alt="">&nbsp;<a
-                href="http://twitter.com/?status=Listening to ${model.playUrl}" target="_blank"><fmt:message key="share.twitter"/></a>
+            <a href="http://twitter.com/?status=Listening to ${model.playUrl}" target="_blank"><img src="<spring:theme code="shareTwitterImage"/>" alt=""></a>&nbsp;
+            <a href="http://twitter.com/?status=Listening to ${model.playUrl}" target="_blank"><fmt:message key="share.twitter"/></a>
         </p>
-
+        <p>
+            <g:plusone size="small" annotation="none" href="${model.playUrl}"></g:plusone>&nbsp;<fmt:message key="share.googleplus"/>
+        </p>
         <p>
             <fmt:message key="share.link">
                 <fmt:param>${model.playUrl}</fmt:param>
