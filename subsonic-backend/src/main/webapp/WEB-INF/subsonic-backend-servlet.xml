@@ -7,6 +7,7 @@
     <bean id="multiController" class="net.sourceforge.subsonic.backend.controller.MultiController">
         <property name="daoHelper" ref="daoHelper"/>
         <property name="paymentDao" ref="paymentDao"/>
+        <property name="whitelistGenerator" ref="whitelistGenerator"/>
     </bean>
 
     <bean id="redirectionController" class="net.sourceforge.subsonic.backend.controller.RedirectionController">
@@ -29,6 +30,7 @@
                 <prop key="/backend/db.view">multiController</prop>
                 <prop key="/backend/sendMail.view">multiController</prop>
                 <prop key="/backend/validateLicense.view">multiController</prop>
+                <prop key="/backend/whitelist.view">multiController</prop>
                 <prop key="/backend/ipn.view">ipnController</prop>
                 <prop key="/backend/redirect/register.view">redirectionManagementController</prop>
                 <prop key="/backend/redirect/unregister.view">redirectionManagementController</prop>

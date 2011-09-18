@@ -23,11 +23,12 @@ Updated German translation, courtesy of deejay.
 REST: include files in root folders.
 Menu broken in "Settings > Shared media" when logged in as admin.
 Stronger license check.  Verify asynch with backend.
+Share on Google+
 
 
 TODO IN 4.6
 -----------------
-Share on Google+
+Show license details in About.
 Support custom domain name in sharing (Settings > Advanced)
 Fix permission issue on Win7.
 Rename "offsetSeconds" to "timeOffset" in StreamController, and update API doc.

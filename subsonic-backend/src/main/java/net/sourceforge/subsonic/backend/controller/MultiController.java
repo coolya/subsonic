@@ -20,6 +20,7 @@ package net.sourceforge.subsonic.backend.controller;
 
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.subsonic.backend.dao.PaymentDao;
+import net.sourceforge.subsonic.backend.service.WhitelistGenerator;
 import org.apache.log4j.Logger;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -52,17 +54,20 @@ public class MultiController extends MultiActionController {
     private static final String SUBSONIC_VERSION = "4.5";
     private static final String SUBSONIC_BETA_VERSION = "4.5.beta2";
 
-    private DaoHelper daoHelper;
-    private PaymentDao paymentDao;
+    private static final Date LICENSE_DATE_THRESHOLD;
 
-    private static final long LICENSE_DATE_THRESHOLD;
+    private DaoHelper daoHelper;
+
+    private PaymentDao paymentDao;
+    private WhitelistGenerator whitelistGenerator;
+
     static {
         Calendar calendar = Calendar.getInstance();
         calendar.clear();
         calendar.set(Calendar.YEAR, 2010);
         calendar.set(Calendar.MONTH, Calendar.JUNE);
         calendar.set(Calendar.DAY_OF_MONTH, 19);
-        LICENSE_DATE_THRESHOLD = calendar.getTime().getTime();
+        LICENSE_DATE_THRESHOLD = calendar.getTime();
     }
 
     public ModelAndView version(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -133,6 +138,25 @@ public class MultiController extends MultiActionController {
         return new ModelAndView("backend/db", "model", map);
     }
 
+    public ModelAndView whitelist(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String password = ServletRequestUtils.getRequiredStringParameter(request, "p");
+        if (!password.equals(Util.getPassword("backendpwd.txt"))) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return null;
+        }
+
+        Date newerThan = MultiController.LICENSE_DATE_THRESHOLD;
+        Integer days = ServletRequestUtils.getIntParameter(request, "days");
+        if (days != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, -days);
+            newerThan = cal.getTime();
+        }
+        whitelistGenerator.generate(newerThan);
+        return null;
+    }
+
     private boolean isLicenseValid(String email, Long date) {
         if (email == null || date == null) {
             return false;
@@ -143,7 +167,7 @@ public class MultiController extends MultiActionController {
         }
 
         // Always accept licenses that are older than 2010-06-19.
-        if (date < LICENSE_DATE_THRESHOLD) {
+        if (date < LICENSE_DATE_THRESHOLD.getTime()) {
             return true;
         }
 
@@ -156,5 +180,9 @@ public class MultiController extends MultiActionController {
 
     public void setPaymentDao(PaymentDao paymentDao) {
         this.paymentDao = paymentDao;
+    }
+
+    public void setWhitelistGenerator(WhitelistGenerator whitelistGenerator) {
+        this.whitelistGenerator = whitelistGenerator;
     }
 }

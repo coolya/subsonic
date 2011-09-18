@@ -58,6 +58,15 @@ public class Schema20 extends Schema {
             LOG.info("Database table 'payment' was created successfully.");
         }
 
+        if (!columnExists(template, "payer_email_lower", "payment")) {
+            LOG.info("Database column 'payment.payer_email_lower' not found.  Creating it.");
+            template.execute("alter table payment " +
+                             "add payer_email_lower varchar");
+            template.execute("update payment set payer_email_lower=lcase(payer_email)");
+            template.execute("create index idx_payment_payer_email_lower on payment(payer_email_lower)");
+            LOG.info("Database column 'payment.payer_email_lower' was added successfully.");
+        }
+
         if (!tableExists(template, "whitelist")) {
             LOG.info("Database table 'whitelist' not found.  Creating it.");
             template.execute("create cached table whitelist (" +

@@ -1,6 +1,7 @@
 package net.sourceforge.subsonic.backend.dao;
 
 import net.sourceforge.subsonic.backend.domain.Payment;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
@@ -20,7 +21,7 @@ public class PaymentDao extends AbstractDao {
     private static final Logger LOG = Logger.getLogger(PaymentDao.class);
     private static final String COLUMNS = "id, transaction_id, transaction_type, item, " +
                                           "payment_type, payment_status, payment_amount, payment_currency, " +
-                                          "payer_email, payer_first_name, payer_last_name, payer_country, " +
+                                          "payer_email, payer_email_lower, payer_first_name, payer_last_name, payer_country, " +
                                           "processing_status, created, last_updated";
 
     private RowMapper paymentRowMapper = new PaymentRowMapper();
@@ -47,8 +48,8 @@ public class PaymentDao extends AbstractDao {
         if (email == null) {
             return null;
         }
-        String sql = "select " + COLUMNS + " from payment where payer_email=?";
-        return queryOne(sql, paymentRowMapper, email);
+        String sql = "select " + COLUMNS + " from payment where payer_email_lower=?";
+        return queryOne(sql, paymentRowMapper, email.toLowerCase());
     }
 
     /**
@@ -70,8 +71,9 @@ public class PaymentDao extends AbstractDao {
         String sql = "insert into payment (" + COLUMNS + ") values (" + questionMarks(COLUMNS) + ")";
         update(sql, null, payment.getTransactionId(), payment.getTransactionType(), payment.getItem(),
                payment.getPaymentType(), payment.getPaymentStatus(), payment.getPaymentAmount(),
-               payment.getPaymentCurrency(), payment.getPayerEmail(), payment.getPayerFirstName(), payment.getPayerLastName(),
-               payment.getPayerCountry(), payment.getProcessingStatus().name(), payment.getCreated(), payment.getLastUpdated());
+               payment.getPaymentCurrency(), payment.getPayerEmail(), StringUtils.lowerCase(payment.getPayerEmail()),
+                payment.getPayerFirstName(), payment.getPayerLastName(), payment.getPayerCountry(),
+                payment.getProcessingStatus().name(), payment.getCreated(), payment.getLastUpdated());
         LOG.info("Created " + payment);
     }
 
@@ -82,33 +84,37 @@ public class PaymentDao extends AbstractDao {
      */
     public void updatePayment(Payment payment) {
         String sql = "update payment set transaction_type=?, item=?, payment_type=?, payment_status=?, " +
-                     "payment_amount=?, payment_currency=?, payer_email=?, payer_first_name=?, payer_last_name=?, " +
+                     "payment_amount=?, payment_currency=?, payer_email=?, payer_email_lower=?, payer_first_name=?, payer_last_name=?, " +
                      "payer_country=?, processing_status=?, created=?, last_updated=? where id=?";
         update(sql, payment.getTransactionType(), payment.getItem(), payment.getPaymentType(), payment.getPaymentStatus(),
-               payment.getPaymentAmount(), payment.getPaymentCurrency(), payment.getPayerEmail(), payment.getPayerFirstName(),
-               payment.getPayerLastName(), payment.getPayerCountry(), payment.getProcessingStatus().name(), payment.getCreated(),
-               payment.getLastUpdated(), payment.getId());
+               payment.getPaymentAmount(), payment.getPaymentCurrency(), payment.getPayerEmail(), StringUtils.lowerCase(payment.getPayerEmail()),
+                payment.getPayerFirstName(), payment.getPayerLastName(), payment.getPayerCountry(), payment.getProcessingStatus().name(),
+                payment.getCreated(), payment.getLastUpdated(), payment.getId());
         LOG.info("Updated " + payment);
     }
 
     public boolean isBlacklisted(String email) {
         String sql = "select 1 from blacklist where email=?";
-        return queryOne(sql, listRowMapper, email) != null;
+        return queryOne(sql, listRowMapper, StringUtils.lowerCase(email)) != null;
 
     }
 
     public boolean isWhitelisted(String email) {
         String sql = "select 1 from whitelist where email=?";
-        return queryOne(sql, listRowMapper, email) != null;
+        return queryOne(sql, listRowMapper, StringUtils.lowerCase(email)) != null;
+    }
+
+    public void whitelist(String email) {
+        update("insert into whitelist(email) values (?)", StringUtils.lowerCase(email));
     }
 
     private static class PaymentRowMapper implements ParameterizedRowMapper<Payment> {
 
         public Payment mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Payment(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-                               rs.getString(6), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(10),
-                               rs.getString(11), rs.getString(12), Payment.ProcessingStatus.valueOf(rs.getString(13)),
-                               rs.getTimestamp(14), rs.getTimestamp(15));
+                               rs.getString(6), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(11),
+                               rs.getString(12), rs.getString(13), Payment.ProcessingStatus.valueOf(rs.getString(14)),
+                               rs.getTimestamp(15), rs.getTimestamp(16));
         }
     }
 }

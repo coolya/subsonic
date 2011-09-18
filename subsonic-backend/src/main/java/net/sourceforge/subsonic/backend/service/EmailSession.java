@@ -20,10 +20,12 @@ package net.sourceforge.subsonic.backend.service;
 
 import net.sourceforge.subsonic.backend.Util;
 
+import javax.mail.Folder;
 import javax.mail.Session;
 import javax.mail.Message;
 import javax.mail.Address;
 import javax.mail.MessagingException;
+import javax.mail.Store;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -37,6 +39,8 @@ import java.util.List;
 public class EmailSession {
 
     private static final String SMTP_MAIL_SERVER = "smtp.gmail.com";
+    private static final String POP_MAIL_SERVER = "pop.gmail.com";
+    private static final String IMAP_MAIL_SERVER = "imap.gmail.com";
     private static final String USER = "subsonic@activeobjects.no";
 
     private Session session;
@@ -80,6 +84,14 @@ public class EmailSession {
                 transport.close();
             }
         }
+    }
+
+    public Folder getFolder(String name) throws Exception {
+        Store store = session.getStore("imaps");
+        store.connect(IMAP_MAIL_SERVER, USER, password);
+        Folder folder = store.getFolder(name);
+        folder.open(Folder.READ_ONLY);
+        return folder;
     }
 
     private Address[] convertAddress(List<String> addresses) throws AddressException {
