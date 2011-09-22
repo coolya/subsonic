@@ -28,6 +28,8 @@ Share on Google+
 
 TODO IN 4.6
 -----------------
+Perisonic
+  https://mail.google.com/mail/?shva=1#inbox/13252226af8e3b3f
 Show license details in About.
 Support custom domain name in sharing (Settings > Advanced)
 Fix permission issue on Win7.
@@ -36,8 +38,6 @@ Add "byteOffset" parameter as well.
 Test with java 7.
 Add rating attributes to <directory> in getMusicDirectory.
 Update description of Thumper.
-Perisonic
-  https://mail.google.com/mail/?shva=1#inbox/13252226af8e3b3f
 minisub
   http://forum.subsonic.org/forum/viewtopic.php?f=8&t=7553
 Subsonic Chumby
@@ -714,6 +714,7 @@ Upgrade Subsonic backend: CHANGE DATE BELOW
   scp subsonic-main/target/subsonic.war              root@subsonic.org:/usr/local/jakarta/tomcat/webapps-2011-08-11/demo.war
   rsync -rlptDvP -e ssh --exclude .svn subsonic-site/src/main/webapp/  root@subsonic.org:/usr/local/jakarta/tomcat/webapps-2011-08-11/pages
 
+  Checkpoint database (db.view)
   ssh root@subsonic.org
   ps -elf | grep jsvc
   /usr/sbin/stoptomcat
