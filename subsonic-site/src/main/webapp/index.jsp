@@ -19,12 +19,13 @@
 
     <div class="floatcontainer margin10-t margin10-b">
         <ul class="stars column-left">
-            <li>Listen to your music wherever you are. Share your collection with family and friends.</li>
-            <li>Browse and manage your music collection with the user-friendly web interface, or use the <a href="apps.jsp">AIR desktop app</a>.</li>
+            <li>Enjoy your music and movies no matter where you are. Share with family and friends.</li>
+            <li>Browse and manage your media collection with the user-friendly web interface.</li>
             <li>Stream music to <a href="apps.jsp">Android</a>, <a href="apps.jsp">iPhone</a> and <a href="apps.jsp">Windows Phone&nbsp;7</a>.</li>
-            <li>Convert and stream lossless music on the fly.</li>
+            <li>Subsonic <a href="apps.jsp">apps</a> available for Roku, BlackBerry Playbook and many more.</li>
         </ul>
         <ul class="stars column-right">
+            <li>Convert and stream lossless music on the fly.</li>
             <li>Manage 100,000+ files in your music collection without hassle.</li>
             <li>Download and listen to Podcasts.</li>
             <li>Get cover art, lyrics, reviews and other album info from Google, <a href="http://www.chartlyrics.com/" target="_blank">Chartlyrics</a>,

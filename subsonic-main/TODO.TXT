@@ -84,8 +84,6 @@ Add to playlist from main.jsp
 Sencha Touch
 
 Can't stop/start service on Win7.  Need elevated rights?  Run service as user?
-Subsonic TV / Roku
-  http://subsonictv.com/
 Subsonic for Boxee
 Avoid icon in mac dock.
   https://mail.google.com/a/activeobjects.no/#starred/12e6a2c9d3184976

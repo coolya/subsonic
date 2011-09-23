@@ -17,22 +17,42 @@
         <div id="main-col">
             <h1 class="bottomspace">Subsonic Apps</h1>
 
+            <p>Check out the steadily growing list of Subsonic apps. These provide fun and alternative ways to
+                enjoy your media collection - no matter where you are.</p>
 
-            <p>In addition to the normal web interface, there are several other Subsonic applications:</p>
+            <h2>On your phone</h2>
 
             <div class="floatcontainer margin10-t margin10-b">
                 <ul class="stars column-left">
                     <li><a href="#android">Subsonic</a> for Android</li>
                     <li><a href="#winphone">Subsonic</a> for Windows Phone 7</li>
+                    <li><a href="#isub">iSub</a> for iPhone/iPad</li>
+                </ul>
+                <ul class="stars column-right">
+                    <li><a href="#zsubsonic">Z-Subsonic</a> for iPhone/iPad</li>
+                    <li><a href="#substream">SubStream</a> for iPhone/iPad</li>
+                </ul>
+            </div>
+
+            <h2>On your device</h2>
+
+            <div class="floatcontainer margin10-t margin10-b">
+                <ul class="stars column-left">
                     <li><a href="#sonicair">SonicAir</a> for BlackBerry PlayBook</li>
+                </ul>
+                <ul class="stars column-right">
                     <li><a href="#subsonictv">SubsonicTV</a> for Roku</li>
+                </ul>
+            </div>
+
+            <h2>On your desktop</h2>
+
+            <div class="floatcontainer margin10-t margin10-b">
+                <ul class="stars column-left">
                     <li><a href="#subair">SubAir</a> for desktops</li>
                     <li><a href="#thumper">Thumper</a> for Mac</li>
                 </ul>
-                <ul class="stars column-right">
-                    <li><a href="#isub">iSub</a> for iPhone/iPad</li>
-                    <li><a href="#zsubsonic">Z-Subsonic</a> for iPhone/iPad</li>
-                    <li><a href="#substream">SubStream</a> for iPhone/iPad</li>
+                <ul class="stars column-right"> 
                     <li><a href="#subgadget">SubGadget</a> for Windows</li>
                     <li><a href="#periscope">Periscope</a> for Windows</li>
                 </ul>
@@ -292,7 +312,7 @@
                             No need to go through the hassle of uploading to the cloud and syncing your files.
                         </p>
 
-                        <img src="inc/img/screenshots/screen33.png" alt="" class="img-center"/>
+                        <a href="inc/img/screenshots/screen33.png"><img src="inc/img/screenshots/thumb33.png" alt="" class="img-center"/></a>
 
                         <p>
                             Developed by JNC Ventures and Musiclouds, it's available both as a free lite version and a paid premium version.
