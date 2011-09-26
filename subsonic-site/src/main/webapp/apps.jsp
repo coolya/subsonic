@@ -58,6 +58,14 @@
                 </ul>
             </div>
 
+            <h2>In your browser</h2>
+
+            <div class="floatcontainer margin10-t margin10-b">
+                <ul class="stars column-left">
+                    <li><a href="#perisonic">Perisonic</a> for Google Chrome</li>
+                </ul>
+            </div>
+
             <p>
                 Please note that most of the apps are made by third-party developers, and are not maintained by
                 the Subsonic project. Some apps are commercial, while some are available for free.
@@ -387,6 +395,25 @@
                         <p>
                             Developed and maintained by <a href="mailto:support@periscopeplayer.com">Matt Campanile</a>.  Free trial version, $1.99 for
                             a lifetime license.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="featureitem">
+                <a name="perisonic"></a>
+
+                <div class="heading">Perisonic<a href="#top" class="backtotop" title="Top"><img src="inc/img/top.gif" alt="" height="16" width="16"/></a></div>
+                <div class="content">
+                    <div class="wide-content">
+                        <p>
+                            <a href="https://chrome.google.com/webstore/detail/bkdipjpecphmbijlckkkmabnabhbpjbn">Perisonic</a> is a simple 
+                            Chrome app for playing random music from Subsonic.
+                        </p>
+                        <img src="inc/img/screenshots/screen34.png" alt="" class="img-center"/>
+                        <p style="padding-top:1em">
+                            Perisonic is developed by Robin Bakker and is
+                            <a href="https://chrome.google.com/webstore/detail/bkdipjpecphmbijlckkkmabnabhbpjbn">available</a> free of charge.
                         </p>
                     </div>
                 </div>
