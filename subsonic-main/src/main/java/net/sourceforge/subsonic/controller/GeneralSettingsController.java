@@ -37,12 +37,12 @@ public class GeneralSettingsController extends SimpleFormController {
 
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         GeneralSettingsCommand command = new GeneralSettingsCommand();
-        command.setCoverArtMask(settingsService.getCoverArtMask());
+        command.setCoverArtFileTypes(settingsService.getCoverArtFileTypes());
         command.setIgnoredArticles(settingsService.getIgnoredArticles());
         command.setShortcuts(settingsService.getShortcuts());
         command.setIndex(settingsService.getIndexString());
-        command.setMusicMask(settingsService.getMusicMask());
-        command.setVideoMask(settingsService.getVideoMask());
+        command.setMusicFileTypes(settingsService.getMusicFileTypes());
+        command.setVideoFileTypes(settingsService.getVideoFileTypes());
         command.setPlaylistFolder(settingsService.getPlaylistFolder());
         command.setGettingStartedEnabled(settingsService.isGettingStartedEnabled());
         command.setWelcomeTitle(settingsService.getWelcomeTitle());
@@ -95,9 +95,9 @@ public class GeneralSettingsController extends SimpleFormController {
         settingsService.setIgnoredArticles(command.getIgnoredArticles());
         settingsService.setShortcuts(command.getShortcuts());
         settingsService.setPlaylistFolder(command.getPlaylistFolder());
-        settingsService.setMusicMask(command.getMusicMask());
-        settingsService.setVideoMask(command.getVideoMask());
-        settingsService.setCoverArtMask(command.getCoverArtMask());
+        settingsService.setMusicFileTypes(command.getMusicFileTypes());
+        settingsService.setVideoFileTypes(command.getVideoFileTypes());
+        settingsService.setCoverArtFileTypes(command.getCoverArtFileTypes());
         settingsService.setGettingStartedEnabled(command.isGettingStartedEnabled());
         settingsService.setWelcomeTitle(command.getWelcomeTitle());
         settingsService.setWelcomeSubtitle(command.getWelcomeSubtitle());

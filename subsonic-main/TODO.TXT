@@ -1,6 +1,5 @@
 TRANSCODING
 -----------
-- Change ".mp3" to "mp3" in Settings > General, also rename SettingsService.KEY_COVER_ART_MASK
 - Update documentation in Settings > Transcoding
 - Support %o for audio ?
 - Are ID3 tags preserved by ffmpeg?
@@ -28,8 +27,6 @@ Share on Google+
 
 TODO IN 4.6
 -----------------
-Perisonic
-  https://mail.google.com/mail/?shva=1#inbox/13252226af8e3b3f
 Show license details in About.
 Support custom domain name in sharing (Settings > Advanced)
 Fix permission issue on Win7.

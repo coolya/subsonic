@@ -28,7 +28,7 @@
         <tr>
             <td><fmt:message key="generalsettings.musicmask"/></td>
             <td>
-                <form:input path="musicMask" size="70"/>
+                <form:input path="musicFileTypes" size="70"/>
                 <c:import url="helpToolTip.jsp"><c:param name="topic" value="musicmask"/></c:import>
             </td>
         </tr>
@@ -36,7 +36,7 @@
         <tr>
             <td><fmt:message key="generalsettings.videomask"/></td>
             <td>
-                <form:input path="videoMask" size="70"/>
+                <form:input path="videoFileTypes" size="70"/>
                 <c:import url="helpToolTip.jsp"><c:param name="topic" value="videomask"/></c:import>
             </td>
         </tr>
@@ -44,7 +44,7 @@
         <tr>
             <td><fmt:message key="generalsettings.coverartmask"/></td>
             <td>
-                <form:input path="coverArtMask" size="70"/>
+                <form:input path="coverArtFileTypes" size="70"/>
                 <c:import url="helpToolTip.jsp"><c:param name="topic" value="coverartmask"/></c:import>
             </td>
         </tr>

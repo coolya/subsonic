@@ -73,8 +73,8 @@ public class SettingsServiceTestCase extends TestCase {
         settingsService.setIgnoredArticles("a the foo bar");
         settingsService.setShortcuts("new incoming \"rock 'n' roll\"");
         settingsService.setPlaylistFolder("playlistFolder");
-        settingsService.setMusicMask(".mp3 .ogg  .aac");
-        settingsService.setCoverArtMask(".jpeg .gif  .png");
+        settingsService.setMusicFileTypes("mp3 ogg  aac");
+        settingsService.setCoverArtFileTypes("jpeg gif  png");
         settingsService.setCoverArtLimit(99);
         settingsService.setWelcomeMessage("welcomeMessage");
         settingsService.setLoginMessage("loginMessage");
@@ -113,10 +113,10 @@ public class SettingsServiceTestCase extends TestCase {
         assertTrue("Wrong ignored articles array.", Arrays.equals(new String[] {"a", "the", "foo", "bar"}, ss.getIgnoredArticlesAsArray()));
         assertTrue("Wrong shortcut array.", Arrays.equals(new String[] {"new", "incoming", "rock 'n' roll"}, ss.getShortcutsAsArray()));
         assertEquals("Wrong playlist folder.", "playlistFolder", ss.getPlaylistFolder());
-        assertEquals("Wrong music mask.", ".mp3 .ogg  .aac", ss.getMusicMask());
-        assertTrue("Wrong music mask array.", Arrays.equals(new String[] {".mp3", ".ogg", ".aac"}, ss.getMusicMaskAsArray()));
-        assertEquals("Wrong cover art mask.", ".jpeg .gif  .png", ss.getCoverArtMask());
-        assertTrue("Wrong cover art mask array.", Arrays.equals(new String[] {".jpeg", ".gif", ".png"}, ss.getCoverArtMaskAsArray()));
+        assertEquals("Wrong music mask.", "mp3 ogg  aac", ss.getMusicFileTypes());
+        assertTrue("Wrong music mask array.", Arrays.equals(new String[] {"mp3", "ogg", "aac"}, ss.getMusicFileTypesAsArray()));
+        assertEquals("Wrong cover art mask.", "jpeg gif  png", ss.getCoverArtFileTypes());
+        assertTrue("Wrong cover art mask array.", Arrays.equals(new String[] {"jpeg", "gif", "png"}, ss.getCoverArtFileTypesAsArray()));
         assertEquals("Wrong cover art limit.", 99, ss.getCoverArtLimit());
         assertEquals("Wrong welcome message.", "welcomeMessage", ss.getWelcomeMessage());
         assertEquals("Wrong login message.", "loginMessage", ss.getLoginMessage());

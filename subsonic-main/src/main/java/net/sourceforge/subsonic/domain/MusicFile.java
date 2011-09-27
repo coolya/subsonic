@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.apache.commons.io.filefilter.FileFileFilter;
@@ -76,7 +77,8 @@ public class MusicFile implements Serializable {
         isFile = file.isFile();
         isDirectory = file.isDirectory();
         lastModified = file.lastModified();
-        isVideo = isFile && isVideoFile(file.getName().toLowerCase());
+        String suffix = FilenameUtils.getExtension(file.getName()).toLowerCase();
+        isVideo = isFile && isVideoFile(suffix);
     }
 
     /**
@@ -393,22 +395,22 @@ public class MusicFile implements Serializable {
             return true;
         }
 
-        String filename = file.getName().toLowerCase();
-        return isMusicFile(filename) || isVideoFile(filename);
+        String suffix = FilenameUtils.getExtension(file.getName()).toLowerCase();
+        return isMusicFile(suffix) || isVideoFile(suffix);
     }
 
-    private boolean isMusicFile(String filename) {
-        for (String suffix : ServiceLocator.getSettingsService().getMusicMaskAsArray()) {
-            if (filename.endsWith(suffix.toLowerCase())) {
+    private static boolean isMusicFile(String suffix) {
+        for (String s : ServiceLocator.getSettingsService().getMusicFileTypesAsArray()) {
+            if (suffix.equals(s.toLowerCase())) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean isVideoFile(String filename) {
-        for (String suffix : ServiceLocator.getSettingsService().getVideoMaskAsArray()) {
-            if (filename.endsWith(suffix.toLowerCase())) {
+    private static boolean isVideoFile(String suffix) {
+        for (String s : ServiceLocator.getSettingsService().getVideoFileTypesAsArray()) {
+            if (suffix.equals(s.toLowerCase())) {
                 return true;
             }
         }

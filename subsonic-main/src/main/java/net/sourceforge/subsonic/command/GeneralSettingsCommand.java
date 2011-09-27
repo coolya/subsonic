@@ -29,9 +29,9 @@ import net.sourceforge.subsonic.domain.Theme;
 public class GeneralSettingsCommand {
 
     private String playlistFolder;
-    private String musicMask;
-    private String videoMask;
-    private String coverArtMask;
+    private String musicFileTypes;
+    private String videoFileTypes;
+    private String coverArtFileTypes;
     private String index;
     private String ignoredArticles;
     private String shortcuts;
@@ -54,28 +54,28 @@ public class GeneralSettingsCommand {
         this.playlistFolder = playlistFolder;
     }
 
-    public String getMusicMask() {
-        return musicMask;
+    public String getMusicFileTypes() {
+        return musicFileTypes;
     }
 
-    public void setMusicMask(String musicMask) {
-        this.musicMask = musicMask;
+    public void setMusicFileTypes(String musicFileTypes) {
+        this.musicFileTypes = musicFileTypes;
     }
 
-    public String getVideoMask() {
-        return videoMask;
+    public String getVideoFileTypes() {
+        return videoFileTypes;
     }
 
-    public void setVideoMask(String videoMask) {
-        this.videoMask = videoMask;
+    public void setVideoFileTypes(String videoFileTypes) {
+        this.videoFileTypes = videoFileTypes;
     }
 
-    public String getCoverArtMask() {
-        return coverArtMask;
+    public String getCoverArtFileTypes() {
+        return coverArtFileTypes;
     }
 
-    public void setCoverArtMask(String coverArtMask) {
-        this.coverArtMask = coverArtMask;
+    public void setCoverArtFileTypes(String coverArtFileTypes) {
+        this.coverArtFileTypes = coverArtFileTypes;
     }
 
     public String getIndex() {

@@ -71,9 +71,9 @@ public class SettingsService {
     private static final String KEY_IGNORED_ARTICLES = "IgnoredArticles";
     private static final String KEY_SHORTCUTS = "Shortcuts";
     private static final String KEY_PLAYLIST_FOLDER = "PlaylistFolder";
-    private static final String KEY_MUSIC_MASK = "MusicMask";
-    private static final String KEY_VIDEO_MASK = "VideoMask";
-    private static final String KEY_COVER_ART_MASK = "CoverArtMask";
+    private static final String KEY_MUSIC_FILE_TYPES = "MusicFileTypes";
+    private static final String KEY_VIDEO_FILE_TYPES = "VideoFileTypes";
+    private static final String KEY_COVER_ART_FILE_TYPES = "CoverArtFileTypes";
     private static final String KEY_COVER_ART_LIMIT = "CoverArtLimit";
     private static final String KEY_WELCOME_TITLE = "WelcomeTitle";
     private static final String KEY_WELCOME_SUBTITLE = "WelcomeSubtitle";
@@ -121,9 +121,9 @@ public class SettingsService {
     private static final String DEFAULT_IGNORED_ARTICLES = "The El La Los Las Le Les";
     private static final String DEFAULT_SHORTCUTS = "New Incoming Podcast";
     private static final String DEFAULT_PLAYLIST_FOLDER = Util.getDefaultPlaylistFolder();
-    private static final String DEFAULT_MUSIC_MASK = ".mp3 .ogg .aac .flac .m4a .wav .wma .ape .mpc .mv .shn";
-    private static final String DEFAULT_VIDEO_MASK = ".avi .mpg .mpeg .flv .mp4 .m4v .mkv .mov .wmv .ogv .divx .m2ts";
-    private static final String DEFAULT_COVER_ART_MASK = "cover.jpg folder.jpg .jpg .jpeg .gif .png";
+    private static final String DEFAULT_MUSIC_FILE_TYPES = "mp3 ogg oga aac m4a flac wav wma ape mpc shn";
+    private static final String DEFAULT_VIDEO_FILE_TYPES = "flv avi mpg mpeg mp4 m4v mkv mov wmv ogv divx m2ts";
+    private static final String DEFAULT_COVER_ART_FILE_TYPES = "cover.jpg folder.jpg jpg jpeg gif png";
     private static final int DEFAULT_COVER_ART_LIMIT = 30;
     private static final String DEFAULT_WELCOME_TITLE = "Welcome to Subsonic!";
     private static final String DEFAULT_WELCOME_SUBTITLE = null;
@@ -174,7 +174,8 @@ public class SettingsService {
     private static final long DEFAULT_SETTINGS_CHANGED = 0L;
 
     // Array of obsolete keys.  Used to clean property file.
-    private static final List<String> OBSOLETE_KEYS = Arrays.asList("PortForwardingPublicPort", "PortForwardingLocalPort", "DownsamplingCommand", "AutoCoverBatch");
+    private static final List<String> OBSOLETE_KEYS = Arrays.asList("PortForwardingPublicPort", "PortForwardingLocalPort", "DownsamplingCommand",
+            "AutoCoverBatch", "MusicMask", "VideoMask", "CoverArtMask");
 
     private static final String LOCALES_FILE = "/net/sourceforge/subsonic/i18n/locales.txt";
     private static final String THEMES_FILE = "/net/sourceforge/subsonic/theme/themes.txt";
@@ -190,9 +191,9 @@ public class SettingsService {
     private AvatarDao avatarDao;
     private VersionService versionService;
 
-    private String[] cachedCoverArtMaskArray;
-    private String[] cachedMusicMaskArray;
-    private String[] cachedVideoMaskArray;
+    private String[] cachedCoverArtFileTypesArray;
+    private String[] cachedMusicFileTypesArray;
+    private String[] cachedVideoFileTypesArray;
     private static File subsonicHome;
 
     private boolean licenseValidated = true;
@@ -337,52 +338,52 @@ public class SettingsService {
         setProperty(KEY_PLAYLIST_FOLDER, playlistFolder);
     }
 
-    public String getMusicMask() {
-        return properties.getProperty(KEY_MUSIC_MASK, DEFAULT_MUSIC_MASK);
+    public String getMusicFileTypes() {
+        return properties.getProperty(KEY_MUSIC_FILE_TYPES, DEFAULT_MUSIC_FILE_TYPES);
     }
 
-    public synchronized void setMusicMask(String mask) {
-        setProperty(KEY_MUSIC_MASK, mask);
-        cachedMusicMaskArray = null;
+    public synchronized void setMusicFileTypes(String fileTypes) {
+        setProperty(KEY_MUSIC_FILE_TYPES, fileTypes);
+        cachedMusicFileTypesArray = null;
     }
 
-    public synchronized String[] getMusicMaskAsArray() {
-        if (cachedMusicMaskArray == null) {
-            cachedMusicMaskArray = toStringArray(getMusicMask());
+    public synchronized String[] getMusicFileTypesAsArray() {
+        if (cachedMusicFileTypesArray == null) {
+            cachedMusicFileTypesArray = toStringArray(getMusicFileTypes());
         }
-        return cachedMusicMaskArray;
+        return cachedMusicFileTypesArray;
     }
 
-    public String getVideoMask() {
-        return properties.getProperty(KEY_VIDEO_MASK, DEFAULT_VIDEO_MASK);
+    public String getVideoFileTypes() {
+        return properties.getProperty(KEY_VIDEO_FILE_TYPES, DEFAULT_VIDEO_FILE_TYPES);
     }
 
-    public synchronized void setVideoMask(String mask) {
-        setProperty(KEY_VIDEO_MASK, mask);
-        cachedVideoMaskArray = null;
+    public synchronized void setVideoFileTypes(String fileTypes) {
+        setProperty(KEY_VIDEO_FILE_TYPES, fileTypes);
+        cachedVideoFileTypesArray = null;
     }
 
-    public synchronized String[] getVideoMaskAsArray() {
-        if (cachedVideoMaskArray == null) {
-            cachedVideoMaskArray = toStringArray(getVideoMask());
+    public synchronized String[] getVideoFileTypesAsArray() {
+        if (cachedVideoFileTypesArray == null) {
+            cachedVideoFileTypesArray = toStringArray(getVideoFileTypes());
         }
-        return cachedVideoMaskArray;
+        return cachedVideoFileTypesArray;
     }
 
-    public String getCoverArtMask() {
-        return properties.getProperty(KEY_COVER_ART_MASK, DEFAULT_COVER_ART_MASK);
+    public String getCoverArtFileTypes() {
+        return properties.getProperty(KEY_COVER_ART_FILE_TYPES, DEFAULT_COVER_ART_FILE_TYPES);
     }
 
-    public synchronized void setCoverArtMask(String mask) {
-        setProperty(KEY_COVER_ART_MASK, mask);
-        cachedCoverArtMaskArray = null;
+    public synchronized void setCoverArtFileTypes(String fileTypes) {
+        setProperty(KEY_COVER_ART_FILE_TYPES, fileTypes);
+        cachedCoverArtFileTypesArray = null;
     }
 
-    public synchronized String[] getCoverArtMaskAsArray() {
-        if (cachedCoverArtMaskArray == null) {
-            cachedCoverArtMaskArray = toStringArray(getCoverArtMask());
+    public synchronized String[] getCoverArtFileTypesAsArray() {
+        if (cachedCoverArtFileTypesArray == null) {
+            cachedCoverArtFileTypesArray = toStringArray(getCoverArtFileTypes());
         }
-        return cachedCoverArtMaskArray;
+        return cachedCoverArtFileTypesArray;
     }
 
     public int getCoverArtLimit() {
